@@ -15,7 +15,7 @@ import { StatementSelector } from "../src/frames/statements/statement-selector";
 import { ThenStatement } from "../src/frames/statements/then-statement";
 import { ParseStatus } from "../src/frames/status-enums";
 import { ignore_test } from "./compiler/compiler-test-helpers";
-import { T00_emptyFile, T03_mainWithAllStatements, T04_allGlobalsExceptClass, T05_classes } from "./model-generating-functions.";
+import { T00_emptyFile, T03_mainWithAllStatements, T05_classes } from "./model-generating-functions.";
 import {
   back,
   createTestRunner,
@@ -149,11 +149,11 @@ suite("Editing Frames", () => {
   });
   test("Remove selector frame", () => {
     const file = T05_classes();
-    const fun = file.getById("func27") as GlobalFunction;
+    const fun = file.getById("func23") as GlobalFunction;
     let child1 = fun.getFirstChild();
-    const sel = file.getById("select28");
+    const sel = file.getById("select24");
     assert.equal(child1, sel);
-    const ret = file.getById("return32");
+    const ret = file.getById("return28");
     ret.select(true, false);
     ret.processKey(up());
     assert.equal(ret.isSelected(), false);
@@ -167,9 +167,9 @@ suite("Editing Frames", () => {
   });
   test("Cannot remove selector that is only statement", () => {
     const file = T05_classes();
-    const cons = file.getById("constructor7") as Constructor;
+    const cons = file.getById("constructor5") as Constructor;
     let child1 = cons.getFirstChild();
-    const sel = file.getById("select8");
+    const sel = file.getById("select6");
     assert.equal(child1, sel);
     sel.processKey(del());
     child1 = cons.getFirstChild();
@@ -342,16 +342,16 @@ suite("Editing Frames", () => {
     const file = await loadFileAsModelNew(`${__dirname}\\files\\testcode622.elan`);
     const runner = await createTestRunner();
     await file.refreshAllStatuses(runner);
-    const func11 = file.getById("func11");
-    func11.select();
-    func11.processKey(ctrl_x());
+    const func9 = file.getById("func9");
+    func9.select();
+    func9.processKey(ctrl_x());
     const scratchpad = (file as FileImpl).getScratchPad();
     assert.equal(scratchpad.readFrames()?.length, 1);
     const class1 = file.getById("class1");
     class1.processKey(enter());
-    const sel20 = file.getById("select21") as GlobalSelector;
-    sel20.select(true, false);
-    sel20.processKey(ctrl_v());
+    const sel18 = file.getById("select19") as GlobalSelector;
+    sel18.select(true, false);
+    sel18.processKey(ctrl_v());
     assert.equal(scratchpad.readFrames()?.length, 1);
   });
   test("#644 cutting statement when there is already a selector following", async () => {

@@ -65,6 +65,8 @@ export const abstractFunctionKeywords = abstractKeyword + " " + functionKeyword;
 export const privatePropertyKeywords = privateKeyword + " " + propertyKeyword;
 export const privateProcedureKeywords = privateKeyword + " " + procedureKeyword;
 export const privateFunctionKeywords = privateKeyword + " " + functionKeyword;
+export const abstractClassKeywords = abstractKeyword + " " + classKeyword;
+export const abstractImmutableKeywords = abstractKeyword + " " + immutableKeyword;
 
 export const commentMarker = "#";
 

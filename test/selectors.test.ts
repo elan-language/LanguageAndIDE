@@ -30,33 +30,34 @@ export class TestProfileSPJ implements Profile {
   can_load_only_own_files: boolean = false;
 }
 
-suite("Unit tests", () => {
+suite("Selector tests", () => {
   test("Statement Select - variable", () => {
     const file = T09_emptyMainAndClassWithGlobalSelector();
     file.getById("select2").processKey(key("v"));
-    const v = file.getById("var13").renderAsSource();
+    const v = file.getById("var11").renderAsSource();
     assert.equal(v, "  var  set to ");
   });
 
   test("Statement Select - case insensitive", () => {
     const file = T09_emptyMainAndClassWithGlobalSelector();
     file.getById("select2").processKey(key("V"));
-    const v = file.getById("var13").renderAsSource();
+    const v = file.getById("var11").renderAsSource();
     assert.equal(v, "  var  set to ");
   });
 
   test("Member Select - function", () => {
     const file = T09_emptyMainAndClassWithGlobalSelector();
-    file.getById("select12").processKey(key("f"));
-    const v = file.getById("func13").renderAsSource();
+    file.getById("select10").processKey(key("f"));
+    const v = file.getById("func11").renderAsSource();
     assert.equal(v, "  function () return \r\n" + "    return \r\n" + "  end function\r\n");
   });
 
   test("Member Select - procedure", () => {
     const file = T09_emptyMainAndClassWithGlobalSelector();
-    file.getById("select12").processKey(key("p"));
-    file.getById("select12").processKey(key("c"));
-    const v = file.getById("proc13").renderAsSource();
+    file.getById("select10").processKey(key("p"));
+    file.getById("select10").processKey(key("o"))
+    file.getById("select10").processKey(key("c"));
+    const v = file.getById("proc11").renderAsSource();
     assert.equal(v, "  procedure ()\r\n\r\n  end procedure\r\n");
   });
 
@@ -64,7 +65,7 @@ suite("Unit tests", () => {
     const file = T09_emptyMainAndClassWithGlobalSelector();
     file.getById("select0").processKey(key("c"));
     file.getById("select0").processKey(key("o"));
-    const v = file.getById("const13").renderAsSource();
+    const v = file.getById("const11").renderAsSource();
     assert.equal(v, "constant  set to \r\n");
   });
 
@@ -72,13 +73,13 @@ suite("Unit tests", () => {
     const f = new FileImpl(hash, new DefaultProfile(), transforms());
     const g = new GlobalSelector(f);
     let help = g.getCompletion();
-    assert.equal(help, " main procedure function class constant enum test #");
+    assert.equal(help, " main procedure function constant test enum class #");
     g.processKey(key("c"));
     help = g.getCompletion();
-    assert.equal(help, " class constant");
+    assert.equal(help, " constant class");
     assert.equal(
       g.renderAsHtml(),
-      `<global class="default" id='select1' tabindex="0"><selector><text>c</text><placeholder>new code</placeholder><help class="selector"> class constant</help></selector></global>`,
+      `<global class="default" id='select1' tabindex="0"><selector><text>c</text><placeholder>new code</placeholder><help class="selector"> constant class</help></selector></global>`,
     );
   });
 
@@ -94,7 +95,7 @@ suite("Unit tests", () => {
     assert.equal(help, " procedure property");
     assert.equal(
       s.renderAsHtml(),
-      `<member class="ok" id='select11' tabindex="0"><selector><text>pro</text><placeholder>new code</placeholder><help class="selector"> procedure property</help></selector></member>`,
+      `<member class="ok" id='select9' tabindex="0"><selector><text>pro</text><placeholder>new code</placeholder><help class="selector"> procedure property</help></selector></member>`,
     );
   });
 
@@ -103,21 +104,21 @@ suite("Unit tests", () => {
     const c = new ClassFrame(f);
     c.makeAbstract();
     const s = new MemberSelector(c);
-    assert.equal(s.getCompletion(), " abstract function, abstract procedure, abstract property, #");
+    assert.equal(s.getCompletion(), " abstract...   #");
     s.processKey(key("a"));
     assert.equal(s.text, "abstract ");
-    assert.equal(s.getCompletion(), " abstract function, abstract procedure, abstract property,");
+    assert.equal(s.getCompletion(), " function procedure property");
     s.processKey(key("a"));
     assert.equal(s.text, "abstract ");
     s.processKey(key("b"));
     assert.equal(s.text, "abstract ");
-    assert.equal(s.getCompletion(), " abstract function, abstract procedure, abstract property,");
+    assert.equal(s.getCompletion(), " function procedure property");
     s.processKey(key("p"));
     assert.equal(s.text, "abstract pro");
-    assert.equal(s.getCompletion(), " abstract procedure, abstract property,");
+    assert.equal(s.getCompletion(), " procedure property");
     assert.equal(
       s.renderAsHtml(),
-      `<member class="ok" id='select11' tabindex="0"><selector><text>abstract pro</text><placeholder>new code</placeholder><help class="selector"> abstract procedure, abstract property,</help></selector></member>`,
+      `<member class="ok" id='select9' tabindex="0"><selector><text>abstract pro</text><placeholder>new code</placeholder><help class="selector"> procedure property</help></selector></member>`,
     );
   });
 
@@ -210,12 +211,12 @@ suite("Unit tests", () => {
     const fl = new FileImpl(hash, new DefaultProfile(), transforms());
     let gs = new GlobalSelector(fl);
     let help = gs.getCompletion();
-    assert.equal(help, " main procedure function class constant enum test #");
+    assert.equal(help, " main procedure function constant test enum class #");
     const m = new MainFrame(fl);
     fl.getChildren().push(m);
     gs = new GlobalSelector(fl);
     help = gs.getCompletion();
-    assert.equal(help, " procedure function class constant enum test #");
+    assert.equal(help, " procedure function constant test enum class #");
   });
 
   test("#377 - Global select filtered by profile", () => {

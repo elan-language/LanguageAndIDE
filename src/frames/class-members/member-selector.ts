@@ -36,9 +36,9 @@ export class MemberSelector extends AbstractSelector implements Member {
       [abstractFunctionKeywords, (parent: Parent) => this.class.createAbstractFunction()],
       [abstractProcedureKeywords, (parent: Parent) => this.class.createAbstractProcedure()],
       [abstractPropertyKeywords, (parent: Parent) => this.class.createAbstractProperty()],
-      [privatePropertyKeywords, (parent: Parent) => this.class.createProperty(true)],
-      [privateProcedureKeywords, (parent: Parent) => this.class.createProcedure(true)],
       [privateFunctionKeywords, (parent: Parent) => this.class.createFunction(true)],
+      [privateProcedureKeywords, (parent: Parent) => this.class.createProcedure(true)],
+      [privatePropertyKeywords, (parent: Parent) => this.class.createProperty(true)],
       [commentMarker, (parent: Parent) => this.class.createComment()],
     ];
     return options;
@@ -64,7 +64,7 @@ export class MemberSelector extends AbstractSelector implements Member {
           keyword === commentMarker;
       }
     } else if (this.class.isImmutable()) {
-      result = !keyword.startsWith(abstractKeyword) && keyword !== procedureKeyword;
+      result = !keyword.startsWith(abstractKeyword) && !keyword.includes(procedureKeyword);
     } else {
       result = !keyword.startsWith(abstractKeyword);
     }
