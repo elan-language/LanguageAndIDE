@@ -1,4 +1,4 @@
-# FFFF Elan Beta 2 valid
+# 94195efd951ae3147fb313aa7dca93e7e48c5788f40b6843ff84f8606c1c21e0 Elan Beta 2 valid
 
 # Demo shows one way to implement a mergeSort function - using recursion
 # Since merge sort is always an 'out of place' sort, we have chosen to use immutable lists
@@ -33,7 +33,7 @@ function merge(a as {String}, b as {String}) return {String}
     else if isBefore(a[0], b[0])
       set result to {a[0]} + merge(a[1..], b)
     else
-      set result to {b.[0]} + merge(a, b[1..])
+      set result to {b[0]} + merge(a, b[1..])
   end if
   return result
 end function
