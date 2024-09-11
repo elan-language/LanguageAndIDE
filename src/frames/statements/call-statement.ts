@@ -29,6 +29,7 @@ import {
 import { QualifierAsn } from "../syntax-nodes/qualifier-asn";
 import { Transforms } from "../syntax-nodes/transforms";
 import { LetStatement } from "./let-statement";
+import { VarStatement } from "./var-statement";
 
 export class CallStatement extends AbstractFrame implements Statement {
   isStatement = true;
@@ -90,14 +91,14 @@ export class CallStatement extends AbstractFrame implements Statement {
     const argList = this.args.getOrTransformAstNode(transforms);
 
     if (isAstCollectionNode(argList)) {
-      let parameters = argList.items;
+      let callParameters = argList.items;
       let isAsync: boolean = false;
 
       if (ps instanceof ProcedureType) {
         mustCallExtensionViaQualifier(ps, qualifier, this.compileErrors, this.htmlId);
 
         if (ps.isExtension && qualifier instanceof QualifierAsn) {
-          parameters = [qualifier.value as AstNode].concat(parameters);
+          callParameters = [qualifier.value as AstNode].concat(callParameters);
           qualifier = undefined;
         }
 
@@ -114,7 +115,7 @@ export class CallStatement extends AbstractFrame implements Statement {
         }
 
         mustMatchParameters(
-          parameters,
+          callParameters,
           parameterTypes,
           ps.isExtension,
           this.compileErrors,
@@ -132,26 +133,32 @@ export class CallStatement extends AbstractFrame implements Statement {
       const wrappedOutParameters: string[] = [];
       const passedParameters: string[] = [];
 
-      const parameterScopes =
+      const parameterDefScopes =
         procSymbol instanceof ProcedureFrame
           ? procSymbol.params.symbolMatches("", true, this).map((s) => s.symbolScope)
           : [];
 
-      for (let i = 0; i < parameters.length; i++) {
-        const p = parameters[i];
+      for (let i = 0; i < callParameters.length; i++) {
+        const p = callParameters[i];
         let pName = p.compile();
 
-        const symbolScope = i < parameterScopes.length ? parameterScopes[i] : SymbolScope.parameter;
-        if (symbolScope === SymbolScope.outParameter) {
+        const parameterDefScope =
+          i < parameterDefScopes.length ? parameterDefScopes[i] : SymbolScope.parameter;
+        if (parameterDefScope === SymbolScope.outParameter) {
           if (isAstIdNode(p)) {
-            const symbol = currentScope.resolveSymbol(p.id, transforms, this);
-            if (!(symbol instanceof LetStatement)) {
+            const callParamSymbol = this.getParentScope().resolveSymbol(p.id, transforms, this);
+            if (
+              callParamSymbol instanceof VarStatement ||
+              callParamSymbol.symbolScope === SymbolScope.parameter ||
+              callParamSymbol.symbolScope === SymbolScope.outParameter
+            ) {
               const tpName = `_${p.id}`;
               wrappedInParameters.push(`var ${tpName} = [${pName}]`);
               wrappedOutParameters.push(`${pName} = ${tpName}[0]`);
               pName = tpName;
             } else {
-              CannotPassAsOutParameter(`let ${p.id}`, this.compileErrors, this.htmlId);
+              const msg = callParamSymbol instanceof LetStatement ? `let ${p.id}` : p;
+              CannotPassAsOutParameter(msg, this.compileErrors, this.htmlId);
             }
           } else {
             CannotPassAsOutParameter(p, this.compileErrors, this.htmlId);
