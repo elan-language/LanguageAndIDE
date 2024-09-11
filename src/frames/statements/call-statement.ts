@@ -131,12 +131,19 @@ export class CallStatement extends AbstractFrame implements Statement {
       const wrappedOutParameters: string[] = [];
       const passedParameters: string[] = [];
 
-      for (const p of parameters) {
-        let pName = p.compile();
-        if (isAstIdNode(p) && procSymbol instanceof ProcedureFrame) {
-          const s = procSymbol.resolveSymbol(p.id, transforms, this);
+      const parameterScopes =
+        procSymbol instanceof ProcedureFrame
+          ? procSymbol.params.symbolMatches("", true, this).map((s) => s.symbolScope)
+          : [];
 
-          if (s.symbolScope === SymbolScope.outParameter) {
+      for (let i = 0; i < parameters.length; i++) {
+        const p = parameters[i];
+        let pName = p.compile();
+        if (isAstIdNode(p)) {
+          const symbolScope =
+            i < parameterScopes.length ? parameterScopes[i] : SymbolScope.parameter;
+
+          if (symbolScope === SymbolScope.outParameter) {
             const tpName = `_${p.id}`;
             wrappedInParameters.push(`var ${tpName} = [${pName}]`);
             wrappedOutParameters.push(`${pName} = ${tpName}[0]`);

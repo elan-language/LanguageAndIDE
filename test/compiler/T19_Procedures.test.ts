@@ -415,9 +415,9 @@ main
   print b
 end main
 
-procedure foo(out a as Float, out b as String)
-  set a to 3
-  set b to "goodbye"
+procedure foo(out x as Float, out y as String)
+  set x to 3
+  set y to "goodbye"
 end procedure`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -431,9 +431,9 @@ async function main() {
   system.printLine(_stdlib.asString(b));
 }
 
-async function foo(a, b) {
-  a[0] = 3;
-  b[0] = "goodbye";
+async function foo(x, y) {
+  x[0] = 3;
+  y[0] = "goodbye";
 }
 return [main, _tests];}`;
 
@@ -457,10 +457,10 @@ main
   print b
 end main
 
-procedure foo(out a as Float, out b as Float)
-  var c set to a
-  set a to b
-  set b to c
+procedure foo(out x as Float, out y as Float)
+  var c set to x
+  set x to y
+  set y to c
 end procedure`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -474,10 +474,10 @@ async function main() {
   system.printLine(_stdlib.asString(b));
 }
 
-async function foo(a, b) {
-  var c = a[0];
-  a[0] = b[0];
-  b[0] = c;
+async function foo(x, y) {
+  var c = x[0];
+  x[0] = y[0];
+  y[0] = c;
 }
 return [main, _tests];}`;
 
@@ -544,7 +544,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "32");
   });
 
-  ignore_test("Pass_CallOnOutParameters", async () => {
+  test("Pass_CallOnOutParameters", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
@@ -578,7 +578,9 @@ async function main() {
 }
 
 async function foo(a, b) {
-  await a[0].bar(b[0]);
+  var _b = [b[0]];
+  await a[0].bar(_b);
+  b[0] = _b[0];
 }
 
 class Foo {
