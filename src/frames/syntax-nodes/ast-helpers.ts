@@ -263,45 +263,13 @@ export function mapOperationSymbol(os: OperationSymbol) {
   throw new Error("Not implemented");
 }
 
-export function mapOperation(op: string) {
+export function mapOperation(op: string): OperationSymbol {
   op = op.trim();
 
-  switch (op.trim()) {
-    case "+":
-      return OperationSymbol.Add;
-    case "-":
-      return OperationSymbol.Minus;
-    case "*":
-      return OperationSymbol.Multiply;
-    case "<":
-      return OperationSymbol.LT;
-    case ">":
-      return OperationSymbol.GT;
-    case ">=":
-      return OperationSymbol.GTE;
-    case "<=":
-      return OperationSymbol.LTE;
-    case "and":
-      return OperationSymbol.And;
-    case "or":
-      return OperationSymbol.Or;
-    case "xor":
-      return OperationSymbol.Xor;
-    case "not":
-      return OperationSymbol.Not;
-    case "is":
-      return OperationSymbol.Equals;
-    case "isnt":
-      return OperationSymbol.NotEquals;
-    case "div":
-      return OperationSymbol.Div;
-    case "mod":
-      return OperationSymbol.Mod;
-    case "/":
-      return OperationSymbol.Divide;
-    case "^":
-      return OperationSymbol.Pow;
-    default:
-      throw new Error("Not implemented");
+  for (const e of opMap.entries()) {
+    if (e[1] === op) {
+      return e[0];
+    }
   }
+  throw new Error("Not implemented");
 }
