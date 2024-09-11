@@ -8,6 +8,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -487,6 +488,119 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "32");
+  });
+
+  test("Pass_NestedOutParameters", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var a set to 2
+  var b set to 3
+  call foo(a, b)
+  print a
+  print b
+end main
+
+procedure foo(out a as Float, out b as Float)
+  call bar(a, b)
+end procedure
+
+procedure bar(out a as Float, out b as Float)
+  var c set to a
+  set a to b
+  set b to c
+end procedure`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = 2;
+  var b = 3;
+  var _a = [a]; var _b = [b];
+  await foo(_a, _b);
+  a = _a[0]; b = _b[0];
+  system.printLine(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(b));
+}
+
+async function foo(a, b) {
+  var _a = [a[0]]; var _b = [b[0]];
+  await bar(_a, _b);
+  a[0] = _a[0]; b[0] = _b[0];
+}
+
+async function bar(a, b) {
+  var c = a[0];
+  a[0] = b[0];
+  b[0] = c;
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "32");
+  });
+
+  ignore_test("Pass_CallOnOutParameters", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var a set to new Foo()
+  var b set to 0
+  call foo(a, b)
+  print b
+end main
+
+procedure foo(out a as Foo, out b as Int)
+  call a.bar(b)
+end procedure
+
+class Foo
+  constructor()
+  end constructor
+
+  procedure bar(out a as Int)
+    set a to 1
+  end procedure
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.initialise(new Foo());
+  var b = 0;
+  var _a = [a]; var _b = [b];
+  await foo(_a, _b);
+  a = _a[0]; b = _b[0];
+  system.printLine(_stdlib.asString(b));
+}
+
+async function foo(a, b) {
+  await a[0].bar(b[0]);
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, []);};
+  constructor() {
+
+  }
+
+  async bar(a) {
+    a[0] = 1;
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1");
   });
 
 
