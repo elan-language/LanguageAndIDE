@@ -30,7 +30,7 @@ end class`;
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 class Foo
-    constructor(a as ArrayList<of Float>)
+    constructor(a as Array<of Float>)
         call a.putAt(0, 4)
     end constructor
 

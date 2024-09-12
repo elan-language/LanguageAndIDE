@@ -492,11 +492,11 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompileWithId(fileImpl, "set12", [
-      "Incompatible types List to ArrayList",
+      "Incompatible types List to Array",
     ]);
 
     assertDoesNotCompileWithId(fileImpl, "set15", [
-      "Incompatible types ArrayList to List try converting with '.asList()'",
+      "Incompatible types Array to List try converting with '.asList()'",
     ]);
 
     assertDoesNotCompileWithId(fileImpl, "set18", [

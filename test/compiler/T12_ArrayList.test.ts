@@ -12,8 +12,8 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("T12_ArrayList", () => {
-  test("Pass_literalArrayList", async () => {
+suite("T12_Array", () => {
+  test("Pass_literalArray", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
@@ -41,7 +41,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  var a set to new ArrayList<of String>()
+  var a set to new Array<of String>()
   print a.length()
 end main`;
 
@@ -429,13 +429,13 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  var a set to {"foo","bar","yon"}.asArrayList()
+  var a set to {"foo","bar","yon"}.asArray()
   print a.length()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = _stdlib.asArrayList(system.list(["foo", "bar", "yon"]));
+  var a = _stdlib.asArray(system.list(["foo", "bar", "yon"]));
   system.printLine(_stdlib.asString(_stdlib.length(a)));
 }
 return [main, _tests];}`;
@@ -449,7 +449,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "3");
   });
 
-  test("Pass_EmptyArrayList", async () => {
+  test("Pass_EmptyArray", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
@@ -465,14 +465,14 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.emptyArrayList();
-  var b = system.emptyArrayList();
+  var a = system.emptyArray();
+  var b = system.emptyArray();
   _stdlib.append(a, 3);
   system.printLine(_stdlib.asString(a));
   system.printLine(_stdlib.asString(b));
   system.printLine(_stdlib.asString(system.objectEquals(a, b)));
-  system.printLine(_stdlib.asString(system.objectEquals(a, system.emptyArrayList())));
-  system.printLine(_stdlib.asString(system.objectEquals(b, system.emptyArrayList())));
+  system.printLine(_stdlib.asString(system.objectEquals(a, system.emptyArray())));
+  system.printLine(_stdlib.asString(system.objectEquals(b, system.emptyArray())));
 }
 return [main, _tests];}`;
 
@@ -485,7 +485,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[3][]falsefalsetrue");
   });
 
-  test("Fail_EmptyArrayList", async () => {
+  test("Fail_EmptyArray", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
@@ -514,7 +514,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot call ArrayList"]);
+    assertDoesNotCompile(fileImpl, ["Cannot call Array"]);
   });
 
   test("Fail_ApplyIndexToANonIndexable", async () => {
@@ -537,7 +537,7 @@ end main
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  var a set to new ArrayList<of String>[3][4]
+  var a set to new Array<of String>[3][4]
   print a[0, 0]
   print a[2, 3]
 end main
@@ -601,7 +601,7 @@ end main
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  var a set to new ArrayList<of String>()
+  var a set to new Array<of String>()
   call a.putAt("b", "fred")
 end main
 `;
@@ -632,7 +632,7 @@ end main
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  var a set to new ArrayList<of String>[3]
+  var a set to new Array<of String>[3]
 end main
 `;
 
@@ -647,7 +647,7 @@ end main
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  var a set to new ArrayList<of String>() {"foo","bar","yon"}
+  var a set to new Array<of String>() {"foo","bar","yon"}
 end main
 `;
 
@@ -703,7 +703,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types List to ArrayList"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types List to Array"]);
   });
 
   test("Fail_withInsert", async () => {
@@ -720,7 +720,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types List to ArrayList"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types List to Array"]);
   });
 
   test("Fail_withRemove", async () => {
@@ -737,7 +737,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Unknown to ArrayList"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Unknown to Array"]);
   });
 
   test("Fail_putAt_asFunction", async () => {
@@ -754,7 +754,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types List to ArrayList"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types List to Array"]);
   });
 
   test("Fail_appendWithPlus", async () => {
@@ -771,7 +771,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types ArrayList to Float or Int"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Array to Float or Int"]);
   });
 
   test("Fail_prependWithPlus", async () => {
@@ -788,7 +788,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types String to ArrayList"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types String to Array"]);
   });
 
   test("Fail_withRemoveFirst", async () => {
@@ -804,7 +804,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types List to ArrayList"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types List to Array"]);
   });
 
   test("Fail_withRemoveAll", async () => {
@@ -820,7 +820,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types List to ArrayList"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types List to Array"]);
   });
 
   test("Fail_assignRange", async () => {
@@ -842,7 +842,7 @@ end main`;
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-    var a set to new ArrayList()
+    var a set to new Array()
     print a
 end main`;
 

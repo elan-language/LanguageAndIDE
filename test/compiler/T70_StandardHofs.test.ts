@@ -17,18 +17,18 @@ suite("T70_StandardHofs", () => {
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
-  print source.filter(lambda x as Int => x > 20).asArrayList()
-  print source.filter(lambda x as Int => x > 20).asArrayList()
-  print source.filter(lambda x as Int => (x < 3) or (x > 35)).asArrayList()
+  print source.filter(lambda x as Int => x > 20).asArray()
+  print source.filter(lambda x as Int => x > 20).asArray()
+  print source.filter(lambda x as Int => (x < 3) or (x > 35)).asArray()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
 
 async function main() {
-  system.printLine(_stdlib.asString(_stdlib.asArrayList(_stdlib.filter(source, (x) => x > 20))));
-  system.printLine(_stdlib.asString(_stdlib.asArrayList(_stdlib.filter(source, (x) => x > 20))));
-  system.printLine(_stdlib.asString(_stdlib.asArrayList(_stdlib.filter(source, (x) => (x < 3) || (x > 35)))));
+  system.printLine(_stdlib.asString(_stdlib.asArray(_stdlib.filter(source, (x) => x > 20))));
+  system.printLine(_stdlib.asString(_stdlib.asArray(_stdlib.filter(source, (x) => x > 20))));
+  system.printLine(_stdlib.asString(_stdlib.asArray(_stdlib.filter(source, (x) => (x < 3) || (x > 35)))));
 }
 return [main, _tests];}`;
 
@@ -49,14 +49,14 @@ return [main, _tests];}`;
 
 constant source set to "onetwo"
 main
-  print source.filter(lambda x as String => x is "o").asArrayList()
+  print source.filter(lambda x as String => x is "o").asArray()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const source = "onetwo";
 
 async function main() {
-  system.printLine(_stdlib.asString(_stdlib.asArrayList(_stdlib.filter(source, (x) => x === "o"))));
+  system.printLine(_stdlib.asString(_stdlib.asArray(_stdlib.filter(source, (x) => x === "o"))));
 }
 return [main, _tests];}`;
 
@@ -111,16 +111,16 @@ return [main, _tests];}`;
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
-  print source.map(lambda x as Int => x + 1).asArrayList()
-  print source.map(lambda x as Int => x.asString() + "*").asArrayList()
+  print source.map(lambda x as Int => x + 1).asArray()
+  print source.map(lambda x as Int => x.asString() + "*").asArray()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
 
 async function main() {
-  system.printLine(_stdlib.asString(_stdlib.asArrayList(_stdlib.map(source, (x) => x + 1))));
-  system.printLine(_stdlib.asString(_stdlib.asArrayList(_stdlib.map(source, (x) => _stdlib.asString(x) + "*"))));
+  system.printLine(_stdlib.asString(_stdlib.asArray(_stdlib.map(source, (x) => x + 1))));
+  system.printLine(_stdlib.asString(_stdlib.asArray(_stdlib.map(source, (x) => _stdlib.asString(x) + "*"))));
 }
 return [main, _tests];}`;
 
@@ -141,14 +141,14 @@ return [main, _tests];}`;
 
 constant source set to "onetwo"
 main
-  print source.map(lambda x as String => x + "*").asArrayList()
+  print source.map(lambda x as String => x + "*").asArray()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const source = "onetwo";
 
 async function main() {
-  system.printLine(_stdlib.asString(_stdlib.asArrayList(_stdlib.map(source, (x) => x + "*"))));
+  system.printLine(_stdlib.asString(_stdlib.asArray(_stdlib.map(source, (x) => x + "*"))));
 }
 return [main, _tests];}`;
 
@@ -170,14 +170,14 @@ return [main, _tests];}`;
 main
   var source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}.asIter()
   set source to source.map(lambda x as Int => x + 1)
-  print source.asArrayList()
+  print source.asArray()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var source = _stdlib.asIter(system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]));
   source = _stdlib.map(source, (x) => x + 1);
-  system.printLine(_stdlib.asString(_stdlib.asArrayList(source)));
+  system.printLine(_stdlib.asString(_stdlib.asArray(source)));
 }
 return [main, _tests];}`;
 
@@ -507,7 +507,7 @@ return [main, _tests];}`;
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
-  print source.sortBy(lambda x as Int, y as Int => if x is y then 0 else if x < y then 1 else -1).asArrayList()
+  print source.sortBy(lambda x as Int, y as Int => if x is y then 0 else if x < y then 1 else -1).asArray()
   print source
 end main`;
 
@@ -515,7 +515,7 @@ end main`;
 const source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
 
 async function main() {
-  system.printLine(_stdlib.asString(_stdlib.asArrayList(_stdlib.sortBy(source, (x, y) => x === y ? 0 : x < y ? 1 : -1))));
+  system.printLine(_stdlib.asString(_stdlib.asArray(_stdlib.sortBy(source, (x, y) => x === y ? 0 : x < y ? 1 : -1))));
   system.printLine(_stdlib.asString(source));
 }
 return [main, _tests];}`;
@@ -537,7 +537,7 @@ return [main, _tests];}`;
 
 constant source set to "dbcd"
 main
-  print source.sortBy(lambda x as String, y as String => if x is y then 0 else if isAfter(x, y) then 1 else -1).asArrayList()
+  print source.sortBy(lambda x as String, y as String => if x is y then 0 else if isAfter(x, y) then 1 else -1).asArray()
   print source
 end main`;
 
@@ -545,7 +545,7 @@ end main`;
 const source = "dbcd";
 
 async function main() {
-  system.printLine(_stdlib.asString(_stdlib.asArrayList(_stdlib.sortBy(source, (x, y) => x === y ? 0 : _stdlib.isAfter(x, y) ? 1 : -1))));
+  system.printLine(_stdlib.asString(_stdlib.asArray(_stdlib.sortBy(source, (x, y) => x === y ? 0 : _stdlib.isAfter(x, y) ? 1 : -1))));
   system.printLine(_stdlib.asString(source));
 }
 return [main, _tests];}`;

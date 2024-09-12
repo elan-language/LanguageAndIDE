@@ -16,7 +16,7 @@ export class TypeListNode extends AbstractSequence {
     this.remainingText = text;
     if (text.length > 0) {
       this.simpleType = new TypeSimpleNode(); //Not added to elements, as not present in the text
-      this.simpleType.parseText("ArrayList");
+      this.simpleType.parseText("Array");
       this.addElement(new PunctuationNode(OPEN_SQ_BRACKET));
       this.generic = new TypeNode();
       this.addElement(this.generic);

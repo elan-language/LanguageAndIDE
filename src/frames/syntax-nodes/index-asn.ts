@@ -7,7 +7,7 @@ import {
 import { AstNode } from "../interfaces/ast-node";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
-import { ArrayListType } from "../symbols/array-list-type";
+import { ArrayType } from "../symbols/array-list-type";
 import { FunctionType } from "../symbols/function-type";
 import { IntType } from "../symbols/int-type";
 import { ListType } from "../symbols/list-type";
@@ -64,7 +64,7 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
     if (rootType instanceof ListType) {
       return `system.list(${code})`;
     }
-    if (rootType instanceof ArrayListType) {
+    if (rootType instanceof ArrayType) {
       return `system.array(${code})`;
     }
     if (rootType instanceof FunctionType) {

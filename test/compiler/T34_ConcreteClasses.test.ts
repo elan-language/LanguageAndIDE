@@ -341,12 +341,12 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["strArr", system.emptyArrayList()]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["strArr", system.emptyArray()]]);};
   constructor() {
     this.strArr = system.literalArray(["apple", "orange", "pair"]);
   }
 
-  strArr = system.emptyArrayList();
+  strArr = system.emptyArray();
 
 }
 return [main, _tests];}`;

@@ -35,7 +35,7 @@ import { SymbolType } from "./interfaces/symbol-type";
 import { allKeywords, reservedWords } from "./keywords";
 import { LetStatement } from "./statements/let-statement";
 import { AbstractDictionaryType } from "./symbols/abstract-dictionary-type";
-import { ArrayListType } from "./symbols/array-list-type";
+import { ArrayType } from "./symbols/array-list-type";
 import { BooleanType } from "./symbols/boolean-type";
 import { ClassType } from "./symbols/class-type";
 import { DictionaryType } from "./symbols/dictionary-type";
@@ -403,7 +403,7 @@ function FailIncompatible(
 ) {
   let addInfo = "";
   // special case
-  if (lhs instanceof ListType && rhs instanceof ArrayListType) {
+  if (lhs instanceof ListType && rhs instanceof ArrayType) {
     addInfo = " try converting with '.asList()'";
   }
 
@@ -564,11 +564,11 @@ export function mustBeCompatibleType(
     return;
   }
 
-  if (lhs instanceof ArrayListType && rhs instanceof ArrayListType) {
+  if (lhs instanceof ArrayType && rhs instanceof ArrayType) {
     mustBeCompatibleType(lhs.ofType, rhs.ofType, compileErrors, location);
   }
 
-  if (lhs instanceof ArrayListType && !(rhs instanceof ArrayListType)) {
+  if (lhs instanceof ArrayType && !(rhs instanceof ArrayType)) {
     FailIncompatible(lhs, rhs, compileErrors, location);
     return;
   }
@@ -754,7 +754,7 @@ export function mustNotBeParameter(
     if (isInsideFunctionOrConstructor(parent)) {
       compileErrors.push(new ReassignCompileError(`parameter: ${getId(assignable)}`, location));
     } else {
-      // only mutate indexed arraylist
+      // only mutate indexed Array
       if (!isIndexed(assignable)) {
         compileErrors.push(new ReassignCompileError(`parameter: ${getId(assignable)}`, location));
       }

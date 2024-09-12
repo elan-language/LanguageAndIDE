@@ -1,6 +1,6 @@
 import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
-import { ArrayListNode } from "./array-list-node";
+import { ArrayNode } from "./array-list-node";
 import { BracketedExpression } from "./bracketed-expression";
 import { DictionaryNode } from "./dictionary-node";
 import { ExprNode } from "./expr-node";
@@ -28,7 +28,7 @@ export class TermSimple extends AbstractSequence {
     const ref = () => new ReferenceNode();
     const typeOf = () => new TypeOfNode();
     const immList = () => new ListNode(() => new ExprNode());
-    const arrList = () => new ArrayListNode(() => new ExprNode());
+    const arrList = () => new ArrayNode(() => new ExprNode());
     const dict = () =>
       new DictionaryNode(
         () => new ExprNode(),

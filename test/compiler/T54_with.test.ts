@@ -728,7 +728,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types ArrayList to Int"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Array to Int"]);
   });
 
   test("Fail_NotClass", async () => {

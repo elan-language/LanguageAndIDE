@@ -4,7 +4,7 @@ import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { Scope } from "../interfaces/scope";
 import { globalKeyword, libraryKeyword, propertyKeyword, thisKeyword } from "../keywords";
 import { AbstractAlternatives } from "../parse-nodes/abstract-alternatives";
-import { ArrayListNode } from "../parse-nodes/array-list-node";
+import { ArrayNode } from "../parse-nodes/array-list-node";
 import { AssignableNode } from "../parse-nodes/assignable-node";
 import { BinaryExpression } from "../parse-nodes/binary-expression";
 import { BracketedExpression } from "../parse-nodes/bracketed-expression";
@@ -57,6 +57,7 @@ import { TypeGenericNode } from "../parse-nodes/type-generic-node";
 import { TypeImmutableDictionaryNode } from "../parse-nodes/type-immutable-dictionary-node";
 import { TypeImmutableListNode } from "../parse-nodes/type-immutable-list-node";
 import { TypeListNode } from "../parse-nodes/type-list-node";
+import { TypeOfNode } from "../parse-nodes/type-of-node";
 import { TypeSimpleNode } from "../parse-nodes/type-simple-node";
 import { TypeTupleNode } from "../parse-nodes/type-tuple-node";
 import { UnaryExpression } from "../parse-nodes/unary-expression";
@@ -85,19 +86,18 @@ import { InterpolatedAsn } from "./interpolated-asn";
 import { KvpAsn } from "./kvp-asn";
 import { LambdaAsn } from "./lambda-asn";
 import { LambdaSigAsn } from "./lambda-sig-asn";
-import { LiteralArrayListAsn } from "./literal-array-list-asn";
+import { LiteralArrayAsn } from "./literal-array-list-asn";
 import { LiteralBoolAsn } from "./literal-bool-asn";
 import { LiteralDictionaryAsn } from "./literal-dictionary-asn";
 import { LiteralEnumAsn } from "./literal-enum-asn";
 import { LiteralFloatAsn } from "./literal-float-asn";
 import { LiteralImmutableDictionaryAsn } from "./literal-immutable-dictionary-asn";
-import { LiteralListAsn } from "./literal-list-asn";
 import { LiteralIntAsn } from "./literal-int-asn";
+import { LiteralListAsn } from "./literal-list-asn";
 import { LiteralRegExAsn } from "./literal-regex-asn";
 import { LiteralStringAsn } from "./literal-string-asn";
 import { LiteralTupleAsn } from "./literal-tuple-asn";
 import { NewAsn } from "./new-asn";
-import { OperationSymbol } from "./operation-symbol";
 import { ParamDefAsn } from "./param-def-asn";
 import { QualifierAsn } from "./qualifier-asn";
 import { RangeAsn } from "./range-asn";
@@ -105,11 +105,10 @@ import { SegmentedStringAsn } from "./segmented-string-asn";
 import { SetAsn } from "./set-asn";
 import { ThisAsn } from "./this-asn";
 import { TypeAsn } from "./type-asn";
+import { TypeOfAsn } from "./typeof-asn";
 import { UnaryExprAsn } from "./unary-expr-asn";
 import { VarAsn } from "./var-asn";
 import { WithAsn } from "./with-asn";
-import { TypeOfNode } from "../parse-nodes/type-of-node";
-import { TypeOfAsn } from "./typeof-asn";
 
 export function transformMany(
   node: CSV | Multiple | Sequence,
@@ -332,9 +331,9 @@ export function transform(
     return new LiteralListAsn(items, fieldId, scope);
   }
 
-  if (node instanceof ArrayListNode) {
+  if (node instanceof ArrayNode) {
     const items = transformMany(node.csv as CSV, fieldId, scope).items;
-    return new LiteralArrayListAsn(items, fieldId, scope);
+    return new LiteralArrayAsn(items, fieldId, scope);
   }
 
   if (node instanceof DictionaryNode) {

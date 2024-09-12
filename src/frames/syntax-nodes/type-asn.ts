@@ -3,7 +3,7 @@ import { mustMatchGenericParameters } from "../compile-rules";
 import { AstNode } from "../interfaces/ast-node";
 import { AstTypeNode } from "../interfaces/ast-type-node";
 import { Scope } from "../interfaces/scope";
-import { ArrayListType } from "../symbols/array-list-type";
+import { ArrayType } from "../symbols/array-list-type";
 import { BooleanType } from "../symbols/boolean-type";
 import { DictionaryType } from "../symbols/dictionary-type";
 import { FloatType } from "../symbols/float-type";
@@ -39,7 +39,7 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
   expectedMinimumGenericParameters() {
     switch (this.id) {
       case "List":
-      case "ArrayList":
+      case "Array":
       case "Func":
       case "Iterable":
         return 1;
@@ -95,8 +95,8 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
         return StringType.Instance;
       case "List":
         return new ListType(this.safeGetGenericParameterSymbolType(0));
-      case "ArrayList":
-        return new ArrayListType(this.safeGetGenericParameterSymbolType(0));
+      case "Array":
+        return new ArrayType(this.safeGetGenericParameterSymbolType(0));
       case "Dictionary":
         return new DictionaryType(
           this.safeGetGenericParameterSymbolType(0),

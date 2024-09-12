@@ -109,9 +109,9 @@ suite("Parsing Nodes", () => {
     testNodeParse(new ExprNode(), "3* foo(5)", ParseStatus.valid, "", "", "3*foo(5)", "");
     testNodeParse(
       new ExprNode(),
-      "new ArrayList<of String>()",
+      "new Array<of String>()",
       ParseStatus.valid,
-      "new ArrayList<of String>()",
+      "new Array<of String>()",
       "",
     );
     testNodeParse(
@@ -1373,9 +1373,9 @@ suite("Parsing Nodes", () => {
     testNodeParse(new NewInstance(), `newFoo()`, ParseStatus.invalid, "", "newFoo()", "", "");
     testNodeParse(
       new NewInstance(),
-      "new ArrayList<of String>()",
+      "new Array<of String>()",
       ParseStatus.valid,
-      "new ArrayList<of String>()",
+      "new Array<of String>()",
       "",
     );
   });
@@ -1444,9 +1444,9 @@ suite("Parsing Nodes", () => {
   // test("#339 call dot function on a literal", () => {
   //   testNodeParse(new MethodCallNode(), `length(bar)`, ParseStatus.valid, "", "");
   //   testNodeParse(new MethodCallNode(), `bar.length()`, ParseStatus.valid, "", "");
-  //   testNodeParse(new MethodCallNode(), `bar.asArrayList()`, ParseStatus.valid, "", "");
+  //   testNodeParse(new MethodCallNode(), `bar.asArray()`, ParseStatus.valid, "", "");
   //   testNodeParse(new LiteralNode(), `{1,2,3,4,5}`, ParseStatus.valid, "", "");
-  //   testNodeParse(new MethodCallNode(), `{1,2,3,4,5}.asArrayList()`, ParseStatus.valid, "", "");
+  //   testNodeParse(new MethodCallNode(), `{1,2,3,4,5}.asArray()`, ParseStatus.valid, "", "");
   //   testNodeParse(new MethodCallNode(), `"Hello World".length()`, ParseStatus.valid, "", "");
   //   testNodeParse(new MethodCallNode(), `12.3.asString()`, ParseStatus.valid, "", "");
   //   testNodeParse(new MethodCallNode(), `bar.`, ParseStatus.incomplete, "", "");

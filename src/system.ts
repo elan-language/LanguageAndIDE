@@ -26,7 +26,7 @@ export class System {
     return this.emptyIterableSingleton;
   }
 
-  emptyArrayList() {
+  emptyArray() {
     return this.literalArray([]);
   }
 
@@ -72,7 +72,7 @@ export class System {
   }
 
   literalArray(t: Array<any>) {
-    (t as unknown as hasHiddenType)._type = "ArrayList";
+    (t as unknown as hasHiddenType)._type = "Array";
     return t;
   }
 
@@ -82,7 +82,7 @@ export class System {
   }
 
   array(t: Array<any>) {
-    (t as unknown as hasHiddenType)._type = "ArrayList";
+    (t as unknown as hasHiddenType)._type = "Array";
     return t;
   }
 
@@ -136,7 +136,7 @@ export class System {
     throw new ElanRuntimeError(`No such key: ${index}`);
   }
 
-  safeArrayListSet<T>(toIndex: T[], index: number, value: T) {
+  safeArraySet<T>(toIndex: T[], index: number, value: T) {
     const size = toIndex.length;
     if (index >= size) {
       throw new ElanRuntimeError(`Out of range index: ${index} size: ${size}`);

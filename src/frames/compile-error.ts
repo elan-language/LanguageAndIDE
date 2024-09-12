@@ -49,7 +49,7 @@ export class TypesCompileError extends CompileError {
 
 export class ArraySizeCompileError extends CompileError {
   constructor(location: string) {
-    super(Priority.illegalOperation, `ArrayList requires 1 or 2 parameters`, location, false);
+    super(Priority.illegalOperation, `Array requires 1 or 2 parameters`, location, false);
   }
 }
 

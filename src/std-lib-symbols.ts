@@ -2,7 +2,7 @@ import { Scope } from "./frames/interfaces/scope";
 import { ElanSymbol } from "./frames/interfaces/symbol";
 import { SymbolType } from "./frames/interfaces/symbol-type";
 import { AbstractDictionaryType } from "./frames/symbols/abstract-dictionary-type";
-import { ArrayListType } from "./frames/symbols/array-list-type";
+import { ArrayType } from "./frames/symbols/array-list-type";
 import { BooleanType } from "./frames/symbols/boolean-type";
 import { DictionaryType } from "./frames/symbols/dictionary-type";
 import { FloatType } from "./frames/symbols/float-type";
@@ -54,12 +54,12 @@ export class StdLibSymbols implements Scope {
       this.getSymbol("unicode", new FunctionType([IntType.Instance], StringType.Instance, false)),
     ],
     [
-      "asArrayList",
+      "asArray",
       this.getSymbol(
-        "asArrayList",
+        "asArray",
         new FunctionType(
           [new IterableType(new GenericParameterType("T"))],
-          new ArrayListType(new GenericParameterType("T")),
+          new ArrayType(new GenericParameterType("T")),
           true,
         ),
       ),
@@ -205,7 +205,7 @@ export class StdLibSymbols implements Scope {
         "putAt",
         new ProcedureType(
           [
-            new ArrayListType(new GenericParameterType("T")),
+            new ArrayType(new GenericParameterType("T")),
             IntType.Instance,
             new GenericParameterType("T"),
           ],
@@ -220,7 +220,7 @@ export class StdLibSymbols implements Scope {
         "putAt2D",
         new ProcedureType(
           [
-            new ArrayListType(new ArrayListType(new GenericParameterType("T"))),
+            new ArrayType(new ArrayType(new GenericParameterType("T"))),
             IntType.Instance,
             IntType.Instance,
             new GenericParameterType("T"),
@@ -313,7 +313,7 @@ export class StdLibSymbols implements Scope {
       this.getSymbol(
         "append",
         new ProcedureType(
-          [new ArrayListType(new GenericParameterType("T")), new GenericParameterType("T")],
+          [new ArrayType(new GenericParameterType("T")), new GenericParameterType("T")],
           true,
           false,
         ),
@@ -325,8 +325,8 @@ export class StdLibSymbols implements Scope {
         "appendList",
         new ProcedureType(
           [
-            new ArrayListType(new GenericParameterType("T")),
-            new ArrayListType(new GenericParameterType("T")),
+            new ArrayType(new GenericParameterType("T")),
+            new ArrayType(new GenericParameterType("T")),
           ],
           true,
           false,
@@ -338,7 +338,7 @@ export class StdLibSymbols implements Scope {
       this.getSymbol(
         "prepend",
         new ProcedureType(
-          [new ArrayListType(new GenericParameterType("T")), new GenericParameterType("T")],
+          [new ArrayType(new GenericParameterType("T")), new GenericParameterType("T")],
           true,
           false,
         ),
@@ -350,8 +350,8 @@ export class StdLibSymbols implements Scope {
         "prependList",
         new ProcedureType(
           [
-            new ArrayListType(new GenericParameterType("T")),
-            new ArrayListType(new GenericParameterType("T")),
+            new ArrayType(new GenericParameterType("T")),
+            new ArrayType(new GenericParameterType("T")),
           ],
           true,
           false,
@@ -364,7 +364,7 @@ export class StdLibSymbols implements Scope {
         "insertAt",
         new ProcedureType(
           [
-            new ArrayListType(new GenericParameterType("T")),
+            new ArrayType(new GenericParameterType("T")),
             IntType.Instance,
             new GenericParameterType("T"),
           ],
@@ -378,7 +378,7 @@ export class StdLibSymbols implements Scope {
       this.getSymbol(
         "removeAt",
         new ProcedureType(
-          [new ArrayListType(new GenericParameterType("T")), IntType.Instance],
+          [new ArrayType(new GenericParameterType("T")), IntType.Instance],
           true,
           false,
         ),
@@ -389,7 +389,7 @@ export class StdLibSymbols implements Scope {
       this.getSymbol(
         "removeFirst",
         new ProcedureType(
-          [new ArrayListType(new GenericParameterType("T")), new GenericParameterType("T")],
+          [new ArrayType(new GenericParameterType("T")), new GenericParameterType("T")],
           true,
           false,
         ),
@@ -400,7 +400,7 @@ export class StdLibSymbols implements Scope {
       this.getSymbol(
         "removeAll",
         new ProcedureType(
-          [new ArrayListType(new GenericParameterType("T")), new GenericParameterType("T")],
+          [new ArrayType(new GenericParameterType("T")), new GenericParameterType("T")],
           true,
           false,
         ),
@@ -748,7 +748,7 @@ export class StdLibSymbols implements Scope {
         "create2DArray",
         new FunctionType(
           [IntType.Instance, IntType.Instance, new GenericParameterType("T")],
-          new ArrayListType(new ArrayListType(new GenericParameterType("T"))),
+          new ArrayType(new ArrayType(new GenericParameterType("T"))),
           false,
         ),
       ),
@@ -759,7 +759,7 @@ export class StdLibSymbols implements Scope {
         "createArray",
         new FunctionType(
           [IntType.Instance, new GenericParameterType("T")],
-          new ArrayListType(new GenericParameterType("T")),
+          new ArrayType(new GenericParameterType("T")),
           false,
         ),
       ),
@@ -1035,7 +1035,7 @@ export class StdLibSymbols implements Scope {
       this.getSymbol(
         "inputStringFromOptions",
         new FunctionType(
-          [StringType.Instance, new ArrayListType(StringType.Instance)],
+          [StringType.Instance, new ArrayType(StringType.Instance)],
           StringType.Instance,
           false,
           false,

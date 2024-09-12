@@ -1371,7 +1371,7 @@ immutable class Bar inherits Foo
   property p1 as Int
 end class
 
-procedure fun(l as ArrayList<of Foo>)
+procedure fun(l as Array<of Foo>)
   print l[0]
 end procedure
 `;
@@ -1382,7 +1382,7 @@ end procedure
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types ArrayList<of Class Bar> to ArrayList<of Class Foo>",
+      "Incompatible types Array<of Class Bar> to Array<of Class Foo>",
     ]);
   });
 
@@ -1416,7 +1416,7 @@ end function
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types ArrayList<of Class Bar> to ArrayList<of Class Foo>",
+      "Incompatible types Array<of Class Bar> to Array<of Class Foo>",
     ]);
   });
 

@@ -8,9 +8,8 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
-  transforms,
+  transforms
 } from "./compiler-test-helpers";
 
 suite("T19_Procedures", () => {
@@ -163,7 +162,7 @@ main
   print a
 end main
 
-procedure changeFirst(a as ArrayList<of Int>)
+procedure changeFirst(a as Array<of Int>)
     call a.putAt(0, 5)
 end procedure`;
 
@@ -894,7 +893,7 @@ end procedure`;
     assertDoesNotCompile(fileImpl, ["May not reassign parameter: a"]);
   });
 
-  test("Fail_ArrayListParamMayNotBeReassigned", async () => {
+  test("Fail_ArrayParamMayNotBeReassigned", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
@@ -903,7 +902,7 @@ main
   print a
 end main
 
-procedure changeAll(a as ArrayList<of Int>)
+procedure changeAll(a as Array<of Int>)
     set a to [1, 2, 3]
 end procedure`;
 
@@ -1108,7 +1107,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types Procedure to ArrayList",
+      "Incompatible types Procedure to Array",
       "Cannot call Procedure",
     ]);
   });

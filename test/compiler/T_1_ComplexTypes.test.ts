@@ -2,17 +2,16 @@ import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
   assertDoesNotCompile,
-  assertDoesNotCompileWithId,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
   testHash,
-  transforms,
+  transforms
 } from "./compiler-test-helpers";
 
 suite("T_1_ComplexTypes", () => {
-  test("Pass_ArrayListOfDictionary", async () => {
+  test("Pass_ArrayOfDictionary", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main 
@@ -38,7 +37,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "2");
   });
 
-  test("Pass_DictionaryOfArrayList", async () => {
+  test("Pass_DictionaryOfArray", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main 

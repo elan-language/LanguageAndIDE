@@ -209,15 +209,15 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["append", "Procedure (ArrayList <Generic Parameter T>, Generic Parameter T)"],
-      ["appendList", "Procedure (ArrayList <Generic Parameter T>, ArrayList <Generic Parameter T>)"],
-      ["insertAt", "Procedure (ArrayList <Generic Parameter T>, Int, Generic Parameter T)"],
-      ["prepend", "Procedure (ArrayList <Generic Parameter T>, Generic Parameter T)"],
-      ["prependList", "Procedure (ArrayList <Generic Parameter T>, ArrayList <Generic Parameter T>)"],
-      ["putAt", "Procedure (ArrayList <Generic Parameter T>, Int, Generic Parameter T)"],
-      ["removeAll", "Procedure (ArrayList <Generic Parameter T>, Generic Parameter T)"],
-      ["removeAt", "Procedure (ArrayList <Generic Parameter T>, Int)"],
-      ["removeFirst", "Procedure (ArrayList <Generic Parameter T>, Generic Parameter T)"]
+      ["append", "Procedure (Array <Generic Parameter T>, Generic Parameter T)"],
+      ["appendList", "Procedure (Array <Generic Parameter T>, Array <Generic Parameter T>)"],
+      ["insertAt", "Procedure (Array <Generic Parameter T>, Int, Generic Parameter T)"],
+      ["prepend", "Procedure (Array <Generic Parameter T>, Generic Parameter T)"],
+      ["prependList", "Procedure (Array <Generic Parameter T>, Array <Generic Parameter T>)"],
+      ["putAt", "Procedure (Array <Generic Parameter T>, Int, Generic Parameter T)"],
+      ["removeAll", "Procedure (Array <Generic Parameter T>, Generic Parameter T)"],
+      ["removeAt", "Procedure (Array <Generic Parameter T>, Int)"],
+      ["removeFirst", "Procedure (Array <Generic Parameter T>, Generic Parameter T)"]
     ] as [string, string][];
 
     await assertAutocompletes(fileImpl, "ident7", ".", 3, expected);
@@ -235,8 +235,8 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["append", "Procedure (ArrayList <Generic Parameter T>, Generic Parameter T)"],
-      ["appendList", "Procedure (ArrayList <Generic Parameter T>, ArrayList <Generic Parameter T>)"],
+      ["append", "Procedure (Array <Generic Parameter T>, Generic Parameter T)"],
+      ["appendList", "Procedure (Array <Generic Parameter T>, Array <Generic Parameter T>)"],
     ] as [string, string][];
 
     await assertAutocompletes(fileImpl, "ident7", "p", 5, expected);

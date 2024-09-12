@@ -160,7 +160,7 @@ end main`;
   test("Fail_Array2", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
-constant k set to new ArrayList<of Int>()
+constant k set to new Array<of Int>()
 
 main 
   print k

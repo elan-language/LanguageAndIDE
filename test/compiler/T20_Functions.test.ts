@@ -122,8 +122,8 @@ main
     print foo(3,4)
 end main
 
-function foo(a as Int, b as Int) return ArrayList<of Int>
-    return empty ArrayList<of Int>
+function foo(a as Int, b as Int) return Array<of Int>
+    return empty Array<of Int>
 end function`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -132,7 +132,7 @@ async function main() {
 }
 
 function foo(a, b) {
-  return system.emptyArrayList();
+  return system.emptyArray();
 }
 return [main, _tests];}`;
 
@@ -526,7 +526,7 @@ end function`;
 main
 end main
 
-function foo(a as ArrayList<of Int>) return Int
+function foo(a as Array<of Int>) return Int
     call a.putAt(0, 1)
     return a[0]
 end function`;
@@ -543,7 +543,7 @@ end function`;
 main
 end main
 
-function foo(b as Int, a as ArrayList<of Int>) return Int
+function foo(b as Int, a as Array<of Int>) return Int
     call a.setAt(0, 0)
     return a[0]
 end function`;
@@ -636,7 +636,7 @@ main
  
 end main
 
-function foo(a as ArrayList<of Int>, b as Dictionary<of String, Int>, c as Foo) return Int
+function foo(a as Array<of Int>, b as Dictionary<of String, Int>, c as Foo) return Int
   call b.setAtKey("key", 1)
   return 1
 end function

@@ -5,9 +5,8 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
-  transforms,
+  transforms
 } from "./compiler-test-helpers";
 
 suite("T46_TypeMethod", () => {
@@ -41,7 +40,7 @@ async function main() {
   system.printLine(_stdlib.asString("Boolean"));
   system.printLine(_stdlib.asString("String"));
   system.printLine(_stdlib.asString("List"));
-  system.printLine(_stdlib.asString("ArrayList"));
+  system.printLine(_stdlib.asString("Array"));
   system.printLine(_stdlib.asString("ImmutableDictionary"));
   system.printLine(_stdlib.asString("Dictionary"));
   var foo = system.initialise(new Foo());
@@ -63,6 +62,6 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "IntFloatBooleanStringListArrayListImmutableDictionaryDictionaryFoo");
+    await assertObjectCodeExecutes(fileImpl, "IntFloatBooleanStringListArrayImmutableDictionaryDictionaryFoo");
   });
 });

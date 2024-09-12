@@ -220,7 +220,7 @@ async function main() {
 }
 
 _tests.push(["test3", async (_outcomes) => {
-  var arr = system.emptyArrayList();
+  var arr = system.emptyArray();
   var b = system.safeIndex(arr, 1);
   _outcomes.push(system.assert(b, 0, "assert12", _stdlib));
 }]);

@@ -842,7 +842,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types List to ArrayList"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types List to Array"]);
   });
 
   test("Fail_CannotSetIndex", async () => {
@@ -891,7 +891,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types List to ArrayList"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types List to Array"]);
   });
 
   test("Fail_insertAt", async () => {
@@ -908,7 +908,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types List to ArrayList"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types List to Array"]);
   });
 
   test("Fail_removeAt", async () => {
@@ -925,7 +925,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types List to ArrayList"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types List to Array"]);
   });
 
   test("Fail_removeFirst", async () => {
@@ -941,7 +941,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types List to ArrayList"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types List to Array"]);
   });
 
   test("Fail_removeAll", async () => {
@@ -957,7 +957,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types List to ArrayList"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types List to Array"]);
   });
 
   test("Fail_withoutGenericType", async () => {
@@ -988,6 +988,6 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types ArrayList to List try converting with '.asList()'"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Array to List try converting with '.asList()'"]);
   });
 });

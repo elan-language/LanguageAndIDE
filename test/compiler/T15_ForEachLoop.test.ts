@@ -48,7 +48,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  var a set to {7,8,9}.asArrayList()
+  var a set to {7,8,9}.asArray()
   var n set to 0
   each x in a
       set n to n + x
@@ -58,7 +58,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = _stdlib.asArrayList(system.list([7, 8, 9]));
+  var a = _stdlib.asArray(system.list([7, 8, 9]));
   var n = 0;
   for (const x of a) {
     n = n + x;

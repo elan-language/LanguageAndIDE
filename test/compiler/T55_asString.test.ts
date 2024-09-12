@@ -374,7 +374,7 @@ main
     var l set to {1,2,3}
     var sl set to l.asString()
     print sl
-    var a set to {1,2,3}.asArrayList()
+    var a set to {1,2,3}.asArray()
     var sa set to a.asString()
     print sa
     var d set to ["a":1, "b":3, "z":10]
@@ -387,7 +387,7 @@ async function main() {
   var l = system.list([1, 2, 3]);
   var sl = _stdlib.asString(l);
   system.printLine(_stdlib.asString(sl));
-  var a = _stdlib.asArrayList(system.list([1, 2, 3]));
+  var a = _stdlib.asArray(system.list([1, 2, 3]));
   var sa = _stdlib.asString(a);
   system.printLine(_stdlib.asString(sa));
   var d = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});

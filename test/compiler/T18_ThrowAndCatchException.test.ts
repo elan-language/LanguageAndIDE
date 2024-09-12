@@ -178,7 +178,7 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   try {
-    var x = system.emptyArrayList();
+    var x = system.emptyArray();
     var y = system.safeIndex(x, 1);
     var z = y.p1;
     system.printLine(_stdlib.asString("not caught"));

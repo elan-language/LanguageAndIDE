@@ -42,7 +42,7 @@ export class StdLib {
           return `{${v.map((i) => this.asString(i)).join(", ")}}`;
         case "Tuple":
           return `(${v.map((i) => this.asString(i)).join(", ")})`;
-        case "ArrayList":
+        case "Array":
           return `[${v.map((i) => this.asString(i)).join(", ")}]`;
         case "Iterable":
           return `an Iterable`;
@@ -75,9 +75,9 @@ export class StdLib {
     return String.fromCharCode(n);
   }
 
-  asArrayList<T>(list: T[]): T[] {
+  asArray<T>(list: T[]): T[] {
     const arr = [...list];
-    (arr as unknown as hasHiddenType)._type = "ArrayList";
+    (arr as unknown as hasHiddenType)._type = "Array";
     return arr;
   }
 
@@ -175,11 +175,11 @@ export class StdLib {
   }
 
   putAt<T>(list: Array<T>, index: number, value: T) {
-    this.system.safeArrayListSet(list, index, value);
+    this.system.safeArraySet(list, index, value);
   }
 
   putAt2D<T>(list: Array<Array<T>>, col: number, row: number, value: T) {
-    this.system.safeArrayListSet(list[col], row, value);
+    this.system.safeArraySet(list[col], row, value);
   }
 
   putAtKey<T>(dict: { [key: string]: T }, key: string, value: T) {

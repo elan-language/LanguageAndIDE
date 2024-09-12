@@ -8,7 +8,7 @@ import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { AbstractDictionaryType } from "../symbols/abstract-dictionary-type";
-import { ArrayListType } from "../symbols/array-list-type";
+import { ArrayType } from "../symbols/array-list-type";
 import { DictionaryType } from "../symbols/dictionary-type";
 import { FunctionType } from "../symbols/function-type";
 import { GenericParameterType } from "../symbols/generic-parameter-type";
@@ -85,7 +85,7 @@ class TypeHolder implements SymbolType {
 }
 
 export function flatten(p: SymbolType): SymbolType {
-  if (p instanceof ArrayListType || p instanceof ListType || p instanceof IterableType) {
+  if (p instanceof ArrayType || p instanceof ListType || p instanceof IterableType) {
     return new TypeHolder(p, [flatten(p.ofType)]);
   }
 
@@ -122,7 +122,7 @@ export function containsGenericType(type: SymbolType): boolean {
   if (type instanceof GenericParameterType) {
     return true;
   }
-  if (type instanceof ArrayListType || type instanceof ListType || type instanceof IterableType) {
+  if (type instanceof ArrayType || type instanceof ListType || type instanceof IterableType) {
     return containsGenericType(type.ofType);
   }
   if (type instanceof AbstractDictionaryType) {
@@ -145,8 +145,8 @@ export function generateType(type: SymbolType, matches: Map<string, SymbolType>)
 
     return match ?? UnknownType.Instance;
   }
-  if (type instanceof ArrayListType) {
-    return new ArrayListType(generateType(type.ofType, matches));
+  if (type instanceof ArrayType) {
+    return new ArrayType(generateType(type.ofType, matches));
   }
   if (type instanceof ListType) {
     return new ListType(generateType(type.ofType, matches));

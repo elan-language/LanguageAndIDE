@@ -15,7 +15,7 @@ import { SymbolType } from "../interfaces/symbol-type";
 import { globalKeyword } from "../keywords";
 import { LetStatement } from "../statements/let-statement";
 import { AbstractDictionaryType } from "../symbols/abstract-dictionary-type";
-import { ArrayListType } from "../symbols/array-list-type";
+import { ArrayType } from "../symbols/array-list-type";
 import { ClassType } from "../symbols/class-type";
 import { IntType } from "../symbols/int-type";
 import { ListType } from "../symbols/list-type";
@@ -174,7 +174,7 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
   }
 
   getOfType(rootType: SymbolType) {
-    if (rootType instanceof ListType || rootType instanceof ArrayListType) {
+    if (rootType instanceof ListType || rootType instanceof ArrayType) {
       return rootType.ofType;
     }
 

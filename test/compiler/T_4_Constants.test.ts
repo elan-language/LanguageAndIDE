@@ -283,7 +283,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "{1, 2, 3}");
   });
 
-  test("Fail_ArrayList", async () => {
+  test("Fail_Array", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 constant a set to [1,2,3]

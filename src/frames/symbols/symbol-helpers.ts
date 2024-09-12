@@ -15,7 +15,7 @@ import { isAstIdNode, isAstQualifiedNode } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractDictionaryType } from "./abstract-dictionary-type";
 import { AbstractListType } from "./abstract-list-type";
-import { ArrayListType } from "./array-list-type";
+import { ArrayType } from "./array-list-type";
 import { BooleanType } from "./boolean-type";
 import { ClassType } from "./class-type";
 import { DictionaryType } from "./dictionary-type";
@@ -205,7 +205,7 @@ function matchGenericTypes(actualType: SymbolType, paramType: SymbolType) {
 
   if (
     paramType instanceof IterableType &&
-    (actualType instanceof ListType || actualType instanceof ArrayListType)
+    (actualType instanceof ListType || actualType instanceof ArrayType)
   ) {
     return true;
   }

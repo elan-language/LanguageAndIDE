@@ -422,12 +422,12 @@ async function main() {
 }
 
 class Bar {
-  static emptyInstance() { return system.emptyClass(Bar, [["strArr", system.emptyArrayList()]]);};
+  static emptyInstance() { return system.emptyClass(Bar, [["strArr", system.emptyArray()]]);};
   constructor() {
     this.strArr = system.literalArray(["apple", "orange", "pair"]);
   }
 
-  strArr = system.emptyArrayList();
+  strArr = system.emptyArray();
 
 }
 return [main, _tests];}`;
@@ -594,13 +594,13 @@ return [main, _tests];}`;
 
 main 
   var a set to [1,2,3,4,5,6]
-  print a[..5].map(lambda x as Int => x * x).asArrayList()[2..].reduce(0, lambda s as Int, x as Int => s + x)
+  print a[..5].map(lambda x as Int => x * x).asArray()[2..].reduce(0, lambda s as Int, x as Int => s + x)
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.literalArray([1, 2, 3, 4, 5, 6]);
-  system.printLine(_stdlib.asString(_stdlib.reduce(system.array(_stdlib.asArrayList(_stdlib.map(system.array(a.slice(0, 5)), (x) => x * x)).slice(2)), 0, (s, x) => s + x)));
+  system.printLine(_stdlib.asString(_stdlib.reduce(system.array(_stdlib.asArray(_stdlib.map(system.array(a.slice(0, 5)), (x) => x * x)).slice(2)), 0, (s, x) => s + x)));
 }
 return [main, _tests];}`;
 

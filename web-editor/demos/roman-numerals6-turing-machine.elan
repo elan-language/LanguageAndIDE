@@ -1,4 +1,4 @@
-# 0b2b61f86b2a2c1e9c7ccfdb1061e20d00cf5ec70c7acc49e791bda1cee38883 Elan Beta 2 valid
+# e366b72fff12d97e627f72e355041f570484917eded0ffab21c700efc1018fec Elan Beta 2 valid
 
 # Turing Machine that converts a Year from decimal to roman numerals
 # Run the program, enter the number to convert and watch the machine in action.
@@ -26,7 +26,7 @@ main
 end main
 
 # Currently used only by the tests, but could be called from main if you don't want to see TM in operation
-procedure runTM(tm as TuringMachine, tape as String)
+procedure runTM(out tm as TuringMachine, tape as String)
   call tm.reset()
   call tm.setTape(tape)
   call tm.runToEnd()
@@ -156,7 +156,7 @@ enum Dir left, right
 constant spaces set to "                                                  "
 
 # rename this method and define new transition rules to solve a different problem
-procedure addRulesForRomanNumeralsInto(tm as TuringMachine)
+procedure addRulesForRomanNumeralsInto(out tm as TuringMachine)
   # name: Denary to Roman "Numerals", initial state = "init", accept state = "halt"
   # Example tape input:  2024 (between 0 and 2499)
   call tm.append(new Rule("init", "0", "init", "0", Dir.right))

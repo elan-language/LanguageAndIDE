@@ -145,7 +145,7 @@ class Game
     property li as List<of Int>
     property ds as Dictionary<of String, Int>
     property dsi as ImmutableDictionary<of String, Int>
-    property ai as ArrayList<of Int>
+    property ai as Array<of Int>
     property t as Tuple<of Int, String, List<of Int>>
     property ff as Func<of String, String => Int>
 
@@ -171,7 +171,7 @@ async function main() {
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.emptyImmutableList()], ["ds", system.emptyDictionary()], ["dsi", system.emptyImmutableDictionary()], ["ai", system.emptyArrayList()], ["t", system.emptyTuple([0, "", system.emptyImmutableList()])], ["ff", system.emptyFunc(0)]]);};
+  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.emptyImmutableList()], ["ds", system.emptyDictionary()], ["dsi", system.emptyImmutableDictionary()], ["ai", system.emptyArray()], ["t", system.emptyTuple([0, "", system.emptyImmutableList()])], ["ff", system.emptyFunc(0)]]);};
   constructor() {
 
   }
@@ -190,7 +190,7 @@ class Game {
 
   dsi = system.emptyImmutableDictionary();
 
-  ai = system.emptyArrayList();
+  ai = system.emptyArray();
 
   t = system.emptyTuple([0, "", system.emptyImmutableList()]);
 
@@ -250,7 +250,7 @@ class Game
     property li as List<of Int>
     property ds as Dictionary<of String, Int>
     property dsi as ImmutableDictionary<of String, Int>
-    property ai as ArrayList<of Int>
+    property ai as Array<of Int>
     property t as Tuple<of Int, String, List<of Int>>
 
     function asString() return String
@@ -291,7 +291,7 @@ class Player {
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.emptyImmutableList()], ["ds", system.emptyDictionary()], ["dsi", system.emptyImmutableDictionary()], ["ai", system.emptyArrayList()], ["t", system.emptyTuple([0, "", system.emptyImmutableList()])]]);};
+  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.emptyImmutableList()], ["ds", system.emptyDictionary()], ["dsi", system.emptyImmutableDictionary()], ["ai", system.emptyArray()], ["t", system.emptyTuple([0, "", system.emptyImmutableList()])]]);};
   constructor() {
 
   }
@@ -310,7 +310,7 @@ class Game {
 
   dsi = system.emptyImmutableDictionary();
 
-  ai = system.emptyArrayList();
+  ai = system.emptyArray();
 
   t = system.emptyTuple([0, "", system.emptyImmutableList()]);
 
@@ -740,7 +740,7 @@ main
   print f.a is empty List<of Int>
   print f.b is empty String
   print f.c is empty Dictionary<of String,Int>
-  print f.d is empty ArrayList<of Int>
+  print f.d is empty Array<of Int>
 end main
 
 class Foo
@@ -750,7 +750,7 @@ class Foo
   property a as List<of Int>
   property b as String
   property c as Dictionary<of String, Int>
-  property d as ArrayList<of Int>
+  property d as Array<of Int>
 
   function asString() return String
     return "A Foo"
@@ -768,11 +768,11 @@ async function main() {
   system.printLine(_stdlib.asString(system.objectEquals(f.a, system.emptyImmutableList())));
   system.printLine(_stdlib.asString(f.b === ""));
   system.printLine(_stdlib.asString(system.objectEquals(f.c, system.emptyDictionary())));
-  system.printLine(_stdlib.asString(system.objectEquals(f.d, system.emptyArrayList())));
+  system.printLine(_stdlib.asString(system.objectEquals(f.d, system.emptyArray())));
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["a", system.emptyImmutableList()], ["b", ""], ["c", system.emptyDictionary()], ["d", system.emptyArrayList()]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["a", system.emptyImmutableList()], ["b", ""], ["c", system.emptyDictionary()], ["d", system.emptyArray()]]);};
   constructor() {
 
   }
@@ -783,7 +783,7 @@ class Foo {
 
   c = system.emptyDictionary();
 
-  d = system.emptyArrayList();
+  d = system.emptyArray();
 
   asString() {
     return "A Foo";
@@ -923,12 +923,12 @@ async function main() {
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["p1", system.emptyArrayList()]]);};
+  static emptyInstance() { return system.emptyClass(Game, [["p1", system.emptyArray()]]);};
   constructor() {
     this.p1 = system.literalArray([1, 2, 3]);
   }
 
-  p1 = system.emptyArrayList();
+  p1 = system.emptyArray();
 
   async something() {
     var a = 1;
