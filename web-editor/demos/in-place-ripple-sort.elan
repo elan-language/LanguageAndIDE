@@ -1,4 +1,4 @@
-# FFFF Elan Beta 2 valid
+# 41b5af2d4057a8f604e951319309228bd5ffa1ef9ac0891c591f95449758dcb2 Elan Beta 2 valid
 
 main
   var li set to [3, 6, 1, 0, 99, 4, 67]
@@ -14,7 +14,7 @@ procedure inPlaceRippleSort(out list as [Int])
     for i from 0 to lastComp step 1
       if list[i] > list[i + 1]
         then
-          let temp be list[i]
+          var temp set to list[i]
           call list.putAt(i, list[i + 1])
           call list.putAt(i + 1, temp)
           set changes to true
