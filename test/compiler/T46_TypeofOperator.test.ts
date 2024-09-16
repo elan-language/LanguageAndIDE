@@ -142,4 +142,65 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "IntFunc<of Int => Int>[Int][[Int]]{[Int]}[[Int]:[[Int]]]{{[Int]}:[[Int]]}({[Int]}, [[Int]])Procedure (Int)Func<of Int => Int>Unknown");
   });
+
+  test("Pass_AssignType", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var a set to ""
+  set a to typeof a
+  print a
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = "";
+  a = "String";
+  system.printLine(_stdlib.asString(a));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "String");
+  });
+
+  test("Pass_UseType", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var a set to ""
+  var b set to typeof a
+  if typeof a is typeof b
+    then
+      print "Pass"
+    else 
+      print "Fail"
+  end if
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = "";
+  var b = "String";
+  if ("String" === "String") {
+      system.printLine(_stdlib.asString("Pass"));
+    } else {
+      system.printLine(_stdlib.asString("Fail"));
+  }
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "Pass");
+  });
 });
