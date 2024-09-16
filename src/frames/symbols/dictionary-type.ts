@@ -12,7 +12,7 @@ export class DictionaryType extends AbstractDictionaryType implements SymbolType
   factoryName = "system.dictionary";
 
   get name() {
-    return `Dictionary <${this.keyType.name},${this.valueType.name}>`;
+    return `[${this.keyType.name}:${this.valueType.name}]`;
   }
 
   toString(): string {

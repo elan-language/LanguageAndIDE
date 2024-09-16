@@ -39,10 +39,10 @@ async function main() {
   system.printLine(_stdlib.asString("Float"));
   system.printLine(_stdlib.asString("Boolean"));
   system.printLine(_stdlib.asString("String"));
-  system.printLine(_stdlib.asString("List"));
-  system.printLine(_stdlib.asString("Array"));
-  system.printLine(_stdlib.asString("ImmutableDictionary"));
-  system.printLine(_stdlib.asString("Dictionary"));
+  system.printLine(_stdlib.asString("{Int}"));
+  system.printLine(_stdlib.asString("[Int]"));
+  system.printLine(_stdlib.asString("{String:Int}"));
+  system.printLine(_stdlib.asString("[String:Int]"));
   var foo = system.initialise(new Foo());
   system.printLine(_stdlib.asString("Foo"));
 }
@@ -62,6 +62,6 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "IntFloatBooleanStringListArrayImmutableDictionaryDictionaryFoo");
+    await assertObjectCodeExecutes(fileImpl, "IntFloatBooleanString{Int}[Int]{String:Int}[String:Int]Foo");
   });
 });

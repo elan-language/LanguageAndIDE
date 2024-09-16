@@ -10,7 +10,7 @@ export class IterableType implements IterableSymbolType {
   isImmutable = true;
 
   get name() {
-    return `Iterable <${this.ofType.name}>`;
+    return `Iterable<${this.ofType.name}>`;
   }
 
   toString(): string {

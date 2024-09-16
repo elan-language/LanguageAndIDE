@@ -1,11 +1,8 @@
 import { CompileError } from "../compile-error";
-import { mustNotBeKeyword } from "../compile-rules";
-import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstNode } from "../interfaces/ast-node";
 import { Scope } from "../interfaces/scope";
 import { StringType } from "../symbols/string-type";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { transforms } from "./ast-helpers";
 
 export class TypeOfAsn extends AbstractAstNode {
   constructor(
@@ -23,7 +20,7 @@ export class TypeOfAsn extends AbstractAstNode {
   compile(): string {
     this.compileErrors = [];
 
-    return `"${this.ast.symbolType()}"`;
+    return `"${this.ast.symbolType().name}"`;
   }
 
   symbolType() {
