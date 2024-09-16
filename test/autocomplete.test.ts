@@ -291,7 +291,7 @@ end function`;
 
     const expected = [
       ["foo", "Int"],
-      ["foobar", "Function () : Int"],
+      ["foobar", "Func<of  => Int>"],
     ] as [string, string][];
 
     await assertAutocompletes(fileImpl, "expr8", "o", 5, expected);
