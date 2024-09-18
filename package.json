@@ -14,11 +14,10 @@
     "Education"
   ],
   "scripts": {
-    "esbuild-web-scripts": "esbuild ./src/web/web-scripts.ts --bundle --outfile=web-editor/web-scripts.js",
-    "compile-api": "tsc -p ./ && esbuild ./src/std-lib.ts --bundle --format=esm --outfile=web-editor/elan-api.js",
+    "compile-api": "esbuild ./src/std-lib.ts --bundle --format=esm --outfile=web-editor/elan-api.js",
     "compile-test": "tsc -p ./test",
     "compile-src": "tsc -p ./ && esbuild ./src/web/web-scripts.ts --bundle --outfile=web-editor/web-scripts.js",
-    "compile": "npm run compile-src && npm run format && npm run lint",
+    "compile": "npm run compile-src && npm run compile-api && npm run format && npm run lint",
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile-src && npm run compile-test && cpr ./test/files ./out/test/files -o",
     "lint": "eslint src --ext ts",
