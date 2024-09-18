@@ -12,7 +12,7 @@ import {
 } from "./compiler-test-helpers";
 
 suite("List Deconstruction", () => {
-  ignore_test("Pass_DeconstructIntoExistingVariables", async () => {
+  test("Pass_DeconstructIntoExistingVariables", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
@@ -30,7 +30,7 @@ async function main() {
   var a = system.literalArray([1, 2, 3]);
   var x = 1;
   var y = system.emptyArray();
-  [x, system.array(...y)] = a;
+  [x, y] = system.deconstructList(a);
   system.printLine(_stdlib.asString(x));
   system.printLine(_stdlib.asString(y));
 }

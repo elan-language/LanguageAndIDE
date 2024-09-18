@@ -232,9 +232,7 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
           const sid = f.symbolId;
 
           if (sid.includes(",")) {
-            const sids = sid
-              .split(",")
-              .map((s) => s.trim());
+            const sids = sid.split(",").map((s) => s.trim());
 
             if (sids.includes(id)) {
               return f;

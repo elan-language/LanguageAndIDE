@@ -232,4 +232,11 @@ export class System {
       htmlId,
     );
   }
+
+  deconstructList<T>(list: T[]): [T, T[]] {
+    const type = (list as unknown as hasHiddenType)._type;
+    const [hd, ...tl] = list;
+    (tl as unknown as hasHiddenType)._type = type;
+    return [hd, tl];
+  }
 }
