@@ -263,6 +263,38 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "123");
   });
 
+  test("Pass_RepeatedCallToProcedureWithLiteralArgument", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  call square(3)
+  call square(5)
+end main
+
+procedure square(x as Int)
+  print x * x
+end procedure`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  await square(3);
+  await square(5);
+}
+
+async function square(x) {
+  system.printLine(_stdlib.asString(x * x));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "925");
+  });
+
   test("Pass_Recursion", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
