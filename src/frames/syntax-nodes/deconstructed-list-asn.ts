@@ -19,7 +19,7 @@ export class DeconstructedListAsn extends AbstractAstNode implements AstNode {
 
   compile(): string {
     this.compileErrors = [];
-    throw new Error("Method not implemented.");
+    return `[${this.head}, ...${this.tail}]`;
   }
 
   symbolType() {
