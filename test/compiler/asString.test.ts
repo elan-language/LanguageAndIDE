@@ -402,9 +402,6 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      "{1, 2, 3}[1, 2, 3][a:1, b:3, z:10]",
-    );
+    await assertObjectCodeExecutes(fileImpl, "{1, 2, 3}[1, 2, 3][a:1, b:3, z:10]");
   });
 });

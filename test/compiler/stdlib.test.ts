@@ -50,7 +50,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "truefalsetruefalsetruefalse");
   });
 
-   test("Pass_pause", async () => {
+  test("Pass_pause", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main

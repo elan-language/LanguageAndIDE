@@ -58,10 +58,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      "[a:[a:1], b:[b:3, z:10]]",
-    );
+    await assertObjectCodeExecutes(fileImpl, "[a:[a:1], b:[b:3, z:10]]");
   });
 
   test("Pass_LiteralEnumKey", async () => {
@@ -273,10 +270,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      "[a:[a:1, x:2], b:[c:4]]",
-    );
+    await assertObjectCodeExecutes(fileImpl, "[a:[a:1, x:2], b:[c:4]]");
   });
 
   test("Pass_removeKey", async () => {
@@ -328,10 +322,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      "[a:[a:1], b:[z:10]]",
-    );
+    await assertObjectCodeExecutes(fileImpl, "[a:[a:1], b:[z:10]]");
   });
 
   test("Pass_removeInvalidKey", async () => {
@@ -539,10 +530,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      "[a:[a:1]][]falsefalsetrue",
-    );
+    await assertObjectCodeExecutes(fileImpl, "[a:[a:1]][]falsefalsetrue");
   });
 
   test("Fail_RepeatedKey", async () => {

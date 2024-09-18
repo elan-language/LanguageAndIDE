@@ -59,10 +59,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      "{{4, 5}, {6, 7, 8}}",
-    );
+    await assertObjectCodeExecutes(fileImpl, "{{4, 5}, {6, 7, 8}}");
   });
 
   test("Pass_literalListOfClass", async () => {
@@ -182,10 +179,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      "{1}{1.1}{c}{d}{true}",
-    );
+    await assertObjectCodeExecutes(fileImpl, "{1}{1.1}{c}{d}{true}");
   });
 
   test("Pass_literalListOfString", async () => {
@@ -335,10 +329,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      "{one, TWO, three}{ONE, TWO, three}",
-    );
+    await assertObjectCodeExecutes(fileImpl, "{one, TWO, three}{ONE, TWO, three}");
   });
 
   test("Pass_withInsert", async () => {
@@ -368,10 +359,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      "{one, TWO, two, three}{ONE, one, TWO, two, three}",
-    );
+    await assertObjectCodeExecutes(fileImpl, "{one, TWO, two, three}{ONE, one, TWO, two, three}");
   });
 
   test("Pass_withRemove", async () => {
@@ -481,10 +469,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      "{6, 7, 8}{5, 6}{4, 5}",
-    );
+    await assertObjectCodeExecutes(fileImpl, "{6, 7, 8}{5, 6}{4, 5}");
   });
 
   test("Pass_addElementToList", async () => {
@@ -512,10 +497,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      "{4, 5, 6, 7, 8}{4, 5, 6, 7, 8, 9}",
-    );
+    await assertObjectCodeExecutes(fileImpl, "{4, 5, 6, 7, 8}{4, 5, 6, 7, 8, 9}");
   });
 
   test("Pass_addListToElement", async () => {
@@ -543,10 +525,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      "{4, 5, 6, 7, 8}{9, 4, 5, 6, 7, 8}",
-    );
+    await assertObjectCodeExecutes(fileImpl, "{4, 5, 6, 7, 8}{9, 4, 5, 6, 7, 8}");
   });
 
   test("Pass_addListToListUsingPlus", async () => {
@@ -578,10 +557,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      "{4, 5, 6, 7, 8}{1, 2, 3}{4, 5, 6, 7, 8, 1, 2, 3}",
-    );
+    await assertObjectCodeExecutes(fileImpl, "{4, 5, 6, 7, 8}{1, 2, 3}{4, 5, 6, 7, 8, 1, 2, 3}");
   });
 
   test("Pass_addListToListUsingPlus1", async () => {
@@ -988,6 +964,8 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Array to List try converting with '.asList()'"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types Array to List try converting with '.asList()'",
+    ]);
   });
 });

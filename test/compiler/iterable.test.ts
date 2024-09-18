@@ -229,10 +229,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      "{1, 2, 3, 4, 5, 6, 7}{4, 5, 6, 7}",
-    );
+    await assertObjectCodeExecutes(fileImpl, "{1, 2, 3, 4, 5, 6, 7}{4, 5, 6, 7}");
   });
 
   ignore_test("Pass_Default", async () => {
@@ -438,6 +435,8 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Iterable<of Int> to List try converting Iterable to a concrete type with e.g. '.asList()'"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types Iterable<of Int> to List try converting Iterable to a concrete type with e.g. '.asList()'",
+    ]);
   });
 });

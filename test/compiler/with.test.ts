@@ -1,7 +1,16 @@
 import { CodeSourceFromString } from "../../src/frames/code-source";
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { FileImpl } from "../../src/frames/file-impl";
-import { assertDoesNotCompile, assertDoesNotParse, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, testHash, transforms } from "./compiler-test-helpers";
+import {
+  assertDoesNotCompile,
+  assertDoesNotParse,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  testHash,
+  transforms,
+} from "./compiler-test-helpers";
 
 suite("T54_With", () => {
   test("Pass_SingleSetToVar", async () => {
@@ -699,7 +708,6 @@ immutable class Foo
   property a as Int
 end class`;
 
-
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
@@ -723,7 +731,6 @@ immutable class Foo
   property b as Int
 end class`;
 
-
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
@@ -739,7 +746,6 @@ main
   var b set to copy a with a to 0
   print b
 end main`;
-
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -757,12 +763,15 @@ main
   print b
 end main`;
 
-
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Foo is not defined", "Cannot new Foo", "Expression must be Class"]);
+    assertDoesNotCompile(fileImpl, [
+      "Foo is not defined",
+      "Cannot new Foo",
+      "Expression must be Class",
+    ]);
   });
 
   test("Fail_NoSuchProperty", async () => {
@@ -781,7 +790,6 @@ immutable class Foo
 
   property d as Int
 end class`;
-
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -807,7 +815,6 @@ immutable class Foo
   private property b as Int
 end class`;
 
-
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
@@ -832,12 +839,10 @@ class Foo
   property b as Int
 end class`;
 
-
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Foo must be immutable"]);
   });
-
 });

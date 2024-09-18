@@ -321,10 +321,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      "{{4, 5}, {6, 7, 8}}",
-    );
+    await assertObjectCodeExecutes(fileImpl, "{{4, 5}, {6, 7, 8}}");
   });
 
   test("Fail_Dictionary", async () => {

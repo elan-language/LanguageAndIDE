@@ -8,7 +8,7 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
-  transforms
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("Regex", () => {
@@ -71,14 +71,12 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "truetruefalsetrue");
   });
 
-
   test("fail_missing end slash", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var r set to /a+
 end main`;
-
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -95,13 +93,10 @@ main
   print "b".matchesRegex(r)
 end main`;
 
-
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl,["Incompatible types String to Regex"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types String to Regex"]);
   });
-
-
 });

@@ -9,7 +9,7 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
-  transforms
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("T19_Procedures", () => {
@@ -87,10 +87,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      "[1, 2]{3, 4}[a:true, b:false]{a:true, b:false}",
-    );
+    await assertObjectCodeExecutes(fileImpl, "[1, 2]{3, 4}[a:true, b:false]{a:true, b:false}");
   });
 
   test("Pass_ExternalCall", async () => {
@@ -434,7 +431,6 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "7");
   });
 
-
   test("Pass_OutParameters", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
@@ -691,7 +687,6 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "101");
   });
-
 
   test("Fail_CallingUndeclaredProc", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
@@ -1159,9 +1154,7 @@ end procedure`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Cannot pass '0' as an out parameter"
-    ]);
+    assertDoesNotCompile(fileImpl, ["Cannot pass '0' as an out parameter"]);
   });
 
   test("Fail_PassExpressionAsOut", async () => {
@@ -1181,9 +1174,7 @@ end procedure`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Cannot pass 'a + b' as an out parameter"
-    ]);
+    assertDoesNotCompile(fileImpl, ["Cannot pass 'a + b' as an out parameter"]);
   });
 
   test("Fail_PassLetAsOut", async () => {
@@ -1202,9 +1193,7 @@ end procedure`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Cannot pass 'let a' as an out parameter"
-    ]);
+    assertDoesNotCompile(fileImpl, ["Cannot pass 'let a' as an out parameter"]);
   });
 
   test("Fail_PassFuncCall", async () => {
@@ -1226,9 +1215,7 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Cannot pass 'bar()' as an out parameter"
-    ]);
+    assertDoesNotCompile(fileImpl, ["Cannot pass 'bar()' as an out parameter"]);
   });
 
   test("Fail_PassProperty", async () => {
@@ -1255,9 +1242,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Cannot pass 'f.ff' as an out parameter"
-    ]);
+    assertDoesNotCompile(fileImpl, ["Cannot pass 'f.ff' as an out parameter"]);
   });
 
   test("Fail_PassIndex", async () => {
@@ -1276,9 +1261,7 @@ end procedure`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Cannot pass 'f[0]' as an out parameter"
-    ]);
+    assertDoesNotCompile(fileImpl, ["Cannot pass 'f[0]' as an out parameter"]);
   });
 
   test("Fail_ProcedureOnNotOutParm", async () => {
@@ -1309,8 +1292,6 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "May not mutate parameter: a"
-    ]);
+    assertDoesNotCompile(fileImpl, ["May not mutate parameter: a"]);
   });
 });

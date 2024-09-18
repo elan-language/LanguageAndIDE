@@ -6,7 +6,7 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
-  transforms
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("T46_TypeMethod", () => {
@@ -62,7 +62,10 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "IntFloatBooleanString{Int}[Int]{String:Int}[String:Int]Foo");
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "IntFloatBooleanString{Int}[Int]{String:Int}[String:Int]Foo",
+    );
   });
 
   test("Pass_TypeOfComplexTypes", async () => {
@@ -140,7 +143,10 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "IntFunc<of Int => Int>[Int][[Int]]{[Int]}[[Int]:[[Int]]]{{[Int]}:[[Int]]}({[Int]}, [[Int]])Procedure (Int)Func<of Int => Int>Unknown");
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "IntFunc<of Int => Int>[Int][[Int]]{[Int]}[[Int]:[[Int]]]{{[Int]}:[[Int]]}({[Int]}, [[Int]])Procedure (Int)Func<of Int => Int>Unknown",
+    );
   });
 
   test("Pass_AssignType", async () => {

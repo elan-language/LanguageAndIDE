@@ -1,6 +1,12 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
-import { assertDoesNotCompile, assertDoesNotParse, assertParses, testHash, transforms } from "./compiler-test-helpers";
+import {
+  assertDoesNotCompile,
+  assertDoesNotParse,
+  assertParses,
+  testHash,
+  transforms,
+} from "./compiler-test-helpers";
 
 suite("T57_ConstructorParmsNotMutable", () => {
   test("Fail_reassigningIntParam", async () => {

@@ -248,5 +248,4 @@ suite("Editing Fields Tests", () => {
     fn2.processKey(key(")"));
     assert.equal(fn2.text, "c)");
   });
-
 });

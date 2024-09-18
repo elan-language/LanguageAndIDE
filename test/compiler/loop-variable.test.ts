@@ -5,7 +5,7 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
-  transforms
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("T93_PassingLoopVariableIntoProcedure", () => {

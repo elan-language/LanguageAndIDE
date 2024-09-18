@@ -491,17 +491,13 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "set12", [
-      "Incompatible types List to Array",
-    ]);
+    assertDoesNotCompileWithId(fileImpl, "set12", ["Incompatible types List to Array"]);
 
     assertDoesNotCompileWithId(fileImpl, "set15", [
       "Incompatible types Array to List try converting with '.asList()'",
     ]);
 
-    assertDoesNotCompileWithId(fileImpl, "set18", [
-      "Incompatible types List to Dictionary",
-    ]);
+    assertDoesNotCompileWithId(fileImpl, "set18", ["Incompatible types List to Dictionary"]);
   });
 
   test("Fail_RecursiveDefinition", async () => {

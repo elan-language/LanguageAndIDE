@@ -360,27 +360,10 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertTestObjectCodeExecutes(fileImpl, [
-      [
-        "test3",
-        [
-          new AssertOutcome(
-            TestStatus.pass,
-            "{3, 2, 4, 0}",
-            "{3, 2, 4, 0}",
-            "assert12",
-          ),
-        ],
-      ],
+      ["test3", [new AssertOutcome(TestStatus.pass, "{3, 2, 4, 0}", "{3, 2, 4, 0}", "assert12")]],
       [
         "test15",
-        [
-          new AssertOutcome(
-            TestStatus.pass,
-            "[2:b, 3:a, 4:c]",
-            "[2:b, 3:a, 4:c]",
-            "assert24",
-          ),
-        ],
+        [new AssertOutcome(TestStatus.pass, "[2:b, 3:a, 4:c]", "[2:b, 3:a, 4:c]", "assert24")],
       ],
       ["test27", [new AssertOutcome(TestStatus.pass, "Hello World", "Hello World", "assert36")]],
       ["test39", [new AssertOutcome(TestStatus.pass, "0", "0", "assert48")]],

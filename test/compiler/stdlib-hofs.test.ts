@@ -38,10 +38,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      "[23, 27, 31, 37][23, 27, 31, 37][2, 37]",
-    );
+    await assertObjectCodeExecutes(fileImpl, "[23, 27, 31, 37][23, 27, 31, 37][2, 37]");
   });
 
   test("Pass_filterString", async () => {
@@ -66,10 +63,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      "[o, o]",
-    );
+    await assertObjectCodeExecutes(fileImpl, "[o, o]");
   });
 
   test("Pass_filterInFunction", async () => {
@@ -158,10 +152,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      "[o*, n*, e*, t*, w*, o*]",
-    );
+    await assertObjectCodeExecutes(fileImpl, "[o*, n*, e*, t*, w*, o*]");
   });
 
   test("Pass_mapTestType", async () => {
@@ -556,10 +547,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      "[b, c, d, d]dbcd",
-    );
+    await assertObjectCodeExecutes(fileImpl, "[b, c, d, d]dbcd");
   });
 
   test("Fail_MaxOnNonNumeric", async () => {
@@ -591,6 +579,4 @@ end main`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Incompatible types String to Float"]);
   });
-
-
 });

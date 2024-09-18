@@ -209,10 +209,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      "00false{}[]{}[](0, , {})0",
-    );
+    await assertObjectCodeExecutes(fileImpl, "00false{}[]{}[](0, , {})0");
   });
 
   test("Pass_DefaultValuesOnEmptyClass", async () => {
@@ -327,10 +324,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      "00false{}[]{}[](0, , {})",
-    );
+    await assertObjectCodeExecutes(fileImpl, "00false{}[]{}[](0, , {})");
   });
 
   test("Pass_DefaultValuesNotPickedUpFromDefaultConstructor", async () => {
@@ -798,10 +792,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      "{}[][]truetruetruetrue",
-    );
+    await assertObjectCodeExecutes(fileImpl, "{}[][]truetruetruetrue");
   });
 
   test("Pass_PropertyOfAbstractType", async () => {

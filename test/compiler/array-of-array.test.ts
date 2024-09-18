@@ -87,10 +87,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      "0[[], [], []]",
-    );
+    await assertObjectCodeExecutes(fileImpl, "0[[], [], []]");
   });
 
   test("Pass_SetAndReadElements1", async () => {
@@ -206,10 +203,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      "[[], [foo], [yon]]",
-    );
+    await assertObjectCodeExecutes(fileImpl, "[[], [foo], [yon]]");
   });
 
   test("Pass_InsertElements1", async () => {
@@ -237,10 +231,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      "[[one], [foo], [two], [yon], [three]]",
-    );
+    await assertObjectCodeExecutes(fileImpl, "[[one], [foo], [two], [yon], [three]]");
   });
 
   test("Pass_InsertElements2", async () => {
@@ -268,10 +259,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      "[[foo, one], [two], [three, yon]]",
-    );
+    await assertObjectCodeExecutes(fileImpl, "[[foo, one], [two], [three, yon]]");
   });
 
   test("Pass_remove1", async () => {
@@ -327,10 +315,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      "[[], [two], []]",
-    );
+    await assertObjectCodeExecutes(fileImpl, "[[], [two], []]");
   });
 
   test("Pass_removeFirst1", async () => {
@@ -356,10 +341,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      "[[one], [three], [one], [two], [three]]",
-    );
+    await assertObjectCodeExecutes(fileImpl, "[[one], [three], [one], [two], [three]]");
   });
 
   test("Pass_removeFirst2", async () => {
@@ -385,10 +367,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      "[[one], [], [three], [one], [two], [three]]",
-    );
+    await assertObjectCodeExecutes(fileImpl, "[[one], [], [three], [one], [two], [three]]");
   });
 
   test("Pass_removeAll1", async () => {
@@ -414,10 +393,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      "[[one], [three], [one], [three]]",
-    );
+    await assertObjectCodeExecutes(fileImpl, "[[one], [three], [one], [three]]");
   });
 
   test("Pass_removeAll2", async () => {
@@ -443,10 +419,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      "[[one], [], [three], [one], [two], [three]]",
-    );
+    await assertObjectCodeExecutes(fileImpl, "[[one], [], [three], [one], [two], [three]]");
   });
 
   test("Pass_InitializeAnArrayFromAList", async () => {
@@ -472,10 +445,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      "2[{foo}, {bar, yon}]",
-    );
+    await assertObjectCodeExecutes(fileImpl, "2[{foo}, {bar, yon}]");
   });
 
   test("Pass_EmptyArray", async () => {
@@ -511,10 +481,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      "[[3]][]falsefalsetrue",
-    );
+    await assertObjectCodeExecutes(fileImpl, "[[3]][]falsefalsetrue");
   });
 
   test("Pass_InitialiseEmptyArray", async () => {
