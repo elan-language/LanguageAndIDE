@@ -231,9 +231,8 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
           // todo kludge
           const sid = f.symbolId;
 
-          if (sid.startsWith("(")) {
+          if (sid.includes(",")) {
             const sids = sid
-              .slice(1, -1)
               .split(",")
               .map((s) => s.trim());
 
