@@ -208,7 +208,7 @@ main
   call foo(a)
 end main
 
-procedure foo(arr as [Int])
+procedure foo(out arr as [Int])
   for i from 0 to 10 step 1
     call arr.putAt(i, 1)
   end for
@@ -218,14 +218,16 @@ end procedure`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = _stdlib.createArray(11, 0);
-  await foo(a);
+  var _a = [a];
+  await foo(_a);
+  a = _a[0];
 }
 
 async function foo(arr) {
   for (var i = 0; i <= 10; i = i + 1) {
-    _stdlib.putAt(arr, i, 1);
+    _stdlib.putAt(arr[0], i, 1);
   }
-  system.printLine(_stdlib.asString(system.safeIndex(arr, 0)));
+  system.printLine(_stdlib.asString(system.safeIndex(arr[0], 0)));
 }
 return [main, _tests];}`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);

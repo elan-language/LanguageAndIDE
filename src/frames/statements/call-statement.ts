@@ -91,6 +91,13 @@ export class CallStatement extends AbstractFrame implements Statement {
     const ps = procSymbol.symbolType(transforms);
     const argList = this.args.getOrTransformAstNode(transforms);
 
+    if (qualifier instanceof QualifierAsn && isAstIdNode(qualifier.value)) {
+      const qSymbol = this.getParentScope().resolveSymbol(qualifier.value.id, transforms, this);
+      if (qSymbol.symbolScope === SymbolScope.parameter) {
+        cannotCallOnParameter(qualifier.value, this.compileErrors, this.htmlId);
+      }
+    }
+
     if (isAstCollectionNode(argList)) {
       let callParameters = argList.items;
       let isAsync: boolean = false;
@@ -166,13 +173,6 @@ export class CallStatement extends AbstractFrame implements Statement {
           }
         }
         passedParameters.push(pName);
-      }
-
-      if (qualifier instanceof QualifierAsn && isAstIdNode(qualifier.value)) {
-        const qSymbol = this.getParentScope().resolveSymbol(qualifier.value.id, transforms, this);
-        if (qSymbol.symbolScope === SymbolScope.parameter) {
-          cannotCallOnParameter(qualifier.value, this.compileErrors, this.htmlId);
-        }
       }
 
       const pp = passedParameters.join(", ");

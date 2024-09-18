@@ -1,4 +1,4 @@
-# bb7babf90fdb8f7f2d7fae527d5db9c6688a951fb1bfd8db75c6eccce51b14f4 Elan Beta 2 valid
+# a28ed677c874ae951afe521fb480b1190c9409b04876fd2729a37579004b2fcc Elan Beta 2 valid
 
 # Run the program and use the standard W,A,S,D keys to change Snake direction
 # Try to 'eat' the (red) apples, and avoid hitting the edge or the body of the snake.
@@ -25,14 +25,14 @@ main
   print "Game Over! Score: {body.length() - 1}"
 end main
 
-procedure setAppleToRandomPosition(apple as [Int], body as [[Int]])
+procedure setAppleToRandomPosition(out apple as [Int], body as [[Int]])
   repeat
     call apple.putAt(0, randomInt(0, 39))
     call apple.putAt(1, randomInt(0, 29))
   end repeat when not overlaps(body, apple)
 end procedure
 
-procedure eatAppleIfPoss(head as [Int], body as [[Int]], apple as [Int])
+procedure eatAppleIfPoss(head as [Int], out body as [[Int]], apple as [Int])
   if head is apple
     then
       call setAppleToRandomPosition(apple, body)

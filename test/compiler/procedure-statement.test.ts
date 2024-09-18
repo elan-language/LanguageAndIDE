@@ -159,19 +159,21 @@ main
   print a
 end main
 
-procedure changeFirst(a as Array<of Int>)
+procedure changeFirst(out a as Array<of Int>)
     call a.putAt(0, 5)
 end procedure`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.literalArray([2, 3]);
-  await changeFirst(a);
+  var _a = [a];
+  await changeFirst(_a);
+  a = _a[0];
   system.printLine(_stdlib.asString(a));
 }
 
 async function changeFirst(a) {
-  _stdlib.putAt(a, 0, 5);
+  _stdlib.putAt(a[0], 0, 5);
 }
 return [main, _tests];}`;
 
@@ -1287,6 +1289,27 @@ class Foo
     set property.ff to 2
   end procedure
 end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["May not mutate parameter: a"]);
+  });
+
+  test("Fail_ProcedureOnNotOutParm1", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var a set to [1,2]
+  call foo(a)
+end main
+
+procedure foo(a as [Int])
+  for i from 0 to 1 step 1
+    call a.putAt(i, 0)
+  end for
+end procedure`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));

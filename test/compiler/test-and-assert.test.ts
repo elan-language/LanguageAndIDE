@@ -455,7 +455,7 @@ return [main, _tests];}`;
 main
 end main
 
-procedure square(x as Int, y as [Int])
+procedure square(x as Int, out y as [Int])
   call y.putAt(0,  x ^ 2)
 end procedure
 
@@ -472,12 +472,14 @@ async function main() {
 }
 
 async function square(x, y) {
-  _stdlib.putAt(y, 0, x ** 2);
+  _stdlib.putAt(y[0], 0, x ** 2);
 }
 
 _tests.push(["test10", async (_outcomes) => {
   var arr = _stdlib.createArray(1, 0);
-  await square(3, arr);
+  var _arr = [arr];
+  await square(3, _arr);
+  arr = _arr[0];
   _outcomes.push(system.assert(system.safeIndex(arr, 0), 9, "assert19", _stdlib));
 }]);
 return [main, _tests];}`;

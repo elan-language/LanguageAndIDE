@@ -6,6 +6,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -208,6 +209,94 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "1");
+  });
+
+  test("Pass_InLoop", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+constant list set to {1,2,3,4,5}
+
+main
+  call foo()
+end main
+
+procedure foo()
+  for i from 0 to 4 step 1
+    let temp be list[i]
+    print temp
+  end for
+end procedure`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const list = system.list([1, 2, 3, 4, 5]);
+
+async function main() {
+  await foo();
+}
+
+async function foo() {
+  for (var i = 0; i <= 4; i = i + 1) {
+    var temp = (() => {
+        var _cache;
+        return () => _cache ??= system.safeIndex(list, i);
+    })();
+    system.printLine(_stdlib.asString(temp()));
+  }
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "12345");
+  });
+
+  ignore_test("Pass_InLoop1", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  call foo()
+end main
+
+procedure foo()
+  var list set to [1,2,3,4,5]
+  for i from 0 to 3 step 1
+    let temp be list[i]
+    call list.putAt(i, list[i + 1])
+    call list.putAt(i + 1, temp)
+    print list
+  end for
+end procedure`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  await foo();
+}
+
+async function foo() {
+  var list = system.literalArray([1, 2, 3, 4, 5]);
+  for (var i = 0; i <= 3; i = i + 1) {
+    var temp = (() => {
+        var _cache;
+        return () => _cache ??= system.safeIndex(list, i);
+    })();
+    _stdlib.putAt(list, i, system.safeIndex(list, i + 1));
+    _stdlib.putAt(list, i + 1, temp());
+  }
+  system.printLine(_stdlib.asString(list));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    //assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[2, 3, 4, 5, 1]");
   });
 
   test("Fail_cannotRedefine ", async () => {
