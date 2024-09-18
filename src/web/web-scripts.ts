@@ -60,8 +60,13 @@ function renderAsHtml() {
   );
 }
 
-function resetFile(reset: boolean) {
+function clearDisplays() {
   elanInputOutput.clearConsole();
+  elanInputOutput.clearGraphics();
+}
+
+function resetFile(reset: boolean) {
+  clearDisplays();
   if (reset) {
     file = new FileImpl(hash, profile, transforms());
     renderAsHtml();
@@ -110,7 +115,7 @@ function refreshAndDisplay() {
 }
 
 function initialDisplay() {
-  elanInputOutput.clearConsole();
+  clearDisplays();
 
   const ps = file.readParseStatus();
   if (ps === ParseStatus.valid || ps === ParseStatus.default) {
@@ -165,6 +170,11 @@ function updateDisplayValues() {
     disable(saveButton, msg);
     disable(newButton, msg);
     disable(demosButton, msg);
+    disable(trimButton, msg);
+    disable(expandCollapseButton, msg);
+    for (const elem of demoFiles) {
+      elem.setAttribute("hidden", "");
+    }
   } else {
     const msg = "Program is not running";
     disable(stopButton, msg);
@@ -173,6 +183,12 @@ function updateDisplayValues() {
     enable(loadButton, "Load code from a file");
     enable(newButton, "Clear the current code and start anew");
     enable(demosButton, "Load a demonstration program");
+    enable(trimButton);
+    enable(expandCollapseButton);
+
+    for (const elem of demoFiles) {
+      elem.removeAttribute("hidden");
+    }
 
     if (isEmpty) {
       disable(saveButton, "Some code must be added in order to save");
@@ -368,6 +384,11 @@ function updateContent(text: string) {
 }
 
 function postMessage(e: editorEvent) {
+  if (file.readRunStatus() === RunStatus.running) {
+    // no change while running
+    return;
+  }
+
   try {
     let isBeingEdited = false;
     switch (e.type) {
@@ -450,7 +471,7 @@ function handleWorkerError(data: WebWorkerStatusMessage) {
 
 runButton?.addEventListener("click", () => {
   try {
-    elanInputOutput.clearConsole();
+    clearDisplays();
     file.setRunStatus(RunStatus.running);
     updateDisplayValues();
     const path = `${document.location.origin}${document.location.pathname}`.replace(
@@ -538,7 +559,7 @@ function handleUpload(event: Event) {
   if (elanFile) {
     const fileName = elanFile.name;
     document.body.style.cursor = "wait";
-    elanInputOutput.clearConsole();
+    clearDisplays();
     const reader = new FileReader();
     reader.addEventListener("load", (event: any) => {
       const rawCode = event.target.result;
