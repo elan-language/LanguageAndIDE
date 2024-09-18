@@ -11,7 +11,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("T81_CharMappedDisplay", () => {
+suite("Char Mapped Display", () => {
   test("Pass_SimpleDraw", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 

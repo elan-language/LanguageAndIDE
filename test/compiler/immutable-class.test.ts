@@ -11,7 +11,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("T44_ImmutableClass", () => {
+suite("Immutable Class", () => {
   test("Pass_BasicImmutableClass", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 

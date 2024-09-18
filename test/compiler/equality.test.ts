@@ -10,7 +10,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("T49_EqualityTesting", () => {
+suite("Equality", () => {
   test("Pass_DifferentInstancesWithSameValuesAreEqual", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 

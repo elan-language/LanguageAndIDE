@@ -10,7 +10,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("T30_Input", () => {
+suite("Input", () => {
   test("Pass_InputString", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 

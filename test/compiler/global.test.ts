@@ -11,7 +11,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("T59_Global", () => {
+suite("Global", () => {
   ignore_test("Pass_DisambiguateConstantFromLocalVariable", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 

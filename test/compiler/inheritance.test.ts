@@ -12,7 +12,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("T43_Inheritance", () => {
+suite("Inheritance", () => {
   test("Pass_DefineAbstractClassAndInheritFromIt", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 

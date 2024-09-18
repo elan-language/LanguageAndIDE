@@ -11,7 +11,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("T29_Expressions3_FunctionCalls", () => {
+suite("Function Expressions", () => {
   test("Pass_LibraryConst", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 

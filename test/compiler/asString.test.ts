@@ -9,7 +9,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("T55_asString", () => {
+suite("asString", () => {
   test("Pass_SimpleExtension", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 

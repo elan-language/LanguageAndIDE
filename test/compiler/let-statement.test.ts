@@ -10,7 +10,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("T_4.5_LetStatement", () => {
+suite("Let Statement", () => {
   test("Pass_normal", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 

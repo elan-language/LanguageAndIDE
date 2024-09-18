@@ -11,7 +11,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("T21_Functions_Procedures_ImpureFunctions_rules", () => {
+suite("Impure Function", () => {
   test("Pass_CanUseImpureMethodsWithinExpressionsInMainOrProcedure", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 

@@ -11,7 +11,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("T15_eachLoop", () => {
+suite("Each Loop", () => {
   test("Pass_List", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 

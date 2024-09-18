@@ -11,7 +11,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("T16_SwitchCase", () => {
+suite("Switch Statement", () => {
   test("Pass_minimal", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 

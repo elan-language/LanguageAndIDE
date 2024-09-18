@@ -11,7 +11,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("T_6_ArithmeticOperators", () => {
+suite("Arithmetic Operators", () => {
   test("Pass_IntAddition", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 

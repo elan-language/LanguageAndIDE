@@ -10,7 +10,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("T36_ConditionalExpressions", () => {
+suite("Conditional Expressions", () => {
   test("Pass_InFunction", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 

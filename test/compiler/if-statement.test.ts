@@ -12,7 +12,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("T_7_IfStatement", () => {
+suite("If Statement", () => {
   test("Pass_1", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 

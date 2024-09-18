@@ -11,7 +11,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("T35_enums", () => {
+suite("Enum", () => {
   test("Pass_PrintValues", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 

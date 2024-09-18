@@ -13,7 +13,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("T80_TestAndAsserts", () => {
+suite("Test and Assert", () => {
   test("Pass_PassingTest", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 

@@ -13,7 +13,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("T14_ImmutableList", () => {
+suite("List", () => {
   test("Pass_literalList", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 

@@ -11,7 +11,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("T26_Iter", () => {
+suite("Iterable", () => {
   ignore_test("Pass_List", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 

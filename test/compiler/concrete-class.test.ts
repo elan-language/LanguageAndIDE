@@ -11,7 +11,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("T34_ConcreteClasses", () => {
+suite("Concrete Class", () => {
   test("Pass_Class_SimpleInstantiation_PropertyAccess_Methods", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 

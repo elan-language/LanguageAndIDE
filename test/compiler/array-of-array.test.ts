@@ -11,7 +11,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("T12.5_ArrayOfArray", () => {
+suite("Array of Array", () => {
   test("Pass_literalArrayOfArray", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 

@@ -11,7 +11,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("T45_AssociationsAndDefaults", () => {
+suite("Associations and Defaults", () => {
   test("Pass_CanHavePropertiesThatAreDataStructuresOrObjects", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 

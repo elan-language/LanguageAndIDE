@@ -11,7 +11,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("T53_Self", () => {
+suite("This and Property", () => {
   test("Pass_DisambiguateParamAndProperty", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 

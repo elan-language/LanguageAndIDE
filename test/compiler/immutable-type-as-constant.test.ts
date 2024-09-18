@@ -10,7 +10,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("T74_AnyImmutableTypeAsConstant", () => {
+suite("Immutable Type as Constant", () => {
   test("Pass_String", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 

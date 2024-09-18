@@ -9,7 +9,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("T83_PrintingCommonSymbols", () => {
+suite("Printing Symbols", () => {
   test("Pass_CommonSymbolsAccessibleFromUKKeyboard", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 

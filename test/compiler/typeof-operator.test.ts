@@ -9,7 +9,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("T46_TypeMethod", () => {
+suite("Typeof Operator", () => {
   test("Pass_TypeOfStandardTypes", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 

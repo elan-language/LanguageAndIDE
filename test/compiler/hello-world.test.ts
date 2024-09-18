@@ -11,7 +11,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("T_2_HelloWorld", () => {
+suite("Hello World", () => {
   test("Pass_CommentsOnly", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 

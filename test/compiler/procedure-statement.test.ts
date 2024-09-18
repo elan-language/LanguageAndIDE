@@ -12,7 +12,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("T19_Procedures", () => {
+suite("Procedure Statement", () => {
   test("Pass_BasicOperationIncludingPrint", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 

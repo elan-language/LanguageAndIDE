@@ -13,7 +13,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("T17.5_ImmutableDictionaries", () => {
+suite("Immutable Dictionary", () => {
   test("Pass_LiteralConstantAndPrinting", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 

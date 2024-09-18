@@ -11,7 +11,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("T52_FunctionMethods", () => {
+suite("Function Method", () => {
   test("Pass_HappyCase", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 

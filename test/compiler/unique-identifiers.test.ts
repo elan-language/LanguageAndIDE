@@ -11,7 +11,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("T78_identifiersMustBeUniqueIgnoringCase", () => {
+suite("Unique Identifiers", () => {
   test("Pass_SameVariableNameInDifferentScope", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 

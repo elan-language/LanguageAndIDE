@@ -11,7 +11,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("T_9_Conditions", () => {
+suite("Conditions", () => {
   test("Pass_lessThan", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 

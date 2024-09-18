@@ -12,7 +12,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("T12_Array", () => {
+suite("Array", () => {
   test("Pass_literalArray", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 

@@ -12,7 +12,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("T62_Tuples", () => {
+suite("Tuple", () => {
   test("Pass_CreatingTuplesAndReadingContents", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 

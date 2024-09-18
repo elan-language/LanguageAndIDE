@@ -12,7 +12,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("T17_Dictionaries", () => {
+suite("Dictionary", () => {
   test("Pass_LiteralDictionary", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 

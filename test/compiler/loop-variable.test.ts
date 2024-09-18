@@ -8,7 +8,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("T93_PassingLoopVariableIntoProcedure", () => {
+suite("Loop Variable", () => {
   test("Pass_Pattern1", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 

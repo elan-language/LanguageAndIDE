@@ -8,7 +8,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("T57_ConstructorParmsNotMutable", () => {
+suite("Constructor Parameters", () => {
   test("Fail_reassigningIntParam", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 

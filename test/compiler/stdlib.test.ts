@@ -12,7 +12,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("StandardLib", () => {
+suite("StdLib", () => {
   test("Pass_contains", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 

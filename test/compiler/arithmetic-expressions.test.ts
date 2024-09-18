@@ -10,7 +10,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("T28_Expressions2_Brackets", () => {
+suite("Arithmetic Expressions", () => {
   test("Pass_BracketsChangeOperatorEvaluation", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 

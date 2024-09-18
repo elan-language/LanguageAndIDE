@@ -12,7 +12,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("T54_With", () => {
+suite("With", () => {
   test("Pass_SingleSetToVar", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 

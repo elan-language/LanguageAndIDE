@@ -11,7 +11,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("T31_Expressions5_LogicalOperators", () => {
+suite("Logical Operators", () => {
   test("Pass_and", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 

@@ -12,7 +12,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("T20_Functions", () => {
+suite("Function", () => {
   test("Pass_SimpleCase", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 

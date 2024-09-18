@@ -11,7 +11,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("T_5_Variables", () => {
+suite("Variables", () => {
   test("Pass_Int", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 

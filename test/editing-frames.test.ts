@@ -405,16 +405,16 @@ suite("Editing Frames", () => {
     // 3. Does not work if field has been edited
     sel0.processKey(key("f"));
     assert.equal(file.getChildren().length, 2);
-    var f3 = file.getById("func15");
-    var name3 = file.getById("ident17");
+    const f3 = file.getById("func15");
+    const name3 = file.getById("ident17");
     name3.processKey(key("x"));
     f3.processKey(key("Backspace"));
     assert.equal(file.getChildren().length, 2);
     // 4. Does not work if any child frame has been added
     sel0.processKey(key("f"));
     assert.equal(file.getChildren().length, 3);
-    var f4 = file.getById("func22");
-    var sel4 = file.getById("select23");
+    const f4 = file.getById("func22");
+    const sel4 = file.getById("select23");
     sel4.processKey(key("v"));
     f4.processKey(key("Backspace"));
     assert.equal(file.getChildren().length, 3);

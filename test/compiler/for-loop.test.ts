@@ -11,7 +11,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("T_8_ForLoop", () => {
+suite("For Loop", () => {
   test("Pass_minimal", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 

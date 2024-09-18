@@ -11,7 +11,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("T73_Lambdas", () => {
+suite("Lambda", () => {
   test("Pass_PassAsParam", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 

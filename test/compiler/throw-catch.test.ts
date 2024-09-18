@@ -11,7 +11,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("T18_ThrowAndCatchException", () => {
+suite("Throw Catch", () => {
   test("Pass_ThrowExceptionInMain", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 

@@ -1,3 +1,3 @@
-suite("T67_ListDeconstruction", () => {
+suite("List Deconstruction", () => {
   // TODO
 });

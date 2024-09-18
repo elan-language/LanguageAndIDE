@@ -12,7 +12,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("T13_StringManipulation", () => {
+suite("String Manipulation", () => {
   test("Pass_AppendStrings", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 

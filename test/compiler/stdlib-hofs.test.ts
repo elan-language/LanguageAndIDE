@@ -11,7 +11,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("T70_StandardHofs", () => {
+suite("StdLib HOFs", () => {
   test("Pass_filter", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
