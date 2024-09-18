@@ -1,8 +1,8 @@
 # FFFF Elan Beta 2 valid
 
 main
-  var start set to new Point(0, 0)
-  var destination set to new Point(39, 29)
+  var start set to new Point(5, 5)
+  var destination set to new Point(34, 24)
   var rocks set to empty [Point]
   var nodes set to empty [Node]
   var percentRocks set to inputIntBetween("Enter % to fill with rocks (0-100): ", 0, 100)
@@ -19,13 +19,13 @@ main
         call gr.clearGraphics()
         call clearConsole()
       else
-        var alg set to algFromLetter.getValueByKey(option)
+        var alg set to algFromLetter[option]
         call runSolver(gr, start, destination, rocks, solver, alg)
     end if
   end while
 end main
 
-procedure runSolver(gr as Graphics, start as Point, destination as Point, rocks as [Point], solver as Solver, alg as Algorithm)
+procedure runSolver(gr as Graphics, start as Point, destination as Point, rocks as [Point], out solver as Solver, alg as Algorithm)
   call solver.initialise(alg)
   var gr2 set to initialiseGraphics(start, destination, rocks)
   while solver.running
@@ -82,6 +82,10 @@ function addRoute(gr as Graphics, route as {Point}) return Graphics
   each p in route
     set gr2 to gr2.putBackground(p.x, p.y, yellow)
   end each
+  let start be route[0]
+  let dest be route[route.length() - 1]
+  set gr2 to gr2.putBackground(start.x, start.y, green)
+  set gr2 to gr2.putBackground(dest.x, dest.y, red)
   return gr2
 end function
 
@@ -150,7 +154,7 @@ class Solver
           set neighbours to neighbours + node
       end if
     end each
-    return neighbours.asArrayList()
+    return neighbours.asArray()
   end function
 
   function getNodeFor(p as Point) return Node

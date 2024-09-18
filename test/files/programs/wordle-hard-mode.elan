@@ -1,4 +1,4 @@
-# 7183e6e80c10099c8ef11f9e3dc84f76102f724447bd607676e335384dabfdea Elan Beta 2 valid
+# 3bc5737e6c8f77c2acec65ebcb1b1f597a8334b81a6349d8f058b1f986bfa3a5 Elan Beta 2 valid
 
 # Wordle Solver: in 'hard' mode (every attempt must be a valid possible answer)
 # Mark each letter of program's attempt word with:
@@ -8,7 +8,7 @@
 # RAISE
 # _*_+_
 main
-  var possible set to allPossibleAnswers.asIter()
+  var possible set to allPossibleAnswers
   var mark set to ""
   var attempt set to "RAISE"
   while mark isnt "*****"
@@ -154,8 +154,8 @@ test markAttempt
   assert markAttempt("COLON", "GLORY") is "_++__"
 end test
 
-function possibleAnswersAfterAttempt(prior as Iter<of String>, attempt as String, mark as String) return Iter<of String>
-  return prior.filter(lambda w as String => markAttempt(attempt, w) is mark)
+function possibleAnswersAfterAttempt(prior as {String}, attempt as String, mark as String) return {String}
+  return prior.filter(lambda w as String => markAttempt(attempt, w) is mark).asList()
 end function
 
 test possibleAnswersAfterAttempt
@@ -165,18 +165,18 @@ test possibleAnswersAfterAttempt
   assert possibleAnswersAfterAttempt(prior, "AXXBX", "+__+_") is {"BCDEA", "CDEAB", "EABCD"}
 end test
 
-function maxWordCountRemainingAfterAttempt(possibleAnswers as Iter<of String>, attempt as String) return Int
+function maxWordCountRemainingAfterAttempt(possAnswers as {String}, attempt as String) return Int
   let d be empty {String:Int}
-  let d2 be possibleAnswers.reduce(d, lambda dd as {String:Int}, possAnswer as String => incrementCount(dd, possAnswer, attempt))
+  let d2 be possAnswers.reduce(d, lambda dd as {String:Int}, answer as String => incrementCount(dd, answer, attempt))
   let keys be d2.keys()
-  return keys.reduce(0, lambda maxSoFar as Int, mark as String => if d2.getValueByKey(mark) > maxSoFar then d2.getValueByKey(mark) else maxSoFar)
+  return keys.reduce(0, lambda maxSoFar as Int, mark as String => if d2[mark] > maxSoFar then d2[mark] else maxSoFar)
 end function
 
 function incrementCount(dd as {String:Int}, possAnswer as String, attempt as String) return {String:Int}
   let mark be markAttempt(attempt, possAnswer)
   let keys be dd.keys()
-  let count be if keys.contains(mark) then dd.getValueByKey(mark) else 0
-  let dd2 be dd.withKeyValue(mark, count + 1)
+  let count be if keys.contains(mark) then dd[mark] else 0
+  let dd2 be dd.withPutAtKey(mark, count + 1)
   return dd2
 end function
 
@@ -188,12 +188,12 @@ test maxWordCountRemainingAfterAttempt
   assert maxWordCountRemainingAfterAttempt(prior, "XXXXX") is 5
 end test
 
-function allRemainingWordCounts(possAnswers as Iter<of String>) return Iter<of WordCount>
+function allRemainingWordCounts(possAnswers as {String}) return {WordCount}
   let parallel be possAnswers
-  return parallel.map(lambda w as String => new WordCount(w, maxWordCountRemainingAfterAttempt(possAnswers, w)))
+  return parallel.map(lambda w as String => new WordCount(w, maxWordCountRemainingAfterAttempt(possAnswers, w))).asList()
 end function
 
-function betterOf(wc1 as WordCount, wc2 as WordCount, possAnswers as Iter<of String>) return WordCount
+function betterOf(wc1 as WordCount, wc2 as WordCount, possAnswers as {String}) return WordCount
   let isBetter be wc2.count < wc1.count
   let isEqualAndPossAnswer be (wc2.count is wc1.count) and possAnswers.contains(wc2.word)
   return if isBetter or isEqualAndPossAnswer then wc2 else wc1
@@ -215,7 +215,7 @@ test betterOf
   assert betterOf(b2, a2, possAnswers3) is a2
 end test
 
-function bestAttempt(possAnswers as Iter<of String>) return String
+function bestAttempt(possAnswers as {String}) return String
   let wordCounts be allRemainingWordCounts(possAnswers)
   let best be wordCounts.reduce(wordCounts.head(), lambda bestSoFar as WordCount, newWord as WordCount => betterOf(bestSoFar, newWord, possAnswers))
   return best.word

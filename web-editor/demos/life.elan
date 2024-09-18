@@ -1,4 +1,4 @@
-# f7582ff5c33411b0e69f936c1c0fa867a8607efbb28b92c6af4e9a69363adb47 Elan Beta 2 valid
+# FFFF Elan Beta 2 valid
 
 main
   print "Press any key to halt"
@@ -74,7 +74,7 @@ end function
 function nextGeneration(cells as [Boolean]) return [Boolean]
   let cellRange be range(0, cells.length() - 1)
   let next be cellRange.map(lambda n as Int => nextCellValue(cells, n))
-  return next.asArrayList()
+  return next.asArray()
 end function
 
 constant black set to 0x000000

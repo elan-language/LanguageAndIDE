@@ -1,0 +1,122 @@
+# 47a030577ad94bdf9bdfa608eb408dafd8aa38914861834798bba2cc6e300329 Elan Beta 2 valid
+
+main
+  var g set to new Graphics()
+  set g to g.fill("", black, black)
+  set g to createStart(g)
+  for i from 0 to 150 step 1
+    var x set to randomInt(0, 39)
+    var y set to randomInt(0, 29)
+    var p set to new Point(x, y)
+    var existing set to getValue(p, g)
+    var setTo set to floor(random() + 0.7)
+    if okToSet(p, setTo, g)
+      then
+        var colour set to if setTo is 1 then white else black
+        set g to g.putBackground(p.x, p.y, colour)
+    end if
+  end for
+  call g.draw()
+end main
+
+function createStart(g as Graphics) return Graphics
+  var g2 set to g
+  for i from 0 to 15 step 2
+    set g2 to addRectangle(g2, i, i, 39 - 2*i, 29 - 2*i)
+  end for
+  return g2
+end function
+
+function addRectangle(g as Graphics, startX as Int, startY as Int, width as Int, depth as Int) return Graphics
+  let paint be white
+  var g2 set to g
+  for x from startX to startX + width step 1
+    set g2 to g2.putBackground(x, startY, paint)
+    set g2 to g2.putBackground(x, startY + depth, paint)
+  end for
+  for y from startY to startY + depth step 1
+    set g2 to g2.putBackground(startX, y, paint)
+    set g2 to g2.putBackground(startX + width, y, paint)
+  end for
+  return g2
+end function
+
+# colour: 0 for black, 1 for white
+function okToSet(p as Point, colour as Int, g as Graphics) return Boolean
+  let n be p.neighbouringPoints().map(lambda p as Point => getValue(p, g)).asList()
+  let q1 be isValidQuadrant(n[0] + n[1]*2 + colour*4 + n[3]*8)
+  let q2 be isValidQuadrant(n[1] + n[2]*2 + n[4]*4 + colour*8)
+  let q3 be isValidQuadrant(colour + n[4]*2 + n[7]*4 + n[6]*8)
+  let q4 be isValidQuadrant(n[3] + colour*2 + n[6]*4 + n[5]*8)
+  return q1 and q2 and q3 and q4
+end function
+
+function getValue(p as Point, g as Graphics) return Int
+  var result set to 0
+  if (p.x > -1) and (p.x < 40) and (p.y > -1) and (p.y < 30)
+    then
+      let colour be g.getDetails(p.x, p.y).third()
+      set result to if colour is black then 0 else 1
+  end if
+  return result
+end function
+
+function flip01(v as Int) return Int
+  return if v is 0 then 1 else 0
+end function
+
+test flip01
+  assert flip01(0) is 1
+  assert flip01(1) is 0
+end test
+
+function isValidQuadrant(q as Int) return Boolean
+  return mod(q, 5) isnt 0
+end function
+
+test isValidQuadrant
+  assert isValidQuadrant(0) is false
+  assert isValidQuadrant(1) is true
+  assert isValidQuadrant(2) is true
+  assert isValidQuadrant(3) is true
+  assert isValidQuadrant(4) is true
+  assert isValidQuadrant(5) is false
+  assert isValidQuadrant(6) is true
+  assert isValidQuadrant(7) is true
+  assert isValidQuadrant(8) is true
+  assert isValidQuadrant(9) is true
+  assert isValidQuadrant(10) is false
+  assert isValidQuadrant(11) is true
+  assert isValidQuadrant(12) is true
+  assert isValidQuadrant(13) is true
+  assert isValidQuadrant(14) is true
+  assert isValidQuadrant(15) is false
+end test
+
+immutable class Point
+  constructor(x as Int, y as Int)
+    set property.x to x
+    set property.y to y
+    # isNotEmpty is needed to distinguish Point(0,0) from empty Point, which will also have zero values
+    set property.isNotEmpty to true
+  end constructor
+
+  property x as Int
+
+  property y as Int
+
+  property isNotEmpty as Boolean
+
+  # Returns the 8 theoretically-neighbouring points, whether or not within bounds
+  function neighbouringPoints() return {Point}
+    return {new Point(x - 1, y - 1), new Point(x, y - 1), new Point(x + 1, y - 1), new Point(x - 1, y), new Point(x + 1, y), new Point(x - 1, y + 1), new Point(x, y + 1), new Point(x + 1, y + 1)}
+  end function
+
+end class
+
+test neighbouringPoints
+  let p be new Point(0, 0)
+  let n be p.neighbouringPoints()
+  let expected be {new Point(-1, -1), new Point(0, -1), new Point(1, -1), new Point(-1, 0), new Point(1, 0), new Point(-1, 1), new Point(0, 1), new Point(1, 1)}
+  assert n is expected
+end test

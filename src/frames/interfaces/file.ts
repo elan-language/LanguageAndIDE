@@ -17,6 +17,9 @@ export interface File extends Parent {
   renderAsHtml(): Promise<string>;
   renderAsSource(): Promise<string>;
   compile(): string;
+
+  compileAsWorker(base: string): string;
+
   fileName: string;
   readonly defaultFileName: string;
 
@@ -54,7 +57,7 @@ export interface File extends Parent {
   createFunction(): Frame;
   createProcedure(): Frame;
   createEnum(): Frame;
-  createClass(): Frame;
+  createClass(abstract: boolean, immutable: boolean): Frame;
   createGlobalComment(): Frame;
   createConstant(): Frame;
   createTest(): Frame;

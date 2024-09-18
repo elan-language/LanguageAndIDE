@@ -97,8 +97,6 @@ export class StatementSelector extends AbstractSelector {
       result = !(
         this.isWithinAFunction(this.getParent()) || this.isWithinAConstructor(this.getParent())
       );
-    } else if (keyword === letKeyword) {
-      result = this.isWithinAFunction(this.getParent());
     } else {
       result = true;
     }

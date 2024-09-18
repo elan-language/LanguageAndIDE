@@ -1,5 +1,6 @@
 import { ElanRuntimeError } from "./elan-runtime-error";
 import { hasHiddenType } from "./has-hidden-type";
+import { StubInputOutput } from "./stub-input-output";
 import { System } from "./system";
 
 type Location = [string, number, number];
@@ -7,7 +8,11 @@ type Graphics = Location[];
 type File = [number, string, number]; // open/closed, read/write, contents, pointer
 
 export class StdLib {
-  constructor(private readonly system: System) {}
+  constructor() {
+    this.system = new System(new StubInputOutput());
+  }
+
+  system: System;
 
   isValueType<T>(v: T) {
     return typeof v === "boolean" || typeof v === "string" || typeof v === "number";
@@ -38,13 +43,13 @@ export class StdLib {
       const type = (v as unknown as hasHiddenType)._type;
 
       switch (type) {
-        case "ImmutableList":
+        case "List":
           return `{${v.map((i) => this.asString(i)).join(", ")}}`;
         case "Tuple":
           return `(${v.map((i) => this.asString(i)).join(", ")})`;
-        case "ArrayList":
+        case "Array":
           return `[${v.map((i) => this.asString(i)).join(", ")}]`;
-        case "Iter":
+        case "Iterable":
           return `an Iterable`;
         default:
           return v.toString();
@@ -75,15 +80,15 @@ export class StdLib {
     return String.fromCharCode(n);
   }
 
-  asArrayList<T>(list: T[]): T[] {
+  asArray<T>(list: T[]): T[] {
     const arr = [...list];
-    (arr as unknown as hasHiddenType)._type = "ArrayList";
+    (arr as unknown as hasHiddenType)._type = "Array";
     return arr;
   }
 
-  asImmutableList<T>(arr: T[]): T[] {
+  asList<T>(arr: T[]): T[] {
     const list = [...arr];
-    (list as unknown as hasHiddenType)._type = "ImmutableList";
+    (list as unknown as hasHiddenType)._type = "List";
     return list;
   }
 
@@ -92,13 +97,13 @@ export class StdLib {
     for (let i = start; i <= end; i++) {
       seq.push(i);
     }
-    (seq as unknown as hasHiddenType)._type = "Iter";
+    (seq as unknown as hasHiddenType)._type = "Iterable";
     return seq;
   }
 
   asIter<T>(arr: T[]): T[] {
     const list = [...arr];
-    (list as unknown as hasHiddenType)._type = "Iter";
+    (list as unknown as hasHiddenType)._type = "Iterable";
     return list as T[];
   }
 
@@ -108,13 +113,13 @@ export class StdLib {
 
   keys<T>(dict: { [key: string]: T }): string[] {
     const lst = Object.getOwnPropertyNames(dict).filter((s) => s !== "_type");
-    (lst as unknown as hasHiddenType)._type = "ImmutableList";
+    (lst as unknown as hasHiddenType)._type = "List";
     return lst;
   }
 
   values<T>(dict: { [key: string]: T }): T[] {
     const lst = this.keys(dict).map((k) => dict[k]);
-    (lst as unknown as hasHiddenType)._type = "ImmutableList";
+    (lst as unknown as hasHiddenType)._type = "List";
     return lst;
   }
 
@@ -170,12 +175,16 @@ export class StdLib {
   withPutAt<T>(list: Array<T>, index: number, value: T) {
     const newList = [...list];
     newList[index] = value;
-    (newList as unknown as hasHiddenType)._type = "ImmutableList";
+    (newList as unknown as hasHiddenType)._type = "List";
     return newList;
   }
 
   putAt<T>(list: Array<T>, index: number, value: T) {
-    this.system.safeArrayListSet(list, index, value);
+    this.system.safeArraySet(list, index, value);
+  }
+
+  putAt2D<T>(list: Array<Array<T>>, col: number, row: number, value: T) {
+    this.system.safeArraySet(list[col], row, value);
   }
 
   putAtKey<T>(dict: { [key: string]: T }, key: string, value: T) {
@@ -185,7 +194,7 @@ export class StdLib {
   withInsert<T>(list: Array<T>, index: number, value: T) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const newList = (list as any).toSpliced(index, 0, value);
-    (newList as unknown as hasHiddenType)._type = "ImmutableList";
+    (newList as unknown as hasHiddenType)._type = "List";
     return newList;
   }
 
@@ -207,7 +216,7 @@ export class StdLib {
   withRemoveAt<T>(list: Array<T>, index: number) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const newList = (list as any).toSpliced(index, 1);
-    (newList as unknown as hasHiddenType)._type = "ImmutableList";
+    (newList as unknown as hasHiddenType)._type = "List";
     return newList;
   }
 
@@ -218,7 +227,7 @@ export class StdLib {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       newList = (newList as any).toSpliced(index, 1);
     }
-    (newList as unknown as hasHiddenType)._type = "ImmutableList";
+    (newList as unknown as hasHiddenType)._type = "List";
     return newList;
   }
 
@@ -230,7 +239,7 @@ export class StdLib {
       newList = (newList as any).toSpliced(index, 1);
       index = this.elanIndexOf(newList, value);
     }
-    (newList as unknown as hasHiddenType)._type = "ImmutableList";
+    (newList as unknown as hasHiddenType)._type = "List";
     return newList;
   }
 
@@ -375,7 +384,7 @@ export class StdLib {
       if (result[i]) {
         result[i].push(i);
       } else {
-        result[i] = this.asImmutableList([i]);
+        result[i] = this.asList([i]);
       }
     }
   }
@@ -558,12 +567,12 @@ export class StdLib {
     return `#${h6}`;
   }
 
-  getKeystroke(map: Graphics): string {
+  getKeystroke(map: Graphics): Promise<string> {
     return this.system.elanInputOutput.getKeystroke();
   }
 
-  getKeystrokeWithModifier(map: Graphics) {
-    return this.system.tuple(this.system.elanInputOutput.getKeystrokeWithModifier());
+  getKeystrokeWithModifier(map: Graphics): Promise<[string, string]> {
+    return this.system.elanInputOutput.getKeystrokeWithModifier();
   }
 
   clearKeyBuffer(map: Graphics) {

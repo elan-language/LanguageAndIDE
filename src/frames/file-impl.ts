@@ -263,6 +263,24 @@ export class FileImpl implements File, Scope {
     return `${stdLib}\n${this.compileGlobals()}return [main, _tests];}`;
   }
 
+  compileAsWorker(base: string): string {
+    const onmsg = `onmessage = async (e) => {
+  if (e.data.type === "start") {
+    try {
+      const [main, tests] = await program();
+      await main();
+      postMessage({type : "status", status : "finished"});
+    }
+    catch (e) {
+      postMessage({type : "status", status : "error", error : e});
+    }
+  }
+};`;
+
+    const stdLib = `import { StdLib } from "${base}/elan-api.js"; var system; var _stdlib; var _tests = []; async function program() { _stdlib = new StdLib(); system = _stdlib.system;`;
+    return `${stdLib}\n${this.compileGlobals()}return [main, _tests];}\n${onmsg}`;
+  }
+
   renderHashableContent(): string {
     const globals = parentHelper_renderChildrenAsSource(this);
     let html = `${this.getVersion()}${this.getProfileName()} ${this.parseStatusAsString()}\r\n\r\n${globals}`;
@@ -475,8 +493,8 @@ export class FileImpl implements File, Scope {
   createEnum(): Frame {
     return new Enum(this);
   }
-  createClass(): Frame {
-    return new ClassFrame(this);
+  createClass(abstract: boolean, immutable: boolean): Frame {
+    return new ClassFrame(this, abstract, immutable);
   }
   createGlobalComment(): Frame {
     return new GlobalComment(this);

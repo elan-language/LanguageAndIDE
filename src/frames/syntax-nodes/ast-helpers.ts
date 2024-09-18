@@ -8,19 +8,20 @@ import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { AbstractDictionaryType } from "../symbols/abstract-dictionary-type";
-import { ArrayListType } from "../symbols/array-list-type";
+import { ArrayType } from "../symbols/array-list-type";
 import { DictionaryType } from "../symbols/dictionary-type";
 import { FunctionType } from "../symbols/function-type";
 import { GenericParameterType } from "../symbols/generic-parameter-type";
 import { ImmutableDictionaryType } from "../symbols/immutable-dictionary-type";
-import { ImmutableListType } from "../symbols/immutable-list-type";
-import { IterType } from "../symbols/iter-type";
+import { IterableType } from "../symbols/iterable-type";
+import { ListType } from "../symbols/list-type";
 import { ProcedureType } from "../symbols/procedure-type";
 import { StringType } from "../symbols/string-type";
 import { TupleType } from "../symbols/tuple-type";
 import { UnknownType } from "../symbols/unknown-type";
 import { transform, transformMany } from "./ast-visitor";
 import { ChainedAsn } from "./chained-asn";
+import { OperationSymbol } from "./operation-symbol";
 import { Transforms } from "./transforms";
 
 export function isAstChainedNode(n: AstNode): n is ChainedAsn {
@@ -84,7 +85,7 @@ class TypeHolder implements SymbolType {
 }
 
 export function flatten(p: SymbolType): SymbolType {
-  if (p instanceof ArrayListType || p instanceof ImmutableListType || p instanceof IterType) {
+  if (p instanceof ArrayType || p instanceof ListType || p instanceof IterableType) {
     return new TypeHolder(p, [flatten(p.ofType)]);
   }
 
@@ -121,11 +122,7 @@ export function containsGenericType(type: SymbolType): boolean {
   if (type instanceof GenericParameterType) {
     return true;
   }
-  if (
-    type instanceof ArrayListType ||
-    type instanceof ImmutableListType ||
-    type instanceof IterType
-  ) {
+  if (type instanceof ArrayType || type instanceof ListType || type instanceof IterableType) {
     return containsGenericType(type.ofType);
   }
   if (type instanceof AbstractDictionaryType) {
@@ -148,14 +145,14 @@ export function generateType(type: SymbolType, matches: Map<string, SymbolType>)
 
     return match ?? UnknownType.Instance;
   }
-  if (type instanceof ArrayListType) {
-    return new ArrayListType(generateType(type.ofType, matches));
+  if (type instanceof ArrayType) {
+    return new ArrayType(generateType(type.ofType, matches));
   }
-  if (type instanceof ImmutableListType) {
-    return new ImmutableListType(generateType(type.ofType, matches));
+  if (type instanceof ListType) {
+    return new ListType(generateType(type.ofType, matches));
   }
-  if (type instanceof IterType) {
-    return new IterType(generateType(type.ofType, matches));
+  if (type instanceof IterableType) {
+    return new IterableType(generateType(type.ofType, matches));
   }
   if (type instanceof DictionaryType) {
     return new DictionaryType(
@@ -236,4 +233,43 @@ export function matchGenericTypes(
   match(flattened, pTypes, matches);
 
   return matches;
+}
+
+const opMap = new Map<OperationSymbol, string>([
+  [OperationSymbol.Add, "+"],
+  [OperationSymbol.Minus, "-"],
+  [OperationSymbol.Not, "not"],
+  [OperationSymbol.Multiply, "*"],
+  [OperationSymbol.And, "and"],
+  [OperationSymbol.Equals, "is"],
+  [OperationSymbol.LT, "<"],
+  [OperationSymbol.GT, ">"],
+  [OperationSymbol.GTE, ">="],
+  [OperationSymbol.LTE, "<="],
+  [OperationSymbol.Div, "div"],
+  [OperationSymbol.Mod, "mod"],
+  [OperationSymbol.Divide, "/"],
+  [OperationSymbol.NotEquals, "isnt"],
+  [OperationSymbol.Pow, "^"],
+  [OperationSymbol.Or, "or"],
+  [OperationSymbol.Xor, "xor"],
+]);
+
+export function mapOperationSymbol(os: OperationSymbol) {
+  const op = opMap.get(os);
+  if (op) {
+    return op;
+  }
+  throw new Error("Not implemented");
+}
+
+export function mapOperation(op: string): OperationSymbol {
+  op = op.trim();
+
+  for (const e of opMap.entries()) {
+    if (e[1] === op) {
+      return e[0];
+    }
+  }
+  throw new Error("Not implemented");
 }

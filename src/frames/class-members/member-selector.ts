@@ -1,19 +1,22 @@
-import { Member } from "../interfaces/member";
-import { singleIndent } from "../helpers";
-import { ClassFrame } from "../globals/class-frame";
 import { AbstractSelector } from "../abstract-selector";
-import { Parent } from "../interfaces/parent";
+import { ClassFrame } from "../globals/class-frame";
+import { singleIndent } from "../helpers";
 import { Frame } from "../interfaces/frame";
+import { Member } from "../interfaces/member";
+import { Parent } from "../interfaces/parent";
 import {
+  abstractFunctionKeywords,
+  abstractKeyword,
+  abstractProcedureKeywords,
+  abstractPropertyKeywords,
+  commentMarker,
   functionKeyword,
+  privateFunctionKeywords,
+  privateKeyword,
+  privateProcedureKeywords,
+  privatePropertyKeywords,
   procedureKeyword,
   propertyKeyword,
-  privateKeyword,
-  abstractKeyword,
-  commentMarker,
-  abstractPropertyKeywords,
-  abstractProcedureKeywords,
-  abstractFunctionKeywords,
 } from "../keywords";
 
 export class MemberSelector extends AbstractSelector implements Member {
@@ -30,10 +33,12 @@ export class MemberSelector extends AbstractSelector implements Member {
       [functionKeyword, (parent: Parent) => this.class.createFunction()],
       [procedureKeyword, (parent: Parent) => this.class.createProcedure()],
       [propertyKeyword, (parent: Parent) => this.class.createProperty()],
-      [privateKeyword, (parent: Parent) => this.class.createProperty()],
       [abstractFunctionKeywords, (parent: Parent) => this.class.createAbstractFunction()],
       [abstractProcedureKeywords, (parent: Parent) => this.class.createAbstractProcedure()],
       [abstractPropertyKeywords, (parent: Parent) => this.class.createAbstractProperty()],
+      [privateFunctionKeywords, (parent: Parent) => this.class.createFunction(true)],
+      [privateProcedureKeywords, (parent: Parent) => this.class.createProcedure(true)],
+      [privatePropertyKeywords, (parent: Parent) => this.class.createProperty(true)],
       [commentMarker, (parent: Parent) => this.class.createComment()],
     ];
     return options;
@@ -48,15 +53,20 @@ export class MemberSelector extends AbstractSelector implements Member {
     if (this.class.isAbstract()) {
       if (this.class.isImmutable()) {
         result =
-          (keyword.startsWith(abstractKeyword) && keyword !== abstractProcedureKeywords) ||
-          keyword === commentMarker;
+          (keyword.startsWith(abstractKeyword) ||
+            keyword.startsWith(privateKeyword) ||
+            keyword === commentMarker) &&
+          !keyword.includes(procedureKeyword);
       } else {
-        result = keyword.startsWith(abstractKeyword) || keyword === commentMarker;
+        result =
+          keyword.startsWith(abstractKeyword) ||
+          keyword.startsWith(privateKeyword) ||
+          keyword === commentMarker;
       }
     } else if (this.class.isImmutable()) {
-      result = !keyword.startsWith(abstractKeyword) && keyword !== procedureKeyword;
+      result = !keyword.startsWith(abstractKeyword) && !keyword.includes(procedureKeyword);
     } else {
-      result = !keyword.startsWith(abstractKeyword) && (keyword !== privateKeyword || !userEntry); //private
+      result = !keyword.startsWith(abstractKeyword);
     }
     return result;
   }

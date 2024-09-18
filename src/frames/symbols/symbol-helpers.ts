@@ -15,7 +15,7 @@ import { isAstIdNode, isAstQualifiedNode } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractDictionaryType } from "./abstract-dictionary-type";
 import { AbstractListType } from "./abstract-list-type";
-import { ArrayListType } from "./array-list-type";
+import { ArrayType } from "./array-list-type";
 import { BooleanType } from "./boolean-type";
 import { ClassType } from "./class-type";
 import { DictionaryType } from "./dictionary-type";
@@ -23,9 +23,9 @@ import { FloatType } from "./float-type";
 import { FunctionType } from "./function-type";
 import { GenericParameterType } from "./generic-parameter-type";
 import { ImmutableDictionaryType } from "./immutable-dictionary-type";
-import { ImmutableListType } from "./immutable-list-type";
 import { IntType } from "./int-type";
-import { IterType } from "./iter-type";
+import { IterableType } from "./iterable-type";
+import { ListType } from "./list-type";
 import { NullScope } from "./null-scope";
 import { ProcedureType } from "./procedure-type";
 import { RegexType } from "./regex-type";
@@ -45,7 +45,7 @@ export function isListType(s?: SymbolType): s is AbstractListType {
 }
 
 export function isIndexableType(s?: SymbolType): s is IterableSymbolType {
-  return isIterableType(s) && !(s instanceof IterType);
+  return isIterableType(s) && !(s instanceof IterableType);
 }
 
 export function isSymbol(s?: Parent | Frame | ElanSymbol): s is ElanSymbol {
@@ -204,8 +204,8 @@ function matchGenericTypes(actualType: SymbolType, paramType: SymbolType) {
   }
 
   if (
-    paramType instanceof IterType &&
-    (actualType instanceof ImmutableListType || actualType instanceof ArrayListType)
+    paramType instanceof IterableType &&
+    (actualType instanceof ListType || actualType instanceof ArrayType)
   ) {
     return true;
   }

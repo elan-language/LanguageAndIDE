@@ -3,6 +3,7 @@ import { ElanInputOutput } from "./elan-input-output";
 import { ElanRuntimeError } from "./elan-runtime-error";
 import { TestStatus } from "./frames/status-enums";
 import { hasHiddenType } from "./has-hidden-type";
+import { StubInputOutput } from "./stub-input-output";
 
 export class AssertOutcome {
   constructor(
@@ -18,7 +19,7 @@ export class System {
   constructor(public readonly elanInputOutput: ElanInputOutput) {}
 
   // constant immutables
-  emptyImmutableListSingleton = this.immutableList([]);
+  emptyImmutableListSingleton = this.list([]);
   emptyIterableSingleton = this.iter([]);
   emptyImmutableDictionarySingleton = this.immutableDictionary({});
 
@@ -26,7 +27,7 @@ export class System {
     return this.emptyIterableSingleton;
   }
 
-  emptyArrayList() {
+  emptyArray() {
     return this.literalArray([]);
   }
 
@@ -56,8 +57,8 @@ export class System {
     return t;
   }
 
-  immutableList(t: Array<any>) {
-    (t as unknown as hasHiddenType)._type = "ImmutableList";
+  list(t: Array<any>) {
+    (t as unknown as hasHiddenType)._type = "List";
     return t;
   }
 
@@ -72,17 +73,17 @@ export class System {
   }
 
   literalArray(t: Array<any>) {
-    (t as unknown as hasHiddenType)._type = "ArrayList";
+    (t as unknown as hasHiddenType)._type = "Array";
     return t;
   }
 
   iter(t: Array<any>) {
-    (t as unknown as hasHiddenType)._type = "Iter";
+    (t as unknown as hasHiddenType)._type = "Iterable";
     return t;
   }
 
   array(t: Array<any>) {
-    (t as unknown as hasHiddenType)._type = "ArrayList";
+    (t as unknown as hasHiddenType)._type = "Array";
     return t;
   }
 
@@ -136,7 +137,7 @@ export class System {
     throw new ElanRuntimeError(`No such key: ${index}`);
   }
 
-  safeArrayListSet<T>(toIndex: T[], index: number, value: T) {
+  safeArraySet<T>(toIndex: T[], index: number, value: T) {
     const size = toIndex.length;
     if (index >= size) {
       throw new ElanRuntimeError(`Out of range index: ${index} size: ${size}`);
@@ -161,15 +162,15 @@ export class System {
 
   concat<T>(lhs: Array<T> | T, rhs: Array<T> | T) {
     if (Array.isArray(lhs) && Array.isArray(rhs)) {
-      return this.immutableList(lhs.concat(rhs));
+      return this.list(lhs.concat(rhs));
     }
 
     if (Array.isArray(lhs)) {
-      return this.immutableList(lhs.concat([rhs as T]));
+      return this.list(lhs.concat([rhs as T]));
     }
 
     // if (Array.isArray(rhs)){
-    return this.immutableList([lhs as T].concat(rhs));
+    return this.list([lhs as T].concat(rhs));
   }
 
   equals(i1: any, i2: any) {

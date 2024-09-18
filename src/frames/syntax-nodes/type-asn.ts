@@ -3,15 +3,14 @@ import { mustMatchGenericParameters } from "../compile-rules";
 import { AstNode } from "../interfaces/ast-node";
 import { AstTypeNode } from "../interfaces/ast-type-node";
 import { Scope } from "../interfaces/scope";
-import { ArrayListType } from "../symbols/array-list-type";
+import { ArrayType } from "../symbols/array-list-type";
 import { BooleanType } from "../symbols/boolean-type";
 import { DictionaryType } from "../symbols/dictionary-type";
 import { FloatType } from "../symbols/float-type";
 import { FunctionType } from "../symbols/function-type";
 import { ImmutableDictionaryType } from "../symbols/immutable-dictionary-type";
-import { ImmutableListType } from "../symbols/immutable-list-type";
 import { IntType } from "../symbols/int-type";
-import { IterType } from "../symbols/iter-type";
+import { ListType } from "../symbols/list-type";
 import { RegexType } from "../symbols/regex-type";
 import { StringType } from "../symbols/string-type";
 import { TupleType } from "../symbols/tuple-type";
@@ -39,10 +38,10 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
 
   expectedMinimumGenericParameters() {
     switch (this.id) {
-      case "ImmutableList":
-      case "ArrayList":
+      case "List":
+      case "Array":
       case "Func":
-      case "Iter":
+      case "Iterable":
         return 1;
       case "Dictionary":
       case "ImmutableDictionary":
@@ -66,7 +65,7 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
       return "Object";
     }
 
-    if (this.id === "ImmutableList") {
+    if (this.id === "List") {
       return "Array";
     }
 
@@ -94,10 +93,10 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
         return BooleanType.Instance;
       case "String":
         return StringType.Instance;
-      case "ImmutableList":
-        return new ImmutableListType(this.safeGetGenericParameterSymbolType(0));
-      case "ArrayList":
-        return new ArrayListType(this.safeGetGenericParameterSymbolType(0));
+      case "List":
+        return new ListType(this.safeGetGenericParameterSymbolType(0));
+      case "Array":
+        return new ArrayType(this.safeGetGenericParameterSymbolType(0));
       case "Dictionary":
         return new DictionaryType(
           this.safeGetGenericParameterSymbolType(0),
@@ -110,8 +109,8 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
         );
       case "Tuple":
         return new TupleType(this.genericParameters.map((p) => p.symbolType()));
-      case "Iter":
-        return new IterType(this.safeGetGenericParameterSymbolType(0));
+      // case "Iterable":
+      //   return new IterableType(this.safeGetGenericParameterSymbolType(0));
       case "Func":
         const types = this.genericParameters.map((p) => p.symbolType());
         const pTypes = types.slice(0, -1);
@@ -126,6 +125,6 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
   toString() {
     const pp = this.genericParameters.map((p) => p.toString()).join(", ");
     const gp = pp ? `<${pp}>` : "";
-    return `Type ${this.id}${gp}`;
+    return `${this.id}${gp}`;
   }
 }

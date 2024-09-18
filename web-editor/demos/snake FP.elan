@@ -1,9 +1,10 @@
-# FFFF Elan Beta 2 valid
+# c8bd3d016207acc2c05e523f55f35b697780a20084782e361ba0220d25d57923 Elan Beta 2 valid
 
 # Run the program and use the standard W,A,S,D keys to change Snake direction
 # Try to 'eat' the (red) apples, and avoid hitting the edge or the body of the snake.
 main
   var game set to new Game(firstRandom())
+  set game to newApple(game)
   while game.isOn
     set game to updateGraphics(game)
     var gr set to game.graphics
@@ -50,8 +51,9 @@ function moveSnake(g as Game) return Game
 end function
 
 function eatAppleOrNot(g as Game) return Game
-  let shortenedTail be g.body[1..]
-  return if overApple(g) then newApple(g) else copy g with priorTail to g.body[0], body to shortenedTail
+  let tail be g.body[0]
+  let moveTail be g.body[1..g.body.length()]
+  return if overApple(g) then newApple(g) else copy g with priorTail to tail, body to moveTail
 end function
 
 function overApple(g as Game) return Boolean
@@ -78,7 +80,6 @@ immutable class Game
     set property.head to new Square(22, 15)
     set property.priorTail to empty Square
     set property.body to {new Square(20, 15), new Square(21, 15)}
-    set property.apple to new Square(10, 10)
     set property.isOn to true
     set property.key to "d"
     set property.rnd to rnd

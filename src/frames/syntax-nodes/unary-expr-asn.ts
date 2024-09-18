@@ -3,6 +3,7 @@ import { AstNode } from "../interfaces/ast-node";
 import { Scope } from "../interfaces/scope";
 import { BooleanType } from "../symbols/boolean-type";
 import { AbstractAstNode } from "./abstract-ast-node";
+import { mapOperationSymbol } from "./ast-helpers";
 import { ExprAsn } from "./expr-asn";
 import { OperationSymbol } from "./operation-symbol";
 
@@ -46,6 +47,6 @@ export class UnaryExprAsn extends AbstractAstNode implements AstNode {
   }
 
   toString() {
-    return `${OperationSymbol[this.op]} (${this.operand})`;
+    return `${mapOperationSymbol(this.op)} ${this.operand}`;
   }
 }

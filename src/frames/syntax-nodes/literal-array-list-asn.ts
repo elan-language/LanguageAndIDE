@@ -3,11 +3,11 @@ import { mustBeCompatibleType } from "../compile-rules";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstNode } from "../interfaces/ast-node";
 import { Scope } from "../interfaces/scope";
-import { ArrayListType } from "../symbols/array-list-type";
+import { ArrayType } from "../symbols/array-list-type";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 
-export class LiteralArrayListAsn extends AbstractAstNode implements AstCollectionNode {
+export class LiteralArrayAsn extends AbstractAstNode implements AstCollectionNode {
   constructor(
     public readonly items: AstNode[],
     public readonly fieldId: string,
@@ -39,9 +39,9 @@ export class LiteralArrayListAsn extends AbstractAstNode implements AstCollectio
   symbolType() {
     const ofType = this.items[0]?.symbolType();
     if (ofType) {
-      return new ArrayListType(ofType);
+      return new ArrayType(ofType);
     }
-    return new ArrayListType(UnknownType.Instance);
+    return new ArrayType(UnknownType.Instance);
   }
 
   toString() {

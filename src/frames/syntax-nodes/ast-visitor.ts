@@ -4,8 +4,7 @@ import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { Scope } from "../interfaces/scope";
 import { globalKeyword, libraryKeyword, propertyKeyword, thisKeyword } from "../keywords";
 import { AbstractAlternatives } from "../parse-nodes/abstract-alternatives";
-import { Alternatives } from "../parse-nodes/alternatives";
-import { ArrayListNode } from "../parse-nodes/array-list-node";
+import { ArrayNode } from "../parse-nodes/array-list-node";
 import { AssignableNode } from "../parse-nodes/assignable-node";
 import { BinaryExpression } from "../parse-nodes/binary-expression";
 import { BracketedExpression } from "../parse-nodes/bracketed-expression";
@@ -23,13 +22,13 @@ import { FuncTypeNode } from "../parse-nodes/func-type-node";
 import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { IfExpr } from "../parse-nodes/if-expr";
 import { ImmutableDictionaryNode } from "../parse-nodes/immutable-dictionary-node";
-import { ImmutableListNode } from "../parse-nodes/immutable-list-node";
 import { IndexSingle } from "../parse-nodes/index-single";
 import { InstanceNode } from "../parse-nodes/instanceNode";
 import { InstanceProcRef } from "../parse-nodes/instanceProcRef";
 import { KeywordNode } from "../parse-nodes/keyword-node";
 import { KVPnode } from "../parse-nodes/kvp-node";
 import { Lambda } from "../parse-nodes/lambda";
+import { ListNode } from "../parse-nodes/list-node";
 import { LitBoolean } from "../parse-nodes/lit-boolean";
 import { LitFloat } from "../parse-nodes/lit-float";
 import { LitInt } from "../parse-nodes/lit-int";
@@ -58,6 +57,7 @@ import { TypeGenericNode } from "../parse-nodes/type-generic-node";
 import { TypeImmutableDictionaryNode } from "../parse-nodes/type-immutable-dictionary-node";
 import { TypeImmutableListNode } from "../parse-nodes/type-immutable-list-node";
 import { TypeListNode } from "../parse-nodes/type-list-node";
+import { TypeOfNode } from "../parse-nodes/type-of-node";
 import { TypeSimpleNode } from "../parse-nodes/type-simple-node";
 import { TypeTupleNode } from "../parse-nodes/type-tuple-node";
 import { UnaryExpression } from "../parse-nodes/unary-expression";
@@ -66,7 +66,7 @@ import { VarRefNode } from "../parse-nodes/var-ref-node";
 import { SetStatement } from "../statements/set-statement";
 import { EnumType } from "../symbols/enum-type";
 import { wrapScopeInScope } from "../symbols/symbol-helpers";
-import { isAstIdNode, isAstQualifierNode } from "./ast-helpers";
+import { isAstIdNode, isAstQualifierNode, mapOperation } from "./ast-helpers";
 import { BinaryExprAsn } from "./binary-expr-asn";
 import { BracketedAsn } from "./bracketed-asn";
 import { CompositeAsn } from "./composite-asn";
@@ -86,19 +86,18 @@ import { InterpolatedAsn } from "./interpolated-asn";
 import { KvpAsn } from "./kvp-asn";
 import { LambdaAsn } from "./lambda-asn";
 import { LambdaSigAsn } from "./lambda-sig-asn";
-import { LiteralArrayListAsn } from "./literal-array-list-asn";
+import { LiteralArrayAsn } from "./literal-array-list-asn";
 import { LiteralBoolAsn } from "./literal-bool-asn";
 import { LiteralDictionaryAsn } from "./literal-dictionary-asn";
 import { LiteralEnumAsn } from "./literal-enum-asn";
 import { LiteralFloatAsn } from "./literal-float-asn";
 import { LiteralImmutableDictionaryAsn } from "./literal-immutable-dictionary-asn";
-import { LiteralImmutableListAsn } from "./literal-immutable-list-asn";
 import { LiteralIntAsn } from "./literal-int-asn";
+import { LiteralListAsn } from "./literal-list-asn";
 import { LiteralRegExAsn } from "./literal-regex-asn";
 import { LiteralStringAsn } from "./literal-string-asn";
 import { LiteralTupleAsn } from "./literal-tuple-asn";
 import { NewAsn } from "./new-asn";
-import { OperationSymbol } from "./operation-symbol";
 import { ParamDefAsn } from "./param-def-asn";
 import { QualifierAsn } from "./qualifier-asn";
 import { RangeAsn } from "./range-asn";
@@ -106,54 +105,10 @@ import { SegmentedStringAsn } from "./segmented-string-asn";
 import { SetAsn } from "./set-asn";
 import { ThisAsn } from "./this-asn";
 import { TypeAsn } from "./type-asn";
+import { TypeOfAsn } from "./typeof-asn";
 import { UnaryExprAsn } from "./unary-expr-asn";
 import { VarAsn } from "./var-asn";
 import { WithAsn } from "./with-asn";
-
-function mapOperation(op: string) {
-  switch (op.trim()) {
-    case "+":
-      return OperationSymbol.Add;
-    case "-":
-      return OperationSymbol.Minus;
-    case "*":
-      return OperationSymbol.Multiply;
-    case "<":
-      return OperationSymbol.LT;
-    case ">":
-      return OperationSymbol.GT;
-    case ">=":
-      return OperationSymbol.GTE;
-    case "<=":
-      return OperationSymbol.LTE;
-    case "and":
-      return OperationSymbol.And;
-    case "or":
-      return OperationSymbol.Or;
-    case "xor":
-      return OperationSymbol.Xor;
-    case "not":
-      return OperationSymbol.Not;
-    case "is":
-      return OperationSymbol.Equals;
-    case "isnt":
-      return OperationSymbol.NotEquals;
-    case "div":
-      return OperationSymbol.Div;
-    case "mod":
-      return OperationSymbol.Mod;
-    case "/":
-      return OperationSymbol.Divide;
-    case "^":
-      return OperationSymbol.Pow;
-    default:
-      throw new Error("Not implemented");
-  }
-}
-
-export function asCsv(nodes: AstNode[], id: string, scope: Scope) {
-  return new CsvAsn(nodes, id, scope);
-}
 
 export function transformMany(
   node: CSV | Multiple | Sequence,
@@ -270,9 +225,10 @@ export function transform(
   if (node instanceof ParamDefNode) {
     const id = node.name?.matchedText ?? "";
     const type = transform(node.type, fieldId, scope);
+    const out = !!node.out?.matchedNode;
 
     if (isAstIdNode(type)) {
-      return new ParamDefAsn(id, type, fieldId, scope);
+      return new ParamDefAsn(id, type, out, fieldId, scope);
     }
 
     return undefined;
@@ -370,14 +326,14 @@ export function transform(
     return new EmptyAsn(fieldId);
   }
 
-  if (node instanceof ImmutableListNode) {
+  if (node instanceof ListNode) {
     const items = transformMany(node.csv as CSV, fieldId, scope).items;
-    return new LiteralImmutableListAsn(items, fieldId, scope);
+    return new LiteralListAsn(items, fieldId, scope);
   }
 
-  if (node instanceof ArrayListNode) {
+  if (node instanceof ArrayNode) {
     const items = transformMany(node.csv as CSV, fieldId, scope).items;
-    return new LiteralArrayListAsn(items, fieldId, scope);
+    return new LiteralArrayAsn(items, fieldId, scope);
   }
 
   if (node instanceof DictionaryNode) {
@@ -540,6 +496,11 @@ export function transform(
     const q = transform(node.prefix, fieldId, scope) as AstQualifierNode | undefined;
     const id = node.simple!.matchedText;
     return new VarAsn(id, false, q, undefined, fieldId, scope);
+  }
+
+  if (node instanceof TypeOfNode) {
+    const term = transform(node.argument, fieldId, scope);
+    return new TypeOfAsn(term!, fieldId, scope);
   }
 
   throw new Error("Not implemented " + (node ? node.constructor.name : "undefined"));

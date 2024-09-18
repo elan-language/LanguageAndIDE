@@ -1,4 +1,4 @@
-# 68a0b0b1624acaf5ddd0a0a9c8f4cf45a68a4f5bca0809f04c122e46ca1e32c5 Elan Beta 2 valid
+# 6ef11d76bb3c7aeeac1f19cf00f18bd50e9660477669f9df182ff687b4552ab6 Elan Beta 2 valid
 
 main
   var start set to new Point(5, 5)
@@ -19,13 +19,13 @@ main
         call gr.clearGraphics()
         call clearConsole()
       else
-        var alg set to algFromLetter.getValueByKey(option)
+        var alg set to algFromLetter[option]
         call runSolver(gr, start, destination, rocks, solver, alg)
     end if
   end while
 end main
 
-procedure runSolver(gr as Graphics, start as Point, destination as Point, rocks as [Point], solver as Solver, alg as Algorithm)
+procedure runSolver(gr as Graphics, start as Point, destination as Point, rocks as [Point], out solver as Solver, alg as Algorithm)
   call solver.initialise(alg)
   var gr2 set to initialiseGraphics(start, destination, rocks)
   while solver.running
@@ -154,7 +154,7 @@ class Solver
           set neighbours to neighbours + node
       end if
     end each
-    return neighbours.asArrayList()
+    return neighbours.asArray()
   end function
 
   function getNodeFor(p as Point) return Node

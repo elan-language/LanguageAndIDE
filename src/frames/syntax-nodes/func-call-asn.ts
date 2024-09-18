@@ -121,6 +121,6 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
 
   toString() {
     const pp = this.parameters.map((p) => p.toString()).join(", ");
-    return `Func Call ${this.id}(${pp})`;
+    return `${this.id}(${pp})`;
   }
 }

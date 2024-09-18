@@ -52,7 +52,7 @@ end class`;
       ["aa3", "Int"],
     ] as [string, string][];
 
-    await assertAutocompletes(fileImpl, "ident18", "a", 1, expected);
+    await assertAutocompletes(fileImpl, "ident16", "a", 1, expected);
   });
 
   test("Pass_FiltersByInput", async () => {
@@ -157,7 +157,7 @@ end main`;
       ["proc2", "Procedure ()"],
     ] as [string, string][];
 
-    await assertAutocompletes(fileImpl, "ident39", ".", 3, expected);
+    await assertAutocompletes(fileImpl, "ident37", ".", 3, expected);
   });
 
   test("Pass_CallMembersFilter", async () => {
@@ -194,7 +194,7 @@ end main`;
 
     const expected = [["pproc3", "Procedure ()"]] as [string, string][];
 
-    await assertAutocompletes(fileImpl, "ident39", "p", 5, expected);
+    await assertAutocompletes(fileImpl, "ident37", "p", 5, expected);
   });
 
   test("Pass_CallExtensions", async () => {
@@ -209,15 +209,15 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["append", "Procedure (ArrayList <Generic Parameter T>, Generic Parameter T)"],
-      ["appendList", "Procedure (ArrayList <Generic Parameter T>, ArrayList <Generic Parameter T>)"],
-      ["insertAt", "Procedure (ArrayList <Generic Parameter T>, Int, Generic Parameter T)"],
-      ["prepend", "Procedure (ArrayList <Generic Parameter T>, Generic Parameter T)"],
-      ["prependList", "Procedure (ArrayList <Generic Parameter T>, ArrayList <Generic Parameter T>)"],
-      ["putAt", "Procedure (ArrayList <Generic Parameter T>, Int, Generic Parameter T)"],
-      ["removeAll", "Procedure (ArrayList <Generic Parameter T>, Generic Parameter T)"],
-      ["removeAt", "Procedure (ArrayList <Generic Parameter T>, Int)"],
-      ["removeFirst", "Procedure (ArrayList <Generic Parameter T>, Generic Parameter T)"]
+      ["append", "Procedure ([Generic Parameter T], Generic Parameter T)"],
+      ["appendList", "Procedure ([Generic Parameter T], [Generic Parameter T])"],
+      ["insertAt", "Procedure ([Generic Parameter T], Int, Generic Parameter T)"],
+      ["prepend", "Procedure ([Generic Parameter T], Generic Parameter T)"],
+      ["prependList", "Procedure ([Generic Parameter T], [Generic Parameter T])"],
+      ["putAt", "Procedure ([Generic Parameter T], Int, Generic Parameter T)"],
+      ["removeAll", "Procedure ([Generic Parameter T], Generic Parameter T)"],
+      ["removeAt", "Procedure ([Generic Parameter T], Int)"],
+      ["removeFirst", "Procedure ([Generic Parameter T], Generic Parameter T)"],
     ] as [string, string][];
 
     await assertAutocompletes(fileImpl, "ident7", ".", 3, expected);
@@ -235,8 +235,8 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["append", "Procedure (ArrayList <Generic Parameter T>, Generic Parameter T)"],
-      ["appendList", "Procedure (ArrayList <Generic Parameter T>, ArrayList <Generic Parameter T>)"],
+      ["append", "Procedure ([Generic Parameter T], Generic Parameter T)"],
+      ["appendList", "Procedure ([Generic Parameter T], [Generic Parameter T])"],
     ] as [string, string][];
 
     await assertAutocompletes(fileImpl, "ident7", "p", 5, expected);
@@ -291,7 +291,7 @@ end function`;
 
     const expected = [
       ["foo", "Int"],
-      ["foobar", "Function () : Int"],
+      ["foobar", "Func<of  => Int>"],
     ] as [string, string][];
 
     await assertAutocompletes(fileImpl, "expr8", "o", 5, expected);

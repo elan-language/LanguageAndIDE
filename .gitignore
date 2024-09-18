@@ -16,3 +16,4 @@ node_modules
 .elanLanguageServer/
 coverage
 .nyc_output
+web-editor/elan-api.js

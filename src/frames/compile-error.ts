@@ -37,14 +37,19 @@ export class TypeCompileError extends CompileError {
 }
 
 export class TypesCompileError extends CompileError {
-  constructor(type1: string, type2: string, location: string, unknown: boolean) {
-    super(Priority.typeError, `Incompatible types ${type1} to ${type2}`, location, unknown);
+  constructor(type1: string, type2: string, addInfo: string, location: string, unknown: boolean) {
+    super(
+      Priority.typeError,
+      `Incompatible types ${type1} to ${type2}${addInfo}`,
+      location,
+      unknown,
+    );
   }
 }
 
 export class ArraySizeCompileError extends CompileError {
   constructor(location: string) {
-    super(Priority.illegalOperation, `ArrayList requires 1 or 2 parameters`, location, false);
+    super(Priority.illegalOperation, `Array requires 1 or 2 parameters`, location, false);
   }
 }
 
@@ -133,6 +138,12 @@ export class MustBeConcreteCompileError extends CompileError {
 export class MustBeImmutableCompileError extends CompileError {
   constructor(type: string, location: string, unknown: boolean) {
     super(Priority.typeError, `${type} must be immutable`, location, unknown);
+  }
+}
+
+export class OutParameterCompileError extends CompileError {
+  constructor(name: string, location: string, unknown: boolean) {
+    super(Priority.typeError, `Cannot pass '${name}' as an out parameter`, location, unknown);
   }
 }
 

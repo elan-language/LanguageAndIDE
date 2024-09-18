@@ -1,17 +1,17 @@
 import { CompileError } from "../compile-error";
 import {
-  mustBeIndexableSymbol,
   mustBeCompatibleType,
+  mustBeIndexableSymbol,
   mustBeRangeableSymbol,
 } from "../compile-rules";
 import { AstNode } from "../interfaces/ast-node";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
-import { ArrayListType } from "../symbols/array-list-type";
+import { ArrayType } from "../symbols/array-list-type";
 import { FunctionType } from "../symbols/function-type";
-import { ImmutableListType } from "../symbols/immutable-list-type";
 import { IntType } from "../symbols/int-type";
-import { isGenericSymbolType, isDictionarySymbolType } from "../symbols/symbol-helpers";
+import { ListType } from "../symbols/list-type";
+import { isDictionarySymbolType, isGenericSymbolType } from "../symbols/symbol-helpers";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { ChainedAsn } from "./chained-asn";
@@ -61,10 +61,10 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
   }
 
   wrapListOrArray(rootType: SymbolType, code: string): string {
-    if (rootType instanceof ImmutableListType) {
-      return `system.immutableList(${code})`;
+    if (rootType instanceof ListType) {
+      return `system.list(${code})`;
     }
-    if (rootType instanceof ArrayListType) {
+    if (rootType instanceof ArrayType) {
       return `system.array(${code})`;
     }
     if (rootType instanceof FunctionType) {
@@ -144,9 +144,6 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
   }
 
   toString() {
-    if (this.index2) {
-      return `[${this.index1}][${this.index2}]`;
-    }
-    return `[${this.index1}]`;
+    return `${this.precedingNode}[${this.index1}]`;
   }
 }

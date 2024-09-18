@@ -1,12 +1,15 @@
 import { ElanInputOutput } from "../../src/elan-input-output";
+import { hasHiddenType } from "../../src/has-hidden-type";
 import { System } from "../../src/system";
 
 export class TestInputOutput implements ElanInputOutput {
-  getKeystroke(): string {
-    return "";
+  getKeystroke(): Promise<string> {
+    return Promise.resolve("");
   }
-  getKeystrokeWithModifier(): [string, string] {
-    return ["", ""];
+  getKeystrokeWithModifier(): Promise<[string, string]> {
+    const t = ["", ""] as [string, string];
+    (t as unknown as hasHiddenType)._type = "Tuple";
+    return  Promise.resolve(t);
   }
   clearKeyBuffer(): void {}
   printed: string = "";

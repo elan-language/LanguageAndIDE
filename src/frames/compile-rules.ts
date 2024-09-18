@@ -16,6 +16,7 @@ import {
   NotNewableCompileError,
   NotRangeableCompileError,
   NotUniqueNameCompileError,
+  OutParameterCompileError,
   ParametersCompileError,
   PrintFunctionCompileError,
   PrivatePropertyCompileError,
@@ -34,7 +35,7 @@ import { SymbolType } from "./interfaces/symbol-type";
 import { allKeywords, reservedWords } from "./keywords";
 import { LetStatement } from "./statements/let-statement";
 import { AbstractDictionaryType } from "./symbols/abstract-dictionary-type";
-import { ArrayListType } from "./symbols/array-list-type";
+import { ArrayType } from "./symbols/array-list-type";
 import { BooleanType } from "./symbols/boolean-type";
 import { ClassType } from "./symbols/class-type";
 import { DictionaryType } from "./symbols/dictionary-type";
@@ -44,9 +45,9 @@ import { FloatType } from "./symbols/float-type";
 import { FunctionType } from "./symbols/function-type";
 import { GenericParameterType } from "./symbols/generic-parameter-type";
 import { ImmutableDictionaryType } from "./symbols/immutable-dictionary-type";
-import { ImmutableListType } from "./symbols/immutable-list-type";
 import { IntType } from "./symbols/int-type";
-import { IterType } from "./symbols/iter-type";
+import { IterableType } from "./symbols/iterable-type";
+import { ListType } from "./symbols/list-type";
 import { ProcedureType } from "./symbols/procedure-type";
 import { RegexType } from "./symbols/regex-type";
 import { StringType } from "./symbols/string-type";
@@ -56,6 +57,7 @@ import {
   isGenericSymbolType,
   isIndexableType,
   isIterableType,
+  isListType,
 } from "./symbols/symbol-helpers";
 import { SymbolScope } from "./symbols/symbol-scope";
 import { TupleType } from "./symbols/tuple-type";
@@ -399,13 +401,25 @@ function FailIncompatible(
   compileErrors: CompileError[],
   location: string,
 ) {
+  let addInfo = "";
+  // special case
+  if (lhs instanceof ListType && rhs instanceof ArrayType) {
+    addInfo = " try converting with '.asList()'";
+  }
+
+  if (isListType(lhs) && rhs instanceof IterableType) {
+    addInfo = " try converting Iterable to a concrete type with e.g. '.asList()'";
+  }
+
   const unknown = lhs === UnknownType.Instance || rhs === UnknownType.Instance;
-  compileErrors.push(new TypesCompileError(rhs.toString(), lhs.toString(), location, unknown));
+  compileErrors.push(
+    new TypesCompileError(rhs.toString(), lhs.toString(), addInfo, location, unknown),
+  );
 }
 
 function FailNotNumber(lhs: SymbolType, compileErrors: CompileError[], location: string) {
   const unknown = lhs === UnknownType.Instance;
-  compileErrors.push(new TypesCompileError(lhs.toString(), "Float or Int", location, unknown));
+  compileErrors.push(new TypesCompileError(lhs.toString(), "Float or Int", "", location, unknown));
 }
 
 function FailCannotCompareProcFunc(compileErrors: CompileError[], location: string) {
@@ -541,20 +555,20 @@ export function mustBeCompatibleType(
     return;
   }
 
-  if (lhs instanceof ImmutableListType && rhs instanceof ImmutableListType) {
+  if (lhs instanceof ListType && rhs instanceof ListType) {
     mustBeCompatibleType(lhs.ofType, rhs.ofType, compileErrors, location);
   }
 
-  if (lhs instanceof ImmutableListType && !(rhs instanceof ImmutableListType)) {
+  if (lhs instanceof ListType && !(rhs instanceof ListType)) {
     FailIncompatible(lhs, rhs, compileErrors, location);
     return;
   }
 
-  if (lhs instanceof ArrayListType && rhs instanceof ArrayListType) {
+  if (lhs instanceof ArrayType && rhs instanceof ArrayType) {
     mustBeCompatibleType(lhs.ofType, rhs.ofType, compileErrors, location);
   }
 
-  if (lhs instanceof ArrayListType && !(rhs instanceof ArrayListType)) {
+  if (lhs instanceof ArrayType && !(rhs instanceof ArrayType)) {
     FailIncompatible(lhs, rhs, compileErrors, location);
     return;
   }
@@ -605,12 +619,12 @@ export function mustBeCompatibleType(
     return;
   }
 
-  if (lhs instanceof IterType && !isIterableType(rhs)) {
+  if (lhs instanceof IterableType && !isIterableType(rhs)) {
     FailIncompatible(lhs, rhs, compileErrors, location);
     return;
   }
 
-  if (lhs instanceof IterType && isIterableType(rhs)) {
+  if (lhs instanceof IterableType && isIterableType(rhs)) {
     mustBeCompatibleType(lhs.ofType, rhs.ofType, compileErrors, location);
     return;
   }
@@ -740,12 +754,20 @@ export function mustNotBeParameter(
     if (isInsideFunctionOrConstructor(parent)) {
       compileErrors.push(new ReassignCompileError(`parameter: ${getId(assignable)}`, location));
     } else {
-      // only mutate indexed arraylist
+      // only mutate indexed Array
       if (!isIndexed(assignable)) {
         compileErrors.push(new ReassignCompileError(`parameter: ${getId(assignable)}`, location));
       }
     }
   }
+}
+
+export function cannotCallOnParameter(
+  assignable: AstNode,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  compileErrors.push(new MutateCompileError(`parameter: ${getId(assignable)}`, location));
 }
 
 export function mustNotBeCounter(
@@ -769,6 +791,19 @@ export function mustNotBeConstant(
 
   if (s === SymbolScope.program) {
     compileErrors.push(new MutateCompileError(`constant`, location));
+  }
+}
+
+export function cannotPassAsOutParameter(
+  parameter: AstNode | string,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  if (typeof parameter === "string") {
+    compileErrors.push(new OutParameterCompileError(parameter, location, false));
+  } else {
+    const unknown = parameter.symbolType() === UnknownType.Instance;
+    compileErrors.push(new OutParameterCompileError(parameter.toString(), location, unknown));
   }
 }
 

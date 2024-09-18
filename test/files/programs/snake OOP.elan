@@ -1,4 +1,4 @@
-# becebcc8ef7cff7e20ed85dd1ba26209a6e951ebe78a528ab58db5e6c347bba7 Elan Beta 2 valid
+# 50c05be91d6922abfd120cca030245df2256ca03548cc97ff45f4049ec7a3d5e Elan Beta 2 valid
 
 # Run the program and use the standard W,A,S,D keys to change Snake direction
 # Try to 'eat' the (red) apples, and avoid hitting the edge or the body of the snake.
@@ -47,7 +47,7 @@ class Snake
     end switch
   end procedure
 
-  procedure clockTick(key as String, apple as Apple)
+  procedure clockTick(key as String, out apple as Apple)
     call setDirection(key)
     set property.priorTail to body[0]
     call body.append(head)

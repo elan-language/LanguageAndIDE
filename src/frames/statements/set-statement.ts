@@ -15,6 +15,7 @@ import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
 import { setKeyword, toKeyword } from "../keywords";
+import { SymbolScope } from "../symbols/symbol-scope";
 import { isAstIdNode } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 

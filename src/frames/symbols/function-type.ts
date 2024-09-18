@@ -15,7 +15,7 @@ export class FunctionType implements SymbolType {
   isImmutable = true;
 
   get name() {
-    return `Function (${this.parametersTypes.map((p) => p.name).join(", ")}) : ${this.returnType.name}`;
+    return `Func<of ${this.parametersTypes.map((p) => p.name).join(", ")} => ${this.returnType.name}>`;
   }
 
   toString(): string {

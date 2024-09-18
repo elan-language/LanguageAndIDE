@@ -15,7 +15,11 @@ import { StatementSelector } from "../src/frames/statements/statement-selector";
 import { ThenStatement } from "../src/frames/statements/then-statement";
 import { ParseStatus } from "../src/frames/status-enums";
 import { ignore_test } from "./compiler/compiler-test-helpers";
-import { T00_emptyFile, T03_mainWithAllStatements, T04_allGlobalsExceptClass, T05_classes } from "./model-generating-functions.";
+import {
+  T00_emptyFile,
+  T03_mainWithAllStatements,
+  T05_classes,
+} from "./model-generating-functions.";
 import {
   back,
   createTestRunner,
@@ -149,11 +153,11 @@ suite("Editing Frames", () => {
   });
   test("Remove selector frame", () => {
     const file = T05_classes();
-    const fun = file.getById("func27") as GlobalFunction;
+    const fun = file.getById("func23") as GlobalFunction;
     let child1 = fun.getFirstChild();
-    const sel = file.getById("select28");
+    const sel = file.getById("select24");
     assert.equal(child1, sel);
-    const ret = file.getById("return32");
+    const ret = file.getById("return28");
     ret.select(true, false);
     ret.processKey(up());
     assert.equal(ret.isSelected(), false);
@@ -167,9 +171,9 @@ suite("Editing Frames", () => {
   });
   test("Cannot remove selector that is only statement", () => {
     const file = T05_classes();
-    const cons = file.getById("constructor7") as Constructor;
+    const cons = file.getById("constructor5") as Constructor;
     let child1 = cons.getFirstChild();
-    const sel = file.getById("select8");
+    const sel = file.getById("select6");
     assert.equal(child1, sel);
     sel.processKey(del());
     child1 = cons.getFirstChild();
@@ -342,16 +346,16 @@ suite("Editing Frames", () => {
     const file = await loadFileAsModelNew(`${__dirname}\\files\\testcode622.elan`);
     const runner = await createTestRunner();
     await file.refreshAllStatuses(runner);
-    const func11 = file.getById("func11");
-    func11.select();
-    func11.processKey(ctrl_x());
+    const func9 = file.getById("func9");
+    func9.select();
+    func9.processKey(ctrl_x());
     const scratchpad = (file as FileImpl).getScratchPad();
     assert.equal(scratchpad.readFrames()?.length, 1);
     const class1 = file.getById("class1");
     class1.processKey(enter());
-    const sel20 = file.getById("select21") as GlobalSelector;
-    sel20.select(true, false);
-    sel20.processKey(ctrl_v());
+    const sel18 = file.getById("select19") as GlobalSelector;
+    sel18.select(true, false);
+    sel18.processKey(ctrl_v());
     assert.equal(scratchpad.readFrames()?.length, 1);
   });
   test("#644 cutting statement when there is already a selector following", async () => {
@@ -381,14 +385,13 @@ suite("Editing Frames", () => {
     assert.equal(main.getChildren()[0].renderAsSource(), select6.renderAsSource());
     var3.processKey(ctrl_up());
     assert.equal(main.getChildren()[0].renderAsSource(), var3.renderAsSource());
-
   });
   test("#653 able to delete a frame that has not been added to", async () => {
     const file = T00_emptyFile();
     // 1. Backspace on the first field
     const sel0 = file.getById("select0");
     sel0.processKey(key("f"));
-    const name = file.getById("ident3")
+    const name = file.getById("ident3");
     assert.equal(name.isSelected(), true);
     name.processKey(key("Backspace"));
     assert.equal(file.getChildren().length, 1);
@@ -402,18 +405,18 @@ suite("Editing Frames", () => {
     // 3. Does not work if field has been edited
     sel0.processKey(key("f"));
     assert.equal(file.getChildren().length, 2);
-    var f3 = file.getById("func15");
-    var name3 = file.getById("ident17");
+    const f3 = file.getById("func15");
+    const name3 = file.getById("ident17");
     name3.processKey(key("x"));
     f3.processKey(key("Backspace"));
     assert.equal(file.getChildren().length, 2);
     // 4. Does not work if any child frame has been added
     sel0.processKey(key("f"));
     assert.equal(file.getChildren().length, 3);
-    var f4 = file.getById("func22");
-    var sel4 = file.getById("select23");
+    const f4 = file.getById("func22");
+    const sel4 = file.getById("select23");
     sel4.processKey(key("v"));
     f4.processKey(key("Backspace"));
     assert.equal(file.getChildren().length, 3);
   });
-});   
+});

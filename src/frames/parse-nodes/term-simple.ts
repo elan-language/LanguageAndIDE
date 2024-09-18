@@ -1,12 +1,12 @@
 import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
-import { ArrayListNode } from "./array-list-node";
+import { ArrayNode } from "./array-list-node";
 import { BracketedExpression } from "./bracketed-expression";
 import { DictionaryNode } from "./dictionary-node";
 import { ExprNode } from "./expr-node";
 import { ImmutableDictionaryNode } from "./immutable-dictionary-node";
-import { ImmutableListNode } from "./immutable-list-node";
 import { IndexSingle } from "./index-single";
+import { ListNode } from "./list-node";
 import { LitValueNode } from "./lit-value";
 import { OptionalNode } from "./optional-node";
 import { ReferenceNode } from "./reference-node";
@@ -27,8 +27,8 @@ export class TermSimple extends AbstractSequence {
     const litVal = () => new LitValueNode();
     const ref = () => new ReferenceNode();
     const typeOf = () => new TypeOfNode();
-    const immList = () => new ImmutableListNode(() => new ExprNode());
-    const arrList = () => new ArrayListNode(() => new ExprNode());
+    const immList = () => new ListNode(() => new ExprNode());
+    const arrList = () => new ArrayNode(() => new ExprNode());
     const dict = () =>
       new DictionaryNode(
         () => new ExprNode(),

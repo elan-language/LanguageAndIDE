@@ -27,6 +27,6 @@ export class InterpolatedAsn extends AbstractAstNode implements AstNode {
   }
 
   toString() {
-    return `(${this.body})`;
+    return `${this.body}`;
   }
 }

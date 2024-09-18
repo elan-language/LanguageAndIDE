@@ -4,7 +4,7 @@ import { CSV } from "./csv";
 import { ParseNode } from "./parse-node";
 import { PunctuationNode } from "./punctuation-node";
 
-export class ArrayListNode extends AbstractSequence {
+export class ArrayNode extends AbstractSequence {
   csv: CSV | undefined;
   elementConstructor: () => ParseNode;
 

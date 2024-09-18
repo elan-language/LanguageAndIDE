@@ -1,4 +1,4 @@
-# 88515fcfe626ca19af6d4c67361e7d883de877ccba93262c8084e86166b80fb1 Elan Beta 2 valid
+# 27ff613829468660bfea1f903f00ae01e2eafa6624dbe1d25d371204d2274e78 Elan Beta 2 valid
 
 # This is *not* a card game: it's a demo of how you could *start* to draw cards for such game
 main
@@ -28,9 +28,9 @@ class Card
   constructor(rank as Rank, suit as Suit)
     set property.rank to rank
     set property.suit to suit
-    set property.symbol to unicode(symbols.getValueByKey(suit))
-    set property.colour to colourForSuit.getValueByKey(suit)
-    set property.label to labels.getValueByKey(rank)
+    set property.symbol to unicode(symbols[suit])
+    set property.colour to colourForSuit[suit]
+    set property.label to labels[rank]
   end constructor
 
   property suit as Suit

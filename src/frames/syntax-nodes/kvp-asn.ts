@@ -33,6 +33,6 @@ export class KvpAsn extends AbstractAstNode implements AstNode {
   }
 
   toString() {
-    return `(${this.key}:${this.value})`;
+    return `${this.key}:${this.value}`;
   }
 }

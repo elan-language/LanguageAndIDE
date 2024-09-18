@@ -40,7 +40,7 @@ export class ParamList extends AbstractField implements Scope {
             matches.push({
               symbolId: n.id,
               symbolType: () => n.symbolType(),
-              symbolScope: SymbolScope.parameter,
+              symbolScope: n.symbolScope,
             });
           }
         }
@@ -90,7 +90,7 @@ export class ParamList extends AbstractField implements Scope {
             matches.push({
               symbolId: id,
               symbolType: () => n.symbolType(),
-              symbolScope: SymbolScope.parameter,
+              symbolScope: n.symbolScope,
             });
           }
         }

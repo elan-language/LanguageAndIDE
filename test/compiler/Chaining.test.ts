@@ -7,7 +7,7 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
-  transforms
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("Chaining", () => {
@@ -22,7 +22,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.immutableList([system.immutableList([1, 2]), system.immutableList([3, 4])]);
+  var a = system.list([system.list([1, 2]), system.list([3, 4])]);
   var b = system.safeIndex(system.safeIndex(a, 1), 1);
   system.printLine(_stdlib.asString(b));
 }
@@ -48,7 +48,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.immutableList([system.literalArray([1, 2]), system.literalArray([3, 4])]);
+  var a = system.list([system.literalArray([1, 2]), system.literalArray([3, 4])]);
   var b = system.safeIndex(system.safeIndex(a, 1), 1);
   system.printLine(_stdlib.asString(b));
 }
@@ -90,7 +90,7 @@ async function main() {
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["a", system.emptyImmutableList()]]);};
   constructor() {
-    this.a = system.immutableList([1]);
+    this.a = system.list([1]);
   }
 
   a = system.emptyImmutableList();
@@ -299,7 +299,7 @@ end class`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var f = system.immutableList([system.initialise(new Foo())]);
+  var f = system.list([system.initialise(new Foo())]);
   var b = 0;
   b = system.safeIndex(f, 0).b.ff();
   system.printLine(_stdlib.asString(b));
@@ -422,12 +422,12 @@ async function main() {
 }
 
 class Bar {
-  static emptyInstance() { return system.emptyClass(Bar, [["strArr", system.emptyArrayList()]]);};
+  static emptyInstance() { return system.emptyClass(Bar, [["strArr", system.emptyArray()]]);};
   constructor() {
     this.strArr = system.literalArray(["apple", "orange", "pair"]);
   }
 
-  strArr = system.emptyArrayList();
+  strArr = system.emptyArray();
 
 }
 return [main, _tests];}`;
@@ -575,7 +575,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.immutableList([1, 2, 3, 4, 5, 6]);
+  var a = system.list([1, 2, 3, 4, 5, 6]);
   system.printLine(_stdlib.asString(_stdlib.reduce(_stdlib.map(_stdlib.filter(a, (x) => x > 2), (x) => x * x), 0, (s, x) => s + x)));
 }
 return [main, _tests];}`;
@@ -594,13 +594,13 @@ return [main, _tests];}`;
 
 main 
   var a set to [1,2,3,4,5,6]
-  print a[..5].map(lambda x as Int => x * x).asArrayList()[2..].reduce(0, lambda s as Int, x as Int => s + x)
+  print a[..5].map(lambda x as Int => x * x).asArray()[2..].reduce(0, lambda s as Int, x as Int => s + x)
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.literalArray([1, 2, 3, 4, 5, 6]);
-  system.printLine(_stdlib.asString(_stdlib.reduce(system.array(_stdlib.asArrayList(_stdlib.map(system.array(a.slice(0, 5)), (x) => x * x)).slice(2)), 0, (s, x) => s + x)));
+  system.printLine(_stdlib.asString(_stdlib.reduce(system.array(_stdlib.asArray(_stdlib.map(system.array(a.slice(0, 5)), (x) => x * x)).slice(2)), 0, (s, x) => s + x)));
 }
 return [main, _tests];}`;
 
@@ -623,12 +623,9 @@ main
   print b
 end main`;
 
-   
-
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
   });
@@ -660,16 +657,10 @@ class Bar
   end function
 end class`;
 
-   
-
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["fd is not defined"]);
   });
-
-
-
 });
