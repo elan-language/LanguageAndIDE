@@ -1,18 +1,12 @@
-import { ElanRuntimeError } from "./elan-runtime-error";
 import { hasHiddenType } from "./has-hidden-type";
-import { StubInputOutput } from "./stub-input-output";
-import { System } from "./system";
+import { ElanRuntimeError, SystemWorker } from "./system-worker";
 
 type Location = [string, number, number];
 type Graphics = Location[];
 type File = [number, string, number]; // open/closed, read/write, contents, pointer
 
-export class StdLib {
-  constructor() {
-    this.system = new System(new StubInputOutput());
-  }
-
-  system: System;
+export class StdLibWorker {
+  constructor(private readonly system: SystemWorker) {}
 
   isValueType<T>(v: T) {
     return typeof v === "boolean" || typeof v === "string" || typeof v === "number";
@@ -425,14 +419,14 @@ export class StdLib {
   }
 
   print(s: string) {
-    this.system.elanInputOutput.print(s);
+    //this.system.elanInputOutput.print(s);
   }
   printTab(position: number, s: string) {
-    this.system.elanInputOutput.printTab(position, s);
+    //this.system.elanInputOutput.printTab(position, s);
   }
 
   clearConsole() {
-    this.system.elanInputOutput.clearConsole();
+    //this.system.elanInputOutput.clearConsole();
   }
   // Graphicsped display
 
@@ -544,7 +538,7 @@ export class StdLib {
   }
 
   clearGraphics(map: Graphics) {
-    this.system.elanInputOutput.clearGraphics();
+    //this.system.elanInputOutput.clearGraphics();
   }
 
   draw(map: Graphics): Promise<void> {
@@ -557,7 +551,7 @@ export class StdLib {
         rendered = `${rendered}<div style="color:${this.asHex(f)};background-color:${this.asHex(b)};">${c}</div>`;
       }
     }
-    this.system.elanInputOutput.drawGraphics(rendered);
+    //this.system.elanInputOutput.drawGraphics(rendered);
     return this.pause(0);
   }
 
@@ -567,16 +561,17 @@ export class StdLib {
     return `#${h6}`;
   }
 
-  getKeystroke(map: Graphics): Promise<string> {
-    return this.system.elanInputOutput.getKeystroke();
+  getKeystroke(map: Graphics): string {
+    //return this.system.elanInputOutput.getKeystroke();
+    return "";
   }
 
-  getKeystrokeWithModifier(map: Graphics): Promise<[string, string]> {
-    return this.system.elanInputOutput.getKeystrokeWithModifier();
+  getKeystrokeWithModifier(map: Graphics) {
+    //return this.system.tuple(this.system.elanInputOutput.getKeystrokeWithModifier());
   }
 
   clearKeyBuffer(map: Graphics) {
-    this.system.elanInputOutput.clearKeyBuffer();
+    //this.system.elanInputOutput.clearKeyBuffer();
   }
 
   createArray<T>(x: number, value: T) {

@@ -7,16 +7,45 @@ import { editorEvent } from "../frames/interfaces/editor-event";
 import { File } from "../frames/interfaces/file";
 import { Profile } from "../frames/interfaces/profile";
 import { CompileStatus, ParseStatus, RunStatus } from "../frames/status-enums";
-import { doImport, getTestRunner } from "../runner";
+import { getTestRunner } from "../runner";
 import { StdLib } from "../std-lib";
-import { System } from "../system";
 import { fetchProfile, hash, transforms } from "./web-helpers";
 import { WebInputOutput } from "./web-input-output";
+import {
+  WebWorkerMessage,
+  WebWorkerReadMessage,
+  WebWorkerStatusMessage,
+  WebWorkerWriteMessage,
+} from "./web-worker-messages";
 
+// static html elements
 const codeContainer = document.querySelector(".elan-code");
+const runButton = document.getElementById("run-button") as HTMLButtonElement;
+const stopButton = document.getElementById("stop") as HTMLButtonElement;
+const pauseButton = document.getElementById("pause") as HTMLButtonElement;
+const clearConsoleButton = document.getElementById("clear-console") as HTMLButtonElement;
+const clearGraphicsButton = document.getElementById("clear-graphics") as HTMLButtonElement;
+const expandCollapseButton = document.getElementById("expand-collapse") as HTMLButtonElement;
+const newButton = document.getElementById("new") as HTMLButtonElement;
+const demosButton = document.getElementById("demos") as HTMLButtonElement;
+const trimButton = document.getElementById("trim") as HTMLButtonElement;
+const consoleDiv = document.getElementById("console") as HTMLDivElement;
+const graphicsDiv = document.getElementById("graphics") as HTMLDivElement;
+const loadButton = document.getElementById("load") as HTMLButtonElement;
+const saveButton = document.getElementById("save") as HTMLButtonElement;
+const codeTitle = document.getElementById("code-title") as HTMLDivElement;
+const parse = document.getElementById("parse") as HTMLDivElement;
+const compile = document.getElementById("compile") as HTMLDivElement;
+const test = document.getElementById("test") as HTMLDivElement;
+const runStatus = document.getElementById("run-status") as HTMLDivElement;
+const codeControls = document.getElementById("code-controls") as HTMLDivElement;
+const demoFiles = document.getElementsByClassName("demo-file");
+
 let file: File;
 let doOnce = true;
 let profile: Profile;
+
+const elanInputOutput = new WebInputOutput(consoleDiv, graphicsDiv);
 
 function setup(p: Profile) {
   profile = p;
@@ -114,68 +143,57 @@ function getModKey(e: KeyboardEvent | MouseEvent) {
 }
 
 function updateDisplayValues() {
-  (document.getElementById("code-title") as HTMLDivElement).innerText = `File: ${file.fileName}`;
-  (document.getElementById("parse") as HTMLDivElement).setAttribute(
-    "class",
-    file.readParseStatusForDashboard(),
-  );
-  (document.getElementById("compile") as HTMLDivElement).setAttribute(
-    "class",
-    file.readCompileStatusForDashboard(),
-  );
-  (document.getElementById("test") as HTMLDivElement).setAttribute(
-    "class",
-    file.readTestStatusForDashboard(),
-  );
+  codeTitle.innerText = `File: ${file.fileName}`;
+  parse.setAttribute("class", file.readParseStatusForDashboard());
+  compile.setAttribute("class", file.readCompileStatusForDashboard());
+  test.setAttribute("class", file.readTestStatusForDashboard());
   //Display run status
-  (document.getElementById("run-status") as HTMLDivElement).setAttribute(
-    "class",
-    file.readRunStatusForDashboard(),
-  );
+  runStatus.setAttribute("class", file.readRunStatusForDashboard());
+
   // Button control
   const isEmpty = file.readParseStatus() === ParseStatus.default;
   const isParsing = file.readParseStatus() === ParseStatus.valid;
   const isCompiling = file.readCompileStatus() === CompileStatus.ok;
   const isRunning = file.readRunStatus() === RunStatus.running;
-  const run = document.getElementById("run-button") as HTMLButtonElement;
+
   if (isRunning) {
-    disable(run, "Program is already running");
-  } else if (!file.containsMain()) {
-    disable(run, "Code must have a 'main' routine to be run");
-  } else if (!isCompiling) {
-    disable(
-      run,
-      "Program is not yet compiled. If you have just edited a field, press Enter or Tab to complete.",
-    );
-  } else {
-    enable(run, "Run the program");
-  }
-  const stop = document.getElementById("stop") as HTMLButtonElement;
-  const pause = document.getElementById("pause") as HTMLButtonElement;
-  /*   if (isRunning) {
-    enable(stop);
-    enable(pause);
+    disable(runButton, "Program is already running");
+    enable(stopButton);
+    //enable(pauseButton);
+    const msg = "Program is running";
+    disable(loadButton, msg);
+    disable(saveButton, msg);
+    disable(newButton, msg);
+    disable(demosButton, msg);
   } else {
     const msg = "Program is not running";
-    disable(stop, msg);
-    disable(pause, msg);
-  }   */
-  const load = document.getElementById("load") as HTMLButtonElement;
-  const save = document.getElementById("save") as HTMLButtonElement;
-  const newButton = document.getElementById("new") as HTMLButtonElement;
-  enable(load, "Load code from a file");
-  enable(save, "Save code as file to the Download directory");
-  enable(newButton, "Clear the current code and start anew");
-  if (isRunning) {
-    const msg = "Program is running";
-    disable(load, msg);
-    disable(save, msg);
-    disable(newButton, msg);
-  } else if (isEmpty) {
-    disable(save, "Some code must be added in order to save");
-  } else if (!isParsing) {
-    disable(save, "Code must be parsing in order to save");
+    disable(stopButton, msg);
+    //disable(pauseButton, msg);
+
+    enable(loadButton, "Load code from a file");
+    enable(newButton, "Clear the current code and start anew");
+    enable(demosButton, "Load a demonstration program");
+
+    if (isEmpty) {
+      disable(saveButton, "Some code must be added in order to save");
+    } else if (!isParsing) {
+      disable(saveButton, "Code must be parsing in order to save");
+    } else {
+      enable(saveButton, "Save code as file to the Download directory");
+    }
+
+    if (!file.containsMain()) {
+      disable(runButton, "Code must have a 'main' routine to be run");
+    } else if (!isCompiling) {
+      disable(
+        runButton,
+        "Program is not yet compiled. If you have just edited a field, press Enter or Tab to complete.",
+      );
+    } else {
+      enable(runButton, "Run the program");
+    }
   }
+
   const testErr = file.getTestError();
   if (testErr) {
     const err = testErr instanceof ElanRuntimeError ? testErr : new ElanRuntimeError(testErr);
@@ -332,7 +350,7 @@ function updateContent(text: string) {
     file.renderAsSource().then((code) => {
       localStorage.setItem("elan-code", code);
       localStorage.setItem("elan-file", file.fileName);
-      (document.getElementById("save") as HTMLButtonElement).classList.add("unsaved");
+      saveButton.classList.add("unsaved");
     });
   }
 
@@ -384,58 +402,104 @@ function postMessage(e: editorEvent) {
   }
 }
 
-const elanInputOutput = new WebInputOutput(
-  document.getElementById("console")!,
-  document.getElementById("graphics")!,
-);
+const stdlib = new StdLib();
+const system = stdlib.system;
 
-const system = new System(elanInputOutput);
-const stdlib = new StdLib(system);
-
-const runButton = document.getElementById("run-button");
-const clearConsoleButton = document.getElementById("clear-console");
-const clearGraphicsButton = document.getElementById("clear-graphics");
-const expandCollapseButton = document.getElementById("expand-collapse");
-const newButton = document.getElementById("new");
-const demosButton = document.getElementById("demos");
-const trimButton = document.getElementById("trim") as HTMLButtonElement;
 trimButton.addEventListener("click", () => {
   const keys = file.removeAllSelectorsThatCanBe();
   renderAsHtml();
 });
+
+let programWorker: Worker;
+
+function readMsg(value: string | [string, string]) {
+  return { type: "read", value: value } as WebWorkerReadMessage;
+}
+
+function handleWorkerIO(data: WebWorkerWriteMessage) {
+  switch (data.function) {
+    case "readLine":
+      elanInputOutput.readLine().then((v) => programWorker.postMessage(readMsg(v)));
+      break;
+    case "getKeystroke":
+      elanInputOutput.getKeystroke().then((v) => programWorker.postMessage(readMsg(v)));
+      break;
+    case "getKeystrokeWithModifier":
+      elanInputOutput.getKeystrokeWithModifier().then((v) => programWorker.postMessage(readMsg(v)));
+      break;
+    default:
+      (elanInputOutput as any)[data.function](...data.parameters);
+  }
+}
+
+function handleWorkerFinished() {
+  programWorker.terminate();
+  console.info("elan program completed OK");
+  file.setRunStatus(RunStatus.default);
+  updateDisplayValues();
+}
+
+function handleWorkerError(data: WebWorkerStatusMessage) {
+  programWorker.terminate();
+  const e = data.error;
+  const err = e instanceof ElanRuntimeError ? e : new ElanRuntimeError(e as any);
+  showError(err, file.fileName, false);
+  file.setRunStatus(RunStatus.error);
+  updateDisplayValues();
+}
 
 runButton?.addEventListener("click", () => {
   try {
     elanInputOutput.clearConsole();
     file.setRunStatus(RunStatus.running);
     updateDisplayValues();
-    const jsCode = file.compile();
+    const path = `${document.location.origin}${document.location.pathname}`.replace(
+      "/index.html",
+      "",
+    );
+    const jsCode = file.compileAsWorker(path);
+    const asUrl = "data:text/javascript;base64," + btoa(jsCode);
 
-    return doImport(jsCode).then(async (elan) => {
-      if (elan.program) {
-        elan._inject(system, stdlib);
-        const [main, tests] = await elan.program();
-        // clear tests each time or the tests array in the program gets duplicates
-        tests.length = 0;
-        main()
-          .then(() => {
-            console.info("elan program completed OK");
-            file.setRunStatus(RunStatus.default);
-            updateDisplayValues();
-          })
-          .catch((e: any) => {
-            const err = e instanceof ElanRuntimeError ? e : new ElanRuntimeError(e);
-            showError(err, file.fileName, false);
-            file.setRunStatus(RunStatus.error);
-            updateDisplayValues();
-          });
+    programWorker = new Worker(asUrl, { type: "module" });
+
+    programWorker.onmessage = (e: MessageEvent<WebWorkerMessage>) => {
+      const data = e.data;
+
+      switch (data.type) {
+        case "write":
+          handleWorkerIO(data);
+          break;
+        case "status":
+          switch (data.status) {
+            case "finished":
+              handleWorkerFinished();
+              break;
+            case "error":
+              handleWorkerError(data);
+              break;
+          }
       }
-    });
+    };
+
+    programWorker.onerror = (ev: ErrorEvent) => {
+      const err = new ElanRuntimeError(ev.message);
+      showError(err, file.fileName, false);
+      file.setRunStatus(RunStatus.error);
+      updateDisplayValues();
+    };
+
+    programWorker.postMessage({ type: "start" } as WebWorkerMessage);
   } catch (e) {
     console.warn(e);
     file.setRunStatus(RunStatus.error);
     updateDisplayValues();
   }
+});
+
+stopButton?.addEventListener("click", () => {
+  programWorker?.terminate();
+  file.setRunStatus(RunStatus.default);
+  updateDisplayValues();
 });
 
 clearConsoleButton?.addEventListener("click", () => {
@@ -455,19 +519,18 @@ newButton?.addEventListener("click", () => {
   resetFile(true);
 });
 
-const upload = document.getElementById("load") as Element;
-upload.addEventListener("click", chooser);
-
 function chooser(event: Event) {
   const f = document.createElement("input");
   f.style.display = "none";
   f.type = "file";
   f.name = "file";
   f.accept = ".elan";
-  document.getElementById("code-controls")?.appendChild(f);
+  codeControls.appendChild(f);
   f.addEventListener("change", handleUpload);
   f.click();
 }
+
+loadButton.addEventListener("click", chooser);
 
 function handleUpload(event: Event) {
   const elanFile = (event.target as any).files?.[0] as any;
@@ -492,9 +555,6 @@ function handleUpload(event: Event) {
 
   event.preventDefault();
 }
-
-const download = document.getElementById("save") as Element;
-download.addEventListener("click", handleDownload);
 
 function handleDownload(event: Event) {
   let fileName = prompt("Please enter your file name", file.fileName);
@@ -523,13 +583,13 @@ function handleDownload(event: Event) {
     aElement.setAttribute("target", "_blank");
     aElement.click();
     URL.revokeObjectURL(href);
-    (download as HTMLButtonElement).classList.remove("unsaved");
+    saveButton.classList.remove("unsaved");
     event.preventDefault();
     renderAsHtml();
   });
 }
 
-const demoFiles = document.getElementsByClassName("demo-file");
+saveButton.addEventListener("click", handleDownload);
 
 for (const elem of demoFiles) {
   elem.addEventListener("click", () => {

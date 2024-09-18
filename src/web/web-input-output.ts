@@ -80,23 +80,27 @@ export class WebInputOutput implements ElanInputOutput {
 
   getKeystroke() {
     const evt = this.keyBuffer.pop();
-    return evt ? evt.key : "";
+    const ks = evt ? evt.key : "";
+
+    return Promise.resolve(ks);
   }
 
   getModKey(e: KeyboardEvent) {
     return e.ctrlKey ? "Control" : e.shiftKey ? "Shift" : e.altKey ? "Alt" : "";
   }
 
-  getKeystrokeWithModifier(): [string, string] {
+  getKeystrokeWithModifier(): Promise<[string, string]> {
     const evt = this.keyBuffer.pop();
-    return evt ? [evt.key, this.getModKey(evt)] : ["", ""];
+    const ks: [string, string] = evt ? [evt.key, this.getModKey(evt)] : ["", ""];
+
+    return Promise.resolve(ks);
   }
 
   clearKeyBuffer() {
     this.keyBuffer = [];
   }
 
-  renderConsole() {
+  private renderConsole() {
     return `<div>${this.previousContent}</div>`;
   }
 

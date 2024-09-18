@@ -1,9 +1,68 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ElanInputOutput } from "./elan-input-output";
-import { ElanRuntimeError } from "./elan-runtime-error";
-import { TestStatus } from "./frames/status-enums";
 import { hasHiddenType } from "./has-hidden-type";
-import { StubInputOutput } from "./stub-input-output";
+
+export enum TestStatus {
+  error,
+  fail,
+  pending,
+  pass,
+  default,
+}
+
+export class ElanRuntimeError extends Error {
+  constructor(private readonly err: string | Error) {
+    super(err instanceof Error ? err.message : err);
+  }
+
+  useLine(token: string) {
+    return !(
+      token.startsWith("System") ||
+      token.startsWith("data") ||
+      token.startsWith("http") ||
+      token.startsWith("async") ||
+      token.startsWith("Array")
+    );
+  }
+
+  updateLine0(l0: string) {
+    if (l0.startsWith("RangeError")) {
+      return "Error: Stack Overflow";
+    }
+    return l0;
+  }
+
+  get elanStack() {
+    const jsStack = this.err instanceof Error ? this.err.stack : this.stack;
+    const elanStack: string[] = [];
+
+    if (jsStack) {
+      let lines = jsStack.split("\n").map((l) => l.trim());
+
+      if (lines.length > 0) {
+        elanStack.push(this.updateLine0(lines[0]));
+        lines = lines.slice(1);
+
+        for (const l of lines) {
+          const line = l.split(" ");
+
+          if (line.length > 1) {
+            let fn = line[1];
+            fn = fn === "runTests" ? "test" : fn;
+
+            if (this.useLine(fn)) {
+              elanStack.push(`at ${fn}`);
+            }
+          }
+        }
+      }
+    }
+
+    if (elanStack.length > 0) {
+      return elanStack.join("\n");
+    }
+    return "";
+  }
+}
 
 export class AssertOutcome {
   constructor(
@@ -15,8 +74,8 @@ export class AssertOutcome {
   ) {}
 }
 
-export class System {
-  constructor(public readonly elanInputOutput: ElanInputOutput) {}
+export class SystemWorker {
+  constructor() {}
 
   // constant immutables
   emptyImmutableListSingleton = this.list([]);
@@ -147,11 +206,12 @@ export class System {
   }
 
   printLine(s: string) {
-    this.elanInputOutput.printLine(s);
+    postMessage(s);
   }
 
-  async input() {
-    return this.elanInputOutput.readLine();
+  async input(): Promise<string> {
+    //return this.elanInputOutput.readLine();
+    return undefined as any;
   }
 
   getTests(program: any) {

@@ -339,6 +339,7 @@ export const unknownType = UnknownType.Instance;
 
 export async function createTestRunner() {
   const system = getTestSystem("");
-  const stdlib = new StdLib(system);
+  const stdlib = new StdLib();
+  stdlib.system = system;
   return await getTestRunner(system, stdlib);
 }

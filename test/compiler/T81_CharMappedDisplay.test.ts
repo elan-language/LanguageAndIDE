@@ -302,7 +302,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var gr = system.initialise(system.list(new Array()));
-  var a = _stdlib.getKeystroke(gr);
+  var a = await _stdlib.getKeystroke(gr);
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -328,7 +328,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var gr = system.initialise(system.list(new Array()));
-  var a = _stdlib.getKeystrokeWithModifier(gr);
+  var a = await _stdlib.getKeystrokeWithModifier(gr);
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;

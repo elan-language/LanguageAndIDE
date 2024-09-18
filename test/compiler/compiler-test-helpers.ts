@@ -76,7 +76,8 @@ function executeCode(file: FileImpl, input?: string) {
   assert.strictEqual(errors.length, 0, errors.map((e) => e.message).join(", "));
 
   const system = getTestSystem(input ?? "");
-  const stdlib = new StdLib(system);
+  const stdlib = new StdLib();
+  stdlib.system = system;
 
   return doImport(jsCode).then(async (elan) => {
     if (elan.program) {
@@ -95,7 +96,8 @@ export async function executeTestCode(file: FileImpl, input?: string) {
   assert.strictEqual(errors.length, 0, errors.map((e) => e.message).join(", "));
 
   const system = getTestSystem(input ?? "");
-  const stdlib = new StdLib(system);
+  const stdlib = new StdLib();
+  stdlib.system = system;
 
   return doImport(jsCode).then(async (elan) => {
     if (elan.program) {
