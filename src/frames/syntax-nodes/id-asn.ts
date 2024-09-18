@@ -6,7 +6,7 @@ import { AstNode } from "../interfaces/ast-node";
 import { Scope } from "../interfaces/scope";
 import { LetStatement } from "../statements/let-statement";
 import { DeconstructedTupleType } from "../symbols/deconstructed-tuple-type";
-import { isPropertyOnFieldsClass } from "../symbols/symbol-helpers";
+import { isDeconstructedType, isPropertyOnFieldsClass } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { transforms } from "./ast-helpers";
@@ -82,7 +82,7 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
       .resolveSymbol(this.id, transforms(), this.scope)
       .symbolType(transforms());
 
-    if (st instanceof DeconstructedTupleType) {
+    if (isDeconstructedType(st)) {
       return st.symbolTypeFor(this.id);
     }
     return st;

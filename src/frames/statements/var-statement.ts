@@ -9,6 +9,8 @@ import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
 import { ElanSymbol } from "../interfaces/symbol";
 import { setKeyword, toKeyword, varKeyword } from "../keywords";
+import { ArrayType } from "../symbols/array-list-type";
+import { DeconstructedListType } from "../symbols/deconstructed-list-type";
 import { DeconstructedTupleType } from "../symbols/deconstructed-tuple-type";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { TupleType } from "../symbols/tuple-type";
@@ -90,6 +92,9 @@ export class VarStatement extends AbstractFrame implements Statement, ElanSymbol
     const st = this.expr.symbolType(transforms);
     if (ids.length > 1 && st instanceof TupleType) {
       return new DeconstructedTupleType(ids, st.ofTypes);
+    }
+    if (ids.length === 2 && st instanceof ArrayType) {
+      return new DeconstructedListType(ids, [st.ofType, st]);
     }
 
     return st;

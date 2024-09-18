@@ -2,6 +2,7 @@ import { Property } from "../class-members/property";
 import { isClass, isFile, isScope } from "../helpers";
 import { AstNode } from "../interfaces/ast-node";
 import { Class } from "../interfaces/class";
+import { DeconstructedSymbolType } from "../interfaces/deconstructed-symbol-type";
 import { File } from "../interfaces/file";
 import { Frame } from "../interfaces/frame";
 import { GenericSymbolType } from "../interfaces/generic-symbol-type";
@@ -31,6 +32,10 @@ import { ProcedureType } from "./procedure-type";
 import { RegexType } from "./regex-type";
 import { StringType } from "./string-type";
 import { SymbolScope } from "./symbol-scope";
+
+export function isDeconstructedType(s?: SymbolType): s is DeconstructedSymbolType {
+  return !!s && "symbolTypeFor" in s;
+}
 
 export function isIterableType(s?: SymbolType): s is IterableSymbolType {
   return !!s && "isIterable" in s;

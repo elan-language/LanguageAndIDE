@@ -2,7 +2,7 @@ import { DeconstructedSymbolType } from "../interfaces/deconstructed-symbol-type
 import { SymbolType } from "../interfaces/symbol-type";
 import { UnknownType } from "./unknown-type";
 
-export class DeconstructedTupleType implements DeconstructedSymbolType {
+export class DeconstructedListType implements DeconstructedSymbolType {
   constructor(
     public readonly ids: string[],
     public readonly ofTypes: SymbolType[],
@@ -23,7 +23,7 @@ export class DeconstructedTupleType implements DeconstructedSymbolType {
   private typeMap = {} as { [index: string]: SymbolType };
 
   get name() {
-    return `DeconstructedTuple <${this.ofTypes.map((t) => t.name).join(", ")}>`;
+    return `DeconstructedList <${this.ofTypes.map((t) => t.name).join(", ")}>`;
   }
 
   toString(): string {

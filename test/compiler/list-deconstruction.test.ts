@@ -52,7 +52,9 @@ main
   var a set to [1,2,3]
   var x:y set to a
   print x
+  print typeof x
   print y
+  print typeof y
 end main
 `;
 
@@ -61,7 +63,9 @@ async function main() {
   var a = system.literalArray([1, 2, 3]);
   var [x, y] = system.deconstructList(a);
   system.printLine(_stdlib.asString(x));
+  system.printLine(_stdlib.asString("Int"));
   system.printLine(_stdlib.asString(y));
+  system.printLine(_stdlib.asString("[Int]"));
 }
 return [main, _tests];}`;
 
@@ -71,6 +75,6 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "1[2, 3]");
+    await assertObjectCodeExecutes(fileImpl, "1Int[2, 3][Int]");
   });
 });
