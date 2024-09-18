@@ -220,6 +220,20 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     return result;
   }
 
+  multipleIds(sid: string) {
+    return sid.includes(",") || sid.includes(":");
+  }
+
+  getIds(sid: string) {
+    if (sid.includes(",")) {
+      return sid.split(",").map((s) => s.trim());
+    }
+    if (sid.includes(":")) {
+      return sid.split(":").map((s) => s.trim());
+    }
+    return [sid];
+  }
+
   resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
     const fst = this.getFirstChild();
     let range = this.getChildRange(fst, initialScope);
@@ -228,16 +242,8 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
 
       for (const f of range) {
         if (isSymbol(f) && id) {
-          // todo kludge
-          const sid = f.symbolId;
-
-          if (sid.includes(",")) {
-            const sids = sid.split(",").map((s) => s.trim());
-
-            if (sids.includes(id)) {
-              return f;
-            }
-          } else if (sid === id) {
+          const sids = this.getIds(f.symbolId);
+          if (sids.includes(id)) {
             return f;
           }
         }
@@ -259,18 +265,8 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
       for (const f of range) {
         if (isSymbol(f) && (id || all)) {
           // todo kludge
-          const sid = f.symbolId;
-
-          if (sid.startsWith("(")) {
-            const sids = sid
-              .slice(1, -1)
-              .split(",")
-              .map((s) => s.trim());
-
-            if (sids.some((sid) => sid.startsWith(id) || all)) {
-              localMatches.push(f);
-            }
-          } else if (sid.startsWith(id) || all) {
+          const sids = this.getIds(f.symbolId);
+          if (sids.some((sid) => sid.startsWith(id) || all)) {
             localMatches.push(f);
           }
         }

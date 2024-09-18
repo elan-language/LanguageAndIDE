@@ -1,9 +1,9 @@
 import { CompileError } from "../compile-error";
-import { AstNode } from "../interfaces/ast-node";
+import { AstIdNode } from "../interfaces/ast-id-node";
 import { Scope } from "../interfaces/scope";
 import { AbstractAstNode } from "./abstract-ast-node";
 
-export class DeconstructedListAsn extends AbstractAstNode implements AstNode {
+export class DeconstructedListAsn extends AbstractAstNode implements AstIdNode {
   constructor(
     private readonly head: string,
     private readonly tail: string,
@@ -11,6 +11,10 @@ export class DeconstructedListAsn extends AbstractAstNode implements AstNode {
     scope: Scope,
   ) {
     super();
+  }
+
+  get id() {
+    return `${this.head},${this.tail}`;
   }
 
   aggregateCompileErrors(): CompileError[] {

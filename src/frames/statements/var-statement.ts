@@ -12,7 +12,7 @@ import { setKeyword, toKeyword, varKeyword } from "../keywords";
 import { DeconstructedTupleType } from "../symbols/deconstructed-tuple-type";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { TupleType } from "../symbols/tuple-type";
-import { isAstIdNode } from "../syntax-nodes/ast-helpers";
+import { isAstIdNode, wrapDeconstruction } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 
 export class VarStatement extends AbstractFrame implements Statement, ElanSymbol {
@@ -73,7 +73,12 @@ export class VarStatement extends AbstractFrame implements Statement, ElanSymbol
 
     const vid = ids.length > 1 ? `[${ids.join(", ")}]` : ids[0];
 
-    return `${this.indent()}var ${vid} = ${this.expr.compile(transforms)};`;
+    const rhs = wrapDeconstruction(
+      this.name.getOrTransformAstNode(transforms),
+      this.expr.compile(transforms),
+    );
+
+    return `${this.indent()}var ${vid} = ${rhs};`;
   }
 
   get symbolId() {

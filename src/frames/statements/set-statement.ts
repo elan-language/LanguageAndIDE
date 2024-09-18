@@ -17,7 +17,7 @@ import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
 import { setKeyword, toKeyword } from "../keywords";
 import { SymbolScope } from "../symbols/symbol-scope";
-import { isAstIdNode } from "../syntax-nodes/ast-helpers";
+import { isAstIdNode, wrapDeconstruction } from "../syntax-nodes/ast-helpers";
 import { DeconstructedListAsn } from "../syntax-nodes/deconstructed-list-asn";
 import { Transforms } from "../syntax-nodes/transforms";
 
@@ -57,12 +57,12 @@ export class SetStatement extends AbstractFrame implements Statement {
     return `${this.indent()}${setKeyword} ${this.assignable.renderAsSource()} ${toKeyword} ${this.expr.renderAsSource()}`;
   }
 
-  wrapDeconstruction(lhs: AstNode, code: string) {
-    if (lhs instanceof DeconstructedListAsn) {
-      return `system.deconstructList(${code})`;
-    }
-    return code;
-  }
+  // wrapDeconstruction(lhs: AstNode, code: string) {
+  //   if (lhs instanceof DeconstructedListAsn) {
+  //     return `system.deconstructList(${code})`;
+  //   }
+  //   return code;
+  // }
 
   compile(transforms: Transforms): string {
     this.compileErrors = [];
@@ -93,7 +93,7 @@ export class SetStatement extends AbstractFrame implements Statement {
       mustNotBeLet(symbol, this.compileErrors, this.htmlId);
     }
 
-    const rhs = this.wrapDeconstruction(assignableAstNode, this.expr.compile(transforms));
+    const rhs = wrapDeconstruction(assignableAstNode, this.expr.compile(transforms));
 
     return `${this.indent()}${this.assignable.compile(transforms)} = ${rhs};`;
   }

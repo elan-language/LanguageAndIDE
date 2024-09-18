@@ -21,6 +21,7 @@ import { TupleType } from "../symbols/tuple-type";
 import { UnknownType } from "../symbols/unknown-type";
 import { transform, transformMany } from "./ast-visitor";
 import { ChainedAsn } from "./chained-asn";
+import { DeconstructedListAsn } from "./deconstructed-list-asn";
 import { OperationSymbol } from "./operation-symbol";
 import { Transforms } from "./transforms";
 
@@ -272,4 +273,11 @@ export function mapOperation(op: string): OperationSymbol {
     }
   }
   throw new Error("Not implemented");
+}
+
+export function wrapDeconstruction(lhs: AstNode, code: string) {
+  if (lhs instanceof DeconstructedListAsn) {
+    return `system.deconstructList(${code})`;
+  }
+  return code;
 }
