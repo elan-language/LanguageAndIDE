@@ -10,6 +10,7 @@ import {
   assertObjectCodeExecutes,
   ignore_test,
   assertDoesNotCompile,
+  assertObjectCodeDoesNotExecute,
 } from "./compiler-test-helpers";
 
 suite("List Deconstruction", () => {
@@ -430,5 +431,45 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["Incompatible types Int to Array"]);
+  });
+
+  test("Fail_DeconstructEmptyArray1", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var a set to empty [Int]
+  var x:y set to a
+  print x
+  print y
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    await assertObjectCodeDoesNotExecute(fileImpl, "Out of range error");
+  });
+
+  test("Fail_DeconstructEmptyArray2", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var a set to empty [Int]
+  var x set to 0
+  var y set to empty [Int]
+  set x:y to a
+  print x
+  print y
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    await assertObjectCodeDoesNotExecute(fileImpl, "Out of range error");
   });
 });
