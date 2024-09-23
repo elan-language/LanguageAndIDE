@@ -14,6 +14,7 @@ import { Transforms } from "../syntax-nodes/transforms";
 export class ProcedureMethod extends ProcedureFrame implements Member {
   isMember: boolean = true;
   private: boolean;
+  isAbstract = false;
 
   constructor(parent: Parent, priv = false) {
     super(parent);

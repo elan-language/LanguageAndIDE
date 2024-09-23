@@ -13,6 +13,8 @@ import { Transforms } from "../syntax-nodes/transforms";
 export class Constructor extends FrameWithStatements implements Member {
   isConstructor = true;
   isMember = true;
+  isAbstract = false;
+  private = false;
   public params: ParamList;
 
   constructor(parent: ClassFrame) {

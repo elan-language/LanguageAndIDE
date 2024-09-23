@@ -1023,6 +1023,70 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "0");
   });
 
+  test("Pass_DefineAbstractWithPrivateMembers", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var x set to new Bar()
+end main
+
+abstract class Foo
+  private property p1 as Float
+
+  private procedure setP1(a as Int)
+    set property.p1 to a
+  end procedure
+
+  private function ff() return Float
+    return p1
+  end function
+end class
+
+class Bar inherits Foo
+    constructor()
+    end constructor
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var x = system.initialise(new Bar());
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
+  #p1 = 0;
+
+  async setP1(a) {
+    this.p1 = a;
+  }
+
+  ff() {
+    return this.p1;
+  }
+
+  asString() {
+    return "empty Abstract Class Foo";
+  }
+}
+
+class Bar {
+  static emptyInstance() { return system.emptyClass(Bar, []);};
+  constructor() {
+
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "");
+  });
+
   test("Fail_AbstractClassCannotInheritFromConcreteClass", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 

@@ -17,6 +17,7 @@ import { Transforms } from "../syntax-nodes/transforms";
 export class Property extends AbstractFrame implements Member, ElanSymbol {
   isMember = true;
   isProperty = true;
+  isAbstract = false;
   name: IdentifierField;
   type: TypeField;
   public private: boolean = false;

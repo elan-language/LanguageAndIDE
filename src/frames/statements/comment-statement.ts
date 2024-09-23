@@ -10,6 +10,8 @@ import { commentMarker } from "../keywords";
 export class CommentStatement extends AbstractFrame implements Statement, Member {
   isStatement = true;
   isMember = true;
+  isAbstract = false;
+  private = false;
   public text: CommentField;
 
   constructor(parent: Parent) {

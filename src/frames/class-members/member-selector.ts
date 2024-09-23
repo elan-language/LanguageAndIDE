@@ -21,6 +21,8 @@ import {
 
 export class MemberSelector extends AbstractSelector implements Member {
   isMember: boolean = true;
+  isAbstract = false;
+  private = false;
   private class: ClassFrame;
 
   constructor(parent: Parent) {

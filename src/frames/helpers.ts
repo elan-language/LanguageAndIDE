@@ -39,7 +39,7 @@ export function isParent(f?: Selectable | Parent): f is Parent {
   return !!f && "isParent" in f;
 }
 
-export function isMember(f?: Scope | Member): f is Member {
+export function isMember(f?: Scope | Member | ElanSymbol): f is Member {
   return !!f && "isMember" in f;
 }
 

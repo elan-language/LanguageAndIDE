@@ -322,7 +322,7 @@ export function mustImplementSuperClasses(
   for (const superClassType of superClassTypes) {
     const superSymbols = superClassType.childSymbols();
 
-    for (const superSymbol of superSymbols) {
+    for (const superSymbol of superSymbols.filter((ss) => isMember(ss) && ss.isAbstract)) {
       const subSymbol = classType.resolveSymbol(superSymbol.symbolId, transforms, classType);
 
       if (subSymbol instanceof UnknownSymbol) {

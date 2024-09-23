@@ -18,6 +18,7 @@ import { Transforms } from "../syntax-nodes/transforms";
 export class AbstractFunction extends AbstractFrame implements Member, ElanSymbol {
   isAbstract = true;
   isMember: boolean = true;
+  private = false;
   public name: IdentifierField;
   public params: ParamList;
   public returnType: TypeField;
