@@ -146,6 +146,39 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[1, 2, 3][Int][[4, 5, 6], [7, 8, 9]][[Int]]");
   });
 
+  test("Pass_DeconstructArrayOfArrayIntoNewLetVariables", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var a set to [[1,2,3], [4,5,6], [7,8,9]]
+  let x:y be a
+  print x
+  print typeof x
+  print y
+  print typeof y
+end main
+`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.literalArray([system.literalArray([1, 2, 3]), system.literalArray([4, 5, 6]), system.literalArray([7, 8, 9])]);
+  var [x, y] = system.deconstructListToLet(a);
+  system.printLine(_stdlib.asString(x()));
+  system.printLine(_stdlib.asString("[Int]"));
+  system.printLine(_stdlib.asString(y()));
+  system.printLine(_stdlib.asString("[[Int]]"));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[1, 2, 3][Int][[4, 5, 6], [7, 8, 9]][[Int]]");
+  });
+
   test("Pass_DeconstructExistingOneElement", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
@@ -232,6 +265,39 @@ async function main() {
   system.printLine(_stdlib.asString(x));
   system.printLine(_stdlib.asString("Int"));
   system.printLine(_stdlib.asString(y));
+  system.printLine(_stdlib.asString("[Int]"));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1Int[][Int]");
+  });
+
+  test("Pass_DeconstructNewLetOneElement", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var a set to [1]
+  let x:y be a
+  print x
+  print typeof x
+  print y
+  print typeof y
+end main
+`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.literalArray([1]);
+  var [x, y] = system.deconstructListToLet(a);
+  system.printLine(_stdlib.asString(x()));
+  system.printLine(_stdlib.asString("Int"));
+  system.printLine(_stdlib.asString(y()));
   system.printLine(_stdlib.asString("[Int]"));
 }
 return [main, _tests];}`;
@@ -448,6 +514,23 @@ end main
     assertDoesNotCompile(fileImpl, ["Expression must be able to be deconstructed"]);
   });
 
+  test("Fail_CannotDeconstructLet", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var a set to 1
+  let x:y be a
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Expression must be able to be deconstructed"]);
+  });
+
   test("Fail_CannotDeconstruct2", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
@@ -558,5 +641,26 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     await assertObjectCodeDoesNotExecute(fileImpl, "Out of range error");
+  });
+
+  test("Fail_DeconstructIntoExistingLetVariables", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var a set to [1,2,3]
+  let x be 1
+  let y be empty [Int]
+  set x:y to a
+  print x
+  print y
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["May not mutate x", "May not mutate y"]);
   });
 });

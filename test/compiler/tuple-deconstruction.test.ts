@@ -447,4 +447,38 @@ end main
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["May not mutate y", "May not mutate z"]);
   });
+
+  test("Fail_CannotDeconstruct", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var a set to 1
+  var x,y set to a
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Expression must be able to be deconstructed"]);
+  });
+
+  test("Fail_CannotDeconstructLet", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var a set to 1
+  let x, y be a
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Expression must be able to be deconstructed"]);
+  });
 });
