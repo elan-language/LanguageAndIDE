@@ -356,4 +356,25 @@ end main
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["May not reassign z"]);
   });
+
+  test("Fail_DeconstructIntoExistingLetVariables", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var x set to (3, "Apple")
+  let y be 0
+  let z be ""
+  set y, z to x
+  print y
+  print z
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["May not mutate y", "May not mutate z"]);
+  });
 });

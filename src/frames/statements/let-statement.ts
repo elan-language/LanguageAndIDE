@@ -15,7 +15,7 @@ import { DeconstructedTupleType } from "../symbols/deconstructed-tuple-type";
 import { ListType } from "../symbols/list-type";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { TupleType } from "../symbols/tuple-type";
-import { isAstIdNode, wrapDeconstruction } from "../syntax-nodes/ast-helpers";
+import { getIds, wrapDeconstruction } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 
 export class LetStatement extends AbstractFrame implements Statement, ElanSymbol {
@@ -30,12 +30,7 @@ export class LetStatement extends AbstractFrame implements Statement, ElanSymbol
   }
 
   ids(transforms?: Transforms) {
-    const ast = this.name.getOrTransformAstNode(transforms);
-    if (isAstIdNode(ast)) {
-      const id = ast.id;
-      return id.includes(",") ? id.split(",") : [id];
-    }
-    return [];
+    return getIds(this.name.getOrTransformAstNode(transforms));
   }
 
   symbolType(transforms?: Transforms) {

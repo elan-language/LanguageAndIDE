@@ -242,7 +242,7 @@ export class System {
 
   deconstructListToLet<T>(list: T[]): [() => T, () => T[]] {
     const type = (list as unknown as hasHiddenType)._type;
-    const setType = (l : T[]) => {
+    const setType = (l: T[]) => {
       (l as unknown as hasHiddenType)._type = type;
       return l;
     };

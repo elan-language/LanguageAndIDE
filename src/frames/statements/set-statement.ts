@@ -11,14 +11,11 @@ import {
 } from "../compile-rules";
 import { AssignableField } from "../fields/assignableField";
 import { ExpressionField } from "../fields/expression-field";
-import { AstNode } from "../interfaces/ast-node";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
 import { setKeyword, toKeyword } from "../keywords";
-import { SymbolScope } from "../symbols/symbol-scope";
-import { isAstIdNode, wrapDeconstruction } from "../syntax-nodes/ast-helpers";
-import { DeconstructedListAsn } from "../syntax-nodes/deconstructed-list-asn";
+import { getIds, isAstIdNode, wrapDeconstruction } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 
 export class SetStatement extends AbstractFrame implements Statement {
@@ -81,8 +78,10 @@ export class SetStatement extends AbstractFrame implements Statement {
       this.htmlId,
     );
 
-    if (isAstIdNode(assignableAstNode)) {
-      const symbol = this.getParent().resolveSymbol(assignableAstNode.id, transforms, this);
+    const ids = getIds(assignableAstNode);
+
+    for (const id of ids) {
+      const symbol = this.getParent().resolveSymbol(id, transforms, this);
       mustNotBeLet(symbol, this.compileErrors, this.htmlId);
     }
 

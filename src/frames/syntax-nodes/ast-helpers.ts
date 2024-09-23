@@ -286,3 +286,11 @@ export function wrapDeconstruction(lhs: AstNode, isLet: boolean, code: string) {
   }
   return code;
 }
+
+export function getIds(ast: AstNode) {
+  if (isAstIdNode(ast)) {
+    const id = ast.id;
+    return id.includes(",") ? id.split(",") : [id];
+  }
+  return [];
+}

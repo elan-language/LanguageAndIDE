@@ -16,7 +16,7 @@ import { ListType } from "../symbols/list-type";
 import { isDeconstructedType } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { TupleType } from "../symbols/tuple-type";
-import { isAstIdNode, wrapDeconstruction } from "../syntax-nodes/ast-helpers";
+import { getIds, isAstIdNode, wrapDeconstruction } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 
 export class VarStatement extends AbstractFrame implements Statement, ElanSymbol {
@@ -57,12 +57,7 @@ export class VarStatement extends AbstractFrame implements Statement, ElanSymbol
   }
 
   ids(transforms?: Transforms) {
-    const ast = this.name.getOrTransformAstNode(transforms);
-    if (isAstIdNode(ast)) {
-      const id = ast.id;
-      return id.includes(",") ? id.split(",") : [id];
-    }
-    return [];
+    return getIds(this.name.getOrTransformAstNode(transforms));
   }
 
   compile(transforms: Transforms): string {
