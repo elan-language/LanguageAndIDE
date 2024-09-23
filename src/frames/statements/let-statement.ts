@@ -15,7 +15,7 @@ import { DeconstructedTupleType } from "../symbols/deconstructed-tuple-type";
 import { ListType } from "../symbols/list-type";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { TupleType } from "../symbols/tuple-type";
-import { isAstIdNode } from "../syntax-nodes/ast-helpers";
+import { isAstIdNode, wrapDeconstruction } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 
 export class LetStatement extends AbstractFrame implements Statement, ElanSymbol {
@@ -105,7 +105,7 @@ export class LetStatement extends AbstractFrame implements Statement, ElanSymbol
 ${this.indent()}${this.indent()}var _cache;
 ${this.indent()}${this.indent()}return () => _cache ??= ${val};
 ${this.indent()}})()`
-        : `system.deconstructTupleToLet(${val})`;
+        : `${wrapDeconstruction(this.name.getOrTransformAstNode(transforms), true, val)}`;
 
     return `${this.indent()}var ${vid} = ${expr};`;
   }

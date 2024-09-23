@@ -179,13 +179,12 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "1[]");
   });
 
-  // #466
-  ignore_test("Pass_DeconstructIntoLetVariables", async () => {
+  test("Pass_DeconstructIntoLetVariables", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to {1,2,3}
-  let x:y set to a
+  let x:y be a
   print x
   print typeof x
   print y
@@ -195,12 +194,12 @@ end main
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.literalArray([1, 2, 3]);
-  var [x, y] = system.deconstructList(a);
-  system.printLine(_stdlib.asString(x));
+  var a = system.list([1, 2, 3]);
+  var [x, y] = system.deconstructListToLet(a);
+  system.printLine(_stdlib.asString(x()));
   system.printLine(_stdlib.asString("Int"));
-  system.printLine(_stdlib.asString(y));
-  system.printLine(_stdlib.asString("[Int]"));
+  system.printLine(_stdlib.asString(y()));
+  system.printLine(_stdlib.asString("{Int}"));
 }
 return [main, _tests];}`;
 
@@ -210,7 +209,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "1Int[2, 3][Int]");
+    await assertObjectCodeExecutes(fileImpl, "1Int{2, 3}{Int}");
   });
 
   test("Pass_DeconstructNewOneElement", async () => {
