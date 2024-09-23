@@ -185,8 +185,10 @@ export function mustBeDeconstructableType(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (!(isDeconstructedType(symbolType))) {
-    compileErrors.push(new TypeCompileError("able to be deconstructed", location, symbolType instanceof UnknownType));
+  if (!isDeconstructedType(symbolType)) {
+    compileErrors.push(
+      new TypeCompileError("able to be deconstructed", location, symbolType instanceof UnknownType),
+    );
   }
 }
 
