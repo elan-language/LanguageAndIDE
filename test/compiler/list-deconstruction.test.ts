@@ -411,6 +411,27 @@ end main
     assertDoesNotCompile(fileImpl, ["Incompatible types Int to Array"]);
   });
 
+  test("Fail_DeconstructIntoWrongType6", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var a set to [1,2]
+  var x set to 0
+  var y set to empty {Int}
+  set x:y to a
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types Array to List try converting with '.asList()'",
+    ]);
+  });
+
   test("Fail_CannotDeconstruct1", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
