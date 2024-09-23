@@ -94,7 +94,7 @@ export class VarStatement extends AbstractFrame implements Statement, ElanSymbol
       return new DeconstructedTupleType(ids, st.ofTypes);
     }
     if (ids.length === 2 && st instanceof ArrayType) {
-      return new DeconstructedListType(ids, [st.ofType, st]);
+      return new DeconstructedListType(ids[0], ids[1], st.ofType, st);
     }
 
     return st;

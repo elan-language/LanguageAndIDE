@@ -4,12 +4,13 @@ import { UnknownType } from "./unknown-type";
 
 export class DeconstructedListType implements DeconstructedSymbolType {
   constructor(
-    public readonly ids: string[],
-    public readonly ofTypes: SymbolType[],
+    public readonly headdId: string,
+    public readonly tailId: string,
+    public readonly headType: SymbolType,
+    public readonly tailType: SymbolType,
   ) {
-    for (let i = 0; i < ids.length; i++) {
-      this.typeMap[ids[i]] = ofTypes[i];
-    }
+    this.typeMap[headdId] = headType;
+    this.typeMap[tailId] = tailType;
   }
 
   initialValue = "";
@@ -23,10 +24,10 @@ export class DeconstructedListType implements DeconstructedSymbolType {
   private typeMap = {} as { [index: string]: SymbolType };
 
   get name() {
-    return `DeconstructedList <${this.ofTypes.map((t) => t.name).join(", ")}>`;
+    return `${this.headdId}:${this.tailId}`;
   }
 
   toString(): string {
-    return `(${this.ofTypes.map((t) => t.name).join(", ")})`;
+    return `${this.headdId}:${this.tailId}`;
   }
 }

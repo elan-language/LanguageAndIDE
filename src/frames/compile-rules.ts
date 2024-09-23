@@ -38,6 +38,7 @@ import { AbstractDictionaryType } from "./symbols/abstract-dictionary-type";
 import { ArrayType } from "./symbols/array-list-type";
 import { BooleanType } from "./symbols/boolean-type";
 import { ClassType } from "./symbols/class-type";
+import { DeconstructedListType } from "./symbols/deconstructed-list-type";
 import { DictionaryType } from "./symbols/dictionary-type";
 import { DuplicateSymbol } from "./symbols/duplicate-symbol";
 import { EnumType } from "./symbols/enum-type";
@@ -672,6 +673,16 @@ export function mustBeCompatibleType(
     if (lhs.name !== rhs.name) {
       FailIncompatible(lhs, rhs, compileErrors, location);
     }
+    return;
+  }
+
+  if (lhs instanceof DeconstructedListType) {
+    if (isGenericSymbolType(lhs.tailType)) {
+      mustBeCompatibleType(lhs.headType, lhs.tailType.ofType, compileErrors, location);
+    }
+
+    mustBeCompatibleType(lhs.tailType, rhs, compileErrors, location);
+
     return;
   }
 

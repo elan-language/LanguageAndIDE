@@ -1,14 +1,16 @@
 import { CompileError } from "../compile-error";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { Scope } from "../interfaces/scope";
+import { DeconstructedListType } from "../symbols/deconstructed-list-type";
 import { AbstractAstNode } from "./abstract-ast-node";
+import { transforms } from "./ast-helpers";
 
 export class DeconstructedListAsn extends AbstractAstNode implements AstIdNode {
   constructor(
     private readonly head: string,
     private readonly tail: string,
     public readonly fieldId: string,
-    scope: Scope,
+    private readonly scope: Scope,
   ) {
     super();
   }
@@ -27,7 +29,17 @@ export class DeconstructedListAsn extends AbstractAstNode implements AstIdNode {
   }
 
   symbolType() {
-    return { name: "", isImmutable: true, initialValue: "" };
+    const hdSt = this.scope
+      .getParentScope()
+      .resolveSymbol(this.head, transforms(), this.scope)
+      .symbolType();
+
+    const tlSt = this.scope
+      .getParentScope()
+      .resolveSymbol(this.tail, transforms(), this.scope)
+      .symbolType();
+
+    return new DeconstructedListType(this.head, this.tail, hdSt, tlSt);
   }
 
   toString() {

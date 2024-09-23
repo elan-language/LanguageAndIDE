@@ -57,13 +57,6 @@ export class SetStatement extends AbstractFrame implements Statement {
     return `${this.indent()}${setKeyword} ${this.assignable.renderAsSource()} ${toKeyword} ${this.expr.renderAsSource()}`;
   }
 
-  // wrapDeconstruction(lhs: AstNode, code: string) {
-  //   if (lhs instanceof DeconstructedListAsn) {
-  //     return `system.deconstructList(${code})`;
-  //   }
-  //   return code;
-  // }
-
   compile(transforms: Transforms): string {
     this.compileErrors = [];
     const assignableAstNode = this.assignable.getOrTransformAstNode(transforms);
