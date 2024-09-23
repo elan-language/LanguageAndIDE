@@ -180,6 +180,41 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "3Int[1, 2][Int]");
   });
 
+  test("Pass_DeconstructTupleWithListIntoNewLet", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var a set to [1,2]
+  var x set to (3, a)
+  let y, z be x
+  print y
+  print typeof y
+  print z
+  print typeof z
+end main
+`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.literalArray([1, 2]);
+  var x = system.tuple([3, a]);
+  var [y, z] = system.deconstructTupleToLet(x);
+  system.printLine(_stdlib.asString(y()));
+  system.printLine(_stdlib.asString("Int"));
+  system.printLine(_stdlib.asString(z()));
+  system.printLine(_stdlib.asString("[Int]"));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "3Int[1, 2][Int]");
+  });
+
   test("Pass_DeconstructTupleWithListIntoExisting", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
@@ -241,6 +276,41 @@ async function main() {
   system.printLine(_stdlib.asString(y));
   system.printLine(_stdlib.asString("Int"));
   system.printLine(_stdlib.asString(z));
+  system.printLine(_stdlib.asString("(Int, Int)"));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "3Int(1, 2)(Int, Int)");
+  });
+
+  test("Pass_DeconstructTupleWithTupleIntoNewLet", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var a set to (1,2)
+  var x set to (3, a)
+  let y, z be x
+  print y
+  print typeof y
+  print z
+  print typeof z
+end main
+`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.tuple([1, 2]);
+  var x = system.tuple([3, a]);
+  var [y, z] = system.deconstructTupleToLet(x);
+  system.printLine(_stdlib.asString(y()));
+  system.printLine(_stdlib.asString("Int"));
+  system.printLine(_stdlib.asString(z()));
   system.printLine(_stdlib.asString("(Int, Int)"));
 }
 return [main, _tests];}`;
