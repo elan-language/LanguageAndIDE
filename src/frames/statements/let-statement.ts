@@ -1,6 +1,6 @@
 import { AbstractFrame } from "../abstract-frame";
 import { CodeSource } from "../code-source";
-import { mustNotBeKeyword, mustNotBeReassigned } from "../compile-rules";
+import { mustBeDeconstructableType, mustNotBeKeyword, mustNotBeReassigned } from "../compile-rules";
 import { ExpressionField } from "../fields/expression-field";
 import { VarDefField } from "../fields/var-def-field";
 import { Field } from "../interfaces/field";
@@ -9,7 +9,12 @@ import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
 import { ElanSymbol } from "../interfaces/symbol";
 import { beKeyword, letKeyword } from "../keywords";
+import { ArrayType } from "../symbols/array-list-type";
+import { DeconstructedListType } from "../symbols/deconstructed-list-type";
+import { DeconstructedTupleType } from "../symbols/deconstructed-tuple-type";
+import { ListType } from "../symbols/list-type";
 import { SymbolScope } from "../symbols/symbol-scope";
+import { TupleType } from "../symbols/tuple-type";
 import { isAstIdNode } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 
@@ -24,8 +29,26 @@ export class LetStatement extends AbstractFrame implements Statement, ElanSymbol
     this.expr = new ExpressionField(this);
   }
 
+  ids(transforms?: Transforms) {
+    const ast = this.name.getOrTransformAstNode(transforms);
+    if (isAstIdNode(ast)) {
+      const id = ast.id;
+      return id.includes(",") ? id.split(",") : [id];
+    }
+    return [];
+  }
+
   symbolType(transforms?: Transforms) {
-    return this.expr.symbolType(transforms);
+    const ids = this.ids(transforms);
+    const st = this.expr.symbolType(transforms);
+    if (ids.length > 1 && st instanceof TupleType) {
+      return new DeconstructedTupleType(ids, st.ofTypes);
+    }
+    if (ids.length === 2 && (st instanceof ArrayType || st instanceof ListType)) {
+      return new DeconstructedListType(ids[0], ids[1], st.ofType, st);
+    }
+
+    return st;
   }
 
   get symbolScope(): SymbolScope {
@@ -60,28 +83,31 @@ export class LetStatement extends AbstractFrame implements Statement, ElanSymbol
 
   compile(transforms: Transforms): string {
     this.compileErrors = [];
-    // todo common code with var statement
-    const ast = this.name.getOrTransformAstNode(transforms);
+    const ids = this.ids(transforms);
 
-    if (isAstIdNode(ast)) {
-      const id = ast.id;
-
-      const ids = id.includes(",") ? id.split(",") : [id];
-
-      for (const i of ids) {
-        mustNotBeKeyword(i, this.compileErrors, this.htmlId);
-        const symbol = this.getParent().resolveSymbol(i!, transforms, this);
-        mustNotBeReassigned(symbol, this.compileErrors, this.htmlId);
-      }
-
-      const vid = ids.length > 1 ? `[${ids.join(", ")}]` : id;
-
-      return `${this.indent()}var ${vid} = (() => {
-${this.indent()}${this.indent()}var _cache;
-${this.indent()}${this.indent()}return () => _cache ??= ${this.expr.compile(transforms)};
-${this.indent()}})();`;
+    if (ids.length > 1) {
+      mustBeDeconstructableType(this.symbolType(transforms), this.compileErrors, this.htmlId);
     }
-    return "";
+
+    for (const i of ids) {
+      mustNotBeKeyword(i, this.compileErrors, this.htmlId);
+      const symbol = this.getParent().resolveSymbol(i!, transforms, this);
+      mustNotBeReassigned(symbol, this.compileErrors, this.htmlId);
+    }
+
+    const vid = ids.length > 1 ? `[${ids.join(", ")}]` : ids[0];
+
+    const val = this.expr.compile(transforms);
+
+    const expr =
+      ids.length === 1
+        ? `(() => {
+${this.indent()}${this.indent()}var _cache;
+${this.indent()}${this.indent()}return () => _cache ??= ${val};
+${this.indent()}})()`
+        : `system.deconstructTupleToLet(${val})`;
+
+    return `${this.indent()}var ${vid} = ${expr};`;
   }
 
   get symbolId() {

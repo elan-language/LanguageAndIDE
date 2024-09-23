@@ -239,4 +239,23 @@ export class System {
     (tl as unknown as hasHiddenType)._type = type;
     return [hd, tl];
   }
+
+  deconstructTupleToLet(tuple: any[]): any[] {
+    const letTuple = [];
+
+    for (let i = 0; i < tuple.length; i++) {
+      const v = tuple[i];
+
+      const letV = (() => {
+        let _cache;
+        return () => (_cache ??= v);
+      })();
+
+      letTuple.push(letV);
+    }
+
+    (letTuple as unknown as hasHiddenType)._type = "Tuple";
+
+    return letTuple;
+  }
 }
