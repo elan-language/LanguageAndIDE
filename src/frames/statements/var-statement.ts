@@ -1,6 +1,6 @@
 import { AbstractFrame } from "../abstract-frame";
 import { CodeSource } from "../code-source";
-import { mustNotBeKeyword, mustNotBeReassigned } from "../compile-rules";
+import { mustBeDeconstructableType, mustNotBeKeyword, mustNotBeReassigned } from "../compile-rules";
 import { ExpressionField } from "../fields/expression-field";
 import { VarDefField } from "../fields/var-def-field";
 import { Field } from "../interfaces/field";
@@ -12,6 +12,8 @@ import { setKeyword, toKeyword, varKeyword } from "../keywords";
 import { ArrayType } from "../symbols/array-list-type";
 import { DeconstructedListType } from "../symbols/deconstructed-list-type";
 import { DeconstructedTupleType } from "../symbols/deconstructed-tuple-type";
+import { ListType } from "../symbols/list-type";
+import { isDeconstructedType } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { TupleType } from "../symbols/tuple-type";
 import { isAstIdNode, wrapDeconstruction } from "../syntax-nodes/ast-helpers";
@@ -67,6 +69,10 @@ export class VarStatement extends AbstractFrame implements Statement, ElanSymbol
     this.compileErrors = [];
     const ids = this.ids(transforms);
 
+    if (ids.length > 1) {
+      mustBeDeconstructableType(this.symbolType(transforms), this.compileErrors, this.htmlId);
+    }
+
     for (const i of ids) {
       mustNotBeKeyword(i, this.compileErrors, this.htmlId);
       const symbol = this.getParent().resolveSymbol(i!, transforms, this);
@@ -93,7 +99,7 @@ export class VarStatement extends AbstractFrame implements Statement, ElanSymbol
     if (ids.length > 1 && st instanceof TupleType) {
       return new DeconstructedTupleType(ids, st.ofTypes);
     }
-    if (ids.length === 2 && st instanceof ArrayType) {
+    if (ids.length === 2 && (st instanceof ArrayType || st instanceof ListType)) {
       return new DeconstructedListType(ids[0], ids[1], st.ofType, st);
     }
 

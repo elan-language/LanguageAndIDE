@@ -53,6 +53,7 @@ import { ProcedureType } from "./symbols/procedure-type";
 import { RegexType } from "./symbols/regex-type";
 import { StringType } from "./symbols/string-type";
 import {
+  isDeconstructedType,
   isDictionarySymbolType,
   isDictionaryType,
   isGenericSymbolType,
@@ -176,6 +177,16 @@ export function mustBeClassType(
 ) {
   if (!(symbolType instanceof ClassType)) {
     compileErrors.push(new TypeCompileError("Class", location, symbolType instanceof UnknownType));
+  }
+}
+
+export function mustBeDeconstructableType(
+  symbolType: SymbolType,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  if (!(isDeconstructedType(symbolType))) {
+    compileErrors.push(new TypeCompileError("able to be deconstructed", location, symbolType instanceof UnknownType));
   }
 }
 
