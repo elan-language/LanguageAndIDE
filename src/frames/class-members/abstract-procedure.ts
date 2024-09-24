@@ -3,6 +3,7 @@ import { CodeSource } from "../code-source";
 import { mustBeUniqueNameInScope } from "../compile-rules";
 import { IdentifierField } from "../fields/identifier-field";
 import { ParamList } from "../fields/param-list";
+import { ClassFrame } from "../globals/class-frame";
 import { singleIndent } from "../helpers";
 import { Field } from "../interfaces/field";
 import { Member } from "../interfaces/member";
@@ -26,6 +27,11 @@ export class AbstractProcedure extends AbstractFrame implements Member, ElanSymb
     this.name = new IdentifierField(this);
     this.params = new ParamList(this);
   }
+
+  getClass(): ClassFrame {
+    return this.getParent() as ClassFrame;
+  }
+
   initialKeywords(): string {
     return abstractProcedureKeywords;
   }

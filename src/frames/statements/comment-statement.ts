@@ -1,9 +1,10 @@
+import { AbstractFrame } from "../abstract-frame";
+import { CodeSource } from "../code-source";
 import { CommentField } from "../fields/comment-field";
+import { ClassFrame } from "../globals/class-frame";
+import { Field } from "../interfaces/field";
 import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
-import { Field } from "../interfaces/field";
-import { CodeSource } from "../code-source";
-import { AbstractFrame } from "../abstract-frame";
 import { Statement } from "../interfaces/statement";
 import { commentMarker } from "../keywords";
 
@@ -17,6 +18,10 @@ export class CommentStatement extends AbstractFrame implements Statement, Member
   constructor(parent: Parent) {
     super(parent);
     this.text = new CommentField(this);
+  }
+
+  getClass(): ClassFrame {
+    return this.getParent() as ClassFrame;
   }
 
   initialKeywords(): string {

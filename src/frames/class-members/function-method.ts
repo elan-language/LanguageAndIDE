@@ -4,6 +4,7 @@ import {
   mustBeKnownSymbolType,
   mustBeUniqueNameInScope,
 } from "../compile-rules";
+import { ClassFrame } from "../globals/class-frame";
 import { FunctionFrame } from "../globals/function-frame";
 import { singleIndent } from "../helpers";
 import { Frame } from "../interfaces/frame";
@@ -25,9 +26,14 @@ export class FunctionMethod extends FunctionFrame implements Member {
     this.private = priv;
   }
 
+  getClass(): ClassFrame {
+    return this.getParent() as ClassFrame;
+  }
+
   private modifierAsHtml(): string {
     return this.private ? `<keyword>private </keyword>` : "";
   }
+
   private modifierAsSource(): string {
     return this.private ? `private ` : "";
   }
@@ -35,6 +41,7 @@ export class FunctionMethod extends FunctionFrame implements Member {
   public override indent(): string {
     return singleIndent();
   }
+
   public override renderAsSource(): string {
     return `${this.indent()}${this.modifierAsSource()}${functionKeyword} ${this.name.renderAsSource()}(${this.params.renderAsSource()}) ${returnKeyword} ${this.returnType.renderAsSource()}\r
 ${this.renderChildrenAsSource()}\r

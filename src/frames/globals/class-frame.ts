@@ -20,6 +20,7 @@ import { InheritsFrom } from "../fields/inheritsFrom";
 import { OptionalKeyword } from "../fields/optionalKeyword";
 import { Regexes } from "../fields/regexes";
 import { TypeNameField } from "../fields/type-name-field";
+import { isMember } from "../helpers";
 import { Class } from "../interfaces/class";
 import { Collapsible } from "../interfaces/collapsible";
 import { Field } from "../interfaces/field";
@@ -287,6 +288,22 @@ end class\r\n`;
     return `[${ps}]`;
   }
 
+  public getSuperClassesTypeAndName(transforms: Transforms) {
+    if (this.doesInherit()) {
+      const superClasses = this.superClasses.getOrTransformAstNode(transforms);
+
+      if (isAstCollectionNode(superClasses)) {
+        const nodes = superClasses.items.filter((i) => isAstIdNode(i));
+        const typeAndName: [ClassType | UnknownType, string][] = nodes
+          .map((n) => getGlobalScope(this).resolveSymbol(n.id, transforms, this))
+          .map((c) => [c.symbolType(transforms) as ClassType | UnknownType, c.symbolId]);
+
+        return typeAndName;
+      }
+    }
+    return [];
+  }
+
   public compile(transforms: Transforms): string {
     this.compileErrors = [];
 
@@ -299,32 +316,23 @@ end class\r\n`;
       this.htmlId,
     );
 
-    if (this.doesInherit()) {
-      const superClasses = this.superClasses.getOrTransformAstNode(transforms);
+    const typeAndName = this.getSuperClassesTypeAndName(transforms);
 
-      if (isAstCollectionNode(superClasses)) {
-        const nodes = superClasses.items.filter((i) => isAstIdNode(i));
-        const typeAndName: [ClassType | UnknownType, string][] = nodes
-          .map((n) => this.resolveSymbol(n.id, transforms, this))
-          .map((c) => [c.symbolType(transforms) as ClassType | UnknownType, c.symbolId]);
-
-        for (const st of typeAndName) {
-          mustBeKnownSymbolType(st[0], st[1], this.compileErrors, this.htmlId);
-        }
-
-        for (const st of typeAndName) {
-          mustBeAbstractClass(st[0], this.compileErrors, this.htmlId);
-        }
-
-        mustImplementSuperClasses(
-          transforms,
-          this.symbolType(transforms),
-          typeAndName.map((tn) => tn[0]).filter((st) => st instanceof ClassType) as ClassType[],
-          this.compileErrors,
-          this.htmlId,
-        );
-      }
+    for (const st of typeAndName) {
+      mustBeKnownSymbolType(st[0], st[1], this.compileErrors, this.htmlId);
     }
+
+    for (const st of typeAndName) {
+      mustBeAbstractClass(st[0], this.compileErrors, this.htmlId);
+    }
+
+    mustImplementSuperClasses(
+      transforms,
+      this.symbolType(transforms),
+      typeAndName.map((tn) => tn[0]).filter((st) => st instanceof ClassType) as ClassType[],
+      this.compileErrors,
+      this.htmlId,
+    );
 
     const asString = this.isAbstract()
       ? `
@@ -427,6 +435,20 @@ ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
     }
     if (matches.length > 1) {
       return new DuplicateSymbol(matches);
+    }
+
+    const types = this.getSuperClassesTypeAndName(transforms)
+      .map((tn) => tn[0])
+      .filter((t) => t instanceof ClassType);
+
+    for (const ct of types) {
+      const privateChildren = ct.childSymbols().filter((ss) => isMember(ss) && ss.private);
+
+      for (const pc of privateChildren) {
+        if (pc.symbolId === id) {
+          return pc;
+        }
+      }
     }
 
     return this.getParent().resolveSymbol(id, transforms, this);

@@ -30,6 +30,10 @@ export class MemberSelector extends AbstractSelector implements Member {
     this.class = parent as ClassFrame;
   }
 
+  getClass(): ClassFrame {
+    return this.getParent() as ClassFrame;
+  }
+
   defaultOptions(): [string, (parent: Parent) => Frame][] {
     const options: [string, (parent: Parent) => Frame][] = [
       [functionKeyword, (parent: Parent) => this.class.createFunction()],

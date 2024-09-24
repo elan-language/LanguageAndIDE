@@ -1028,28 +1028,35 @@ return [main, _tests];}`;
 
 main
   var x set to new Bar()
+  call x.testPrivate(3)
 end main
 
 abstract class Foo
-  private property p1 as Float
+  private property p1 as Int
 
   private procedure setP1(a as Int)
     set property.p1 to a
   end procedure
 
-  private function ff() return Float
+  private function ff() return Int
     return p1
   end function
 end class
 
 class Bar inherits Foo
-    constructor()
-    end constructor
+  constructor()
+  end constructor
+
+  procedure testPrivate(a as Int)
+    call setP1(a)
+    print ff()
+  end procedure
 end class`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var x = system.initialise(new Bar());
+  await x.testPrivate(3);
 }
 
 class Foo {
@@ -1071,8 +1078,14 @@ class Foo {
 
 class Bar {
   static emptyInstance() { return system.emptyClass(Bar, []);};
+  _Foo = new Foo();
   constructor() {
 
+  }
+
+  async testPrivate(a) {
+    await this._Foo.setP1(a);
+    system.printLine(_stdlib.asString(this._Foo.ff()));
   }
 
 }
@@ -1084,7 +1097,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "");
+    await assertObjectCodeExecutes(fileImpl, "3");
   });
 
   test("Fail_AbstractClassCannotInheritFromConcreteClass", async () => {

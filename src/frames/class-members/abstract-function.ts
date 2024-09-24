@@ -4,6 +4,7 @@ import { mustBeUniqueNameInScope } from "../compile-rules";
 import { IdentifierField } from "../fields/identifier-field";
 import { ParamList } from "../fields/param-list";
 import { TypeField } from "../fields/type-field";
+import { ClassFrame } from "../globals/class-frame";
 import { singleIndent } from "../helpers";
 import { Field } from "../interfaces/field";
 import { Member } from "../interfaces/member";
@@ -30,6 +31,11 @@ export class AbstractFunction extends AbstractFrame implements Member, ElanSymbo
     this.returnType = new TypeField(this);
     this.returnType.setPlaceholder("return type");
   }
+
+  getClass(): ClassFrame {
+    return this.getParent() as ClassFrame;
+  }
+
   initialKeywords(): string {
     return abstractFunctionKeywords;
   }

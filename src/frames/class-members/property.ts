@@ -28,9 +28,15 @@ export class Property extends AbstractFrame implements Member, ElanSymbol {
     this.type = new TypeField(this);
     this.private = priv;
   }
+
+  getClass(): ClassFrame {
+    return this.getParent() as ClassFrame;
+  }
+
   initialKeywords(): string {
     return propertyKeyword;
   }
+
   getFields(): Field[] {
     return [this.name, this.type];
   }

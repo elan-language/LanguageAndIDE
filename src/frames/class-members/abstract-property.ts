@@ -26,9 +26,15 @@ export class AbstractProperty extends AbstractFrame implements Member, ElanSymbo
     this.name = new IdentifierField(this);
     this.type = new TypeField(this);
   }
+
+  getClass(): ClassFrame {
+    return this.getParent() as ClassFrame;
+  }
+
   initialKeywords(): string {
     return abstractPropertyKeywords;
   }
+
   getFields(): Field[] {
     return [this.name, this.type];
   }
@@ -36,6 +42,7 @@ export class AbstractProperty extends AbstractFrame implements Member, ElanSymbo
   getIdPrefix(): string {
     return "prop";
   }
+
   renderAsHtml(): string {
     return `<property class="${this.cls()}" id='${this.htmlId}' tabindex="0"><top><keyword>abstract property </keyword>${this.name.renderAsHtml()}</keyword> as </keyword ${this.type.renderAsHtml()}</top>${this.compileMsgAsHtml()}${this.getFrNo()}</property>`;
   }

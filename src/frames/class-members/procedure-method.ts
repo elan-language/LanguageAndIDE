@@ -1,5 +1,6 @@
 import { CodeSource } from "../code-source";
 import { mustBeUniqueNameInScope } from "../compile-rules";
+import { ClassFrame } from "../globals/class-frame";
 import { ProcedureFrame } from "../globals/procedure-frame";
 import { singleIndent } from "../helpers";
 import { Frame } from "../interfaces/frame";
@@ -20,15 +21,23 @@ export class ProcedureMethod extends ProcedureFrame implements Member {
     super(parent);
     this.private = priv;
   }
+
+  getClass(): ClassFrame {
+    return this.getParent() as ClassFrame;
+  }
+
   private modifierAsHtml(): string {
     return this.private ? `<keyword>private </keyword>` : "";
   }
+
   private modifierAsSource(): string {
     return this.private ? `private ` : "";
   }
+
   public override indent(): string {
     return singleIndent();
   }
+
   public override renderAsSource(): string {
     return `${this.indent()}${this.modifierAsSource()}procedure ${this.name.renderAsSource()}(${this.params.renderAsSource()})\r
 ${this.renderChildrenAsSource()}\r

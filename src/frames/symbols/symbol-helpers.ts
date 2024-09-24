@@ -1,5 +1,7 @@
+import { ProcedureMethod } from "../class-members/procedure-method";
 import { Property } from "../class-members/property";
-import { isClass, isFile, isScope } from "../helpers";
+import { ClassFrame } from "../globals/class-frame";
+import { isClass, isFile, isMember, isScope } from "../helpers";
 import { AstNode } from "../interfaces/ast-node";
 import { Class } from "../interfaces/class";
 import { DeconstructedSymbolType } from "../interfaces/deconstructed-symbol-type";
@@ -81,13 +83,24 @@ export function isPropertyOnFieldsClass(s: ElanSymbol, scope: Scope) {
   return isProperty(s) && s.getParent() === getClassScope(scope);
 }
 
-export function scopePrefix(symbolScope: SymbolScope | undefined) {
-  if (symbolScope === SymbolScope.stdlib) {
+export function scopePrefix(procSymbol: ElanSymbol, scope: Scope) {
+  if (procSymbol.symbolScope === SymbolScope.stdlib) {
     return `_stdlib.`;
   }
-  if (symbolScope === SymbolScope.property) {
+
+  if (isMember(procSymbol) && procSymbol.private) {
+    const procClass = procSymbol.getClass();
+    const thisClass = getClassScope(scope);
+
+    if (procClass !== thisClass) {
+      return `this._${procClass.symbolId}.`;
+    }
+  }
+
+  if (procSymbol.symbolScope === SymbolScope.property) {
     return `this.`;
   }
+
   return "";
 }
 

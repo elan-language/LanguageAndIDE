@@ -1,5 +1,6 @@
 import { AbstractFrame } from "../abstract-frame";
 import { Constructor } from "../class-members/constructor";
+import { ProcedureMethod } from "../class-members/procedure-method";
 import { CodeSource } from "../code-source";
 import {
   cannotCallOnParameter,
@@ -11,6 +12,7 @@ import {
 } from "../compile-rules";
 import { ArgListField } from "../fields/arg-list-field";
 import { ProcRefField } from "../fields/proc-ref-field";
+import { ClassFrame } from "../globals/class-frame";
 import { ProcedureFrame } from "../globals/procedure-frame";
 import { AstNode } from "../interfaces/ast-node";
 import { Field } from "../interfaces/field";
@@ -18,7 +20,7 @@ import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
 import { callKeyword } from "../keywords";
 import { ProcedureType } from "../symbols/procedure-type";
-import { scopePrefix, updateScopeAndQualifier } from "../symbols/symbol-helpers";
+import { getClassScope, scopePrefix, updateScopeAndQualifier } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import {
   containsGenericType,
@@ -27,6 +29,7 @@ import {
   isAstIdNode,
   matchGenericTypes,
 } from "../syntax-nodes/ast-helpers";
+import { IdAsn } from "../syntax-nodes/id-asn";
 import { QualifierAsn } from "../syntax-nodes/qualifier-asn";
 import { Transforms } from "../syntax-nodes/transforms";
 import { LetStatement } from "./let-statement";
@@ -176,7 +179,7 @@ export class CallStatement extends AbstractFrame implements Statement {
       }
 
       const pp = passedParameters.join(", ");
-      const q = qualifier ? `${qualifier.compile()}` : scopePrefix(procSymbol.symbolScope);
+      const q = qualifier ? `${qualifier.compile()}` : scopePrefix(procSymbol, this);
       const a = isAsync ? "await " : "";
       let prefix = "";
       let postfix = "";
