@@ -112,9 +112,9 @@ export class MustBeAbstractCompileError extends CompileError {
   }
 }
 
-export class PrivatePropertyCompileError extends CompileError {
+export class PrivateMemberCompileError extends CompileError {
   constructor(id: string, location: string) {
-    super(Priority.illegalOperation, `Cannot reference private property ${id}`, location, false);
+    super(Priority.illegalOperation, `Cannot reference private member ${id}`, location, false);
   }
 }
 

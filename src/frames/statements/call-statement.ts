@@ -7,6 +7,7 @@ import {
   cannotPassAsOutParameter,
   mustBeKnownSymbol,
   mustBeProcedure,
+  mustBePublicMember,
   mustCallExtensionViaQualifier,
   mustMatchParameters,
 } from "../compile-rules";
@@ -20,7 +21,12 @@ import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
 import { callKeyword } from "../keywords";
 import { ProcedureType } from "../symbols/procedure-type";
-import { getClassScope, scopePrefix, updateScopeAndQualifier } from "../symbols/symbol-helpers";
+import {
+  getClassScope,
+  isMemberOnFieldsClass,
+  scopePrefix,
+  updateScopeAndQualifier,
+} from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import {
   containsGenericType,
@@ -90,6 +96,10 @@ export class CallStatement extends AbstractFrame implements Statement {
 
     mustBeKnownSymbol(procSymbol, this.compileErrors, this.htmlId);
     mustBeProcedure(procSymbol.symbolType(transforms), this.compileErrors, this.htmlId);
+
+    if (!isMemberOnFieldsClass(procSymbol, transforms, this)) {
+      mustBePublicMember(procSymbol, this.compileErrors, this.htmlId);
+    }
 
     const ps = procSymbol.symbolType(transforms);
     const argList = this.args.getOrTransformAstNode(transforms);

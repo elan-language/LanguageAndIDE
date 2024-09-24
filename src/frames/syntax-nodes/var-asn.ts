@@ -3,7 +3,7 @@ import {
   mustBeCompatibleType,
   mustBeIndexableSymbol,
   mustBeKnownSymbol,
-  mustBePublicProperty,
+  mustBePublicMember,
 } from "../compile-rules";
 import { isScope } from "../helpers";
 import { AstIndexableNode } from "../interfaces/ast-indexable-node";
@@ -24,7 +24,7 @@ import {
   getGlobalScope,
   isDictionarySymbolType,
   isGenericSymbolType,
-  isPropertyOnFieldsClass,
+  isMemberOnFieldsClass,
   scopePrefix,
 } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
@@ -106,14 +106,15 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
       const classSymbol = this.scope.resolveSymbol(classScope.className, transforms(), this.scope);
       if (isScope(classSymbol)) {
         symbol = classSymbol.resolveSymbol(this.id, transforms(), classSymbol);
-        if (!isPropertyOnFieldsClass(symbol, transforms(), this.scope)) {
-          mustBePublicProperty(symbol, this.compileErrors, this.fieldId);
-        }
       }
     } else if (isAstIdNode(this.qualifier?.value) && this.qualifier.value.id === globalKeyword) {
       symbol = getGlobalScope(this.scope).resolveSymbol(this.id, transforms(), this.scope);
     } else {
       symbol = this.scope.getParentScope().resolveSymbol(this.id, transforms(), this.scope);
+    }
+
+    if (!isMemberOnFieldsClass(symbol, transforms(), this.scope)) {
+      mustBePublicMember(symbol, this.compileErrors, this.fieldId);
     }
 
     mustBeKnownSymbol(symbol, this.compileErrors, this.fieldId);

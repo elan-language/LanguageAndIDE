@@ -19,7 +19,7 @@ import {
   OutParameterCompileError,
   ParametersCompileError,
   PrintFunctionCompileError,
-  PrivatePropertyCompileError,
+  PrivateMemberCompileError,
   ReassignCompileError,
   SyntaxCompileError,
   TypeCompileError,
@@ -289,13 +289,13 @@ export function mustBeAbstractClass(
   }
 }
 
-export function mustBePublicProperty(
-  property: ElanSymbol,
+export function mustBePublicMember(
+  member: ElanSymbol,
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (property instanceof Property && property.private === true) {
-    compileErrors.push(new PrivatePropertyCompileError(property.name.text, location));
+  if (isMember(member) && member.private) {
+    compileErrors.push(new PrivateMemberCompileError(member.symbolId, location));
   }
 }
 
@@ -305,7 +305,7 @@ export function mustBePropertyAndPublic(
   location: string,
 ) {
   if (symbol instanceof Property && symbol.private === true) {
-    compileErrors.push(new PrivatePropertyCompileError(symbol.name.text, location));
+    compileErrors.push(new PrivateMemberCompileError(symbol.name.text, location));
   }
   if (!(symbol instanceof Property)) {
     compileErrors.push(new UndefinedSymbolCompileError(symbol.symbolId, location));

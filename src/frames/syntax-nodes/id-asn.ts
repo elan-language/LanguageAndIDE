@@ -1,16 +1,11 @@
 import { CompileError } from "../compile-error";
-import { mustBeKnownSymbol, mustBePublicProperty, mustNotBeKeyword } from "../compile-rules";
+import { mustBeKnownSymbol, mustBePublicMember, mustNotBeKeyword } from "../compile-rules";
 import { isMember } from "../helpers";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstNode } from "../interfaces/ast-node";
 import { Scope } from "../interfaces/scope";
 import { LetStatement } from "../statements/let-statement";
-import { DeconstructedTupleType } from "../symbols/deconstructed-tuple-type";
-import {
-  isDeconstructedType,
-  isPropertyOnFieldsClass,
-  scopePrefix,
-} from "../symbols/symbol-helpers";
+import { isDeconstructedType, isMemberOnFieldsClass, scopePrefix } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { transforms } from "./ast-helpers";
@@ -56,8 +51,8 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
 
     mustBeKnownSymbol(symbol, this.compileErrors, this.fieldId);
 
-    if (!isPropertyOnFieldsClass(symbol, transforms(), this.scope)) {
-      mustBePublicProperty(symbol, this.compileErrors, this.fieldId);
+    if (!isMemberOnFieldsClass(symbol, transforms(), this.scope)) {
+      mustBePublicMember(symbol, this.compileErrors, this.fieldId);
     }
 
     let postfix = "";

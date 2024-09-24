@@ -819,7 +819,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot reference private property b"]);
+    assertDoesNotCompile(fileImpl, ["Cannot reference private member b"]);
   });
 
   test("Fail_NotImmutable", async () => {

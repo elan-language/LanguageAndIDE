@@ -9,7 +9,7 @@ import { DeconstructedTuple } from "../parse-nodes/deconstructed-tuple";
 import { ParseNode } from "../parse-nodes/parse-node";
 import {
   filteredSymbols,
-  isPropertyOnFieldsClass,
+  isMemberOnFieldsClass,
   isVarOrPropertyStatement,
 } from "../symbols/symbol-helpers";
 import { transforms } from "../syntax-nodes/ast-helpers";
@@ -42,7 +42,7 @@ export class AssignableField extends AbstractField {
   }
 
   protected override getId(s: ElanSymbol) {
-    if (isPropertyOnFieldsClass(s, transforms(), this.getHolder())) {
+    if (isMemberOnFieldsClass(s, transforms(), this.getHolder())) {
       return `${propertyKeyword}.${s.symbolId}`;
     }
     return s.symbolId;

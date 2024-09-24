@@ -210,7 +210,34 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot reference private property p2"]);
+    assertDoesNotCompile(fileImpl, ["Cannot reference private member p2"]);
+  });
+
+  test("Fail_PrivateProcedureCannotBeAccessed", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var foo set to new Foo()
+  call foo.setP1(5)
+end main
+
+class Foo
+  constructor()
+  end constructor
+
+  property p1 as Float
+
+  private procedure setP1(a as Int)
+    set property.p1 to a
+  end procedure
+
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Cannot reference private member setP1"]);
   });
 
   test("Fail_PrivatePropertyCannotBePrinted", async () => {
@@ -241,6 +268,6 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot reference private property p2"]);
+    assertDoesNotCompile(fileImpl, ["Cannot reference private member p2"]);
   });
 });

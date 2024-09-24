@@ -1,4 +1,3 @@
-import { ProcedureMethod } from "../class-members/procedure-method";
 import { Property } from "../class-members/property";
 import { ClassFrame } from "../globals/class-frame";
 import { isClass, isFile, isMember, isScope } from "../helpers";
@@ -9,7 +8,6 @@ import { File } from "../interfaces/file";
 import { Frame } from "../interfaces/frame";
 import { GenericSymbolType } from "../interfaces/generic-symbol-type";
 import { IterableSymbolType } from "../interfaces/iterable-symbol-type";
-import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
 import { Scope } from "../interfaces/scope";
 import { ElanSymbol } from "../interfaces/symbol";
@@ -80,12 +78,10 @@ export function isVarOrPropertyStatement(s?: ElanSymbol): boolean {
   return !!s && (isVarStatement(s) || isProperty(s));
 }
 
-export function isPropertyOnFieldsClass(s: ElanSymbol, transforms: Transforms, scope: Scope) {
+export function isMemberOnFieldsClass(s: ElanSymbol, transforms: Transforms, scope: Scope) {
   const currentClass = getClassScope(scope);
-  const matchingProperty = currentClass.resolveSymbol(s.symbolId, transforms, scope);
-  return (
-    isProperty(s) && isProperty(matchingProperty) && s.getClass() === matchingProperty.getClass()
-  );
+  const matchingMember = currentClass.resolveSymbol(s.symbolId, transforms, scope);
+  return isMember(s) && isMember(matchingMember) && s.getClass() === matchingMember.getClass();
 }
 
 export function scopePrefix(procSymbol: ElanSymbol, scope: Scope) {
