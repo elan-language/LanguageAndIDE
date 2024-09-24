@@ -387,9 +387,7 @@ export function filteredSymbols(
 }
 
 export function hasPrivateMembers(ct: ClassType) {
-  const children = ct
-    .childSymbols()
-    .filter((s) => isMember(s) && s.private);
+  const children = ct.childSymbols().filter((s) => isMember(s) && s.private);
   return children.length > 0;
 }
 
@@ -397,7 +395,7 @@ export function getMixins(start: ClassFrame, transforms: Transforms) {
   const superClasses = start.getSuperClassesTypeAndName(transforms);
   let mixins: string[] = [];
 
-  for (const ct of superClasses.map(t => t[0]).filter((t) => t instanceof ClassType)) {
+  for (const ct of superClasses.map((t) => t[0]).filter((t) => t instanceof ClassType)) {
     if (hasPrivateMembers(ct)) {
       const name = ct.className;
       mixins.push(`_${name} = new ${name}()`);
