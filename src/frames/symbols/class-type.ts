@@ -13,7 +13,7 @@ export class ClassType implements SymbolType, Scope {
     public readonly isAbstract: boolean,
     public readonly isImmutable: boolean,
     public readonly inheritsFrom: SymbolType[],
-    private readonly scope: ClassFrame,
+    public readonly scope: ClassFrame,
   ) {}
 
   symbolMatches(id: string, all: boolean): ElanSymbol[] {

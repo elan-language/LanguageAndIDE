@@ -9,6 +9,7 @@ import { Member } from "../interfaces/member";
 import { ElanSymbol } from "../interfaces/symbol";
 import { constructorKeyword } from "../keywords";
 import { ClassType } from "../symbols/class-type";
+import { getMixins, hasPrivateMembers } from "../symbols/symbol-helpers";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { Transforms } from "../syntax-nodes/transforms";
 
@@ -61,21 +62,7 @@ ${this.indent()}end constructor\r
   public compile(transforms: Transforms): string {
     this.compileErrors = [];
 
-    const mixins: string[] = [];
-
-    const superClasses = (this.getParent() as ClassFrame).getSuperClassesTypeAndName(transforms);
-
-    for (const tn of superClasses.filter((t) => t[0] instanceof ClassType)) {
-      const children = (tn[0] as ClassType)
-        .childSymbols()
-        .filter((s) => isMember(s) && s.private) as unknown as Member[];
-
-      if (children.length > 0) {
-        const name = tn[1];
-        mixins.push(`_${name} = new ${name}()`);
-      }
-    }
-
+    const mixins: string[] = getMixins(this.getParent() as ClassFrame, transforms);
     const mixinVars = mixins.length === 0 ? "" : `${this.indent()}${mixins.join("; ")};\n`;
 
     return `${mixinVars}${this.indent()}constructor(${this.params.compile(transforms)}) {\r

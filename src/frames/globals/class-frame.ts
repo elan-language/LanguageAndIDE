@@ -62,6 +62,7 @@ import { ClassType } from "../symbols/class-type";
 import { DuplicateSymbol } from "../symbols/duplicate-symbol";
 import { getGlobalScope, isSymbol } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
+import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { UnknownType } from "../symbols/unknown-type";
 import { isAstCollectionNode, isAstIdNode } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
@@ -421,7 +422,7 @@ ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
     return new MemberSelector(this);
   }
 
-  resolveSymbol(id: string, transforms: Transforms, initialScope: Frame): ElanSymbol {
+  resolveOwnSymbol(id: string, transforms: Transforms): ElanSymbol {
     if (id === thisKeyword) {
       return this;
     }
@@ -442,16 +443,23 @@ ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
       .filter((t) => t instanceof ClassType);
 
     for (const ct of types) {
-      const privateChildren = ct.childSymbols().filter((ss) => isMember(ss) && ss.private);
-
-      for (const pc of privateChildren) {
-        if (pc.symbolId === id) {
-          return pc;
-        }
+      const s = ct.scope.resolveOwnSymbol(id, transforms);
+      if (isMember(s) && s.private) {
+        return s;
       }
     }
 
-    return this.getParent().resolveSymbol(id, transforms, this);
+    return new UnknownSymbol(id);
+  }
+
+  resolveSymbol(id: string, transforms: Transforms, initialScope: Frame): ElanSymbol {
+    const symbol = this.resolveOwnSymbol(id, transforms);
+
+    if (symbol instanceof UnknownSymbol) {
+      return this.getParent().resolveSymbol(id, transforms, this);
+    }
+
+    return symbol;
   }
 
   symbolMatches(id: string, all: boolean, initialScope?: Frame | undefined): ElanSymbol[] {

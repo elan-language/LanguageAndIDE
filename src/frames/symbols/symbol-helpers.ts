@@ -9,6 +9,7 @@ import { File } from "../interfaces/file";
 import { Frame } from "../interfaces/frame";
 import { GenericSymbolType } from "../interfaces/generic-symbol-type";
 import { IterableSymbolType } from "../interfaces/iterable-symbol-type";
+import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
 import { Scope } from "../interfaces/scope";
 import { ElanSymbol } from "../interfaces/symbol";
@@ -383,4 +384,26 @@ export function filteredSymbols(
   const filtered = removeIfSingleFullMatch(matches.filter(filter), match);
   const ordered = filtered.sort((s1, s2) => s1.symbolId.localeCompare(s2.symbolId));
   return [match, ordered];
+}
+
+export function hasPrivateMembers(ct: ClassType) {
+  const children = ct
+    .childSymbols()
+    .filter((s) => isMember(s) && s.private);
+  return children.length > 0;
+}
+
+export function getMixins(start: ClassFrame, transforms: Transforms) {
+  const superClasses = start.getSuperClassesTypeAndName(transforms);
+  let mixins: string[] = [];
+
+  for (const ct of superClasses.map(t => t[0]).filter((t) => t instanceof ClassType)) {
+    if (hasPrivateMembers(ct)) {
+      const name = ct.className;
+      mixins.push(`_${name} = new ${name}()`);
+    }
+    mixins = mixins.concat(getMixins(ct.scope, transforms));
+  }
+
+  return mixins;
 }
