@@ -1050,6 +1050,7 @@ class Bar inherits Foo
   procedure testPrivate(a as Int)
     call setP1(a)
     print ff()
+    print p1
   end procedure
 end class`;
 
@@ -1061,7 +1062,7 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
-  #p1 = 0;
+  p1 = 0;
 
   async setP1(a) {
     this.p1 = a;
@@ -1086,6 +1087,7 @@ class Bar {
   async testPrivate(a) {
     await this._Foo.setP1(a);
     system.printLine(_stdlib.asString(this._Foo.ff()));
+    system.printLine(_stdlib.asString(this._Foo.p1));
   }
 
 }
@@ -1097,7 +1099,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "3");
+    await assertObjectCodeExecutes(fileImpl, "33");
   });
 
   test("Fail_AbstractClassCannotInheritFromConcreteClass", async () => {

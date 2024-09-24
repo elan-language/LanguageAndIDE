@@ -79,8 +79,12 @@ export function isVarOrPropertyStatement(s?: ElanSymbol): boolean {
   return !!s && (isVarStatement(s) || isProperty(s));
 }
 
-export function isPropertyOnFieldsClass(s: ElanSymbol, scope: Scope) {
-  return isProperty(s) && s.getParent() === getClassScope(scope);
+export function isPropertyOnFieldsClass(s: ElanSymbol, transforms: Transforms, scope: Scope) {
+  const currentClass = getClassScope(scope);
+  const matchingProperty = currentClass.resolveSymbol(s.symbolId, transforms, scope);
+  return (
+    isProperty(s) && isProperty(matchingProperty) && s.getClass() === matchingProperty.getClass()
+  );
 }
 
 export function scopePrefix(procSymbol: ElanSymbol, scope: Scope) {

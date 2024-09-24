@@ -50,7 +50,7 @@ class Foo {
 
   p1 = 0;
 
-  #p2 = "";
+  p2 = "";
 
   asString() {
     return this.p2;

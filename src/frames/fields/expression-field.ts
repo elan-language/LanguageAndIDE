@@ -58,7 +58,7 @@ export class ExpressionField extends AbstractField {
     if (isFunction(s, transforms())) {
       return s.symbolId + "(";
     }
-    if (isPropertyOnFieldsClass(s, this.getHolder())) {
+    if (isPropertyOnFieldsClass(s, transforms(), this.getHolder())) {
       return `${propertyKeyword}.${s.symbolId}`;
     }
     return s.symbolId;

@@ -25,6 +25,7 @@ import {
   isDictionarySymbolType,
   isGenericSymbolType,
   isPropertyOnFieldsClass,
+  scopePrefix,
 } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
@@ -63,17 +64,11 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
     return this.index instanceof IndexAsn && !(this.index.index1 instanceof RangeAsn);
   }
 
-  private getQualifier() {
+  private getQualifier(symbol: ElanSymbol) {
     if (this.qualifier) {
       return `${this.qualifier.compile()}`;
     }
-    const s = this.scope.resolveSymbol(this.id, transforms(), this.scope);
-
-    if (s && s.symbolScope === SymbolScope.property) {
-      return "this.";
-    }
-
-    return "";
+    return scopePrefix(symbol, this.scope);
   }
 
   wrapIndex(code: string): string {
@@ -111,7 +106,7 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
       const classSymbol = this.scope.resolveSymbol(classScope.className, transforms(), this.scope);
       if (isScope(classSymbol)) {
         symbol = classSymbol.resolveSymbol(this.id, transforms(), classSymbol);
-        if (!isPropertyOnFieldsClass(symbol, this.scope)) {
+        if (!isPropertyOnFieldsClass(symbol, transforms(), this.scope)) {
           mustBePublicProperty(symbol, this.compileErrors, this.fieldId);
         }
       }
@@ -123,7 +118,7 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
 
     mustBeKnownSymbol(symbol, this.compileErrors, this.fieldId);
 
-    const q = this.getQualifier();
+    const q = this.getQualifier(symbol);
     const call = symbol instanceof LetStatement ? "()" : "";
     const idx = this.index
       ? this.index.compile()
