@@ -148,6 +148,72 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "39");
   });
 
+  test("Pass_AbstractImmutableClassWithPrivate", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var f set to new Foo(3)
+  print f
+end main
+
+abstract immutable class Bar
+  private property p1 as Float
+  private function square() return Float
+    return p1 * p1
+  end function 
+end class
+
+immutable class Foo inherits Bar
+  constructor(p1 as Float)
+    set property.p1 to p1
+  end constructor
+  function asString() return String
+    return square().asString()
+  end function
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var f = system.initialise(new Foo(3));
+  system.printLine(_stdlib.asString(f));
+}
+
+class Bar {
+  static emptyInstance() { return system.emptyClass(Bar, [["p1", 0]]);};
+  p1 = 0;
+
+  square() {
+    return this.p1 * this.p1;
+  }
+
+  asString() {
+    return "empty Abstract Class Bar";
+  }
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, []);};
+  _Bar = new Bar();
+  constructor(p1) {
+    this._Bar.p1 = p1;
+  }
+
+  asString() {
+    return _stdlib.asString(this._Bar.square());
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "9");
+  });
+
   test("Fail_ProcedureMethod", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
