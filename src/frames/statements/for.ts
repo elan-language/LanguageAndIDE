@@ -1,18 +1,18 @@
-import { IdentifierField } from "../fields/identifier-field";
-import { Parent } from "../interfaces/parent";
-import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
+import { mustBeOfSymbolType } from "../compile-rules";
+import { ExpressionField } from "../fields/expression-field";
+import { IdentifierField } from "../fields/identifier-field";
 import { FrameWithStatements } from "../frame-with-statements";
+import { ElanSymbol } from "../interfaces/elan-symbol";
+import { Field } from "../interfaces/field";
+import { Frame } from "../interfaces/frame";
+import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
 import { forKeyword } from "../keywords";
-import { Frame } from "../interfaces/frame";
-import { ElanSymbol } from "../interfaces/symbol";
-import { mustBeOfSymbolType } from "../compile-rules";
 import { IntType } from "../symbols/int-type";
-import { Transforms } from "../syntax-nodes/transforms";
 import { SymbolScope } from "../symbols/symbol-scope";
-import { ExpressionField } from "../fields/expression-field";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export class For extends FrameWithStatements implements Statement {
   isStatement: boolean = true;

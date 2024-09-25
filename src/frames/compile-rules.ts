@@ -29,9 +29,9 @@ import {
 } from "./compile-error";
 import { isClass, isFunction, isInsideFunctionOrConstructor, isMember } from "./helpers";
 import { AstNode } from "./interfaces/ast-node";
+import { ElanSymbol } from "./interfaces/elan-symbol";
 import { Parent } from "./interfaces/parent";
 import { Scope } from "./interfaces/scope";
-import { ElanSymbol } from "./interfaces/symbol";
 import { SymbolType } from "./interfaces/symbol-type";
 import { allKeywords, reservedWords } from "./keywords";
 import { LetStatement } from "./statements/let-statement";

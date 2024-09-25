@@ -4,11 +4,11 @@ import { CodeSource } from "./code-source";
 import { CompileError } from "./compile-error";
 import { Regexes } from "./fields/regexes";
 import { Collapsible } from "./interfaces/collapsible";
+import { ElanSymbol } from "./interfaces/elan-symbol";
 import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
 import { Profile } from "./interfaces/profile";
 import { StatementFactory } from "./interfaces/statement-factory";
-import { ElanSymbol } from "./interfaces/symbol";
 import {
   parentHelper_addChildAfter,
   parentHelper_addChildBefore,

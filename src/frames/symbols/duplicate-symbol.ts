@@ -1,4 +1,4 @@
-import { ElanSymbol } from "../interfaces/symbol";
+import { ElanSymbol } from "../interfaces/elan-symbol";
 import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../syntax-nodes/transforms";
 

@@ -11,13 +11,13 @@ import {
   singleIndent,
 } from "./helpers";
 import { editorEvent } from "./interfaces/editor-event";
+import { ElanSymbol } from "./interfaces/elan-symbol";
 import { Field } from "./interfaces/field";
 import { File } from "./interfaces/file";
 import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
 import { Scope } from "./interfaces/scope";
 import { Selectable } from "./interfaces/selectable";
-import { ElanSymbol } from "./interfaces/symbol";
 import {
   parentHelper_getAllSelectedChildren,
   parentHelper_getChildAfter,

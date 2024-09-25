@@ -3,14 +3,12 @@ import { cannotHaveDuplicatePrivateIds } from "../compile-rules";
 import { ParamList } from "../fields/param-list";
 import { FrameWithStatements } from "../frame-with-statements";
 import { ClassFrame } from "../globals/class-frame";
-import { isMember } from "../helpers";
+import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { Frame } from "../interfaces/frame";
 import { Member } from "../interfaces/member";
-import { ElanSymbol } from "../interfaces/symbol";
 import { constructorKeyword } from "../keywords";
-import { ClassType } from "../symbols/class-type";
-import { getAllPrivateIds, getMixins, hasPrivateMembers } from "../symbols/symbol-helpers";
+import { getAllPrivateIds, getMixins } from "../symbols/symbol-helpers";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { Transforms } from "../syntax-nodes/transforms";
 

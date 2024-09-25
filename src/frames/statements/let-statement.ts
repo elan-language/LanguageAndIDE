@@ -4,11 +4,11 @@ import { mustBeDeconstructableType, mustNotBeKeyword, mustNotBeReassigned } from
 import { ExpressionField } from "../fields/expression-field";
 import { VarDefField } from "../fields/var-def-field";
 import { mapIds, mapSymbolType } from "../helpers";
+import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { Frame } from "../interfaces/frame";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
-import { ElanSymbol } from "../interfaces/symbol";
 import { beKeyword, letKeyword } from "../keywords";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { getIds, wrapDeconstruction, wrapLet } from "../syntax-nodes/ast-helpers";

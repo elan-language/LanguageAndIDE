@@ -23,13 +23,13 @@ import { TypeNameField } from "../fields/type-name-field";
 import { isMember } from "../helpers";
 import { Class } from "../interfaces/class";
 import { Collapsible } from "../interfaces/collapsible";
+import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { Frame } from "../interfaces/frame";
 import { Parent } from "../interfaces/parent";
 import { Profile } from "../interfaces/profile";
 import { StatementFactory } from "../interfaces/statement-factory";
-import { ElanSymbol } from "../interfaces/symbol";
 import {
   abstractKeyword,
   classKeyword,

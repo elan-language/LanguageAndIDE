@@ -1,4 +1,4 @@
-import { ElanSymbol } from "../interfaces/symbol";
+import { ElanSymbol } from "../interfaces/elan-symbol";
 import { SymbolScope } from "./symbol-scope";
 import { UnknownType } from "./unknown-type";
 

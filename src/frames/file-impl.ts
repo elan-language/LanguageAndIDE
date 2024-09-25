@@ -22,6 +22,7 @@ import {
   isSelector,
 } from "./helpers";
 import { editorEvent } from "./interfaces/editor-event";
+import { ElanSymbol } from "./interfaces/elan-symbol";
 import { Field } from "./interfaces/field";
 import { File } from "./interfaces/file";
 import { Frame } from "./interfaces/frame";
@@ -30,7 +31,6 @@ import { Profile } from "./interfaces/profile";
 import { Scope } from "./interfaces/scope";
 import { Selectable } from "./interfaces/selectable";
 import { StatementFactory } from "./interfaces/statement-factory";
-import { ElanSymbol } from "./interfaces/symbol";
 import {
   parentHelper_addChildAfter,
   parentHelper_addChildBefore,
