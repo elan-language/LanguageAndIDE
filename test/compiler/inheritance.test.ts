@@ -2267,4 +2267,31 @@ end class`;
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["Name p1 not unique in scope"]);
   });
+
+  test("Fail_DuplicatePrivateMembers6", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+ 
+end main
+
+abstract class Yon
+  private property p1 as String
+  abstract property p1 as String
+end class
+
+class Bar inherits Yon
+  constructor()
+  end constructor
+
+  property p2 as Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Name p1 not unique in scope"]);
+  });
 });
