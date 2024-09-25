@@ -409,7 +409,7 @@ export function getAllPrivateIds(start: ClassFrame, transforms: Transforms) {
   for (const ct of superClasses.map((t) => t[0]).filter((t) => t instanceof ClassType)) {
     const children = ct.childSymbols().filter((s) => isMember(s) && s.private);
     allNames = allNames.concat(children.map((c) => c.symbolId));
-    allNames.concat(getAllPrivateIds(ct.scope, transforms));
+    allNames = allNames.concat(getAllPrivateIds(ct.scope, transforms));
   }
 
   return allNames;
