@@ -199,6 +199,12 @@ export class DuplicateKeyCompileError extends CompileError {
   }
 }
 
+export class DuplicateIdsCompileError extends CompileError {
+  constructor(ids: string[], location: string) {
+    super(Priority.typeError, `Duplicate inherited ids: ${ids.join(", ")}`, location, false);
+  }
+}
+
 export class PrintFunctionCompileError extends CompileError {
   constructor(location: string) {
     super(

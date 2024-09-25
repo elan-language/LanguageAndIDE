@@ -2116,4 +2116,97 @@ end class`;
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["Name ff not unique in scope"]);
   });
+
+  test("Fail_DuplicatePrivateMembers", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+ 
+end main
+
+abstract class Foo
+  private property p1 as Int
+end class
+
+abstract class Yon
+  private property p1 as String
+end class
+
+class Bar inherits Foo, Yon
+  constructor()
+  end constructor
+
+  property p3 as Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Duplicate inherited ids: p1"]);
+  });
+
+  test("Fail_DuplicatePrivateMembers1", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+ 
+end main
+
+abstract class Foo
+  private procedure p1()
+  end procedure
+end class
+
+abstract class Yon
+  private property p1 as String
+end class
+
+class Bar inherits Foo, Yon
+  constructor()
+  end constructor
+
+  property p3 as Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Duplicate inherited ids: p1"]);
+  });
+
+  test("Fail_DuplicatePrivateMembers2", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+ 
+end main
+
+abstract class Foo
+  private function p1() return Int
+    return 0
+  end function
+end class
+
+abstract class Yon
+  private property p1 as String
+end class
+
+class Bar inherits Foo, Yon
+  constructor()
+  end constructor
+
+  property p3 as Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Duplicate inherited ids: p1"]);
+  });
 });
