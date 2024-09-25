@@ -431,13 +431,6 @@ ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
       (f) => isSymbol(f) && f.symbolId === id,
     ) as ElanSymbol[];
 
-    if (matches.length === 1) {
-      return matches[0];
-    }
-    if (matches.length > 1) {
-      return new DuplicateSymbol(matches);
-    }
-
     const types = this.getSuperClassesTypeAndName(transforms)
       .map((tn) => tn[0])
       .filter((t) => t instanceof ClassType);
@@ -445,8 +438,15 @@ ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
     for (const ct of types) {
       const s = ct.scope.resolveOwnSymbol(id, transforms);
       if (isMember(s) && s.private) {
-        return s;
+        matches.push(s);
       }
+    }
+
+    if (matches.length === 1) {
+      return matches[0];
+    }
+    if (matches.length > 1) {
+      return new DuplicateSymbol(matches);
     }
 
     return new UnknownSymbol(id);

@@ -2239,6 +2239,32 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Duplicate inherited ids: p1"]);
+    assertDoesNotCompile(fileImpl, ["Name p1 not unique in scope", "Duplicate inherited ids: p1"]);
+  });
+
+  test("Fail_DuplicatePrivateMembers5", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+ 
+end main
+
+abstract class Yon
+  private property p1 as String
+end class
+
+class Bar inherits Yon
+  constructor()
+  end constructor
+
+  property p1 as Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Name p1 not unique in scope"]);
   });
 });
