@@ -64,13 +64,6 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
     return this.index instanceof IndexAsn && !(this.index.index1 instanceof RangeAsn);
   }
 
-  private getQualifier(symbol: ElanSymbol) {
-    // if (this.qualifier) {
-    //   return `${this.qualifier.compile()}`;
-    // }
-    return scopePrefix(symbol, this.scope);
-  }
-
   wrapIndex(code: string): string {
     return `system.safeIndex(${code})`;
   }
@@ -119,7 +112,7 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
 
     mustBeKnownSymbol(symbol, this.compileErrors, this.fieldId);
 
-    const q = this.getQualifier(symbol);
+    const q = scopePrefix(symbol, this.scope);
     const call = symbol instanceof LetStatement ? "()" : "";
     const idx = this.index
       ? this.index.compile()

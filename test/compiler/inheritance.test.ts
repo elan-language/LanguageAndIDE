@@ -1011,6 +1011,7 @@ end class
 
 class Bar inherits Foo
   constructor()
+    set property.p1 to 1
   end constructor
 
   procedure testPrivate(a as Int)
@@ -1047,7 +1048,7 @@ class Bar {
   static emptyInstance() { return system.emptyClass(Bar, []);};
   _Foo = new Foo();
   constructor() {
-
+    this._Foo.p1 = 1;
   }
 
   async testPrivate(a) {
@@ -1294,6 +1295,231 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "3344");
+  });
+
+  test("Pass_SetInheritedProperty", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var x set to new Bar()
+  call x.testPrivate(3)
+end main
+
+abstract class Foo
+  private property p1 as Int
+end class
+
+class Bar inherits Foo
+  constructor()
+    set property.p1 to 1
+  end constructor
+
+  procedure testPrivate(a as Int)
+    print p1
+    set property.p1 to a
+    print p1
+  end procedure
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var x = system.initialise(new Bar());
+  await x.testPrivate(3);
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
+  p1 = 0;
+
+  asString() {
+    return "empty Abstract Class Foo";
+  }
+}
+
+class Bar {
+  static emptyInstance() { return system.emptyClass(Bar, []);};
+  _Foo = new Foo();
+  constructor() {
+    this._Foo.p1 = 1;
+  }
+
+  async testPrivate(a) {
+    system.printLine(_stdlib.asString(this._Foo.p1));
+    this._Foo.p1 = a;
+    system.printLine(_stdlib.asString(this._Foo.p1));
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "13");
+  });
+
+  // #606 comment
+  ignore_test("Pass_AccessAbstractPropertyFromPrivate", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var x set to new Bar()
+  call x.testPrivate(3)
+end main
+
+abstract class Foo
+  abstract property p1 as Int
+
+  private procedure setP1(a as Int)
+    set property.p1 to a
+  end procedure
+
+end class
+
+class Bar inherits Foo
+  constructor()
+    set property.p1 to 1
+  end constructor
+  
+  property p1 as Int
+
+  procedure testPrivate(a as Int)
+    call setP1(a)
+    print p1
+  end procedure
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var x = system.initialise(new Bar());
+  await x.testPrivate(3);
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
+  get p1() {
+    return 0;
+  }
+  set p1(p1) {
+  }
+
+  async setP1(a) {
+    this.p1 = a;
+  }
+
+  asString() {
+    return "empty Abstract Class Foo";
+  }
+}
+
+class Bar {
+  static emptyInstance() { return system.emptyClass(Bar, [["p1", 0]]);};
+  _Foo = new Foo();
+  constructor() {
+    this.p1 = 1;
+  }
+
+  p1 = 0;
+
+  async testPrivate(a) {
+    await this._Foo.setP1(a);
+    system.printLine(_stdlib.asString(this.p1));
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "3");
+  });
+
+  // #606 comment
+  ignore_test("Pass_AccessInheritedPropertyFromPrivate", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var x set to new Bar()
+  call x.testPrivate(3)
+end main
+
+abstract class Yon
+  private property p1 as Int
+end class
+
+abstract class Foo inherits Yon
+
+  private procedure setP1(a as Int)
+    set property.p1 to a
+  end procedure
+
+end class
+
+class Bar inherits Foo
+  constructor()
+  end constructor
+
+  procedure testPrivate(a as Int)
+    call setP1(a)
+    print p1
+  end procedure
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var x = system.initialise(new Bar());
+  await x.testPrivate(3);
+}
+
+class Yon {
+  static emptyInstance() { return system.emptyClass(Yon, [["p1", 0]]);};
+  p1 = 0;
+
+  asString() {
+    return "empty Abstract Class Yon";
+  }
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, []);};
+  async setP1(a) {
+    this._Yon.p1 = a;
+  }
+
+  asString() {
+    return "empty Abstract Class Foo";
+  }
+}
+
+class Bar {
+  static emptyInstance() { return system.emptyClass(Bar, []);};
+  _Foo = new Foo(); _Yon = new Yon();
+  constructor() {
+
+  }
+
+  async testPrivate(a) {
+    await this._Foo.setP1(a);
+    system.printLine(_stdlib.asString(this._Yon.p1));
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "3");
   });
 
   test("Fail_AbstractClassCannotInheritFromConcreteClass", async () => {
