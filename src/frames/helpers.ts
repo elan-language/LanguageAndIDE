@@ -218,6 +218,6 @@ export function mapSymbolType(ids: string[], st: SymbolType) {
   return st;
 }
 
-export function mapIds(ids : string[]) {
+export function mapIds(ids: string[]) {
   return ids.length > 1 ? `[${ids.join(", ")}]` : ids[0];
 }

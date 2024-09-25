@@ -262,11 +262,11 @@ main
 end main
 
 procedure foo()
-  var list set to [1,2,3,4,5]
+  var list set to {1,2,3,4,5}
   for i from 0 to 3 step 1
     let temp be list[i]
-    call list.putAt(i, list[i + 1])
-    call list.putAt(i + 1, temp)
+    set list to list.withPutAt(i, list[i + 1])
+    set list to list.withPutAt(i + 1, temp)
     print list
   end for
 end procedure`;
@@ -277,16 +277,16 @@ async function main() {
 }
 
 async function foo() {
-  var list = system.literalArray([1, 2, 3, 4, 5]);
+  var list = system.list([1, 2, 3, 4, 5]);
   for (var i = 0; i <= 3; i = i + 1) {
     var temp = (() => {
         var _cache;
         return () => _cache ??= system.safeIndex(list, i);
     })();
-    _stdlib.putAt(list, i, system.safeIndex(list, i + 1));
-    _stdlib.putAt(list, i + 1, temp());
+    list = _stdlib.withPutAt(list, i, system.safeIndex(list, i + 1));
+    list = _stdlib.withPutAt(list, i + 1, temp());
+    system.printLine(_stdlib.asString(list));
   }
-  system.printLine(_stdlib.asString(list));
 }
 return [main, _tests];}`;
 
@@ -295,7 +295,7 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    //assertObjectCodeIs(fileImpl, objectCode);
+    assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "[2, 3, 4, 5, 1]");
   });
 
