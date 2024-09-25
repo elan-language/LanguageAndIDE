@@ -15,7 +15,7 @@ import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
 import { setKeyword, toKeyword } from "../keywords";
-import { getIds, isAstIdNode, wrapDeconstruction } from "../syntax-nodes/ast-helpers";
+import { getIds, wrapDeconstruction } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 
 export class SetStatement extends AbstractFrame implements Statement {

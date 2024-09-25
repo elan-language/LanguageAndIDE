@@ -3,19 +3,15 @@ import { CodeSource } from "../code-source";
 import { mustBeDeconstructableType, mustNotBeKeyword, mustNotBeReassigned } from "../compile-rules";
 import { ExpressionField } from "../fields/expression-field";
 import { VarDefField } from "../fields/var-def-field";
+import { mapIds, mapSymbolType } from "../helpers";
 import { Field } from "../interfaces/field";
 import { Frame } from "../interfaces/frame";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
 import { ElanSymbol } from "../interfaces/symbol";
 import { beKeyword, letKeyword } from "../keywords";
-import { ArrayType } from "../symbols/array-list-type";
-import { DeconstructedListType } from "../symbols/deconstructed-list-type";
-import { DeconstructedTupleType } from "../symbols/deconstructed-tuple-type";
-import { ListType } from "../symbols/list-type";
 import { SymbolScope } from "../symbols/symbol-scope";
-import { TupleType } from "../symbols/tuple-type";
-import { getIds, wrapDeconstruction } from "../syntax-nodes/ast-helpers";
+import { getIds, wrapDeconstruction, wrapLet } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 
 export class LetStatement extends AbstractFrame implements Statement, ElanSymbol {
@@ -36,14 +32,7 @@ export class LetStatement extends AbstractFrame implements Statement, ElanSymbol
   symbolType(transforms?: Transforms) {
     const ids = this.ids(transforms);
     const st = this.expr.symbolType(transforms);
-    if (ids.length > 1 && st instanceof TupleType) {
-      return new DeconstructedTupleType(ids, st.ofTypes);
-    }
-    if (ids.length === 2 && (st instanceof ArrayType || st instanceof ListType)) {
-      return new DeconstructedListType(ids[0], ids[1], st.ofType, st);
-    }
-
-    return st;
+    return mapSymbolType(ids, st);
   }
 
   get symbolScope(): SymbolScope {
@@ -90,19 +79,14 @@ export class LetStatement extends AbstractFrame implements Statement, ElanSymbol
       mustNotBeReassigned(symbol, this.compileErrors, this.htmlId);
     }
 
-    const vid = ids.length > 1 ? `[${ids.join(", ")}]` : ids[0];
-
     const val = this.expr.compile(transforms);
 
-    const expr =
+    const rhs =
       ids.length === 1
-        ? `(() => {
-${this.indent()}${this.indent()}var _cache;
-${this.indent()}${this.indent()}return () => _cache ??= ${val};
-${this.indent()}})()`
-        : `${wrapDeconstruction(this.name.getOrTransformAstNode(transforms), true, val)}`;
+        ? wrapLet(val, this.indent())
+        : wrapDeconstruction(this.name.getOrTransformAstNode(transforms), true, val);
 
-    return `${this.indent()}var ${vid} = ${expr};`;
+    return `${this.indent()}var ${mapIds(ids)} = ${rhs};`;
   }
 
   get symbolId() {

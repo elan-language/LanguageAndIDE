@@ -287,6 +287,13 @@ export function wrapDeconstruction(lhs: AstNode, isLet: boolean, code: string) {
   return code;
 }
 
+export function wrapLet(val: string, indent: string) {
+  return `(() => {
+${indent}${indent}var _cache;
+${indent}${indent}return () => _cache ??= ${val};
+${indent}})()`;
+}
+
 export function getIds(ast: AstNode) {
   if (isAstIdNode(ast)) {
     const id = ast.id;

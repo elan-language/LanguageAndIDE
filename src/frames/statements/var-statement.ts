@@ -3,20 +3,15 @@ import { CodeSource } from "../code-source";
 import { mustBeDeconstructableType, mustNotBeKeyword, mustNotBeReassigned } from "../compile-rules";
 import { ExpressionField } from "../fields/expression-field";
 import { VarDefField } from "../fields/var-def-field";
+import { mapIds, mapSymbolType } from "../helpers";
 import { Field } from "../interfaces/field";
 import { Frame } from "../interfaces/frame";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
 import { ElanSymbol } from "../interfaces/symbol";
 import { setKeyword, toKeyword, varKeyword } from "../keywords";
-import { ArrayType } from "../symbols/array-list-type";
-import { DeconstructedListType } from "../symbols/deconstructed-list-type";
-import { DeconstructedTupleType } from "../symbols/deconstructed-tuple-type";
-import { ListType } from "../symbols/list-type";
-import { isDeconstructedType } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
-import { TupleType } from "../symbols/tuple-type";
-import { getIds, isAstIdNode, wrapDeconstruction } from "../syntax-nodes/ast-helpers";
+import { getIds, wrapDeconstruction } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 
 export class VarStatement extends AbstractFrame implements Statement, ElanSymbol {
@@ -74,15 +69,13 @@ export class VarStatement extends AbstractFrame implements Statement, ElanSymbol
       mustNotBeReassigned(symbol, this.compileErrors, this.htmlId);
     }
 
-    const vid = ids.length > 1 ? `[${ids.join(", ")}]` : ids[0];
-
     const rhs = wrapDeconstruction(
       this.name.getOrTransformAstNode(transforms),
       false,
       this.expr.compile(transforms),
     );
 
-    return `${this.indent()}var ${vid} = ${rhs};`;
+    return `${this.indent()}var ${mapIds(ids)} = ${rhs};`;
   }
 
   get symbolId() {
@@ -92,14 +85,7 @@ export class VarStatement extends AbstractFrame implements Statement, ElanSymbol
   symbolType(transforms?: Transforms) {
     const ids = this.ids(transforms);
     const st = this.expr.symbolType(transforms);
-    if (ids.length > 1 && st instanceof TupleType) {
-      return new DeconstructedTupleType(ids, st.ofTypes);
-    }
-    if (ids.length === 2 && (st instanceof ArrayType || st instanceof ListType)) {
-      return new DeconstructedListType(ids[0], ids[1], st.ofType, st);
-    }
-
-    return st;
+    return mapSymbolType(ids, st);
   }
 
   get symbolScope() {

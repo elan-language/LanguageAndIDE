@@ -13,7 +13,13 @@ import { Parent } from "./interfaces/parent";
 import { Scope } from "./interfaces/scope";
 import { Selectable } from "./interfaces/selectable";
 import { ElanSymbol } from "./interfaces/symbol";
+import { SymbolType } from "./interfaces/symbol-type";
 import { CompileStatus, DisplayStatus, ParseStatus, RunStatus, TestStatus } from "./status-enums";
+import { ArrayType } from "./symbols/array-list-type";
+import { DeconstructedListType } from "./symbols/deconstructed-list-type";
+import { DeconstructedTupleType } from "./symbols/deconstructed-tuple-type";
+import { ListType } from "./symbols/list-type";
+import { TupleType } from "./symbols/tuple-type";
 
 export function isCollapsible(f?: Selectable): f is Collapsible {
   return !!f && "isCollapsible" in f;
@@ -199,4 +205,19 @@ export function isInsideFunctionOrConstructor(parent: Parent): boolean {
     return false;
   }
   return isInsideFunctionOrConstructor(parent.getParent());
+}
+
+export function mapSymbolType(ids: string[], st: SymbolType) {
+  if (ids.length > 1 && st instanceof TupleType) {
+    return new DeconstructedTupleType(ids, st.ofTypes);
+  }
+  if (ids.length === 2 && (st instanceof ArrayType || st instanceof ListType)) {
+    return new DeconstructedListType(ids[0], ids[1], st.ofType, st);
+  }
+
+  return st;
+}
+
+export function mapIds(ids : string[]) {
+  return ids.length > 1 ? `[${ids.join(", ")}]` : ids[0];
 }
