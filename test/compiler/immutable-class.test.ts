@@ -437,6 +437,32 @@ end function
     assertDoesNotCompile(fileImpl, ["Incompatible types Bar to Foo"]);
   });
 
+  test("Fail_PrivateProcedure", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var f set to new Foo()
+end main
+
+abstract immutable class Bar
+  private property p1 as Int
+  private procedure setP1(a as Int)
+    set property.p1 to a
+  end procedure
+end class
+
+immutable class Foo inherits Bar
+  constructor()
+  end constructor
+  property p2 as Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
   // remaining tests not relevant
   // Fail_ProcedureMethodOnAbstractImmutableClass
   // Fail_AbstractAndImmutableReversed
