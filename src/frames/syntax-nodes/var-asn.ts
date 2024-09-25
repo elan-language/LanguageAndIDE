@@ -65,9 +65,9 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
   }
 
   private getQualifier(symbol: ElanSymbol) {
-    if (this.qualifier) {
-      return `${this.qualifier.compile()}`;
-    }
+    // if (this.qualifier) {
+    //   return `${this.qualifier.compile()}`;
+    // }
     return scopePrefix(symbol, this.scope);
   }
 

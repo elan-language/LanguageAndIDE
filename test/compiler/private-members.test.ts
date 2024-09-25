@@ -213,6 +213,33 @@ end class`;
     assertDoesNotCompile(fileImpl, ["Cannot reference private member p2"]);
   });
 
+  test("Fail_PrivatePropertyCannotBeAccessedViaAbstract", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var f set to new Foo()
+  var s set to f.p2
+end main
+
+abstract class Bar
+  private property p2 as String
+end class
+
+class Foo inherits Bar
+    constructor()
+      set property.p1 to 5
+    end constructor
+
+    property p1 as Float
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Cannot reference private member p2"]);
+  });
+
   test("Fail_PrivateProcedureCannotBeAccessed", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
@@ -225,7 +252,7 @@ class Foo
   constructor()
   end constructor
 
-  property p1 as Float
+  property p1 as Int
 
   private procedure setP1(a as Int)
     set property.p1 to a
@@ -238,6 +265,33 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Cannot reference private member setP1"]);
+  });
+
+  test("Fail_PrivateFunctionCannotBeAccessed", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var foo set to new Foo()
+  var a set to foo.ff()
+end main
+
+class Foo
+  constructor()
+  end constructor
+
+  property p1 as Int
+
+  private function ff() return Int
+    return p1
+  end function
+
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Cannot reference private member ff"]);
   });
 
   test("Fail_PrivatePropertyCannotBePrinted", async () => {
@@ -269,5 +323,32 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Cannot reference private member p2"]);
+  });
+
+  test("Fail_PrivateFunctionCannotBePrinted", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var foo set to new Foo()
+  print foo.ff()
+end main
+
+class Foo
+  constructor()
+  end constructor
+
+  property p1 as Int
+
+  private function ff() return Int
+    return p1
+  end function
+
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Cannot reference private member ff"]);
   });
 });

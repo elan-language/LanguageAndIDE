@@ -471,40 +471,6 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "341216");
   });
 
-  test("Fail_CannotInheritFromConcreteClass", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
-
-main
-  var x set to new Bar()
-end main
-
-class Foo
-    constructor()
-    end constructor
-
-    property p1 as Int
-
-    property p2 as Int
-
-end class
-
-class Bar inherits Foo
-    constructor()
-    end constructor
-
-    property p1 as Int
-
-    property p2 as Int
-
-end class`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Superclass Foo must be abstract"]);
-  });
-
   test("Pass_AbstractMutableClassAsProcedureParameter", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
@@ -1398,6 +1364,40 @@ end class`;
       "Bar must implement Foo.setP1",
       "Bar must implement Foo.product",
     ]);
+  });
+
+  test("Fail_CannotInheritFromConcreteClass", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var x set to new Bar()
+end main
+
+class Foo
+    constructor()
+    end constructor
+
+    property p1 as Int
+
+    property p2 as Int
+
+end class
+
+class Bar inherits Foo
+    constructor()
+    end constructor
+
+    property p1 as Int
+
+    property p2 as Int
+
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Superclass Foo must be abstract"]);
   });
 
   test("Fail_MustCorrectlyImplementAllInheritedMethods", async () => {
