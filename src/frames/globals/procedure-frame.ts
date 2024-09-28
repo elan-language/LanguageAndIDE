@@ -1,20 +1,20 @@
-import { ProcedureType } from "../symbols/procedure-type";
-import { ElanSymbol } from "../interfaces/symbol";
-import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { CodeSource } from "../code-source";
+import { mustBeUniqueNameInScope } from "../compile-rules";
 import { IdentifierField } from "../fields/identifier-field";
 import { ParamList } from "../fields/param-list";
 import { FrameWithStatements } from "../frame-with-statements";
+import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { Frame } from "../interfaces/frame";
 import { Parent } from "../interfaces/parent";
 import { Scope } from "../interfaces/scope";
 import { procedureKeyword } from "../keywords";
-import { Transforms } from "../syntax-nodes/transforms";
-import { SymbolScope } from "../symbols/symbol-scope";
-import { mustBeUniqueNameInScope } from "../compile-rules";
+import { ProcedureType } from "../symbols/procedure-type";
 import { getGlobalScope } from "../symbols/symbol-helpers";
+import { SymbolScope } from "../symbols/symbol-scope";
+import { UnknownSymbol } from "../symbols/unknown-symbol";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export abstract class ProcedureFrame extends FrameWithStatements implements ElanSymbol, Scope {
   public name: IdentifierField;

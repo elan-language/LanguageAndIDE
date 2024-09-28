@@ -20,15 +20,16 @@ import { InheritsFrom } from "../fields/inheritsFrom";
 import { OptionalKeyword } from "../fields/optionalKeyword";
 import { Regexes } from "../fields/regexes";
 import { TypeNameField } from "../fields/type-name-field";
+import { isMember } from "../helpers";
 import { Class } from "../interfaces/class";
 import { Collapsible } from "../interfaces/collapsible";
+import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { Frame } from "../interfaces/frame";
 import { Parent } from "../interfaces/parent";
 import { Profile } from "../interfaces/profile";
 import { StatementFactory } from "../interfaces/statement-factory";
-import { ElanSymbol } from "../interfaces/symbol";
 import {
   abstractKeyword,
   classKeyword,
@@ -61,6 +62,7 @@ import { ClassType } from "../symbols/class-type";
 import { DuplicateSymbol } from "../symbols/duplicate-symbol";
 import { getGlobalScope, isSymbol } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
+import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { UnknownType } from "../symbols/unknown-type";
 import { isAstCollectionNode, isAstIdNode } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
@@ -287,6 +289,22 @@ end class\r\n`;
     return `[${ps}]`;
   }
 
+  public getSuperClassesTypeAndName(transforms: Transforms) {
+    if (this.doesInherit()) {
+      const superClasses = this.superClasses.getOrTransformAstNode(transforms);
+
+      if (isAstCollectionNode(superClasses)) {
+        const nodes = superClasses.items.filter((i) => isAstIdNode(i));
+        const typeAndName: [ClassType | UnknownType, string][] = nodes
+          .map((n) => getGlobalScope(this).resolveSymbol(n.id, transforms, this))
+          .map((c) => [c.symbolType(transforms) as ClassType | UnknownType, c.symbolId]);
+
+        return typeAndName;
+      }
+    }
+    return [];
+  }
+
   public compile(transforms: Transforms): string {
     this.compileErrors = [];
 
@@ -299,32 +317,23 @@ end class\r\n`;
       this.htmlId,
     );
 
-    if (this.doesInherit()) {
-      const superClasses = this.superClasses.getOrTransformAstNode(transforms);
+    const typeAndName = this.getSuperClassesTypeAndName(transforms);
 
-      if (isAstCollectionNode(superClasses)) {
-        const nodes = superClasses.items.filter((i) => isAstIdNode(i));
-        const typeAndName: [ClassType | UnknownType, string][] = nodes
-          .map((n) => this.resolveSymbol(n.id, transforms, this))
-          .map((c) => [c.symbolType(transforms) as ClassType | UnknownType, c.symbolId]);
-
-        for (const st of typeAndName) {
-          mustBeKnownSymbolType(st[0], st[1], this.compileErrors, this.htmlId);
-        }
-
-        for (const st of typeAndName) {
-          mustBeAbstractClass(st[0], this.compileErrors, this.htmlId);
-        }
-
-        mustImplementSuperClasses(
-          transforms,
-          this.symbolType(transforms),
-          typeAndName.map((tn) => tn[0]).filter((st) => st instanceof ClassType) as ClassType[],
-          this.compileErrors,
-          this.htmlId,
-        );
-      }
+    for (const st of typeAndName) {
+      mustBeKnownSymbolType(st[0], st[1], this.compileErrors, this.htmlId);
     }
+
+    for (const st of typeAndName) {
+      mustBeAbstractClass(st[0], this.compileErrors, this.htmlId);
+    }
+
+    mustImplementSuperClasses(
+      transforms,
+      this.symbolType(transforms),
+      typeAndName.map((tn) => tn[0]).filter((st) => st instanceof ClassType) as ClassType[],
+      this.compileErrors,
+      this.htmlId,
+    );
 
     const asString = this.isAbstract()
       ? `
@@ -413,7 +422,7 @@ ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
     return new MemberSelector(this);
   }
 
-  resolveSymbol(id: string, transforms: Transforms, initialScope: Frame): ElanSymbol {
+  resolveOwnSymbol(id: string, transforms: Transforms): ElanSymbol {
     if (id === thisKeyword) {
       return this;
     }
@@ -422,6 +431,17 @@ ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
       (f) => isSymbol(f) && f.symbolId === id,
     ) as ElanSymbol[];
 
+    const types = this.getSuperClassesTypeAndName(transforms)
+      .map((tn) => tn[0])
+      .filter((t) => t instanceof ClassType);
+
+    for (const ct of types) {
+      const s = ct.scope.resolveOwnSymbol(id, transforms);
+      if (isMember(s) && s.private) {
+        matches.push(s);
+      }
+    }
+
     if (matches.length === 1) {
       return matches[0];
     }
@@ -429,7 +449,17 @@ ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
       return new DuplicateSymbol(matches);
     }
 
-    return this.getParent().resolveSymbol(id, transforms, this);
+    return new UnknownSymbol(id);
+  }
+
+  resolveSymbol(id: string, transforms: Transforms, initialScope: Frame): ElanSymbol {
+    const symbol = this.resolveOwnSymbol(id, transforms);
+
+    if (symbol instanceof UnknownSymbol) {
+      return this.getParent().resolveSymbol(id, transforms, this);
+    }
+
+    return symbol;
   }
 
   symbolMatches(id: string, all: boolean, initialScope?: Frame | undefined): ElanSymbol[] {

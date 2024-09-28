@@ -14,7 +14,7 @@ export class ArrayType extends AbstractListType implements IterableSymbolType {
   factoryName = "system.array";
 
   get name() {
-    return `Array <${this.ofType.name}>`;
+    return `[${this.ofType.name}]`;
   }
 
   toString(): string {

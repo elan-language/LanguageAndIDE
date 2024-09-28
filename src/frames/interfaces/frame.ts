@@ -1,12 +1,12 @@
 import { CompileError } from "../compile-error";
 import { CompileStatus, ParseStatus } from "../status-enums";
 import { Transforms } from "../syntax-nodes/transforms";
+import { ElanSymbol } from "./elan-symbol";
 import { Field } from "./field";
 import { File } from "./file";
 import { Parent } from "./parent";
 import { Scope } from "./scope";
 import { Selectable } from "./selectable";
-import { ElanSymbol } from "./symbol";
 
 export interface Frame extends Selectable, Scope, ElanSymbol {
   isFrame: boolean;

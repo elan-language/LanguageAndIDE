@@ -1,5 +1,6 @@
 import { ElanRuntimeError } from "./elan-runtime-error";
 import { hasHiddenType } from "./has-hidden-type";
+import { StubInputOutput } from "./stub-input-output";
 import { System } from "./system";
 
 type Location = [string, number, number];
@@ -7,7 +8,11 @@ type Graphics = Location[];
 type File = [number, string, number]; // open/closed, read/write, contents, pointer
 
 export class StdLib {
-  constructor(private readonly system: System) {}
+  constructor() {
+    this.system = new System(new StubInputOutput());
+  }
+
+  system: System;
 
   isValueType<T>(v: T) {
     return typeof v === "boolean" || typeof v === "string" || typeof v === "number";
@@ -562,12 +567,12 @@ export class StdLib {
     return `#${h6}`;
   }
 
-  getKeystroke(map: Graphics): string {
+  getKeystroke(map: Graphics): Promise<string> {
     return this.system.elanInputOutput.getKeystroke();
   }
 
-  getKeystrokeWithModifier(map: Graphics) {
-    return this.system.tuple(this.system.elanInputOutput.getKeystrokeWithModifier());
+  getKeystrokeWithModifier(map: Graphics): Promise<[string, string]> {
+    return this.system.elanInputOutput.getKeystrokeWithModifier();
   }
 
   clearKeyBuffer(map: Graphics) {

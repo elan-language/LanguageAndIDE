@@ -1,6 +1,6 @@
 import { CodeSource } from "../code-source";
+import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Frame } from "../interfaces/frame";
-import { ElanSymbol } from "../interfaces/symbol";
 import { propertyKeyword } from "../keywords";
 import { ExprNode } from "../parse-nodes/expr-node";
 import { ParseNode } from "../parse-nodes/parse-node";
@@ -8,7 +8,7 @@ import {
   filteredSymbols,
   isExpression,
   isFunction,
-  isPropertyOnFieldsClass,
+  isMemberOnFieldsClass,
 } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { transforms } from "../syntax-nodes/ast-helpers";
@@ -58,7 +58,7 @@ export class ExpressionField extends AbstractField {
     if (isFunction(s, transforms())) {
       return s.symbolId + "(";
     }
-    if (isPropertyOnFieldsClass(s, this.getHolder())) {
+    if (isMemberOnFieldsClass(s, transforms(), this.getHolder())) {
       return `${propertyKeyword}.${s.symbolId}`;
     }
     return s.symbolId;

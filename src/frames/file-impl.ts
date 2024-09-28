@@ -22,6 +22,7 @@ import {
   isSelector,
 } from "./helpers";
 import { editorEvent } from "./interfaces/editor-event";
+import { ElanSymbol } from "./interfaces/elan-symbol";
 import { Field } from "./interfaces/field";
 import { File } from "./interfaces/file";
 import { Frame } from "./interfaces/frame";
@@ -30,7 +31,6 @@ import { Profile } from "./interfaces/profile";
 import { Scope } from "./interfaces/scope";
 import { Selectable } from "./interfaces/selectable";
 import { StatementFactory } from "./interfaces/statement-factory";
-import { ElanSymbol } from "./interfaces/symbol";
 import {
   parentHelper_addChildAfter,
   parentHelper_addChildBefore,
@@ -261,6 +261,24 @@ export class FileImpl implements File, Scope {
   compile(): string {
     const stdLib = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {`;
     return `${stdLib}\n${this.compileGlobals()}return [main, _tests];}`;
+  }
+
+  compileAsWorker(base: string): string {
+    const onmsg = `onmessage = async (e) => {
+  if (e.data.type === "start") {
+    try {
+      const [main, tests] = await program();
+      await main();
+      postMessage({type : "status", status : "finished"});
+    }
+    catch (e) {
+      postMessage({type : "status", status : "error", error : e});
+    }
+  }
+};`;
+
+    const stdLib = `import { StdLib } from "${base}/elan-api.js"; var system; var _stdlib; var _tests = []; async function program() { _stdlib = new StdLib(); system = _stdlib.system;`;
+    return `${stdLib}\n${this.compileGlobals()}return [main, _tests];}\n${onmsg}`;
   }
 
   renderHashableContent(): string {

@@ -4,9 +4,9 @@ import { mustBeKnownSymbolType, mustBeUniqueNameInScope } from "../compile-rules
 import { IdentifierField } from "../fields/identifier-field";
 import { TypeField } from "../fields/type-field";
 import { ClassFrame } from "../globals/class-frame";
+import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { Member } from "../interfaces/member";
-import { ElanSymbol } from "../interfaces/symbol";
 import { asKeyword, privateKeyword, propertyKeyword } from "../keywords";
 import { ClassType } from "../symbols/class-type";
 import { getClassScope } from "../symbols/symbol-helpers";
@@ -17,6 +17,7 @@ import { Transforms } from "../syntax-nodes/transforms";
 export class Property extends AbstractFrame implements Member, ElanSymbol {
   isMember = true;
   isProperty = true;
+  isAbstract = false;
   name: IdentifierField;
   type: TypeField;
   public private: boolean = false;
@@ -27,9 +28,15 @@ export class Property extends AbstractFrame implements Member, ElanSymbol {
     this.type = new TypeField(this);
     this.private = priv;
   }
+
+  getClass(): ClassFrame {
+    return this.getParent() as ClassFrame;
+  }
+
   initialKeywords(): string {
     return propertyKeyword;
   }
+
   getFields(): Field[] {
     return [this.name, this.type];
   }
@@ -44,10 +51,6 @@ export class Property extends AbstractFrame implements Member, ElanSymbol {
     return this.private ? `private ` : "";
   }
 
-  private modifierAsObjectCode(): string {
-    return this.private ? `#` : "";
-  }
-
   renderAsHtml(): string {
     return `<property class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.modifierAsHtml()}<keyword>${propertyKeyword} </keyword>${this.name.renderAsHtml()}<keyword> ${asKeyword} </keyword>${this.type.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</property>`;
   }
@@ -59,7 +62,6 @@ export class Property extends AbstractFrame implements Member, ElanSymbol {
   compile(transforms: Transforms): string {
     this.compileErrors = [];
     const pName = this.name.compile(transforms);
-    const mod = this.modifierAsObjectCode();
     const st = this.type.symbolType(transforms);
 
     mustBeUniqueNameInScope(
@@ -74,15 +76,15 @@ export class Property extends AbstractFrame implements Member, ElanSymbol {
 
     if (st instanceof ClassType) {
       return `${this.indent()}_${pName};\r
-${this.indent()}${mod}get ${pName}() {\r
+${this.indent()}get ${pName}() {\r
 ${this.indent()}${this.indent()}return this._${pName} ??= ${this.type.compile(transforms)};\r
 ${this.indent()}}\r
-${this.indent()}${mod}set ${pName}(${pName}) {\r
+${this.indent()}set ${pName}(${pName}) {\r
 ${this.indent()}${this.indent()}this._${pName} = ${pName};\r
 ${this.indent()}}\r\n`;
     }
 
-    return `${this.indent()}${mod}${pName} = ${this.type.compile(transforms)};\r\n`;
+    return `${this.indent()}${pName} = ${this.type.compile(transforms)};\r\n`;
   }
 
   parseFrom(source: CodeSource): void {

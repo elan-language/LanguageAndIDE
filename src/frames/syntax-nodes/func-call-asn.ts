@@ -1,6 +1,7 @@
 import { CompileError } from "../compile-error";
 import {
   mustBeKnownSymbol,
+  mustBePublicMember,
   mustBePureFunctionSymbol,
   mustCallExtensionViaQualifier,
   mustMatchParameters,
@@ -9,7 +10,7 @@ import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstNode } from "../interfaces/ast-node";
 import { Scope } from "../interfaces/scope";
 import { FunctionType } from "../symbols/function-type";
-import { scopePrefix } from "../symbols/symbol-helpers";
+import { isMemberOnFieldsClass, scopePrefix } from "../symbols/symbol-helpers";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { containsGenericType, matchGenericTypes, generateType, transforms } from "./ast-helpers";
 import { ChainedAsn } from "./chained-asn";
@@ -66,6 +67,10 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
     mustBeKnownSymbol(funcSymbol, this.compileErrors, this.fieldId);
     mustBePureFunctionSymbol(fst, this.scope, this.compileErrors, this.fieldId);
 
+    if (!isMemberOnFieldsClass(funcSymbol, transforms(), this.scope)) {
+      mustBePublicMember(funcSymbol, this.compileErrors, this.fieldId);
+    }
+
     if (fst instanceof FunctionType) {
       mustCallExtensionViaQualifier(fst, this.precedingNode, this.compileErrors, this.fieldId);
 
@@ -96,7 +101,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
     const a = isAsync ? "await " : "";
     const pp = parameters.map((p) => p.compile()).join(", ");
     const q =
-      this.precedingNode && this.showPreviousNode ? "" : scopePrefix(funcSymbol?.symbolScope);
+      this.precedingNode && this.showPreviousNode ? "" : scopePrefix(funcSymbol, this.scope);
 
     return `${a}${q}${this.mId}(${pp})`;
   }

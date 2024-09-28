@@ -4,9 +4,9 @@ import { mustBeUniqueNameInScope } from "../compile-rules";
 import { IdentifierField } from "../fields/identifier-field";
 import { TypeField } from "../fields/type-field";
 import { ClassFrame } from "../globals/class-frame";
+import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { Member } from "../interfaces/member";
-import { ElanSymbol } from "../interfaces/symbol";
 import { abstractPropertyKeywords } from "../keywords";
 import { ClassType } from "../symbols/class-type";
 import { getClassScope } from "../symbols/symbol-helpers";
@@ -26,9 +26,15 @@ export class AbstractProperty extends AbstractFrame implements Member, ElanSymbo
     this.name = new IdentifierField(this);
     this.type = new TypeField(this);
   }
+
+  getClass(): ClassFrame {
+    return this.getParent() as ClassFrame;
+  }
+
   initialKeywords(): string {
     return abstractPropertyKeywords;
   }
+
   getFields(): Field[] {
     return [this.name, this.type];
   }
@@ -36,6 +42,7 @@ export class AbstractProperty extends AbstractFrame implements Member, ElanSymbo
   getIdPrefix(): string {
     return "prop";
   }
+
   renderAsHtml(): string {
     return `<property class="${this.cls()}" id='${this.htmlId}' tabindex="0"><top><keyword>abstract property </keyword>${this.name.renderAsHtml()}</keyword> as </keyword ${this.type.renderAsHtml()}</top>${this.compileMsgAsHtml()}${this.getFrNo()}</property>`;
   }

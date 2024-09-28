@@ -1,4 +1,4 @@
-# 6ef11d76bb3c7aeeac1f19cf00f18bd50e9660477669f9df182ff687b4552ab6 Elan Beta 2 valid
+# 6ccc9942239e70a4396e1261f1d178af5949a7c4f237481cf9edbdbba67b7f3c Elan Beta 2 valid
 
 main
   var start set to new Point(5, 5)
@@ -36,7 +36,7 @@ procedure runSolver(gr as Graphics, start as Point, destination as Point, rocks 
   end while
   if solver.getLastVisited() is destination
     then
-      var (route, length) set to solver.getRouteAndLength()
+      var route, length set to solver.getRouteAndLength()
       set gr2 to addRoute(gr2, route)
       call gr2.draw()
       print "Length of route: {round(length, 2)}"
@@ -45,7 +45,7 @@ procedure runSolver(gr as Graphics, start as Point, destination as Point, rocks 
   end if
 end procedure
 
-procedure createRocksAndNodes(percentRocks as Int, rocks as [Point], nodes as [Node], start as Point, dest as Point)
+procedure createRocksAndNodes(percentRocks as Int, out rocks as [Point], out nodes as [Node], start as Point, dest as Point)
   for x from 0 to 39 step 1
     for y from 0 to 29 step 1
       var p set to new Point(x, y)
@@ -297,7 +297,8 @@ test solver
   var dest set to new Point(39, 29)
   var alg set to Algorithm.dijkstra
   var nodes set to empty [Node]
-  call createRocksAndNodes(0, empty [Point], nodes, start, dest)
+  var points set to empty [Point]
+  call createRocksAndNodes(0, points, nodes, start, dest)
   var solver set to new Solver(nodes, start, dest)
   call solver.initialise(alg)
   var emptyNode set to empty Node

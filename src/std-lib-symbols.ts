@@ -1,5 +1,5 @@
+import { ElanSymbol } from "./frames/interfaces/elan-symbol";
 import { Scope } from "./frames/interfaces/scope";
-import { ElanSymbol } from "./frames/interfaces/symbol";
 import { SymbolType } from "./frames/interfaces/symbol-type";
 import { AbstractDictionaryType } from "./frames/symbols/abstract-dictionary-type";
 import { ArrayType } from "./frames/symbols/array-list-type";
@@ -977,6 +977,7 @@ export class StdLibSymbols implements Scope {
           StringType.Instance,
           true,
           false,
+          true,
         ),
       ),
     ],
@@ -989,6 +990,7 @@ export class StdLibSymbols implements Scope {
           new TupleType([StringType.Instance, StringType.Instance]),
           true,
           false,
+          true,
         ),
       ),
     ],

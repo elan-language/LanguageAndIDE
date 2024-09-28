@@ -1,9 +1,9 @@
 import { CodeSource } from "../code-source";
 import { ExpressionField } from "../fields/expression-field";
 import { FrameWithStatements } from "../frame-with-statements";
+import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
-import { ElanSymbol } from "../interfaces/symbol";
 import { switchKeyword } from "../keywords";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { Transforms } from "../syntax-nodes/transforms";

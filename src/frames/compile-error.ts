@@ -112,9 +112,9 @@ export class MustBeAbstractCompileError extends CompileError {
   }
 }
 
-export class PrivatePropertyCompileError extends CompileError {
+export class PrivateMemberCompileError extends CompileError {
   constructor(id: string, location: string) {
-    super(Priority.illegalOperation, `Cannot reference private property ${id}`, location, false);
+    super(Priority.illegalOperation, `Cannot reference private member ${id}`, location, false);
   }
 }
 
@@ -196,6 +196,12 @@ export class IndexCompileError extends CompileError {
 export class DuplicateKeyCompileError extends CompileError {
   constructor(location: string) {
     super(Priority.typeError, `Duplicate Dictionary key(s)`, location, false);
+  }
+}
+
+export class DuplicateIdsCompileError extends CompileError {
+  constructor(ids: string[], location: string) {
+    super(Priority.typeError, `Duplicate inherited ids: ${ids.join(", ")}`, location, false);
   }
 }
 

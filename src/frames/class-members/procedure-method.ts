@@ -1,11 +1,12 @@
 import { CodeSource } from "../code-source";
 import { mustBeUniqueNameInScope } from "../compile-rules";
+import { ClassFrame } from "../globals/class-frame";
 import { ProcedureFrame } from "../globals/procedure-frame";
 import { singleIndent } from "../helpers";
+import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Frame } from "../interfaces/frame";
 import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
-import { ElanSymbol } from "../interfaces/symbol";
 import { privateKeyword } from "../keywords";
 import { getClassScope } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
@@ -14,20 +15,29 @@ import { Transforms } from "../syntax-nodes/transforms";
 export class ProcedureMethod extends ProcedureFrame implements Member {
   isMember: boolean = true;
   private: boolean;
+  isAbstract = false;
 
   constructor(parent: Parent, priv = false) {
     super(parent);
     this.private = priv;
   }
+
+  getClass(): ClassFrame {
+    return this.getParent() as ClassFrame;
+  }
+
   private modifierAsHtml(): string {
     return this.private ? `<keyword>private </keyword>` : "";
   }
+
   private modifierAsSource(): string {
     return this.private ? `private ` : "";
   }
+
   public override indent(): string {
     return singleIndent();
   }
+
   public override renderAsSource(): string {
     return `${this.indent()}${this.modifierAsSource()}procedure ${this.name.renderAsSource()}(${this.params.renderAsSource()})\r
 ${this.renderChildrenAsSource()}\r

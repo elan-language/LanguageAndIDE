@@ -1,6 +1,6 @@
 import { CodeSource } from "../code-source";
+import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Frame } from "../interfaces/frame";
-import { ElanSymbol } from "../interfaces/symbol";
 import { Alternatives } from "../parse-nodes/alternatives";
 import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { InstanceProcRef } from "../parse-nodes/instanceProcRef";

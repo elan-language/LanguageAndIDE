@@ -1,20 +1,20 @@
+import { CodeSource } from "../code-source";
 import { IdentifierField } from "../fields/identifier-field";
 import { ParamList } from "../fields/param-list";
 import { TypeField } from "../fields/type-field";
-import { ReturnStatement } from "../statements/return-statement";
 import { FrameWithStatements } from "../frame-with-statements";
-import { Parent } from "../interfaces/parent";
+import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
-import { CodeSource } from "../code-source";
 import { File } from "../interfaces/file";
+import { Frame } from "../interfaces/frame";
+import { Parent } from "../interfaces/parent";
 import { Profile } from "../interfaces/profile";
 import { endKeyword, functionKeyword, returnKeyword } from "../keywords";
-import { ElanSymbol } from "../interfaces/symbol";
-import { Frame } from "../interfaces/frame";
+import { ReturnStatement } from "../statements/return-statement";
 import { FunctionType } from "../symbols/function-type";
+import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { Transforms } from "../syntax-nodes/transforms";
-import { SymbolScope } from "../symbols/symbol-scope";
 
 export abstract class FunctionFrame extends FrameWithStatements implements Parent, ElanSymbol {
   public name: IdentifierField;

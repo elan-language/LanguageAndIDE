@@ -21,11 +21,17 @@ import {
 
 export class MemberSelector extends AbstractSelector implements Member {
   isMember: boolean = true;
+  isAbstract = false;
+  private = false;
   private class: ClassFrame;
 
   constructor(parent: Parent) {
     super(parent);
     this.class = parent as ClassFrame;
+  }
+
+  getClass(): ClassFrame {
+    return this.getParent() as ClassFrame;
   }
 
   defaultOptions(): [string, (parent: Parent) => Frame][] {

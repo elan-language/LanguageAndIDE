@@ -1,7 +1,8 @@
+import { DeconstructedSymbolType } from "../interfaces/deconstructed-symbol-type";
 import { SymbolType } from "../interfaces/symbol-type";
 import { UnknownType } from "./unknown-type";
 
-export class DeconstructedTupleType implements SymbolType {
+export class DeconstructedTupleType implements DeconstructedSymbolType {
   constructor(
     public readonly ids: string[],
     public readonly ofTypes: SymbolType[],

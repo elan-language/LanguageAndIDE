@@ -4,11 +4,12 @@ import { mustBeUniqueNameInScope } from "../compile-rules";
 import { IdentifierField } from "../fields/identifier-field";
 import { ParamList } from "../fields/param-list";
 import { TypeField } from "../fields/type-field";
+import { ClassFrame } from "../globals/class-frame";
 import { singleIndent } from "../helpers";
+import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
-import { ElanSymbol } from "../interfaces/symbol";
 import { abstractFunctionKeywords } from "../keywords";
 import { FunctionType } from "../symbols/function-type";
 import { getClassScope } from "../symbols/symbol-helpers";
@@ -18,6 +19,7 @@ import { Transforms } from "../syntax-nodes/transforms";
 export class AbstractFunction extends AbstractFrame implements Member, ElanSymbol {
   isAbstract = true;
   isMember: boolean = true;
+  private = false;
   public name: IdentifierField;
   public params: ParamList;
   public returnType: TypeField;
@@ -29,6 +31,11 @@ export class AbstractFunction extends AbstractFrame implements Member, ElanSymbo
     this.returnType = new TypeField(this);
     this.returnType.setPlaceholder("return type");
   }
+
+  getClass(): ClassFrame {
+    return this.getParent() as ClassFrame;
+  }
+
   initialKeywords(): string {
     return abstractFunctionKeywords;
   }

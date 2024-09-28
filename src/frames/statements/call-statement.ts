@@ -1,16 +1,19 @@
 import { AbstractFrame } from "../abstract-frame";
 import { Constructor } from "../class-members/constructor";
+import { ProcedureMethod } from "../class-members/procedure-method";
 import { CodeSource } from "../code-source";
 import {
   cannotCallOnParameter,
   cannotPassAsOutParameter,
   mustBeKnownSymbol,
   mustBeProcedure,
+  mustBePublicMember,
   mustCallExtensionViaQualifier,
   mustMatchParameters,
 } from "../compile-rules";
 import { ArgListField } from "../fields/arg-list-field";
 import { ProcRefField } from "../fields/proc-ref-field";
+import { ClassFrame } from "../globals/class-frame";
 import { ProcedureFrame } from "../globals/procedure-frame";
 import { AstNode } from "../interfaces/ast-node";
 import { Field } from "../interfaces/field";
@@ -18,7 +21,12 @@ import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
 import { callKeyword } from "../keywords";
 import { ProcedureType } from "../symbols/procedure-type";
-import { scopePrefix, updateScopeAndQualifier } from "../symbols/symbol-helpers";
+import {
+  getClassScope,
+  isMemberOnFieldsClass,
+  scopePrefix,
+  updateScopeAndQualifier,
+} from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import {
   containsGenericType,
@@ -27,6 +35,7 @@ import {
   isAstIdNode,
   matchGenericTypes,
 } from "../syntax-nodes/ast-helpers";
+import { IdAsn } from "../syntax-nodes/id-asn";
 import { QualifierAsn } from "../syntax-nodes/qualifier-asn";
 import { Transforms } from "../syntax-nodes/transforms";
 import { LetStatement } from "./let-statement";
@@ -88,8 +97,19 @@ export class CallStatement extends AbstractFrame implements Statement {
     mustBeKnownSymbol(procSymbol, this.compileErrors, this.htmlId);
     mustBeProcedure(procSymbol.symbolType(transforms), this.compileErrors, this.htmlId);
 
+    if (!isMemberOnFieldsClass(procSymbol, transforms, this)) {
+      mustBePublicMember(procSymbol, this.compileErrors, this.htmlId);
+    }
+
     const ps = procSymbol.symbolType(transforms);
     const argList = this.args.getOrTransformAstNode(transforms);
+
+    if (qualifier instanceof QualifierAsn && isAstIdNode(qualifier.value)) {
+      const qSymbol = this.getParentScope().resolveSymbol(qualifier.value.id, transforms, this);
+      if (qSymbol.symbolScope === SymbolScope.parameter) {
+        cannotCallOnParameter(qualifier.value, this.compileErrors, this.htmlId);
+      }
+    }
 
     if (isAstCollectionNode(argList)) {
       let callParameters = argList.items;
@@ -168,15 +188,8 @@ export class CallStatement extends AbstractFrame implements Statement {
         passedParameters.push(pName);
       }
 
-      if (qualifier instanceof QualifierAsn && isAstIdNode(qualifier.value)) {
-        const qSymbol = this.getParentScope().resolveSymbol(qualifier.value.id, transforms, this);
-        if (qSymbol.symbolScope === SymbolScope.parameter) {
-          cannotCallOnParameter(qualifier.value, this.compileErrors, this.htmlId);
-        }
-      }
-
       const pp = passedParameters.join(", ");
-      const q = qualifier ? `${qualifier.compile()}` : scopePrefix(procSymbol.symbolScope);
+      const q = qualifier ? `${qualifier.compile()}` : scopePrefix(procSymbol, this);
       const a = isAsync ? "await " : "";
       let prefix = "";
       let postfix = "";

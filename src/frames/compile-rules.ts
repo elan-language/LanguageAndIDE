@@ -4,6 +4,7 @@ import {
   CannotUseLikeAFunction,
   CannotUseSystemMethodInAFunction,
   CompileError,
+  DuplicateIdsCompileError,
   DuplicateKeyCompileError,
   ExtensionCompileError,
   MustBeAbstractCompileError,
@@ -19,7 +20,7 @@ import {
   OutParameterCompileError,
   ParametersCompileError,
   PrintFunctionCompileError,
-  PrivatePropertyCompileError,
+  PrivateMemberCompileError,
   ReassignCompileError,
   SyntaxCompileError,
   TypeCompileError,
@@ -28,9 +29,9 @@ import {
 } from "./compile-error";
 import { isClass, isFunction, isInsideFunctionOrConstructor, isMember } from "./helpers";
 import { AstNode } from "./interfaces/ast-node";
+import { ElanSymbol } from "./interfaces/elan-symbol";
 import { Parent } from "./interfaces/parent";
 import { Scope } from "./interfaces/scope";
-import { ElanSymbol } from "./interfaces/symbol";
 import { SymbolType } from "./interfaces/symbol-type";
 import { allKeywords, reservedWords } from "./keywords";
 import { LetStatement } from "./statements/let-statement";
@@ -38,6 +39,7 @@ import { AbstractDictionaryType } from "./symbols/abstract-dictionary-type";
 import { ArrayType } from "./symbols/array-list-type";
 import { BooleanType } from "./symbols/boolean-type";
 import { ClassType } from "./symbols/class-type";
+import { DeconstructedListType } from "./symbols/deconstructed-list-type";
 import { DictionaryType } from "./symbols/dictionary-type";
 import { DuplicateSymbol } from "./symbols/duplicate-symbol";
 import { EnumType } from "./symbols/enum-type";
@@ -52,6 +54,7 @@ import { ProcedureType } from "./symbols/procedure-type";
 import { RegexType } from "./symbols/regex-type";
 import { StringType } from "./symbols/string-type";
 import {
+  isDeconstructedType,
   isDictionarySymbolType,
   isDictionaryType,
   isGenericSymbolType,
@@ -178,6 +181,18 @@ export function mustBeClassType(
   }
 }
 
+export function mustBeDeconstructableType(
+  symbolType: SymbolType,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  if (!isDeconstructedType(symbolType)) {
+    compileErrors.push(
+      new TypeCompileError("able to be deconstructed", location, symbolType instanceof UnknownType),
+    );
+  }
+}
+
 export function mustNotBeFunction(
   symbolType: SymbolType,
   compileErrors: CompileError[],
@@ -275,13 +290,13 @@ export function mustBeAbstractClass(
   }
 }
 
-export function mustBePublicProperty(
-  property: ElanSymbol,
+export function mustBePublicMember(
+  member: ElanSymbol,
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (property instanceof Property && property.private === true) {
-    compileErrors.push(new PrivatePropertyCompileError(property.name.text, location));
+  if (isMember(member) && member.private) {
+    compileErrors.push(new PrivateMemberCompileError(member.symbolId, location));
   }
 }
 
@@ -291,7 +306,7 @@ export function mustBePropertyAndPublic(
   location: string,
 ) {
   if (symbol instanceof Property && symbol.private === true) {
-    compileErrors.push(new PrivatePropertyCompileError(symbol.name.text, location));
+    compileErrors.push(new PrivateMemberCompileError(symbol.name.text, location));
   }
   if (!(symbol instanceof Property)) {
     compileErrors.push(new UndefinedSymbolCompileError(symbol.symbolId, location));
@@ -308,7 +323,7 @@ export function mustImplementSuperClasses(
   for (const superClassType of superClassTypes) {
     const superSymbols = superClassType.childSymbols();
 
-    for (const superSymbol of superSymbols) {
+    for (const superSymbol of superSymbols.filter((ss) => isMember(ss) && ss.isAbstract)) {
       const subSymbol = classType.resolveSymbol(superSymbol.symbolId, transforms, classType);
 
       if (subSymbol instanceof UnknownSymbol) {
@@ -675,6 +690,16 @@ export function mustBeCompatibleType(
     return;
   }
 
+  if (lhs instanceof DeconstructedListType) {
+    if (isGenericSymbolType(lhs.tailType)) {
+      mustBeCompatibleType(lhs.headType, lhs.tailType.ofType, compileErrors, location);
+    }
+
+    mustBeCompatibleType(lhs.tailType, rhs, compileErrors, location);
+
+    return;
+  }
+
   if (lhs instanceof GenericParameterType || rhs instanceof GenericParameterType) {
     FailIncompatible(lhs, rhs, compileErrors, location);
   }
@@ -874,4 +899,12 @@ export function mustHaveUniqueKeys(
 
 export function mustBeNewable(type: string, compileErrors: CompileError[], location: string) {
   compileErrors.push(new NotNewableCompileError(type, location, false));
+}
+
+export function cannotHaveDuplicatePrivateIds(
+  duplicates: string[],
+  compileErrors: CompileError[],
+  location: string,
+) {
+  compileErrors.push(new DuplicateIdsCompileError(duplicates, location));
 }

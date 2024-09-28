@@ -55,7 +55,7 @@ suite("Selector tests", () => {
   test("Member Select - procedure", () => {
     const file = T09_emptyMainAndClassWithGlobalSelector();
     file.getById("select10").processKey(key("p"));
-    file.getById("select10").processKey(key("o"))
+    file.getById("select10").processKey(key("o"));
     file.getById("select10").processKey(key("c"));
     const v = file.getById("proc11").renderAsSource();
     assert.equal(v, "  procedure ()\r\n\r\n  end procedure\r\n");

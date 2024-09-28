@@ -1,16 +1,22 @@
 import { CompileError } from "../compile-error";
-import { AstNode } from "../interfaces/ast-node";
+import { AstIdNode } from "../interfaces/ast-id-node";
 import { Scope } from "../interfaces/scope";
+import { DeconstructedListType } from "../symbols/deconstructed-list-type";
 import { AbstractAstNode } from "./abstract-ast-node";
+import { transforms } from "./ast-helpers";
 
-export class DeconstructedListAsn extends AbstractAstNode implements AstNode {
+export class DeconstructedListAsn extends AbstractAstNode implements AstIdNode {
   constructor(
     private readonly head: string,
     private readonly tail: string,
     public readonly fieldId: string,
-    scope: Scope,
+    private readonly scope: Scope,
   ) {
     super();
+  }
+
+  get id() {
+    return `${this.head},${this.tail}`;
   }
 
   aggregateCompileErrors(): CompileError[] {
@@ -19,11 +25,21 @@ export class DeconstructedListAsn extends AbstractAstNode implements AstNode {
 
   compile(): string {
     this.compileErrors = [];
-    throw new Error("Method not implemented.");
+    return `[${this.head}, ${this.tail}]`;
   }
 
   symbolType() {
-    return { name: "", isImmutable: true, initialValue: "" };
+    const hdSt = this.scope
+      .getParentScope()
+      .resolveSymbol(this.head, transforms(), this.scope)
+      .symbolType();
+
+    const tlSt = this.scope
+      .getParentScope()
+      .resolveSymbol(this.tail, transforms(), this.scope)
+      .symbolType();
+
+    return new DeconstructedListType(this.head, this.tail, hdSt, tlSt);
   }
 
   toString() {

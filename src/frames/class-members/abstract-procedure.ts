@@ -3,11 +3,12 @@ import { CodeSource } from "../code-source";
 import { mustBeUniqueNameInScope } from "../compile-rules";
 import { IdentifierField } from "../fields/identifier-field";
 import { ParamList } from "../fields/param-list";
+import { ClassFrame } from "../globals/class-frame";
 import { singleIndent } from "../helpers";
+import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
-import { ElanSymbol } from "../interfaces/symbol";
 import { abstractProcedureKeywords } from "../keywords";
 import { ProcedureType } from "../symbols/procedure-type";
 import { getClassScope } from "../symbols/symbol-helpers";
@@ -17,6 +18,7 @@ import { Transforms } from "../syntax-nodes/transforms";
 export class AbstractProcedure extends AbstractFrame implements Member, ElanSymbol {
   isAbstract = true;
   isMember: boolean = true;
+  private = false;
   public name: IdentifierField;
   public params: ParamList;
 
@@ -25,6 +27,11 @@ export class AbstractProcedure extends AbstractFrame implements Member, ElanSymb
     this.name = new IdentifierField(this);
     this.params = new ParamList(this);
   }
+
+  getClass(): ClassFrame {
+    return this.getParent() as ClassFrame;
+  }
+
   initialKeywords(): string {
     return abstractProcedureKeywords;
   }

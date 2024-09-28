@@ -1,18 +1,18 @@
+import { CodeSource } from "../code-source";
+import { mustBeIterable, mustNotBeReassigned } from "../compile-rules";
 import { ExpressionField } from "../fields/expression-field";
 import { IdentifierField } from "../fields/identifier-field";
-import { Parent } from "../interfaces/parent";
-import { File } from "../interfaces/file";
-import { Field } from "../interfaces/field";
-import { CodeSource } from "../code-source";
 import { FrameWithStatements } from "../frame-with-statements";
+import { ElanSymbol } from "../interfaces/elan-symbol";
+import { Field } from "../interfaces/field";
+import { File } from "../interfaces/file";
+import { Frame } from "../interfaces/frame";
+import { GenericSymbolType } from "../interfaces/generic-symbol-type";
+import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
 import { eachKeyword } from "../keywords";
-import { Frame } from "../interfaces/frame";
-import { ElanSymbol } from "../interfaces/symbol";
-import { mustBeIterable, mustNotBeReassigned } from "../compile-rules";
-import { Transforms } from "../syntax-nodes/transforms";
 import { SymbolScope } from "../symbols/symbol-scope";
-import { GenericSymbolType } from "../interfaces/generic-symbol-type";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export class Each extends FrameWithStatements implements Statement {
   isStatement = true;

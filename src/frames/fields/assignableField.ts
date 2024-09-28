@@ -1,6 +1,6 @@
 import { CodeSource } from "../code-source";
+import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Frame } from "../interfaces/frame";
-import { ElanSymbol } from "../interfaces/symbol";
 import { propertyKeyword } from "../keywords";
 import { Alternatives } from "../parse-nodes/alternatives";
 import { AssignableNode } from "../parse-nodes/assignable-node";
@@ -9,7 +9,7 @@ import { DeconstructedTuple } from "../parse-nodes/deconstructed-tuple";
 import { ParseNode } from "../parse-nodes/parse-node";
 import {
   filteredSymbols,
-  isPropertyOnFieldsClass,
+  isMemberOnFieldsClass,
   isVarOrPropertyStatement,
 } from "../symbols/symbol-helpers";
 import { transforms } from "../syntax-nodes/ast-helpers";
@@ -42,7 +42,7 @@ export class AssignableField extends AbstractField {
   }
 
   protected override getId(s: ElanSymbol) {
-    if (isPropertyOnFieldsClass(s, this.getHolder())) {
+    if (isMemberOnFieldsClass(s, transforms(), this.getHolder())) {
       return `${propertyKeyword}.${s.symbolId}`;
     }
     return s.symbolId;

@@ -1,12 +1,11 @@
 import { CompileError } from "../compile-error";
-import { mustBeKnownSymbol, mustBePublicProperty, mustNotBeKeyword } from "../compile-rules";
+import { mustBeKnownSymbol, mustBePublicMember, mustNotBeKeyword } from "../compile-rules";
 import { isMember } from "../helpers";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstNode } from "../interfaces/ast-node";
 import { Scope } from "../interfaces/scope";
 import { LetStatement } from "../statements/let-statement";
-import { DeconstructedTupleType } from "../symbols/deconstructed-tuple-type";
-import { isPropertyOnFieldsClass } from "../symbols/symbol-helpers";
+import { isDeconstructedType, isMemberOnFieldsClass, scopePrefix } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { transforms } from "./ast-helpers";
@@ -52,25 +51,21 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
 
     mustBeKnownSymbol(symbol, this.compileErrors, this.fieldId);
 
-    let prefix = "";
+    if (!isMemberOnFieldsClass(symbol, transforms(), this.scope)) {
+      mustBePublicMember(symbol, this.compileErrors, this.fieldId);
+    }
 
     let postfix = "";
 
     if (symbol.symbolScope === SymbolScope.outParameter) {
       postfix = `[0]`;
     }
+
     if (symbol instanceof LetStatement) {
       postfix = `${postfix}()`;
     }
-    if (symbol.symbolScope === SymbolScope.stdlib) {
-      prefix = "_stdlib.";
-    }
-    if (symbol.symbolScope === SymbolScope.property && !this.classScope) {
-      prefix = "this.";
-    }
-    if (!isPropertyOnFieldsClass(symbol, this.scope)) {
-      mustBePublicProperty(symbol, this.compileErrors, this.fieldId);
-    }
+
+    const prefix = this.classScope ? "" : scopePrefix(symbol, this.scope);
 
     return `${prefix}${this.id}${postfix}`;
   }
@@ -82,7 +77,7 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
       .resolveSymbol(this.id, transforms(), this.scope)
       .symbolType(transforms());
 
-    if (st instanceof DeconstructedTupleType) {
+    if (isDeconstructedType(st)) {
       return st.symbolTypeFor(this.id);
     }
     return st;

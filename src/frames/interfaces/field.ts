@@ -2,10 +2,9 @@ import { CompileError } from "../compile-error";
 import { File } from "../interfaces/file";
 import { Overtyper } from "../overtyper";
 import { CompileStatus } from "../status-enums";
+import { ElanSymbol } from "./elan-symbol";
 import { Frame } from "./frame";
-import { Scope } from "./scope";
 import { Selectable } from "./selectable";
-import { ElanSymbol } from "./symbol";
 
 export interface Field extends Selectable {
   isField: boolean;

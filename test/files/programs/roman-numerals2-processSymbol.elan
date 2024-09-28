@@ -1,22 +1,22 @@
-# b90495eb691e703c81e8627251eb69dc528813e2c3f79da0f34ca27c72fd49ae Elan Beta 2 valid
+# FFFF Elan Beta 2 valid
 
 function asRoman(d as Int) return String
   var result set to ""
   var d2 set to d
-  set (d2, result) to processSymbol(1000, "M", d2, result)
-  set (d2, result) to processSymbol(900, "CM", d2, result)
-  set (d2, result) to processSymbol(900, "CM", d2, result)
-  set (d2, result) to processSymbol(500, "D", d2, result)
-  set (d2, result) to processSymbol(400, "CD", d2, result)
-  set (d2, result) to processSymbol(100, "C", d2, result)
-  set (d2, result) to processSymbol(90, "XC", d2, result)
-  set (d2, result) to processSymbol(50, "L", d2, result)
-  set (d2, result) to processSymbol(40, "XL", d2, result)
-  set (d2, result) to processSymbol(10, "X", d2, result)
-  set (d2, result) to processSymbol(9, "IX", d2, result)
-  set (d2, result) to processSymbol(5, "V", d2, result)
-  set (d2, result) to processSymbol(4, "IV", d2, result)
-  set (d2, result) to processSymbol(1, "I", d2, result)
+  set d2, result to processSymbol(1000, "M", d2, result)
+  set d2, result to processSymbol(900, "CM", d2, result)
+  set d2, result to processSymbol(900, "CM", d2, result)
+  set d2, result to processSymbol(500, "D", d2, result)
+  set d2, result to processSymbol(400, "CD", d2, result)
+  set d2, result to processSymbol(100, "C", d2, result)
+  set d2, result to processSymbol(90, "XC", d2, result)
+  set d2, result to processSymbol(50, "L", d2, result)
+  set d2, result to processSymbol(40, "XL", d2, result)
+  set d2, result to processSymbol(10, "X", d2, result)
+  set d2, result to processSymbol(9, "IX", d2, result)
+  set d2, result to processSymbol(5, "V", d2, result)
+  set d2, result to processSymbol(4, "IV", d2, result)
+  set d2, result to processSymbol(1, "I", d2, result)
   return result
 end function
 

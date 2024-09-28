@@ -13,7 +13,7 @@ export class ImmutableDictionaryType extends AbstractDictionaryType implements S
   factoryName = "system.immutableDictionary";
 
   get name() {
-    return `ImmutableDictionary <${this.keyType.name},${this.valueType.name}>`;
+    return `{${this.keyType.name}:${this.valueType.name}}`;
   }
 
   toString(): string {

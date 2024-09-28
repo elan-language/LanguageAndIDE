@@ -21,6 +21,8 @@ import { TupleType } from "../symbols/tuple-type";
 import { UnknownType } from "../symbols/unknown-type";
 import { transform, transformMany } from "./ast-visitor";
 import { ChainedAsn } from "./chained-asn";
+import { DeconstructedListAsn } from "./deconstructed-list-asn";
+import { DeconstructedTupleAsn } from "./deconstructed-tuple-asn";
 import { OperationSymbol } from "./operation-symbol";
 import { Transforms } from "./transforms";
 
@@ -272,4 +274,30 @@ export function mapOperation(op: string): OperationSymbol {
     }
   }
   throw new Error("Not implemented");
+}
+
+export function wrapDeconstruction(lhs: AstNode, isLet: boolean, code: string) {
+  if (lhs instanceof DeconstructedListAsn) {
+    return isLet ? `system.deconstructListToLet(${code})` : `system.deconstructList(${code})`;
+  }
+
+  if (lhs instanceof DeconstructedTupleAsn) {
+    return isLet ? `system.deconstructTupleToLet(${code})` : code;
+  }
+  return code;
+}
+
+export function wrapLet(val: string, indent: string) {
+  return `(() => {
+${indent}${indent}var _cache;
+${indent}${indent}return () => _cache ??= ${val};
+${indent}})()`;
+}
+
+export function getIds(ast: AstNode) {
+  if (isAstIdNode(ast)) {
+    const id = ast.id;
+    return id.includes(",") ? id.split(",") : [id];
+  }
+  return [];
 }

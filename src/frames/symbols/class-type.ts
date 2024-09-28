@@ -1,11 +1,10 @@
 import { ClassFrame } from "../globals/class-frame";
+import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Scope } from "../interfaces/scope";
-import { Transforms } from "../syntax-nodes/transforms";
-import { ElanSymbol } from "../interfaces/symbol";
 import { SymbolType } from "../interfaces/symbol-type";
+import { Transforms } from "../syntax-nodes/transforms";
 import { isSymbol } from "./symbol-helpers";
 import { UnknownSymbol } from "./unknown-symbol";
-import { Parent } from "../interfaces/parent";
 
 export class ClassType implements SymbolType, Scope {
   constructor(
@@ -13,7 +12,7 @@ export class ClassType implements SymbolType, Scope {
     public readonly isAbstract: boolean,
     public readonly isImmutable: boolean,
     public readonly inheritsFrom: SymbolType[],
-    private readonly scope: ClassFrame,
+    public readonly scope: ClassFrame,
   ) {}
 
   symbolMatches(id: string, all: boolean): ElanSymbol[] {
@@ -54,7 +53,7 @@ export class ClassType implements SymbolType, Scope {
   }
 
   get name() {
-    return `Class ${this.className.trim()}`;
+    return `${this.className.trim()}`;
   }
 
   toString(): string {

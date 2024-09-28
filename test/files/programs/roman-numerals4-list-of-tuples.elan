@@ -1,10 +1,10 @@
-# 35df23ec85a87eda420991d9b097c663faa90c47068a80a7b848bfa15d340d8c Elan Beta 2 valid
+# FFFF Elan Beta 2 valid
 
 function asRoman(d as Int) return String
   var result set to ""
   var d2 set to d
   each vs in valueSymbols
-    var (value, symbol) set to vs
+    var value, symbol set to vs
     while d2 >= value
       set result to result + symbol
       set d2 to d2 - value

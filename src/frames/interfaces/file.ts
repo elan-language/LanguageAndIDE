@@ -17,6 +17,9 @@ export interface File extends Parent {
   renderAsHtml(): Promise<string>;
   renderAsSource(): Promise<string>;
   compile(): string;
+
+  compileAsWorker(base: string): string;
+
   fileName: string;
   readonly defaultFileName: string;
 

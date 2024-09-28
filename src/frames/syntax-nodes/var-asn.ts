@@ -3,14 +3,14 @@ import {
   mustBeCompatibleType,
   mustBeIndexableSymbol,
   mustBeKnownSymbol,
-  mustBePublicProperty,
+  mustBePublicMember,
 } from "../compile-rules";
 import { isScope } from "../helpers";
 import { AstIndexableNode } from "../interfaces/ast-indexable-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
+import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Frame } from "../interfaces/frame";
 import { Scope } from "../interfaces/scope";
-import { ElanSymbol } from "../interfaces/symbol";
 import { SymbolType } from "../interfaces/symbol-type";
 import { globalKeyword } from "../keywords";
 import { LetStatement } from "../statements/let-statement";
@@ -24,7 +24,8 @@ import {
   getGlobalScope,
   isDictionarySymbolType,
   isGenericSymbolType,
-  isPropertyOnFieldsClass,
+  isMemberOnFieldsClass,
+  scopePrefix,
 } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
@@ -63,19 +64,6 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
     return this.index instanceof IndexAsn && !(this.index.index1 instanceof RangeAsn);
   }
 
-  private getQualifier() {
-    if (this.qualifier) {
-      return `${this.qualifier.compile()}`;
-    }
-    const s = this.scope.resolveSymbol(this.id, transforms(), this.scope);
-
-    if (s && s.symbolScope === SymbolScope.property) {
-      return "this.";
-    }
-
-    return "";
-  }
-
   wrapIndex(code: string): string {
     return `system.safeIndex(${code})`;
   }
@@ -111,9 +99,6 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
       const classSymbol = this.scope.resolveSymbol(classScope.className, transforms(), this.scope);
       if (isScope(classSymbol)) {
         symbol = classSymbol.resolveSymbol(this.id, transforms(), classSymbol);
-        if (!isPropertyOnFieldsClass(symbol, this.scope)) {
-          mustBePublicProperty(symbol, this.compileErrors, this.fieldId);
-        }
       }
     } else if (isAstIdNode(this.qualifier?.value) && this.qualifier.value.id === globalKeyword) {
       symbol = getGlobalScope(this.scope).resolveSymbol(this.id, transforms(), this.scope);
@@ -121,9 +106,13 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
       symbol = this.scope.getParentScope().resolveSymbol(this.id, transforms(), this.scope);
     }
 
+    if (!isMemberOnFieldsClass(symbol, transforms(), this.scope)) {
+      mustBePublicMember(symbol, this.compileErrors, this.fieldId);
+    }
+
     mustBeKnownSymbol(symbol, this.compileErrors, this.fieldId);
 
-    const q = this.getQualifier();
+    const q = scopePrefix(symbol, this.scope);
     const call = symbol instanceof LetStatement ? "()" : "";
     const idx = this.index
       ? this.index.compile()

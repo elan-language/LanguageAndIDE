@@ -211,7 +211,7 @@ suite("Parsing Nodes", () => {
   });
   test("CSV of set clauses", () => {
     testNodeParse(
-      new CSV(() => new SetClause(),1),
+      new CSV(() => new SetClause(), 1),
       "x to p.x + 3, y to p.y - 1",
       ParseStatus.valid,
       "",
@@ -220,7 +220,7 @@ suite("Parsing Nodes", () => {
       "",
     );
   });
- 
+
   test("Expression + with clause", () => {
     testNodeParse(
       new ExprNode(),
@@ -711,22 +711,8 @@ suite("Parsing Nodes", () => {
       "{1, 2, 3, 4, 5}",
       "",
     );
-    testNodeParse(
-      new ListNode(() => new LitInt()),
-      `{}`,
-      ParseStatus.invalid,
-      ``,
-      "{}",
-      "",
-    );
-    testNodeParse(
-      new ListNode(() => new LitInt()),
-      `{`,
-      ParseStatus.incomplete,
-      `{`,
-      "",
-      "",
-    );
+    testNodeParse(new ListNode(() => new LitInt()), `{}`, ParseStatus.invalid, ``, "{}", "");
+    testNodeParse(new ListNode(() => new LitInt()), `{`, ParseStatus.incomplete, `{`, "", "");
     testNodeParse(
       new ListNode(() => new LitInt()),
       `{1,2,3.1}`,
@@ -1299,10 +1285,19 @@ suite("Parsing Nodes", () => {
     testNodeParse(new LitTuple(), `()`, ParseStatus.invalid, "", "()", "");
   });
   test("DeconstructedTuple", () => {
-    testNodeParse(new DeconstructedTuple(), `(a,b)`, ParseStatus.valid, "", "", "");
-    testNodeParse(new DeconstructedTuple(), `(a,b`, ParseStatus.incomplete, "", "", "");
-    testNodeParse(new DeconstructedTuple(), `(3,4)`, ParseStatus.invalid, "", "(3,4)", "");
-    testNodeParse(new DeconstructedTuple(), `(a[2],b)`, ParseStatus.invalid, "", "(a[2],b)", "");
+    testNodeParse(new DeconstructedTuple(), `a, b`, ParseStatus.valid, "", "", "");
+    testNodeParse(new DeconstructedTuple(), `a,b`, ParseStatus.valid, "", "", "");
+    testNodeParse(new DeconstructedTuple(), `a,`, ParseStatus.incomplete, "", "", "");
+    testNodeParse(new DeconstructedTuple(), `(a,b)`, ParseStatus.invalid, "", "(a,b)", "");
+    testNodeParse(new DeconstructedTuple(), `3,4`, ParseStatus.invalid, "", "3,4", "");
+    testNodeParse(
+      new DeconstructedTuple(),
+      `property.a, b`,
+      ParseStatus.invalid,
+      "",
+      "property.a, b",
+      "",
+    );
   });
   test("Literal", () => {
     testNodeParse(new LiteralNode(), `"hello"`, ParseStatus.valid, "", "", "");
@@ -1452,7 +1447,7 @@ suite("Parsing Nodes", () => {
   //   testNodeParse(new MethodCallNode(), `bar.`, ParseStatus.incomplete, "", "");
   //   testNodeParse(new MethodCallNode(), `bar`, ParseStatus.incomplete, "", "");
   // });
- 
+
   test("#670 new parse node structure for terms & expressions", () => {
     testNodeParse(new ReferenceNode(), `abc`, ParseStatus.valid, "abc", "");
     testNodeParse(new ReferenceNode(), `abc()`, ParseStatus.valid, "abc()", "");
@@ -1462,11 +1457,17 @@ suite("Parsing Nodes", () => {
     testNodeParse(new TermSimple(), `abc[1][2]`, ParseStatus.valid, "abc[1]", "[2]");
     testNodeParse(new TermSimple(), `abc[1..2]`, ParseStatus.valid, "abc[1..2]", "");
     testNodeParse(new TermSimple(), `abc(def, ghi)[0]`, ParseStatus.valid, "abc(def, ghi)[0]", "");
-    testNodeParse(new TermSimple(), `(def, ghi)`, ParseStatus.valid, "(def, ghi)", "");// tuple
-    testNodeParse(new TermSimple(), `[def, ghi]`, ParseStatus.valid, "[def, ghi]", ""); 
-    testNodeParse(new TermSimple(), `{def:true, ghi: false}`, ParseStatus.valid, "{def:true, ghi: false}", "");
-    testNodeParse(new TermSimple(), `345`, ParseStatus.valid, "345", "");  
-    testNodeParse(new TermSimple(), `-345`, ParseStatus.valid, "-345", ""); 
+    testNodeParse(new TermSimple(), `(def, ghi)`, ParseStatus.valid, "(def, ghi)", ""); // tuple
+    testNodeParse(new TermSimple(), `[def, ghi]`, ParseStatus.valid, "[def, ghi]", "");
+    testNodeParse(
+      new TermSimple(),
+      `{def:true, ghi: false}`,
+      ParseStatus.valid,
+      "{def:true, ghi: false}",
+      "",
+    );
+    testNodeParse(new TermSimple(), `345`, ParseStatus.valid, "345", "");
+    testNodeParse(new TermSimple(), `-345`, ParseStatus.valid, "-345", "");
     testNodeParse(new TermSimple(), `not a`, ParseStatus.valid, "not a", "");
     testNodeParse(new TermSimple(), `(3 + a)`, ParseStatus.valid, "(3 + a)", "");
     testNodeParse(new TermSimple(), `typeof a`, ParseStatus.valid, "typeof a", "");
@@ -1479,10 +1480,42 @@ suite("Parsing Nodes", () => {
     testNodeParse(new DotBefore(new ReferenceNode()), `.a`, ParseStatus.valid, `.a`, "");
     testNodeParse(new DotAfter(new ReferenceNode()), `.a`, ParseStatus.invalid, ``, ".a");
     testNodeParse(new TermChained(), `property.a`, ParseStatus.valid, `property.a`, "");
-    testNodeParse(new TermChained(), `a[1].b()[1..2].c(d)[e][f]`, ParseStatus.valid, `a[1].b()[1..2].c(d)[e][f]`, "");
-    testNodeParse(new TermChained(), `property.a[1].b().c(d)[e]`, ParseStatus.valid, `property.a[1].b().c(d)[e]`, "");
-    testNodeParse(new TermChained(), `this.a.b()`, ParseStatus.valid, `this.a.b()`, "","this.a.b()","<keyword>this</keyword>.a.<method>b</method>()");
-    testNodeParse(new ExprNode(), `a[1].b()[1..2].c(d).e.f[g]`, ParseStatus.valid, `a[1].b()[1..2].c(d).e.f[g]`, "");
-    testNodeParse(new ExprNode(), `property.a[1].b().c(d)[e]`, ParseStatus.valid, `property.a[1].b().c(d)[e]`, "");  
+    testNodeParse(
+      new TermChained(),
+      `a[1].b()[1..2].c(d)[e][f]`,
+      ParseStatus.valid,
+      `a[1].b()[1..2].c(d)[e][f]`,
+      "",
+    );
+    testNodeParse(
+      new TermChained(),
+      `property.a[1].b().c(d)[e]`,
+      ParseStatus.valid,
+      `property.a[1].b().c(d)[e]`,
+      "",
+    );
+    testNodeParse(
+      new TermChained(),
+      `this.a.b()`,
+      ParseStatus.valid,
+      `this.a.b()`,
+      "",
+      "this.a.b()",
+      "<keyword>this</keyword>.a.<method>b</method>()",
+    );
+    testNodeParse(
+      new ExprNode(),
+      `a[1].b()[1..2].c(d).e.f[g]`,
+      ParseStatus.valid,
+      `a[1].b()[1..2].c(d).e.f[g]`,
+      "",
+    );
+    testNodeParse(
+      new ExprNode(),
+      `property.a[1].b().c(d)[e]`,
+      ParseStatus.valid,
+      `property.a[1].b().c(d)[e]`,
+      "",
+    );
   });
 });
