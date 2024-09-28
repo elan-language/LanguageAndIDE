@@ -1,4 +1,4 @@
-# bb7babf90fdb8f7f2d7fae527d5db9c6688a951fb1bfd8db75c6eccce51b14f4 Elan Beta 2 valid
+# fd76b22c10f6a0d4dcc2ae0c074f40f3994e101e7a53819e5dd8f1e07efaf2a2 Elan Beta 2 valid
 
 # Run the program and use the standard W,A,S,D keys to change Snake direction
 # Try to 'eat' the (red) apples, and avoid hitting the edge or the body of the snake.
@@ -73,6 +73,18 @@ function getAdjacentSquare(sq as [Int], dir as String) return [Int]
   return [newX, newY]
 end function
 
+test getAdjacentSquare
+  let sq be [20, 15]
+  assert getAdjacentSquare(sq, "up") is [20, 14]
+  assert getAdjacentSquare(sq, "down") is [20, 16]
+  assert getAdjacentSquare(sq, "left") is [19, 15]
+  assert getAdjacentSquare(sq, "right") is [21, 15]
+  # unexpected input:
+  assert getAdjacentSquare(sq, "x") is sq
+  # boundary
+  assert getAdjacentSquare([0, 15], "left") is [-1, 15]
+end test
+
 function overlaps(body as [[Int]], sq as [Int]) return Boolean
   var result set to false
   each seg in body
@@ -98,6 +110,17 @@ function directionByKey(current as String, key as String) return String
   end switch
   return dir
 end function
+
+test directionByKey
+  let current be "up"
+  assert directionByKey(current, "") is "up"
+  assert directionByKey(current, "x") is "up"
+  assert directionByKey(current, "w") is "up"
+  assert directionByKey(current, "s") is "down"
+  assert directionByKey(current, "a") is "left"
+  assert directionByKey(current, "d") is "right"
+  assert directionByKey(current, "D") is "up"
+end test
 
 test hasHitEdge
   assert hasHitEdge([0, 0]) is false
