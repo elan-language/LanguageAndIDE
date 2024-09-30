@@ -509,14 +509,12 @@ export class StdLibWorker {
   withBlock(map: BlockGraphics, x: number, y: number, b: number) {
     const cm = this.ensureInitialised(map);
     const [c, f] = this.getDetails(cm, x, y);
-    return this.putDetails(cm, x, y, c, f, b);
+    return this.putDetails(cm, x, y, "", f, b);
   }
-
 
   withBackground(map: BlockGraphics, b: number): BlockGraphics {
     return this.initialisedGraphics(b);
   }
-
 
   getChar(map: BlockGraphics, x: number, y: number) {
     const cm = this.ensureInitialised(map);

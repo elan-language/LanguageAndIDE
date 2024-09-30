@@ -488,7 +488,7 @@ export class StdLib {
   withBlock(map: BlockGraphics, x: number, y: number, b: number) {
     const cm = this.ensureInitialised(map);
     const [c, f] = this.getDetails(cm, x, y);
-    return this.putDetails(cm, x, y, c, f, b);
+    return this.putDetails(cm, x, y, "", f, b);
   }
 
   withUnicode(map: BlockGraphics, x: number, y: number, unicode: number, f: number, b: number) {
