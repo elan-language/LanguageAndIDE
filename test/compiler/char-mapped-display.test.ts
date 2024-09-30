@@ -1,14 +1,14 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
-    assertDoesNotParse,
-    assertGraphicsContains,
-    assertObjectCodeExecutes,
-    assertObjectCodeIs,
-    assertParses,
-    assertStatusIsValid,
-    testHash,
-    transforms,
+  assertDoesNotParse,
+  assertGraphicsContains,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  testHash,
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("Char Mapped Display", () => {
@@ -101,14 +101,14 @@ return [main, _tests];}`;
 
 main
   var g set to new BlockGraphics()
-  set g to g.putChar(0, 0, "Z")
+  set g to g.withUnicode(0, 0, 90, black, white)
   call g.draw()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var g = system.initialise(system.list(new Array()));
-  g = _stdlib.putChar(g, 0, 0, "Z");
+  g = _stdlib.withUnicode(g, 0, 0, 90, _stdlib.black, _stdlib.white);
   await _stdlib.draw(g);
 }
 return [main, _tests];}`;

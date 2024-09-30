@@ -818,15 +818,17 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
-      "putChar",
+      "withUnicode",
       this.getSymbol(
-        "putChar",
+        "withUnicode",
         new FunctionType(
           [
             new ListType(new TupleType([StringType.Instance, IntType.Instance, IntType.Instance])),
             IntType.Instance,
             IntType.Instance,
-            StringType.Instance,
+            IntType.Instance,
+            IntType.Instance,
+            IntType.Instance,
           ],
           new ListType(new TupleType([StringType.Instance, IntType.Instance, IntType.Instance])),
           true,

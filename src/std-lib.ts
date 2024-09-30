@@ -485,10 +485,10 @@ export class StdLib {
     return this.system.safeIndex(cm, this.idx(x, y));
   }
 
-  putChar(map: BlockGraphics, x: number, y: number, c: string) {
+  withUnicode(map: BlockGraphics, x: number, y: number, unicode: number, f: number, b: number) {
     const cm = this.ensureInitialised(map);
-    const [, f, b] = this.getDetails(cm, x, y);
-    return this.putDetails(cm, x, y, c[0], f, b);
+    const str = String.fromCharCode(unicode);
+    return this.putDetails(cm, x, y, str, f, b);
   }
 
   withText(
