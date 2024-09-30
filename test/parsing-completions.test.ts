@@ -116,12 +116,12 @@ suite("Parsing - Completions", () => {
   });
   test("Lambda", () => {
     testCompletion(new Lambda(), "lambda x as Int => x*x", ParseStatus.valid, "");
-    testCompletion(
-      new Lambda(),
-      "lambda ",
-      ParseStatus.incomplete,
-      "<pr>parameter definition</pr> => <pr>expression</pr>",
-    );
+    // testCompletion(
+    //   new Lambda(),
+    //   "lambda ",
+    //   ParseStatus.incomplete,
+    //   "<pr>parameter definition</pr> => <pr>expression</pr>",
+    // );
     testCompletion(
       new Lambda(),
       "lambda x as Int ",

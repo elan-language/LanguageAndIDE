@@ -213,8 +213,13 @@ export function transform(
   }
 
   if (node instanceof Lambda) {
-    const parameters = transformMany(node.params as CSV, fieldId, scope)
-      .items as Array<ParamDefAsn>;
+    let parameters: ParamDefAsn[] = [];
+
+    if (node.params?.matchedNode) {
+      parameters = transformMany(node.params.matchedNode as CSV, fieldId, scope)
+        .items as Array<ParamDefAsn>;
+    }
+
     const sig = new LambdaSigAsn(parameters, fieldId, scope);
     // wrap sig scope in another scope to prevent looking up a symbol in current scope.
     const body = transform(node.expr, fieldId, wrapScopeInScope(sig)) as ExprAsn;

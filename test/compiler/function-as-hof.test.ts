@@ -6,6 +6,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -37,6 +38,44 @@ async function printModified(i, f) {
 
 function twice(x) {
   return x * 2;
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "6");
+  });
+
+  ignore_test("Pass_PassAsParam1", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  call printModified(3, twice)
+end main
+  
+procedure printModified(i as Float, f as Func<of => Float>)
+  print f()
+end procedure
+  
+function twice() return Float
+  return 2
+end function`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  await printModified(3, twice);
+}
+
+async function printModified(i, f) {
+  system.printLine(_stdlib.asString(f(i)));
+}
+
+function twice() {
+  return 2;
 }
 return [main, _tests];}`;
 
