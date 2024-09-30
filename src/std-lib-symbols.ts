@@ -905,9 +905,9 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
-      "putBackground",
+      "withBlock",
       this.getSymbol(
-        "putBackground",
+        "withBlock",
         new FunctionType(
           [
             new ListType(new TupleType([StringType.Instance, IntType.Instance, IntType.Instance])),

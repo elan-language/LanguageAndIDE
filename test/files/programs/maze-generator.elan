@@ -13,7 +13,7 @@ main
     if okToSet(p, setTo, g)
       then
         var colour set to if setTo is 1 then white else black
-        set g to g.putBackground(p.x, p.y, colour)
+        set g to g.withBlock(p.x, p.y, colour)
     end if
   end for
   call g.draw()
@@ -31,12 +31,12 @@ function addRectangle(g as BlockGraphics, startX as Int, startY as Int, width as
   let paint be white
   var g2 set to g
   for x from startX to startX + width step 1
-    set g2 to g2.putBackground(x, startY, paint)
-    set g2 to g2.putBackground(x, startY + depth, paint)
+    set g2 to g2.withBlock(x, startY, paint)
+    set g2 to g2.withBlock(x, startY + depth, paint)
   end for
   for y from startY to startY + depth step 1
-    set g2 to g2.putBackground(startX, y, paint)
-    set g2 to g2.putBackground(startX + width, y, paint)
+    set g2 to g2.withBlock(startX, y, paint)
+    set g2 to g2.withBlock(startX + width, y, paint)
   end for
   return g2
 end function

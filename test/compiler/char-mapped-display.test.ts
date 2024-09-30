@@ -213,14 +213,14 @@ return [main, _tests];}`;
 
 main
   var g set to new BlockGraphics()
-  set g to g.putBackground(1, 0, 4)
+  set g to g.withBlock(1, 0, 4)
   call g.draw()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var g = system.initialise(system.list(new Array()));
-  g = _stdlib.putBackground(g, 1, 0, 4);
+  g = _stdlib.withBlock(g, 1, 0, 4);
   await _stdlib.draw(g);
 }
 return [main, _tests];}`;

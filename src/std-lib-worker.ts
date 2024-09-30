@@ -522,7 +522,7 @@ export class StdLibWorker {
     return this.system.safeIndex(this.getDetails(cm, x, y), 1);
   }
 
-  putBackground(map: BlockGraphics, x: number, y: number, b: number) {
+  withBlock(map: BlockGraphics, x: number, y: number, b: number) {
     const cm = this.ensureInitialised(map);
     const [c, f] = this.getDetails(cm, x, y);
     return this.putDetails(cm, x, y, c, f, b);

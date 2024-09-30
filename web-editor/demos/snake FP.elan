@@ -23,11 +23,11 @@ function clockTick(g as Game, k as String) return Game
 end function
 
 function updateGraphics(g as Game) return Game
-  let g2 be copy g with graphics to g.graphics.putBackground(g.apple.x, g.apple.y, red)
-  let g3 be copy g2 with graphics to g2.graphics.putBackground(g2.head.x, g2.head.y, green)
+  let g2 be copy g with graphics to g.graphics.withBlock(g.apple.x, g.apple.y, red)
+  let g3 be copy g2 with graphics to g2.graphics.withBlock(g2.head.x, g2.head.y, green)
   let tail be g3.body[0]
   let tailColour be if tail is g3.priorTail then green else white
-  return copy g3 with graphics to g3.graphics.putBackground(tail.x, tail.y, tailColour)
+  return copy g3 with graphics to g3.graphics.withBlock(tail.x, tail.y, tailColour)
 end function
 
 function newApple(g as Game) return Game

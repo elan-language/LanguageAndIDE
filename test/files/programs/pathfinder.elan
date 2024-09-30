@@ -66,26 +66,26 @@ end procedure
 function initialiseGraphics(start as Point, dest as Point, rocks as [Point]) return BlockGraphics
   var gr set to new BlockGraphics()
   each rock in rocks
-    set gr to gr.putBackground(rock.x, rock.y, black)
+    set gr to gr.withBlock(rock.x, rock.y, black)
   end each
-  set gr to gr.putBackground(start.x, start.y, green)
-  set gr to gr.putBackground(dest.x, dest.y, red)
+  set gr to gr.withBlock(start.x, start.y, green)
+  set gr to gr.withBlock(dest.x, dest.y, red)
   return gr
 end function
 
 function addVisited(gr as BlockGraphics, visited as Point) return BlockGraphics
-  return gr.putBackground(visited.x, visited.y, lightBlue)
+  return gr.withBlock(visited.x, visited.y, lightBlue)
 end function
 
 function addRoute(gr as BlockGraphics, route as {Point}) return BlockGraphics
   var gr2 set to gr
   each p in route
-    set gr2 to gr2.putBackground(p.x, p.y, yellow)
+    set gr2 to gr2.withBlock(p.x, p.y, yellow)
   end each
   let start be route[0]
   let dest be route[route.length() - 1]
-  set gr2 to gr2.putBackground(start.x, start.y, green)
-  set gr2 to gr2.putBackground(dest.x, dest.y, red)
+  set gr2 to gr2.withBlock(start.x, start.y, green)
+  set gr2 to gr2.withBlock(dest.x, dest.y, red)
   return gr2
 end function
 

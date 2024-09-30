@@ -23,7 +23,7 @@ function addSquare(gr as BlockGraphics, x as Int, y as Int, colour as Int) retur
   var gr2 set to gr
   for col from x to x + 2 step 1
     for row from y to y + 2 step 1
-      set gr2 to gr2.putBackground(col, row, colour)
+      set gr2 to gr2.withBlock(col, row, colour)
     end for
   end for
   return gr2

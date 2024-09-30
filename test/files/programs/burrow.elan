@@ -5,10 +5,10 @@ main
   var x set to 20
   var y set to 15
   while true
-    set g to g.putBackground(x, y, red)
+    set g to g.withBlock(x, y, red)
     call g.draw()
     call pause(50)
-    set g to g.putBackground(x, y, black)
+    set g to g.withBlock(x, y, black)
     call g.draw()
     var r set to randomInt(0, 3)
     switch r
