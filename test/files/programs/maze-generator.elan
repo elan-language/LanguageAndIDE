@@ -1,8 +1,8 @@
-# FFFF Elan Beta 2 valid
+# 794a58390e0e0db021e194172ee7029a32dce3a8e570990420c9f2c764516bf7 Elan Beta 2 valid
 
 main
   var g set to new BlockGraphics()
-  set g to g.withBackground("", black, black)
+  set g to g.withBackground(black)
   set g to createStart(g)
   for i from 0 to 150 step 1
     var x set to randomInt(0, 39)
@@ -55,7 +55,7 @@ function getValue(p as Point, g as BlockGraphics) return Int
   var result set to 0
   if (p.x > -1) and (p.x < 40) and (p.y > -1) and (p.y < 30)
     then
-      let colour be g.getDetails(p.x, p.y).third()
+      let colour be g.getBackground(p.x, p.y)
       set result to if colour is black then 0 else 1
   end if
   return result
