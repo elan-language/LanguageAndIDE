@@ -467,7 +467,7 @@ export class StdLib {
     }
   }
 
-  putDetails(
+  private putDetails(
     map: BlockGraphics,
     x: number,
     y: number,
@@ -480,9 +480,15 @@ export class StdLib {
     return cm;
   }
 
-  getDetails(map: BlockGraphics, x: number, y: number) {
+  private getDetails(map: BlockGraphics, x: number, y: number) {
     const cm = this.ensureInitialised(map);
     return this.system.safeIndex(cm, this.idx(x, y));
+  }
+
+  withBlock(map: BlockGraphics, x: number, y: number, b: number) {
+    const cm = this.ensureInitialised(map);
+    const [c, f] = this.getDetails(cm, x, y);
+    return this.putDetails(cm, x, y, c, f, b);
   }
 
   withUnicode(map: BlockGraphics, x: number, y: number, unicode: number, f: number, b: number) {
@@ -512,15 +518,13 @@ export class StdLib {
     return cm;
   }
 
+  withBackground(map: BlockGraphics, b: number): BlockGraphics {
+    return this.initialisedGraphics(b);
+  }
+
   getChar(map: BlockGraphics, x: number, y: number) {
     const cm = this.ensureInitialised(map);
     return this.system.safeIndex(this.getDetails(cm, x, y), 0);
-  }
-
-  putForeground(map: BlockGraphics, x: number, y: number, f: number) {
-    const cm = this.ensureInitialised(map);
-    const [c, , b] = this.getDetails(map, x, y);
-    return this.putDetails(cm, x, y, c, f, b);
   }
 
   getForeground(map: BlockGraphics, x: number, y: number) {
@@ -528,19 +532,9 @@ export class StdLib {
     return this.system.safeIndex(this.getDetails(cm, x, y), 1);
   }
 
-  withBlock(map: BlockGraphics, x: number, y: number, b: number) {
-    const cm = this.ensureInitialised(map);
-    const [c, f] = this.getDetails(cm, x, y);
-    return this.putDetails(cm, x, y, c, f, b);
-  }
-
   getBackground(map: BlockGraphics, x: number, y: number) {
     const cm = this.ensureInitialised(map);
     return this.system.safeIndex(this.getDetails(cm, x, y), 2);
-  }
-
-  withBackground(map: BlockGraphics, b: number): BlockGraphics {
-    return this.initialisedGraphics(b);
   }
 
   clearGraphics(map: BlockGraphics) {

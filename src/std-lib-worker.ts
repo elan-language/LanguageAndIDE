@@ -461,7 +461,7 @@ export class StdLibWorker {
     }
   }
 
-  putDetails(
+  private putDetails(
     map: BlockGraphics,
     x: number,
     y: number,
@@ -474,7 +474,7 @@ export class StdLibWorker {
     return cm;
   }
 
-  getDetails(map: BlockGraphics, x: number, y: number) {
+  private getDetails(map: BlockGraphics, x: number, y: number) {
     const cm = this.ensureInitialised(map);
     return this.system.safeIndex(cm, this.idx(x, y));
   }
@@ -506,15 +506,21 @@ export class StdLibWorker {
     return cm;
   }
 
+  withBlock(map: BlockGraphics, x: number, y: number, b: number) {
+    const cm = this.ensureInitialised(map);
+    const [c, f] = this.getDetails(cm, x, y);
+    return this.putDetails(cm, x, y, c, f, b);
+  }
+
+
+  withBackground(map: BlockGraphics, b: number): BlockGraphics {
+    return this.initialisedGraphics(b);
+  }
+
+
   getChar(map: BlockGraphics, x: number, y: number) {
     const cm = this.ensureInitialised(map);
     return this.system.safeIndex(this.getDetails(cm, x, y), 0);
-  }
-
-  putForeground(map: BlockGraphics, x: number, y: number, f: number) {
-    const cm = this.ensureInitialised(map);
-    const [c, , b] = this.getDetails(map, x, y);
-    return this.putDetails(cm, x, y, c, f, b);
   }
 
   getForeground(map: BlockGraphics, x: number, y: number) {
@@ -522,19 +528,9 @@ export class StdLibWorker {
     return this.system.safeIndex(this.getDetails(cm, x, y), 1);
   }
 
-  withBlock(map: BlockGraphics, x: number, y: number, b: number) {
-    const cm = this.ensureInitialised(map);
-    const [c, f] = this.getDetails(cm, x, y);
-    return this.putDetails(cm, x, y, c, f, b);
-  }
-
   getBackground(map: BlockGraphics, x: number, y: number) {
     const cm = this.ensureInitialised(map);
     return this.system.safeIndex(this.getDetails(cm, x, y), 2);
-  }
-
-  withBackground(map: BlockGraphics, b: number): BlockGraphics {
-    return this.initialisedGraphics(b);
   }
 
   clearGraphics(map: BlockGraphics) {

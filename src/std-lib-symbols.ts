@@ -764,7 +764,7 @@ export class StdLibSymbols implements Scope {
         ),
       ),
     ],
-    // char map
+    // Block Graphics
     [
       "withBackground",
       this.getSymbol(
@@ -775,43 +775,6 @@ export class StdLibSymbols implements Scope {
             IntType.Instance,
           ],
           new ListType(new TupleType([StringType.Instance, IntType.Instance, IntType.Instance])),
-          true,
-          true,
-        ),
-      ),
-    ],
-    [
-      "putDetails",
-      this.getSymbol(
-        "putDetails",
-        new FunctionType(
-          [
-            new ListType(new TupleType([StringType.Instance, IntType.Instance, IntType.Instance])),
-            IntType.Instance,
-            IntType.Instance,
-            StringType.Instance,
-            IntType.Instance,
-            IntType.Instance,
-          ],
-          new ListType(new TupleType([StringType.Instance, IntType.Instance, IntType.Instance])),
-          true,
-          true,
-        ),
-      ),
-    ],
-    [
-      "getDetails",
-      this.getSymbol(
-        "getDetails",
-        new FunctionType(
-          [
-            new ListType(new TupleType([StringType.Instance, IntType.Instance, IntType.Instance])),
-            IntType.Instance,
-            IntType.Instance,
-          ],
-
-          new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
-
           true,
           true,
         ),
@@ -866,23 +829,6 @@ export class StdLibSymbols implements Scope {
             IntType.Instance,
           ],
           StringType.Instance,
-          true,
-          true,
-        ),
-      ),
-    ],
-    [
-      "putForeground",
-      this.getSymbol(
-        "putForeground",
-        new FunctionType(
-          [
-            new ListType(new TupleType([StringType.Instance, IntType.Instance, IntType.Instance])),
-            IntType.Instance,
-            IntType.Instance,
-            IntType.Instance,
-          ],
-          new ListType(new TupleType([StringType.Instance, IntType.Instance, IntType.Instance])),
           true,
           true,
         ),
