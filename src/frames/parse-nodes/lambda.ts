@@ -8,6 +8,7 @@ import { OptionalNode } from "./optional-node";
 import { ParamDefNode } from "./param-def-node";
 import { Space } from "./parse-node-helpers";
 import { PunctuationNode } from "./punctuation-node";
+import { Sequence } from "./sequence";
 import { SpaceNode } from "./space-node";
 
 export class Lambda extends AbstractSequence {
@@ -18,10 +19,11 @@ export class Lambda extends AbstractSequence {
     if (text.length > 0) {
       this.addElement(new KeywordNode(lambdaKeyword));
       this.addElement(new SpaceNode(Space.required));
-      const paramList = new CSV(() => new ParamDefNode(), 1);
-      this.params = new OptionalNode(paramList);
+      const paramList = () => new CSV(() => new ParamDefNode(), 1);
+      const sp = () => new SpaceNode(Space.required);
+      const paramListSp = new Sequence([paramList, sp]);
+      this.params = new OptionalNode(paramListSp);
       this.addElement(this.params);
-      this.addElement(new SpaceNode(Space.required));
       this.addElement(new PunctuationNode(ARROW));
       this.addElement(new SpaceNode(Space.required));
       this.expr = new ExprNode();

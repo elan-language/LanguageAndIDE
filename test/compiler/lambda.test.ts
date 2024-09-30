@@ -7,7 +7,6 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -206,26 +205,20 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "25");
   });
 
-  ignore_test("Pass_ParameterlessLambda", async () => {
+  test("Pass_ParameterlessLambda", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  var l set to getFunc(5)
+  var x set to 3
+  var l set to lambda => x * 5
   print l()
-end main
-
-function getFunc(x as Int) return Func<of => Int>
-  return lambda => x * 5
-end function`;
+end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var l = getFunc(5);
+  var x = 3;
+  var l = () => x * 5;
   system.printLine(_stdlib.asString(l()));
-}
-
-function getFunc(x) {
-  return () => x * 5;
 }
 return [main, _tests];}`;
 
@@ -235,7 +228,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "25");
+    await assertObjectCodeExecutes(fileImpl, "15");
   });
 
   test("Fail_ImmediateInvoke", async () => {
