@@ -28,6 +28,8 @@ body {
     font-size: var(--ideTitleSize);
   }
   #graphics div {
+    height: 15px;
+    width: 15px;
     font-size: 10pt;
     text-align: center;
   }

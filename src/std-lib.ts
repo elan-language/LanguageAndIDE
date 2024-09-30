@@ -448,9 +448,9 @@ export class StdLib {
     return x * this.ySize + y;
   }
 
-  initialisedGraphics(c: string, foreground: number, background: number) {
+  initialisedGraphics(background: number) {
     const emptyMap: BlockGraphics = [];
-    const emptyLocation: Location = this.system.tuple([c, foreground, background]) as Location;
+    const emptyLocation: Location = this.system.tuple(["", 0x000000, background]) as Location;
     for (let x = 0; x < this.xSize; x++) {
       for (let y = 0; y < this.ySize; y++) {
         emptyMap.push(emptyLocation);
@@ -463,11 +463,11 @@ export class StdLib {
     if (cm.length === this.GraphicsLength) {
       return cm;
     } else {
-      return this.initialisedGraphics("", 0, 0xffffff);
+      return this.initialisedGraphics(0xffffff);
     }
   }
 
-  putDetails(
+  private putDetails(
     map: BlockGraphics,
     x: number,
     y: number,
@@ -480,18 +480,24 @@ export class StdLib {
     return cm;
   }
 
-  getDetails(map: BlockGraphics, x: number, y: number) {
+  private getDetails(map: BlockGraphics, x: number, y: number) {
     const cm = this.ensureInitialised(map);
     return this.system.safeIndex(cm, this.idx(x, y));
   }
 
-  putChar(map: BlockGraphics, x: number, y: number, c: string) {
+  withBlock(map: BlockGraphics, x: number, y: number, b: number) {
     const cm = this.ensureInitialised(map);
-    const [, f, b] = this.getDetails(cm, x, y);
-    return this.putDetails(cm, x, y, c[0], f, b);
+    const [c, f] = this.getDetails(cm, x, y);
+    return this.putDetails(cm, x, y, "", f, b);
   }
 
-  putString(
+  withUnicode(map: BlockGraphics, x: number, y: number, unicode: number, f: number, b: number) {
+    const cm = this.ensureInitialised(map);
+    const str = String.fromCharCode(unicode);
+    return this.putDetails(cm, x, y, str, f, b);
+  }
+
+  withText(
     map: BlockGraphics,
     x: number,
     y: number,
@@ -512,15 +518,13 @@ export class StdLib {
     return cm;
   }
 
+  withBackground(map: BlockGraphics, b: number): BlockGraphics {
+    return this.initialisedGraphics(b);
+  }
+
   getChar(map: BlockGraphics, x: number, y: number) {
     const cm = this.ensureInitialised(map);
     return this.system.safeIndex(this.getDetails(cm, x, y), 0);
-  }
-
-  putForeground(map: BlockGraphics, x: number, y: number, f: number) {
-    const cm = this.ensureInitialised(map);
-    const [c, , b] = this.getDetails(map, x, y);
-    return this.putDetails(cm, x, y, c, f, b);
   }
 
   getForeground(map: BlockGraphics, x: number, y: number) {
@@ -528,19 +532,9 @@ export class StdLib {
     return this.system.safeIndex(this.getDetails(cm, x, y), 1);
   }
 
-  putBackground(map: BlockGraphics, x: number, y: number, b: number) {
-    const cm = this.ensureInitialised(map);
-    const [c, f] = this.getDetails(cm, x, y);
-    return this.putDetails(cm, x, y, c, f, b);
-  }
-
   getBackground(map: BlockGraphics, x: number, y: number) {
     const cm = this.ensureInitialised(map);
     return this.system.safeIndex(this.getDetails(cm, x, y), 2);
-  }
-
-  fill(map: BlockGraphics, c: string, f: number, b: number): BlockGraphics {
-    return this.initialisedGraphics(c, f, b);
   }
 
   clearGraphics(map: BlockGraphics) {

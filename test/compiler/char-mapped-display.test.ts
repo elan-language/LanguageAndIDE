@@ -40,75 +40,19 @@ return [main, _tests];}`;
     );
   });
 
-  test("Pass_PutAt", async () => {
+  test("Pass_WithUnicode", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var g set to new BlockGraphics()
-  set g to g.putDetails(0, 0, "F", 1, 2)
+  set g to g.withUnicode(0, 0, 90, black, white)
   call g.draw()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var g = system.initialise(system.list(new Array()));
-  g = _stdlib.putDetails(g, 0, 0, "F", 1, 2);
-  await _stdlib.draw(g);
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertGraphicsContains(
-      fileImpl,
-      0,
-      '<div style="color:#000001;background-color:#000002;">F',
-    );
-  });
-
-  test("Pass_GetAt", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
-
-main
-  var g set to new BlockGraphics()
-  set g to g.putDetails(10, 20, "a", 1, 2)
-  print g.getDetails(10, 20)
-end main`;
-
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-async function main() {
-  var g = system.initialise(system.list(new Array()));
-  g = _stdlib.putDetails(g, 10, 20, "a", 1, 2);
-  system.printLine(_stdlib.asString(_stdlib.getDetails(g, 10, 20)));
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "(a, 1, 2)");
-  });
-
-  test("Pass_PutChar", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
-
-main
-  var g set to new BlockGraphics()
-  set g to g.putChar(0, 0, "Z")
-  call g.draw()
-end main`;
-
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-async function main() {
-  var g = system.initialise(system.list(new Array()));
-  g = _stdlib.putChar(g, 0, 0, "Z");
+  g = _stdlib.withUnicode(g, 0, 0, 90, _stdlib.black, _stdlib.white);
   await _stdlib.draw(g);
 }
 return [main, _tests];}`;
@@ -131,14 +75,14 @@ return [main, _tests];}`;
 
 main
   var g set to new BlockGraphics()
-  set g to g.putDetails(10, 20, "a", 1, 2)
+  set g to g.withText(10, 20, "a", 1, 2)
   print g.getChar(10, 20)
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var g = system.initialise(system.list(new Array()));
-  g = _stdlib.putDetails(g, 10, 20, "a", 1, 2);
+  g = _stdlib.withText(g, 10, 20, "a", 1, 2);
   system.printLine(_stdlib.asString(_stdlib.getChar(g, 10, 20)));
 }
 return [main, _tests];}`;
@@ -152,49 +96,19 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "a");
   });
 
-  test("Pass_PutForeground", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
-
-main
-  var g set to new BlockGraphics()
-  set g to g.putForeground(0, 0, 3)
-  call g.draw()
-end main`;
-
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-async function main() {
-  var g = system.initialise(system.list(new Array()));
-  g = _stdlib.putForeground(g, 0, 0, 3);
-  await _stdlib.draw(g);
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertGraphicsContains(
-      fileImpl,
-      0,
-      '<div style="color:#000003;background-color:#ffffff;">',
-    );
-  });
-
   test("Pass_GetForeground", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var g set to new BlockGraphics()
-  set g to g.putDetails(10, 20, "a", 1, 2)
+  set g to g.withText(10, 20, "a", 1, 2)
   print g.getForeground(10, 20)
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var g = system.initialise(system.list(new Array()));
-  g = _stdlib.putDetails(g, 10, 20, "a", 1, 2);
+  g = _stdlib.withText(g, 10, 20, "a", 1, 2);
   system.printLine(_stdlib.asString(_stdlib.getForeground(g, 10, 20)));
 }
 return [main, _tests];}`;
@@ -213,14 +127,14 @@ return [main, _tests];}`;
 
 main
   var g set to new BlockGraphics()
-  set g to g.putBackground(1, 0, 4)
+  set g to g.withBlock(1, 0, 4)
   call g.draw()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var g = system.initialise(system.list(new Array()));
-  g = _stdlib.putBackground(g, 1, 0, 4);
+  g = _stdlib.withBlock(g, 1, 0, 4);
   await _stdlib.draw(g);
 }
 return [main, _tests];}`;
@@ -243,14 +157,14 @@ return [main, _tests];}`;
 
 main
   var g set to new BlockGraphics()
-  set g to g.putDetails(10, 20, "a", 1, 2)
+  set g to g.withText(10, 20, "a", 1, 2)
   print g.getBackground(10, 20)
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var g = system.initialise(system.list(new Array()));
-  g = _stdlib.putDetails(g, 10, 20, "a", 1, 2);
+  g = _stdlib.withText(g, 10, 20, "a", 1, 2);
   system.printLine(_stdlib.asString(_stdlib.getBackground(g, 10, 20)));
 }
 return [main, _tests];}`;
@@ -450,14 +364,14 @@ end main`;
 
 main
   var g set to new BlockGraphics()
-  set g to g.putString(0, 0, "Hello", 1, 2)
+  set g to g.withText(0, 0, "Hello", 1, 2)
   call g.draw()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var g = system.initialise(system.list(new Array()));
-  g = _stdlib.putString(g, 0, 0, "Hello", 1, 2);
+  g = _stdlib.withText(g, 0, 0, "Hello", 1, 2);
   await _stdlib.draw(g);
 }
 return [main, _tests];}`;
@@ -484,14 +398,14 @@ return [main, _tests];}`;
 
 main
   var g set to new BlockGraphics()
-  set g to g.putString(39, 29, "Hello", 1, 2)
+  set g to g.withText(39, 29, "Hello", 1, 2)
   call g.draw()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var g = system.initialise(system.list(new Array()));
-  g = _stdlib.putString(g, 39, 29, "Hello", 1, 2);
+  g = _stdlib.withText(g, 39, 29, "Hello", 1, 2);
   await _stdlib.draw(g);
 }
 return [main, _tests];}`;

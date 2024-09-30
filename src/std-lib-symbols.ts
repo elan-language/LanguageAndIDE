@@ -764,15 +764,32 @@ export class StdLibSymbols implements Scope {
         ),
       ),
     ],
-    // char map
+    // Block Graphics
     [
-      "fill",
+      "withBackground",
       this.getSymbol(
-        "fill",
+        "withBackground",
         new FunctionType(
           [
             new ListType(new TupleType([StringType.Instance, IntType.Instance, IntType.Instance])),
-            StringType.Instance,
+            IntType.Instance,
+          ],
+          new ListType(new TupleType([StringType.Instance, IntType.Instance, IntType.Instance])),
+          true,
+          true,
+        ),
+      ),
+    ],
+    [
+      "withUnicode",
+      this.getSymbol(
+        "withUnicode",
+        new FunctionType(
+          [
+            new ListType(new TupleType([StringType.Instance, IntType.Instance, IntType.Instance])),
+            IntType.Instance,
+            IntType.Instance,
+            IntType.Instance,
             IntType.Instance,
             IntType.Instance,
           ],
@@ -783,61 +800,7 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
-      "putDetails",
-      this.getSymbol(
-        "putDetails",
-        new FunctionType(
-          [
-            new ListType(new TupleType([StringType.Instance, IntType.Instance, IntType.Instance])),
-            IntType.Instance,
-            IntType.Instance,
-            StringType.Instance,
-            IntType.Instance,
-            IntType.Instance,
-          ],
-          new ListType(new TupleType([StringType.Instance, IntType.Instance, IntType.Instance])),
-          true,
-          true,
-        ),
-      ),
-    ],
-    [
-      "getDetails",
-      this.getSymbol(
-        "getDetails",
-        new FunctionType(
-          [
-            new ListType(new TupleType([StringType.Instance, IntType.Instance, IntType.Instance])),
-            IntType.Instance,
-            IntType.Instance,
-          ],
-
-          new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
-
-          true,
-          true,
-        ),
-      ),
-    ],
-    [
-      "putChar",
-      this.getSymbol(
-        "putChar",
-        new FunctionType(
-          [
-            new ListType(new TupleType([StringType.Instance, IntType.Instance, IntType.Instance])),
-            IntType.Instance,
-            IntType.Instance,
-            StringType.Instance,
-          ],
-          new ListType(new TupleType([StringType.Instance, IntType.Instance, IntType.Instance])),
-          true,
-          true,
-        ),
-      ),
-    ],
-    [
-      "putString",
+      "withText",
       this.getSymbol(
         "putChar",
         new FunctionType(
@@ -872,23 +835,6 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
-      "putForeground",
-      this.getSymbol(
-        "putForeground",
-        new FunctionType(
-          [
-            new ListType(new TupleType([StringType.Instance, IntType.Instance, IntType.Instance])),
-            IntType.Instance,
-            IntType.Instance,
-            IntType.Instance,
-          ],
-          new ListType(new TupleType([StringType.Instance, IntType.Instance, IntType.Instance])),
-          true,
-          true,
-        ),
-      ),
-    ],
-    [
       "getForeground",
       this.getSymbol(
         "getForeground",
@@ -905,9 +851,9 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
-      "putBackground",
+      "withBlock",
       this.getSymbol(
-        "putBackground",
+        "withBlock",
         new FunctionType(
           [
             new ListType(new TupleType([StringType.Instance, IntType.Instance, IntType.Instance])),

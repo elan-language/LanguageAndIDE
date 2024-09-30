@@ -1,4 +1,4 @@
-# FFFF Elan Beta 2 valid
+# dda8cc6d6a163246baeba907a282753a38b673a6ba0e5cfc40bef22a6a6e2187 Elan Beta 2 valid
 
 # Run the program and use the standard W,A,S,D keys to change Snake direction
 # Try to 'eat' the (red) apples, and avoid hitting the edge or the body of the snake.
@@ -76,10 +76,10 @@ class Snake
   end function
 
   function updateGraphics(gr as BlockGraphics) return BlockGraphics
-    var gr2 set to gr.putBackground(head.x, head.y, green)
+    var gr2 set to gr.withBlock(head.x, head.y, green)
     if body[0] isnt priorTail
       then
-        set gr2 to gr2.putBackground(priorTail.x, priorTail.y, white)
+        set gr2 to gr2.withBlock(priorTail.x, priorTail.y, white)
     end if
     return gr2
   end function
@@ -106,7 +106,7 @@ class Apple
   end procedure
 
   function updateGraphics(gr as BlockGraphics) return BlockGraphics
-    return gr.putBackground(location.x, location.y, red)
+    return gr.withBlock(location.x, location.y, red)
   end function
 
 end class
