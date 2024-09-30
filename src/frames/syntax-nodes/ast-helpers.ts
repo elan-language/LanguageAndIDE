@@ -276,22 +276,15 @@ export function mapOperation(op: string): OperationSymbol {
   throw new Error("Not implemented");
 }
 
-export function wrapDeconstruction(lhs: AstNode, isLet: boolean, code: string) {
+export function wrapDeconstruction(lhs: AstNode, code: string) {
   if (lhs instanceof DeconstructedListAsn) {
-    return isLet ? `system.deconstructListToLet(${code})` : `system.deconstructList(${code})`;
+    return `system.deconstructList(${code})`;
   }
 
   if (lhs instanceof DeconstructedTupleAsn) {
-    return isLet ? `system.deconstructTupleToLet(${code})` : code;
+    return code;
   }
   return code;
-}
-
-export function wrapLet(val: string, indent: string) {
-  return `(() => {
-${indent}${indent}var _cache;
-${indent}${indent}return () => _cache ??= ${val};
-${indent}})()`;
 }
 
 export function getIds(ast: AstNode) {

@@ -133,11 +133,8 @@ async function main() {
 
 function foo() {
   var a = system.initialise(new Foo());
-  var b = (() => {
-    var _cache;
-    return () => _cache ??= (() => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = 2; return _a;})();
-  })();
-  return b();
+  const b = (() => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = 2; return _a;})();
+  return b;
 }
 
 class Foo {
@@ -189,15 +186,9 @@ async function main() {
 }
 
 function foo() {
-  var a = (() => {
-    var _cache;
-    return () => _cache ??= system.initialise(new Foo());
-  })();
-  var b = (() => {
-    var _cache;
-    return () => _cache ??= (() => {const _a = {...a()}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a())); _a.a = 2; return _a;})();
-  })();
-  return b();
+  const a = system.initialise(new Foo());
+  const b = (() => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = 2; return _a;})();
+  return b;
 }
 
 class Foo {

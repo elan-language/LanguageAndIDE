@@ -61,10 +61,6 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
       postfix = `[0]`;
     }
 
-    if (symbol instanceof LetStatement) {
-      postfix = `${postfix}()`;
-    }
-
     const prefix = this.classScope
       ? ""
       : scopePrefix(symbol, this.compileErrors, this.scope, this.fieldId);

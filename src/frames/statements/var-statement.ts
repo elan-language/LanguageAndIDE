@@ -71,7 +71,6 @@ export class VarStatement extends AbstractFrame implements Statement, ElanSymbol
 
     const rhs = wrapDeconstruction(
       this.name.getOrTransformAstNode(transforms),
-      false,
       this.expr.compile(transforms),
     );
 

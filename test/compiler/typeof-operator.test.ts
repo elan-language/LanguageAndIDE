@@ -104,10 +104,7 @@ end function`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = (() => {
-    var _cache;
-    return () => _cache ??= 1;
-  })();
+  const a = 1;
   var b = (x) => x * 5;
   var c = system.emptyArray();
   var d = system.literalArray([c]);

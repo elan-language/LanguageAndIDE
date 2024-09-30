@@ -239,40 +239,4 @@ export class System {
     (tl as unknown as hasHiddenType)._type = type;
     return [hd, tl];
   }
-
-  deconstructListToLet<T>(list: T[]): [() => T, () => T[]] {
-    const type = (list as unknown as hasHiddenType)._type;
-    const setType = (l: T[]) => {
-      (l as unknown as hasHiddenType)._type = type;
-      return l;
-    };
-
-    const letHd = (() => {
-      let _cache;
-      return () => (_cache ??= list[0]);
-    })();
-
-    const letTl = (() => {
-      let _cache;
-      return () => (_cache ??= setType(list.slice(1)));
-    })();
-    return [letHd, letTl];
-  }
-
-  deconstructTupleToLet(tuple: any[]): any[] {
-    const letTuple = [];
-
-    for (let i = 0; i < tuple.length; i++) {
-      const letV = (() => {
-        let _cache;
-        return () => (_cache ??= tuple[i]);
-      })();
-
-      letTuple.push(letV);
-    }
-
-    (letTuple as unknown as hasHiddenType)._type = "Tuple";
-
-    return letTuple;
-  }
 }

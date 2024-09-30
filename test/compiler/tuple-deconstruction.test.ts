@@ -62,10 +62,10 @@ end main
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var x = system.tuple([3, "Apple"]);
-  var [y, z] = system.deconstructTupleToLet(x);
-  system.printLine(_stdlib.asString(y()));
+  const [y, z] = x;
+  system.printLine(_stdlib.asString(y));
   system.printLine(_stdlib.asString("Int"));
-  system.printLine(_stdlib.asString(z()));
+  system.printLine(_stdlib.asString(z));
   system.printLine(_stdlib.asString("String"));
 }
 return [main, _tests];}`;
@@ -198,10 +198,10 @@ end main
 async function main() {
   var a = system.literalArray([1, 2]);
   var x = system.tuple([3, a]);
-  var [y, z] = system.deconstructTupleToLet(x);
-  system.printLine(_stdlib.asString(y()));
+  const [y, z] = x;
+  system.printLine(_stdlib.asString(y));
   system.printLine(_stdlib.asString("Int"));
-  system.printLine(_stdlib.asString(z()));
+  system.printLine(_stdlib.asString(z));
   system.printLine(_stdlib.asString("[Int]"));
 }
 return [main, _tests];}`;
@@ -307,10 +307,10 @@ end main
 async function main() {
   var a = system.tuple([1, 2]);
   var x = system.tuple([3, a]);
-  var [y, z] = system.deconstructTupleToLet(x);
-  system.printLine(_stdlib.asString(y()));
+  const [y, z] = x;
+  system.printLine(_stdlib.asString(y));
   system.printLine(_stdlib.asString("Int"));
-  system.printLine(_stdlib.asString(z()));
+  system.printLine(_stdlib.asString(z));
   system.printLine(_stdlib.asString("(Int, Int)"));
 }
 return [main, _tests];}`;

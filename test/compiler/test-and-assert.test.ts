@@ -127,12 +127,9 @@ async function main() {
 }
 
 _tests.push(["test3", async (_outcomes) => {
-  var t = (() => {
-    var _cache;
-    return () => _cache ??= system.tuple(["one", "two"]);
-  })();
-  _outcomes.push(system.assert(t(), system.tuple(["one", "two"]), "assert9", _stdlib));
-  _outcomes.push(system.assert(_stdlib.first(t()), "one", "assert12", _stdlib));
+  const t = system.tuple(["one", "two"]);
+  _outcomes.push(system.assert(t, system.tuple(["one", "two"]), "assert9", _stdlib));
+  _outcomes.push(system.assert(_stdlib.first(t), "one", "assert12", _stdlib));
 }]);
 return [main, _tests];}`;
 

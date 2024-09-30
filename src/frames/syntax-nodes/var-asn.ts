@@ -78,12 +78,12 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
     return [UnknownType.Instance, UnknownType.Instance];
   }
 
-  compileIndex(rootType: SymbolType, index: IndexAsn, q: string, call: string, idx: string) {
+  compileIndex(rootType: SymbolType, index: IndexAsn, q: string, idx: string) {
     mustBeIndexableSymbol(rootType, true, this.compileErrors, this.fieldId);
     const [indexType] = this.getIndexType(rootType);
     mustBeCompatibleType(indexType, index.index1.symbolType(), this.compileErrors, this.fieldId);
 
-    let code = `${q}${this.id}${call}, ${idx}`;
+    let code = `${q}${this.id}, ${idx}`;
     if (!this.isAssignable) {
       code = this.wrapIndex(code);
     }
@@ -113,14 +113,13 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
     mustBeKnownSymbol(symbol, this.compileErrors, this.fieldId);
 
     const q = scopePrefix(symbol, this.compileErrors, this.scope, this.fieldId);
-    const call = symbol instanceof LetStatement ? "()" : "";
     const idx = this.index
       ? this.index.compile()
       : symbol.symbolScope === SymbolScope.outParameter
         ? "[0]"
         : "";
 
-    let code = `${q}${this.id}${call}${idx}`;
+    let code = `${q}${this.id}${idx}`;
 
     if (this.isIndex() || this.isRange()) {
       const rootType = this.scope
@@ -128,7 +127,7 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
         .symbolType(transforms());
 
       if (this.isIndex()) {
-        code = this.compileIndex(rootType, this.index!, q, call, idx);
+        code = this.compileIndex(rootType, this.index!, q, idx);
       }
     }
 

@@ -162,10 +162,10 @@ end main
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.literalArray([system.literalArray([1, 2, 3]), system.literalArray([4, 5, 6]), system.literalArray([7, 8, 9])]);
-  var [x, y] = system.deconstructListToLet(a);
-  system.printLine(_stdlib.asString(x()));
+  const [x, y] = system.deconstructList(a);
+  system.printLine(_stdlib.asString(x));
   system.printLine(_stdlib.asString("[Int]"));
-  system.printLine(_stdlib.asString(y()));
+  system.printLine(_stdlib.asString(y));
   system.printLine(_stdlib.asString("[[Int]]"));
 }
 return [main, _tests];}`;
@@ -228,10 +228,10 @@ end main
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.list([1, 2, 3]);
-  var [x, y] = system.deconstructListToLet(a);
-  system.printLine(_stdlib.asString(x()));
+  const [x, y] = system.deconstructList(a);
+  system.printLine(_stdlib.asString(x));
   system.printLine(_stdlib.asString("Int"));
-  system.printLine(_stdlib.asString(y()));
+  system.printLine(_stdlib.asString(y));
   system.printLine(_stdlib.asString("{Int}"));
 }
 return [main, _tests];}`;
@@ -294,10 +294,10 @@ end main
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.literalArray([1]);
-  var [x, y] = system.deconstructListToLet(a);
-  system.printLine(_stdlib.asString(x()));
+  const [x, y] = system.deconstructList(a);
+  system.printLine(_stdlib.asString(x));
   system.printLine(_stdlib.asString("Int"));
-  system.printLine(_stdlib.asString(y()));
+  system.printLine(_stdlib.asString(y));
   system.printLine(_stdlib.asString("[Int]"));
 }
 return [main, _tests];}`;
