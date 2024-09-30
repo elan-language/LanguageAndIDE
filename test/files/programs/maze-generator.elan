@@ -1,18 +1,18 @@
-# 794a58390e0e0db021e194172ee7029a32dce3a8e570990420c9f2c764516bf7 Elan Beta 2 valid
+# 7bf0b9890aad93b4d24bdf0075605f67b065c3dcdaa0ec20b9ccaaa619cecc52 Elan Beta 2 valid
 
 main
   var g set to new BlockGraphics()
   set g to g.withBackground(black)
   set g to createStart(g)
   for i from 0 to 150 step 1
-    var x set to randomInt(0, 39)
-    var y set to randomInt(0, 29)
-    var p set to new Point(x, y)
-    var existing set to getValue(p, g)
-    var setTo set to floor(random() + 0.7)
+    let x be randomInt(0, 39)
+    let y be randomInt(0, 29)
+    let p be new Point(x, y)
+    let existing be getValue(p, g)
+    let setTo be floor(random() + 0.7)
     if okToSet(p, setTo, g)
       then
-        var colour set to if setTo is 1 then white else black
+        let colour be if setTo is 1 then white else black
         set g to g.withBlock(p.x, p.y, colour)
     end if
   end for

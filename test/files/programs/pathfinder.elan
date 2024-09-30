@@ -1,25 +1,25 @@
-# b19f1c83114891f7192f634ef78795f5eca8d2627ed6b7e725983e16134ceed8 Elan Beta 2 valid
+# b0438d801e05be6d4b7e16bb5ac3a2159a1a0c83312f5aa6a906e5275669984d Elan Beta 2 valid
 
 main
-  var start set to new Point(5, 5)
-  var destination set to new Point(34, 24)
+  let start be new Point(5, 5)
+  let destination be new Point(34, 24)
+  let percentRocks be inputIntBetween("Enter % to withBackground with rocks (0-100): ", 0, 100)
   var rocks set to empty [Point]
   var nodes set to empty [Node]
-  var percentRocks set to inputIntBetween("Enter % to withBackground with rocks (0-100): ", 0, 100)
   call createRocksAndNodes(percentRocks, rocks, nodes, start, destination)
   var gr set to initialiseGraphics(start, destination, rocks)
   call gr.draw()
   var solver set to new Solver(nodes, start, destination)
   var exit set to false
   while not exit
-    var option set to inputString(algPrompt)
+    let option be inputString(algPrompt)
     if option is "x"
       then
         set exit to true
         call gr.clearGraphics()
         call clearConsole()
       else
-        var alg set to algFromLetter[option]
+        let alg be algFromLetter[option]
         call runSolver(gr, start, destination, rocks, solver, alg)
     end if
   end while
@@ -36,7 +36,7 @@ procedure runSolver(gr as BlockGraphics, start as Point, destination as Point, r
   end while
   if solver.getLastVisited() is destination
     then
-      var route, length set to solver.getRouteAndLength()
+      let route, length be solver.getRouteAndLength()
       set gr2 to addRoute(gr2, route)
       call gr2.draw()
       print "Length of route: {round(length, 2)}"
@@ -48,7 +48,7 @@ end procedure
 procedure createRocksAndNodes(percentRocks as Int, out rocks as [Point], out nodes as [Node], start as Point, dest as Point)
   for x from 0 to 39 step 1
     for y from 0 to 29 step 1
-      var p set to new Point(x, y)
+      let p be new Point(x, y)
       if p is start
         then
           call nodes.append(new Node(p, 0, p.minDistTo(dest)))
@@ -131,10 +131,10 @@ class Solver
   end procedure
 
   procedure updateNeighbours()
-    var distToCurrent set to current.distFromStart
+    let distToCurrent be current.distFromStart
     each neighbour in currentNeighbours()
-      var currentPoint set to current.point
-      var distViaCurrent set to distToCurrent + currentPoint.minDistTo(neighbour.point)
+      let currentPoint be current.point
+      let distViaCurrent be distToCurrent + currentPoint.minDistTo(neighbour.point)
       if distViaCurrent < neighbour.distFromStart
         then
           call neighbour.setVia(current.point)
@@ -158,7 +158,7 @@ class Solver
   end function
 
   function getNodeFor(p as Point) return Node
-    var matches set to nodes.filter(lambda n as Node => n.point is p)
+    let matches be nodes.filter(lambda n as Node => n.point is p)
     return if matches.length() is 1 then matches.head() else empty Node
   end function
 
@@ -169,7 +169,7 @@ class Solver
   function nextNodeToVisit() return Node
     var lowestCostSoFar set to infinity
     var lowestCostNode set to empty Node
-    var possibilities set to nodes.filter(lambda nd as Node => (not nd.visited) and (nd.distFromStart < infinity))
+    let possibilities be nodes.filter(lambda nd as Node => (not nd.visited) and (nd.distFromStart < infinity))
     each nd in possibilities
       let cost be calculateCost(nd)
       if cost < lowestCostSoFar
@@ -183,8 +183,8 @@ class Solver
 
   function calculateCost(node as Node) return Float
     var cost set to 0.0
-    var fromStart set to node.distFromStart
-    var estToDest set to node.estDistToDest
+    let fromStart be node.distFromStart
+    let estToDest be node.estDistToDest
     switch alg
       case Algorithm.dijkstra
         set cost to fromStart
@@ -201,8 +201,8 @@ class Solver
     var length set to 0.0
     var node set to getNodeFor(destination)
     repeat
-      var previous set to node.via
-      var p set to node.point
+      let previous be node.via
+      let p be node.bepoint
       set length to length + p.minDistTo(previous)
       set route to route.withInsert(0, previous)
       set node to getNodeFor(previous)
@@ -293,17 +293,17 @@ test point
 end test
 
 test solver
-  var start set to new Point(0, 0)
-  var dest set to new Point(39, 29)
-  var alg set to Algorithm.dijkstra
+  let start be new Point(0, 0)
+  let dest be new Point(39, 29)
+  let alg be Algorithm.dijkstra
   var nodes set to empty [Node]
   var points set to empty [Point]
   call createRocksAndNodes(0, points, nodes, start, dest)
-  var solver set to new Solver(nodes, start, dest)
+  let solver be new Solver(nodes, start, dest)
   call solver.initialise(alg)
-  var emptyNode set to empty Node
+  let emptyNode be empty Node
   assert solver.getNodeFor(new Point(-1, -1)) is emptyNode
-  var emptyListOfNodes set to empty [Node]
-  var currNeighbours set to solver.currentNeighbours()
+  let emptyListOfNodes be empty [Node]
+  let currNeighbours be solver.currentNeighbours()
   assert currNeighbours.length() is 3
 end test
