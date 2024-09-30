@@ -19,6 +19,7 @@ import { DotBefore } from "../parse-nodes/dot-before";
 import { EmptyOfTypeNode } from "../parse-nodes/empty-of-type-node";
 import { EnumVal } from "../parse-nodes/enum-val";
 import { FuncTypeNode } from "../parse-nodes/func-type-node";
+import { FunctionRefNode } from "../parse-nodes/function-ref-node";
 import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { IfExpr } from "../parse-nodes/if-expr";
 import { ImmutableDictionaryNode } from "../parse-nodes/immutable-dictionary-node";
@@ -202,7 +203,7 @@ export function transform(
       return new IdDefAsn(node.matchedText, fieldId, scope);
     }
 
-    return new IdAsn(node.matchedText, fieldId, scope);
+    return new IdAsn(node.matchedText, fieldId, false, scope);
   }
 
   if (node instanceof MethodCallNode) {
@@ -265,10 +266,17 @@ export function transform(
 
   if (node instanceof FuncTypeNode) {
     const type = "Func";
-    //const inp = node.inputTypes ? transformMany(node.inputTypes, fieldId, scope).items : [];
+    let inp: AstNode[] = [];
+
+    if (node.inputTypes?.matchedNode) {
+      inp = node.inputTypes
+        ? transformMany(node.inputTypes.matchedNode as CSV, fieldId, scope).items
+        : [];
+    }
+
     const oup = node.returnType ? [transform(node.returnType, fieldId, scope)!] : [];
 
-    //return new TypeAsn(type, inp.concat(oup), fieldId, scope);
+    return new TypeAsn(type, inp.concat(oup), fieldId, scope);
   }
 
   if (node instanceof TypeSimpleNode) {
@@ -509,6 +517,10 @@ export function transform(
   if (node instanceof TypeOfNode) {
     const term = transform(node.argument, fieldId, scope);
     return new TypeOfAsn(term!, fieldId, scope);
+  }
+
+  if (node instanceof FunctionRefNode) {
+    return new IdAsn(node.name?.matchedText ?? "", fieldId, true, scope);
   }
 
   throw new Error("Not implemented " + (node ? node.constructor.name : "undefined"));

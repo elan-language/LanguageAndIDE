@@ -2,6 +2,7 @@ import { AbstractFrame } from "../abstract-frame";
 import { CodeSource } from "../code-source";
 import {
   mustBeCompatibleNode,
+  mustBeFunctionRefIfFunction,
   mustBePropertyPrefixedOnAssignable,
   mustNotBeConstant,
   mustNotBeCounter,

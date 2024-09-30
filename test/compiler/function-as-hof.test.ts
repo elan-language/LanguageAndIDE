@@ -16,7 +16,7 @@ suite("Function as HOF", () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  call printModified(3, twice)
+  call printModified(3, function twice)
 end main
   
 procedure printModified(i as Float, f as Func<of Float => Float>)
@@ -92,7 +92,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  call printIt("Hello", "e", find)
+  call printIt("Hello", "e", function find)
 end main
   
 procedure printIt(s as String, c as String, f as Func<of String, String => Int>)
@@ -135,7 +135,7 @@ main
 end main
   
 function getFunc() return Func<of Float => Float>
-  return twice
+  return function twice
 end function
   
 function twice(x as Float) return Float
@@ -170,7 +170,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  var f set to twice
+  var f set to function twice
   print f(5)
 end main
   
@@ -196,6 +196,28 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "10");
+  });
+
+  test("Fail_SetAsVariableWithoutFunctionKeyword", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var f set to twice
+  print f(5)
+end main
+  
+function twice(x as Float) return Float
+  return x * 2
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "To evaluate function 'twice' add brackets. Or to create a reference to 'twice', precede it by 'function '",
+    ]);
   });
 
   test("Fail_FunctionSignatureDoesntMatch1", async () => {

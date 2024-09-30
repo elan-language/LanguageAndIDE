@@ -1,5 +1,10 @@
 import { CompileError } from "../compile-error";
-import { mustBeKnownSymbol, mustBePublicMember, mustNotBeKeyword } from "../compile-rules";
+import {
+  mustBeFunctionRefIfFunction,
+  mustBeKnownSymbol,
+  mustBePublicMember,
+  mustNotBeKeyword,
+} from "../compile-rules";
 import { isMember } from "../helpers";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstNode } from "../interfaces/ast-node";
@@ -15,6 +20,7 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
   constructor(
     public readonly id: string,
     public readonly fieldId: string,
+    private readonly isFuncRef: boolean,
     private scope: Scope,
   ) {
     super();
@@ -55,15 +61,15 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
       mustBePublicMember(symbol, this.compileErrors, this.fieldId);
     }
 
-    let postfix = "";
-
-    if (symbol.symbolScope === SymbolScope.outParameter) {
-      postfix = `[0]`;
+    if (!this.isFuncRef) {
+      mustBeFunctionRefIfFunction(symbol, this.compileErrors, this.fieldId);
     }
 
     const prefix = this.classScope
       ? ""
       : scopePrefix(symbol, this.compileErrors, this.scope, this.fieldId);
+
+    const postfix = symbol.symbolScope === SymbolScope.outParameter ? "[0]" : "";
 
     return `${prefix}${this.id}${postfix}`;
   }

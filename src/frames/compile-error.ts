@@ -215,3 +215,14 @@ export class PrintFunctionCompileError extends CompileError {
     );
   }
 }
+
+export class FunctionRefCompileError extends CompileError {
+  constructor(id: string, location: string) {
+    super(
+      Priority.typeError,
+      `To evaluate function '${id}' add brackets. Or to create a reference to '${id}', precede it by 'function '`,
+      location,
+      false,
+    );
+  }
+}

@@ -49,7 +49,7 @@ export function isMember(f?: Scope | Member | ElanSymbol): f is Member {
   return !!f && "isMember" in f;
 }
 
-export function isFunction(f?: Scope | Member): f is Member {
+export function isFunction(f?: Scope | Member | ElanSymbol): f is Member {
   return !!f && "isFunction" in f;
 }
 
