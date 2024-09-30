@@ -1,6 +1,9 @@
 import { Property } from "../class-members/property";
 import { CompileError } from "../compile-error";
-import { cannotAccessPrivateMemberInAbstractClass } from "../compile-rules";
+import {
+  cannotAccessAbstractMemberInAbstractClass,
+  cannotAccessPrivateMemberInAbstractClass,
+} from "../compile-rules";
 import { ClassFrame } from "../globals/class-frame";
 import { isClass, isFile, isMember, isScope } from "../helpers";
 import { AstNode } from "../interfaces/ast-node";
@@ -96,16 +99,20 @@ export function scopePrefix(
     return `_stdlib.`;
   }
 
-  if (isMember(symbol) && symbol.private) {
+  if (isMember(symbol)) {
     const symbolClass = symbol.getClass();
     const thisClass = getClassScope(scope);
 
-    if (symbolClass !== thisClass) {
+    if (symbol.private && symbolClass !== thisClass) {
       if (isClass(thisClass) && thisClass.abstract) {
         cannotAccessPrivateMemberInAbstractClass(symbol.symbolId, compileErors, location);
       }
 
       return `this._${symbolClass.symbolId}.`;
+    }
+
+    if (symbol.isAbstract && isClass(thisClass) && thisClass.abstract) {
+      cannotAccessAbstractMemberInAbstractClass(symbol.symbolId, compileErors, location);
     }
   }
 
