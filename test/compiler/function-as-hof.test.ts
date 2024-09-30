@@ -50,11 +50,11 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "6");
   });
 
-  ignore_test("Pass_PassAsParam1", async () => {
+  test("Pass_PassAsParam1", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  call printModified(3, twice)
+  call printModified(3, function twice)
 end main
   
 procedure printModified(i as Float, f as Func<of => Float>)
@@ -85,7 +85,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "6");
+    await assertObjectCodeExecutes(fileImpl, "2");
   });
 
   test("Pass_PassAsParam2", async () => {
@@ -198,6 +198,57 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "10");
   });
 
+  test("Pass_SetAsProperty", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var f set to new Foo(function ff)
+  print f.pf(5)
+end main
+
+function ff(a as Int) return Int
+  return a
+end function
+  
+class Foo
+  constructor(f as Func<of Int => Int>)
+    set property.pf to f
+  end constructor
+
+  property pf as Func<of Int => Int>
+
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var f = system.initialise(new Foo(ff));
+  system.printLine(_stdlib.asString(f.pf(5)));
+}
+
+function ff(a) {
+  return a;
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["pf", system.emptyFunc(0)]]);};
+  constructor(f) {
+    this.pf = f;
+  }
+
+  pf = system.emptyFunc(0);
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "5");
+  });
+
   test("Fail_SetAsVariableWithoutFunctionKeyword", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
@@ -285,5 +336,87 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Parameters expected: 1 got: 0"]);
+  });
+
+  test("Fail_PassAsParamWithoutFunctionKeyword", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  call printModified(3, twice)
+end main
+  
+procedure printModified(i as Float, f as Func<of Float => Float>)
+  print f(i)
+end procedure
+  
+function twice(x as Float) return Float
+  return x * 2
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "To evaluate function 'twice' add brackets. Or to create a reference to 'twice', precede it by 'function '",
+    ]);
+  });
+
+  test("Fail_ReturnAFunctionWithoutFunctionKeyword", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var f set to getFunc()
+  print f(5)
+end main
+  
+function getFunc() return Func<of Float => Float>
+  return twice
+end function
+  
+function twice(x as Float) return Float
+  return x * 2
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "To evaluate function 'twice' add brackets. Or to create a reference to 'twice', precede it by 'function '",
+    ]);
+  });
+
+  test("Fail_SetAsPropertyWithoutFunctionKeyword", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var f set to new Foo(ff)
+  print f.pf(5)
+end main
+
+function ff(a as Int) return Int
+  return a
+end function
+  
+class Foo
+  constructor(f as Func<of Int => Int>)
+    set property.pf to f
+  end constructor
+
+  property pf as Func<of Int => Int>
+
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "To evaluate function 'ff' add brackets. Or to create a reference to 'ff', precede it by 'function '",
+    ]);
   });
 });

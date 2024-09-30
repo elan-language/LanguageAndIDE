@@ -266,13 +266,10 @@ export function transform(
 
   if (node instanceof FuncTypeNode) {
     const type = "Func";
-    let inp: AstNode[] = [];
 
-    if (node.inputTypes?.matchedNode) {
-      inp = node.inputTypes
-        ? transformMany(node.inputTypes.matchedNode as CSV, fieldId, scope).items
-        : [];
-    }
+    const inp = node.inputTypes?.matchedNode
+      ? transformMany(node.inputTypes.matchedNode as CSV, fieldId, scope).items
+      : [];
 
     const oup = node.returnType ? [transform(node.returnType, fieldId, scope)!] : [];
 
