@@ -3,7 +3,7 @@
 # This is not a chess game: it's a demo of how you could draw a chess board
 main
   var gr set to new BlockGraphics()
-  set gr to gr.fill("", black, darkGreen)
+  set gr to gr.withBackground("", black, darkGreen)
   set gr to addBoard(gr)
   call gr.draw()
 end main

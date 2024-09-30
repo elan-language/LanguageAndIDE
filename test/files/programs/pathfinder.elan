@@ -5,7 +5,7 @@ main
   var destination set to new Point(34, 24)
   var rocks set to empty [Point]
   var nodes set to empty [Node]
-  var percentRocks set to inputIntBetween("Enter % to fill with rocks (0-100): ", 0, 100)
+  var percentRocks set to inputIntBetween("Enter % to withBackground with rocks (0-100): ", 0, 100)
   call createRocksAndNodes(percentRocks, rocks, nodes, start, destination)
   var gr set to initialiseGraphics(start, destination, rocks)
   call gr.draw()

@@ -3,7 +3,7 @@
 main
   print "Press any key to halt"
   var gr set to new BlockGraphics()
-  set gr to gr.fill("", black, white)
+  set gr to gr.withBackground("", black, white)
   var grid set to empty [Boolean]
   call fillRandom(grid)
   var cont set to true

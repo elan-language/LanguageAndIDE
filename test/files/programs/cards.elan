@@ -3,7 +3,7 @@
 # This is *not* a card game: it's a demo of how you could *start* to draw cards for such game
 main
   var gr set to new BlockGraphics()
-  set gr to gr.fill("", black, green)
+  set gr to gr.withBackground("", black, green)
   var card1 set to new Card(Rank.ace, Suit.hearts)
   var card2 set to new Card(Rank.two, Suit.spades)
   set gr to placeCard(gr, card1, 1, 1)

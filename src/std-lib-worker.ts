@@ -442,9 +442,9 @@ export class StdLibWorker {
     return x * this.ySize + y;
   }
 
-  initialisedGraphics(c: string, foreground: number, background: number) {
+  initialisedGraphics(background: number) {
     const emptyMap: BlockGraphics = [];
-    const emptyLocation: Location = this.system.tuple([c, foreground, background]) as Location;
+    const emptyLocation: Location = this.system.tuple(["", 0, background]) as Location;
     for (let x = 0; x < this.xSize; x++) {
       for (let y = 0; y < this.ySize; y++) {
         emptyMap.push(emptyLocation);
@@ -457,7 +457,7 @@ export class StdLibWorker {
     if (cm.length === this.GraphicsLength) {
       return cm;
     } else {
-      return this.initialisedGraphics("", 0, 0xffffff);
+      return this.initialisedGraphics(0xffffff);
     }
   }
 
@@ -533,8 +533,8 @@ export class StdLibWorker {
     return this.system.safeIndex(this.getDetails(cm, x, y), 2);
   }
 
-  fill(map: BlockGraphics, c: string, f: number, b: number): BlockGraphics {
-    return this.initialisedGraphics(c, f, b);
+  withBackground(map: BlockGraphics, b: number): BlockGraphics {
+    return this.initialisedGraphics(b);
   }
 
   clearGraphics(map: BlockGraphics) {

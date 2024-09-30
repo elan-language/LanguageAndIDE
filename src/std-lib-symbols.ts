@@ -766,14 +766,12 @@ export class StdLibSymbols implements Scope {
     ],
     // char map
     [
-      "fill",
+      "withBackground",
       this.getSymbol(
-        "fill",
+        "withBackground",
         new FunctionType(
           [
             new ListType(new TupleType([StringType.Instance, IntType.Instance, IntType.Instance])),
-            StringType.Instance,
-            IntType.Instance,
             IntType.Instance,
           ],
           new ListType(new TupleType([StringType.Instance, IntType.Instance, IntType.Instance])),

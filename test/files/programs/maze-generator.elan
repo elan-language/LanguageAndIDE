@@ -2,7 +2,7 @@
 
 main
   var g set to new BlockGraphics()
-  set g to g.fill("", black, black)
+  set g to g.withBackground("", black, black)
   set g to createStart(g)
   for i from 0 to 150 step 1
     var x set to randomInt(0, 39)
