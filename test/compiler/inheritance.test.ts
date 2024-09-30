@@ -1479,6 +1479,83 @@ end class`;
     assertDoesNotCompile(fileImpl, ["Cannot access private member p1 in abstract class"]);
   });
 
+  test("Fail_AccessInheritedProcedureFromPrivate", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var x set to new Bar()
+  call x.testPrivate(3)
+end main
+
+abstract class Yon
+  private procedure setP(a as Int)
+  end procedure
+end class
+
+abstract class Foo inherits Yon
+
+  private procedure setP1(a as Int)
+    call setP(a)
+  end procedure
+
+end class
+
+class Bar inherits Foo
+  constructor()
+  end constructor
+
+  procedure testPrivate(a as Int)
+    call setP1(a)
+  end procedure
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Cannot access private member setP in abstract class"]);
+  });
+
+  test("Fail_AccessInheritedFunctionFromPrivate", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var x set to new Bar()
+  print x.testPrivate(3)
+end main
+
+abstract class Yon
+  private function ff() return Int
+    return 0
+  end function
+end class
+
+abstract class Foo inherits Yon
+
+  private function fff() return Int
+    return ff()
+  end function
+
+end class
+
+class Bar inherits Foo
+  constructor()
+  end constructor
+
+  function testPrivate(a as Int) return Int
+    return fff()
+  end function
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Cannot access private member ff in abstract class"]);
+  });
+
   test("Fail_AbstractClassCannotInheritFromConcreteClass", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
