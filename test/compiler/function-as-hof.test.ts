@@ -290,7 +290,9 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Parameters expected: 2 got: 1"]);
+    assertDoesNotCompile(fileImpl, [
+      "Function Signatures do not match expected: 1 parameter(s) got: 2",
+    ]);
   });
 
   test("Fail_FunctionSignatureDoesntMatch2", async () => {

@@ -23,6 +23,7 @@ import {
   PrintFunctionCompileError,
   PrivateMemberCompileError,
   ReassignCompileError,
+  SignatureCompileError,
   SyntaxCompileError,
   TypeCompileError,
   TypesCompileError,
@@ -517,6 +518,28 @@ function mustBeCompatibleTypes(
   return;
 }
 
+function mustBeCompatibleSignatures(
+  lhss: SymbolType[],
+  rhss: SymbolType[],
+  compileErrors: CompileError[],
+  location: string,
+) {
+  if (lhss.length !== rhss.length) {
+    compileErrors.push(new SignatureCompileError(lhss.length, rhss.length, location));
+  }
+
+  const maxLen = lhss.length > rhss.length ? lhss.length : rhss.length;
+  for (let i = 0; i < maxLen; i++) {
+    mustBeCompatibleType(
+      lhss[i] ?? UnknownType.Instance,
+      rhss[i] ?? UnknownType.Instance,
+      compileErrors,
+      location,
+    );
+  }
+  return;
+}
+
 export function mustBeCompatibleMutableType(
   lhs: SymbolType,
   rhs: SymbolType,
@@ -679,7 +702,7 @@ export function mustBeCompatibleType(
   }
 
   if (lhs instanceof FunctionType && rhs instanceof FunctionType) {
-    mustBeCompatibleTypes(lhs.parametersTypes, rhs.parametersTypes, compileErrors, location);
+    mustBeCompatibleSignatures(lhs.parametersTypes, rhs.parametersTypes, compileErrors, location);
     mustBeCompatibleType(lhs.returnType, rhs.returnType, compileErrors, location);
     return;
   }

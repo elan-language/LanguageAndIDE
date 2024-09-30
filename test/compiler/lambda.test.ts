@@ -231,6 +231,38 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "15");
   });
 
+  test("Pass_ReturnAParameterLessLambda", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var l set to getFunc(5)
+  print l()
+end main
+    
+function getFunc(x as Int) return Func<of => Int>
+  return lambda => x * 5
+end function`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var l = getFunc(5);
+  system.printLine(_stdlib.asString(l()));
+}
+
+function getFunc(x) {
+  return () => x * 5;
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "25");
+  });
+
   test("Fail_ImmediateInvoke", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
@@ -283,5 +315,63 @@ end procedure`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Incompatible types String to Int"]);
+  });
+
+  test("Fail_PassLambdaWithWrongTypes1", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  call printModified(4, lambda x as Int => x)
+end main
+
+procedure printModified(i as Int, f as Func<of => Int>)
+  print f()
+end procedure`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Function Signatures do not match expected: 0 parameter(s) got: 1",
+    ]);
+  });
+
+  test("Fail_PassLambdaWithWrongTypes2", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  call printModified(4, lambda => 0)
+end main
+
+procedure printModified(i as Int, f as Func<of Int => Int>)
+  print f(5)
+end procedure`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Function Signatures do not match expected: 1 parameter(s) got: 0",
+    ]);
+  });
+
+  test("Fail_InvokeLambdaWithWrongTypes", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  call printModified(4, lambda => 0)
+end main
+
+procedure printModified(i as Int, f as Func<of => Int>)
+  print f(5)
+end procedure`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Parameters expected: 0 got: 1"]);
   });
 });
