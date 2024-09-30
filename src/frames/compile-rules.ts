@@ -918,3 +918,13 @@ export function cannotAccessPrivateMemberInAbstractClass(
     new SyntaxCompileError(`Cannot access private member ${id} in abstract class`, location),
   );
 }
+
+export function cannotAccessAbstractMemberInAbstractClass(
+  id: string,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  compileErrors.push(
+    new SyntaxCompileError(`Cannot access abstract member ${id} in abstract class`, location),
+  );
+}
