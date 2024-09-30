@@ -1,4 +1,4 @@
-# c8bd3d016207acc2c05e523f55f35b697780a20084782e361ba0220d25d57923 Elan Beta 2 valid
+# e6205fe6bf4eb8eacfff1159bcb641830826d4fddb7ed18e3d1797aafa86d69f Elan Beta 2 valid
 
 # Run the program and use the standard W,A,S,D keys to change Snake direction
 # Try to 'eat' the (red) apples, and avoid hitting the edge or the body of the snake.
@@ -18,7 +18,7 @@ end main
 function clockTick(g as Game, k as String) return Game
   let g2 be if k is "" then g else copy g with key to k
   let g3 be moveSnake(g2)
-  let g4 be eatAppleOrNot(g3)
+  let g4 be eatAppleIfPoss(g3)
   return if gameOver(g4) then copy g4 with isOn to false else g4
 end function
 
@@ -50,7 +50,7 @@ function moveSnake(g as Game) return Game
   return copy g with body to g.body + g.head, head to new Square(newX, newY)
 end function
 
-function eatAppleOrNot(g as Game) return Game
+function eatAppleIfPoss(g as Game) return Game
   let tail be g.body[0]
   let moveTail be g.body[1..g.body.length()]
   return if overApple(g) then newApple(g) else copy g with priorTail to tail, body to moveTail
@@ -76,13 +76,13 @@ end function
 
 immutable class Game
   constructor(rnd as Random)
+    set property.rnd to rnd
     set property.graphics to new Graphics()
     set property.head to new Square(22, 15)
-    set property.priorTail to empty Square
     set property.body to {new Square(20, 15), new Square(21, 15)}
-    set property.isOn to true
+    set property.priorTail to empty Square
     set property.key to "d"
-    set property.rnd to rnd
+    set property.isOn to true
   end constructor
 
   property head as Square
