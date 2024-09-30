@@ -1,7 +1,7 @@
-# 22aaa4e1feb2c7016f5958cf766111f3729afdc43ada5b54421a948385a49c18 Elan Beta 2 valid
+# FFFF Elan Beta 2 valid
 
 main
-  var g set to new Graphics()
+  var g set to new BlockGraphics()
   var x set to 20
   var y set to 15
   while true

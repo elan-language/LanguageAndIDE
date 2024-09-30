@@ -16,7 +16,7 @@ suite("Char Mapped Display", () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  var g set to  new Graphics()
+  var g set to  new BlockGraphics()
   call g.draw()
 end main`;
 
@@ -44,7 +44,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  var g set to new Graphics()
+  var g set to new BlockGraphics()
   set g to g.putDetails(0, 0, "F", 1, 2)
   call g.draw()
 end main`;
@@ -74,7 +74,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  var g set to new Graphics()
+  var g set to new BlockGraphics()
   set g to g.putDetails(10, 20, "a", 1, 2)
   print g.getDetails(10, 20)
 end main`;
@@ -100,7 +100,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  var g set to new Graphics()
+  var g set to new BlockGraphics()
   set g to g.putChar(0, 0, "Z")
   call g.draw()
 end main`;
@@ -130,7 +130,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  var g set to new Graphics()
+  var g set to new BlockGraphics()
   set g to g.putDetails(10, 20, "a", 1, 2)
   print g.getChar(10, 20)
 end main`;
@@ -156,7 +156,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  var g set to new Graphics()
+  var g set to new BlockGraphics()
   set g to g.putForeground(0, 0, 3)
   call g.draw()
 end main`;
@@ -186,7 +186,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  var g set to new Graphics()
+  var g set to new BlockGraphics()
   set g to g.putDetails(10, 20, "a", 1, 2)
   print g.getForeground(10, 20)
 end main`;
@@ -212,7 +212,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  var g set to new Graphics()
+  var g set to new BlockGraphics()
   set g to g.putBackground(1, 0, 4)
   call g.draw()
 end main`;
@@ -242,7 +242,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  var g set to new Graphics()
+  var g set to new BlockGraphics()
   set g to g.putDetails(10, 20, "a", 1, 2)
   print g.getBackground(10, 20)
 end main`;
@@ -268,7 +268,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  var gr set to new Graphics()
+  var gr set to new BlockGraphics()
   call gr.draw()
   call gr.clearGraphics()
 end main`;
@@ -294,7 +294,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  var gr set to new Graphics()
+  var gr set to new BlockGraphics()
   var a set to gr.getKeystroke()
   print a
 end main`;
@@ -320,7 +320,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  var gr set to new Graphics()
+  var gr set to new BlockGraphics()
   var a set to gr.getKeystrokeWithModifier()
   print a
 end main`;
@@ -346,7 +346,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  var gr set to new Graphics()
+  var gr set to new BlockGraphics()
   call gr.clearKeyBuffer()
 end main`;
 
@@ -370,7 +370,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  var a set to new Graphics()
+  var a set to new BlockGraphics()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -401,7 +401,7 @@ class Foo
   constructor()
   end constructor
 
-  property p as Graphics
+  property p as BlockGraphics
 end class`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -435,7 +435,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  var a set to empty Graphics()
+  var a set to empty BlockGraphics()
   set a to initialisedGraphics()
 end main`;
 
@@ -449,7 +449,7 @@ end main`;
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  var g set to new Graphics()
+  var g set to new BlockGraphics()
   set g to g.putString(0, 0, "Hello", 1, 2)
   call g.draw()
 end main`;
@@ -483,7 +483,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  var g set to new Graphics()
+  var g set to new BlockGraphics()
   set g to g.putString(39, 29, "Hello", 1, 2)
   call g.draw()
 end main`;

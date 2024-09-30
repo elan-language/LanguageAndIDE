@@ -1,4 +1,4 @@
-# 6ccc9942239e70a4396e1261f1d178af5949a7c4f237481cf9edbdbba67b7f3c Elan Beta 2 valid
+# FFFF Elan Beta 2 valid
 
 main
   var start set to new Point(5, 5)
@@ -25,7 +25,7 @@ main
   end while
 end main
 
-procedure runSolver(gr as Graphics, start as Point, destination as Point, rocks as [Point], out solver as Solver, alg as Algorithm)
+procedure runSolver(gr as BlockGraphics, start as Point, destination as Point, rocks as [Point], out solver as Solver, alg as Algorithm)
   call solver.initialise(alg)
   var gr2 set to initialiseGraphics(start, destination, rocks)
   while solver.running
@@ -63,8 +63,8 @@ procedure createRocksAndNodes(percentRocks as Int, out rocks as [Point], out nod
   end for
 end procedure
 
-function initialiseGraphics(start as Point, dest as Point, rocks as [Point]) return Graphics
-  var gr set to new Graphics()
+function initialiseGraphics(start as Point, dest as Point, rocks as [Point]) return BlockGraphics
+  var gr set to new BlockGraphics()
   each rock in rocks
     set gr to gr.putBackground(rock.x, rock.y, black)
   end each
@@ -73,11 +73,11 @@ function initialiseGraphics(start as Point, dest as Point, rocks as [Point]) ret
   return gr
 end function
 
-function addVisited(gr as Graphics, visited as Point) return Graphics
+function addVisited(gr as BlockGraphics, visited as Point) return BlockGraphics
   return gr.putBackground(visited.x, visited.y, lightBlue)
 end function
 
-function addRoute(gr as Graphics, route as {Point}) return Graphics
+function addRoute(gr as BlockGraphics, route as {Point}) return BlockGraphics
   var gr2 set to gr
   each p in route
     set gr2 to gr2.putBackground(p.x, p.y, yellow)

@@ -1,9 +1,9 @@
-# 50c05be91d6922abfd120cca030245df2256ca03548cc97ff45f4049ec7a3d5e Elan Beta 2 valid
+# FFFF Elan Beta 2 valid
 
 # Run the program and use the standard W,A,S,D keys to change Snake direction
 # Try to 'eat' the (red) apples, and avoid hitting the edge or the body of the snake.
 main
-  var gr set to new Graphics()
+  var gr set to new BlockGraphics()
   var snake set to new Snake()
   var apple set to new Apple()
   call apple.newRandomPosition(snake)
@@ -75,7 +75,7 @@ class Snake
     return result
   end function
 
-  function updateGraphics(gr as Graphics) return Graphics
+  function updateGraphics(gr as BlockGraphics) return BlockGraphics
     var gr2 set to gr.putBackground(head.x, head.y, green)
     if body[0] isnt priorTail
       then
@@ -105,7 +105,7 @@ class Apple
     end repeat when not snake.bodyCovers(location)
   end procedure
 
-  function updateGraphics(gr as Graphics) return Graphics
+  function updateGraphics(gr as BlockGraphics) return BlockGraphics
     return gr.putBackground(location.x, location.y, red)
   end function
 

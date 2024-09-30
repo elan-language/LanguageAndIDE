@@ -76,7 +76,7 @@ end function
 
 immutable class Game
   constructor(rnd as Random)
-    set property.graphics to new Graphics()
+    set property.graphics to new BlockGraphics()
     set property.head to new Square(22, 15)
     set property.priorTail to empty Square
     set property.body to {new Square(20, 15), new Square(21, 15)}
@@ -97,7 +97,7 @@ immutable class Game
 
   property rnd as Random
 
-  property graphics as Graphics
+  property graphics as BlockGraphics
 
   property key as String
 

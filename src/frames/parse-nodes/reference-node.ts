@@ -1,5 +1,6 @@
 import { thisKeyword } from "../keywords";
 import { AbstractAlternatives } from "./abstract-alternatives";
+import { FunctionRefNode } from "./function-ref-node";
 import { IdentifierNode } from "./identifier-node";
 import { KeywordNode } from "./keyword-node";
 import { MethodCallNode } from "./method-call-node";
@@ -11,6 +12,7 @@ export class ReferenceNode extends AbstractAlternatives {
       this.alternatives.push(new KeywordNode(thisKeyword));
       this.alternatives.push(new IdentifierNode());
       this.alternatives.push(new MethodCallNode());
+      this.alternatives.push(new FunctionRefNode());
       super.parseText(text);
     }
   }

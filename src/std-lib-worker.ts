@@ -2,7 +2,7 @@ import { hasHiddenType } from "./has-hidden-type";
 import { ElanRuntimeError, SystemWorker } from "./system-worker";
 
 type Location = [string, number, number];
-type Graphics = Location[];
+type BlockGraphics = Location[];
 type File = [number, string, number]; // open/closed, read/write, contents, pointer
 
 export class StdLibWorker {
@@ -443,7 +443,7 @@ export class StdLibWorker {
   }
 
   initialisedGraphics(c: string, foreground: number, background: number) {
-    const emptyMap: Graphics = [];
+    const emptyMap: BlockGraphics = [];
     const emptyLocation: Location = this.system.tuple([c, foreground, background]) as Location;
     for (let x = 0; x < this.xSize; x++) {
       for (let y = 0; y < this.ySize; y++) {
@@ -453,7 +453,7 @@ export class StdLibWorker {
     return emptyMap;
   }
 
-  ensureInitialised(cm: Graphics): Graphics {
+  ensureInitialised(cm: BlockGraphics): BlockGraphics {
     if (cm.length === this.GraphicsLength) {
       return cm;
     } else {
@@ -462,31 +462,31 @@ export class StdLibWorker {
   }
 
   putDetails(
-    map: Graphics,
+    map: BlockGraphics,
     x: number,
     y: number,
     char: string,
     foreground: number,
     background: number,
-  ): Graphics {
+  ): BlockGraphics {
     const cm = this.ensureInitialised(map);
     cm[this.idx(x, y)] = this.system.tuple([char, foreground, background]) as Location;
     return cm;
   }
 
-  getDetails(map: Graphics, x: number, y: number) {
+  getDetails(map: BlockGraphics, x: number, y: number) {
     const cm = this.ensureInitialised(map);
     return this.system.safeIndex(cm, this.idx(x, y));
   }
 
-  putChar(map: Graphics, x: number, y: number, c: string) {
+  putChar(map: BlockGraphics, x: number, y: number, c: string) {
     const cm = this.ensureInitialised(map);
     const [, f, b] = this.getDetails(cm, x, y);
     return this.putDetails(cm, x, y, c[0], f, b);
   }
 
   putString(
-    map: Graphics,
+    map: BlockGraphics,
     x: number,
     y: number,
     text: string,
@@ -506,42 +506,42 @@ export class StdLibWorker {
     return cm;
   }
 
-  getChar(map: Graphics, x: number, y: number) {
+  getChar(map: BlockGraphics, x: number, y: number) {
     const cm = this.ensureInitialised(map);
     return this.system.safeIndex(this.getDetails(cm, x, y), 0);
   }
 
-  putForeground(map: Graphics, x: number, y: number, f: number) {
+  putForeground(map: BlockGraphics, x: number, y: number, f: number) {
     const cm = this.ensureInitialised(map);
     const [c, , b] = this.getDetails(map, x, y);
     return this.putDetails(cm, x, y, c, f, b);
   }
 
-  getForeground(map: Graphics, x: number, y: number) {
+  getForeground(map: BlockGraphics, x: number, y: number) {
     const cm = this.ensureInitialised(map);
     return this.system.safeIndex(this.getDetails(cm, x, y), 1);
   }
 
-  putBackground(map: Graphics, x: number, y: number, b: number) {
+  putBackground(map: BlockGraphics, x: number, y: number, b: number) {
     const cm = this.ensureInitialised(map);
     const [c, f] = this.getDetails(cm, x, y);
     return this.putDetails(cm, x, y, c, f, b);
   }
 
-  getBackground(map: Graphics, x: number, y: number) {
+  getBackground(map: BlockGraphics, x: number, y: number) {
     const cm = this.ensureInitialised(map);
     return this.system.safeIndex(this.getDetails(cm, x, y), 2);
   }
 
-  fill(map: Graphics, c: string, f: number, b: number): Graphics {
+  fill(map: BlockGraphics, c: string, f: number, b: number): BlockGraphics {
     return this.initialisedGraphics(c, f, b);
   }
 
-  clearGraphics(map: Graphics) {
+  clearGraphics(map: BlockGraphics) {
     //this.system.elanInputOutput.clearGraphics();
   }
 
-  draw(map: Graphics): Promise<void> {
+  draw(map: BlockGraphics): Promise<void> {
     const cm = this.ensureInitialised(map);
     let rendered = "";
 
@@ -561,16 +561,16 @@ export class StdLibWorker {
     return `#${h6}`;
   }
 
-  getKeystroke(map: Graphics): string {
+  getKeystroke(map: BlockGraphics): string {
     //return this.system.elanInputOutput.getKeystroke();
     return "";
   }
 
-  getKeystrokeWithModifier(map: Graphics) {
+  getKeystrokeWithModifier(map: BlockGraphics) {
     //return this.system.tuple(this.system.elanInputOutput.getKeystrokeWithModifier());
   }
 
-  clearKeyBuffer(map: Graphics) {
+  clearKeyBuffer(map: BlockGraphics) {
     //this.system.elanInputOutput.clearKeyBuffer();
   }
 

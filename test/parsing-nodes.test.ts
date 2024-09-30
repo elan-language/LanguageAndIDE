@@ -1517,5 +1517,7 @@ suite("Parsing Nodes", () => {
       `property.a[1].b().c(d)[e]`,
       "",
     );
+    testNodeParse(new ExprNode(), `function foo`, ParseStatus.valid, `function foo`, "");
+    testNodeParse(new ExprNode(), `function `, ParseStatus.incomplete, `function `, "");
   });
 });

@@ -1,4 +1,4 @@
-# e6205fe6bf4eb8eacfff1159bcb641830826d4fddb7ed18e3d1797aafa86d69f Elan Beta 2 valid
+# FFFF Elan Beta 2 valid
 
 # Run the program and use the standard W,A,S,D keys to change Snake direction
 # Try to 'eat' the (red) apples, and avoid hitting the edge or the body of the snake.
@@ -77,7 +77,7 @@ end function
 immutable class Game
   constructor(rnd as Random)
     set property.rnd to rnd
-    set property.graphics to new Graphics()
+    set property.graphics to new BlockGraphics()
     set property.head to new Square(22, 15)
     set property.body to {new Square(20, 15), new Square(21, 15)}
     set property.priorTail to empty Square
@@ -97,7 +97,7 @@ immutable class Game
 
   property rnd as Random
 
-  property graphics as Graphics
+  property graphics as BlockGraphics
 
   property key as String
 
