@@ -18,7 +18,7 @@ import { Switch } from "../src/frames/statements/switch";
 import { While } from "../src/frames/statements/while";
 import { hash } from "../src/util";
 import { transforms } from "./compiler/compiler-test-helpers";
-import { T09_emptyMainAndClassWithGlobalSelector } from "./model-generating-functions.";
+import { T09_emptyMainAndClassWithGlobalSelector } from "./model-generating-functions";
 import { key } from "./testHelpers";
 
 export class TestProfileSPJ implements Profile {

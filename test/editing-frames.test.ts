@@ -19,7 +19,7 @@ import {
   T00_emptyFile,
   T03_mainWithAllStatements,
   T05_classes,
-} from "./model-generating-functions.";
+} from "./model-generating-functions";
 import {
   back,
   createTestRunner,
