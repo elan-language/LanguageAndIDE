@@ -2,7 +2,7 @@
 
 main
   print "Press any key to halt"
-  var gr set to new Graphics()
+  var gr set to new BlockGraphics()
   set gr to gr.fill("", black, white)
   var grid set to empty [Boolean]
   call fillRandom(grid)
@@ -25,7 +25,7 @@ procedure fillRandom(starter as [Boolean])
   end for
 end procedure
 
-function updateGraphics(grid as [Boolean], gr as Graphics) return Graphics
+function updateGraphics(grid as [Boolean], gr as BlockGraphics) return BlockGraphics
   var gr2 set to gr
   for row from 0 to 29 step 1
     for col from 0 to 39 step 1

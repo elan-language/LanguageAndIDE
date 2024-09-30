@@ -1006,9 +1006,9 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
-      "Graphics",
+      "BlockGraphics",
       this.getSymbol(
-        "Graphics",
+        "BlockGraphics",
         new ListType(new TupleType([StringType.Instance, IntType.Instance, IntType.Instance])),
       ),
     ],

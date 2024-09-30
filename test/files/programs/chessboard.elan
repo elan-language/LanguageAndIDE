@@ -1,14 +1,14 @@
-# c879ba2ceb6eeb405372e418c801a974fcf3c2aae8afa52a76ede6a8b7781962 Elan Beta 2 valid
+# FFFF Elan Beta 2 valid
 
 # This is not a chess game: it's a demo of how you could draw a chess board
 main
-  var gr set to new Graphics()
+  var gr set to new BlockGraphics()
   set gr to gr.fill("", black, darkGreen)
   set gr to addBoard(gr)
   call gr.draw()
 end main
 
-function addBoard(gr as Graphics) return Graphics
+function addBoard(gr as BlockGraphics) return BlockGraphics
   var gr2 set to gr
   for x from 0 to 7 step 1
     for y from 0 to 7 step 1
@@ -19,7 +19,7 @@ function addBoard(gr as Graphics) return Graphics
   return gr2
 end function
 
-function addSquare(gr as Graphics, x as Int, y as Int, colour as Int) return Graphics
+function addSquare(gr as BlockGraphics, x as Int, y as Int, colour as Int) return BlockGraphics
   var gr2 set to gr
   for col from x to x + 2 step 1
     for row from y to y + 2 step 1

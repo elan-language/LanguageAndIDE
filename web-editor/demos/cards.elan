@@ -2,7 +2,7 @@
 
 # This is *not* a card game: it's a demo of how you could *start* to draw cards for such game
 main
-  var gr set to new Graphics()
+  var gr set to new BlockGraphics()
   set gr to gr.fill("", black, green)
   var card1 set to new Card(Rank.ace, Suit.hearts)
   var card2 set to new Card(Rank.two, Suit.spades)
@@ -11,7 +11,7 @@ main
   call gr.draw()
 end main
 
-function placeCard(gr as Graphics, c as Card, x as Int, y as Int) return Graphics
+function placeCard(gr as BlockGraphics, c as Card, x as Int, y as Int) return BlockGraphics
   var gr2 set to gr
   for row from y to y + 8 step 1
     for col from x to x + 5 step 1

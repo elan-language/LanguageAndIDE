@@ -16,14 +16,14 @@ suite("Impure Function", () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  var gr set to new Graphics()
+  var gr set to new BlockGraphics()
   var k set to gr.getKeystroke()
   var r set to randomInt(1, 6)
   set r to randomInt(1, 6) * 10
   call bar(randomInt(1,6))
 end main
 
-procedure foo(gr as Graphics)
+procedure foo(gr as BlockGraphics)
   var k set to gr.getKeystroke()
   var r set to randomInt(1, 6)
   set r to randomInt(1, 6) * 10

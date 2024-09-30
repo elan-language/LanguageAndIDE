@@ -1,9 +1,9 @@
-# 84ed05ed3783d1a5e0c9a1924e93d2801f6e03bea711b4c79e7786fc4fe879d4 Elan Beta 2 valid
+# FFFF Elan Beta 2 valid
 
 # Run the program and use the standard W,A,S,D keys to change Snake direction
 # Try to 'eat' the (red) apples, and avoid hitting the edge or the body of the snake.
 main
-  var gr set to new Graphics()
+  var gr set to new BlockGraphics()
   var head set to [20, 15]
   var tail set to head
   var body set to [head]
@@ -41,7 +41,7 @@ procedure eatAppleIfPoss(head as [Int], out body as [[Int]], apple as [Int])
   end if
 end procedure
 
-function updateGraphics(gr as Graphics, head as [Int], tail as [Int], body as [[Int]], apple as [Int]) return Graphics
+function updateGraphics(gr as BlockGraphics, head as [Int], tail as [Int], body as [[Int]], apple as [Int]) return BlockGraphics
   var gr2 set to gr.putBackground(head[0], head[1], green)
   if body[0] is tail
     then
