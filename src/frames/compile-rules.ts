@@ -7,6 +7,7 @@ import {
   DuplicateIdsCompileError,
   DuplicateKeyCompileError,
   ExtensionCompileError,
+  FunctionRefCompileError,
   MustBeAbstractCompileError,
   MustBeConcreteCompileError,
   MustBeImmutableCompileError,
@@ -927,4 +928,14 @@ export function cannotAccessAbstractMemberInAbstractClass(
   compileErrors.push(
     new SyntaxCompileError(`Cannot access abstract member ${id} in abstract class`, location),
   );
+}
+
+export function mustBeFunctionRefIfFunction(
+  symbol: ElanSymbol,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  if (isFunction(symbol)) {
+    compileErrors.push(new FunctionRefCompileError(symbol.symbolId, location));
+  }
 }

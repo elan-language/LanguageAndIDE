@@ -803,6 +803,33 @@ end function`;
     assertDoesNotCompile(fileImpl, ["Name a not unique in scope"]);
   });
 
+  test("Fail_OperatorsAndProceduresWithFunctionKeyword", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var a set to function p1 is function p2
+  var b set to function p1 + function p2
+  var c set to - function p1
+end main
+
+function p1() return Int
+  return 0
+end function
+function p2() return Int
+  return 0
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot do equality operations on Procedures or Functions",
+      "Incompatible types Function to Float or Int",
+      "Incompatible types Function to Float or Int",
+    ]);
+  });
+
   test("Fail_OperatorsAndProcedures", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
@@ -825,8 +852,13 @@ end function`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "Cannot do equality operations on Procedures or Functions",
+      "To evaluate function 'p1' add brackets. Or to create a reference to 'p1', precede it by 'function '",
+      "To evaluate function 'p2' add brackets. Or to create a reference to 'p2', precede it by 'function '",
       "Incompatible types Function to Float or Int",
       "Incompatible types Function to Float or Int",
+      "To evaluate function 'p1' add brackets. Or to create a reference to 'p1', precede it by 'function '",
+      "To evaluate function 'p2' add brackets. Or to create a reference to 'p2', precede it by 'function '",
+      "To evaluate function 'p1' add brackets. Or to create a reference to 'p1', precede it by 'function '",
     ]);
   });
 
