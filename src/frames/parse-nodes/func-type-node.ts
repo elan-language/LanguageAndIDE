@@ -3,13 +3,15 @@ import { ARROW, GT, LT } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { CSV } from "./csv";
 import { KeywordNode } from "./keyword-node";
+import { OptionalNode } from "./optional-node";
 import { Space } from "./parse-node-helpers";
 import { PunctuationNode } from "./punctuation-node";
+import { Sequence } from "./sequence";
 import { SpaceNode } from "./space-node";
 import { TypeNode } from "./type-node";
 
 export class FuncTypeNode extends AbstractSequence {
-  inputTypes: CSV | undefined;
+  inputTypes: OptionalNode | undefined;
   returnType: TypeNode | undefined;
 
   constructor() {
@@ -24,10 +26,11 @@ export class FuncTypeNode extends AbstractSequence {
       this.addElement(new PunctuationNode(LT));
       this.addElement(new KeywordNode(ofKeyword));
       this.addElement(new SpaceNode(Space.required));
-      this.inputTypes = new CSV(() => new TypeNode(), 0);
-      this.inputTypes.setCompletionWhenEmpty("Type(s)");
+      const inputTypes = () => new CSV(() => new TypeNode(), 1);
+      const sp = () => new SpaceNode(Space.required);
+      const inputTypesSp = new Sequence([inputTypes, sp]);
+      this.inputTypes = new OptionalNode(inputTypesSp);
       this.addElement(this.inputTypes);
-      this.addElement(new SpaceNode(Space.required));
       this.addElement(new PunctuationNode(ARROW));
       this.addElement(new SpaceNode(Space.required));
       this.returnType = new TypeNode();
