@@ -1,4 +1,4 @@
-# 41b5af2d4057a8f604e951319309228bd5ffa1ef9ac0891c591f95449758dcb2 Elan Beta 2 valid
+# 972adcd75f5245eea773e94bff618b4e14d9d03c9086d0ccdb873e644a29e31c Elan Beta 2 valid
 
 main
   var li set to [3, 6, 1, 0, 99, 4, 67]
@@ -14,7 +14,7 @@ procedure inPlaceRippleSort(out list as [Int])
     for i from 0 to lastComp step 1
       if list[i] > list[i + 1]
         then
-          var temp set to list[i]
+          let temp be list[i]
           call list.putAt(i, list[i + 1])
           call list.putAt(i + 1, temp)
           set changes to true
@@ -25,7 +25,7 @@ procedure inPlaceRippleSort(out list as [Int])
 end procedure
 
 test 
-  var emptyList set to empty [Int]
+  let emptyList be empty [Int]
   var li1 set to empty [Int]
   call inPlaceRippleSort(li1)
   assert li1 is emptyList

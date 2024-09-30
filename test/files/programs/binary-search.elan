@@ -1,13 +1,13 @@
-# 8e30eeddc3fbb8dc45050328839e8598fcfb4b8edb35bb6c7aa3e1aa61a97b52 Elan Beta 2 valid
+# 05cc419a3d4ebf176e6f86bab7cdeac31b9d645917d45ea7b6f49dd401a41974 Elan Beta 2 valid
 
 main
-  var fruit set to ["apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"]
+  let fruit be ["apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"]
   var exit set to false
   while not exit
-    var wanted set to inputString("What type of fruit do you want ('x' to exit)? ")
+    let wanted be inputString("What type of fruit do you want ('x' to exit)? ")
     if wanted isnt "x"
       then
-        var result set to binarySearch(fruit, wanted)
+        let result be binarySearch(fruit, wanted)
         if result
           then
             print "We can supply a {wanted}"
@@ -24,8 +24,8 @@ function binarySearch(list as [String], item as String) return Boolean
   var result set to false
   if list.length() > 0
     then
-      var mid set to div(list.length(), 2)
-      var value set to list[mid]
+      let mid be div(list.length(), 2)
+      let value be list[mid]
       if item is value
         then
           set result to true
@@ -39,18 +39,18 @@ function binarySearch(list as [String], item as String) return Boolean
 end function
 
 test 
-  var li1 set to ["lemon", "lime", "orange"]
+  let li1 be ["lemon", "lime", "orange"]
   assert binarySearch(li1, "lemon") is true
   assert binarySearch(li1, "lime") is true
   assert binarySearch(li1, "orange") is true
   assert binarySearch(li1, "pear") is false
-  var li2 set to ["lemon", "orange"]
+  let li2 be ["lemon", "orange"]
   assert binarySearch(li2, "lemon") is true
   assert binarySearch(li2, "orange") is true
   assert binarySearch(li2, "pear") is false
-  var li3 set to ["lemon"]
+  let li3 be ["lemon"]
   assert binarySearch(li3, "lemon") is true
   assert binarySearch(li3, "lime") is false
-  var li4 set to empty [String]
+  let li4 be empty [String]
   assert binarySearch(li4, "pear") is false
 end test

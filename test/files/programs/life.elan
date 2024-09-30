@@ -1,4 +1,4 @@
-# 9cf334d3cab3bd404c981b25ed06ecd34cf04ad736d396e15c79c829e198e5dc Elan Beta 2 valid
+# f8da1740aaf9d495258cfd29900d7883808e3806bcae54078e1b91e84c0740e5 Elan Beta 2 valid
 
 main
   print "Press any key to halt"
@@ -28,8 +28,8 @@ function updateGraphics(grid as [Boolean], gr as BlockGraphics) return BlockGrap
   var gr2 set to gr
   for row from 0 to 29 step 1
     for col from 0 to 39 step 1
-      var cell set to grid[row*40 + col]
-      var colour set to if cell then black else white
+      let cell be grid[row*40 + col]
+      let colour be if cell then black else white
       set gr2 to gr2.withBlock(col, row, colour)
     end for
   end for
