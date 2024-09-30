@@ -101,7 +101,9 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
     const a = isAsync ? "await " : "";
     const pp = parameters.map((p) => p.compile()).join(", ");
     const q =
-      this.precedingNode && this.showPreviousNode ? "" : scopePrefix(funcSymbol, this.scope);
+      this.precedingNode && this.showPreviousNode
+        ? ""
+        : scopePrefix(funcSymbol, this.compileErrors, this.scope, this.fieldId);
 
     return `${a}${q}${this.mId}(${pp})`;
   }

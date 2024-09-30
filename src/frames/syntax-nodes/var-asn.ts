@@ -112,7 +112,7 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
 
     mustBeKnownSymbol(symbol, this.compileErrors, this.fieldId);
 
-    const q = scopePrefix(symbol, this.scope);
+    const q = scopePrefix(symbol, this.compileErrors, this.scope, this.fieldId);
     const call = symbol instanceof LetStatement ? "()" : "";
     const idx = this.index
       ? this.index.compile()

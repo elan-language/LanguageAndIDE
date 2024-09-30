@@ -908,3 +908,13 @@ export function cannotHaveDuplicatePrivateIds(
 ) {
   compileErrors.push(new DuplicateIdsCompileError(duplicates, location));
 }
+
+export function cannotAccessPrivateMemberInAbstractClass(
+  id: string,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  compileErrors.push(
+    new SyntaxCompileError(`Cannot access private member ${id} in abstract class`, location),
+  );
+}
