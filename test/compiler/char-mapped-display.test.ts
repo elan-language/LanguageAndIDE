@@ -1,14 +1,14 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
-  assertDoesNotParse,
-  assertGraphicsContains,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  transforms,
+    assertDoesNotParse,
+    assertGraphicsContains,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Char Mapped Display", () => {
@@ -450,14 +450,14 @@ end main`;
 
 main
   var g set to new BlockGraphics()
-  set g to g.putString(0, 0, "Hello", 1, 2)
+  set g to g.withText(0, 0, "Hello", 1, 2)
   call g.draw()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var g = system.initialise(system.list(new Array()));
-  g = _stdlib.putString(g, 0, 0, "Hello", 1, 2);
+  g = _stdlib.withText(g, 0, 0, "Hello", 1, 2);
   await _stdlib.draw(g);
 }
 return [main, _tests];}`;
@@ -484,14 +484,14 @@ return [main, _tests];}`;
 
 main
   var g set to new BlockGraphics()
-  set g to g.putString(39, 29, "Hello", 1, 2)
+  set g to g.withText(39, 29, "Hello", 1, 2)
   call g.draw()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var g = system.initialise(system.list(new Array()));
-  g = _stdlib.putString(g, 39, 29, "Hello", 1, 2);
+  g = _stdlib.withText(g, 39, 29, "Hello", 1, 2);
   await _stdlib.draw(g);
 }
 return [main, _tests];}`;

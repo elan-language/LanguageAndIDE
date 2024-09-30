@@ -491,7 +491,7 @@ export class StdLib {
     return this.putDetails(cm, x, y, c[0], f, b);
   }
 
-  putString(
+  withText(
     map: BlockGraphics,
     x: number,
     y: number,
