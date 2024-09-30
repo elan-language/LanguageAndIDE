@@ -1,0 +1,41 @@
+# 22aaa4e1feb2c7016f5958cf766111f3729afdc43ada5b54421a948385a49c18 Elan Beta 2 valid
+
+main
+  var g set to new Graphics()
+  var x set to 20
+  var y set to 15
+  while true
+    set g to g.putBackground(x, y, red)
+    call g.draw()
+    call pause(50)
+    set g to g.putBackground(x, y, black)
+    call g.draw()
+    var r set to randomInt(0, 3)
+    switch r
+      case 0
+        set x to x - 1
+        if x < 0
+          then
+            set x to 0
+        end if
+      case 1
+        set x to x + 1
+        if x > 39
+          then
+            set x to 39
+        end if
+      case 2
+        set y to y - 1
+        if y < 0
+          then
+            set y to 0
+        end if
+      case 3
+        set y to y + 1
+        if y > 29
+          then
+            set y to 29
+        end if
+    end switch
+  end while
+end main
