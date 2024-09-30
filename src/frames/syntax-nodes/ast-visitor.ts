@@ -266,10 +266,17 @@ export function transform(
 
   if (node instanceof FuncTypeNode) {
     const type = "Func";
-    //const inp = node.inputTypes ? transformMany(node.inputTypes, fieldId, scope).items : [];
+    let inp: AstNode[] = [];
+
+    if (node.inputTypes?.matchedNode) {
+      inp = node.inputTypes
+        ? transformMany(node.inputTypes.matchedNode as CSV, fieldId, scope).items
+        : [];
+    }
+
     const oup = node.returnType ? [transform(node.returnType, fieldId, scope)!] : [];
 
-    //return new TypeAsn(type, inp.concat(oup), fieldId, scope);
+    return new TypeAsn(type, inp.concat(oup), fieldId, scope);
   }
 
   if (node instanceof TypeSimpleNode) {

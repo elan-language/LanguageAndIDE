@@ -98,13 +98,13 @@ suite("Parsing - Completions", () => {
       new TypeNode(),
       "Func",
       ParseStatus.incomplete,
-      "<of <pr>Type(s)</pr> => <pr>Type</pr>>",
+      "<of <pr></pr>=> <pr>Type</pr>>",
     );
     testCompletion(
       new TypeNode(),
       "Func<",
       ParseStatus.incomplete,
-      "of <pr>Type(s)</pr> => <pr>Type</pr>>",
+      "of <pr></pr>=> <pr>Type</pr>>",
     );
     testCompletion(new TypeNode(), "Func<of Foo", ParseStatus.incomplete, " => <pr>Type</pr>>");
     testCompletion(
@@ -116,12 +116,7 @@ suite("Parsing - Completions", () => {
   });
   test("Lambda", () => {
     testCompletion(new Lambda(), "lambda x as Int => x*x", ParseStatus.valid, "");
-    // testCompletion(
-    //   new Lambda(),
-    //   "lambda ",
-    //   ParseStatus.incomplete,
-    //   "<pr>parameter definition</pr> => <pr>expression</pr>",
-    // );
+    testCompletion(new Lambda(), "lambda ", ParseStatus.incomplete, "=> <pr>expression</pr>");
     testCompletion(
       new Lambda(),
       "lambda x as Int ",
