@@ -1,3 +1,5 @@
 import { Frame } from "./frame";
 
-export interface Class extends Frame {}
+export interface Class extends Frame {
+  abstract: boolean;
+}

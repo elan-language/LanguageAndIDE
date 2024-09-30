@@ -1441,8 +1441,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "3");
   });
 
-  // #606 comment
-  ignore_test("Pass_AccessInheritedPropertyFromPrivate", async () => {
+  test("Fail_AccessInheritedPropertyFromPrivate", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
@@ -1472,54 +1471,12 @@ class Bar inherits Foo
   end procedure
 end class`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-async function main() {
-  var x = system.initialise(new Bar());
-  await x.testPrivate(3);
-}
-
-class Yon {
-  static emptyInstance() { return system.emptyClass(Yon, [["p1", 0]]);};
-  p1 = 0;
-
-  asString() {
-    return "empty Abstract Class Yon";
-  }
-}
-
-class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, []);};
-  async setP1(a) {
-    this._Yon.p1 = a;
-  }
-
-  asString() {
-    return "empty Abstract Class Foo";
-  }
-}
-
-class Bar {
-  static emptyInstance() { return system.emptyClass(Bar, []);};
-  _Foo = new Foo(); _Yon = new Yon();
-  constructor() {
-
-  }
-
-  async testPrivate(a) {
-    await this._Foo.setP1(a);
-    system.printLine(_stdlib.asString(this._Yon.p1));
-  }
-
-}
-return [main, _tests];}`;
-
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "3");
+    assertDoesNotCompile(fileImpl, ["Cannot access private member p1 in abstract class"]);
   });
 
   test("Fail_AbstractClassCannotInheritFromConcreteClass", async () => {

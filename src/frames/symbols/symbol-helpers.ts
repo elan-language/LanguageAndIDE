@@ -1,4 +1,6 @@
 import { Property } from "../class-members/property";
+import { CompileError } from "../compile-error";
+import { cannotAccessPrivateMemberInAbstractClass } from "../compile-rules";
 import { ClassFrame } from "../globals/class-frame";
 import { isClass, isFile, isMember, isScope } from "../helpers";
 import { AstNode } from "../interfaces/ast-node";
@@ -84,21 +86,30 @@ export function isMemberOnFieldsClass(s: ElanSymbol, transforms: Transforms, sco
   return isMember(s) && isMember(matchingMember) && s.getClass() === matchingMember.getClass();
 }
 
-export function scopePrefix(procSymbol: ElanSymbol, scope: Scope) {
-  if (procSymbol.symbolScope === SymbolScope.stdlib) {
+export function scopePrefix(
+  symbol: ElanSymbol,
+  compileErors: CompileError[],
+  scope: Scope,
+  location: string,
+) {
+  if (symbol.symbolScope === SymbolScope.stdlib) {
     return `_stdlib.`;
   }
 
-  if (isMember(procSymbol) && procSymbol.private) {
-    const procClass = procSymbol.getClass();
+  if (isMember(symbol) && symbol.private) {
+    const symbolClass = symbol.getClass();
     const thisClass = getClassScope(scope);
 
-    if (procClass !== thisClass) {
-      return `this._${procClass.symbolId}.`;
+    if (symbolClass !== thisClass) {
+      if (isClass(thisClass) && thisClass.abstract) {
+        cannotAccessPrivateMemberInAbstractClass(symbol.symbolId, compileErors, location);
+      }
+
+      return `this._${symbolClass.symbolId}.`;
     }
   }
 
-  if (procSymbol.symbolScope === SymbolScope.property) {
+  if (symbol.symbolScope === SymbolScope.property) {
     return `this.`;
   }
 

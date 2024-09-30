@@ -189,7 +189,9 @@ export class CallStatement extends AbstractFrame implements Statement {
       }
 
       const pp = passedParameters.join(", ");
-      const q = qualifier ? `${qualifier.compile()}` : scopePrefix(procSymbol, this);
+      const q = qualifier
+        ? `${qualifier.compile()}`
+        : scopePrefix(procSymbol, this.compileErrors, this, this.htmlId);
       const a = isAsync ? "await " : "";
       let prefix = "";
       let postfix = "";
