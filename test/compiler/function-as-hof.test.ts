@@ -71,7 +71,7 @@ async function main() {
 }
 
 async function printModified(i, f) {
-  system.printLine(_stdlib.asString(f(i)));
+  system.printLine(_stdlib.asString(f()));
 }
 
 function twice() {
