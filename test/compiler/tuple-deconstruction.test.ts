@@ -46,6 +46,122 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "3Apple");
   });
 
+  test("Pass_DeconstructIntoExistingVariablesWithDiscard1", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var x set to (3, "Apple")
+  var z set to ""
+  set _, z to x
+  print z
+end main
+`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var x = system.tuple([3, "Apple"]);
+  var z = "";
+  [, z] = x;
+  system.printLine(_stdlib.asString(z));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "Apple");
+  });
+
+  test("Pass_DeconstructIntoExistingVariablesWithDiscard2", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var x set to (3, "Apple")
+  var y set to 0
+  set y, _ to x
+  print y
+end main
+`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var x = system.tuple([3, "Apple"]);
+  var y = 0;
+  [y, ] = x;
+  system.printLine(_stdlib.asString(y));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "3");
+  });
+
+  test("Pass_DeconstructIntoExistingVariablesWithDiscard3", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var x set to (3, "Apple", 4)
+  var z set to ""
+  set _, z, _ to x
+  print z
+end main
+`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var x = system.tuple([3, "Apple", 4]);
+  var z = "";
+  [, z, ] = x;
+  system.printLine(_stdlib.asString(z));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "Apple");
+  });
+
+  test("Pass_DeconstructIntoExistingVariablesWithDiscard4", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var x set to (3, "Apple", 4)
+  var y set to 0
+  set _, _, y to x
+  print y
+end main
+`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var x = system.tuple([3, "Apple", 4]);
+  var y = 0;
+  [, , y] = x;
+  system.printLine(_stdlib.asString(y));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "4");
+  });
+
   test("Pass_DeconstructIntoLetVariables", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 

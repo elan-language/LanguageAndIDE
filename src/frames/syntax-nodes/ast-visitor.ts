@@ -75,6 +75,7 @@ import { CompositeAsn } from "./composite-asn";
 import { CsvAsn } from "./csv-asn";
 import { DeconstructedListAsn } from "./deconstructed-list-asn";
 import { DeconstructedTupleAsn } from "./deconstructed-tuple-asn";
+import { DiscardAsn } from "./discard-asn";
 import { EmptyAsn } from "./empty-asn";
 import { EmptyTypeAsn } from "./empty-type-asn";
 import { ExprAsn } from "./expr-asn";
@@ -307,6 +308,9 @@ export function transform(
   }
 
   if (node instanceof PunctuationNode) {
+    if (node.fixedText === "_") {
+      return new DiscardAsn("_", fieldId);
+    }
     return undefined;
   }
 
@@ -378,8 +382,8 @@ export function transform(
   }
 
   if (node instanceof DeconstructedList) {
-    const hd = node.head!.matchedText;
-    const tl = node.tail!.matchedText;
+    const hd = transform(node.head, fieldId, scope)!;
+    const tl = transform(node.tail, fieldId, scope)!;
     return new DeconstructedListAsn(hd, tl, fieldId, scope);
   }
 

@@ -47,6 +47,64 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "1[2, 3]");
   });
 
+  test("Pass_DeconstructIntoExistingVariablesWithDiscard1", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var a set to [1,2,3]
+  var y set to empty [Int]
+  set _:y to a
+  print y
+end main
+`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.literalArray([1, 2, 3]);
+  var y = system.emptyArray();
+  [, y] = system.deconstructList(a);
+  system.printLine(_stdlib.asString(y));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[2, 3]");
+  });
+
+  test("Pass_DeconstructIntoExistingVariablesWithDiscard2", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var a set to [1,2,3]
+  var x set to 1
+  set x:_ to a
+  print x
+end main
+`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.literalArray([1, 2, 3]);
+  var x = 1;
+  [x, ] = system.deconstructList(a);
+  system.printLine(_stdlib.asString(x));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1");
+  });
+
   test("Pass_DeconstructIntoNewVariables", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
