@@ -128,12 +128,12 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  print div(7, 2)
+  print 7 div 2
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  system.printLine(_stdlib.asString(_stdlib.div(7, 2)));
+  system.printLine(_stdlib.asString(Math.floor(7 / 2)));
 }
 return [main, _tests];}`;
 
@@ -150,12 +150,12 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  print mod(11, 3)
+  print 11 mod 3
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  system.printLine(_stdlib.asString(_stdlib.mod(11, 3)));
+  system.printLine(_stdlib.asString(11 % 3));
 }
 return [main, _tests];}`;
 
@@ -172,12 +172,12 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  print if mod(25, 20) < 19 then 1 else 2
+  print if (25 mod 20) < 19 then 1 else 2
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  system.printLine(_stdlib.asString(_stdlib.mod(25, 20) < 19 ? 1 : 2));
+  system.printLine(_stdlib.asString((25 % 20) < 19 ? 1 : 2));
 }
 return [main, _tests];}`;
 

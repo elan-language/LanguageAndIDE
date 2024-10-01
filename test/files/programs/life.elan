@@ -1,4 +1,4 @@
-# 971e825673f1ffba9c9963a0770303e2376ddf82dff6bfb597eadbc43e67708c Elan Beta 2 valid
+# FFFF Elan Beta 2 valid
 
 main
   var gr set to new BlockGraphics()
@@ -39,11 +39,11 @@ function s(c as Int) return Int
 end function
 
 function e(c as Int) return Int
-  return if mod(c, 40) < 39 then c + 1 else c - 39
+  return if (c mod 40) < 39 then c + 1 else c - 39
 end function
 
 function w(c as Int) return Int
-  return if mod(c, 40) > 0 then c - 1 else c + 39
+  return if (c mod 40) > 0 then c - 1 else c + 39
 end function
 
 function neighbourCells(c as Int) return [Int]

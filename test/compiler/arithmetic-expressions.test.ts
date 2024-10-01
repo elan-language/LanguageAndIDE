@@ -191,16 +191,16 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  var x set to mod(11, 3)
-  var y set to mod(5 + 6, 3)
+  var x set to 11 mod 3
+  var y set to (5 + 6) mod 3
   print x
   print y
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var x = _stdlib.mod(11, 3);
-  var y = _stdlib.mod(5 + 6, 3);
+  var x = 11 % 3;
+  var y = (5 + 6) % 3;
   system.printLine(_stdlib.asString(x));
   system.printLine(_stdlib.asString(y));
 }
@@ -219,16 +219,16 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  var x set to div(11, 3)
-  var y set to div(5 + 6, 3)
+  var x set to 11 div 3
+  var y set to (5 + 6) div 3
   print x
   print y
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var x = _stdlib.div(11, 3);
-  var y = _stdlib.div(5 + 6, 3);
+  var x = Math.floor(11 / 3);
+  var y = Math.floor((5 + 6) / 3);
   system.printLine(_stdlib.asString(x));
   system.printLine(_stdlib.asString(y));
 }

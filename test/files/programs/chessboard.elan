@@ -1,4 +1,4 @@
-# bfc278c8d0579a456931e698b9f9d4e12e756cc6c30d7735c02971565263b688 Elan Beta 2 valid
+# FFFF Elan Beta 2 valid
 
 # This is not a chess game: it's a demo of how you could draw a chess board
 main
@@ -12,7 +12,7 @@ function addBoard(gr as BlockGraphics) return BlockGraphics
   var gr2 set to gr
   for x from 0 to 7 step 1
     for y from 0 to 7 step 1
-      let colour be if mod(x + y, 2) is 1 then black else white
+      let colour be if (x + y) mod 2 is 1 then black else white
       set gr2 to addSquare(gr2, x*3, y*3, colour)
     end for
   end for

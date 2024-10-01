@@ -1,4 +1,4 @@
-# 05cc419a3d4ebf176e6f86bab7cdeac31b9d645917d45ea7b6f49dd401a41974 Elan Beta 2 valid
+# FFFF Elan Beta 2 valid
 
 main
   let fruit be ["apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"]
@@ -24,7 +24,7 @@ function binarySearch(list as [String], item as String) return Boolean
   var result set to false
   if list.length() > 0
     then
-      let mid be div(list.length(), 2)
+      let mid be list.length() div 2
       let value be list[mid]
       if item is value
         then

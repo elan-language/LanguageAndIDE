@@ -294,14 +294,14 @@ return [main, _tests];}`;
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
-  print source.maxBy(lambda x as Int => mod(x, 5))
+  print source.maxBy(lambda x as Int => x mod 5)
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
 
 async function main() {
-  system.printLine(_stdlib.asString(_stdlib.maxBy(source, (x) => _stdlib.mod(x, 5))));
+  system.printLine(_stdlib.asString(_stdlib.maxBy(source, (x) => x % 5)));
 }
 return [main, _tests];}`;
 
@@ -419,14 +419,14 @@ return [main, _tests];}`;
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
-  print source.minBy(lambda x as Int => mod(x, 5))
+  print source.minBy(lambda x as Int => x mod 5)
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
 
 async function main() {
-  system.printLine(_stdlib.asString(_stdlib.minBy(source, (x) => _stdlib.mod(x, 5))));
+  system.printLine(_stdlib.asString(_stdlib.minBy(source, (x) => x % 5)));
 }
 return [main, _tests];}`;
 
@@ -445,7 +445,7 @@ return [main, _tests];}`;
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
   print source.any(lambda x as Int => x > 20)
-  print source.any(lambda x as Int => mod(x, 2) is 0)
+  print source.any(lambda x as Int => (x mod 2) is 0)
   print source.any(lambda x as Int => x > 40)
 end main`;
 
@@ -454,7 +454,7 @@ const source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
 
 async function main() {
   system.printLine(_stdlib.asString(_stdlib.any(source, (x) => x > 20)));
-  system.printLine(_stdlib.asString(_stdlib.any(source, (x) => _stdlib.mod(x, 2) === 0)));
+  system.printLine(_stdlib.asString(_stdlib.any(source, (x) => (x % 2) === 0)));
   system.printLine(_stdlib.asString(_stdlib.any(source, (x) => x > 40)));
 }
 return [main, _tests];}`;

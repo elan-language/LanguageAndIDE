@@ -304,13 +304,6 @@ export class StdLib {
   trim(s: string): string {
     return s.trim();
   }
-  mod(n: number, d: number) {
-    return n % d;
-  }
-
-  div(n: number, d: number) {
-    return this.floor(n / d);
-  }
 
   floor(n: number) {
     return Math.floor(n);
