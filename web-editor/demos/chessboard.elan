@@ -1,0 +1,36 @@
+# bfc278c8d0579a456931e698b9f9d4e12e756cc6c30d7735c02971565263b688 Elan Beta 2 valid
+
+# This is not a chess game: it's a demo of how you could draw a chess board
+main
+  var gr set to new BlockGraphics()
+  set gr to gr.withBackground(darkGreen)
+  set gr to addBoard(gr)
+  call gr.draw()
+end main
+
+function addBoard(gr as BlockGraphics) return BlockGraphics
+  var gr2 set to gr
+  for x from 0 to 7 step 1
+    for y from 0 to 7 step 1
+      let colour be if mod(x + y, 2) is 1 then black else white
+      set gr2 to addSquare(gr2, x*3, y*3, colour)
+    end for
+  end for
+  return gr2
+end function
+
+function addSquare(gr as BlockGraphics, x as Int, y as Int, colour as Int) return BlockGraphics
+  var gr2 set to gr
+  for col from x to x + 2 step 1
+    for row from y to y + 2 step 1
+      set gr2 to gr2.withBlock(col, row, colour)
+    end for
+  end for
+  return gr2
+end function
+
+constant white set to 0xffffff
+
+constant black set to 0x000000
+
+constant darkGreen set to 0x008000

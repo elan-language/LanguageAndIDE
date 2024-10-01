@@ -1,11 +1,11 @@
-# 27ff613829468660bfea1f903f00ae01e2eafa6624dbe1d25d371204d2274e78 Elan Beta 2 valid
+# fc70ed055f3b561cbeae4ed55f921776885a53ef5d105eac8223e264c47614ce Elan Beta 2 valid
 
 # This is *not* a card game: it's a demo of how you could *start* to draw cards for such game
 main
   var gr set to new BlockGraphics()
-  set gr to gr.withBackground("", black, green)
-  var card1 set to new Card(Rank.ace, Suit.hearts)
-  var card2 set to new Card(Rank.two, Suit.spades)
+  set gr to gr.withBackground(green)
+  let card1 be new Card(Rank.ace, Suit.hearts)
+  let card2 be new Card(Rank.two, Suit.spades)
   set gr to placeCard(gr, card1, 1, 1)
   set gr to placeCard(gr, card2, 8, 1)
   call gr.draw()
@@ -16,15 +16,14 @@ function placeCard(gr as BlockGraphics, c as Card, x as Int, y as Int) return Bl
   for row from y to y + 8 step 1
     for col from x to x + 5 step 1
       set gr2 to gr2.withBlock(col, row, white)
-      set gr2 to gr2.putForeground(col, row, c.colour)
     end for
   end for
-  set gr2 to gr2.putChar(x, y, c.label)
-  set gr2 to gr2.putChar(x + 1, y, c.symbol)
+  set gr2 to gr2.withText(x, y, c.label, c.colour, white)
+  set gr2 to gr2.withText(x + 1, y, c.symbol, c.colour, white)
   return gr2
 end function
 
-class Card
+immutable class Card
   constructor(rank as Rank, suit as Suit)
     set property.rank to rank
     set property.suit to suit

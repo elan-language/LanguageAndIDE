@@ -1,0 +1,41 @@
+# 18dc981f16136c773d42b066a2a5526e2f7e93917ce7371465e60abcff7993da Elan Beta 2 valid
+
+main
+  var g set to new BlockGraphics()
+  var x set to 20
+  var y set to 15
+  while true
+    set g to g.withText(x, y, "*", red, black)
+    call g.draw()
+    call pause(50)
+    set g to g.withBlock(x, y, black)
+    call g.draw()
+    let r be randomInt(0, 3)
+    switch r
+      case 0
+        set x to x - 1
+        if x < 0
+          then
+            set x to 0
+        end if
+      case 1
+        set x to x + 1
+        if x > 39
+          then
+            set x to 39
+        end if
+      case 2
+        set y to y - 1
+        if y < 0
+          then
+            set y to 0
+        end if
+      case 3
+        set y to y + 1
+        if y > 29
+          then
+            set y to 29
+        end if
+    end switch
+  end while
+end main

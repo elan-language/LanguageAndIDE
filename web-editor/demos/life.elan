@@ -1,9 +1,8 @@
-# FFFF Elan Beta 2 valid
+# f8da1740aaf9d495258cfd29900d7883808e3806bcae54078e1b91e84c0740e5 Elan Beta 2 valid
 
 main
   print "Press any key to halt"
   var gr set to new BlockGraphics()
-  set gr to gr.withBackground("", black, white)
   var grid set to empty [Boolean]
   call fillRandom(grid)
   var cont set to true
@@ -19,7 +18,7 @@ main
   end while
 end main
 
-procedure fillRandom(starter as [Boolean])
+procedure fillRandom(out starter as [Boolean])
   for i from 0 to 1199 step 1
     call starter.append(random() > 0.5)
   end for
@@ -29,8 +28,8 @@ function updateGraphics(grid as [Boolean], gr as BlockGraphics) return BlockGrap
   var gr2 set to gr
   for row from 0 to 29 step 1
     for col from 0 to 39 step 1
-      var cell set to grid[row*40 + col]
-      var colour set to if cell then black else white
+      let cell be grid[row*40 + col]
+      let colour be if cell then black else white
       set gr2 to gr2.withBlock(col, row, colour)
     end for
   end for
