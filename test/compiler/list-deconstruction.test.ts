@@ -303,6 +303,64 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "1Int{2, 3}{Int}");
   });
 
+  test("Pass_DeconstructIntoLetVariablesWithDiscard1", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var a set to {1,2,3}
+  let x:_ be a
+  print x
+  print typeof x
+end main
+`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.list([1, 2, 3]);
+  const [x, ] = system.deconstructList(a);
+  system.printLine(_stdlib.asString(x));
+  system.printLine(_stdlib.asString("Int"));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1Int");
+  });
+
+  test("Pass_DeconstructIntoLetVariablesWithDiscard2", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var a set to {1,2,3}
+  let _:y be a
+  print y
+  print typeof y
+end main
+`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.list([1, 2, 3]);
+  const [, y] = system.deconstructList(a);
+  system.printLine(_stdlib.asString(y));
+  system.printLine(_stdlib.asString("{Int}"));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "{2, 3}{Int}");
+  });
+
   test("Pass_DeconstructNewOneElement", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
@@ -553,6 +611,42 @@ end main
     assertDoesNotCompile(fileImpl, [
       "Incompatible types Array to List try converting with '.asList()'",
     ]);
+  });
+
+  test("Fail_DeconstructIntoWrongType1WithDiscard", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var a set to [1,2]
+  var x set to ""
+  set x:_ to a
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
+  });
+
+  test("Fail_DeconstructIntoWrongType2WithDiscard", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var a set to [1,2]
+  var y set to empty [String]
+  set _:y to a
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
   });
 
   test("Fail_CannotDeconstruct1", async () => {

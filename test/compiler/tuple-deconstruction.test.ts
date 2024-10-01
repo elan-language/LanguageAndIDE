@@ -599,6 +599,25 @@ end main
     assertDoesNotCompile(fileImpl, ["May not reassign z"]);
   });
 
+  test("Fail_DeconstructIntoWrongTypeWithDiscard", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var x set to (3, "Apple")
+  var y set to ""
+  set y, _ to x
+  print y
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
+  });
+
   test("Fail_DeconstructIntoExistingLetVariables", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 

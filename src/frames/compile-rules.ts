@@ -721,6 +721,10 @@ export function mustBeCompatibleType(
 
     mustBeCompatibleType(lhs.tailType, rhs, compileErrors, location);
 
+    if (isGenericSymbolType(rhs)) {
+      mustBeCompatibleType(lhs.headType, rhs.ofType, compileErrors, location);
+    }
+
     return;
   }
 
