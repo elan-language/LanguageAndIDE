@@ -1,4 +1,4 @@
-# b0438d801e05be6d4b7e16bb5ac3a2159a1a0c83312f5aa6a906e5275669984d Elan Beta 2 valid
+# 7d4720f2e3a70d056d557e36fed4e4694536ae06db9e424536da68398a51c8ee Elan Beta 2 valid
 
 main
   let start be new Point(5, 5)
@@ -11,17 +11,10 @@ main
   call gr.draw()
   var solver set to new Solver(nodes, start, destination)
   var exit set to false
-  while not exit
+  while true
     let option be inputString(algPrompt)
-    if option is "x"
-      then
-        set exit to true
-        call gr.clearGraphics()
-        call clearConsole()
-      else
-        let alg be algFromLetter[option]
-        call runSolver(gr, start, destination, rocks, solver, alg)
-    end if
+    let alg be algFromLetter[option]
+    call runSolver(gr, start, destination, rocks, solver, alg)
   end while
 end main
 
@@ -202,7 +195,7 @@ class Solver
     var node set to getNodeFor(destination)
     repeat
       let previous be node.via
-      let p be node.bepoint
+      let p be node.point
       set length to length + p.minDistTo(previous)
       set route to route.withInsert(0, previous)
       set node to getNodeFor(previous)
@@ -281,7 +274,7 @@ constant infinity set to 2000.0
 
 constant algFromLetter set to {"a":Algorithm.aStar, "d":Algorithm.dijkstra, "h":Algorithm.heuristic}
 
-constant algPrompt set to "\n'a' for A-star \n'd' for Dijkstra \n'h' for Heuristic \n'x' to exit\nEnter option: "
+constant algPrompt set to "\n'a' for A-star \n'd' for Dijkstra \n'h' for Heuristic \nEnter option: "
 
 constant lightBlue set to 0x80abff
 
