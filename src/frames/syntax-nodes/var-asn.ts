@@ -5,36 +5,27 @@ import {
   mustBeKnownSymbol,
   mustBePublicMember,
 } from "../compile-rules";
-import { isScope } from "../helpers";
 import { AstIndexableNode } from "../interfaces/ast-indexable-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
-import { ElanSymbol } from "../interfaces/elan-symbol";
-import { Frame } from "../interfaces/frame";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
-import { globalKeyword } from "../keywords";
 import { AbstractDictionaryType } from "../symbols/abstract-dictionary-type";
 import { ArrayType } from "../symbols/array-list-type";
-import { ClassType } from "../symbols/class-type";
 import { IntType } from "../symbols/int-type";
 import { ListType } from "../symbols/list-type";
 import {
-  getClassScope,
-  getGlobalScope,
   isDictionarySymbolType,
   isGenericSymbolType,
   isMemberOnFieldsClass,
   scopePrefix,
+  updateScope,
 } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
-import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { isAstIdNode, transforms } from "./ast-helpers";
+import { transforms } from "./ast-helpers";
 import { IndexAsn } from "./index-asn";
-import { QualifierAsn } from "./qualifier-asn";
 import { RangeAsn } from "./range-asn";
-import { ThisAsn } from "./this-asn";
 
 export class VarAsn extends AbstractAstNode implements AstIndexableNode {
   constructor(
@@ -85,33 +76,11 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
     return code;
   }
 
-  updateScope() {
-    let currentScope: Scope;
-    const classScope = this.qualifier ? this.qualifier.symbolType() : undefined;
-    if (classScope instanceof ClassType) {
-      const classSymbol = this.scope.resolveSymbol(classScope.className, transforms(), this.scope);
-      // replace scope with class scope
-      currentScope = isScope(classSymbol) ? classSymbol : this.scope;
-    } else {
-      currentScope = this.scope.getParentScope();
-    }
-
-    return currentScope;
-  }
-
   compile(): string {
     this.compileErrors = [];
-    let symbol: ElanSymbol = new UnknownSymbol(this.id);
 
-    const classScope = this.qualifier ? this.qualifier.symbolType() : undefined;
-    if (classScope instanceof ClassType) {
-      const classSymbol = this.scope.resolveSymbol(classScope.className, transforms(), this.scope);
-      if (isScope(classSymbol)) {
-        symbol = classSymbol.resolveSymbol(this.id, transforms(), classSymbol);
-      }
-    } else {
-      symbol = this.scope.getParentScope().resolveSymbol(this.id, transforms(), this.scope);
-    }
+    const currentScope = updateScope(this.qualifier, this.scope);
+    const symbol = currentScope.resolveSymbol(this.id, transforms(), this.scope);
 
     if (!isMemberOnFieldsClass(symbol, transforms(), this.scope)) {
       mustBePublicMember(symbol, this.compileErrors, this.fieldId);
@@ -140,7 +109,7 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
   }
 
   rootSymbolType() {
-    const currentScope = this.updateScope();
+    const currentScope = updateScope(this.qualifier, this.scope);
     const rootType = currentScope
       .resolveSymbol(this.id, transforms(), this.scope)
       .symbolType(transforms());
@@ -168,7 +137,7 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
   }
 
   get symbolScope() {
-    const currentScope = this.updateScope();
+    const currentScope = updateScope(this.qualifier, this.scope);
     const symbol = currentScope.resolveSymbol(this.id, transforms(), this.scope);
     return symbol.symbolScope;
   }
