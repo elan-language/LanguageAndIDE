@@ -637,7 +637,7 @@ return [main, _tests];}`;
     ]);
   });
 
-  test("Fail_expressionForExpected", async () => {
+  test("Pass_expressionForExpected", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
@@ -655,7 +655,26 @@ end test
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+
+}
+
+function square(x) {
+  return x ** 2;
+}
+
+_tests.push(["test10", async (_outcomes) => {
+  _outcomes.push(system.assert(square(3), 3 * 3, "assert13", _stdlib));
+}]);
+return [main, _tests];}`;
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertTestObjectCodeExecutes(fileImpl, [
+      ["test10", [new AssertOutcome(TestStatus.pass, "9", "9", "assert13")]],
+    ]);
   });
 
   test("Fail_AssertOutsideAtest", async () => {

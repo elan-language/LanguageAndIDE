@@ -9,15 +9,13 @@ import { AbstractField } from "./abstract-field";
 export class AssertActualField extends AbstractField {
   constructor(holder: Frame) {
     super(holder);
-    this.placeholder = "result";
-    this.help = `May be a function call, or a variable defined in a prior statement.`;
   }
 
   initialiseRoot(): ParseNode {
     this.astNode = undefined;
-    const variableRef = () => new TermSimple();
-    const functionCall = () => new TermChained();
-    this.rootNode = new Alternatives([variableRef, functionCall]);
+    const termSimple = () => new TermSimple();
+    const termChained = () => new TermChained();
+    this.rootNode = new Alternatives([termSimple, termChained]);
     return this.rootNode;
   }
 

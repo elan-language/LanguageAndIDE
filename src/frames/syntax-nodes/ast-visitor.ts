@@ -63,8 +63,6 @@ import { TypeOfNode } from "../parse-nodes/type-of-node";
 import { TypeSimpleNode } from "../parse-nodes/type-simple-node";
 import { TypeTupleNode } from "../parse-nodes/type-tuple-node";
 import { UnaryExpression } from "../parse-nodes/unary-expression";
-import { VarRefCompound } from "../parse-nodes/var-ref-compound";
-import { VarRefNode } from "../parse-nodes/var-ref-node";
 import { SetStatement } from "../statements/set-statement";
 import { EnumType } from "../symbols/enum-type";
 import { wrapScopeInScope } from "../symbols/symbol-helpers";
@@ -296,10 +294,6 @@ export function transform(
     return undefined;
   }
 
-  if (node instanceof VarRefNode) {
-    return transform(node.bestMatch, fieldId, scope);
-  }
-
   if (node instanceof SetClause) {
     const id = node.property!.matchedText;
     const to = transform(node.expr, fieldId, scope) as ExprAsn;
@@ -392,14 +386,6 @@ export function transform(
     const pp = transformMany(node.args as CSV, fieldId, scope).items;
     return new NewAsn(type, pp, fieldId, scope);
   }
-
-  if (node instanceof VarRefCompound) {
-    const q = transform(node.optQualifier, fieldId, scope) as AstQualifierNode | undefined;
-    const id = node.simple!.matchedText;
-    const index = transform(node.index, fieldId, scope) as IndexAsn | undefined;
-    return new VarAsn(id, false, q, index, fieldId, scope);
-  }
-
   if (node instanceof TermSimple) {
     const alts = transform(node.alternatives, fieldId, scope) as ExprAsn;
     const index = transform(node.optIndex, fieldId, scope) as IndexAsn | undefined;
