@@ -9,11 +9,8 @@ export enum OperationSymbol {
   GT,
   GTE,
   LTE,
-  Div,
-  Mod,
   Divide,
   NotEquals,
   Pow,
   Or,
-  Xor,
 }

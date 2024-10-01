@@ -59,9 +59,7 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
       case OperationSymbol.Add:
       case OperationSymbol.Minus:
       case OperationSymbol.Multiply:
-      case OperationSymbol.Div:
       case OperationSymbol.Divide:
-      case OperationSymbol.Mod:
       case OperationSymbol.Pow:
         return true;
     }
@@ -83,7 +81,6 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
     switch (this.op) {
       case OperationSymbol.And:
       case OperationSymbol.Or:
-      case OperationSymbol.Xor:
         return true;
     }
     return false;
@@ -103,8 +100,6 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
         return "&&";
       case OperationSymbol.Or:
         return "||";
-      case OperationSymbol.Xor:
-        return "!=";
       case OperationSymbol.Equals:
         return "===";
       case OperationSymbol.NotEquals:
@@ -117,10 +112,6 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
         return ">=";
       case OperationSymbol.LTE:
         return "<=";
-      case OperationSymbol.Div:
-        return "/";
-      case OperationSymbol.Mod:
-        return "%";
       case OperationSymbol.Divide:
         return "/";
       case OperationSymbol.Pow:
@@ -184,10 +175,6 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
 
     const code = `${this.lhs.compile()} ${this.opToJs()} ${this.rhs.compile()}`;
 
-    if (this.op === OperationSymbol.Div) {
-      return `Math.floor(${code})`;
-    }
-
     return code;
   }
 
@@ -199,17 +186,11 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
         return this.MostPreciseSymbol(this.lhs.symbolType(), this.rhs.symbolType());
       case OperationSymbol.Multiply:
         return this.MostPreciseSymbol(this.lhs.symbolType(), this.rhs.symbolType());
-      case OperationSymbol.Div:
-        return IntType.Instance;
-      case OperationSymbol.Mod:
-        return IntType.Instance;
       case OperationSymbol.Divide:
         return FloatType.Instance;
       case OperationSymbol.And:
         return BooleanType.Instance;
       case OperationSymbol.Not:
-        return BooleanType.Instance;
-      case OperationSymbol.Xor:
         return BooleanType.Instance;
       case OperationSymbol.Equals:
         return BooleanType.Instance;
