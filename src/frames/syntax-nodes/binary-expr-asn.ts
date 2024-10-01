@@ -58,7 +58,9 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
       case OperationSymbol.Add:
       case OperationSymbol.Minus:
       case OperationSymbol.Multiply:
+      case OperationSymbol.Div:
       case OperationSymbol.Divide:
+      case OperationSymbol.Mod:
       case OperationSymbol.Pow:
         return true;
     }
@@ -109,6 +111,10 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
         return ">=";
       case OperationSymbol.LTE:
         return "<=";
+      case OperationSymbol.Div:
+        return "/";
+      case OperationSymbol.Mod:
+        return "%";
       case OperationSymbol.Divide:
         return "/";
       case OperationSymbol.Pow:
@@ -170,7 +176,13 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
       return `system.objectEquals(${this.lhs.compile()}, ${this.rhs.compile()})`;
     }
 
-    return `${this.lhs.compile()} ${this.opToJs()} ${this.rhs.compile()}`;
+    const code = `${this.lhs.compile()} ${this.opToJs()} ${this.rhs.compile()}`;
+
+    if (this.op === OperationSymbol.Div) {
+      return `Math.floor(${code})`;
+    }
+
+    return code;
   }
 
   symbolType() {
@@ -181,6 +193,10 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
         return this.MostPreciseSymbol(this.lhs.symbolType(), this.rhs.symbolType());
       case OperationSymbol.Multiply:
         return this.MostPreciseSymbol(this.lhs.symbolType(), this.rhs.symbolType());
+      case OperationSymbol.Div:
+        return IntType.Instance;
+      case OperationSymbol.Mod:
+        return IntType.Instance;
       case OperationSymbol.Divide:
         return FloatType.Instance;
       case OperationSymbol.And:

@@ -244,6 +244,8 @@ const opMap = new Map<OperationSymbol, string>([
   [OperationSymbol.GT, ">"],
   [OperationSymbol.GTE, ">="],
   [OperationSymbol.LTE, "<="],
+  [OperationSymbol.Div, "div"],
+  [OperationSymbol.Mod, "mod"],
   [OperationSymbol.Divide, "/"],
   [OperationSymbol.NotEquals, "isnt"],
   [OperationSymbol.Pow, "^"],
