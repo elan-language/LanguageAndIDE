@@ -337,16 +337,16 @@ class Foo {
 
 }
 
-_tests.push(["test77", async (_outcomes) => {
+_tests.push(["test76", async (_outcomes) => {
   var a = system.initialise(new Foo(3));
   var b = system.initialise(new Foo(3));
-  _outcomes.push(system.assert(a, b, "assert86", _stdlib));
+  _outcomes.push(system.assert(a, b, "assert85", _stdlib));
 }]);
 
 _tests.push(["test89", async (_outcomes) => {
   var a = Foo.emptyInstance();
   var b = Foo.emptyInstance();
-  _outcomes.push(system.assert(a, b, "assert98", _stdlib));
+  _outcomes.push(system.assert(a, b, "assert97", _stdlib));
 }]);
 return [main, _tests];}`;
 

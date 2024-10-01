@@ -25,6 +25,7 @@ import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { IfExpr } from "../parse-nodes/if-expr";
 import { ImmutableDictionaryNode } from "../parse-nodes/immutable-dictionary-node";
 import { IndexSingle } from "../parse-nodes/index-single";
+import { InheritanceNode } from "../parse-nodes/inheritanceNode";
 import { InstanceNode } from "../parse-nodes/instanceNode";
 import { InstanceProcRef } from "../parse-nodes/instanceProcRef";
 import { KeywordNode } from "../parse-nodes/keyword-node";
@@ -282,6 +283,11 @@ export function transform(
     const type = node.matchedText;
 
     return new TypeAsn(type, [], fieldId, scope);
+  }
+
+  if (node instanceof InheritanceNode) {
+    const types = transformMany(node.typeList as CSV, fieldId, scope).items;
+    return new TypeAsn("", types, fieldId, scope);
   }
 
   if (node instanceof EmptyOfTypeNode) {

@@ -153,11 +153,11 @@ suite("Editing Frames", () => {
   });
   test("Remove selector frame", () => {
     const file = T05_classes();
-    const fun = file.getById("func23") as GlobalFunction;
+    const fun = file.getById("func21") as GlobalFunction;
     let child1 = fun.getFirstChild();
-    const sel = file.getById("select24");
+    const sel = file.getById("select22");
     assert.equal(child1, sel);
-    const ret = file.getById("return28");
+    const ret = file.getById("return26");
     ret.select(true, false);
     ret.processKey(up());
     assert.equal(ret.isSelected(), false);
@@ -171,9 +171,9 @@ suite("Editing Frames", () => {
   });
   test("Cannot remove selector that is only statement", () => {
     const file = T05_classes();
-    const cons = file.getById("constructor5") as Constructor;
+    const cons = file.getById("constructor4") as Constructor;
     let child1 = cons.getFirstChild();
-    const sel = file.getById("select6");
+    const sel = file.getById("select5");
     assert.equal(child1, sel);
     sel.processKey(del());
     child1 = cons.getFirstChild();
@@ -346,14 +346,14 @@ suite("Editing Frames", () => {
     const file = await loadFileAsModelNew(`${__dirname}\\files\\testcode622.elan`);
     const runner = await createTestRunner();
     await file.refreshAllStatuses(runner);
-    const func9 = file.getById("func9");
+    const func9 = file.getById("func8");
     func9.select();
     func9.processKey(ctrl_x());
     const scratchpad = (file as FileImpl).getScratchPad();
     assert.equal(scratchpad.readFrames()?.length, 1);
     const class1 = file.getById("class1");
     class1.processKey(enter());
-    const sel18 = file.getById("select19") as GlobalSelector;
+    const sel18 = file.getById("select18") as GlobalSelector;
     sel18.select(true, false);
     sel18.processKey(ctrl_v());
     assert.equal(scratchpad.readFrames()?.length, 1);
