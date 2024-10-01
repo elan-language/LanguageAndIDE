@@ -9,10 +9,7 @@ import { AstIndexableNode } from "../interfaces/ast-indexable-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
-import { AbstractDictionaryType } from "../symbols/abstract-dictionary-type";
-import { ArrayType } from "../symbols/array-list-type";
 import { IntType } from "../symbols/int-type";
-import { ListType } from "../symbols/list-type";
 import {
   isDictionarySymbolType,
   isGenericSymbolType,
@@ -50,37 +47,36 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
     return this.index instanceof IndexAsn && !(this.index.index1 instanceof RangeAsn);
   }
 
-  wrapIndex(code: string): string {
-    return `system.safeIndex(${code})`;
-  }
-
-  getIndexType(rootType: SymbolType): [SymbolType, SymbolType] {
+  getIndexAndOfType(rootType: SymbolType): [SymbolType, SymbolType] {
     if (isGenericSymbolType(rootType)) {
       return [IntType.Instance, rootType.ofType];
     }
+
     if (isDictionarySymbolType(rootType)) {
       return [rootType.keyType, rootType.valueType];
     }
+
     return [UnknownType.Instance, UnknownType.Instance];
   }
 
-  compileIndex(rootType: SymbolType, index: IndexAsn, q: string, idx: string) {
+  compileIndex(rootType: SymbolType, index: IndexAsn, prefix: string, postfix: string) {
     mustBeIndexableSymbol(rootType, true, this.compileErrors, this.fieldId);
-    const [indexType] = this.getIndexType(rootType);
+    const [indexType] = this.getIndexAndOfType(rootType);
     mustBeCompatibleType(indexType, index.index1.symbolType(), this.compileErrors, this.fieldId);
 
-    let code = `${q}${this.id}, ${idx}`;
-    if (!this.isAssignable) {
-      code = this.wrapIndex(code);
-    }
-    return code;
+    const code = `${prefix}${this.id}, ${postfix}`;
+    return `system.safeIndex(${code})`;
+  }
+
+  getSymbol() {
+    const currentScope = updateScope(this.qualifier, this.scope);
+    return currentScope.resolveSymbol(this.id, transforms(), this.scope);
   }
 
   compile(): string {
     this.compileErrors = [];
 
-    const currentScope = updateScope(this.qualifier, this.scope);
-    const symbol = currentScope.resolveSymbol(this.id, transforms(), this.scope);
+    const symbol = this.getSymbol();
 
     if (!isMemberOnFieldsClass(symbol, transforms(), this.scope)) {
       mustBePublicMember(symbol, this.compileErrors, this.fieldId);
@@ -88,63 +84,34 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
 
     mustBeKnownSymbol(symbol, this.compileErrors, this.fieldId);
 
-    const q = scopePrefix(symbol, this.compileErrors, this.scope, this.fieldId);
-    const idx = this.index
+    const prefix = scopePrefix(symbol, this.compileErrors, this.scope, this.fieldId);
+    const postfix = this.index
       ? this.index.compile()
       : symbol.symbolScope === SymbolScope.outParameter
         ? "[0]"
         : "";
 
-    let code = `${q}${this.id}${idx}`;
-
-    if (this.isIndex()) {
-      const rootType = this.scope
-        .resolveSymbol(this.id, transforms(), this.scope)
-        .symbolType(transforms());
-
-      code = this.compileIndex(rootType, this.index!, q, idx);
-    }
-
-    return code;
+    return this.isIndex()
+      ? this.compileIndex(this.rootSymbolType(), this.index!, prefix, postfix)
+      : `${prefix}${this.id}${postfix}`;
   }
 
   rootSymbolType() {
-    const currentScope = updateScope(this.qualifier, this.scope);
-    const rootType = currentScope
-      .resolveSymbol(this.id, transforms(), this.scope)
-      .symbolType(transforms());
-    return rootType;
-  }
-
-  getOfType(rootType: SymbolType) {
-    if (rootType instanceof ListType || rootType instanceof ArrayType) {
-      return rootType.ofType;
-    }
-
-    if (rootType instanceof AbstractDictionaryType) {
-      return rootType.valueType;
-    }
-
-    return UnknownType.Instance;
+    return this.getSymbol().symbolType(transforms());
   }
 
   symbolType() {
     const rootType = this.rootSymbolType();
-    if (this.isIndex()) {
-      return this.getOfType(rootType);
-    }
-    return rootType;
+    return this.isIndex() ? this.getIndexAndOfType(rootType)[1] : rootType;
   }
 
   get symbolScope() {
-    const currentScope = updateScope(this.qualifier, this.scope);
-    const symbol = currentScope.resolveSymbol(this.id, transforms(), this.scope);
-    return symbol.symbolScope;
+    return this.getSymbol().symbolScope;
   }
 
   toString() {
-    const q = this.qualifier ? `${this.qualifier}` : "";
-    const idx = this.index ? `${this.index}` : "";
-    return `${q}${this.id}${idx}`;
+    const prefix = this.qualifier ? `${this.qualifier}` : "";
+    const postfix = this.index ? `${this.index}` : "";
+    return `${prefix}${this.id}${postfix}`;
   }
 }
