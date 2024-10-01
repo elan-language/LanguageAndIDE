@@ -8,6 +8,7 @@ import {
 import { ClassFrame } from "../globals/class-frame";
 import { isClass, isFile, isMember, isScope } from "../helpers";
 import { AstNode } from "../interfaces/ast-node";
+import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { Class } from "../interfaces/class";
 import { DeconstructedSymbolType } from "../interfaces/deconstructed-symbol-type";
 import { ElanSymbol } from "../interfaces/elan-symbol";
@@ -19,7 +20,7 @@ import { Parent } from "../interfaces/parent";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { globalKeyword, libraryKeyword } from "../keywords";
-import { isAstIdNode, isAstQualifiedNode } from "../syntax-nodes/ast-helpers";
+import { isAstIdNode, isAstQualifiedNode, transforms } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractDictionaryType } from "./abstract-dictionary-type";
 import { AbstractListType } from "./abstract-list-type";
@@ -432,4 +433,22 @@ export function getAllPrivateIds(start: ClassFrame, transforms: Transforms) {
   }
 
   return allNames;
+}
+
+export function updateScope(qualifier: AstQualifierNode | undefined, originalScope: Scope) {
+  let currentScope = originalScope;
+  const classScope = qualifier ? qualifier.symbolType() : undefined;
+  if (classScope instanceof ClassType) {
+    const classSymbol = originalScope.resolveSymbol(
+      classScope.className,
+      transforms(),
+      originalScope,
+    );
+    // replace scope with class scope
+    currentScope = isScope(classSymbol) ? classSymbol : originalScope;
+  } else {
+    currentScope = originalScope.getParentScope();
+  }
+
+  return currentScope;
 }
