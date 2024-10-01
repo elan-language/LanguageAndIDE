@@ -1,11 +1,11 @@
-# 94195efd951ae3147fb313aa7dca93e7e48c5788f40b6843ff84f8606c1c21e0 Elan Beta 2 valid
+# 898bfa5e969c0713881cdc455f8c7f2241777373fa4200db7bb5fc0b673a0686 Elan Beta 2 valid
 
 # Demo shows one way to implement a mergeSort function - using recursion
 # Since merge sort is always an 'out of place' sort, we have chosen to use immutable lists
 # It could be written with mutable lists, but the code for the merge function would need changing
 main
-  var li set to {"plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear"}
-  print mergeSort(li)
+  let fruit be {"plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear"}
+  print mergeSort(fruit)
 end main
 
 function mergeSort(li as {String}) return {String}

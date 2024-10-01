@@ -1,0 +1,252 @@
+# b8fbb933d7bd7eb6f7bd8c8579f69b21f5796cb94d76c3902df90207dae50576 Elan Beta 2 valid
+
+main
+  var possible set to validWords
+  var marking set to ""
+  var attempt set to "RAISE"
+  while marking isnt "*****"
+    print attempt
+    set marking to inputString("")
+    var possAnswers set to possibleAnswersAfterAttempt(possible, attempt, marking)
+    set attempt to bestAttempt(possAnswers.asList(), validWords)
+  end while
+end main
+
+function isGreen(attempt as String, target as String, n as Int) return Boolean
+  return target[n] is attempt[n]
+end function
+
+test isGreen
+  assert isGreen("ABCDE", "A____", 0) is true
+  assert isGreen("ABCDE", "____E", 4) is true
+  assert isGreen("ABCDE", "_A___", 1) is false
+  assert isGreen("BABBB", "B____", 1) is false
+end test
+
+function setChar(word as String, n as Int, newChar as String) return String
+  return word[..n] + newChar + word[n + 1..]
+end function
+
+test setChar
+  assert setChar("ABCDE", 0, "_") is "_BCDE"
+  assert setChar("ABCDE", 4, "_") is "ABCD_"
+end test
+
+function setAttemptIfGreen(attempt as String, target as String, n as Int) return String
+  return if isGreen(attempt, target, n) then setChar(attempt, n, "*") else attempt
+end function
+
+test setAttemptIfGreen
+  assert setAttemptIfGreen("ABCDE", "ABCDE", 0) is "*BCDE"
+  assert setAttemptIfGreen("ABCDE", "ABCDE", 4) is "ABCD*"
+  assert setAttemptIfGreen("BBCDE", "ABCDE", 0) is "BBCDE"
+  assert setAttemptIfGreen("ABCDE", "AACDE", 0) is "*BCDE"
+end test
+
+function setTargetIfGreen(attempt as String, target as String, n as Int) return String
+  return if isGreen(attempt, target, n) then setChar(target, n, ".") else target
+end function
+
+test setTargetIfGreen
+  assert setTargetIfGreen("ABCDE", "ABCDE", 0) is ".BCDE"
+  assert setTargetIfGreen("ABCDE", "ABCDE", 4) is "ABCD."
+  assert setTargetIfGreen("BBCDE", "ABCDE", 0) is "ABCDE"
+  assert setTargetIfGreen("ABCDE", "AACDE", 0) is ".ACDE"
+end test
+
+function evaluateGreens(attempt as String, target as String) return (String, String)
+  return letterPositions.reduce((attempt, target), lambda a as (String, String), x as Int => (setAttemptIfGreen(a.first(), a.second(), x), setTargetIfGreen(a.first(), a.second(), x)))
+end function
+
+test evaluateGreens
+  assert evaluateGreens("ABCDE", "AXXXX") is ("*BCDE", ".XXXX")
+  assert evaluateGreens("ABCDE", "XXXXE") is ("ABCD*", "XXXX.")
+  assert evaluateGreens("ABCDE", "ABCDE") is ("*****", ".....")
+  assert evaluateGreens("AACDE", "AXXXX") is ("*ACDE", ".XXXX")
+  assert evaluateGreens("ABCDE", "AAXXX") is ("*BCDE", ".AXXX")
+end test
+
+function isYellow(attempt as String, target as String, n as Int) return Boolean
+  return target.contains(attempt[n])
+end function
+
+test isYellow
+  assert isYellow("ABCDE", "____A", 0) is true
+  assert isYellow("ABCDE", "____A", 4) is false
+  assert isYellow("ABCDE", "___AA", 0) is true
+  assert isYellow("AACDE", "_A___", 1) is true
+  assert isYellow("AACDE", "__A__", 1) is true
+end test
+
+function setAttemptIfYellow(attempt as String, target as String, n as Int) return String
+  return if attempt[n] is "*" then attempt else if isYellow(attempt, target, n) then setChar(attempt, n, "+") else setChar(attempt, n, "_")
+end function
+
+test setAttemptIfYellow
+  assert setAttemptIfYellow("ABCDE", "EABCD", 0) is "+BCDE"
+  assert setAttemptIfYellow("ABCDE", "EABCD", 4) is "ABCD+"
+  assert setAttemptIfYellow("ABCDE", "BAAAA", 0) is "+BCDE"
+  assert setAttemptIfYellow("AAAAB", "EABBB", 4) is "AAAA+"
+end test
+
+function isAlreadyMarkedGreen(attempt as String, n as Int) return Boolean
+  return attempt[n] is "*"
+end function
+
+test isAlreadyMarkedGreen
+  assert isAlreadyMarkedGreen("AB*DE", 2) is true
+  assert isAlreadyMarkedGreen("AB*DE", 0) is false
+  assert isAlreadyMarkedGreen("AB*DE", 4) is false
+  assert isAlreadyMarkedGreen("*BCD*", 2) is false
+  assert isAlreadyMarkedGreen("*BCD*", 0) is true
+  assert isAlreadyMarkedGreen("*BCD*", 4) is true
+end test
+
+function setTargetIfYellow(attempt as String, target as String, n as Int) return String
+  return if isAlreadyMarkedGreen(attempt, n) then target else if isYellow(attempt, target, n) then setChar(target, target.indexOf(attempt[n]), ".") else target
+end function
+
+test setTargetIfYellow
+  assert setTargetIfYellow("ABCDE", "EABCD", 0) is "E.BCD"
+  assert setTargetIfYellow("ABCDE", "EABCD", 4) is ".ABCD"
+  assert setTargetIfYellow("ABCDE", "BAAAA", 0) is "B.AAA"
+  assert setTargetIfYellow("AAAAB", "EABEA", 4) is "EA.EA"
+  assert setTargetIfYellow("AAAAB", "EABBB", 4) is "EA.BB"
+  assert setTargetIfYellow("*BCDE", "*BCDA", 4) is "*BCDA"
+end test
+
+function evaluateYellows(attempt as String, target as String) return (String, String)
+  return letterPositions.reduce((attempt, target), lambda a as (String, String), x as Int => (setAttemptIfYellow(a.first(), a.second(), x), setTargetIfYellow(a.first(), a.second(), x)))
+end function
+
+test evaluateYellows
+  assert evaluateYellows("ABCDE", "XAXXX") is ("+____", "X.XXX")
+  assert evaluateYellows("ABCDE", "XXXXA") is ("+____", "XXXX.")
+  assert evaluateYellows("ABCDE", "XXXXE") is ("____+", "XXXX.")
+  assert evaluateYellows("ABCDE", "XAAXX") is ("+____", "X.AXX")
+  assert evaluateYellows("AACDE", "XAXXX") is ("+____", "X.XXX")
+  assert evaluateYellows("ABCDE", "BCDEA") is ("+++++", ".....")
+end test
+
+function markAttempt(attempt as String, target as String) return String
+  let greens be evaluateGreens(attempt, target)
+  let attemptAfterGreens be greens.first()
+  let targetAfterGreens be greens.second()
+  let markedAttempt be evaluateYellows(attemptAfterGreens, targetAfterGreens)
+  return markedAttempt.first()
+end function
+
+test markAttempt
+  assert markAttempt("ABCDE", "XXXXX") is "_____"
+  assert markAttempt("ABCDE", "BCDEA") is "+++++"
+  assert markAttempt("ABCDE", "ABCDE") is "*****"
+  assert markAttempt("SAINT", "LADLE") is "_*___"
+  assert markAttempt("IDEAL", "LADLE") is "_++++"
+  assert markAttempt("CABAL", "RECAP") is "+__*_"
+  assert markAttempt("CABAL", "RECAP") is "+__*_"
+  assert markAttempt("COLON", "GLORY") is "_++__"
+end test
+
+function possibleAnswersAfterAttempt(prior as List<of String>, attempt as String, mark as String) return List<of String>
+  return prior.filter(lambda w as String => markAttempt(attempt, w) is mark).asList()
+end function
+
+test possibleAnswersAfterAttempt
+  let prior be {"ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"}
+  assert possibleAnswersAfterAttempt(prior, "AAAAA", "*____") is {"ABCDE"}
+  assert possibleAnswersAfterAttempt(prior, "AXXXX", "+____") is {"BCDEA", "CDEAB", "DEABC", "EABCD"}
+  assert possibleAnswersAfterAttempt(prior, "AXXBX", "+__+_") is {"BCDEA", "CDEAB", "EABCD"}
+end test
+
+function maxWordCountRemainingAfterAttempt(possibleAnswers as List<of String>, attempt as String) return Int
+  let d be emptyDictionaryOfAllOutcomes
+  let d2 be possibleAnswers.reduce(d, lambda dd as {String:Int}, possAnswer as String => incrementCount(dd, possAnswer, attempt))
+  let keys be d2.keys()
+  return keys.reduce(0, lambda maxSoFar as Int, mark as String => if d2[mark] > maxSoFar then d2[mark] else maxSoFar)
+end function
+
+function incrementCount(dd as {String:Int}, possAnswer as String, attempt as String) return {String:Int}
+  let mark be markAttempt(attempt, possAnswer)
+  let keys be dd.keys()
+  let count be if keys.contains(mark) then dd[mark] else 0
+  let dd2 be dd.withPutAtKey(mark, count + 1)
+  return dd2
+end function
+
+test maxWordCountRemainingAfterAttempt
+  let prior be {"ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"}
+  let d be emptyDictionaryOfAllOutcomes
+  assert maxWordCountRemainingAfterAttempt(prior, "AAAAA") is 1
+  assert maxWordCountRemainingAfterAttempt(prior, "AXXXX") is 4
+  assert maxWordCountRemainingAfterAttempt(prior, "XXXXX") is 5
+end test
+
+function allRemainingWordCounts(possAnswers as {String}, possAttempts as List<of String>) return List<of WordCount>
+  let parallel be possAttempts
+  return parallel.map(lambda w as String => new WordCount(w, maxWordCountRemainingAfterAttempt(possAnswers, w))).asList()
+end function
+
+test allRemainingWordCounts
+  let possAnswers be {"AAAAA", "BBBBB", "CCCCC", "DDDDD"}
+  let possAttempts be {"ABABA", "BCBCB", "ABCBC"}
+  let expected be {new WordCount("ABABA", 2), new WordCount("BCBCB", 2), new WordCount("ABCBC", 1)}
+  assert allRemainingWordCounts(possAnswers, possAttempts) is expected
+end test
+
+function betterOf(wc1 as WordCount, wc2 as WordCount, possAnswers as List<of String>) return WordCount
+  let isBetter be wc2.count < wc1.count
+  let isEqualAndPossAnswer be (wc2.count is wc1.count) and possAnswers.contains(wc2.word)
+  return if isBetter or isEqualAndPossAnswer then wc2 else wc1
+end function
+
+test betterOf
+  let possAnswers be new List<of String>()
+  let b2 be new WordCount("B", 2)
+  let a3 be new WordCount("A", 3)
+  let a2 be new WordCount("A", 2)
+  assert betterOf(a3, b2, possAnswers) is b2
+  assert betterOf(b2, a3, possAnswers) is b2
+  assert betterOf(b2, a2, possAnswers) is b2
+  assert betterOf(a2, b2, possAnswers) is a2
+  let possAnswers2 be {"B"}
+  assert betterOf(a2, b2, possAnswers2) is b2
+  let possAnswers3 be {"B", "A"}
+  assert betterOf(a2, b2, possAnswers3) is b2
+  assert betterOf(b2, a2, possAnswers3) is a2
+end test
+
+function bestAttempt(possAnswers as {String}, possAttempts as {String}) return String
+  let wordCounts be allRemainingWordCounts(possAnswers, possAttempts)
+  let best be wordCounts.reduce(wordCounts.head(), lambda bestSoFar as WordCount, newWord as WordCount => betterOf(bestSoFar, newWord, possAnswers))
+  return best.word
+end function
+
+test bestAttempt
+  let possAnswers be {"ABCDE", "ABBBB", "EDCBA"}
+  let possAttempts be {"AAAAA", "BBBBB", "CCCCC", "DDDDD", "EEEEE", "EDCBA", "DEABC"}
+  assert bestAttempt(possAnswers, possAttempts) is "EDCBA"
+  let possAnswers2 be {"ABCDE", "ABBBB", "BCDEA"}
+  let possAttempts2 be {"AAAAA", "BBBBB", "CCCCC", "DDDDD", "EEEEE", "EDCBA", "DEABC"}
+  assert bestAttempt(possAnswers2, possAttempts2) is "BBBBB"
+end test
+
+immutable class WordCount
+  constructor(word as String, count as Int)
+    set property.word to word
+    set property.count to count
+  end constructor
+
+  property word as String
+
+  property count as Int
+
+end class
+
+constant letterPositions set to {0, 1, 2, 3, 4}
+
+constant emptyDictionaryOfAllOutcomes set to {"_____":0, "____+":0, "****_":0}
+
+# Lists of words below are truncated. Full lists are 2309 words & 15,000+ words respectively
+constant allPossibleAnswers set to {"ABACK", "ABASE", "ABATE", "ABBEY", "ABBOT", "ABHOR", "ABIDE", "ABLED", "ABODE", "ABORT", "ABOUT", "ABOVE"}
+
+constant validWords set to {"ABACK", "ABASE", "ABATE", "ABBEY", "ABBOT", "ABHOR", "ABIDE", "ABLED", "ABODE", "ABORT", "ABOUT", "ABOVE"}

@@ -19,6 +19,7 @@ export const LT = "<";
 export const GT = ">";
 export const LE = "<=";
 export const GE = ">=";
+export const UNDERSCORE = "_";
 
 export const DOUBLE_QUOTES = `"`;
 export const SINGLE_QUOTE = `'`;
