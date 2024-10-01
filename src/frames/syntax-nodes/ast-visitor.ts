@@ -382,8 +382,8 @@ export function transform(
   }
 
   if (node instanceof DeconstructedList) {
-    const hd = node.head!.matchedText;
-    const tl = node.tail!.matchedText;
+    const hd = transform(node.head, fieldId, scope)!;
+    const tl = transform(node.tail, fieldId, scope)!;
     return new DeconstructedListAsn(hd, tl, fieldId, scope);
   }
 
