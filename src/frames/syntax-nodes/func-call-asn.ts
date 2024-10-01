@@ -23,7 +23,6 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
     private scope: Scope,
   ) {
     super();
-    this.id = id.trim();
   }
 
   private precedingNode?: AstNode = undefined;

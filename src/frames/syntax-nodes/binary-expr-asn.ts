@@ -26,7 +26,6 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
     private readonly lhs: ExprAsn,
     private readonly rhs: ExprAsn,
     public readonly fieldId: string,
-    scope: Scope,
   ) {
     super();
   }
@@ -92,8 +91,6 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
         return "+";
       case OperationSymbol.Minus:
         return "-";
-      case OperationSymbol.Not:
-        return "!";
       case OperationSymbol.Multiply:
         return "*";
       case OperationSymbol.And:
@@ -173,9 +170,7 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
       return `system.objectEquals(${this.lhs.compile()}, ${this.rhs.compile()})`;
     }
 
-    const code = `${this.lhs.compile()} ${this.opToJs()} ${this.rhs.compile()}`;
-
-    return code;
+    return `${this.lhs.compile()} ${this.opToJs()} ${this.rhs.compile()}`;
   }
 
   symbolType() {
@@ -189,8 +184,6 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
       case OperationSymbol.Divide:
         return FloatType.Instance;
       case OperationSymbol.And:
-        return BooleanType.Instance;
-      case OperationSymbol.Not:
         return BooleanType.Instance;
       case OperationSymbol.Equals:
         return BooleanType.Instance;

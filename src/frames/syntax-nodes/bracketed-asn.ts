@@ -1,6 +1,5 @@
 import { CompileError } from "../compile-error";
 import { AstNode } from "../interfaces/ast-node";
-import { Scope } from "../interfaces/scope";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { ExprAsn } from "./expr-asn";
 
@@ -8,7 +7,6 @@ export class BracketedAsn extends AbstractAstNode implements AstNode {
   constructor(
     private readonly body: ExprAsn,
     public readonly fieldId: string,
-    private readonly scope: Scope,
   ) {
     super();
   }
