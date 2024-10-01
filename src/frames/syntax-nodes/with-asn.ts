@@ -3,15 +3,12 @@ import {
   mustBeClass,
   mustBeClassType,
   mustBeCompatibleType,
-  mustBeConcreteClass,
   mustBeImmutableType,
-  mustBeOfSymbolType,
   mustBePropertyAndPublic,
 } from "../compile-rules";
 import { isClass } from "../helpers";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstNode } from "../interfaces/ast-node";
-import { Class } from "../interfaces/class";
 import { Scope } from "../interfaces/scope";
 import { ClassType } from "../symbols/class-type";
 import { AbstractAstNode } from "./abstract-ast-node";
