@@ -5,7 +5,7 @@ import { Regexes } from "../src/frames/fields/regexes";
 import { FileImpl } from "../src/frames/file-impl";
 import { hash } from "../src/util";
 import { ignore_test, transforms } from "./compiler/compiler-test-helpers";
-import { T03_mainWithAllStatements } from "./model-generating-functions.";
+import { T03_mainWithAllStatements } from "./model-generating-functions";
 import { assertElementHasClasses, key } from "./testHelpers";
 
 suite("Misc Tests", () => {

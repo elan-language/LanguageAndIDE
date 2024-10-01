@@ -1,3 +1,4 @@
+import { ElanCompilerError } from "../../elan-compiler-error";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstNode } from "../interfaces/ast-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
@@ -520,5 +521,5 @@ export function transform(
     return new IdAsn(node.name?.matchedText ?? "", fieldId, true, scope);
   }
 
-  throw new Error("Not implemented " + (node ? node.constructor.name : "undefined"));
+  throw new ElanCompilerError("Unsupported node " + (node ? node.constructor.name : "undefined"));
 }

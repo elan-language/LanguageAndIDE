@@ -1,3 +1,4 @@
+import { ElanCompilerError } from "../../elan-compiler-error";
 import { isFile, isFrame, isFunction } from "../helpers";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstIdNode } from "../interfaces/ast-id-node";
@@ -20,15 +21,10 @@ import { StringType } from "../symbols/string-type";
 import { TupleType } from "../symbols/tuple-type";
 import { UnknownType } from "../symbols/unknown-type";
 import { transform, transformMany } from "./ast-visitor";
-import { ChainedAsn } from "./chained-asn";
 import { DeconstructedListAsn } from "./deconstructed-list-asn";
 import { DeconstructedTupleAsn } from "./deconstructed-tuple-asn";
 import { OperationSymbol } from "./operation-symbol";
 import { Transforms } from "./transforms";
-
-export function isAstChainedNode(n: AstNode): n is ChainedAsn {
-  return !!n && "updateScopeAndChain" in n;
-}
 
 export function isAstQualifiedNode(n: AstNode): n is AstQualifiedNode {
   return !!n && "qualifier" in n;
@@ -262,7 +258,7 @@ export function mapOperationSymbol(os: OperationSymbol) {
   if (op) {
     return op;
   }
-  throw new Error("Not implemented");
+  throw new ElanCompilerError(`Cannot map operation symbol ${os}`);
 }
 
 export function mapOperation(op: string): OperationSymbol {
@@ -273,7 +269,7 @@ export function mapOperation(op: string): OperationSymbol {
       return e[0];
     }
   }
-  throw new Error("Not implemented");
+  throw new ElanCompilerError(`Cannot map operation ${op}`);
 }
 
 export function wrapDeconstruction(lhs: AstNode, code: string) {

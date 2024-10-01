@@ -13,7 +13,6 @@ import { Frame } from "../interfaces/frame";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { globalKeyword } from "../keywords";
-import { LetStatement } from "../statements/let-statement";
 import { AbstractDictionaryType } from "../symbols/abstract-dictionary-type";
 import { ArrayType } from "../symbols/array-list-type";
 import { ClassType } from "../symbols/class-type";
@@ -56,10 +55,6 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
     return this.compileErrors.concat(q).concat(i);
   }
 
-  isRange() {
-    return this.index instanceof IndexAsn && this.index.index1 instanceof RangeAsn;
-  }
-
   isIndex() {
     return this.index instanceof IndexAsn && !(this.index.index1 instanceof RangeAsn);
   }
@@ -90,6 +85,20 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
     return code;
   }
 
+  updateScope() {
+    let currentScope: Scope;
+    const classScope = this.qualifier ? this.qualifier.symbolType() : undefined;
+    if (classScope instanceof ClassType) {
+      const classSymbol = this.scope.resolveSymbol(classScope.className, transforms(), this.scope);
+      // replace scope with class scope
+      currentScope = isScope(classSymbol) ? classSymbol : this.scope;
+    } else {
+      currentScope = this.scope.getParentScope();
+    }
+
+    return currentScope;
+  }
+
   compile(): string {
     this.compileErrors = [];
     let symbol: ElanSymbol = new UnknownSymbol(this.id);
@@ -100,8 +109,6 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
       if (isScope(classSymbol)) {
         symbol = classSymbol.resolveSymbol(this.id, transforms(), classSymbol);
       }
-    } else if (isAstIdNode(this.qualifier?.value) && this.qualifier.value.id === globalKeyword) {
-      symbol = getGlobalScope(this.scope).resolveSymbol(this.id, transforms(), this.scope);
     } else {
       symbol = this.scope.getParentScope().resolveSymbol(this.id, transforms(), this.scope);
     }
@@ -121,40 +128,19 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
 
     let code = `${q}${this.id}${idx}`;
 
-    if (this.isIndex() || this.isRange()) {
+    if (this.isIndex()) {
       const rootType = this.scope
         .resolveSymbol(this.id, transforms(), this.scope)
         .symbolType(transforms());
 
-      if (this.isIndex()) {
-        code = this.compileIndex(rootType, this.index!, q, idx);
-      }
+      code = this.compileIndex(rootType, this.index!, q, idx);
     }
 
     return code;
   }
 
-  updateScope(currentScope: Scope) {
-    const classScope = this.qualifier ? this.qualifier.symbolType() : undefined;
-    if (classScope instanceof ClassType) {
-      const s = this.scope.resolveSymbol(classScope.className, transforms(), this.scope);
-      // replace scope with class scope
-      currentScope = isScope(s) ? s : currentScope;
-    } else if (classScope instanceof ClassType) {
-      currentScope = classScope;
-    } else if (this.qualifier instanceof QualifierAsn && this.qualifier?.value instanceof ThisAsn) {
-      currentScope = getClassScope(currentScope as Frame);
-    } else if (isAstIdNode(this.qualifier?.value) && this.qualifier.value.id === globalKeyword) {
-      currentScope = getGlobalScope(currentScope);
-    } else {
-      currentScope = currentScope.getParentScope();
-    }
-
-    return currentScope;
-  }
-
   rootSymbolType() {
-    const currentScope = this.updateScope(this.scope);
+    const currentScope = this.updateScope();
     const rootType = currentScope
       .resolveSymbol(this.id, transforms(), this.scope)
       .symbolType(transforms());
@@ -182,7 +168,7 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
   }
 
   get symbolScope() {
-    const currentScope = this.updateScope(this.scope);
+    const currentScope = this.updateScope();
     const symbol = currentScope.resolveSymbol(this.id, transforms(), this.scope);
     return symbol.symbolScope;
   }

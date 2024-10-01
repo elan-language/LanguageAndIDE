@@ -3,7 +3,7 @@ import {
   ExpandAll,
   SelectMainById,
   SelectStatementById,
-} from "./model-generating-functions.";
+} from "./model-generating-functions";
 import { assertEffectOfActionNew, assertGeneratesHtmlandSameSourceNew } from "./testHelpers";
 
 suite("Parse source and generate Html", () => {

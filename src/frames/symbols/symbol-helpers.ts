@@ -1,3 +1,4 @@
+import { ElanCompilerError } from "../../elan-compiler-error";
 import { Property } from "../class-members/property";
 import { CompileError } from "../compile-error";
 import {
@@ -191,7 +192,7 @@ export function updateScopeInChain(
 
 export function getGlobalScope(start: Scope): File {
   if (start instanceof NullScope) {
-    throw new Error("Global scope not found");
+    throw new ElanCompilerError("Global scope not found");
   }
 
   if (isFile(start)) {
