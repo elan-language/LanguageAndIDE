@@ -309,7 +309,7 @@ export function transform(
 
   if (node instanceof PunctuationNode) {
     if (node.fixedText === "_") {
-      return new DiscardAsn("_", fieldId);
+      return new DiscardAsn("", fieldId);
     }
     return undefined;
   }

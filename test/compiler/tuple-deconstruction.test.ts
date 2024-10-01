@@ -195,6 +195,35 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "3IntAppleString");
   });
 
+  test("Pass_DeconstructIntoLetVariablesWithDiscard", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var x set to (3, "Apple")
+  let _, z be x
+  print z
+  print typeof z
+end main
+`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var x = system.tuple([3, "Apple"]);
+  const [, z] = x;
+  system.printLine(_stdlib.asString(z));
+  system.printLine(_stdlib.asString("String"));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "AppleString");
+  });
+
   test("Pass_DeconstructIntoNewVariables", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
@@ -222,6 +251,33 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "3Apple");
+  });
+
+  test("Pass_DeconstructIntoNewVariablesWithDiscard", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var x set to (3, "Apple")
+  var _, z set to x
+  print z
+end main
+`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var x = system.tuple([3, "Apple"]);
+  var [, z] = x;
+  system.printLine(_stdlib.asString(z));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "Apple");
   });
 
   test("Pass_DeconstructIntoNewVariablesTypeCheck", async () => {
