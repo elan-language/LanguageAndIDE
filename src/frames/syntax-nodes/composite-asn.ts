@@ -55,7 +55,7 @@ export class CompositeAsn extends AbstractAstNode implements AstNode {
 
       previousNode = new CompositeAsn(
         previousNode,
-        new CsvAsn([currentNode], this.fieldId, this.scope),
+        new CsvAsn([currentNode], this.fieldId),
         this.fieldId,
         this.scope,
       );

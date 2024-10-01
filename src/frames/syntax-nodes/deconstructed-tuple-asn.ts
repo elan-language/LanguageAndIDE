@@ -1,6 +1,5 @@
 import { CompileError } from "../compile-error";
 import { AstIdNode } from "../interfaces/ast-id-node";
-import { Scope } from "../interfaces/scope";
 import { TupleType } from "../symbols/tuple-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 
@@ -8,7 +7,6 @@ export class DeconstructedTupleAsn extends AbstractAstNode implements AstIdNode 
   constructor(
     public readonly items: AstIdNode[],
     public readonly fieldId: string,
-    scope: Scope,
   ) {
     super();
   }
