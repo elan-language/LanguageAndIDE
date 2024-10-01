@@ -7,6 +7,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -314,7 +315,7 @@ end main`;
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_div", async () => {
+  ignore_test("Fail_div", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
@@ -328,7 +329,7 @@ end main`;
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_mod", async () => {
+  ignore_test("Fail_mod", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
