@@ -83,7 +83,7 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
 
   symbolType() {
     switch (this.id) {
-      case "RegEx":
+      case "Regex":
         return RegexType.Instance;
       case "Int":
         return IntType.Instance;

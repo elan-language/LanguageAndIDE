@@ -40,6 +40,38 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "A Regextruefalse");
   });
 
+  test("Pass_RegexAsParameter", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var r set to /a+/
+  print testRegex(r)
+end main
+
+function testRegex(r as Regex) return Boolean
+  return "aa".matchesRegex(r)
+end function`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var r = /a+/;
+  system.printLine(_stdlib.asString(testRegex(r)));
+}
+
+function testRegex(r) {
+  return _stdlib.matchesRegex("aa", r);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "true");
+  });
+
   test("Pass_ContainsEscapedForwardSlash", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
