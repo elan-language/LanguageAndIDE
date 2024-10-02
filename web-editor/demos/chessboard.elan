@@ -12,7 +12,7 @@ function addBoard(gr as BlockGraphics) return BlockGraphics
   var gr2 set to gr
   for x from 0 to 7 step 1
     for y from 0 to 7 step 1
-      let colour be if ((x + y) mod 2) is 1 then black else white
+      let colour be if (x + y) mod 2 is 1 then black else white
       set gr2 to addSquare(gr2, x*3, y*3, colour)
     end for
   end for
