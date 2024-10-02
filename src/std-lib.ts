@@ -301,7 +301,7 @@ export class StdLib {
     return this.system.safeIndex(st, 1);
   }
 
-  third<T, T1, T2>(st: [T, T1]): T2 {
+  third<T, T1, T2>(st: [T, T1, T2]): T2 {
     return this.system.safeIndex(st, 2);
   }
 

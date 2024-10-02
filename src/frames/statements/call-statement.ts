@@ -168,11 +168,6 @@ export class CallStatement extends AbstractFrame implements Statement {
         isAsync = procSymbolType.isAsync;
       }
 
-      // todo temp fix pending constructor
-      if (this.getParent() instanceof Constructor) {
-        isAsync = false;
-      }
-
       const [wrappedInParameters, wrappedOutParameters, passedParameters] = this.wrapParameters(
         procSymbol,
         callParameters,

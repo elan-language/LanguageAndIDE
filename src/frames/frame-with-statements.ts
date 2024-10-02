@@ -264,7 +264,6 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
 
       for (const f of range) {
         if (isSymbol(f) && (id || all)) {
-          // todo kludge
           const sids = this.getIds(f.symbolId);
           if (sids.some((sid) => sid.startsWith(id) || all)) {
             localMatches.push(f);

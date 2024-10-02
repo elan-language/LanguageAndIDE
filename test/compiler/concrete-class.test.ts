@@ -938,4 +938,31 @@ end class`;
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["Name ff not unique in scope"]);
   });
+
+  test("Fail_ConstructorWithCall", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var x set to new Foo()
+  print x.b
+end main
+
+class Foo
+    constructor()
+      call setP1(5)
+    end constructor
+
+    procedure setP1(a as Int)
+      set property.b to a
+    end procedure
+    
+    property b as Int
+
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
 });
