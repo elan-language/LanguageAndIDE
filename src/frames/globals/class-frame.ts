@@ -17,7 +17,6 @@ import {
   mustImplementSuperClasses,
 } from "../compile-rules";
 import { InheritsFrom } from "../fields/inheritsFrom";
-import { OptionalKeyword } from "../fields/optionalKeyword";
 import { Regexes } from "../fields/regexes";
 import { TypeNameField } from "../fields/type-name-field";
 import { isMember } from "../helpers";
@@ -30,13 +29,7 @@ import { Frame } from "../interfaces/frame";
 import { Parent } from "../interfaces/parent";
 import { Profile } from "../interfaces/profile";
 import { StatementFactory } from "../interfaces/statement-factory";
-import {
-  abstractKeyword,
-  classKeyword,
-  immutableKeyword,
-  inheritsKeyword,
-  thisKeyword,
-} from "../keywords";
+import { abstractKeyword, classKeyword, immutableKeyword, thisKeyword } from "../keywords";
 import {
   parentHelper_addChildAfter,
   parentHelper_addChildBefore,
@@ -74,16 +67,13 @@ export class ClassFrame extends AbstractFrame implements Class, Parent, Collapsi
   public name: TypeNameField;
   public abstract: boolean;
   public immutable: boolean;
-  public inherits: OptionalKeyword;
-  public superClasses: InheritsFrom;
+  public inheritance: InheritsFrom;
   private _children: Array<Frame> = new Array<Frame>();
 
   constructor(parent: File, abstract = false, immutable = false) {
     super(parent);
     this.name = new TypeNameField(this);
-    this.inherits = new OptionalKeyword(this, inheritsKeyword);
-    this.superClasses = new InheritsFrom(this);
-    this.superClasses.setOptional(true);
+    this.inheritance = new InheritsFrom(this);
     this.immutable = immutable;
     this.abstract = abstract;
     if (!abstract) {
@@ -112,7 +102,7 @@ export class ClassFrame extends AbstractFrame implements Class, Parent, Collapsi
       this.symbolId,
       this.isAbstract(),
       this.isImmutable(),
-      this.superClasses.symbolTypes(transforms),
+      this.inheritance.symbolTypes(transforms),
       this,
     );
   }
@@ -188,16 +178,7 @@ export class ClassFrame extends AbstractFrame implements Class, Parent, Collapsi
     parentHelper_moveSelectedChildrenDownOne(this);
   }
 
-  fieldUpdated(field: Field): void {
-    if (field === this.inherits) {
-      if (this.inherits.keywordExists()) {
-        this.superClasses.setOptional(false);
-      } else {
-        this.superClasses.setFieldToKnownValidText("");
-        this.superClasses.setOptional(true);
-      }
-    }
-  }
+  fieldUpdated(field: Field): void {}
 
   minimumNumberOfChildrenExceeded(): boolean {
     const children = this.getChildren().length;
@@ -218,14 +199,11 @@ export class ClassFrame extends AbstractFrame implements Class, Parent, Collapsi
     this.immutable = true;
   }
   doesInherit(): boolean {
-    return this.inherits.keywordExists();
-  }
-  makeInherits(): void {
-    this.inherits.specify();
+    return this.inheritance.text !== "";
   }
 
   getFields(): Field[] {
-    return [this.name, this.inherits, this.superClasses];
+    return [this.name, this.inheritance];
   }
 
   getIdPrefix(): string {
@@ -248,12 +226,10 @@ export class ClassFrame extends AbstractFrame implements Class, Parent, Collapsi
     return result;
   }
   private inheritanceAsHtml(): string {
-    return ` ${this.inherits.renderAsHtml()} ${this.superClasses.renderAsHtml()}`;
+    return ` ${this.inheritance.renderAsHtml()}`;
   }
   private inheritanceAsSource(): string {
-    return this.doesInherit()
-      ? ` ${this.inherits.renderAsSource()} ${this.superClasses.renderAsSource()}`
-      : ``;
+    return this.doesInherit() ? ` ${this.inheritance.renderAsSource()}` : ``;
   }
 
   private inheritanceAsObjectCode(): string {
@@ -291,7 +267,7 @@ end class\r\n`;
 
   public getSuperClassesTypeAndName(transforms: Transforms) {
     if (this.doesInherit()) {
-      const superClasses = this.superClasses.getOrTransformAstNode(transforms);
+      const superClasses = this.inheritance.getOrTransformAstNode(transforms);
 
       if (isAstCollectionNode(superClasses)) {
         const nodes = superClasses.items.filter((i) => isAstIdNode(i));
@@ -395,12 +371,7 @@ ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
     }
     source.remove(`${classKeyword} `);
     this.name.parseFrom(source);
-    const inh = ` ${inheritsKeyword} `; //Note leading & trailing space
-    if (source.isMatch(inh)) {
-      source.remove(inh);
-      this.makeInherits();
-      this.superClasses.parseFrom(source);
-    }
+    this.inheritance.parseFrom(source);
     source.removeNewLine();
     if (!this.isAbstract()) {
       this.getConstructor().parseFrom(source);
