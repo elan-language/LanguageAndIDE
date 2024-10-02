@@ -296,4 +296,29 @@ end function`;
 
     await assertAutocompletes(fileImpl, "expr8", "o", 5, expected);
   });
+
+  test("Pass_ExpressionDictionaryExtension", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var foo set to {"a":1}
+  var bar set to foo.w
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      [
+        "withPutAtKey",
+        "Func<of {Generic Parameter T1:Generic Parameter T2}, Generic Parameter T1, Generic Parameter T2 => {Generic Parameter T1:Generic Parameter T2}>",
+      ],
+      [
+        "withRemoveAtKey",
+        "Func<of {Generic Parameter T1:Generic Parameter T2}, Generic Parameter T1 => {Generic Parameter T1:Generic Parameter T2}>",
+      ],
+    ] as [string, string][];
+
+    await assertAutocompletes(fileImpl, "expr8", "i", 5, expected);
+  });
 });
