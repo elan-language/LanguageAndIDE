@@ -552,6 +552,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "0, 1688, 1677, 1683, 1585, 1680, 1687, ");
   });
+
   test("bitwise operations", async () => {
     const code = `# FFFF Elan Beta 2 valid
 
@@ -619,6 +620,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[[o, , ], [, x, ], [, , o]]");
   });
 });
+
 test("Pass_stringForUnicode", async () => {
   const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
@@ -640,6 +642,7 @@ return [main, _tests];}`;
   assertObjectCodeIs(fileImpl, objectCode);
   await assertObjectCodeExecutes(fileImpl, "A");
 });
+
 test("Pass_asUnicode", async () => {
   const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
@@ -660,4 +663,92 @@ return [main, _tests];}`;
   assertStatusIsValid(fileImpl);
   assertObjectCodeIs(fileImpl, objectCode);
   await assertObjectCodeExecutes(fileImpl, "65");
+});
+
+test("Pass_appendList", async () => {
+  const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var a set to [1,2]
+  var b set to [3,4]
+  call a.appendList(b)
+  print a
+  print b
+end main`;
+
+  const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.literalArray([1, 2]);
+  var b = system.literalArray([3, 4]);
+  _stdlib.appendList(a, b);
+  system.printLine(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(b));
+}
+return [main, _tests];}`;
+
+  const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+  await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+  assertParses(fileImpl);
+  assertStatusIsValid(fileImpl);
+  assertObjectCodeIs(fileImpl, objectCode);
+  await assertObjectCodeExecutes(fileImpl, "[1, 2, 3, 4][3, 4]");
+});
+
+test("Pass_prependList", async () => {
+  const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var a set to [1,2]
+  var b set to [3,4]
+  call a.prependList(b)
+  print a
+  print b
+end main`;
+
+  const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.literalArray([1, 2]);
+  var b = system.literalArray([3, 4]);
+  _stdlib.prependList(a, b);
+  system.printLine(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(b));
+}
+return [main, _tests];}`;
+
+  const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+  await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+  assertParses(fileImpl);
+  assertStatusIsValid(fileImpl);
+  assertObjectCodeIs(fileImpl, objectCode);
+  await assertObjectCodeExecutes(fileImpl, "[3, 4, 1, 2][3, 4]");
+});
+
+test("Pass_prepend", async () => {
+  const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var a set to [1,2]
+  var b set to 3
+  call a.prepend(b)
+  print a
+end main`;
+
+  const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.literalArray([1, 2]);
+  var b = 3;
+  _stdlib.prepend(a, b);
+  system.printLine(_stdlib.asString(a));
+}
+return [main, _tests];}`;
+
+  const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+  await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+  assertParses(fileImpl);
+  assertStatusIsValid(fileImpl);
+  assertObjectCodeIs(fileImpl, objectCode);
+  await assertObjectCodeExecutes(fileImpl, "[3, 1, 2]");
 });

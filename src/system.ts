@@ -158,12 +158,6 @@ export class System {
     return this.elanInputOutput.readLine();
   }
 
-  getTests(program: any) {
-    return Object.getOwnPropertyNames(program)
-      .filter((s) => s.startsWith("_test_"))
-      .map((f) => program[f]);
-  }
-
   concat<T>(lhs: Array<T> | T, rhs: Array<T> | T) {
     if (Array.isArray(lhs) && Array.isArray(rhs)) {
       return this.list(lhs.concat(rhs));
