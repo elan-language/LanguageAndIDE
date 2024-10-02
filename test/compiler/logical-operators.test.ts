@@ -314,32 +314,4 @@ end main`;
 
     assertDoesNotParse(fileImpl);
   });
-
-  ignore_test("Fail_div", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
-
-main
-  var a set to 1 div 1
-  print a
-end main`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertDoesNotParse(fileImpl);
-  });
-
-  ignore_test("Fail_mod", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
-
-main
-  var a set to 1 mod 1
-  print a
-end main`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertDoesNotParse(fileImpl);
-  });
 });
