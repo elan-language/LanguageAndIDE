@@ -5,7 +5,7 @@ import { AbstractAstNode } from "./abstract-ast-node";
 
 export class LiteralRegExAsn extends AbstractAstNode implements AstNode {
   constructor(
-    private readonly rawValue: string,
+    rawValue: string,
     public readonly fieldId: string,
   ) {
     super();

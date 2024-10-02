@@ -8,7 +8,6 @@ export class InterpolatedAsn extends AbstractAstNode implements AstNode {
   constructor(
     private readonly body: ExprAsn,
     public readonly fieldId: string,
-    scope: Scope,
   ) {
     super();
   }

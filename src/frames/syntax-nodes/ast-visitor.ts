@@ -152,7 +152,7 @@ export function transform(
     const op = mapOperation(node.unaryOp!.matchedText);
     const operand = transform(node.term, fieldId, scope) as ExprAsn;
 
-    return new UnaryExprAsn(op, operand, fieldId, scope);
+    return new UnaryExprAsn(op, operand, fieldId);
   }
 
   if (node instanceof BinaryExpression) {
@@ -183,7 +183,7 @@ export function transform(
     const ss = node.segments ? transformMany(node.segments, fieldId, scope).items : [];
 
     if (ss.map((i) => i instanceof InterpolatedAsn).reduce((i, s) => i || s)) {
-      return new SegmentedStringAsn(ss, fieldId, scope);
+      return new SegmentedStringAsn(ss, fieldId);
     }
 
     return new LiteralStringAsn(node.matchedText, fieldId);
@@ -229,7 +229,7 @@ export function transform(
     // wrap sig scope in another scope to prevent looking up a symbol in current scope.
     const body = transform(node.expr, fieldId, wrapScopeInScope(sig)) as ExprAsn;
 
-    return new LambdaAsn(sig, body, fieldId, scope);
+    return new LambdaAsn(sig, body, fieldId);
   }
 
   if (node instanceof ParamDefNode) {
@@ -238,7 +238,7 @@ export function transform(
     const out = !!node.out?.matchedNode;
 
     if (isAstIdNode(type)) {
-      return new ParamDefAsn(id, type, out, fieldId, scope);
+      return new ParamDefAsn(id, type, out, fieldId);
     }
 
     return undefined;
@@ -304,7 +304,7 @@ export function transform(
     const id = node.property!.matchedText;
     const to = transform(node.expr, fieldId, scope) as ExprAsn;
 
-    return new SetAsn(id, to, fieldId, scope);
+    return new SetAsn(id, to, fieldId);
   }
 
   if (node instanceof PunctuationNode) {
@@ -346,32 +346,32 @@ export function transform(
 
   if (node instanceof ListNode) {
     const items = transformMany(node.csv as CSV, fieldId, scope).items;
-    return new LiteralListAsn(items, fieldId, scope);
+    return new LiteralListAsn(items, fieldId);
   }
 
   if (node instanceof ArrayNode) {
     const items = transformMany(node.csv as CSV, fieldId, scope).items;
-    return new LiteralArrayAsn(items, fieldId, scope);
+    return new LiteralArrayAsn(items, fieldId);
   }
 
   if (node instanceof DictionaryNode) {
     const items = transformMany(node.csv!, fieldId, scope);
-    return new LiteralDictionaryAsn(items, fieldId, scope);
+    return new LiteralDictionaryAsn(items, fieldId);
   }
 
   if (node instanceof ImmutableDictionaryNode) {
     const items = transformMany(node.csv!, fieldId, scope);
-    return new LiteralImmutableDictionaryAsn(items, fieldId, scope);
+    return new LiteralImmutableDictionaryAsn(items, fieldId);
   }
 
   if (node instanceof TupleNode) {
     const items = transformMany(node.csv as CSV, fieldId, scope).items;
-    return new LiteralTupleAsn(items, fieldId, scope);
+    return new LiteralTupleAsn(items, fieldId);
   }
 
   if (node instanceof LitTuple) {
     const items = transformMany(node.csv as CSV, fieldId, scope).items;
-    return new LiteralTupleAsn(items, fieldId, scope);
+    return new LiteralTupleAsn(items, fieldId);
   }
 
   if (node instanceof DeconstructedTuple) {
@@ -428,12 +428,12 @@ export function transform(
     const from = fromNode ? transform(fromNode, fieldId, scope) : undefined;
     const toNode = node.toIndex?.matchedNode;
     const to = toNode ? transform(toNode, fieldId, scope) : undefined;
-    return new RangeAsn(from, to, fieldId, scope);
+    return new RangeAsn(from, to, fieldId);
   }
 
   if (node instanceof IndexSingle) {
     const index = transform(node.contents, fieldId, scope) as ExprAsn;
-    return new IndexAsn(index, undefined, fieldId, scope);
+    return new IndexAsn(index, undefined, fieldId);
   }
 
   if (node instanceof DotAfter) {
@@ -465,13 +465,13 @@ export function transform(
     const key = transform(node.key, fieldId, scope)!;
     const value = transform(node.value, fieldId, scope)!;
 
-    return new KvpAsn(key, value, fieldId, scope);
+    return new KvpAsn(key, value, fieldId);
   }
 
   if (node instanceof StringInterpolation) {
     const value = transform(node.expr, fieldId, scope)!;
 
-    return new InterpolatedAsn(value, fieldId, scope);
+    return new InterpolatedAsn(value, fieldId);
   }
 
   if (node instanceof RegExMatchNode) {
@@ -510,7 +510,7 @@ export function transform(
 
   if (node instanceof TypeOfNode) {
     const term = transform(node.argument, fieldId, scope);
-    return new TypeOfAsn(term!, fieldId, scope);
+    return new TypeOfAsn(term!, fieldId);
   }
 
   if (node instanceof FunctionRefNode) {

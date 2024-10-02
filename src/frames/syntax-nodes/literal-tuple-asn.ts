@@ -8,7 +8,6 @@ export class LiteralTupleAsn extends AbstractAstNode implements AstNode {
   constructor(
     public readonly items: AstNode[],
     public readonly fieldId: string,
-    scope: Scope,
   ) {
     super();
   }

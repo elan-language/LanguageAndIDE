@@ -8,7 +8,6 @@ export class TypeOfAsn extends AbstractAstNode {
   constructor(
     public readonly ast: AstNode,
     public readonly fieldId: string,
-    private readonly scope: Scope,
   ) {
     super();
   }

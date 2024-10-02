@@ -8,7 +8,6 @@ export class KvpAsn extends AbstractAstNode implements AstNode {
     public readonly key: AstNode,
     public readonly value: AstNode,
     public readonly fieldId: string,
-    scope: Scope,
   ) {
     super();
   }

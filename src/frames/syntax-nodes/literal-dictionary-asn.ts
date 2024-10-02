@@ -12,7 +12,6 @@ export class LiteralDictionaryAsn extends AbstractAstNode implements AstNode {
   constructor(
     private readonly list: AstCollectionNode,
     public readonly fieldId: string,
-    scope: Scope,
   ) {
     super();
   }

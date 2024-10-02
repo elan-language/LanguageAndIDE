@@ -11,7 +11,6 @@ export class ParamDefAsn extends AbstractAstNode implements AstIdNode {
     private readonly type: AstIdNode,
     private readonly out: boolean,
     public readonly fieldId: string,
-    private readonly scope: Scope,
   ) {
     super();
   }

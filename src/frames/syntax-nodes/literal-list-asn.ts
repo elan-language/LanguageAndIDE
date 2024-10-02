@@ -11,7 +11,6 @@ export class LiteralListAsn extends AbstractAstNode implements AstCollectionNode
   constructor(
     public readonly items: AstNode[],
     public readonly fieldId: string,
-    scope: Scope,
   ) {
     super();
   }

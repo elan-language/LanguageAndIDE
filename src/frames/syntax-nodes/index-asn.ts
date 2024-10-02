@@ -8,7 +8,6 @@ import { AstNode } from "../interfaces/ast-node";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { ArrayType } from "../symbols/array-list-type";
-import { FunctionType } from "../symbols/function-type";
 import { IntType } from "../symbols/int-type";
 import { ListType } from "../symbols/list-type";
 import { isDictionarySymbolType, isGenericSymbolType } from "../symbols/symbol-helpers";
@@ -23,16 +22,13 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
     public readonly index1: ExprAsn,
     public readonly index2: ExprAsn | undefined,
     public readonly fieldId: string,
-    scope: Scope,
   ) {
     super();
   }
 
   private precedingNode?: AstNode = undefined;
-  private updatedScope?: Scope = undefined;
 
-  updateScopeAndChain(s: Scope, ast: AstNode) {
-    this.updatedScope = s;
+  updateScopeAndChain(scope: Scope, ast: AstNode) {
     this.precedingNode = ast;
   }
 
@@ -66,9 +62,6 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
     }
     if (rootType instanceof ArrayType) {
       return `system.array(${code})`;
-    }
-    if (rootType instanceof FunctionType) {
-      return this.wrapListOrArray(rootType.returnType, code);
     }
     return code;
   }

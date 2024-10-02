@@ -8,7 +8,6 @@ export class SegmentedStringAsn extends AbstractAstNode implements AstNode {
   constructor(
     private readonly segments: AstNode[],
     public readonly fieldId: string,
-    scope: Scope,
   ) {
     super();
   }

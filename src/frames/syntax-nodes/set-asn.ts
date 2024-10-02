@@ -9,7 +9,6 @@ export class SetAsn extends AbstractAstNode implements AstIdNode {
     public readonly id: string,
     private readonly to: ExprAsn,
     public readonly fieldId: string,
-    scope: Scope,
   ) {
     super();
   }

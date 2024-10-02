@@ -1,6 +1,5 @@
 import { CompileError } from "../compile-error";
 import { AstNode } from "../interfaces/ast-node";
-import { Scope } from "../interfaces/scope";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 
@@ -9,7 +8,6 @@ export class RangeAsn extends AbstractAstNode implements AstNode {
     private readonly from: AstNode | undefined,
     private readonly to: AstNode | undefined,
     public readonly fieldId: string,
-    scope: Scope,
   ) {
     super();
   }

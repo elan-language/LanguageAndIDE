@@ -12,7 +12,6 @@ export class UnaryExprAsn extends AbstractAstNode implements AstNode {
     private readonly op: OperationSymbol,
     private readonly operand: ExprAsn,
     public readonly fieldId: string,
-    scope: Scope,
   ) {
     super();
   }

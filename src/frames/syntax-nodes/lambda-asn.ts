@@ -11,7 +11,6 @@ export class LambdaAsn extends AbstractAstNode implements AstNode {
     private readonly signature: LambdaSigAsn,
     private readonly body: ExprAsn,
     public readonly fieldId: string,
-    scope: Scope,
   ) {
     super();
   }

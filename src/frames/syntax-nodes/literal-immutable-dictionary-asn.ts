@@ -12,7 +12,6 @@ export class LiteralImmutableDictionaryAsn extends AbstractAstNode implements As
   constructor(
     private readonly list: AstCollectionNode,
     public readonly fieldId: string,
-    scope: Scope,
   ) {
     super();
   }

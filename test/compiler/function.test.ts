@@ -42,6 +42,71 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "12");
   });
+
+  test("Pass_IndexResult", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var a set to foo(1,2)[0]
+  print a
+end main
+
+function foo(a as Int, b as Int) return [Int]
+  return [a, b]
+end function`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.safeIndex(foo(1, 2), 0);
+  system.printLine(_stdlib.asString(a));
+}
+
+function foo(a, b) {
+  return system.literalArray([a, b]);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1");
+  });
+
+  test("Pass_RangeResult", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var a set to foo(1,2)[0..1]
+  print a
+end main
+
+function foo(a as Int, b as Int) return [Int]
+  return [a, b]
+end function`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.array(foo(1, 2).slice(0, 1));
+  system.printLine(_stdlib.asString(a));
+}
+
+function foo(a, b) {
+  return system.literalArray([a, b]);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[1]");
+  });
+
   test("Pass_ReturnSimpleDefault", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
