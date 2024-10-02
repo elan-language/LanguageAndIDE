@@ -343,7 +343,7 @@ _tests.push(["test76", async (_outcomes) => {
   _outcomes.push(system.assert(a, b, "assert85", _stdlib));
 }]);
 
-_tests.push(["test89", async (_outcomes) => {
+_tests.push(["test88", async (_outcomes) => {
   var a = Foo.emptyInstance();
   var b = Foo.emptyInstance();
   _outcomes.push(system.assert(a, b, "assert97", _stdlib));
@@ -365,8 +365,8 @@ return [main, _tests];}`;
       ["test27", [new AssertOutcome(TestStatus.pass, "Hello World", "Hello World", "assert36")]],
       ["test39", [new AssertOutcome(TestStatus.pass, "0", "0", "assert48")]],
       ["test54", [new AssertOutcome(TestStatus.pass, "Hello", "Hello", "assert60")]],
-      ["test77", [new AssertOutcome(TestStatus.pass, "a Foo", "a Foo", "assert86")]],
-      ["test89", [new AssertOutcome(TestStatus.pass, "a Foo", "a Foo", "assert98")]],
+      ["test76", [new AssertOutcome(TestStatus.pass, "a Foo", "a Foo", "assert85")]],
+      ["test88", [new AssertOutcome(TestStatus.pass, "a Foo", "a Foo", "assert97")]],
     ]);
   });
 
