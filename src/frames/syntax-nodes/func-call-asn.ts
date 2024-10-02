@@ -3,7 +3,7 @@ import {
   mustBeKnownSymbol,
   mustBePublicMember,
   mustBePureFunctionSymbol,
-  mustCallExtensionViaQualifier
+  mustCallExtensionViaQualifier,
 } from "../compile-rules";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstNode } from "../interfaces/ast-node";
@@ -96,14 +96,14 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
       isAsync = funcSymbolType.isAsync;
     }
 
-    const a = isAsync ? "await " : "";
-    const pp = parameters.map((p) => p.compile()).join(", ");
+    const async = isAsync ? "await " : "";
+    const parms = parameters.map((p) => p.compile()).join(", ");
     const prefix =
       this.precedingNode && this.showPreviousNode
         ? ""
         : scopePrefix(funcSymbol, this.compileErrors, this.scope, this.fieldId);
 
-    return `${a}${prefix}${this.id}(${pp})`;
+    return `${async}${prefix}${this.id}(${parms})`;
   }
 
   symbolType() {
