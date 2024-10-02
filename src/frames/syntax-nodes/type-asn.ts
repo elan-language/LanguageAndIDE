@@ -109,8 +109,6 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
         );
       case "Tuple":
         return new TupleType(this.genericParameters.map((p) => p.symbolType()));
-      // case "Iterable":
-      //   return new IterableType(this.safeGetGenericParameterSymbolType(0));
       case "Func":
         const types = this.genericParameters.map((p) => p.symbolType());
         const pTypes = types.slice(0, -1);

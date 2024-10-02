@@ -1,6 +1,5 @@
 import { CompileError } from "../compile-error";
 import { AstNode } from "../interfaces/ast-node";
-import { Scope } from "../interfaces/scope";
 import { AbstractAstNode } from "./abstract-ast-node";
 
 export class KvpAsn extends AbstractAstNode implements AstNode {

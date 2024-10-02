@@ -3,7 +3,6 @@ import { ElanInputOutput } from "./elan-input-output";
 import { ElanRuntimeError } from "./elan-runtime-error";
 import { TestStatus } from "./frames/status-enums";
 import { hasHiddenType } from "./has-hidden-type";
-import { StubInputOutput } from "./stub-input-output";
 
 export class AssertOutcome {
   constructor(

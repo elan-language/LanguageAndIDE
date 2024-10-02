@@ -2,7 +2,6 @@ import { CompileError } from "../compile-error";
 import { mustBeCompatibleType, mustHaveUniqueKeys } from "../compile-rules";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstNode } from "../interfaces/ast-node";
-import { Scope } from "../interfaces/scope";
 import { DictionaryType } from "../symbols/dictionary-type";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";

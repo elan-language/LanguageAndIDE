@@ -1,6 +1,5 @@
 import { CompileError } from "../compile-error";
 import { AstNode } from "../interfaces/ast-node";
-import { Scope } from "../interfaces/scope";
 import { StringType } from "../symbols/string-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 

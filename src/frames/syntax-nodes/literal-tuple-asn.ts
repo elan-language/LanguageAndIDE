@@ -1,6 +1,5 @@
 import { CompileError } from "../compile-error";
 import { AstNode } from "../interfaces/ast-node";
-import { Scope } from "../interfaces/scope";
 import { TupleType } from "../symbols/tuple-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 

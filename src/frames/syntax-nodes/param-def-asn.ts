@@ -1,7 +1,6 @@
 import { CompileError } from "../compile-error";
 import { mustBeKnownSymbolType, mustNotBeKeyword } from "../compile-rules";
 import { AstIdNode } from "../interfaces/ast-id-node";
-import { Scope } from "../interfaces/scope";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { AbstractAstNode } from "./abstract-ast-node";
 
