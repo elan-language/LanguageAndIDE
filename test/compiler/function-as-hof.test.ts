@@ -451,4 +451,45 @@ end class`;
       "To evaluate function 'ff' add brackets. Or to create a reference to 'ff', precede it by 'function '",
     ]);
   });
+
+  test("Fail_InExpression1", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var f set to 1 + ff
+end main
+
+function ff(a as Int) return Int
+  return a
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types Function to Float or Int",
+      "To evaluate function 'ff' add brackets. Or to create a reference to 'ff', precede it by 'function '",
+    ]);
+  });
+
+  test("Fail_InExpression2", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var f set to 1 + function ff
+end main
+
+function ff(a as Int) return Int
+  return a
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Function to Float or Int"]);
+  });
 });
