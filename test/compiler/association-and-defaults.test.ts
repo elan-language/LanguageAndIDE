@@ -132,6 +132,7 @@ main
   print g.ai
   print g.t
   print g.ff("a", "b")
+  print "aa".matchesRegex(g.r)
 end main
 
 class Game
@@ -148,6 +149,7 @@ class Game
     property ai as Array<of Int>
     property t as Tuple<of Int, String, List<of Int>>
     property ff as Func<of String, String => Int>
+    property r as Regex
 
     function asString() return String
         return "A game"
@@ -168,10 +170,11 @@ async function main() {
   system.printLine(_stdlib.asString(g.ai));
   system.printLine(_stdlib.asString(g.t));
   system.printLine(_stdlib.asString(g.ff("a", "b")));
+  system.printLine(_stdlib.asString(_stdlib.matchesRegex("aa", g.r)));
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.emptyImmutableList()], ["ds", system.emptyDictionary()], ["dsi", system.emptyImmutableDictionary()], ["ai", system.emptyArray()], ["t", system.emptyTuple([0, "", system.emptyImmutableList()])], ["ff", system.emptyFunc(0)]]);};
+  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.emptyImmutableList()], ["ds", system.emptyDictionary()], ["dsi", system.emptyImmutableDictionary()], ["ai", system.emptyArray()], ["t", system.emptyTuple([0, "", system.emptyImmutableList()])], ["ff", system.emptyFunc(0)], ["r", /(?:)/]]);};
   constructor() {
 
   }
@@ -196,6 +199,8 @@ class Game {
 
   ff = system.emptyFunc(0);
 
+  r = /(?:)/;
+
   asString() {
     return "A game";
   }
@@ -209,7 +214,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "00false{}[]{}[](0, , {})0");
+    await assertObjectCodeExecutes(fileImpl, "00false{}[]{}[](0, , {})0true");
   });
 
   test("Pass_DefaultValuesOnEmptyClass", async () => {

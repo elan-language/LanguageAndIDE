@@ -3,7 +3,7 @@ import { SymbolType } from "../interfaces/symbol-type";
 export class RegexType implements SymbolType {
   private constructor() {}
 
-  initialValue = "";
+  initialValue = "/(?:)/";
 
   isImmutable = true;
 
