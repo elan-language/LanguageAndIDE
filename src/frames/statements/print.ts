@@ -1,6 +1,5 @@
 import { AbstractFrame } from "../abstract-frame";
 import { CodeSource } from "../code-source";
-import { mustNotBeFunction } from "../compile-rules";
 import { ExpressionField } from "../fields/expression-field";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
@@ -44,9 +43,6 @@ export class Print extends AbstractFrame implements Statement {
 
   compile(transforms: Transforms): string {
     this.compileErrors = [];
-
-    const st = this.expr.symbolType(transforms);
-    mustNotBeFunction(st, this.compileErrors, this.htmlId);
 
     const toPrint = this.expr.compile(transforms) || '""';
     return `${this.indent()}system.printLine(_stdlib.asString(${toPrint}));`;

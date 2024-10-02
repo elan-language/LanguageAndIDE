@@ -216,17 +216,6 @@ export class DuplicateIdsCompileError extends CompileError {
   }
 }
 
-export class PrintFunctionCompileError extends CompileError {
-  constructor(location: string) {
-    super(
-      Priority.typeError,
-      `Cannot print a function. To print the result of evaluating a function, add brackets after function name.`,
-      location,
-      false,
-    );
-  }
-}
-
 export class FunctionRefCompileError extends CompileError {
   constructor(id: string, location: string) {
     super(
