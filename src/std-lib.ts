@@ -80,8 +80,12 @@ export class StdLib {
     throw new Error("Not implemented: " + typeof v);
   }
 
-  unicode(n: number): string {
+  stringForUnicode(n: number): string {
     return String.fromCharCode(n);
+  }
+
+  asUnicode(s: string): number {
+    return s.charCodeAt(0);
   }
 
   asArray<T>(list: T[]): T[] {
