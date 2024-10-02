@@ -285,7 +285,7 @@ export function transform(
 
   if (node instanceof InheritanceNode) {
     const types = transformMany(node.typeList as CSV, fieldId, scope).items;
-    return new CsvAsn(types, fieldId, scope);
+    return new CsvAsn(types, fieldId);
   }
 
   if (node instanceof EmptyOfTypeNode) {
