@@ -9,6 +9,7 @@ import {
   assertParses,
   assertStatusIsValid,
   assertTestObjectCodeExecutes,
+  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -147,6 +148,150 @@ return [main, _tests];}`;
           new AssertOutcome(TestStatus.pass, "one", "one", "assert12"),
         ],
       ],
+    ]);
+  });
+
+  test("Pass_AssertSimpleVarRef", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+end main
+
+test square
+  let t1 be ("one", "two")
+  let t2 be ("one", "two")
+  assert t1 is t2
+end test
+`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+
+}
+
+_tests.push(["test3", async (_outcomes) => {
+  const t1 = system.tuple(["one", "two"]);
+  const t2 = system.tuple(["one", "two"]);
+  _outcomes.push(system.assert(t1, t2, "assert12", _stdlib));
+}]);
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertTestObjectCodeExecutes(fileImpl, [
+      ["test3", [new AssertOutcome(TestStatus.pass, "(one, two)", "(one, two)", "assert12")]],
+    ]);
+  });
+
+  test("Pass_AssertCompoundVarRef1", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+end main
+
+test square
+  let f be new Foo()
+  let t2 be 10
+  assert f.p1 is t2
+end test
+
+class Foo
+  constructor()
+    set property.p1 to 10
+  end constructor
+
+  property p1 as Int
+
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+
+}
+
+_tests.push(["test3", async (_outcomes) => {
+  const f = system.initialise(new Foo());
+  const t2 = 10;
+  _outcomes.push(system.assert(f.p1, t2, "assert12", _stdlib));
+}]);
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
+  constructor() {
+    this.p1 = 10;
+  }
+
+  p1 = 0;
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertTestObjectCodeExecutes(fileImpl, [
+      ["test3", [new AssertOutcome(TestStatus.pass, "10", "10", "assert12")]],
+    ]);
+  });
+
+  ignore_test("Pass_AssertCompoundVarRef2", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+end main
+
+test square
+  let f be new Foo()
+  let t2 be 10
+  assert t2 is f.p1
+end test
+
+class Foo
+  constructor()
+    set property.p1 to 10
+  end constructor
+
+  property p1 as Int
+
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+
+}
+
+_tests.push(["test3", async (_outcomes) => {
+  const f = system.initialise(new Foo());
+  const t2 = 10;
+  _outcomes.push(system.assert(t2, this.p1, "assert12", _stdlib));
+}]);
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
+  constructor() {
+    this.p1 = 10;
+  }
+
+  p1 = 0;
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertTestObjectCodeExecutes(fileImpl, [
+      ["test3", [new AssertOutcome(TestStatus.pass, "10", "10", "assert12")]],
     ]);
   });
 
@@ -492,7 +637,7 @@ return [main, _tests];}`;
     ]);
   });
 
-  test("Fail_expressionForExpected", async () => {
+  test("Pass_expressionForExpected", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
@@ -510,7 +655,26 @@ end test
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+
+}
+
+function square(x) {
+  return x ** 2;
+}
+
+_tests.push(["test10", async (_outcomes) => {
+  _outcomes.push(system.assert(square(3), 3 * 3, "assert13", _stdlib));
+}]);
+return [main, _tests];}`;
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertTestObjectCodeExecutes(fileImpl, [
+      ["test10", [new AssertOutcome(TestStatus.pass, "9", "9", "assert13")]],
+    ]);
   });
 
   test("Fail_AssertOutsideAtest", async () => {

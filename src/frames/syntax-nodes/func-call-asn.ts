@@ -8,7 +8,9 @@ import {
 } from "../compile-rules";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstNode } from "../interfaces/ast-node";
+import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Scope } from "../interfaces/scope";
+import { SymbolType } from "../interfaces/symbol-type";
 import { FunctionType } from "../symbols/function-type";
 import { isMemberOnFieldsClass, scopePrefix } from "../symbols/symbol-helpers";
 import { AbstractAstNode } from "./abstract-ast-node";
@@ -23,14 +25,13 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
     private scope: Scope,
   ) {
     super();
-    this.id = id.trim();
   }
 
   private precedingNode?: AstNode = undefined;
   private updatedScope?: Scope = undefined;
 
-  updateScopeAndChain(s: Scope, ast: AstNode) {
-    this.updatedScope = s;
+  updateScopeAndChain(scope: Scope, ast: AstNode) {
+    this.updatedScope = scope;
     this.precedingNode = ast;
   }
 
@@ -39,10 +40,6 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
   }
 
   private isExtensionMethod: boolean = false;
-
-  get mId() {
-    return this.id;
-  }
 
   aggregateCompileErrors(): CompileError[] {
     let cc: CompileError[] = [];
@@ -54,76 +51,84 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
     return this.compileErrors.concat(cc);
   }
 
+  getSymbolAndType(): [ElanSymbol, SymbolType] {
+    const currentScope = this.updatedScope ?? this.scope.getParentScope();
+    const funcSymbol = currentScope.resolveSymbol(this.id, transforms(), this.scope);
+    const funcSymbolType = funcSymbol.symbolType(transforms());
+    return [funcSymbol, funcSymbolType];
+  }
+
   compile(): string {
     this.compileErrors = [];
 
     let parameters = [...this.parameters];
-    const currentScope = this.updatedScope ?? this.scope.getParentScope();
+    const [funcSymbol, funcSymbolType] = this.getSymbolAndType();
 
-    const funcSymbol = currentScope.resolveSymbol(this.id, transforms(), this.scope);
-    const fst = funcSymbol.symbolType(transforms());
     let isAsync: boolean = false;
 
     mustBeKnownSymbol(funcSymbol, this.compileErrors, this.fieldId);
-    mustBePureFunctionSymbol(fst, this.scope, this.compileErrors, this.fieldId);
+    mustBePureFunctionSymbol(funcSymbolType, this.scope, this.compileErrors, this.fieldId);
 
     if (!isMemberOnFieldsClass(funcSymbol, transforms(), this.scope)) {
       mustBePublicMember(funcSymbol, this.compileErrors, this.fieldId);
     }
 
-    if (fst instanceof FunctionType) {
-      mustCallExtensionViaQualifier(fst, this.precedingNode, this.compileErrors, this.fieldId);
+    if (funcSymbolType instanceof FunctionType) {
+      mustCallExtensionViaQualifier(
+        funcSymbolType,
+        this.precedingNode,
+        this.compileErrors,
+        this.fieldId,
+      );
 
-      if (fst.isExtension && this.precedingNode) {
+      if (funcSymbolType.isExtension && this.precedingNode) {
         this.isExtensionMethod = true;
         parameters = [this.precedingNode].concat(parameters);
       }
 
-      let parameterTypes = fst.parametersTypes;
+      let parameterTypes = funcSymbolType.parametersTypes;
 
       if (parameterTypes.some((pt) => containsGenericType(pt))) {
         // this.parameters is correct - function adds qualifier if extension
-        const matches = matchGenericTypes(fst, this.parameters, this.precedingNode);
+        const matches = matchGenericTypes(funcSymbolType, this.parameters, this.precedingNode);
         parameterTypes = parameterTypes.map((pt) => generateType(pt, matches));
       }
 
       mustMatchParameters(
         parameters,
         parameterTypes,
-        fst.isExtension,
+        funcSymbolType.isExtension,
         this.compileErrors,
         this.fieldId,
       );
 
-      isAsync = fst.isAsync;
+      isAsync = funcSymbolType.isAsync;
     }
 
     const a = isAsync ? "await " : "";
     const pp = parameters.map((p) => p.compile()).join(", ");
-    const q =
+    const prefix =
       this.precedingNode && this.showPreviousNode
         ? ""
         : scopePrefix(funcSymbol, this.compileErrors, this.scope, this.fieldId);
 
-    return `${a}${q}${this.mId}(${pp})`;
+    return `${a}${prefix}${this.id}(${pp})`;
   }
 
   symbolType() {
-    const currentScope = this.updatedScope ?? this.scope.getParentScope();
-    const funcSymbol = currentScope.resolveSymbol(this.id, transforms(), this.scope);
-    const fst = funcSymbol.symbolType(transforms());
+    const [, funcSymbolType] = this.getSymbolAndType();
 
-    if (fst instanceof FunctionType) {
-      const returnType = fst.returnType;
+    if (funcSymbolType instanceof FunctionType) {
+      const returnType = funcSymbolType.returnType;
 
       if (containsGenericType(returnType)) {
-        const matches = matchGenericTypes(fst, this.parameters, this.precedingNode);
+        const matches = matchGenericTypes(funcSymbolType, this.parameters, this.precedingNode);
         return generateType(returnType, matches);
       }
       return returnType;
     }
 
-    return fst;
+    return funcSymbolType;
   }
 
   toString() {

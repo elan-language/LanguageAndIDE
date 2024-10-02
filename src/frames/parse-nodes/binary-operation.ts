@@ -1,4 +1,4 @@
-import { andKeyword, isKeyword, isntKeyword, orKeyword } from "../keywords";
+import { andKeyword, divKeyword, isKeyword, isntKeyword, modKeyword, orKeyword } from "../keywords";
 import { DIVIDE, GE, GT, LE, LT, MINUS, MULT, PLUS, POWER } from "../symbols";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { KeywordNode } from "./keyword-node";
@@ -23,6 +23,8 @@ export class BinaryOperation extends AbstractAlternatives {
     this.alternatives.push(new KeywordNode(isntKeyword));
     this.alternatives.push(new KeywordNode(andKeyword));
     this.alternatives.push(new KeywordNode(orKeyword));
+    this.alternatives.push(new KeywordNode(divKeyword));
+    this.alternatives.push(new KeywordNode(modKeyword));
     super.parseText(text.trimStart());
   }
 

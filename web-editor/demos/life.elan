@@ -1,4 +1,4 @@
-# f8da1740aaf9d495258cfd29900d7883808e3806bcae54078e1b91e84c0740e5 Elan Beta 2 valid
+# FFFF Elan Beta 2 valid
 
 main
   print "Press any key to halt"
@@ -45,11 +45,11 @@ function s(c as Int) return Int
 end function
 
 function e(c as Int) return Int
-  return if mod(c, 40) < 39 then c + 1 else c - 39
+  return if (c mod 40) < 39 then c + 1 else c - 39
 end function
 
 function w(c as Int) return Int
-  return if mod(c, 40) > 0 then c - 1 else c + 39
+  return if (c mod 40) > 0 then c - 1 else c + 39
 end function
 
 function neighbourCells(c as Int) return [Int]

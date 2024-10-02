@@ -1,4 +1,4 @@
-# 7bf0b9890aad93b4d24bdf0075605f67b065c3dcdaa0ec20b9ccaaa619cecc52 Elan Beta 2 valid
+# FFFF Elan Beta 2 valid
 
 main
   var g set to new BlockGraphics()
@@ -71,7 +71,7 @@ test flip01
 end test
 
 function isValidQuadrant(q as Int) return Boolean
-  return mod(q, 5) isnt 0
+  return (q mod 5) isnt 0
 end function
 
 test isValidQuadrant

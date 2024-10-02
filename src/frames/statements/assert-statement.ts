@@ -1,26 +1,27 @@
-import { Parent } from "../interfaces/parent";
-import { Field } from "../interfaces/field";
-import { CodeSource } from "../code-source";
-import { ValueRefField } from "../fields/value-ref-field";
-import { AbstractFrame } from "../abstract-frame";
-import { Statement } from "../interfaces/statement";
-import { AssertActualField } from "../fields/assert-actual-field";
-import { assertKeyword } from "../keywords";
-import { Transforms } from "../syntax-nodes/transforms";
 import { AssertOutcome } from "../../system";
-import { CompileStatus, DisplayStatus, TestStatus } from "../status-enums";
+import { AbstractFrame } from "../abstract-frame";
+import { CodeSource } from "../code-source";
+import { AssertActualField } from "../fields/assert-actual-field";
+import { ExpressionField } from "../fields/expression-field";
 import { helper_compileMsgAsHtml } from "../helpers";
+import { Field } from "../interfaces/field";
+import { Parent } from "../interfaces/parent";
+import { Statement } from "../interfaces/statement";
+import { assertKeyword } from "../keywords";
+import { CompileStatus, DisplayStatus, TestStatus } from "../status-enums";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export class AssertStatement extends AbstractFrame implements Statement {
   isStatement = true;
   actual: AssertActualField;
-  expected: ValueRefField;
+  expected: AssertActualField;
   outcome?: AssertOutcome;
 
   constructor(parent: Parent) {
     super(parent);
     this.actual = new AssertActualField(this);
-    this.expected = new ValueRefField(this, /\r|\n/);
+    this.actual.setPlaceholder("computed value");
+    this.expected = new ExpressionField(this, /\r|\n/);
     this.expected.setPlaceholder("expected value");
   }
 

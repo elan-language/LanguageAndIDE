@@ -20,7 +20,6 @@ import {
   NotUniqueNameCompileError,
   OutParameterCompileError,
   ParametersCompileError,
-  PrintFunctionCompileError,
   PrivateMemberCompileError,
   ReassignCompileError,
   SignatureCompileError,
@@ -192,31 +191,6 @@ export function mustBeDeconstructableType(
     compileErrors.push(
       new TypeCompileError("able to be deconstructed", location, symbolType instanceof UnknownType),
     );
-  }
-}
-
-export function mustNotBeFunction(
-  symbolType: SymbolType,
-  compileErrors: CompileError[],
-  location: string,
-) {
-  if (symbolType instanceof ProcedureType || symbolType instanceof FunctionType) {
-    compileErrors.push(new PrintFunctionCompileError(location));
-    return;
-  }
-
-  if (symbolType instanceof StringType) {
-    // todo - string are recusrsively of type string needs to be fixed.
-    return;
-  }
-
-  if (isGenericSymbolType(symbolType)) {
-    mustNotBeFunction(symbolType.ofType, compileErrors, location);
-  }
-
-  if (isDictionarySymbolType(symbolType)) {
-    mustNotBeFunction(symbolType.keyType, compileErrors, location);
-    mustNotBeFunction(symbolType.valueType, compileErrors, location);
   }
 }
 

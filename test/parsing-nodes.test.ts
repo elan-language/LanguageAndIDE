@@ -47,7 +47,6 @@ import { TypeNode } from "../src/frames/parse-nodes/type-node";
 import { TypeSimpleNode } from "../src/frames/parse-nodes/type-simple-node";
 import { TypeSimpleOrGeneric } from "../src/frames/parse-nodes/type-simple-or-generic";
 import { UnaryExpression } from "../src/frames/parse-nodes/unary-expression";
-import { VarRefNode } from "../src/frames/parse-nodes/var-ref-node";
 import { ParseStatus } from "../src/frames/status-enums";
 import { DOT } from "../src/frames/symbols";
 import { testNodeParse } from "./testHelpers";
@@ -1315,34 +1314,6 @@ suite("Parsing Nodes", () => {
     );
     testNodeParse(new LiteralNode(), `{4, 5, 2, 3}`, ParseStatus.valid, "", "", "", `{4, 5, 2, 3}`);
   });
-  test("VarRef", () => {
-    testNodeParse(new VarRefNode(), `g`, ParseStatus.valid, "", "", "");
-    testNodeParse(new VarRefNode(), `new`, ParseStatus.valid, "new", "", ""); // because keyword as var is now a compile error not parse error
-    testNodeParse(new VarRefNode(), `global.`, ParseStatus.incomplete, "", "", "");
-    testNodeParse(
-      new VarRefNode(),
-      `global`,
-      ParseStatus.valid, //because use of a keyword alone is now to be picked up as a compile error, not a parse error
-      "global",
-      "",
-      "",
-    );
-    testNodeParse(new VarRefNode(), `foo`, ParseStatus.valid, "", "", "");
-    testNodeParse(new VarRefNode(), `foo[3]`, ParseStatus.valid, "", "", "");
-    testNodeParse(new VarRefNode(), `library.foo`, ParseStatus.valid, "", "", "");
-    testNodeParse(new VarRefNode(), `property.foo`, ParseStatus.valid, "", "", "");
-    testNodeParse(new VarRefNode(), `global.foo[3]`, ParseStatus.valid, "", "", "");
-    testNodeParse(new VarRefNode(), `property.foo[3..4]`, ParseStatus.valid, "", "", "");
-    testNodeParse(new VarRefNode(), `bar.foo[3..4]`, ParseStatus.valid, "", "", "");
-    testNodeParse(
-      new VarRefNode(),
-      `property.bar.foo`,
-      ParseStatus.valid,
-      "property.bar",
-      ".foo",
-      "",
-    );
-  });
   test("DeconstructedList", () => {
     testNodeParse(new DeconstructedList(), `a:b`, ParseStatus.valid, "", "", "");
     testNodeParse(new DeconstructedList(), `a:`, ParseStatus.incomplete, "", "", "");
@@ -1350,7 +1321,6 @@ suite("Parsing Nodes", () => {
     testNodeParse(new DeconstructedList(), `[a:3]`, ParseStatus.invalid, "", "[a:3]", "");
     testNodeParse(new DeconstructedList(), `(a:b)`, ParseStatus.invalid, "", "(a:b)", "");
   });
-
   test("SpaceNode", () => {
     testNodeParse(new SpaceNode(Space.ignored), ``, ParseStatus.valid, "", "", "", "");
     testNodeParse(new SpaceNode(Space.ignored), ` `, ParseStatus.valid, "", "", "", "");

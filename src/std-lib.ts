@@ -73,6 +73,10 @@ export class StdLib {
       return `a ${v.constructor.name}`;
     }
 
+    if (typeof v === "function") {
+      return `function ${v.name}`;
+    }
+
     throw new Error("Not implemented: " + typeof v);
   }
 
@@ -303,13 +307,6 @@ export class StdLib {
 
   trim(s: string): string {
     return s.trim();
-  }
-  mod(n: number, d: number) {
-    return n % d;
-  }
-
-  div(n: number, d: number) {
-    return this.floor(n / d);
   }
 
   floor(n: number) {

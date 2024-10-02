@@ -250,7 +250,6 @@ const opMap = new Map<OperationSymbol, string>([
   [OperationSymbol.NotEquals, "isnt"],
   [OperationSymbol.Pow, "^"],
   [OperationSymbol.Or, "or"],
-  [OperationSymbol.Xor, "xor"],
 ]);
 
 export function mapOperationSymbol(os: OperationSymbol) {

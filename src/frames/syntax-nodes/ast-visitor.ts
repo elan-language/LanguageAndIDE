@@ -64,8 +64,6 @@ import { TypeOfNode } from "../parse-nodes/type-of-node";
 import { TypeSimpleNode } from "../parse-nodes/type-simple-node";
 import { TypeTupleNode } from "../parse-nodes/type-tuple-node";
 import { UnaryExpression } from "../parse-nodes/unary-expression";
-import { VarRefCompound } from "../parse-nodes/var-ref-compound";
-import { VarRefNode } from "../parse-nodes/var-ref-node";
 import { SetStatement } from "../statements/set-statement";
 import { EnumType } from "../symbols/enum-type";
 import { wrapScopeInScope } from "../symbols/symbol-helpers";
@@ -138,7 +136,7 @@ export function transformMany(
     }
   }
 
-  return new CsvAsn(asts, fieldId, scope);
+  return new CsvAsn(asts, fieldId);
 }
 
 export function transform(
@@ -147,7 +145,7 @@ export function transform(
   scope: Scope,
 ): AstNode | undefined {
   if (node instanceof BracketedExpression) {
-    return new BracketedAsn(transform(node.expr, fieldId, scope)!, fieldId, scope);
+    return new BracketedAsn(transform(node.expr, fieldId, scope)!, fieldId);
   }
 
   if (node instanceof UnaryExpression) {
@@ -162,7 +160,7 @@ export function transform(
     const rhs = transform(node.rhs, fieldId, scope) as ExprAsn;
     const op = mapOperation(node.op!.matchedText);
 
-    return new BinaryExprAsn(op, lhs, rhs, fieldId, scope);
+    return new BinaryExprAsn(op, lhs, rhs, fieldId);
   }
 
   if (node instanceof LitInt) {
@@ -292,7 +290,7 @@ export function transform(
 
   if (node instanceof EmptyOfTypeNode) {
     const type = transform(node.type, fieldId, scope) as TypeAsn;
-    return new EmptyTypeAsn(type, fieldId, scope);
+    return new EmptyTypeAsn(type, fieldId);
   }
 
   if (node instanceof OptionalNode) {
@@ -300,10 +298,6 @@ export function transform(
       return transform(node.matchedNode, fieldId, scope);
     }
     return undefined;
-  }
-
-  if (node instanceof VarRefNode) {
-    return transform(node.bestMatch, fieldId, scope);
   }
 
   if (node instanceof SetClause) {
@@ -384,13 +378,13 @@ export function transform(
     const items = transformMany(node.csv as CSV, fieldId, scope).items.filter((i) =>
       isAstIdNode(i),
     );
-    return new DeconstructedTupleAsn(items, fieldId, scope);
+    return new DeconstructedTupleAsn(items, fieldId);
   }
 
   if (node instanceof DeconstructedList) {
     const hd = transform(node.head, fieldId, scope)!;
     const tl = transform(node.tail, fieldId, scope)!;
-    return new DeconstructedListAsn(hd, tl, fieldId, scope);
+    return new DeconstructedListAsn(hd, tl, fieldId);
   }
 
   if (node instanceof NewInstance) {
@@ -398,14 +392,6 @@ export function transform(
     const pp = transformMany(node.args as CSV, fieldId, scope).items;
     return new NewAsn(type, pp, fieldId, scope);
   }
-
-  if (node instanceof VarRefCompound) {
-    const q = transform(node.optQualifier, fieldId, scope) as AstQualifierNode | undefined;
-    const id = node.simple!.matchedText;
-    const index = transform(node.index, fieldId, scope) as IndexAsn | undefined;
-    return new VarAsn(id, false, q, index, fieldId, scope);
-  }
-
   if (node instanceof TermSimple) {
     const alts = transform(node.alternatives, fieldId, scope) as ExprAsn;
     const index = transform(node.optIndex, fieldId, scope) as IndexAsn | undefined;

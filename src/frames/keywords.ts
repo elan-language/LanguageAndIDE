@@ -11,6 +11,7 @@ export const constantKeyword = "constant";
 export const constructorKeyword = "constructor";
 export const copyKeyword = "copy";
 export const defaultKeyword = "default";
+export const divKeyword = "div";
 export const eachKeyword = "each";
 export const elseKeyword = "else";
 export const emptyKeyword = "empty";
@@ -32,6 +33,7 @@ export const lambdaKeyword = "lambda";
 export const letKeyword = "let";
 export const libraryKeyword = "library";
 export const mainKeyword = "main";
+export const modKeyword = "mod";
 export const newKeyword = "new";
 export const notKeyword = "not";
 export const ofKeyword = "of";
@@ -84,6 +86,7 @@ export const allKeywords = [
   constructorKeyword,
   copyKeyword,
   defaultKeyword,
+  divKeyword,
   eachKeyword,
   elseKeyword,
   emptyKeyword,
@@ -105,6 +108,7 @@ export const allKeywords = [
   letKeyword,
   libraryKeyword,
   mainKeyword,
+  modKeyword,
   newKeyword,
   notKeyword,
   ofKeyword,

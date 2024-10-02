@@ -1,17 +1,14 @@
 import { CompileError } from "../compile-error";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstNode } from "../interfaces/ast-node";
-import { Scope } from "../interfaces/scope";
 import { DeconstructedListType } from "../symbols/deconstructed-list-type";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { transforms } from "./ast-helpers";
 
 export class DeconstructedListAsn extends AbstractAstNode implements AstIdNode {
   constructor(
     private readonly head: AstNode,
     private readonly tail: AstNode,
     public readonly fieldId: string,
-    private readonly scope: Scope,
   ) {
     super();
   }
