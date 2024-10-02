@@ -232,6 +232,7 @@ main
   print g.dsi
   print g.ai
   print g.t
+  print g.r
 end main
 
 class Player
@@ -254,6 +255,7 @@ class Game
     property dsi as ImmutableDictionary<of String, Int>
     property ai as Array<of Int>
     property t as Tuple<of Int, String, List<of Int>>
+    property r as Regex
 
     function asString() return String
         return "A game"
@@ -274,6 +276,7 @@ async function main() {
   system.printLine(_stdlib.asString(g.dsi));
   system.printLine(_stdlib.asString(g.ai));
   system.printLine(_stdlib.asString(g.t));
+  system.printLine(_stdlib.asString(g.r));
 }
 
 class Player {
@@ -293,7 +296,7 @@ class Player {
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.emptyImmutableList()], ["ds", system.emptyDictionary()], ["dsi", system.emptyImmutableDictionary()], ["ai", system.emptyArray()], ["t", system.emptyTuple([0, "", system.emptyImmutableList()])]]);};
+  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.emptyImmutableList()], ["ds", system.emptyDictionary()], ["dsi", system.emptyImmutableDictionary()], ["ai", system.emptyArray()], ["t", system.emptyTuple([0, "", system.emptyImmutableList()])], ["r", /(?:)/]]);};
   constructor() {
 
   }
@@ -316,6 +319,8 @@ class Game {
 
   t = system.emptyTuple([0, "", system.emptyImmutableList()]);
 
+  r = /(?:)/;
+
   asString() {
     return "A game";
   }
@@ -329,7 +334,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "00false{}[]{}[](0, , {})");
+    await assertObjectCodeExecutes(fileImpl, "00false{}[]{}[](0, , {})A Regex");
   });
 
   test("Pass_DefaultValuesNotPickedUpFromDefaultConstructor", async () => {
@@ -488,6 +493,7 @@ main
   print g.previousScores is empty List<of Int>
   print g.score is empty Int
   print g.best is empty Int
+  print g.r is empty Regex
 end main
 
 class Game
@@ -504,6 +510,8 @@ class Game
   property previousGame as Game
 
   property previousScores as List<of Int>
+
+  property r as Regex
 
   function asString() return String
     return "A game"
@@ -533,10 +541,11 @@ async function main() {
   system.printLine(_stdlib.asString(system.objectEquals(g.previousScores, system.emptyImmutableList())));
   system.printLine(_stdlib.asString(g.score === 0));
   system.printLine(_stdlib.asString(g.best === 0));
+  system.printLine(_stdlib.asString(g.r === /(?:)/));
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["score", 0], ["best", 0], ["previousScores", system.emptyImmutableList()]]);};
+  static emptyInstance() { return system.emptyClass(Game, [["score", 0], ["best", 0], ["previousScores", system.emptyImmutableList()], ["r", /(?:)/]]);};
   constructor() {
     this.score = 1;
   }
@@ -571,6 +580,8 @@ class Game {
 
   previousScores = system.emptyImmutableList();
 
+  r = /(?:)/;
+
   asString() {
     return "A game";
   }
@@ -598,7 +609,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "truetruetruetruefalsetrue");
+    await assertObjectCodeExecutes(fileImpl, "truetruetruetruefalsetruefalse");
   });
 
   test("Pass_defaultValueCanBeAssigned", async () => {
