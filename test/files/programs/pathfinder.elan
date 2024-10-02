@@ -1,16 +1,15 @@
-# 7d4720f2e3a70d056d557e36fed4e4694536ae06db9e424536da68398a51c8ee Elan Beta 2 valid
+# 9fcebfe7d397e7fa79318f544a24c7f91a28fb37672eadf1707a6f1c44f1655e Elan Beta 2 valid
 
 main
   let start be new Point(5, 5)
   let destination be new Point(34, 24)
-  let percentRocks be inputIntBetween("Enter % to withBackground with rocks (0-100): ", 0, 100)
+  let percentRocks be inputIntBetween("Enter % to fill with rocks (0-100): ", 0, 100)
   var rocks set to empty [Point]
   var nodes set to empty [Node]
   call createRocksAndNodes(percentRocks, rocks, nodes, start, destination)
   var gr set to initialiseGraphics(start, destination, rocks)
   call gr.draw()
   var solver set to new Solver(nodes, start, destination)
-  var exit set to false
   while true
     let option be inputString(algPrompt)
     let alg be algFromLetter[option]

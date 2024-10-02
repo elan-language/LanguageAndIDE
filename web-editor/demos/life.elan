@@ -1,20 +1,14 @@
 # FFFF Elan Beta 2 valid
 
 main
-  print "Press any key to halt"
   var gr set to new BlockGraphics()
   var grid set to empty [Boolean]
   call fillRandom(grid)
-  var cont set to true
-  while cont
+  while true
     set gr to updateGraphics(grid, gr)
     call gr.draw()
     set grid to nextGeneration(grid)
     call pause(50)
-    if gr.getKeystroke() isnt ""
-      then
-        set cont to false
-    end if
   end while
 end main
 
