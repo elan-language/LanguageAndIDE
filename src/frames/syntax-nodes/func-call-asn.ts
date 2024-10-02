@@ -3,8 +3,7 @@ import {
   mustBeKnownSymbol,
   mustBePublicMember,
   mustBePureFunctionSymbol,
-  mustCallExtensionViaQualifier,
-  mustMatchParameters,
+  mustCallExtensionViaQualifier
 } from "../compile-rules";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstNode } from "../interfaces/ast-node";
@@ -14,7 +13,13 @@ import { SymbolType } from "../interfaces/symbol-type";
 import { FunctionType } from "../symbols/function-type";
 import { isMemberOnFieldsClass, scopePrefix } from "../symbols/symbol-helpers";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { containsGenericType, matchGenericTypes, generateType, transforms } from "./ast-helpers";
+import {
+  containsGenericType,
+  generateType,
+  matchGenericTypes,
+  matchParametersAndTypes,
+  transforms,
+} from "./ast-helpers";
 import { ChainedAsn } from "./chained-asn";
 
 export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
@@ -86,21 +91,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
         parameters = [this.precedingNode].concat(parameters);
       }
 
-      let parameterTypes = funcSymbolType.parametersTypes;
-
-      if (parameterTypes.some((pt) => containsGenericType(pt))) {
-        // this.parameters is correct - function adds qualifier if extension
-        const matches = matchGenericTypes(funcSymbolType, this.parameters, this.precedingNode);
-        parameterTypes = parameterTypes.map((pt) => generateType(pt, matches));
-      }
-
-      mustMatchParameters(
-        parameters,
-        parameterTypes,
-        funcSymbolType.isExtension,
-        this.compileErrors,
-        this.fieldId,
-      );
+      matchParametersAndTypes(funcSymbolType, parameters, this.compileErrors, this.fieldId);
 
       isAsync = funcSymbolType.isAsync;
     }
@@ -122,7 +113,13 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
       const returnType = funcSymbolType.returnType;
 
       if (containsGenericType(returnType)) {
-        const matches = matchGenericTypes(funcSymbolType, this.parameters, this.precedingNode);
+        let callParameters = this.parameters;
+
+        if (funcSymbolType.isExtension && this.precedingNode) {
+          callParameters = [this.precedingNode].concat(callParameters);
+        }
+
+        const matches = matchGenericTypes(funcSymbolType, callParameters);
         return generateType(returnType, matches);
       }
       return returnType;

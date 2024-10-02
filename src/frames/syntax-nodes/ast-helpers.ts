@@ -1,4 +1,6 @@
 import { ElanCompilerError } from "../../elan-compiler-error";
+import { CompileError } from "../compile-error";
+import { mustMatchParameters } from "../compile-rules";
 import { isFile, isFrame, isFunction } from "../helpers";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstIdNode } from "../interfaces/ast-id-node";
@@ -213,24 +215,34 @@ export function match(
   }
 }
 
-export function matchGenericTypes(
-  type: FunctionType | ProcedureType,
-  parameters: AstNode[],
-  precedingNode: AstNode | undefined,
-) {
+export function matchGenericTypes(type: FunctionType | ProcedureType, parameters: AstNode[]) {
   const matches = new Map<string, SymbolType>();
-
   const flattened = type.parametersTypes.map((n) => flatten(n));
+  const pTypes = parameters.map((p) => flatten(p.symbolType()));
+  match(flattened, pTypes, matches);
+  return matches;
+}
 
-  if (type.isExtension && precedingNode) {
-    parameters = [precedingNode].concat(parameters);
+export function matchParametersAndTypes(
+  funcSymbolType: FunctionType | ProcedureType,
+  parameters: AstNode[],
+  compileErrors: CompileError[],
+  location: string,
+) {
+  let parameterTypes = funcSymbolType.parametersTypes;
+
+  if (parameterTypes.some((pt) => containsGenericType(pt))) {
+    const matches = matchGenericTypes(funcSymbolType, parameters);
+    parameterTypes = parameterTypes.map((pt) => generateType(pt, matches));
   }
 
-  const pTypes = parameters.map((p) => flatten(p.symbolType()));
-
-  match(flattened, pTypes, matches);
-
-  return matches;
+  mustMatchParameters(
+    parameters,
+    parameterTypes,
+    funcSymbolType.isExtension,
+    compileErrors,
+    location,
+  );
 }
 
 const opMap = new Map<OperationSymbol, string>([
