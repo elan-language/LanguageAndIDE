@@ -22,6 +22,11 @@ export class System {
   emptyImmutableListSingleton = this.list([]);
   emptyIterableSingleton = this.iter([]);
   emptyImmutableDictionarySingleton = this.immutableDictionary({});
+  emptyRegexSingleton = /(?:)/;
+
+  emptyRegex() {
+    return this.emptyRegexSingleton;
+  }
 
   emptyIter() {
     return this.emptyIterableSingleton;

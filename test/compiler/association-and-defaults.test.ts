@@ -174,7 +174,7 @@ async function main() {
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.emptyImmutableList()], ["ds", system.emptyDictionary()], ["dsi", system.emptyImmutableDictionary()], ["ai", system.emptyArray()], ["t", system.emptyTuple([0, "", system.emptyImmutableList()])], ["ff", system.emptyFunc(0)], ["r", /(?:)/]]);};
+  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.emptyImmutableList()], ["ds", system.emptyDictionary()], ["dsi", system.emptyImmutableDictionary()], ["ai", system.emptyArray()], ["t", system.emptyTuple([0, "", system.emptyImmutableList()])], ["ff", system.emptyFunc(0)], ["r", system.emptyRegex()]]);};
   constructor() {
 
   }
@@ -199,7 +199,7 @@ class Game {
 
   ff = system.emptyFunc(0);
 
-  r = /(?:)/;
+  r = system.emptyRegex();
 
   asString() {
     return "A game";
@@ -296,7 +296,7 @@ class Player {
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.emptyImmutableList()], ["ds", system.emptyDictionary()], ["dsi", system.emptyImmutableDictionary()], ["ai", system.emptyArray()], ["t", system.emptyTuple([0, "", system.emptyImmutableList()])], ["r", /(?:)/]]);};
+  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.emptyImmutableList()], ["ds", system.emptyDictionary()], ["dsi", system.emptyImmutableDictionary()], ["ai", system.emptyArray()], ["t", system.emptyTuple([0, "", system.emptyImmutableList()])], ["r", system.emptyRegex()]]);};
   constructor() {
 
   }
@@ -319,7 +319,7 @@ class Game {
 
   t = system.emptyTuple([0, "", system.emptyImmutableList()]);
 
-  r = /(?:)/;
+  r = system.emptyRegex();
 
   asString() {
     return "A game";
@@ -541,11 +541,11 @@ async function main() {
   system.printLine(_stdlib.asString(system.objectEquals(g.previousScores, system.emptyImmutableList())));
   system.printLine(_stdlib.asString(g.score === 0));
   system.printLine(_stdlib.asString(g.best === 0));
-  system.printLine(_stdlib.asString(g.r === /(?:)/));
+  system.printLine(_stdlib.asString(g.r === system.emptyRegex()));
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["score", 0], ["best", 0], ["previousScores", system.emptyImmutableList()], ["r", /(?:)/]]);};
+  static emptyInstance() { return system.emptyClass(Game, [["score", 0], ["best", 0], ["previousScores", system.emptyImmutableList()], ["r", system.emptyRegex()]]);};
   constructor() {
     this.score = 1;
   }
@@ -580,7 +580,7 @@ class Game {
 
   previousScores = system.emptyImmutableList();
 
-  r = /(?:)/;
+  r = system.emptyRegex();
 
   asString() {
     return "A game";
@@ -609,7 +609,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "truetruetruetruefalsetruefalse");
+    await assertObjectCodeExecutes(fileImpl, "truetruetruetruefalsetruetrue");
   });
 
   test("Pass_defaultValueCanBeAssigned", async () => {
