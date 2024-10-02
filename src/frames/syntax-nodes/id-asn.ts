@@ -5,7 +5,6 @@ import {
   mustBePublicMember,
   mustNotBeKeyword,
 } from "../compile-rules";
-import { isMember } from "../helpers";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstNode } from "../interfaces/ast-node";
 import { Scope } from "../interfaces/scope";

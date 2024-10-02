@@ -12,7 +12,6 @@ export class IdDefAsn extends AbstractAstNode implements AstIdNode {
     private readonly scope: Scope,
   ) {
     super();
-    this.id = id.trim();
   }
 
   aggregateCompileErrors(): CompileError[] {

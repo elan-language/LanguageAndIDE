@@ -449,9 +449,9 @@ export function transform(
 
   if (node instanceof IfExpr) {
     const condition = transform(node.condition, fieldId, scope) as ExprAsn;
-    const tr = transform(node.whenTrue, fieldId, scope) as ExprAsn;
-    const fl = transform(node.whenFalse, fieldId, scope) as ExprAsn;
-    return new IfExprAsn(condition, tr, fl, fieldId, scope);
+    const trueExpression = transform(node.whenTrue, fieldId, scope) as ExprAsn;
+    const falseExpression = transform(node.whenFalse, fieldId, scope) as ExprAsn;
+    return new IfExprAsn(condition, trueExpression, falseExpression, fieldId);
   }
 
   if (node instanceof EnumVal) {

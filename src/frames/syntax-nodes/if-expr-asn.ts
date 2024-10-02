@@ -12,7 +12,6 @@ export class IfExprAsn extends AbstractAstNode implements AstNode {
     private readonly expr1: ExprAsn,
     private readonly expr2: ExprAsn,
     public readonly fieldId: string,
-    scope: Scope,
   ) {
     super();
   }
