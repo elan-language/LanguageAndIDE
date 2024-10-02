@@ -34,30 +34,30 @@ suite("Selector tests", () => {
   test("Statement Select - variable", () => {
     const file = T09_emptyMainAndClassWithGlobalSelector();
     file.getById("select2").processKey(key("v"));
-    const v = file.getById("var11").renderAsSource();
+    const v = file.getById("var10").renderAsSource();
     assert.equal(v, "  var  set to ");
   });
 
   test("Statement Select - case insensitive", () => {
     const file = T09_emptyMainAndClassWithGlobalSelector();
     file.getById("select2").processKey(key("V"));
-    const v = file.getById("var11").renderAsSource();
+    const v = file.getById("var10").renderAsSource();
     assert.equal(v, "  var  set to ");
   });
 
   test("Member Select - function", () => {
     const file = T09_emptyMainAndClassWithGlobalSelector();
-    file.getById("select10").processKey(key("f"));
-    const v = file.getById("func11").renderAsSource();
+    file.getById("select9").processKey(key("f"));
+    const v = file.getById("func10").renderAsSource();
     assert.equal(v, "  function () return \r\n" + "    return \r\n" + "  end function\r\n");
   });
 
   test("Member Select - procedure", () => {
     const file = T09_emptyMainAndClassWithGlobalSelector();
-    file.getById("select10").processKey(key("p"));
-    file.getById("select10").processKey(key("o"));
-    file.getById("select10").processKey(key("c"));
-    const v = file.getById("proc11").renderAsSource();
+    file.getById("select9").processKey(key("p"));
+    file.getById("select9").processKey(key("o"));
+    file.getById("select9").processKey(key("c"));
+    const v = file.getById("proc10").renderAsSource();
     assert.equal(v, "  procedure ()\r\n\r\n  end procedure\r\n");
   });
 
@@ -65,7 +65,7 @@ suite("Selector tests", () => {
     const file = T09_emptyMainAndClassWithGlobalSelector();
     file.getById("select0").processKey(key("c"));
     file.getById("select0").processKey(key("o"));
-    const v = file.getById("const11").renderAsSource();
+    const v = file.getById("const10").renderAsSource();
     assert.equal(v, "constant  set to \r\n");
   });
 
@@ -95,7 +95,7 @@ suite("Selector tests", () => {
     assert.equal(help, " procedure property");
     assert.equal(
       s.renderAsHtml(),
-      `<member class="ok" id='select9' tabindex="0"><selector><text>pro</text><placeholder>new code</placeholder><help class="selector"> procedure property</help></selector></member>`,
+      `<member class="ok" id='select8' tabindex="0"><selector><text>pro</text><placeholder>new code</placeholder><help class="selector"> procedure property</help></selector></member>`,
     );
   });
 
@@ -118,7 +118,7 @@ suite("Selector tests", () => {
     assert.equal(s.getCompletion(), " procedure property");
     assert.equal(
       s.renderAsHtml(),
-      `<member class="ok" id='select9' tabindex="0"><selector><text>abstract pro</text><placeholder>new code</placeholder><help class="selector"> procedure property</help></selector></member>`,
+      `<member class="ok" id='select8' tabindex="0"><selector><text>abstract pro</text><placeholder>new code</placeholder><help class="selector"> procedure property</help></selector></member>`,
     );
   });
 
