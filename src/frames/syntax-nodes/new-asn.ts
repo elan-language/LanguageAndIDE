@@ -54,7 +54,7 @@ export class NewAsn extends AbstractAstNode implements AstNode {
     if (type instanceof ClassType) {
       mustBeConcreteClass(type, this.compileErrors, this.fieldId);
 
-      if (type.isAbstract === false) {
+      if (!type.isAbstract) {
         const classSymbol = this.scope.resolveSymbol(type.className, transforms(), this.scope);
 
         // todo is this right - or should we resolve constructor on class scope and get constructor symbol ?

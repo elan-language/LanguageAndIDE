@@ -6,7 +6,6 @@ import {
   mustBeNumberType,
 } from "../compile-rules";
 import { AstNode } from "../interfaces/ast-node";
-import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { BooleanType } from "../symbols/boolean-type";
 import { EnumType } from "../symbols/enum-type";

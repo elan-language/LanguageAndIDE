@@ -25,7 +25,6 @@ export class ParamDefAsn extends AbstractAstNode implements AstIdNode {
     this.type.compile();
 
     mustNotBeKeyword(this.id, this.compileErrors, this.fieldId);
-
     mustBeKnownSymbolType(this.symbolType(), this.type.id, this.compileErrors, this.fieldId);
 
     return `${this.id}`;

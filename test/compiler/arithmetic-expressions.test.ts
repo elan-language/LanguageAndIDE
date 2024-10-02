@@ -163,16 +163,20 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  var x set to - 4.7
-  var y set to 5 * -3
+  var x set to 0.0
+  var y set to 0
+  set x to - 4.7
+  set y to 5 * -3
   print x
   print y
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var x = -4.7;
-  var y = 5 * -3;
+  var x = 0;
+  var y = 0;
+  x = -4.7;
+  y = 5 * -3;
   system.printLine(_stdlib.asString(x));
   system.printLine(_stdlib.asString(y));
 }

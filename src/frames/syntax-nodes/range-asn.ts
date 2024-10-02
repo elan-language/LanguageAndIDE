@@ -23,11 +23,7 @@ export class RangeAsn extends AbstractAstNode implements AstNode {
     this.compileErrors = [];
     const f = this.from ? `${this.from.compile()}` : "0";
     const t = this.to ? `${this.to.compile()}` : undefined;
-
-    if (t) {
-      return `.slice(${f}, ${t})`;
-    }
-    return `.slice(${f})`;
+    return t ? `.slice(${f}, ${t})` : `.slice(${f})`;
   }
 
   symbolType() {
