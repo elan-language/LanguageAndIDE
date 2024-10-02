@@ -73,6 +73,10 @@ export class StdLib {
       return `a ${v.constructor.name}`;
     }
 
+    if (typeof v === "function") {
+      return `function ${v.name}`;
+    }
+
     throw new Error("Not implemented: " + typeof v);
   }
 
