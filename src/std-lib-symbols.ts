@@ -795,7 +795,7 @@ export class StdLibSymbols implements Scope {
     [
       "withText",
       this.getSymbol(
-        "putChar",
+        "withText",
         new FunctionType(
           [
             new ListType(new TupleType([StringType.Instance, IntType.Instance, IntType.Instance])),
