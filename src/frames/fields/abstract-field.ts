@@ -317,21 +317,23 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   private enter() {
-    const completions = this.getPlainTextCompletion();
-    if (completions.length > 0) {
-      this.cursorRight();
-    } else if (this.autoCompSelected) {
+    if (this.autoCompSelected) {
       this.replaceAutocompletedText();
     } else {
-      const peerFields = this.holder.getFields();
-      const last = peerFields.length - 1;
-      const thisField = peerFields.indexOf(this);
-      if (thisField === last) {
-        this.holder.insertSelectorAfterLastField();
+      const completions = this.getPlainTextCompletion();
+      if (completions.length > 0) {
+        this.cursorRight();
       } else {
-        this.tab(false);
+        const peerFields = this.holder.getFields();
+        const last = peerFields.length - 1;
+        const thisField = peerFields.indexOf(this);
+        if (thisField === last) {
+          this.holder.insertSelectorAfterLastField();
+        } else {
+          this.tab(false);
+        }
+        this.noLongerEditingField();
       }
-      this.noLongerEditingField();
     }
   }
 
