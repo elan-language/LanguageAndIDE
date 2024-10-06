@@ -1,4 +1,4 @@
-# FFFF Elan Beta 2 valid
+# fa9e4842bb7a115acbf8d23371ebd4b8f047c878c7f35db163ab071df7a77a45 Elan Beta 2 valid
 
 # Turing Machine that converts a Year from decimal to roman numerals
 # Run the program, enter the number to convert and watch the machine in action.
@@ -6,11 +6,10 @@
 # a simpler task, just by writing rules in the same format:
 # new Rule("currentState", "readSymbol", "newState", "writeSymbol", DirectionForHeadMove)
 main
-  # You can define your own initial and halt states, or use these two as defaults.
   var tm set to new TuringMachine("init", "halt")
   call addRulesForRomanNumeralsInto(tm)
-  let decimal be inputString("Enter a decimal number in range 0 to 2500 ")
-  call tm.setTape(decimal)
+  let decimal be inputIntBetween("Enter a decimal number: ", 0, 2500)
+  call tm.setTape(decimal.asString())
   var steps set to 0
   while not tm.isHalted()
     let rule be tm.findMatchingRule()

@@ -1,4 +1,4 @@
-# 3a74053ed3520e1905c1d37ab21092a2aabb9bf70c516f023b7ad4a157f39f33 Elan Beta 2 valid
+# da73e4a642825d226b7f57f984ce51ed28522d91455692f807dbbbac0e5ff4ac Elan Beta 2 valid
 
 main
   var g set to new BlockGraphics()
@@ -7,30 +7,41 @@ main
   while true
     set g to g.withText(x, y, "*", red, black)
     call g.draw()
-    call pause(50)
+    call pause(100)
     set g to g.withBlock(x, y, black)
     call g.draw()
     let r be randomInt(0, 3)
     switch r
       case 0
-        set x to withinLimits(x - 1, 39)
+        set x to lesserOf(x + 1, 39)
       case 1
-        set x to withinLimits(x + 1, 39)
+        set x to greaterOf(x - 1, 0)
       case 2
-        set y to withinLimits(y - 1, 29)
+        set y to lesserOf(y + 1, 29)
       case 3
-        set y to withinLimits(y + 1, 29)
+        set y to greaterOf(y - 1, 0)
     end switch
   end while
 end main
 
-function withinLimits(value as Int, max as Int) return Int
-  var result set to value
-  if value < 0
-    then
-      set result to 0
-    else if value > max
-      set result to max
-  end if
-  return result
+function lesserOf(value as Int, max as Int) return Int
+  return if value > max then max else value
 end function
+
+function greaterOf(value as Int, min as Int) return Int
+  return if value < min then min else value
+end function
+
+test lesserOf
+  assert lesserOf(5, 10) is 5
+  assert lesserOf(10, 10) is 10
+  assert lesserOf(11, 10) is 10
+  assert lesserOf(-1, 10) is -1
+end test
+
+test greaterOf
+  assert greaterOf(7, 3) is 7
+  assert greaterOf(3, 3) is 3
+  assert greaterOf(2, 3) is 3
+  assert greaterOf(-1, 0) is 0
+end test

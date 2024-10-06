@@ -1,4 +1,4 @@
-# fc70ed055f3b561cbeae4ed55f921776885a53ef5d105eac8223e264c47614ce Elan Beta 2 valid
+# 577b0eced8b36188c6cb4f5753d3c5b47356b8a31f6286295eeeb4d9a9417d51 Elan Beta 2 valid
 
 # This is *not* a card game: it's a demo of how you could *start* to draw cards for such game
 main
@@ -27,7 +27,7 @@ immutable class Card
   constructor(rank as Rank, suit as Suit)
     set property.rank to rank
     set property.suit to suit
-    set property.symbol to unicode(symbols[suit])
+    set property.symbol to stringForUnicode(symbols[suit])
     set property.colour to colourForSuit[suit]
     set property.label to labels[rank]
   end constructor
