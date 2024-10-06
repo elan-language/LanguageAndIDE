@@ -487,12 +487,24 @@ export class StdLib {
   }
 
   withBlock(map: BlockGraphics, x: number, y: number, b: number) {
+    if (x < 0 || x >= this.xSize) {
+      throw new ElanRuntimeError(`x value ${x} is outside range 0 to ${this.xSize - 1}`);
+    }
+    if (y < 0 || y >= this.ySize) {
+      throw new ElanRuntimeError(`y value ${y} is outside of range 0 to ${this.ySize - 1}`);
+    }
     const cm = this.ensureInitialised(map);
     const [c, f] = this.getDetails(cm, x, y);
     return this.putDetails(cm, x, y, "", f, b);
   }
 
   withUnicode(map: BlockGraphics, x: number, y: number, unicode: number, f: number, b: number) {
+    if (x < 0 || x >= this.xSize) {
+      throw new ElanRuntimeError(`x value ${x} is outside range 0 to ${this.xSize - 1}`);
+    }
+    if (y < 0 || y >= this.ySize) {
+      throw new ElanRuntimeError(`y value ${y} is outside of range 0 to ${this.ySize - 1}`);
+    }
     const cm = this.ensureInitialised(map);
     const str = String.fromCharCode(unicode);
     return this.putDetails(cm, x, y, str, f, b);
@@ -506,6 +518,12 @@ export class StdLib {
     foreground: number,
     background: number,
   ) {
+    if (x < 0 || x >= this.xSize) {
+      throw new ElanRuntimeError(`x value ${x} is outside range 0 to ${this.xSize - 1}`);
+    }
+    if (y < 0 || y >= this.ySize) {
+      throw new ElanRuntimeError(`y value ${y} is outside of range 0 to ${this.ySize - 1}`);
+    }
     let cm = this.ensureInitialised(map);
     for (let i = 0; i < text.length; i++) {
       if (x + i < this.xSize) {
@@ -513,6 +531,9 @@ export class StdLib {
       } else {
         const newX = (x + i) % this.xSize;
         const newY = (y + this.floor((x + i) / this.xSize)) % this.ySize;
+        if (newY >= this.ySize) {
+          throw new ElanRuntimeError(`'${text} is too long to fit from point ${x},${y} onwards'`);
+        }
         cm = this.putDetails(cm, newX, newY, text[i], foreground, background);
       }
     }
