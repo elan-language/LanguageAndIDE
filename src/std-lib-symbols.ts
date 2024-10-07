@@ -1,3 +1,4 @@
+import { elanTypeMetadataKey } from "./elan-type-annotations";
 import { ElanSymbol } from "./frames/interfaces/elan-symbol";
 import { Scope } from "./frames/interfaces/scope";
 import { SymbolType } from "./frames/interfaces/symbol-type";
@@ -19,9 +20,78 @@ import { StringType } from "./frames/symbols/string-type";
 import { SymbolScope } from "./frames/symbols/symbol-scope";
 import { TupleType } from "./frames/symbols/tuple-type";
 import { UnknownSymbol } from "./frames/symbols/unknown-symbol";
+import { UnknownType } from "./frames/symbols/unknown-type";
 import { Transforms } from "./frames/syntax-nodes/transforms";
+import { StdLib } from "./std-lib";
 
 export class StdLibSymbols implements Scope {
+  constructor() {
+    this.loadSymbols();
+  }
+
+  private loadSymbols() {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const stdlib = new StdLib() as any;
+
+    const names = Object.getOwnPropertyNames(Object.getPrototypeOf(stdlib));
+
+    for (let i = 0; i < names.length; i++) {
+      const m = names[i];
+      const symbol = stdlib[m];
+      if (typeof symbol === "function") {
+        this.loadFunction(stdlib, symbol);
+      }
+    }
+  }
+
+  private mapType(type: string): SymbolType {
+    switch (type) {
+      case "Number":
+        return FloatType.Instance;
+      case "Float":
+        return FloatType.Instance;
+    }
+    throw new Error("NotImplemented");
+  }
+
+  private createFunction(
+    pTypes: string[],
+    retType: string,
+    isExtension: boolean,
+    isPure: boolean,
+    isAsync: boolean,
+  ) {
+    return new FunctionType(
+      pTypes.map((t) => this.mapType(t)),
+      this.mapType(retType),
+      isExtension,
+      isPure,
+      isAsync,
+    );
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/ban-types
+  private loadFunction(tgt: any, f: Function) {
+    const name = f.name;
+
+    if (name === "abs") {
+      const pTypes: string[] = Reflect.getMetadata("design:paramtypes", tgt, name).map(
+        (t: { name: string }) => t.name,
+      );
+      const retType: string = Reflect.getMetadata("design:returntype", tgt, name).name;
+
+      const epTypes = Reflect.getMetadata(elanTypeMetadataKey, tgt, name) as string[];
+
+      for (let i = 0; i < pTypes.length; i++) {
+        pTypes[i] = epTypes[i];
+      }
+
+      const f = this.createFunction(pTypes, retType, false, false, false);
+
+      this.symbols.set(name, this.getSymbol(name, f));
+    }
+  }
+
   symbolMatches(id: string, all: boolean): ElanSymbol[] {
     return [...this.symbols.keys()]
       .filter((k) => k.startsWith(id) || all)

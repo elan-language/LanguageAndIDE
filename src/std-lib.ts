@@ -1,4 +1,6 @@
+import "reflect-metadata";
 import { ElanRuntimeError } from "./elan-runtime-error";
+import { elanType } from "./elan-type-annotations";
 import { hasHiddenType } from "./has-hidden-type";
 import { StubInputOutput } from "./stub-input-output";
 import { System } from "./system";
@@ -727,7 +729,10 @@ export class StdLib {
   //Math
   pi = Math.PI;
 
-  abs = Math.abs;
+  abs(@elanType("Float") x: number): number {
+    return Math.abs(x);
+  }
+
   // Returns the absolute value of the input.
 
   acos = Math.acos;
