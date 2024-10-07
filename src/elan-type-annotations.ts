@@ -32,6 +32,16 @@ export class ElanFunctionDescriptor implements ElanMethodDescriptor {
   parameters: TypeDescriptor[] = [];
 }
 
+export class ElanParametersDescriptor implements ElanMethodDescriptor {
+  isProcedure = false;
+  isFunction = false;
+  isPure = false;
+  isExtension = false;
+  isAsync = false;
+
+  parameters: TypeDescriptor[] = [];
+}
+
 export class ElanTypeDescriptor {
   constructor(public readonly name: string) {}
 }
@@ -53,17 +63,27 @@ export function elanMethod(elanDesc: ElanMethodDescriptor) {
         (t: { name: string }) => new TypescriptTypeDescriptor(t.name),
       );
     }
+
+    const metaData: ElanMethodDescriptor =
+      Reflect.getOwnMetadata(elanMethodMetadataKey, target, propertyKey) ??
+      new ElanParametersDescriptor();
+
+    for (let i = 0; i <= elanDesc.parameters.length; i++) {
+      const updatedParam = metaData.parameters[i];
+      if (updatedParam) {
+        elanDesc.parameters[i] = updatedParam;
+      }
+    }
+
     Reflect.defineMetadata(elanMethodMetadataKey, elanDesc, target, propertyKey);
   };
 }
 
 export function elanType(eType: ElanTypeDescriptor) {
   return function (target: object, propertyKey: string | symbol, parameterIndex: number) {
-    const metaData: ElanMethodDescriptor = Reflect.getOwnMetadata(
-      elanMethodMetadataKey,
-      target,
-      propertyKey,
-    );
+    const metaData: ElanMethodDescriptor =
+      Reflect.getOwnMetadata(elanMethodMetadataKey, target, propertyKey) ??
+      new ElanParametersDescriptor();
 
     metaData.parameters[parameterIndex] = eType;
     Reflect.defineMetadata(elanMethodMetadataKey, metaData, target, propertyKey);

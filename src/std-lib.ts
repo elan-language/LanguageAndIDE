@@ -91,7 +91,7 @@ export class StdLib {
   }
 
   @elanMethod(new ElanFunctionDescriptor(new ElanTypeDescriptor("String"), false, true, false))
-  stringForUnicode(n: number): string {
+  stringForUnicode(@elanType(new ElanTypeDescriptor("Int")) n: number): string {
     return String.fromCharCode(n);
   }
 

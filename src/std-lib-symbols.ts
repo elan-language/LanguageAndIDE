@@ -60,6 +60,8 @@ export class StdLibSymbols implements Scope {
         return FloatType.Instance;
       case "String":
         return StringType.Instance;
+      case "Int":
+          return IntType.Instance;
     }
     throw new Error("NotImplemented: " + type);
   }
