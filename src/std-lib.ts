@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import { ElanRuntimeError } from "./elan-runtime-error";
-import { elanType } from "./elan-type-annotations";
+import { elanIgnore, elanType } from "./elan-type-annotations";
 import { hasHiddenType } from "./has-hidden-type";
 import { StubInputOutput } from "./stub-input-output";
 import { System } from "./system";
@@ -16,10 +16,12 @@ export class StdLib {
 
   system: System;
 
+  @elanIgnore
   isValueType<T>(v: T) {
     return typeof v === "boolean" || typeof v === "string" || typeof v === "number";
   }
 
+  @elanIgnore
   asString<T>(v: T | T[] | undefined): string {
     if (v === undefined || v === null) {
       throw new Error(`Out of range error`);
@@ -82,26 +84,31 @@ export class StdLib {
     throw new Error("Not implemented: " + typeof v);
   }
 
+  @elanIgnore
   stringForUnicode(n: number): string {
     return String.fromCharCode(n);
   }
 
+  @elanIgnore
   asUnicode(s: string): number {
     return s.charCodeAt(0);
   }
 
+  @elanIgnore
   asArray<T>(list: T[]): T[] {
     const arr = [...list];
     (arr as unknown as hasHiddenType)._type = "Array";
     return arr;
   }
 
+  @elanIgnore
   asList<T>(arr: T[]): T[] {
     const list = [...arr];
     (list as unknown as hasHiddenType)._type = "List";
     return list;
   }
 
+  @elanIgnore
   range(start: number, end: number): number[] {
     const seq = [];
     for (let i = start; i <= end; i++) {
@@ -111,32 +118,38 @@ export class StdLib {
     return seq;
   }
 
+  @elanIgnore
   asIter<T>(arr: T[]): T[] {
     const list = [...arr];
     (list as unknown as hasHiddenType)._type = "Iterable";
     return list as T[];
   }
 
+  @elanIgnore
   head<T>(arr: T[]): T {
     return this.system.safeIndex(arr, 0);
   }
 
+  @elanIgnore
   keys<T>(dict: { [key: string]: T }): string[] {
     const lst = Object.getOwnPropertyNames(dict).filter((s) => s !== "_type");
     (lst as unknown as hasHiddenType)._type = "List";
     return lst;
   }
 
+  @elanIgnore
   values<T>(dict: { [key: string]: T }): T[] {
     const lst = this.keys(dict).map((k) => dict[k]);
     (lst as unknown as hasHiddenType)._type = "List";
     return lst;
   }
 
+  @elanIgnore
   hasKey<T>(dict: { [key: string]: T }, key: string): boolean {
     return this.keys(dict).includes(key);
   }
 
+  @elanIgnore
   withRemoveAtKey<T>(dict: { [key: string]: T }, key: string) {
     const newDict = { ...dict };
     (newDict as unknown as hasHiddenType)._type = (dict as unknown as hasHiddenType)._type;
@@ -144,10 +157,12 @@ export class StdLib {
     return newDict;
   }
 
+  @elanIgnore
   removeAtKey<T>(dict: { [key: string]: T }, key: string) {
     delete dict[key];
   }
 
+  @elanIgnore
   length<T>(coll: string | T[] | { [key: string]: T }) {
     if (typeof coll === "string") {
       return coll.length;
@@ -158,30 +173,37 @@ export class StdLib {
     return this.keys(coll).length;
   }
 
+  @elanIgnore
   upperCase(s1: string): string {
     return s1.toUpperCase();
   }
 
+  @elanIgnore
   lowerCase(s1: string): string {
     return s1.toLowerCase();
   }
 
+  @elanIgnore
   isBefore(s1: string, s2: string) {
     return s1 < s2;
   }
 
+  @elanIgnore
   isAfter(s1: string, s2: string) {
     return s1 > s2;
   }
 
+  @elanIgnore
   isAfterOrSameAs(s1: string, s2: string) {
     return s1 > s2 || s1 === s2;
   }
 
+  @elanIgnore
   isBeforeOrSameAs(s1: string, s2: string) {
     return s1 < s2 || s1 === s2;
   }
 
+  @elanIgnore
   withPutAt<T>(list: Array<T>, index: number, value: T) {
     const newList = [...list];
     newList[index] = value;
@@ -189,18 +211,22 @@ export class StdLib {
     return newList;
   }
 
+  @elanIgnore
   putAt<T>(list: Array<T>, index: number, value: T) {
     this.system.safeArraySet(list, index, value);
   }
 
+  @elanIgnore
   putAt2D<T>(list: Array<Array<T>>, col: number, row: number, value: T) {
     this.system.safeArraySet(list[col], row, value);
   }
 
+  @elanIgnore
   putAtKey<T>(dict: { [key: string]: T }, key: string, value: T) {
     this.system.safeDictionarySet(dict, key, value);
   }
 
+  @elanIgnore
   withInsert<T>(list: Array<T>, index: number, value: T) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const newList = (list as any).toSpliced(index, 0, value);
@@ -208,11 +234,13 @@ export class StdLib {
     return newList;
   }
 
+  @elanIgnore
   insertAt<T>(list: Array<T>, index: number, value: T) {
     list.splice(index, 0, value);
   }
 
   // custom impl
+  @elanIgnore
   elanIndexOf<T>(list: T[], elem: T) {
     for (let i = 0; i < list.length; i++) {
       const item = list[i];
@@ -223,6 +251,7 @@ export class StdLib {
     return -1;
   }
 
+  @elanIgnore
   withRemoveAt<T>(list: Array<T>, index: number) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const newList = (list as any).toSpliced(index, 1);
@@ -230,6 +259,7 @@ export class StdLib {
     return newList;
   }
 
+  @elanIgnore
   withRemoveFirst<T>(list: Array<T>, value: T) {
     let newList = [...list];
     const index = this.elanIndexOf(newList, value);
@@ -241,6 +271,7 @@ export class StdLib {
     return newList;
   }
 
+  @elanIgnore
   withRemoveAll<T>(list: Array<T>, value: T) {
     let newList = [...list];
     let index = this.elanIndexOf(newList, value);
@@ -253,10 +284,12 @@ export class StdLib {
     return newList;
   }
 
+  @elanIgnore
   removeAt<T>(list: Array<T>, index: number) {
     list.splice(index, 1);
   }
 
+  @elanIgnore
   removeFirst<T>(list: Array<T>, value: T) {
     const index = this.elanIndexOf(list, value);
     if (index > -1) {
@@ -264,6 +297,7 @@ export class StdLib {
     }
   }
 
+  @elanIgnore
   removeAll<T>(list: Array<T>, value: T) {
     let index = this.elanIndexOf(list, value);
     while (index > -1) {
@@ -272,22 +306,27 @@ export class StdLib {
     }
   }
 
+  @elanIgnore
   append<T>(list: Array<T>, value: T) {
     list.push(value);
   }
 
+  @elanIgnore
   appendList<T>(list: Array<T>, listB: Array<T>) {
     list.push(...listB);
   }
 
+  @elanIgnore
   prepend<T>(list: Array<T>, value: T) {
     list.unshift(value);
   }
 
+  @elanIgnore
   prependList<T>(list: Array<T>, listB: Array<T>) {
     list.unshift(...listB);
   }
 
+  @elanIgnore
   withPutAtKey<T>(dict: { [key: string]: T }, key: string, value: T) {
     const newDict = { ...dict };
     newDict[key] = value;
@@ -295,63 +334,79 @@ export class StdLib {
     return newDict;
   }
 
+  @elanIgnore
   first<T, T1>(st: [T, T1]): T {
     return this.system.safeIndex(st, 0);
   }
 
+  @elanIgnore
   second<T, T1>(st: [T, T1]): T1 {
     return this.system.safeIndex(st, 1);
   }
 
+  @elanIgnore
   third<T, T1, T2>(st: [T, T1, T2]): T2 {
     return this.system.safeIndex(st, 2);
   }
 
+  @elanIgnore
   indexOf(s1: string, s2: string) {
     return s1.indexOf(s2);
   }
 
+  @elanIgnore
   trim(s: string): string {
     return s.trim();
   }
 
+  @elanIgnore
   floor(n: number) {
     return Math.floor(n);
   }
+
+  @elanIgnore
   round(n: number, places: number) {
     const shift = 10 ** places;
     return Math.floor(n * shift + 0.5) / shift;
   }
+
+  @elanIgnore
   ceiling(n: number) {
     const fl = this.floor(n);
     return n > fl ? fl + 1 : fl;
   }
 
+  @elanIgnore
   typeAndProperties(o: { [key: string]: object }) {
     const type = o.constructor.name;
     const items = Object.getOwnPropertyNames(o);
     return `${type} [${items.map((n) => `"${n}":${o[n]}`).join(", ")}]`;
   }
 
+  @elanIgnore
   filter<T>(source: T[] | string, predicate: (value: T | string) => boolean): (T | string)[] {
     const list = typeof source === "string" ? source.split("") : [...source];
     return this.asIter(list.filter(predicate));
   }
 
+  @elanIgnore
   map<T, U>(source: T[] | string, predicate: (value: T | string) => U) {
     const list = typeof source === "string" ? source.split("") : [...source];
     return this.asIter(list.map(predicate));
   }
 
+  @elanIgnore
   reduce<T, U>(source: T[] | string, initValue: U, predicate: (s: U, value: T | string) => U): U {
     const list = typeof source === "string" ? source.split("") : [...source];
     return list.reduce(predicate, initValue);
   }
 
+  @elanIgnore
   max(source: number[]): number {
     return Math.max(...source);
   }
 
+  @elanIgnore
   maxBy<T>(source: T[], predicate: (value: T) => number): T {
     const mm = source.map(predicate);
     const max = Math.max(...mm);
@@ -359,10 +414,12 @@ export class StdLib {
     return source[i];
   }
 
+  @elanIgnore
   min(source: number[]): number {
     return Math.min(...source);
   }
 
+  @elanIgnore
   minBy<T>(source: T[], predicate: (value: T) => number): T {
     const mm = source.map(predicate);
     const min = Math.min(...mm);
@@ -370,15 +427,18 @@ export class StdLib {
     return source[i];
   }
 
+  @elanIgnore
   sortBy<T>(source: T[], predicate: (a: T, b: T) => number): T[] {
     const clone = [...source];
     return this.asIter(clone.sort(predicate));
   }
 
+  @elanIgnore
   any<T>(source: T[], predicate: (value: T) => boolean) {
     return source.some(predicate);
   }
 
+  @elanIgnore
   groupBy<T>(source: T[], predicate: (value: T) => T) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const result = {} as any;
@@ -392,28 +452,34 @@ export class StdLib {
     }
   }
 
+  @elanIgnore
   contains<T>(source: T[], item: T): boolean {
     return source.includes(item);
   }
 
+  @elanIgnore
   pause(ms: number): Promise<void> {
     return new Promise((resolve) => {
       setTimeout(() => resolve(), ms);
     });
   }
 
+  @elanIgnore
   clock(): number {
     return new Date().getTime();
   }
 
+  @elanIgnore
   random(): number {
     return Math.random();
   }
 
+  @elanIgnore
   randomInt(low: number, high: number): number {
     return Math.floor(Math.random() * (high - low + 1)) + low;
   }
 
+  @elanIgnore
   parseAsFloat(s: string): [boolean, number] {
     const f = parseFloat(s);
     if (Number.isFinite(f)) {
@@ -422,18 +488,23 @@ export class StdLib {
     return [false, 0];
   }
 
+  @elanIgnore
   parseAsInt(s: string): [boolean, number] {
     const [b, f] = this.parseAsFloat(s);
     return [b, Math.floor(f)];
   }
 
+  @elanIgnore
   print(s: string) {
     this.system.elanInputOutput.print(s);
   }
+
+  @elanIgnore
   printTab(position: number, s: string) {
     this.system.elanInputOutput.printTab(position, s);
   }
 
+  @elanIgnore
   clearConsole() {
     this.system.elanInputOutput.clearConsole();
   }
@@ -444,6 +515,7 @@ export class StdLib {
 
   GraphicsLength = this.xSize * this.ySize;
 
+  @elanIgnore
   idx(x: number, y: number) {
     if (x < 0 || x >= this.xSize || y < 0 || y >= this.ySize) {
       throw new ElanRuntimeError(`Out of range index`);
@@ -451,6 +523,7 @@ export class StdLib {
     return x * this.ySize + y;
   }
 
+  @elanIgnore
   initialisedGraphics(background: number) {
     const emptyMap: BlockGraphics = [];
     const emptyLocation: Location = this.system.tuple(["", 0x000000, background]) as Location;
@@ -462,6 +535,7 @@ export class StdLib {
     return emptyMap;
   }
 
+  @elanIgnore
   ensureInitialised(cm: BlockGraphics): BlockGraphics {
     if (cm.length === this.GraphicsLength) {
       return cm;
@@ -470,6 +544,7 @@ export class StdLib {
     }
   }
 
+  @elanIgnore
   private putDetails(
     map: BlockGraphics,
     x: number,
@@ -483,11 +558,13 @@ export class StdLib {
     return cm;
   }
 
+  @elanIgnore
   private getDetails(map: BlockGraphics, x: number, y: number) {
     const cm = this.ensureInitialised(map);
     return this.system.safeIndex(cm, this.idx(x, y));
   }
 
+  @elanIgnore
   withBlock(map: BlockGraphics, x: number, y: number, b: number) {
     if (x < 0 || x >= this.xSize) {
       throw new ElanRuntimeError(`x value ${x} is outside range 0 to ${this.xSize - 1}`);
@@ -500,6 +577,7 @@ export class StdLib {
     return this.putDetails(cm, x, y, "", f, b);
   }
 
+  @elanIgnore
   withUnicode(map: BlockGraphics, x: number, y: number, unicode: number, f: number, b: number) {
     if (x < 0 || x >= this.xSize) {
       throw new ElanRuntimeError(`x value ${x} is outside range 0 to ${this.xSize - 1}`);
@@ -512,6 +590,7 @@ export class StdLib {
     return this.putDetails(cm, x, y, str, f, b);
   }
 
+  @elanIgnore
   withText(
     map: BlockGraphics,
     x: number,
@@ -542,29 +621,35 @@ export class StdLib {
     return cm;
   }
 
+  @elanIgnore
   withBackground(map: BlockGraphics, b: number): BlockGraphics {
     return this.initialisedGraphics(b);
   }
 
+  @elanIgnore
   getChar(map: BlockGraphics, x: number, y: number) {
     const cm = this.ensureInitialised(map);
     return this.system.safeIndex(this.getDetails(cm, x, y), 0);
   }
 
+  @elanIgnore
   getForeground(map: BlockGraphics, x: number, y: number) {
     const cm = this.ensureInitialised(map);
     return this.system.safeIndex(this.getDetails(cm, x, y), 1);
   }
 
+  @elanIgnore
   getBackground(map: BlockGraphics, x: number, y: number) {
     const cm = this.ensureInitialised(map);
     return this.system.safeIndex(this.getDetails(cm, x, y), 2);
   }
 
+  @elanIgnore
   clearGraphics(map: BlockGraphics) {
     this.system.elanInputOutput.clearGraphics();
   }
 
+  @elanIgnore
   draw(map: BlockGraphics): Promise<void> {
     const cm = this.ensureInitialised(map);
     let rendered = "";
@@ -579,24 +664,29 @@ export class StdLib {
     return this.pause(0);
   }
 
+  @elanIgnore
   private asHex(n: number): string {
     const h = "000000" + n.toString(16);
     const h6 = h.substring(h.length - 6);
     return `#${h6}`;
   }
 
+  @elanIgnore
   getKeystroke(map: BlockGraphics): Promise<string> {
     return this.system.elanInputOutput.getKeystroke();
   }
 
+  @elanIgnore
   getKeystrokeWithModifier(map: BlockGraphics): Promise<[string, string]> {
     return this.system.elanInputOutput.getKeystrokeWithModifier();
   }
 
+  @elanIgnore
   clearKeyBuffer(map: BlockGraphics) {
     this.system.elanInputOutput.clearKeyBuffer();
   }
 
+  @elanIgnore
   createArray<T>(x: number, value: T) {
     if (!this.isValueType(value)) {
       throw new ElanRuntimeError(
@@ -614,6 +704,7 @@ export class StdLib {
     return toInit;
   }
 
+  @elanIgnore
   create2DArray<T>(x: number, y: number, value: T) {
     if (!this.isValueType(value)) {
       throw new ElanRuntimeError(
@@ -636,15 +727,18 @@ export class StdLib {
   }
 
   //Input functions
+  @elanIgnore
   prompt(prompt: string) {
     this.print(prompt);
   }
 
+  @elanIgnore
   inputString(prompt: string): Promise<string> {
     this.prompt(prompt);
     return this.system.input();
   }
 
+  @elanIgnore
   inputStringWithLimits(prompt: string, minLength: number, maxLength: number): Promise<string> {
     this.prompt(prompt);
     return this.system.input().then((s) => {
@@ -659,6 +753,7 @@ export class StdLib {
     });
   }
 
+  @elanIgnore
   inputStringFromOptions(prompt: string, options: string[]): Promise<string> {
     this.prompt(prompt);
     return this.system.input().then((s) => {
@@ -671,6 +766,7 @@ export class StdLib {
     });
   }
 
+  @elanIgnore
   inputInt(prompt: string): Promise<number> {
     this.prompt(prompt);
     return this.system.input().then((s) => {
@@ -686,6 +782,7 @@ export class StdLib {
     });
   }
 
+  @elanIgnore
   inputIntBetween(prompt: string, min: number, max: number): Promise<number> {
     this.prompt(prompt);
     return this.system.input().then((s) => {
@@ -699,6 +796,7 @@ export class StdLib {
     });
   }
 
+  @elanIgnore
   inputFloat(prompt: string): Promise<number> {
     this.prompt(prompt);
     return this.system.input().then((s) => {
@@ -714,6 +812,7 @@ export class StdLib {
     });
   }
 
+  @elanIgnore
   inputFloatBetween(prompt: string, min: number, max: number): Promise<number> {
     this.prompt(prompt);
     return this.system.input().then((s) => {
@@ -729,77 +828,119 @@ export class StdLib {
   //Math
   pi = Math.PI;
 
-  abs(@elanType("Float") x: number): number {
+  @elanIgnore
+  abs(x: number): number {
     return Math.abs(x);
   }
 
   // Returns the absolute value of the input.
 
-  acos = Math.acos;
+  @elanIgnore
+  acos(@elanType("Float") x: number): number {
+    return Math.acos(x);
+  }
   // Returns the arccosine of the input.
 
+  @elanIgnore
   acosDeg(n: number) {
     return this.radToDeg(this.acos(n));
   }
 
-  asin = Math.asin;
+  @elanIgnore
+  asin(@elanType("Float") x: number): number {
+    return Math.asin(x);
+  }
   // Returns the arcsine of the input.
 
+  @elanIgnore
   asinDeg(n: number) {
     return this.radToDeg(this.asin(n));
   }
 
-  atan = Math.atan;
+  @elanIgnore
+  atan(x: number): number {
+    return Math.atan(x);
+  }
   // Returns the arctangent of the input.
 
+  @elanIgnore
   atanDeg(n: number) {
     return this.radToDeg(this.atan(n));
   }
 
-  cos = Math.cos;
-  // Returns the cosine of the input.
+  @elanIgnore
+  cos(x: number): number {
+    return Math.cos(x);
+  }
 
+  @elanIgnore
   cosDeg(n: number) {
     return this.cos(this.degToRad(n));
   }
 
-  exp = Math.exp;
+  @elanIgnore
+  exp(x: number): number {
+    return Math.exp(x);
+  }
   // Returns ex, where x is the argument, and e is Euler's number (2.718…, the base of the natural logarithm).
 
-  logE = Math.log;
+  @elanIgnore
+  logE(x: number): number {
+    return Math.log(x);
+  }
   // Returns the natural logarithm (㏒e; also, ㏑) of the input.
 
-  log10 = Math.log10;
+  @elanIgnore
+  log10(x: number): number {
+    return Math.log10(x);
+  }
   // Returns the base-10 logarithm of the input.
 
-  log2 = Math.log2;
   // Returns the base-2 logarithm of the input.
 
-  sin = Math.sin;
+  @elanIgnore
+  log2(x: number): number {
+    return Math.log2(x);
+  }
+
+  @elanIgnore
+  sin(x: number): number {
+    return Math.sin(x);
+  }
   // Returns the sine of the input.
 
+  @elanIgnore
   sinDeg(n: number) {
     return this.sin(this.degToRad(n));
   }
+
   sqrt = Math.sqrt;
   // Returns the positive square root of the input.
 
-  tan = Math.tan;
+  @elanIgnore
+  tan(x: number): number {
+    return Math.tan(x);
+  }
   // Returns the tangent of the input.
 
+  @elanIgnore
   tanDeg(n: number) {
     return this.tan(this.degToRad(n));
   }
 
+  @elanIgnore
   degToRad(d: number) {
     return (d * this.pi) / 180;
   }
+
+  @elanIgnore
   radToDeg(r: number) {
     return (r / this.pi) * 180;
   }
 
   // Functional random
   // Credit for source of algorithm: https://www.codeproject.com/Articles/25172/Simple-Random-Number-Generation
+  @elanIgnore
   next(current: [number, number]): [number, number] {
     const u = current[0];
     const v = current[1];
@@ -808,29 +949,40 @@ export class StdLib {
     return [u2, v2];
   }
 
+  @elanIgnore
   value(current: [number, number]): number {
     const u = current[0];
     const v = current[1];
     return this.lo32(this.lo32(u * 65536) + v + 1) * 2.328306435454494e-10;
   }
 
+  @elanIgnore
   lo32(n: number): number {
     return n % 4294967296;
   }
+
+  @elanIgnore
   lo16(n: number): number {
     return n % 65536;
   }
+
+  @elanIgnore
   hi16(n: number): number {
     return this.lo16(n / 65536);
   }
+
+  @elanIgnore
   valueInt(current: [number, number], min: number, max: number): number {
     const float = this.value(current);
     return Math.floor(float * (max - min + 1) + min);
   }
+
+  @elanIgnore
   firstRandomInFixedSequence(): [number, number] {
     return [521288629, 362436069];
   }
 
+  @elanIgnore
   firstRandom(): [number, number] {
     const c = this.clock();
     return [this.hi16(c), this.lo16(c)];
@@ -846,34 +998,52 @@ export class StdLib {
   yellow = 0xffff00;
   brown = 0xa52a2a;
 
+  @elanIgnore
   bitAnd(a: number, b: number): number {
     return a & b;
   }
+
+  @elanIgnore
   bitOr(a: number, b: number): number {
     return a | b;
   }
+
+  @elanIgnore
   bitXor(a: number, b: number): number {
     return a ^ b;
   }
+
+  @elanIgnore
   bitNot(a: number): number {
     return ~a;
   }
+
+  @elanIgnore
   bitShiftL(a: number, shift: number): number {
     return a << shift;
   }
+
+  @elanIgnore
   bitShiftR(a: number, shift: number): number {
     return a >>> shift;
   }
+
+  @elanIgnore
   asBinary(a: number): string {
     return a.toString(2);
   }
+
+  @elanIgnore
   matchesRegex(a: string, r: RegExp): boolean {
     return r.test(a);
   }
   //File operations
+  @elanIgnore
   openRead(contents: string): File {
     return [1, contents, 0];
   }
+
+  @elanIgnore
   readLine(file: File): string {
     const status = file[0];
     const contents = file[1];
@@ -893,10 +1063,12 @@ export class StdLib {
     return line;
   }
 
+  @elanIgnore
   endOfFile(file: File): boolean {
     return file[2] >= file[1].length - 1;
   }
 
+  @elanIgnore
   close(file: File): void {
     //Does nothing for now.
   }

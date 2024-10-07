@@ -1,4 +1,4 @@
-import { elanTypeMetadataKey } from "./elan-type-annotations";
+import { elanIgnoreMetadataKey, elanTypeMetadataKey } from "./elan-type-annotations";
 import { ElanSymbol } from "./frames/interfaces/elan-symbol";
 import { Scope } from "./frames/interfaces/scope";
 import { SymbolType } from "./frames/interfaces/symbol-type";
@@ -29,6 +29,10 @@ export class StdLibSymbols implements Scope {
     this.loadSymbols();
   }
 
+  private ignoreSymbol(tgt: object, key: string) {
+    return key === "constructor" || (Reflect.getMetadata(elanIgnoreMetadataKey, tgt, key) as boolean);
+  }
+
   private loadSymbols() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const stdlib = new StdLib() as any;
@@ -38,7 +42,8 @@ export class StdLibSymbols implements Scope {
     for (let i = 0; i < names.length; i++) {
       const m = names[i];
       const symbol = stdlib[m];
-      if (typeof symbol === "function") {
+      const process = !this.ignoreSymbol(stdlib, m);
+      if (process && typeof symbol === "function") {
         this.loadFunction(stdlib, symbol);
       }
     }
@@ -74,22 +79,20 @@ export class StdLibSymbols implements Scope {
   private loadFunction(tgt: any, f: Function) {
     const name = f.name;
 
-    if (name === "abs") {
-      const pTypes: string[] = Reflect.getMetadata("design:paramtypes", tgt, name).map(
-        (t: { name: string }) => t.name,
-      );
-      const retType: string = Reflect.getMetadata("design:returntype", tgt, name).name;
+    const pTypes: string[] = Reflect.getMetadata("design:paramtypes", tgt, name).map(
+      (t: { name: string }) => t.name,
+    );
+    const retType: string = Reflect.getMetadata("design:returntype", tgt, name).name;
 
-      const epTypes = Reflect.getMetadata(elanTypeMetadataKey, tgt, name) as string[];
+    const epTypes = Reflect.getMetadata(elanTypeMetadataKey, tgt, name) as string[];
 
-      for (let i = 0; i < pTypes.length; i++) {
-        pTypes[i] = epTypes[i];
-      }
-
-      const f = this.createFunction(pTypes, retType, false, false, false);
-
-      this.symbols.set(name, this.getSymbol(name, f));
+    for (let i = 0; i < pTypes.length; i++) {
+      pTypes[i] = epTypes[i];
     }
+
+    const symbolType = this.createFunction(pTypes, retType, false, false, false);
+
+    this.symbols.set(name, this.getSymbol(name, symbolType));
   }
 
   symbolMatches(id: string, all: boolean): ElanSymbol[] {

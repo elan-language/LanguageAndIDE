@@ -1,17 +1,18 @@
 import "reflect-metadata";
 export const elanTypeMetadataKey = Symbol("elan-type");
+export const elanIgnoreMetadataKey = Symbol("elan-ignore");
 
-/* eslint-disable @typescript-eslint/ban-types */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-//export function extension(target: any, p: any) {}
+export function elanIgnore(target: object, propertyKey: string, descriptor: PropertyDescriptor) {
+  Reflect.defineMetadata(elanIgnoreMetadataKey, true, target, propertyKey);
+}
 
 export function elanType(eType: string) {
-  return function (target: Object, propertyKey: string | symbol, parameterIndex: number) {
-    const existingParameterTypes: string[] =
+  return function (target: object, propertyKey: string | symbol, parameterIndex: number) {
+    const typeMetaData: string[] =
       Reflect.getOwnMetadata(elanTypeMetadataKey, target, propertyKey) || [];
 
-    existingParameterTypes[parameterIndex] = eType;
+    typeMetaData[parameterIndex] = eType;
 
-    Reflect.defineMetadata(elanTypeMetadataKey, existingParameterTypes, target, propertyKey);
+    Reflect.defineMetadata(elanTypeMetadataKey, typeMetaData, target, propertyKey);
   };
 }
