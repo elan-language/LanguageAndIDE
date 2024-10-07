@@ -1,6 +1,12 @@
 import "reflect-metadata";
 import { ElanRuntimeError } from "./elan-runtime-error";
-import { ElanFunctionDescriptor, elanIgnore, elanMethod, elanType } from "./elan-type-annotations";
+import {
+  ElanFunctionDescriptor,
+  elanIgnore,
+  elanMethod,
+  elanType,
+  ElanTypeDescriptor,
+} from "./elan-type-annotations";
 import { hasHiddenType } from "./has-hidden-type";
 import { StubInputOutput } from "./stub-input-output";
 import { System } from "./system";
@@ -84,7 +90,7 @@ export class StdLib {
     throw new Error("Not implemented: " + typeof v);
   }
 
-  @elanIgnore
+  @elanMethod(new ElanFunctionDescriptor(new ElanTypeDescriptor("String"), false, true, false))
   stringForUnicode(n: number): string {
     return String.fromCharCode(n);
   }
@@ -828,69 +834,69 @@ export class StdLib {
   //Math
   pi = Math.PI;
 
-  @elanMethod(new ElanFunctionDescriptor("Float", false, true, false))
+  @elanMethod(new ElanFunctionDescriptor(new ElanTypeDescriptor("Float"), false, true, false))
   abs(x: number): number {
     return Math.abs(x);
   }
 
   // Returns the absolute value of the input.
 
-  @elanMethod(new ElanFunctionDescriptor("Float", false, true, false))
+  @elanMethod(new ElanFunctionDescriptor(new ElanTypeDescriptor("Float"), false, true, false))
   acos(x: number): number {
     return Math.acos(x);
   }
   // Returns the arccosine of the input.
 
-  @elanMethod(new ElanFunctionDescriptor("Float", false, true, false))
+  @elanMethod(new ElanFunctionDescriptor(new ElanTypeDescriptor("Float"), false, true, false))
   acosDeg(n: number): number {
     return this.radToDeg(this.acos(n));
   }
 
-  @elanMethod(new ElanFunctionDescriptor("Float", false, true, false))
+  @elanMethod(new ElanFunctionDescriptor(new ElanTypeDescriptor("Float"), false, true, false))
   asin(x: number): number {
     return Math.asin(x);
   }
   // Returns the arcsine of the input.
 
-  @elanMethod(new ElanFunctionDescriptor("Float", false, true, false))
+  @elanMethod(new ElanFunctionDescriptor(new ElanTypeDescriptor("Float"), false, true, false))
   asinDeg(n: number) {
     return this.radToDeg(this.asin(n));
   }
 
-  @elanMethod(new ElanFunctionDescriptor("Float", false, true, false))
+  @elanMethod(new ElanFunctionDescriptor(new ElanTypeDescriptor("Float"), false, true, false))
   atan(x: number): number {
     return Math.atan(x);
   }
   // Returns the arctangent of the input.
 
-  @elanMethod(new ElanFunctionDescriptor("Float", false, true, false))
+  @elanMethod(new ElanFunctionDescriptor(new ElanTypeDescriptor("Float"), false, true, false))
   atanDeg(n: number) {
     return this.radToDeg(this.atan(n));
   }
 
-  @elanMethod(new ElanFunctionDescriptor("Float", false, true, false))
+  @elanMethod(new ElanFunctionDescriptor(new ElanTypeDescriptor("Float"), false, true, false))
   cos(x: number): number {
     return Math.cos(x);
   }
 
-  @elanMethod(new ElanFunctionDescriptor("Float", false, true, false))
+  @elanMethod(new ElanFunctionDescriptor(new ElanTypeDescriptor("Float"), false, true, false))
   cosDeg(n: number) {
     return this.cos(this.degToRad(n));
   }
 
-  @elanMethod(new ElanFunctionDescriptor("Float", false, true, false))
+  @elanMethod(new ElanFunctionDescriptor(new ElanTypeDescriptor("Float"), false, true, false))
   exp(x: number): number {
     return Math.exp(x);
   }
   // Returns ex, where x is the argument, and e is Euler's number (2.718…, the base of the natural logarithm).
 
-  @elanMethod(new ElanFunctionDescriptor("Float", false, true, false))
+  @elanMethod(new ElanFunctionDescriptor(new ElanTypeDescriptor("Float"), false, true, false))
   logE(x: number): number {
     return Math.log(x);
   }
   // Returns the natural logarithm (㏒e; also, ㏑) of the input.
 
-  @elanMethod(new ElanFunctionDescriptor("Float", false, true, false))
+  @elanMethod(new ElanFunctionDescriptor(new ElanTypeDescriptor("Float"), false, true, false))
   log10(x: number): number {
     return Math.log10(x);
   }
@@ -898,42 +904,45 @@ export class StdLib {
 
   // Returns the base-2 logarithm of the input.
 
-  @elanMethod(new ElanFunctionDescriptor("Float", false, true, false))
+  @elanMethod(new ElanFunctionDescriptor(new ElanTypeDescriptor("Float"), false, true, false))
   log2(x: number): number {
     return Math.log2(x);
   }
 
-  @elanMethod(new ElanFunctionDescriptor("Float", false, true, false))
+  @elanMethod(new ElanFunctionDescriptor(new ElanTypeDescriptor("Float"), false, true, false))
   sin(x: number): number {
     return Math.sin(x);
   }
   // Returns the sine of the input.
 
-  @elanMethod(new ElanFunctionDescriptor("Float", false, true, false))
+  @elanMethod(new ElanFunctionDescriptor(new ElanTypeDescriptor("Float"), false, true, false))
   sinDeg(n: number) {
     return this.sin(this.degToRad(n));
   }
 
-  sqrt = Math.sqrt;
+  @elanMethod(new ElanFunctionDescriptor(new ElanTypeDescriptor("Float"), false, true, false))
+  sqrt(x: number): number {
+    return Math.sqrt(x);
+  }
   // Returns the positive square root of the input.
 
-  @elanMethod(new ElanFunctionDescriptor("Float", false, true, false))
+  @elanMethod(new ElanFunctionDescriptor(new ElanTypeDescriptor("Float"), false, true, false))
   tan(x: number): number {
     return Math.tan(x);
   }
   // Returns the tangent of the input.
 
-  @elanMethod(new ElanFunctionDescriptor("Float", false, true, false))
+  @elanMethod(new ElanFunctionDescriptor(new ElanTypeDescriptor("Float"), false, true, false))
   tanDeg(n: number) {
     return this.tan(this.degToRad(n));
   }
 
-  @elanMethod(new ElanFunctionDescriptor("Float", false, true, false))
+  @elanMethod(new ElanFunctionDescriptor(new ElanTypeDescriptor("Float"), false, true, false))
   degToRad(d: number) {
     return (d * this.pi) / 180;
   }
 
-  @elanMethod(new ElanFunctionDescriptor("Float", false, true, false))
+  @elanMethod(new ElanFunctionDescriptor(new ElanTypeDescriptor("Float"), false, true, false))
   radToDeg(r: number) {
     return (r / this.pi) * 180;
   }

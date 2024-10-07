@@ -1,4 +1,8 @@
-import { ElanFunctionDescriptor, elanMethodMetadataKey } from "./elan-type-annotations";
+import {
+  ElanMethodDescriptor,
+  elanMethodMetadataKey,
+  TypeDescriptor,
+} from "./elan-type-interfaces";
 import { ElanSymbol } from "./frames/interfaces/elan-symbol";
 import { Scope } from "./frames/interfaces/scope";
 import { SymbolType } from "./frames/interfaces/symbol-type";
@@ -20,7 +24,6 @@ import { StringType } from "./frames/symbols/string-type";
 import { SymbolScope } from "./frames/symbols/symbol-scope";
 import { TupleType } from "./frames/symbols/tuple-type";
 import { UnknownSymbol } from "./frames/symbols/unknown-symbol";
-import { UnknownType } from "./frames/symbols/unknown-type";
 import { Transforms } from "./frames/syntax-nodes/transforms";
 import { StdLib } from "./std-lib";
 
@@ -39,9 +42,11 @@ export class StdLibSymbols implements Scope {
       const m = names[i];
       const symbol = stdlib[m];
 
-      const metadata = Reflect.getMetadata(elanMethodMetadataKey, stdlib, m);
+      const metadata = Reflect.getMetadata(elanMethodMetadataKey, stdlib, m) as
+        | ElanMethodDescriptor
+        | undefined;
 
-      if (metadata instanceof ElanFunctionDescriptor) {
+      if (metadata && metadata.isFunction) {
         this.loadFunction(stdlib, symbol, metadata);
       }
     }
@@ -53,20 +58,22 @@ export class StdLibSymbols implements Scope {
         return FloatType.Instance;
       case "Float":
         return FloatType.Instance;
+      case "String":
+        return StringType.Instance;
     }
-    throw new Error("NotImplemented");
+    throw new Error("NotImplemented: " + type);
   }
 
   private createFunction(
-    pTypes: string[],
-    retType: string,
+    pTypes: TypeDescriptor[],
+    retType: TypeDescriptor,
     isExtension: boolean,
     isPure: boolean,
     isAsync: boolean,
   ) {
     return new FunctionType(
-      pTypes.map((t) => this.mapType(t)),
-      this.mapType(retType),
+      pTypes.map((t) => this.mapType(t.name)),
+      this.mapType(retType.name),
       isExtension,
       isPure,
       isAsync,
@@ -74,24 +81,17 @@ export class StdLibSymbols implements Scope {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/ban-types
-  private loadFunction(tgt: any, f: Function, descriptor: ElanFunctionDescriptor) {
+  private loadFunction(tgt: any, f: Function, descriptor: ElanMethodDescriptor) {
     const name = f.name;
 
-    const tsParamTypes: string[] = descriptor.designParameters;
-    const retType: string = descriptor.returnType;
-    const elanParameterTypes = descriptor.parameters;
-
-    for (let i = 0; i < tsParamTypes.length; i++) {
-      if (elanParameterTypes[i]) {
-        tsParamTypes[i] = elanParameterTypes[i];
-      }
-    }
+    const retType = descriptor.returnType;
+    const parameterTypes = descriptor.parameters;
 
     const symbolType = this.createFunction(
-      tsParamTypes,
-      retType,
+      parameterTypes,
+      retType!,
       descriptor.isExtension,
-      descriptor.isPure,
+      descriptor.isPure!,
       descriptor.isAsync,
     );
 

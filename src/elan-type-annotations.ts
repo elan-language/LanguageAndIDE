@@ -1,16 +1,9 @@
-import "reflect-metadata";
-export const elanIgnoreMetadataKey = Symbol("elan-ignore");
-export const elanMethodMetadataKey = Symbol("elan-method");
-
-export interface ElanMethodDescriptor {
-  isProcedure: boolean;
-  isFunction: boolean;
-  isExtension: boolean;
-  isAsync: boolean;
-  returnType?: string;
-  parameters: string[];
-  designParameters: string[];
-}
+import {
+  elanIgnoreMetadataKey,
+  ElanMethodDescriptor,
+  elanMethodMetadataKey,
+  TypeDescriptor,
+} from "./elan-type-interfaces";
 
 export class ElanProcedureDescriptor implements ElanMethodDescriptor {
   constructor(
@@ -20,14 +13,14 @@ export class ElanProcedureDescriptor implements ElanMethodDescriptor {
 
   isProcedure = true;
   isFunction = false;
+  isPure = false;
 
-  parameters: string[] = [];
-  designParameters: string[] = [];
+  parameters: TypeDescriptor[] = [];
 }
 
 export class ElanFunctionDescriptor implements ElanMethodDescriptor {
   constructor(
-    public readonly returnType: string,
+    public readonly returnType: TypeDescriptor,
     public readonly isExtension: boolean,
     public readonly isPure: boolean,
     public readonly isAsync: boolean,
@@ -36,8 +29,15 @@ export class ElanFunctionDescriptor implements ElanMethodDescriptor {
   isProcedure = false;
   isFunction = true;
 
-  parameters: string[] = [];
-  designParameters: string[] = [];
+  parameters: TypeDescriptor[] = [];
+}
+
+export class ElanTypeDescriptor {
+  constructor(public readonly name: string) {}
+}
+
+export class TypescriptTypeDescriptor {
+  constructor(public readonly name: string) {}
 }
 
 export function elanIgnore(target: object, propertyKey: string, descriptor: PropertyDescriptor) {
@@ -49,13 +49,15 @@ export function elanMethod(elanDesc: ElanMethodDescriptor) {
     const designMetaData = Reflect.getMetadata("design:paramtypes", target, propertyKey);
 
     if (Array.isArray(designMetaData)) {
-      elanDesc.designParameters = designMetaData.map((t: { name: string }) => t.name);
+      elanDesc.parameters = designMetaData.map(
+        (t: { name: string }) => new TypescriptTypeDescriptor(t.name),
+      );
     }
     Reflect.defineMetadata(elanMethodMetadataKey, elanDesc, target, propertyKey);
   };
 }
 
-export function elanType(eType: string) {
+export function elanType(eType: ElanTypeDescriptor) {
   return function (target: object, propertyKey: string | symbol, parameterIndex: number) {
     const metaData: ElanMethodDescriptor = Reflect.getOwnMetadata(
       elanMethodMetadataKey,
