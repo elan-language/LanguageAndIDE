@@ -4,11 +4,19 @@ import {
   elanMethodMetadataKey,
   TypeDescriptor,
 } from "./elan-type-interfaces";
+import { SymbolType } from "./frames/interfaces/symbol-type";
+import { ArrayType } from "./frames/symbols/array-list-type";
+import { FloatType } from "./frames/symbols/float-type";
+import { GenericParameterType } from "./frames/symbols/generic-parameter-type";
+import { IntType } from "./frames/symbols/int-type";
+import { IterableType } from "./frames/symbols/iterable-type";
+import { ListType } from "./frames/symbols/list-type";
+import { StringType } from "./frames/symbols/string-type";
 
 export class ElanProcedureDescriptor implements ElanMethodDescriptor {
   constructor(
-    public readonly isExtension: boolean,
-    public readonly isAsync: boolean,
+    public readonly isExtension: boolean = false,
+    public readonly isAsync: boolean = false,
   ) {}
 
   isProcedure = true;
@@ -43,16 +51,61 @@ export class ElanParametersDescriptor implements ElanMethodDescriptor {
   returnType: TypeDescriptor | undefined;
 }
 
-export class ElanTypeDescriptor {
-  constructor(public readonly name: string) {}
+export class ElanTypeDescriptor implements TypeDescriptor {
+  constructor(
+    public readonly name: string,
+    public readonly ofType?: ElanTypeDescriptor,
+  ) {}
+
+  mapType(): SymbolType {
+    switch (this.name) {
+      case "Float":
+        return FloatType.Instance;
+      case "String":
+        return StringType.Instance;
+      case "Int":
+        return IntType.Instance;
+      case "Iterable":
+        return new IterableType(this.ofType!.mapType());
+      case "Array":
+        return new ArrayType(this.ofType!.mapType());
+      case "List":
+        return new ListType(this.ofType!.mapType());
+    }
+    throw new Error("NotImplemented: " + this.name);
+  }
 }
 
-export class TypescriptTypeDescriptor {
+export class ElanGenericTypeDescriptor implements TypeDescriptor {
   constructor(public readonly name: string) {}
+
+  mapType(): SymbolType {
+    return new GenericParameterType(this.name);
+  }
+}
+
+export class TypescriptTypeDescriptor implements TypeDescriptor {
+  constructor(public readonly name: string) {}
+
+  mapType(): SymbolType {
+    switch (this.name) {
+      case "Number":
+        return FloatType.Instance;
+      case "String":
+        return StringType.Instance;
+    }
+    throw new Error("NotImplemented: " + this.name);
+  }
 }
 
 export function elanIgnore(target: object, propertyKey: string, descriptor: PropertyDescriptor) {
   Reflect.defineMetadata(elanIgnoreMetadataKey, true, target, propertyKey);
+}
+
+type tsType = { name: string };
+
+function mapTypescriptType(t: tsType): TypescriptTypeDescriptor {
+  return new TypescriptTypeDescriptor(t.name);
 }
 
 export function elanMethod(elanDesc: ElanMethodDescriptor) {
@@ -61,9 +114,7 @@ export function elanMethod(elanDesc: ElanMethodDescriptor) {
     const retTypeMetadata = Reflect.getMetadata("design:returntype", target, propertyKey);
 
     if (Array.isArray(paramTypesMetadata)) {
-      elanDesc.parameters = paramTypesMetadata.map(
-        (t: { name: string }) => new TypescriptTypeDescriptor(t.name),
-      );
+      elanDesc.parameters = paramTypesMetadata.map((t) => mapTypescriptType(t));
     }
 
     if (!elanDesc.returnType && retTypeMetadata && retTypeMetadata.name) {

@@ -2,8 +2,10 @@ import "reflect-metadata";
 import { ElanRuntimeError } from "./elan-runtime-error";
 import {
   ElanFunctionDescriptor,
+  ElanGenericTypeDescriptor,
   elanIgnore,
   elanMethod,
+  ElanProcedureDescriptor,
   elanType,
   ElanTypeDescriptor,
 } from "./elan-type-annotations";
@@ -95,7 +97,7 @@ export class StdLib {
     return String.fromCharCode(n);
   }
 
-  @elanIgnore
+  @elanMethod(new ElanFunctionDescriptor(true))
   asUnicode(s: string): number {
     return s.charCodeAt(0);
   }
@@ -312,8 +314,11 @@ export class StdLib {
     }
   }
 
-  @elanIgnore
-  append<T>(list: Array<T>, value: T) {
+  @elanMethod(new ElanProcedureDescriptor(true))
+  append<T>(
+    @elanType(new ElanTypeDescriptor("Array", new ElanGenericTypeDescriptor("T"))) list: Array<T>,
+    @elanType(new ElanGenericTypeDescriptor("T")) value: T,
+  ) {
     list.push(value);
   }
 

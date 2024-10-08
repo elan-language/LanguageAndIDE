@@ -1,3 +1,5 @@
+import { SymbolType } from "./frames/interfaces/symbol-type";
+
 export const elanIgnoreMetadataKey = Symbol("elan-ignore");
 export const elanMethodMetadataKey = Symbol("elan-method");
 
@@ -13,4 +15,5 @@ export interface ElanMethodDescriptor {
 
 export interface TypeDescriptor {
   name: string;
+  mapType(): SymbolType;
 }

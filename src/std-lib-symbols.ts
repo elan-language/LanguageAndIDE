@@ -33,37 +33,25 @@ export class StdLibSymbols implements Scope {
   }
 
   private loadSymbols() {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const stdlib = new StdLib() as any;
+    const stdlib = new StdLib();
 
     const names = Object.getOwnPropertyNames(Object.getPrototypeOf(stdlib));
 
     for (let i = 0; i < names.length; i++) {
-      const m = names[i];
-      const symbol = stdlib[m];
+      const name = names[i];
 
-      const metadata = Reflect.getMetadata(elanMethodMetadataKey, stdlib, m) as
+      const metadata = Reflect.getMetadata(elanMethodMetadataKey, stdlib, name) as
         | ElanMethodDescriptor
         | undefined;
 
       if (metadata && metadata.isFunction) {
-        this.loadFunction(stdlib, symbol, metadata);
+        this.loadFunction(name, metadata);
+      }
+
+      if (metadata && metadata.isProcedure) {
+        this.loadProcedure(name, metadata);
       }
     }
-  }
-
-  private mapType(type: string): SymbolType {
-    switch (type) {
-      case "Number":
-        return FloatType.Instance;
-      case "Float":
-        return FloatType.Instance;
-      case "String":
-        return StringType.Instance;
-      case "Int":
-        return IntType.Instance;
-    }
-    throw new Error("NotImplemented: " + type);
   }
 
   private createFunction(
@@ -74,18 +62,23 @@ export class StdLibSymbols implements Scope {
     isAsync: boolean,
   ) {
     return new FunctionType(
-      pTypes.map((t) => this.mapType(t.name)),
-      this.mapType(retType.name),
+      pTypes.map((t) => t.mapType()),
+      retType.mapType(),
       isExtension,
       isPure,
       isAsync,
     );
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/ban-types
-  private loadFunction(tgt: any, f: Function, descriptor: ElanMethodDescriptor) {
-    const name = f.name;
+  private createProcedure(pTypes: TypeDescriptor[], isExtension: boolean, isAsync: boolean) {
+    return new ProcedureType(
+      pTypes.map((t) => t.mapType()),
+      isExtension,
+      isAsync,
+    );
+  }
 
+  private loadFunction(name: string, descriptor: ElanMethodDescriptor) {
     const retType = descriptor.returnType;
     const parameterTypes = descriptor.parameters;
 
@@ -94,6 +87,18 @@ export class StdLibSymbols implements Scope {
       retType!,
       descriptor.isExtension,
       descriptor.isPure!,
+      descriptor.isAsync,
+    );
+
+    this.symbols.set(name, this.getSymbol(name, symbolType));
+  }
+
+  private loadProcedure(name: string, descriptor: ElanMethodDescriptor) {
+    const parameterTypes = descriptor.parameters;
+
+    const symbolType = this.createProcedure(
+      parameterTypes,
+      descriptor.isExtension,
       descriptor.isAsync,
     );
 
