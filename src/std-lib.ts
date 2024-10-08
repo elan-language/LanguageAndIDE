@@ -90,7 +90,7 @@ export class StdLib {
     throw new Error("Not implemented: " + typeof v);
   }
 
-  @elanMethod(new ElanFunctionDescriptor(false, true, false))
+  @elanMethod(new ElanFunctionDescriptor())
   stringForUnicode(@elanType(new ElanTypeDescriptor("Int")) n: number): string {
     return String.fromCharCode(n);
   }
@@ -834,69 +834,69 @@ export class StdLib {
   //Math
   pi = Math.PI;
 
-  @elanMethod(new ElanFunctionDescriptor(false, true, false))
+  @elanMethod(new ElanFunctionDescriptor())
   abs(x: number): number {
     return Math.abs(x);
   }
 
   // Returns the absolute value of the input.
 
-  @elanMethod(new ElanFunctionDescriptor(false, true, false))
+  @elanMethod(new ElanFunctionDescriptor())
   acos(x: number): number {
     return Math.acos(x);
   }
   // Returns the arccosine of the input.
 
-  @elanMethod(new ElanFunctionDescriptor(false, true, false))
+  @elanMethod(new ElanFunctionDescriptor())
   acosDeg(n: number): number {
     return this.radToDeg(this.acos(n));
   }
 
-  @elanMethod(new ElanFunctionDescriptor(false, true, false))
+  @elanMethod(new ElanFunctionDescriptor())
   asin(x: number): number {
     return Math.asin(x);
   }
   // Returns the arcsine of the input.
 
-  @elanMethod(new ElanFunctionDescriptor(false, true, false))
+  @elanMethod(new ElanFunctionDescriptor())
   asinDeg(n: number): number {
     return this.radToDeg(this.asin(n));
   }
 
-  @elanMethod(new ElanFunctionDescriptor(false, true, false))
+  @elanMethod(new ElanFunctionDescriptor())
   atan(x: number): number {
     return Math.atan(x);
   }
   // Returns the arctangent of the input.
 
-  @elanMethod(new ElanFunctionDescriptor(false, true, false))
+  @elanMethod(new ElanFunctionDescriptor())
   atanDeg(n: number): number {
     return this.radToDeg(this.atan(n));
   }
 
-  @elanMethod(new ElanFunctionDescriptor(false, true, false))
+  @elanMethod(new ElanFunctionDescriptor())
   cos(x: number): number {
     return Math.cos(x);
   }
 
-  @elanMethod(new ElanFunctionDescriptor(false, true, false))
+  @elanMethod(new ElanFunctionDescriptor())
   cosDeg(n: number): number {
     return this.cos(this.degToRad(n));
   }
 
-  @elanMethod(new ElanFunctionDescriptor(false, true, false))
+  @elanMethod(new ElanFunctionDescriptor())
   exp(x: number): number {
     return Math.exp(x);
   }
   // Returns ex, where x is the argument, and e is Euler's number (2.718…, the base of the natural logarithm).
 
-  @elanMethod(new ElanFunctionDescriptor(false, true, false))
+  @elanMethod(new ElanFunctionDescriptor())
   logE(x: number): number {
     return Math.log(x);
   }
   // Returns the natural logarithm (㏒e; also, ㏑) of the input.
 
-  @elanMethod(new ElanFunctionDescriptor(false, true, false))
+  @elanMethod(new ElanFunctionDescriptor())
   log10(x: number): number {
     return Math.log10(x);
   }
@@ -904,45 +904,45 @@ export class StdLib {
 
   // Returns the base-2 logarithm of the input.
 
-  @elanMethod(new ElanFunctionDescriptor(false, true, false))
+  @elanMethod(new ElanFunctionDescriptor())
   log2(x: number): number {
     return Math.log2(x);
   }
 
-  @elanMethod(new ElanFunctionDescriptor(false, true, false))
+  @elanMethod(new ElanFunctionDescriptor())
   sin(x: number): number {
     return Math.sin(x);
   }
   // Returns the sine of the input.
 
-  @elanMethod(new ElanFunctionDescriptor(false, true, false))
+  @elanMethod(new ElanFunctionDescriptor())
   sinDeg(n: number): number {
     return this.sin(this.degToRad(n));
   }
 
-  @elanMethod(new ElanFunctionDescriptor(false, true, false))
+  @elanMethod(new ElanFunctionDescriptor())
   sqrt(x: number): number {
     return Math.sqrt(x);
   }
   // Returns the positive square root of the input.
 
-  @elanMethod(new ElanFunctionDescriptor(false, true, false))
+  @elanMethod(new ElanFunctionDescriptor())
   tan(x: number): number {
     return Math.tan(x);
   }
   // Returns the tangent of the input.
 
-  @elanMethod(new ElanFunctionDescriptor(false, true, false))
+  @elanMethod(new ElanFunctionDescriptor())
   tanDeg(n: number): number {
     return this.tan(this.degToRad(n));
   }
 
-  @elanMethod(new ElanFunctionDescriptor(false, true, false))
+  @elanMethod(new ElanFunctionDescriptor())
   degToRad(d: number): number {
     return (d * this.pi) / 180;
   }
 
-  @elanMethod(new ElanFunctionDescriptor(false, true, false))
+  @elanMethod(new ElanFunctionDescriptor())
   radToDeg(r: number): number {
     return (r / this.pi) * 180;
   }

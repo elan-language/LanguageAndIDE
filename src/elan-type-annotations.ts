@@ -20,9 +20,9 @@ export class ElanProcedureDescriptor implements ElanMethodDescriptor {
 
 export class ElanFunctionDescriptor implements ElanMethodDescriptor {
   constructor(
-    public readonly isExtension: boolean,
-    public readonly isPure: boolean,
-    public readonly isAsync: boolean,
+    public readonly isExtension: boolean = false,
+    public readonly isPure: boolean = true,
+    public readonly isAsync: boolean = false,
     public readonly returnType?: TypeDescriptor,
   ) {}
 
