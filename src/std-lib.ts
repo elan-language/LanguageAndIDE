@@ -24,13 +24,12 @@ export class StdLib {
 
   system: System;
 
-  @elanIgnore
   isValueType<T>(v: T) {
     return typeof v === "boolean" || typeof v === "string" || typeof v === "number";
   }
 
-  @elanIgnore
-  asString<T>(v: T | T[] | undefined): string {
+  @elanMethod(new ElanFunctionDescriptor(true))
+  asString<T>(@elanType(new ElanGenericTypeDescriptor("T")) v: T | T[] | undefined): string {
     if (v === undefined || v === null) {
       throw new Error(`Out of range error`);
     }

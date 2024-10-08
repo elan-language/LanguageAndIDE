@@ -126,24 +126,6 @@ export class StdLibSymbols implements Scope {
   // todo - we need to load this from a .d.ts file also work out how to do generics
   private symbols = new Map<string, ElanSymbol>([
     [
-      "asString",
-      this.getSymbol(
-        "asString",
-        new FunctionType([new GenericParameterType("T")], StringType.Instance, true),
-      ),
-    ],
-    [
-      "stringForUnicode",
-      this.getSymbol(
-        "stringForUnicode",
-        new FunctionType([IntType.Instance], StringType.Instance, false),
-      ),
-    ],
-    [
-      "asUnicode",
-      this.getSymbol("asUnicode", new FunctionType([StringType.Instance], IntType.Instance, true)),
-    ],
-    [
       "asArray",
       this.getSymbol(
         "asArray",
@@ -1108,86 +1090,6 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     ["pi", this.getSymbol("pi", FloatType.Instance)],
-    [
-      "abs",
-      this.getSymbol("abs", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
-    ],
-    [
-      "acos",
-      this.getSymbol("acos", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
-    ],
-    [
-      "acosDeg",
-      this.getSymbol("acosDeg", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
-    ],
-    [
-      "asin",
-      this.getSymbol("asin", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
-    ],
-    [
-      "asinDeg",
-      this.getSymbol("asinDeg", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
-    ],
-    [
-      "atan",
-      this.getSymbol("atan", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
-    ],
-    [
-      "atanDeg",
-      this.getSymbol("atanDeg", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
-    ],
-    [
-      "cos",
-      this.getSymbol("cos", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
-    ],
-    [
-      "cosDeg",
-      this.getSymbol("cosDeg", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
-    ],
-    [
-      "exp",
-      this.getSymbol("exp", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
-    ],
-    [
-      "logE",
-      this.getSymbol("logE", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
-    ],
-    [
-      "log10",
-      this.getSymbol("log10", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
-    ],
-    [
-      "log2",
-      this.getSymbol("log2", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
-    ],
-    [
-      "sin",
-      this.getSymbol("sin", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
-    ],
-    [
-      "sinDeg",
-      this.getSymbol("sinDeg", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
-    ],
-    [
-      "sqrt",
-      this.getSymbol("sqrt", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
-    ],
-    [
-      "tan",
-      this.getSymbol("tan", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
-    ],
-    [
-      "tanDeg",
-      this.getSymbol("tanDeg", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
-    ],
-    [
-      "degToRad",
-      this.getSymbol("degToRad", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
-    ],
-    [
-      "radToDeg",
-      this.getSymbol("radToDeg", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
-    ],
     ["Random", this.getSymbol("Random", new TupleType([IntType.Instance, IntType.Instance]))],
     [
       "next",
