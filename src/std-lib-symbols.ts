@@ -61,7 +61,7 @@ export class StdLibSymbols implements Scope {
       case "String":
         return StringType.Instance;
       case "Int":
-          return IntType.Instance;
+        return IntType.Instance;
     }
     throw new Error("NotImplemented: " + type);
   }

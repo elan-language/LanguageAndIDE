@@ -20,10 +20,10 @@ export class ElanProcedureDescriptor implements ElanMethodDescriptor {
 
 export class ElanFunctionDescriptor implements ElanMethodDescriptor {
   constructor(
-    public readonly returnType: TypeDescriptor,
     public readonly isExtension: boolean,
     public readonly isPure: boolean,
     public readonly isAsync: boolean,
+    public readonly returnType?: TypeDescriptor,
   ) {}
 
   isProcedure = false;
@@ -40,6 +40,7 @@ export class ElanParametersDescriptor implements ElanMethodDescriptor {
   isAsync = false;
 
   parameters: TypeDescriptor[] = [];
+  returnType: TypeDescriptor | undefined;
 }
 
 export class ElanTypeDescriptor {
@@ -56,12 +57,17 @@ export function elanIgnore(target: object, propertyKey: string, descriptor: Prop
 
 export function elanMethod(elanDesc: ElanMethodDescriptor) {
   return function (target: object, propertyKey: string, descriptor: PropertyDescriptor) {
-    const designMetaData = Reflect.getMetadata("design:paramtypes", target, propertyKey);
+    const paramTypesMetadata = Reflect.getMetadata("design:paramtypes", target, propertyKey);
+    const retTypeMetadata = Reflect.getMetadata("design:returntype", target, propertyKey);
 
-    if (Array.isArray(designMetaData)) {
-      elanDesc.parameters = designMetaData.map(
+    if (Array.isArray(paramTypesMetadata)) {
+      elanDesc.parameters = paramTypesMetadata.map(
         (t: { name: string }) => new TypescriptTypeDescriptor(t.name),
       );
+    }
+
+    if (!elanDesc.returnType && retTypeMetadata && retTypeMetadata.name) {
+      elanDesc.returnType = new TypescriptTypeDescriptor(retTypeMetadata.name);
     }
 
     const metaData: ElanMethodDescriptor =
