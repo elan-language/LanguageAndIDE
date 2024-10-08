@@ -309,59 +309,111 @@ export class StdLib {
     return s1.toLowerCase();
   }
 
-  @elanMethod(new ElanFunctionDescriptor(false))
+  @elanMethod(new ElanFunctionDescriptor())
   isBefore(s1: string, s2: string): boolean {
     return s1 < s2;
   }
 
-  @elanMethod(new ElanFunctionDescriptor(false))
+  @elanMethod(new ElanFunctionDescriptor())
   isAfter(s1: string, s2: string): boolean {
     return s1 > s2;
   }
 
-  @elanMethod(new ElanFunctionDescriptor(false))
+  @elanMethod(new ElanFunctionDescriptor())
   isAfterOrSameAs(s1: string, s2: string): boolean {
     return s1 > s2 || s1 === s2;
   }
 
-  @elanMethod(new ElanFunctionDescriptor(false))
+  @elanMethod(new ElanFunctionDescriptor())
   isBeforeOrSameAs(s1: string, s2: string): boolean {
     return s1 < s2 || s1 === s2;
   }
 
-  @elanIgnore
-  withPutAt<T>(list: Array<T>, index: number, value: T) {
+  @elanMethod(
+    new ElanFunctionDescriptor(
+      true,
+      true,
+      false,
+      new ElanTypeDescriptor("List", new ElanGenericTypeDescriptor("T")),
+    ),
+  )
+  withPutAt<T>(
+    @elanType(new ElanTypeDescriptor("List", new ElanGenericTypeDescriptor("T"))) list: Array<T>,
+    @elanType(new ElanTypeDescriptor("Int")) index: number,
+    @elanType(new ElanGenericTypeDescriptor("T")) value: T,
+  ) {
     const newList = [...list];
     newList[index] = value;
     (newList as unknown as hasHiddenType)._type = "List";
     return newList;
   }
 
-  @elanIgnore
-  putAt<T>(list: Array<T>, index: number, value: T) {
+  @elanMethod(new ElanProcedureDescriptor(true))
+  putAt<T>(
+    @elanType(new ElanTypeDescriptor("Array", new ElanGenericTypeDescriptor("T"))) list: Array<T>,
+    @elanType(new ElanTypeDescriptor("Int")) index: number,
+    @elanType(new ElanGenericTypeDescriptor("T")) value: T,
+  ) {
     this.system.safeArraySet(list, index, value);
   }
 
-  @elanIgnore
-  putAt2D<T>(list: Array<Array<T>>, col: number, row: number, value: T) {
+  @elanMethod(new ElanProcedureDescriptor(true))
+  putAt2D<T>(
+    @elanType(
+      new ElanTypeDescriptor(
+        "Array",
+        new ElanTypeDescriptor("Array", new ElanGenericTypeDescriptor("T")),
+      ),
+    )
+    list: Array<Array<T>>,
+    @elanType(new ElanTypeDescriptor("Int")) col: number,
+    @elanType(new ElanTypeDescriptor("Int")) row: number,
+    @elanType(new ElanGenericTypeDescriptor("T")) value: T,
+  ) {
     this.system.safeArraySet(list[col], row, value);
   }
 
-  @elanIgnore
-  putAtKey<T>(dict: { [key: string]: T }, key: string, value: T) {
+  @elanMethod(new ElanProcedureDescriptor(true))
+  putAtKey<T>(
+    @elanType(
+      new ElanTypeDescriptor(
+        "Dictionary",
+        new ElanGenericTypeDescriptor("T1"),
+        new ElanGenericTypeDescriptor("T2"),
+      ),
+    )
+    dict: { [key: string]: T },
+    @elanType(new ElanGenericTypeDescriptor("T1")) key: string,
+    @elanType(new ElanGenericTypeDescriptor("T2")) value: T,
+  ) {
     this.system.safeDictionarySet(dict, key, value);
   }
 
-  @elanIgnore
-  withInsert<T>(list: Array<T>, index: number, value: T) {
+  @elanMethod(
+    new ElanFunctionDescriptor(
+      true,
+      true,
+      false,
+      new ElanTypeDescriptor("List", new ElanGenericTypeDescriptor("T")),
+    ),
+  )
+  withInsert<T>(
+    @elanType(new ElanTypeDescriptor("List", new ElanGenericTypeDescriptor("T"))) list: Array<T>,
+    @elanType(new ElanTypeDescriptor("Int")) index: number,
+    @elanType(new ElanGenericTypeDescriptor("T")) value: T,
+  ) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const newList = (list as any).toSpliced(index, 0, value);
     (newList as unknown as hasHiddenType)._type = "List";
     return newList;
   }
 
-  @elanIgnore
-  insertAt<T>(list: Array<T>, index: number, value: T) {
+  @elanMethod(new ElanProcedureDescriptor(true))
+  insertAt<T>(
+    @elanType(new ElanTypeDescriptor("Array", new ElanGenericTypeDescriptor("T"))) list: Array<T>,
+    @elanType(new ElanTypeDescriptor("Int")) index: number,
+    @elanType(new ElanGenericTypeDescriptor("T")) value: T,
+  ) {
     list.splice(index, 0, value);
   }
 
@@ -377,16 +429,36 @@ export class StdLib {
     return -1;
   }
 
-  @elanIgnore
-  withRemoveAt<T>(list: Array<T>, index: number) {
+  @elanMethod(
+    new ElanFunctionDescriptor(
+      true,
+      true,
+      false,
+      new ElanTypeDescriptor("List", new ElanGenericTypeDescriptor("T")),
+    ),
+  )
+  withRemoveAt<T>(
+    @elanType(new ElanTypeDescriptor("List", new ElanGenericTypeDescriptor("T"))) list: Array<T>,
+    @elanType(new ElanTypeDescriptor("Int")) index: number,
+  ) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const newList = (list as any).toSpliced(index, 1);
     (newList as unknown as hasHiddenType)._type = "List";
     return newList;
   }
 
-  @elanIgnore
-  withRemoveFirst<T>(list: Array<T>, value: T) {
+  @elanMethod(
+    new ElanFunctionDescriptor(
+      true,
+      true,
+      false,
+      new ElanTypeDescriptor("List", new ElanGenericTypeDescriptor("T")),
+    ),
+  )
+  withRemoveFirst<T>(
+    @elanType(new ElanTypeDescriptor("List", new ElanGenericTypeDescriptor("T"))) list: Array<T>,
+    @elanType(new ElanGenericTypeDescriptor("T")) value: T,
+  ) {
     let newList = [...list];
     const index = this.elanIndexOf(newList, value);
     if (index > -1) {
@@ -397,8 +469,18 @@ export class StdLib {
     return newList;
   }
 
-  @elanIgnore
-  withRemoveAll<T>(list: Array<T>, value: T) {
+  @elanMethod(
+    new ElanFunctionDescriptor(
+      true,
+      true,
+      false,
+      new ElanTypeDescriptor("List", new ElanGenericTypeDescriptor("T")),
+    ),
+  )
+  withRemoveAll<T>(
+    @elanType(new ElanTypeDescriptor("List", new ElanGenericTypeDescriptor("T"))) list: Array<T>,
+    @elanType(new ElanGenericTypeDescriptor("T")) value: T,
+  ) {
     let newList = [...list];
     let index = this.elanIndexOf(newList, value);
     while (index > -1) {
@@ -410,21 +492,30 @@ export class StdLib {
     return newList;
   }
 
-  @elanIgnore
-  removeAt<T>(list: Array<T>, index: number) {
+  @elanMethod(new ElanProcedureDescriptor(true))
+  removeAt<T>(
+    @elanType(new ElanTypeDescriptor("Array", new ElanGenericTypeDescriptor("T"))) list: Array<T>,
+    @elanType(new ElanTypeDescriptor("Int")) index: number,
+  ) {
     list.splice(index, 1);
   }
 
-  @elanIgnore
-  removeFirst<T>(list: Array<T>, value: T) {
+  @elanMethod(new ElanProcedureDescriptor(true))
+  removeFirst<T>(
+    @elanType(new ElanTypeDescriptor("Array", new ElanGenericTypeDescriptor("T"))) list: Array<T>,
+    @elanType(new ElanGenericTypeDescriptor("T")) value: T,
+  ) {
     const index = this.elanIndexOf(list, value);
     if (index > -1) {
       list.splice(index, 1);
     }
   }
 
-  @elanIgnore
-  removeAll<T>(list: Array<T>, value: T) {
+  @elanMethod(new ElanProcedureDescriptor(true))
+  removeAll<T>(
+    @elanType(new ElanTypeDescriptor("Array", new ElanGenericTypeDescriptor("T"))) list: Array<T>,
+    @elanType(new ElanGenericTypeDescriptor("T")) value: T,
+  ) {
     let index = this.elanIndexOf(list, value);
     while (index > -1) {
       list.splice(index, 1);
@@ -440,23 +531,54 @@ export class StdLib {
     list.push(value);
   }
 
-  @elanIgnore
-  appendList<T>(list: Array<T>, listB: Array<T>) {
+  @elanMethod(new ElanProcedureDescriptor(true))
+  appendList<T>(
+    @elanType(new ElanTypeDescriptor("Array", new ElanGenericTypeDescriptor("T"))) list: Array<T>,
+    @elanType(new ElanTypeDescriptor("Array", new ElanGenericTypeDescriptor("T"))) listB: Array<T>,
+  ) {
     list.push(...listB);
   }
 
-  @elanIgnore
-  prepend<T>(list: Array<T>, value: T) {
+  @elanMethod(new ElanProcedureDescriptor(true))
+  prepend<T>(
+    @elanType(new ElanTypeDescriptor("Array", new ElanGenericTypeDescriptor("T"))) list: Array<T>,
+    @elanType(new ElanGenericTypeDescriptor("T")) value: T,
+  ) {
     list.unshift(value);
   }
 
-  @elanIgnore
-  prependList<T>(list: Array<T>, listB: Array<T>) {
+  @elanMethod(new ElanProcedureDescriptor(true))
+  prependList<T>(
+    @elanType(new ElanTypeDescriptor("Array", new ElanGenericTypeDescriptor("T"))) list: Array<T>,
+    @elanType(new ElanTypeDescriptor("Array", new ElanGenericTypeDescriptor("T"))) listB: Array<T>,
+  ) {
     list.unshift(...listB);
   }
 
-  @elanIgnore
-  withPutAtKey<T>(dict: { [key: string]: T }, key: string, value: T) {
+  @elanMethod(
+    new ElanFunctionDescriptor(
+      true,
+      true,
+      false,
+      new ElanTypeDescriptor(
+        "ImmutableDictionary",
+        new ElanGenericTypeDescriptor("T1"),
+        new ElanGenericTypeDescriptor("T2"),
+      ),
+    ),
+  )
+  withPutAtKey<T>(
+    @elanType(
+      new ElanTypeDescriptor(
+        "ImmutableDictionary",
+        new ElanGenericTypeDescriptor("T1"),
+        new ElanGenericTypeDescriptor("T2"),
+      ),
+    )
+    dict: { [key: string]: T },
+    @elanType(new ElanGenericTypeDescriptor("T1")) key: string,
+    @elanType(new ElanGenericTypeDescriptor("T2")) value: T,
+  ) {
     const newDict = { ...dict };
     newDict[key] = value;
     (newDict as unknown as hasHiddenType)._type = "ImmutableDictionary";
