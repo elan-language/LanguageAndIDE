@@ -101,22 +101,50 @@ export class StdLib {
     return s.charCodeAt(0);
   }
 
-  @elanIgnore
-  asArray<T>(list: T[]): T[] {
+  @elanMethod(
+    new ElanFunctionDescriptor(
+      true,
+      true,
+      false,
+      new ElanTypeDescriptor("Array", new ElanGenericTypeDescriptor("T")),
+    ),
+  )
+  asArray<T>(
+    @elanType(new ElanTypeDescriptor("Iterable", new ElanGenericTypeDescriptor("T"))) list: T[],
+  ): T[] {
     const arr = [...list];
     (arr as unknown as hasHiddenType)._type = "Array";
     return arr;
   }
 
-  @elanIgnore
-  asList<T>(arr: T[]): T[] {
+  @elanMethod(
+    new ElanFunctionDescriptor(
+      true,
+      true,
+      false,
+      new ElanTypeDescriptor("List", new ElanGenericTypeDescriptor("T")),
+    ),
+  )
+  asList<T>(
+    @elanType(new ElanTypeDescriptor("Iterable", new ElanGenericTypeDescriptor("T"))) arr: T[],
+  ): T[] {
     const list = [...arr];
     (list as unknown as hasHiddenType)._type = "List";
     return list;
   }
 
-  @elanIgnore
-  range(start: number, end: number): number[] {
+  @elanMethod(
+    new ElanFunctionDescriptor(
+      false,
+      true,
+      false,
+      new ElanTypeDescriptor("Iterable", new ElanTypeDescriptor("Int")),
+    ),
+  )
+  range(
+    @elanType(new ElanTypeDescriptor("Int")) start: number,
+    @elanType(new ElanTypeDescriptor("Int")) end: number,
+  ): number[] {
     const seq = [];
     for (let i = start; i <= end; i++) {
       seq.push(i);
@@ -125,8 +153,15 @@ export class StdLib {
     return seq;
   }
 
-  @elanIgnore
-  asIter<T>(arr: T[]): T[] {
+  @elanMethod(
+    new ElanFunctionDescriptor(
+      true,
+      true,
+      false,
+      new ElanTypeDescriptor("Iterable", new ElanGenericTypeDescriptor("T")),
+    ),
+  )
+  asIter<T>(@elanType(new ElanTypeDescriptor("Iterable", new ElanGenericTypeDescriptor("T"))) arr: T[]): T[] {
     const list = [...arr];
     (list as unknown as hasHiddenType)._type = "Iterable";
     return list as T[];
