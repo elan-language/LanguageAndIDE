@@ -125,34 +125,6 @@ export class StdLibSymbols implements Scope {
 
   // todo - we need to load this from a .d.ts file also work out how to do generics
   private symbols = new Map<string, ElanSymbol>([
-  
-    [
-      "head",
-      this.getSymbol(
-        "head",
-        new FunctionType(
-          [new IterableType(new GenericParameterType("T"))],
-          new GenericParameterType("T"),
-          true,
-        ),
-      ),
-    ],
-    [
-      "keys",
-      this.getSymbol(
-        "keys",
-        new FunctionType(
-          [
-            new AbstractDictionaryType(
-              new GenericParameterType("T1"),
-              new GenericParameterType("T2"),
-            ),
-          ],
-          new ListType(new GenericParameterType("T1")),
-          true,
-        ),
-      ),
-    ],
     [
       "floor",
       this.getSymbol(

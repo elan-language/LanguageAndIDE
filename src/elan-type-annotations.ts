@@ -5,6 +5,7 @@ import {
   TypeDescriptor,
 } from "./elan-type-interfaces";
 import { SymbolType } from "./frames/interfaces/symbol-type";
+import { AbstractDictionaryType } from "./frames/symbols/abstract-dictionary-type";
 import { ArrayType } from "./frames/symbols/array-list-type";
 import { FloatType } from "./frames/symbols/float-type";
 import { GenericParameterType } from "./frames/symbols/generic-parameter-type";
@@ -55,6 +56,7 @@ export class ElanTypeDescriptor implements TypeDescriptor {
   constructor(
     public readonly name: string,
     public readonly ofType?: ElanTypeDescriptor,
+    public readonly valueType?: ElanTypeDescriptor,
   ) {}
 
   mapType(): SymbolType {
@@ -71,6 +73,8 @@ export class ElanTypeDescriptor implements TypeDescriptor {
         return new ArrayType(this.ofType!.mapType());
       case "List":
         return new ListType(this.ofType!.mapType());
+      case "AbstractDictionary":
+        return new AbstractDictionaryType(this.ofType!.mapType(), this.valueType!.mapType());
     }
     throw new Error("NotImplemented: " + this.name);
   }

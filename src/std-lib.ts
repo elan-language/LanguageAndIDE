@@ -161,19 +161,41 @@ export class StdLib {
       new ElanTypeDescriptor("Iterable", new ElanGenericTypeDescriptor("T")),
     ),
   )
-  asIter<T>(@elanType(new ElanTypeDescriptor("Iterable", new ElanGenericTypeDescriptor("T"))) arr: T[]): T[] {
+  asIter<T>(
+    @elanType(new ElanTypeDescriptor("Iterable", new ElanGenericTypeDescriptor("T"))) arr: T[],
+  ): T[] {
     const list = [...arr];
     (list as unknown as hasHiddenType)._type = "Iterable";
     return list as T[];
   }
 
-  @elanIgnore
-  head<T>(arr: T[]): T {
+  @elanMethod(new ElanFunctionDescriptor(true, true, false, new ElanGenericTypeDescriptor("T")))
+  head<T>(
+    @elanType(new ElanTypeDescriptor("Iterable", new ElanGenericTypeDescriptor("T"))) arr: T[],
+  ): T {
     return this.system.safeIndex(arr, 0);
   }
 
-  @elanIgnore
-  keys<T>(dict: { [key: string]: T }): string[] {
+  @elanMethod(
+    new ElanFunctionDescriptor(
+      true,
+      true,
+      false,
+      new ElanTypeDescriptor("List", new ElanGenericTypeDescriptor("T1")),
+    ),
+  )
+  keys<T>(
+    @elanType(
+      new ElanTypeDescriptor(
+        "AbstractDictionary",
+        new ElanGenericTypeDescriptor("T1"),
+        new ElanGenericTypeDescriptor("T2"),
+      ),
+    )
+    dict: {
+      [key: string]: T;
+    },
+  ): string[] {
     const lst = Object.getOwnPropertyNames(dict).filter((s) => s !== "_type");
     (lst as unknown as hasHiddenType)._type = "List";
     return lst;
