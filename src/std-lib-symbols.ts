@@ -146,39 +146,8 @@ export class StdLibSymbols implements Scope {
         new FunctionType([FloatType.Instance], IntType.Instance, false, true),
       ),
     ],
-    [
-      "values",
-      this.getSymbol(
-        "values",
-        new FunctionType(
-          [
-            new AbstractDictionaryType(
-              new GenericParameterType("T1"),
-              new GenericParameterType("T2"),
-            ),
-          ],
-          new ListType(new GenericParameterType("T1")),
-          true,
-        ),
-      ),
-    ],
-    [
-      "hasKey",
-      this.getSymbol(
-        "hasKey",
-        new FunctionType(
-          [
-            new AbstractDictionaryType(
-              new GenericParameterType("T1"),
-              new GenericParameterType("T2"),
-            ),
-            new GenericParameterType("T1"),
-          ],
-          BooleanType.Instance,
-          true,
-        ),
-      ),
-    ],
+
+   
     [
       "length",
       this.getSymbol(

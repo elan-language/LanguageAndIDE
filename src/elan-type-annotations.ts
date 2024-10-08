@@ -7,6 +7,7 @@ import {
 import { SymbolType } from "./frames/interfaces/symbol-type";
 import { AbstractDictionaryType } from "./frames/symbols/abstract-dictionary-type";
 import { ArrayType } from "./frames/symbols/array-list-type";
+import { BooleanType } from "./frames/symbols/boolean-type";
 import { FloatType } from "./frames/symbols/float-type";
 import { GenericParameterType } from "./frames/symbols/generic-parameter-type";
 import { IntType } from "./frames/symbols/int-type";
@@ -67,6 +68,8 @@ export class ElanTypeDescriptor implements TypeDescriptor {
         return StringType.Instance;
       case "Int":
         return IntType.Instance;
+      case "Boolean":
+        return BooleanType.Instance;
       case "Iterable":
         return new IterableType(this.ofType!.mapType());
       case "Array":

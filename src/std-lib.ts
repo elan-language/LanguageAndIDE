@@ -201,15 +201,43 @@ export class StdLib {
     return lst;
   }
 
-  @elanIgnore
-  values<T>(dict: { [key: string]: T }): T[] {
+  @elanMethod(
+    new ElanFunctionDescriptor(
+      true,
+      true,
+      false,
+      new ElanTypeDescriptor("List", new ElanGenericTypeDescriptor("T2")),
+    ),
+  )
+  values<T>(
+    @elanType(
+      new ElanTypeDescriptor(
+        "AbstractDictionary",
+        new ElanGenericTypeDescriptor("T1"),
+        new ElanGenericTypeDescriptor("T2"),
+      ),
+    )
+    dict: {
+      [key: string]: T;
+    },
+  ): T[] {
     const lst = this.keys(dict).map((k) => dict[k]);
     (lst as unknown as hasHiddenType)._type = "List";
     return lst;
   }
 
-  @elanIgnore
-  hasKey<T>(dict: { [key: string]: T }, key: string): boolean {
+  @elanMethod(new ElanFunctionDescriptor(true, true, false, new ElanTypeDescriptor("Boolean")))
+  hasKey<T>(
+    @elanType(
+      new ElanTypeDescriptor(
+        "AbstractDictionary",
+        new ElanGenericTypeDescriptor("T1"),
+        new ElanGenericTypeDescriptor("T2"),
+      ),
+    )
+    dict: { [key: string]: T },
+    @elanType(new ElanGenericTypeDescriptor("T1")) key: string,
+  ): boolean {
     return this.keys(dict).includes(key);
   }
 
