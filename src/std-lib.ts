@@ -600,29 +600,29 @@ export class StdLib {
     return this.system.safeIndex(st, 2);
   }
 
-  @elanIgnore
-  indexOf(s1: string, s2: string) {
+  @elanMethod(new ElanFunctionDescriptor(true, true, false, new ElanTypeDescriptor("Int")))
+  indexOf(s1: string, s2: string): number {
     return s1.indexOf(s2);
   }
 
-  @elanIgnore
+  @elanMethod(new ElanFunctionDescriptor(true))
   trim(s: string): string {
     return s.trim();
   }
 
-  @elanIgnore
-  floor(n: number) {
+  @elanMethod(new ElanFunctionDescriptor(false, true, false, new ElanTypeDescriptor("Int")))
+  floor(n: number): number {
     return Math.floor(n);
   }
 
-  @elanIgnore
-  round(n: number, places: number) {
+  @elanMethod(new ElanFunctionDescriptor())
+  round(n: number, @elanType(new ElanTypeDescriptor("Int")) places: number): number {
     const shift = 10 ** places;
     return Math.floor(n * shift + 0.5) / shift;
   }
 
-  @elanIgnore
-  ceiling(n: number) {
+  @elanMethod(new ElanFunctionDescriptor(false, true, false, new ElanTypeDescriptor("Int")))
+  ceiling(n: number): number {
     const fl = this.floor(n);
     return n > fl ? fl + 1 : fl;
   }

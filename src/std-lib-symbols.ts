@@ -6,14 +6,11 @@ import {
 import { ElanSymbol } from "./frames/interfaces/elan-symbol";
 import { Scope } from "./frames/interfaces/scope";
 import { SymbolType } from "./frames/interfaces/symbol-type";
-import { AbstractDictionaryType } from "./frames/symbols/abstract-dictionary-type";
 import { ArrayType } from "./frames/symbols/array-list-type";
 import { BooleanType } from "./frames/symbols/boolean-type";
-import { DictionaryType } from "./frames/symbols/dictionary-type";
 import { FloatType } from "./frames/symbols/float-type";
 import { FunctionType } from "./frames/symbols/function-type";
 import { GenericParameterType } from "./frames/symbols/generic-parameter-type";
-import { ImmutableDictionaryType } from "./frames/symbols/immutable-dictionary-type";
 import { IntType } from "./frames/symbols/int-type";
 import { IterableType } from "./frames/symbols/iterable-type";
 import { ListType } from "./frames/symbols/list-type";
@@ -126,44 +123,6 @@ export class StdLibSymbols implements Scope {
   // todo - we need to load this from a .d.ts file also work out how to do generics
   private symbols = new Map<string, ElanSymbol>([
     [
-      "floor",
-      this.getSymbol(
-        "floor",
-        new FunctionType([FloatType.Instance], IntType.Instance, false, true),
-      ),
-    ],
-    [
-      "round",
-      this.getSymbol(
-        "round",
-        new FunctionType([FloatType.Instance, IntType.Instance], FloatType.Instance, false, true),
-      ),
-    ],
-    [
-      "ceiling",
-      this.getSymbol(
-        "ceiling",
-        new FunctionType([FloatType.Instance], IntType.Instance, false, true),
-      ),
-    ],
-
-    [
-      "insertAt",
-      this.getSymbol(
-        "insertAt",
-        new ProcedureType(
-          [
-            new ArrayType(new GenericParameterType("T")),
-            IntType.Instance,
-            new GenericParameterType("T"),
-          ],
-          true,
-          false,
-        ),
-      ),
-    ],
-
-    [
       "first",
       this.getSymbol(
         "first",
@@ -201,17 +160,6 @@ export class StdLibSymbols implements Scope {
           true,
         ),
       ),
-    ],
-    [
-      "indexOf",
-      this.getSymbol(
-        "indexOf",
-        new FunctionType([StringType.Instance, StringType.Instance], IntType.Instance, true),
-      ),
-    ],
-    [
-      "trim",
-      this.getSymbol("trim", new FunctionType([StringType.Instance], StringType.Instance, true)),
     ],
     [
       "typeAndProperties",
