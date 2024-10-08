@@ -270,13 +270,26 @@ export class StdLib {
     return newDict;
   }
 
-  @elanIgnore
-  removeAtKey<T>(dict: { [key: string]: T }, key: string) {
+  @elanMethod(new ElanProcedureDescriptor(true))
+  removeAtKey<T>(
+    @elanType(
+      new ElanTypeDescriptor(
+        "Dictionary",
+        new ElanGenericTypeDescriptor("T1"),
+        new ElanGenericTypeDescriptor("T2"),
+      ),
+    )
+    dict: { [key: string]: T },
+    @elanType(new ElanGenericTypeDescriptor("T1")) key: string,
+  ) {
     delete dict[key];
   }
 
-  @elanIgnore
-  length<T>(coll: string | T[] | { [key: string]: T }) {
+  @elanMethod(new ElanFunctionDescriptor(true, true, false, new ElanTypeDescriptor("Int")))
+  length<T>(
+    @elanType(new ElanTypeDescriptor("Iterable", new ElanGenericTypeDescriptor("T")))
+    coll: string | T[] | { [key: string]: T },
+  ) {
     if (typeof coll === "string") {
       return coll.length;
     }
@@ -286,33 +299,33 @@ export class StdLib {
     return this.keys(coll).length;
   }
 
-  @elanIgnore
+  @elanMethod(new ElanFunctionDescriptor(true))
   upperCase(s1: string): string {
     return s1.toUpperCase();
   }
 
-  @elanIgnore
+  @elanMethod(new ElanFunctionDescriptor(true))
   lowerCase(s1: string): string {
     return s1.toLowerCase();
   }
 
-  @elanIgnore
-  isBefore(s1: string, s2: string) {
+  @elanMethod(new ElanFunctionDescriptor(false))
+  isBefore(s1: string, s2: string): boolean {
     return s1 < s2;
   }
 
-  @elanIgnore
-  isAfter(s1: string, s2: string) {
+  @elanMethod(new ElanFunctionDescriptor(false))
+  isAfter(s1: string, s2: string): boolean {
     return s1 > s2;
   }
 
-  @elanIgnore
-  isAfterOrSameAs(s1: string, s2: string) {
+  @elanMethod(new ElanFunctionDescriptor(false))
+  isAfterOrSameAs(s1: string, s2: string): boolean {
     return s1 > s2 || s1 === s2;
   }
 
-  @elanIgnore
-  isBeforeOrSameAs(s1: string, s2: string) {
+  @elanMethod(new ElanFunctionDescriptor(false))
+  isBeforeOrSameAs(s1: string, s2: string): boolean {
     return s1 < s2 || s1 === s2;
   }
 

@@ -146,14 +146,6 @@ export class StdLibSymbols implements Scope {
         new FunctionType([FloatType.Instance], IntType.Instance, false, true),
       ),
     ],
-
-    [
-      "length",
-      this.getSymbol(
-        "length",
-        new FunctionType([new IterableType(new GenericParameterType("T"))], IntType.Instance, true),
-      ),
-    ],
     [
       "putAt",
       this.getSymbol(
@@ -382,62 +374,7 @@ export class StdLibSymbols implements Scope {
         ),
       ),
     ],
-    [
-      "removeAtKey",
-      this.getSymbol(
-        "removeAtKey",
-        new ProcedureType(
-          [
-            new DictionaryType(new GenericParameterType("T1"), new GenericParameterType("T2")),
-            new GenericParameterType("T1"),
-          ],
-          true,
-          false,
-        ),
-      ),
-    ],
-    [
-      "upperCase",
-      this.getSymbol(
-        "upperCase",
-        new FunctionType([StringType.Instance], StringType.Instance, true, true),
-      ),
-    ],
-    [
-      "lowerCase",
-      this.getSymbol(
-        "lowerCase",
-        new FunctionType([StringType.Instance], StringType.Instance, true, true),
-      ),
-    ],
-    [
-      "isBefore",
-      this.getSymbol(
-        "isBefore",
-        new FunctionType([StringType.Instance, StringType.Instance], BooleanType.Instance, false),
-      ),
-    ],
-    [
-      "isAfter",
-      this.getSymbol(
-        "isAfter",
-        new FunctionType([StringType.Instance, StringType.Instance], BooleanType.Instance, false),
-      ),
-    ],
-    [
-      "isBeforeOrSameAs",
-      this.getSymbol(
-        "isBeforeOrSameAs",
-        new FunctionType([StringType.Instance, StringType.Instance], BooleanType.Instance, false),
-      ),
-    ],
-    [
-      "isAfterOrSameAs",
-      this.getSymbol(
-        "isAfterOrSameAs",
-        new FunctionType([StringType.Instance, StringType.Instance], BooleanType.Instance, false),
-      ),
-    ],
+
     [
       "first",
       this.getSymbol(

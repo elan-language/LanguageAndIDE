@@ -8,6 +8,7 @@ import { SymbolType } from "./frames/interfaces/symbol-type";
 import { AbstractDictionaryType } from "./frames/symbols/abstract-dictionary-type";
 import { ArrayType } from "./frames/symbols/array-list-type";
 import { BooleanType } from "./frames/symbols/boolean-type";
+import { DictionaryType } from "./frames/symbols/dictionary-type";
 import { FloatType } from "./frames/symbols/float-type";
 import { GenericParameterType } from "./frames/symbols/generic-parameter-type";
 import { ImmutableDictionaryType } from "./frames/symbols/immutable-dictionary-type";
@@ -81,6 +82,8 @@ export class ElanTypeDescriptor implements TypeDescriptor {
         return new AbstractDictionaryType(this.ofType!.mapType(), this.valueType!.mapType());
       case "ImmutableDictionary":
         return new ImmutableDictionaryType(this.ofType!.mapType(), this.valueType!.mapType());
+      case "Dictionary":
+        return new DictionaryType(this.ofType!.mapType(), this.valueType!.mapType());
     }
     throw new Error("NotImplemented: " + this.name);
   }
@@ -103,6 +106,8 @@ export class TypescriptTypeDescriptor implements TypeDescriptor {
         return FloatType.Instance;
       case "String":
         return StringType.Instance;
+      case "Boolean":
+        return BooleanType.Instance;
     }
     throw new Error("NotImplemented: " + this.name);
   }
