@@ -1,10 +1,15 @@
-# c906207c46b7bf8e39291f693d801443622b6aa4ba75fc31016da9ce9b2d1ca3 Elan Beta 2 valid
+# FFFF Elan Beta 2 valid
 
 function asRoman(d as Int) return String
   let allSymbols be {(1000, "M"), (900, "CM"), (500, "D"), (400, "CD"), (100, "C"), (90, "XC"), (50, "L"), (40, "XL"), (10, "X"), (9, "IX"), (5, "V"), (4, "IV"), (1, "I"), (0, "")}
-  let symbols be allSymbols.filter(lambda s as (Int, String) => s.first() <= d)
-  let largest be symbols.head()
-  return if d is 0 then "" else largest.second() + asRoman(d - largest.first())
+  let symbols be allSymbols.filter(lambda s as (Int, String) => first(s) <= d)
+  let value, symbol be symbols.head()
+  return if d is 0 then "" else symbol + asRoman(d - value)
+end function
+
+function first(s as (Int, String)) return Int
+  let first, _ be s
+  return first
 end function
 
 test 

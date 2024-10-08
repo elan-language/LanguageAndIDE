@@ -292,27 +292,12 @@ export class StdLib {
     (newDict as unknown as hasHiddenType)._type = "ImmutableDictionary";
     return newDict;
   }
-
-  first<T, T1>(st: [T, T1]): T {
-    return this.system.safeIndex(st, 0);
-  }
-
-  second<T, T1>(st: [T, T1]): T1 {
-    return this.system.safeIndex(st, 1);
-  }
-
-  third<T, T1, T2>(st: [T, T1, T2]): T2 {
-    return this.system.safeIndex(st, 2);
-  }
-
   indexOf(s1: string, s2: string) {
     return s1.indexOf(s2);
   }
-
   trim(s: string): string {
     return s.trim();
   }
-
   floor(n: number) {
     return Math.floor(n);
   }
@@ -324,7 +309,6 @@ export class StdLib {
     const fl = this.floor(n);
     return n > fl ? fl + 1 : fl;
   }
-
   typeAndProperties(o: { [key: string]: object }) {
     const type = o.constructor.name;
     const items = Object.getOwnPropertyNames(o);

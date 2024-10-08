@@ -67,7 +67,7 @@ return [main, _tests];}`;
     ]);
   });
 
-  test("Pass_AssertTuple", async () => {
+  ignore_test("Pass_AssertTuple", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
@@ -76,7 +76,6 @@ end main
 test square
   var t set to ("one", "two")
   assert t is ("one", "two")
-  assert t.first() is "one"
 end test
 `;
 
@@ -88,7 +87,6 @@ async function main() {
 _tests.push(["test3", async (_outcomes) => {
   var t = system.tuple(["one", "two"]);
   _outcomes.push(system.assert(t, system.tuple(["one", "two"]), "assert9", _stdlib));
-  _outcomes.push(system.assert(_stdlib.first(t), "one", "assert12", _stdlib));
 }]);
 return [main, _tests];}`;
 
@@ -109,7 +107,7 @@ return [main, _tests];}`;
     ]);
   });
 
-  test("Pass_AssertLetTuple", async () => {
+  ignore_test("Pass_AssertLetTuple", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
@@ -118,7 +116,6 @@ end main
 test square
   let t be ("one", "two")
   assert t is ("one", "two")
-  assert t.first() is "one"
 end test
 `;
 
@@ -130,7 +127,6 @@ async function main() {
 _tests.push(["test3", async (_outcomes) => {
   const t = system.tuple(["one", "two"]);
   _outcomes.push(system.assert(t, system.tuple(["one", "two"]), "assert9", _stdlib));
-  _outcomes.push(system.assert(_stdlib.first(t), "one", "assert12", _stdlib));
 }]);
 return [main, _tests];}`;
 

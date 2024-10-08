@@ -497,45 +497,6 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
-      "first",
-      this.getSymbol(
-        "first",
-        new FunctionType(
-          [new TupleType([new GenericParameterType("T1"), new GenericParameterType("T2")])],
-          new GenericParameterType("T1"),
-          true,
-        ),
-      ),
-    ],
-    [
-      "second",
-      this.getSymbol(
-        "second",
-        new FunctionType(
-          [new TupleType([new GenericParameterType("T1"), new GenericParameterType("T2")])],
-          new GenericParameterType("T2"),
-          true,
-        ),
-      ),
-    ],
-    [
-      "third",
-      this.getSymbol(
-        "third",
-        new FunctionType(
-          [
-            new TupleType([
-              new GenericParameterType("T1"),
-              new GenericParameterType("T2"),
-              new GenericParameterType("T3"),
-            ]),
-          ],
-          new GenericParameterType("T3"),
-          true,
-        ),
-      ),
-    ],
-    [
       "indexOf",
       this.getSymbol(
         "indexOf",
@@ -553,7 +514,6 @@ export class StdLibSymbols implements Scope {
         new FunctionType([new GenericParameterType("T")], StringType.Instance, false),
       ),
     ],
-
     ["random", this.getSymbol("random", new FunctionType([], FloatType.Instance, false, false))],
     [
       "randomInt",

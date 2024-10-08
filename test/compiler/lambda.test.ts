@@ -46,8 +46,13 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  call printModified((4, 5), lambda t as (Int, Int) => t.first())
+  call printModified((4, 5), lambda t as (Int, Int) => first(t))
 end main
+
+function first(t as (Int, Int)) return Int
+    let a, _ be t
+    return a
+end function
   
 procedure printModified(i as (Int, Int), f as Func<of (Int, Int) => Int>)
   print f(i)
@@ -55,7 +60,12 @@ end procedure`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  await printModified(system.tuple([4, 5]), (t) => _stdlib.first(t));
+  await printModified(system.tuple([4, 5]), (t) => first(t));
+}
+
+function first(t) {
+  const [a, ] = t;
+  return a;
 }
 
 async function printModified(i, f) {

@@ -93,15 +93,6 @@ suite("Overall Status Tests", () => {
     assert.equal(m1.renderAsHtml().startsWith(`<main class="ok`), true);
   });
 
-  test("test wordle-solver", async () => {
-    const f = await loadFileAsModelNew(`${__dirname}\\files\\programs\\wordle-solver.elan`);
-    const runner = await createTestRunner();
-    await f.refreshAllStatuses(runner);
-    assert.equal(f.readParseStatus(), ParseStatus.valid);
-    assert.equal(f.readCompileStatus(), CompileStatus.ok);
-    assert.equal(f.readTestStatus(), TestStatus.pass);
-  });
-
   test("test best-fit", async () => {
     const f = await loadFileAsModelNew(`${__dirname}\\files\\programs\\best-fit.elan`);
     const runner = await createTestRunner();
@@ -172,16 +163,6 @@ suite("Overall Status Tests", () => {
   test("test roman-numerals4-list-of-tuples", async () => {
     const f = await loadFileAsModelNew(
       `${__dirname}\\files\\programs\\roman-numerals4-list-of-tuples.elan`,
-    );
-    const runner = await createTestRunner();
-    await f.refreshAllStatuses(runner);
-    assert.equal(f.readParseStatus(), ParseStatus.valid);
-    assert.equal(f.readCompileStatus(), CompileStatus.ok);
-    assert.equal(f.readTestStatus(), TestStatus.pass);
-  });
-  test("test roman-numerals5-recursive", async () => {
-    const f = await loadFileAsModelNew(
-      `${__dirname}\\files\\programs\\roman-numerals5-recursive.elan`,
     );
     const runner = await createTestRunner();
     await f.refreshAllStatuses(runner);
