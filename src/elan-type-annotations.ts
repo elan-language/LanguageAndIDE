@@ -10,6 +10,7 @@ import { ArrayType } from "./frames/symbols/array-list-type";
 import { BooleanType } from "./frames/symbols/boolean-type";
 import { FloatType } from "./frames/symbols/float-type";
 import { GenericParameterType } from "./frames/symbols/generic-parameter-type";
+import { ImmutableDictionaryType } from "./frames/symbols/immutable-dictionary-type";
 import { IntType } from "./frames/symbols/int-type";
 import { IterableType } from "./frames/symbols/iterable-type";
 import { ListType } from "./frames/symbols/list-type";
@@ -78,6 +79,8 @@ export class ElanTypeDescriptor implements TypeDescriptor {
         return new ListType(this.ofType!.mapType());
       case "AbstractDictionary":
         return new AbstractDictionaryType(this.ofType!.mapType(), this.valueType!.mapType());
+      case "ImmutableDictionary":
+        return new ImmutableDictionaryType(this.ofType!.mapType(), this.valueType!.mapType());
     }
     throw new Error("NotImplemented: " + this.name);
   }

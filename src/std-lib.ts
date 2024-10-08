@@ -241,8 +241,29 @@ export class StdLib {
     return this.keys(dict).includes(key);
   }
 
-  @elanIgnore
-  withRemoveAtKey<T>(dict: { [key: string]: T }, key: string) {
+  @elanMethod(
+    new ElanFunctionDescriptor(
+      true,
+      true,
+      false,
+      new ElanTypeDescriptor(
+        "ImmutableDictionary",
+        new ElanGenericTypeDescriptor("T1"),
+        new ElanGenericTypeDescriptor("T2"),
+      ),
+    ),
+  )
+  withRemoveAtKey<T>(
+    @elanType(
+      new ElanTypeDescriptor(
+        "ImmutableDictionary",
+        new ElanGenericTypeDescriptor("T1"),
+        new ElanGenericTypeDescriptor("T2"),
+      ),
+    )
+    dict: { [key: string]: T },
+    @elanType(new ElanGenericTypeDescriptor("T1")) key: string,
+  ) {
     const newDict = { ...dict };
     (newDict as unknown as hasHiddenType)._type = (dict as unknown as hasHiddenType)._type;
     delete newDict[key];

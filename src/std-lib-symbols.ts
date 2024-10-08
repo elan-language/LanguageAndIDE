@@ -147,7 +147,6 @@ export class StdLibSymbols implements Scope {
       ),
     ],
 
-   
     [
       "length",
       this.getSymbol(
@@ -394,26 +393,6 @@ export class StdLibSymbols implements Scope {
           ],
           true,
           false,
-        ),
-      ),
-    ],
-    [
-      "withRemoveAtKey",
-      this.getSymbol(
-        "withRemoveAtKey",
-        new FunctionType(
-          [
-            new ImmutableDictionaryType(
-              new GenericParameterType("T1"),
-              new GenericParameterType("T2"),
-            ),
-            new GenericParameterType("T1"),
-          ],
-          new ImmutableDictionaryType(
-            new GenericParameterType("T1"),
-            new GenericParameterType("T2"),
-          ),
-          true,
         ),
       ),
     ],
