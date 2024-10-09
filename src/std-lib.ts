@@ -32,15 +32,14 @@ export class StdLib {
 
   // Standard colours
 
-  @elanConstant(ElanInt)
-  black = 0x000000;
-  grey = 0x808080;
-  white = 0xffffff;
-  red = 0xff0000;
-  green = 0x008000;
-  blue = 0x0000ff;
-  yellow = 0xffff00;
-  brown = 0xa52a2a;
+  @elanConstant(ElanInt) black = 0x000000;
+  @elanConstant(ElanInt) grey = 0x808080;
+  @elanConstant(ElanInt) white = 0xffffff;
+  @elanConstant(ElanInt) red = 0xff0000;
+  @elanConstant(ElanInt) green = 0x008000;
+  @elanConstant(ElanInt) blue = 0x0000ff;
+  @elanConstant(ElanInt) yellow = 0xffff00;
+  @elanConstant(ElanInt) brown = 0xa52a2a;
 
   private isValueType<T>(v: T) {
     return typeof v === "boolean" || typeof v === "string" || typeof v === "number";
@@ -1355,7 +1354,7 @@ export class StdLib {
     });
   }
   //Math
-  pi = Math.PI;
+  @elanConstant() pi: number = Math.PI;
 
   @elanMethod(new ElanFunctionDescriptor())
   abs(x: number): number {

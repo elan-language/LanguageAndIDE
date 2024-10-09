@@ -1,7 +1,7 @@
 import { ElanCompilerError } from "./elan-compiler-error";
 import {
+  elanMetadataKey,
   ElanMethodDescriptor,
-  elanMethodMetadataKey,
   isFunctionDescriptor,
   TypeDescriptor,
 } from "./elan-type-interfaces";
@@ -184,7 +184,7 @@ export function elanMethod(elanDesc: ElanMethodDescriptor) {
     }
 
     const metaData: ElanMethodDescriptor =
-      Reflect.getOwnMetadata(elanMethodMetadataKey, target, propertyKey) ??
+      Reflect.getOwnMetadata(elanMetadataKey, target, propertyKey) ??
       new ElanParametersDescriptor();
 
     for (let i = 0; i <= elanDesc.parameters.length; i++) {
@@ -194,46 +194,30 @@ export function elanMethod(elanDesc: ElanMethodDescriptor) {
       }
     }
 
-    Reflect.defineMetadata(elanMethodMetadataKey, elanDesc, target, propertyKey);
+    Reflect.defineMetadata(elanMetadataKey, elanDesc, target, propertyKey);
   };
 }
 
-export function elanConstant(elanDesc: ElanTypeDescriptor) {
+export function elanConstant(elanDesc?: ElanTypeDescriptor) {
   return function (target: object, propertyKey: string) {
-    // const paramTypesMetadata = Reflect.getMetadata("design:paramtypes", target, propertyKey);
-    // const retTypeMetadata = Reflect.getMetadata("design:returntype", target, propertyKey);
+    const typeMetadata = Reflect.getMetadata("design:type", target, propertyKey);
 
-    // if (Array.isArray(paramTypesMetadata)) {
-    //   elanDesc.parameters = paramTypesMetadata.map((t) => mapTypescriptType(t));
-    // }
+    if (!elanDesc && typeMetadata && typeMetadata.name) {
+      elanDesc = new TypescriptTypeDescriptor(typeMetadata.name);
+    }
 
-    // if (!elanDesc.returnType && retTypeMetadata && retTypeMetadata.name) {
-    //   elanDesc.returnType = new TypescriptTypeDescriptor(retTypeMetadata.name);
-    // }
-
-    // const metaData: ElanMethodDescriptor =
-    //   Reflect.getOwnMetadata(elanMethodMetadataKey, target, propertyKey) ??
-    //   new ElanParametersDescriptor();
-
-    // for (let i = 0; i <= elanDesc.parameters.length; i++) {
-    //   const updatedParam = metaData.parameters[i];
-    //   if (updatedParam) {
-    //     elanDesc.parameters[i] = updatedParam;
-    //   }
-    // }
-
-    Reflect.defineMetadata(elanMethodMetadataKey, elanDesc, target, propertyKey);
+    Reflect.defineMetadata(elanMetadataKey, elanDesc, target, propertyKey);
   };
 }
 
 export function elanType(eType: ElanTypeDescriptor | ElanFuncTypeDescriptor) {
   return function (target: object, propertyKey: string | symbol, parameterIndex: number) {
     const metaData: ElanMethodDescriptor =
-      Reflect.getOwnMetadata(elanMethodMetadataKey, target, propertyKey) ??
+      Reflect.getOwnMetadata(elanMetadataKey, target, propertyKey) ??
       new ElanParametersDescriptor();
 
     metaData.parameters[parameterIndex] = eType;
-    Reflect.defineMetadata(elanMethodMetadataKey, metaData, target, propertyKey);
+    Reflect.defineMetadata(elanMetadataKey, metaData, target, propertyKey);
   };
 }
 

@@ -1,9 +1,9 @@
 import {
   ElanDescriptor,
-  ElanMethodDescriptor,
-  elanMethodMetadataKey,
+  elanMetadataKey,
   IElanFunctionDescriptor,
   IElanProcedureDescriptor,
+  isConstantDescriptor,
   isFunctionDescriptor,
   isProcedureDescriptor,
   TypeDescriptor,
@@ -11,15 +11,12 @@ import {
 import { ElanSymbol } from "./frames/interfaces/elan-symbol";
 import { Scope } from "./frames/interfaces/scope";
 import { SymbolType } from "./frames/interfaces/symbol-type";
-import { ArrayType } from "./frames/symbols/array-list-type";
-import { BooleanType } from "./frames/symbols/boolean-type";
 import { FloatType } from "./frames/symbols/float-type";
 import { FunctionType } from "./frames/symbols/function-type";
 import { IntType } from "./frames/symbols/int-type";
 import { ListType } from "./frames/symbols/list-type";
 import { NullScope } from "./frames/symbols/null-scope";
 import { ProcedureType } from "./frames/symbols/procedure-type";
-import { RegexType } from "./frames/symbols/regex-type";
 import { StringType } from "./frames/symbols/string-type";
 import { SymbolScope } from "./frames/symbols/symbol-scope";
 import { TupleType } from "./frames/symbols/tuple-type";
@@ -35,12 +32,14 @@ export class StdLibSymbols implements Scope {
   private loadSymbols() {
     const stdlib = new StdLib();
 
-    const names = Object.getOwnPropertyNames(Object.getPrototypeOf(stdlib));
+    const names = Object.getOwnPropertyNames(Object.getPrototypeOf(stdlib)).concat(
+      Object.getOwnPropertyNames(stdlib),
+    );
 
     for (let i = 0; i < names.length; i++) {
       const name = names[i];
 
-      const metadata = Reflect.getMetadata(elanMethodMetadataKey, stdlib, name) as
+      const metadata = Reflect.getMetadata(elanMetadataKey, stdlib, name) as
         | ElanDescriptor
         | undefined;
 
@@ -50,6 +49,10 @@ export class StdLibSymbols implements Scope {
 
       if (isProcedureDescriptor(metadata)) {
         this.loadProcedure(name, metadata);
+      }
+
+      if (isConstantDescriptor(metadata)) {
+        this.loadConstant(name, metadata);
       }
     }
   }
@@ -105,6 +108,10 @@ export class StdLibSymbols implements Scope {
     this.symbols.set(name, this.getSymbol(name, symbolType));
   }
 
+  private loadConstant(name: string, descriptor: TypeDescriptor) {
+    this.symbols.set(name, this.getSymbol(name, descriptor.mapType()));
+  }
+
   symbolMatches(id: string, all: boolean): ElanSymbol[] {
     return [...this.symbols.keys()]
       .filter((k) => k.startsWith(id) || all)
@@ -134,18 +141,8 @@ export class StdLibSymbols implements Scope {
         new ListType(new TupleType([StringType.Instance, IntType.Instance, IntType.Instance])),
       ),
     ],
-    ["pi", this.getSymbol("pi", FloatType.Instance)],
 
     ["Random", this.getSymbol("Random", new TupleType([IntType.Instance, IntType.Instance]))],
-
-    ["black", this.getSymbol("black", IntType.Instance)],
-    ["grey", this.getSymbol("grey", IntType.Instance)],
-    ["white", this.getSymbol("white", IntType.Instance)],
-    ["red", this.getSymbol("red", IntType.Instance)],
-    ["green", this.getSymbol("green", IntType.Instance)],
-    ["blue", this.getSymbol("blue", IntType.Instance)],
-    ["yellow", this.getSymbol("yellow", IntType.Instance)],
-    ["brown", this.getSymbol("brown", IntType.Instance)],
   ]);
 
   resolveSymbol(id: string | undefined, transforms: Transforms, scope: Scope): ElanSymbol {

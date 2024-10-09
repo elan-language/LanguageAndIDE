@@ -1,6 +1,6 @@
 import { SymbolType } from "./frames/interfaces/symbol-type";
 
-export const elanMethodMetadataKey = Symbol("elan-method");
+export const elanMetadataKey = Symbol("elan-metadata");
 
 export interface ElanDescriptor {}
 
