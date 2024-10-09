@@ -614,7 +614,7 @@ saveButton.addEventListener("click", handleDownload);
 
 for (const elem of demoFiles) {
   elem.addEventListener("click", () => {
-    const fileName = `demos/${elem.id}`;
+    const fileName = `${elem.id}`;
     return fetch(fileName, { mode: "same-origin" })
       .then((f) => f.text())
       .then((rawCode) => {
