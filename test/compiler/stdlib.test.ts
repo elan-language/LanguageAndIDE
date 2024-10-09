@@ -137,15 +137,13 @@ return [main, _tests];}`;
 
 main
   var a set to  parseAsFloat("10.1")
-  print a.first()
-  print a.second()
+  print a
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = _stdlib.parseAsFloat("10.1");
-  system.printLine(_stdlib.asString(_stdlib.first(a)));
-  system.printLine(_stdlib.asString(_stdlib.second(a)));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 
@@ -155,7 +153,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "true10.1");
+    await assertObjectCodeExecutes(fileImpl, "true,10.1");
   });
 
   test("Pass_parseAsFloat2", async () => {
@@ -163,15 +161,13 @@ return [main, _tests];}`;
 
 main
   var a set to parseAsFloat("x12")
-  print a.first()
-  print a.second()
+  print a
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = _stdlib.parseAsFloat("x12");
-  system.printLine(_stdlib.asString(_stdlib.first(a)));
-  system.printLine(_stdlib.asString(_stdlib.second(a)));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 
@@ -181,7 +177,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "false0");
+    await assertObjectCodeExecutes(fileImpl, "false,0");
   });
 
   test("Pass_parseAsInt1", async () => {
@@ -189,15 +185,13 @@ return [main, _tests];}`;
 
 main
   var a set to parseAsInt("10.1")
-  print a.first()
-  print a.second()
+  print a
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = _stdlib.parseAsInt("10.1");
-  system.printLine(_stdlib.asString(_stdlib.first(a)));
-  system.printLine(_stdlib.asString(_stdlib.second(a)));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 
@@ -207,7 +201,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "true10");
+    await assertObjectCodeExecutes(fileImpl, "true,10");
   });
 
   test("Pass_parseAsInt2", async () => {
@@ -215,15 +209,13 @@ return [main, _tests];}`;
 
 main
   var a set to parseAsInt("")
-  print a.first()
-  print a.second()
+  print a
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = _stdlib.parseAsInt("");
-  system.printLine(_stdlib.asString(_stdlib.first(a)));
-  system.printLine(_stdlib.asString(_stdlib.second(a)));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 
@@ -233,7 +225,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "false0");
+    await assertObjectCodeExecutes(fileImpl, "false,0");
   });
   test("Pass print (procedure)", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid

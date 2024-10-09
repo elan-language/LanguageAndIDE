@@ -123,43 +123,469 @@ export class StdLibSymbols implements Scope {
   // todo - we need to load this from a .d.ts file also work out how to do generics
   private symbols = new Map<string, ElanSymbol>([
     [
-      "first",
+      "asString",
       this.getSymbol(
-        "first",
+        "asString",
+        new FunctionType([new GenericParameterType("T")], StringType.Instance, true),
+      ),
+    ],
+    [
+      "stringForUnicode",
+      this.getSymbol(
+        "stringForUnicode",
+        new FunctionType([IntType.Instance], StringType.Instance, false),
+      ),
+    ],
+    [
+      "asUnicode",
+      this.getSymbol("asUnicode", new FunctionType([StringType.Instance], IntType.Instance, true)),
+    ],
+    [
+      "asArray",
+      this.getSymbol(
+        "asArray",
         new FunctionType(
-          [new TupleType([new GenericParameterType("T1"), new GenericParameterType("T2")])],
-          new GenericParameterType("T1"),
+          [new IterableType(new GenericParameterType("T"))],
+          new ArrayType(new GenericParameterType("T")),
           true,
         ),
       ),
     ],
     [
-      "second",
+      "asList",
       this.getSymbol(
-        "second",
+        "asList",
         new FunctionType(
-          [new TupleType([new GenericParameterType("T1"), new GenericParameterType("T2")])],
-          new GenericParameterType("T2"),
+          [new IterableType(new GenericParameterType("T"))],
+          new ListType(new GenericParameterType("T")),
           true,
         ),
       ),
     ],
     [
-      "third",
+      "range",
       this.getSymbol(
-        "third",
+        "range",
+        new FunctionType(
+          [IntType.Instance, IntType.Instance],
+          new IterableType(IntType.Instance),
+          false,
+        ),
+      ),
+    ],
+    [
+      "asIter",
+      this.getSymbol(
+        "asIter",
+        new FunctionType(
+          [new IterableType(new GenericParameterType("T"))],
+          new IterableType(new GenericParameterType("T")),
+          true,
+        ),
+      ),
+    ],
+    [
+      "head",
+      this.getSymbol(
+        "head",
+        new FunctionType(
+          [new IterableType(new GenericParameterType("T"))],
+          new GenericParameterType("T"),
+          true,
+        ),
+      ),
+    ],
+    [
+      "keys",
+      this.getSymbol(
+        "keys",
         new FunctionType(
           [
-            new TupleType([
+            new AbstractDictionaryType(
               new GenericParameterType("T1"),
               new GenericParameterType("T2"),
-              new GenericParameterType("T3"),
-            ]),
+            ),
           ],
-          new GenericParameterType("T3"),
+          new ListType(new GenericParameterType("T1")),
           true,
         ),
       ),
+    ],
+    [
+      "floor",
+      this.getSymbol(
+        "floor",
+        new FunctionType([FloatType.Instance], IntType.Instance, false, true),
+      ),
+    ],
+    [
+      "round",
+      this.getSymbol(
+        "round",
+        new FunctionType([FloatType.Instance, IntType.Instance], FloatType.Instance, false, true),
+      ),
+    ],
+    [
+      "ceiling",
+      this.getSymbol(
+        "ceiling",
+        new FunctionType([FloatType.Instance], IntType.Instance, false, true),
+      ),
+    ],
+    [
+      "values",
+      this.getSymbol(
+        "values",
+        new FunctionType(
+          [
+            new AbstractDictionaryType(
+              new GenericParameterType("T1"),
+              new GenericParameterType("T2"),
+            ),
+          ],
+          new ListType(new GenericParameterType("T1")),
+          true,
+        ),
+      ),
+    ],
+    [
+      "hasKey",
+      this.getSymbol(
+        "hasKey",
+        new FunctionType(
+          [
+            new AbstractDictionaryType(
+              new GenericParameterType("T1"),
+              new GenericParameterType("T2"),
+            ),
+            new GenericParameterType("T1"),
+          ],
+          BooleanType.Instance,
+          true,
+        ),
+      ),
+    ],
+    [
+      "length",
+      this.getSymbol(
+        "length",
+        new FunctionType([new IterableType(new GenericParameterType("T"))], IntType.Instance, true),
+      ),
+    ],
+    [
+      "putAt",
+      this.getSymbol(
+        "putAt",
+        new ProcedureType(
+          [
+            new ArrayType(new GenericParameterType("T")),
+            IntType.Instance,
+            new GenericParameterType("T"),
+          ],
+          true,
+          false,
+        ),
+      ),
+    ],
+    [
+      "putAt2D",
+      this.getSymbol(
+        "putAt2D",
+        new ProcedureType(
+          [
+            new ArrayType(new ArrayType(new GenericParameterType("T"))),
+            IntType.Instance,
+            IntType.Instance,
+            new GenericParameterType("T"),
+          ],
+          true,
+          false,
+        ),
+      ),
+    ],
+    [
+      "putAtKey",
+      this.getSymbol(
+        "putAtKey",
+        new ProcedureType(
+          [
+            new DictionaryType(new GenericParameterType("T1"), new GenericParameterType("T2")),
+            new GenericParameterType("T1"),
+            new GenericParameterType("T2"),
+          ],
+          true,
+          false,
+        ),
+      ),
+    ],
+    [
+      "withPutAt",
+      this.getSymbol(
+        "withPutAt",
+        new FunctionType(
+          [
+            new ListType(new GenericParameterType("T")),
+            IntType.Instance,
+            new GenericParameterType("T"),
+          ],
+          new ListType(new GenericParameterType("T")),
+          true,
+        ),
+      ),
+    ],
+    [
+      "withInsert",
+      this.getSymbol(
+        "withInsert",
+        new FunctionType(
+          [
+            new ListType(new GenericParameterType("T")),
+            IntType.Instance,
+            new GenericParameterType("T"),
+          ],
+          new ListType(new GenericParameterType("T")),
+          true,
+        ),
+      ),
+    ],
+    [
+      "withRemoveAt",
+      this.getSymbol(
+        "withRemoveAt",
+        new FunctionType(
+          [new ListType(new GenericParameterType("T")), IntType.Instance],
+          new ListType(new GenericParameterType("T")),
+          true,
+        ),
+      ),
+    ],
+    [
+      "withRemoveFirst",
+      this.getSymbol(
+        "withRemoveFirst",
+        new FunctionType(
+          [new ListType(new GenericParameterType("T")), new GenericParameterType("T")],
+          new ListType(new GenericParameterType("T")),
+          true,
+        ),
+      ),
+    ],
+    [
+      "withRemoveAll",
+      this.getSymbol(
+        "withRemoveAll",
+        new FunctionType(
+          [new ListType(new GenericParameterType("T")), new GenericParameterType("T")],
+          new ListType(new GenericParameterType("T")),
+          true,
+        ),
+      ),
+    ],
+    [
+      "append",
+      this.getSymbol(
+        "append",
+        new ProcedureType(
+          [new ArrayType(new GenericParameterType("T")), new GenericParameterType("T")],
+          true,
+          false,
+        ),
+      ),
+    ],
+    [
+      "appendList",
+      this.getSymbol(
+        "appendList",
+        new ProcedureType(
+          [
+            new ArrayType(new GenericParameterType("T")),
+            new ArrayType(new GenericParameterType("T")),
+          ],
+          true,
+          false,
+        ),
+      ),
+    ],
+    [
+      "prepend",
+      this.getSymbol(
+        "prepend",
+        new ProcedureType(
+          [new ArrayType(new GenericParameterType("T")), new GenericParameterType("T")],
+          true,
+          false,
+        ),
+      ),
+    ],
+    [
+      "prependList",
+      this.getSymbol(
+        "prependList",
+        new ProcedureType(
+          [
+            new ArrayType(new GenericParameterType("T")),
+            new ArrayType(new GenericParameterType("T")),
+          ],
+          true,
+          false,
+        ),
+      ),
+    ],
+    [
+      "insertAt",
+      this.getSymbol(
+        "insertAt",
+        new ProcedureType(
+          [
+            new ArrayType(new GenericParameterType("T")),
+            IntType.Instance,
+            new GenericParameterType("T"),
+          ],
+          true,
+          false,
+        ),
+      ),
+    ],
+    [
+      "removeAt",
+      this.getSymbol(
+        "removeAt",
+        new ProcedureType(
+          [new ArrayType(new GenericParameterType("T")), IntType.Instance],
+          true,
+          false,
+        ),
+      ),
+    ],
+    [
+      "removeFirst",
+      this.getSymbol(
+        "removeFirst",
+        new ProcedureType(
+          [new ArrayType(new GenericParameterType("T")), new GenericParameterType("T")],
+          true,
+          false,
+        ),
+      ),
+    ],
+    [
+      "removeAll",
+      this.getSymbol(
+        "removeAll",
+        new ProcedureType(
+          [new ArrayType(new GenericParameterType("T")), new GenericParameterType("T")],
+          true,
+          false,
+        ),
+      ),
+    ],
+    [
+      "withPutAtKey",
+      this.getSymbol(
+        "withPutAtKey",
+        new FunctionType(
+          [
+            new ImmutableDictionaryType(
+              new GenericParameterType("T1"),
+              new GenericParameterType("T2"),
+            ),
+            new GenericParameterType("T1"),
+            new GenericParameterType("T2"),
+          ],
+          new ImmutableDictionaryType(
+            new GenericParameterType("T1"),
+            new GenericParameterType("T2"),
+          ),
+          true,
+        ),
+      ),
+    ],
+    [
+      "removeAtKey",
+      this.getSymbol(
+        "removeAtKey",
+        new ProcedureType(
+          [
+            new DictionaryType(new GenericParameterType("T1"), new GenericParameterType("T2")),
+            new GenericParameterType("T1"),
+          ],
+          true,
+          false,
+        ),
+      ),
+    ],
+    [
+      "withRemoveAtKey",
+      this.getSymbol(
+        "withRemoveAtKey",
+        new FunctionType(
+          [
+            new ImmutableDictionaryType(
+              new GenericParameterType("T1"),
+              new GenericParameterType("T2"),
+            ),
+            new GenericParameterType("T1"),
+          ],
+          new ImmutableDictionaryType(
+            new GenericParameterType("T1"),
+            new GenericParameterType("T2"),
+          ),
+          true,
+        ),
+      ),
+    ],
+    [
+      "upperCase",
+      this.getSymbol(
+        "upperCase",
+        new FunctionType([StringType.Instance], StringType.Instance, true, true),
+      ),
+    ],
+    [
+      "lowerCase",
+      this.getSymbol(
+        "lowerCase",
+        new FunctionType([StringType.Instance], StringType.Instance, true, true),
+      ),
+    ],
+    [
+      "isBefore",
+      this.getSymbol(
+        "isBefore",
+        new FunctionType([StringType.Instance, StringType.Instance], BooleanType.Instance, false),
+      ),
+    ],
+    [
+      "isAfter",
+      this.getSymbol(
+        "isAfter",
+        new FunctionType([StringType.Instance, StringType.Instance], BooleanType.Instance, false),
+      ),
+    ],
+    [
+      "isBeforeOrSameAs",
+      this.getSymbol(
+        "isBeforeOrSameAs",
+        new FunctionType([StringType.Instance, StringType.Instance], BooleanType.Instance, false),
+      ),
+    ],
+    [
+      "isAfterOrSameAs",
+      this.getSymbol(
+        "isAfterOrSameAs",
+        new FunctionType([StringType.Instance, StringType.Instance], BooleanType.Instance, false),
+      ),
+    ],
+    [
+      "indexOf",
+      this.getSymbol(
+        "indexOf",
+        new FunctionType([StringType.Instance, StringType.Instance], IntType.Instance, true),
+      ),
+    ],
+    [
+      "trim",
+      this.getSymbol("trim", new FunctionType([StringType.Instance], StringType.Instance, true)),
     ],
     [
       "typeAndProperties",
@@ -168,7 +594,6 @@ export class StdLibSymbols implements Scope {
         new FunctionType([new GenericParameterType("T")], StringType.Instance, false),
       ),
     ],
-
     ["random", this.getSymbol("random", new FunctionType([], FloatType.Instance, false, false))],
     [
       "randomInt",

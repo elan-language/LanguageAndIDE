@@ -585,21 +585,6 @@ export class StdLib {
     return newDict;
   }
 
-  @elanIgnore
-  first<T, T1>(st: [T, T1]): T {
-    return this.system.safeIndex(st, 0);
-  }
-
-  @elanIgnore
-  second<T, T1>(st: [T, T1]): T1 {
-    return this.system.safeIndex(st, 1);
-  }
-
-  @elanIgnore
-  third<T, T1, T2>(st: [T, T1, T2]): T2 {
-    return this.system.safeIndex(st, 2);
-  }
-
   @elanMethod(new ElanFunctionDescriptor(true, true, false, new ElanTypeDescriptor("Int")))
   indexOf(s1: string, s2: string): number {
     return s1.indexOf(s2);
@@ -611,7 +596,7 @@ export class StdLib {
   }
 
   @elanMethod(new ElanFunctionDescriptor(false, true, false, new ElanTypeDescriptor("Int")))
-  floor(n: number): number {
+  floor(n: number) {
     return Math.floor(n);
   }
 

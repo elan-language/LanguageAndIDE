@@ -124,9 +124,9 @@ suite("Parsing Nodes", () => {
     );
     testNodeParse(
       new ExprNode(),
-      "reduce(0.0, lambda s as String, p as List<of String> => s + p.first() * p.first())",
+      "reduce(0.0, lambda s as String, p as List<of String> => s + p[0] * p[0])",
       ParseStatus.valid,
-      "reduce(0.0, lambda s as String, p as List<of String> => s + p.first() * p.first())",
+      "reduce(0.0, lambda s as String, p as List<of String> => s + p[0] * p[0])",
       "",
       "",
     );
@@ -988,7 +988,7 @@ suite("Parsing Nodes", () => {
     );
     testNodeParse(
       new Lambda(),
-      `lambda s as Int, p as List<of Int> => s + p.first()`,
+      `lambda s as Int, p as List<of Int> => s + p[0]`,
       ParseStatus.valid,
       "",
       "",

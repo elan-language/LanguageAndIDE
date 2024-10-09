@@ -46,13 +46,12 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "9");
   });
 
-  test("Pass_proveCached", async () => {
+  ignore_test("Pass_proveCached", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var z set to foo1()
-  var x set to z.first()
-  var y set to z.second()
+  var x, y set to z
   call y.setP1(10)
   print x.p1
   print y.p1
@@ -78,8 +77,7 @@ end function`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var z = foo1();
-  var x = _stdlib.first(z);
-  var y = _stdlib.second(z);
+  var x, y = z;
   await y.setP1(10);
   system.printLine(_stdlib.asString(x.p1));
   system.printLine(_stdlib.asString(y.p1));

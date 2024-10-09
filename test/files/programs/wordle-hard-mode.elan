@@ -136,11 +136,9 @@ test evaluateYellows
 end test
 
 function markAttempt(attempt as String, target as String) return String
-  let greens be evaluateGreens(attempt, target)
-  let attemptAfterGreens be greens.first()
-  let targetAfterGreens be greens.second()
-  let markedAttempt be evaluateYellows(attemptAfterGreens, targetAfterGreens)
-  return markedAttempt.first()
+  let attemptAfterGreens, targetAfterGreens be greens evaluateGreens(attempt, target)
+  let markedAttempt, _ be evaluateYellows(attemptAfterGreens, targetAfterGreens)
+  return markedAttempt
 end function
 
 test markAttempt

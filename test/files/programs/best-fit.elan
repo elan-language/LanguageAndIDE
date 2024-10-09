@@ -1,4 +1,4 @@
-# ac7d0fc7eb0251aec7d26d52678e1842258f6cb911295773990866b5557d356d Elan Beta 2 valid
+# FFFF Elan Beta 2 valid
 
 function bestFitLine(points as {Point}) return (Float, Float)
   let sumX be points.reduce(0.0, lambda s as Float, p as Point => s + p.x)
@@ -25,7 +25,7 @@ end class
 
 test 
   let l1 be {new Point(0.71, 1.12), new Point(3.56, 5.36), new Point(7.83, 9.04)}
-  let result be bestFitLine(l1)
-  assert round(result.first(), 3) is 0.766
-  assert round(result.second(), 3) is 1.093
+  let first, second be bestFitLine(l1)
+  assert round(first, 3) is 0.766
+  assert round(second, 3) is 1.093
 end test
