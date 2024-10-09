@@ -18,6 +18,7 @@ import { IntType } from "./frames/symbols/int-type";
 import { IterableType } from "./frames/symbols/iterable-type";
 import { ListType } from "./frames/symbols/list-type";
 import { StringType } from "./frames/symbols/string-type";
+import { TupleType } from "./frames/symbols/tuple-type";
 
 export class ElanProcedureDescriptor implements ElanMethodDescriptor {
   constructor(
@@ -112,6 +113,16 @@ export class ElanFuncTypeDescriptor implements TypeDescriptor {
       this.returnType.mapType(),
       false,
     );
+  }
+}
+
+export class ElanTupleTypeDescriptor implements TypeDescriptor {
+  constructor(public readonly parameters: TypeDescriptor[]) {}
+
+  name = "Tuple";
+
+  mapType(): SymbolType {
+    return new TupleType(this.parameters.map((p) => p.mapType()));
   }
 }
 

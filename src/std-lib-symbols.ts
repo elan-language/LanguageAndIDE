@@ -122,30 +122,6 @@ export class StdLibSymbols implements Scope {
   // todo - we need to load this from a .d.ts file also work out how to do generics
   private symbols = new Map<string, ElanSymbol>([
     [
-      "parseAsFloat",
-      this.getSymbol(
-        "parseAsFloat",
-        new FunctionType(
-          [StringType.Instance],
-          new TupleType([BooleanType.Instance, FloatType.Instance]),
-          false,
-          true,
-        ),
-      ),
-    ],
-    [
-      "parseAsInt",
-      this.getSymbol(
-        "parseAsInt",
-        new FunctionType(
-          [StringType.Instance],
-          new TupleType([BooleanType.Instance, IntType.Instance]),
-          false,
-          true,
-        ),
-      ),
-    ],
-    [
       "create2DArray",
       this.getSymbol(
         "create2DArray",

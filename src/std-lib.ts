@@ -7,6 +7,7 @@ import {
   elanIgnore,
   elanMethod,
   ElanProcedureDescriptor,
+  ElanTupleTypeDescriptor,
   elanType,
   ElanTypeDescriptor,
 } from "./elan-type-annotations";
@@ -832,7 +833,17 @@ export class StdLib {
     return Math.floor(Math.random() * (high - low + 1)) + low;
   }
 
-  @elanIgnore
+  @elanMethod(
+    new ElanFunctionDescriptor(
+      false,
+      true,
+      false,
+      new ElanTupleTypeDescriptor([
+        new ElanTypeDescriptor("Boolean"),
+        new ElanTypeDescriptor("Float"),
+      ]),
+    ),
+  )
   parseAsFloat(s: string): [boolean, number] {
     const f = parseFloat(s);
     if (Number.isFinite(f)) {
@@ -841,7 +852,17 @@ export class StdLib {
     return [false, 0];
   }
 
-  @elanIgnore
+  @elanMethod(
+    new ElanFunctionDescriptor(
+      false,
+      true,
+      false,
+      new ElanTupleTypeDescriptor([
+        new ElanTypeDescriptor("Boolean"),
+        new ElanTypeDescriptor("Int"),
+      ]),
+    ),
+  )
   parseAsInt(s: string): [boolean, number] {
     const [b, f] = this.parseAsFloat(s);
     return [b, Math.floor(f)];
