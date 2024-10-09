@@ -33,6 +33,8 @@ export class WebInputOutput implements ElanInputOutput {
 
   printLine(text: string) {
     this.print(`${text}<br>`);
+    const element = document.getElementById("console")!;
+    element.scrollTop = element.scrollHeight;
   }
 
   print(text: string) {
