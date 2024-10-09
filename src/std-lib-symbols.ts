@@ -121,28 +121,6 @@ export class StdLibSymbols implements Scope {
 
   // todo - we need to load this from a .d.ts file also work out how to do generics
   private symbols = new Map<string, ElanSymbol>([
-    [
-      "create2DArray",
-      this.getSymbol(
-        "create2DArray",
-        new FunctionType(
-          [IntType.Instance, IntType.Instance, new GenericParameterType("T")],
-          new ArrayType(new ArrayType(new GenericParameterType("T"))),
-          false,
-        ),
-      ),
-    ],
-    [
-      "createArray",
-      this.getSymbol(
-        "createArray",
-        new FunctionType(
-          [IntType.Instance, new GenericParameterType("T")],
-          new ArrayType(new GenericParameterType("T")),
-          false,
-        ),
-      ),
-    ],
     // Block Graphics
     [
       "withBackground",
@@ -262,15 +240,7 @@ export class StdLibSymbols implements Scope {
         ),
       ),
     ],
-    ["print", this.getSymbol("print", new ProcedureType([StringType.Instance], false, false))],
-    [
-      "printTab",
-      this.getSymbol(
-        "printTab",
-        new ProcedureType([IntType.Instance, StringType.Instance], false, false),
-      ),
-    ],
-    ["clearConsole", this.getSymbol("clearConsole", new ProcedureType([], false, false))],
+
     [
       "clearGraphics",
       this.getSymbol(

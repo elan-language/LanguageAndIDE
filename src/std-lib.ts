@@ -868,17 +868,17 @@ export class StdLib {
     return [b, Math.floor(f)];
   }
 
-  @elanIgnore
+  @elanMethod(new ElanProcedureDescriptor())
   print(s: string) {
     this.system.elanInputOutput.print(s);
   }
 
-  @elanIgnore
-  printTab(position: number, s: string) {
+  @elanMethod(new ElanProcedureDescriptor())
+  printTab(@elanType(new ElanTypeDescriptor("Int")) position: number, s: string) {
     this.system.elanInputOutput.printTab(position, s);
   }
 
-  @elanIgnore
+  @elanMethod(new ElanProcedureDescriptor())
   clearConsole() {
     this.system.elanInputOutput.clearConsole();
   }
@@ -1060,8 +1060,18 @@ export class StdLib {
     this.system.elanInputOutput.clearKeyBuffer();
   }
 
-  @elanIgnore
-  createArray<T>(x: number, value: T) {
+  @elanMethod(
+    new ElanFunctionDescriptor(
+      false,
+      true,
+      false,
+      new ElanTypeDescriptor("Array", new ElanGenericTypeDescriptor("T")),
+    ),
+  )
+  createArray<T>(
+    @elanType(new ElanTypeDescriptor("Int")) x: number,
+    @elanType(new ElanGenericTypeDescriptor("T")) value: T,
+  ) {
     if (!this.isValueType(value)) {
       throw new ElanRuntimeError(
         `Can only create array with simple value, not: ${this.asString(value)}`,
@@ -1078,8 +1088,22 @@ export class StdLib {
     return toInit;
   }
 
-  @elanIgnore
-  create2DArray<T>(x: number, y: number, value: T) {
+  @elanMethod(
+    new ElanFunctionDescriptor(
+      false,
+      true,
+      false,
+      new ElanTypeDescriptor(
+        "Array",
+        new ElanTypeDescriptor("Array", new ElanGenericTypeDescriptor("T")),
+      ),
+    ),
+  )
+  create2DArray<T>(
+    @elanType(new ElanTypeDescriptor("Int")) x: number,
+    @elanType(new ElanTypeDescriptor("Int")) y: number,
+    @elanType(new ElanGenericTypeDescriptor("T")) value: T,
+  ) {
     if (!this.isValueType(value)) {
       throw new ElanRuntimeError(
         `Can only initialise array with simple value, not: ${this.asString(value)}`,
