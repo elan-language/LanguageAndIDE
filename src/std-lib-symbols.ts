@@ -132,53 +132,7 @@ export class StdLibSymbols implements Scope {
     ["pi", this.getSymbol("pi", FloatType.Instance)],
 
     ["Random", this.getSymbol("Random", new TupleType([IntType.Instance, IntType.Instance]))],
-    [
-      "next",
-      this.getSymbol(
-        "next",
-        new FunctionType(
-          [new TupleType([IntType.Instance, IntType.Instance])],
-          new TupleType([IntType.Instance, IntType.Instance]),
-          true,
-        ),
-      ),
-    ],
-    [
-      "value",
-      this.getSymbol(
-        "value",
-        new FunctionType(
-          [new TupleType([IntType.Instance, IntType.Instance])],
-          FloatType.Instance,
-          true,
-        ),
-      ),
-    ],
-    [
-      "valueInt",
-      this.getSymbol(
-        "valueInt",
-        new FunctionType(
-          [new TupleType([IntType.Instance, IntType.Instance]), IntType.Instance, IntType.Instance],
-          IntType.Instance,
-          true,
-        ),
-      ),
-    ],
-    [
-      "firstRandom",
-      this.getSymbol(
-        "firstRandom",
-        new FunctionType([], new TupleType([IntType.Instance, IntType.Instance]), false, false),
-      ),
-    ],
-    [
-      "firstRandomInFixedSequence",
-      this.getSymbol(
-        "firstRandomInFixedSequence",
-        new FunctionType([], new TupleType([IntType.Instance, IntType.Instance]), false, false),
-      ),
-    ],
+
     ["black", this.getSymbol("black", IntType.Instance)],
     ["grey", this.getSymbol("grey", IntType.Instance)],
     ["white", this.getSymbol("white", IntType.Instance)],
@@ -187,49 +141,8 @@ export class StdLibSymbols implements Scope {
     ["blue", this.getSymbol("blue", IntType.Instance)],
     ["yellow", this.getSymbol("yellow", IntType.Instance)],
     ["brown", this.getSymbol("brown", IntType.Instance)],
-    [
-      "bitAnd",
-      this.getSymbol(
-        "bitAnd",
-        new FunctionType([IntType.Instance, IntType.Instance], IntType.Instance, false),
-      ),
-    ],
-    [
-      "bitOr",
-      this.getSymbol(
-        "bitOr",
-        new FunctionType([IntType.Instance, IntType.Instance], IntType.Instance, false),
-      ),
-    ],
-    [
-      "bitXor",
-      this.getSymbol(
-        "bitXor",
-        new FunctionType([IntType.Instance, IntType.Instance], IntType.Instance, false),
-      ),
-    ],
-    [
-      "bitNot",
-      this.getSymbol("bitNot", new FunctionType([IntType.Instance], IntType.Instance, false)),
-    ],
-    [
-      "bitShiftL",
-      this.getSymbol(
-        "bitShiftL",
-        new FunctionType([IntType.Instance, IntType.Instance], IntType.Instance, false),
-      ),
-    ],
-    [
-      "bitShiftR",
-      this.getSymbol(
-        "bitShiftR",
-        new FunctionType([IntType.Instance, IntType.Instance], IntType.Instance, false),
-      ),
-    ],
-    [
-      "asBinary",
-      this.getSymbol("asBinary", new FunctionType([IntType.Instance], StringType.Instance, true)),
-    ],
+
+    
     [
       "matchesRegex",
       this.getSymbol(

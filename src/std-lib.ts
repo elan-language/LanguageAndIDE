@@ -1461,8 +1461,12 @@ export class StdLib {
 
   // Functional random
   // Credit for source of algorithm: https://www.codeproject.com/Articles/25172/Simple-Random-Number-Generation
-  @elanIgnore
-  next(current: [number, number]): [number, number] {
+  @elanMethod(
+    new ElanFunctionDescriptor(true, true, false, new ElanTupleTypeDescriptor([ElanInt, ElanInt])),
+  )
+  next(
+    @elanType(new ElanTupleTypeDescriptor([ElanInt, ElanInt])) current: [number, number],
+  ): [number, number] {
     const u = current[0];
     const v = current[1];
     const u2 = 36969 * this.lo16(u) + u / 65536;
@@ -1470,40 +1474,57 @@ export class StdLib {
     return [u2, v2];
   }
 
-  @elanIgnore
-  value(current: [number, number]): number {
+  @elanMethod(new ElanFunctionDescriptor(true, true, false, ElanFloat))
+  value(
+    @elanType(new ElanTupleTypeDescriptor([ElanInt, ElanInt])) current: [number, number],
+  ): number {
     const u = current[0];
     const v = current[1];
     return this.lo32(this.lo32(u * 65536) + v + 1) * 2.328306435454494e-10;
   }
 
-  @elanIgnore
-  lo32(n: number): number {
+  private lo32(n: number): number {
     return n % 4294967296;
   }
 
-  @elanIgnore
-  lo16(n: number): number {
+  private lo16(n: number): number {
     return n % 65536;
   }
 
-  @elanIgnore
-  hi16(n: number): number {
+  private hi16(n: number): number {
     return this.lo16(n / 65536);
   }
 
-  @elanIgnore
-  valueInt(current: [number, number], min: number, max: number): number {
+  @elanMethod(new ElanFunctionDescriptor(true, true, false, ElanInt))
+  valueInt(
+    @elanType(new ElanTupleTypeDescriptor([ElanInt, ElanInt])) current: [number, number],
+    @elanIntType() min: number,
+    @elanIntType() max: number,
+  ): number {
     const float = this.value(current);
     return Math.floor(float * (max - min + 1) + min);
   }
 
-  @elanIgnore
+  @elanMethod(
+    new ElanFunctionDescriptor(
+      false,
+      false,
+      false,
+      new ElanTupleTypeDescriptor([ElanInt, ElanInt]),
+    ),
+  )
   firstRandomInFixedSequence(): [number, number] {
     return [521288629, 362436069];
   }
 
-  @elanIgnore
+  @elanMethod(
+    new ElanFunctionDescriptor(
+      false,
+      false,
+      false,
+      new ElanTupleTypeDescriptor([ElanInt, ElanInt]),
+    ),
+  )
   firstRandom(): [number, number] {
     const c = this.clock();
     return [this.hi16(c), this.lo16(c)];
@@ -1519,38 +1540,38 @@ export class StdLib {
   yellow = 0xffff00;
   brown = 0xa52a2a;
 
-  @elanIgnore
-  bitAnd(a: number, b: number): number {
+  @elanMethod(new ElanFunctionDescriptor(false, true, false, ElanInt))
+  bitAnd(@elanIntType() a: number, @elanIntType() b: number): number {
     return a & b;
   }
 
-  @elanIgnore
-  bitOr(a: number, b: number): number {
+  @elanMethod(new ElanFunctionDescriptor(false, true, false, ElanInt))
+  bitOr(@elanIntType() a: number, @elanIntType() b: number): number {
     return a | b;
   }
 
-  @elanIgnore
-  bitXor(a: number, b: number): number {
+  @elanMethod(new ElanFunctionDescriptor(false, true, false, ElanInt))
+  bitXor(@elanIntType() a: number, @elanIntType() b: number): number {
     return a ^ b;
   }
 
-  @elanIgnore
-  bitNot(a: number): number {
+  @elanMethod(new ElanFunctionDescriptor(false, true, false, ElanInt))
+  bitNot(@elanIntType() a: number): number {
     return ~a;
   }
 
-  @elanIgnore
-  bitShiftL(a: number, shift: number): number {
+  @elanMethod(new ElanFunctionDescriptor(false, true, false, ElanInt))
+  bitShiftL(@elanIntType() a: number, @elanIntType() shift: number): number {
     return a << shift;
   }
 
-  @elanIgnore
-  bitShiftR(a: number, shift: number): number {
+  @elanMethod(new ElanFunctionDescriptor(false, true, false, ElanInt))
+  bitShiftR(@elanIntType() a: number, @elanIntType() shift: number): number {
     return a >>> shift;
   }
 
-  @elanIgnore
-  asBinary(a: number): string {
+  @elanMethod(new ElanFunctionDescriptor(true))
+  asBinary(@elanIntType() a: number): string {
     return a.toString(2);
   }
 
