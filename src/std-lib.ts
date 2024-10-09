@@ -5,7 +5,6 @@ import {
   elanConstant,
   ElanFloat,
   elanFunction,
-  ElanFunctionDescriptor,
   ElanFuncTypeDescriptor,
   ElanGenericTypeDescriptor,
   ElanInt,
@@ -636,14 +635,7 @@ export class StdLib {
     return Math.floor(Math.random() * (high - low + 1)) + low;
   }
 
-  @elanMethod(
-    new ElanFunctionDescriptor(
-      false,
-      true,
-      false,
-      new ElanTupleTypeDescriptor([ElanBoolean, ElanFloat]),
-    ),
-  )
+  @elanFunction(FunctionOptions.pure, new ElanTupleTypeDescriptor([ElanBoolean, ElanFloat]))
   parseAsFloat(s: string): [boolean, number] {
     const f = parseFloat(s);
     if (Number.isFinite(f)) {
@@ -652,14 +644,7 @@ export class StdLib {
     return [false, 0];
   }
 
-  @elanMethod(
-    new ElanFunctionDescriptor(
-      false,
-      true,
-      false,
-      new ElanTupleTypeDescriptor([ElanBoolean, ElanInt]),
-    ),
-  )
+  @elanFunction(FunctionOptions.pure, new ElanTupleTypeDescriptor([ElanBoolean, ElanInt]))
   parseAsInt(s: string): [boolean, number] {
     const [b, f] = this.parseAsFloat(s);
     return [b, Math.floor(f)];
@@ -925,13 +910,9 @@ export class StdLib {
     return this.system.elanInputOutput.getKeystroke();
   }
 
-  @elanMethod(
-    new ElanFunctionDescriptor(
-      true,
-      false,
-      true,
-      new ElanTupleTypeDescriptor([ElanString, ElanString]),
-    ),
+  @elanFunction(
+    FunctionOptions.impureAsyncExtension,
+    new ElanTupleTypeDescriptor([ElanString, ElanString]),
   )
   getKeystrokeWithModifier(
     @elanType(
@@ -970,13 +951,9 @@ export class StdLib {
     return toInit;
   }
 
-  @elanMethod(
-    new ElanFunctionDescriptor(
-      false,
-      true,
-      false,
-      new ElanTypeDescriptor("Array", new ElanTypeDescriptor("Array", ElanT)),
-    ),
+  @elanFunction(
+    FunctionOptions.pure,
+    new ElanTypeDescriptor("Array", new ElanTypeDescriptor("Array", ElanT)),
   )
   create2DArray<T>(@elanIntType() x: number, @elanIntType() y: number, @elanType(ElanT) value: T) {
     if (!this.isValueType(value)) {
@@ -1268,26 +1245,12 @@ export class StdLib {
     return Math.floor(float * (max - min + 1) + min);
   }
 
-  @elanMethod(
-    new ElanFunctionDescriptor(
-      false,
-      false,
-      false,
-      new ElanTupleTypeDescriptor([ElanInt, ElanInt]),
-    ),
-  )
+  @elanFunction(FunctionOptions.impure, new ElanTupleTypeDescriptor([ElanInt, ElanInt]))
   firstRandomInFixedSequence(): [number, number] {
     return [521288629, 362436069];
   }
 
-  @elanMethod(
-    new ElanFunctionDescriptor(
-      false,
-      false,
-      false,
-      new ElanTupleTypeDescriptor([ElanInt, ElanInt]),
-    ),
-  )
+  @elanFunction(FunctionOptions.impure, new ElanTupleTypeDescriptor([ElanInt, ElanInt]))
   firstRandom(): [number, number] {
     const c = this.clock();
     return [this.hi16(c), this.lo16(c)];
@@ -1333,13 +1296,9 @@ export class StdLib {
     return r.test(a);
   }
   //File operations
-  @elanMethod(
-    new ElanFunctionDescriptor(
-      false,
-      false,
-      true,
-      new ElanTupleTypeDescriptor([ElanInt, ElanString, ElanInt]),
-    ),
+  @elanFunction(
+    FunctionOptions.impureAsync,
+    new ElanTupleTypeDescriptor([ElanInt, ElanString, ElanInt]),
   )
   openRead(contents: string): File {
     return [1, contents, 0];
