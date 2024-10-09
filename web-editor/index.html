@@ -15,16 +15,7 @@
             <div class="dropdown">
                 <button id="demos" class="plain">Demo</button>
                 <div class="dropdown-content">
-                    <div class="demo-file" id="best-fit.elan">Best Fit (linear regression)</div>
-                    <div class="demo-file" id="binary-search.elan">Binary Search</div>
-                    <div class="demo-file" id="cards.elan">Cards (graphics only)</div>
-                    <div class="demo-file" id="in-place-ripple-sort.elan">In-place Sort</div>
-                    <div class="demo-file" id="life.elan">Life</div>
-                    <div class="demo-file" id="merge-sort.elan">Merge Sort</div>
                     <div class="demo-file" id="pathfinder.elan">Pathfinder</div>
-                    <div class="demo-file" id="roman-numerals6-turing-machine.elan">Turing Machine (roman numerals)</div>
-                    <div class="demo-file" id="snake PP.elan">Snake</div>
-                    <div class="demo-file" id="wordle-hard-mode.elan">Wordle Solver (hard mode)</div>
                   </div>
             </div>
             <button id="load" class="plain">Load</button>
@@ -34,7 +25,7 @@
             <button id="expand-collapse" class="plain" title="Expand / Collapse all code regions">+/-</button>     
         </div>
         <div class="elan-code" data-code="" tabindex="0"></div>
-        <img id="logo" src="./images/reverse-logo.png">
+        <img id="logo" src="reverse-logo.png">
         <div id="help">
         <a id="videos" href="https://www.youtube.com/playlist?list=PLhZaBW7EbafOPO4YyuovGI1prCViAeVKM" target="_blank" rel="noopener noreferrer">Videos</a>
         <a id="manual" title="Open the Reference Manual" href="reference-manual.pdf" target="_blank" rel="noopener noreferrer">Help</a>
@@ -55,14 +46,13 @@
             <div id="run-status" class=""></div>
         </div>
         <div id="run-controls">
-            <button id="run-button" class="icon"><img src="./images/Run.png"></button>
-            <button id="stop" class="icon" disabled><img src="./images/Stop.png"></button>
+            <button id="run-button" class="icon"><img src="Run.png"></button>
+            <button id="stop" class="icon" disabled><img src="Stop.png"></button>
         </div>
         <div id="graphics-title" tabindex="0">Graphics</div>
         <button id="clear-graphics" class="plain">Clear</button>
         <div id="graphics" tabindex="0">
         </div>
-        <!--<script src="profile.js"></script>  This tag is for local deployment only. For deployment to server, delete the tag &  ensure there is a profile.json file on server-->
         <script src="elan-api.js" type="module"></script>
         <script src="web-scripts.js"></script>
     </body>
