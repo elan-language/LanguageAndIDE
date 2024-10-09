@@ -1575,18 +1575,27 @@ export class StdLib {
     return a.toString(2);
   }
 
-  @elanIgnore
+  @elanMethod(new ElanFunctionDescriptor(true))
   matchesRegex(a: string, r: RegExp): boolean {
     return r.test(a);
   }
   //File operations
-  @elanIgnore
+  @elanMethod(
+    new ElanFunctionDescriptor(
+      false,
+      false,
+      true,
+      new ElanTupleTypeDescriptor([ElanInt, ElanString, ElanInt]),
+    ),
+  )
   openRead(contents: string): File {
     return [1, contents, 0];
   }
 
-  @elanIgnore
-  readLine(file: File): string {
+  @elanMethod(new ElanFunctionDescriptor(true, false, true))
+  readLine(
+    @elanType(new ElanTupleTypeDescriptor([ElanInt, ElanString, ElanInt])) file: File,
+  ): string {
     const status = file[0];
     const contents = file[1];
     const pointer = file[2];
@@ -1605,13 +1614,13 @@ export class StdLib {
     return line;
   }
 
-  @elanIgnore
-  endOfFile(file: File): boolean {
+  @elanMethod(new ElanFunctionDescriptor(true, true))
+  endOfFile( @elanType(new ElanTupleTypeDescriptor([ElanInt, ElanString, ElanInt])) file: File): boolean {
     return file[2] >= file[1].length - 1;
   }
 
-  @elanIgnore
-  close(file: File): void {
+  @elanMethod(new ElanProcedureDescriptor(true, true))
+  close( @elanType(new ElanTupleTypeDescriptor([ElanInt, ElanString, ElanInt])) file: File): void {
     //Does nothing for now.
   }
 }

@@ -17,6 +17,7 @@ import { ImmutableDictionaryType } from "./frames/symbols/immutable-dictionary-t
 import { IntType } from "./frames/symbols/int-type";
 import { IterableType } from "./frames/symbols/iterable-type";
 import { ListType } from "./frames/symbols/list-type";
+import { RegexType } from "./frames/symbols/regex-type";
 import { StringType } from "./frames/symbols/string-type";
 import { TupleType } from "./frames/symbols/tuple-type";
 
@@ -74,6 +75,8 @@ export class ElanTypeDescriptor implements TypeDescriptor {
         return IntType.Instance;
       case "Boolean":
         return BooleanType.Instance;
+      case "Regex":
+        return RegexType.Instance;
       case "Iterable":
         return new IterableType(this.ofType!.mapType());
       case "Array":
@@ -137,6 +140,8 @@ export class TypescriptTypeDescriptor implements TypeDescriptor {
         return StringType.Instance;
       case "Boolean":
         return BooleanType.Instance;
+      case "RegExp":
+        return RegexType.Instance;
       case "Function":
         throw new ElanCompilerError("Typescript 'Function' must be mapped into Elan types");
       case "Array":
