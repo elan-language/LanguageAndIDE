@@ -9,6 +9,7 @@ import {
   elanIntType,
   elanMethod,
   ElanProcedureDescriptor,
+  ElanString,
   ElanTupleTypeDescriptor,
   elanType,
   ElanTypeDescriptor,
@@ -877,15 +878,13 @@ export class StdLib {
 
   GraphicsLength = this.xSize * this.ySize;
 
-  @elanIgnore
-  idx(x: number, y: number) {
+  private idx(x: number, y: number) {
     if (x < 0 || x >= this.xSize || y < 0 || y >= this.ySize) {
       throw new ElanRuntimeError(`Out of range index`);
     }
     return x * this.ySize + y;
   }
 
-  @elanIgnore
   initialisedGraphics(background: number) {
     const emptyMap: BlockGraphics = [];
     const emptyLocation: Location = this.system.tuple(["", 0x000000, background]) as Location;
@@ -897,8 +896,7 @@ export class StdLib {
     return emptyMap;
   }
 
-  @elanIgnore
-  ensureInitialised(cm: BlockGraphics): BlockGraphics {
+  private ensureInitialised(cm: BlockGraphics): BlockGraphics {
     if (cm.length === this.GraphicsLength) {
       return cm;
     } else {
@@ -906,7 +904,6 @@ export class StdLib {
     }
   }
 
-  @elanIgnore
   private putDetails(
     map: BlockGraphics,
     x: number,
@@ -920,14 +917,28 @@ export class StdLib {
     return cm;
   }
 
-  @elanIgnore
   private getDetails(map: BlockGraphics, x: number, y: number) {
     const cm = this.ensureInitialised(map);
     return this.system.safeIndex(cm, this.idx(x, y));
   }
 
-  @elanIgnore
-  withBlock(map: BlockGraphics, x: number, y: number, b: number) {
+  @elanMethod(
+    new ElanFunctionDescriptor(
+      true,
+      true,
+      false,
+      new ElanTypeDescriptor("List", new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
+    ),
+  )
+  withBlock(
+    @elanType(
+      new ElanTypeDescriptor("List", new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
+    )
+    map: BlockGraphics,
+    @elanIntType() x: number,
+    @elanIntType() y: number,
+    @elanIntType() b: number,
+  ) {
     if (x < 0 || x >= this.xSize) {
       throw new ElanRuntimeError(`x value ${x} is outside range 0 to ${this.xSize - 1}`);
     }
