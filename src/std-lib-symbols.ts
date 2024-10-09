@@ -6,16 +6,12 @@ import {
 import { ElanSymbol } from "./frames/interfaces/elan-symbol";
 import { Scope } from "./frames/interfaces/scope";
 import { SymbolType } from "./frames/interfaces/symbol-type";
-import { AbstractDictionaryType } from "./frames/symbols/abstract-dictionary-type";
 import { ArrayType } from "./frames/symbols/array-list-type";
 import { BooleanType } from "./frames/symbols/boolean-type";
-import { DictionaryType } from "./frames/symbols/dictionary-type";
 import { FloatType } from "./frames/symbols/float-type";
 import { FunctionType } from "./frames/symbols/function-type";
 import { GenericParameterType } from "./frames/symbols/generic-parameter-type";
-import { ImmutableDictionaryType } from "./frames/symbols/immutable-dictionary-type";
 import { IntType } from "./frames/symbols/int-type";
-import { IterableType } from "./frames/symbols/iterable-type";
 import { ListType } from "./frames/symbols/list-type";
 import { NullScope } from "./frames/symbols/null-scope";
 import { ProcedureType } from "./frames/symbols/procedure-type";
@@ -125,43 +121,6 @@ export class StdLibSymbols implements Scope {
 
   // todo - we need to load this from a .d.ts file also work out how to do generics
   private symbols = new Map<string, ElanSymbol>([
-    ["random", this.getSymbol("random", new FunctionType([], FloatType.Instance, false, false))],
-    [
-      "randomInt",
-      this.getSymbol(
-        "randomInt",
-        new FunctionType([IntType.Instance, IntType.Instance], IntType.Instance, false, false),
-      ),
-    ],
-
-    [
-      "any",
-      this.getSymbol(
-        "any",
-        new FunctionType(
-          [
-            new IterableType(new GenericParameterType("T")),
-            new FunctionType([new GenericParameterType("T")], BooleanType.Instance, false),
-          ],
-          BooleanType.Instance,
-          true,
-        ),
-      ),
-    ],
-    [
-      "contains",
-      this.getSymbol(
-        "contains",
-        new FunctionType(
-          [new IterableType(new GenericParameterType("T")), new GenericParameterType("T")],
-          BooleanType.Instance,
-          true,
-        ),
-      ),
-    ],
-    ["pause", this.getSymbol("pause", new ProcedureType([IntType.Instance], false, true))],
-
-    ["clock", this.getSymbol("clock", new FunctionType([], IntType.Instance, false, false))],
     [
       "parseAsFloat",
       this.getSymbol(

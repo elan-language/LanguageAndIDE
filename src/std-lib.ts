@@ -799,30 +799,36 @@ export class StdLib {
     }
   }
 
-  @elanIgnore
-  contains<T>(source: T[], item: T): boolean {
+  @elanMethod(new ElanFunctionDescriptor(true))
+  contains<T>(
+    @elanType(new ElanTypeDescriptor("Iterable", new ElanGenericTypeDescriptor("T"))) source: T[],
+    @elanType(new ElanGenericTypeDescriptor("T")) item: T,
+  ): boolean {
     return source.includes(item);
   }
 
-  @elanIgnore
-  pause(ms: number): Promise<void> {
+  @elanMethod(new ElanProcedureDescriptor(false, true))
+  pause(@elanType(new ElanGenericTypeDescriptor("Int")) ms: number): Promise<void> {
     return new Promise((resolve) => {
       setTimeout(() => resolve(), ms);
     });
   }
 
-  @elanIgnore
+  @elanMethod(new ElanFunctionDescriptor(false, false, false, new ElanTypeDescriptor("Int")))
   clock(): number {
     return new Date().getTime();
   }
 
-  @elanIgnore
+  @elanMethod(new ElanFunctionDescriptor(false, false))
   random(): number {
     return Math.random();
   }
 
-  @elanIgnore
-  randomInt(low: number, high: number): number {
+  @elanMethod(new ElanFunctionDescriptor(false, false, false, new ElanTypeDescriptor("Int")))
+  randomInt(
+    @elanType(new ElanTypeDescriptor("Int")) low: number,
+    @elanType(new ElanTypeDescriptor("Int")) high: number,
+  ): number {
     return Math.floor(Math.random() * (high - low + 1)) + low;
   }
 
