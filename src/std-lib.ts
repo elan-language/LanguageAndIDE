@@ -9,6 +9,7 @@ import {
   ElanGenericTypeDescriptor,
   ElanInt,
   elanIntType,
+  ElanList,
   elanMethod,
   ElanProcedureDescriptor,
   ElanString,
@@ -38,9 +39,7 @@ export class StdLib {
 
   // types
 
-  @elanConstant(
-    new ElanTypeDescriptor("List", new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
-  )
+  @elanConstant(ElanList(new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])))
   BlockGraphics = "";
 
   @elanConstant(new ElanTupleTypeDescriptor([ElanInt, ElanInt]))
@@ -141,7 +140,7 @@ export class StdLib {
     return arr;
   }
 
-  @elanFunction(FunctionOptions.pureExtension, new ElanTypeDescriptor("List", ElanT))
+  @elanFunction(FunctionOptions.pureExtension, ElanList(ElanT))
   asList<T>(@elanType(new ElanTypeDescriptor("Iterable", ElanT)) arr: T[]): T[] {
     const list = [...arr];
     (list as unknown as hasHiddenType)._type = "List";
@@ -170,7 +169,7 @@ export class StdLib {
     return this.system.safeIndex(arr, 0);
   }
 
-  @elanFunction(FunctionOptions.pureExtension, new ElanTypeDescriptor("List", ElanT1))
+  @elanFunction(FunctionOptions.pureExtension, ElanList(ElanT1))
   keys<T>(
     @elanType(new ElanTypeDescriptor("AbstractDictionary", ElanT1, ElanT2))
     dict: {
@@ -182,7 +181,7 @@ export class StdLib {
     return lst;
   }
 
-  @elanFunction(FunctionOptions.pureExtension, new ElanTypeDescriptor("List", ElanT2))
+  @elanFunction(FunctionOptions.pureExtension, ElanList(ElanT2))
   values<T>(
     @elanType(new ElanTypeDescriptor("AbstractDictionary", ElanT1, ElanT2))
     dict: {
@@ -271,9 +270,9 @@ export class StdLib {
     return s1 < s2 || s1 === s2;
   }
 
-  @elanFunction(FunctionOptions.pureExtension, new ElanTypeDescriptor("List", ElanT))
+  @elanFunction(FunctionOptions.pureExtension, ElanList(ElanT))
   withPutAt<T>(
-    @elanType(new ElanTypeDescriptor("List", ElanT)) list: Array<T>,
+    @elanType(ElanList(ElanT)) list: Array<T>,
     @elanIntType() index: number,
     @elanType(ElanT) value: T,
   ) {
@@ -313,9 +312,9 @@ export class StdLib {
     this.system.safeDictionarySet(dict, key, value);
   }
 
-  @elanFunction(FunctionOptions.pureExtension, new ElanTypeDescriptor("List", ElanT))
+  @elanFunction(FunctionOptions.pureExtension, ElanList(ElanT))
   withInsert<T>(
-    @elanType(new ElanTypeDescriptor("List", ElanT)) list: Array<T>,
+    @elanType(ElanList(ElanT)) list: Array<T>,
     @elanIntType() index: number,
     @elanType(ElanT) value: T,
   ) {
@@ -345,22 +344,16 @@ export class StdLib {
     return -1;
   }
 
-  @elanFunction(FunctionOptions.pureExtension, new ElanTypeDescriptor("List", ElanT))
-  withRemoveAt<T>(
-    @elanType(new ElanTypeDescriptor("List", ElanT)) list: Array<T>,
-    @elanIntType() index: number,
-  ) {
+  @elanFunction(FunctionOptions.pureExtension, ElanList(ElanT))
+  withRemoveAt<T>(@elanType(ElanList(ElanT)) list: Array<T>, @elanIntType() index: number) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const newList = (list as any).toSpliced(index, 1);
     (newList as unknown as hasHiddenType)._type = "List";
     return newList;
   }
 
-  @elanFunction(FunctionOptions.pureExtension, new ElanTypeDescriptor("List", ElanT))
-  withRemoveFirst<T>(
-    @elanType(new ElanTypeDescriptor("List", ElanT)) list: Array<T>,
-    @elanType(ElanT) value: T,
-  ) {
+  @elanFunction(FunctionOptions.pureExtension, ElanList(ElanT))
+  withRemoveFirst<T>(@elanType(ElanList(ElanT)) list: Array<T>, @elanType(ElanT) value: T) {
     let newList = [...list];
     const index = this.elanIndexOf(newList, value);
     if (index > -1) {
@@ -371,11 +364,8 @@ export class StdLib {
     return newList;
   }
 
-  @elanFunction(FunctionOptions.pureExtension, new ElanTypeDescriptor("List", ElanT))
-  withRemoveAll<T>(
-    @elanType(new ElanTypeDescriptor("List", ElanT)) list: Array<T>,
-    @elanType(ElanT) value: T,
-  ) {
+  @elanFunction(FunctionOptions.pureExtension, ElanList(ElanT))
+  withRemoveAll<T>(@elanType(ElanList(ElanT)) list: Array<T>, @elanType(ElanT) value: T) {
     let newList = [...list];
     let index = this.elanIndexOf(newList, value);
     while (index > -1) {
@@ -717,12 +707,10 @@ export class StdLib {
 
   @elanFunction(
     FunctionOptions.pureExtension,
-    new ElanTypeDescriptor("List", new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
+    ElanList(new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
   )
   withBlock(
-    @elanType(
-      new ElanTypeDescriptor("List", new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
-    )
+    @elanType(ElanList(new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])))
     map: BlockGraphics,
     @elanIntType() x: number,
     @elanIntType() y: number,
@@ -741,12 +729,10 @@ export class StdLib {
 
   @elanFunction(
     FunctionOptions.pureExtension,
-    new ElanTypeDescriptor("List", new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
+    ElanList(new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
   )
   withUnicode(
-    @elanType(
-      new ElanTypeDescriptor("List", new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
-    )
+    @elanType(ElanList(new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])))
     map: BlockGraphics,
     @elanIntType() x: number,
     @elanIntType() y: number,
@@ -767,12 +753,10 @@ export class StdLib {
 
   @elanFunction(
     FunctionOptions.pureExtension,
-    new ElanTypeDescriptor("List", new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
+    ElanList(new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
   )
   withText(
-    @elanType(
-      new ElanTypeDescriptor("List", new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
-    )
+    @elanType(ElanList(new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])))
     map: BlockGraphics,
     @elanIntType() x: number,
     @elanIntType() y: number,
@@ -804,12 +788,10 @@ export class StdLib {
 
   @elanFunction(
     FunctionOptions.pureExtension,
-    new ElanTypeDescriptor("List", new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
+    ElanList(new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
   )
   withBackground(
-    @elanType(
-      new ElanTypeDescriptor("List", new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
-    )
+    @elanType(ElanList(new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])))
     map: BlockGraphics,
     @elanIntType() b: number,
   ): BlockGraphics {
@@ -818,12 +800,10 @@ export class StdLib {
 
   @elanFunction(
     FunctionOptions.pureExtension,
-    new ElanTypeDescriptor("List", new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
+    ElanList(new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
   )
   getChar(
-    @elanType(
-      new ElanTypeDescriptor("List", new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
-    )
+    @elanType(ElanList(new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])))
     map: BlockGraphics,
     @elanIntType() x: number,
     @elanIntType() y: number,
@@ -834,12 +814,10 @@ export class StdLib {
 
   @elanFunction(
     FunctionOptions.pureExtension,
-    new ElanTypeDescriptor("List", new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
+    ElanList(new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
   )
   getForeground(
-    @elanType(
-      new ElanTypeDescriptor("List", new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
-    )
+    @elanType(ElanList(new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])))
     map: BlockGraphics,
     @elanIntType() x: number,
     @elanIntType() y: number,
@@ -850,12 +828,10 @@ export class StdLib {
 
   @elanFunction(
     FunctionOptions.pureExtension,
-    new ElanTypeDescriptor("List", new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
+    ElanList(new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
   )
   getBackground(
-    @elanType(
-      new ElanTypeDescriptor("List", new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
-    )
+    @elanType(ElanList(new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])))
     map: BlockGraphics,
     @elanIntType() x: number,
     @elanIntType() y: number,
@@ -866,9 +842,7 @@ export class StdLib {
 
   @elanMethod(new ElanProcedureDescriptor(true))
   clearGraphics(
-    @elanType(
-      new ElanTypeDescriptor("List", new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
-    )
+    @elanType(ElanList(new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])))
     map: BlockGraphics,
   ) {
     this.system.elanInputOutput.clearGraphics();
@@ -876,9 +850,7 @@ export class StdLib {
 
   @elanMethod(new ElanProcedureDescriptor(true, true))
   draw(
-    @elanType(
-      new ElanTypeDescriptor("List", new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
-    )
+    @elanType(ElanList(new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])))
     map: BlockGraphics,
   ): Promise<void> {
     const cm = this.ensureInitialised(map);
@@ -902,9 +874,7 @@ export class StdLib {
 
   @elanFunction(FunctionOptions.impureAsyncExtension, ElanString)
   getKeystroke(
-    @elanType(
-      new ElanTypeDescriptor("List", new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
-    )
+    @elanType(ElanList(new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])))
     map: BlockGraphics,
   ): Promise<string> {
     return this.system.elanInputOutput.getKeystroke();
@@ -915,9 +885,7 @@ export class StdLib {
     new ElanTupleTypeDescriptor([ElanString, ElanString]),
   )
   getKeystrokeWithModifier(
-    @elanType(
-      new ElanTypeDescriptor("List", new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
-    )
+    @elanType(ElanList(new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])))
     map: BlockGraphics,
   ): Promise<[string, string]> {
     return this.system.elanInputOutput.getKeystrokeWithModifier();
@@ -925,9 +893,7 @@ export class StdLib {
 
   @elanMethod(new ElanProcedureDescriptor(true, false))
   clearKeyBuffer(
-    @elanType(
-      new ElanTypeDescriptor("List", new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
-    )
+    @elanType(ElanList(new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])))
     map: BlockGraphics,
   ) {
     this.system.elanInputOutput.clearKeyBuffer();
