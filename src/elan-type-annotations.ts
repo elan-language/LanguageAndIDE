@@ -1,3 +1,4 @@
+import { ElanCompilerError } from "./elan-compiler-error";
 import {
   elanIgnoreMetadataKey,
   ElanMethodDescriptor,
@@ -10,6 +11,7 @@ import { ArrayType } from "./frames/symbols/array-list-type";
 import { BooleanType } from "./frames/symbols/boolean-type";
 import { DictionaryType } from "./frames/symbols/dictionary-type";
 import { FloatType } from "./frames/symbols/float-type";
+import { FunctionType } from "./frames/symbols/function-type";
 import { GenericParameterType } from "./frames/symbols/generic-parameter-type";
 import { ImmutableDictionaryType } from "./frames/symbols/immutable-dictionary-type";
 import { IntType } from "./frames/symbols/int-type";
@@ -37,7 +39,6 @@ export class ElanFunctionDescriptor implements ElanMethodDescriptor {
     public readonly isAsync: boolean = false,
     public readonly returnType?: TypeDescriptor,
   ) {}
-
   isProcedure = false;
   isFunction = true;
 
@@ -97,6 +98,23 @@ export class ElanGenericTypeDescriptor implements TypeDescriptor {
   }
 }
 
+export class ElanFuncTypeDescriptor implements TypeDescriptor {
+  constructor(
+    public readonly parameters: TypeDescriptor[],
+    public readonly returnType: TypeDescriptor,
+  ) {}
+
+  name = "Func";
+
+  mapType(): SymbolType {
+    return new FunctionType(
+      this.parameters.map((p) => p.mapType()),
+      this.returnType.mapType(),
+      false,
+    );
+  }
+}
+
 export class TypescriptTypeDescriptor implements TypeDescriptor {
   constructor(public readonly name: string) {}
 
@@ -108,6 +126,8 @@ export class TypescriptTypeDescriptor implements TypeDescriptor {
         return StringType.Instance;
       case "Boolean":
         return BooleanType.Instance;
+      case "Function":
+        throw new ElanCompilerError("Typescript 'Function' must be mapped into Elan types");
     }
     throw new Error("NotImplemented: " + this.name);
   }
@@ -151,7 +171,7 @@ export function elanMethod(elanDesc: ElanMethodDescriptor) {
   };
 }
 
-export function elanType(eType: ElanTypeDescriptor) {
+export function elanType(eType: ElanTypeDescriptor | ElanFuncTypeDescriptor) {
   return function (target: object, propertyKey: string | symbol, parameterIndex: number) {
     const metaData: ElanMethodDescriptor =
       Reflect.getOwnMetadata(elanMethodMetadataKey, target, propertyKey) ??

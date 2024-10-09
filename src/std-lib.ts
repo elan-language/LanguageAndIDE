@@ -2,6 +2,7 @@ import "reflect-metadata";
 import { ElanRuntimeError } from "./elan-runtime-error";
 import {
   ElanFunctionDescriptor,
+  ElanFuncTypeDescriptor,
   ElanGenericTypeDescriptor,
   elanIgnore,
   elanMethod,
@@ -612,15 +613,34 @@ export class StdLib {
     return n > fl ? fl + 1 : fl;
   }
 
-  @elanIgnore
-  typeAndProperties(o: { [key: string]: object }) {
+  @elanMethod(new ElanFunctionDescriptor())
+  typeAndProperties(
+    @elanType(new ElanGenericTypeDescriptor("T")) o: { [key: string]: object },
+  ): string {
     const type = o.constructor.name;
     const items = Object.getOwnPropertyNames(o);
     return `${type} [${items.map((n) => `"${n}":${o[n]}`).join(", ")}]`;
   }
 
-  @elanIgnore
-  filter<T>(source: T[] | string, predicate: (value: T | string) => boolean): (T | string)[] {
+  @elanMethod(
+    new ElanFunctionDescriptor(
+      true,
+      true,
+      false,
+      new ElanTypeDescriptor("Iterable", new ElanGenericTypeDescriptor("T")),
+    ),
+  )
+  filter<T>(
+    @elanType(new ElanTypeDescriptor("Iterable", new ElanGenericTypeDescriptor("T")))
+    source: T[] | string,
+    @elanType(
+      new ElanFuncTypeDescriptor(
+        [new ElanGenericTypeDescriptor("T")],
+        new ElanTypeDescriptor("Boolean"),
+      ),
+    )
+    predicate: (value: T | string) => boolean,
+  ): (T | string)[] {
     const list = typeof source === "string" ? source.split("") : [...source];
     return this.asIter(list.filter(predicate));
   }
