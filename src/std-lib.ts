@@ -645,57 +645,148 @@ export class StdLib {
     return this.asIter(list.filter(predicate));
   }
 
-  @elanIgnore
-  map<T, U>(source: T[] | string, predicate: (value: T | string) => U) {
+  @elanMethod(
+    new ElanFunctionDescriptor(
+      true,
+      true,
+      false,
+      new ElanTypeDescriptor("Iterable", new ElanGenericTypeDescriptor("U")),
+    ),
+  )
+  map<T, U>(
+    @elanType(new ElanTypeDescriptor("Iterable", new ElanGenericTypeDescriptor("T")))
+    source: T[] | string,
+    @elanType(
+      new ElanFuncTypeDescriptor(
+        [new ElanGenericTypeDescriptor("T")],
+        new ElanGenericTypeDescriptor("U"),
+      ),
+    )
+    predicate: (value: T | string) => U,
+  ) {
     const list = typeof source === "string" ? source.split("") : [...source];
     return this.asIter(list.map(predicate));
   }
 
-  @elanIgnore
-  reduce<T, U>(source: T[] | string, initValue: U, predicate: (s: U, value: T | string) => U): U {
+  @elanMethod(new ElanFunctionDescriptor(true, true, false, new ElanGenericTypeDescriptor("U")))
+  reduce<T, U>(
+    @elanType(new ElanTypeDescriptor("Iterable", new ElanGenericTypeDescriptor("T")))
+    source: T[] | string,
+    @elanType(new ElanGenericTypeDescriptor("U")) initValue: U,
+    @elanType(
+      new ElanFuncTypeDescriptor(
+        [new ElanGenericTypeDescriptor("U"), new ElanGenericTypeDescriptor("T")],
+        new ElanGenericTypeDescriptor("U"),
+      ),
+    )
+    predicate: (s: U, value: T | string) => U,
+  ): U {
     const list = typeof source === "string" ? source.split("") : [...source];
     return list.reduce(predicate, initValue);
   }
 
-  @elanIgnore
-  max(source: number[]): number {
+  @elanMethod(new ElanFunctionDescriptor(true))
+  max(
+    @elanType(new ElanTypeDescriptor("Iterable", new ElanTypeDescriptor("Float"))) source: number[],
+  ): number {
     return Math.max(...source);
   }
 
-  @elanIgnore
-  maxBy<T>(source: T[], predicate: (value: T) => number): T {
+  @elanMethod(new ElanFunctionDescriptor(true, true, false, new ElanGenericTypeDescriptor("T")))
+  maxBy<T>(
+    @elanType(new ElanTypeDescriptor("Iterable", new ElanGenericTypeDescriptor("T"))) source: T[],
+    @elanType(
+      new ElanFuncTypeDescriptor(
+        [new ElanGenericTypeDescriptor("T")],
+        new ElanTypeDescriptor("Float"),
+      ),
+    )
+    predicate: (value: T) => number,
+  ): T {
     const mm = source.map(predicate);
     const max = Math.max(...mm);
     const i = this.elanIndexOf(mm, max);
     return source[i];
   }
 
-  @elanIgnore
-  min(source: number[]): number {
+  @elanMethod(new ElanFunctionDescriptor(true))
+  min(
+    @elanType(new ElanTypeDescriptor("Iterable", new ElanTypeDescriptor("Float"))) source: number[],
+  ): number {
     return Math.min(...source);
   }
 
-  @elanIgnore
-  minBy<T>(source: T[], predicate: (value: T) => number): T {
+  @elanMethod(new ElanFunctionDescriptor(true, true, false, new ElanGenericTypeDescriptor("T")))
+  minBy<T>(
+    @elanType(new ElanTypeDescriptor("Iterable", new ElanGenericTypeDescriptor("T"))) source: T[],
+    @elanType(
+      new ElanFuncTypeDescriptor(
+        [new ElanGenericTypeDescriptor("T")],
+        new ElanTypeDescriptor("Float"),
+      ),
+    )
+    predicate: (value: T) => number,
+  ): T {
     const mm = source.map(predicate);
     const min = Math.min(...mm);
     const i = this.elanIndexOf(mm, min);
     return source[i];
   }
 
-  @elanIgnore
-  sortBy<T>(source: T[], predicate: (a: T, b: T) => number): T[] {
+  @elanMethod(
+    new ElanFunctionDescriptor(
+      true,
+      true,
+      false,
+      new ElanTypeDescriptor("Iterable", new ElanGenericTypeDescriptor("T")),
+    ),
+  )
+  sortBy<T>(
+    @elanType(new ElanTypeDescriptor("Iterable", new ElanGenericTypeDescriptor("T"))) source: T[],
+    @elanType(
+      new ElanFuncTypeDescriptor(
+        [new ElanGenericTypeDescriptor("T"), new ElanGenericTypeDescriptor("T")],
+        new ElanTypeDescriptor("Int"),
+      ),
+    )
+    predicate: (a: T, b: T) => number,
+  ): T[] {
     const clone = [...source];
     return this.asIter(clone.sort(predicate));
   }
 
-  @elanIgnore
-  any<T>(source: T[], predicate: (value: T) => boolean) {
+  @elanMethod(new ElanFunctionDescriptor(true))
+  any<T>(
+    @elanType(new ElanTypeDescriptor("Iterable", new ElanGenericTypeDescriptor("T"))) source: T[],
+    @elanType(
+      new ElanFuncTypeDescriptor(
+        [new ElanGenericTypeDescriptor("T")],
+        new ElanTypeDescriptor("Boolean"),
+      ),
+    )
+    predicate: (value: T) => boolean,
+  ): boolean {
     return source.some(predicate);
   }
 
-  @elanIgnore
-  groupBy<T>(source: T[], predicate: (value: T) => T) {
+  @elanMethod(
+    new ElanFunctionDescriptor(
+      true,
+      true,
+      false,
+      new ElanTypeDescriptor("Iterable", new ElanGenericTypeDescriptor("U")),
+    ),
+  )
+  groupBy<T>(
+    @elanType(new ElanTypeDescriptor("Iterable", new ElanGenericTypeDescriptor("T"))) source: T[],
+    @elanType(
+      new ElanFuncTypeDescriptor(
+        [new ElanGenericTypeDescriptor("T")],
+        new ElanGenericTypeDescriptor("U"),
+      ),
+    )
+    predicate: (value: T) => T,
+  ) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const result = {} as any;
 

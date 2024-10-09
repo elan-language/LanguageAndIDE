@@ -128,6 +128,8 @@ export class TypescriptTypeDescriptor implements TypeDescriptor {
         return BooleanType.Instance;
       case "Function":
         throw new ElanCompilerError("Typescript 'Function' must be mapped into Elan types");
+      case "Array":
+        throw new ElanCompilerError("Typescript 'Array' must be mapped into Elan types");
     }
     throw new Error("NotImplemented: " + this.name);
   }
