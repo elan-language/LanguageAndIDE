@@ -1,6 +1,7 @@
 import "reflect-metadata";
 import { ElanRuntimeError } from "./elan-runtime-error";
 import {
+  ElanFloat,
   ElanFunctionDescriptor,
   ElanFuncTypeDescriptor,
   ElanGenericTypeDescriptor,
@@ -1162,8 +1163,13 @@ export class StdLib {
     return this.system.elanInputOutput.getKeystrokeWithModifier();
   }
 
-  @elanIgnore
-  clearKeyBuffer(map: BlockGraphics) {
+  @elanMethod(new ElanProcedureDescriptor(true, false))
+  clearKeyBuffer(
+    @elanType(
+      new ElanTypeDescriptor("List", new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
+    )
+    map: BlockGraphics,
+  ) {
     this.system.elanInputOutput.clearKeyBuffer();
   }
 
@@ -1229,18 +1235,17 @@ export class StdLib {
   }
 
   //Input functions
-  @elanIgnore
-  prompt(prompt: string) {
+  private prompt(prompt: string) {
     this.print(prompt);
   }
 
-  @elanMethod(new ElanFunctionDescriptor(false, false, true, new ElanTypeDescriptor("String")))
+  @elanMethod(new ElanFunctionDescriptor(false, false, true, ElanString))
   inputString(prompt: string): Promise<string> {
     this.prompt(prompt);
     return this.system.input();
   }
 
-  @elanMethod(new ElanFunctionDescriptor(false, false, true, new ElanTypeDescriptor("String")))
+  @elanMethod(new ElanFunctionDescriptor(false, false, true, ElanString))
   inputStringWithLimits(
     prompt: string,
     @elanIntType() minLength: number,
@@ -1259,8 +1264,11 @@ export class StdLib {
     });
   }
 
-  @elanIgnore
-  inputStringFromOptions(prompt: string, options: string[]): Promise<string> {
+  @elanMethod(new ElanFunctionDescriptor(false, false, true, ElanString))
+  inputStringFromOptions(
+    prompt: string,
+    @elanType(new ElanTypeDescriptor("Array", ElanString)) options: string[],
+  ): Promise<string> {
     this.prompt(prompt);
     return this.system.input().then((s) => {
       if (options.includes(s)) {
@@ -1272,7 +1280,7 @@ export class StdLib {
     });
   }
 
-  @elanIgnore
+  @elanMethod(new ElanFunctionDescriptor(false, false, true, ElanInt))
   inputInt(prompt: string): Promise<number> {
     this.prompt(prompt);
     return this.system.input().then((s) => {
@@ -1288,8 +1296,12 @@ export class StdLib {
     });
   }
 
-  @elanIgnore
-  inputIntBetween(prompt: string, min: number, max: number): Promise<number> {
+  @elanMethod(new ElanFunctionDescriptor(false, false, true, ElanInt))
+  inputIntBetween(
+    prompt: string,
+    @elanIntType() min: number,
+    @elanIntType() max: number,
+  ): Promise<number> {
     this.prompt(prompt);
     return this.system.input().then((s) => {
       const [b, i] = this.parseAsInt(s);
@@ -1302,7 +1314,7 @@ export class StdLib {
     });
   }
 
-  @elanIgnore
+  @elanMethod(new ElanFunctionDescriptor(false, false, true, ElanFloat))
   inputFloat(prompt: string): Promise<number> {
     this.prompt(prompt);
     return this.system.input().then((s) => {
@@ -1318,7 +1330,7 @@ export class StdLib {
     });
   }
 
-  @elanIgnore
+  @elanMethod(new ElanFunctionDescriptor(false, false, true, ElanFloat))
   inputFloatBetween(prompt: string, min: number, max: number): Promise<number> {
     this.prompt(prompt);
     return this.system.input().then((s) => {

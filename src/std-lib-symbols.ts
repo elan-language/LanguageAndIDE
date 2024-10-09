@@ -123,98 +123,14 @@ export class StdLibSymbols implements Scope {
     // Block Graphics
 
     [
-      "clearKeyBuffer",
-      this.getSymbol(
-        "clearKeyBuffer",
-        new ProcedureType(
-          [new ListType(new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]))],
-          true,
-          false,
-        ),
-      ),
-    ],
-
-    [
       "BlockGraphics",
       this.getSymbol(
         "BlockGraphics",
         new ListType(new TupleType([StringType.Instance, IntType.Instance, IntType.Instance])),
       ),
     ],
-    [
-      "inputString",
-      this.getSymbol(
-        "inputString",
-        new FunctionType([StringType.Instance], StringType.Instance, false, false, true),
-      ),
-    ],
-    [
-      "inputStringWithLimits",
-      this.getSymbol(
-        "inputStringWithLimits",
-        new FunctionType(
-          [StringType.Instance, IntType.Instance, IntType.Instance],
-          StringType.Instance,
-          false,
-          false,
-          true,
-        ),
-      ),
-    ],
-    [
-      "inputStringFromOptions",
-      this.getSymbol(
-        "inputStringFromOptions",
-        new FunctionType(
-          [StringType.Instance, new ArrayType(StringType.Instance)],
-          StringType.Instance,
-          false,
-          false,
-          true,
-        ),
-      ),
-    ],
-    [
-      "inputInt",
-      this.getSymbol(
-        "inputInt",
-        new FunctionType([StringType.Instance], IntType.Instance, false, false, true),
-      ),
-    ],
-    [
-      "inputIntBetween",
-      this.getSymbol(
-        "inputIntBetween",
-        new FunctionType(
-          [StringType.Instance, IntType.Instance, IntType.Instance],
-          IntType.Instance,
-          false,
-          false,
-          true,
-        ),
-      ),
-    ],
-    [
-      "inputFloat",
-      this.getSymbol(
-        "inputFloat",
-        new FunctionType([StringType.Instance], FloatType.Instance, false, false, true),
-      ),
-    ],
-    [
-      "inputFloatBetween",
-      this.getSymbol(
-        "inputFloatBetween",
-        new FunctionType(
-          [StringType.Instance, FloatType.Instance, FloatType.Instance],
-          FloatType.Instance,
-          false,
-          false,
-          true,
-        ),
-      ),
-    ],
     ["pi", this.getSymbol("pi", FloatType.Instance)],
+
     ["Random", this.getSymbol("Random", new TupleType([IntType.Instance, IntType.Instance]))],
     [
       "next",

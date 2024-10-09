@@ -196,7 +196,9 @@ export function elanType(eType: ElanTypeDescriptor | ElanFuncTypeDescriptor) {
 }
 
 export const ElanInt: ElanTypeDescriptor = new ElanTypeDescriptor("Int");
+export const ElanFloat: ElanTypeDescriptor = new ElanTypeDescriptor("Float");
 export const ElanString: ElanTypeDescriptor = new ElanTypeDescriptor("String");
+export const ElanBoolean: ElanTypeDescriptor = new ElanTypeDescriptor("Boolean");
 
 export function elanIntType() {
   return elanType(ElanInt);
