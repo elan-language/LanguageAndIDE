@@ -1,8 +1,10 @@
 import "reflect-metadata";
 import { ElanRuntimeError } from "./elan-runtime-error";
 import {
+  ElanBoolean,
   elanConstant,
   ElanFloat,
+  elanFunction,
   ElanFunctionDescriptor,
   ElanFuncTypeDescriptor,
   ElanGenericTypeDescriptor,
@@ -11,9 +13,14 @@ import {
   elanMethod,
   ElanProcedureDescriptor,
   ElanString,
+  ElanT,
+  ElanT1,
+  ElanT2,
+  ElanTU,
   ElanTupleTypeDescriptor,
   elanType,
   ElanTypeDescriptor,
+  FunctionOptions,
 } from "./elan-type-annotations";
 import { hasHiddenType } from "./has-hidden-type";
 import { StubInputOutput } from "./stub-input-output";
@@ -55,8 +62,8 @@ export class StdLib {
     return typeof v === "boolean" || typeof v === "string" || typeof v === "number";
   }
 
-  @elanMethod(new ElanFunctionDescriptor(true))
-  asString<T>(@elanType(new ElanGenericTypeDescriptor("T")) v: T | T[] | undefined): string {
+  @elanFunction(FunctionOptions.pureExtension)
+  asString<T>(@elanType(ElanT) v: T | T[] | undefined): string {
     if (v === undefined || v === null) {
       throw new Error(`Out of range error`);
     }
@@ -118,51 +125,31 @@ export class StdLib {
     throw new Error("Not implemented: " + typeof v);
   }
 
-  @elanMethod(new ElanFunctionDescriptor())
+  @elanFunction()
   stringForUnicode(@elanIntType() n: number): string {
     return String.fromCharCode(n);
   }
 
-  @elanMethod(new ElanFunctionDescriptor(true))
+  @elanFunction(FunctionOptions.pureExtension)
   asUnicode(s: string): number {
     return s.charCodeAt(0);
   }
 
-  @elanMethod(
-    new ElanFunctionDescriptor(
-      true,
-      true,
-      false,
-      new ElanTypeDescriptor("Array", new ElanGenericTypeDescriptor("T")),
-    ),
-  )
-  asArray<T>(
-    @elanType(new ElanTypeDescriptor("Iterable", new ElanGenericTypeDescriptor("T"))) list: T[],
-  ): T[] {
+  @elanFunction(FunctionOptions.pureExtension, new ElanTypeDescriptor("Array", ElanT))
+  asArray<T>(@elanType(new ElanTypeDescriptor("Iterable", ElanT)) list: T[]): T[] {
     const arr = [...list];
     (arr as unknown as hasHiddenType)._type = "Array";
     return arr;
   }
 
-  @elanMethod(
-    new ElanFunctionDescriptor(
-      true,
-      true,
-      false,
-      new ElanTypeDescriptor("List", new ElanGenericTypeDescriptor("T")),
-    ),
-  )
-  asList<T>(
-    @elanType(new ElanTypeDescriptor("Iterable", new ElanGenericTypeDescriptor("T"))) arr: T[],
-  ): T[] {
+  @elanFunction(FunctionOptions.pureExtension, new ElanTypeDescriptor("List", ElanT))
+  asList<T>(@elanType(new ElanTypeDescriptor("Iterable", ElanT)) arr: T[]): T[] {
     const list = [...arr];
     (list as unknown as hasHiddenType)._type = "List";
     return list;
   }
 
-  @elanMethod(
-    new ElanFunctionDescriptor(false, true, false, new ElanTypeDescriptor("Iterable", ElanInt)),
-  )
+  @elanFunction(FunctionOptions.pure, new ElanTypeDescriptor("Iterable", ElanInt))
   range(@elanIntType() start: number, @elanIntType() end: number): number[] {
     const seq = [];
     for (let i = start; i <= end; i++) {
@@ -172,45 +159,21 @@ export class StdLib {
     return seq;
   }
 
-  @elanMethod(
-    new ElanFunctionDescriptor(
-      true,
-      true,
-      false,
-      new ElanTypeDescriptor("Iterable", new ElanGenericTypeDescriptor("T")),
-    ),
-  )
-  asIter<T>(
-    @elanType(new ElanTypeDescriptor("Iterable", new ElanGenericTypeDescriptor("T"))) arr: T[],
-  ): T[] {
+  @elanFunction(FunctionOptions.pureExtension, new ElanTypeDescriptor("Iterable", ElanT))
+  asIter<T>(@elanType(new ElanTypeDescriptor("Iterable", ElanT)) arr: T[]): T[] {
     const list = [...arr];
     (list as unknown as hasHiddenType)._type = "Iterable";
     return list as T[];
   }
 
-  @elanMethod(new ElanFunctionDescriptor(true, true, false, new ElanGenericTypeDescriptor("T")))
-  head<T>(
-    @elanType(new ElanTypeDescriptor("Iterable", new ElanGenericTypeDescriptor("T"))) arr: T[],
-  ): T {
+  @elanFunction(FunctionOptions.pureExtension, ElanT)
+  head<T>(@elanType(new ElanTypeDescriptor("Iterable", ElanT)) arr: T[]): T {
     return this.system.safeIndex(arr, 0);
   }
 
-  @elanMethod(
-    new ElanFunctionDescriptor(
-      true,
-      true,
-      false,
-      new ElanTypeDescriptor("List", new ElanGenericTypeDescriptor("T1")),
-    ),
-  )
+  @elanFunction(FunctionOptions.pureExtension, new ElanTypeDescriptor("List", ElanT1))
   keys<T>(
-    @elanType(
-      new ElanTypeDescriptor(
-        "AbstractDictionary",
-        new ElanGenericTypeDescriptor("T1"),
-        new ElanGenericTypeDescriptor("T2"),
-      ),
-    )
+    @elanType(new ElanTypeDescriptor("AbstractDictionary", ElanT1, ElanT2))
     dict: {
       [key: string]: T;
     },
@@ -220,22 +183,9 @@ export class StdLib {
     return lst;
   }
 
-  @elanMethod(
-    new ElanFunctionDescriptor(
-      true,
-      true,
-      false,
-      new ElanTypeDescriptor("List", new ElanGenericTypeDescriptor("T2")),
-    ),
-  )
+  @elanFunction(FunctionOptions.pureExtension, new ElanTypeDescriptor("List", ElanT2))
   values<T>(
-    @elanType(
-      new ElanTypeDescriptor(
-        "AbstractDictionary",
-        new ElanGenericTypeDescriptor("T1"),
-        new ElanGenericTypeDescriptor("T2"),
-      ),
-    )
+    @elanType(new ElanTypeDescriptor("AbstractDictionary", ElanT1, ElanT2))
     dict: {
       [key: string]: T;
     },
@@ -245,43 +195,23 @@ export class StdLib {
     return lst;
   }
 
-  @elanMethod(new ElanFunctionDescriptor(true, true, false, new ElanTypeDescriptor("Boolean")))
+  @elanFunction(FunctionOptions.pureExtension, ElanBoolean)
   hasKey<T>(
-    @elanType(
-      new ElanTypeDescriptor(
-        "AbstractDictionary",
-        new ElanGenericTypeDescriptor("T1"),
-        new ElanGenericTypeDescriptor("T2"),
-      ),
-    )
+    @elanType(new ElanTypeDescriptor("AbstractDictionary", ElanT1, ElanT2))
     dict: { [key: string]: T },
-    @elanType(new ElanGenericTypeDescriptor("T1")) key: string,
+    @elanType(ElanT1) key: string,
   ): boolean {
     return this.keys(dict).includes(key);
   }
 
-  @elanMethod(
-    new ElanFunctionDescriptor(
-      true,
-      true,
-      false,
-      new ElanTypeDescriptor(
-        "ImmutableDictionary",
-        new ElanGenericTypeDescriptor("T1"),
-        new ElanGenericTypeDescriptor("T2"),
-      ),
-    ),
+  @elanFunction(
+    FunctionOptions.pureExtension,
+    new ElanTypeDescriptor("ImmutableDictionary", ElanT1, ElanT2),
   )
   withRemoveAtKey<T>(
-    @elanType(
-      new ElanTypeDescriptor(
-        "ImmutableDictionary",
-        new ElanGenericTypeDescriptor("T1"),
-        new ElanGenericTypeDescriptor("T2"),
-      ),
-    )
+    @elanType(new ElanTypeDescriptor("ImmutableDictionary", ElanT1, ElanT2))
     dict: { [key: string]: T },
-    @elanType(new ElanGenericTypeDescriptor("T1")) key: string,
+    @elanType(ElanT1) key: string,
   ) {
     const newDict = { ...dict };
     (newDict as unknown as hasHiddenType)._type = (dict as unknown as hasHiddenType)._type;
@@ -291,22 +221,16 @@ export class StdLib {
 
   @elanMethod(new ElanProcedureDescriptor(true))
   removeAtKey<T>(
-    @elanType(
-      new ElanTypeDescriptor(
-        "Dictionary",
-        new ElanGenericTypeDescriptor("T1"),
-        new ElanGenericTypeDescriptor("T2"),
-      ),
-    )
+    @elanType(new ElanTypeDescriptor("Dictionary", ElanT1, ElanT2))
     dict: { [key: string]: T },
-    @elanType(new ElanGenericTypeDescriptor("T1")) key: string,
+    @elanType(ElanT1) key: string,
   ) {
     delete dict[key];
   }
 
-  @elanMethod(new ElanFunctionDescriptor(true, true, false, ElanInt))
+  @elanFunction(FunctionOptions.pureExtension, ElanInt)
   length<T>(
-    @elanType(new ElanTypeDescriptor("Iterable", new ElanGenericTypeDescriptor("T")))
+    @elanType(new ElanTypeDescriptor("Iterable", ElanT))
     coll: string | T[] | { [key: string]: T },
   ) {
     if (typeof coll === "string") {
@@ -318,48 +242,41 @@ export class StdLib {
     return this.keys(coll).length;
   }
 
-  @elanMethod(new ElanFunctionDescriptor(true))
+  @elanFunction(FunctionOptions.pureExtension)
   upperCase(s1: string): string {
     return s1.toUpperCase();
   }
 
-  @elanMethod(new ElanFunctionDescriptor(true))
+  @elanFunction(FunctionOptions.pureExtension)
   lowerCase(s1: string): string {
     return s1.toLowerCase();
   }
 
-  @elanMethod(new ElanFunctionDescriptor())
+  @elanFunction()
   isBefore(s1: string, s2: string): boolean {
     return s1 < s2;
   }
 
-  @elanMethod(new ElanFunctionDescriptor())
+  @elanFunction()
   isAfter(s1: string, s2: string): boolean {
     return s1 > s2;
   }
 
-  @elanMethod(new ElanFunctionDescriptor())
+  @elanFunction()
   isAfterOrSameAs(s1: string, s2: string): boolean {
     return s1 > s2 || s1 === s2;
   }
 
-  @elanMethod(new ElanFunctionDescriptor())
+  @elanFunction()
   isBeforeOrSameAs(s1: string, s2: string): boolean {
     return s1 < s2 || s1 === s2;
   }
 
-  @elanMethod(
-    new ElanFunctionDescriptor(
-      true,
-      true,
-      false,
-      new ElanTypeDescriptor("List", new ElanGenericTypeDescriptor("T")),
-    ),
-  )
+  @elanFunction(FunctionOptions.pureExtension, new ElanTypeDescriptor("List", ElanT))
   withPutAt<T>(
-    @elanType(new ElanTypeDescriptor("List", new ElanGenericTypeDescriptor("T"))) list: Array<T>,
+    @elanType(new ElanTypeDescriptor("List", ElanT)) list: Array<T>,
     @elanIntType() index: number,
-    @elanType(new ElanGenericTypeDescriptor("T")) value: T,
+    @elanType(ElanT) value: T,
   ) {
     const newList = [...list];
     newList[index] = value;
@@ -369,57 +286,39 @@ export class StdLib {
 
   @elanMethod(new ElanProcedureDescriptor(true))
   putAt<T>(
-    @elanType(new ElanTypeDescriptor("Array", new ElanGenericTypeDescriptor("T"))) list: Array<T>,
+    @elanType(new ElanTypeDescriptor("Array", ElanT)) list: Array<T>,
     @elanIntType() index: number,
-    @elanType(new ElanGenericTypeDescriptor("T")) value: T,
+    @elanType(ElanT) value: T,
   ) {
     this.system.safeArraySet(list, index, value);
   }
 
   @elanMethod(new ElanProcedureDescriptor(true))
   putAt2D<T>(
-    @elanType(
-      new ElanTypeDescriptor(
-        "Array",
-        new ElanTypeDescriptor("Array", new ElanGenericTypeDescriptor("T")),
-      ),
-    )
+    @elanType(new ElanTypeDescriptor("Array", new ElanTypeDescriptor("Array", ElanT)))
     list: Array<Array<T>>,
     @elanIntType() col: number,
     @elanIntType() row: number,
-    @elanType(new ElanGenericTypeDescriptor("T")) value: T,
+    @elanType(ElanT) value: T,
   ) {
     this.system.safeArraySet(list[col], row, value);
   }
 
   @elanMethod(new ElanProcedureDescriptor(true))
   putAtKey<T>(
-    @elanType(
-      new ElanTypeDescriptor(
-        "Dictionary",
-        new ElanGenericTypeDescriptor("T1"),
-        new ElanGenericTypeDescriptor("T2"),
-      ),
-    )
+    @elanType(new ElanTypeDescriptor("Dictionary", ElanT1, ElanT2))
     dict: { [key: string]: T },
-    @elanType(new ElanGenericTypeDescriptor("T1")) key: string,
-    @elanType(new ElanGenericTypeDescriptor("T2")) value: T,
+    @elanType(ElanT1) key: string,
+    @elanType(ElanT2) value: T,
   ) {
     this.system.safeDictionarySet(dict, key, value);
   }
 
-  @elanMethod(
-    new ElanFunctionDescriptor(
-      true,
-      true,
-      false,
-      new ElanTypeDescriptor("List", new ElanGenericTypeDescriptor("T")),
-    ),
-  )
+  @elanFunction(FunctionOptions.pureExtension, new ElanTypeDescriptor("List", ElanT))
   withInsert<T>(
-    @elanType(new ElanTypeDescriptor("List", new ElanGenericTypeDescriptor("T"))) list: Array<T>,
+    @elanType(new ElanTypeDescriptor("List", ElanT)) list: Array<T>,
     @elanIntType() index: number,
-    @elanType(new ElanGenericTypeDescriptor("T")) value: T,
+    @elanType(ElanT) value: T,
   ) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const newList = (list as any).toSpliced(index, 0, value);
@@ -429,9 +328,9 @@ export class StdLib {
 
   @elanMethod(new ElanProcedureDescriptor(true))
   insertAt<T>(
-    @elanType(new ElanTypeDescriptor("Array", new ElanGenericTypeDescriptor("T"))) list: Array<T>,
+    @elanType(new ElanTypeDescriptor("Array", ElanT)) list: Array<T>,
     @elanIntType() index: number,
-    @elanType(new ElanGenericTypeDescriptor("T")) value: T,
+    @elanType(ElanT) value: T,
   ) {
     list.splice(index, 0, value);
   }
@@ -447,16 +346,9 @@ export class StdLib {
     return -1;
   }
 
-  @elanMethod(
-    new ElanFunctionDescriptor(
-      true,
-      true,
-      false,
-      new ElanTypeDescriptor("List", new ElanGenericTypeDescriptor("T")),
-    ),
-  )
+  @elanFunction(FunctionOptions.pureExtension, new ElanTypeDescriptor("List", ElanT))
   withRemoveAt<T>(
-    @elanType(new ElanTypeDescriptor("List", new ElanGenericTypeDescriptor("T"))) list: Array<T>,
+    @elanType(new ElanTypeDescriptor("List", ElanT)) list: Array<T>,
     @elanIntType() index: number,
   ) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -465,17 +357,10 @@ export class StdLib {
     return newList;
   }
 
-  @elanMethod(
-    new ElanFunctionDescriptor(
-      true,
-      true,
-      false,
-      new ElanTypeDescriptor("List", new ElanGenericTypeDescriptor("T")),
-    ),
-  )
+  @elanFunction(FunctionOptions.pureExtension, new ElanTypeDescriptor("List", ElanT))
   withRemoveFirst<T>(
-    @elanType(new ElanTypeDescriptor("List", new ElanGenericTypeDescriptor("T"))) list: Array<T>,
-    @elanType(new ElanGenericTypeDescriptor("T")) value: T,
+    @elanType(new ElanTypeDescriptor("List", ElanT)) list: Array<T>,
+    @elanType(ElanT) value: T,
   ) {
     let newList = [...list];
     const index = this.elanIndexOf(newList, value);
@@ -487,17 +372,10 @@ export class StdLib {
     return newList;
   }
 
-  @elanMethod(
-    new ElanFunctionDescriptor(
-      true,
-      true,
-      false,
-      new ElanTypeDescriptor("List", new ElanGenericTypeDescriptor("T")),
-    ),
-  )
+  @elanFunction(FunctionOptions.pureExtension, new ElanTypeDescriptor("List", ElanT))
   withRemoveAll<T>(
-    @elanType(new ElanTypeDescriptor("List", new ElanGenericTypeDescriptor("T"))) list: Array<T>,
-    @elanType(new ElanGenericTypeDescriptor("T")) value: T,
+    @elanType(new ElanTypeDescriptor("List", ElanT)) list: Array<T>,
+    @elanType(ElanT) value: T,
   ) {
     let newList = [...list];
     let index = this.elanIndexOf(newList, value);
@@ -512,7 +390,7 @@ export class StdLib {
 
   @elanMethod(new ElanProcedureDescriptor(true))
   removeAt<T>(
-    @elanType(new ElanTypeDescriptor("Array", new ElanGenericTypeDescriptor("T"))) list: Array<T>,
+    @elanType(new ElanTypeDescriptor("Array", ElanT)) list: Array<T>,
     @elanIntType() index: number,
   ) {
     list.splice(index, 1);
@@ -520,8 +398,8 @@ export class StdLib {
 
   @elanMethod(new ElanProcedureDescriptor(true))
   removeFirst<T>(
-    @elanType(new ElanTypeDescriptor("Array", new ElanGenericTypeDescriptor("T"))) list: Array<T>,
-    @elanType(new ElanGenericTypeDescriptor("T")) value: T,
+    @elanType(new ElanTypeDescriptor("Array", ElanT)) list: Array<T>,
+    @elanType(ElanT) value: T,
   ) {
     const index = this.elanIndexOf(list, value);
     if (index > -1) {
@@ -531,8 +409,8 @@ export class StdLib {
 
   @elanMethod(new ElanProcedureDescriptor(true))
   removeAll<T>(
-    @elanType(new ElanTypeDescriptor("Array", new ElanGenericTypeDescriptor("T"))) list: Array<T>,
-    @elanType(new ElanGenericTypeDescriptor("T")) value: T,
+    @elanType(new ElanTypeDescriptor("Array", ElanT)) list: Array<T>,
+    @elanType(ElanT) value: T,
   ) {
     let index = this.elanIndexOf(list, value);
     while (index > -1) {
@@ -543,59 +421,45 @@ export class StdLib {
 
   @elanMethod(new ElanProcedureDescriptor(true))
   append<T>(
-    @elanType(new ElanTypeDescriptor("Array", new ElanGenericTypeDescriptor("T"))) list: Array<T>,
-    @elanType(new ElanGenericTypeDescriptor("T")) value: T,
+    @elanType(new ElanTypeDescriptor("Array", ElanT)) list: Array<T>,
+    @elanType(ElanT) value: T,
   ) {
     list.push(value);
   }
 
   @elanMethod(new ElanProcedureDescriptor(true))
   appendList<T>(
-    @elanType(new ElanTypeDescriptor("Array", new ElanGenericTypeDescriptor("T"))) list: Array<T>,
-    @elanType(new ElanTypeDescriptor("Array", new ElanGenericTypeDescriptor("T"))) listB: Array<T>,
+    @elanType(new ElanTypeDescriptor("Array", ElanT)) list: Array<T>,
+    @elanType(new ElanTypeDescriptor("Array", ElanT)) listB: Array<T>,
   ) {
     list.push(...listB);
   }
 
   @elanMethod(new ElanProcedureDescriptor(true))
   prepend<T>(
-    @elanType(new ElanTypeDescriptor("Array", new ElanGenericTypeDescriptor("T"))) list: Array<T>,
-    @elanType(new ElanGenericTypeDescriptor("T")) value: T,
+    @elanType(new ElanTypeDescriptor("Array", ElanT)) list: Array<T>,
+    @elanType(ElanT) value: T,
   ) {
     list.unshift(value);
   }
 
   @elanMethod(new ElanProcedureDescriptor(true))
   prependList<T>(
-    @elanType(new ElanTypeDescriptor("Array", new ElanGenericTypeDescriptor("T"))) list: Array<T>,
-    @elanType(new ElanTypeDescriptor("Array", new ElanGenericTypeDescriptor("T"))) listB: Array<T>,
+    @elanType(new ElanTypeDescriptor("Array", ElanT)) list: Array<T>,
+    @elanType(new ElanTypeDescriptor("Array", ElanT)) listB: Array<T>,
   ) {
     list.unshift(...listB);
   }
 
-  @elanMethod(
-    new ElanFunctionDescriptor(
-      true,
-      true,
-      false,
-      new ElanTypeDescriptor(
-        "ImmutableDictionary",
-        new ElanGenericTypeDescriptor("T1"),
-        new ElanGenericTypeDescriptor("T2"),
-      ),
-    ),
+  @elanFunction(
+    FunctionOptions.pureExtension,
+    new ElanTypeDescriptor("ImmutableDictionary", ElanT1, ElanT2),
   )
   withPutAtKey<T>(
-    @elanType(
-      new ElanTypeDescriptor(
-        "ImmutableDictionary",
-        new ElanGenericTypeDescriptor("T1"),
-        new ElanGenericTypeDescriptor("T2"),
-      ),
-    )
+    @elanType(new ElanTypeDescriptor("ImmutableDictionary", ElanT1, ElanT2))
     dict: { [key: string]: T },
-    @elanType(new ElanGenericTypeDescriptor("T1")) key: string,
-    @elanType(new ElanGenericTypeDescriptor("T2")) value: T,
+    @elanType(ElanT1) key: string,
+    @elanType(ElanT2) value: T,
   ) {
     const newDict = { ...dict };
     newDict[key] = value;
@@ -603,121 +467,83 @@ export class StdLib {
     return newDict;
   }
 
-  @elanMethod(new ElanFunctionDescriptor(true, true, false, ElanInt))
+  @elanFunction(FunctionOptions.pureExtension, ElanInt)
   indexOf(s1: string, s2: string): number {
     return s1.indexOf(s2);
   }
 
-  @elanMethod(new ElanFunctionDescriptor(true))
+  @elanFunction(FunctionOptions.pureExtension)
   trim(s: string): string {
     return s.trim();
   }
 
-  @elanMethod(new ElanFunctionDescriptor(false, true, false, ElanInt))
+  @elanFunction(FunctionOptions.pure, ElanInt)
   floor(n: number) {
     return Math.floor(n);
   }
 
-  @elanMethod(new ElanFunctionDescriptor())
+  @elanFunction()
   round(n: number, @elanIntType() places: number): number {
     const shift = 10 ** places;
     return Math.floor(n * shift + 0.5) / shift;
   }
 
-  @elanMethod(new ElanFunctionDescriptor(false, true, false, ElanInt))
+  @elanFunction(FunctionOptions.pure, ElanInt)
   ceiling(n: number): number {
     const fl = this.floor(n);
     return n > fl ? fl + 1 : fl;
   }
 
-  @elanMethod(new ElanFunctionDescriptor())
-  typeAndProperties(
-    @elanType(new ElanGenericTypeDescriptor("T")) o: { [key: string]: object },
-  ): string {
+  @elanFunction()
+  typeAndProperties(@elanType(ElanT) o: { [key: string]: object }): string {
     const type = o.constructor.name;
     const items = Object.getOwnPropertyNames(o);
     return `${type} [${items.map((n) => `"${n}":${o[n]}`).join(", ")}]`;
   }
 
-  @elanMethod(
-    new ElanFunctionDescriptor(
-      true,
-      true,
-      false,
-      new ElanTypeDescriptor("Iterable", new ElanGenericTypeDescriptor("T")),
-    ),
-  )
+  @elanFunction(FunctionOptions.pureExtension, new ElanTypeDescriptor("Iterable", ElanT))
   filter<T>(
-    @elanType(new ElanTypeDescriptor("Iterable", new ElanGenericTypeDescriptor("T")))
+    @elanType(new ElanTypeDescriptor("Iterable", ElanT))
     source: T[] | string,
-    @elanType(
-      new ElanFuncTypeDescriptor(
-        [new ElanGenericTypeDescriptor("T")],
-        new ElanTypeDescriptor("Boolean"),
-      ),
-    )
+    @elanType(new ElanFuncTypeDescriptor([ElanT], ElanBoolean))
     predicate: (value: T | string) => boolean,
   ): (T | string)[] {
     const list = typeof source === "string" ? source.split("") : [...source];
     return this.asIter(list.filter(predicate));
   }
 
-  @elanMethod(
-    new ElanFunctionDescriptor(
-      true,
-      true,
-      false,
-      new ElanTypeDescriptor("Iterable", new ElanGenericTypeDescriptor("U")),
-    ),
-  )
+  @elanFunction(FunctionOptions.pureExtension, new ElanTypeDescriptor("Iterable", ElanTU))
   map<T, U>(
-    @elanType(new ElanTypeDescriptor("Iterable", new ElanGenericTypeDescriptor("T")))
+    @elanType(new ElanTypeDescriptor("Iterable", ElanT))
     source: T[] | string,
-    @elanType(
-      new ElanFuncTypeDescriptor(
-        [new ElanGenericTypeDescriptor("T")],
-        new ElanGenericTypeDescriptor("U"),
-      ),
-    )
+    @elanType(new ElanFuncTypeDescriptor([ElanT], ElanTU))
     predicate: (value: T | string) => U,
   ) {
     const list = typeof source === "string" ? source.split("") : [...source];
     return this.asIter(list.map(predicate));
   }
 
-  @elanMethod(new ElanFunctionDescriptor(true, true, false, new ElanGenericTypeDescriptor("U")))
+  @elanFunction(FunctionOptions.pureExtension, ElanTU)
   reduce<T, U>(
-    @elanType(new ElanTypeDescriptor("Iterable", new ElanGenericTypeDescriptor("T")))
+    @elanType(new ElanTypeDescriptor("Iterable", ElanT))
     source: T[] | string,
-    @elanType(new ElanGenericTypeDescriptor("U")) initValue: U,
-    @elanType(
-      new ElanFuncTypeDescriptor(
-        [new ElanGenericTypeDescriptor("U"), new ElanGenericTypeDescriptor("T")],
-        new ElanGenericTypeDescriptor("U"),
-      ),
-    )
+    @elanType(ElanTU) initValue: U,
+    @elanType(new ElanFuncTypeDescriptor([ElanTU, ElanT], ElanTU))
     predicate: (s: U, value: T | string) => U,
   ): U {
     const list = typeof source === "string" ? source.split("") : [...source];
     return list.reduce(predicate, initValue);
   }
 
-  @elanMethod(new ElanFunctionDescriptor(true))
-  max(
-    @elanType(new ElanTypeDescriptor("Iterable", new ElanTypeDescriptor("Float"))) source: number[],
-  ): number {
+  @elanFunction(FunctionOptions.pureExtension)
+  max(@elanType(new ElanTypeDescriptor("Iterable", ElanFloat)) source: number[]): number {
     return Math.max(...source);
   }
 
-  @elanMethod(new ElanFunctionDescriptor(true, true, false, new ElanGenericTypeDescriptor("T")))
+  @elanFunction(FunctionOptions.pureExtension, ElanT)
   maxBy<T>(
-    @elanType(new ElanTypeDescriptor("Iterable", new ElanGenericTypeDescriptor("T"))) source: T[],
-    @elanType(
-      new ElanFuncTypeDescriptor(
-        [new ElanGenericTypeDescriptor("T")],
-        new ElanTypeDescriptor("Float"),
-      ),
-    )
+    @elanType(new ElanTypeDescriptor("Iterable", ElanT)) source: T[],
+    @elanType(new ElanFuncTypeDescriptor([ElanT], ElanFloat))
     predicate: (value: T) => number,
   ): T {
     const mm = source.map(predicate);
@@ -726,22 +552,15 @@ export class StdLib {
     return source[i];
   }
 
-  @elanMethod(new ElanFunctionDescriptor(true))
-  min(
-    @elanType(new ElanTypeDescriptor("Iterable", new ElanTypeDescriptor("Float"))) source: number[],
-  ): number {
+  @elanFunction(FunctionOptions.pureExtension)
+  min(@elanType(new ElanTypeDescriptor("Iterable", ElanFloat)) source: number[]): number {
     return Math.min(...source);
   }
 
-  @elanMethod(new ElanFunctionDescriptor(true, true, false, new ElanGenericTypeDescriptor("T")))
+  @elanFunction(FunctionOptions.pureExtension, ElanT)
   minBy<T>(
-    @elanType(new ElanTypeDescriptor("Iterable", new ElanGenericTypeDescriptor("T"))) source: T[],
-    @elanType(
-      new ElanFuncTypeDescriptor(
-        [new ElanGenericTypeDescriptor("T")],
-        new ElanTypeDescriptor("Float"),
-      ),
-    )
+    @elanType(new ElanTypeDescriptor("Iterable", ElanT)) source: T[],
+    @elanType(new ElanFuncTypeDescriptor([ElanT], ElanFloat))
     predicate: (value: T) => number,
   ): T {
     const mm = source.map(predicate);
@@ -750,58 +569,29 @@ export class StdLib {
     return source[i];
   }
 
-  @elanMethod(
-    new ElanFunctionDescriptor(
-      true,
-      true,
-      false,
-      new ElanTypeDescriptor("Iterable", new ElanGenericTypeDescriptor("T")),
-    ),
-  )
+  @elanFunction(FunctionOptions.pureExtension, new ElanTypeDescriptor("Iterable", ElanT))
   sortBy<T>(
-    @elanType(new ElanTypeDescriptor("Iterable", new ElanGenericTypeDescriptor("T"))) source: T[],
-    @elanType(
-      new ElanFuncTypeDescriptor(
-        [new ElanGenericTypeDescriptor("T"), new ElanGenericTypeDescriptor("T")],
-        ElanInt,
-      ),
-    )
+    @elanType(new ElanTypeDescriptor("Iterable", ElanT)) source: T[],
+    @elanType(new ElanFuncTypeDescriptor([ElanT, ElanT], ElanInt))
     predicate: (a: T, b: T) => number,
   ): T[] {
     const clone = [...source];
     return this.asIter(clone.sort(predicate));
   }
 
-  @elanMethod(new ElanFunctionDescriptor(true))
+  @elanFunction(FunctionOptions.pureExtension)
   any<T>(
-    @elanType(new ElanTypeDescriptor("Iterable", new ElanGenericTypeDescriptor("T"))) source: T[],
-    @elanType(
-      new ElanFuncTypeDescriptor(
-        [new ElanGenericTypeDescriptor("T")],
-        new ElanTypeDescriptor("Boolean"),
-      ),
-    )
+    @elanType(new ElanTypeDescriptor("Iterable", ElanT)) source: T[],
+    @elanType(new ElanFuncTypeDescriptor([ElanT], ElanBoolean))
     predicate: (value: T) => boolean,
   ): boolean {
     return source.some(predicate);
   }
 
-  @elanMethod(
-    new ElanFunctionDescriptor(
-      true,
-      true,
-      false,
-      new ElanTypeDescriptor("Iterable", new ElanGenericTypeDescriptor("U")),
-    ),
-  )
+  @elanFunction(FunctionOptions.pureExtension, new ElanTypeDescriptor("Iterable", ElanTU))
   groupBy<T>(
-    @elanType(new ElanTypeDescriptor("Iterable", new ElanGenericTypeDescriptor("T"))) source: T[],
-    @elanType(
-      new ElanFuncTypeDescriptor(
-        [new ElanGenericTypeDescriptor("T")],
-        new ElanGenericTypeDescriptor("U"),
-      ),
-    )
+    @elanType(new ElanTypeDescriptor("Iterable", ElanT)) source: T[],
+    @elanType(new ElanFuncTypeDescriptor([ElanT], ElanTU))
     predicate: (value: T) => T,
   ) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -816,10 +606,10 @@ export class StdLib {
     }
   }
 
-  @elanMethod(new ElanFunctionDescriptor(true))
+  @elanFunction(FunctionOptions.pureExtension)
   contains<T>(
-    @elanType(new ElanTypeDescriptor("Iterable", new ElanGenericTypeDescriptor("T"))) source: T[],
-    @elanType(new ElanGenericTypeDescriptor("T")) item: T,
+    @elanType(new ElanTypeDescriptor("Iterable", ElanT)) source: T[],
+    @elanType(ElanT) item: T,
   ): boolean {
     return source.includes(item);
   }
@@ -831,17 +621,17 @@ export class StdLib {
     });
   }
 
-  @elanMethod(new ElanFunctionDescriptor(false, false, false, ElanInt))
+  @elanFunction(FunctionOptions.impure, ElanInt)
   clock(): number {
     return new Date().getTime();
   }
 
-  @elanMethod(new ElanFunctionDescriptor(false, false))
+  @elanFunction(FunctionOptions.impure)
   random(): number {
     return Math.random();
   }
 
-  @elanMethod(new ElanFunctionDescriptor(false, false, false, ElanInt))
+  @elanFunction(FunctionOptions.impure, ElanInt)
   randomInt(@elanIntType() low: number, @elanIntType() high: number): number {
     return Math.floor(Math.random() * (high - low + 1)) + low;
   }
@@ -851,10 +641,7 @@ export class StdLib {
       false,
       true,
       false,
-      new ElanTupleTypeDescriptor([
-        new ElanTypeDescriptor("Boolean"),
-        new ElanTypeDescriptor("Float"),
-      ]),
+      new ElanTupleTypeDescriptor([ElanBoolean, ElanFloat]),
     ),
   )
   parseAsFloat(s: string): [boolean, number] {
@@ -870,7 +657,7 @@ export class StdLib {
       false,
       true,
       false,
-      new ElanTupleTypeDescriptor([new ElanTypeDescriptor("Boolean"), ElanInt]),
+      new ElanTupleTypeDescriptor([ElanBoolean, ElanInt]),
     ),
   )
   parseAsInt(s: string): [boolean, number] {
@@ -943,13 +730,9 @@ export class StdLib {
     return this.system.safeIndex(cm, this.idx(x, y));
   }
 
-  @elanMethod(
-    new ElanFunctionDescriptor(
-      true,
-      true,
-      false,
-      new ElanTypeDescriptor("List", new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
-    ),
+  @elanFunction(
+    FunctionOptions.pureExtension,
+    new ElanTypeDescriptor("List", new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
   )
   withBlock(
     @elanType(
@@ -971,13 +754,9 @@ export class StdLib {
     return this.putDetails(cm, x, y, "", f, b);
   }
 
-  @elanMethod(
-    new ElanFunctionDescriptor(
-      true,
-      true,
-      false,
-      new ElanTypeDescriptor("List", new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
-    ),
+  @elanFunction(
+    FunctionOptions.pureExtension,
+    new ElanTypeDescriptor("List", new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
   )
   withUnicode(
     @elanType(
@@ -1001,13 +780,9 @@ export class StdLib {
     return this.putDetails(cm, x, y, str, f, b);
   }
 
-  @elanMethod(
-    new ElanFunctionDescriptor(
-      true,
-      true,
-      false,
-      new ElanTypeDescriptor("List", new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
-    ),
+  @elanFunction(
+    FunctionOptions.pureExtension,
+    new ElanTypeDescriptor("List", new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
   )
   withText(
     @elanType(
@@ -1042,13 +817,9 @@ export class StdLib {
     return cm;
   }
 
-  @elanMethod(
-    new ElanFunctionDescriptor(
-      true,
-      true,
-      false,
-      new ElanTypeDescriptor("List", new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
-    ),
+  @elanFunction(
+    FunctionOptions.pureExtension,
+    new ElanTypeDescriptor("List", new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
   )
   withBackground(
     @elanType(
@@ -1060,13 +831,9 @@ export class StdLib {
     return this.initialisedGraphics(b);
   }
 
-  @elanMethod(
-    new ElanFunctionDescriptor(
-      true,
-      true,
-      false,
-      new ElanTypeDescriptor("List", new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
-    ),
+  @elanFunction(
+    FunctionOptions.pureExtension,
+    new ElanTypeDescriptor("List", new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
   )
   getChar(
     @elanType(
@@ -1080,13 +847,9 @@ export class StdLib {
     return this.system.safeIndex(this.getDetails(cm, x, y), 0);
   }
 
-  @elanMethod(
-    new ElanFunctionDescriptor(
-      true,
-      true,
-      false,
-      new ElanTypeDescriptor("List", new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
-    ),
+  @elanFunction(
+    FunctionOptions.pureExtension,
+    new ElanTypeDescriptor("List", new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
   )
   getForeground(
     @elanType(
@@ -1100,13 +863,9 @@ export class StdLib {
     return this.system.safeIndex(this.getDetails(cm, x, y), 1);
   }
 
-  @elanMethod(
-    new ElanFunctionDescriptor(
-      true,
-      true,
-      false,
-      new ElanTypeDescriptor("List", new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
-    ),
+  @elanFunction(
+    FunctionOptions.pureExtension,
+    new ElanTypeDescriptor("List", new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
   )
   getBackground(
     @elanType(
@@ -1156,7 +915,7 @@ export class StdLib {
     return `#${h6}`;
   }
 
-  @elanMethod(new ElanFunctionDescriptor(true, false, true, ElanString))
+  @elanFunction(FunctionOptions.impureAsyncExtension, ElanString)
   getKeystroke(
     @elanType(
       new ElanTypeDescriptor("List", new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
@@ -1193,15 +952,8 @@ export class StdLib {
     this.system.elanInputOutput.clearKeyBuffer();
   }
 
-  @elanMethod(
-    new ElanFunctionDescriptor(
-      false,
-      true,
-      false,
-      new ElanTypeDescriptor("Array", new ElanGenericTypeDescriptor("T")),
-    ),
-  )
-  createArray<T>(@elanIntType() x: number, @elanType(new ElanGenericTypeDescriptor("T")) value: T) {
+  @elanFunction(FunctionOptions.pure, new ElanTypeDescriptor("Array", ElanT))
+  createArray<T>(@elanIntType() x: number, @elanType(ElanT) value: T) {
     if (!this.isValueType(value)) {
       throw new ElanRuntimeError(
         `Can only create array with simple value, not: ${this.asString(value)}`,
@@ -1223,17 +975,10 @@ export class StdLib {
       false,
       true,
       false,
-      new ElanTypeDescriptor(
-        "Array",
-        new ElanTypeDescriptor("Array", new ElanGenericTypeDescriptor("T")),
-      ),
+      new ElanTypeDescriptor("Array", new ElanTypeDescriptor("Array", ElanT)),
     ),
   )
-  create2DArray<T>(
-    @elanIntType() x: number,
-    @elanIntType() y: number,
-    @elanType(new ElanGenericTypeDescriptor("T")) value: T,
-  ) {
+  create2DArray<T>(@elanIntType() x: number, @elanIntType() y: number, @elanType(ElanT) value: T) {
     if (!this.isValueType(value)) {
       throw new ElanRuntimeError(
         `Can only initialise array with simple value, not: ${this.asString(value)}`,
@@ -1259,13 +1004,13 @@ export class StdLib {
     this.print(prompt);
   }
 
-  @elanMethod(new ElanFunctionDescriptor(false, false, true, ElanString))
+  @elanFunction(FunctionOptions.impureAsync, ElanString)
   inputString(prompt: string): Promise<string> {
     this.prompt(prompt);
     return this.system.input();
   }
 
-  @elanMethod(new ElanFunctionDescriptor(false, false, true, ElanString))
+  @elanFunction(FunctionOptions.impureAsync, ElanString)
   inputStringWithLimits(
     prompt: string,
     @elanIntType() minLength: number,
@@ -1284,7 +1029,7 @@ export class StdLib {
     });
   }
 
-  @elanMethod(new ElanFunctionDescriptor(false, false, true, ElanString))
+  @elanFunction(FunctionOptions.impureAsync, ElanString)
   inputStringFromOptions(
     prompt: string,
     @elanType(new ElanTypeDescriptor("Array", ElanString)) options: string[],
@@ -1300,7 +1045,7 @@ export class StdLib {
     });
   }
 
-  @elanMethod(new ElanFunctionDescriptor(false, false, true, ElanInt))
+  @elanFunction(FunctionOptions.impureAsync, ElanInt)
   inputInt(prompt: string): Promise<number> {
     this.prompt(prompt);
     return this.system.input().then((s) => {
@@ -1316,7 +1061,7 @@ export class StdLib {
     });
   }
 
-  @elanMethod(new ElanFunctionDescriptor(false, false, true, ElanInt))
+  @elanFunction(FunctionOptions.impureAsync, ElanInt)
   inputIntBetween(
     prompt: string,
     @elanIntType() min: number,
@@ -1334,7 +1079,7 @@ export class StdLib {
     });
   }
 
-  @elanMethod(new ElanFunctionDescriptor(false, false, true, ElanFloat))
+  @elanFunction(FunctionOptions.impureAsync, ElanFloat)
   inputFloat(prompt: string): Promise<number> {
     this.prompt(prompt);
     return this.system.input().then((s) => {
@@ -1350,7 +1095,7 @@ export class StdLib {
     });
   }
 
-  @elanMethod(new ElanFunctionDescriptor(false, false, true, ElanFloat))
+  @elanFunction(FunctionOptions.impureAsync, ElanFloat)
   inputFloatBetween(prompt: string, min: number, max: number): Promise<number> {
     this.prompt(prompt);
     return this.system.input().then((s) => {
@@ -1366,69 +1111,69 @@ export class StdLib {
   //Math
   @elanConstant() pi: number = Math.PI;
 
-  @elanMethod(new ElanFunctionDescriptor())
+  @elanFunction()
   abs(x: number): number {
     return Math.abs(x);
   }
 
   // Returns the absolute value of the input.
 
-  @elanMethod(new ElanFunctionDescriptor())
+  @elanFunction()
   acos(x: number): number {
     return Math.acos(x);
   }
   // Returns the arccosine of the input.
 
-  @elanMethod(new ElanFunctionDescriptor())
+  @elanFunction()
   acosDeg(n: number): number {
     return this.radToDeg(this.acos(n));
   }
 
-  @elanMethod(new ElanFunctionDescriptor())
+  @elanFunction()
   asin(x: number): number {
     return Math.asin(x);
   }
   // Returns the arcsine of the input.
 
-  @elanMethod(new ElanFunctionDescriptor())
+  @elanFunction()
   asinDeg(n: number): number {
     return this.radToDeg(this.asin(n));
   }
 
-  @elanMethod(new ElanFunctionDescriptor())
+  @elanFunction()
   atan(x: number): number {
     return Math.atan(x);
   }
   // Returns the arctangent of the input.
 
-  @elanMethod(new ElanFunctionDescriptor())
+  @elanFunction()
   atanDeg(n: number): number {
     return this.radToDeg(this.atan(n));
   }
 
-  @elanMethod(new ElanFunctionDescriptor())
+  @elanFunction()
   cos(x: number): number {
     return Math.cos(x);
   }
 
-  @elanMethod(new ElanFunctionDescriptor())
+  @elanFunction()
   cosDeg(n: number): number {
     return this.cos(this.degToRad(n));
   }
 
-  @elanMethod(new ElanFunctionDescriptor())
+  @elanFunction()
   exp(x: number): number {
     return Math.exp(x);
   }
   // Returns ex, where x is the argument, and e is Euler's number (2.718…, the base of the natural logarithm).
 
-  @elanMethod(new ElanFunctionDescriptor())
+  @elanFunction()
   logE(x: number): number {
     return Math.log(x);
   }
   // Returns the natural logarithm (㏒e; also, ㏑) of the input.
 
-  @elanMethod(new ElanFunctionDescriptor())
+  @elanFunction()
   log10(x: number): number {
     return Math.log10(x);
   }
@@ -1436,54 +1181,52 @@ export class StdLib {
 
   // Returns the base-2 logarithm of the input.
 
-  @elanMethod(new ElanFunctionDescriptor())
+  @elanFunction()
   log2(x: number): number {
     return Math.log2(x);
   }
 
-  @elanMethod(new ElanFunctionDescriptor())
+  @elanFunction()
   sin(x: number): number {
     return Math.sin(x);
   }
   // Returns the sine of the input.
 
-  @elanMethod(new ElanFunctionDescriptor())
+  @elanFunction()
   sinDeg(n: number): number {
     return this.sin(this.degToRad(n));
   }
 
-  @elanMethod(new ElanFunctionDescriptor())
+  @elanFunction()
   sqrt(x: number): number {
     return Math.sqrt(x);
   }
   // Returns the positive square root of the input.
 
-  @elanMethod(new ElanFunctionDescriptor())
+  @elanFunction()
   tan(x: number): number {
     return Math.tan(x);
   }
   // Returns the tangent of the input.
 
-  @elanMethod(new ElanFunctionDescriptor())
+  @elanFunction()
   tanDeg(n: number): number {
     return this.tan(this.degToRad(n));
   }
 
-  @elanMethod(new ElanFunctionDescriptor())
+  @elanFunction()
   degToRad(d: number): number {
     return (d * this.pi) / 180;
   }
 
-  @elanMethod(new ElanFunctionDescriptor())
+  @elanFunction()
   radToDeg(r: number): number {
     return (r / this.pi) * 180;
   }
 
   // Functional random
   // Credit for source of algorithm: https://www.codeproject.com/Articles/25172/Simple-Random-Number-Generation
-  @elanMethod(
-    new ElanFunctionDescriptor(true, true, false, new ElanTupleTypeDescriptor([ElanInt, ElanInt])),
-  )
+  @elanFunction(FunctionOptions.pureExtension, new ElanTupleTypeDescriptor([ElanInt, ElanInt]))
   next(
     @elanType(new ElanTupleTypeDescriptor([ElanInt, ElanInt])) current: [number, number],
   ): [number, number] {
@@ -1494,7 +1237,7 @@ export class StdLib {
     return [u2, v2];
   }
 
-  @elanMethod(new ElanFunctionDescriptor(true, true, false, ElanFloat))
+  @elanFunction(FunctionOptions.pureExtension, ElanFloat)
   value(
     @elanType(new ElanTupleTypeDescriptor([ElanInt, ElanInt])) current: [number, number],
   ): number {
@@ -1515,7 +1258,7 @@ export class StdLib {
     return this.lo16(n / 65536);
   }
 
-  @elanMethod(new ElanFunctionDescriptor(true, true, false, ElanInt))
+  @elanFunction(FunctionOptions.pureExtension, ElanInt)
   valueInt(
     @elanType(new ElanTupleTypeDescriptor([ElanInt, ElanInt])) current: [number, number],
     @elanIntType() min: number,
@@ -1550,42 +1293,42 @@ export class StdLib {
     return [this.hi16(c), this.lo16(c)];
   }
 
-  @elanMethod(new ElanFunctionDescriptor(false, true, false, ElanInt))
+  @elanFunction(FunctionOptions.pure, ElanInt)
   bitAnd(@elanIntType() a: number, @elanIntType() b: number): number {
     return a & b;
   }
 
-  @elanMethod(new ElanFunctionDescriptor(false, true, false, ElanInt))
+  @elanFunction(FunctionOptions.pure, ElanInt)
   bitOr(@elanIntType() a: number, @elanIntType() b: number): number {
     return a | b;
   }
 
-  @elanMethod(new ElanFunctionDescriptor(false, true, false, ElanInt))
+  @elanFunction(FunctionOptions.pure, ElanInt)
   bitXor(@elanIntType() a: number, @elanIntType() b: number): number {
     return a ^ b;
   }
 
-  @elanMethod(new ElanFunctionDescriptor(false, true, false, ElanInt))
+  @elanFunction(FunctionOptions.pure, ElanInt)
   bitNot(@elanIntType() a: number): number {
     return ~a;
   }
 
-  @elanMethod(new ElanFunctionDescriptor(false, true, false, ElanInt))
+  @elanFunction(FunctionOptions.pure, ElanInt)
   bitShiftL(@elanIntType() a: number, @elanIntType() shift: number): number {
     return a << shift;
   }
 
-  @elanMethod(new ElanFunctionDescriptor(false, true, false, ElanInt))
+  @elanFunction(FunctionOptions.pure, ElanInt)
   bitShiftR(@elanIntType() a: number, @elanIntType() shift: number): number {
     return a >>> shift;
   }
 
-  @elanMethod(new ElanFunctionDescriptor(true))
+  @elanFunction(FunctionOptions.pureExtension)
   asBinary(@elanIntType() a: number): string {
     return a.toString(2);
   }
 
-  @elanMethod(new ElanFunctionDescriptor(true))
+  @elanFunction(FunctionOptions.pureExtension)
   matchesRegex(a: string, r: RegExp): boolean {
     return r.test(a);
   }
@@ -1602,7 +1345,7 @@ export class StdLib {
     return [1, contents, 0];
   }
 
-  @elanMethod(new ElanFunctionDescriptor(true, false, true))
+  @elanFunction(FunctionOptions.impureAsyncExtension)
   readLine(
     @elanType(new ElanTupleTypeDescriptor([ElanInt, ElanString, ElanInt])) file: File,
   ): string {
@@ -1624,7 +1367,7 @@ export class StdLib {
     return line;
   }
 
-  @elanMethod(new ElanFunctionDescriptor(true, true))
+  @elanFunction(FunctionOptions.pureExtension)
   endOfFile(
     @elanType(new ElanTupleTypeDescriptor([ElanInt, ElanString, ElanInt])) file: File,
   ): boolean {

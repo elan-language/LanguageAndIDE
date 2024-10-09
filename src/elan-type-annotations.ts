@@ -165,6 +165,11 @@ function mapTypescriptType(t: tsType): TypescriptTypeDescriptor {
   return new TypescriptTypeDescriptor(t.name);
 }
 
+export function elanFunction(options?: FunctionOptions, retType?: TypeDescriptor) {
+  const flags = mapOptions(options ?? FunctionOptions.pure, retType);
+  return elanMethod(new ElanFunctionDescriptor(...flags));
+}
+
 export function elanMethod(elanDesc: ElanMethodDescriptor) {
   return function (target: object, propertyKey: string, descriptor: PropertyDescriptor) {
     const paramTypesMetadata = Reflect.getMetadata("design:paramtypes", target, propertyKey);
@@ -227,6 +232,11 @@ export const ElanString: ElanTypeDescriptor = new ElanTypeDescriptor("String");
 export const ElanBoolean: ElanTypeDescriptor = new ElanTypeDescriptor("Boolean");
 export const ElanRegex: ElanTypeDescriptor = new ElanTypeDescriptor("Regex");
 
+export const ElanT: ElanTypeDescriptor = new ElanGenericTypeDescriptor("T");
+export const ElanT1: ElanTypeDescriptor = new ElanGenericTypeDescriptor("T1");
+export const ElanT2: ElanTypeDescriptor = new ElanGenericTypeDescriptor("T2");
+export const ElanTU: ElanTypeDescriptor = new ElanGenericTypeDescriptor("U");
+
 export function elanIntType() {
   return elanType(ElanInt);
 }
@@ -245,4 +255,39 @@ export function elanBooleanType() {
 
 export function elanRegexType() {
   return elanType(ElanRegex);
+}
+
+export enum FunctionOptions {
+  pure,
+  pureExtension,
+  pureAsync,
+  pureAsyncExtension,
+  impure,
+  impureExtension,
+  impureAsync,
+  impureAsyncExtension,
+}
+
+function mapOptions(
+  options: FunctionOptions,
+  retType?: TypeDescriptor,
+): [boolean, boolean, boolean, TypeDescriptor | undefined] {
+  switch (options) {
+    case FunctionOptions.pure:
+      return [false, true, false, retType];
+    case FunctionOptions.pureExtension:
+      return [true, true, false, retType];
+    case FunctionOptions.pureAsync:
+      return [true, true, false, retType];
+    case FunctionOptions.pureAsyncExtension:
+      return [true, true, true, retType];
+    case FunctionOptions.impure:
+      return [false, false, false, retType];
+    case FunctionOptions.impureExtension:
+      return [true, false, false, retType];
+    case FunctionOptions.impureAsync:
+      return [false, false, true, retType];
+    case FunctionOptions.impureAsyncExtension:
+      return [true, false, true, retType];
+  }
 }
