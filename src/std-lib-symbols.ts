@@ -1,6 +1,11 @@
 import {
+  ElanDescriptor,
   ElanMethodDescriptor,
   elanMethodMetadataKey,
+  IElanFunctionDescriptor,
+  IElanProcedureDescriptor,
+  isFunctionDescriptor,
+  isProcedureDescriptor,
   TypeDescriptor,
 } from "./elan-type-interfaces";
 import { ElanSymbol } from "./frames/interfaces/elan-symbol";
@@ -36,14 +41,14 @@ export class StdLibSymbols implements Scope {
       const name = names[i];
 
       const metadata = Reflect.getMetadata(elanMethodMetadataKey, stdlib, name) as
-        | ElanMethodDescriptor
+        | ElanDescriptor
         | undefined;
 
-      if (metadata && metadata.isFunction) {
+      if (isFunctionDescriptor(metadata)) {
         this.loadFunction(name, metadata);
       }
 
-      if (metadata && metadata.isProcedure) {
+      if (isProcedureDescriptor(metadata)) {
         this.loadProcedure(name, metadata);
       }
     }
@@ -73,7 +78,7 @@ export class StdLibSymbols implements Scope {
     );
   }
 
-  private loadFunction(name: string, descriptor: ElanMethodDescriptor) {
+  private loadFunction(name: string, descriptor: IElanFunctionDescriptor) {
     const retType = descriptor.returnType;
     const parameterTypes = descriptor.parameters;
 
@@ -88,7 +93,7 @@ export class StdLibSymbols implements Scope {
     this.symbols.set(name, this.getSymbol(name, symbolType));
   }
 
-  private loadProcedure(name: string, descriptor: ElanMethodDescriptor) {
+  private loadProcedure(name: string, descriptor: IElanProcedureDescriptor) {
     const parameterTypes = descriptor.parameters;
 
     const symbolType = this.createProcedure(
@@ -141,8 +146,6 @@ export class StdLibSymbols implements Scope {
     ["blue", this.getSymbol("blue", IntType.Instance)],
     ["yellow", this.getSymbol("yellow", IntType.Instance)],
     ["brown", this.getSymbol("brown", IntType.Instance)],
-
-  
   ]);
 
   resolveSymbol(id: string | undefined, transforms: Transforms, scope: Scope): ElanSymbol {

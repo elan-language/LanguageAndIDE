@@ -1,11 +1,11 @@
 import "reflect-metadata";
 import { ElanRuntimeError } from "./elan-runtime-error";
 import {
+  elanConstant,
   ElanFloat,
   ElanFunctionDescriptor,
   ElanFuncTypeDescriptor,
   ElanGenericTypeDescriptor,
-  elanIgnore,
   ElanInt,
   elanIntType,
   elanMethod,
@@ -30,7 +30,19 @@ export class StdLib {
 
   system: System;
 
-  isValueType<T>(v: T) {
+  // Standard colours
+
+  @elanConstant(ElanInt)
+  black = 0x000000;
+  grey = 0x808080;
+  white = 0xffffff;
+  red = 0xff0000;
+  green = 0x008000;
+  blue = 0x0000ff;
+  yellow = 0xffff00;
+  brown = 0xa52a2a;
+
+  private isValueType<T>(v: T) {
     return typeof v === "boolean" || typeof v === "string" || typeof v === "number";
   }
 
@@ -416,8 +428,7 @@ export class StdLib {
   }
 
   // custom impl
-  @elanIgnore
-  elanIndexOf<T>(list: T[], elem: T) {
+  private elanIndexOf<T>(list: T[], elem: T) {
     for (let i = 0; i < list.length; i++) {
       const item = list[i];
       if (this.system.equals(item, elem)) {
@@ -1529,16 +1540,6 @@ export class StdLib {
     const c = this.clock();
     return [this.hi16(c), this.lo16(c)];
   }
-  // Standard colours
-
-  black = 0x000000;
-  grey = 0x808080;
-  white = 0xffffff;
-  red = 0xff0000;
-  green = 0x008000;
-  blue = 0x0000ff;
-  yellow = 0xffff00;
-  brown = 0xa52a2a;
 
   @elanMethod(new ElanFunctionDescriptor(false, true, false, ElanInt))
   bitAnd(@elanIntType() a: number, @elanIntType() b: number): number {
@@ -1615,12 +1616,14 @@ export class StdLib {
   }
 
   @elanMethod(new ElanFunctionDescriptor(true, true))
-  endOfFile( @elanType(new ElanTupleTypeDescriptor([ElanInt, ElanString, ElanInt])) file: File): boolean {
+  endOfFile(
+    @elanType(new ElanTupleTypeDescriptor([ElanInt, ElanString, ElanInt])) file: File,
+  ): boolean {
     return file[2] >= file[1].length - 1;
   }
 
   @elanMethod(new ElanProcedureDescriptor(true, true))
-  close( @elanType(new ElanTupleTypeDescriptor([ElanInt, ElanString, ElanInt])) file: File): void {
+  close(@elanType(new ElanTupleTypeDescriptor([ElanInt, ElanString, ElanInt])) file: File): void {
     //Does nothing for now.
   }
 }

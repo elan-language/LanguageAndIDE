@@ -1,8 +1,8 @@
 import { ElanCompilerError } from "./elan-compiler-error";
 import {
-  elanIgnoreMetadataKey,
   ElanMethodDescriptor,
   elanMethodMetadataKey,
+  isFunctionDescriptor,
   TypeDescriptor,
 } from "./elan-type-interfaces";
 import { SymbolType } from "./frames/interfaces/symbol-type";
@@ -28,7 +28,7 @@ export class ElanProcedureDescriptor implements ElanMethodDescriptor {
   ) {}
 
   isProcedure = true;
-  isFunction = false;
+
   isPure = false;
 
   parameters: TypeDescriptor[] = [];
@@ -41,15 +41,13 @@ export class ElanFunctionDescriptor implements ElanMethodDescriptor {
     public readonly isAsync: boolean = false,
     public readonly returnType?: TypeDescriptor,
   ) {}
-  isProcedure = false;
+
   isFunction = true;
 
   parameters: TypeDescriptor[] = [];
 }
 
 export class ElanParametersDescriptor implements ElanMethodDescriptor {
-  isProcedure = false;
-  isFunction = false;
   isPure = false;
   isExtension = false;
   isAsync = false;
@@ -64,6 +62,8 @@ export class ElanTypeDescriptor implements TypeDescriptor {
     public readonly ofType?: ElanTypeDescriptor,
     public readonly valueType?: ElanTypeDescriptor,
   ) {}
+
+  isConstant = true;
 
   mapType(): SymbolType {
     switch (this.name) {
@@ -97,6 +97,8 @@ export class ElanTypeDescriptor implements TypeDescriptor {
 export class ElanGenericTypeDescriptor implements TypeDescriptor {
   constructor(public readonly name: string) {}
 
+  isConstant = true;
+
   mapType(): SymbolType {
     return new GenericParameterType(this.name);
   }
@@ -107,6 +109,8 @@ export class ElanFuncTypeDescriptor implements TypeDescriptor {
     public readonly parameters: TypeDescriptor[],
     public readonly returnType: TypeDescriptor,
   ) {}
+
+  isConstant = true;
 
   name = "Func";
 
@@ -124,6 +128,8 @@ export class ElanTupleTypeDescriptor implements TypeDescriptor {
 
   name = "Tuple";
 
+  isConstant = true;
+
   mapType(): SymbolType {
     return new TupleType(this.parameters.map((p) => p.mapType()));
   }
@@ -131,6 +137,8 @@ export class ElanTupleTypeDescriptor implements TypeDescriptor {
 
 export class TypescriptTypeDescriptor implements TypeDescriptor {
   constructor(public readonly name: string) {}
+
+  isConstant = true;
 
   mapType(): SymbolType {
     switch (this.name) {
@@ -151,10 +159,6 @@ export class TypescriptTypeDescriptor implements TypeDescriptor {
   }
 }
 
-export function elanIgnore(target: object, propertyKey: string, descriptor: PropertyDescriptor) {
-  Reflect.defineMetadata(elanIgnoreMetadataKey, true, target, propertyKey);
-}
-
 type tsType = { name: string };
 
 function mapTypescriptType(t: tsType): TypescriptTypeDescriptor {
@@ -170,7 +174,12 @@ export function elanMethod(elanDesc: ElanMethodDescriptor) {
       elanDesc.parameters = paramTypesMetadata.map((t) => mapTypescriptType(t));
     }
 
-    if (!elanDesc.returnType && retTypeMetadata && retTypeMetadata.name) {
+    if (
+      isFunctionDescriptor(elanDesc) &&
+      !elanDesc.returnType &&
+      retTypeMetadata &&
+      retTypeMetadata.name
+    ) {
       elanDesc.returnType = new TypescriptTypeDescriptor(retTypeMetadata.name);
     }
 
@@ -184,6 +193,34 @@ export function elanMethod(elanDesc: ElanMethodDescriptor) {
         elanDesc.parameters[i] = updatedParam;
       }
     }
+
+    Reflect.defineMetadata(elanMethodMetadataKey, elanDesc, target, propertyKey);
+  };
+}
+
+export function elanConstant(elanDesc: ElanTypeDescriptor) {
+  return function (target: object, propertyKey: string) {
+    // const paramTypesMetadata = Reflect.getMetadata("design:paramtypes", target, propertyKey);
+    // const retTypeMetadata = Reflect.getMetadata("design:returntype", target, propertyKey);
+
+    // if (Array.isArray(paramTypesMetadata)) {
+    //   elanDesc.parameters = paramTypesMetadata.map((t) => mapTypescriptType(t));
+    // }
+
+    // if (!elanDesc.returnType && retTypeMetadata && retTypeMetadata.name) {
+    //   elanDesc.returnType = new TypescriptTypeDescriptor(retTypeMetadata.name);
+    // }
+
+    // const metaData: ElanMethodDescriptor =
+    //   Reflect.getOwnMetadata(elanMethodMetadataKey, target, propertyKey) ??
+    //   new ElanParametersDescriptor();
+
+    // for (let i = 0; i <= elanDesc.parameters.length; i++) {
+    //   const updatedParam = metaData.parameters[i];
+    //   if (updatedParam) {
+    //     elanDesc.parameters[i] = updatedParam;
+    //   }
+    // }
 
     Reflect.defineMetadata(elanMethodMetadataKey, elanDesc, target, propertyKey);
   };
@@ -204,11 +241,24 @@ export const ElanInt: ElanTypeDescriptor = new ElanTypeDescriptor("Int");
 export const ElanFloat: ElanTypeDescriptor = new ElanTypeDescriptor("Float");
 export const ElanString: ElanTypeDescriptor = new ElanTypeDescriptor("String");
 export const ElanBoolean: ElanTypeDescriptor = new ElanTypeDescriptor("Boolean");
+export const ElanRegex: ElanTypeDescriptor = new ElanTypeDescriptor("Regex");
 
 export function elanIntType() {
   return elanType(ElanInt);
 }
 
+export function elanFloatType() {
+  return elanType(ElanFloat);
+}
+
 export function elanStringType() {
   return elanType(ElanString);
+}
+
+export function elanBooleanType() {
+  return elanType(ElanBoolean);
+}
+
+export function elanRegexType() {
+  return elanType(ElanRegex);
 }
