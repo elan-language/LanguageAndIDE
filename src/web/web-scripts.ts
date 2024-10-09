@@ -74,7 +74,9 @@ function resetFile(reset: boolean) {
 }
 
 function showError(err: Error, fileName: string, reset: boolean) {
-  resetFile(reset);
+  if (reset) {
+    resetFile(true);
+  }
   file.fileName = fileName;
 
   if (err.message === cannotLoadFile) {
