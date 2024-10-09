@@ -11,15 +11,10 @@ import {
 import { ElanSymbol } from "./frames/interfaces/elan-symbol";
 import { Scope } from "./frames/interfaces/scope";
 import { SymbolType } from "./frames/interfaces/symbol-type";
-import { FloatType } from "./frames/symbols/float-type";
 import { FunctionType } from "./frames/symbols/function-type";
-import { IntType } from "./frames/symbols/int-type";
-import { ListType } from "./frames/symbols/list-type";
 import { NullScope } from "./frames/symbols/null-scope";
 import { ProcedureType } from "./frames/symbols/procedure-type";
-import { StringType } from "./frames/symbols/string-type";
 import { SymbolScope } from "./frames/symbols/symbol-scope";
-import { TupleType } from "./frames/symbols/tuple-type";
 import { UnknownSymbol } from "./frames/symbols/unknown-symbol";
 import { Transforms } from "./frames/syntax-nodes/transforms";
 import { StdLib } from "./std-lib";
@@ -28,6 +23,8 @@ export class StdLibSymbols implements Scope {
   constructor() {
     this.loadSymbols();
   }
+
+  private symbols = new Map<string, ElanSymbol>();
 
   private loadSymbols() {
     const stdlib = new StdLib();
@@ -129,21 +126,6 @@ export class StdLibSymbols implements Scope {
       symbolScope: SymbolScope.stdlib,
     };
   }
-
-  // todo - we need to load this from a .d.ts file also work out how to do generics
-  private symbols = new Map<string, ElanSymbol>([
-    // Block Graphics
-
-    [
-      "BlockGraphics",
-      this.getSymbol(
-        "BlockGraphics",
-        new ListType(new TupleType([StringType.Instance, IntType.Instance, IntType.Instance])),
-      ),
-    ],
-
-    ["Random", this.getSymbol("Random", new TupleType([IntType.Instance, IntType.Instance]))],
-  ]);
 
   resolveSymbol(id: string | undefined, transforms: Transforms, scope: Scope): ElanSymbol {
     return id ? this.symbols.get(id) ?? new UnknownSymbol(id) : new UnknownSymbol();

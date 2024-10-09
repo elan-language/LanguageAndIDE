@@ -16,7 +16,7 @@
   "scripts": {
     "compile-api": "esbuild ./src/std-lib.ts --bundle --format=esm --outfile=web-editor/elan-api.js",
     "compile-test": "tsc -p ./test && npm run format-test",
-    "compile-src": "tsc -p ./ && esbuild ./src/web/web-scripts.ts --bundle --outfile=web-editor/web-scripts.js",
+    "compile-src": "tsc -p ./ && esbuild ./out/src/web/web-scripts.js --bundle --outfile=web-editor/web-scripts.js",
     "compile": "npm run compile-src && npm run compile-api && npm run format-src && npm run lint",
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile-src && npm run compile-test && cpr ./test/files ./out/test/files -o",

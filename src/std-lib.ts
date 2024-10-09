@@ -30,6 +30,16 @@ export class StdLib {
 
   system: System;
 
+  // types
+
+  @elanConstant(
+    new ElanTypeDescriptor("List", new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
+  )
+  BlockGraphics = "";
+
+  @elanConstant(new ElanTupleTypeDescriptor([ElanInt, ElanInt]))
+  Random = "";
+
   // Standard colours
 
   @elanConstant(ElanInt) black = 0x000000;
