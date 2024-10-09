@@ -194,3 +194,9 @@ export function elanType(eType: ElanTypeDescriptor | ElanFuncTypeDescriptor) {
     Reflect.defineMetadata(elanMethodMetadataKey, metaData, target, propertyKey);
   };
 }
+
+export const ElanInt: ElanTypeDescriptor = new ElanTypeDescriptor("Int");
+
+export function elanIntType() {
+  return elanType(ElanInt);
+}

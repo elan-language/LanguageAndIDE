@@ -10,7 +10,6 @@ import { ArrayType } from "./frames/symbols/array-list-type";
 import { BooleanType } from "./frames/symbols/boolean-type";
 import { FloatType } from "./frames/symbols/float-type";
 import { FunctionType } from "./frames/symbols/function-type";
-import { GenericParameterType } from "./frames/symbols/generic-parameter-type";
 import { IntType } from "./frames/symbols/int-type";
 import { ListType } from "./frames/symbols/list-type";
 import { NullScope } from "./frames/symbols/null-scope";

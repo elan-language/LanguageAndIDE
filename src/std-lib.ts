@@ -5,6 +5,8 @@ import {
   ElanFuncTypeDescriptor,
   ElanGenericTypeDescriptor,
   elanIgnore,
+  ElanInt,
+  elanIntType,
   elanMethod,
   ElanProcedureDescriptor,
   ElanTupleTypeDescriptor,
@@ -94,7 +96,7 @@ export class StdLib {
   }
 
   @elanMethod(new ElanFunctionDescriptor())
-  stringForUnicode(@elanType(new ElanTypeDescriptor("Int")) n: number): string {
+  stringForUnicode(@elanIntType() n: number): string {
     return String.fromCharCode(n);
   }
 
@@ -136,17 +138,9 @@ export class StdLib {
   }
 
   @elanMethod(
-    new ElanFunctionDescriptor(
-      false,
-      true,
-      false,
-      new ElanTypeDescriptor("Iterable", new ElanTypeDescriptor("Int")),
-    ),
+    new ElanFunctionDescriptor(false, true, false, new ElanTypeDescriptor("Iterable", ElanInt)),
   )
-  range(
-    @elanType(new ElanTypeDescriptor("Int")) start: number,
-    @elanType(new ElanTypeDescriptor("Int")) end: number,
-  ): number[] {
+  range(@elanIntType() start: number, @elanIntType() end: number): number[] {
     const seq = [];
     for (let i = start; i <= end; i++) {
       seq.push(i);
@@ -287,7 +281,7 @@ export class StdLib {
     delete dict[key];
   }
 
-  @elanMethod(new ElanFunctionDescriptor(true, true, false, new ElanTypeDescriptor("Int")))
+  @elanMethod(new ElanFunctionDescriptor(true, true, false, ElanInt))
   length<T>(
     @elanType(new ElanTypeDescriptor("Iterable", new ElanGenericTypeDescriptor("T")))
     coll: string | T[] | { [key: string]: T },
@@ -341,7 +335,7 @@ export class StdLib {
   )
   withPutAt<T>(
     @elanType(new ElanTypeDescriptor("List", new ElanGenericTypeDescriptor("T"))) list: Array<T>,
-    @elanType(new ElanTypeDescriptor("Int")) index: number,
+    @elanIntType() index: number,
     @elanType(new ElanGenericTypeDescriptor("T")) value: T,
   ) {
     const newList = [...list];
@@ -353,7 +347,7 @@ export class StdLib {
   @elanMethod(new ElanProcedureDescriptor(true))
   putAt<T>(
     @elanType(new ElanTypeDescriptor("Array", new ElanGenericTypeDescriptor("T"))) list: Array<T>,
-    @elanType(new ElanTypeDescriptor("Int")) index: number,
+    @elanIntType() index: number,
     @elanType(new ElanGenericTypeDescriptor("T")) value: T,
   ) {
     this.system.safeArraySet(list, index, value);
@@ -368,8 +362,8 @@ export class StdLib {
       ),
     )
     list: Array<Array<T>>,
-    @elanType(new ElanTypeDescriptor("Int")) col: number,
-    @elanType(new ElanTypeDescriptor("Int")) row: number,
+    @elanIntType() col: number,
+    @elanIntType() row: number,
     @elanType(new ElanGenericTypeDescriptor("T")) value: T,
   ) {
     this.system.safeArraySet(list[col], row, value);
@@ -401,7 +395,7 @@ export class StdLib {
   )
   withInsert<T>(
     @elanType(new ElanTypeDescriptor("List", new ElanGenericTypeDescriptor("T"))) list: Array<T>,
-    @elanType(new ElanTypeDescriptor("Int")) index: number,
+    @elanIntType() index: number,
     @elanType(new ElanGenericTypeDescriptor("T")) value: T,
   ) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -413,7 +407,7 @@ export class StdLib {
   @elanMethod(new ElanProcedureDescriptor(true))
   insertAt<T>(
     @elanType(new ElanTypeDescriptor("Array", new ElanGenericTypeDescriptor("T"))) list: Array<T>,
-    @elanType(new ElanTypeDescriptor("Int")) index: number,
+    @elanIntType() index: number,
     @elanType(new ElanGenericTypeDescriptor("T")) value: T,
   ) {
     list.splice(index, 0, value);
@@ -441,7 +435,7 @@ export class StdLib {
   )
   withRemoveAt<T>(
     @elanType(new ElanTypeDescriptor("List", new ElanGenericTypeDescriptor("T"))) list: Array<T>,
-    @elanType(new ElanTypeDescriptor("Int")) index: number,
+    @elanIntType() index: number,
   ) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const newList = (list as any).toSpliced(index, 1);
@@ -497,7 +491,7 @@ export class StdLib {
   @elanMethod(new ElanProcedureDescriptor(true))
   removeAt<T>(
     @elanType(new ElanTypeDescriptor("Array", new ElanGenericTypeDescriptor("T"))) list: Array<T>,
-    @elanType(new ElanTypeDescriptor("Int")) index: number,
+    @elanIntType() index: number,
   ) {
     list.splice(index, 1);
   }
@@ -587,7 +581,7 @@ export class StdLib {
     return newDict;
   }
 
-  @elanMethod(new ElanFunctionDescriptor(true, true, false, new ElanTypeDescriptor("Int")))
+  @elanMethod(new ElanFunctionDescriptor(true, true, false, ElanInt))
   indexOf(s1: string, s2: string): number {
     return s1.indexOf(s2);
   }
@@ -597,18 +591,18 @@ export class StdLib {
     return s.trim();
   }
 
-  @elanMethod(new ElanFunctionDescriptor(false, true, false, new ElanTypeDescriptor("Int")))
+  @elanMethod(new ElanFunctionDescriptor(false, true, false, ElanInt))
   floor(n: number) {
     return Math.floor(n);
   }
 
   @elanMethod(new ElanFunctionDescriptor())
-  round(n: number, @elanType(new ElanTypeDescriptor("Int")) places: number): number {
+  round(n: number, @elanIntType() places: number): number {
     const shift = 10 ** places;
     return Math.floor(n * shift + 0.5) / shift;
   }
 
-  @elanMethod(new ElanFunctionDescriptor(false, true, false, new ElanTypeDescriptor("Int")))
+  @elanMethod(new ElanFunctionDescriptor(false, true, false, ElanInt))
   ceiling(n: number): number {
     const fl = this.floor(n);
     return n > fl ? fl + 1 : fl;
@@ -747,7 +741,7 @@ export class StdLib {
     @elanType(
       new ElanFuncTypeDescriptor(
         [new ElanGenericTypeDescriptor("T"), new ElanGenericTypeDescriptor("T")],
-        new ElanTypeDescriptor("Int"),
+        ElanInt,
       ),
     )
     predicate: (a: T, b: T) => number,
@@ -815,7 +809,7 @@ export class StdLib {
     });
   }
 
-  @elanMethod(new ElanFunctionDescriptor(false, false, false, new ElanTypeDescriptor("Int")))
+  @elanMethod(new ElanFunctionDescriptor(false, false, false, ElanInt))
   clock(): number {
     return new Date().getTime();
   }
@@ -825,11 +819,8 @@ export class StdLib {
     return Math.random();
   }
 
-  @elanMethod(new ElanFunctionDescriptor(false, false, false, new ElanTypeDescriptor("Int")))
-  randomInt(
-    @elanType(new ElanTypeDescriptor("Int")) low: number,
-    @elanType(new ElanTypeDescriptor("Int")) high: number,
-  ): number {
+  @elanMethod(new ElanFunctionDescriptor(false, false, false, ElanInt))
+  randomInt(@elanIntType() low: number, @elanIntType() high: number): number {
     return Math.floor(Math.random() * (high - low + 1)) + low;
   }
 
@@ -857,10 +848,7 @@ export class StdLib {
       false,
       true,
       false,
-      new ElanTupleTypeDescriptor([
-        new ElanTypeDescriptor("Boolean"),
-        new ElanTypeDescriptor("Int"),
-      ]),
+      new ElanTupleTypeDescriptor([new ElanTypeDescriptor("Boolean"), ElanInt]),
     ),
   )
   parseAsInt(s: string): [boolean, number] {
@@ -874,7 +862,7 @@ export class StdLib {
   }
 
   @elanMethod(new ElanProcedureDescriptor())
-  printTab(@elanType(new ElanTypeDescriptor("Int")) position: number, s: string) {
+  printTab(@elanIntType() position: number, s: string) {
     this.system.elanInputOutput.printTab(position, s);
   }
 
@@ -1068,10 +1056,7 @@ export class StdLib {
       new ElanTypeDescriptor("Array", new ElanGenericTypeDescriptor("T")),
     ),
   )
-  createArray<T>(
-    @elanType(new ElanTypeDescriptor("Int")) x: number,
-    @elanType(new ElanGenericTypeDescriptor("T")) value: T,
-  ) {
+  createArray<T>(@elanIntType() x: number, @elanType(new ElanGenericTypeDescriptor("T")) value: T) {
     if (!this.isValueType(value)) {
       throw new ElanRuntimeError(
         `Can only create array with simple value, not: ${this.asString(value)}`,
@@ -1100,8 +1085,8 @@ export class StdLib {
     ),
   )
   create2DArray<T>(
-    @elanType(new ElanTypeDescriptor("Int")) x: number,
-    @elanType(new ElanTypeDescriptor("Int")) y: number,
+    @elanIntType() x: number,
+    @elanIntType() y: number,
     @elanType(new ElanGenericTypeDescriptor("T")) value: T,
   ) {
     if (!this.isValueType(value)) {
@@ -1130,14 +1115,18 @@ export class StdLib {
     this.print(prompt);
   }
 
-  @elanIgnore
+  @elanMethod(new ElanFunctionDescriptor(false, false, true, new ElanTypeDescriptor("String")))
   inputString(prompt: string): Promise<string> {
     this.prompt(prompt);
     return this.system.input();
   }
 
-  @elanIgnore
-  inputStringWithLimits(prompt: string, minLength: number, maxLength: number): Promise<string> {
+  @elanMethod(new ElanFunctionDescriptor(false, false, true, new ElanTypeDescriptor("String")))
+  inputStringWithLimits(
+    prompt: string,
+    @elanIntType() minLength: number,
+    @elanIntType() maxLength: number,
+  ): Promise<string> {
     this.prompt(prompt);
     return this.system.input().then((s) => {
       if (s.length < minLength) {
