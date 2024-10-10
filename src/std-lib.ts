@@ -17,6 +17,7 @@ import {
   ElanIterable,
   ElanList,
   elanMethod,
+  elanProcedure,
   ElanProcedureDescriptor,
   ElanString,
   ElanT,
@@ -27,6 +28,7 @@ import {
   elanType,
   ElanTypeDescriptor,
   FunctionOptions,
+  ProcedureOptions,
 } from "./elan-type-annotations";
 import { hasHiddenType } from "./has-hidden-type";
 import { StubInputOutput } from "./stub-input-output";
@@ -220,7 +222,7 @@ export class StdLib {
     return newDict;
   }
 
-  @elanMethod(new ElanProcedureDescriptor(true))
+  @elanProcedure(ProcedureOptions.extension)
   removeAtKey<T>(
     @elanType(ElanDictionary(ElanT1, ElanT2))
     dict: { [key: string]: T },
@@ -285,7 +287,7 @@ export class StdLib {
     return newList;
   }
 
-  @elanMethod(new ElanProcedureDescriptor(true))
+  @elanProcedure(ProcedureOptions.extension)
   putAt<T>(
     @elanType(ElanArray(ElanT)) list: Array<T>,
     @elanIntType() index: number,
@@ -294,7 +296,7 @@ export class StdLib {
     this.system.safeArraySet(list, index, value);
   }
 
-  @elanMethod(new ElanProcedureDescriptor(true))
+  @elanProcedure(ProcedureOptions.extension)
   putAt2D<T>(
     @elanType(ElanArray(ElanArray(ElanT)))
     list: Array<Array<T>>,
@@ -305,7 +307,7 @@ export class StdLib {
     this.system.safeArraySet(list[col], row, value);
   }
 
-  @elanMethod(new ElanProcedureDescriptor(true))
+  @elanProcedure(ProcedureOptions.extension)
   putAtKey<T>(
     @elanType(ElanDictionary(ElanT1, ElanT2))
     dict: { [key: string]: T },
@@ -327,7 +329,7 @@ export class StdLib {
     return newList;
   }
 
-  @elanMethod(new ElanProcedureDescriptor(true))
+  @elanProcedure(ProcedureOptions.extension)
   insertAt<T>(
     @elanType(ElanArray(ElanT)) list: Array<T>,
     @elanIntType() index: number,
@@ -380,12 +382,12 @@ export class StdLib {
     return newList;
   }
 
-  @elanMethod(new ElanProcedureDescriptor(true))
+  @elanProcedure(ProcedureOptions.extension)
   removeAt<T>(@elanType(ElanArray(ElanT)) list: Array<T>, @elanIntType() index: number) {
     list.splice(index, 1);
   }
 
-  @elanMethod(new ElanProcedureDescriptor(true))
+  @elanProcedure(ProcedureOptions.extension)
   removeFirst<T>(@elanType(ElanArray(ElanT)) list: Array<T>, @elanType(ElanT) value: T) {
     const index = this.elanIndexOf(list, value);
     if (index > -1) {
@@ -393,7 +395,7 @@ export class StdLib {
     }
   }
 
-  @elanMethod(new ElanProcedureDescriptor(true))
+  @elanProcedure(ProcedureOptions.extension)
   removeAll<T>(@elanType(ElanArray(ElanT)) list: Array<T>, @elanType(ElanT) value: T) {
     let index = this.elanIndexOf(list, value);
     while (index > -1) {
@@ -402,12 +404,12 @@ export class StdLib {
     }
   }
 
-  @elanMethod(new ElanProcedureDescriptor(true))
+  @elanProcedure(ProcedureOptions.extension)
   append<T>(@elanType(ElanArray(ElanT)) list: Array<T>, @elanType(ElanT) value: T) {
     list.push(value);
   }
 
-  @elanMethod(new ElanProcedureDescriptor(true))
+  @elanProcedure(ProcedureOptions.extension)
   appendList<T>(
     @elanType(ElanArray(ElanT)) list: Array<T>,
     @elanType(ElanArray(ElanT)) listB: Array<T>,
@@ -415,12 +417,12 @@ export class StdLib {
     list.push(...listB);
   }
 
-  @elanMethod(new ElanProcedureDescriptor(true))
+  @elanProcedure(ProcedureOptions.extension)
   prepend<T>(@elanType(ElanArray(ElanT)) list: Array<T>, @elanType(ElanT) value: T) {
     list.unshift(value);
   }
 
-  @elanMethod(new ElanProcedureDescriptor(true))
+  @elanProcedure(ProcedureOptions.extension)
   prependList<T>(
     @elanType(ElanArray(ElanT)) list: Array<T>,
     @elanType(ElanArray(ElanT)) listB: Array<T>,
@@ -585,7 +587,7 @@ export class StdLib {
     return source.includes(item);
   }
 
-  @elanMethod(new ElanProcedureDescriptor(false, true))
+  @elanProcedure(ProcedureOptions.async)
   pause(@elanType(new ElanGenericTypeDescriptor("Int")) ms: number): Promise<void> {
     return new Promise((resolve) => {
       setTimeout(() => resolve(), ms);
@@ -622,17 +624,17 @@ export class StdLib {
     return [b, Math.floor(f)];
   }
 
-  @elanMethod(new ElanProcedureDescriptor())
+  @elanProcedure()
   print(s: string) {
     this.system.elanInputOutput.print(s);
   }
 
-  @elanMethod(new ElanProcedureDescriptor())
+  @elanProcedure()
   printTab(@elanIntType() position: number, s: string) {
     this.system.elanInputOutput.printTab(position, s);
   }
 
-  @elanMethod(new ElanProcedureDescriptor())
+  @elanProcedure()
   clearConsole() {
     this.system.elanInputOutput.clearConsole();
   }
@@ -801,7 +803,7 @@ export class StdLib {
     return this.system.safeIndex(this.getDetails(cm, x, y), 2);
   }
 
-  @elanMethod(new ElanProcedureDescriptor(true))
+  @elanProcedure(ProcedureOptions.extension)
   clearGraphics(
     @elanType(ElanList(ElanTuple([ElanString, ElanInt, ElanInt])))
     map: BlockGraphics,
@@ -809,7 +811,7 @@ export class StdLib {
     this.system.elanInputOutput.clearGraphics();
   }
 
-  @elanMethod(new ElanProcedureDescriptor(true, true))
+  @elanProcedure(ProcedureOptions.asyncExtension)
   draw(
     @elanType(ElanList(ElanTuple([ElanString, ElanInt, ElanInt])))
     map: BlockGraphics,
@@ -849,7 +851,7 @@ export class StdLib {
     return this.system.elanInputOutput.getKeystrokeWithModifier();
   }
 
-  @elanMethod(new ElanProcedureDescriptor(true, false))
+  @elanProcedure(ProcedureOptions.extension)
   clearKeyBuffer(
     @elanType(ElanList(ElanTuple([ElanString, ElanInt, ElanInt])))
     map: BlockGraphics,
@@ -1243,7 +1245,7 @@ export class StdLib {
     return file[2] >= file[1].length - 1;
   }
 
-  @elanMethod(new ElanProcedureDescriptor(true, true))
+  @elanProcedure(ProcedureOptions.asyncExtension)
   close(@elanType(ElanTuple([ElanInt, ElanString, ElanInt])) file: File): void {
     //Does nothing for now.
   }

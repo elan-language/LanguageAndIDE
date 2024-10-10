@@ -166,8 +166,13 @@ function mapTypescriptType(t: tsType): TypescriptTypeDescriptor {
 }
 
 export function elanFunction(options?: FunctionOptions, retType?: TypeDescriptor) {
-  const flags = mapOptions(options ?? FunctionOptions.pure, retType);
+  const flags = mapFunctionOptions(options ?? FunctionOptions.pure, retType);
   return elanMethod(new ElanFunctionDescriptor(...flags));
+}
+
+export function elanProcedure(options?: ProcedureOptions) {
+  const flags = mapProcedureOptions(options ?? ProcedureOptions.default);
+  return elanMethod(new ElanProcedureDescriptor(...flags));
 }
 
 export function elanMethod(elanDesc: ElanMethodDescriptor) {
@@ -315,7 +320,14 @@ export enum FunctionOptions {
   impureAsyncExtension,
 }
 
-function mapOptions(
+export enum ProcedureOptions {
+  default,
+  extension,
+  async,
+  asyncExtension,
+}
+
+function mapFunctionOptions(
   options: FunctionOptions,
   retType?: TypeDescriptor,
 ): [boolean, boolean, boolean, TypeDescriptor | undefined] {
@@ -336,5 +348,18 @@ function mapOptions(
       return [false, false, true, retType];
     case FunctionOptions.impureAsyncExtension:
       return [true, false, true, retType];
+  }
+}
+
+function mapProcedureOptions(options: ProcedureOptions): [boolean, boolean] {
+  switch (options) {
+    case ProcedureOptions.default:
+      return [false, false];
+    case ProcedureOptions.extension:
+      return [true, false];
+    case ProcedureOptions.async:
+      return [false, true];
+    case ProcedureOptions.asyncExtension:
+      return [true, true];
   }
 }
