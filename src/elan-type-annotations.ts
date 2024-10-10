@@ -309,6 +309,24 @@ export function elanIterableType(ofType: ElanTypeDescriptor) {
   return elanType(ElanIterable(ofType));
 }
 
+export function elanAbstractDictionaryType(
+  keyType: ElanTypeDescriptor,
+  valueType: ElanTypeDescriptor,
+) {
+  return elanType(ElanAbstractDictionary(keyType, valueType));
+}
+
+export function elanImmutableDictionaryType(
+  keyType: ElanTypeDescriptor,
+  valueType: ElanTypeDescriptor,
+) {
+  return elanType(ElanImmutableDictionary(keyType, valueType));
+}
+
+export function elanDictionaryType(keyType: ElanTypeDescriptor, valueType: ElanTypeDescriptor) {
+  return elanType(ElanDictionary(keyType, valueType));
+}
+
 export enum FunctionOptions {
   pure,
   pureExtension,

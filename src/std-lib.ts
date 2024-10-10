@@ -2,16 +2,17 @@ import "reflect-metadata";
 import { ElanCompilerError } from "./elan-compiler-error";
 import { ElanRuntimeError } from "./elan-runtime-error";
 import {
-  ElanAbstractDictionary,
+  elanAbstractDictionaryType,
   ElanArray,
   elanArrayType,
   ElanBoolean,
   elanConstant,
-  ElanDictionary,
+  elanDictionaryType,
   ElanFloat,
   ElanFunc,
   elanFunction,
   ElanImmutableDictionary,
+  elanImmutableDictionaryType,
   ElanInt,
   elanIntType,
   ElanIterable,
@@ -178,7 +179,7 @@ export class StdLib {
 
   @elanFunction(FunctionOptions.pureExtension, ElanList(ElanT1))
   keys<T>(
-    @elanType(ElanAbstractDictionary(ElanT1, ElanT2))
+    @elanAbstractDictionaryType(ElanT1, ElanT2)
     dict: {
       [key: string]: T;
     },
@@ -190,7 +191,7 @@ export class StdLib {
 
   @elanFunction(FunctionOptions.pureExtension, ElanList(ElanT2))
   values<T>(
-    @elanType(ElanAbstractDictionary(ElanT1, ElanT2))
+    @elanAbstractDictionaryType(ElanT1, ElanT2)
     dict: {
       [key: string]: T;
     },
@@ -202,7 +203,7 @@ export class StdLib {
 
   @elanFunction(FunctionOptions.pureExtension, ElanBoolean)
   hasKey<T>(
-    @elanType(ElanAbstractDictionary(ElanT1, ElanT2))
+    @elanAbstractDictionaryType(ElanT1, ElanT2)
     dict: { [key: string]: T },
     @elanType(ElanT1) key: string,
   ): boolean {
@@ -211,7 +212,7 @@ export class StdLib {
 
   @elanFunction(FunctionOptions.pureExtension, ElanImmutableDictionary(ElanT1, ElanT2))
   withRemoveAtKey<T>(
-    @elanType(ElanImmutableDictionary(ElanT1, ElanT2))
+    @elanImmutableDictionaryType(ElanT1, ElanT2)
     dict: { [key: string]: T },
     @elanType(ElanT1) key: string,
   ) {
@@ -223,7 +224,7 @@ export class StdLib {
 
   @elanProcedure(ProcedureOptions.extension)
   removeAtKey<T>(
-    @elanType(ElanDictionary(ElanT1, ElanT2))
+    @elanDictionaryType(ElanT1, ElanT2)
     dict: { [key: string]: T },
     @elanType(ElanT1) key: string,
   ) {
@@ -308,7 +309,7 @@ export class StdLib {
 
   @elanProcedure(ProcedureOptions.extension)
   putAtKey<T>(
-    @elanType(ElanDictionary(ElanT1, ElanT2))
+    @elanDictionaryType(ElanT1, ElanT2)
     dict: { [key: string]: T },
     @elanType(ElanT1) key: string,
     @elanType(ElanT2) value: T,
@@ -425,7 +426,7 @@ export class StdLib {
 
   @elanFunction(FunctionOptions.pureExtension, ElanImmutableDictionary(ElanT1, ElanT2))
   withPutAtKey<T>(
-    @elanType(ElanImmutableDictionary(ElanT1, ElanT2))
+    @elanImmutableDictionaryType(ElanT1, ElanT2)
     dict: { [key: string]: T },
     @elanType(ElanT1) key: string,
     @elanType(ElanT2) value: T,
