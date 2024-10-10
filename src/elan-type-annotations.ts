@@ -240,7 +240,6 @@ export const ElanRegex: ElanTypeDescriptor = new ElanTypeDescriptor("Regex");
 export const ElanT: ElanTypeDescriptor = new ElanGenericTypeDescriptor("T");
 export const ElanT1: ElanTypeDescriptor = new ElanGenericTypeDescriptor("T1");
 export const ElanT2: ElanTypeDescriptor = new ElanGenericTypeDescriptor("T2");
-export const ElanTU: ElanTypeDescriptor = new ElanGenericTypeDescriptor("U");
 
 export function ElanList(ofType: ElanTypeDescriptor) {
   return new ElanTypeDescriptor("List", ofType);

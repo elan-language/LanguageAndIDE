@@ -24,7 +24,6 @@ import {
   ElanT,
   ElanT1,
   ElanT2,
-  ElanTU,
   ElanTuple,
   elanType,
   FunctionOptions,
@@ -482,25 +481,25 @@ export class StdLib {
     return this.asIter(list.filter(predicate));
   }
 
-  @elanFunction(FunctionOptions.pureExtension, ElanIterable(ElanTU))
-  map<T, U>(
-    @elanIterableType(ElanT)
-    source: T[] | string,
-    @elanType(ElanFunc([ElanT], ElanTU))
-    predicate: (value: T | string) => U,
+  @elanFunction(FunctionOptions.pureExtension, ElanIterable(ElanT2))
+  map<T1, T2>(
+    @elanIterableType(ElanT1)
+    source: T1[] | string,
+    @elanType(ElanFunc([ElanT1], ElanT2))
+    predicate: (value: T1 | string) => T2,
   ) {
     const list = typeof source === "string" ? source.split("") : [...source];
     return this.asIter(list.map(predicate));
   }
 
-  @elanFunction(FunctionOptions.pureExtension, ElanTU)
-  reduce<T, U>(
-    @elanIterableType(ElanT)
-    source: T[] | string,
-    @elanType(ElanTU) initValue: U,
-    @elanType(ElanFunc([ElanTU, ElanT], ElanTU))
-    predicate: (s: U, value: T | string) => U,
-  ): U {
+  @elanFunction(FunctionOptions.pureExtension, ElanT2)
+  reduce<T1, T2>(
+    @elanIterableType(ElanT1)
+    source: T1[] | string,
+    @elanType(ElanT2) initValue: T2,
+    @elanType(ElanFunc([ElanT2, ElanT1], ElanT2))
+    predicate: (s: T2, value: T1 | string) => T2,
+  ): T2 {
     const list = typeof source === "string" ? source.split("") : [...source];
     return list.reduce(predicate, initValue);
   }
@@ -558,11 +557,11 @@ export class StdLib {
     return source.some(predicate);
   }
 
-  @elanFunction(FunctionOptions.pureExtension, ElanIterable(ElanTU))
-  groupBy<T>(
-    @elanIterableType(ElanT) source: T[],
-    @elanType(ElanFunc([ElanT], ElanTU))
-    predicate: (value: T) => T,
+  @elanFunction(FunctionOptions.pureExtension, ElanIterable(ElanT2))
+  groupBy<T1>(
+    @elanIterableType(ElanT) source: T1[],
+    @elanType(ElanFunc([ElanT], ElanT2))
+    predicate: (value: T1) => T1,
   ) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const result = {} as any;
