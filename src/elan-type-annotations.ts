@@ -249,6 +249,10 @@ export function ElanIterable(ofType: ElanTypeDescriptor) {
   return new ElanTypeDescriptor("Iterable", ofType);
 }
 
+export function ElanTuple(ofTypes: ElanTypeDescriptor[]) {
+  return new ElanTupleTypeDescriptor(ofTypes);
+}
+
 export function elanIntType() {
   return elanType(ElanInt);
 }

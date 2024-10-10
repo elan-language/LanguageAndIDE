@@ -19,7 +19,7 @@ import {
   ElanT1,
   ElanT2,
   ElanTU,
-  ElanTupleTypeDescriptor,
+  ElanTuple,
   elanType,
   ElanTypeDescriptor,
   FunctionOptions,
@@ -41,10 +41,10 @@ export class StdLib {
 
   // types
 
-  @elanConstant(ElanList(new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])))
+  @elanConstant(ElanList(ElanTuple([ElanString, ElanInt, ElanInt])))
   BlockGraphics = "";
 
-  @elanConstant(new ElanTupleTypeDescriptor([ElanInt, ElanInt]))
+  @elanConstant(ElanTuple([ElanInt, ElanInt]))
   Random = "";
 
   // Standard colours
@@ -609,7 +609,7 @@ export class StdLib {
     return Math.floor(Math.random() * (high - low + 1)) + low;
   }
 
-  @elanFunction(FunctionOptions.pure, new ElanTupleTypeDescriptor([ElanBoolean, ElanFloat]))
+  @elanFunction(FunctionOptions.pure, ElanTuple([ElanBoolean, ElanFloat]))
   parseAsFloat(s: string): [boolean, number] {
     const f = parseFloat(s);
     if (Number.isFinite(f)) {
@@ -618,7 +618,7 @@ export class StdLib {
     return [false, 0];
   }
 
-  @elanFunction(FunctionOptions.pure, new ElanTupleTypeDescriptor([ElanBoolean, ElanInt]))
+  @elanFunction(FunctionOptions.pure, ElanTuple([ElanBoolean, ElanInt]))
   parseAsInt(s: string): [boolean, number] {
     const [b, f] = this.parseAsFloat(s);
     return [b, Math.floor(f)];
@@ -689,12 +689,9 @@ export class StdLib {
     return this.system.safeIndex(cm, this.idx(x, y));
   }
 
-  @elanFunction(
-    FunctionOptions.pureExtension,
-    ElanList(new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
-  )
+  @elanFunction(FunctionOptions.pureExtension, ElanList(ElanTuple([ElanString, ElanInt, ElanInt])))
   withBlock(
-    @elanType(ElanList(new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])))
+    @elanType(ElanList(ElanTuple([ElanString, ElanInt, ElanInt])))
     map: BlockGraphics,
     @elanIntType() x: number,
     @elanIntType() y: number,
@@ -711,12 +708,9 @@ export class StdLib {
     return this.putDetails(cm, x, y, "", f, b);
   }
 
-  @elanFunction(
-    FunctionOptions.pureExtension,
-    ElanList(new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
-  )
+  @elanFunction(FunctionOptions.pureExtension, ElanList(ElanTuple([ElanString, ElanInt, ElanInt])))
   withUnicode(
-    @elanType(ElanList(new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])))
+    @elanType(ElanList(ElanTuple([ElanString, ElanInt, ElanInt])))
     map: BlockGraphics,
     @elanIntType() x: number,
     @elanIntType() y: number,
@@ -735,12 +729,9 @@ export class StdLib {
     return this.putDetails(cm, x, y, str, f, b);
   }
 
-  @elanFunction(
-    FunctionOptions.pureExtension,
-    ElanList(new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
-  )
+  @elanFunction(FunctionOptions.pureExtension, ElanList(ElanTuple([ElanString, ElanInt, ElanInt])))
   withText(
-    @elanType(ElanList(new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])))
+    @elanType(ElanList(ElanTuple([ElanString, ElanInt, ElanInt])))
     map: BlockGraphics,
     @elanIntType() x: number,
     @elanIntType() y: number,
@@ -770,24 +761,18 @@ export class StdLib {
     return cm;
   }
 
-  @elanFunction(
-    FunctionOptions.pureExtension,
-    ElanList(new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
-  )
+  @elanFunction(FunctionOptions.pureExtension, ElanList(ElanTuple([ElanString, ElanInt, ElanInt])))
   withBackground(
-    @elanType(ElanList(new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])))
+    @elanType(ElanList(ElanTuple([ElanString, ElanInt, ElanInt])))
     map: BlockGraphics,
     @elanIntType() b: number,
   ): BlockGraphics {
     return this.initialisedGraphics(b);
   }
 
-  @elanFunction(
-    FunctionOptions.pureExtension,
-    ElanList(new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
-  )
+  @elanFunction(FunctionOptions.pureExtension, ElanList(ElanTuple([ElanString, ElanInt, ElanInt])))
   getChar(
-    @elanType(ElanList(new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])))
+    @elanType(ElanList(ElanTuple([ElanString, ElanInt, ElanInt])))
     map: BlockGraphics,
     @elanIntType() x: number,
     @elanIntType() y: number,
@@ -796,12 +781,9 @@ export class StdLib {
     return this.system.safeIndex(this.getDetails(cm, x, y), 0);
   }
 
-  @elanFunction(
-    FunctionOptions.pureExtension,
-    ElanList(new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
-  )
+  @elanFunction(FunctionOptions.pureExtension, ElanList(ElanTuple([ElanString, ElanInt, ElanInt])))
   getForeground(
-    @elanType(ElanList(new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])))
+    @elanType(ElanList(ElanTuple([ElanString, ElanInt, ElanInt])))
     map: BlockGraphics,
     @elanIntType() x: number,
     @elanIntType() y: number,
@@ -810,12 +792,9 @@ export class StdLib {
     return this.system.safeIndex(this.getDetails(cm, x, y), 1);
   }
 
-  @elanFunction(
-    FunctionOptions.pureExtension,
-    ElanList(new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])),
-  )
+  @elanFunction(FunctionOptions.pureExtension, ElanList(ElanTuple([ElanString, ElanInt, ElanInt])))
   getBackground(
-    @elanType(ElanList(new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])))
+    @elanType(ElanList(ElanTuple([ElanString, ElanInt, ElanInt])))
     map: BlockGraphics,
     @elanIntType() x: number,
     @elanIntType() y: number,
@@ -826,7 +805,7 @@ export class StdLib {
 
   @elanMethod(new ElanProcedureDescriptor(true))
   clearGraphics(
-    @elanType(ElanList(new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])))
+    @elanType(ElanList(ElanTuple([ElanString, ElanInt, ElanInt])))
     map: BlockGraphics,
   ) {
     this.system.elanInputOutput.clearGraphics();
@@ -834,7 +813,7 @@ export class StdLib {
 
   @elanMethod(new ElanProcedureDescriptor(true, true))
   draw(
-    @elanType(ElanList(new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])))
+    @elanType(ElanList(ElanTuple([ElanString, ElanInt, ElanInt])))
     map: BlockGraphics,
   ): Promise<void> {
     const cm = this.ensureInitialised(map);
@@ -858,18 +837,15 @@ export class StdLib {
 
   @elanFunction(FunctionOptions.impureAsyncExtension, ElanString)
   getKeystroke(
-    @elanType(ElanList(new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])))
+    @elanType(ElanList(ElanTuple([ElanString, ElanInt, ElanInt])))
     map: BlockGraphics,
   ): Promise<string> {
     return this.system.elanInputOutput.getKeystroke();
   }
 
-  @elanFunction(
-    FunctionOptions.impureAsyncExtension,
-    new ElanTupleTypeDescriptor([ElanString, ElanString]),
-  )
+  @elanFunction(FunctionOptions.impureAsyncExtension, ElanTuple([ElanString, ElanString]))
   getKeystrokeWithModifier(
-    @elanType(ElanList(new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])))
+    @elanType(ElanList(ElanTuple([ElanString, ElanInt, ElanInt])))
     map: BlockGraphics,
   ): Promise<[string, string]> {
     return this.system.elanInputOutput.getKeystrokeWithModifier();
@@ -877,7 +853,7 @@ export class StdLib {
 
   @elanMethod(new ElanProcedureDescriptor(true, false))
   clearKeyBuffer(
-    @elanType(ElanList(new ElanTupleTypeDescriptor([ElanString, ElanInt, ElanInt])))
+    @elanType(ElanList(ElanTuple([ElanString, ElanInt, ElanInt])))
     map: BlockGraphics,
   ) {
     this.system.elanInputOutput.clearKeyBuffer();
@@ -1150,10 +1126,8 @@ export class StdLib {
 
   // Functional random
   // Credit for source of algorithm: https://www.codeproject.com/Articles/25172/Simple-Random-Number-Generation
-  @elanFunction(FunctionOptions.pureExtension, new ElanTupleTypeDescriptor([ElanInt, ElanInt]))
-  next(
-    @elanType(new ElanTupleTypeDescriptor([ElanInt, ElanInt])) current: [number, number],
-  ): [number, number] {
+  @elanFunction(FunctionOptions.pureExtension, ElanTuple([ElanInt, ElanInt]))
+  next(@elanType(ElanTuple([ElanInt, ElanInt])) current: [number, number]): [number, number] {
     const u = current[0];
     const v = current[1];
     const u2 = 36969 * this.lo16(u) + u / 65536;
@@ -1162,9 +1136,7 @@ export class StdLib {
   }
 
   @elanFunction(FunctionOptions.pureExtension, ElanFloat)
-  value(
-    @elanType(new ElanTupleTypeDescriptor([ElanInt, ElanInt])) current: [number, number],
-  ): number {
+  value(@elanType(ElanTuple([ElanInt, ElanInt])) current: [number, number]): number {
     const u = current[0];
     const v = current[1];
     return this.lo32(this.lo32(u * 65536) + v + 1) * 2.328306435454494e-10;
@@ -1184,7 +1156,7 @@ export class StdLib {
 
   @elanFunction(FunctionOptions.pureExtension, ElanInt)
   valueInt(
-    @elanType(new ElanTupleTypeDescriptor([ElanInt, ElanInt])) current: [number, number],
+    @elanType(ElanTuple([ElanInt, ElanInt])) current: [number, number],
     @elanIntType() min: number,
     @elanIntType() max: number,
   ): number {
@@ -1192,12 +1164,12 @@ export class StdLib {
     return Math.floor(float * (max - min + 1) + min);
   }
 
-  @elanFunction(FunctionOptions.impure, new ElanTupleTypeDescriptor([ElanInt, ElanInt]))
+  @elanFunction(FunctionOptions.impure, ElanTuple([ElanInt, ElanInt]))
   firstRandomInFixedSequence(): [number, number] {
     return [521288629, 362436069];
   }
 
-  @elanFunction(FunctionOptions.impure, new ElanTupleTypeDescriptor([ElanInt, ElanInt]))
+  @elanFunction(FunctionOptions.impure, ElanTuple([ElanInt, ElanInt]))
   firstRandom(): [number, number] {
     const c = this.clock();
     return [this.hi16(c), this.lo16(c)];
@@ -1243,18 +1215,13 @@ export class StdLib {
     return r.test(a);
   }
   //File operations
-  @elanFunction(
-    FunctionOptions.impureAsync,
-    new ElanTupleTypeDescriptor([ElanInt, ElanString, ElanInt]),
-  )
+  @elanFunction(FunctionOptions.impureAsync, ElanTuple([ElanInt, ElanString, ElanInt]))
   openRead(contents: string): File {
     return [1, contents, 0];
   }
 
   @elanFunction(FunctionOptions.impureAsyncExtension)
-  readLine(
-    @elanType(new ElanTupleTypeDescriptor([ElanInt, ElanString, ElanInt])) file: File,
-  ): string {
+  readLine(@elanType(ElanTuple([ElanInt, ElanString, ElanInt])) file: File): string {
     const status = file[0];
     const contents = file[1];
     const pointer = file[2];
@@ -1274,14 +1241,12 @@ export class StdLib {
   }
 
   @elanFunction(FunctionOptions.pureExtension)
-  endOfFile(
-    @elanType(new ElanTupleTypeDescriptor([ElanInt, ElanString, ElanInt])) file: File,
-  ): boolean {
+  endOfFile(@elanType(ElanTuple([ElanInt, ElanString, ElanInt])) file: File): boolean {
     return file[2] >= file[1].length - 1;
   }
 
   @elanMethod(new ElanProcedureDescriptor(true, true))
-  close(@elanType(new ElanTupleTypeDescriptor([ElanInt, ElanString, ElanInt])) file: File): void {
+  close(@elanType(ElanTuple([ElanInt, ElanString, ElanInt])) file: File): void {
     //Does nothing for now.
   }
 }
