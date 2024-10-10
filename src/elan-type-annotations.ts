@@ -249,6 +249,21 @@ export function ElanIterable(ofType: ElanTypeDescriptor) {
   return new ElanTypeDescriptor("Iterable", ofType);
 }
 
+export function ElanAbstractDictionary(keyType: ElanTypeDescriptor, valueType: ElanTypeDescriptor) {
+  return new ElanTypeDescriptor("AbstractDictionary", keyType, valueType);
+}
+
+export function ElanImmutableDictionary(
+  keyType: ElanTypeDescriptor,
+  valueType: ElanTypeDescriptor,
+) {
+  return new ElanTypeDescriptor("ImmutableDictionary", keyType, valueType);
+}
+
+export function ElanDictionary(keyType: ElanTypeDescriptor, valueType: ElanTypeDescriptor) {
+  return new ElanTypeDescriptor("Dictionary", keyType, valueType);
+}
+
 export function ElanTuple(ofTypes: ElanTypeDescriptor[]) {
   return new ElanTupleTypeDescriptor(ofTypes);
 }
