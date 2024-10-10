@@ -268,6 +268,10 @@ export function ElanTuple(ofTypes: ElanTypeDescriptor[]) {
   return new ElanTupleTypeDescriptor(ofTypes);
 }
 
+export function ElanFunc(parameters: ElanTypeDescriptor[], returnType: ElanTypeDescriptor) {
+  return new ElanFuncTypeDescriptor(parameters, returnType);
+}
+
 export function elanIntType() {
   return elanType(ElanInt);
 }

@@ -7,6 +7,7 @@ import {
   elanConstant,
   ElanDictionary,
   ElanFloat,
+  ElanFunc,
   elanFunction,
   ElanFuncTypeDescriptor,
   ElanGenericTypeDescriptor,
@@ -478,7 +479,7 @@ export class StdLib {
   filter<T>(
     @elanType(ElanIterable(ElanT))
     source: T[] | string,
-    @elanType(new ElanFuncTypeDescriptor([ElanT], ElanBoolean))
+    @elanType(ElanFunc([ElanT], ElanBoolean))
     predicate: (value: T | string) => boolean,
   ): (T | string)[] {
     const list = typeof source === "string" ? source.split("") : [...source];
@@ -489,7 +490,7 @@ export class StdLib {
   map<T, U>(
     @elanType(ElanIterable(ElanT))
     source: T[] | string,
-    @elanType(new ElanFuncTypeDescriptor([ElanT], ElanTU))
+    @elanType(ElanFunc([ElanT], ElanTU))
     predicate: (value: T | string) => U,
   ) {
     const list = typeof source === "string" ? source.split("") : [...source];
@@ -501,7 +502,7 @@ export class StdLib {
     @elanType(ElanIterable(ElanT))
     source: T[] | string,
     @elanType(ElanTU) initValue: U,
-    @elanType(new ElanFuncTypeDescriptor([ElanTU, ElanT], ElanTU))
+    @elanType(ElanFunc([ElanTU, ElanT], ElanTU))
     predicate: (s: U, value: T | string) => U,
   ): U {
     const list = typeof source === "string" ? source.split("") : [...source];
@@ -516,7 +517,7 @@ export class StdLib {
   @elanFunction(FunctionOptions.pureExtension, ElanT)
   maxBy<T>(
     @elanType(ElanIterable(ElanT)) source: T[],
-    @elanType(new ElanFuncTypeDescriptor([ElanT], ElanFloat))
+    @elanType(ElanFunc([ElanT], ElanFloat))
     predicate: (value: T) => number,
   ): T {
     const mm = source.map(predicate);
@@ -533,7 +534,7 @@ export class StdLib {
   @elanFunction(FunctionOptions.pureExtension, ElanT)
   minBy<T>(
     @elanType(ElanIterable(ElanT)) source: T[],
-    @elanType(new ElanFuncTypeDescriptor([ElanT], ElanFloat))
+    @elanType(ElanFunc([ElanT], ElanFloat))
     predicate: (value: T) => number,
   ): T {
     const mm = source.map(predicate);
@@ -545,7 +546,7 @@ export class StdLib {
   @elanFunction(FunctionOptions.pureExtension, ElanIterable(ElanT))
   sortBy<T>(
     @elanType(ElanIterable(ElanT)) source: T[],
-    @elanType(new ElanFuncTypeDescriptor([ElanT, ElanT], ElanInt))
+    @elanType(ElanFunc([ElanT, ElanT], ElanInt))
     predicate: (a: T, b: T) => number,
   ): T[] {
     const clone = [...source];
@@ -555,7 +556,7 @@ export class StdLib {
   @elanFunction(FunctionOptions.pureExtension)
   any<T>(
     @elanType(ElanIterable(ElanT)) source: T[],
-    @elanType(new ElanFuncTypeDescriptor([ElanT], ElanBoolean))
+    @elanType(ElanFunc([ElanT], ElanBoolean))
     predicate: (value: T) => boolean,
   ): boolean {
     return source.some(predicate);
@@ -564,7 +565,7 @@ export class StdLib {
   @elanFunction(FunctionOptions.pureExtension, ElanIterable(ElanTU))
   groupBy<T>(
     @elanType(ElanIterable(ElanT)) source: T[],
-    @elanType(new ElanFuncTypeDescriptor([ElanT], ElanTU))
+    @elanType(ElanFunc([ElanT], ElanTU))
     predicate: (value: T) => T,
   ) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
