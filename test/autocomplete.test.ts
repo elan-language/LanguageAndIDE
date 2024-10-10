@@ -209,15 +209,15 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["append", "Procedure ([Generic Parameter T], Generic Parameter T)"],
-      ["appendList", "Procedure ([Generic Parameter T], [Generic Parameter T])"],
-      ["insertAt", "Procedure ([Generic Parameter T], Int, Generic Parameter T)"],
-      ["prepend", "Procedure ([Generic Parameter T], Generic Parameter T)"],
-      ["prependList", "Procedure ([Generic Parameter T], [Generic Parameter T])"],
-      ["putAt", "Procedure ([Generic Parameter T], Int, Generic Parameter T)"],
-      ["removeAll", "Procedure ([Generic Parameter T], Generic Parameter T)"],
-      ["removeAt", "Procedure ([Generic Parameter T], Int)"],
-      ["removeFirst", "Procedure ([Generic Parameter T], Generic Parameter T)"],
+      ["append", "Procedure ([Generic Parameter T1], Generic Parameter T1)"],
+      ["appendList", "Procedure ([Generic Parameter T1], [Generic Parameter T1])"],
+      ["insertAt", "Procedure ([Generic Parameter T1], Int, Generic Parameter T1)"],
+      ["prepend", "Procedure ([Generic Parameter T1], Generic Parameter T1)"],
+      ["prependList", "Procedure ([Generic Parameter T1], [Generic Parameter T1])"],
+      ["putAt", "Procedure ([Generic Parameter T1], Int, Generic Parameter T1)"],
+      ["removeAll", "Procedure ([Generic Parameter T1], Generic Parameter T1)"],
+      ["removeAt", "Procedure ([Generic Parameter T1], Int)"],
+      ["removeFirst", "Procedure ([Generic Parameter T1], Generic Parameter T1)"],
     ] as [string, string][];
 
     await assertAutocompletes(fileImpl, "ident7", ".", 3, expected);
@@ -235,8 +235,8 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["append", "Procedure ([Generic Parameter T], Generic Parameter T)"],
-      ["appendList", "Procedure ([Generic Parameter T], [Generic Parameter T])"],
+      ["append", "Procedure ([Generic Parameter T1], Generic Parameter T1)"],
+      ["appendList", "Procedure ([Generic Parameter T1], [Generic Parameter T1])"],
     ] as [string, string][];
 
     await assertAutocompletes(fileImpl, "ident7", "p", 5, expected);

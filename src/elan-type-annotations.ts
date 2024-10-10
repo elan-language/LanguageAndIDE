@@ -237,7 +237,6 @@ export const ElanString: ElanTypeDescriptor = new ElanTypeDescriptor("String");
 export const ElanBoolean: ElanTypeDescriptor = new ElanTypeDescriptor("Boolean");
 export const ElanRegex: ElanTypeDescriptor = new ElanTypeDescriptor("Regex");
 
-export const ElanT: ElanTypeDescriptor = new ElanGenericTypeDescriptor("T");
 export const ElanT1: ElanTypeDescriptor = new ElanGenericTypeDescriptor("T1");
 export const ElanT2: ElanTypeDescriptor = new ElanGenericTypeDescriptor("T2");
 
@@ -294,6 +293,14 @@ export function elanBooleanType() {
 
 export function elanRegexType() {
   return elanType(ElanRegex);
+}
+
+export function elanGenericParamT1Type() {
+  return elanType(ElanT1);
+}
+
+export function elanGenericParamT2Type() {
+  return elanType(ElanT2);
 }
 
 export function elanListType(ofType: ElanTypeDescriptor) {
