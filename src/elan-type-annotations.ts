@@ -326,6 +326,14 @@ export function elanDictionaryType(keyType: ElanTypeDescriptor, valueType: ElanT
   return elanType(ElanDictionary(keyType, valueType));
 }
 
+export function elanTupleType(ofTypes: ElanTypeDescriptor[]) {
+  return elanType(ElanTuple(ofTypes));
+}
+
+export function elanFuncType(parameters: ElanTypeDescriptor[], returnType: ElanTypeDescriptor) {
+  return elanType(ElanFunc(parameters, returnType));
+}
+
 export enum FunctionOptions {
   pure,
   pureExtension,

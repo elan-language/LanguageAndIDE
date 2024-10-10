@@ -9,8 +9,8 @@ import {
   elanConstant,
   elanDictionaryType,
   ElanFloat,
-  ElanFunc,
   elanFunction,
+  elanFuncType,
   ElanImmutableDictionary,
   elanImmutableDictionaryType,
   ElanInt,
@@ -25,6 +25,7 @@ import {
   ElanT1,
   ElanT2,
   ElanTuple,
+  elanTupleType,
   elanType,
   FunctionOptions,
   ProcedureOptions,
@@ -474,7 +475,7 @@ export class StdLib {
   filter<T>(
     @elanIterableType(ElanT)
     source: T[] | string,
-    @elanType(ElanFunc([ElanT], ElanBoolean))
+    @elanFuncType([ElanT], ElanBoolean)
     predicate: (value: T | string) => boolean,
   ): (T | string)[] {
     const list = typeof source === "string" ? source.split("") : [...source];
@@ -485,7 +486,7 @@ export class StdLib {
   map<T1, T2>(
     @elanIterableType(ElanT1)
     source: T1[] | string,
-    @elanType(ElanFunc([ElanT1], ElanT2))
+    @elanFuncType([ElanT1], ElanT2)
     predicate: (value: T1 | string) => T2,
   ) {
     const list = typeof source === "string" ? source.split("") : [...source];
@@ -497,7 +498,7 @@ export class StdLib {
     @elanIterableType(ElanT1)
     source: T1[] | string,
     @elanType(ElanT2) initValue: T2,
-    @elanType(ElanFunc([ElanT2, ElanT1], ElanT2))
+    @elanFuncType([ElanT2, ElanT1], ElanT2)
     predicate: (s: T2, value: T1 | string) => T2,
   ): T2 {
     const list = typeof source === "string" ? source.split("") : [...source];
@@ -512,7 +513,7 @@ export class StdLib {
   @elanFunction(FunctionOptions.pureExtension, ElanT)
   maxBy<T>(
     @elanIterableType(ElanT) source: T[],
-    @elanType(ElanFunc([ElanT], ElanFloat))
+    @elanFuncType([ElanT], ElanFloat)
     predicate: (value: T) => number,
   ): T {
     const mm = source.map(predicate);
@@ -529,7 +530,7 @@ export class StdLib {
   @elanFunction(FunctionOptions.pureExtension, ElanT)
   minBy<T>(
     @elanIterableType(ElanT) source: T[],
-    @elanType(ElanFunc([ElanT], ElanFloat))
+    @elanFuncType([ElanT], ElanFloat)
     predicate: (value: T) => number,
   ): T {
     const mm = source.map(predicate);
@@ -541,7 +542,7 @@ export class StdLib {
   @elanFunction(FunctionOptions.pureExtension, ElanIterable(ElanT))
   sortBy<T>(
     @elanIterableType(ElanT) source: T[],
-    @elanType(ElanFunc([ElanT, ElanT], ElanInt))
+    @elanFuncType([ElanT, ElanT], ElanInt)
     predicate: (a: T, b: T) => number,
   ): T[] {
     const clone = [...source];
@@ -551,7 +552,7 @@ export class StdLib {
   @elanFunction(FunctionOptions.pureExtension)
   any<T>(
     @elanIterableType(ElanT) source: T[],
-    @elanType(ElanFunc([ElanT], ElanBoolean))
+    @elanFuncType([ElanT], ElanBoolean)
     predicate: (value: T) => boolean,
   ): boolean {
     return source.some(predicate);
@@ -560,7 +561,7 @@ export class StdLib {
   @elanFunction(FunctionOptions.pureExtension, ElanIterable(ElanT2))
   groupBy<T1>(
     @elanIterableType(ElanT) source: T1[],
-    @elanType(ElanFunc([ElanT], ElanT2))
+    @elanFuncType([ElanT], ElanT2)
     predicate: (value: T1) => T1,
   ) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -1120,7 +1121,7 @@ export class StdLib {
   // Functional random
   // Credit for source of algorithm: https://www.codeproject.com/Articles/25172/Simple-Random-Number-Generation
   @elanFunction(FunctionOptions.pureExtension, ElanTuple([ElanInt, ElanInt]))
-  next(@elanType(ElanTuple([ElanInt, ElanInt])) current: [number, number]): [number, number] {
+  next(@elanTupleType([ElanInt, ElanInt]) current: [number, number]): [number, number] {
     const u = current[0];
     const v = current[1];
     const u2 = 36969 * this.lo16(u) + u / 65536;
@@ -1129,7 +1130,7 @@ export class StdLib {
   }
 
   @elanFunction(FunctionOptions.pureExtension, ElanFloat)
-  value(@elanType(ElanTuple([ElanInt, ElanInt])) current: [number, number]): number {
+  value(@elanTupleType([ElanInt, ElanInt]) current: [number, number]): number {
     const u = current[0];
     const v = current[1];
     return this.lo32(this.lo32(u * 65536) + v + 1) * 2.328306435454494e-10;
@@ -1149,7 +1150,7 @@ export class StdLib {
 
   @elanFunction(FunctionOptions.pureExtension, ElanInt)
   valueInt(
-    @elanType(ElanTuple([ElanInt, ElanInt])) current: [number, number],
+    @elanTupleType([ElanInt, ElanInt]) current: [number, number],
     @elanIntType() min: number,
     @elanIntType() max: number,
   ): number {
@@ -1214,7 +1215,7 @@ export class StdLib {
   }
 
   @elanFunction(FunctionOptions.impureAsyncExtension)
-  readLine(@elanType(ElanTuple([ElanInt, ElanString, ElanInt])) file: File): string {
+  readLine(@elanTupleType([ElanInt, ElanString, ElanInt]) file: File): string {
     const status = file[0];
     const contents = file[1];
     const pointer = file[2];
@@ -1234,12 +1235,12 @@ export class StdLib {
   }
 
   @elanFunction(FunctionOptions.pureExtension)
-  endOfFile(@elanType(ElanTuple([ElanInt, ElanString, ElanInt])) file: File): boolean {
+  endOfFile(@elanTupleType([ElanInt, ElanString, ElanInt]) file: File): boolean {
     return file[2] >= file[1].length - 1;
   }
 
   @elanProcedure(ProcedureOptions.asyncExtension)
-  close(@elanType(ElanTuple([ElanInt, ElanString, ElanInt])) file: File): void {
+  close(@elanTupleType([ElanInt, ElanString, ElanInt]) file: File): void {
     //Does nothing for now.
   }
 }
