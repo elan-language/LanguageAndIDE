@@ -33,6 +33,7 @@ import {
 import { hasHiddenType } from "./has-hidden-type";
 import { StubInputOutput } from "./stub-input-output";
 import { System } from "./system";
+import { ElanCompilerError } from "./elan-compiler-error";
 
 type Location = [string, number, number];
 type BlockGraphics = Location[];
@@ -71,7 +72,7 @@ export class StdLib {
   @elanFunction(FunctionOptions.pureExtension)
   asString<T>(@elanType(ElanT) v: T | T[] | undefined): string {
     if (v === undefined || v === null) {
-      throw new Error(`Out of range error`);
+      throw new ElanRuntimeError(`Out of range error`);
     }
 
     if (typeof v === "boolean") {
@@ -128,7 +129,7 @@ export class StdLib {
       return `function ${v.name}`;
     }
 
-    throw new Error("Not implemented: " + typeof v);
+    throw new ElanCompilerError("Not implemented: " + typeof v);
   }
 
   @elanFunction()
@@ -588,7 +589,7 @@ export class StdLib {
   }
 
   @elanProcedure(ProcedureOptions.async)
-  pause(@elanType(new ElanGenericTypeDescriptor("Int")) ms: number): Promise<void> {
+  pause(@elanIntType() ms: number): Promise<void> {
     return new Promise((resolve) => {
       setTimeout(() => resolve(), ms);
     });
@@ -1226,10 +1227,10 @@ export class StdLib {
     const contents = file[1];
     const pointer = file[2];
     if (status === 0) {
-      throw new Error("File is not open");
+      throw new ElanRuntimeError("File is not open");
     }
     if (status === 2) {
-      throw new Error("File is open for writing, not reading");
+      throw new ElanRuntimeError("File is open for writing, not reading");
     }
     let newline = contents.indexOf("\n", pointer);
     if (newline === -1) {
