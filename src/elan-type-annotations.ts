@@ -241,6 +241,14 @@ export function ElanList(ofType: ElanTypeDescriptor) {
   return new ElanTypeDescriptor("List", ofType);
 }
 
+export function ElanArray(ofType: ElanTypeDescriptor) {
+  return new ElanTypeDescriptor("Array", ofType);
+}
+
+export function ElanIterable(ofType: ElanTypeDescriptor) {
+  return new ElanTypeDescriptor("Iterable", ofType);
+}
+
 export function elanIntType() {
   return elanType(ElanInt);
 }
@@ -259,6 +267,18 @@ export function elanBooleanType() {
 
 export function elanRegexType() {
   return elanType(ElanRegex);
+}
+
+export function elanListType(ofType: ElanTypeDescriptor) {
+  return elanType(ElanList(ofType));
+}
+
+export function elanArrayType(ofType: ElanTypeDescriptor) {
+  return elanType(ElanArray(ofType));
+}
+
+export function elanIterableType(ofType: ElanTypeDescriptor) {
+  return elanType(ElanIterable(ofType));
 }
 
 export enum FunctionOptions {
