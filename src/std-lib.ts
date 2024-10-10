@@ -178,7 +178,7 @@ export class StdLib {
   }
 
   @elanFunction(FunctionOptions.pureExtension, ElanList(ElanT1))
-  keys<T1>(
+  keys<T1, T2>(
     @elanAbstractDictionaryType(ElanT1, ElanT2)
     dict: {
       [key: string]: T1;
@@ -277,7 +277,7 @@ export class StdLib {
 
   @elanFunction(FunctionOptions.pureExtension, ElanList(ElanT1))
   withPutAt<T1>(
-    @elanListType(ElanT1) list: Array<T1>,
+    @elanListType(ElanT1) list: T1[],
     @elanIntType() index: number,
     @elanGenericParamT1Type() value: T1,
   ) {
@@ -289,7 +289,7 @@ export class StdLib {
 
   @elanProcedure(ProcedureOptions.extension)
   putAt<T1>(
-    @elanArrayType(ElanT1) list: Array<T1>,
+    @elanArrayType(ElanT1) list: T1[],
     @elanIntType() index: number,
     @elanGenericParamT1Type() value: T1,
   ) {
@@ -299,7 +299,7 @@ export class StdLib {
   @elanProcedure(ProcedureOptions.extension)
   putAt2D<T1>(
     @elanArrayType(ElanArray(ElanT1))
-    list: Array<Array<T1>>,
+    list: T1[][],
     @elanIntType() col: number,
     @elanIntType() row: number,
     @elanGenericParamT1Type() value: T1,
@@ -319,7 +319,7 @@ export class StdLib {
 
   @elanFunction(FunctionOptions.pureExtension, ElanList(ElanT1))
   withInsert<T1>(
-    @elanListType(ElanT1) list: Array<T1>,
+    @elanListType(ElanT1) list: T1[],
     @elanIntType() index: number,
     @elanGenericParamT1Type() value: T1,
   ) {
@@ -331,7 +331,7 @@ export class StdLib {
 
   @elanProcedure(ProcedureOptions.extension)
   insertAt<T1>(
-    @elanArrayType(ElanT1) list: Array<T1>,
+    @elanArrayType(ElanT1) list: T1[],
     @elanIntType() index: number,
     @elanGenericParamT1Type() value: T1,
   ) {
@@ -350,7 +350,7 @@ export class StdLib {
   }
 
   @elanFunction(FunctionOptions.pureExtension, ElanList(ElanT1))
-  withRemoveAt<T1>(@elanListType(ElanT1) list: Array<T1>, @elanIntType() index: number) {
+  withRemoveAt<T1>(@elanListType(ElanT1) list: T1[], @elanIntType() index: number) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const newList = (list as any).toSpliced(index, 1);
     (newList as unknown as hasHiddenType)._type = "List";
@@ -358,7 +358,7 @@ export class StdLib {
   }
 
   @elanFunction(FunctionOptions.pureExtension, ElanList(ElanT1))
-  withRemoveFirst<T1>(@elanListType(ElanT1) list: Array<T1>, @elanGenericParamT1Type() value: T1) {
+  withRemoveFirst<T1>(@elanListType(ElanT1) list: T1[], @elanGenericParamT1Type() value: T1) {
     let newList = [...list];
     const index = this.elanIndexOf(newList, value);
     if (index > -1) {
@@ -370,7 +370,7 @@ export class StdLib {
   }
 
   @elanFunction(FunctionOptions.pureExtension, ElanList(ElanT1))
-  withRemoveAll<T1>(@elanListType(ElanT1) list: Array<T1>, @elanGenericParamT1Type() value: T1) {
+  withRemoveAll<T1>(@elanListType(ElanT1) list: T1[], @elanGenericParamT1Type() value: T1) {
     let newList = [...list];
     let index = this.elanIndexOf(newList, value);
     while (index > -1) {
@@ -383,12 +383,12 @@ export class StdLib {
   }
 
   @elanProcedure(ProcedureOptions.extension)
-  removeAt<T1>(@elanArrayType(ElanT1) list: Array<T1>, @elanIntType() index: number) {
+  removeAt<T1>(@elanArrayType(ElanT1) list: T1[], @elanIntType() index: number) {
     list.splice(index, 1);
   }
 
   @elanProcedure(ProcedureOptions.extension)
-  removeFirst<T1>(@elanArrayType(ElanT1) list: Array<T1>, @elanGenericParamT1Type() value: T1) {
+  removeFirst<T1>(@elanArrayType(ElanT1) list: T1[], @elanGenericParamT1Type() value: T1) {
     const index = this.elanIndexOf(list, value);
     if (index > -1) {
       list.splice(index, 1);
@@ -396,7 +396,7 @@ export class StdLib {
   }
 
   @elanProcedure(ProcedureOptions.extension)
-  removeAll<T1>(@elanArrayType(ElanT1) list: Array<T1>, @elanGenericParamT1Type() value: T1) {
+  removeAll<T1>(@elanArrayType(ElanT1) list: T1[], @elanGenericParamT1Type() value: T1) {
     let index = this.elanIndexOf(list, value);
     while (index > -1) {
       list.splice(index, 1);
@@ -405,22 +405,22 @@ export class StdLib {
   }
 
   @elanProcedure(ProcedureOptions.extension)
-  append<T1>(@elanArrayType(ElanT1) list: Array<T1>, @elanGenericParamT1Type() value: T1) {
+  append<T1>(@elanArrayType(ElanT1) list: T1[], @elanGenericParamT1Type() value: T1) {
     list.push(value);
   }
 
   @elanProcedure(ProcedureOptions.extension)
-  appendList<T1>(@elanArrayType(ElanT1) list: Array<T1>, @elanArrayType(ElanT1) listB: Array<T1>) {
+  appendList<T1>(@elanArrayType(ElanT1) list: T1[], @elanArrayType(ElanT1) listB: T1[]) {
     list.push(...listB);
   }
 
   @elanProcedure(ProcedureOptions.extension)
-  prepend<T1>(@elanArrayType(ElanT1) list: Array<T1>, @elanGenericParamT1Type() value: T1) {
+  prepend<T1>(@elanArrayType(ElanT1) list: T1[], @elanGenericParamT1Type() value: T1) {
     list.unshift(value);
   }
 
   @elanProcedure(ProcedureOptions.extension)
-  prependList<T1>(@elanArrayType(ElanT1) list: Array<T1>, @elanArrayType(ElanT1) listB: Array<T1>) {
+  prependList<T1>(@elanArrayType(ElanT1) list: T1[], @elanArrayType(ElanT1) listB: T1[]) {
     list.unshift(...listB);
   }
 
