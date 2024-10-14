@@ -158,7 +158,7 @@ suite("Selector tests", () => {
     const test = new TestFrame(fl);
     const s = new StatementSelector(test);
     const help = s.getCompletion();
-    assert.equal(help, " assert call let var #");
+    assert.equal(help, " assert each for if let repeat set switch throw try var while #");
   });
 
   test("Selection Context - deeper nesting 1", () => {

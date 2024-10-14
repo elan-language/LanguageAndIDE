@@ -20,7 +20,6 @@ import {
   returnKeyword,
   setKeyword,
   switchKeyword,
-  testKeyword,
   throwKeyword,
   tryKeyword,
   varKeyword,
@@ -73,46 +72,40 @@ export class StatementSelector extends AbstractSelector {
   validWithinCurrentContext(keyword: string, userEntry: boolean): boolean {
     const parent = this.getParent();
     let result = false;
-    if (parent.getIdPrefix() === testKeyword) {
-      result =
-        keyword === assertKeyword ||
-        keyword === callKeyword ||
-        keyword === letKeyword ||
-        keyword === varKeyword ||
-        keyword === commentMarker;
-    } else if (parent.getIdPrefix() === switchKeyword) {
+    if (parent.getIdPrefix() === switchKeyword) {
       result = keyword === caseKeyword || (keyword === defaultKeyword && this.noPeerLevelDefault());
     } else if (parent.getIdPrefix() === ifKeyword) {
       result = keyword === elseKeyword;
-    } else if (
-      keyword === assertKeyword ||
-      keyword === caseKeyword ||
-      keyword === defaultKeyword ||
-      keyword === elseKeyword
-    ) {
+    } else if (keyword === caseKeyword || keyword === defaultKeyword || keyword === elseKeyword) {
       result = false;
+    } else if (keyword === assertKeyword) {
+      return this.isWithinATest();
     } else if (keyword === returnKeyword || keyword === catchKeyword) {
       result = !userEntry;
     } else if (keyword === printKeyword || keyword === callKeyword) {
-      result = !(
-        this.isWithinAFunction(this.getParent()) || this.isWithinAConstructor(this.getParent())
-      );
+      result = !(this.isWithinAFunction() || this.isWithinATest() || this.isWithinAConstructor());
     } else {
       result = true;
     }
     return result;
   }
 
-  private isWithinAFunction(parent: Parent): boolean {
-    return parent.getIdPrefix() === "func"
-      ? true
-      : parent.hasParent() && this.isWithinAFunction(parent.getParent());
+  private isWithinAFunction(): boolean {
+    return this.isWithinContext(this.getParent(), "func");
   }
 
-  private isWithinAConstructor(parent: Parent): boolean {
-    return parent.getIdPrefix() === "constructor"
+  private isWithinATest(): boolean {
+    return this.isWithinContext(this.getParent(), "test");
+  }
+
+  private isWithinAConstructor(): boolean {
+    return this.isWithinContext(this.getParent(), "constructor");
+  }
+
+  private isWithinContext(parent: Parent, parentPrefix: string): boolean {
+    return parent.getIdPrefix() === parentPrefix
       ? true
-      : parent.hasParent() && this.isWithinAConstructor(parent.getParent());
+      : parent.hasParent() && this.isWithinContext(parent.getParent(), parentPrefix);
   }
 
   renderAsHtml(): string {
