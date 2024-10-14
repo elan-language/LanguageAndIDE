@@ -8,10 +8,13 @@ import {
   ElanBoolean,
   ElanClass,
   elanClass,
+  elanClassExport,
   elanConstant,
+  elanConstructor,
   elanDictionaryType,
   ElanFloat,
   elanFunction,
+  elanFunctionMethod,
   elanFuncType,
   elanGenericParamT1Type,
   elanGenericParamT2Type,
@@ -40,13 +43,13 @@ type Location = [string, number, number];
 type BlockGraphics = Location[];
 type File = [number, string, number]; // open/closed, read/write, contents, pointer
 
-// @elanClass()
-// export class BlockGraphics1 {
-//   @elanFunction(FunctionOptions.impureAsyncExtension, ElanString)
-//   getKeystroke(): Promise<string> {
-//     return Promise.resolve("");
-//   }
-// }
+@elanClass()
+export class BlockGraphics1 {
+  @elanFunctionMethod(FunctionOptions.impureAsync, ElanString)
+  getKeystroke1(): Promise<string> {
+    return Promise.resolve("testvalue");
+  }
+}
 
 export class StdLib {
   constructor() {
@@ -63,8 +66,8 @@ export class StdLib {
   @elanConstant(ElanTuple([ElanInt, ElanInt]))
   Random = "";
 
-  // @elanConstant(ElanClass(BlockGraphics1))
-  // BlockGraphics1?: BlockGraphics1;
+  @elanClassExport(BlockGraphics1)
+  BlockGraphics1 = BlockGraphics1;
 
   // Standard colours
 

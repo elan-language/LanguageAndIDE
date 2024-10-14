@@ -1,15 +1,15 @@
+import { getSymbol } from "./elan-type-annotations";
 import {
   ElanDescriptor,
   elanMetadataKey,
+  isClassDescriptor,
   isConstantDescriptor,
   isFunctionDescriptor,
   isProcedureDescriptor,
 } from "./elan-type-interfaces";
 import { ElanSymbol } from "./frames/interfaces/elan-symbol";
 import { Scope } from "./frames/interfaces/scope";
-import { SymbolType } from "./frames/interfaces/symbol-type";
 import { NullScope } from "./frames/symbols/null-scope";
-import { SymbolScope } from "./frames/symbols/symbol-scope";
 import { UnknownSymbol } from "./frames/symbols/unknown-symbol";
 import { Transforms } from "./frames/syntax-nodes/transforms";
 import { StdLib } from "./std-lib";
@@ -36,15 +36,19 @@ export class StdLibSymbols implements Scope {
         | undefined;
 
       if (isFunctionDescriptor(metadata)) {
-        this.symbols.set(name, this.getSymbol(name, metadata.mapType()));
+        this.symbols.set(name, getSymbol(name, metadata.mapType()));
       }
 
       if (isProcedureDescriptor(metadata)) {
-        this.symbols.set(name, this.getSymbol(name, metadata.mapType()));
+        this.symbols.set(name, getSymbol(name, metadata.mapType()));
       }
 
       if (isConstantDescriptor(metadata)) {
-        this.symbols.set(name, this.getSymbol(name, metadata.mapType()));
+        this.symbols.set(name, getSymbol(name, metadata.mapType()));
+      }
+
+      if (isClassDescriptor(metadata)) {
+        this.symbols.set(name, getSymbol(name, metadata.mapType(this)));
       }
     }
   }
@@ -57,14 +61,6 @@ export class StdLibSymbols implements Scope {
 
   getParentScope(): Scope {
     return NullScope.Instance;
-  }
-
-  private getSymbol(id: string, st: SymbolType): ElanSymbol {
-    return {
-      symbolId: id,
-      symbolType: () => st,
-      symbolScope: SymbolScope.stdlib,
-    };
   }
 
   resolveSymbol(id: string | undefined, transforms: Transforms, scope: Scope): ElanSymbol {

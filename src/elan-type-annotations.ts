@@ -1,5 +1,6 @@
 import { ElanCompilerError } from "./elan-compiler-error";
 import {
+  ElanDescriptor,
   elanMetadataKey,
   ElanMethodDescriptor,
   IElanFunctionDescriptor,
@@ -7,6 +8,8 @@ import {
   isFunctionDescriptor,
   TypeDescriptor,
 } from "./elan-type-interfaces";
+import { ElanSymbol } from "./frames/interfaces/elan-symbol";
+import { Scope } from "./frames/interfaces/scope";
 import { SymbolType } from "./frames/interfaces/symbol-type";
 import { AbstractDictionaryType } from "./frames/symbols/abstract-dictionary-type";
 import { ArrayType } from "./frames/symbols/array-list-type";
@@ -24,6 +27,7 @@ import { ListType } from "./frames/symbols/list-type";
 import { ProcedureType } from "./frames/symbols/procedure-type";
 import { RegexType } from "./frames/symbols/regex-type";
 import { StringType } from "./frames/symbols/string-type";
+import { SymbolScope } from "./frames/symbols/symbol-scope";
 import { TupleType } from "./frames/symbols/tuple-type";
 
 export class ElanProcedureDescriptor implements ElanMethodDescriptor, IElanProcedureDescriptor {
@@ -157,12 +161,46 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
   // eslint-disable-next-line @typescript-eslint/ban-types
   constructor(private readonly cls: Function) {}
 
+  isClass = true;
+
   name = "Class";
 
-  isConstant = true;
+  mapType(scope?: Scope): SymbolType {
+    const names = Object.getOwnPropertyNames(this.cls.prototype);
+    const children: ElanSymbol[] = [];
 
-  mapType(): SymbolType {
-    return new ClassType("", false, false, [], new ClassTypeDef());
+    for (let i = 0; i < names.length; i++) {
+      const name = names[i];
+
+      const metadata = Reflect.getMetadata(elanMetadataKey, this.cls.prototype, name) as
+        | ElanDescriptor
+        | undefined;
+
+      // todo
+      if (name === "constructor") {
+        children.push(getSymbol(name, new ProcedureType([], false, false)));
+      }
+
+      if (isFunctionDescriptor(metadata)) {
+        children.push(getSymbol(name, metadata.mapType()));
+      }
+
+      // if (isProcedureDescriptor(metadata)) {
+      //   this.symbols.set(name, this.getSymbol(name, metadata.mapType()));
+      // }
+
+      // if (isConstantDescriptor(metadata)) {
+      //   this.symbols.set(name, this.getSymbol(name, metadata.mapType()));
+      // }
+    }
+
+    return new ClassType(
+      this.cls.name,
+      false,
+      false,
+      [],
+      new ClassTypeDef(this.cls.name, children, scope!),
+    );
   }
 }
 
@@ -201,9 +239,18 @@ export function elanFunction(options?: FunctionOptions, retType?: TypeDescriptor
   return elanMethod(new ElanFunctionDescriptor(...flags));
 }
 
+export function elanFunctionMethod(options?: FunctionOptions, retType?: TypeDescriptor) {
+  const flags = mapFunctionOptions(options ?? FunctionOptions.pure, retType);
+  return elanMethod(new ElanFunctionDescriptor(...flags));
+}
+
 export function elanProcedure(options?: ProcedureOptions) {
   const flags = mapProcedureOptions(options ?? ProcedureOptions.default);
   return elanMethod(new ElanProcedureDescriptor(...flags));
+}
+
+export function elanConstructor() {
+  return elanMethod(new ElanProcedureDescriptor());
 }
 
 export function elanMethod(elanDesc: ElanMethodDescriptor) {
@@ -248,7 +295,21 @@ export function elanClass() {
   };
 }
 
-export function elanConstant(elanDesc?: ElanTypeDescriptor) {
+export function elanConstant(elanDesc?: TypeDescriptor) {
+  return function (target: object, propertyKey: string) {
+    const typeMetadata = Reflect.getMetadata("design:type", target, propertyKey);
+
+    if (!elanDesc && typeMetadata && typeMetadata.name) {
+      elanDesc = new TypescriptTypeDescriptor(typeMetadata.name);
+    }
+
+    Reflect.defineMetadata(elanMetadataKey, elanDesc, target, propertyKey);
+  };
+}
+
+// eslint-disable-next-line @typescript-eslint/ban-types
+export function elanClassExport(cls: Function) {
+  let elanDesc = ElanClass(cls) as TypeDescriptor;
   return function (target: object, propertyKey: string) {
     const typeMetadata = Reflect.getMetadata("design:type", target, propertyKey);
 
@@ -465,7 +526,14 @@ export function createFunction(
   );
 }
 
-export function createClass(pTypes: TypeDescriptor[], isExtension: boolean, isAsync: boolean) {
-  const cd = new ClassTypeDef();
-  return new ClassType("name", false, false, [], cd);
+export function getSymbol(id: string, st: SymbolType): ElanSymbol {
+  if (st instanceof ClassType) {
+    return st.scope;
+  }
+
+  return {
+    symbolId: id,
+    symbolType: () => st,
+    symbolScope: SymbolScope.stdlib,
+  };
 }

@@ -1,3 +1,4 @@
+import { Scope } from "./frames/interfaces/scope";
 import { SymbolType } from "./frames/interfaces/symbol-type";
 
 export const elanMetadataKey = Symbol("elan-metadata");
@@ -25,9 +26,11 @@ export interface IElanProcedureDescriptor extends ElanMethodDescriptor {
 
 export interface TypeDescriptor extends ElanDescriptor {
   name: string;
-  mapType(): SymbolType;
+  mapType(scope?: Scope): SymbolType;
+}
 
-  isConstant: boolean;
+export function isTypeMapper(d: ElanDescriptor | undefined): d is IElanFunctionDescriptor {
+  return !!d && "mapType" in d;
 }
 
 export function isFunctionDescriptor(d: ElanDescriptor | undefined): d is IElanFunctionDescriptor {
@@ -42,4 +45,8 @@ export function isProcedureDescriptor(
 
 export function isConstantDescriptor(d: ElanDescriptor | undefined): d is TypeDescriptor {
   return !!d && "isConstant" in d;
+}
+
+export function isClassDescriptor(d: ElanDescriptor | undefined): d is TypeDescriptor {
+  return !!d && "isClass" in d;
 }

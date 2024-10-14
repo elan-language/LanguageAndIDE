@@ -34,6 +34,8 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
     return true;
   }
 
+  isAsync: boolean = false;
+
   aggregateCompileErrors(): CompileError[] {
     return this.compileErrors;
   }
