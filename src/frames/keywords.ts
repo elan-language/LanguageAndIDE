@@ -138,6 +138,7 @@ export const allKeywords = [
 ];
 
 export const reservedWords = [
+  "action",
   "arguments",
   "await",
   "boolean",
@@ -174,6 +175,7 @@ export const reservedWords = [
   "short",
   "static",
   "super",
+  "system",
   "synchronized",
   "throws",
   "transient",
