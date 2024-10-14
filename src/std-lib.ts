@@ -6,11 +6,9 @@ import {
   ElanArray,
   elanArrayType,
   ElanBoolean,
-  ElanClass,
   elanClass,
   elanClassExport,
   elanConstant,
-  elanConstructor,
   elanDictionaryType,
   ElanFloat,
   elanFunction,
@@ -797,7 +795,7 @@ export class StdLib {
     return this.system.safeIndex(this.getDetails(cm, x, y), 0);
   }
 
-  @elanFunction(FunctionOptions.pureExtension, ElanList(ElanTuple([ElanString, ElanInt, ElanInt])))
+  @elanFunction(FunctionOptions.pureExtension, ElanInt)
   getForeground(
     @elanListType(ElanTuple([ElanString, ElanInt, ElanInt]))
     map: BlockGraphics,
@@ -808,7 +806,7 @@ export class StdLib {
     return this.system.safeIndex(this.getDetails(cm, x, y), 1);
   }
 
-  @elanFunction(FunctionOptions.pureExtension, ElanList(ElanTuple([ElanString, ElanInt, ElanInt])))
+  @elanFunction(FunctionOptions.pureExtension, ElanInt)
   getBackground(
     @elanListType(ElanTuple([ElanString, ElanInt, ElanInt]))
     map: BlockGraphics,
