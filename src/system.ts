@@ -101,6 +101,11 @@ export class System {
         }
       }
     }
+
+    if ("system" in toInit) {
+      toInit.system = this;
+    }
+
     return toInit;
   }
 
