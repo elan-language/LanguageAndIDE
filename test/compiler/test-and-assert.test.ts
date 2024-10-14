@@ -587,7 +587,7 @@ return [main, _tests];}`;
     ]);
   });
 
-  test("Pass_PassingTestWithProcedure", async () => {
+  test("Fail_TestWithProcedure", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
@@ -603,34 +603,10 @@ test square
   assert arr[0] is 9
 end test
 `;
-
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-async function main() {
-
-}
-
-async function square(x, y) {
-  _stdlib.putAt(y[0], 0, x ** 2);
-}
-
-_tests.push(["test10", async (_outcomes) => {
-  var arr = _stdlib.createArray(1, 0);
-  var _arr = [arr];
-  await square(3, _arr);
-  arr = _arr[0];
-  _outcomes.push(system.assert(system.safeIndex(arr, 0), 9, "assert19", _stdlib));
-}]);
-return [main, _tests];}`;
-
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertTestObjectCodeExecutes(fileImpl, [
-      ["test10", [new AssertOutcome(TestStatus.pass, "9", "9", "assert19")]],
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Pass_expressionForExpected", async () => {
