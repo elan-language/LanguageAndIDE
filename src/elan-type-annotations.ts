@@ -2,6 +2,8 @@ import { ElanCompilerError } from "./elan-compiler-error";
 import {
   elanMetadataKey,
   ElanMethodDescriptor,
+  IElanFunctionDescriptor,
+  IElanProcedureDescriptor,
   isFunctionDescriptor,
   TypeDescriptor,
 } from "./elan-type-interfaces";
@@ -9,6 +11,8 @@ import { SymbolType } from "./frames/interfaces/symbol-type";
 import { AbstractDictionaryType } from "./frames/symbols/abstract-dictionary-type";
 import { ArrayType } from "./frames/symbols/array-list-type";
 import { BooleanType } from "./frames/symbols/boolean-type";
+import { ClassType } from "./frames/symbols/class-type";
+import { ClassTypeDef } from "./frames/symbols/class-type-def";
 import { DictionaryType } from "./frames/symbols/dictionary-type";
 import { FloatType } from "./frames/symbols/float-type";
 import { FunctionType } from "./frames/symbols/function-type";
@@ -17,11 +21,12 @@ import { ImmutableDictionaryType } from "./frames/symbols/immutable-dictionary-t
 import { IntType } from "./frames/symbols/int-type";
 import { IterableType } from "./frames/symbols/iterable-type";
 import { ListType } from "./frames/symbols/list-type";
+import { ProcedureType } from "./frames/symbols/procedure-type";
 import { RegexType } from "./frames/symbols/regex-type";
 import { StringType } from "./frames/symbols/string-type";
 import { TupleType } from "./frames/symbols/tuple-type";
 
-export class ElanProcedureDescriptor implements ElanMethodDescriptor {
+export class ElanProcedureDescriptor implements ElanMethodDescriptor, IElanProcedureDescriptor {
   constructor(
     public readonly isExtension: boolean = false,
     public readonly isAsync: boolean = false,
@@ -32,9 +37,15 @@ export class ElanProcedureDescriptor implements ElanMethodDescriptor {
   isPure = false;
 
   parameters: TypeDescriptor[] = [];
+
+  mapType(): SymbolType {
+    const parameterTypes = this.parameters;
+
+    return createProcedure(parameterTypes, this.isExtension, this.isAsync);
+  }
 }
 
-export class ElanFunctionDescriptor implements ElanMethodDescriptor {
+export class ElanFunctionDescriptor implements ElanMethodDescriptor, IElanFunctionDescriptor {
   constructor(
     public readonly isExtension: boolean = false,
     public readonly isPure: boolean = true,
@@ -45,6 +56,13 @@ export class ElanFunctionDescriptor implements ElanMethodDescriptor {
   isFunction = true;
 
   parameters: TypeDescriptor[] = [];
+
+  mapType(): SymbolType {
+    const retType = this.returnType;
+    const parameterTypes = this.parameters;
+
+    return createFunction(parameterTypes, retType!, this.isExtension, this.isPure!, this.isAsync);
+  }
 }
 
 export class ElanParametersDescriptor implements ElanMethodDescriptor {
@@ -135,6 +153,19 @@ export class ElanTupleTypeDescriptor implements TypeDescriptor {
   }
 }
 
+export class ElanClassTypeDescriptor implements TypeDescriptor {
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  constructor(private readonly cls: Function) {}
+
+  name = "Class";
+
+  isConstant = true;
+
+  mapType(): SymbolType {
+    return new ClassType("", false, false, [], new ClassTypeDef());
+  }
+}
+
 export class TypescriptTypeDescriptor implements TypeDescriptor {
   constructor(public readonly name: string) {}
 
@@ -208,6 +239,15 @@ export function elanMethod(elanDesc: ElanMethodDescriptor) {
   };
 }
 
+export function elanClass() {
+  return function (target: object) {
+    const typeMetadata = Reflect.getMetadata("design:type", target);
+    if (typeMetadata) {
+      Reflect.defineMetadata(elanMetadataKey, typeMetadata, target);
+    }
+  };
+}
+
 export function elanConstant(elanDesc?: ElanTypeDescriptor) {
   return function (target: object, propertyKey: string) {
     const typeMetadata = Reflect.getMetadata("design:type", target, propertyKey);
@@ -254,6 +294,11 @@ export function ElanIterable(ofType: ElanTypeDescriptor) {
 
 export function ElanAbstractDictionary(keyType: ElanTypeDescriptor, valueType: ElanTypeDescriptor) {
   return new ElanTypeDescriptor("AbstractDictionary", keyType, valueType);
+}
+
+// eslint-disable-next-line @typescript-eslint/ban-types
+export function ElanClass(cls: Function) {
+  return new ElanClassTypeDescriptor(cls);
 }
 
 export function ElanImmutableDictionary(
@@ -394,4 +439,33 @@ function mapProcedureOptions(options: ProcedureOptions): [boolean, boolean] {
     case ProcedureOptions.asyncExtension:
       return [true, true];
   }
+}
+
+export function createProcedure(pTypes: TypeDescriptor[], isExtension: boolean, isAsync: boolean) {
+  return new ProcedureType(
+    pTypes.map((t) => t.mapType()),
+    isExtension,
+    isAsync,
+  );
+}
+
+export function createFunction(
+  pTypes: TypeDescriptor[],
+  retType: TypeDescriptor,
+  isExtension: boolean,
+  isPure: boolean,
+  isAsync: boolean,
+) {
+  return new FunctionType(
+    pTypes.map((t) => t.mapType()),
+    retType.mapType(),
+    isExtension,
+    isPure,
+    isAsync,
+  );
+}
+
+export function createClass(pTypes: TypeDescriptor[], isExtension: boolean, isAsync: boolean) {
+  const cd = new ClassTypeDef();
+  return new ClassType("name", false, false, [], cd);
 }

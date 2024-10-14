@@ -416,7 +416,8 @@ export function getMixins(start: ClassFrame, transforms: Transforms) {
       const name = ct.className;
       mixins.push(`_${name} = new ${name}()`);
     }
-    mixins = mixins.concat(getMixins(ct.scope, transforms));
+    // todo fix cast
+    mixins = mixins.concat(getMixins(ct.scope as ClassFrame, transforms));
   }
 
   return mixins;
@@ -429,7 +430,8 @@ export function getAllPrivateIds(start: ClassFrame, transforms: Transforms) {
   for (const ct of superClasses.map((t) => t[0]).filter((t) => t instanceof ClassType)) {
     const children = ct.childSymbols().filter((s) => isMember(s) && s.private);
     allNames = allNames.concat(children.map((c) => c.symbolId));
-    allNames = allNames.concat(getAllPrivateIds(ct.scope, transforms));
+    // todo fix cast
+    allNames = allNames.concat(getAllPrivateIds(ct.scope as ClassFrame, transforms));
   }
 
   return allNames;

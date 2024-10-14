@@ -12,13 +12,15 @@ export interface ElanMethodDescriptor extends ElanDescriptor {
 
 export interface IElanFunctionDescriptor extends ElanMethodDescriptor {
   isPure: boolean;
-  returnType: TypeDescriptor;
+  returnType?: TypeDescriptor;
 
   isFunction: boolean;
+  mapType(): SymbolType;
 }
 
 export interface IElanProcedureDescriptor extends ElanMethodDescriptor {
   isProcedure: boolean;
+  mapType(): SymbolType;
 }
 
 export interface TypeDescriptor extends ElanDescriptor {

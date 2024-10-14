@@ -6,6 +6,8 @@ import {
   ElanArray,
   elanArrayType,
   ElanBoolean,
+  ElanClass,
+  elanClass,
   elanConstant,
   elanDictionaryType,
   ElanFloat,
@@ -38,6 +40,14 @@ type Location = [string, number, number];
 type BlockGraphics = Location[];
 type File = [number, string, number]; // open/closed, read/write, contents, pointer
 
+// @elanClass()
+// export class BlockGraphics1 {
+//   @elanFunction(FunctionOptions.impureAsyncExtension, ElanString)
+//   getKeystroke(): Promise<string> {
+//     return Promise.resolve("");
+//   }
+// }
+
 export class StdLib {
   constructor() {
     this.system = new System(new StubInputOutput());
@@ -53,6 +63,9 @@ export class StdLib {
   @elanConstant(ElanTuple([ElanInt, ElanInt]))
   Random = "";
 
+  // @elanConstant(ElanClass(BlockGraphics1))
+  // BlockGraphics1?: BlockGraphics1;
+
   // Standard colours
 
   @elanConstant(ElanInt) black = 0x000000;
@@ -63,6 +76,9 @@ export class StdLib {
   @elanConstant(ElanInt) blue = 0x0000ff;
   @elanConstant(ElanInt) yellow = 0xffff00;
   @elanConstant(ElanInt) brown = 0xa52a2a;
+
+  @elanConstant()
+  pi: number = Math.PI;
 
   private isValueType<T1>(v: T1) {
     return typeof v === "boolean" || typeof v === "string" || typeof v === "number";
@@ -1010,7 +1026,6 @@ export class StdLib {
     });
   }
   //Math
-  @elanConstant() pi: number = Math.PI;
 
   @elanFunction()
   abs(x: number): number {
