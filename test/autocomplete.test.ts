@@ -379,6 +379,25 @@ end main`;
     await assertAutocompletes(fileImpl, "ident7", ".", 3, expected);
   });
 
+  test("Pass_CallDict", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var foo set to ["a":1]
+  call foo()
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["putAtKey", "*"],
+      ["removeAtKey", "*"],
+    ] as [string, string][];
+
+    await assertAutocompletes(fileImpl, "ident7", ".", 3, expected);
+  });
+
   test("Pass_ExprDict", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
@@ -395,6 +414,29 @@ end main`;
       ["hasKey", "*"],
       ["keys", "*"],
       ["values", "*"],
+    ] as [string, string][];
+
+    await assertAutocompletes(fileImpl, "expr8", ".", 3, expected);
+  });
+
+  test("Pass_ExprImmutableDict", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var foo set to {"a":1}
+  var bar set to foo
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["asString", "*"],
+      ["hasKey", "*"],
+      ["keys", "*"],
+      ["values", "*"],
+      ["withPutAtKey", "*"],
+      ["withRemoveAtKey", "*"],
     ] as [string, string][];
 
     await assertAutocompletes(fileImpl, "expr8", ".", 3, expected);
