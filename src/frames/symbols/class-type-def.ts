@@ -1,15 +1,13 @@
-import { Constructor } from "../class-members/constructor";
-import { isMember } from "../helpers";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
-import { thisKeyword, constructorKeyword } from "../keywords";
+import { constructorKeyword, thisKeyword } from "../keywords";
+import { isSymbol } from "../symbols/symbol-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 import { ClassType } from "./class-type";
 import { DuplicateSymbol } from "./duplicate-symbol";
 import { SymbolScope } from "./symbol-scope";
 import { UnknownSymbol } from "./unknown-symbol";
-import { getGlobalScope, isSymbol } from "../symbols/symbol-helpers";
 
 export class ClassTypeDef implements Scope, ElanSymbol {
   constructor(
@@ -19,6 +17,8 @@ export class ClassTypeDef implements Scope, ElanSymbol {
   ) {
     this.symbolId = this.name;
   }
+
+  isClass = true;
 
   symbolId: string;
 

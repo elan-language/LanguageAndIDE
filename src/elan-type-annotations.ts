@@ -160,6 +160,10 @@ export class ElanTupleTypeDescriptor implements TypeDescriptor {
 
 const tempMap = new Map<string, ClassType>();
 
+function removeUnderscore(name: string) {
+  return name.startsWith("_") ? name.slice(1) : name;
+}
+
 export class ElanClassTypeDescriptor implements TypeDescriptor {
   // eslint-disable-next-line @typescript-eslint/ban-types
   constructor(private readonly cls: Function) {}
@@ -171,7 +175,7 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
   mapType(scope?: Scope): SymbolType {
     const names = Object.getOwnPropertyNames(this.cls.prototype);
     const children: [string, SymbolType][] = [];
-    const className = this.cls.name;
+    const className = removeUnderscore(this.cls.name);
 
     if (tempMap.has(className)) {
       return tempMap.get(className)!;
@@ -212,7 +216,7 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
     classType.updateScope(classTypeDef);
 
     for (const c of children) {
-      classTypeDef.children.push(getSymbol(c[0], c[1]));
+      classTypeDef.children.push(getSymbol(c[0], c[1], SymbolScope.property));
     }
 
     return classType;
@@ -541,7 +545,7 @@ export function createFunction(
   );
 }
 
-export function getSymbol(id: string, st: SymbolType): ElanSymbol {
+export function getSymbol(id: string, st: SymbolType, ss: SymbolScope): ElanSymbol {
   if (st instanceof ClassType) {
     return st.scope!;
   }
@@ -549,6 +553,6 @@ export function getSymbol(id: string, st: SymbolType): ElanSymbol {
   return {
     symbolId: id,
     symbolType: () => st,
-    symbolScope: SymbolScope.stdlib,
+    symbolScope: ss,
   };
 }

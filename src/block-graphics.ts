@@ -1,24 +1,22 @@
 import { ElanRuntimeError } from "./elan-runtime-error";
 import {
+  ElanClass,
   elanFunction,
-  FunctionOptions,
-  ElanList,
-  ElanTuple,
-  ElanString,
   ElanInt,
-  elanListType,
   elanIntType,
   elanProcedure,
+  ElanString,
+  ElanTuple,
+  FunctionOptions,
   ProcedureOptions,
-  ElanClass,
 } from "./elan-type-annotations";
 import { System } from "./system";
 
-export class BlockGraphics1 {
-
-  // this must be implemented by hand on all stdlib classes 
-  static emptyInstance() { return new BlockGraphics1();};
-
+export class BlockGraphics {
+  // this must be implemented by hand on all stdlib classes
+  static emptyInstance() {
+    return new BlockGraphics();
+  }
 
   constructor() {
     this.internalRep = this.initialisedGraphics(0xffffff);
@@ -63,7 +61,7 @@ export class BlockGraphics1 {
     char: string,
     foreground: number,
     background: number,
-  ): BlockGraphics1 {
+  ): BlockGraphics {
     this.ensureInitialised();
     this.internalRep[this.idx(x, y)] = [char, foreground, background];
     return this;
@@ -98,7 +96,7 @@ export class BlockGraphics1 {
     return this.safeIndex(this.internalRep, this.idx(x, y)) as [string, number, number];
   }
 
-  @elanFunction(FunctionOptions.pure, ElanClass(BlockGraphics1))
+  @elanFunction(FunctionOptions.pure, ElanClass(BlockGraphics))
   withBlock(@elanIntType() x: number, @elanIntType() y: number, @elanIntType() b: number) {
     if (x < 0 || x >= this.xSize) {
       throw new ElanRuntimeError(`x value ${x} is outside range 0 to ${this.xSize - 1}`);
@@ -111,14 +109,14 @@ export class BlockGraphics1 {
     return this.putDetails(x, y, "", f, b);
   }
 
-  @elanFunction(FunctionOptions.pure, ElanClass(BlockGraphics1))
+  @elanFunction(FunctionOptions.pure, ElanClass(BlockGraphics))
   withUnicode(
     @elanIntType() x: number,
     @elanIntType() y: number,
     @elanIntType() unicode: number,
     @elanIntType() f: number,
     @elanIntType() b: number,
-  ): BlockGraphics1 {
+  ): BlockGraphics {
     if (x < 0 || x >= this.xSize) {
       throw new ElanRuntimeError(`x value ${x} is outside range 0 to ${this.xSize - 1}`);
     }
@@ -130,7 +128,7 @@ export class BlockGraphics1 {
     return this.putDetails(x, y, str, f, b);
   }
 
-  @elanFunction(FunctionOptions.pure, ElanClass(BlockGraphics1))
+  @elanFunction(FunctionOptions.pure, ElanClass(BlockGraphics))
   withText(
     @elanIntType() x: number,
     @elanIntType() y: number,
@@ -160,8 +158,8 @@ export class BlockGraphics1 {
     return this;
   }
 
-  @elanFunction(FunctionOptions.pureExtension, ElanClass(BlockGraphics1))
-  withBackground(@elanIntType() b: number): BlockGraphics1 {
+  @elanFunction(FunctionOptions.pureExtension, ElanClass(BlockGraphics))
+  withBackground(@elanIntType() b: number): BlockGraphics {
     this.initialisedGraphics(b);
     return this;
   }

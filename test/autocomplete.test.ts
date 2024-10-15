@@ -160,6 +160,26 @@ end main`;
     await assertAutocompletes(fileImpl, "ident36", ".", 3, expected);
   });
 
+  test("Pass_CallLibMembers", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var foo set to new BlockGraphics()
+  call foo()
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["clearGraphics", "Procedure ()"],
+      ["clearKeyBuffer", "Procedure ()"],
+      ["draw", "Procedure ()"],
+    ] as [string, string][];
+
+    await assertAutocompletes(fileImpl, "ident7", ".", 3, expected);
+  });
+
   test("Pass_CallMembersFilter", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 

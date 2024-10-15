@@ -64,7 +64,7 @@ export class NewAsn extends AbstractAstNode implements AstNode {
 
         libScope = classSymbol.symbolScope === SymbolScope.stdlib;
 
-        const constructorType = (classSymbol as unknown as Scope)
+        const constructorType = type
           .resolveSymbol(constructorKeyword, tf, this.scope)
           .symbolType(tf);
 
