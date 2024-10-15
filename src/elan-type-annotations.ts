@@ -6,6 +6,7 @@ import {
   IElanFunctionDescriptor,
   IElanProcedureDescriptor,
   isFunctionDescriptor,
+  isProcedureDescriptor,
   TypeDescriptor,
 } from "./elan-type-interfaces";
 import { ElanSymbol } from "./frames/interfaces/elan-symbol";
@@ -157,6 +158,8 @@ export class ElanTupleTypeDescriptor implements TypeDescriptor {
   }
 }
 
+const tempMap = new Map<string, ClassType>();
+
 export class ElanClassTypeDescriptor implements TypeDescriptor {
   // eslint-disable-next-line @typescript-eslint/ban-types
   constructor(private readonly cls: Function) {}
@@ -167,7 +170,14 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
 
   mapType(scope?: Scope): SymbolType {
     const names = Object.getOwnPropertyNames(this.cls.prototype);
-    const children: ElanSymbol[] = [];
+    const children: [string, SymbolType][] = [];
+    const className = this.cls.name;
+
+    if (tempMap.has(className)) {
+      return tempMap.get(className)!;
+    } else {
+      tempMap.set(className, new ClassType(className, false, false, [], undefined));
+    }
 
     for (let i = 0; i < names.length; i++) {
       const name = names[i];
@@ -178,29 +188,34 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
 
       // todo
       if (name === "constructor") {
-        children.push(getSymbol(name, new ProcedureType([], false, false)));
+        children.push([name, new ProcedureType([], false, false)]);
       }
 
       if (isFunctionDescriptor(metadata)) {
-        children.push(getSymbol(name, metadata.mapType()));
+        children.push([name, metadata.mapType()]);
       }
 
-      // if (isProcedureDescriptor(metadata)) {
-      //   this.symbols.set(name, this.getSymbol(name, metadata.mapType()));
-      // }
+      if (isProcedureDescriptor(metadata)) {
+        children.push([name, metadata.mapType()]);
+      }
 
       // if (isConstantDescriptor(metadata)) {
       //   this.symbols.set(name, this.getSymbol(name, metadata.mapType()));
       // }
     }
 
-    return new ClassType(
-      this.cls.name,
-      false,
-      false,
-      [],
-      new ClassTypeDef(this.cls.name, children, scope!),
-    );
+    const classType = tempMap.get(className)!;
+    tempMap.delete(className);
+
+    const classTypeDef = new ClassTypeDef(className, [], scope!);
+
+    classType.updateScope(classTypeDef);
+
+    for (const c of children) {
+      classTypeDef.children.push(getSymbol(c[0], c[1]));
+    }
+
+    return classType;
   }
 }
 
@@ -528,7 +543,7 @@ export function createFunction(
 
 export function getSymbol(id: string, st: SymbolType): ElanSymbol {
   if (st instanceof ClassType) {
-    return st.scope;
+    return st.scope!;
   }
 
   return {

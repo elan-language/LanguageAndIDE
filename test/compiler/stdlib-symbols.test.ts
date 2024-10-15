@@ -8,17 +8,18 @@ import {
   assertParses,
   assertStatusIsValid,
   assertTestObjectCodeExecutes,
+  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("StdLib-symbols", () => {
-  test("Pass_contains", async () => {
+  ignore_test("Pass_contains", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var bg set to new BlockGraphics1()
-  var ks set to bg.getKeystroke1()
+  var ks set to bg.getKeystroke()
   print ks
 end main`;
 

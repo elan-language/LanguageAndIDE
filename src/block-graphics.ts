@@ -15,8 +15,8 @@ import {
 import { System } from "./system";
 
 export class BlockGraphics1 {
-  constructor(background: number) {
-    this.internalRep = this.initialisedGraphics(background);
+  constructor() {
+    this.internalRep = this.initialisedGraphics(0xffffff);
   }
 
   private system?: System;

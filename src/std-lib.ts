@@ -36,18 +36,11 @@ import {
 import { hasHiddenType } from "./has-hidden-type";
 import { StubInputOutput } from "./stub-input-output";
 import { System } from "./system";
+import { BlockGraphics1 } from "./block-graphics";
 
 type Location = [string, number, number];
 type BlockGraphics = Location[];
 type File = [number, string, number]; // open/closed, read/write, contents, pointer
-
-@elanClass()
-export class BlockGraphics1 {
-  @elanFunctionMethod(FunctionOptions.impureAsync, ElanString)
-  getKeystroke1(): Promise<string> {
-    return Promise.resolve("testvalue");
-  }
-}
 
 export class StdLib {
   constructor() {

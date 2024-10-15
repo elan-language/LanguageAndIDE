@@ -14,7 +14,7 @@ import { getGlobalScope, isSymbol } from "../symbols/symbol-helpers";
 export class ClassTypeDef implements Scope, ElanSymbol {
   constructor(
     private readonly name: string,
-    private readonly children: ElanSymbol[],
+    public readonly children: ElanSymbol[],
     private readonly scope: Scope,
   ) {
     this.symbolId = this.name;

@@ -417,7 +417,7 @@ ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
       .filter((t) => t instanceof ClassType);
 
     for (const ct of types) {
-      const s = ct.scope.resolveOwnSymbol(id, transforms);
+      const s = ct.scope!.resolveOwnSymbol(id, transforms);
       if (isMember(s) && s.private) {
         matches.push(s);
       }

@@ -13,18 +13,18 @@ import {
 } from "./compiler-test-helpers";
 
 suite("Char Mapped Display1", () => {
-  ignore_test("Pass_SimpleDraw", async () => {
+  test("Pass_SimpleDraw", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  var g set to  new BlockGraphics1()
+  var g set to new BlockGraphics1()
   call g.draw()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var g = system.initialise(system.list(new Array()));
-  await _stdlib.draw(g);
+  var g = system.initialise(new _stdlib.BlockGraphics1());
+  await g.draw();
 }
 return [main, _tests];}`;
 
@@ -45,7 +45,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  var g set to new BlockGraphics()
+  var g set to new BlockGraphics1()
   set g to g.withUnicode(0, 0, 90, black, white)
   call g.draw()
 end main`;
@@ -394,7 +394,7 @@ return [main, _tests];}`;
       '<div style="color:#000001;background-color:#000002;">e',
     );
   });
-  
+
   ignore_test("Pass_putString overrunning both limits", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
