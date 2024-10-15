@@ -44,6 +44,8 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
     return !this.isExtensionMethod;
   }
 
+  isAsync: boolean = false;
+
   private isExtensionMethod: boolean = false;
 
   aggregateCompileErrors(): CompileError[] {
@@ -69,8 +71,6 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
     let parameters = [...this.parameters];
     const [funcSymbol, funcSymbolType] = this.getSymbolAndType();
 
-    let isAsync: boolean = false;
-
     mustBeKnownSymbol(funcSymbol, this.compileErrors, this.fieldId);
     mustBePureFunctionSymbol(funcSymbolType, this.scope, this.compileErrors, this.fieldId);
 
@@ -93,15 +93,15 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
 
       matchParametersAndTypes(funcSymbolType, parameters, this.compileErrors, this.fieldId);
 
-      isAsync = funcSymbolType.isAsync;
+      this.isAsync = funcSymbolType.isAsync;
     }
 
-    const async = isAsync ? "await " : "";
+    const showPreviousNode = this.precedingNode && this.showPreviousNode;
+    const async = this.isAsync && !showPreviousNode ? "await " : "";
     const parms = parameters.map((p) => p.compile()).join(", ");
-    const prefix =
-      this.precedingNode && this.showPreviousNode
-        ? ""
-        : scopePrefix(funcSymbol, this.compileErrors, this.scope, this.fieldId);
+    const prefix = showPreviousNode
+      ? ""
+      : scopePrefix(funcSymbol, this.compileErrors, this.scope, this.fieldId);
 
     return `${async}${prefix}${this.id}(${parms})`;
   }

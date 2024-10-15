@@ -5,4 +5,6 @@ export interface ChainedAsn extends AstNode {
   updateScopeAndChain(scope: Scope, ast: AstNode): void;
 
   showPreviousNode: boolean;
+
+  isAsync: boolean;
 }

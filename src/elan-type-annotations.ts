@@ -1,14 +1,22 @@
 import { ElanCompilerError } from "./elan-compiler-error";
 import {
+  ElanDescriptor,
   elanMetadataKey,
   ElanMethodDescriptor,
+  IElanFunctionDescriptor,
+  IElanProcedureDescriptor,
   isFunctionDescriptor,
+  isProcedureDescriptor,
   TypeDescriptor,
 } from "./elan-type-interfaces";
+import { ElanSymbol } from "./frames/interfaces/elan-symbol";
+import { Scope } from "./frames/interfaces/scope";
 import { SymbolType } from "./frames/interfaces/symbol-type";
 import { AbstractDictionaryType } from "./frames/symbols/abstract-dictionary-type";
 import { ArrayType } from "./frames/symbols/array-list-type";
 import { BooleanType } from "./frames/symbols/boolean-type";
+import { ClassType } from "./frames/symbols/class-type";
+import { ClassTypeDef } from "./frames/symbols/class-type-def";
 import { DictionaryType } from "./frames/symbols/dictionary-type";
 import { FloatType } from "./frames/symbols/float-type";
 import { FunctionType } from "./frames/symbols/function-type";
@@ -17,11 +25,13 @@ import { ImmutableDictionaryType } from "./frames/symbols/immutable-dictionary-t
 import { IntType } from "./frames/symbols/int-type";
 import { IterableType } from "./frames/symbols/iterable-type";
 import { ListType } from "./frames/symbols/list-type";
+import { ProcedureType } from "./frames/symbols/procedure-type";
 import { RegexType } from "./frames/symbols/regex-type";
 import { StringType } from "./frames/symbols/string-type";
+import { SymbolScope } from "./frames/symbols/symbol-scope";
 import { TupleType } from "./frames/symbols/tuple-type";
 
-export class ElanProcedureDescriptor implements ElanMethodDescriptor {
+export class ElanProcedureDescriptor implements ElanMethodDescriptor, IElanProcedureDescriptor {
   constructor(
     public readonly isExtension: boolean = false,
     public readonly isAsync: boolean = false,
@@ -32,9 +42,15 @@ export class ElanProcedureDescriptor implements ElanMethodDescriptor {
   isPure = false;
 
   parameters: TypeDescriptor[] = [];
+
+  mapType(): SymbolType {
+    const parameterTypes = this.parameters;
+
+    return createProcedure(parameterTypes, this.isExtension, this.isAsync);
+  }
 }
 
-export class ElanFunctionDescriptor implements ElanMethodDescriptor {
+export class ElanFunctionDescriptor implements ElanMethodDescriptor, IElanFunctionDescriptor {
   constructor(
     public readonly isExtension: boolean = false,
     public readonly isPure: boolean = true,
@@ -45,6 +61,13 @@ export class ElanFunctionDescriptor implements ElanMethodDescriptor {
   isFunction = true;
 
   parameters: TypeDescriptor[] = [];
+
+  mapType(): SymbolType {
+    const retType = this.returnType;
+    const parameterTypes = this.parameters;
+
+    return createFunction(parameterTypes, retType!, this.isExtension, this.isPure!, this.isAsync);
+  }
 }
 
 export class ElanParametersDescriptor implements ElanMethodDescriptor {
@@ -135,6 +158,71 @@ export class ElanTupleTypeDescriptor implements TypeDescriptor {
   }
 }
 
+const tempMap = new Map<string, ClassType>();
+
+function removeUnderscore(name: string) {
+  return name.startsWith("_") ? name.slice(1) : name;
+}
+
+export class ElanClassTypeDescriptor implements TypeDescriptor {
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  constructor(private readonly cls: Function) {}
+
+  isClass = true;
+
+  name = "Class";
+
+  mapType(scope?: Scope): SymbolType {
+    const names = Object.getOwnPropertyNames(this.cls.prototype);
+    const children: [string, SymbolType][] = [];
+    const className = removeUnderscore(this.cls.name);
+
+    if (tempMap.has(className)) {
+      return tempMap.get(className)!;
+    } else {
+      tempMap.set(className, new ClassType(className, false, false, [], undefined));
+    }
+
+    for (let i = 0; i < names.length; i++) {
+      const name = names[i];
+
+      const metadata = Reflect.getMetadata(elanMetadataKey, this.cls.prototype, name) as
+        | ElanDescriptor
+        | undefined;
+
+      // todo
+      if (name === "constructor") {
+        children.push([name, new ProcedureType([], false, false)]);
+      }
+
+      if (isFunctionDescriptor(metadata)) {
+        children.push([name, metadata.mapType()]);
+      }
+
+      if (isProcedureDescriptor(metadata)) {
+        children.push([name, metadata.mapType()]);
+      }
+
+      // if (isConstantDescriptor(metadata)) {
+      //   this.symbols.set(name, this.getSymbol(name, metadata.mapType()));
+      // }
+    }
+
+    const classType = tempMap.get(className)!;
+    tempMap.delete(className);
+
+    const classTypeDef = new ClassTypeDef(className, [], scope!);
+
+    classType.updateScope(classTypeDef);
+
+    for (const c of children) {
+      classTypeDef.children.push(getSymbol(c[0], c[1], SymbolScope.property));
+    }
+
+    return classType;
+  }
+}
+
 export class TypescriptTypeDescriptor implements TypeDescriptor {
   constructor(public readonly name: string) {}
 
@@ -170,9 +258,18 @@ export function elanFunction(options?: FunctionOptions, retType?: TypeDescriptor
   return elanMethod(new ElanFunctionDescriptor(...flags));
 }
 
+export function elanFunctionMethod(options?: FunctionOptions, retType?: TypeDescriptor) {
+  const flags = mapFunctionOptions(options ?? FunctionOptions.pure, retType);
+  return elanMethod(new ElanFunctionDescriptor(...flags));
+}
+
 export function elanProcedure(options?: ProcedureOptions) {
   const flags = mapProcedureOptions(options ?? ProcedureOptions.default);
   return elanMethod(new ElanProcedureDescriptor(...flags));
+}
+
+export function elanConstructor() {
+  return elanMethod(new ElanProcedureDescriptor());
 }
 
 export function elanMethod(elanDesc: ElanMethodDescriptor) {
@@ -208,7 +305,30 @@ export function elanMethod(elanDesc: ElanMethodDescriptor) {
   };
 }
 
-export function elanConstant(elanDesc?: ElanTypeDescriptor) {
+export function elanClass() {
+  return function (target: object) {
+    const typeMetadata = Reflect.getMetadata("design:type", target);
+    if (typeMetadata) {
+      Reflect.defineMetadata(elanMetadataKey, typeMetadata, target);
+    }
+  };
+}
+
+export function elanConstant(elanDesc?: TypeDescriptor) {
+  return function (target: object, propertyKey: string) {
+    const typeMetadata = Reflect.getMetadata("design:type", target, propertyKey);
+
+    if (!elanDesc && typeMetadata && typeMetadata.name) {
+      elanDesc = new TypescriptTypeDescriptor(typeMetadata.name);
+    }
+
+    Reflect.defineMetadata(elanMetadataKey, elanDesc, target, propertyKey);
+  };
+}
+
+// eslint-disable-next-line @typescript-eslint/ban-types
+export function elanClassExport(cls: Function) {
+  let elanDesc = ElanClass(cls) as TypeDescriptor;
   return function (target: object, propertyKey: string) {
     const typeMetadata = Reflect.getMetadata("design:type", target, propertyKey);
 
@@ -254,6 +374,11 @@ export function ElanIterable(ofType: ElanTypeDescriptor) {
 
 export function ElanAbstractDictionary(keyType: ElanTypeDescriptor, valueType: ElanTypeDescriptor) {
   return new ElanTypeDescriptor("AbstractDictionary", keyType, valueType);
+}
+
+// eslint-disable-next-line @typescript-eslint/ban-types
+export function ElanClass(cls: Function) {
+  return new ElanClassTypeDescriptor(cls);
 }
 
 export function ElanImmutableDictionary(
@@ -394,4 +519,40 @@ function mapProcedureOptions(options: ProcedureOptions): [boolean, boolean] {
     case ProcedureOptions.asyncExtension:
       return [true, true];
   }
+}
+
+export function createProcedure(pTypes: TypeDescriptor[], isExtension: boolean, isAsync: boolean) {
+  return new ProcedureType(
+    pTypes.map((t) => t.mapType()),
+    isExtension,
+    isAsync,
+  );
+}
+
+export function createFunction(
+  pTypes: TypeDescriptor[],
+  retType: TypeDescriptor,
+  isExtension: boolean,
+  isPure: boolean,
+  isAsync: boolean,
+) {
+  return new FunctionType(
+    pTypes.map((t) => t.mapType()),
+    retType.mapType(),
+    isExtension,
+    isPure,
+    isAsync,
+  );
+}
+
+export function getSymbol(id: string, st: SymbolType, ss: SymbolScope): ElanSymbol {
+  if (st instanceof ClassType) {
+    return st.scope!;
+  }
+
+  return {
+    symbolId: id,
+    symbolType: () => st,
+    symbolScope: ss,
+  };
 }

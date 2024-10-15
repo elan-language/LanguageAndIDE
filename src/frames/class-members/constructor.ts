@@ -8,11 +8,13 @@ import { Field } from "../interfaces/field";
 import { Frame } from "../interfaces/frame";
 import { Member } from "../interfaces/member";
 import { constructorKeyword } from "../keywords";
+import { ProcedureType } from "../symbols/procedure-type";
 import { getAllPrivateIds, getMixins } from "../symbols/symbol-helpers";
+import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { Transforms } from "../syntax-nodes/transforms";
 
-export class Constructor extends FrameWithStatements implements Member {
+export class Constructor extends FrameWithStatements implements ElanSymbol, Member {
   isConstructor = true;
   isMember = true;
   isAbstract = false;
@@ -100,5 +102,18 @@ ${this.indent()}}\r
     const matches = super.symbolMatches(id, all, initialScope);
     const localMatches = this.params.symbolMatches(id, all, initialScope);
     return localMatches.concat(matches);
+  }
+
+  get symbolId() {
+    return constructorKeyword;
+  }
+
+  symbolType(transforms?: Transforms) {
+    const pt = this.params.symbolTypes(transforms);
+    return new ProcedureType(pt, false, false);
+  }
+
+  get symbolScope() {
+    return SymbolScope.property;
   }
 }

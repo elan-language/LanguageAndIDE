@@ -1,4 +1,5 @@
 import "reflect-metadata";
+import { BlockGraphics } from "./block-graphics";
 import { ElanCompilerError } from "./elan-compiler-error";
 import { ElanRuntimeError } from "./elan-runtime-error";
 import {
@@ -6,6 +7,7 @@ import {
   ElanArray,
   elanArrayType,
   ElanBoolean,
+  elanClassExport,
   elanConstant,
   elanDictionaryType,
   ElanFloat,
@@ -34,8 +36,6 @@ import { hasHiddenType } from "./has-hidden-type";
 import { StubInputOutput } from "./stub-input-output";
 import { System } from "./system";
 
-type Location = [string, number, number];
-type BlockGraphics = Location[];
 type File = [number, string, number]; // open/closed, read/write, contents, pointer
 
 export class StdLib {
@@ -47,11 +47,11 @@ export class StdLib {
 
   // types
 
-  @elanConstant(ElanList(ElanTuple([ElanString, ElanInt, ElanInt])))
-  BlockGraphics = "";
-
   @elanConstant(ElanTuple([ElanInt, ElanInt]))
   Random = "";
+
+  @elanClassExport(BlockGraphics)
+  BlockGraphics = BlockGraphics;
 
   // Standard colours
 
@@ -63,6 +63,9 @@ export class StdLib {
   @elanConstant(ElanInt) blue = 0x0000ff;
   @elanConstant(ElanInt) yellow = 0xffff00;
   @elanConstant(ElanInt) brown = 0xa52a2a;
+
+  @elanConstant()
+  pi: number = Math.PI;
 
   private isValueType<T1>(v: T1) {
     return typeof v === "boolean" || typeof v === "string" || typeof v === "number";
@@ -635,226 +638,6 @@ export class StdLib {
   clearConsole() {
     this.system.elanInputOutput.clearConsole();
   }
-  // Graphicsped display
-
-  xSize = 40;
-  ySize = 30;
-
-  GraphicsLength = this.xSize * this.ySize;
-
-  private idx(x: number, y: number) {
-    if (x < 0 || x >= this.xSize || y < 0 || y >= this.ySize) {
-      throw new ElanRuntimeError(`Out of range index`);
-    }
-    return x * this.ySize + y;
-  }
-
-  initialisedGraphics(background: number) {
-    const emptyMap: BlockGraphics = [];
-    const emptyLocation: Location = this.system.tuple(["", 0x000000, background]) as Location;
-    for (let x = 0; x < this.xSize; x++) {
-      for (let y = 0; y < this.ySize; y++) {
-        emptyMap.push(emptyLocation);
-      }
-    }
-    return emptyMap;
-  }
-
-  private ensureInitialised(cm: BlockGraphics): BlockGraphics {
-    if (cm.length === this.GraphicsLength) {
-      return cm;
-    } else {
-      return this.initialisedGraphics(0xffffff);
-    }
-  }
-
-  private putDetails(
-    map: BlockGraphics,
-    x: number,
-    y: number,
-    char: string,
-    foreground: number,
-    background: number,
-  ): BlockGraphics {
-    const cm = this.ensureInitialised(map);
-    cm[this.idx(x, y)] = this.system.tuple([char, foreground, background]) as Location;
-    return cm;
-  }
-
-  private getDetails(map: BlockGraphics, x: number, y: number) {
-    const cm = this.ensureInitialised(map);
-    return this.system.safeIndex(cm, this.idx(x, y));
-  }
-
-  @elanFunction(FunctionOptions.pureExtension, ElanList(ElanTuple([ElanString, ElanInt, ElanInt])))
-  withBlock(
-    @elanListType(ElanTuple([ElanString, ElanInt, ElanInt]))
-    map: BlockGraphics,
-    @elanIntType() x: number,
-    @elanIntType() y: number,
-    @elanIntType() b: number,
-  ) {
-    if (x < 0 || x >= this.xSize) {
-      throw new ElanRuntimeError(`x value ${x} is outside range 0 to ${this.xSize - 1}`);
-    }
-    if (y < 0 || y >= this.ySize) {
-      throw new ElanRuntimeError(`y value ${y} is outside of range 0 to ${this.ySize - 1}`);
-    }
-    const cm = this.ensureInitialised(map);
-    const [c, f] = this.getDetails(cm, x, y);
-    return this.putDetails(cm, x, y, "", f, b);
-  }
-
-  @elanFunction(FunctionOptions.pureExtension, ElanList(ElanTuple([ElanString, ElanInt, ElanInt])))
-  withUnicode(
-    @elanListType(ElanTuple([ElanString, ElanInt, ElanInt]))
-    map: BlockGraphics,
-    @elanIntType() x: number,
-    @elanIntType() y: number,
-    @elanIntType() unicode: number,
-    @elanIntType() f: number,
-    @elanIntType() b: number,
-  ) {
-    if (x < 0 || x >= this.xSize) {
-      throw new ElanRuntimeError(`x value ${x} is outside range 0 to ${this.xSize - 1}`);
-    }
-    if (y < 0 || y >= this.ySize) {
-      throw new ElanRuntimeError(`y value ${y} is outside of range 0 to ${this.ySize - 1}`);
-    }
-    const cm = this.ensureInitialised(map);
-    const str = String.fromCharCode(unicode);
-    return this.putDetails(cm, x, y, str, f, b);
-  }
-
-  @elanFunction(FunctionOptions.pureExtension, ElanList(ElanTuple([ElanString, ElanInt, ElanInt])))
-  withText(
-    @elanListType(ElanTuple([ElanString, ElanInt, ElanInt]))
-    map: BlockGraphics,
-    @elanIntType() x: number,
-    @elanIntType() y: number,
-    text: string,
-    @elanIntType() foreground: number,
-    @elanIntType() background: number,
-  ) {
-    if (x < 0 || x >= this.xSize) {
-      throw new ElanRuntimeError(`x value ${x} is outside range 0 to ${this.xSize - 1}`);
-    }
-    if (y < 0 || y >= this.ySize) {
-      throw new ElanRuntimeError(`y value ${y} is outside of range 0 to ${this.ySize - 1}`);
-    }
-    let cm = this.ensureInitialised(map);
-    for (let i = 0; i < text.length; i++) {
-      if (x + i < this.xSize) {
-        cm = this.putDetails(cm, x + i, y, text[i], foreground, background);
-      } else {
-        const newX = (x + i) % this.xSize;
-        const newY = (y + this.floor((x + i) / this.xSize)) % this.ySize;
-        if (newY >= this.ySize) {
-          throw new ElanRuntimeError(`'${text} is too long to fit from point ${x},${y} onwards'`);
-        }
-        cm = this.putDetails(cm, newX, newY, text[i], foreground, background);
-      }
-    }
-    return cm;
-  }
-
-  @elanFunction(FunctionOptions.pureExtension, ElanList(ElanTuple([ElanString, ElanInt, ElanInt])))
-  withBackground(
-    @elanListType(ElanTuple([ElanString, ElanInt, ElanInt]))
-    map: BlockGraphics,
-    @elanIntType() b: number,
-  ): BlockGraphics {
-    return this.initialisedGraphics(b);
-  }
-
-  @elanFunction(FunctionOptions.pureExtension, ElanList(ElanTuple([ElanString, ElanInt, ElanInt])))
-  getChar(
-    @elanListType(ElanTuple([ElanString, ElanInt, ElanInt]))
-    map: BlockGraphics,
-    @elanIntType() x: number,
-    @elanIntType() y: number,
-  ) {
-    const cm = this.ensureInitialised(map);
-    return this.system.safeIndex(this.getDetails(cm, x, y), 0);
-  }
-
-  @elanFunction(FunctionOptions.pureExtension, ElanList(ElanTuple([ElanString, ElanInt, ElanInt])))
-  getForeground(
-    @elanListType(ElanTuple([ElanString, ElanInt, ElanInt]))
-    map: BlockGraphics,
-    @elanIntType() x: number,
-    @elanIntType() y: number,
-  ) {
-    const cm = this.ensureInitialised(map);
-    return this.system.safeIndex(this.getDetails(cm, x, y), 1);
-  }
-
-  @elanFunction(FunctionOptions.pureExtension, ElanList(ElanTuple([ElanString, ElanInt, ElanInt])))
-  getBackground(
-    @elanListType(ElanTuple([ElanString, ElanInt, ElanInt]))
-    map: BlockGraphics,
-    @elanIntType() x: number,
-    @elanIntType() y: number,
-  ) {
-    const cm = this.ensureInitialised(map);
-    return this.system.safeIndex(this.getDetails(cm, x, y), 2);
-  }
-
-  @elanProcedure(ProcedureOptions.extension)
-  clearGraphics(
-    @elanListType(ElanTuple([ElanString, ElanInt, ElanInt]))
-    map: BlockGraphics,
-  ) {
-    this.system.elanInputOutput.clearGraphics();
-  }
-
-  @elanProcedure(ProcedureOptions.asyncExtension)
-  draw(
-    @elanListType(ElanTuple([ElanString, ElanInt, ElanInt]))
-    map: BlockGraphics,
-  ): Promise<void> {
-    const cm = this.ensureInitialised(map);
-    let rendered = "";
-
-    for (let y = 0; y < this.ySize; y++) {
-      for (let x = 0; x < this.xSize; x++) {
-        const [c, f, b] = this.getDetails(cm, x, y);
-        rendered = `${rendered}<div style="color:${this.asHex(f)};background-color:${this.asHex(b)};">${c}</div>`;
-      }
-    }
-    this.system.elanInputOutput.drawGraphics(rendered);
-    return this.pause(0);
-  }
-
-  private asHex(n: number): string {
-    const h = "000000" + n.toString(16);
-    const h6 = h.substring(h.length - 6);
-    return `#${h6}`;
-  }
-
-  @elanFunction(FunctionOptions.impureAsyncExtension, ElanString)
-  getKeystroke(
-    @elanListType(ElanTuple([ElanString, ElanInt, ElanInt]))
-    map: BlockGraphics,
-  ): Promise<string> {
-    return this.system.elanInputOutput.getKeystroke();
-  }
-
-  @elanFunction(FunctionOptions.impureAsyncExtension, ElanTuple([ElanString, ElanString]))
-  getKeystrokeWithModifier(
-    @elanListType(ElanTuple([ElanString, ElanInt, ElanInt]))
-    map: BlockGraphics,
-  ): Promise<[string, string]> {
-    return this.system.elanInputOutput.getKeystrokeWithModifier();
-  }
-
-  @elanProcedure(ProcedureOptions.extension)
-  clearKeyBuffer(
-    @elanListType(ElanTuple([ElanString, ElanInt, ElanInt]))
-    map: BlockGraphics,
-  ) {
-    this.system.elanInputOutput.clearKeyBuffer();
-  }
 
   @elanFunction(FunctionOptions.pure, ElanArray(ElanT1))
   createArray<T1>(@elanIntType() x: number, @elanGenericParamT1Type() value: T1) {
@@ -1010,7 +793,6 @@ export class StdLib {
     });
   }
   //Math
-  @elanConstant() pi: number = Math.PI;
 
   @elanFunction()
   abs(x: number): number {

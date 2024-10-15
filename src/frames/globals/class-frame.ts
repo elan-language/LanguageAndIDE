@@ -29,7 +29,13 @@ import { Frame } from "../interfaces/frame";
 import { Parent } from "../interfaces/parent";
 import { Profile } from "../interfaces/profile";
 import { StatementFactory } from "../interfaces/statement-factory";
-import { abstractKeyword, classKeyword, immutableKeyword, thisKeyword } from "../keywords";
+import {
+  abstractKeyword,
+  classKeyword,
+  constructorKeyword,
+  immutableKeyword,
+  thisKeyword,
+} from "../keywords";
 import {
   parentHelper_addChildAfter,
   parentHelper_addChildBefore,
@@ -398,6 +404,10 @@ ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
       return this;
     }
 
+    if (id === constructorKeyword) {
+      return this.getChildren().find((c) => c instanceof Constructor) ?? new UnknownSymbol(id);
+    }
+
     const matches = this.getChildren().filter(
       (f) => isSymbol(f) && f.symbolId === id,
     ) as ElanSymbol[];
@@ -407,7 +417,7 @@ ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
       .filter((t) => t instanceof ClassType);
 
     for (const ct of types) {
-      const s = ct.scope.resolveOwnSymbol(id, transforms);
+      const s = ct.scope!.resolveOwnSymbol(id, transforms);
       if (isMember(s) && s.private) {
         matches.push(s);
       }
@@ -437,7 +447,7 @@ ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
     const otherMatches = this.getParent().symbolMatches(id, all, this);
 
     const matches = this.getChildren().filter(
-      (f) => isSymbol(f) && (f.symbolId.startsWith(id) || all),
+      (f) => !(f instanceof Constructor) && isSymbol(f) && (f.symbolId.startsWith(id) || all),
     ) as ElanSymbol[];
 
     return matches.concat(otherMatches);

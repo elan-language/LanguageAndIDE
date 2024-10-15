@@ -3,6 +3,7 @@ import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../syntax-nodes/transforms";
+import { ClassTypeDef } from "./class-type-def";
 import { isSymbol } from "./symbol-helpers";
 import { UnknownSymbol } from "./unknown-symbol";
 
@@ -12,12 +13,16 @@ export class ClassType implements SymbolType, Scope {
     public readonly isAbstract: boolean,
     public readonly isImmutable: boolean,
     public readonly inheritsFrom: SymbolType[],
-    public readonly scope: ClassFrame,
+    public scope: ClassFrame | ClassTypeDef | undefined,
   ) {}
+
+  updateScope(scope: ClassTypeDef) {
+    this.scope = scope;
+  }
 
   symbolMatches(id: string, all: boolean): ElanSymbol[] {
     const matches: ElanSymbol[] = [];
-    for (const f of this.scope.getChildren()) {
+    for (const f of this.scope!.getChildren()) {
       if (isSymbol(f) && (f.symbolId.startsWith(id) || all)) {
         matches.push(f);
       }
@@ -36,15 +41,15 @@ export class ClassType implements SymbolType, Scope {
   }
 
   getParentScope(): Scope {
-    return this.scope;
+    return this.scope!;
   }
 
   childSymbols(): ElanSymbol[] {
-    return this.scope.getChildren().filter((c) => isSymbol(c));
+    return this.scope!.getChildren().filter((c) => isSymbol(c));
   }
 
   resolveSymbol(id: string, transforms: Transforms, scope: Scope): ElanSymbol {
-    for (const f of this.scope.getChildren()) {
+    for (const f of this.scope!.getChildren()) {
       if (isSymbol(f) && f.symbolId === id) {
         return f;
       }
@@ -61,6 +66,7 @@ export class ClassType implements SymbolType, Scope {
   }
 
   get initialValue() {
-    return `${this.className}.emptyInstance()`;
+    const lib = this.scope instanceof ClassTypeDef ? "_stdlib." : "";
+    return `${lib}${this.className}.emptyInstance()`;
   }
 }
