@@ -1,16 +1,11 @@
-import { ElanRuntimeError } from "./elan-runtime-error";
 import {
-  ElanClass,
   elanFunction,
   elanGenericParamT1Type,
   ElanInt,
   elanIntType,
   elanProcedure,
-  ElanString,
   ElanT1,
-  ElanTuple,
   FunctionOptions,
-  ProcedureOptions,
 } from "./elan-type-annotations";
 import { System } from "./system";
 
@@ -39,8 +34,8 @@ export class Stack {
   }
 
   @elanProcedure()
-  push<T1>(@elanIntType() @elanGenericParamT1Type() item: T1) {
-    //this.contents.unshift(item); //Not sure how to handle the constraint that T1 must extend 'object'
+  push<T1 extends object>(@elanIntType() @elanGenericParamT1Type() item: T1) {
+    this.contents.unshift(item);
   }
 
   @elanFunction(FunctionOptions.impure,  ElanT1)
