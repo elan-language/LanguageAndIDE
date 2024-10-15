@@ -41,7 +41,7 @@ return [main, _tests];}`;
     );
   });
 
-  ignore_test("Pass_WithUnicode", async () => {
+  test("Pass_WithUnicode", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
@@ -52,9 +52,9 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var g = system.initialise(system.list(new Array()));
-  g = _stdlib.withUnicode(g, 0, 0, 90, _stdlib.black, _stdlib.white);
-  await _stdlib.draw(g);
+  var g = system.initialise(new _stdlib.BlockGraphics1());
+  g = g.withUnicode(0, 0, 90, _stdlib.black, _stdlib.white);
+  await g.draw();
 }
 return [main, _tests];}`;
 
@@ -71,20 +71,20 @@ return [main, _tests];}`;
     );
   });
 
-  ignore_test("Pass_GetChar", async () => {
+  test("Pass_GetChar", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  var g set to new BlockGraphics()
+  var g set to new BlockGraphics1()
   set g to g.withText(10, 20, "a", 1, 2)
   print g.getChar(10, 20)
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var g = system.initialise(system.list(new Array()));
-  g = _stdlib.withText(g, 10, 20, "a", 1, 2);
-  system.printLine(_stdlib.asString(_stdlib.getChar(g, 10, 20)));
+  var g = system.initialise(new _stdlib.BlockGraphics1());
+  g = g.withText(10, 20, "a", 1, 2);
+  system.printLine(_stdlib.asString(g.getChar(10, 20)));
 }
 return [main, _tests];}`;
 
@@ -97,20 +97,20 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "a");
   });
 
-  ignore_test("Pass_GetForeground", async () => {
+  test("Pass_GetForeground", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  var g set to new BlockGraphics()
+  var g set to new BlockGraphics1()
   set g to g.withText(10, 20, "a", 1, 2)
   print g.getForeground(10, 20)
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var g = system.initialise(system.list(new Array()));
-  g = _stdlib.withText(g, 10, 20, "a", 1, 2);
-  system.printLine(_stdlib.asString(_stdlib.getForeground(g, 10, 20)));
+  var g = system.initialise(new _stdlib.BlockGraphics1());
+  g = g.withText(10, 20, "a", 1, 2);
+  system.printLine(_stdlib.asString(g.getForeground(10, 20)));
 }
 return [main, _tests];}`;
 
@@ -123,20 +123,20 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "1");
   });
 
-  ignore_test("Pass_PutBackground", async () => {
+  test("Pass_PutBackground", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  var g set to new BlockGraphics()
+  var g set to new BlockGraphics1()
   set g to g.withBlock(1, 0, 4)
   call g.draw()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var g = system.initialise(system.list(new Array()));
-  g = _stdlib.withBlock(g, 1, 0, 4);
-  await _stdlib.draw(g);
+  var g = system.initialise(new _stdlib.BlockGraphics1());
+  g = g.withBlock(1, 0, 4);
+  await g.draw();
 }
 return [main, _tests];}`;
 
@@ -153,20 +153,20 @@ return [main, _tests];}`;
     );
   });
 
-  ignore_test("Pass_GetBackground", async () => {
+  test("Pass_GetBackground", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  var g set to new BlockGraphics()
+  var g set to new BlockGraphics1()
   set g to g.withText(10, 20, "a", 1, 2)
   print g.getBackground(10, 20)
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var g = system.initialise(system.list(new Array()));
-  g = _stdlib.withText(g, 10, 20, "a", 1, 2);
-  system.printLine(_stdlib.asString(_stdlib.getBackground(g, 10, 20)));
+  var g = system.initialise(new _stdlib.BlockGraphics1());
+  g = g.withText(10, 20, "a", 1, 2);
+  system.printLine(_stdlib.asString(g.getBackground(10, 20)));
 }
 return [main, _tests];}`;
 
@@ -179,20 +179,20 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "2");
   });
 
-  ignore_test("Pass_ClearGraphics", async () => {
+  test("Pass_ClearGraphics", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  var gr set to new BlockGraphics()
-  call gr.draw()
-  call gr.clearGraphics()
+  var g set to new BlockGraphics1()
+  call g.draw()
+  call g.clearGraphics()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var gr = system.initialise(system.list(new Array()));
-  await _stdlib.draw(gr);
-  _stdlib.clearGraphics(gr);
+  var g = system.initialise(new _stdlib.BlockGraphics1());
+  await g.draw();
+  g.clearGraphics();
 }
 return [main, _tests];}`;
 
@@ -205,19 +205,19 @@ return [main, _tests];}`;
     await assertGraphicsContains(fileImpl, 0, "");
   });
 
-  ignore_test("Pass_getKeystroke", async () => {
+  test("Pass_getKeystroke", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  var gr set to new BlockGraphics()
+  var gr set to new BlockGraphics1()
   var a set to gr.getKeystroke()
   print a
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var gr = system.initialise(system.list(new Array()));
-  var a = await _stdlib.getKeystroke(gr);
+  var gr = system.initialise(new _stdlib.BlockGraphics1());
+  var a = await gr.getKeystroke();
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -231,19 +231,19 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "");
   });
 
-  ignore_test("Pass_getKeystrokeWithModifier", async () => {
+  test("Pass_getKeystrokeWithModifier", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  var gr set to new BlockGraphics()
+  var gr set to new BlockGraphics1()
   var a set to gr.getKeystrokeWithModifier()
   print a
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var gr = system.initialise(system.list(new Array()));
-  var a = await _stdlib.getKeystrokeWithModifier(gr);
+  var gr = system.initialise(new _stdlib.BlockGraphics1());
+  var a = await gr.getKeystrokeWithModifier();
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -257,18 +257,18 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "(, )");
   });
 
-  ignore_test("Pass_clearKeyBuffer", async () => {
+  test("Pass_clearKeyBuffer", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  var gr set to new BlockGraphics()
+  var gr set to new BlockGraphics1()
   call gr.clearKeyBuffer()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var gr = system.initialise(system.list(new Array()));
-  _stdlib.clearKeyBuffer(gr);
+  var gr = system.initialise(new _stdlib.BlockGraphics1());
+  gr.clearKeyBuffer();
 }
 return [main, _tests];}`;
 
@@ -281,16 +281,16 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "");
   });
 
-  ignore_test("Pass_newGraphics", async () => {
+  test("Pass_newGraphics", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  var a set to new BlockGraphics()
+  var a set to new BlockGraphics1()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.initialise(system.list(new Array()));
+  var a = system.initialise(new _stdlib.BlockGraphics1());
 }
 return [main, _tests];}`;
 
@@ -303,7 +303,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "");
   });
 
-  ignore_test("Pass_defaultGraphics", async () => {
+  test("Pass_defaultGraphics", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
@@ -316,7 +316,7 @@ class Foo
   constructor()
   end constructor
 
-  property p as BlockGraphics
+  property p as BlockGraphics1
 end class`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -327,12 +327,18 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p", system.emptyImmutableList()]]);};
+  static emptyInstance() { return system.emptyClass(Foo, []);};
   constructor() {
 
   }
 
-  p = system.emptyImmutableList();
+  _p;
+  get p() {
+    return this._p ??= _stdlib.BlockGraphics1.emptyInstance();
+  }
+  set p(p) {
+    this._p = p;
+  }
 
 }
 return [main, _tests];}`;
@@ -343,14 +349,14 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{}");
+    await assertObjectCodeExecutes(fileImpl, "a BlockGraphics1");
   });
 
-  ignore_test("Fail_emptyGraphics", async () => {
+  test("Fail_emptyGraphics", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  var a set to empty BlockGraphics()
+  var a set to empty BlockGraphics1()
   set a to initialisedGraphics()
 end main`;
 
@@ -360,20 +366,20 @@ end main`;
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test("Pass_putString", async () => {
+  test("Pass_putString", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  var g set to new BlockGraphics()
+  var g set to new BlockGraphics1()
   set g to g.withText(0, 0, "Hello", 1, 2)
   call g.draw()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var g = system.initialise(system.list(new Array()));
-  g = _stdlib.withText(g, 0, 0, "Hello", 1, 2);
-  await _stdlib.draw(g);
+  var g = system.initialise(new _stdlib.BlockGraphics1());
+  g = g.withText(0, 0, "Hello", 1, 2);
+  await g.draw();
 }
 return [main, _tests];}`;
 
@@ -395,20 +401,20 @@ return [main, _tests];}`;
     );
   });
 
-  ignore_test("Pass_putString overrunning both limits", async () => {
+  test("Pass_putString overrunning both limits", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  var g set to new BlockGraphics()
+  var g set to new BlockGraphics1()
   set g to g.withText(39, 29, "Hello", 1, 2)
   call g.draw()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var g = system.initialise(system.list(new Array()));
-  g = _stdlib.withText(g, 39, 29, "Hello", 1, 2);
-  await _stdlib.draw(g);
+  var g = system.initialise(new _stdlib.BlockGraphics1());
+  g = g.withText(39, 29, "Hello", 1, 2);
+  await g.draw();
 }
 return [main, _tests];}`;
 

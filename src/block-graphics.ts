@@ -15,6 +15,11 @@ import {
 import { System } from "./system";
 
 export class BlockGraphics1 {
+
+  // this must be implemented by hand on all stdlib classes 
+  static emptyInstance() { return new BlockGraphics1();};
+
+
   constructor() {
     this.internalRep = this.initialisedGraphics(0xffffff);
   }
@@ -106,7 +111,7 @@ export class BlockGraphics1 {
     return this.putDetails(x, y, "", f, b);
   }
 
-  @elanFunction(FunctionOptions.pureExtension, ElanClass(BlockGraphics1))
+  @elanFunction(FunctionOptions.pure, ElanClass(BlockGraphics1))
   withUnicode(
     @elanIntType() x: number,
     @elanIntType() y: number,
@@ -125,7 +130,7 @@ export class BlockGraphics1 {
     return this.putDetails(x, y, str, f, b);
   }
 
-  @elanFunction(FunctionOptions.pureExtension, ElanClass(BlockGraphics1))
+  @elanFunction(FunctionOptions.pure, ElanClass(BlockGraphics1))
   withText(
     @elanIntType() x: number,
     @elanIntType() y: number,
@@ -161,7 +166,7 @@ export class BlockGraphics1 {
     return this;
   }
 
-  @elanFunction(FunctionOptions.pure, ElanClass(BlockGraphics1))
+  @elanFunction(FunctionOptions.pure, ElanInt)
   getChar(@elanIntType() x: number, @elanIntType() y: number) {
     this.ensureInitialised();
     return this.safeIndex(this.getDetails(x, y), 0);
@@ -179,7 +184,7 @@ export class BlockGraphics1 {
     return this.safeIndex(this.getDetails(x, y), 2) as number;
   }
 
-  @elanProcedure(ProcedureOptions.extension)
+  @elanProcedure()
   clearGraphics() {
     this.system!.elanInputOutput.clearGraphics();
   }
@@ -221,7 +226,7 @@ export class BlockGraphics1 {
     return this.system!.elanInputOutput.getKeystrokeWithModifier();
   }
 
-  @elanProcedure(ProcedureOptions.extension)
+  @elanProcedure()
   clearKeyBuffer() {
     this.system!.elanInputOutput.clearKeyBuffer();
   }
