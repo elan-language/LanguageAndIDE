@@ -15,6 +15,7 @@ import { System } from "./system";
 export class BlockGraphics {
   // this must be implemented by hand on all stdlib classes
   static emptyInstance() {
+    // todo how do we inject system as it's static !
     return new BlockGraphics();
   }
 
