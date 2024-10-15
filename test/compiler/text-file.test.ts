@@ -21,7 +21,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var g = system.initialise(new _stdlib.TextFile());
+  var tf = system.initialise(new _stdlib.TextFile());
 }
 return [main, _tests];}`;
 

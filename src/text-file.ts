@@ -1,6 +1,8 @@
 import {
+  ElanBoolean,
   elanFunction,
   elanProcedure,
+  ElanString,
   FunctionOptions,
   ProcedureOptions,
 } from "./elan-type-annotations";
@@ -16,27 +18,27 @@ export class TextFile {
 
   private system?: System;
 
-  @elanFunction(FunctionOptions.impureAsync)
+  @elanFunction(FunctionOptions.impureAsync, ElanString)
   readLine(): Promise<string> {
     return Promise.resolve("");
   }
 
-  @elanFunction(FunctionOptions.impureAsync)
+  @elanFunction(FunctionOptions.impureAsync, ElanString)
   readToEnd(): Promise<string> {
     return Promise.resolve("");
   }
 
   @elanProcedure(ProcedureOptions.async)
-  writeLine(data: string): Promise<void> {
+  writeLine(data: string) {
     return Promise.resolve();
   }
 
   @elanProcedure(ProcedureOptions.async)
-  close(): Promise<void> {
+  close() {
     return Promise.resolve();
   }
 
-  @elanFunction(FunctionOptions.pureAsync)
+  @elanFunction(FunctionOptions.pureAsync, ElanBoolean)
   endOfFile(): Promise<boolean> {
     return Promise.resolve(true);
   }
