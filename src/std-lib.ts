@@ -7,6 +7,7 @@ import {
   ElanArray,
   elanArrayType,
   ElanBoolean,
+  ElanClass,
   elanClassExport,
   elanConstant,
   elanDictionaryType,
@@ -35,6 +36,7 @@ import {
 import { hasHiddenType } from "./has-hidden-type";
 import { StubInputOutput } from "./stub-input-output";
 import { System } from "./system";
+import { TextFile } from "./text-file";
 
 type File = [number, string, number]; // open/closed, read/write, contents, pointer
 
@@ -52,6 +54,9 @@ export class StdLib {
 
   @elanClassExport(BlockGraphics)
   BlockGraphics = BlockGraphics;
+
+  @elanClassExport(TextFile)
+  TextFile = TextFile;
 
   // Standard colours
 
@@ -994,38 +999,13 @@ export class StdLib {
     return r.test(a);
   }
   //File operations
-  @elanFunction(FunctionOptions.impureAsync, ElanTuple([ElanInt, ElanString, ElanInt]))
-  openRead(contents: string): File {
-    return [1, contents, 0];
+  @elanFunction(FunctionOptions.impureAsync, ElanClass(TextFile))
+  openRead(path: string): Promise<TextFile> {
+    return Promise.resolve(this.system.initialise(new TextFile()));
   }
 
-  @elanFunction(FunctionOptions.impureAsyncExtension)
-  readLine(@elanTupleType([ElanInt, ElanString, ElanInt]) file: File): string {
-    const status = file[0];
-    const contents = file[1];
-    const pointer = file[2];
-    if (status === 0) {
-      throw new ElanRuntimeError("File is not open");
-    }
-    if (status === 2) {
-      throw new ElanRuntimeError("File is open for writing, not reading");
-    }
-    let newline = contents.indexOf("\n", pointer);
-    if (newline === -1) {
-      newline = contents.length;
-    }
-    const line = contents.substring(pointer, newline);
-    file[2] = newline + 1;
-    return line;
-  }
-
-  @elanFunction(FunctionOptions.pureExtension)
-  endOfFile(@elanTupleType([ElanInt, ElanString, ElanInt]) file: File): boolean {
-    return file[2] >= file[1].length - 1;
-  }
-
-  @elanProcedure(ProcedureOptions.asyncExtension)
-  close(@elanTupleType([ElanInt, ElanString, ElanInt]) file: File): void {
-    //Does nothing for now.
+  @elanFunction(FunctionOptions.impureAsync, ElanClass(TextFile))
+  openWrite(path: string): Promise<TextFile> {
+    return Promise.resolve(this.system.initialise(new TextFile()));
   }
 }
