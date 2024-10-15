@@ -49,22 +49,17 @@ export class BlockGraphics {
     return x * this.ySize + y;
   }
 
-  private ensureInitialised() {
-    if (this.internalRep.length !== this.GraphicsLength) {
-      this.internalRep = this.initialisedGraphics(0xffffff);
-    }
-  }
-
-  private putDetails(
+  private withDetails(
     x: number,
     y: number,
     char: string,
     foreground: number,
     background: number,
   ): BlockGraphics {
-    this.ensureInitialised();
-    this.internalRep[this.idx(x, y)] = [char, foreground, background];
-    return this;
+    const copy = this.system!.initialise(new BlockGraphics());
+    copy.internalRep = this.internalRep;
+    copy.internalRep[this.idx(x, y)] = [char, foreground, background];
+    return copy;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -92,21 +87,19 @@ export class BlockGraphics {
   }
 
   private getDetails(x: number, y: number): [string, number, number] {
-    this.ensureInitialised();
     return this.safeIndex(this.internalRep, this.idx(x, y)) as [string, number, number];
   }
 
   @elanFunction(FunctionOptions.pure, ElanClass(BlockGraphics))
-  withBlock(@elanIntType() x: number, @elanIntType() y: number, @elanIntType() b: number) {
+  withBlock(@elanIntType() x: number, @elanIntType() y: number, @elanIntType() colour: number) {
     if (x < 0 || x >= this.xSize) {
       throw new ElanRuntimeError(`x value ${x} is outside range 0 to ${this.xSize - 1}`);
     }
     if (y < 0 || y >= this.ySize) {
       throw new ElanRuntimeError(`y value ${y} is outside of range 0 to ${this.ySize - 1}`);
     }
-    this.ensureInitialised();
-    const [c, f] = this.getDetails(x, y);
-    return this.putDetails(x, y, "", f, b);
+    const [, f] = this.getDetails(x, y);
+    return this.withDetails(x, y, "", f, colour);
   }
 
   @elanFunction(FunctionOptions.pure, ElanClass(BlockGraphics))
@@ -114,8 +107,8 @@ export class BlockGraphics {
     @elanIntType() x: number,
     @elanIntType() y: number,
     @elanIntType() unicode: number,
-    @elanIntType() f: number,
-    @elanIntType() b: number,
+    @elanIntType() foreColour: number,
+    @elanIntType() backColour: number,
   ): BlockGraphics {
     if (x < 0 || x >= this.xSize) {
       throw new ElanRuntimeError(`x value ${x} is outside range 0 to ${this.xSize - 1}`);
@@ -123,9 +116,8 @@ export class BlockGraphics {
     if (y < 0 || y >= this.ySize) {
       throw new ElanRuntimeError(`y value ${y} is outside of range 0 to ${this.ySize - 1}`);
     }
-    this.ensureInitialised();
     const str = String.fromCharCode(unicode);
-    return this.putDetails(x, y, str, f, b);
+    return this.withDetails(x, y, str, foreColour, backColour);
   }
 
   @elanFunction(FunctionOptions.pure, ElanClass(BlockGraphics))
@@ -133,8 +125,8 @@ export class BlockGraphics {
     @elanIntType() x: number,
     @elanIntType() y: number,
     text: string,
-    @elanIntType() foreground: number,
-    @elanIntType() background: number,
+    @elanIntType() foreColour: number,
+    @elanIntType() backColour: number,
   ) {
     if (x < 0 || x >= this.xSize) {
       throw new ElanRuntimeError(`x value ${x} is outside range 0 to ${this.xSize - 1}`);
@@ -142,43 +134,47 @@ export class BlockGraphics {
     if (y < 0 || y >= this.ySize) {
       throw new ElanRuntimeError(`y value ${y} is outside of range 0 to ${this.ySize - 1}`);
     }
-    this.ensureInitialised();
     for (let i = 0; i < text.length; i++) {
       if (x + i < this.xSize) {
-        this.putDetails(x + i, y, text[i], foreground, background);
+        this.withDetails(x + i, y, text[i], foreColour, backColour);
       } else {
         const newX = (x + i) % this.xSize;
         const newY = (y + Math.floor((x + i) / this.xSize)) % this.ySize;
         if (newY >= this.ySize) {
           throw new ElanRuntimeError(`'${text} is too long to fit from point ${x},${y} onwards'`);
         }
-        this.putDetails(newX, newY, text[i], foreground, background);
+        this.withDetails(newX, newY, text[i], foreColour, backColour);
       }
     }
     return this;
   }
 
   @elanFunction(FunctionOptions.pureExtension, ElanClass(BlockGraphics))
-  withBackground(@elanIntType() b: number): BlockGraphics {
-    this.initialisedGraphics(b);
-    return this;
+  withBackground(@elanIntType() colour: number): BlockGraphics {
+    const copy = this.system!.initialise(new BlockGraphics());
+    copy.internalRep = this.internalRep;
+    for (let x = 0; x < this.xSize; x++) {
+      for (let y = 0; y < this.ySize; y++) {
+        const id = this.idx(x, y);
+        const existing = copy.internalRep[id];
+        copy.internalRep[id] = [existing[0], existing[1], colour];
+      }
+    }
+    return copy;
   }
 
   @elanFunction(FunctionOptions.pure, ElanInt)
   getChar(@elanIntType() x: number, @elanIntType() y: number) {
-    this.ensureInitialised();
     return this.safeIndex(this.getDetails(x, y), 0);
   }
 
   @elanFunction(FunctionOptions.pure, ElanInt)
   getForeground(@elanIntType() x: number, @elanIntType() y: number): number {
-    this.ensureInitialised();
     return this.safeIndex(this.getDetails(x, y), 1) as number;
   }
 
   @elanFunction(FunctionOptions.pure, ElanInt)
   getBackground(@elanIntType() x: number, @elanIntType() y: number): number {
-    this.ensureInitialised();
     return this.safeIndex(this.getDetails(x, y), 2) as number;
   }
 
@@ -195,7 +191,6 @@ export class BlockGraphics {
 
   @elanProcedure(ProcedureOptions.async)
   draw(): Promise<void> {
-    this.ensureInitialised();
     let rendered = "";
 
     for (let y = 0; y < this.ySize; y++) {
