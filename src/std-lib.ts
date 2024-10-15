@@ -1151,10 +1151,6 @@ export class StdLib {
     return n % 65536;
   }
 
-  private hi16(n: number): number {
-    return this.lo16(n / 65536);
-  }
-
   @elanFunction(FunctionOptions.pureExtension, ElanInt)
   valueInt(
     @elanTupleType([ElanInt, ElanInt]) current: [number, number],
@@ -1173,7 +1169,7 @@ export class StdLib {
   @elanFunction(FunctionOptions.impure, ElanTuple([ElanInt, ElanInt]))
   firstRandom(): [number, number] {
     const c = this.clock();
-    return [this.hi16(c), this.lo16(c)];
+    return [(c % 1000) * 1000000, 0];
   }
 
   @elanFunction(FunctionOptions.pure, ElanInt)
