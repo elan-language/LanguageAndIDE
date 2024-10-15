@@ -54,6 +54,20 @@ export class ElanProcedureDescriptor implements ElanMethodDescriptor, IElanProce
   }
 }
 
+export class ElanConstructorDescriptor implements ElanDescriptor {
+  constructor(public readonly parameters: TypeDescriptor[]) {}
+
+  mapType(): SymbolType {
+    const parameterTypes = this.parameters;
+
+    return new ProcedureType(
+      parameterTypes.map((t) => t.mapType()),
+      false,
+      false,
+    );
+  }
+}
+
 export class ElanFunctionDescriptor implements ElanMethodDescriptor, IElanFunctionDescriptor {
   constructor(
     public readonly isExtension: boolean = false,
@@ -192,6 +206,9 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
       tempMap.set(className, new ClassType(className, false, false, [], undefined));
     }
 
+    const classMetadata: ElanConstructorDescriptor =
+      Reflect.getMetadata(elanMetadataKey, this.cls) ?? new ElanConstructorDescriptor([]);
+
     for (let i = 0; i < names.length; i++) {
       const name = names[i];
 
@@ -199,9 +216,8 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
         | ElanDescriptor
         | undefined;
 
-      // todo
       if (name === "constructor") {
-        children.push([name, new ProcedureType([], false, false)]);
+        children.push([name, classMetadata.mapType()]);
       }
 
       if (isFunctionDescriptor(metadata)) {
@@ -305,12 +321,10 @@ export function elanMethod(elanDesc: ElanMethodDescriptor) {
   };
 }
 
-export function elanClass() {
+export function elanClass(params: ElanTypeDescriptor[]) {
+  const ctor = new ElanConstructorDescriptor(params);
   return function (target: object) {
-    const typeMetadata = Reflect.getMetadata("design:type", target);
-    if (typeMetadata) {
-      Reflect.defineMetadata(elanMetadataKey, typeMetadata, target);
-    }
+    Reflect.defineMetadata(elanMetadataKey, ctor, target);
   };
 }
 
