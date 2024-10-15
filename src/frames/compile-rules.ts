@@ -55,9 +55,8 @@ import { ProcedureType } from "./symbols/procedure-type";
 import { RegexType } from "./symbols/regex-type";
 import { StringType } from "./symbols/string-type";
 import {
+  isAnyDictionaryType,
   isDeconstructedType,
-  isDictionarySymbolType,
-  isDictionaryType,
   isGenericSymbolType,
   isIndexableType,
   isIterableType,
@@ -228,7 +227,7 @@ export function mustBeIndexableSymbol(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (!(read && (isIndexableType(symbolType) || isDictionaryType(symbolType)))) {
+  if (!(read && (isIndexableType(symbolType) || isAnyDictionaryType(symbolType)))) {
     compileErrors.push(
       new NotIndexableCompileError(
         symbolType.toString(),
@@ -608,13 +607,13 @@ export function mustBeCompatibleType(
     return;
   }
 
-  if (lhs instanceof AbstractDictionaryType && rhs instanceof AbstractDictionaryType) {
+  if (lhs instanceof AbstractDictionaryType && isAnyDictionaryType(rhs)) {
     mustBeCompatibleType(lhs.keyType, rhs.keyType, compileErrors, location);
     mustBeCompatibleType(lhs.valueType, rhs.valueType, compileErrors, location);
     return;
   }
 
-  if (lhs instanceof AbstractDictionaryType && !(rhs instanceof AbstractDictionaryType)) {
+  if (lhs instanceof AbstractDictionaryType && !isAnyDictionaryType(rhs)) {
     FailIncompatible(lhs, rhs, compileErrors, location);
     return;
   }

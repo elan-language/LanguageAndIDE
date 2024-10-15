@@ -11,6 +11,7 @@ import { AstNode } from "../interfaces/ast-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { Class } from "../interfaces/class";
 import { DeconstructedSymbolType } from "../interfaces/deconstructed-symbol-type";
+import { DictionarySymbolType } from "../interfaces/dictionary-symbol-type";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { File } from "../interfaces/file";
 import { Frame } from "../interfaces/frame";
@@ -49,8 +50,14 @@ export function isIterableType(s?: SymbolType): s is IterableSymbolType {
   return !!s && "isIterable" in s;
 }
 
-export function isDictionaryType(s?: SymbolType): s is AbstractDictionaryType {
-  return s instanceof AbstractDictionaryType;
+export function isAnyDictionaryType(s?: SymbolType): s is DictionarySymbolType {
+  return !!s && "keyType" in s && "valueType" in s;
+}
+
+export function isConcreteDictionaryType(
+  s?: SymbolType,
+): s is DictionaryType | ImmutableDictionaryType {
+  return s instanceof DictionaryType || s instanceof ImmutableDictionaryType;
 }
 
 export function isListType(s?: SymbolType): s is AbstractListType {
@@ -67,10 +74,6 @@ export function isSymbol(s?: Parent | Frame | ElanSymbol): s is ElanSymbol {
 
 export function isGenericSymbolType(s?: SymbolType | GenericSymbolType): s is GenericSymbolType {
   return !!s && "ofType" in s;
-}
-
-export function isDictionarySymbolType(s?: SymbolType | DictionaryType): s is DictionaryType {
-  return !!s && "keyType" in s && "valueType" in s;
 }
 
 export function isVarStatement(s?: ElanSymbol): boolean {
@@ -284,7 +287,7 @@ export function matchType(actualType: SymbolType, paramType: SymbolType): boolea
     );
   }
 
-  if (isDictionarySymbolType(paramType) && isDictionarySymbolType(actualType)) {
+  if (isAnyDictionaryType(paramType) && isAnyDictionaryType(actualType)) {
     return (
       matchDictionaryTypes(actualType, paramType) &&
       (paramType.keyType instanceof GenericParameterType ||

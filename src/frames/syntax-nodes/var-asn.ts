@@ -11,7 +11,7 @@ import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { IntType } from "../symbols/int-type";
 import {
-  isDictionarySymbolType,
+  isAnyDictionaryType,
   isGenericSymbolType,
   isMemberOnFieldsClass,
   scopePrefix,
@@ -52,7 +52,7 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
       return [IntType.Instance, rootType.ofType];
     }
 
-    if (isDictionarySymbolType(rootType)) {
+    if (isAnyDictionaryType(rootType)) {
       return [rootType.keyType, rootType.valueType];
     }
 

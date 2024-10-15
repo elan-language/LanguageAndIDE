@@ -185,7 +185,10 @@ export async function assertAutocompletes(
     const e = expected[i];
 
     assert.strictEqual(s.symbolId, e[0]);
-    assert.strictEqual(s.symbolType(transforms()).name, e[1]);
+
+    if (e[1] !== "*") {
+      assert.strictEqual(s.symbolType(transforms()).name, e[1]);
+    }
   }
 }
 

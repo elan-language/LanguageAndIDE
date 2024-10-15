@@ -20,6 +20,7 @@ import { IterableType } from "../symbols/iterable-type";
 import { ListType } from "../symbols/list-type";
 import { ProcedureType } from "../symbols/procedure-type";
 import { StringType } from "../symbols/string-type";
+import { isAnyDictionaryType } from "../symbols/symbol-helpers";
 import { TupleType } from "../symbols/tuple-type";
 import { UnknownType } from "../symbols/unknown-type";
 import { transform, transformMany } from "./ast-visitor";
@@ -89,7 +90,7 @@ export function flatten(p: SymbolType): SymbolType {
     return new TypeHolder(p, [flatten(p.ofType)]);
   }
 
-  if (p instanceof AbstractDictionaryType) {
+  if (isAnyDictionaryType(p)) {
     return new TypeHolder(p, [flatten(p.keyType), flatten(p.valueType)]);
   }
 
@@ -125,10 +126,9 @@ export function containsGenericType(type: SymbolType): boolean {
   if (type instanceof ArrayType || type instanceof ListType || type instanceof IterableType) {
     return containsGenericType(type.ofType);
   }
-  if (type instanceof AbstractDictionaryType) {
+  if (isAnyDictionaryType(type)) {
     return containsGenericType(type.keyType) || containsGenericType(type.valueType);
   }
-
   if (type instanceof TupleType) {
     return type.ofTypes.some((t) => containsGenericType(t));
   }

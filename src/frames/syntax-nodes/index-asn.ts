@@ -10,7 +10,7 @@ import { SymbolType } from "../interfaces/symbol-type";
 import { ArrayType } from "../symbols/array-list-type";
 import { IntType } from "../symbols/int-type";
 import { ListType } from "../symbols/list-type";
-import { isDictionarySymbolType, isGenericSymbolType } from "../symbols/symbol-helpers";
+import { isAnyDictionaryType, isGenericSymbolType } from "../symbols/symbol-helpers";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { ChainedAsn } from "./chained-asn";
@@ -76,7 +76,7 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
     if (isGenericSymbolType(rootType)) {
       return [IntType.Instance, rootType.ofType];
     }
-    if (isDictionarySymbolType(rootType)) {
+    if (isAnyDictionaryType(rootType)) {
       return [rootType.keyType, rootType.valueType];
     }
     return [UnknownType.Instance, UnknownType.Instance];

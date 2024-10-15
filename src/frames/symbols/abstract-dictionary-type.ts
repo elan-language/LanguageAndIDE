@@ -1,6 +1,7 @@
+import { DictionarySymbolType } from "../interfaces/dictionary-symbol-type";
 import { SymbolType } from "../interfaces/symbol-type";
 
-export class AbstractDictionaryType implements SymbolType {
+export class AbstractDictionaryType implements DictionarySymbolType {
   constructor(
     public readonly keyType: SymbolType,
     public readonly valueType: SymbolType,

@@ -1,10 +1,11 @@
+import { DictionarySymbolType } from "../interfaces/dictionary-symbol-type";
 import { SymbolType } from "../interfaces/symbol-type";
-import { AbstractDictionaryType } from "./abstract-dictionary-type";
 
-export class ImmutableDictionaryType extends AbstractDictionaryType implements SymbolType {
-  constructor(keyType: SymbolType, valueType: SymbolType) {
-    super(keyType, valueType);
-  }
+export class ImmutableDictionaryType implements DictionarySymbolType {
+  constructor(
+    public readonly keyType: SymbolType,
+    public readonly valueType: SymbolType,
+  ) {}
 
   initialValue = "system.emptyImmutableDictionary()";
 

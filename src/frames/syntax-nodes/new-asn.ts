@@ -5,13 +5,16 @@ import {
   mustBeNewable,
   mustMatchParameters,
 } from "../compile-rules";
-import { ClassFrame } from "../globals/class-frame";
 import { AstNode } from "../interfaces/ast-node";
 import { Scope } from "../interfaces/scope";
 import { constructorKeyword } from "../keywords";
 import { ClassType } from "../symbols/class-type";
 import { ProcedureType } from "../symbols/procedure-type";
-import { isDictionaryType, isListType, isProcedure } from "../symbols/symbol-helpers";
+import {
+  isAnyDictionaryType,
+  isConcreteDictionaryType,
+  isListType,
+} from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { transforms } from "./ast-helpers";
@@ -50,7 +53,7 @@ export class NewAsn extends AbstractAstNode implements AstNode {
       return `system.initialise(${type.factoryName}(new Array()))`;
     }
 
-    if (isDictionaryType(type)) {
+    if (isConcreteDictionaryType(type)) {
       mustMatchParameters(this.parameters, [], false, this.compileErrors, this.fieldId);
       return `system.initialise(${type.factoryName}(new Object()))`;
     }
