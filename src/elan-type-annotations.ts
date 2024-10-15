@@ -46,7 +46,11 @@ export class ElanProcedureDescriptor implements ElanMethodDescriptor, IElanProce
   mapType(): SymbolType {
     const parameterTypes = this.parameters;
 
-    return createProcedure(parameterTypes, this.isExtension, this.isAsync);
+    return new ProcedureType(
+      parameterTypes.map((t) => t.mapType()),
+      this.isExtension,
+      this.isAsync,
+    );
   }
 }
 
@@ -63,10 +67,16 @@ export class ElanFunctionDescriptor implements ElanMethodDescriptor, IElanFuncti
   parameters: TypeDescriptor[] = [];
 
   mapType(): SymbolType {
-    const retType = this.returnType;
+    const retType = this.returnType!;
     const parameterTypes = this.parameters;
 
-    return createFunction(parameterTypes, retType!, this.isExtension, this.isPure!, this.isAsync);
+    return new FunctionType(
+      parameterTypes.map((t) => t.mapType()),
+      retType.mapType(),
+      this.isExtension,
+      this.isPure,
+      this.isAsync,
+    );
   }
 }
 
@@ -165,8 +175,7 @@ function removeUnderscore(name: string) {
 }
 
 export class ElanClassTypeDescriptor implements TypeDescriptor {
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  constructor(private readonly cls: Function) {}
+  constructor(private readonly cls: { name: string; prototype: object }) {}
 
   isClass = true;
 
@@ -258,18 +267,9 @@ export function elanFunction(options?: FunctionOptions, retType?: TypeDescriptor
   return elanMethod(new ElanFunctionDescriptor(...flags));
 }
 
-export function elanFunctionMethod(options?: FunctionOptions, retType?: TypeDescriptor) {
-  const flags = mapFunctionOptions(options ?? FunctionOptions.pure, retType);
-  return elanMethod(new ElanFunctionDescriptor(...flags));
-}
-
 export function elanProcedure(options?: ProcedureOptions) {
   const flags = mapProcedureOptions(options ?? ProcedureOptions.default);
   return elanMethod(new ElanProcedureDescriptor(...flags));
-}
-
-export function elanConstructor() {
-  return elanMethod(new ElanProcedureDescriptor());
 }
 
 export function elanMethod(elanDesc: ElanMethodDescriptor) {
@@ -326,8 +326,7 @@ export function elanConstant(elanDesc?: TypeDescriptor) {
   };
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-export function elanClassExport(cls: Function) {
+export function elanClassExport(cls: { name: string; prototype: object }) {
   let elanDesc = ElanClass(cls) as TypeDescriptor;
   return function (target: object, propertyKey: string) {
     const typeMetadata = Reflect.getMetadata("design:type", target, propertyKey);
@@ -376,8 +375,7 @@ export function ElanAbstractDictionary(keyType: ElanTypeDescriptor, valueType: E
   return new ElanTypeDescriptor("AbstractDictionary", keyType, valueType);
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-export function ElanClass(cls: Function) {
+export function ElanClass(cls: { name: string; prototype: object }) {
   return new ElanClassTypeDescriptor(cls);
 }
 
@@ -519,30 +517,6 @@ function mapProcedureOptions(options: ProcedureOptions): [boolean, boolean] {
     case ProcedureOptions.asyncExtension:
       return [true, true];
   }
-}
-
-export function createProcedure(pTypes: TypeDescriptor[], isExtension: boolean, isAsync: boolean) {
-  return new ProcedureType(
-    pTypes.map((t) => t.mapType()),
-    isExtension,
-    isAsync,
-  );
-}
-
-export function createFunction(
-  pTypes: TypeDescriptor[],
-  retType: TypeDescriptor,
-  isExtension: boolean,
-  isPure: boolean,
-  isAsync: boolean,
-) {
-  return new FunctionType(
-    pTypes.map((t) => t.mapType()),
-    retType.mapType(),
-    isExtension,
-    isPure,
-    isAsync,
-  );
 }
 
 export function getSymbol(id: string, st: SymbolType, ss: SymbolScope): ElanSymbol {
