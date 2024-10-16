@@ -20,4 +20,6 @@ export interface ElanInputOutput {
   clearKeyBuffer(): void;
 
   readFile(path: string): Promise<string>;
+
+  writeFile(path: string, data: string): Promise<void>;
 }

@@ -455,6 +455,11 @@ function handleWorkerIO(data: WebWorkerWriteMessage) {
         .readFile(data.parameters[0] as string)
         .then((v) => programWorker.postMessage(readMsg(v)));
       break;
+    case "writeFile":
+      elanInputOutput
+        .writeFile(data.parameters[0] as string, data.parameters[1] as string)
+        .then(() => programWorker.postMessage(readMsg("")));
+      break;
     default:
       (elanInputOutput as any)[data.function](...data.parameters);
   }

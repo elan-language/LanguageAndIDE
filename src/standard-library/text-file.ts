@@ -19,29 +19,38 @@ export class TextFile {
   private system?: System;
 
   path: string = "";
+  content: string[] = [];
+  currentLine = 0;
 
-  @elanFunction(FunctionOptions.impureAsync, ElanString)
-  readLine(): Promise<string> {
-    return Promise.resolve("");
+  @elanFunction(FunctionOptions.impure, ElanString)
+  readLine(): string {
+    let line = "";
+
+    if (this.currentLine < this.content.length) {
+      line = this.content[this.currentLine];
+      this.currentLine++;
+    }
+
+    return line;
   }
 
-  @elanFunction(FunctionOptions.impureAsync, ElanString)
-  readToEnd(): Promise<string> {
-    return this.system!.elanInputOutput.readFile(this.path);
+  @elanFunction(FunctionOptions.impure, ElanString)
+  readToEnd(): string {
+    return this.content.join("\n");
   }
 
   @elanProcedure(ProcedureOptions.async)
   writeLine(data: string) {
-    return Promise.resolve();
+    this.content.push(data);
   }
 
   @elanProcedure(ProcedureOptions.async)
   close() {
-    return Promise.resolve();
+    this.system!.elanInputOutput.writeFile(this.path, this.readToEnd());
   }
 
-  @elanFunction(FunctionOptions.pureAsync, ElanBoolean)
-  endOfFile(): Promise<boolean> {
-    return Promise.resolve(true);
+  @elanFunction(FunctionOptions.pure, ElanBoolean)
+  endOfFile(): boolean {
+    return this.currentLine >= this.content.length;
   }
 }
