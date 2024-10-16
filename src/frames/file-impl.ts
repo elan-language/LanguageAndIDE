@@ -238,7 +238,15 @@ export class FileImpl implements File, Scope {
         ss.push(frame.compile(this.transform));
       }
 
-      for (const frame of this._children.filter((g) => !("isSelector" in g || g instanceof Enum))) {
+      for (const frame of this._children.filter((g) => g instanceof Constant)) {
+        ss.push("const global = new class {");
+        ss.push(`  ${frame.compile(this.transform)}`);
+        ss.push("};");
+      }
+
+      for (const frame of this._children.filter(
+        (g) => !("isSelector" in g || g instanceof Enum || g instanceof Constant),
+      )) {
         ss.push(frame.compile(this.transform));
       }
 

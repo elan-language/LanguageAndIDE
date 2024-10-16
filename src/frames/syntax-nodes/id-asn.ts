@@ -5,6 +5,7 @@ import {
   mustBePublicMember,
   mustNotBeKeyword,
 } from "../compile-rules";
+import { isConstant } from "../helpers";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstNode } from "../interfaces/ast-node";
 import { Scope } from "../interfaces/scope";
@@ -61,9 +62,10 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
       mustBeFunctionRefIfFunction(symbol, this.compileErrors, this.fieldId);
     }
 
-    const prefix = this.updatedScope
-      ? ""
-      : scopePrefix(symbol, this.compileErrors, this.scope, this.fieldId);
+    const prefix =
+      this.updatedScope && !isConstant(symbol)
+        ? ""
+        : scopePrefix(symbol, this.compileErrors, this.scope, this.fieldId);
 
     const postfix = symbol.symbolScope === SymbolScope.outParameter ? "[0]" : "";
 

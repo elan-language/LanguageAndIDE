@@ -12,7 +12,7 @@ import {
 } from "./compiler-test-helpers";
 
 suite("Global", () => {
-  ignore_test("Pass_DisambiguateConstantFromLocalVariable", async () => {
+  test("Pass_DisambiguateConstantFromLocalVariable", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 constant a set to 4
@@ -23,11 +23,13 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const a = 4;
+const global = new class {
+  a = 4;
 
+};
 async function main() {
   var a = 3;
-  system.printLine(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(global.a));
 }
 return [main, _tests];}`;
 
@@ -73,8 +75,10 @@ class Foo
 end class`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const a = 4;
+const global = new class {
+  a = 4;
 
+};
 async function main() {
   var f = system.initialise(new Foo());
   system.printLine(_stdlib.asString(f.prop()));
@@ -94,7 +98,7 @@ class Foo {
   }
 
   cons() {
-    return a;
+    return global.a;
   }
 
   asString() {
@@ -345,3 +349,16 @@ end class`;
     assertDoesNotCompile(fileImpl, ["bar is not defined"]);
   });
 });
+
+function a() {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  const global = new (class {
+    a = 4;
+  })();
+
+  function f() {
+    const a = 2;
+
+    const b = global.a;
+  }
+}

@@ -20,6 +20,7 @@ export class Constant extends AbstractFrame implements ElanSymbol, GlobalFrame, 
   name: IdentifierField;
   value: ConstantValueField;
   file: File;
+  isConstant = true;
 
   constructor(parent: File) {
     super(parent);
@@ -73,7 +74,7 @@ export class Constant extends AbstractFrame implements ElanSymbol, GlobalFrame, 
       this.htmlId,
     );
 
-    return `const ${name} = ${this.value.compile(transforms)};\r
+    return `${name} = ${this.value.compile(transforms)};\r
 `;
   }
 
