@@ -469,6 +469,16 @@ export function mustBeBooleanType(
   mustBeCompatibleType(BooleanType.Instance, rhs, compileErrors, location);
 }
 
+export function mustBeIntegerType(
+  lhs: SymbolType,
+  rhs: SymbolType,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  mustBeCompatibleType(IntType.Instance, lhs, compileErrors, location);
+  mustBeCompatibleType(IntType.Instance, rhs, compileErrors, location);
+}
+
 function mustBeCompatibleTypes(
   lhss: SymbolType[],
   rhss: SymbolType[],
