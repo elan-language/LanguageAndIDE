@@ -1,6 +1,6 @@
 import "reflect-metadata";
-import { ElanCompilerError } from "./elan-compiler-error";
-import { ElanRuntimeError } from "./elan-runtime-error";
+import { ElanCompilerError } from "../elan-compiler-error";
+import { ElanRuntimeError } from "../elan-runtime-error";
 import {
   elanAbstractDictionaryType,
   ElanArray,
@@ -31,14 +31,14 @@ import {
   elanTupleType,
   FunctionOptions,
   ProcedureOptions,
-} from "./elan-type-annotations";
-import { hasHiddenType } from "./has-hidden-type";
-import { StubInputOutput } from "./stub-input-output";
-import { System } from "./system";
+} from "../elan-type-annotations";
+import { hasHiddenType } from "../has-hidden-type";
+import { StubInputOutput } from "../stub-input-output";
+import { System } from "../system";
+import { BlockGraphics } from "./block-graphics";
+import { ImmutableStack } from "./immutable-stack";
+import { Stack } from "./stack";
 import { TextFile } from "./text-file";
-import { BlockGraphics } from "./standard-library/block-graphics";
-import { Stack } from "./standard-library/stack";
-import { ImmutableStack } from "./standard-library/immutable-stack";
 
 type File = [number, string, number]; // open/closed, read/write, contents, pointer
 
@@ -1009,7 +1009,9 @@ export class StdLib {
   //File operations
   @elanFunction(FunctionOptions.impureAsync, ElanClass(TextFile))
   openRead(path: string): Promise<TextFile> {
-    return Promise.resolve(this.system.initialise(new TextFile()));
+    const tf = this.system.initialise(new TextFile());
+    tf.path = path;
+    return Promise.resolve(tf);
   }
 
   @elanFunction(FunctionOptions.impureAsync, ElanClass(TextFile))

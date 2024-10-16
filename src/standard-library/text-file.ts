@@ -5,8 +5,8 @@ import {
   ElanString,
   FunctionOptions,
   ProcedureOptions,
-} from "./elan-type-annotations";
-import { System } from "./system";
+} from "../elan-type-annotations";
+import { System } from "../system";
 
 export class TextFile {
   // this must be implemented by hand on all stdlib classes
@@ -18,6 +18,8 @@ export class TextFile {
 
   private system?: System;
 
+  path: string = "";
+
   @elanFunction(FunctionOptions.impureAsync, ElanString)
   readLine(): Promise<string> {
     return Promise.resolve("");
@@ -25,7 +27,7 @@ export class TextFile {
 
   @elanFunction(FunctionOptions.impureAsync, ElanString)
   readToEnd(): Promise<string> {
-    return Promise.resolve("");
+    return this.system!.elanInputOutput.readFile(this.path);
   }
 
   @elanProcedure(ProcedureOptions.async)

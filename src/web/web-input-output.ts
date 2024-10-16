@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ElanInputOutput } from "../elan-input-output";
 
 export class WebInputOutput implements ElanInputOutput {
@@ -20,6 +21,59 @@ export class WebInputOutput implements ElanInputOutput {
     });
 
     this.graphics.focus();
+  }
+
+  handleUpload(event: Event) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const elanFile = (event.target as any).files?.[0] as any;
+
+    if (elanFile) {
+      const fileName = elanFile.name;
+      document.body.style.cursor = "wait";
+      const reader = new FileReader();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
+      reader.addEventListener("load", (event: any) => {
+        const rawCode = event.target.result;
+      });
+      reader.readAsText(elanFile);
+    }
+
+    event.preventDefault();
+  }
+
+  chooser() {
+    const f = document.createElement("input");
+    const g = document.getElementById("graphics") as HTMLElement;
+    f.style.display = "none";
+    f.type = "file";
+    f.name = "file";
+    //f.accept = ".elan";
+    g.appendChild(f);
+    return f;
+  }
+
+  readFile(path: string): Promise<string> {
+    const inp = this.chooser();
+
+    return new Promise<string>((rs, rj) => {
+      inp.addEventListener("change", (event: any) => {
+        const elanFile = (event.target as any).files?.[0] as any;
+
+        if (elanFile) {
+          const reader = new FileReader();
+
+          reader.addEventListener("load", (event: any) => {
+            const rawCode = event.target.result;
+            rs(rawCode);
+          });
+          reader.readAsText(elanFile);
+        }
+
+        event.preventDefault();
+      });
+      inp.click();
+    });
   }
 
   drawGraphics(html: string): void {

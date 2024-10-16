@@ -18,4 +18,6 @@ export interface ElanInputOutput {
   getKeystrokeWithModifier(): Promise<[string, string]>;
 
   clearKeyBuffer(): void;
+
+  readFile(path: string): Promise<string>;
 }
