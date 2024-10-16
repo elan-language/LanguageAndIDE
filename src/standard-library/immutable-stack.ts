@@ -5,8 +5,7 @@ import {
   elanGenericParamT1Type,
   ElanInt,
   ElanT1,
-  ElanTuple,
-  FunctionOptions,
+  FunctionOptions
 } from "../elan-type-annotations";
 import { System } from "../system";
 
