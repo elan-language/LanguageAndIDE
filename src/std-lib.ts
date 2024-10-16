@@ -1,5 +1,4 @@
 import "reflect-metadata";
-import { BlockGraphics } from "./block-graphics";
 import { ElanCompilerError } from "./elan-compiler-error";
 import { ElanRuntimeError } from "./elan-runtime-error";
 import {
@@ -37,6 +36,8 @@ import { hasHiddenType } from "./has-hidden-type";
 import { StubInputOutput } from "./stub-input-output";
 import { System } from "./system";
 import { TextFile } from "./text-file";
+import { BlockGraphics } from "./standard-library/block-graphics";
+import { Stack } from "./standard-library/stack";
 
 type File = [number, string, number]; // open/closed, read/write, contents, pointer
 
@@ -57,6 +58,9 @@ export class StdLib {
 
   @elanClassExport(TextFile)
   TextFile = TextFile;
+
+  @elanClassExport(BlockGraphics)
+  Stack = Stack;
 
   // Standard colours
 

@@ -1,4 +1,4 @@
-import { ElanRuntimeError } from "./elan-runtime-error";
+import { ElanRuntimeError } from "../elan-runtime-error";
 import {
   ElanClass,
   elanFunction,
@@ -9,8 +9,8 @@ import {
   ElanTuple,
   FunctionOptions,
   ProcedureOptions,
-} from "./elan-type-annotations";
-import { System } from "./system";
+} from "../elan-type-annotations";
+import { System } from "../system";
 
 export class BlockGraphics {
   // this must be implemented by hand on all stdlib classes
