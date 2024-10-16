@@ -333,7 +333,7 @@ class Foo {
 
   _p;
   get p() {
-    return this._p ??= _stdlib.BlockGraphics.emptyInstance();
+    return this._p ??= system.initialise(_stdlib.BlockGraphics.emptyInstance());
   }
   set p(p) {
     this._p = p;

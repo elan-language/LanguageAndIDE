@@ -66,7 +66,8 @@ export class ClassType implements SymbolType, Scope {
   }
 
   get initialValue() {
-    const lib = this.scope instanceof ClassTypeDef ? "_stdlib." : "";
-    return `${lib}${this.className}.emptyInstance()`;
+    const prefix = this.scope instanceof ClassTypeDef ? "system.initialise(_stdlib." : "";
+    const postfix = this.scope instanceof ClassTypeDef ? ")" : "";
+    return `${prefix}${this.className}.emptyInstance()${postfix}`;
   }
 }

@@ -23,12 +23,12 @@ export class Stack {
 
   private system?: System;
 
-  @elanFunction(FunctionOptions.pure,  ElanT1)
+  @elanFunction(FunctionOptions.pure, ElanT1)
   peek() {
     return this.contents[0];
   }
 
-  @elanFunction(FunctionOptions.pure,  ElanInt)
+  @elanFunction(FunctionOptions.pure, ElanInt)
   length() {
     return this.contents.length;
   }
@@ -38,11 +38,10 @@ export class Stack {
     this.contents.unshift(item);
   }
 
-  @elanFunction(FunctionOptions.impure,  ElanT1)
+  @elanFunction(FunctionOptions.impure, ElanT1)
   pop() {
     const result = this.contents[0];
-    this.contents.splice(0,1);
+    this.contents.splice(0, 1);
     return result;
   }
-
 }
