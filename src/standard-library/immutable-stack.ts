@@ -43,7 +43,9 @@ export class ImmutableStack {
       const itemT = typeof item;
       const stackT = typeof this.contents[0];
       if (itemT !== stackT) {
-        throw new ElanRuntimeError(`Attempting to push a ${itemT} onto a Stack of type ${stackT}`);
+        throw new ElanRuntimeError(
+          `Attempting to push an incompatible type onto a non-empty ImmutableStack`,
+        );
       }
     }
     const copy = this.system!.initialise(new ImmutableStack());

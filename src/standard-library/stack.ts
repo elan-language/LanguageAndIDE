@@ -26,7 +26,7 @@ export class Stack {
   @elanFunction(FunctionOptions.pure, ElanT1)
   peek() {
     if (this.contents.length === 0) {
-      throw new ElanRuntimeError(`Cannot peek from an empty Stack - check using length()`);
+      throw new ElanRuntimeError(`Cannot peek an empty Stack - check using length()`);
     }
     return this.contents[0];
   }
@@ -42,7 +42,9 @@ export class Stack {
       const itemT = typeof item;
       const stackT = typeof this.contents[0];
       if (itemT !== stackT) {
-        throw new ElanRuntimeError(`Attempting to push a ${itemT} onto a Stack of type ${stackT}`);
+        throw new ElanRuntimeError(
+          `Attempting to push an incompatible type onto a non-empty Stack`,
+        );
       }
     }
     this.contents.unshift(item);
@@ -51,7 +53,7 @@ export class Stack {
   @elanFunction(FunctionOptions.impure, ElanT1)
   pop() {
     if (this.contents.length === 0) {
-      throw new ElanRuntimeError(`Cannot peek an empty Stack - check using length()`);
+      throw new ElanRuntimeError(`Cannot pop an empty Stack - check using length()`);
     }
     const result = this.contents[0];
     this.contents.splice(0, 1);
