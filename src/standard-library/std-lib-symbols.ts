@@ -1,4 +1,4 @@
-import { getSymbol } from "./elan-type-annotations";
+import { getSymbol } from "../elan-type-annotations";
 import {
   ElanDescriptor,
   elanMetadataKey,
@@ -6,13 +6,13 @@ import {
   isConstantDescriptor,
   isFunctionDescriptor,
   isProcedureDescriptor,
-} from "./elan-type-interfaces";
-import { ElanSymbol } from "./frames/interfaces/elan-symbol";
-import { Scope } from "./frames/interfaces/scope";
-import { NullScope } from "./frames/symbols/null-scope";
-import { SymbolScope } from "./frames/symbols/symbol-scope";
-import { UnknownSymbol } from "./frames/symbols/unknown-symbol";
-import { Transforms } from "./frames/syntax-nodes/transforms";
+} from "../elan-type-interfaces";
+import { ElanSymbol } from "../frames/interfaces/elan-symbol";
+import { Scope } from "../frames/interfaces/scope";
+import { NullScope } from "../frames/symbols/null-scope";
+import { SymbolScope } from "../frames/symbols/symbol-scope";
+import { UnknownSymbol } from "../frames/symbols/unknown-symbol";
+import { Transforms } from "../frames/syntax-nodes/transforms";
 import { StdLib } from "./std-lib";
 
 export class StdLibSymbols implements Scope {

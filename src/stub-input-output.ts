@@ -5,6 +5,19 @@ import { WebWorkerMessage, WebWorkerWriteMessage } from "./web/web-worker-messag
 export class StubInputOutput implements ElanInputOutput {
   constructor() {}
 
+  readFile(path: string): Promise<string> {
+    return new Promise<string>((rs, rj) => {
+      onmessage = (e) => {
+        const data = e.data as WebWorkerMessage;
+
+        if (data.type === "read") {
+          rs(data.value as string);
+        }
+      };
+      postMessage(this.writeMsg("readFile", [path]));
+    });
+  }
+
   writeMsg(func: string, parameters?: (string | number)[]) {
     return { type: "write", function: func, parameters: parameters ?? [] } as WebWorkerWriteMessage;
   }

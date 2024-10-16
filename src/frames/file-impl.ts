@@ -1,4 +1,4 @@
-import { StdLibSymbols } from "../std-lib-symbols";
+import { StdLibSymbols } from "../standard-library/std-lib-symbols";
 import { AssertOutcome } from "../system";
 import { AbstractSelector } from "./abstract-selector";
 import { CodeSource, CodeSourceFromString } from "./code-source";

@@ -14,7 +14,7 @@
     "Education"
   ],
   "scripts": {
-    "compile-api": "esbuild ./src/std-lib.ts --bundle --format=esm --outfile=web-editor/elan-api.js",
+    "compile-api": "esbuild ./src/standard-library/std-lib.ts --bundle --format=esm --outfile=web-editor/elan-api.js",
     "compile-test": "tsc -p ./test && npm run format-test",
     "compile-src": "tsc -p ./ && esbuild ./out/src/web/web-scripts.js --bundle --outfile=web-editor/web-scripts.js",
     "compile": "npm run compile-src && npm run compile-api && npm run format-src && npm run lint",

@@ -8,7 +8,7 @@ import { File } from "../frames/interfaces/file";
 import { Profile } from "../frames/interfaces/profile";
 import { CompileStatus, ParseStatus, RunStatus } from "../frames/status-enums";
 import { getTestRunner } from "../runner";
-import { StdLib } from "../std-lib";
+import { StdLib } from "../standard-library/std-lib";
 import { fetchProfile, hash, transforms } from "./web-helpers";
 import { WebInputOutput } from "./web-input-output";
 import {
@@ -449,6 +449,11 @@ function handleWorkerIO(data: WebWorkerWriteMessage) {
       break;
     case "getKeystrokeWithModifier":
       elanInputOutput.getKeystrokeWithModifier().then((v) => programWorker.postMessage(readMsg(v)));
+      break;
+    case "readFile":
+      elanInputOutput
+        .readFile(data.parameters[0] as string)
+        .then((v) => programWorker.postMessage(readMsg(v)));
       break;
     default:
       (elanInputOutput as any)[data.function](...data.parameters);

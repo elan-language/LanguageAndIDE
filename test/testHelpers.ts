@@ -16,7 +16,7 @@ import { IntType } from "../src/frames/symbols/int-type";
 import { StringType } from "../src/frames/symbols/string-type";
 import { UnknownType } from "../src/frames/symbols/unknown-type";
 import { getTestRunner } from "../src/runner";
-import { StdLib } from "../src/std-lib";
+import { StdLib } from "../src/standard-library/std-lib";
 import { hash } from "../src/util";
 import { assertParses, transforms } from "./compiler/compiler-test-helpers";
 import { getTestSystem } from "./compiler/test-system";

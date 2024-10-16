@@ -1,5 +1,5 @@
 import { TestStatus } from "./frames/status-enums";
-import { StdLib } from "./std-lib";
+import { StdLib } from "./standard-library/std-lib";
 import { AssertOutcome, System } from "./system";
 
 export async function runTests(tests: [string, (_outcomes: AssertOutcome[]) => Promise<void>][]) {
