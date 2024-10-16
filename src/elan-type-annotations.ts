@@ -188,10 +188,11 @@ function removeUnderscore(name: string) {
   return name.startsWith("_") ? name.slice(1) : name;
 }
 
-export class ElanClassTypeDescriptor implements TypeDescriptor {
+export class ElanClassTypeDescriptor implements ElanTypeDescriptor {
   constructor(private readonly cls: { name: string; prototype: object }) {}
 
   isClass = true;
+  isConstant = true;
 
   name = "Class";
 

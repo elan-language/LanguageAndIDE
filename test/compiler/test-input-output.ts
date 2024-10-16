@@ -4,6 +4,7 @@ import { hasHiddenType } from "../../src/has-hidden-type";
 export class TestInputOutput implements ElanInputOutput {
 
   writeFile(path: string, data: string): Promise<void> {
+    this.printed = data;
     return Promise.resolve();
   }
   

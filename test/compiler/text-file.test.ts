@@ -64,15 +64,18 @@ return [main, _tests];}`;
 
 main
   var tf set to openRead("path")
-  var txt set to tf.readLine()
-  print txt
+
+  while not tf.endOfFile()
+    print tf.readLine()
+  end while
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var tf = await _stdlib.openRead("path");
-  var txt = tf.readLine();
-  system.printLine(_stdlib.asString(txt));
+  while (!tf.endOfFile()) {
+    system.printLine(_stdlib.asString(tf.readLine()));
+  }
 }
 return [main, _tests];}`;
 
@@ -82,6 +85,32 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "Line1");
+    await assertObjectCodeExecutes(fileImpl, "Line1Line2Line3");
+  });
+
+  test("Pass_write", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var tf set to openWrite("path")
+  call tf.writeLine("something")
+  call tf.close()
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var tf = _stdlib.openWrite("path");
+  await tf.writeLine("something");
+  await tf.close();
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "something");
   });
 });

@@ -5,6 +5,7 @@ import {
   elanGenericParamT1Type,
   ElanInt,
   ElanT1,
+  ElanTuple,
   FunctionOptions,
 } from "../elan-type-annotations";
 import { System } from "../system";
@@ -51,7 +52,7 @@ export class ImmutableStack {
     return copy;
   }
 
-  //@elanFunction(FunctionOptions.pure, ElanTuple([ElanClass(ImmutableStack), ElanT1]))
+  @elanFunction(FunctionOptions.pure, ElanTuple([ElanClass(ImmutableStack), ElanT1]))
   pop() {
     if (this.contents.length === 0) {
       throw new ElanRuntimeError(`Cannot peek an empty Stack - check using length()`);
