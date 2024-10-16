@@ -1023,7 +1023,7 @@ export class StdLib {
     });
   }
 
-  @elanFunction(FunctionOptions.impure, ElanClass(TextFileWriter))
+  @elanFunction(FunctionOptions.pure, ElanClass(TextFileWriter))
   createFileForWriting(fileName: string): TextFileWriter {
     const tf = this.system.initialise(new TextFileWriter());
     tf.fileName = fileName;
