@@ -91,7 +91,7 @@ export class System {
     return t;
   }
 
-  initialise(toInit: any, toType?: () => any) {
+  initialise<T>(toInit: T, toType?: () => any): T {
     if (toType && Array.isArray(toInit) && toInit.length > 0) {
       for (let i = 0; i < toInit.length; i++) {
         if (Array.isArray(toInit[i])) {
@@ -102,8 +102,8 @@ export class System {
       }
     }
 
-    if ("system" in toInit) {
-      toInit.system = this;
+    if ("system" in (toInit as object)) {
+      (toInit as any).system = this;
     }
 
     return toInit;

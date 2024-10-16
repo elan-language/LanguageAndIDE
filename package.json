@@ -27,6 +27,7 @@
     "format-test": "prettier --ignore-path .gitignore --print-width 100 --log-level silent --end-of-line auto --write \"test/**/*.test.ts\""
   },
   "dependencies": {
+    "@types/wicg-file-system-access": "^2023.10.5",
     "async-file": "2.0.2",
     "reflect-metadata": "^0.2.2"
   },

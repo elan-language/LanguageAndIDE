@@ -1009,19 +1009,19 @@ export class StdLib {
 
   //File operations
   @elanFunction(FunctionOptions.impureAsync, ElanClass(TextFile))
-  openRead(path: string): Promise<TextFile> {
-    return this.system.elanInputOutput.readFile(path).then((s) => {
+  openRead(fileName: string): Promise<TextFile> {
+    return this.system.elanInputOutput.readFile(fileName).then((s) => {
       const tf = this.system.initialise(new TextFile());
-      tf.path = path;
+      tf.fileName = fileName;
       tf.content = s ? s.split("\n") : [];
       return tf;
     });
   }
 
   @elanFunction(FunctionOptions.impure, ElanClass(TextFile))
-  openWrite(path: string): TextFile {
+  openWrite(fileName: string): TextFile {
     const tf = this.system.initialise(new TextFile());
-    tf.path = path;
+    tf.fileName = fileName;
     return tf;
   }
 }

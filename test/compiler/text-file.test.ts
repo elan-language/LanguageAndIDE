@@ -37,14 +37,14 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  var tf set to openRead("path")
+  var tf set to openRead("data.txt")
   var txt set to tf.readToEnd()
   print txt
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var tf = await _stdlib.openRead("path");
+  var tf = await _stdlib.openRead("data.txt");
   var txt = tf.readToEnd();
   system.printLine(_stdlib.asString(txt));
 }
@@ -63,7 +63,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  var tf set to openRead("path")
+  var tf set to openRead("data.txt")
 
   while not tf.endOfFile()
     print tf.readLine()
@@ -72,7 +72,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var tf = await _stdlib.openRead("path");
+  var tf = await _stdlib.openRead("data.txt");
   while (!tf.endOfFile()) {
     system.printLine(_stdlib.asString(tf.readLine()));
   }
@@ -92,14 +92,14 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  var tf set to openWrite("path")
+  var tf set to openWrite("data.txt")
   call tf.writeLine("something")
   call tf.close()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var tf = _stdlib.openWrite("path");
+  var tf = _stdlib.openWrite("data.txt");
   await tf.writeLine("something");
   await tf.close();
 }

@@ -18,7 +18,7 @@ export class TextFile {
 
   private system?: System;
 
-  path: string = "";
+  fileName: string = "";
   content: string[] = [];
   currentLine = 0;
 
@@ -46,7 +46,7 @@ export class TextFile {
 
   @elanProcedure(ProcedureOptions.async)
   close() {
-    this.system!.elanInputOutput.writeFile(this.path, this.readToEnd());
+    this.system!.elanInputOutput.writeFile(this.fileName, this.readToEnd());
   }
 
   @elanFunction(FunctionOptions.pure, ElanBoolean)

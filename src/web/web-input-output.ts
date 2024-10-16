@@ -53,7 +53,38 @@ export class WebInputOutput implements ElanInputOutput {
     return f;
   }
 
+  chromeChooser() {
+    const f = document.createElement("input");
+    const g = document.getElementById("graphics") as HTMLElement;
+    g.appendChild(f);
+    return f;
+  }
+
+  readFileChrome(path: string): Promise<string> {
+    let fileHandle;
+
+    const chooser = this.chromeChooser();
+
+    return new Promise<string>((rs, rj) => {
+      chooser.addEventListener("click", async () => {
+        [fileHandle] = await window.showOpenFilePicker({
+          startIn: "documents",
+        });
+        const file = await fileHandle.getFile();
+        const contents = await file.text();
+        rs(contents);
+      });
+
+      chooser.click();
+    });
+  }
+
   readFile(path: string): Promise<string> {
+    if ("showOpenFilePicker" in self) {
+      // The `showOpenFilePicker()` method of the File System Access API is supported.
+      return this.readFileChrome(path);
+    }
+
     const inp = this.chooser();
 
     return new Promise<string>((rs, rj) => {
@@ -76,19 +107,28 @@ export class WebInputOutput implements ElanInputOutput {
     });
   }
 
-  writeFile(path: string, data: string): Promise<void> {
+  writeFileChrome(fileName: string, data: string): Promise<void> {
+    return self
+      .showSaveFilePicker({
+        suggestedName: fileName,
+        startIn: "documents",
+      })
+      .then((fh) => fh.createWritable())
+      .then((writeable) => writeable.write(data).then(() => writeable))
+      .then((writeable) => writeable.close());
+  }
+
+  writeFile(fileName: string, data: string): Promise<void> {
+    if (!fileName) {
+      fileName = "untitled.txt";
+    }
+
+    if ("showSaveFilePicker" in self) {
+      // The `showOpenFilePicker()` method of the File System Access API is supported.
+      return this.writeFileChrome(fileName, data);
+    }
+
     return new Promise<void>((rs, rj) => {
-      let fileName = prompt("Please enter your file name", path);
-
-      if (fileName === null) {
-        // cancelled
-        rs();
-      }
-
-      if (!fileName) {
-        fileName = "file.txt";
-      }
-
       const blob = new Blob([data], { type: "plain/text" });
 
       const aElement = document.createElement("a");
