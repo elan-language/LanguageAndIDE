@@ -6,6 +6,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -249,6 +250,3 @@ return [main, _tests];}`;
     );
   });
 });
-function ignore_test(arg0: string, arg1: () => Promise<void>) {
-  throw new Error("Function not implemented.");
-}

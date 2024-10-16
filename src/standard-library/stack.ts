@@ -42,7 +42,9 @@ export class Stack {
       const itemT = typeof item;
       const stackT = typeof this.contents[0];
       if (itemT !== stackT) {
-        throw new ElanRuntimeError(`Attempting to push an incompatible type onto a non-empty Stack`);
+        throw new ElanRuntimeError(
+          `Attempting to push an incompatible type onto a non-empty Stack`,
+        );
       }
     }
     this.contents.unshift(item);
