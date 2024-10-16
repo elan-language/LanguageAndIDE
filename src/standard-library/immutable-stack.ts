@@ -1,11 +1,12 @@
 import { ElanRuntimeError } from "../elan-runtime-error";
 import {
+  ElanClass,
   elanFunction,
   elanGenericParamT1Type,
   ElanInt,
-  elanProcedure,
   ElanT1,
-  FunctionOptions,
+  ElanTuple,
+  FunctionOptions
 } from "../elan-type-annotations";
 import { System } from "../system";
 
@@ -36,8 +37,8 @@ export class ImmutableStack {
     return this.contents.length;
   }
 
-  @elanProcedure()
-  push<T1 extends object>(@elanGenericParamT1Type() item: T1) {
+  @elanFunction(FunctionOptions.pure, ElanClass(ImmutableStack))
+  push<T1 extends object>(@elanGenericParamT1Type() item: T1)  {
     if (this.contents.length > 0) {
       const itemT = typeof item;
       const stackT = typeof this.contents[0];
@@ -45,16 +46,21 @@ export class ImmutableStack {
         throw new ElanRuntimeError(`Attempting to push a ${itemT} onto a Stack of type ${stackT}`);
       }
     }
-    this.contents.unshift(item);
+    const copy = this.system!.initialise(new ImmutableStack());
+    copy.contents = this.contents
+    copy.contents.unshift(item);
+    return copy;
   }
 
-  @elanFunction(FunctionOptions.impure, ElanT1)
+  //@elanFunction(FunctionOptions.pure, ElanTuple([ElanClass(ImmutableStack), ElanT1]))
   pop() {
     if (this.contents.length === 0) {
       throw new ElanRuntimeError(`Cannot peek an empty Stack - check using length()`);
     }
-    const result = this.contents[0];
-    this.contents.splice(0, 1);
-    return result;
+    const copy = this.system!.initialise(new ImmutableStack());
+    copy.contents = this.contents
+    const result = copy.contents[0];
+    copy.contents.splice(0, 1);
+    return [copy, result];
   }
 }

@@ -38,6 +38,7 @@ import { System } from "./system";
 import { TextFile } from "./text-file";
 import { BlockGraphics } from "./standard-library/block-graphics";
 import { Stack } from "./standard-library/stack";
+import { ImmutableStack } from "./standard-library/immutable-stack";
 
 type File = [number, string, number]; // open/closed, read/write, contents, pointer
 
@@ -59,8 +60,11 @@ export class StdLib {
   @elanClassExport(TextFile)
   TextFile = TextFile;
 
-  @elanClassExport(BlockGraphics)
+  @elanClassExport(Stack)
   Stack = Stack;
+
+  @elanClassExport(ImmutableStack)
+  ImmutableStack = ImmutableStack;
 
   // Standard colours
 
