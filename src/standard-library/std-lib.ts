@@ -1006,16 +1006,22 @@ export class StdLib {
   matchesRegex(a: string, r: RegExp): boolean {
     return r.test(a);
   }
+
   //File operations
   @elanFunction(FunctionOptions.impureAsync, ElanClass(TextFile))
   openRead(path: string): Promise<TextFile> {
-    const tf = this.system.initialise(new TextFile());
-    tf.path = path;
-    return Promise.resolve(tf);
+    return this.system.elanInputOutput.readFile(path).then((s) => {
+      const tf = this.system.initialise(new TextFile());
+      tf.path = path;
+      tf.content = s ? s.split("\n") : [];
+      return tf;
+    });
   }
 
-  @elanFunction(FunctionOptions.impureAsync, ElanClass(TextFile))
-  openWrite(path: string): Promise<TextFile> {
-    return Promise.resolve(this.system.initialise(new TextFile()));
+  @elanFunction(FunctionOptions.impure, ElanClass(TextFile))
+  openWrite(path: string): TextFile {
+    const tf = this.system.initialise(new TextFile());
+    tf.path = path;
+    return tf;
   }
 }

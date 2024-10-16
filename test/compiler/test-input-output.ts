@@ -2,8 +2,13 @@ import { ElanInputOutput } from "../../src/elan-input-output";
 import { hasHiddenType } from "../../src/has-hidden-type";
 
 export class TestInputOutput implements ElanInputOutput {
+
+  writeFile(path: string, data: string): Promise<void> {
+    return Promise.resolve();
+  }
+  
   readFile(path: string): Promise<string> {
-    return Promise.resolve("test file content");
+    return Promise.resolve("Line1\nLine2\nLine3");
   }
   
   getKeystroke(): Promise<string> {

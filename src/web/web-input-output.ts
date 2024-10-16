@@ -76,6 +76,33 @@ export class WebInputOutput implements ElanInputOutput {
     });
   }
 
+  writeFile(path: string, data: string): Promise<void> {
+    return new Promise<void>((rs, rj) => {
+      let fileName = prompt("Please enter your file name", path);
+
+      if (fileName === null) {
+        // cancelled
+        rs();
+      }
+
+      if (!fileName) {
+        fileName = "file.txt";
+      }
+
+      const blob = new Blob([data], { type: "plain/text" });
+
+      const aElement = document.createElement("a");
+      aElement.setAttribute("download", fileName!);
+      const href = URL.createObjectURL(blob);
+      aElement.href = href;
+      aElement.setAttribute("target", "_blank");
+      aElement.click();
+      URL.revokeObjectURL(href);
+
+      rs();
+    });
+  }
+
   drawGraphics(html: string): void {
     this.graphicsWindow.innerHTML = html;
     this.graphics.focus();

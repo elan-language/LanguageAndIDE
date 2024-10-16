@@ -18,6 +18,19 @@ export class StubInputOutput implements ElanInputOutput {
     });
   }
 
+  writeFile(path: string, data: string): Promise<void> {
+    return new Promise<void>((rs, rj) => {
+      onmessage = (e) => {
+        const data = e.data as WebWorkerMessage;
+
+        if (data.type === "read") {
+          rs();
+        }
+      };
+      postMessage(this.writeMsg("writeFile", [path, data]));
+    });
+  }
+
   writeMsg(func: string, parameters?: (string | number)[]) {
     return { type: "write", function: func, parameters: parameters ?? [] } as WebWorkerWriteMessage;
   }
