@@ -5,8 +5,7 @@ import {
   elanGenericParamT1Type,
   ElanInt,
   ElanT1,
-  ElanTuple,
-  FunctionOptions
+  FunctionOptions,
 } from "../elan-type-annotations";
 import { System } from "../system";
 
@@ -38,7 +37,7 @@ export class ImmutableStack {
   }
 
   @elanFunction(FunctionOptions.pure, ElanClass(ImmutableStack))
-  push<T1 extends object>(@elanGenericParamT1Type() item: T1)  {
+  push<T1 extends object>(@elanGenericParamT1Type() item: T1) {
     if (this.contents.length > 0) {
       const itemT = typeof item;
       const stackT = typeof this.contents[0];
@@ -47,7 +46,7 @@ export class ImmutableStack {
       }
     }
     const copy = this.system!.initialise(new ImmutableStack());
-    copy.contents = this.contents
+    copy.contents = this.contents;
     copy.contents.unshift(item);
     return copy;
   }
@@ -58,7 +57,7 @@ export class ImmutableStack {
       throw new ElanRuntimeError(`Cannot peek an empty Stack - check using length()`);
     }
     const copy = this.system!.initialise(new ImmutableStack());
-    copy.contents = this.contents
+    copy.contents = this.contents;
     const result = copy.contents[0];
     copy.contents.splice(0, 1);
     return [copy, result];
