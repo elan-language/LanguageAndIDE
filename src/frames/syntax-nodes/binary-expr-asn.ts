@@ -3,6 +3,7 @@ import {
   mustBeBooleanType,
   mustBeCoercibleType,
   mustBeCompatibleType,
+  mustBeIntegerType,
   mustBeNumberType,
 } from "../compile-rules";
 import { AstNode } from "../interfaces/ast-node";
@@ -57,10 +58,17 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
       case OperationSymbol.Add:
       case OperationSymbol.Minus:
       case OperationSymbol.Multiply:
-      case OperationSymbol.Div:
       case OperationSymbol.Divide:
-      case OperationSymbol.Mod:
       case OperationSymbol.Pow:
+        return true;
+    }
+    return false;
+  }
+
+  private isIntegerOnlyOp() {
+    switch (this.op) {
+      case OperationSymbol.Div:
+      case OperationSymbol.Mod:
         return true;
     }
     return false;
@@ -161,6 +169,10 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
 
     if (this.isCompareOp() || this.isArithmeticOp()) {
       mustBeNumberType(lst, rst, this.compileErrors, this.fieldId);
+    }
+
+    if (this.isIntegerOnlyOp()) {
+      mustBeIntegerType(lst, rst, this.compileErrors, this.fieldId);
     }
 
     if (this.isLogicalOp()) {
