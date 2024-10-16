@@ -38,7 +38,8 @@ import { System } from "../system";
 import { BlockGraphics } from "./block-graphics";
 import { ImmutableStack } from "./immutable-stack";
 import { Stack } from "./stack";
-import { TextFile } from "./text-file";
+import { TextFileReader } from "./text-file-reader";
+import { TextFileWriter } from "./text-file-writer";
 
 type File = [number, string, number]; // open/closed, read/write, contents, pointer
 
@@ -57,8 +58,11 @@ export class StdLib {
   @elanClassExport(BlockGraphics)
   BlockGraphics = BlockGraphics;
 
-  @elanClassExport(TextFile)
-  TextFile = TextFile;
+  @elanClassExport(TextFileReader)
+  TextFileReader = TextFileReader;
+
+  @elanClassExport(TextFileWriter)
+  TextFileWriter = TextFileWriter;
 
   @elanClassExport(Stack)
   Stack = Stack;
@@ -1008,20 +1012,22 @@ export class StdLib {
   }
 
   //File operations
-  @elanFunction(FunctionOptions.impureAsync, ElanClass(TextFile))
-  openRead(fileName: string): Promise<TextFile> {
+  @elanFunction(FunctionOptions.impureAsync, ElanClass(TextFileReader))
+  openFileForReading(fileName: string): Promise<TextFileReader> {
     return this.system.elanInputOutput.readFile(fileName).then((s) => {
-      const tf = this.system.initialise(new TextFile());
+      const tf = this.system.initialise(new TextFileReader());
       tf.fileName = fileName;
+      tf.status = 1;
       tf.content = s ? s.split("\n") : [];
       return tf;
     });
   }
 
-  @elanFunction(FunctionOptions.impure, ElanClass(TextFile))
-  openWrite(fileName: string): TextFile {
-    const tf = this.system.initialise(new TextFile());
+  @elanFunction(FunctionOptions.impure, ElanClass(TextFileWriter))
+  createFileForWriting(fileName: string): TextFileWriter {
+    const tf = this.system.initialise(new TextFileWriter());
     tf.fileName = fileName;
+    tf.status = 1;
     return tf;
   }
 }
