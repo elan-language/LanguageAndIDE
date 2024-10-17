@@ -13,7 +13,7 @@ import {
 
 suite("Impure Function", () => {
   test("Pass_CanUseImpureMethodsWithinExpressionsInMainOrProcedure", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var gr set to new BlockGraphics()
@@ -63,7 +63,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_CannotCallAProcedureWithinAnExpression", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var k set to foo()
@@ -81,7 +81,7 @@ end procedure
   });
 
   test("Fail_CannotCallAFunctionLikeAProcedure", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   call square(3)
@@ -100,7 +100,7 @@ end function`;
   });
 
   test("Fail_CannotCallAProcedureWithinAFunction", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var k set to foo()
@@ -122,7 +122,7 @@ end function
   });
 
   test("Fail_CannotUseAnImpureMethodWithinAFunction", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
 end main

@@ -13,7 +13,7 @@ import {
 
 suite("Constants", () => {
   test("Pass_Int", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 constant a set to 3
 main
@@ -42,7 +42,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Int_Hex", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 constant a set to 0xFF
 main
@@ -69,7 +69,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Int_Binary", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 constant a set to 0b10101
 main
@@ -95,7 +95,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Float", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 constant a set to 3.1
 main
@@ -121,7 +121,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_String", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 constant a set to "hell0"
 main
@@ -147,7 +147,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_EmptyString", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 constant a set to ""
 main
@@ -175,7 +175,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_SpaceAsString", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 constant a set to " "
 main
@@ -201,7 +201,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Bool", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 constant a set to true
 main
@@ -227,7 +227,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Enum", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 constant a set to Fruit.apple
 main
@@ -258,7 +258,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_List", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 constant a set to {1,2,3}
 main
@@ -284,7 +284,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_Array", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 constant a set to [1,2,3]
 main
@@ -299,7 +299,7 @@ end main
   });
 
   test("Pass_ListofList", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 constant a set to {{4, 5}, {6, 7, 8}}
 main
@@ -325,7 +325,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_Dictionary", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 constant a set to ["a":1]
 main
@@ -340,7 +340,7 @@ end main
   });
 
   test("Fail_useInsideMain", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   constant a set to 3 
@@ -355,7 +355,7 @@ end main
   });
 
   test("Fail_incorrectKeyword", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 const a set to 3
 
@@ -371,7 +371,7 @@ end main
   });
 
   test("Fail_invalidLiteralString", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 constant a set to 'hello'
 
@@ -387,7 +387,7 @@ end main
   });
 
   test("Fail_reassignment", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 constant a set to 3
 
@@ -405,7 +405,7 @@ end main
   });
 
   test("Fail_expression", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 constant a set to 3 + 4
 
@@ -422,7 +422,7 @@ end main
   });
 
   test("Pass_referenceToOtherConstant", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 constant a set to 3
 constant b set to a
@@ -451,7 +451,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_UseOfKeywordAsName", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 constant if set to 3
 
@@ -470,7 +470,7 @@ end main
   });
 
   test("Fail_UseOfReservedAsName", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 constant break set to 3
 
@@ -489,7 +489,7 @@ end main
   });
 
   test("Fail_NotUniqueName", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 constant a set to 1
 constant a set to 2

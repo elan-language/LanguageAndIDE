@@ -6,14 +6,13 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("Function as HOF", () => {
   test("Pass_PassAsParam", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   call printModified(3, function twice)
@@ -51,7 +50,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_PassAsParam1", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   call printModified(3, function twice)
@@ -89,7 +88,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_PassAsParam2", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   call printIt("Hello", "e", function find)
@@ -127,7 +126,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ReturnAFunction", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var f set to getFunc()
@@ -167,7 +166,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_SetAsVariable", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var f set to function twice
@@ -199,7 +198,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_SetAsProperty", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var f set to new Foo(function ff)
@@ -250,7 +249,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Print", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   print function ff
@@ -280,7 +279,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_SetAsVariableWithoutFunctionKeyword", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var f set to twice
@@ -302,7 +301,7 @@ end function`;
   });
 
   test("Fail_FunctionSignatureDoesntMatch1", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   call printModified(3, power)
@@ -326,7 +325,7 @@ end function`;
   });
 
   test("Fail_FunctionSignatureDoesntMatch2", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   call printModified(3, power)
@@ -348,7 +347,7 @@ end function`;
   });
 
   test("Fail_UsingReturnedFuncWithoutArgs", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to getFunc()
@@ -371,7 +370,7 @@ end function`;
   });
 
   test("Fail_PassAsParamWithoutFunctionKeyword", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   call printModified(3, twice)
@@ -396,7 +395,7 @@ end function`;
   });
 
   test("Fail_ReturnAFunctionWithoutFunctionKeyword", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var f set to getFunc()
@@ -422,7 +421,7 @@ end function`;
   });
 
   test("Fail_SetAsPropertyWithoutFunctionKeyword", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var f set to new Foo(ff)
@@ -453,7 +452,7 @@ end class`;
   });
 
   test("Fail_InExpression1", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var f set to 1 + ff
@@ -475,7 +474,7 @@ end function`;
   });
 
   test("Fail_InExpression2", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var f set to 1 + function ff

@@ -12,7 +12,7 @@ import {
 
 suite("Conditional Expressions", () => {
   test("Pass_InFunction", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   print grade(90)
@@ -48,7 +48,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InVariableDeclaration", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var score set to 70
@@ -75,7 +75,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_EndIf", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
  print grade(90)

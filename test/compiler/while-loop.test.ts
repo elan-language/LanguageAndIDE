@@ -13,7 +13,7 @@ import {
 
 suite("While Loop", () => {
   test("Pass_minimal", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var x set to 0
@@ -43,7 +43,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_innerLoop", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var t set to 0
@@ -85,7 +85,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_noEnd", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var x = 0
@@ -101,7 +101,7 @@ main
   });
 
   test("Fail_variableNotPredefined", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   while x < 10
@@ -118,7 +118,7 @@ main
   });
 
   test("Fail_variableDefinedInWhile", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   while var x < 10
@@ -134,7 +134,7 @@ main
   });
 
   test("Fail_noCondition", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var x set to 0
@@ -151,7 +151,7 @@ main
   });
 
   test("Fail_while_do", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var x set to 0
@@ -168,7 +168,7 @@ main
   });
 
   test("Fail_WhileConditionNotBool", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to 3

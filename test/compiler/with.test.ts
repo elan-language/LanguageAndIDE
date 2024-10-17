@@ -14,7 +14,7 @@ import {
 
 suite("With", () => {
   test("Pass_SingleSetToVar", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to new Foo()
@@ -60,7 +60,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_SingleSetToSet", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to new Foo()
@@ -104,7 +104,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_SingleSetToLet", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to foo()
@@ -158,7 +158,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_CopyLet", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to foo()
@@ -212,7 +212,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_SingleSetToReturn", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to foo()
@@ -264,7 +264,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_MultiSet", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to new Foo()
@@ -320,7 +320,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_CopiedObjectStillValid", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to new Foo()
@@ -381,7 +381,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ExpressionSimple", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to new Foo()
@@ -427,7 +427,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ExpressionNew", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to new Foo(1)
@@ -482,7 +482,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ExpressionIndex", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to [0,2]
@@ -530,7 +530,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_MultiExpressionIndex", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to [0,2]
@@ -586,7 +586,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ExpressionIndex1", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to {0,2}
@@ -634,7 +634,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ExpressionExtension", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to {0,2,3}
@@ -682,7 +682,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_NoSets", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to new Foo()
@@ -706,7 +706,7 @@ end class`;
   });
 
   test("Fail_WrongType", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var b set to new Foo(1)
@@ -730,7 +730,7 @@ end class`;
   });
 
   test("Fail_NotClass", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to {1, 2}
@@ -746,7 +746,7 @@ end main`;
   });
 
   test("Fail_NotClass1", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to new Foo()
@@ -766,7 +766,7 @@ end main`;
   });
 
   test("Fail_NoSuchProperty", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var b set to new Foo(1)
@@ -790,7 +790,7 @@ end class`;
   });
 
   test("Fail_PrivateProperty", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var b set to new Foo(1)
@@ -814,7 +814,7 @@ end class`;
   });
 
   test("Fail_NotImmutable", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var b set to new Foo(1)

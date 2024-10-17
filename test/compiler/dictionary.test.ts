@@ -14,7 +14,7 @@ import {
 
 suite("Dictionary", () => {
   test("Pass_LiteralDictionary", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to ["a":1, "b":3, "z":10]
@@ -38,7 +38,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_LiteralDictionaryOfDictionary", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to ["a":["a":1], "b":["b":3, "z":10]]
@@ -62,7 +62,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_LiteralEnumKey", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 enum Fruit apple, orange, pear
 
@@ -92,7 +92,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AccessByKey", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to ["a":1, "b":3, "z":10]
@@ -116,7 +116,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AccessByDoubleKey", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to ["a":["a":1], "b":["b":3, "z":10]]
@@ -140,7 +140,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_keys", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to ["a":1, "b":3, "z":10]
@@ -168,7 +168,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_hasKey", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to ["a":1, "b":3, "z":10]
@@ -194,7 +194,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_values", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to ["a":1, "b":3, "z":10]
@@ -218,7 +218,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_set", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to ["a":1, "b":3, "z":10]
@@ -246,7 +246,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_set2d", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to ["a":["a":1], "b":["b":3, "z":10]]
@@ -274,7 +274,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_removeKey", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to ["a":1, "b":3, "z":10]
@@ -300,7 +300,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_remove2dKey", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to ["a":["a":1], "b":["b":3, "z":10]]
@@ -326,7 +326,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_removeInvalidKey", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to ["a":1, "b":3, "z":10]
@@ -352,7 +352,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_CreateEmptyDictionary", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to new Dictionary<of String, Int>()
@@ -386,7 +386,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_CreateEmptyDictionaryOfDictionary", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to new Dictionary<of String, Dictionary<of String, Int>>()
@@ -422,7 +422,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_EnumKey", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
     enum Fruit apple, orange, pear  
 
@@ -462,7 +462,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_EmptyDictionary", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to empty [String:Int]
@@ -498,7 +498,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Empty2dDictionary", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to empty [String:[String:Int]]
@@ -534,7 +534,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_RepeatedKey", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to ["a":1, "b":3, "a":10]
@@ -550,7 +550,7 @@ end main
   });
 
   test("Fail_InconsistentTypes1", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to ["a":1, "b":3.1, "c":10]
@@ -566,7 +566,7 @@ end main
   });
 
   test("Fail_InconsistentTypes2", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to ["a":1, "b":3, 10:10]
@@ -582,7 +582,7 @@ end main
   });
 
   test("Fail_AccessByInvalidKey", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to ["a":1, "b":3, "z":10]
@@ -598,7 +598,7 @@ end main
   });
 
   test("Fail_RemoveInvalidKeyType", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to ["a":1, "b":3, "z":10]
@@ -614,7 +614,7 @@ end main
   });
 
   test("Fail_SetInvalidKeyType", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to ["a":1, "b":3, "z":10]
@@ -630,7 +630,7 @@ end main
   });
 
   ignore_test("Fail_getForKey", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to ["a":1, "b":3, "z":10]
@@ -646,7 +646,7 @@ end main
   });
 
   test("Fail_putAtKey", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to ["a":1, "b":3, "z":10]
@@ -663,7 +663,7 @@ end main
   });
 
   test("Fail_SetInvalidValueType", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to ["a":1, "b":3, "z":10]
@@ -679,7 +679,7 @@ end main
   });
 
   test("Fail_withRemoveAtKey", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to ["a":1, "b":3, "z":10]
@@ -696,7 +696,7 @@ end main`;
   });
 
   test("Fail_withoutGenericType", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
     var a set to new Dictionary()
@@ -711,7 +711,7 @@ end main`;
   });
 
   test("Fail_IndexWrongType1", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to ["a":1, "d":2]
@@ -727,7 +727,7 @@ end main
   });
 
   test("Fail_IndexWrongType2", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to ["a":["a":1, "d":2]]
@@ -743,7 +743,7 @@ end main
   });
 
   test("Fail_IndexWrongType3", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to ["a":["a":1, "d":2]]
@@ -759,7 +759,7 @@ end main
   });
 
   test("Fail_Range", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to [1:1, 2:2]

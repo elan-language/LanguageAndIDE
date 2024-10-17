@@ -13,7 +13,7 @@ import {
 
 suite("Unique Identifiers", () => {
   test("Pass_SameVariableNameInDifferentScope", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 constant id set to 1
 
@@ -41,7 +41,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_CanUseKeywordWithDifferentCase", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var bReak set to 2
@@ -65,7 +65,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_CanHaveIdentiferSameAsTypeExceptCase", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var foo set to new Foo()
@@ -109,7 +109,7 @@ return [main, _tests];}`;
   });
 
   ignore_test("Fail_DeclareSameVarNameWithDifferentCase", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var fOO set to 1
@@ -124,7 +124,7 @@ end main`;
   });
 
   ignore_test("Fail_ElanKeywordWithChangedCase", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
     var pRocedure set to 1
@@ -138,7 +138,7 @@ end main`;
   });
 
   ignore_test("Fail_ElanKeywordTypeEvenWithChangedCase", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 class Main
   constructor()
@@ -157,7 +157,7 @@ end class`;
   });
 
   test("Fail_KeywordWithCorrectCaseIfAlteredCaseAlreadyUsed", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var bReak set to 1
@@ -174,7 +174,7 @@ end main`;
   });
 
   test("Fail_SameVariableNameInScope", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var id set to 1

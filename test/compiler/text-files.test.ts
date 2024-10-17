@@ -11,7 +11,7 @@ import {
 
 suite("Text Files", () => {
   test("Pass_Create", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var fr set to new TextFileReader()
@@ -34,7 +34,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ReadToEnd", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var tf set to openFileForReading("data.txt")
@@ -60,7 +60,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ReadLine", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var tf set to openFileForReading("data.txt")
@@ -89,7 +89,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_write", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var tf set to createFileForWriting("data.txt")
