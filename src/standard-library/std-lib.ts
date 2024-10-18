@@ -28,7 +28,6 @@ import {
   ElanT1,
   ElanT2,
   ElanTuple,
-  elanTupleType,
   FunctionOptions,
   ProcedureOptions,
 } from "../elan-type-annotations";
@@ -37,6 +36,7 @@ import { StubInputOutput } from "../stub-input-output";
 import { System } from "../system";
 import { BlockGraphics } from "./block-graphics";
 import { ImmutableStack } from "./immutable-stack";
+import { Random } from "./random";
 import { Stack } from "./stack";
 import { TextFileReader } from "./text-file-reader";
 import { TextFileWriter } from "./text-file-writer";
@@ -51,10 +51,6 @@ export class StdLib {
   system: System;
 
   // types
-
-  @elanConstant(ElanTuple([ElanInt, ElanInt]))
-  Random = "";
-
   @elanClassExport(BlockGraphics)
   BlockGraphics = BlockGraphics;
 
@@ -63,6 +59,9 @@ export class StdLib {
 
   @elanClassExport(TextFileWriter)
   TextFileWriter = TextFileWriter;
+
+  @elanClassExport(Random)
+  Random = Random;
 
   @elanClassExport(Stack)
   Stack = Stack;
@@ -924,53 +923,6 @@ export class StdLib {
     return (r / this.pi) * 180;
   }
 
-  // Functional random
-  // Credit for source of algorithm: https://www.codeproject.com/Articles/25172/Simple-Random-Number-Generation
-  @elanFunction(FunctionOptions.pureExtension, ElanTuple([ElanInt, ElanInt]))
-  next(@elanTupleType([ElanInt, ElanInt]) current: [number, number]): [number, number] {
-    const u = current[0];
-    const v = current[1];
-    const u2 = 36969 * this.lo16(u) + u / 65536;
-    const v2 = 18000 * this.lo16(v) + v / 65536;
-    return [u2, v2];
-  }
-
-  @elanFunction(FunctionOptions.pureExtension, ElanFloat)
-  value(@elanTupleType([ElanInt, ElanInt]) current: [number, number]): number {
-    const u = current[0];
-    const v = current[1];
-    return this.lo32(this.lo32(u * 65536) + v + 1) * 2.328306435454494e-10;
-  }
-
-  private lo32(n: number): number {
-    return n % 4294967296;
-  }
-
-  private lo16(n: number): number {
-    return n % 65536;
-  }
-
-  @elanFunction(FunctionOptions.pureExtension, ElanInt)
-  valueInt(
-    @elanTupleType([ElanInt, ElanInt]) current: [number, number],
-    @elanIntType() min: number,
-    @elanIntType() max: number,
-  ): number {
-    const float = this.value(current);
-    return Math.floor(float * (max - min + 1) + min);
-  }
-
-  @elanFunction(FunctionOptions.impure, ElanTuple([ElanInt, ElanInt]))
-  firstRandomInFixedSequence(): [number, number] {
-    return [521288629, 362436069];
-  }
-
-  @elanFunction(FunctionOptions.impure, ElanTuple([ElanInt, ElanInt]))
-  firstRandom(): [number, number] {
-    const c = this.clock();
-    return [(c % 1000) * 1000000, 0];
-  }
-
   @elanFunction(FunctionOptions.pure, ElanInt)
   bitAnd(@elanIntType() a: number, @elanIntType() b: number): number {
     return a & b;
@@ -998,7 +950,7 @@ export class StdLib {
 
   @elanFunction(FunctionOptions.pure, ElanInt)
   bitShiftR(@elanIntType() a: number, @elanIntType() shift: number): number {
-    return a >>> shift;
+    return a >>> shift; // >>> is unsigned version of >>
   }
 
   @elanFunction(FunctionOptions.pureExtension)

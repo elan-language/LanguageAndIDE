@@ -407,16 +407,17 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "0, 0, 0, 0.3, 0.3, 0.3, 0, ");
   });
 
-  test("firstRandom", async () => {
+  test("RandomInitialised", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
 main
   var results set to [0, 0, 0, 0, 0, 0, 0]
-  var rnd set to firstRandom()
+  var rnd set to new Random()
+  var val set to 0
+  call rnd.initialiseFromClock()
   for i from 1 to 10000 step 1
-    var r set to rnd.valueInt(3, 5)
-    call results.putAt(r, results[r] + 1)
-    set rnd to rnd.next()
+    set val, rnd to rnd.nextInt(3, 5)
+    call results.putAt(val, results[val] + 1)
   end for
   for i from 0 to 6 step 1
     var r set to round(results[i]/10000, 1)
@@ -428,11 +429,12 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var results = system.literalArray([0, 0, 0, 0, 0, 0, 0]);
-  var rnd = _stdlib.firstRandom();
+  var rnd = system.initialise(new _stdlib.Random());
+  var val = 0;
+  rnd.initialiseFromClock();
   for (var i = 1; i <= 10000; i = i + 1) {
-    var r = _stdlib.valueInt(rnd, 3, 5);
-    _stdlib.putAt(results, r, system.safeIndex(results, r) + 1);
-    rnd = _stdlib.next(rnd);
+    [val, rnd] = rnd.nextInt(3, 5);
+    _stdlib.putAt(results, val, system.safeIndex(results, val) + 1);
   }
   for (var i = 0; i <= 6; i = i + 1) {
     var r = _stdlib.round(system.safeIndex(results, i) / 10000, 1);
@@ -450,16 +452,16 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "0, 0, 0, 0.3, 0.3, 0.3, 0, ");
   });
-  test("firstRandomInFixedSequence", async () => {
+  test("RandomInFixedSequence", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
 main
   var results set to [0, 0, 0, 0, 0, 0, 0]
-  var rnd set to firstRandomInFixedSequence()
+  var rnd set to new Random()
+  var val set to 0
   for i from 1 to 10000 step 1
-    var r set to rnd.valueInt(3, 5)
-    call results.putAt(r, results[r] + 1)
-    set rnd to rnd.next()
+    set val, rnd to rnd.nextInt(3, 5)
+    call results.putAt(val, results[val] + 1)
   end for
   for i from 0 to 6 step 1
     var r set to results[i]
@@ -471,11 +473,11 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var results = system.literalArray([0, 0, 0, 0, 0, 0, 0]);
-  var rnd = _stdlib.firstRandomInFixedSequence();
+  var rnd = system.initialise(new _stdlib.Random());
+  var val = 0;
   for (var i = 1; i <= 10000; i = i + 1) {
-    var r = _stdlib.valueInt(rnd, 3, 5);
-    _stdlib.putAt(results, r, system.safeIndex(results, r) + 1);
-    rnd = _stdlib.next(rnd);
+    [val, rnd] = rnd.nextInt(3, 5);
+    _stdlib.putAt(results, val, system.safeIndex(results, val) + 1);
   }
   for (var i = 0; i <= 6; i = i + 1) {
     var r = system.safeIndex(results, i);
@@ -498,7 +500,7 @@ return [main, _tests];}`;
 
 main
   var results set to [0, 0, 0, 0, 0, 0, 0]
-  var rnd set to firstRandomInFixedSequence()
+  var rnd set to new Random()
   var dice set to 0
   for i from 1 to 10000 step 1
     set dice, rnd to rollDice(rnd)
@@ -512,13 +514,13 @@ main
 end main
 
 function rollDice(rnd as Random) return (Int, Random)
-  return (rnd.valueInt(1, 6), rnd.next())
+  return rnd.nextInt(1, 6)
 end function`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var results = system.literalArray([0, 0, 0, 0, 0, 0, 0]);
-  var rnd = _stdlib.firstRandomInFixedSequence();
+  var rnd = system.initialise(new _stdlib.Random());
   var dice = 0;
   for (var i = 1; i <= 10000; i = i + 1) {
     [dice, rnd] = rollDice(rnd);
@@ -532,7 +534,7 @@ async function main() {
 }
 
 function rollDice(rnd) {
-  return system.tuple([_stdlib.valueInt(rnd, 1, 6), _stdlib.next(rnd)]);
+  return rnd.nextInt(1, 6);
 }
 return [main, _tests];}`;
 
