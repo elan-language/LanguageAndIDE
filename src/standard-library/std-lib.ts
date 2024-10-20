@@ -35,7 +35,7 @@ import { hasHiddenType } from "../has-hidden-type";
 import { StubInputOutput } from "../stub-input-output";
 import { System } from "../system";
 import { BlockGraphics } from "./block-graphics";
-import { ImmutableStack } from "./immutable-stack";
+import { ImmutableStack } from "./stack-immutable";
 import { Random } from "./random";
 import { Stack } from "./stack";
 import { TextFileReader } from "./text-file-reader";

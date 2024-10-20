@@ -1,18 +1,19 @@
 import { ElanRuntimeError } from "../elan-runtime-error";
 import {
+  ElanClass,
   elanFunction,
   elanGenericParamT1Type,
   ElanInt,
-  elanProcedure,
   ElanT1,
+  ElanTuple,
   FunctionOptions,
 } from "../elan-type-annotations";
 import { System } from "../system";
 
-export class Stack {
+export class ImmutableQueue {
   // this must be implemented by hand on all stdlib classes
   static emptyInstance() {
-    return new Stack();
+    return new ImmutableQueue();
   }
 
   constructor() {
@@ -26,7 +27,7 @@ export class Stack {
   @elanFunction(FunctionOptions.pure, ElanT1)
   peek() {
     if (this.contents.length === 0) {
-      throw new ElanRuntimeError(`Cannot peek an empty Stack - check using length()`);
+      throw new ElanRuntimeError(`Cannot peek from an empty ImmutableQueue - check using length()`);
     }
     return this.contents[0];
   }
@@ -36,28 +37,33 @@ export class Stack {
     return this.contents.length;
   }
 
-  @elanProcedure()
-  push<T1 extends object>(@elanGenericParamT1Type() item: T1) {
+  @elanFunction(FunctionOptions.pure, ElanClass(ImmutableQueue))
+  enqueue<T1 extends object>(@elanGenericParamT1Type() item: T1) {
     if (this.contents.length > 0) {
       const itemT = typeof item;
       const stackT = typeof this.contents[0];
       // TODO: This check can be removed when the class has generic type
       if (itemT !== stackT) {
         throw new ElanRuntimeError(
-          `Attempting to push an incompatible type onto a non-empty Stack`,
+          `Attempting to push an incompatible type onto a non-empty ImmutableQueue`,
         );
       }
     }
-    this.contents.unshift(item);
+    const copy = this.system!.initialise(new ImmutableQueue());
+    copy.contents = this.contents;
+    copy.contents.push(item);
+    return copy;
   }
 
-  @elanFunction(FunctionOptions.impure, ElanT1)
-  pop() {
+  @elanFunction(FunctionOptions.pure, ElanTuple([ElanClass(ImmutableQueue), ElanT1]))
+  dequeue() {
     if (this.contents.length === 0) {
-      throw new ElanRuntimeError(`Cannot pop an empty Stack - check using length()`);
+      throw new ElanRuntimeError(`Cannot dequeue an empty ImmutableQueue - check using length()`);
     }
-    const result = this.contents[0];
-    this.contents.splice(0, 1);
-    return result;
+    const copy = this.system!.initialise(new ImmutableQueue());
+    copy.contents = this.contents;
+    const result = copy.contents[0];
+    copy.contents.splice(0, 1);
+    return [copy, result];
   }
 }

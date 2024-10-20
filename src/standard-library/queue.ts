@@ -9,10 +9,10 @@ import {
 } from "../elan-type-annotations";
 import { System } from "../system";
 
-export class Stack {
+export class Queue {
   // this must be implemented by hand on all stdlib classes
   static emptyInstance() {
-    return new Stack();
+    return new Queue();
   }
 
   constructor() {
@@ -26,7 +26,7 @@ export class Stack {
   @elanFunction(FunctionOptions.pure, ElanT1)
   peek() {
     if (this.contents.length === 0) {
-      throw new ElanRuntimeError(`Cannot peek an empty Stack - check using length()`);
+      throw new ElanRuntimeError(`Cannot peek an empty Queue - check using length()`);
     }
     return this.contents[0];
   }
@@ -37,24 +37,24 @@ export class Stack {
   }
 
   @elanProcedure()
-  push<T1 extends object>(@elanGenericParamT1Type() item: T1) {
+  enqueue<T1 extends object>(@elanGenericParamT1Type() item: T1) {
     if (this.contents.length > 0) {
       const itemT = typeof item;
       const stackT = typeof this.contents[0];
       // TODO: This check can be removed when the class has generic type
       if (itemT !== stackT) {
         throw new ElanRuntimeError(
-          `Attempting to push an incompatible type onto a non-empty Stack`,
+          `Attempting to push an incompatible type onto a non-empty Queue`,
         );
       }
     }
-    this.contents.unshift(item);
+    this.contents.push(item);
   }
 
   @elanFunction(FunctionOptions.impure, ElanT1)
-  pop() {
+  dequeue() {
     if (this.contents.length === 0) {
-      throw new ElanRuntimeError(`Cannot pop an empty Stack - check using length()`);
+      throw new ElanRuntimeError(`Cannot dequeue an empty Queue - check using length()`);
     }
     const result = this.contents[0];
     this.contents.splice(0, 1);
