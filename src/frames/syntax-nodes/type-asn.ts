@@ -42,7 +42,6 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
     switch (this.id) {
       case "List":
       case "Array":
-      case "Func":
       case "Iterable":
         return 1;
       case "Dictionary":
@@ -55,6 +54,10 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
 
     if (st instanceof ClassType && st.scope instanceof ClassTypeDef) {
       return st.scope.ofTypes.length;
+    }
+
+    if (st instanceof FunctionType) {
+      return st.parametersTypes.length + 1;
     }
 
     return 0;

@@ -380,7 +380,7 @@ export function mustMatchGenericParameters(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (parms.length < expected) {
+  if (parms.length !== expected) {
     compileErrors.push(new ParametersCompileError(expected, parms.length, location, true));
   }
 }

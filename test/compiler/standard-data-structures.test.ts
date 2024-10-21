@@ -137,7 +137,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan Beta 3 valid
 
 main
-  var st set to new ImmutableStack()
+  var st set to new ImmutableStack<of String>()
   print st.length()
   set st to st.push("apple")
   print st.length()
@@ -172,7 +172,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan Beta 3 valid
 
 main
-  var st set to new ImmutableStack()
+  var st set to new ImmutableStack<of String>()
   set st to st.push("apple")
   set st to st.push(3)
 end main`;
@@ -200,7 +200,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan Beta 3 valid
 
 main
-  let st be new ImmutableStack()
+  let st be new ImmutableStack<of String>()
   print st.peek()
 end main`;
 
