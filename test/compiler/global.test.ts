@@ -2,6 +2,7 @@ import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
   assertDoesNotCompile,
+  assertDoesNotParse,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
@@ -12,7 +13,7 @@ import {
 } from "./compiler-test-helpers";
 
 suite("Global", () => {
-  ignore_test("Pass_DisambiguateConstantFromLocalVariable", async () => {
+  test("Pass_DisambiguateConstantFromLocalVariable", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
 constant a set to 4
@@ -23,10 +24,42 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const a = 4;
+const global = new class {
+  a = 4;
 
+};
 async function main() {
   var a = 3;
+  system.printLine(_stdlib.asString(global.a));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "4");
+  });
+
+  test("Pass_DisambiguateConstantFromLocalVariable1", async () => {
+    const code = `# FFFF Elan Beta 3 valid
+
+constant a set to 4
+
+main
+  var a set to global.a
+  print a
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {
+  a = 4;
+
+};
+async function main() {
+  var a = global.a;
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -73,8 +106,10 @@ class Foo
 end class`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const a = 4;
+const global = new class {
+  a = 4;
 
+};
 async function main() {
   var f = system.initialise(new Foo());
   system.printLine(_stdlib.asString(f.prop()));
@@ -94,7 +129,7 @@ class Foo {
   }
 
   cons() {
-    return a;
+    return global.a;
   }
 
   asString() {
@@ -343,5 +378,21 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["bar is not defined"]);
+  });
+
+  test("Fail_globalGlobal", async () => {
+    const code = `# FFFF Elan Beta 3 valid
+
+const a = 4
+const b = global.a
+
+main
+ 
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
   });
 });
