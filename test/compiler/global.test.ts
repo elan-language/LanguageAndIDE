@@ -2,6 +2,7 @@ import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
   assertDoesNotCompile,
+  assertDoesNotParse,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
@@ -12,7 +13,7 @@ import {
 } from "./compiler-test-helpers";
 
 suite("Global", () => {
-  ignore_test("Pass_DisambiguateConstantFromLocalVariable", async () => {
+  test("Pass_DisambiguateConstantFromLocalVariable", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
 constant a set to 4
@@ -348,17 +349,20 @@ end class`;
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["bar is not defined"]);
   });
+
+  test("Fail_globalGlobal", async () => {
+    const code = `# FFFF Elan Beta 3 valid
+
+const a = 4
+const b = global.a
+
+main
+ 
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
 });
-
-function a() {
-  // eslint-disable-next-line @typescript-eslint/no-namespace
-  const global = new (class {
-    a = 4;
-  })();
-
-  function f() {
-    const a = 2;
-
-    const b = global.a;
-  }
-}
