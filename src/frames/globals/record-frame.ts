@@ -34,6 +34,7 @@ import {
   classKeyword,
   constructorKeyword,
   immutableKeyword,
+  recordKeyword,
   thisKeyword,
 } from "../keywords";
 import {
@@ -71,20 +72,16 @@ export class RecordFrame extends AbstractFrame implements Class, Parent, Collaps
   isParent: boolean = true;
   isClass: boolean = true;
   public name: TypeNameField;
-  public abstract: boolean;
-  public immutable: boolean;
+  public abstract: boolean = false;
+  public immutable: boolean = true;
   public inheritance: InheritsFrom;
   private _children: Array<Frame> = new Array<Frame>();
 
-  constructor(parent: File, abstract = false, immutable = false) {
+  constructor(parent: File) {
     super(parent);
     this.name = new TypeNameField(this);
     this.inheritance = new InheritsFrom(this);
-    this.immutable = immutable;
-    this.abstract = abstract;
-    if (!abstract) {
-      this.getChildren().push(new Constructor(this));
-    }
+    this.getChildren().push(new Constructor(this));
     this.getChildren().push(new MemberSelector(this));
   }
 
@@ -93,7 +90,7 @@ export class RecordFrame extends AbstractFrame implements Class, Parent, Collaps
   }
 
   initialKeywords(): string {
-    return classKeyword;
+    return recordKeyword;
   }
   private hasAddedMembers(): boolean {
     return (
@@ -194,15 +191,8 @@ export class RecordFrame extends AbstractFrame implements Class, Parent, Collaps
   isAbstract(): boolean {
     return this.abstract;
   }
-  makeAbstract(): void {
-    this.abstract = true;
-    this.getChildren().splice(0, 1); //remove constructor
-  }
   isImmutable(): boolean {
     return this.immutable;
-  }
-  makeImmutable(): void {
-    this.immutable = true;
   }
   doesInherit(): boolean {
     return this.inheritance.text !== "";
