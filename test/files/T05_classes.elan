@@ -1,4 +1,4 @@
-# 6d2173765f4da3fc1d5b92e2eb55552de29df23c20ae7478247ecedd766b37b0 Elan Beta 3 valid
+# 9e6979c23c05a24a6b098dec8dd8d33f637adbe7f4f622c49ef9c56277849187 Elan Beta 3 valid
 
 class Player
   constructor()
@@ -9,15 +9,11 @@ class Player
 
 end class
 
-immutable class Card inherits Foo, Bar
+record Card
   constructor()
 
   end constructor
 
-  private property value as Int
+  property value as Int
 
-  function reset() return Player
-    return new Player()
-  end function
-
-end class
+end record

@@ -133,15 +133,15 @@ main
   print b(x)
 end main
 
-abstract immutable class Foo
+abstract class Foo
   abstract property p1 as Float
 end class
 
-abstract immutable class Bar
+abstract class Bar
   abstract property p2 as String
 end class
 
-immutable class Yon inherits Foo, Bar
+class Yon inherits Foo, Bar
     constructor()
         set property.p1 to 3
         set property.p2 to "apple"

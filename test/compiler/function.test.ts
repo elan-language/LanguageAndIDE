@@ -265,7 +265,7 @@ function foo(bar as Bar) return String
     return bar.asString()
 end function
 
-immutable class Bar
+class Bar
     constructor()
     end constructor
 

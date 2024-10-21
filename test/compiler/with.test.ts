@@ -23,13 +23,12 @@ main
   print b.a
 end main
 
-immutable class Foo
+record Foo
   constructor()
-    set property.a to 1
   end constructor
 
   property a as Int
-end class`;
+end record`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
@@ -42,7 +41,7 @@ async function main() {
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["a", 0]]);};
   constructor() {
-    this.a = 1;
+
   }
 
   a = 0;
@@ -56,7 +55,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "12");
+    await assertObjectCodeExecutes(fileImpl, "02");
   });
 
   test("Pass_SingleSetToSet", async () => {
@@ -68,13 +67,12 @@ main
   print a.a
 end main
 
-immutable class Foo
+record Foo
   constructor()
-    set property.a to 1
   end constructor
 
   property a as Int
-end class`;
+end record`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
@@ -86,7 +84,7 @@ async function main() {
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["a", 0]]);};
   constructor() {
-    this.a = 1;
+
   }
 
   a = 0;
@@ -117,13 +115,12 @@ function foo() return Foo
   return b
 end function
 
-immutable class Foo
+record Foo
   constructor()
-    set property.a to 1
   end constructor
 
   property a as Int
-end class`;
+end record`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
@@ -140,7 +137,7 @@ function foo() {
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["a", 0]]);};
   constructor() {
-    this.a = 1;
+
   }
 
   a = 0;
@@ -171,13 +168,12 @@ function foo() return Foo
   return b
 end function
 
-immutable class Foo
+record Foo
   constructor()
-    set property.a to 1
   end constructor
 
   property a as Int
-end class`;
+end record`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
@@ -194,7 +190,7 @@ function foo() {
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["a", 0]]);};
   constructor() {
-    this.a = 1;
+
   }
 
   a = 0;
@@ -224,13 +220,12 @@ function foo() return Foo
   return copy a with a to 2
 end function
 
-immutable class Foo
+record Foo
   constructor()
-    set property.a to 1
   end constructor
 
   property a as Int
-end class`;
+end record`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
@@ -246,7 +241,7 @@ function foo() {
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["a", 0]]);};
   constructor() {
-    this.a = 1;
+
   }
 
   a = 0;
@@ -275,16 +270,14 @@ main
   print b.b
 end main
 
-immutable class Foo
+record Foo
   constructor()
-    set property.a to 1
-    set property.b to "bill"
   end constructor
 
   property a as Int
 
   property b as String
-end class`;
+end record`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
@@ -299,8 +292,7 @@ async function main() {
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["a", 0], ["b", ""]]);};
   constructor() {
-    this.a = 1;
-    this.b = "bill";
+
   }
 
   a = 0;
@@ -316,7 +308,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "1bill2fred");
+    await assertObjectCodeExecutes(fileImpl, "02fred");
   });
 
   test("Pass_CopiedObjectStillValid", async () => {
@@ -325,48 +317,37 @@ return [main, _tests];}`;
 main
   var a set to new Foo()
   var b set to copy a with a to 2
-  print a.ff()
-  print b.ff()
+  print a.a
+  print b.a
 end main
 
-immutable class Foo
+record Foo
   constructor()
-    set property.a to 1
-    set property.b to 100
   end constructor
 
   property a as Int
 
   property b as Int
 
-  function ff() return Int
-    return a + b
-  end function
-
-end class`;
+end record`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.initialise(new Foo());
   var b = (() => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = 2; return _a;})();
-  system.printLine(_stdlib.asString(a.ff()));
-  system.printLine(_stdlib.asString(b.ff()));
+  system.printLine(_stdlib.asString(a.a));
+  system.printLine(_stdlib.asString(b.a));
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["a", 0], ["b", 0]]);};
   constructor() {
-    this.a = 1;
-    this.b = 100;
+
   }
 
   a = 0;
 
   b = 0;
-
-  ff() {
-    return this.a + this.b;
-  }
 
 }
 return [main, _tests];}`;
@@ -377,7 +358,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "101102");
+    await assertObjectCodeExecutes(fileImpl, "02");
   });
 
   test("Pass_ExpressionSimple", async () => {
@@ -792,39 +773,30 @@ end class`;
   test("Fail_PrivateProperty", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
-main
-  var b set to new Foo(1)
-  var c set to copy b with b to 0
-  print c.d
-end main
-
-immutable class Foo
-  constructor(i as Int)
-    set property.b to i
+record Foo
+  constructor()
   end constructor
 
   private property b as Int
-end class`;
+end record`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot reference private member b"]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_NotImmutable", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
 main
-  var b set to new Foo(1)
+  var b set to new Foo()
   var c set to copy b with b to 0
   print c.b
 end main
 
 class Foo
-  constructor(i as Int)
-    set property.b to i
+  constructor()
   end constructor
 
   property b as Int

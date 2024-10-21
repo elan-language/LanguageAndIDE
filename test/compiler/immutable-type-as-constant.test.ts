@@ -115,26 +115,22 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "{a:1, b:3, c:3}");
   });
 
-  test("Fail_ImmutableClass", async () => {
+  test("Fail_record", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
-constant k = new Foo(3)
+constant k = new Foo()
 
 main
   print k
 end main
 
-immutable class Foo
-  constructor(p1 as Int)
-    set property.p1 to p1 * 2
+record Foo
+  constructor()
+
   end constructor
     
   property p1 as Int
-    
-  function asString() return String
-    return "{p1}"
-  end function
-end class`;
+end record`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));

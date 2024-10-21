@@ -57,20 +57,12 @@ export class MemberSelector extends AbstractSelector implements Member {
   validWithinCurrentContext(keyword: string, userEntry: boolean): boolean {
     let result = false;
     if (this.class.isAbstract()) {
-      if (this.class.isImmutable()) {
-        result =
-          (keyword.startsWith(abstractKeyword) ||
-            keyword.startsWith(privateKeyword) ||
-            keyword === commentMarker) &&
-          !keyword.includes(procedureKeyword);
-      } else {
-        result =
-          keyword.startsWith(abstractKeyword) ||
-          keyword.startsWith(privateKeyword) ||
-          keyword === commentMarker;
-      }
+      result =
+        keyword.startsWith(abstractKeyword) ||
+        keyword.startsWith(privateKeyword) ||
+        keyword === commentMarker;
     } else if (this.class.isImmutable()) {
-      result = !keyword.startsWith(abstractKeyword) && !keyword.includes(procedureKeyword);
+      result = keyword === propertyKeyword;
     } else {
       result = !keyword.startsWith(abstractKeyword);
     }

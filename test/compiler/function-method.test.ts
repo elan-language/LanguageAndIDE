@@ -520,7 +520,7 @@ class Foo
 
 end class
 
-immutable class Bar
+class Bar
     constructor()
         set property.p1 to 1
     end constructor

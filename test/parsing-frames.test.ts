@@ -293,17 +293,17 @@ end class
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
-  test("parse Frames - immutable class", async () => {
-    const code = `# 11a48986fce8a5cf444ba4fc0120649d6d411d94f4995ff7ee05248e06996319 Elan Beta 3 valid
+  test("parse Frames - record", async () => {
+    const code = `# 5bd61b1253e540f7098c3ac3fbb87e74842f1ffb60b09007f92d0864577b45fb Elan Beta 3 valid
 
-immutable class Card inherits Foo, Bar
+record Card
   constructor()
 
   end constructor
 
-  private property value as Int
+  property value as Int
 
-end class
+end record
 `;
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(hash, new DefaultProfile(), transforms());
@@ -329,23 +329,6 @@ end class
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(hash, new DefaultProfile(), transforms());
     await fl.parseFrom(source);
-    const elan = await fl.renderAsSource();
-    assert.equal(elan, code.replaceAll("\n", "\r\n"));
-  });
-
-  test("parse Frames - abstract immutable class", async () => {
-    const code = `# dfe0383fbd1d0da2635786b74983810021e5b1679142e0e752c9acbf47650d33 Elan Beta 3 valid
-
-abstract immutable class Card
-  abstract property value as Int
-
-  abstract function bar() return Qux
-
-end class
-`;
-    const source = new CodeSourceFromString(code);
-    const fl = new FileImpl(hash, new DefaultProfile(), transforms());
-    await await fl.parseFrom(source);
     const elan = await fl.renderAsSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
@@ -437,24 +420,24 @@ end class
     await await fl.parseFrom(source);
     assert.equal(fl.parseError!.includes(`0 matches found at function bar() return Int`), true);
   });
-  test("#367 immutable class cannot contain procedure", async () => {
+  test("record cannot contain any method", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
-immutable class Card
+record Card
   constructor()
 
   end constructor
 
-  procedure foo()
-
+  function foo() return Int
+    return 0
   end procedure
 	  
-end class
+end record
 `;
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(hash, new DefaultProfile(), transforms(), true);
     await await fl.parseFrom(source);
-    assert.equal(fl.parseError!.includes(`0 matches found at procedure foo()`), true);
+    assert.equal(fl.parseError!.includes(`0 matches found at function foo()`), true);
   });
 
   test("#367 abstract class cannot contain constructor", async () => {
