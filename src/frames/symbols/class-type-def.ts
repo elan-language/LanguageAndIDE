@@ -12,7 +12,9 @@ import { UnknownSymbol } from "./unknown-symbol";
 export class ClassTypeDef implements Scope, ElanSymbol {
   constructor(
     private readonly name: string,
+    public readonly isAbstract: boolean,
     public readonly children: ElanSymbol[],
+    public readonly ofTypes: SymbolType[],
     private readonly scope: Scope,
   ) {
     this.symbolId = this.name;
@@ -23,7 +25,7 @@ export class ClassTypeDef implements Scope, ElanSymbol {
   symbolId: string;
 
   symbolType(transforms?: Transforms): SymbolType {
-    return new ClassType(this.name, false, false, [], this);
+    return new ClassType(this.name, this.isAbstract, false, [], this);
   }
 
   symbolScope: SymbolScope = SymbolScope.stdlib;

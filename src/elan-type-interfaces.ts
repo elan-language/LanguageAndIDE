@@ -29,10 +29,6 @@ export interface TypeDescriptor extends ElanDescriptor {
   mapType(scope?: Scope): SymbolType;
 }
 
-export function isTypeMapper(d: ElanDescriptor | undefined): d is IElanFunctionDescriptor {
-  return !!d && "mapType" in d;
-}
-
 export function isFunctionDescriptor(d: ElanDescriptor | undefined): d is IElanFunctionDescriptor {
   return !!d && "isFunction" in d;
 }

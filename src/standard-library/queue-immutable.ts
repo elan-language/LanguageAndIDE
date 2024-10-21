@@ -1,5 +1,7 @@
 import { ElanRuntimeError } from "../elan-runtime-error";
 import {
+  ClassOptions,
+  elanClass,
   ElanClass,
   elanFunction,
   elanGenericParamT1Type,
@@ -10,6 +12,7 @@ import {
 } from "../elan-type-annotations";
 import { System } from "../system";
 
+@elanClass(ClassOptions.concrete, [ElanT1])
 export class ImmutableQueue {
   // this must be implemented by hand on all stdlib classes
   static emptyInstance() {

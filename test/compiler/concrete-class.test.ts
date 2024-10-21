@@ -965,4 +965,39 @@ end class`;
 
     assertDoesNotParse(fileImpl);
   });
+
+  test("Fail_UnnecessaryGenericParm1", async () => {
+    const code = `# FFFF Elan Beta 3 valid
+
+main
+  var x set to new Foo<of String>()
+end main
+
+class Foo
+    constructor()
+    end constructor
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Generic parameters expected: 0 got: 1"]);
+  });
+
+  test("Fail_UnnecessaryGenericParm2", async () => {
+    const code = `# FFFF Elan Beta 3 valid
+
+main
+  var x set to new BlockGraphics<of String>()
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Generic parameters expected: 0 got: 1"]);
+  });
 });

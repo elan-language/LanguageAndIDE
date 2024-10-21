@@ -5,6 +5,8 @@ import { AstTypeNode } from "../interfaces/ast-type-node";
 import { Scope } from "../interfaces/scope";
 import { ArrayType } from "../symbols/array-list-type";
 import { BooleanType } from "../symbols/boolean-type";
+import { ClassType } from "../symbols/class-type";
+import { ClassTypeDef } from "../symbols/class-type-def";
 import { DictionaryType } from "../symbols/dictionary-type";
 import { FloatType } from "../symbols/float-type";
 import { FunctionType } from "../symbols/function-type";
@@ -40,7 +42,6 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
     switch (this.id) {
       case "List":
       case "Array":
-      case "Func":
       case "Iterable":
         return 1;
       case "Dictionary":
@@ -48,6 +49,17 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
       case "Tuple":
         return 2;
     }
+
+    const st = this.symbolType();
+
+    if (st instanceof ClassType && st.scope instanceof ClassTypeDef) {
+      return st.scope.ofTypes.length;
+    }
+
+    if (st instanceof FunctionType) {
+      return st.parametersTypes.length + 1;
+    }
+
     return 0;
   }
 
