@@ -12,6 +12,7 @@ import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { AbstractDictionaryType } from "../symbols/abstract-dictionary-type";
 import { ArrayType } from "../symbols/array-list-type";
+import { ClassTypeDef } from "../symbols/class-type-def";
 import { DictionaryType } from "../symbols/dictionary-type";
 import { FunctionType } from "../symbols/function-type";
 import { GenericParameterType } from "../symbols/generic-parameter-type";
@@ -215,9 +216,27 @@ export function match(
   }
 }
 
-export function matchGenericTypes(type: FunctionType | ProcedureType, parameters: AstNode[]) {
+export function matchGenericTypes(
+  type: FunctionType | ProcedureType,
+  parameters: AstNode[],
+  cls?: ClassTypeDef,
+) {
   const matches = new Map<string, SymbolType>();
+
+  if (cls) {
+    return cls.gpMap ?? matches;
+  }
+
   const flattened = type.parametersTypes.map((n) => flatten(n));
+
+  const pTypes = parameters.map((p) => flatten(p.symbolType()));
+  match(flattened, pTypes, matches);
+  return matches;
+}
+
+export function matchClassGenericTypes(type: ClassTypeDef, parameters: AstNode[]) {
+  const matches = new Map<string, SymbolType>();
+  const flattened = type.ofTypes.map((n) => flatten(n));
   const pTypes = parameters.map((p) => flatten(p.symbolType()));
   match(flattened, pTypes, matches);
   return matches;
@@ -226,13 +245,15 @@ export function matchGenericTypes(type: FunctionType | ProcedureType, parameters
 export function matchParametersAndTypes(
   funcSymbolType: FunctionType | ProcedureType,
   parameters: AstNode[],
+  scope: Scope | undefined,
   compileErrors: CompileError[],
   location: string,
 ) {
   let parameterTypes = funcSymbolType.parametersTypes;
 
   if (parameterTypes.some((pt) => containsGenericType(pt))) {
-    const matches = matchGenericTypes(funcSymbolType, parameters);
+    const cls = scope instanceof ClassTypeDef ? scope : undefined;
+    const matches = matchGenericTypes(funcSymbolType, parameters, cls);
     parameterTypes = parameterTypes.map((pt) => generateType(pt, matches));
   }
 

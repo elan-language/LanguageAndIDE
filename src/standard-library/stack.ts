@@ -12,7 +12,7 @@ import {
 import { System } from "../system";
 
 @elanClass(ClassOptions.concrete, [ElanT1])
-export class Stack {
+export class Stack<T1> {
   // this must be implemented by hand on all stdlib classes
   static emptyInstance() {
     return new Stack();
@@ -22,12 +22,12 @@ export class Stack {
     this.contents = [];
   }
 
-  private contents: object[];
+  private contents: T1[];
 
   private system?: System;
 
   @elanFunction(FunctionOptions.pure, ElanT1)
-  peek() {
+  peek(): T1 {
     if (this.contents.length === 0) {
       throw new ElanRuntimeError(`Cannot peek an empty Stack - check using length()`);
     }
@@ -40,22 +40,12 @@ export class Stack {
   }
 
   @elanProcedure()
-  push<T1 extends object>(@elanGenericParamT1Type() item: T1) {
-    if (this.contents.length > 0) {
-      const itemT = typeof item;
-      const stackT = typeof this.contents[0];
-      // TODO: This check can be removed when the class has generic type
-      if (itemT !== stackT) {
-        throw new ElanRuntimeError(
-          `Attempting to push an incompatible type onto a non-empty Stack`,
-        );
-      }
-    }
+  push(@elanGenericParamT1Type() item: T1) {
     this.contents.unshift(item);
   }
 
   @elanFunction(FunctionOptions.impure, ElanT1)
-  pop() {
+  pop(): T1 {
     if (this.contents.length === 0) {
       throw new ElanRuntimeError(`Cannot pop an empty Stack - check using length()`);
     }

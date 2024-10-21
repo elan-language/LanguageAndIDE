@@ -91,7 +91,13 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
         parameters = [this.precedingNode].concat(parameters);
       }
 
-      matchParametersAndTypes(funcSymbolType, parameters, this.compileErrors, this.fieldId);
+      matchParametersAndTypes(
+        funcSymbolType,
+        parameters,
+        undefined,
+        this.compileErrors,
+        this.fieldId,
+      );
 
       this.isAsync = funcSymbolType.isAsync;
     }
