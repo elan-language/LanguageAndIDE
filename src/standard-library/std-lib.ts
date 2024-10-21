@@ -40,8 +40,7 @@ import { Random } from "./random";
 import { Stack } from "./stack";
 import { TextFileReader } from "./text-file-reader";
 import { TextFileWriter } from "./text-file-writer";
-
-type File = [number, string, number]; // open/closed, read/write, contents, pointer
+import { SVG } from "./svg";
 
 export class StdLib {
   constructor() {
@@ -68,6 +67,9 @@ export class StdLib {
 
   @elanClassExport(ImmutableStack)
   ImmutableStack = ImmutableStack;
+
+  @elanClassExport(SVG)
+  SVG = SVG;
 
   // Standard colours
 

@@ -1,12 +1,5 @@
 import { ElanRuntimeError } from "../elan-runtime-error";
-import {
-  ElanBoolean,
-  elanFunction,
-  elanProcedure,
-  ElanString,
-  FunctionOptions,
-  ProcedureOptions,
-} from "../elan-type-annotations";
+import { elanProcedure, ProcedureOptions } from "../elan-type-annotations";
 import { System } from "../system";
 
 export class TextFileWriter {
