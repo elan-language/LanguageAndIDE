@@ -11,34 +11,26 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("Immutable Class", () => {
-  test("Pass_BasicImmutableClass", async () => {
+suite("Record", () => {
+  test("Pass_BasicRecord", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
 main
   var f set to new Foo(3)
   print f.p1
-  print f.square()
 end main
 
-immutable class Foo
+record Foo
     constructor(p1 as Float)
         set property.p1 to p1
     end constructor
     property p1 as Float
-    function square() return Float
-        return p1 * p1
-    end function
-    function asString() return String
-        return ""
-    end function
-end class`;
+end record`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var f = system.initialise(new Foo(3));
   system.printLine(_stdlib.asString(f.p1));
-  system.printLine(_stdlib.asString(f.square()));
 }
 
 class Foo {
@@ -49,14 +41,6 @@ class Foo {
 
   p1 = 0;
 
-  square() {
-    return this.p1 * this.p1;
-  }
-
-  asString() {
-    return "";
-  }
-
 }
 return [main, _tests];}`;
 
@@ -66,7 +50,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "39");
+    await assertObjectCodeExecutes(fileImpl, "3");
   });
 
   test("Pass_AbstractImmutableClass", async () => {
