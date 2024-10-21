@@ -105,7 +105,7 @@ export function scopePrefix(
   }
 
   if (isConstant(symbol) && symbol.symbolScope === SymbolScope.program) {
-    return `global.`;
+    return isConstant(scope) ? "this." : "global.";
   }
 
   if (isMember(symbol)) {

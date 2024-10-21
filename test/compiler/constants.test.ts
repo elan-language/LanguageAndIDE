@@ -457,7 +457,7 @@ end main
 const global = new class {
   a = 3;
 
-  b = global.a;
+  b = this.a;
 
 };
 async function main() {
