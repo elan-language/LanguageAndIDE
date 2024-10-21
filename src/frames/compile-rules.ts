@@ -171,13 +171,13 @@ export function mustBeProcedure(
   }
 }
 
-export function mustBeClassType(
+export function mustBeRecordType(
   symbolType: SymbolType,
   compileErrors: CompileError[],
   location: string,
 ) {
   if (!(symbolType instanceof ClassType)) {
-    compileErrors.push(new TypeCompileError("Class", location, symbolType instanceof UnknownType));
+    compileErrors.push(new TypeCompileError("record", location, symbolType instanceof UnknownType));
   }
 }
 

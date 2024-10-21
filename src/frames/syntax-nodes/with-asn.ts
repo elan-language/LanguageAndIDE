@@ -1,10 +1,10 @@
 import { CompileError } from "../compile-error";
 import {
   mustBeClass,
-  mustBeClassType,
   mustBeCompatibleType,
   mustBePropertyAndPublic,
   mustBeRecord,
+  mustBeRecordType,
 } from "../compile-rules";
 import { isClass } from "../helpers";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
@@ -37,7 +37,7 @@ export class WithAsn extends AbstractAstNode implements AstNode {
     const fromType = this.obj.symbolType();
     let withClauseStr = "";
 
-    mustBeClassType(fromType, this.compileErrors, this.fieldId);
+    mustBeRecordType(fromType, this.compileErrors, this.fieldId);
 
     if (fromType instanceof ClassType) {
       const classSymbol = this.scope
