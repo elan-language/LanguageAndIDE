@@ -18,7 +18,7 @@ import { StringType } from "../symbols/string-type";
 import { TupleType } from "../symbols/tuple-type";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { transforms } from "./ast-helpers";
+import { matchClassGenericTypes, transforms } from "./ast-helpers";
 
 export class TypeAsn extends AbstractAstNode implements AstTypeNode {
   constructor(
@@ -127,7 +127,16 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
         const rType = types[types.length - 1] ?? UnknownType.Instance;
         return new FunctionType(pTypes, rType, false);
       default: {
-        return this.scope.resolveSymbol(this.id, transforms(), this.scope).symbolType(transforms());
+        const ct = this.scope.resolveSymbol(this.id, transforms(), this.scope);
+        const cst = this.scope
+          .resolveSymbol(this.id, transforms(), this.scope)
+          .symbolType(transforms());
+
+        if (ct instanceof ClassTypeDef && this.genericParameters.length > 0) {
+          ct.gpMap = matchClassGenericTypes(ct, this.genericParameters);
+        }
+
+        return cst;
       }
     }
   }

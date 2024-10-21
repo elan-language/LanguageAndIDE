@@ -55,7 +55,7 @@ return [main, _tests];}`;
     assertObjectCodeExecutes(fileImpl, "02pearpearapple0");
   });
 
-  test("Fail_Stack_adding_incompatible_type", async () => {
+  test("Fail_Stack_adding_incompatible_type1", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
 main
@@ -64,24 +64,28 @@ main
   call st.push(3)
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-async function main() {
-  const st = system.initialise(new _stdlib.Stack());
-  st.push("apple");
-  st.push(3);
-}
-return [main, _tests];}`;
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
+  });
+
+  test("Fail_Stack_adding_incompatible_type2", async () => {
+    const code = `# FFFF Elan Beta 3 valid
+
+main
+  let st be new Stack<of String>()
+  call st.push(3)
+end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    assertObjectCodeDoesNotExecute(
-      fileImpl,
-      "Attempting to push an incompatible type onto a non-empty Stack",
-    );
+    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
   });
 
   test("Fail_Stack_peek_empty_stack", async () => {

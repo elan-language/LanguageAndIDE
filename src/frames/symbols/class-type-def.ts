@@ -20,6 +20,8 @@ export class ClassTypeDef implements Scope, ElanSymbol {
     this.symbolId = this.name;
   }
 
+  gpMap?: Map<string, SymbolType>;
+
   isClass = true;
 
   symbolId: string;
