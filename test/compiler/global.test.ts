@@ -43,6 +43,36 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "4");
   });
 
+  test("Pass_DisambiguateConstantFromLocalVariable1", async () => {
+    const code = `# FFFF Elan Beta 3 valid
+
+constant a set to 4
+
+main
+  var a set to global.a
+  print a
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {
+  a = 4;
+
+};
+async function main() {
+  var a = global.a;
+  system.printLine(_stdlib.asString(a));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "4");
+  });
+
   test("Pass_DisambiguateConstantFromInstanceProperty", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
