@@ -135,9 +135,9 @@ export class MustBeConcreteCompileError extends CompileError {
   }
 }
 
-export class MustBeImmutableCompileError extends CompileError {
+export class MustBeRecordCompileError extends CompileError {
   constructor(type: string, location: string, unknown: boolean) {
-    super(Priority.typeError, `${type} must be immutable`, location, unknown);
+    super(Priority.typeError, `${type} must be a record to use 'with'`, location, unknown);
   }
 }
 

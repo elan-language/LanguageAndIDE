@@ -10,7 +10,7 @@ import {
   FunctionRefCompileError,
   MustBeAbstractCompileError,
   MustBeConcreteCompileError,
-  MustBeImmutableCompileError,
+  MustBeRecordCompileError,
   MustImplementCompileError,
   MutateCompileError,
   NotIndexableCompileError,
@@ -124,14 +124,14 @@ export function mustBeKnownSymbolType(
   }
 }
 
-export function mustBeImmutableType(
+export function mustBeRecord(
   symbolType: SymbolType,
   compileErrors: CompileError[],
   location: string,
 ) {
   if (!symbolType.isImmutable) {
     compileErrors.push(
-      new MustBeImmutableCompileError(
+      new MustBeRecordCompileError(
         symbolType.toString(),
         location,
         symbolType instanceof UnknownType,

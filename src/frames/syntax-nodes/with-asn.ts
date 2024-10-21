@@ -3,8 +3,8 @@ import {
   mustBeClass,
   mustBeClassType,
   mustBeCompatibleType,
-  mustBeImmutableType,
   mustBePropertyAndPublic,
+  mustBeRecord,
 } from "../compile-rules";
 import { isClass } from "../helpers";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
@@ -45,7 +45,7 @@ export class WithAsn extends AbstractAstNode implements AstNode {
         .resolveSymbol(fromType.className, transforms(), this.scope);
 
       mustBeClass(classSymbol, this.compileErrors, this.fieldId);
-      mustBeImmutableType(classSymbol.symbolType(), this.compileErrors, this.fieldId);
+      mustBeRecord(classSymbol.symbolType(), this.compileErrors, this.fieldId);
 
       if (isClass(classSymbol)) {
         for (const ast of this.withClause.items as SetAsn[]) {

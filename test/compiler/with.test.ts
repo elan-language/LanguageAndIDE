@@ -806,6 +806,6 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Foo must be immutable"]);
+    assertDoesNotCompile(fileImpl, ["Foo must be a record to use 'with'"]);
   });
 });
