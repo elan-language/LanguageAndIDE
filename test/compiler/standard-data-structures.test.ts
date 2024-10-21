@@ -1,6 +1,7 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
+  assertDoesNotCompile,
   assertObjectCodeDoesNotExecute,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
@@ -16,7 +17,7 @@ suite("Standard Data Structures", () => {
     const code = `# FFFF Elan Beta 3 valid
 
 main
-  let st be new Stack()
+  let st be new Stack<of String>()
   print st.length()
   call st.push("apple")
   call st.push("pear")
@@ -58,7 +59,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan Beta 3 valid
 
 main
-  let st be new Stack()
+  let st be new Stack<of String>()
   call st.push("apple")
   call st.push(3)
 end main`;
@@ -87,7 +88,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan Beta 3 valid
 
 main
-  let st be new Stack()
+  let st be new Stack<of String>()
   print st.peek()
 end main`;
 
@@ -111,7 +112,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan Beta 3 valid
 
 main
-  let st be new Stack()
+  let st be new Stack<of String>()
   print st.pop()
 end main`;
 
@@ -248,5 +249,20 @@ return [main, _tests];}`;
       fileImpl,
       "Cannot pop an empty ImmutableStack - check using length()",
     );
+  });
+
+  test("Fail_StackWithoutGenericParm", async () => {
+    const code = `# FFFF Elan Beta 3 valid
+
+main
+  let st be new Stack()
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Generic parameters expected: 1 got: 0"]);
   });
 });

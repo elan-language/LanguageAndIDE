@@ -14,6 +14,7 @@ export class ClassTypeDef implements Scope, ElanSymbol {
     private readonly name: string,
     public readonly isAbstract: boolean,
     public readonly children: ElanSymbol[],
+    public readonly ofTypes: SymbolType[],
     private readonly scope: Scope,
   ) {
     this.symbolId = this.name;

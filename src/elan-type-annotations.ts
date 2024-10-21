@@ -57,6 +57,7 @@ export class ElanProcedureDescriptor implements ElanMethodDescriptor, IElanProce
 export class ElanClassDescriptor implements ElanDescriptor {
   constructor(
     public readonly isAbstract: boolean = false,
+    public readonly ofTypes: TypeDescriptor[] = [],
     public readonly parameters: TypeDescriptor[] = [],
   ) {}
 
@@ -207,6 +208,7 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
 
     const names = Object.getOwnPropertyNames(this.cls.prototype);
     const children: [string, SymbolType][] = [];
+    const ofTypes: SymbolType[] = [];
 
     const classMetadata: ElanClassDescriptor =
       Reflect.getMetadata(elanMetadataKey, this.cls) ?? new ElanClassDescriptor();
@@ -237,15 +239,23 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
       // }
     }
 
+    for (const ot of classMetadata.ofTypes) {
+      ofTypes.push(ot.mapType());
+    }
+
     const classType = tempMap.get(className)!;
     tempMap.delete(className);
 
-    const classTypeDef = new ClassTypeDef(className, classMetadata.isAbstract, [], scope!);
+    const classTypeDef = new ClassTypeDef(className, classMetadata.isAbstract, [], [], scope!);
 
     classType.updateScope(classTypeDef);
 
     for (const c of children) {
       classTypeDef.children.push(getSymbol(c[0], c[1], SymbolScope.property));
+    }
+
+    for (const ot of ofTypes) {
+      classTypeDef.ofTypes.push(ot);
     }
 
     return classType;
@@ -325,9 +335,14 @@ export function elanMethod(elanDesc: ElanMethodDescriptor) {
   };
 }
 
-export function elanClass(options?: ClassOptions, params?: TypeDescriptor[]) {
+export function elanClass(
+  options?: ClassOptions,
+  ofTypes?: TypeDescriptor[],
+  params?: TypeDescriptor[],
+) {
   const classDesc = new ElanClassDescriptor(
     mapClassOptions(options ?? ClassOptions.concrete),
+    ofTypes ?? [],
     params ?? [],
   );
   return function (target: object) {
