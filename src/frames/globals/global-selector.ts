@@ -6,6 +6,7 @@ import { Parent } from "../interfaces/parent";
 import {
   abstractClassKeywords,
   abstractImmutableKeywords,
+  abstractKeyword,
   classKeyword,
   commentMarker,
   constantKeyword,
@@ -38,9 +39,7 @@ export class GlobalSelector extends AbstractSelector implements GlobalFrame {
       [testKeyword, (parent: Parent) => this.file.createTest()],
       [enumKeyword, (parent: Parent) => this.file.createEnum()],
       [classKeyword, (parent: Parent) => this.file.createClass(false, false)],
-      [abstractClassKeywords, (parent: Parent) => this.file.createClass(true, false)],
-      [abstractImmutableKeywords, (parent: Parent) => this.file.createClass(true, true)],
-      [immutableKeyword, (parent: Parent) => this.file.createClass(false, true)],
+      [abstractKeyword, (parent: Parent) => this.file.createClass(true, false)],
       [recordKeyword, (parent: Parent) => this.file.createRecord()],
       [commentMarker, (parent: Parent) => this.file.createGlobalComment()],
     ];

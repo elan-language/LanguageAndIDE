@@ -1,10 +1,11 @@
 {
 "name": "My Profile",
 
-"globals":["main", "procedure", "function",  "constant", "test", "enum", "class", "abstract class", "immutable", "abstract immutable","record","#"],
+"globals":["main", "procedure", "function",  "constant", "test", "enum", "class", "abstract","record","#"],
 "statements":["assert", "call", "case", "default", "each", "else", "for", "if", "let", "print",
                "repeat", "set", "switch", "throw", "try", "var", "while", "#"],
-"class_members": ["function", "procedure", "property","private function", "private procedure", "private property", "abstract function", "abstract procedure", "abstract property","#"],
+"class_members": ["function", "procedure", "property","private function", "private procedure", "private property",
+                  "abstract function", "abstract procedure", "abstract property","#"],
 
 "include_profile_name_in_header": false,
 "can_load_only_own_files": false
