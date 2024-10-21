@@ -12,7 +12,7 @@ import {
 
 suite("StdLib-symbols", () => {
   ignore_test("Pass_contains", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var bg set to new BlockGraphics()

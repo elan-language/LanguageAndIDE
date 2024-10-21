@@ -1,4 +1,4 @@
-# FFFF Elan Beta 2 valid
+# FFFF Elan Beta 3 valid
 
 main
   var r set to new Rule("a", "b", "c", "d", Dir.left)

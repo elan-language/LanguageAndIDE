@@ -13,7 +13,7 @@ import {
 
 suite("Associations and Defaults", () => {
   test("Pass_CanHavePropertiesThatAreDataStructuresOrObjects", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var g set to new Game()
@@ -118,7 +118,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_PropertiesOfAllStandardTypesHaveDefaultValues", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var g set to new Game()
@@ -218,7 +218,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DefaultValuesOnEmptyClass", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var p set to new Player()
@@ -338,7 +338,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DefaultValuesNotPickedUpFromDefaultConstructor", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var g set to empty Game
@@ -389,7 +389,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_PropertiesOfClassTypesHaveDefaultValues", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var g set to new Game()
@@ -483,7 +483,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_defaultKeywordToTestValue", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var g set to new Game()
@@ -613,7 +613,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_defaultValueCanBeAssigned", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var g set to new Game()
@@ -739,7 +739,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_defaultForStandardDataStructures", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var f set to new Foo()
@@ -812,7 +812,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_PropertyOfAbstractType", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var g set to new Game()
@@ -901,7 +901,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_PropertyOfArrayType", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var g set to new Game()
@@ -957,7 +957,7 @@ return [main, _tests];}`;
 
   // pending with implementation
   ignore_test("Pass_defaultCannotBeReplacedUsingWith", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var p set to empty Player
@@ -1001,7 +1001,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_UseOfKeywordAsName", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
  
@@ -1023,7 +1023,7 @@ end class`;
   });
 
   test("Fail_UseOfReservedWordAsName", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
  

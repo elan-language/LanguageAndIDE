@@ -149,7 +149,7 @@ export class BlockGraphics {
     return this;
   }
 
-  @elanFunction(FunctionOptions.pureExtension, ElanClass(BlockGraphics))
+  @elanFunction(FunctionOptions.pure, ElanClass(BlockGraphics))
   withBackground(@elanIntType() colour: number): BlockGraphics {
     const copy = this.system!.initialise(new BlockGraphics());
     copy.internalRep = this.internalRep;

@@ -5,7 +5,7 @@ import { assertAutocompletes } from "./testHelpers";
 
 suite("Autocomplete", () => {
   test("Pass_LocalVars", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var foo set to 1
@@ -25,7 +25,7 @@ end main`;
   });
 
   test("Pass_InClass", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
 
@@ -56,7 +56,7 @@ end class`;
   });
 
   test("Pass_FiltersByInput", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var foo set to 1
@@ -73,7 +73,7 @@ end main`;
   });
 
   test("Pass_NoConstant", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 constant fooyon set to 3
 
@@ -95,7 +95,7 @@ end main`;
   });
 
   test("Pass_CallLocalVars", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 procedure fooyon()
 
@@ -120,7 +120,7 @@ end main`;
   });
 
   test("Pass_CallMembers", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 class Foo
   constructor()
@@ -161,7 +161,7 @@ end main`;
   });
 
   test("Pass_CallLibMembers", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var foo set to new BlockGraphics()
@@ -181,7 +181,7 @@ end main`;
   });
 
   test("Pass_CallMembersFilter", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 class Foo
   constructor()
@@ -218,7 +218,7 @@ end main`;
   });
 
   test("Pass_CallExtensions", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var foo set to [1, 2]
@@ -244,7 +244,7 @@ end main`;
   });
 
   test("Pass_CallExtensionsFilter", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var foo set to [1, 2]
@@ -263,7 +263,7 @@ end main`;
   });
 
   test("Pass_ExpressionId", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var foo set to 1
@@ -279,7 +279,7 @@ end main`;
   });
 
   test("Pass_ExpressionLocalVar", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var foo set to 1
@@ -295,7 +295,7 @@ end main`;
   });
 
   test("Pass_ExpressionLocalFunction", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var foo set to 1
@@ -318,7 +318,7 @@ end function`;
   });
 
   test("Pass_ExpressionDictionaryExtension", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var foo set to {"a":1}
@@ -343,7 +343,7 @@ end main`;
   });
 
   test("Pass_ExpressionAbstractDictionaryExtension", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var foo set to {"a":1}
@@ -364,7 +364,7 @@ end main`;
   });
 
   test("Pass_CallImmutableDict", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var foo set to {"a":1}
@@ -380,7 +380,7 @@ end main`;
   });
 
   test("Pass_CallDict", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var foo set to ["a":1]
@@ -399,7 +399,7 @@ end main`;
   });
 
   test("Pass_ExprDict", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var foo set to ["a":1]
@@ -420,7 +420,7 @@ end main`;
   });
 
   test("Pass_ExprImmutableDict", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var foo set to {"a":1}

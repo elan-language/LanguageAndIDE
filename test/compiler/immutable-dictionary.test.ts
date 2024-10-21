@@ -15,7 +15,7 @@ import {
 
 suite("Immutable Dictionary", () => {
   test("Pass_LiteralConstantAndPrinting", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 constant a set to {"a":1, "b":3, "z":10}
 main
@@ -42,7 +42,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_LiteralEnumKey", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 enum Fruit apple, orange, pear  
 constant a set to {Fruit.apple:1, Fruit.orange:3, Fruit.pear:10}
@@ -74,7 +74,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_LiteralVarAndPrinting", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to {"a":1, "b":3, "z":10}
@@ -98,7 +98,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AccessByKey", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 constant a set to {"a":1, "b":3, "z":10}
 main
@@ -125,7 +125,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_keys", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 constant a set to {"a":1, "b":3, "z":10}
 main
@@ -156,7 +156,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_hasKey", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 constant a set to {"a":1, "b":3, "z":10}
 main
@@ -185,7 +185,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_values", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 constant a set to {"a":1, "b":3, "z":10}
 main
@@ -212,7 +212,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_putAtKey", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 constant a set to {"a":1, "b":3, "z":10}
 main
@@ -245,7 +245,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_withRemoveAtKey", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 constant a set to {"a":1, "b":3, "z":10}
 main
@@ -276,7 +276,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_removeInvalidKey", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 constant a set to {"a":1, "b":3, "z":10}
 main
@@ -305,7 +305,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_CreateEmptyDictionary", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to new ImmutableDictionary<of String, Int>()
@@ -339,7 +339,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_EnumKey", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 enum Fruit apple, orange, pear  
 
@@ -379,7 +379,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_EmptyImmutableDictionary", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to empty {String:Int}
@@ -415,7 +415,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_RepeatedKey", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 constant a set to {"a":1, "b":3, "a":10}
 main
@@ -431,7 +431,7 @@ end main
   });
 
   test("Fail_InconsistentTypes1", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 constant a set to {"a":1, "b":3.1, "c":10}
 main
@@ -447,7 +447,7 @@ end main
   });
 
   test("Fail_InconsistentTypes2", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 constant a set to {"a":1, "b":3, 10:10}
 main
@@ -463,7 +463,7 @@ end main
   });
 
   test("Fail_AccessByInvalidKey", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 constant a set to {"a":1, "b":3, "z":10}
 main
@@ -479,7 +479,7 @@ end main
   });
 
   test("Fail_RemoveInvalidKeyType", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 constant a set to {"a":1, "b":3, "z":10}
 main
@@ -495,7 +495,7 @@ end main
   });
 
   test("Fail_SetInvalidKeyType", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 constant a set to {"a":1, "b":3, "z":10}
 main
@@ -511,7 +511,7 @@ end main
   });
 
   test("Fail_SetInvalidValueType", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 constant a set to {"a":1, "b":3, "z":10}
 main
@@ -527,7 +527,7 @@ end main
   });
 
   ignore_test("Fail_CannotIndex", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to {"a":4, "b":5, "c":6, "d":7, "e":8}
@@ -544,7 +544,7 @@ end main
   });
 
   test("Fail_CannotSetIndex", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to {"a":4, "b":5, "c":6, "d":7, "e":8}
@@ -559,7 +559,7 @@ end main
   });
 
   test("Fail_CannotPutAtKey", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to {"a":4, "b":5, "c":6, "d":7, "e":8}
@@ -576,7 +576,7 @@ end main
   });
 
   test("Fail_removeKey", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to {"a":1, "b":3, "z":10}
@@ -593,7 +593,7 @@ end main`;
   });
 
   test("Fail_recursive definition", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to a.getValueByKey("a")
@@ -607,7 +607,7 @@ end main`;
   });
 
   test("Fail_withoutGenericType", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
     var a set to new ImmutableDictionary()

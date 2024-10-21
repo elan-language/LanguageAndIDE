@@ -43,6 +43,7 @@ export class ImmutableStack {
       const itemT = typeof item;
       const stackT = typeof this.contents[0];
       if (itemT !== stackT) {
+        // TODO: This check can be removed when the class has generic type
         throw new ElanRuntimeError(
           `Attempting to push an incompatible type onto a non-empty ImmutableStack`,
         );
@@ -57,7 +58,7 @@ export class ImmutableStack {
   @elanFunction(FunctionOptions.pure, ElanTuple([ElanClass(ImmutableStack), ElanT1]))
   pop() {
     if (this.contents.length === 0) {
-      throw new ElanRuntimeError(`Cannot peek an empty Stack - check using length()`);
+      throw new ElanRuntimeError(`Cannotpop an empty ImmutableStack - check using length()`);
     }
     const copy = this.system!.initialise(new ImmutableStack());
     copy.contents = this.contents;

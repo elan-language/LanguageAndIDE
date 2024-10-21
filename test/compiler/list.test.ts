@@ -15,7 +15,7 @@ import {
 
 suite("List", () => {
   test("Pass_literalList", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to {4,5,6,7,8}
@@ -39,7 +39,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_literalListofList", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to {{4, 5}, {6, 7, 8}}
@@ -63,7 +63,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_literalListOfClass", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to new Foo()
@@ -111,7 +111,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_literalListOfValueId", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to 1
@@ -183,7 +183,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_literalListOfString", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to {"Foo", "Bar"}
@@ -207,7 +207,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_literalListWithCoercion", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to {4.1,5,6,7,8}
@@ -231,7 +231,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_length", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
     var a set to {4,5,6,7,8}
@@ -255,7 +255,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_emptyList", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
     var a set to new List<of Int>()
@@ -279,7 +279,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_index", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
     var a set to {4,5,6,7,8}
@@ -303,7 +303,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_put", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
     var a set to {"one", "two", "three"}
@@ -333,7 +333,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_withInsert", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
     var a set to {"one", "two", "three"}
@@ -363,7 +363,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_withRemove", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
     var a set to {"one", "two", "three"}
@@ -393,7 +393,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_withRemoveFirst", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
     var a set to {"one", "two", "three", "one", "two", "three"}
@@ -419,7 +419,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_withRemoveAll", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
     var a set to {"one", "two", "three", "one", "two", "three"}
@@ -445,7 +445,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Range", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to {4,5,6,7,8}
@@ -473,7 +473,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_addElementToList", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to {4,5,6,7,8}
@@ -501,7 +501,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_addListToElement", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to {4,5,6,7,8}
@@ -529,7 +529,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_addListToListUsingPlus", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
     var a set to {4,5,6,7,8}
@@ -561,7 +561,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_addListToListUsingPlus1", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
     var a set to {"a", "b"}
@@ -593,7 +593,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_constantLists", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 constant a set to {4,5,6,7,8}
 main
@@ -620,7 +620,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_createEmptyListUsingConstructor", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to new List<of Int>()
@@ -644,7 +644,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Default", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var f set to new Foo()
@@ -693,7 +693,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_EmptyImmutableList", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to empty {Int}
@@ -729,7 +729,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_emptyLiteralList", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to []
@@ -743,7 +743,7 @@ end main
   });
 
   test("Fail_literalListInconsistentTypes1", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to {3, "apples"}
@@ -758,7 +758,7 @@ end main
   });
 
   test("Fail_literalListInconsistentTypes2", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to {3, 3.1}
@@ -773,7 +773,7 @@ end main
   });
 
   test("Fail_OutOfRange", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to {4, 5, 6, 7, 8}
@@ -790,7 +790,7 @@ end main
   });
 
   ignore_test("Fail_CannotIndex", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to {4, 5, 6, 7, 8}
@@ -807,7 +807,7 @@ end main
   });
 
   test("Fail_CannotPutAt", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to {4, 5, 6, 7, 8}
@@ -824,7 +824,7 @@ end main
   });
 
   test("Fail_CannotSetIndex", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to {4, 5, 6, 7, 8}
@@ -839,7 +839,7 @@ end main
   });
 
   test("Fail_putAtKey", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to {"one", "two", "three"}
@@ -856,7 +856,7 @@ end main
   });
 
   test("Fail_add", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to {"one", "two", "three"}
@@ -873,7 +873,7 @@ end main
   });
 
   test("Fail_insertAt", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to {"one", "two", "three"}
@@ -890,7 +890,7 @@ end main
   });
 
   test("Fail_removeAt", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to {"one", "two", "three"}
@@ -907,7 +907,7 @@ end main
   });
 
   test("Fail_removeFirst", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to {"one", "two", "three", "one", "two", "three"}
@@ -923,7 +923,7 @@ end main`;
   });
 
   test("Fail_removeAll", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var a set to {"one", "two", "three", "one", "two", "three"}
@@ -939,7 +939,7 @@ end main`;
   });
 
   test("Fail_withoutGenericType", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
     var a set to new List()
@@ -954,7 +954,7 @@ end main`;
   });
 
   test("Fail_typeErrorMessage", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
     var a set to empty [Int]

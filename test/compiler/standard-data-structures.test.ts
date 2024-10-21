@@ -13,7 +13,7 @@ import {
 
 suite("Standard Data Structures", () => {
   test("Pass_Stack", async () => {
-    const code = `# FFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   let st be new Stack()
@@ -55,7 +55,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_Stack_adding_incompatible_type", async () => {
-    const code = `# FFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   let st be new Stack()
@@ -84,7 +84,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_Stack_peek_empty_stack", async () => {
-    const code = `# FFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   let st be new Stack()
@@ -108,7 +108,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_Stack_pop_empty_stack", async () => {
-    const code = `# FFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   let st be new Stack()
@@ -133,7 +133,7 @@ return [main, _tests];}`;
 
   test("Pass_ImmutableStack", async () => {
     //  THIS IS INCOMPLETE - NOT YET TESTING POP (not yet implemented fully)
-    const code = `# FFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var st set to new ImmutableStack()
@@ -168,7 +168,7 @@ return [main, _tests];}`;
     assertObjectCodeDoesNotExecute(fileImpl, "xxx");
   });
   test("Fail_ImmutableStack_adding_incompatible_type", async () => {
-    const code = `# FFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var st set to new ImmutableStack()
@@ -196,7 +196,7 @@ return [main, _tests];}`;
     );
   });
   test("Fail_ImmutableStack_peek_empty_stack", async () => {
-    const code = `# FFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   let st be new ImmutableStack()
@@ -224,7 +224,7 @@ return [main, _tests];}`;
 
   //pop is not yet implemented for ImmutableStack
   ignore_test("Fail_ImmutableStack_pop_empty_stack", async () => {
-    const code = `# FFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var st set to new ImmutableStack()

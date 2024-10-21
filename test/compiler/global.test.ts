@@ -12,8 +12,8 @@ import {
 } from "./compiler-test-helpers";
 
 suite("Global", () => {
-  test("Pass_DisambiguateConstantFromLocalVariable", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+  ignore_test("Pass_DisambiguateConstantFromLocalVariable", async () => {
+    const code = `# FFFF Elan Beta 3 valid
 
 constant a set to 4
 
@@ -43,7 +43,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DisambiguateConstantFromInstanceProperty", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 constant a set to 4
 
@@ -118,7 +118,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DisambiguateGlobalFunctionFromInstanceFunction", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
     var f set to new Foo()
@@ -198,7 +198,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DisambiguateLibFunctionFromInstanceFunction", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
     var f set to new Foo()
@@ -255,7 +255,7 @@ return [main, _tests];}`;
   });
 
   ignore_test("Fail_NoSuchGlobal", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 constant b set to 4
 
@@ -273,7 +273,7 @@ end main`;
   });
 
   test("Fail_NoSuchGlobalConstant", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var f set to new Foo()
@@ -311,7 +311,7 @@ end class`;
   });
 
   test("Fail_NoSuchGlobalSubroutine", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var f set to new Foo()

@@ -13,7 +13,7 @@ import {
 
 suite("Let Statement", () => {
   test("Pass_normal", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   print add()
@@ -47,7 +47,7 @@ return [main, _tests];}`;
   });
 
   ignore_test("Pass_proveCached", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var z set to foo1()
@@ -114,7 +114,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_IdShadowsFunction", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   print foo()
@@ -155,7 +155,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InLoop", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 constant list set to {1,2,3,4,5}
 
@@ -197,7 +197,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InLoop1", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   call foo()
@@ -239,7 +239,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_cannotRedefine ", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   print foo()
@@ -260,7 +260,7 @@ end function`;
   });
 
   test("Fail_cannotAssign", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   print foo()
@@ -281,7 +281,7 @@ end function`;
   });
 
   test("Fail_RecursiveDefinition", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   var x set to foo()
@@ -306,7 +306,7 @@ end function`;
   });
 
   test("Fail_RecursiveDefinition1", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+    const code = `# FFFF Elan Beta 3 valid
 
 main
   print foo()
