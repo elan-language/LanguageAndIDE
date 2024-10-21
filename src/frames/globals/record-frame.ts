@@ -73,14 +73,11 @@ export class RecordFrame extends AbstractFrame implements Class, Parent, Collaps
   isClass: boolean = true;
   public name: TypeNameField;
   public abstract: boolean = false;
-  public immutable: boolean = true;
-  public inheritance: InheritsFrom;
   private _children: Array<Frame> = new Array<Frame>();
 
   constructor(parent: File) {
     super(parent);
     this.name = new TypeNameField(this);
-    this.inheritance = new InheritsFrom(this);
     this.getChildren().push(new Constructor(this));
     this.getChildren().push(new MemberSelector(this));
   }
@@ -101,13 +98,7 @@ export class RecordFrame extends AbstractFrame implements Class, Parent, Collaps
     return this.name.text;
   }
   symbolType(transforms?: Transforms) {
-    return new ClassType(
-      this.symbolId,
-      this.isAbstract(),
-      this.isImmutable(),
-      this.inheritance.symbolTypes(transforms),
-      this,
-    );
+    return new ClassType(this.symbolId, this.isAbstract(), this.isImmutable(), [], this);
   }
   get symbolScope() {
     return SymbolScope.program;
@@ -189,54 +180,28 @@ export class RecordFrame extends AbstractFrame implements Class, Parent, Collaps
   }
 
   isAbstract(): boolean {
-    return this.abstract;
+    return false;
   }
   isImmutable(): boolean {
-    return this.immutable;
+    return false;
   }
   doesInherit(): boolean {
-    return this.inheritance.text !== "";
+    return false;
   }
 
   getFields(): Field[] {
-    return [this.name, this.inheritance];
+    return [this.name];
   }
 
   getIdPrefix(): string {
     return "class";
   }
-  private modifiersAsHtml(): string {
-    let result = "";
-    result += this.isAbstract() ? `<keyword>abstract </keyword>` : ``;
-    result += this.isImmutable() ? `<keyword>immutable </keyword>` : ``;
-    return result;
-  }
-  private modifiersAsSource(): string {
-    let result = "";
-    if (this.isAbstract()) {
-      result += `abstract `;
-    }
-    if (this.isImmutable()) {
-      result += `immutable `;
-    }
-    return result;
-  }
-  private inheritanceAsHtml(): string {
-    return ` ${this.inheritance.renderAsHtml()}`;
-  }
-  private inheritanceAsSource(): string {
-    return this.doesInherit() ? ` ${this.inheritance.renderAsSource()}` : ``;
-  }
-
-  private inheritanceAsObjectCode(): string {
-    return ``;
-  }
 
   public renderAsHtml(): string {
     return `<classDef class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<top><expand>+</expand>${this.modifiersAsHtml()}<keyword>class </keyword>${this.name.renderAsHtml()}${this.inheritanceAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</top>
+<top><expand>+</expand><keyword>record </keyword>${this.name.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</top>
 ${parentHelper_renderChildrenAsHtml(this)}
-<keyword>end class</keyword>
+<keyword>end record</keyword>
 </classDef>`;
   }
 
@@ -245,9 +210,9 @@ ${parentHelper_renderChildrenAsHtml(this)}
   }
 
   public renderAsSource(): string {
-    return `${this.modifiersAsSource()}class ${this.name.renderAsSource()}${this.inheritanceAsSource()}\r
+    return `record ${this.name.renderAsSource()}\r
 ${parentHelper_renderChildrenAsSource(this)}\r
-end class\r\n`;
+end record\r\n`;
   }
 
   private propertiesToInit() {
@@ -262,18 +227,6 @@ end class\r\n`;
   }
 
   public getSuperClassesTypeAndName(transforms: Transforms) {
-    if (this.doesInherit()) {
-      const superClasses = this.inheritance.getOrTransformAstNode(transforms);
-
-      if (isAstCollectionNode(superClasses)) {
-        const nodes = superClasses.items.filter((i) => isAstIdNode(i));
-        const typeAndName: [ClassType | UnknownType, string][] = nodes
-          .map((n) => getGlobalScope(this).resolveSymbol(n.id, transforms, this))
-          .map((c) => [c.symbolType(transforms) as ClassType | UnknownType, c.symbolId]);
-
-        return typeAndName;
-      }
-    }
     return [];
   }
 
@@ -289,32 +242,9 @@ end class\r\n`;
       this.htmlId,
     );
 
-    const typeAndName = this.getSuperClassesTypeAndName(transforms);
+    const asString = "";
 
-    for (const st of typeAndName) {
-      mustBeKnownSymbolType(st[0], st[1], this.compileErrors, this.htmlId);
-    }
-
-    for (const st of typeAndName) {
-      mustBeAbstractClass(st[0], this.compileErrors, this.htmlId);
-    }
-
-    mustImplementSuperClasses(
-      transforms,
-      this.symbolType(transforms),
-      typeAndName.map((tn) => tn[0]).filter((st) => st instanceof ClassType) as ClassType[],
-      this.compileErrors,
-      this.htmlId,
-    );
-
-    const asString = this.isAbstract()
-      ? `
-  asString() {
-    return "empty Abstract Class ${name}";
-  }`
-      : "";
-
-    return `class ${name}${this.inheritanceAsObjectCode()} {\r
+    return `class ${name} {\r
   static emptyInstance() { return system.emptyClass(${name}, ${this.propertiesToInit()});};\r
 ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
 }\r\n`;
@@ -342,17 +272,8 @@ ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
     }
   }
   parseTop(source: CodeSource): boolean {
-    const abs = `${abstractKeyword} `;
-    if (source.isMatch(abs)) {
-      source.remove(abs);
-    }
-    const imm = `${immutableKeyword} `;
-    if (source.isMatch(imm)) {
-      source.remove(imm);
-    }
-    source.remove(`${classKeyword} `);
+    source.remove(`record `);
     this.name.parseFrom(source);
-    this.inheritance.parseFrom(source);
     source.removeNewLine();
     if (!this.isAbstract()) {
       this.getConstructor().parseFrom(source);
@@ -363,7 +284,7 @@ ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
   parseBottom(source: CodeSource): boolean {
     let result = false;
     source.removeIndent();
-    const keyword = "end class";
+    const keyword = "end record";
     if (source.isMatch(keyword)) {
       source.remove(keyword);
       result = true;
@@ -386,17 +307,6 @@ ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
     const matches = this.getChildren().filter(
       (f) => isSymbol(f) && f.symbolId === id,
     ) as ElanSymbol[];
-
-    const types = this.getSuperClassesTypeAndName(transforms)
-      .map((tn) => tn[0])
-      .filter((t) => t instanceof ClassType);
-
-    for (const ct of types) {
-      const s = ct.scope!.resolveOwnSymbol(id, transforms);
-      if (isMember(s) && s.private) {
-        matches.push(s);
-      }
-    }
 
     if (matches.length === 1) {
       return matches[0];
