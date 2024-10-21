@@ -7,6 +7,7 @@ import { ClassFrame } from "../globals/class-frame";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { Member } from "../interfaces/member";
+import { Parent } from "../interfaces/parent";
 import { asKeyword, privateKeyword, propertyKeyword } from "../keywords";
 import { ClassType } from "../symbols/class-type";
 import { getClassScope } from "../symbols/symbol-helpers";
@@ -22,7 +23,7 @@ export class Property extends AbstractFrame implements Member, ElanSymbol {
   type: TypeField;
   public private: boolean = false;
 
-  constructor(parent: ClassFrame, priv = false) {
+  constructor(parent: Parent, priv = false) {
     super(parent);
     this.name = new IdentifierField(this);
     this.type = new TypeField(this);

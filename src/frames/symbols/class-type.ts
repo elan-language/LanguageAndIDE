@@ -1,4 +1,5 @@
 import { ClassFrame } from "../globals/class-frame";
+import { RecordFrame } from "../globals/record-frame";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
@@ -13,7 +14,7 @@ export class ClassType implements SymbolType, Scope {
     public readonly isAbstract: boolean,
     public readonly isImmutable: boolean,
     public readonly inheritsFrom: SymbolType[],
-    public scope: ClassFrame | ClassTypeDef | undefined,
+    public scope: ClassFrame | RecordFrame | ClassTypeDef | undefined,
   ) {}
 
   updateScope(scope: ClassTypeDef) {

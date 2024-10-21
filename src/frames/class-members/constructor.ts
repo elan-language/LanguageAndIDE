@@ -7,6 +7,7 @@ import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { Frame } from "../interfaces/frame";
 import { Member } from "../interfaces/member";
+import { Parent } from "../interfaces/parent";
 import { constructorKeyword } from "../keywords";
 import { ProcedureType } from "../symbols/procedure-type";
 import { getAllPrivateIds, getMixins } from "../symbols/symbol-helpers";
@@ -21,7 +22,7 @@ export class Constructor extends FrameWithStatements implements ElanSymbol, Memb
   private = false;
   public params: ParamList;
 
-  constructor(parent: ClassFrame) {
+  constructor(parent: Parent) {
     super(parent);
     this.movable = false;
     this.params = new ParamList(this);
