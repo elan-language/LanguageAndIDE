@@ -1,4 +1,4 @@
-# 9e6979c23c05a24a6b098dec8dd8d33f637adbe7f4f622c49ef9c56277849187 Elan Beta 3 valid
+# c4af1c4edaffa1ea66676ccda8f90982b316b8c223743b3492e0588d0c4c7546 Elan Beta 3 valid
 
 class Player
   constructor()
@@ -10,10 +10,6 @@ class Player
 end class
 
 record Card
-  constructor()
-
-  end constructor
-
   property value as Int
 
 end record

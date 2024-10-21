@@ -294,14 +294,10 @@ end class
   });
 
   test("parse Frames - record", async () => {
-    const code = `# 5bd61b1253e540f7098c3ac3fbb87e74842f1ffb60b09007f92d0864577b45fb Elan Beta 3 valid
+    const code = `# 3f74b10646c730e3ad1a2e7867fe1f13d13dd8ca732c9e0872b76dfbf773b977 Elan Beta 3 valid
 
-record Card
-  constructor()
-
-  end constructor
-
-  property value as Int
+record Foo
+  property bar as Int
 
 end record
 `;
@@ -424,14 +420,9 @@ end class
     const code = `# FFFF Elan Beta 3 valid
 
 record Card
-  constructor()
-
-  end constructor
-
   function foo() return Int
     return 0
   end procedure
-	  
 end record
 `;
     const source = new CodeSourceFromString(code);

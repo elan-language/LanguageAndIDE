@@ -95,11 +95,6 @@ export class ClassFrame extends AbstractFrame implements Class, Parent, Collapsi
   initialKeywords(): string {
     return classKeyword;
   }
-  private hasAddedMembers(): boolean {
-    return (
-      this.getChildren().filter((m) => !("isConstructor" in m || "isSelector" in m)).length > 0
-    );
-  }
   get symbolId() {
     return this.name.text;
   }

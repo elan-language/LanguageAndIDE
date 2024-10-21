@@ -20,9 +20,6 @@ main
 end main
 
 record Foo
-    constructor(p1 as Float)
-        set property.p1 to p1
-    end constructor
     property p1 as Float
 end record`;
 
@@ -34,10 +31,6 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
-  constructor(p1) {
-    this.p1 = p1;
-  }
-
   p1 = 0;
 
 }
@@ -49,7 +42,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "3");
+    await assertObjectCodeExecutes(fileImpl, "0");
   });
 
   test("Fail_AbstractRecord", async () => {
@@ -75,9 +68,6 @@ end record`;
     const code = `# FFFF Elan Beta 3 valid
 
 record Foo
-  constructor()
-  end constructor
-
   procedure setP1(p1 as Int)
     set property.p1 to p1
   end procedure
@@ -99,8 +89,6 @@ main
 end main
 
 record Foo
-  constructor()
-  end constructor
   property p1 as Int
 end record
 
@@ -117,10 +105,6 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
-  constructor() {
-
-  }
-
   p1 = 0;
 
 }
@@ -148,8 +132,6 @@ main
 end main
 
 record Foo
-  constructor()
-  end constructor
   property p1 as Int
 end record
 
@@ -166,10 +148,6 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
-  constructor() {
-
-  }
-
   p1 = 0;
 
 }
@@ -192,9 +170,6 @@ return [main, _tests];}`;
     const code = `# FFFF Elan Beta 3 valid
 
 record Foo
-  constructor()
-  end constructor
-
   private property p1 as Int
 
 end class`;

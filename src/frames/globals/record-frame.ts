@@ -58,7 +58,6 @@ export class RecordFrame extends AbstractFrame implements Class, Parent, Collaps
   constructor(parent: File) {
     super(parent);
     this.name = new TypeNameField(this);
-    this.getChildren().push(new Constructor(this));
     this.getChildren().push(new MemberSelector(this));
   }
 
@@ -68,11 +67,6 @@ export class RecordFrame extends AbstractFrame implements Class, Parent, Collaps
 
   initialKeywords(): string {
     return recordKeyword;
-  }
-  private hasAddedMembers(): boolean {
-    return (
-      this.getChildren().filter((m) => !("isConstructor" in m || "isSelector" in m)).length > 0
-    );
   }
   get symbolId() {
     return this.name.text;
@@ -156,7 +150,7 @@ export class RecordFrame extends AbstractFrame implements Class, Parent, Collaps
 
   minimumNumberOfChildrenExceeded(): boolean {
     const children = this.getChildren().length;
-    return this.isAbstract() ? children > 1 : children > 2; // Concrete class must include constructor
+    return children > 1;
   }
 
   isAbstract(): boolean {
@@ -236,10 +230,6 @@ ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
   createComment(): Frame {
     return new CommentStatement(this);
   }
-
-  public getConstructor(): Constructor {
-    return this.getChildren().filter((m) => "isConstructor" in m)[0] as Constructor;
-  }
   parseFrom(source: CodeSource): void {
     this.parseTop(source);
     while (!this.parseBottom(source)) {
@@ -255,9 +245,6 @@ ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
     source.remove(`record `);
     this.name.parseFrom(source);
     source.removeNewLine();
-    if (!this.isAbstract()) {
-      this.getConstructor().parseFrom(source);
-    }
     return true;
   }
 

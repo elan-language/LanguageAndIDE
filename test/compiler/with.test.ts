@@ -24,9 +24,6 @@ main
 end main
 
 record Foo
-  constructor()
-  end constructor
-
   property a as Int
 end record`;
 
@@ -40,10 +37,6 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["a", 0]]);};
-  constructor() {
-
-  }
-
   a = 0;
 
 }
@@ -68,9 +61,6 @@ main
 end main
 
 record Foo
-  constructor()
-  end constructor
-
   property a as Int
 end record`;
 
@@ -83,10 +73,6 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["a", 0]]);};
-  constructor() {
-
-  }
-
   a = 0;
 
 }
@@ -116,9 +102,6 @@ function foo() return Foo
 end function
 
 record Foo
-  constructor()
-  end constructor
-
   property a as Int
 end record`;
 
@@ -136,10 +119,6 @@ function foo() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["a", 0]]);};
-  constructor() {
-
-  }
-
   a = 0;
 
 }
@@ -169,9 +148,6 @@ function foo() return Foo
 end function
 
 record Foo
-  constructor()
-  end constructor
-
   property a as Int
 end record`;
 
@@ -189,10 +165,6 @@ function foo() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["a", 0]]);};
-  constructor() {
-
-  }
-
   a = 0;
 
 }
@@ -221,9 +193,6 @@ function foo() return Foo
 end function
 
 record Foo
-  constructor()
-  end constructor
-
   property a as Int
 end record`;
 
@@ -240,10 +209,6 @@ function foo() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["a", 0]]);};
-  constructor() {
-
-  }
-
   a = 0;
 
 }
@@ -271,9 +236,6 @@ main
 end main
 
 record Foo
-  constructor()
-  end constructor
-
   property a as Int
 
   property b as String
@@ -291,10 +253,6 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["a", 0], ["b", ""]]);};
-  constructor() {
-
-  }
-
   a = 0;
 
   b = "";
@@ -322,9 +280,6 @@ main
 end main
 
 record Foo
-  constructor()
-  end constructor
-
   property a as Int
 
   property b as Int
@@ -341,10 +296,6 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["a", 0], ["b", 0]]);};
-  constructor() {
-
-  }
-
   a = 0;
 
   b = 0;
@@ -372,9 +323,6 @@ main
 end main
 
 record Foo
-  constructor()
-  end constructor
-
   property a as Int
 end record`;
 
@@ -388,10 +336,6 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["a", 0]]);};
-  constructor() {
-
-  }
-
   a = 0;
 
 }
@@ -418,9 +362,6 @@ main
 end main
 
 record Foo
-  constructor()
-  end constructor
-
   property a as Foo
   property b as Int
 end record`;
@@ -436,10 +377,6 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["b", 0]]);};
-  constructor() {
-
-  }
-
   _a;
   get a() {
     return this._a ??= Foo.emptyInstance();
@@ -474,9 +411,6 @@ main
 end main
 
 record Foo
-  constructor()
-  end constructor
-
   property b as Int
 end record`;
 
@@ -491,10 +425,6 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["b", 0]]);};
-  constructor() {
-
-  }
-
   b = 0;
 
 }
@@ -522,9 +452,6 @@ main
 end main
 
 record Foo
-  constructor()
-  end constructor
-
   property b as Int
   property c as Int
   property d as Int
@@ -542,10 +469,6 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["b", 0], ["c", 0], ["d", 0]]);};
-  constructor() {
-
-  }
-
   b = 0;
 
   c = 0;
@@ -576,10 +499,6 @@ main
 end main
 
 record Foo
-  constructor()
-
-  end constructor
-
   property b as Int
 end record`;
 
@@ -594,10 +513,6 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["b", 0]]);};
-  constructor() {
-
-  }
-
   b = 0;
 
 }
@@ -624,9 +539,6 @@ main
 end main
 
 record Foo
-  constructor()
-  end constructor
-
   property b as Int
 end record`;
 
@@ -641,10 +553,6 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["b", 0]]);};
-  constructor() {
-
-  }
-
   b = 0;
 
 }
@@ -669,9 +577,6 @@ main
 end main
 
 record Foo
-  constructor()
-  end constructor
-
   property b as Int
 end record`;
 
@@ -724,9 +629,6 @@ main
 end main
 
 record Foo
-  constructor()
-  end constructor
-
   property d as Int
 end record`;
 
@@ -741,9 +643,6 @@ end record`;
     const code = `# FFFF Elan Beta 3 valid
 
 record Foo
-  constructor()
-  end constructor
-
   private property b as Int
 end record`;
 
