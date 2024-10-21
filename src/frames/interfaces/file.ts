@@ -58,6 +58,7 @@ export interface File extends Parent {
   createProcedure(): Frame;
   createEnum(): Frame;
   createClass(abstract: boolean, immutable: boolean): Frame;
+  createRecord(): Frame;
   createGlobalComment(): Frame;
   createConstant(): Frame;
   createTest(): Frame;

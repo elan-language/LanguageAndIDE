@@ -1,25 +1,14 @@
 import { AbstractFrame } from "../abstract-frame";
 import { AbstractSelector } from "../abstract-selector";
-import { AbstractFunction } from "../class-members/abstract-function";
-import { AbstractProcedure } from "../class-members/abstract-procedure";
 import { AbstractProperty } from "../class-members/abstract-property";
 import { Constructor } from "../class-members/constructor";
-import { FunctionMethod } from "../class-members/function-method";
 import { MemberSelector } from "../class-members/member-selector";
-import { ProcedureMethod } from "../class-members/procedure-method";
 import { Property } from "../class-members/property";
 import { CodeSource } from "../code-source";
 import { CompileError } from "../compile-error";
-import {
-  mustBeAbstractClass,
-  mustBeKnownSymbolType,
-  mustBeUniqueNameInScope,
-  mustImplementSuperClasses,
-} from "../compile-rules";
-import { InheritsFrom } from "../fields/inheritsFrom";
+import { mustBeUniqueNameInScope } from "../compile-rules";
 import { Regexes } from "../fields/regexes";
 import { TypeNameField } from "../fields/type-name-field";
-import { isMember } from "../helpers";
 import { Class } from "../interfaces/class";
 import { Collapsible } from "../interfaces/collapsible";
 import { ElanSymbol } from "../interfaces/elan-symbol";
@@ -29,14 +18,7 @@ import { Frame } from "../interfaces/frame";
 import { Parent } from "../interfaces/parent";
 import { Profile } from "../interfaces/profile";
 import { StatementFactory } from "../interfaces/statement-factory";
-import {
-  abstractKeyword,
-  classKeyword,
-  constructorKeyword,
-  immutableKeyword,
-  recordKeyword,
-  thisKeyword,
-} from "../keywords";
+import { constructorKeyword, recordKeyword, thisKeyword } from "../keywords";
 import {
   parentHelper_addChildAfter,
   parentHelper_addChildBefore,
@@ -63,8 +45,6 @@ import { DuplicateSymbol } from "../symbols/duplicate-symbol";
 import { getGlobalScope, isSymbol } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
-import { UnknownType } from "../symbols/unknown-type";
-import { isAstCollectionNode, isAstIdNode } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 
 export class RecordFrame extends AbstractFrame implements Class, Parent, Collapsible, ElanSymbol {
@@ -183,7 +163,7 @@ export class RecordFrame extends AbstractFrame implements Class, Parent, Collaps
     return false;
   }
   isImmutable(): boolean {
-    return false;
+    return true;
   }
   doesInherit(): boolean {
     return false;

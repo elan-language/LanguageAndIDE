@@ -14,6 +14,7 @@ import {
   immutableKeyword,
   mainKeyword,
   procedureKeyword,
+  recordKeyword,
   testKeyword,
 } from "../keywords";
 import { ParseStatus } from "../status-enums";
@@ -40,6 +41,7 @@ export class GlobalSelector extends AbstractSelector implements GlobalFrame {
       [abstractClassKeywords, (parent: Parent) => this.file.createClass(true, false)],
       [abstractImmutableKeywords, (parent: Parent) => this.file.createClass(true, true)],
       [immutableKeyword, (parent: Parent) => this.file.createClass(false, true)],
+      [recordKeyword, (parent: Parent) => this.file.createRecord()],
       [commentMarker, (parent: Parent) => this.file.createGlobalComment()],
     ];
   }

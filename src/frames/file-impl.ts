@@ -12,6 +12,7 @@ import { GlobalFunction } from "./globals/global-function";
 import { GlobalProcedure } from "./globals/global-procedure";
 import { GlobalSelector } from "./globals/global-selector";
 import { MainFrame } from "./globals/main-frame";
+import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
 import {
   expandCollapseAll,
@@ -495,6 +496,9 @@ export class FileImpl implements File, Scope {
   }
   createClass(abstract: boolean, immutable: boolean): Frame {
     return new ClassFrame(this, abstract, immutable);
+  }
+  createRecord(): Frame {
+    return new RecordFrame(this);
   }
   createGlobalComment(): Frame {
     return new GlobalComment(this);
