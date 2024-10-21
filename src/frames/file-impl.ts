@@ -506,8 +506,8 @@ export class FileImpl implements File, Scope {
   createEnum(): Frame {
     return new Enum(this);
   }
-  createClass(abstract: boolean, immutable: boolean): Frame {
-    return new ClassFrame(this, abstract, immutable);
+  createClass(abstract: boolean): Frame {
+    return new ClassFrame(this, abstract);
   }
   createRecord(): Frame {
     return new RecordFrame(this);

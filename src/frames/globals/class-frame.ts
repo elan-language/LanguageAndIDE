@@ -63,7 +63,7 @@ import { getGlobalScope, isSymbol } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { UnknownType } from "../symbols/unknown-type";
-import { isAstCollectionNode, isAstIdNode } from "../syntax-nodes/ast-helpers";
+import { flatten, isAstCollectionNode, isAstIdNode } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 
 export class ClassFrame extends AbstractFrame implements Class, Parent, Collapsible, ElanSymbol {
@@ -72,15 +72,13 @@ export class ClassFrame extends AbstractFrame implements Class, Parent, Collapsi
   isClass: boolean = true;
   public name: TypeNameField;
   public abstract: boolean;
-  public immutable: boolean;
   public inheritance: InheritsFrom;
   private _children: Array<Frame> = new Array<Frame>();
 
-  constructor(parent: File, abstract = false, immutable = false) {
+  constructor(parent: File, abstract = false) {
     super(parent);
     this.name = new TypeNameField(this);
     this.inheritance = new InheritsFrom(this);
-    this.immutable = immutable;
     this.abstract = abstract;
     if (!abstract) {
       this.getChildren().push(new Constructor(this));
@@ -194,10 +192,7 @@ export class ClassFrame extends AbstractFrame implements Class, Parent, Collapsi
     this.getChildren().splice(0, 1); //remove constructor
   }
   isImmutable(): boolean {
-    return this.immutable;
-  }
-  makeImmutable(): void {
-    this.immutable = true;
+    return false;
   }
   doesInherit(): boolean {
     return this.inheritance.text !== "";

@@ -190,7 +190,6 @@ export function T05_classes() {
   cl2.inheritance.setFieldToKnownValidText("inherits Foo, Bar");
   f.addChildBefore(cl2, gs);
   cl2.name.setFieldToKnownValidText("Card");
-  cl2.makeImmutable();
   const p2 = new Property(cl2);
   cl2.addChildBefore(p2, ms2);
   p2.name.setFieldToKnownValidText("value");
