@@ -231,6 +231,17 @@ suite("Parsing Nodes", () => {
       "",
     );
   });
+  test("new record + with clause", () => {
+    testNodeParse(
+      new ExprNode(),
+      "new Foo() with x to 3, y to 1",
+      ParseStatus.valid,
+      "",
+      "",
+      "",
+      "",
+    );
+  });
   test("Identifier", () => {
     testNodeParse(new IdentifierNode(), ``, ParseStatus.empty, ``, "", "");
     testNodeParse(new IdentifierNode(), `  `, ParseStatus.invalid, ``, "", "");

@@ -4,15 +4,12 @@ import { Frame } from "../interfaces/frame";
 import { GlobalFrame } from "../interfaces/global-frame";
 import { Parent } from "../interfaces/parent";
 import {
-  abstractClassKeywords,
-  abstractImmutableKeywords,
   abstractKeyword,
   classKeyword,
   commentMarker,
   constantKeyword,
   enumKeyword,
   functionKeyword,
-  immutableKeyword,
   mainKeyword,
   procedureKeyword,
   recordKeyword,

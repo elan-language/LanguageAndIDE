@@ -89,7 +89,7 @@ suite("Parsing - Completions", () => {
       new NewInstance(),
       "new ",
       ParseStatus.incomplete,
-      "<pr>Type</pr>(<pr>arguments</pr>)",
+      "<pr>Type</pr>(<pr>arguments</pr>)<pr></pr>",
     );
   });
   test("Func", () => {

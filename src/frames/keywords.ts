@@ -23,7 +23,6 @@ export const fromKeyword = "from";
 export const functionKeyword = "function";
 export const globalKeyword = "global";
 export const ifKeyword = "if";
-export const immutableKeyword = "immutable";
 export const importKeyword = "import";
 export const inKeyword = "in";
 export const inheritsKeyword = "inherits";
@@ -69,7 +68,6 @@ export const privatePropertyKeywords = privateKeyword + " " + propertyKeyword;
 export const privateProcedureKeywords = privateKeyword + " " + procedureKeyword;
 export const privateFunctionKeywords = privateKeyword + " " + functionKeyword;
 export const abstractClassKeywords = abstractKeyword + " " + classKeyword;
-export const abstractImmutableKeywords = abstractKeyword + " " + immutableKeyword;
 
 export const commentMarker = "#";
 
@@ -99,7 +97,6 @@ export const allKeywords = [
   functionKeyword,
   globalKeyword,
   ifKeyword,
-  immutableKeyword,
   importKeyword,
   inKeyword,
   inheritsKeyword,
@@ -161,6 +158,7 @@ export const reservedWords = [
   "finally",
   "float",
   "goto",
+  "immutable",
   "implements",
   "import",
   "instanceof",

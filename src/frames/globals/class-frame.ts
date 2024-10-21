@@ -29,13 +29,7 @@ import { Frame } from "../interfaces/frame";
 import { Parent } from "../interfaces/parent";
 import { Profile } from "../interfaces/profile";
 import { StatementFactory } from "../interfaces/statement-factory";
-import {
-  abstractKeyword,
-  classKeyword,
-  constructorKeyword,
-  immutableKeyword,
-  thisKeyword,
-} from "../keywords";
+import { abstractKeyword, classKeyword, constructorKeyword, thisKeyword } from "../keywords";
 import {
   parentHelper_addChildAfter,
   parentHelper_addChildBefore,
@@ -360,10 +354,6 @@ ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
     const abs = `${abstractKeyword} `;
     if (source.isMatch(abs)) {
       source.remove(abs);
-    }
-    const imm = `${immutableKeyword} `;
-    if (source.isMatch(imm)) {
-      source.remove(imm);
     }
     source.remove(`${classKeyword} `);
     this.name.parseFrom(source);
