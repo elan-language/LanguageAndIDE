@@ -7,7 +7,7 @@ end main
 
 enum Dir left, right
 
-immutable class Rule
+class Rule
   constructor(currentState as String, currentSymbol as String, nextState as String, writeSymbol as String, move as Dir)
     set property.currentState to currentState
     set property.currentSymbol to currentSymbol

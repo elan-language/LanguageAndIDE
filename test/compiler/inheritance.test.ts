@@ -537,324 +537,6 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "0");
   });
 
-  test("Pass_AbstractImmutableClassAsProcedureParameter", async () => {
-    const code = `# FFFF Elan Beta 3 valid
-
-main
-  var f set to new Bar()
-  call proc(f)
-end main
-
-abstract immutable class Foo
-  abstract property p1 as Int
-end class
-
-immutable class Bar inherits Foo
-  constructor()
-  end constructor
-  property p1 as Int
-end class
-
-procedure proc(foo as Foo)
-    print foo.p1
-end procedure
-`;
-
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-async function main() {
-  var f = system.initialise(new Bar());
-  await proc(f);
-}
-
-class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
-  get p1() {
-    return 0;
-  }
-  set p1(p1) {
-  }
-
-  asString() {
-    return "empty Abstract Class Foo";
-  }
-}
-
-class Bar {
-  static emptyInstance() { return system.emptyClass(Bar, [["p1", 0]]);};
-  constructor() {
-
-  }
-
-  p1 = 0;
-
-}
-
-async function proc(foo) {
-  system.printLine(_stdlib.asString(foo.p1));
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "0");
-  });
-
-  test("Pass_AbstractImmutableClassAsFunctionParameter", async () => {
-    const code = `# FFFF Elan Beta 3 valid
-
-main
-  var f set to new Bar()
-  print fun(f)
-end main
-
-abstract immutable class Foo
-  abstract property p1 as Int
-end class
-
-immutable class Bar inherits Foo
-  constructor()
-  end constructor
-  property p1 as Int
-end class
-
-function fun(foo as Foo) return Int
-    return foo.p1
-end function
-`;
-
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-async function main() {
-  var f = system.initialise(new Bar());
-  system.printLine(_stdlib.asString(fun(f)));
-}
-
-class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
-  get p1() {
-    return 0;
-  }
-  set p1(p1) {
-  }
-
-  asString() {
-    return "empty Abstract Class Foo";
-  }
-}
-
-class Bar {
-  static emptyInstance() { return system.emptyClass(Bar, [["p1", 0]]);};
-  constructor() {
-
-  }
-
-  p1 = 0;
-
-}
-
-function fun(foo) {
-  return foo.p1;
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "0");
-  });
-
-  test("Pass_AbstractImmutableClassAsProcedureParameter1", async () => {
-    const code = `# FFFF Elan Beta 3 valid
-
-main
-  var f set to new Bar()
-  call proc(f)
-end main
-
-abstract immutable class Foo
-  abstract property p1 as Int
-end class
-
-abstract immutable class Yon inherits Foo
-  abstract property p1 as Int
-  abstract property p2 as Int
-end class
-
-immutable class Bar inherits Yon
-  constructor()
-  end constructor
-  property p1 as Int
-  property p2 as Int
-end class
-
-procedure proc(foo as Foo)
-    print foo.p1
-end procedure
-`;
-
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-async function main() {
-  var f = system.initialise(new Bar());
-  await proc(f);
-}
-
-class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
-  get p1() {
-    return 0;
-  }
-  set p1(p1) {
-  }
-
-  asString() {
-    return "empty Abstract Class Foo";
-  }
-}
-
-class Yon {
-  static emptyInstance() { return system.emptyClass(Yon, [["p1", 0], ["p2", 0]]);};
-  get p1() {
-    return 0;
-  }
-  set p1(p1) {
-  }
-
-  get p2() {
-    return 0;
-  }
-  set p2(p2) {
-  }
-
-  asString() {
-    return "empty Abstract Class Yon";
-  }
-}
-
-class Bar {
-  static emptyInstance() { return system.emptyClass(Bar, [["p1", 0], ["p2", 0]]);};
-  constructor() {
-
-  }
-
-  p1 = 0;
-
-  p2 = 0;
-
-}
-
-async function proc(foo) {
-  system.printLine(_stdlib.asString(foo.p1));
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "0");
-  });
-
-  test("Pass_AbstractImmutableClassAsFunctionParameter1", async () => {
-    const code = `# FFFF Elan Beta 3 valid
-
-main
-  var f set to new Bar()
-  print fun(f)
-end main
-
-abstract immutable class Foo
-  abstract property p1 as Int
-end class
-
-abstract immutable class Yon inherits Foo
-  abstract property p1 as Int
-  abstract property p2 as Int
-end class
-
-immutable class Bar inherits Yon
-  constructor()
-  end constructor
-  property p1 as Int
-  property p2 as Int
-end class
-
-function fun(foo as Foo) return Int
-    return foo.p1
-end function
-`;
-
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-async function main() {
-  var f = system.initialise(new Bar());
-  system.printLine(_stdlib.asString(fun(f)));
-}
-
-class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
-  get p1() {
-    return 0;
-  }
-  set p1(p1) {
-  }
-
-  asString() {
-    return "empty Abstract Class Foo";
-  }
-}
-
-class Yon {
-  static emptyInstance() { return system.emptyClass(Yon, [["p1", 0], ["p2", 0]]);};
-  get p1() {
-    return 0;
-  }
-  set p1(p1) {
-  }
-
-  get p2() {
-    return 0;
-  }
-  set p2(p2) {
-  }
-
-  asString() {
-    return "empty Abstract Class Yon";
-  }
-}
-
-class Bar {
-  static emptyInstance() { return system.emptyClass(Bar, [["p1", 0], ["p2", 0]]);};
-  constructor() {
-
-  }
-
-  p1 = 0;
-
-  p2 = 0;
-
-}
-
-function fun(foo) {
-  return foo.p1;
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "0");
-  });
-
   test("Pass_Invariance", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
@@ -864,11 +546,11 @@ main
   print fun(lst)
 end main
 
-abstract immutable class Foo
+abstract class Foo
   abstract property p1 as Int
 end class
 
-immutable class Bar inherits Foo
+class Bar inherits Foo
   constructor()
   end constructor
   property p1 as Int
@@ -1888,11 +1570,11 @@ main
   print fun(f)
 end main
 
-abstract immutable class Foo
+abstract class Foo
   abstract property p1 as Int
 end class
 
-immutable class Bar inherits Foo
+class Bar inherits Foo
   constructor()
   end constructor
   property p1 as Int
@@ -1926,11 +1608,11 @@ main
   print fun(lst)
 end main
 
-abstract immutable class Foo
+abstract class Foo
   abstract property p1 as Int
 end class
 
-immutable class Bar inherits Foo
+class Bar inherits Foo
   constructor()
   end constructor
   property p1 as Int
@@ -1960,11 +1642,11 @@ main
   call fun(lst)
 end main
 
-abstract immutable class Foo
+abstract class Foo
   abstract property p1 as Int
 end class
 
-immutable class Bar inherits Foo
+class Bar inherits Foo
   constructor()
   end constructor
   property p1 as Int
@@ -1994,11 +1676,11 @@ main
   print fun(lst)
 end main
 
-abstract immutable class Foo
+abstract class Foo
   abstract property p1 as Int
 end class
 
-immutable class Bar inherits Foo
+class Bar inherits Foo
   constructor()
   end constructor
   property p1 as Int
