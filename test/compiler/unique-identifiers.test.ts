@@ -23,8 +23,10 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const id = 1;
+const global = new class {
+  id = 1;
 
+};
 async function main() {
   var id = 2;
   system.printLine(_stdlib.asString(id));

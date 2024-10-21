@@ -21,10 +21,12 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const k = "Apple";
+const global = new class {
+  k = "Apple";
 
+};
 async function main() {
-  system.printLine(_stdlib.asString(k));
+  system.printLine(_stdlib.asString(global.k));
 }
 return [main, _tests];}`;
 
@@ -47,10 +49,12 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const k = system.tuple([3, "Apple"]);
+const global = new class {
+  k = system.tuple([3, "Apple"]);
 
+};
 async function main() {
-  system.printLine(_stdlib.asString(k));
+  system.printLine(_stdlib.asString(global.k));
 }
 return [main, _tests];}`;
 
@@ -73,10 +77,12 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const k = system.list([1, 2, 3]);
+const global = new class {
+  k = system.list([1, 2, 3]);
 
+};
 async function main() {
-  system.printLine(_stdlib.asString(k));
+  system.printLine(_stdlib.asString(global.k));
 }
 return [main, _tests];}`;
 
@@ -99,10 +105,12 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const k = system.immutableDictionary({["a"] : 1, ["b"] : 3, ["c"] : 3});
+const global = new class {
+  k = system.immutableDictionary({["a"] : 1, ["b"] : 3, ["c"] : 3});
 
+};
 async function main() {
-  system.printLine(_stdlib.asString(k));
+  system.printLine(_stdlib.asString(global.k));
 }
 return [main, _tests];}`;
 

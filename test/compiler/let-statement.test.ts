@@ -171,15 +171,17 @@ procedure foo()
 end procedure`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const list = system.list([1, 2, 3, 4, 5]);
+const global = new class {
+  list = system.list([1, 2, 3, 4, 5]);
 
+};
 async function main() {
   await foo();
 }
 
 async function foo() {
   for (var i = 0; i <= 4; i = i + 1) {
-    const temp = system.safeIndex(list, i);
+    const temp = system.safeIndex(global.list, i);
     system.printLine(_stdlib.asString(temp));
   }
 }

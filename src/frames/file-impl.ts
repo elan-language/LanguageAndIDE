@@ -238,9 +238,13 @@ export class FileImpl implements File, Scope {
         ss.push(frame.compile(this.transform));
       }
 
-      for (const frame of this._children.filter((g) => g instanceof Constant)) {
+      const constants = this._children.filter((g) => g instanceof Constant);
+
+      if (constants.length > 0) {
         ss.push("const global = new class {");
-        ss.push(`  ${frame.compile(this.transform)}`);
+        for (const frame of constants) {
+          ss.push(`  ${frame.compile(this.transform)}`);
+        }
         ss.push("};");
       }
 

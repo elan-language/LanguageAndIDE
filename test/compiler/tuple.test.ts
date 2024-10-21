@@ -126,13 +126,15 @@ end main
 constant a set to {(1,2)}`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {
+  a = system.list([system.tuple([1, 2])]);
+
+};
 async function main() {
-  var t = _stdlib.reduce(a, system.tuple([1, 1]), (i, j) => j);
+  var t = _stdlib.reduce(global.a, system.tuple([1, 1]), (i, j) => j);
   const [fst, ] = t;
   system.printLine(_stdlib.asString(fst));
 }
-
-const a = system.list([system.tuple([1, 2])]);
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
