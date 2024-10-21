@@ -6,7 +6,7 @@ import {
   cannotAccessPrivateMemberInAbstractClass,
 } from "../compile-rules";
 import { ClassFrame } from "../globals/class-frame";
-import { isClass, isFile, isMember, isScope } from "../helpers";
+import { isClass, isConstant, isFile, isMember, isScope } from "../helpers";
 import { AstNode } from "../interfaces/ast-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { Class } from "../interfaces/class";
@@ -102,6 +102,10 @@ export function scopePrefix(
 ) {
   if (symbol.symbolScope === SymbolScope.stdlib) {
     return `_stdlib.`;
+  }
+
+  if (isConstant(symbol) && symbol.symbolScope === SymbolScope.program) {
+    return isConstant(scope) ? "this." : "global.";
   }
 
   if (isMember(symbol)) {

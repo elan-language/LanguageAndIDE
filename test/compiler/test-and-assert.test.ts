@@ -433,6 +433,10 @@ test class2
 end test`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {
+  a = "Hello";
+
+};
 async function main() {
 
 }
@@ -461,11 +465,9 @@ _tests.push(["test39", async (_outcomes) => {
   _outcomes.push(system.assert(a, b, "assert48", _stdlib));
 }]);
 
-const a = "Hello";
-
 _tests.push(["test54", async (_outcomes) => {
   var b = "Hello";
-  _outcomes.push(system.assert(a, b, "assert60", _stdlib));
+  _outcomes.push(system.assert(global.a, b, "assert60", _stdlib));
 }]);
 
 class Foo {

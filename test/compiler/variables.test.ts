@@ -148,8 +148,10 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const a = 3;
+const global = new class {
+  a = 3;
 
+};
 async function main() {
   var a = 4;
   system.printLine(_stdlib.asString(a));
@@ -261,10 +263,12 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const a = system.list([1, 2]);
+const global = new class {
+  a = system.list([1, 2]);
 
+};
 async function main() {
-  var b = _stdlib.map(a, (x) => x);
+  var b = _stdlib.map(global.a, (x) => x);
   b = system.list([1, 2]);
   system.printLine(_stdlib.asString(b));
 }
