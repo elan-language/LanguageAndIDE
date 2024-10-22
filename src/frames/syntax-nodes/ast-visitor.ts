@@ -3,7 +3,7 @@ import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstNode } from "../interfaces/ast-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { Scope } from "../interfaces/scope";
-import { globalKeyword, libraryKeyword, propertyKeyword, thisKeyword } from "../keywords";
+import { libraryKeyword, propertyKeyword, thisKeyword } from "../keywords";
 import { AbstractAlternatives } from "../parse-nodes/abstract-alternatives";
 import { ArrayNode } from "../parse-nodes/array-list-node";
 import { AssignableNode } from "../parse-nodes/assignable-node";
@@ -324,9 +324,6 @@ export function transform(
 
   if (node instanceof KeywordNode) {
     // todo decouple this from js
-    if (node.fixedText === globalKeyword) {
-      return new FixedIdAsn(globalKeyword, fieldId);
-    }
     if (node.fixedText === libraryKeyword) {
       return new FixedIdAsn(libraryKeyword, fieldId);
     }

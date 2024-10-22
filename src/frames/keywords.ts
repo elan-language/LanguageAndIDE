@@ -21,7 +21,6 @@ export const falseKeyword = "false";
 export const forKeyword = "for";
 export const fromKeyword = "from";
 export const functionKeyword = "function";
-export const globalKeyword = "global";
 export const ifKeyword = "if";
 export const importKeyword = "import";
 export const inKeyword = "in";
@@ -95,7 +94,6 @@ export const allKeywords = [
   forKeyword,
   fromKeyword,
   functionKeyword,
-  globalKeyword,
   ifKeyword,
   importKeyword,
   inKeyword,
@@ -157,6 +155,7 @@ export const reservedWords = [
   "final",
   "finally",
   "float",
+  "global",
   "goto",
   "immutable",
   "implements",
