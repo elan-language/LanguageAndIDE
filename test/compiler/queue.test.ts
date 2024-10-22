@@ -11,35 +11,35 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("Standard Data Structures", () => {
-  test("Pass_Stack", async () => {
+suite("Queue", () => {
+  test("Pass_Queue", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
 main
-  let st be new Stack<of String>()
+  let st be new Queue<of String>()
   print st.length()
-  call st.push("apple")
-  call st.push("pear")
+  call st.enqueue("apple")
+  call st.enqueue("pear")
   print st.length()
   print st.peek()
-  var fruit set to st.pop()
+  var fruit set to st.dequeue()
   print fruit
-  set fruit to st.pop()
+  set fruit to st.dequeue()
   print fruit
   print st.length()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  const st = system.initialise(new _stdlib.Stack());
+  const st = system.initialise(new _stdlib.Queue());
   system.printLine(_stdlib.asString(st.length()));
-  st.push("apple");
-  st.push("pear");
+  st.enqueue("apple");
+  st.enqueue("pear");
   system.printLine(_stdlib.asString(st.length()));
   system.printLine(_stdlib.asString(st.peek()));
-  var fruit = st.pop();
+  var fruit = st.dequeue();
   system.printLine(_stdlib.asString(fruit));
-  fruit = st.pop();
+  fruit = st.dequeue();
   system.printLine(_stdlib.asString(fruit));
   system.printLine(_stdlib.asString(st.length()));
 }
@@ -51,16 +51,16 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    assertObjectCodeExecutes(fileImpl, "02pearpearapple0");
+    assertObjectCodeExecutes(fileImpl, "02appleapplepear0");
   });
 
-  test("Fail_Stack_adding_incompatible_type1", async () => {
+  test("Fail_Queue_adding_incompatible_type1", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
 main
-  let st be new Stack<of String>()
-  call st.push("apple")
-  call st.push(3)
+  let st be new Queue<of String>()
+  call st.enqueue("apple")
+  call st.enqueue(3)
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -71,12 +71,12 @@ end main`;
     assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
   });
 
-  test("Fail_Stack_adding_incompatible_type2", async () => {
+  test("Fail_Queue_adding_incompatible_type2", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
 main
-  let st be new Stack<of String>()
-  call st.push(3)
+  let st be new Queue<of String>()
+  call st.enqueue(3)
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -87,35 +87,17 @@ end main`;
     assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
   });
 
-  test("Fail_Stack_peek_incompatible_type", async () => {
+  test("Fail_Queue_peek_empty_Queue", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
 main
-  let st be new Stack<of String>()
-  call st.push("apple")
-  var a set to 1
-  set a to st.peek()
-end main`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types String to Int"]);
-  });
-
-  test("Fail_Stack_peek_empty_stack", async () => {
-    const code = `# FFFF Elan Beta 3 valid
-
-main
-  let st be new Stack<of String>()
+  let st be new Queue<of String>()
   print st.peek()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  const st = system.initialise(new _stdlib.Stack());
+  const st = system.initialise(new _stdlib.Queue());
   system.printLine(_stdlib.asString(st.peek()));
 }
 return [main, _tests];}`;
@@ -126,21 +108,21 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    assertObjectCodeDoesNotExecute(fileImpl, "Cannot peek an empty Stack - check using length()");
+    assertObjectCodeDoesNotExecute(fileImpl, "Cannot peek an empty Queue - check using length()");
   });
 
-  test("Fail_Stack_pop_empty_stack", async () => {
+  test("Fail_Queue_dequeue_empty_Queue", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
 main
-  let st be new Stack<of String>()
-  print st.pop()
+  let st be new Queue<of String>()
+  print st.dequeue()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  const st = system.initialise(new _stdlib.Stack());
-  system.printLine(_stdlib.asString(st.pop()));
+  const st = system.initialise(new _stdlib.Queue());
+  system.printLine(_stdlib.asString(st.dequeue()));
 }
 return [main, _tests];}`;
 
@@ -150,14 +132,17 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    assertObjectCodeDoesNotExecute(fileImpl, "Cannot pop an empty Stack - check using length()");
+    assertObjectCodeDoesNotExecute(
+      fileImpl,
+      "Cannot dequeue an empty Queue - check using length()",
+    );
   });
 
-  test("Fail_StackWithoutGenericParm", async () => {
+  test("Fail_QueueWithoutGenericParm", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
 main
-  let st be new Stack()
+  let st be new Queue()
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);

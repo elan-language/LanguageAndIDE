@@ -35,6 +35,7 @@ import { hasHiddenType } from "../has-hidden-type";
 import { StubInputOutput } from "../stub-input-output";
 import { System } from "../system";
 import { BlockGraphics } from "./block-graphics";
+import { Queue } from "./queue";
 import { Random } from "./random";
 import { Stack } from "./stack";
 import { SVG } from "./svg";
@@ -63,6 +64,9 @@ export class StdLib {
 
   @elanClassExport(Stack)
   Stack = Stack;
+
+  @elanClassExport(Queue)
+  Queue = Queue;
 
   @elanClassExport(SVG)
   SVG = SVG;
