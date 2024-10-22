@@ -41,6 +41,7 @@ import { Stack } from "./stack";
 import { SVG } from "./svg";
 import { TextFileReader } from "./text-file-reader";
 import { TextFileWriter } from "./text-file-writer";
+import { ElanSet } from "./set";
 
 export class StdLib {
   constructor() {
@@ -67,6 +68,9 @@ export class StdLib {
 
   @elanClassExport(Queue)
   Queue = Queue;
+
+  @elanClassExport(ElanSet)
+  ElanSet = ElanSet;
 
   @elanClassExport(SVG)
   SVG = SVG;
