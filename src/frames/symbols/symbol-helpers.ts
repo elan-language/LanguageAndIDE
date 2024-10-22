@@ -90,7 +90,7 @@ export function isVarOrPropertyStatement(s?: ElanSymbol): boolean {
 }
 
 export function isClassTypeDef(s?: ElanSymbol | Scope): s is ClassTypeDef {
-  return !!s && "gpMap" in s;
+  return !!s && "genericParamMatches" in s;
 }
 
 export function isMemberOnFieldsClass(s: ElanSymbol, transforms: Transforms, scope: Scope) {

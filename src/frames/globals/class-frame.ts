@@ -83,6 +83,7 @@ export class ClassFrame extends AbstractFrame implements Class, Parent, Collapsi
   }
 
   ofTypes: SymbolType[] = [];
+  genericParamMatches: Map<string, SymbolType> = new Map<string, SymbolType>();
 
   getFile(): File {
     return this.getParent() as File;

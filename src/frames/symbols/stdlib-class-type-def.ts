@@ -21,7 +21,7 @@ export class StdLibClassTypeDef implements ClassTypeDef {
     this.symbolId = this.name;
   }
 
-  gpMap?: Map<string, SymbolType>;
+  genericParamMatches: Map<string, SymbolType> = new Map<string, SymbolType>();
 
   isClass = true;
 

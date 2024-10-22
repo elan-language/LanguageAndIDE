@@ -4,7 +4,7 @@ import { Scope } from "./scope";
 import { SymbolType } from "./symbol-type";
 
 export interface ClassTypeDef extends Scope, ElanSymbol {
-  gpMap?: Map<string, SymbolType>;
+  genericParamMatches: Map<string, SymbolType>;
   getChildren(): ElanSymbol[];
   resolveOwnSymbol(id: string, transforms: Transforms): ElanSymbol;
   ofTypes: SymbolType[];

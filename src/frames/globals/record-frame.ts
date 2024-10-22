@@ -64,6 +64,7 @@ export class RecordFrame extends AbstractFrame implements Class, Parent, Collaps
   }
 
   ofTypes: SymbolType[] = [];
+  genericParamMatches: Map<string, SymbolType> = new Map<string, SymbolType>();
 
   getFile(): File {
     return this.getParent() as File;
