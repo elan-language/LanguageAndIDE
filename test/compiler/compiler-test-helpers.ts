@@ -13,7 +13,7 @@ import { TestInputOutput } from "./test-input-output";
 import { getTestSystem } from "./test-system";
 
 export function assertParses(file: FileImpl) {
-  assert.strictEqual(file.parseError, undefined, "Unexpected parse error");
+  assert.strictEqual(file.parseError, undefined, "Unexpected parse error: " + file.parseError);
 }
 
 export function assertDoesNotParse(file: FileImpl) {

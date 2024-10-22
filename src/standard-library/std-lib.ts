@@ -42,6 +42,7 @@ import { Random } from "./random";
 import { Stack } from "./stack";
 import { TextFileReader } from "./text-file-reader";
 import { TextFileWriter } from "./text-file-writer";
+import { ElanSet } from "./set";
 import { VectorGraphics } from "./vector-graphics";
 
 export class StdLib {
@@ -69,6 +70,9 @@ export class StdLib {
 
   @elanClassExport(Queue)
   Queue = Queue;
+
+  @elanClassExport(ElanSet)
+  Set = ElanSet;
 
   @elanClassExport(VectorGraphics)
   VectorGraphics = VectorGraphics;

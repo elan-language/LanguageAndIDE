@@ -1,12 +1,12 @@
 import {
   ElanClass,
+  elanClassType,
   elanFunction,
   elanProcedure,
   ElanString,
   ElanTuple,
-  elanType,
   FunctionOptions,
-  ProcedureOptions,
+  ProcedureOptions
 } from "../elan-type-annotations";
 import { System } from "../system";
 import { BaseVG } from "./base-vg";
@@ -24,7 +24,7 @@ export class VectorGraphics {
   private internalRep: BaseVG[] = [];
 
   @elanFunction(FunctionOptions.pure, ElanClass(VectorGraphics))
-  add(@elanType(ElanClass(BaseVG)) obj: BaseVG): VectorGraphics {
+  add(@elanClassType(BaseVG) obj: BaseVG): VectorGraphics {
     const copy = this.system!.initialise(new VectorGraphics());
     copy.internalRep = this.internalRep;
     copy.internalRep.push(obj);

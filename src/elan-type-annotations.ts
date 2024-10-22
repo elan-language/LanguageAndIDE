@@ -59,6 +59,7 @@ export class ElanClassDescriptor implements ElanDescriptor {
     public readonly isAbstract: boolean = false,
     public readonly ofTypes: TypeDescriptor[] = [],
     public readonly parameters: TypeDescriptor[] = [],
+    public readonly alias?: string,
   ) {}
 
   mapType(): SymbolType {
@@ -200,7 +201,10 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
   name = "Class";
 
   mapType(scope?: Scope): SymbolType {
-    const className = removeUnderscore(this.cls.name);
+    const classMetadata: ElanClassDescriptor =
+      Reflect.getMetadata(elanMetadataKey, this.cls) ?? new ElanClassDescriptor();
+
+    const className = classMetadata.alias ?? removeUnderscore(this.cls.name);
 
     if (tempMap.has(className)) {
       return tempMap.get(className)!;
@@ -209,9 +213,6 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
     const names = Object.getOwnPropertyNames(this.cls.prototype);
     const children: [string, SymbolType][] = [];
     const ofTypes: SymbolType[] = [];
-
-    const classMetadata: ElanClassDescriptor =
-      Reflect.getMetadata(elanMetadataKey, this.cls) ?? new ElanClassDescriptor();
 
     tempMap.set(className, new ClassType(className, false, false, [], undefined!));
 
@@ -282,7 +283,7 @@ export class TypescriptTypeDescriptor implements TypeDescriptor {
       case "Array":
         throw new ElanCompilerError("Typescript 'Array' must be mapped into Elan types");
     }
-    throw new Error("NotImplemented: " + this.name);
+    throw new ElanCompilerError("Missing type annotation in stdlib class");
   }
 }
 
@@ -339,11 +340,13 @@ export function elanClass(
   options?: ClassOptions,
   ofTypes?: TypeDescriptor[],
   params?: TypeDescriptor[],
+  alias?: string,
 ) {
   const classDesc = new ElanClassDescriptor(
     mapClassOptions(options ?? ClassOptions.concrete),
     ofTypes ?? [],
     params ?? [],
+    alias,
   );
   return function (target: object) {
     Reflect.defineMetadata(elanMetadataKey, classDesc, target);
@@ -489,6 +492,10 @@ export function elanTupleType(ofTypes: TypeDescriptor[]) {
 
 export function elanFuncType(parameters: TypeDescriptor[], returnType: TypeDescriptor) {
   return elanType(ElanFunc(parameters, returnType));
+}
+
+export function elanClassType(cls: { name: string; prototype: object }) {
+  return elanType(ElanClass(cls));
 }
 
 export enum FunctionOptions {
