@@ -166,6 +166,7 @@ export const reservedWords = [
   "into",
   "interface",
   "long",
+  "namespace",
   "native",
   "null",
   "package",
