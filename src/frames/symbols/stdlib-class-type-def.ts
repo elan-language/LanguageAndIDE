@@ -13,7 +13,7 @@ import { UnknownSymbol } from "./unknown-symbol";
 export class StdLibClassTypeDef implements ClassTypeDef {
   constructor(
     private readonly name: string,
-    public readonly isAbstract: boolean,
+    public readonly abstract: boolean,
     public readonly children: ElanSymbol[],
     public readonly ofTypes: SymbolType[],
     private readonly scope: Scope,
@@ -28,7 +28,7 @@ export class StdLibClassTypeDef implements ClassTypeDef {
   symbolId: string;
 
   symbolType(transforms?: Transforms): SymbolType {
-    return new ClassType(this.name, this.isAbstract, false, [], this);
+    return new ClassType(this.name, this.abstract, false, [], this);
   }
 
   symbolScope: SymbolScope = SymbolScope.stdlib;

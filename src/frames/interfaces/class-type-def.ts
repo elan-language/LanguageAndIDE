@@ -8,4 +8,5 @@ export interface ClassTypeDef extends Scope, ElanSymbol {
   getChildren(): ElanSymbol[];
   resolveOwnSymbol(id: string, transforms: Transforms): ElanSymbol;
   ofTypes: SymbolType[];
+  abstract: boolean;
 }
