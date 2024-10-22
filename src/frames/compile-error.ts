@@ -157,7 +157,7 @@ export class ParametersCompileError extends CompileError {
   constructor(expected: number, actual: number, location: string, generic?: boolean) {
     super(
       Priority.illegalOperation,
-      `${generic ? "Generic parameters" : "Parameters"} expected: ${expected} got: ${actual}`,
+      `${generic ? "<of Type(s)>" : "Parameters"} expected: ${expected} got: ${actual}`,
       location,
       false,
     );

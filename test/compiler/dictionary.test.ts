@@ -707,7 +707,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Generic parameters expected: 2 got: 0"]);
+    assertDoesNotCompile(fileImpl, ["<of Type(s)> expected: 2 got: 0"]);
   });
 
   test("Fail_IndexWrongType1", async () => {

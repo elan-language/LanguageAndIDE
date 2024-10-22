@@ -360,7 +360,7 @@ end procedure`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Generic parameters expected: 1 got: 0"]);
+    assertDoesNotCompile(fileImpl, ["<of Type(s)> expected: 1 got: 0"]);
   });
 
   ignore_test("Fail_PassArgumentWithWrongGenericType", async () => {
