@@ -7,9 +7,11 @@ import {
 } from "../compile-rules";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstNode } from "../interfaces/ast-node";
+import { Class } from "../interfaces/class";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
+import { ClassType } from "../symbols/class-type";
 import { FunctionType } from "../symbols/function-type";
 import { isMemberOnFieldsClass, scopePrefix } from "../symbols/symbol-helpers";
 import { AbstractAstNode } from "./abstract-ast-node";
@@ -91,13 +93,10 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
         parameters = [this.precedingNode].concat(parameters);
       }
 
-      matchParametersAndTypes(
-        funcSymbolType,
-        parameters,
-        undefined,
-        this.compileErrors,
-        this.fieldId,
-      );
+      const st = this.precedingNode?.symbolType();
+      const cls = st instanceof ClassType ? st.scope : undefined;
+
+      matchParametersAndTypes(funcSymbolType, parameters, cls, this.compileErrors, this.fieldId);
 
       this.isAsync = funcSymbolType.isAsync;
     }
@@ -125,7 +124,10 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
           callParameters = [this.precedingNode].concat(callParameters);
         }
 
-        const matches = matchGenericTypes(funcSymbolType, callParameters);
+        const st = this.precedingNode?.symbolType();
+        const cls = st instanceof ClassType ? st.scope : undefined;
+
+        const matches = matchGenericTypes(funcSymbolType, callParameters, cls);
         return generateType(returnType, matches);
       }
       return returnType;

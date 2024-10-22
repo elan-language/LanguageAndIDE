@@ -87,6 +87,24 @@ end main`;
     assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
   });
 
+  test("Fail_Stack_peek_incompatible_type", async () => {
+    const code = `# FFFF Elan Beta 3 valid
+
+main
+  let st be new Stack<of String>()
+  call st.push("apple")
+  var a set to 1
+  set a to st.peek()
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types String to Int"]);
+  });
+
   test("Fail_Stack_peek_empty_stack", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
