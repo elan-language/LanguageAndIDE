@@ -26,7 +26,7 @@ import { IterableType } from "./frames/symbols/iterable-type";
 import { ListType } from "./frames/symbols/list-type";
 import { ProcedureType } from "./frames/symbols/procedure-type";
 import { RegexType } from "./frames/symbols/regex-type";
-import { StdLibClassTypeDef } from "./frames/symbols/stdlib-class-type-def";
+import { StdLibClass } from "./frames/symbols/stdlib-class";
 import { StringType } from "./frames/symbols/string-type";
 import { SymbolScope } from "./frames/symbols/symbol-scope";
 import { TupleType } from "./frames/symbols/tuple-type";
@@ -246,13 +246,7 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
     const classType = tempMap.get(className)!;
     tempMap.delete(className);
 
-    const classTypeDef = new StdLibClassTypeDef(
-      className,
-      classMetadata.isAbstract,
-      [],
-      [],
-      scope!,
-    );
+    const classTypeDef = new StdLibClass(className, classMetadata.isAbstract, [], [], scope!);
 
     classType.updateScope(classTypeDef);
 

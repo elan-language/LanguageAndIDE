@@ -30,7 +30,7 @@ export function isFile(f?: Scope): f is File {
 }
 
 export function isClass(f?: ElanSymbol | Scope): f is Class {
-  return !!f && "isClass" in f;
+  return !!f && "genericParamMatches" in f;
 }
 
 export function isFrame(f?: Selectable | Scope): f is Frame {
