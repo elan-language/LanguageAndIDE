@@ -880,16 +880,6 @@ export function mustNotBeLet(symbol: ElanSymbol, compileErrors: CompileError[], 
   }
 }
 
-export function mustNotBeReassigned(
-  variable: ElanSymbol,
-  compileErrors: CompileError[],
-  location: string,
-) {
-  if (!(variable instanceof UnknownSymbol) && variable.symbolScope === SymbolScope.local) {
-    compileErrors.push(new ReassignCompileError(variable.symbolId, location));
-  }
-}
-
 function mapToPurpose(symbol: ElanSymbol) {
   if (symbol.symbolScope === SymbolScope.parameter) {
     return "parameter";

@@ -152,7 +152,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not reassign a"]);
+    assertDoesNotCompile(fileImpl, [
+      "The identifier 'a' is already used for a 'let' and cannot be re-defined here.",
+    ]);
   });
 
   test("Pass_DisambiguateLocalVariableFromLibConstant", async () => {

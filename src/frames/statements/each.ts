@@ -1,5 +1,5 @@
 import { CodeSource } from "../code-source";
-import { mustBeIterable, mustNotBeReassigned } from "../compile-rules";
+import { mustBeIterable, mustNotBeRedefined } from "../compile-rules";
 import { ExpressionField } from "../fields/expression-field";
 import { IdentifierField } from "../fields/identifier-field";
 import { FrameWithStatements } from "../frame-with-statements";
@@ -57,7 +57,7 @@ ${this.indent()}end each`;
     const id = this.variable.getOrTransformAstNode(transforms)?.compile();
     const symbol = this.getParent().resolveSymbol(id!, transforms, this);
 
-    mustNotBeReassigned(symbol, this.compileErrors, this.htmlId);
+    mustNotBeRedefined(symbol, this.compileErrors, this.htmlId);
 
     const iterType = this.iter.getOrTransformAstNode(transforms)?.symbolType();
     mustBeIterable(iterType!, this.compileErrors, this.htmlId);

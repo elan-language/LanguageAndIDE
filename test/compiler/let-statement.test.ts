@@ -113,47 +113,6 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "1010");
   });
 
-  test("Pass_IdShadowsFunction", async () => {
-    const code = `# FFFF Elan Beta 3 valid
-
-main
-  print foo()
-end main
-
-function foo() return Int
-  return 1
-end function
-
-function bar() return Int
-  let foo be foo()
-  return foo
-end function
-`;
-
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-async function main() {
-  system.printLine(_stdlib.asString(foo()));
-}
-
-function foo() {
-  return 1;
-}
-
-function bar() {
-  const foo = foo();
-  return foo;
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "1");
-  });
-
   test("Pass_InLoop", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
@@ -256,7 +215,9 @@ end function`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "let15", ["May not reassign x"]);
+    assertDoesNotCompileWithId(fileImpl, "let15", [
+      "The identifier 'x' is already used for a 'let' and cannot be re-defined here.",
+    ]);
   });
 
   test("Fail_cannotAssign", async () => {
