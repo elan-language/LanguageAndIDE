@@ -56,7 +56,7 @@ export abstract class AbstractFrame implements Frame {
   }
 
   get symbolId() {
-    return "";
+    return "__";
   }
 
   symbolType(transforms?: Transforms) {

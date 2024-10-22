@@ -405,11 +405,11 @@ test default_
   assert a is b
 end test
 
-constant a set to "Hello"
+constant hello set to "Hello"
 
 test constant_
   var b set to "Hello"
-  assert a is b
+  assert hello is b
 end test
 
 class Foo
@@ -434,7 +434,7 @@ end test`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
-  a = "Hello";
+  hello = "Hello";
 
 };
 async function main() {
@@ -467,7 +467,7 @@ _tests.push(["test39", async (_outcomes) => {
 
 _tests.push(["test54", async (_outcomes) => {
   var b = "Hello";
-  _outcomes.push(system.assert(global.a, b, "assert60", _stdlib));
+  _outcomes.push(system.assert(global.hello, b, "assert60", _stdlib));
 }]);
 
 class Foo {

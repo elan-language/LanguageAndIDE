@@ -1,6 +1,11 @@
 import { AbstractFrame } from "../abstract-frame";
 import { CodeSource } from "../code-source";
-import { mustBeDeconstructableType, mustNotBeKeyword, mustNotBeReassigned } from "../compile-rules";
+import {
+  mustBeDeconstructableType,
+  mustNotBeKeyword,
+  mustNotBeReassigned,
+  mustNotBeRedefined,
+} from "../compile-rules";
 import { ExpressionField } from "../fields/expression-field";
 import { VarDefField } from "../fields/var-def-field";
 import { mapIds, mapSymbolType } from "../helpers";
@@ -66,7 +71,7 @@ export class VarStatement extends AbstractFrame implements Statement, ElanSymbol
     for (const i of ids) {
       mustNotBeKeyword(i, this.compileErrors, this.htmlId);
       const symbol = this.getParent().resolveSymbol(i!, transforms, this);
-      mustNotBeReassigned(symbol, this.compileErrors, this.htmlId);
+      mustNotBeRedefined(symbol, this.compileErrors, this.htmlId);
     }
 
     const rhs = wrapDeconstruction(

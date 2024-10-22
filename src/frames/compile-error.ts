@@ -193,6 +193,17 @@ export class ReassignCompileError extends CompileError {
   }
 }
 
+export class RedefinedCompileError extends CompileError {
+  constructor(id: string, purpose: string, location: string) {
+    super(
+      Priority.illegalOperation,
+      `The identifier '${id}' is already used for a ${purpose} and cannot be re-defined here.`,
+      location,
+      false,
+    );
+  }
+}
+
 export class IndexCompileError extends CompileError {
   constructor(thing: string, location: string) {
     super(

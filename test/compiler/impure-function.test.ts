@@ -127,7 +127,7 @@ end function
 main
 end main
 
-function square(x as Int) return Int
+function square(z as Int) return Int
   var x set to randomInt(1,6)
   return x * x
 end function

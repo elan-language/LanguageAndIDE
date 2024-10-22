@@ -138,35 +138,6 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "4");
   });
 
-  test("Pass_LocalVarHidesGlobalConstant", async () => {
-    const code = `# FFFF Elan Beta 3 valid
-
-constant a set to 3
-main
-  var a set to 4
-  print a
-end main`;
-
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {
-  a = 3;
-
-};
-async function main() {
-  var a = 4;
-  system.printLine(_stdlib.asString(a));
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "4");
-  });
-
   test("Pass_OperatorCoverage", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
@@ -283,46 +254,6 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "{1, 2}");
   });
 
-  test("Pass_IdShadowsFunction", async () => {
-    const code = `# FFFF Elan Beta 3 valid
-
-main
-  print foo()
-end main
-function foo() return Int
-  return 1
-end function
-
-function bar() return Int
-  var foo set to foo()
-  return foo
-end function
-`;
-
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-async function main() {
-  system.printLine(_stdlib.asString(foo()));
-}
-
-function foo() {
-  return 1;
-}
-
-function bar() {
-  var foo = foo();
-  return foo;
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "1");
-  });
-
   test("Fail_WrongKeyword", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
@@ -334,21 +265,6 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
-  });
-
-  test("Fail_DuplicateVar", async () => {
-    const code = `# FFFF Elan Beta 3 valid
-
-main
-  var a set to 3
-  var a set to 4
-end main`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "var6", ["May not reassign a"]);
   });
 
   test("Fail_GlobalVariable", async () => {

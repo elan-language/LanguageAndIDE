@@ -22,13 +22,21 @@ import {
   ParametersCompileError,
   PrivateMemberCompileError,
   ReassignCompileError,
+  RedefinedCompileError,
   SignatureCompileError,
   SyntaxCompileError,
   TypeCompileError,
   TypesCompileError,
   UndefinedSymbolCompileError,
 } from "./compile-error";
-import { isClass, isFunction, isInsideFunctionOrConstructor, isMember } from "./helpers";
+import {
+  isClass,
+  isConstant,
+  isFunction,
+  isProcedure,
+  isInsideFunctionOrConstructor,
+  isMember,
+} from "./helpers";
 import { AstNode } from "./interfaces/ast-node";
 import { ElanSymbol } from "./interfaces/elan-symbol";
 import { Parent } from "./interfaces/parent";
@@ -878,6 +886,38 @@ export function mustNotBeReassigned(
 ) {
   if (!(variable instanceof UnknownSymbol) && variable.symbolScope === SymbolScope.local) {
     compileErrors.push(new ReassignCompileError(variable.symbolId, location));
+  }
+}
+
+function mapToPurpose(symbol: ElanSymbol) {
+  if (symbol.symbolScope === SymbolScope.parameter) {
+    return "parameter";
+  }
+
+  if (isConstant(symbol)) {
+    return "constant";
+  }
+
+  if (isFunction(symbol)) {
+    return "function";
+  }
+
+  if (isProcedure(symbol)) {
+    return "procedure";
+  }
+
+  return "variable";
+}
+
+export function mustNotBeRedefined(
+  variable: ElanSymbol,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  if (!(variable instanceof UnknownSymbol) && variable.symbolScope !== SymbolScope.stdlib) {
+    compileErrors.push(
+      new RedefinedCompileError(variable.symbolId, mapToPurpose(variable), location),
+    );
   }
 }
 

@@ -27,6 +27,9 @@ export abstract class ProcedureFrame extends FrameWithStatements implements Elan
     this.name = new IdentifierField(this);
     this.params = new ParamList(this);
   }
+
+  isProcedure = true;
+
   initialKeywords(): string {
     return procedureKeyword;
   }

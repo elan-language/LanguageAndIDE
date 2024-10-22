@@ -12,36 +12,6 @@ import {
 } from "./compiler-test-helpers";
 
 suite("Unique Identifiers", () => {
-  test("Pass_SameVariableNameInDifferentScope", async () => {
-    const code = `# FFFF Elan Beta 3 valid
-
-constant id set to 1
-
-main
-  var id set to 2
-  print id
-end main`;
-
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {
-  id = 1;
-
-};
-async function main() {
-  var id = 2;
-  system.printLine(_stdlib.asString(id));
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "2");
-  });
-
   test("Pass_CanUseKeywordWithDifferentCase", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
@@ -187,6 +157,8 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not reassign id"]);
+    assertDoesNotCompile(fileImpl, [
+      "The identifier 'id' is already used for a variable and cannot be re-defined here.",
+    ]);
   });
 });

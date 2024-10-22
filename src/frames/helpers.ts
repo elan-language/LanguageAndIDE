@@ -57,6 +57,10 @@ export function isFunction(f?: Scope | Member | ElanSymbol): f is Member {
   return !!f && "isFunction" in f;
 }
 
+export function isProcedure(f?: Scope | Member | ElanSymbol): f is Member {
+  return !!f && "isProcedure" in f;
+}
+
 export function isConstructor(f?: Scope | Member): f is Member {
   return !!f && "isConstructor" in f;
 }

@@ -12,55 +12,64 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("Global", () => {
-  test("Pass_DisambiguateConstantFromLocalVariable", async () => {
+suite("Shadowing", () => {
+  test("Fail_LocalShadowsConstant", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
 constant a set to 4
 
 main
   var a set to 3
-  print global.a
-end main`;
-
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {
-  a = 4;
-
-};
-async function main() {
-  var a = 3;
-  system.printLine(_stdlib.asString(global.a));
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "4");
-  });
-
-  test("Pass_DisambiguateConstantFromLocalVariable1", async () => {
-    const code = `# FFFF Elan Beta 3 valid
-
-constant a set to 4
-
-main
-  var a set to global.a
   print a
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {
-  a = 4;
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-};
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "The identifier 'a' is already used for a constant and cannot be re-defined here.",
+    ]);
+  });
+
+  test("Fail_IdShadowsFunction", async () => {
+    const code = `# FFFF Elan Beta 3 valid
+
+main
+  print foo()
+end main
+function foo() return Int
+  return 1
+end function
+
+function bar() return Int
+  var foo set to foo()
+  return foo
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "The identifier 'foo' is already used for a function and cannot be re-defined here.",
+    ]);
+  });
+
+  test("Pass_DisambiguateLocalVariableFromLibConstant", async () => {
+    const code = `# FFFF Elan Beta 3 valid
+
+main
+  var pi set to library.pi
+  print pi
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = global.a;
-  system.printLine(_stdlib.asString(a));
+  var pi = _stdlib.pi;
+  system.printLine(_stdlib.asString(pi));
 }
 return [main, _tests];}`;
 
@@ -70,7 +79,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "4");
+    await assertObjectCodeExecutes(fileImpl, "3.141592653589793");
   });
 
   test("Pass_DisambiguateConstantFromInstanceProperty", async () => {

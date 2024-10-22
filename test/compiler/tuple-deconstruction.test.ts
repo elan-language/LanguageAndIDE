@@ -662,7 +662,9 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not reassign z"]);
+    assertDoesNotCompile(fileImpl, [
+      "The identifier 'z' is already used for a variable and cannot be re-defined here.",
+    ]);
   });
 
   test("Fail_DeconstructIntoWrongTypeWithDiscard", async () => {
