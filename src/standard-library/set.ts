@@ -4,6 +4,7 @@ import {
   ElanClass,
   elanClass,
   elanFunction,
+  elanGenericParamT1Type,
   ElanInt,
   ElanT1,
   FunctionOptions,
@@ -31,19 +32,19 @@ export class ElanSet<T1> {
   }
 
   @elanFunction(FunctionOptions.pure, ElanBoolean)
-  contains(item: T1) {
+  contains(@elanGenericParamT1Type() item: T1) {
     return this.contents.has(item);
   }
 
   @elanFunction(FunctionOptions.pure, ElanClass(ElanSet))
-  add(item: T1): ElanSet<T1> {
+  add(@elanGenericParamT1Type() item: T1): ElanSet<T1> {
     const copy = this.system!.initialise(new ElanSet<T1>());
     copy.contents.add(item);
     return copy;
   }
 
   @elanFunction(FunctionOptions.impure, ElanClass(ElanSet))
-  remove(item: T1): ElanSet<T1> {
+  remove(@elanGenericParamT1Type() item: T1): ElanSet<T1> {
     const copy = this.system!.initialise(new ElanSet<T1>());
     copy.contents.delete(item);
     return copy;

@@ -28,6 +28,15 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
+  var st = system.initialise(new _stdlib.ElanSet());
+  st = st.add(3).add(7).add(5);
+  system.printLine(_stdlib.asString(st.length()));
+  st = st.add(7);
+  system.printLine(_stdlib.asString(st.length()));
+  st = st.remove(3);
+  system.printLine(_stdlib.asString(st.length()));
+  st = st.remove(3);
+  system.printLine(_stdlib.asString(st.length()));
 }
 return [main, _tests];}`;
 
