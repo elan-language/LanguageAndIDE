@@ -224,7 +224,7 @@ export function matchGenericTypes(
   const matches = new Map<string, SymbolType>();
 
   if (isClassTypeDef(cls) && cls.ofTypes.length > 0) {
-    return cls.gpMap ?? matches;
+    return cls.genericParamMatches ?? matches;
   }
 
   const flattened = type.parametersTypes.map((n) => flatten(n));

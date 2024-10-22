@@ -133,7 +133,7 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
           .symbolType(transforms());
 
         if (isClassTypeDef(ct) && this.genericParameters.length > 0) {
-          ct.gpMap = matchClassGenericTypes(ct, this.genericParameters);
+          ct.genericParamMatches = matchClassGenericTypes(ct, this.genericParameters);
         }
 
         return cst;
