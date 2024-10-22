@@ -139,6 +139,22 @@ end main`;
     ]);
   });
 
+  test("Fail_LetShadowsLet", async () => {
+    const code = `# FFFF Elan Beta 3 valid
+
+main
+  let a be 1
+  let a be 2
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["May not reassign a"]);
+  });
+
   test("Pass_DisambiguateLocalVariableFromLibConstant", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
@@ -163,7 +179,31 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "3.141592653589793");
   });
 
-  test("Pass_DisambiguateLibFunctionFromInstanceFunction", async () => {
+  test("Pass_DisambiguateLocalLetFromLibConstant", async () => {
+    const code = `# FFFF Elan Beta 3 valid
+
+main
+  let pi be library.pi
+  print pi
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  const pi = _stdlib.pi;
+  system.printLine(_stdlib.asString(pi));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "3.141592653589793");
+  });
+
+  test("Pass_DisambiguateLibFunctionFromLocalAndInstanceFunctions", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
 main
@@ -218,24 +258,6 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "2221110.8414709848078965");
-  });
-
-  ignore_test("Fail_NoSuchGlobal", async () => {
-    const code = `# FFFF Elan Beta 3 valid
-
-constant b set to 4
-
-main
-  var a set to 3
-  print global.a
-end main`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types (Int, String, Int) to (Int, String)"]);
   });
 
   test("Fail_global", async () => {
