@@ -1,11 +1,10 @@
-import { ClassFrame } from "../globals/class-frame";
-import { RecordFrame } from "../globals/record-frame";
+import { ClassTypeDef } from "../interfaces/class-type-def";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../syntax-nodes/transforms";
-import { ClassTypeDef } from "./class-type-def";
 import { isSymbol } from "./symbol-helpers";
+import { SymbolScope } from "./symbol-scope";
 import { UnknownSymbol } from "./unknown-symbol";
 
 export class ClassType implements SymbolType, Scope {
@@ -14,7 +13,7 @@ export class ClassType implements SymbolType, Scope {
     public readonly isAbstract: boolean,
     public readonly isImmutable: boolean,
     public readonly inheritsFrom: SymbolType[],
-    public scope: ClassFrame | RecordFrame | ClassTypeDef | undefined,
+    public scope: ClassTypeDef | undefined,
   ) {}
 
   updateScope(scope: ClassTypeDef) {
@@ -67,8 +66,9 @@ export class ClassType implements SymbolType, Scope {
   }
 
   get initialValue() {
-    const prefix = this.scope instanceof ClassTypeDef ? "system.initialise(_stdlib." : "";
-    const postfix = this.scope instanceof ClassTypeDef ? ")" : "";
+    const isStdLib = this.scope?.symbolScope === SymbolScope.stdlib;
+    const prefix = isStdLib ? "system.initialise(_stdlib." : "";
+    const postfix = isStdLib ? ")" : "";
     return `${prefix}${this.className}.emptyInstance()${postfix}`;
   }
 }

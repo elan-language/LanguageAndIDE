@@ -1,15 +1,16 @@
+import { ClassTypeDef } from "../interfaces/class-type-def";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { constructorKeyword, thisKeyword } from "../keywords";
-import { isSymbol } from "../symbols/symbol-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 import { ClassType } from "./class-type";
 import { DuplicateSymbol } from "./duplicate-symbol";
+import { isSymbol } from "./symbol-helpers";
 import { SymbolScope } from "./symbol-scope";
 import { UnknownSymbol } from "./unknown-symbol";
 
-export class ClassTypeDef implements Scope, ElanSymbol {
+export class StdLibClassTypeDef implements ClassTypeDef {
   constructor(
     private readonly name: string,
     public readonly isAbstract: boolean,

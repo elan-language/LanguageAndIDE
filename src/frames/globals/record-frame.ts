@@ -10,6 +10,7 @@ import { mustBeUniqueNameInScope } from "../compile-rules";
 import { Regexes } from "../fields/regexes";
 import { TypeNameField } from "../fields/type-name-field";
 import { Class } from "../interfaces/class";
+import { ClassTypeDef } from "../interfaces/class-type-def";
 import { Collapsible } from "../interfaces/collapsible";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
@@ -18,6 +19,7 @@ import { Frame } from "../interfaces/frame";
 import { Parent } from "../interfaces/parent";
 import { Profile } from "../interfaces/profile";
 import { StatementFactory } from "../interfaces/statement-factory";
+import { SymbolType } from "../interfaces/symbol-type";
 import { constructorKeyword, recordKeyword, thisKeyword } from "../keywords";
 import {
   parentHelper_addChildAfter,
@@ -47,7 +49,7 @@ import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { Transforms } from "../syntax-nodes/transforms";
 
-export class RecordFrame extends AbstractFrame implements Class, Parent, Collapsible, ElanSymbol {
+export class RecordFrame extends AbstractFrame implements Class, Parent, Collapsible, ClassTypeDef {
   isCollapsible: boolean = true;
   isParent: boolean = true;
   isClass: boolean = true;
@@ -60,6 +62,8 @@ export class RecordFrame extends AbstractFrame implements Class, Parent, Collaps
     this.name = new TypeNameField(this);
     this.getChildren().push(new MemberSelector(this));
   }
+
+  ofTypes: SymbolType[] = [];
 
   getFile(): File {
     return this.getParent() as File;

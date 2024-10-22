@@ -16,7 +16,6 @@ import { AbstractDictionaryType } from "./frames/symbols/abstract-dictionary-typ
 import { ArrayType } from "./frames/symbols/array-list-type";
 import { BooleanType } from "./frames/symbols/boolean-type";
 import { ClassType } from "./frames/symbols/class-type";
-import { ClassTypeDef } from "./frames/symbols/class-type-def";
 import { DictionaryType } from "./frames/symbols/dictionary-type";
 import { FloatType } from "./frames/symbols/float-type";
 import { FunctionType } from "./frames/symbols/function-type";
@@ -27,6 +26,7 @@ import { IterableType } from "./frames/symbols/iterable-type";
 import { ListType } from "./frames/symbols/list-type";
 import { ProcedureType } from "./frames/symbols/procedure-type";
 import { RegexType } from "./frames/symbols/regex-type";
+import { StdLibClassTypeDef } from "./frames/symbols/stdlib-class-type-def";
 import { StringType } from "./frames/symbols/string-type";
 import { SymbolScope } from "./frames/symbols/symbol-scope";
 import { TupleType } from "./frames/symbols/tuple-type";
@@ -246,7 +246,13 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
     const classType = tempMap.get(className)!;
     tempMap.delete(className);
 
-    const classTypeDef = new ClassTypeDef(className, classMetadata.isAbstract, [], [], scope!);
+    const classTypeDef = new StdLibClassTypeDef(
+      className,
+      classMetadata.isAbstract,
+      [],
+      [],
+      scope!,
+    );
 
     classType.updateScope(classTypeDef);
 

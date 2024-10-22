@@ -10,6 +10,7 @@ import { isClass, isConstant, isFile, isMember, isScope } from "../helpers";
 import { AstNode } from "../interfaces/ast-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { Class } from "../interfaces/class";
+import { ClassTypeDef } from "../interfaces/class-type-def";
 import { DeconstructedSymbolType } from "../interfaces/deconstructed-symbol-type";
 import { DictionarySymbolType } from "../interfaces/dictionary-symbol-type";
 import { ElanSymbol } from "../interfaces/elan-symbol";
@@ -86,6 +87,10 @@ export function isProperty(s?: ElanSymbol): s is Property {
 
 export function isVarOrPropertyStatement(s?: ElanSymbol): boolean {
   return !!s && (isVarStatement(s) || isProperty(s));
+}
+
+export function isClassTypeDef(s?: ElanSymbol | Scope): s is ClassTypeDef {
+  return !!s && "gpMap" in s;
 }
 
 export function isMemberOnFieldsClass(s: ElanSymbol, transforms: Transforms, scope: Scope) {

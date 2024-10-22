@@ -8,11 +8,11 @@ import { AstIndexableNode } from "../interfaces/ast-indexable-node";
 import { AstNode } from "../interfaces/ast-node";
 import { AstQualifiedNode } from "../interfaces/ast-qualified-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
+import { ClassTypeDef } from "../interfaces/class-type-def";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { AbstractDictionaryType } from "../symbols/abstract-dictionary-type";
 import { ArrayType } from "../symbols/array-list-type";
-import { ClassTypeDef } from "../symbols/class-type-def";
 import { DictionaryType } from "../symbols/dictionary-type";
 import { FunctionType } from "../symbols/function-type";
 import { GenericParameterType } from "../symbols/generic-parameter-type";
@@ -21,7 +21,7 @@ import { IterableType } from "../symbols/iterable-type";
 import { ListType } from "../symbols/list-type";
 import { ProcedureType } from "../symbols/procedure-type";
 import { StringType } from "../symbols/string-type";
-import { isAnyDictionaryType } from "../symbols/symbol-helpers";
+import { isAnyDictionaryType, isClassTypeDef } from "../symbols/symbol-helpers";
 import { TupleType } from "../symbols/tuple-type";
 import { UnknownType } from "../symbols/unknown-type";
 import { transform, transformMany } from "./ast-visitor";
@@ -219,11 +219,11 @@ export function match(
 export function matchGenericTypes(
   type: FunctionType | ProcedureType,
   parameters: AstNode[],
-  cls?: ClassTypeDef,
+  cls?: Scope,
 ) {
   const matches = new Map<string, SymbolType>();
 
-  if (cls) {
+  if (isClassTypeDef(cls) && cls.ofTypes.length > 0) {
     return cls.gpMap ?? matches;
   }
 
@@ -245,15 +245,14 @@ export function matchClassGenericTypes(type: ClassTypeDef, parameters: AstNode[]
 export function matchParametersAndTypes(
   funcSymbolType: FunctionType | ProcedureType,
   parameters: AstNode[],
-  scope: Scope | undefined,
+  classTypeDef: Scope | undefined,
   compileErrors: CompileError[],
   location: string,
 ) {
   let parameterTypes = funcSymbolType.parametersTypes;
 
   if (parameterTypes.some((pt) => containsGenericType(pt))) {
-    const cls = scope instanceof ClassTypeDef ? scope : undefined;
-    const matches = matchGenericTypes(funcSymbolType, parameters, cls);
+    const matches = matchGenericTypes(funcSymbolType, parameters, classTypeDef);
     parameterTypes = parameterTypes.map((pt) => generateType(pt, matches));
   }
 

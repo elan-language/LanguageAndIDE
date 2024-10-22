@@ -6,7 +6,6 @@ import { Scope } from "../interfaces/scope";
 import { ArrayType } from "../symbols/array-list-type";
 import { BooleanType } from "../symbols/boolean-type";
 import { ClassType } from "../symbols/class-type";
-import { ClassTypeDef } from "../symbols/class-type-def";
 import { DictionaryType } from "../symbols/dictionary-type";
 import { FloatType } from "../symbols/float-type";
 import { FunctionType } from "../symbols/function-type";
@@ -15,6 +14,7 @@ import { IntType } from "../symbols/int-type";
 import { ListType } from "../symbols/list-type";
 import { RegexType } from "../symbols/regex-type";
 import { StringType } from "../symbols/string-type";
+import { isClassTypeDef } from "../symbols/symbol-helpers";
 import { TupleType } from "../symbols/tuple-type";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
@@ -52,8 +52,8 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
 
     const st = this.symbolType();
 
-    if (st instanceof ClassType && st.scope instanceof ClassTypeDef) {
-      return st.scope.ofTypes.length;
+    if (st instanceof ClassType) {
+      return st.scope?.ofTypes.length ?? 0;
     }
 
     if (st instanceof FunctionType) {
@@ -132,7 +132,7 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
           .resolveSymbol(this.id, transforms(), this.scope)
           .symbolType(transforms());
 
-        if (ct instanceof ClassTypeDef && this.genericParameters.length > 0) {
+        if (isClassTypeDef(ct) && this.genericParameters.length > 0) {
           ct.gpMap = matchClassGenericTypes(ct, this.genericParameters);
         }
 
