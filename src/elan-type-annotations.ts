@@ -375,7 +375,7 @@ export function elanClassExport(cls: { name: string; prototype: object }) {
   };
 }
 
-export function elanType(eType: TypeDescriptor | ElanFuncTypeDescriptor) {
+export function elanType(eType: TypeDescriptor) {
   return function (target: object, propertyKey: string | symbol, parameterIndex: number) {
     const metaData: ElanMethodDescriptor =
       Reflect.getOwnMetadata(elanMetadataKey, target, propertyKey) ??

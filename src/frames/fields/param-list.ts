@@ -1,5 +1,7 @@
 import { CodeSource } from "../code-source";
-import { mustBeUniqueNameInScope } from "../compile-rules";
+import { mustBeUniqueNameInScope, mustNotBeRedefined } from "../compile-rules";
+import { AstIdNode } from "../interfaces/ast-id-node";
+import { AstNode } from "../interfaces/ast-node";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Frame } from "../interfaces/frame";
 import { Scope } from "../interfaces/scope";
@@ -11,6 +13,7 @@ import { ParseStatus } from "../status-enums";
 import { DuplicateSymbol } from "../symbols/duplicate-symbol";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { isAstCollectionNode, isAstIdNode, transforms } from "../syntax-nodes/ast-helpers";
+import { EmptyAsn } from "../syntax-nodes/empty-asn";
 import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractField } from "./abstract-field";
 
@@ -110,25 +113,37 @@ export class ParamList extends AbstractField implements Scope {
     return this.text === "" && key === ")";
   }
 
+  private mustNotBeRedefined(id: string, transforms: Transforms) {
+    // up two or we just get the parameter again
+    const symbol = this.getParentScope().getParentScope().resolveSymbol(id, transforms, this);
+    mustNotBeRedefined(symbol, this.compileErrors, this.htmlId);
+  }
+
+  private getIdNodes(parms: AstNode | EmptyAsn): AstIdNode[] {
+    if (isAstCollectionNode(parms)) {
+      return parms.items.filter((n) => isAstIdNode(n)) as AstIdNode[];
+    }
+
+    return [];
+  }
+
   compile(transforms: Transforms): string {
     this.compileErrors = [];
 
     if (this.rootNode && this.rootNode.status === ParseStatus.valid) {
       const parms = this.getOrTransformAstNode(transforms);
 
-      if (isAstCollectionNode(parms)) {
-        if (parms.items.length > 1) {
-          const ids = parms.items;
+      const idNodes = this.getIdNodes(parms);
 
-          for (const idNode of ids) {
-            if (isAstIdNode(idNode)) {
-              mustBeUniqueNameInScope(idNode.id, this, transforms, this.compileErrors, this.htmlId);
-            }
-          }
+      for (const idNode of idNodes) {
+        if (idNodes.length > 1) {
+          mustBeUniqueNameInScope(idNode.id, this, transforms, this.compileErrors, this.htmlId);
         }
 
-        return parms.compile();
+        this.mustNotBeRedefined(idNode.id, transforms);
       }
+
+      return parms.compile();
     }
 
     return "";

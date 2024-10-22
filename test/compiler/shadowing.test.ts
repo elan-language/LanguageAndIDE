@@ -157,6 +157,29 @@ end main`;
     ]);
   });
 
+  test("Fail_ParameterShadowsConst", async () => {
+    const code = `# FFFF Elan Beta 3 valid
+
+constant x set to 1
+
+main
+  
+end main
+
+function foo(x as Int) return Int
+  return x
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "The identifier 'x' is already used for a constant and cannot be re-defined here.",
+    ]);
+  });
+
   test("Pass_DisambiguateLocalVariableFromLibConstant", async () => {
     const code = `# FFFF Elan Beta 3 valid
 

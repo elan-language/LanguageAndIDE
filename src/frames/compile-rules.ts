@@ -909,7 +909,10 @@ export function mustNotBeRedefined(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (!(variable instanceof UnknownSymbol) && variable.symbolScope !== SymbolScope.stdlib) {
+  if (
+    !(variable instanceof UnknownSymbol) &&
+    !(variable.symbolScope === SymbolScope.stdlib || variable.symbolScope === SymbolScope.property)
+  ) {
     compileErrors.push(
       new RedefinedCompileError(variable.symbolId, mapToPurpose(variable), location),
     );
