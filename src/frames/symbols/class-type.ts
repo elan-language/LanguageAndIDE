@@ -1,4 +1,4 @@
-import { ClassTypeDef } from "../interfaces/class-type-def";
+import { Class } from "../interfaces/class";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
@@ -13,10 +13,10 @@ export class ClassType implements SymbolType, Scope {
     public readonly isAbstract: boolean,
     public readonly isImmutable: boolean,
     public readonly inheritsFrom: SymbolType[],
-    public scope: ClassTypeDef | undefined,
+    public scope: Class | undefined,
   ) {}
 
-  updateScope(scope: ClassTypeDef) {
+  updateScope(scope: Class) {
     this.scope = scope;
   }
 

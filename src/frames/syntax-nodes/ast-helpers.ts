@@ -8,7 +8,7 @@ import { AstIndexableNode } from "../interfaces/ast-indexable-node";
 import { AstNode } from "../interfaces/ast-node";
 import { AstQualifiedNode } from "../interfaces/ast-qualified-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
-import { ClassTypeDef } from "../interfaces/class-type-def";
+import { Class } from "../interfaces/class";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { AbstractDictionaryType } from "../symbols/abstract-dictionary-type";
@@ -234,7 +234,7 @@ export function matchGenericTypes(
   return matches;
 }
 
-export function matchClassGenericTypes(type: ClassTypeDef, parameters: AstNode[]) {
+export function matchClassGenericTypes(type: Class, parameters: AstNode[]) {
   const matches = new Map<string, SymbolType>();
   const flattened = type.ofTypes.map((n) => flatten(n));
   const pTypes = parameters.map((p) => flatten(p.symbolType()));

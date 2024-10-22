@@ -1,4 +1,4 @@
-import { ClassTypeDef } from "../interfaces/class-type-def";
+import { Class } from "../interfaces/class";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
@@ -10,7 +10,7 @@ import { isSymbol } from "./symbol-helpers";
 import { SymbolScope } from "./symbol-scope";
 import { UnknownSymbol } from "./unknown-symbol";
 
-export class StdLibClassTypeDef implements ClassTypeDef {
+export class StdLibClass implements Class {
   constructor(
     private readonly name: string,
     public readonly abstract: boolean,
