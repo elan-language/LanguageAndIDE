@@ -17,8 +17,17 @@ import { StdLib } from "./std-lib";
 
 export class StdLibSymbols implements Scope {
   constructor() {
-    this.loadSymbols();
+    try {
+      this.loadSymbols();
+      this.isInitialised = true;
+    } catch (e) {
+      this.isInitialised = false;
+      this.error = (e as { message: string }).message;
+    }
   }
+
+  isInitialised: boolean = false;
+  error: string = "";
 
   private symbols = new Map<string, ElanSymbol>();
 

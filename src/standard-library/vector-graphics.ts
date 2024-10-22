@@ -1,5 +1,6 @@
 import {
   ElanClass,
+  elanClassType,
   elanFunction,
   elanProcedure,
   ElanString,
@@ -24,7 +25,7 @@ export class VectorGraphics {
   private internalRep: VGBase[] = [];
 
   @elanFunction(FunctionOptions.pure, ElanClass(VectorGraphics))
-  add(@elanType(ElanClass(VGBase)) obj: VGBase): VectorGraphics {
+  add(@elanClassType(VGBase) obj: VGBase): VectorGraphics {
     const copy = this.system!.initialise(new VectorGraphics());
     copy.internalRep = this.internalRep;
     copy.internalRep.push(obj);

@@ -283,7 +283,7 @@ export class TypescriptTypeDescriptor implements TypeDescriptor {
       case "Array":
         throw new ElanCompilerError("Typescript 'Array' must be mapped into Elan types");
     }
-    throw new Error("NotImplemented: " + this.name);
+    throw new ElanCompilerError("Missing type annotation in stdlib class");
   }
 }
 
@@ -492,6 +492,10 @@ export function elanTupleType(ofTypes: TypeDescriptor[]) {
 
 export function elanFuncType(parameters: TypeDescriptor[], returnType: TypeDescriptor) {
   return elanType(ElanFunc(parameters, returnType));
+}
+
+export function elanClassType(cls: { name: string; prototype: object }) {
+  return elanType(ElanClass(cls));
 }
 
 export enum FunctionOptions {
