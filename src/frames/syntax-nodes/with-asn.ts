@@ -6,7 +6,7 @@ import {
   mustBeRecord,
   mustBeRecordType,
 } from "../compile-rules";
-import { isClass } from "../helpers";
+import { isClassTypeDef } from "../helpers";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstNode } from "../interfaces/ast-node";
 import { Scope } from "../interfaces/scope";
@@ -47,7 +47,7 @@ export class WithAsn extends AbstractAstNode implements AstNode {
       mustBeClass(classSymbol, this.compileErrors, this.fieldId);
       mustBeRecord(classSymbol.symbolType(), this.compileErrors, this.fieldId);
 
-      if (isClass(classSymbol)) {
+      if (isClassTypeDef(classSymbol)) {
         for (const ast of this.withClause.items as SetAsn[]) {
           const propertyId = ast.id;
           const type = ast.symbolType();

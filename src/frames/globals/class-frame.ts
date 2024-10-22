@@ -20,7 +20,6 @@ import { InheritsFrom } from "../fields/inheritsFrom";
 import { Regexes } from "../fields/regexes";
 import { TypeNameField } from "../fields/type-name-field";
 import { isMember } from "../helpers";
-import { Class } from "../interfaces/class";
 import { ClassTypeDef } from "../interfaces/class-type-def";
 import { Collapsible } from "../interfaces/collapsible";
 import { ElanSymbol } from "../interfaces/elan-symbol";
@@ -62,7 +61,7 @@ import { UnknownType } from "../symbols/unknown-type";
 import { flatten, isAstCollectionNode, isAstIdNode } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 
-export class ClassFrame extends AbstractFrame implements Class, Parent, Collapsible, ClassTypeDef {
+export class ClassFrame extends AbstractFrame implements Frame, Parent, Collapsible, ClassTypeDef {
   isCollapsible: boolean = true;
   isParent: boolean = true;
   isClass: boolean = true;

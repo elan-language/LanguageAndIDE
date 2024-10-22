@@ -28,7 +28,7 @@ import {
   TypesCompileError,
   UndefinedSymbolCompileError,
 } from "./compile-error";
-import { isClass, isFunction, isInsideFunctionOrConstructor, isMember } from "./helpers";
+import { isClassTypeDef, isFunction, isInsideFunctionOrConstructor, isMember } from "./helpers";
 import { AstNode } from "./interfaces/ast-node";
 import { ElanSymbol } from "./interfaces/elan-symbol";
 import { Parent } from "./interfaces/parent";
@@ -333,7 +333,7 @@ export function mustBeConcreteClass(
 }
 
 export function mustBeClass(symbol: ElanSymbol, compileErrors: CompileError[], location: string) {
-  if (!isClass(symbol)) {
+  if (!isClassTypeDef(symbol)) {
     const st = symbol.symbolType();
     const unknown = st instanceof UnknownType;
     compileErrors.push(new TypeCompileError("Class", location, unknown));

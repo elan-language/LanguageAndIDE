@@ -9,7 +9,6 @@ import { CompileError } from "../compile-error";
 import { mustBeUniqueNameInScope } from "../compile-rules";
 import { Regexes } from "../fields/regexes";
 import { TypeNameField } from "../fields/type-name-field";
-import { Class } from "../interfaces/class";
 import { ClassTypeDef } from "../interfaces/class-type-def";
 import { Collapsible } from "../interfaces/collapsible";
 import { ElanSymbol } from "../interfaces/elan-symbol";
@@ -49,7 +48,7 @@ import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { Transforms } from "../syntax-nodes/transforms";
 
-export class RecordFrame extends AbstractFrame implements Class, Parent, Collapsible, ClassTypeDef {
+export class RecordFrame extends AbstractFrame implements Frame, Parent, Collapsible, ClassTypeDef {
   isCollapsible: boolean = true;
   isParent: boolean = true;
   isClass: boolean = true;

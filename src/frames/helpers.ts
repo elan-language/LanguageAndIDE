@@ -2,7 +2,7 @@ import { AbstractSelector } from "./abstract-selector";
 import { CompileError } from "./compile-error";
 import { AstNode } from "./interfaces/ast-node";
 import { AstTypeNode } from "./interfaces/ast-type-node";
-import { Class } from "./interfaces/class";
+import { ClassTypeDef } from "./interfaces/class-type-def";
 import { Collapsible } from "./interfaces/collapsible";
 import { ElanSymbol } from "./interfaces/elan-symbol";
 import { Field } from "./interfaces/field";
@@ -29,8 +29,8 @@ export function isFile(f?: Scope): f is File {
   return !!f && "isFile" in f;
 }
 
-export function isClass(f?: ElanSymbol | Scope): f is Class {
-  return !!f && "isClass" in f;
+export function isClassTypeDef(f?: ElanSymbol | Scope): f is ClassTypeDef {
+  return !!f && "genericParamMatches" in f;
 }
 
 export function isFrame(f?: Selectable | Scope): f is Frame {

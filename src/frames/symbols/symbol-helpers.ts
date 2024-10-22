@@ -6,10 +6,9 @@ import {
   cannotAccessPrivateMemberInAbstractClass,
 } from "../compile-rules";
 import { ClassFrame } from "../globals/class-frame";
-import { isClass, isConstant, isFile, isMember, isScope } from "../helpers";
+import { isConstant, isFile, isMember, isScope } from "../helpers";
 import { AstNode } from "../interfaces/ast-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
-import { Class } from "../interfaces/class";
 import { ClassTypeDef } from "../interfaces/class-type-def";
 import { DeconstructedSymbolType } from "../interfaces/deconstructed-symbol-type";
 import { DictionarySymbolType } from "../interfaces/dictionary-symbol-type";
@@ -118,14 +117,14 @@ export function scopePrefix(
     const thisClass = getClassScope(scope);
 
     if (symbol.private && symbolClass !== thisClass) {
-      if (isClass(thisClass) && thisClass.abstract) {
+      if (isClassTypeDef(thisClass) && thisClass.abstract) {
         cannotAccessPrivateMemberInAbstractClass(symbol.symbolId, compileErors, location);
       }
 
       return `this._${symbolClass.symbolId}.`;
     }
 
-    if (symbol.isAbstract && isClass(thisClass) && thisClass.abstract) {
+    if (symbol.isAbstract && isClassTypeDef(thisClass) && thisClass.abstract) {
       cannotAccessAbstractMemberInAbstractClass(symbol.symbolId, compileErors, location);
     }
   }
@@ -215,12 +214,12 @@ export function getGlobalScope(start: Scope): File {
   return getGlobalScope(start.getParentScope());
 }
 
-export function getClassScope(start: Scope): Class | NullScope {
+export function getClassScope(start: Scope): ClassTypeDef | NullScope {
   if (start instanceof NullScope) {
     return start;
   }
 
-  if (isClass(start)) {
+  if (isClassTypeDef(start)) {
     return start;
   }
 
@@ -356,7 +355,7 @@ export function matchingSymbols(
     if (qualSt instanceof ClassType) {
       const cls = getGlobalScope(scope).resolveSymbol(qualSt.className, transforms, scope);
 
-      if (isClass(cls)) {
+      if (isClassTypeDef(cls)) {
         return [
           propId,
           cls.symbolMatches(propId, !propId).filter((s) => s.symbolScope === SymbolScope.property),
