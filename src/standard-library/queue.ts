@@ -12,7 +12,7 @@ import {
 import { System } from "../system";
 
 @elanClass(ClassOptions.concrete, [ElanT1])
-export class Queue {
+export class Queue<T1> {
   // this must be implemented by hand on all stdlib classes
   static emptyInstance() {
     return new Queue();
@@ -22,12 +22,12 @@ export class Queue {
     this.contents = [];
   }
 
-  private contents: object[];
+  private contents: T1[];
 
   private system?: System;
 
   @elanFunction(FunctionOptions.pure, ElanT1)
-  peek() {
+  peek(): T1 {
     if (this.contents.length === 0) {
       throw new ElanRuntimeError(`Cannot peek an empty Queue - check using length()`);
     }
@@ -40,12 +40,12 @@ export class Queue {
   }
 
   @elanProcedure()
-  enqueue<T1 extends object>(@elanGenericParamT1Type() item: T1) {
+  enqueue(@elanGenericParamT1Type() item: T1) {
     if (this.contents.length > 0) {
       const itemT = typeof item;
-      const stackT = typeof this.contents[0];
+      const queueT = typeof this.contents[0];
       // TODO: This check can be removed when the class has generic type
-      if (itemT !== stackT) {
+      if (itemT !== queueT) {
         throw new ElanRuntimeError(
           `Attempting to push an incompatible type onto a non-empty Queue`,
         );
@@ -55,7 +55,7 @@ export class Queue {
   }
 
   @elanFunction(FunctionOptions.impure, ElanT1)
-  dequeue() {
+  dequeue(): T1 {
     if (this.contents.length === 0) {
       throw new ElanRuntimeError(`Cannot dequeue an empty Queue - check using length()`);
     }

@@ -11,7 +11,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("Standard Data Structures", () => {
+suite("Stack", () => {
   test("Pass_Stack", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
