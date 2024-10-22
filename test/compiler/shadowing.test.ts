@@ -58,6 +58,87 @@ end function`;
     ]);
   });
 
+  test("Fail_IdShadowsProcedure", async () => {
+    const code = `# FFFF Elan Beta 3 valid
+
+main
+  call foo()
+end main
+procedure foo()
+
+end procedure
+
+function bar() return Int
+  var foo set to 1
+  return foo
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "The identifier 'foo' is already used for a procedure and cannot be re-defined here.",
+    ]);
+  });
+
+  test("Fail_IdShadowsParameter", async () => {
+    const code = `# FFFF Elan Beta 3 valid
+
+main
+  call foo(1)
+end main
+procedure foo(a as Int)
+  var a set to a
+end procedure`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "The identifier 'a' is already used for a parameter and cannot be re-defined here.",
+    ]);
+  });
+
+  test("Fail_IdShadowsVariable", async () => {
+    const code = `# FFFF Elan Beta 3 valid
+
+main
+  var a set to 1
+  var a set to 2
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "The identifier 'a' is already used for a variable and cannot be re-defined here.",
+    ]);
+  });
+
+  test("Fail_IdShadowsLet", async () => {
+    const code = `# FFFF Elan Beta 3 valid
+
+main
+  let a be 1
+  var a set to 2
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "The identifier 'a' is already used for a 'let' and cannot be re-defined here.",
+    ]);
+  });
+
   test("Pass_DisambiguateLocalVariableFromLibConstant", async () => {
     const code = `# FFFF Elan Beta 3 valid
 

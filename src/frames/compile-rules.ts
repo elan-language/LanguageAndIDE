@@ -36,6 +36,7 @@ import {
   isProcedure,
   isInsideFunctionOrConstructor,
   isMember,
+  isLet,
 } from "./helpers";
 import { AstNode } from "./interfaces/ast-node";
 import { ElanSymbol } from "./interfaces/elan-symbol";
@@ -904,6 +905,10 @@ function mapToPurpose(symbol: ElanSymbol) {
 
   if (isProcedure(symbol)) {
     return "procedure";
+  }
+
+  if (isLet(symbol)) {
+    return "'let'";
   }
 
   return "variable";

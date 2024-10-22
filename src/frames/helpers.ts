@@ -13,6 +13,7 @@ import { Member } from "./interfaces/member";
 import { Parent } from "./interfaces/parent";
 import { Scope } from "./interfaces/scope";
 import { Selectable } from "./interfaces/selectable";
+import { Statement } from "./interfaces/statement";
 import { SymbolType } from "./interfaces/symbol-type";
 import { CompileStatus, DisplayStatus, ParseStatus, RunStatus, TestStatus } from "./status-enums";
 import { ArrayType } from "./symbols/array-list-type";
@@ -59,6 +60,10 @@ export function isFunction(f?: Scope | Member | ElanSymbol): f is Member {
 
 export function isProcedure(f?: Scope | Member | ElanSymbol): f is Member {
   return !!f && "isProcedure" in f;
+}
+
+export function isLet(f?: ElanSymbol | Statement): f is Statement {
+  return !!f && "isLet" in f;
 }
 
 export function isConstructor(f?: Scope | Member): f is Member {

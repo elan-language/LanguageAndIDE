@@ -25,6 +25,8 @@ export class LetStatement extends AbstractFrame implements Statement, ElanSymbol
     this.expr = new ExpressionField(this);
   }
 
+  isLet = true;
+
   ids(transforms?: Transforms) {
     return getIds(this.name.getOrTransformAstNode(transforms));
   }
