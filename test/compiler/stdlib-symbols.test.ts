@@ -19,8 +19,8 @@ main
  
 end main
 
-procedure renderSvg(out svg as SVG)
-  call svg.renderAsSVG()
+procedure renderSvg(out vg as VGBase)
+  call vg.renderAsSVG()
 end procedure`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -28,8 +28,8 @@ async function main() {
 
 }
 
-async function renderSvg(svg) {
-  await svg[0].renderAsSVG();
+async function renderSvg(vg) {
+  await vg[0].renderAsSVG();
 }
 return [main, _tests];}`;
 
@@ -46,7 +46,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan Beta 3 valid
 
 main
-  var svg set to new SVG()
+  var svg set to new VGBase()
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -54,6 +54,6 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["SVG must be concrete to new"]);
+    assertDoesNotCompile(fileImpl, ["VGBase must be concrete to new"]);
   });
 });
