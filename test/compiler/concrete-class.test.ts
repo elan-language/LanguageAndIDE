@@ -983,7 +983,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Generic parameters expected: 0 got: 1"]);
+    assertDoesNotCompile(fileImpl, ["<of Type(s)> expected: 0 got: 1"]);
   });
 
   test("Fail_UnnecessaryGenericParm2", async () => {
@@ -998,6 +998,6 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Generic parameters expected: 0 got: 1"]);
+    assertDoesNotCompile(fileImpl, ["<of Type(s)> expected: 0 got: 1"]);
   });
 });
