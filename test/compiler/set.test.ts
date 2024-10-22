@@ -14,7 +14,7 @@ suite("Set", () => {
     const code = `# FFFF Elan Beta 3 valid
 
 main
-  var st set to new ElanSet<of Int>()
+  var st set to new Set<of Int>()
   set st to st.add(3).add(7).add(5)
   print st.length()
   set st to st.add(7)
@@ -28,7 +28,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var st = system.initialise(new _stdlib.ElanSet());
+  var st = system.initialise(new _stdlib.Set());
   st = st.add(3).add(7).add(5);
   system.printLine(_stdlib.asString(st.length()));
   st = st.add(7);

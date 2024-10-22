@@ -70,7 +70,7 @@ export class StdLib {
   Queue = Queue;
 
   @elanClassExport(ElanSet)
-  ElanSet = ElanSet;
+  Set = ElanSet;
 
   @elanClassExport(SVG)
   SVG = SVG;
