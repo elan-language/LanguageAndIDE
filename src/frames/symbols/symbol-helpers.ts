@@ -20,7 +20,7 @@ import { IterableSymbolType } from "../interfaces/iterable-symbol-type";
 import { Parent } from "../interfaces/parent";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
-import { globalKeyword, libraryKeyword } from "../keywords";
+import { libraryKeyword } from "../keywords";
 import { isAstIdNode, isAstQualifiedNode, transforms } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractDictionaryType } from "./abstract-dictionary-type";
@@ -151,10 +151,6 @@ function internalUpdateScopeAndQualifier(
     );
     // replace scope with class scope
     currentScope = isScope(classSymbol) ? classSymbol : currentScope;
-  } else if (isAstIdNode(value) && value.id === globalKeyword) {
-    // todo kludge
-    currentScope = getGlobalScope(currentScope);
-    qualifier = undefined;
   } else if (isAstIdNode(value) && value.id === libraryKeyword) {
     currentScope = getGlobalScope(currentScope).libraryScope;
     qualifier = undefined;

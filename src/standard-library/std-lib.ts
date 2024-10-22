@@ -38,10 +38,12 @@ import { BlockGraphics } from "./block-graphics";
 import { Queue } from "./queue";
 import { Random } from "./random";
 import { Stack } from "./stack";
-import { SVG } from "./svg";
 import { TextFileReader } from "./text-file-reader";
 import { TextFileWriter } from "./text-file-writer";
 import { ElanSet } from "./set";
+import { VGBase } from "./vg-base";
+import { VGCircle } from "./vg-circle";
+import { VectorGraphics } from "./vector-graphics";
 
 export class StdLib {
   constructor() {
@@ -72,8 +74,14 @@ export class StdLib {
   @elanClassExport(ElanSet)
   Set = ElanSet;
 
-  @elanClassExport(SVG)
-  SVG = SVG;
+  @elanClassExport(VectorGraphics)
+  VectorGraphics = VectorGraphics;
+
+  @elanClassExport(VGBase)
+  VGBase = VGBase;
+
+  @elanClassExport(VGCircle)
+  VGCircle = VGCircle;
 
   // Standard colours
 

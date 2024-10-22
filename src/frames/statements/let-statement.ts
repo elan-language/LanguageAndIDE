@@ -1,6 +1,6 @@
 import { AbstractFrame } from "../abstract-frame";
 import { CodeSource } from "../code-source";
-import { mustBeDeconstructableType, mustNotBeKeyword, mustNotBeReassigned } from "../compile-rules";
+import { mustBeDeconstructableType, mustNotBeKeyword, mustNotBeRedefined } from "../compile-rules";
 import { ExpressionField } from "../fields/expression-field";
 import { VarDefField } from "../fields/var-def-field";
 import { mapIds, mapSymbolType } from "../helpers";
@@ -24,6 +24,8 @@ export class LetStatement extends AbstractFrame implements Statement, ElanSymbol
     this.name = new VarDefField(this);
     this.expr = new ExpressionField(this);
   }
+
+  isLet = true;
 
   ids(transforms?: Transforms) {
     return getIds(this.name.getOrTransformAstNode(transforms));
@@ -76,7 +78,7 @@ export class LetStatement extends AbstractFrame implements Statement, ElanSymbol
     for (const i of ids) {
       mustNotBeKeyword(i, this.compileErrors, this.htmlId);
       const symbol = this.getParent().resolveSymbol(i!, transforms, this);
-      mustNotBeReassigned(symbol, this.compileErrors, this.htmlId);
+      mustNotBeRedefined(symbol, this.compileErrors, this.htmlId);
     }
 
     const val = this.expr.compile(transforms);

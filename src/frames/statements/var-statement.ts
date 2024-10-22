@@ -1,11 +1,6 @@
 import { AbstractFrame } from "../abstract-frame";
 import { CodeSource } from "../code-source";
-import {
-  mustBeDeconstructableType,
-  mustNotBeKeyword,
-  mustNotBeReassigned,
-  mustNotBeRedefined,
-} from "../compile-rules";
+import { mustBeDeconstructableType, mustNotBeKeyword, mustNotBeRedefined } from "../compile-rules";
 import { ExpressionField } from "../fields/expression-field";
 import { VarDefField } from "../fields/var-def-field";
 import { mapIds, mapSymbolType } from "../helpers";

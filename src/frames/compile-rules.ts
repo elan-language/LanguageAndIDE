@@ -36,6 +36,7 @@ import {
   isProcedure,
   isInsideFunctionOrConstructor,
   isMember,
+  isLet,
 } from "./helpers";
 import { AstNode } from "./interfaces/ast-node";
 import { ElanSymbol } from "./interfaces/elan-symbol";
@@ -879,16 +880,6 @@ export function mustNotBeLet(symbol: ElanSymbol, compileErrors: CompileError[], 
   }
 }
 
-export function mustNotBeReassigned(
-  variable: ElanSymbol,
-  compileErrors: CompileError[],
-  location: string,
-) {
-  if (!(variable instanceof UnknownSymbol) && variable.symbolScope === SymbolScope.local) {
-    compileErrors.push(new ReassignCompileError(variable.symbolId, location));
-  }
-}
-
 function mapToPurpose(symbol: ElanSymbol) {
   if (symbol.symbolScope === SymbolScope.parameter) {
     return "parameter";
@@ -906,6 +897,10 @@ function mapToPurpose(symbol: ElanSymbol) {
     return "procedure";
   }
 
+  if (isLet(symbol)) {
+    return "'let'";
+  }
+
   return "variable";
 }
 
@@ -914,7 +909,10 @@ export function mustNotBeRedefined(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (!(variable instanceof UnknownSymbol) && variable.symbolScope !== SymbolScope.stdlib) {
+  if (
+    !(variable instanceof UnknownSymbol) &&
+    !(variable.symbolScope === SymbolScope.stdlib || variable.symbolScope === SymbolScope.property)
+  ) {
     compileErrors.push(
       new RedefinedCompileError(variable.symbolId, mapToPurpose(variable), location),
     );

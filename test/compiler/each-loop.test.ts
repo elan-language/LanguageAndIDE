@@ -185,7 +185,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not reassign x"]);
+    assertDoesNotCompile(fileImpl, [
+      "The identifier 'x' is already used for a variable and cannot be re-defined here.",
+    ]);
   });
 
   test("Fail_variableIsScoped2", async () => {
