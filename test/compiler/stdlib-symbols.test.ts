@@ -19,7 +19,7 @@ main
  
 end main
 
-procedure renderSvg(out vg as VGBase)
+procedure renderSvg(out vg as BaseVG)
   call vg.renderAsSVG()
 end procedure`;
 
@@ -46,7 +46,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan Beta 3 valid
 
 main
-  var svg set to new VGBase()
+  var svg set to new BaseVG()
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -54,6 +54,6 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["VGBase must be concrete to new"]);
+    assertDoesNotCompile(fileImpl, ["BaseVG must be concrete to new"]);
   });
 });

@@ -9,7 +9,7 @@ import {
   ProcedureOptions,
 } from "../elan-type-annotations";
 import { System } from "../system";
-import { VGBase } from "./vg-base";
+import { BaseVG } from "./base-vg";
 
 export class VectorGraphics {
   // this must be implemented by hand on all stdlib classes
@@ -21,10 +21,10 @@ export class VectorGraphics {
 
   private system?: System;
 
-  private internalRep: VGBase[] = [];
+  private internalRep: BaseVG[] = [];
 
   @elanFunction(FunctionOptions.pure, ElanClass(VectorGraphics))
-  add(@elanType(ElanClass(VGBase)) obj: VGBase): VectorGraphics {
+  add(@elanType(ElanClass(BaseVG)) obj: BaseVG): VectorGraphics {
     const copy = this.system!.initialise(new VectorGraphics());
     copy.internalRep = this.internalRep;
     copy.internalRep.push(obj);

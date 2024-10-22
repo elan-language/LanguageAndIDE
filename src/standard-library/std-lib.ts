@@ -34,14 +34,14 @@ import {
 import { hasHiddenType } from "../has-hidden-type";
 import { StubInputOutput } from "../stub-input-output";
 import { System } from "../system";
+import { BaseVG } from "./base-vg";
 import { BlockGraphics } from "./block-graphics";
+import { CircleVG } from "./circle-vg";
 import { Queue } from "./queue";
 import { Random } from "./random";
 import { Stack } from "./stack";
 import { TextFileReader } from "./text-file-reader";
 import { TextFileWriter } from "./text-file-writer";
-import { VGBase } from "./vg-base";
-import { VGCircle } from "./vg-circle";
 import { VectorGraphics } from "./vector-graphics";
 
 export class StdLib {
@@ -73,11 +73,11 @@ export class StdLib {
   @elanClassExport(VectorGraphics)
   VectorGraphics = VectorGraphics;
 
-  @elanClassExport(VGBase)
-  VGBase = VGBase;
+  @elanClassExport(BaseVG)
+  BaseVG = BaseVG;
 
-  @elanClassExport(VGCircle)
-  VGCircle = VGCircle;
+  @elanClassExport(CircleVG)
+  CircleVG = CircleVG;
 
   // Standard colours
 
