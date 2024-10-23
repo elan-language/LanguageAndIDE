@@ -33,7 +33,7 @@ export class VectorGraphics {
 
   @elanProcedure(ProcedureOptions.async)
   draw(): Promise<void> {
-    const html = `<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">\n${this.internalRep.reduce((html, ob) => html + "  " + ob.renderAsSVG() + "\n", "")}</svg>\n`;
+    const html = `<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">\n${this.asHtml()}</svg>\n`;
     this.system!.elanInputOutput.drawGraphics(html);
     return this.pause(0);
   }
@@ -57,5 +57,10 @@ export class VectorGraphics {
   @elanProcedure()
   clearKeyBuffer() {
     this.system!.elanInputOutput.clearKeyBuffer();
+  }
+
+  @elanFunction(FunctionOptions.pure)
+  asHtml(): string {
+    return this.internalRep.reduce((html, ob) => html + "  " + ob.asHtml() + "\n", "");
   }
 }

@@ -1,25 +1,37 @@
 import {
   ClassOptions,
   ElanClass,
+  ElanInt,
   FunctionOptions,
-  ProcedureOptions,
   elanClass,
   elanFunction,
   elanProcedure,
+  elanProperty,
 } from "../elan-type-annotations";
 import { BaseVG } from "./base-vg";
 
-@elanClass(ClassOptions.concrete, [], [], [ElanClass(BaseVG)])
+@elanClass(ClassOptions.record, [], [], [ElanClass(BaseVG)])
 export class CircleVG extends BaseVG {
   static emptyInstance() {
     return new CircleVG();
   }
 
+  @elanProperty(ElanInt)
   x: number = 0;
+
+  @elanProperty()
   y: number = 0;
+
+  @elanProperty()
   r: number = 0;
+
+  @elanProperty()
   strokeColour: string = "";
+
+  @elanProperty()
   strokeWidth: number = 0;
+
+  @elanProperty()
   fillColour: string = "";
 
   constructor() {
@@ -43,8 +55,8 @@ export class CircleVG extends BaseVG {
     this.fillColour = this.asHtmlColour(fillColour);
   }
 
-  @elanProcedure(ProcedureOptions.async)
-  renderAsSVG() {
+  @elanFunction(FunctionOptions.pure)
+  asHtml(): string {
     return `<circle cx="${this.x}" cy="${this.y}" r="${this.r}" stroke="${this.strokeColour}" stroke-width="${this.strokeWidth}" fill="${this.fillColour}" />`;
   }
 

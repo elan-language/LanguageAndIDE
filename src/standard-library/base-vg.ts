@@ -1,4 +1,4 @@
-import { ClassOptions, elanClass, elanProcedure, ProcedureOptions } from "../elan-type-annotations";
+import { ClassOptions, FunctionOptions, elanClass, elanFunction } from "../elan-type-annotations";
 
 @elanClass(ClassOptions.abstract)
 export class BaseVG {
@@ -9,6 +9,8 @@ export class BaseVG {
 
   constructor() {}
 
-  @elanProcedure(ProcedureOptions.async)
-  renderAsSVG() {}
+  @elanFunction(FunctionOptions.pure)
+  asHtml(): string {
+    return "";
+  }
 }
