@@ -232,11 +232,26 @@ return [main, _tests];}`;
 record Foo
   private property p1 as Int
 
-end class`;
+end record`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
+  });
+
+  test("Fail_NotImmutableProperty", async () => {
+    const code = `# FFFF Elan Beta 3 valid
+
+record Foo
+  property p1 as [Int] 
+
+end record`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Property p1 is not of an immutable type."]);
   });
 });
