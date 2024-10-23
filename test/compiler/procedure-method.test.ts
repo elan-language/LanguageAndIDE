@@ -246,7 +246,7 @@ return [main, _tests];}`;
 
 main
   var f set to new Foo()
-  call display(f)
+  call show(f)
 end main
 
 class Foo
@@ -256,7 +256,7 @@ class Foo
 
   property p1 as Float
 
-  procedure display()
+  procedure show()
     print p1
   end procedure
 
@@ -270,7 +270,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["display is not defined"]);
+    assertDoesNotCompile(fileImpl, ["show is not defined"]);
   });
 
   test("Fail_CallUnknownMethodOnInstance", async () => {

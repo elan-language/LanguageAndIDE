@@ -6,22 +6,20 @@ import {
   elanFunction,
   ElanInt,
   elanIntType,
-  elanProcedure,
-  ElanString,
-  ElanTuple,
   FunctionOptions,
-  ProcedureOptions,
 } from "../elan-type-annotations";
 import { System } from "../system";
+import { GraphicsBase } from "./graphics-base";
 
-@elanClass(ClassOptions.record)
-export class BlockGraphics {
+@elanClass(ClassOptions.record, [], [], [ElanClass(GraphicsBase)])
+export class BlockGraphics extends GraphicsBase {
   // this must be implemented by hand on all stdlib classes
   static emptyInstance() {
     return new BlockGraphics();
   }
 
   constructor() {
+    super();
     this.internalRep = this.initialisedGraphics(0xffffff);
   }
 
@@ -181,19 +179,14 @@ export class BlockGraphics {
     return this.safeIndex(this.getDetails(x, y), 2) as number;
   }
 
-  @elanProcedure()
-  clearGraphics() {
-    this.system!.elanInputOutput.clearGraphics();
-  }
-
   pause(ms: number): Promise<void> {
     return new Promise((resolve) => {
       setTimeout(() => resolve(), ms);
     });
   }
 
-  @elanProcedure(ProcedureOptions.async)
-  display(): Promise<void> {
+  @elanFunction(FunctionOptions.pure)
+  asHtml(): string {
     let rendered = "";
 
     for (let y = 0; y < this.ySize; y++) {
@@ -202,28 +195,12 @@ export class BlockGraphics {
         rendered = `${rendered}<div style="color:${this.asHex(f)};background-color:${this.asHex(b)};">${c}</div>`;
       }
     }
-    this.system!.elanInputOutput.drawGraphics(rendered);
-    return this.pause(0);
+    return rendered;
   }
 
   private asHex(n: number): string {
     const h = "000000" + n.toString(16);
     const h6 = h.substring(h.length - 6);
     return `#${h6}`;
-  }
-
-  @elanFunction(FunctionOptions.impureAsync, ElanString)
-  getKeystroke(): Promise<string> {
-    return this.system!.elanInputOutput.getKeystroke();
-  }
-
-  @elanFunction(FunctionOptions.impureAsync, ElanTuple([ElanString, ElanString]))
-  getKeystrokeWithModifier(): Promise<[string, string]> {
-    return this.system!.elanInputOutput.getKeystrokeWithModifier();
-  }
-
-  @elanProcedure()
-  clearKeyBuffer() {
-    this.system!.elanInputOutput.clearKeyBuffer();
   }
 }

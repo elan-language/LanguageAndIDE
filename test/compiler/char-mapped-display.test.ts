@@ -23,7 +23,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var g = system.initialise(new _stdlib.BlockGraphics());
-  await g.display();
+  await _stdlib.display(g);
 }
 return [main, _tests];}`;
 
@@ -53,7 +53,7 @@ end main`;
 async function main() {
   var g = system.initialise(new _stdlib.BlockGraphics());
   g = g.withUnicode(0, 0, 90, _stdlib.black, _stdlib.white);
-  await g.display();
+  await _stdlib.display(g);
 }
 return [main, _tests];}`;
 
@@ -135,7 +135,7 @@ end main`;
 async function main() {
   var g = system.initialise(new _stdlib.BlockGraphics());
   g = g.withBlock(1, 0, 4);
-  await g.display();
+  await _stdlib.display(g);
 }
 return [main, _tests];}`;
 
@@ -190,8 +190,8 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var g = system.initialise(new _stdlib.BlockGraphics());
-  await g.display();
-  g.clearGraphics();
+  await _stdlib.display(g);
+  _stdlib.clearGraphics(g);
 }
 return [main, _tests];}`;
 
@@ -216,7 +216,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var gr = system.initialise(new _stdlib.BlockGraphics());
-  var a = await gr.getKeystroke();
+  var a = await _stdlib.getKeystroke(gr);
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -242,7 +242,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var gr = system.initialise(new _stdlib.BlockGraphics());
-  var a = await gr.getKeystrokeWithModifier();
+  var a = await _stdlib.getKeystrokeWithModifier(gr);
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -267,7 +267,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var gr = system.initialise(new _stdlib.BlockGraphics());
-  gr.clearKeyBuffer();
+  _stdlib.clearKeyBuffer(gr);
 }
 return [main, _tests];}`;
 
@@ -378,7 +378,7 @@ end main`;
 async function main() {
   var g = system.initialise(new _stdlib.BlockGraphics());
   g = g.withText(0, 0, "Hello", 1, 2);
-  await g.display();
+  await _stdlib.display(g);
 }
 return [main, _tests];}`;
 
@@ -413,7 +413,7 @@ end main`;
 async function main() {
   var g = system.initialise(new _stdlib.BlockGraphics());
   g = g.withText(39, 29, "Hello", 1, 2);
-  await g.display();
+  await _stdlib.display(g);
 }
 return [main, _tests];}`;
 
