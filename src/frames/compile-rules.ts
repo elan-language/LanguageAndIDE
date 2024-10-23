@@ -543,6 +543,19 @@ export function mustBeCompatibleMutableType(
   }
 }
 
+export function mustBeImmutableType(
+  name: string,
+  type: SymbolType,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  if (!type.isImmutable) {
+    compileErrors.push(
+      new SyntaxCompileError(`Property ${name} is not of an immutable type.`, location),
+    );
+  }
+}
+
 export function mustBeInvariantType(
   lhs: SymbolType,
   rhs: SymbolType,
