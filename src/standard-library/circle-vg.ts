@@ -2,10 +2,7 @@ import {
   ClassOptions,
   ElanClass,
   ElanInt,
-  FunctionOptions,
   elanClass,
-  elanFunction,
-  elanProcedure,
   elanProperty,
 } from "../elan-type-annotations";
 import { BaseVG } from "./base-vg";
@@ -16,7 +13,7 @@ export class CircleVG extends BaseVG {
     return new CircleVG();
   }
 
-  @elanProperty(ElanInt)
+  @elanProperty()
   x: number = 0;
 
   @elanProperty()
@@ -25,39 +22,27 @@ export class CircleVG extends BaseVG {
   @elanProperty()
   r: number = 0;
 
-  @elanProperty()
-  strokeColour: string = "";
+  @elanProperty(ElanInt)
+  stroke: number = 0;
 
   @elanProperty()
   strokeWidth: number = 0;
 
-  @elanProperty()
-  fillColour: string = "";
+  @elanProperty(ElanInt)
+  fill: number = 0;
 
   constructor() {
     super();
   }
 
-  @elanProcedure()
-  setProperties(
-    x: number,
-    y: number,
-    r: number,
-    strokeColour: number,
-    strokeWidth: number,
-    fillColour: number,
-  ) {
-    this.x = x;
-    this.y = y;
-    this.r = r;
-    this.strokeColour = this.asHtmlColour(strokeColour);
-    this.strokeWidth = strokeWidth;
-    this.fillColour = this.asHtmlColour(fillColour);
-  }
-
-  @elanFunction(FunctionOptions.pure)
   asHtml(): string {
-    return `<circle cx="${this.x}" cy="${this.y}" r="${this.r}" stroke="${this.strokeColour}" stroke-width="${this.strokeWidth}" fill="${this.fillColour}" />`;
+    return `<circle cx="${this.x}" cy="${this.y}" r="${this.r}" stroke="${this.strokeHtml()}" stroke-width="${this.strokeWidth}" fill="${this.fillHtml()}" />`;
+  }
+  strokeHtml(): string {
+    return this.asHtmlColour(this.stroke);
+  }
+  fillHtml(): string {
+    return this.asHtmlColour(this.fill);
   }
 
   //TODO: move up to superclass or other helper
@@ -65,10 +50,5 @@ export class CircleVG extends BaseVG {
     const hex = `000000${colour.toString(16)}`;
     const rgb = hex.substring(hex.length - 6, hex.length);
     return `#${rgb}`;
-  }
-
-  @elanFunction(FunctionOptions.pure, ElanClass(BaseVG))
-  asBaseVG() {
-    return this;
   }
 }

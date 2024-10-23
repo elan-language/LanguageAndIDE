@@ -31,6 +31,23 @@ export class VectorGraphics {
     return copy;
   }
 
+  @elanFunction(FunctionOptions.pure, ElanClass(VectorGraphics))
+  replace(
+    @elanClassType(BaseVG) existing: BaseVG,
+    @elanClassType(BaseVG) replacement: BaseVG,
+  ): VectorGraphics {
+    const copy = this.system!.initialise(new VectorGraphics());
+    copy.internalRep = this.internalRep;
+    if (copy.internalRep.includes(existing)) {
+      const i = copy.internalRep.indexOf(existing);
+      copy.internalRep = copy.internalRep
+        .slice(0, i)
+        .concat([replacement])
+        .concat(copy.internalRep.slice(i + 1));
+    }
+    return copy;
+  }
+
   @elanProcedure(ProcedureOptions.async)
   display(): Promise<void> {
     const html = `<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">\n${this.asHtml()}</svg>\n`;

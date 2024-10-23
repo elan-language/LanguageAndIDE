@@ -9,7 +9,6 @@ export class BaseVG {
 
   constructor() {}
 
-  @elanFunction(FunctionOptions.pure)
   asHtml(): string {
     return "";
   }
