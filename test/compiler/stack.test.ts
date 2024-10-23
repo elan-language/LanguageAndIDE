@@ -51,7 +51,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    assertObjectCodeExecutes(fileImpl, "02pearpearapple0");
+    await assertObjectCodeExecutes(fileImpl, "02pearpearapple0");
   });
 
   test("Fail_Stack_adding_incompatible_type1", async () => {

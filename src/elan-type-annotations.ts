@@ -60,6 +60,7 @@ export class ElanClassDescriptor implements ElanDescriptor {
     public readonly isAbstract: boolean = false,
     public readonly ofTypes: TypeDescriptor[] = [],
     public readonly parameters: TypeDescriptor[] = [],
+    public readonly inherits: ElanClassTypeDescriptor[] = [],
     public readonly alias?: string,
   ) {}
 
@@ -218,7 +219,6 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
     );
 
     const children: [string, SymbolType][] = [];
-    const ofTypes: SymbolType[] = [];
 
     tempMap.set(className, new ClassType(className, false, false, [], undefined!));
 
@@ -246,14 +246,10 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
       }
     }
 
-    for (const ot of classMetadata.ofTypes) {
-      ofTypes.push(ot.mapType());
-    }
-
     const classType = tempMap.get(className)!;
     tempMap.delete(className);
 
-    const classTypeDef = new StdLibClass(className, classMetadata.isAbstract, [], [], scope!);
+    const classTypeDef = new StdLibClass(className, classMetadata.isAbstract, [], [], [], scope!);
 
     classType.updateScope(classTypeDef);
 
@@ -261,8 +257,12 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
       classTypeDef.children.push(getSymbol(c[0], c[1], SymbolScope.property));
     }
 
-    for (const ot of ofTypes) {
-      classTypeDef.ofTypes.push(ot);
+    for (const ot of classMetadata.ofTypes) {
+      classTypeDef.ofTypes.push(ot.mapType());
+    }
+
+    for (const inherits of classMetadata.inherits) {
+      classTypeDef.inheritTypes.push(inherits.mapType());
     }
 
     return classType;
@@ -346,12 +346,14 @@ export function elanClass(
   options?: ClassOptions,
   ofTypes?: TypeDescriptor[],
   params?: TypeDescriptor[],
+  inherits?: ElanClassTypeDescriptor[],
   alias?: string,
 ) {
   const classDesc = new ElanClassDescriptor(
     mapClassOptions(options ?? ClassOptions.concrete),
     ofTypes ?? [],
     params ?? [],
+    inherits ?? [],
     alias,
   );
   return function (target: object) {

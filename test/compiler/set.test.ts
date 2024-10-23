@@ -46,7 +46,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    assertObjectCodeExecutes(fileImpl, "3322");
+    await assertObjectCodeExecutes(fileImpl, "3322");
   });
 
   test("Pass_SetProperty", async () => {
@@ -74,6 +74,6 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    assertObjectCodeExecutes(fileImpl, "30");
+    await assertObjectCodeExecutes(fileImpl, "30");
   });
 });

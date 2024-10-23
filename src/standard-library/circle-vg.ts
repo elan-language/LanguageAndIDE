@@ -9,7 +9,7 @@ import {
 } from "../elan-type-annotations";
 import { BaseVG } from "./base-vg";
 
-@elanClass(ClassOptions.concrete)
+@elanClass(ClassOptions.concrete, [], [], [ElanClass(BaseVG)])
 export class CircleVG extends BaseVG {
   static emptyInstance() {
     return new CircleVG();

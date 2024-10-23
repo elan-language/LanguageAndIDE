@@ -12,7 +12,7 @@ import {
 } from "../elan-type-annotations";
 import { System } from "../system";
 
-@elanClass(ClassOptions.concrete, [ElanT1], [], "Set")
+@elanClass(ClassOptions.concrete, [ElanT1], [], [], "Set")
 export class ElanSet<T1> {
   // this must be implemented by hand on all stdlib classes
   static emptyInstance() {
@@ -50,6 +50,7 @@ export class ElanSet<T1> {
   @elanFunction(FunctionOptions.pure, ElanClass(ElanSet))
   add(@elanGenericParamT1Type() item: T1): ElanSet<T1> {
     const copy = this.system!.initialise(new ElanSet<T1>());
+    copy.contents = new Set<T1>(this.contents);
     copy.contents.add(item);
     return copy;
   }
@@ -57,6 +58,7 @@ export class ElanSet<T1> {
   @elanFunction(FunctionOptions.impure, ElanClass(ElanSet))
   remove(@elanGenericParamT1Type() item: T1): ElanSet<T1> {
     const copy = this.system!.initialise(new ElanSet<T1>());
+    copy.contents = new Set<T1>(this.contents);
     copy.contents.delete(item);
     return copy;
   }

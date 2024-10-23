@@ -51,7 +51,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    assertObjectCodeExecutes(fileImpl, "02appleapplepear0");
+    await assertObjectCodeExecutes(fileImpl, "02appleapplepear0");
   });
 
   test("Fail_Queue_adding_incompatible_type1", async () => {
