@@ -47,7 +47,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "0");
   });
 
-  ignore_test("Fail_NewWithParam", async () => {
+  test("Fail_NewWithParam", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
 main

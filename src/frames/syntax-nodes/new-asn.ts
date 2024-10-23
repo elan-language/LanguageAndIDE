@@ -71,16 +71,16 @@ export class NewAsn extends AbstractAstNode implements AstNode {
           .resolveSymbol(constructorKeyword, tf, this.scope)
           .symbolType(tf);
 
-        if (constructorType instanceof ProcedureType) {
-          const parameterTypes = constructorType.parametersTypes;
-          mustMatchParameters(
-            this.parameters,
-            parameterTypes,
-            false,
-            this.compileErrors,
-            this.fieldId,
-          );
-        }
+        const parameterTypes =
+          constructorType instanceof ProcedureType ? constructorType.parametersTypes : [];
+
+        mustMatchParameters(
+          this.parameters,
+          parameterTypes,
+          false,
+          this.compileErrors,
+          this.fieldId,
+        );
       }
 
       const scope = libScope ? "_stdlib." : "";
