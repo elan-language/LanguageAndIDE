@@ -9,4 +9,5 @@ export interface Class extends Scope, ElanSymbol {
   resolveOwnSymbol(id: string, transforms: Transforms): ElanSymbol;
   ofTypes: SymbolType[];
   abstract: boolean;
+  isImmutable: () => boolean;
 }

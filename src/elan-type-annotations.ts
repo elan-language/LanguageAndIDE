@@ -57,6 +57,7 @@ export class ElanProcedureDescriptor implements ElanMethodDescriptor, IElanProce
 
 export class ElanClassDescriptor implements ElanDescriptor {
   constructor(
+    public readonly isImmutable: boolean = false,
     public readonly isAbstract: boolean = false,
     public readonly ofTypes: TypeDescriptor[] = [],
     public readonly parameters: TypeDescriptor[] = [],
@@ -249,7 +250,15 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
     const classType = tempMap.get(className)!;
     tempMap.delete(className);
 
-    const classTypeDef = new StdLibClass(className, classMetadata.isAbstract, [], [], [], scope!);
+    const classTypeDef = new StdLibClass(
+      className,
+      classMetadata.isAbstract,
+      classMetadata.isImmutable,
+      [],
+      [],
+      [],
+      scope!,
+    );
 
     classType.updateScope(classTypeDef);
 
@@ -349,8 +358,10 @@ export function elanClass(
   inherits?: ElanClassTypeDescriptor[],
   alias?: string,
 ) {
+  const [isImmutable, isAbstract] = mapClassOptions(options ?? ClassOptions.concrete);
   const classDesc = new ElanClassDescriptor(
-    mapClassOptions(options ?? ClassOptions.concrete),
+    isImmutable,
+    isAbstract,
     ofTypes ?? [],
     params ?? [],
     inherits ?? [],
@@ -547,6 +558,7 @@ export enum ProcedureOptions {
 export enum ClassOptions {
   concrete,
   abstract,
+  record,
 }
 
 function mapFunctionOptions(
@@ -586,12 +598,14 @@ function mapProcedureOptions(options: ProcedureOptions): [boolean, boolean] {
   }
 }
 
-function mapClassOptions(options: ClassOptions): boolean {
+function mapClassOptions(options: ClassOptions): [boolean, boolean] {
   switch (options) {
     case ClassOptions.concrete:
-      return false;
+      return [false, false];
     case ClassOptions.abstract:
-      return true;
+      return [false, true];
+    case ClassOptions.record:
+      return [true, false];
   }
 }
 
