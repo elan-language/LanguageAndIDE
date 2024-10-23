@@ -36,14 +36,14 @@ end procedure
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var gr = system.initialise(new _stdlib.BlockGraphics());
-  var k = await gr.getKeystroke();
+  var k = await _stdlib.getKeystroke(gr);
   var r = _stdlib.randomInt(1, 6);
   r = _stdlib.randomInt(1, 6) * 10;
   await bar(_stdlib.randomInt(1, 6));
 }
 
 async function foo(gr) {
-  var k = await gr.getKeystroke();
+  var k = await _stdlib.getKeystroke(gr);
   var r = _stdlib.randomInt(1, 6);
   r = _stdlib.randomInt(1, 6) * 10;
 }

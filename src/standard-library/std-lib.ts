@@ -8,6 +8,7 @@ import {
   ElanBoolean,
   ElanClass,
   elanClassExport,
+  elanClassType,
   elanConstant,
   elanDictionaryType,
   ElanFloat,
@@ -37,12 +38,13 @@ import { System } from "../system";
 import { BaseVG } from "./base-vg";
 import { BlockGraphics } from "./block-graphics";
 import { CircleVG } from "./circle-vg";
+import { GraphicsBase } from "./graphics-base";
 import { Queue } from "./queue";
 import { Random } from "./random";
+import { ElanSet } from "./set";
 import { Stack } from "./stack";
 import { TextFileReader } from "./text-file-reader";
 import { TextFileWriter } from "./text-file-writer";
-import { ElanSet } from "./set";
 import { VectorGraphics } from "./vector-graphics";
 
 export class StdLib {
@@ -53,9 +55,6 @@ export class StdLib {
   system: System;
 
   // types
-  @elanClassExport(BlockGraphics)
-  BlockGraphics = BlockGraphics;
-
   @elanClassExport(TextFileReader)
   TextFileReader = TextFileReader;
 
@@ -73,6 +72,12 @@ export class StdLib {
 
   @elanClassExport(ElanSet)
   Set = ElanSet;
+
+  @elanClassExport(GraphicsBase)
+  GraphicsBase = GraphicsBase;
+
+  @elanClassExport(BlockGraphics)
+  BlockGraphics = BlockGraphics;
 
   @elanClassExport(VectorGraphics)
   VectorGraphics = VectorGraphics;
@@ -995,5 +1000,35 @@ export class StdLib {
     tf.fileName = fileName;
     tf.status = 1;
     return tf;
+  }
+
+  // Graphics
+  @elanProcedure(ProcedureOptions.extension)
+  clearGraphics(@elanClassType(GraphicsBase) g: GraphicsBase) {
+    this.system!.elanInputOutput.clearGraphics();
+  }
+
+  @elanFunction(FunctionOptions.impureAsyncExtension, ElanString)
+  getKeystroke(@elanClassType(GraphicsBase) g: GraphicsBase): Promise<string> {
+    return this.system!.elanInputOutput.getKeystroke();
+  }
+
+  @elanFunction(FunctionOptions.impureAsyncExtension, ElanTuple([ElanString, ElanString]))
+  getKeystrokeWithModifier(
+    @elanClassType(GraphicsBase) g: GraphicsBase,
+  ): Promise<[string, string]> {
+    return this.system!.elanInputOutput.getKeystrokeWithModifier();
+  }
+
+  @elanProcedure(ProcedureOptions.extension)
+  clearKeyBuffer(@elanClassType(GraphicsBase) g: GraphicsBase) {
+    this.system!.elanInputOutput.clearKeyBuffer();
+  }
+
+  @elanProcedure(ProcedureOptions.asyncExtension)
+  display(@elanClassType(GraphicsBase) g: GraphicsBase): Promise<void> {
+    const html = g.asHtml();
+    this.system!.elanInputOutput.drawGraphics(html);
+    return this.pause(0);
   }
 }
