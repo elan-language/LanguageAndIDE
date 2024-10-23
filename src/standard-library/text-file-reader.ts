@@ -46,7 +46,7 @@ export class TextFileReader {
     return this.content.join("\n");
   }
 
-  @elanProcedure(ProcedureOptions.async)
+  @elanProcedure()
   close() {
     if (this.status === 0) {
       throw new ElanRuntimeError("Cannot use any method on a closed file");

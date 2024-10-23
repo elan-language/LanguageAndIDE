@@ -13,6 +13,10 @@ export class StubInputOutput implements ElanInputOutput {
         if (data.type === "read") {
           rs(data.value as string);
         }
+
+        if (data.type === "status" && data.status === "error") {
+          rj(data.error as string);
+        }
       };
       postMessage(this.writeMsg("readFile", [path]));
     });
@@ -25,6 +29,9 @@ export class StubInputOutput implements ElanInputOutput {
 
         if (data.type === "read") {
           rs();
+        }
+        if (data.type === "status" && data.status === "error") {
+          rj(data.error as string);
         }
       };
       postMessage(this.writeMsg("writeFile", [path, data]));

@@ -439,6 +439,10 @@ function readMsg(value: string | [string, string]) {
   return { type: "read", value: value } as WebWorkerReadMessage;
 }
 
+function errorMsg(value: string | [string, string]) {
+  return { type: "status", status: "error", error: value } as WebWorkerStatusMessage;
+}
+
 function handleWorkerIO(data: WebWorkerWriteMessage) {
   switch (data.function) {
     case "readLine":
@@ -451,14 +455,17 @@ function handleWorkerIO(data: WebWorkerWriteMessage) {
       elanInputOutput.getKeystrokeWithModifier().then((v) => programWorker.postMessage(readMsg(v)));
       break;
     case "readFile":
-      elanInputOutput
-        .readFile(data.parameters[0] as string)
-        .then((v) => programWorker.postMessage(readMsg(v)));
+      elanInputOutput.readFile(data.parameters[0] as string).then(
+        (v) => programWorker.postMessage(readMsg(v)),
+        (e) => programWorker.postMessage(errorMsg(e)),
+      );
+
       break;
     case "writeFile":
-      elanInputOutput
-        .writeFile(data.parameters[0] as string, data.parameters[1] as string)
-        .then(() => programWorker.postMessage(readMsg("")));
+      elanInputOutput.writeFile(data.parameters[0] as string, data.parameters[1] as string).then(
+        () => programWorker.postMessage(readMsg("")),
+        (e) => programWorker.postMessage(errorMsg(e)),
+      );
       break;
     default:
       (elanInputOutput as any)[data.function](...data.parameters);

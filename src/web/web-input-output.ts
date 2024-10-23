@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ElanInputOutput } from "../elan-input-output";
+import { ElanRuntimeError } from "../elan-runtime-error";
 
 export class WebInputOutput implements ElanInputOutput {
   keyBuffer: KeyboardEvent[] = [];
@@ -71,8 +72,13 @@ export class WebInputOutput implements ElanInputOutput {
           startIn: "documents",
         });
         const file = await fileHandle.getFile();
-        const contents = await file.text();
-        rs(contents);
+
+        if (file.type !== "text/plain") {
+          rj(`cannot load non text file ${file.name} of type ${file.type}`);
+        } else {
+          const contents = await file.text();
+          rs(contents);
+        }
       });
 
       chooser.click();
@@ -88,17 +94,21 @@ export class WebInputOutput implements ElanInputOutput {
     const inp = this.chooser();
 
     return new Promise<string>((rs, rj) => {
-      inp.addEventListener("change", (event: any) => {
-        const elanFile = (event.target as any).files?.[0] as any;
+      inp.addEventListener("change", (event: Event) => {
+        const elanFile = (event.target as HTMLInputElement).files?.[0];
 
         if (elanFile) {
-          const reader = new FileReader();
+          if (elanFile.type !== "text/plain") {
+            rj(`cannot load non text file ${elanFile.name} of type ${elanFile.type}`);
+          } else {
+            const reader = new FileReader();
 
-          reader.addEventListener("load", (event: any) => {
-            const rawCode = event.target.result;
-            rs(rawCode);
-          });
-          reader.readAsText(elanFile);
+            reader.addEventListener("load", (event: ProgressEvent) => {
+              const content = (event.target as FileReader).result as string;
+              rs(content);
+            });
+            reader.readAsText(elanFile);
+          }
         }
 
         event.preventDefault();
@@ -123,23 +133,30 @@ export class WebInputOutput implements ElanInputOutput {
       fileName = "untitled.txt";
     }
 
+    if (!fileName.endsWith(".txt")) {
+      fileName = `${fileName}.txt`;
+    }
+
     if ("showSaveFilePicker" in self) {
       // The `showOpenFilePicker()` method of the File System Access API is supported.
       return this.writeFileChrome(fileName, data);
     }
 
     return new Promise<void>((rs, rj) => {
-      const blob = new Blob([data], { type: "plain/text" });
+      try {
+        const blob = new Blob([data], { type: "text/plain" });
+        const aElement = document.createElement("a");
+        aElement.setAttribute("download", fileName!);
+        const href = URL.createObjectURL(blob);
+        aElement.href = href;
+        aElement.setAttribute("target", "_blank");
+        aElement.click();
+        URL.revokeObjectURL(href);
 
-      const aElement = document.createElement("a");
-      aElement.setAttribute("download", fileName!);
-      const href = URL.createObjectURL(blob);
-      aElement.href = href;
-      aElement.setAttribute("target", "_blank");
-      aElement.click();
-      URL.revokeObjectURL(href);
-
-      rs();
+        rs();
+      } catch (e) {
+        rj(e);
+      }
     });
   }
 
