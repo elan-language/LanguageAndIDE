@@ -14,6 +14,7 @@ import { WithClause } from "./with-clause";
 export class NewInstance extends AbstractSequence {
   type: TypeSimpleOrGeneric | undefined;
   args: CSV | undefined;
+  withClause: OptionalNode | undefined;
 
   parseText(text: string): void {
     this.addElement(new KeywordNode(newKeyword));
@@ -25,8 +26,8 @@ export class NewInstance extends AbstractSequence {
     this.args.setCompletionWhenEmpty("arguments");
     this.addElement(this.args);
     this.addElement(new PunctuationNode(CLOSE_BRACKET));
-    const optionalWithClause = new OptionalNode(new WithClause());
-    this.addElement(optionalWithClause);
+    this.withClause = new OptionalNode(new WithClause());
+    this.addElement(this.withClause);
     super.parseText(text);
   }
 }

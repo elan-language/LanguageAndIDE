@@ -66,7 +66,7 @@ end record`;
     assertDoesNotCompile(fileImpl, ["Parameters expected: 0 got: 1"]);
   });
 
-  ignore_test("Pass_instantiateUsingWith", async () => {
+  test("Pass_instantiateUsingWith", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
 main
@@ -82,14 +82,16 @@ end record`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var f = system.initialise(new Foo()); //Something more needed
+  var f = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.p1 = 3; _a.p2 = "hello"; return _a;})();
   system.printLine(_stdlib.asString(f.p1));
   system.printLine(_stdlib.asString(f.p2));
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", ""]]);};
   p1 = 0;
+
+  p2 = "";
 
 }
 return [main, _tests];}`;
