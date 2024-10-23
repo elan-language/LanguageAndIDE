@@ -5,6 +5,7 @@ import {
   ElanMethodDescriptor,
   IElanFunctionDescriptor,
   IElanProcedureDescriptor,
+  isConstantDescriptor,
   isFunctionDescriptor,
   isProcedureDescriptor,
   TypeDescriptor,
@@ -194,7 +195,9 @@ function removeUnderscore(name: string) {
 }
 
 export class ElanClassTypeDescriptor implements TypeDescriptor {
-  constructor(private readonly cls: { name: string; prototype: object }) {}
+  constructor(
+    private readonly cls: { name: string; prototype: object; emptyInstance: () => object },
+  ) {}
 
   isClass = true;
 
@@ -210,7 +213,10 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
       return tempMap.get(className)!;
     }
 
-    const names = Object.getOwnPropertyNames(this.cls.prototype);
+    const names = Object.getOwnPropertyNames(this.cls.prototype).concat(
+      Object.getOwnPropertyNames(this.cls.emptyInstance()),
+    );
+
     const children: [string, SymbolType][] = [];
     const ofTypes: SymbolType[] = [];
 
@@ -235,9 +241,9 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
         children.push([name, metadata.mapType()]);
       }
 
-      // if (isConstantDescriptor(metadata)) {
-      //   this.symbols.set(name, this.getSymbol(name, metadata.mapType()));
-      // }
+      if (isConstantDescriptor(metadata)) {
+        children.push([name, metadata.mapType()]);
+      }
     }
 
     for (const ot of classMetadata.ofTypes) {
@@ -365,7 +371,23 @@ export function elanConstant(elanDesc?: TypeDescriptor) {
   };
 }
 
-export function elanClassExport(cls: { name: string; prototype: object }) {
+export function elanProperty(elanDesc?: TypeDescriptor) {
+  return function (target: object, propertyKey: string) {
+    const typeMetadata = Reflect.getMetadata("design:type", target, propertyKey);
+
+    if (!elanDesc && typeMetadata && typeMetadata.name) {
+      elanDesc = new TypescriptTypeDescriptor(typeMetadata.name);
+    }
+
+    Reflect.defineMetadata(elanMetadataKey, elanDesc, target, propertyKey);
+  };
+}
+
+export function elanClassExport(cls: {
+  name: string;
+  prototype: object;
+  emptyInstance: () => object;
+}) {
   let elanDesc = ElanClass(cls) as TypeDescriptor;
   return function (target: object, propertyKey: string) {
     const typeMetadata = Reflect.getMetadata("design:type", target, propertyKey);
@@ -414,7 +436,7 @@ export function ElanAbstractDictionary(keyType: TypeDescriptor, valueType: TypeD
   return new ElanValueTypeDescriptor("AbstractDictionary", keyType, valueType);
 }
 
-export function ElanClass(cls: { name: string; prototype: object }) {
+export function ElanClass(cls: { name: string; prototype: object; emptyInstance: () => object }) {
   return new ElanClassTypeDescriptor(cls);
 }
 
@@ -494,7 +516,11 @@ export function elanFuncType(parameters: TypeDescriptor[], returnType: TypeDescr
   return elanType(ElanFunc(parameters, returnType));
 }
 
-export function elanClassType(cls: { name: string; prototype: object }) {
+export function elanClassType(cls: {
+  name: string;
+  prototype: object;
+  emptyInstance: () => object;
+}) {
   return elanType(ElanClass(cls));
 }
 

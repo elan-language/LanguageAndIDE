@@ -48,4 +48,32 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     assertObjectCodeExecutes(fileImpl, "3322");
   });
+
+  test("Pass_SetProperty", async () => {
+    const code = `# FFFF Elan Beta 3 valid
+
+main
+  var st set to new Set<of Int>()
+  set st to st.add(3).add(7).add(5)
+  print st.size
+  print st.initialSize
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var st = system.initialise(new _stdlib.Set());
+  st = st.add(3).add(7).add(5);
+  system.printLine(_stdlib.asString(st.size));
+  system.printLine(_stdlib.asString(st.initialSize));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    assertObjectCodeExecutes(fileImpl, "30");
+  });
 });

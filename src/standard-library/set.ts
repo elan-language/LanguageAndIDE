@@ -6,6 +6,7 @@ import {
   elanFunction,
   elanGenericParamT1Type,
   ElanInt,
+  elanProperty,
   ElanT1,
   FunctionOptions,
 } from "../elan-type-annotations";
@@ -25,6 +26,16 @@ export class ElanSet<T1> {
   private contents: Set<T1>;
 
   private system?: System;
+
+  // todo update stdlib classes with proper properties and remove these and update test
+  @elanProperty(ElanInt)
+  get size() {
+    return this.contents.size;
+  }
+
+  @elanProperty(ElanInt)
+  initialSize: number = 0;
+  // end
 
   @elanFunction(FunctionOptions.pure, ElanInt)
   length() {

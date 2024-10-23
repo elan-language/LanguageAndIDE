@@ -6,7 +6,7 @@ import {
   ElanString,
   ElanTuple,
   FunctionOptions,
-  ProcedureOptions
+  ProcedureOptions,
 } from "../elan-type-annotations";
 import { System } from "../system";
 import { BaseVG } from "./base-vg";
