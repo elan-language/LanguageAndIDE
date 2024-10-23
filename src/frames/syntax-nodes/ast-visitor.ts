@@ -49,11 +49,11 @@ import { PunctuationNode } from "../parse-nodes/punctuation-node";
 import { RangeNode } from "../parse-nodes/range-node";
 import { RegExMatchNode } from "../parse-nodes/regex-match-node";
 import { Sequence } from "../parse-nodes/sequence";
-import { SetClause } from "../parse-nodes/set-clause";
 import { SpaceNode } from "../parse-nodes/space-node";
 import { StringInterpolation } from "../parse-nodes/string-interpolation";
 import { TermChained } from "../parse-nodes/term-chained";
 import { TermSimple } from "../parse-nodes/term-simple";
+import { ToClause } from "../parse-nodes/to-clause";
 import { TupleNode } from "../parse-nodes/tuple-node";
 import { TypeDictionaryNode } from "../parse-nodes/type-dictionary-node";
 import { TypeGenericNode } from "../parse-nodes/type-generic-node";
@@ -64,6 +64,7 @@ import { TypeOfNode } from "../parse-nodes/type-of-node";
 import { TypeSimpleNode } from "../parse-nodes/type-simple-node";
 import { TypeTupleNode } from "../parse-nodes/type-tuple-node";
 import { UnaryExpression } from "../parse-nodes/unary-expression";
+import { WithClause } from "../parse-nodes/with-clause";
 import { SetStatement } from "../statements/set-statement";
 import { EnumType } from "../symbols/enum-type";
 import { wrapScopeInScope } from "../symbols/symbol-helpers";
@@ -71,6 +72,7 @@ import { isAstIdNode, isAstQualifierNode, mapOperation } from "./ast-helpers";
 import { BinaryExprAsn } from "./binary-expr-asn";
 import { BracketedAsn } from "./bracketed-asn";
 import { CompositeAsn } from "./composite-asn";
+import { CopyWithAsn } from "./copy-with-asn";
 import { CsvAsn } from "./csv-asn";
 import { DeconstructedListAsn } from "./deconstructed-list-asn";
 import { DeconstructedTupleAsn } from "./deconstructed-tuple-asn";
@@ -104,13 +106,12 @@ import { ParamDefAsn } from "./param-def-asn";
 import { QualifierAsn } from "./qualifier-asn";
 import { RangeAsn } from "./range-asn";
 import { SegmentedStringAsn } from "./segmented-string-asn";
-import { SetAsn } from "./set-asn";
 import { ThisAsn } from "./this-asn";
+import { ToAsn } from "./to-asn";
 import { TypeAsn } from "./type-asn";
 import { TypeOfAsn } from "./typeof-asn";
 import { UnaryExprAsn } from "./unary-expr-asn";
 import { VarAsn } from "./var-asn";
-import { WithAsn } from "./with-asn";
 
 export function transformMany(
   node: CSV | Multiple | Sequence,
@@ -300,11 +301,15 @@ export function transform(
     return undefined;
   }
 
-  if (node instanceof SetClause) {
+  if (node instanceof WithClause) {
+    return transformMany(node.toClauses as CSV, fieldId, scope);
+  }
+
+  if (node instanceof ToClause) {
     const id = node.property!.matchedText;
     const to = transform(node.expr, fieldId, scope) as ExprAsn;
 
-    return new SetAsn(id, to, fieldId);
+    return new ToAsn(id, to, fieldId);
   }
 
   if (node instanceof PunctuationNode) {
@@ -411,8 +416,8 @@ export function transform(
 
   if (node instanceof CopyWith) {
     const obj = transform(node.original, fieldId, scope) as ExprAsn;
-    const changes = transformMany(node.changes!, fieldId, scope);
-    return new WithAsn(obj, changes, fieldId, scope);
+    const withClause = transform(node.withClause!, fieldId, scope) as AstCollectionNode;
+    return new CopyWithAsn(obj, withClause, fieldId, scope);
   }
 
   if (node instanceof TypeTupleNode) {

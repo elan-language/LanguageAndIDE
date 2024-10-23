@@ -1,4 +1,4 @@
-import { newKeyword, withKeyword } from "../keywords";
+import { newKeyword } from "../keywords";
 import { CLOSE_BRACKET, OPEN_BRACKET } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { CSV } from "./csv";
@@ -7,10 +7,9 @@ import { KeywordNode } from "./keyword-node";
 import { OptionalNode } from "./optional-node";
 import { Space } from "./parse-node-helpers";
 import { PunctuationNode } from "./punctuation-node";
-import { Sequence } from "./sequence";
-import { SetClause } from "./set-clause";
 import { SpaceNode } from "./space-node";
 import { TypeSimpleOrGeneric } from "./type-simple-or-generic";
+import { WithClause } from "./with-clause";
 
 export class NewInstance extends AbstractSequence {
   type: TypeSimpleOrGeneric | undefined;
@@ -26,13 +25,8 @@ export class NewInstance extends AbstractSequence {
     this.args.setCompletionWhenEmpty("arguments");
     this.addElement(this.args);
     this.addElement(new PunctuationNode(CLOSE_BRACKET));
-    // optional with clause
-    const sp1 = () => new SpaceNode(Space.required);
-    const withK = () => new KeywordNode(withKeyword);
-    const sp2 = () => new SpaceNode(Space.required);
-    const changes = () => new CSV(() => new SetClause(), 1);
-    const withClause = new OptionalNode(new Sequence([sp1, withK, sp2, changes]));
-    this.addElement(withClause);
+    const optionalWithClause = new OptionalNode(new WithClause());
+    this.addElement(optionalWithClause);
     super.parseText(text);
   }
 }
