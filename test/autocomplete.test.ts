@@ -174,7 +174,7 @@ end main`;
     const expected = [
       ["clearGraphics", "Procedure ()"],
       ["clearKeyBuffer", "Procedure ()"],
-      ["draw", "Procedure ()"],
+      ["display", "Procedure ()"],
     ] as [string, string][];
 
     await assertAutocompletes(fileImpl, "ident7", ".", 3, expected);

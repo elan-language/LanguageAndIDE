@@ -32,7 +32,7 @@ export class VectorGraphics {
   }
 
   @elanProcedure(ProcedureOptions.async)
-  draw(): Promise<void> {
+  display(): Promise<void> {
     const html = `<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">\n${this.asHtml()}</svg>\n`;
     this.system!.elanInputOutput.drawGraphics(html);
     return this.pause(0);

@@ -190,7 +190,7 @@ export class BlockGraphics {
   }
 
   @elanProcedure(ProcedureOptions.async)
-  draw(): Promise<void> {
+  display(): Promise<void> {
     let rendered = "";
 
     for (let y = 0; y < this.ySize; y++) {
