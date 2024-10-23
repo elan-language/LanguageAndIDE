@@ -21,7 +21,7 @@ export class CopyWith extends AbstractSequence {
       this.addElement(new SpaceNode(Space.required));
       this.original = new IdentifierNode();
       this.addElement(this.original);
-      this.withClause = new WithClause()
+      this.withClause = new WithClause();
       this.addElement(this.withClause);
       return super.parseText(text);
     }

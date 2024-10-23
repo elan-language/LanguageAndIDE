@@ -3,7 +3,7 @@ import { AstIdNode } from "../interfaces/ast-id-node";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { ExprAsn } from "./expr-asn";
 
-export class SetAsn extends AbstractAstNode implements AstIdNode {
+export class ToAsn extends AbstractAstNode implements AstIdNode {
   constructor(
     public readonly id: string,
     private readonly to: ExprAsn,
@@ -26,6 +26,6 @@ export class SetAsn extends AbstractAstNode implements AstIdNode {
   }
 
   toString() {
-    return `set ${this.id} to ${this.to}`;
+    return ` ${this.id} to ${this.to}`;
   }
 }
