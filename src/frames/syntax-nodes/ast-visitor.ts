@@ -49,11 +49,11 @@ import { PunctuationNode } from "../parse-nodes/punctuation-node";
 import { RangeNode } from "../parse-nodes/range-node";
 import { RegExMatchNode } from "../parse-nodes/regex-match-node";
 import { Sequence } from "../parse-nodes/sequence";
-import { SetClause } from "../parse-nodes/set-clause";
 import { SpaceNode } from "../parse-nodes/space-node";
 import { StringInterpolation } from "../parse-nodes/string-interpolation";
 import { TermChained } from "../parse-nodes/term-chained";
 import { TermSimple } from "../parse-nodes/term-simple";
+import { ToClause } from "../parse-nodes/to-clause";
 import { TupleNode } from "../parse-nodes/tuple-node";
 import { TypeDictionaryNode } from "../parse-nodes/type-dictionary-node";
 import { TypeGenericNode } from "../parse-nodes/type-generic-node";
@@ -300,7 +300,7 @@ export function transform(
     return undefined;
   }
 
-  if (node instanceof SetClause) {
+  if (node instanceof ToClause) {
     const id = node.property!.matchedText;
     const to = transform(node.expr, fieldId, scope) as ExprAsn;
 
@@ -411,7 +411,7 @@ export function transform(
 
   if (node instanceof CopyWith) {
     const obj = transform(node.original, fieldId, scope) as ExprAsn;
-    const changes = transformMany(node.changes!, fieldId, scope);
+    const changes = transformMany(node.withClause!, fieldId, scope);
     return new WithAsn(obj, changes, fieldId, scope);
   }
 
