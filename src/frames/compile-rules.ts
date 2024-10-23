@@ -292,7 +292,7 @@ export function mustBePropertyAndPublic(
   if (symbol instanceof Property && symbol.private === true) {
     compileErrors.push(new PrivateMemberCompileError(symbol.name.text, location));
   }
-  if (!(symbol instanceof Property)) {
+  if (symbol.symbolScope !== SymbolScope.property) {
     compileErrors.push(new UndefinedSymbolCompileError(symbol.symbolId, location));
   }
 }
