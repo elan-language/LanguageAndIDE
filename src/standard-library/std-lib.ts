@@ -39,15 +39,15 @@ import { BaseVG } from "./base-vg";
 import { BlockGraphics } from "./block-graphics";
 import { CircleVG } from "./circle-vg";
 import { GraphicsBase } from "./graphics-base";
+import { LineVG } from "./line-vg";
 import { Queue } from "./queue";
 import { Random } from "./random";
+import { RectangleVG } from "./rectangle-vg";
 import { ElanSet } from "./set";
 import { Stack } from "./stack";
 import { TextFileReader } from "./text-file-reader";
 import { TextFileWriter } from "./text-file-writer";
 import { VectorGraphics } from "./vector-graphics";
-import { LineVG } from "./line-vg";
-import { RectangleVG } from "./rectangle-vg";
 
 export class StdLib {
   constructor() {
