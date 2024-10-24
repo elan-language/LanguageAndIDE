@@ -44,11 +44,4 @@ export class CircleVG extends BaseVG {
   fillHtml(): string {
     return this.asHtmlColour(this.fill);
   }
-
-  //TODO: move up to superclass or other helper
-  asHtmlColour(colour: number) {
-    const hex = `000000${colour.toString(16)}`;
-    const rgb = hex.substring(hex.length - 6, hex.length);
-    return `#${rgb}`;
-  }
 }

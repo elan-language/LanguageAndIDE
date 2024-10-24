@@ -12,4 +12,10 @@ export class BaseVG {
   asHtml(): string {
     return "";
   }
+
+  asHtmlColour(colour: number) {
+    const hex = `000000${colour.toString(16)}`;
+    const rgb = hex.substring(hex.length - 6, hex.length);
+    return `#${rgb}`;
+  }
 }
