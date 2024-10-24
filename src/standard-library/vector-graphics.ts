@@ -51,7 +51,7 @@ export class VectorGraphics {
   @elanFunction(FunctionOptions.pure)
   asHtml(): string {
     const content = this.internalRep.reduce((html, ob) => html + "  " + ob.asHtml() + "\n", "");
-    const html = `<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">\n${content}</svg>\n`;
+    const html = `<svg width="266" height="200" xmlns="http://www.w3.org/2000/svg">\n${content}</svg>\n`;
     return html;
   }
 }
