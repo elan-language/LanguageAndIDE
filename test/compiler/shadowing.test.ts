@@ -300,4 +300,48 @@ end main`;
 
     assertDoesNotParse(fileImpl);
   });
+
+  test("Fail_ShadowParameter1", async () => {
+    const code = `# FFFF Elan Beta 3 valid
+
+main
+  var result set to foo(3,4)
+  print result
+end main
+
+function foo(a as Int, b as Int) return Int
+  var a set to 1
+  return a * b
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "The identifier 'a' is already used for a parameter and cannot be re-defined here.",
+    ]);
+  });
+
+  test("Fail_ShadowParameter2", async () => {
+    const code = `# FFFF Elan Beta 3 valid
+
+main
+  var result set to foo(3,4)
+  print result
+end main
+
+function foo(a as Int, b as Int) return Int
+  let a be 1
+  return a * b
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "The identifier 'a' is already used for a parameter and cannot be re-defined here.",
+    ]);
+  });
 });

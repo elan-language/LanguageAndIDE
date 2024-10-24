@@ -38,6 +38,7 @@ import {
   isMember,
   isLet,
 } from "./helpers";
+import { AstIdNode } from "./interfaces/ast-id-node";
 import { AstNode } from "./interfaces/ast-node";
 import { ElanSymbol } from "./interfaces/elan-symbol";
 import { Parent } from "./interfaces/parent";
@@ -825,7 +826,7 @@ export function cannotCallOnParameter(
   compileErrors: CompileError[],
   location: string,
 ) {
-  compileErrors.push(new MutateCompileError(`parameter: ${getId(assignable)}`, location));
+  compileErrors.push(new MutateCompileError(getId(assignable), "parameter", location));
 }
 
 export function mustNotBeCounter(
@@ -836,7 +837,7 @@ export function mustNotBeCounter(
   const s = assignable.symbolScope;
 
   if (s === SymbolScope.counter) {
-    compileErrors.push(new MutateCompileError(`counter`, location));
+    compileErrors.push(new MutateCompileError(getId(assignable), "loop counter", location));
   }
 }
 
@@ -848,7 +849,7 @@ export function mustNotBeConstant(
   const s = assignable.symbolScope;
 
   if (s === SymbolScope.program) {
-    compileErrors.push(new MutateCompileError(`constant`, location));
+    compileErrors.push(new MutateCompileError(getId(assignable), "constant", location));
   }
 }
 
@@ -889,7 +890,7 @@ export function mustBeUniqueValueInScope(
 
 export function mustNotBeLet(symbol: ElanSymbol, compileErrors: CompileError[], location: string) {
   if (symbol instanceof LetStatement) {
-    compileErrors.push(new MutateCompileError(symbol.symbolId, location));
+    compileErrors.push(new MutateCompileError(symbol.symbolId, mapToPurpose(symbol), location));
   }
 }
 

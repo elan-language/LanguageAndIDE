@@ -1298,7 +1298,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not mutate parameter: a"]);
+    assertDoesNotCompile(fileImpl, ["May not re-assign the parameter a"]);
   });
 
   test("Fail_ProcedureOnNotOutParm1", async () => {
@@ -1319,6 +1319,6 @@ end procedure`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not mutate parameter: a"]);
+    assertDoesNotCompile(fileImpl, ["May not re-assign the parameter a"]);
   });
 });
