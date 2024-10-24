@@ -176,8 +176,8 @@ export class SignatureCompileError extends CompileError {
 }
 
 export class MutateCompileError extends CompileError {
-  constructor(thing: string, location: string) {
-    super(Priority.illegalOperation, `May not mutate ${thing}`, location, false);
+  constructor(name: string, purpose: string, location: string) {
+    super(Priority.illegalOperation, `May not re-assign the ${purpose} ${name}`, location, false);
   }
 }
 

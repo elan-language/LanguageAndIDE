@@ -260,6 +260,6 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not mutate counter"]);
+    assertDoesNotCompile(fileImpl, ["May not re-assign the loop counter a"]);
   });
 });

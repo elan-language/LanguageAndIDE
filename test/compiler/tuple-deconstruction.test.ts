@@ -704,7 +704,10 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not mutate y", "May not mutate z"]);
+    assertDoesNotCompile(fileImpl, [
+      "May not re-assign the 'let' y",
+      "May not re-assign the 'let' z",
+    ]);
   });
 
   test("Fail_CannotDeconstruct", async () => {
