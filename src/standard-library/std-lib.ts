@@ -46,6 +46,8 @@ import { Stack } from "./stack";
 import { TextFileReader } from "./text-file-reader";
 import { TextFileWriter } from "./text-file-writer";
 import { VectorGraphics } from "./vector-graphics";
+import { LineVG } from "./line-vg";
+import { RectangleVG } from "./rectangle-vg";
 
 export class StdLib {
   constructor() {
@@ -87,6 +89,12 @@ export class StdLib {
 
   @elanClassExport(CircleVG)
   CircleVG = CircleVG;
+
+  @elanClassExport(LineVG)
+  LineVG = LineVG;
+
+  @elanClassExport(RectangleVG)
+  RectangleVG = RectangleVG;
 
   // Standard colours
 
