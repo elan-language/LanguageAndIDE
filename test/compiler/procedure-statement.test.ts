@@ -919,7 +919,9 @@ end procedure`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not reassign parameter: a"]);
+    assertDoesNotCompile(fileImpl, [
+      "The identifier 'a' is already used for a parameter and cannot be re-defined here.",
+    ]);
   });
 
   test("Fail_ArrayParamMayNotBeReassigned", async () => {
@@ -940,7 +942,9 @@ end procedure`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not reassign parameter: a"]);
+    assertDoesNotCompile(fileImpl, [
+      "The identifier 'a' is already used for a parameter and cannot be re-defined here.",
+    ]);
   });
 
   test("Fail_ValueTypeParamMayNotBeReassigned", async () => {
@@ -956,14 +960,14 @@ procedure changeValue(a as Int)
     set a to 3
 end procedure`;
 
-    const objectCode = ``;
-
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not reassign parameter: a"]);
+    assertDoesNotCompile(fileImpl, [
+      "The identifier 'a' is already used for a parameter and cannot be re-defined here.",
+    ]);
   });
 
   test("Fail_ParameterUnknownType", async () => {

@@ -29,7 +29,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not reassign parameter: p_1"]);
+    assertDoesNotCompile(fileImpl, [
+      "The identifier 'p_1' is already used for a parameter and cannot be re-defined here.",
+    ]);
   });
 
   test("Fail_MutatingArrayParam", async () => {

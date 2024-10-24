@@ -262,6 +262,8 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not reassign parameter: p1"]);
+    assertDoesNotCompile(fileImpl, [
+      "The identifier 'p1' is already used for a parameter and cannot be re-defined here.",
+    ]);
   });
 });
