@@ -811,11 +811,11 @@ export function mustNotBeParameter(
 
   if (s === SymbolScope.parameter) {
     if (isInsideFunctionOrConstructor(parent)) {
-      compileErrors.push(new RedefinedCompileError(getId(assignable), "parameter", location));
+      compileErrors.push(new MutateCompileError(getId(assignable), "parameter", location));
     } else {
       // only mutate indexed Array
       if (!isIndexed(assignable)) {
-        compileErrors.push(new RedefinedCompileError(getId(assignable), "parameter", location));
+        compileErrors.push(new MutateCompileError(getId(assignable), "parameter", location));
       }
     }
   }

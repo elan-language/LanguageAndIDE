@@ -919,9 +919,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "The identifier 'a' is already used for a parameter and cannot be re-defined here.",
-    ]);
+    assertDoesNotCompile(fileImpl, ["May not re-assign the parameter a"]);
   });
 
   test("Fail_ArrayParamMayNotBeReassigned", async () => {
@@ -942,9 +940,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "The identifier 'a' is already used for a parameter and cannot be re-defined here.",
-    ]);
+    assertDoesNotCompile(fileImpl, ["May not re-assign the parameter a"]);
   });
 
   test("Fail_ValueTypeParamMayNotBeReassigned", async () => {
@@ -965,9 +961,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "The identifier 'a' is already used for a parameter and cannot be re-defined here.",
-    ]);
+    assertDoesNotCompile(fileImpl, ["May not re-assign the parameter a"]);
   });
 
   test("Fail_ParameterUnknownType", async () => {

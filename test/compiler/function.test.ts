@@ -582,9 +582,7 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "The identifier 'a' is already used for a parameter and cannot be re-defined here.",
-    ]);
+    assertDoesNotCompile(fileImpl, ["May not re-assign the parameter a"]);
   });
 
   test("Fail_CannotModifyParam1", async () => {
@@ -604,9 +602,7 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "The identifier 'a' is already used for a parameter and cannot be re-defined here.",
-    ]);
+    assertDoesNotCompile(fileImpl, ["May not re-assign the parameter a"]);
   });
 
   test("Fail_CannotUpdateArray", async () => {
