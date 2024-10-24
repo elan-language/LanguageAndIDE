@@ -455,7 +455,7 @@ function handleWorkerIO(data: WebWorkerWriteMessage) {
       elanInputOutput.getKeystrokeWithModifier().then((v) => programWorker.postMessage(readMsg(v)));
       break;
     case "readFile":
-      elanInputOutput.readFile(data.parameters[0] as string).then(
+      elanInputOutput.readFile().then(
         (v) => programWorker.postMessage(readMsg(v)),
         (e) => programWorker.postMessage(errorMsg(e)),
       );

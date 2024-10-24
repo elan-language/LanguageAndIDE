@@ -984,11 +984,10 @@ export class StdLib {
 
   //File operations
   @elanFunction(FunctionOptions.impureAsync, ElanClass(TextFileReader))
-  openFileForReading(fileName: string): Promise<TextFileReader> {
-    return this.system.elanInputOutput.readFile(fileName).then(
+  openFileForReading(): Promise<TextFileReader> {
+    return this.system.elanInputOutput.readFile().then(
       (s) => {
         const tf = this.system.initialise(new TextFileReader());
-        tf.fileName = fileName;
         tf.status = 1;
         tf.content = s ? s.split("\n") : [];
         return tf;

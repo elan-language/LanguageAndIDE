@@ -20,7 +20,6 @@ export class TextFileReader {
   private system?: System;
 
   status: number = 0; //0 = Closed, 1 = Open
-  fileName: string = "";
   content: string[] = [];
   currentLine = 0;
 

@@ -61,7 +61,7 @@ export class WebInputOutput implements ElanInputOutput {
     return f;
   }
 
-  readFileChrome(path: string): Promise<string> {
+  readFileChrome(): Promise<string> {
     let fileHandle;
 
     const chooser = this.chromeChooser();
@@ -85,10 +85,10 @@ export class WebInputOutput implements ElanInputOutput {
     });
   }
 
-  readFile(path: string): Promise<string> {
+  readFile(): Promise<string> {
     if ("showOpenFilePicker" in self) {
       // The `showOpenFilePicker()` method of the File System Access API is supported.
-      return this.readFileChrome(path);
+      return this.readFileChrome();
     }
 
     const inp = this.chooser();
