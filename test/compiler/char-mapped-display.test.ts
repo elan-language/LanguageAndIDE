@@ -23,7 +23,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var g = system.initialise(new _stdlib.BlockGraphics());
-  await _stdlib.display(g);
+  await g.display();
 }
 return [main, _tests];}`;
 
@@ -53,7 +53,7 @@ end main`;
 async function main() {
   var g = system.initialise(new _stdlib.BlockGraphics());
   g = g.withUnicode(0, 0, 90, _stdlib.black, _stdlib.white);
-  await _stdlib.display(g);
+  await g.display();
 }
 return [main, _tests];}`;
 
@@ -135,7 +135,7 @@ end main`;
 async function main() {
   var g = system.initialise(new _stdlib.BlockGraphics());
   g = g.withBlock(1, 0, 4);
-  await _stdlib.display(g);
+  await g.display();
 }
 return [main, _tests];}`;
 
@@ -190,7 +190,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var g = system.initialise(new _stdlib.BlockGraphics());
-  await _stdlib.display(g);
+  await g.display();
   _stdlib.clearGraphics(g);
 }
 return [main, _tests];}`;
@@ -378,7 +378,7 @@ end main`;
 async function main() {
   var g = system.initialise(new _stdlib.BlockGraphics());
   g = g.withText(0, 0, "Hello", 1, 2);
-  await _stdlib.display(g);
+  await g.display();
 }
 return [main, _tests];}`;
 
@@ -413,7 +413,7 @@ end main`;
 async function main() {
   var g = system.initialise(new _stdlib.BlockGraphics());
   g = g.withText(39, 29, "Hello", 1, 2);
-  await _stdlib.display(g);
+  await g.display();
 }
 return [main, _tests];}`;
 

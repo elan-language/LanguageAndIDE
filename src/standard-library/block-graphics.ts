@@ -4,9 +4,12 @@ import {
   elanClass,
   ElanClass,
   elanFunction,
+  elanProcedure,
   ElanInt,
   elanIntType,
   FunctionOptions,
+  ProcedureOptions,
+  elanClassType,
 } from "../elan-type-annotations";
 import { System } from "../system";
 import { GraphicsBase } from "./graphics-base";
@@ -202,5 +205,12 @@ export class BlockGraphics extends GraphicsBase {
     const h = "000000" + n.toString(16);
     const h6 = h.substring(h.length - 6);
     return `#${h6}`;
+  }
+
+  @elanProcedure(ProcedureOptions.async)
+  display(): Promise<void> {
+    const html = this.asHtml();
+    this.system!.elanInputOutput.drawGraphics(html);
+    return this.pause(0);
   }
 }

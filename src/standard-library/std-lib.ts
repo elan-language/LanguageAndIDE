@@ -48,6 +48,7 @@ import { Stack } from "./stack";
 import { TextFileReader } from "./text-file-reader";
 import { TextFileWriter } from "./text-file-writer";
 import { VectorGraphics } from "./vector-graphics";
+import { TurtleGraphics } from "./turtle-graphics";
 
 export class StdLib {
   constructor() {
@@ -80,6 +81,9 @@ export class StdLib {
 
   @elanClassExport(BlockGraphics)
   BlockGraphics = BlockGraphics;
+
+  @elanClassExport(TurtleGraphics)
+  TurtleGraphics = TurtleGraphics;
 
   @elanClassExport(VectorGraphics)
   VectorGraphics = VectorGraphics;
@@ -1035,12 +1039,5 @@ export class StdLib {
   @elanProcedure(ProcedureOptions.extension)
   clearKeyBuffer(@elanClassType(GraphicsBase) g: GraphicsBase) {
     this.system!.elanInputOutput.clearKeyBuffer();
-  }
-
-  @elanProcedure(ProcedureOptions.asyncExtension)
-  display(@elanClassType(GraphicsBase) g: GraphicsBase): Promise<void> {
-    const html = g.asHtml();
-    this.system!.elanInputOutput.drawGraphics(html);
-    return this.pause(0);
   }
 }
