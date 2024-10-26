@@ -2,8 +2,10 @@ import {
   ClassOptions,
   elanClass,
   ElanClass,
+  elanIntType,
   elanProcedure,
   elanProperty,
+  ProcedureOptions,
 } from "../elan-type-annotations";
 import { System } from "../system";
 import { CircleVG } from "./circle-vg";
@@ -50,13 +52,18 @@ export class TurtleGraphics extends GraphicsBase {
   width: number;
 
   //TODO: Temporary kludge - see comment in constructor above
+  private initialised: boolean = false;
   @elanProcedure()
-  tempInitialise() {
-    this.vg = this.system!.initialise(new VectorGraphics());
+  checkInitialised() {
+    if (!this.initialised) {
+      this.vg = this.system!.initialise(new VectorGraphics());
+      this.initialised = true;
+    }
   }
 
   @elanProcedure()
   showTurtle() {
+    this.checkInitialised();
     if (!this.show) {
       this.show = true;
       this.addTurtleIfShown();
@@ -66,6 +73,7 @@ export class TurtleGraphics extends GraphicsBase {
 
   @elanProcedure()
   hideTurtle() {
+    this.checkInitialised();
     this.removeTurtleIfShown();
     this.show = false;
     this.vg.display();
@@ -117,6 +125,7 @@ export class TurtleGraphics extends GraphicsBase {
 
   @elanProcedure()
   move(distance: number) {
+    this.checkInitialised();
     this.removeTurtleIfShown();
     const [newX, newY] = this.getDestination(distance);
     if (this.pen) {
@@ -142,29 +151,32 @@ export class TurtleGraphics extends GraphicsBase {
 
   @elanProcedure()
   turnTo(heading: number) {
+    this.checkInitialised();
     this.removeTurtleIfShown();
     this.heading = heading;
     this.addTurtleIfShown();
     this.vg.display();
   }
 
-  @elanProcedure() //Int
-  pause(milliSeconds: number) {
-    this._stdLib.pause(milliSeconds);
+  @elanProcedure(ProcedureOptions.async)
+  pause(@elanIntType() ms: number): Promise<void> {
+    return new Promise((resolve) => {
+      setTimeout(() => resolve(), ms);
+    });
   }
-
-  @elanProcedure() //Int
-  penColour(colour: number) {
+  @elanProcedure()
+  penColour(@elanIntType() colour: number) {
     this.colour = colour;
   }
 
-  @elanProcedure() //Int
-  penWidth(width: number) {
+  @elanProcedure()
+  penWidth(@elanIntType() width: number) {
     this.width = width > 0 ? width : 1;
   }
 
   @elanProcedure()
   placeAt(x: number, y: number) {
+    this.checkInitialised();
     this.removeTurtleIfShown();
     this.x = x;
     this.y = y;
