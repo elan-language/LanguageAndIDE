@@ -2,9 +2,11 @@ import {
   ClassOptions,
   elanClass,
   ElanClass,
+  elanFunction,
   elanIntType,
   elanProcedure,
   elanProperty,
+  FunctionOptions,
   ProcedureOptions,
 } from "../elan-type-annotations";
 import { System } from "../system";
@@ -143,11 +145,11 @@ export class TurtleGraphics extends GraphicsBase {
 
   @elanProcedure()
   turn(degrees: number) {
-    this.turnTo(this.heading + degrees);
+    this.turnToHeading(this.heading + degrees);
   }
 
   @elanProcedure()
-  turnTo(heading: number) {
+  turnToHeading(heading: number) {
     this.checkInitialised();
     this.removeTurtleIfShown();
     this.heading = heading;
@@ -179,5 +181,10 @@ export class TurtleGraphics extends GraphicsBase {
     this.y = y;
     this.addTurtleIfShown();
     this.vg.display();
+  }
+
+  @elanFunction(FunctionOptions.pure)
+  asHtml(): string {
+    return this.vg.asHtml();
   }
 }
