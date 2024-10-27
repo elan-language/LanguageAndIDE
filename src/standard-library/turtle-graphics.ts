@@ -53,7 +53,6 @@ export class TurtleGraphics extends GraphicsBase {
 
   //TODO: Temporary kludge - see comment in constructor above
   private initialised: boolean = false;
-  @elanProcedure()
   checkInitialised() {
     if (!this.initialised) {
       this.vg = this.system!.initialise(new VectorGraphics());
@@ -89,7 +88,6 @@ export class TurtleGraphics extends GraphicsBase {
     this.pen = true;
   }
 
-  @elanProcedure()
   private addTurtleIfShown() {
     if (this.show) {
       const turtle = new CircleVG();
@@ -109,7 +107,6 @@ export class TurtleGraphics extends GraphicsBase {
     }
   }
 
-  @elanProcedure()
   private removeTurtleIfShown() {
     if (this.show) {
       // remove last two shapes (circle and line)
