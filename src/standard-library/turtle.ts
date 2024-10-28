@@ -30,10 +30,10 @@ export class Turtle extends GraphicsBase {
     this.y = 100;
     this.heading = 0;
     this.pen = true;
-    this.show = false;
+    this.shown = false;
     this.colour = 0;
     this.width = 1;
-    this.vg = new VectorGraphics(); //This needs to be initialised with system, but can't be because the system property is not populated yet
+    this.vg = new VectorGraphics(); //This needs to be initialised with system, see ensureIntialised() below
   }
   private _stdLib = new StdLib();
 
@@ -49,11 +49,10 @@ export class Turtle extends GraphicsBase {
   heading: number;
 
   pen: boolean;
-  show: boolean;
+  shown: boolean;
   colour: number;
   width: number;
 
-  //TODO: Temporary kludge - see comment in constructor above
   private initialised: boolean = false;
   ensureInitialised() {
     if (!this.initialised) {
@@ -63,10 +62,10 @@ export class Turtle extends GraphicsBase {
   }
 
   @elanProcedure()
-  Show() {
+  show() {
     this.ensureInitialised();
-    if (!this.show) {
-      this.show = true;
+    if (!this.shown) {
+      this.shown = true;
       this.addTurtleIfShown();
       this.vg.display();
     }
@@ -76,7 +75,7 @@ export class Turtle extends GraphicsBase {
   hide() {
     this.ensureInitialised();
     this.removeTurtleIfShown();
-    this.show = false;
+    this.shown = false;
     this.vg.display();
   }
 
@@ -91,7 +90,7 @@ export class Turtle extends GraphicsBase {
   }
 
   private addTurtleIfShown() {
-    if (this.show) {
+    if (this.shown) {
       const turtle = new CircleVG();
       turtle.cx = this.x;
       turtle.cy = this.y;
@@ -110,9 +109,8 @@ export class Turtle extends GraphicsBase {
   }
 
   private removeTurtleIfShown() {
-    if (this.show) {
-      // remove last two shapes (circle and line)
-      this.vg = this.vg.removeLast().removeLast();
+    if (this.shown) {
+      this.vg = this.vg.removeLast().removeLast(); // circle and line
     }
   }
 
