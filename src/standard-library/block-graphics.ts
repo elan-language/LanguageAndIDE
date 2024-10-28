@@ -1,15 +1,14 @@
 import { ElanRuntimeError } from "../elan-runtime-error";
 import {
   ClassOptions,
-  elanClass,
   ElanClass,
-  elanFunction,
-  elanProcedure,
   ElanInt,
-  elanIntType,
   FunctionOptions,
   ProcedureOptions,
-  elanClassType,
+  elanClass,
+  elanFunction,
+  elanIntType,
+  elanProcedure,
 } from "../elan-type-annotations";
 import { System } from "../system";
 import { GraphicsBase } from "./graphics-base";
@@ -190,7 +189,7 @@ export class BlockGraphics extends GraphicsBase {
 
   @elanFunction(FunctionOptions.pure)
   asHtml(): string {
-    let rendered = "";
+    let rendered = `<div id="block-graphics">`;
 
     for (let y = 0; y < this.ySize; y++) {
       for (let x = 0; x < this.xSize; x++) {
@@ -198,7 +197,7 @@ export class BlockGraphics extends GraphicsBase {
         rendered = `${rendered}<div style="color:${this.asHex(f)};background-color:${this.asHex(b)};">${c}</div>`;
       }
     }
-    return rendered;
+    return rendered + "</div>";
   }
 
   private asHex(n: number): string {

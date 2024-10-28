@@ -164,7 +164,8 @@ export async function assertGraphicsContains(file: FileImpl, offset: number, sni
   } catch (e) {
     assert.fail((e as { message: string }).message ?? "");
   }
-  const divs = graphics.split("</div>");
+  let start = `<div id="block-graphics">`.length
+  const divs = graphics.substring(start).split("</div>");
 
   if (divs.length > offset) {
     assert.strictEqual(divs[offset], snippet);

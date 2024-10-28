@@ -27,11 +27,6 @@ body {
     font-family: var(--ideTitleFont);
     font-size: var(--ideTitleSize);
   }
-  #graphics div {
-    container: block / size;
-    font-size: 0.7cqw;
-    text-align: center;
-  }
   #code-title {
     grid-row: 1;
     grid-column: 17 / 32;
@@ -105,11 +100,19 @@ body {
     margin: 0;
     height: 100%;
     aspect-ratio: 4/3;
-  /* Define it as a sub-grid within the overall grid */
+  }
+  #block-graphics {
+    width: 100%;
+    height: 100%;
     display: grid;
     grid-template-columns: repeat(40, 1fr);
     grid-template-rows: repeat(30, 1fr);
-}
+  }
+  #block-graphics div {
+    container: block / size;
+    font-size: 0.7cqw;
+    text-align: center;
+  }
  #code-controls {
     grid-row: 1;
     grid-column: 1/17;
