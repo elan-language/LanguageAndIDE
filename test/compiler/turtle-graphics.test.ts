@@ -9,12 +9,12 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("TurtleGraphics", () => {
+suite("Turtle", () => {
   test("Pass_MethodsUpdateTurtleState", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
 main
-  let t be new TurtleGraphics()
+  let t be new Turtle()
   call t.placeAt(100, 150)
   call t.turn(45)
   call t.move(100)
@@ -25,7 +25,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  const t = system.initialise(new _stdlib.TurtleGraphics());
+  const t = system.initialise(new _stdlib.Turtle());
   t.placeAt(100, 150);
   t.turn(45);
   t.move(100);
@@ -47,7 +47,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan Beta 3 valid
 
 main
-  let t be new TurtleGraphics()
+  let t be new Turtle()
   call t.placeAt(100, 150)
   call t.turn(45)
   call t.move(100)
@@ -56,7 +56,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  const t = system.initialise(new _stdlib.TurtleGraphics());
+  const t = system.initialise(new _stdlib.Turtle());
   t.placeAt(100, 150);
   t.turn(45);
   t.move(100);

@@ -2,35 +2,35 @@ import "reflect-metadata";
 import { ElanCompilerError } from "../elan-compiler-error";
 import { ElanRuntimeError } from "../elan-runtime-error";
 import {
-  elanAbstractDictionaryType,
-  ElanArray,
-  elanArrayType,
-  ElanBoolean,
-  ElanClass,
-  elanClassExport,
-  elanClassType,
-  elanConstant,
-  elanDictionaryType,
-  ElanFloat,
-  elanFunction,
-  elanFuncType,
-  elanGenericParamT1Type,
-  elanGenericParamT2Type,
-  ElanImmutableDictionary,
-  elanImmutableDictionaryType,
-  ElanInt,
-  elanIntType,
-  ElanIterable,
-  elanIterableType,
-  ElanList,
-  elanListType,
-  elanProcedure,
-  ElanString,
-  ElanT1,
-  ElanT2,
-  ElanTuple,
-  FunctionOptions,
-  ProcedureOptions,
+    elanAbstractDictionaryType,
+    ElanArray,
+    elanArrayType,
+    ElanBoolean,
+    ElanClass,
+    elanClassExport,
+    elanClassType,
+    elanConstant,
+    elanDictionaryType,
+    ElanFloat,
+    elanFunction,
+    elanFuncType,
+    elanGenericParamT1Type,
+    elanGenericParamT2Type,
+    ElanImmutableDictionary,
+    elanImmutableDictionaryType,
+    ElanInt,
+    elanIntType,
+    ElanIterable,
+    elanIterableType,
+    ElanList,
+    elanListType,
+    elanProcedure,
+    ElanString,
+    ElanT1,
+    ElanT2,
+    ElanTuple,
+    FunctionOptions,
+    ProcedureOptions,
 } from "../elan-type-annotations";
 import { hasHiddenType } from "../has-hidden-type";
 import { StubInputOutput } from "../stub-input-output";
@@ -47,8 +47,8 @@ import { ElanSet } from "./set";
 import { Stack } from "./stack";
 import { TextFileReader } from "./text-file-reader";
 import { TextFileWriter } from "./text-file-writer";
+import { Turtle } from "./turtle-graphics";
 import { VectorGraphics } from "./vector-graphics";
-import { TurtleGraphics } from "./turtle-graphics";
 
 export class StdLib {
   constructor() {
@@ -82,8 +82,8 @@ export class StdLib {
   @elanClassExport(BlockGraphics)
   BlockGraphics = BlockGraphics;
 
-  @elanClassExport(TurtleGraphics)
-  TurtleGraphics = TurtleGraphics;
+  @elanClassExport(Turtle)
+  Turtle = Turtle;
 
   @elanClassExport(VectorGraphics)
   VectorGraphics = VectorGraphics;

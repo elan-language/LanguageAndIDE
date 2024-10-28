@@ -17,10 +17,10 @@ import { StdLib } from "./std-lib";
 import { VectorGraphics } from "./vector-graphics";
 
 @elanClass(ClassOptions.concrete, [], [], [ElanClass(GraphicsBase)])
-export class TurtleGraphics extends GraphicsBase {
+export class Turtle extends GraphicsBase {
   // this must = implemented by hand on all stdlib classes
   static emptyInstance() {
-    return new TurtleGraphics();
+    return new Turtle();
   }
   private system?: System;
 
@@ -63,7 +63,7 @@ export class TurtleGraphics extends GraphicsBase {
   }
 
   @elanProcedure()
-  showTurtle() {
+  Show() {
     this.checkInitialised();
     if (!this.show) {
       this.show = true;
@@ -73,7 +73,7 @@ export class TurtleGraphics extends GraphicsBase {
   }
 
   @elanProcedure()
-  hideTurtle() {
+  hide() {
     this.checkInitialised();
     this.removeTurtleIfShown();
     this.show = false;
