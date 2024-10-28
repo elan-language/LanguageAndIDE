@@ -2,6 +2,7 @@ import {
   ClassOptions,
   elanClass,
   ElanClass,
+  elanFloatType,
   elanFunction,
   elanIntType,
   elanProcedure,
@@ -167,7 +168,7 @@ export class Turtle extends GraphicsBase {
   }
 
   @elanProcedure()
-  penWidth(@elanIntType() width: number) {
+  penWidth(@elanFloatType() width: number) {
     this.width = width > 0 ? width : 1;
   }
 
