@@ -47,7 +47,7 @@ import { ElanSet } from "./set";
 import { Stack } from "./stack";
 import { TextFileReader } from "./text-file-reader";
 import { TextFileWriter } from "./text-file-writer";
-import { Turtle } from "./turtle-graphics";
+import { Turtle } from "./turtle";
 import { VectorGraphics } from "./vector-graphics";
 
 export class StdLib {

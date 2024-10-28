@@ -55,7 +55,7 @@ export class Turtle extends GraphicsBase {
 
   //TODO: Temporary kludge - see comment in constructor above
   private initialised: boolean = false;
-  checkInitialised() {
+  ensureInitialised() {
     if (!this.initialised) {
       this.vg = this.system!.initialise(new VectorGraphics());
       this.initialised = true;
@@ -64,7 +64,7 @@ export class Turtle extends GraphicsBase {
 
   @elanProcedure()
   Show() {
-    this.checkInitialised();
+    this.ensureInitialised();
     if (!this.show) {
       this.show = true;
       this.addTurtleIfShown();
@@ -74,7 +74,7 @@ export class Turtle extends GraphicsBase {
 
   @elanProcedure()
   hide() {
-    this.checkInitialised();
+    this.ensureInitialised();
     this.removeTurtleIfShown();
     this.show = false;
     this.vg.display();
@@ -124,7 +124,7 @@ export class Turtle extends GraphicsBase {
 
   @elanProcedure()
   move(distance: number) {
-    this.checkInitialised();
+    this.ensureInitialised();
     this.removeTurtleIfShown();
     const [newX, newY] = this.getDestination(distance);
     if (this.pen) {
@@ -150,7 +150,7 @@ export class Turtle extends GraphicsBase {
 
   @elanProcedure()
   turnToHeading(heading: number) {
-    this.checkInitialised();
+    this.ensureInitialised();
     this.removeTurtleIfShown();
     this.heading = heading;
     this.addTurtleIfShown();
@@ -175,7 +175,7 @@ export class Turtle extends GraphicsBase {
 
   @elanProcedure()
   placeAt(x: number, y: number) {
-    this.checkInitialised();
+    this.ensureInitialised();
     this.removeTurtleIfShown();
     this.x = x;
     this.y = y;
