@@ -29,6 +29,6 @@ export class RectangleVG extends BaseVG {
   height: number = 0;
 
   asHtml(): string {
-    return `<rect x="${this.x}" y="${this.y}" width="${this.width}" height="${this.height}" stroke="${this.strokeAsColour()}" stroke-width="${this.strokeWidth}" fill="${this.fillAsColour()}" />`;
+    return `<rect x="${this.x}%" y="${this.y / 0.75}%" width="${this.width}%" height="${this.height / 0.75}%" stroke="${this.strokeAsColour()}" stroke-width="${this.strokeWidthPC()}%" fill="${this.fillAsColour()}" />`;
   }
 }

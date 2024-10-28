@@ -24,6 +24,6 @@ export class CircleVG extends BaseVG {
   r: number = 0;
 
   asHtml(): string {
-    return `<circle cx="${this.cx}" cy="${this.cy}" r="${this.r}" stroke="${this.strokeAsColour()}" stroke-width="${this.strokeWidth}" fill="${this.fillAsColour()}" />`;
+    return `<circle cx="${this.cx}%" cy="${this.cy / 0.75}%" r="${this.r * 1.125}%" stroke="${this.strokeAsColour()}" stroke-width="${this.strokeWidthPC()}%" fill="${this.fillAsColour()}" />`;
   }
 }

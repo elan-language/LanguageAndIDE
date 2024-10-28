@@ -38,4 +38,8 @@ export class BaseVG {
   fillAsColour(): string {
     return this.asColour(this.fill);
   }
+
+  strokeWidthPC(): number {
+    return this.strokeWidth * 0.3;
+  }
 }

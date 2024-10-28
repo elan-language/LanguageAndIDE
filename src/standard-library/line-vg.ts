@@ -26,6 +26,6 @@ export class LineVG extends BaseVG {
   y2: number = 0;
 
   asHtml(): string {
-    return `<line x1="${this.x1}" y1="${this.y1}" x2="${this.x2}" y2="${this.y2}" stroke="${this.strokeAsColour()}" stroke-width="${this.strokeWidth}" />`;
+    return `<line x1="${this.x1}%" y1="${this.y1 / 0.75}%" x2="${this.x2}%" y2="${this.y2 / 0.75}%" stroke="${this.strokeAsColour()}" stroke-width="${this.strokeWidthPC()}%" />`;
   }
 }
