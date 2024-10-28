@@ -26,7 +26,7 @@ export class Turtle extends GraphicsBase {
 
   constructor() {
     super();
-    this.x = 133;
+    this.x = 100;
     this.y = 100;
     this.heading = 0;
     this.pen = true;

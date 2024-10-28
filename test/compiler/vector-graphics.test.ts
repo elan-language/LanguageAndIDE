@@ -51,7 +51,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      `<svg width="266" height="200" xmlns="http://www.w3.org/2000/svg">
+      `<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
 </svg>
 `,
     );
@@ -88,7 +88,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      `<svg width="266" height="200" xmlns="http://www.w3.org/2000/svg">
+      `<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
   <circle cx="100" cy="100" r="10" stroke="#000000" stroke-width="1" fill="#ffff00" />
   <line x1="0" y1="0" x2="100" y2="100" stroke="#000000" stroke-width="1" />
   <rect x="30" y="40" width="20" height="10" stroke="#000000" stroke-width="1" fill="#0000ff" />
@@ -123,7 +123,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      `<svg width="266" height="200" xmlns="http://www.w3.org/2000/svg">
+      `<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
   <circle cx="90" cy="70" r="13" stroke="#ff0000" stroke-width="2" fill="#008000" />
 </svg>
 `,
@@ -160,7 +160,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      `<svg width="266" height="200" xmlns="http://www.w3.org/2000/svg">
+      `<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
   <circle cx="100" cy="100" r="10" stroke="#000000" stroke-width="1" fill="#008000" />
 </svg>
 `,
