@@ -89,9 +89,9 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(
       fileImpl,
       `<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-  <circle cx="100" cy="100" r="10" stroke="#000000" stroke-width="1" fill="#ffff00" />
-  <line x1="0" y1="0" x2="100" y2="100" stroke="#000000" stroke-width="1" />
-  <rect x="30" y="40" width="20" height="10" stroke="#000000" stroke-width="1" fill="#0000ff" />
+  <circle cx="100%" cy="133.33333333333334%" r="11.25%" stroke="#000000" stroke-width="0.3%" fill="#ffff00" />
+  <line x1="0%" y1="0%" x2="100%" y2="133.33333333333334%" stroke="#000000" stroke-width="0.3%" />
+  <rect x="30%" y="53.333333333333336%" width="20%" height="13.333333333333334%" stroke="#000000" stroke-width="0.3%" fill="#0000ff" />
 </svg>
 `,
     );
@@ -124,7 +124,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(
       fileImpl,
       `<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-  <circle cx="90" cy="70" r="13" stroke="#ff0000" stroke-width="2" fill="#008000" />
+  <circle cx="90%" cy="93.33333333333333%" r="14.625%" stroke="#ff0000" stroke-width="0.6%" fill="#008000" />
 </svg>
 `,
     );
@@ -161,7 +161,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(
       fileImpl,
       `<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-  <circle cx="100" cy="100" r="10" stroke="#000000" stroke-width="1" fill="#008000" />
+  <circle cx="100%" cy="133.33333333333334%" r="11.25%" stroke="#000000" stroke-width="0.3%" fill="#008000" />
 </svg>
 `,
     );

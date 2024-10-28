@@ -73,7 +73,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(
       fileImpl,
       `<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-  <line x1="100" y1="150" x2="170.71067811865476" y2="79.28932188134524" stroke="#000000" stroke-width="1" />
+  <line x1="100%" y1="200%" x2="170.71067811865476%" y2="105.71909584179366%" stroke="#000000" stroke-width="0.3%" />
 </svg>
 `,
     );
