@@ -23,7 +23,12 @@ export class Turtle extends GraphicsBase {
   static emptyInstance() {
     return new Turtle();
   }
-  private system?: System;
+  private _system?: System;
+
+  set system(value: System) {
+    this._system = value;
+    this.vg = this._system!.initialise(new VectorGraphics());
+  }
 
   constructor() {
     super();
@@ -34,7 +39,7 @@ export class Turtle extends GraphicsBase {
     this.shown = false;
     this.colour = 0;
     this.width = 1;
-    this.vg = new VectorGraphics(); //This needs to be initialised with system, see ensureIntialised() below
+    this.vg = new VectorGraphics(); // replaced by initialised version in set system()
   }
   private _stdLib = new StdLib();
 
@@ -54,17 +59,8 @@ export class Turtle extends GraphicsBase {
   colour: number;
   width: number;
 
-  private initialised: boolean = false;
-  ensureInitialised() {
-    if (!this.initialised) {
-      this.vg = this.system!.initialise(new VectorGraphics());
-      this.initialised = true;
-    }
-  }
-
   @elanProcedure()
   show() {
-    this.ensureInitialised();
     if (!this.shown) {
       this.shown = true;
       this.addTurtleIfShown();
@@ -74,7 +70,6 @@ export class Turtle extends GraphicsBase {
 
   @elanProcedure()
   hide() {
-    this.ensureInitialised();
     this.removeTurtleIfShown();
     this.shown = false;
     this.vg.display();
@@ -95,10 +90,10 @@ export class Turtle extends GraphicsBase {
       const turtle = new CircleVG();
       turtle.cx = this.x;
       turtle.cy = this.y;
-      turtle.r = 4;
+      turtle.r = 2;
       turtle.fill = 0x008000;
       turtle.strokeWidth = 0;
-      const [x2, y2] = this.getDestination(4);
+      const [x2, y2] = this.getDestination(2);
       const pointer = new LineVG();
       pointer.x1 = this.x;
       pointer.y1 = this.y;
@@ -123,7 +118,6 @@ export class Turtle extends GraphicsBase {
 
   @elanProcedure()
   move(distance: number) {
-    this.ensureInitialised();
     this.removeTurtleIfShown();
     const [newX, newY] = this.getDestination(distance);
     if (this.pen) {
@@ -149,7 +143,6 @@ export class Turtle extends GraphicsBase {
 
   @elanProcedure()
   turnToHeading(heading: number) {
-    this.ensureInitialised();
     this.removeTurtleIfShown();
     this.heading = heading;
     this.addTurtleIfShown();
@@ -174,7 +167,6 @@ export class Turtle extends GraphicsBase {
 
   @elanProcedure()
   placeAt(x: number, y: number) {
-    this.ensureInitialised();
     this.removeTurtleIfShown();
     this.x = x;
     this.y = y;
