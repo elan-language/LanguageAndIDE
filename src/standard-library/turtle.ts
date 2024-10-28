@@ -144,9 +144,13 @@ export class Turtle extends GraphicsBase {
   @elanProcedure()
   turnToHeading(heading: number) {
     this.removeTurtleIfShown();
-    this.heading = heading;
+    this.heading = this.normaliseHeading(heading);
     this.addTurtleIfShown();
     this.vg.display();
+  }
+
+  private normaliseHeading(x: number): number {
+    return x >= 360 ? this.normaliseHeading(x - 360) : x < 0 ? this.normaliseHeading(x + 360) : x;
   }
 
   @elanProcedure(ProcedureOptions.async)
@@ -168,8 +172,6 @@ export class Turtle extends GraphicsBase {
   @elanProcedure()
   placeAt(x: number, y: number) {
     this.removeTurtleIfShown();
-    this.x = x;
-    this.y = y;
     this.addTurtleIfShown();
     this.vg.display();
   }
