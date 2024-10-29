@@ -34,7 +34,7 @@
   "devDependencies": {
     "@types/jsdom": "^21.1.7",
     "@types/mocha": "^10.0.6",
-    "@types/node": "20.x",
+    "@types/node": "22.x",
     "@typescript-eslint/eslint-plugin": "^7.16.0",
     "@typescript-eslint/parser": "^7.16.0",
     "cpr": "~3.0.1",

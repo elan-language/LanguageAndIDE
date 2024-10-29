@@ -3,6 +3,7 @@ import {
   ElanBoolean,
   ElanClass,
   elanClass,
+  elanClassType,
   elanFunction,
   elanGenericParamT1Type,
   ElanInt,
@@ -76,6 +77,13 @@ export class ElanSet<T1> {
   remove(@elanGenericParamT1Type() item: T1): ElanSet<T1> {
     const copy = this.copyOfThis();
     copy.contents.delete(item);
+    return copy;
+  }
+
+  @elanFunction(FunctionOptions.pure, ElanClass(ElanSet))
+  union(@elanClassType(ElanSet) other: ElanSet<T1>): ElanSet<T1> {
+    const copy = this.copyOfThis();
+    copy.contents = this.contents.union(other.contents);
     return copy;
   }
 
