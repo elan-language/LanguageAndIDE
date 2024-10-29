@@ -426,7 +426,7 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   private escapeDoubleQuotes(str: string): string {
-    return str.replace(/"/g, "&quot;");
+    return str.replace(/&/g, "&amp;").replace(/"/g, "&quot;");
   }
 
   public textAsSource(): string {
