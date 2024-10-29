@@ -427,6 +427,7 @@ function postMessage(e: editorEvent) {
 
 const stdlib = new StdLib();
 const system = stdlib.system;
+system.stdlib = stdlib; // to allow injection
 
 trimButton.addEventListener("click", () => {
   const keys = file.removeAllSelectorsThatCanBe();

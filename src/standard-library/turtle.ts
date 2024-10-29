@@ -41,7 +41,7 @@ export class Turtle extends GraphicsBase {
     this.width = 1;
     this.vg = new VectorGraphics(); // replaced by initialised version in set system()
   }
-  private _stdLib = new StdLib();
+  private stdlib!: StdLib; // injected
 
   vg: VectorGraphics;
 
@@ -111,8 +111,8 @@ export class Turtle extends GraphicsBase {
   }
 
   private getDestination(distance: number): [number, number] {
-    const newX = this.x + distance * this._stdLib.sinDeg(this.heading);
-    const newY = this.y - distance * this._stdLib.cosDeg(this.heading);
+    const newX = this.x + distance * this.stdlib.sinDeg(this.heading);
+    const newY = this.y - distance * this.stdlib.cosDeg(this.heading);
     return [newX, newY];
   }
 

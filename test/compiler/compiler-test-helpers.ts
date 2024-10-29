@@ -79,6 +79,7 @@ function executeCode(file: FileImpl, input?: string) {
   const system = getTestSystem(input ?? "");
   const stdlib = new StdLib();
   stdlib.system = system;
+  system.stdlib = stdlib;
 
   return doImport(jsCode).then(async (elan) => {
     if (elan.program) {
@@ -164,7 +165,7 @@ export async function assertGraphicsContains(file: FileImpl, offset: number, sni
   } catch (e) {
     assert.fail((e as { message: string }).message ?? "");
   }
-  let start = `<div id="block-graphics">`.length
+  const start = `<div id="block-graphics">`.length;
   const divs = graphics.substring(start).split("</div>");
 
   if (divs.length > offset) {

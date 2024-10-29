@@ -23,7 +23,7 @@ export class VectorGraphics {
 
   constructor() {}
 
-  private _stdLib = new StdLib();
+  private stdlib!: StdLib; // injected
 
   private system?: System;
 
@@ -89,6 +89,6 @@ export class VectorGraphics {
   display(): Promise<void> {
     const html = this.asHtml();
     this.system!.elanInputOutput.drawGraphics(html);
-    return this._stdLib.pause(0);
+    return this.stdlib.pause(0);
   }
 }
