@@ -499,7 +499,17 @@ export class StdLib {
 
   @elanFunction(FunctionOptions.pureExtension, ElanList(ElanString))
   split(s: string, separator: string): string[] {
-    return s.split(separator);
+    return this.asList(s.split(separator));
+  }
+
+  @elanFunction(FunctionOptions.pureExtension)
+  joinArrayElements(@elanArrayType(ElanString) list: string[], separator: string): string {
+    return list.join(separator);
+  }
+
+  @elanFunction(FunctionOptions.pureExtension)
+  joinListElements(@elanListType(ElanString) list: string[], separator: string): string {
+    return list.join(separator);
   }
 
   @elanFunction(FunctionOptions.pure, ElanInt)
