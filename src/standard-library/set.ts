@@ -8,7 +8,7 @@ import {
   ElanInt,
   elanProperty,
   ElanT1,
-  FunctionOptions
+  FunctionOptions,
 } from "../elan-type-annotations";
 import { System } from "../system";
 import { StdLib } from "./std-lib";
@@ -39,7 +39,7 @@ export class ElanSet<T1> {
 
   private contents: Set<T1>;
 
-  private copyOfThis() : ElanSet<T1> {
+  private copyOfThis(): ElanSet<T1> {
     const copy = this.system!.initialise(new ElanSet<T1>());
     copy.contents = this.contents;
     return copy;
