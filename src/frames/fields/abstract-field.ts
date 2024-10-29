@@ -1,7 +1,7 @@
 import { CodeSource } from "../code-source";
 import { CompileError } from "../compile-error";
 import {
-  escapeAngleBrackets,
+  escapeHtmlChars,
   helper_CompileOrParseAsDisplayStatus,
   helper_compileMsgAsHtml,
   helper_deriveCompileStatusFromErrors,
@@ -407,7 +407,7 @@ export abstract class AbstractField implements Selectable, Field {
       if (this.rootNode && this._parseStatus === ParseStatus.valid) {
         html = this.rootNode.renderAsHtml();
       } else {
-        html = escapeAngleBrackets(this.text);
+        html = escapeHtmlChars(this.text);
       }
     }
     return html;

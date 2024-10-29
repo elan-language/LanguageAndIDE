@@ -37,6 +37,7 @@ import { LitFloat } from "../parse-nodes/lit-float";
 import { LitInt } from "../parse-nodes/lit-int";
 import { LitRegEx } from "../parse-nodes/lit-regex";
 import { LitStringEmpty } from "../parse-nodes/lit-string-empty";
+import { LitStringInterpolation } from "../parse-nodes/lit-string-interpolation";
 import { LitStringNonEmpty } from "../parse-nodes/lit-string-non-empty";
 import { LitTuple } from "../parse-nodes/lit-tuple";
 import { MethodCallNode } from "../parse-nodes/method-call-node";
@@ -50,7 +51,6 @@ import { RangeNode } from "../parse-nodes/range-node";
 import { RegExMatchNode } from "../parse-nodes/regex-match-node";
 import { Sequence } from "../parse-nodes/sequence";
 import { SpaceNode } from "../parse-nodes/space-node";
-import { StringInterpolation } from "../parse-nodes/string-interpolation";
 import { TermChained } from "../parse-nodes/term-chained";
 import { TermSimple } from "../parse-nodes/term-simple";
 import { ToClause } from "../parse-nodes/to-clause";
@@ -477,7 +477,7 @@ export function transform(
     return new KvpAsn(key, value, fieldId);
   }
 
-  if (node instanceof StringInterpolation) {
+  if (node instanceof LitStringInterpolation) {
     const value = transform(node.expr, fieldId, scope)!;
 
     return new InterpolatedAsn(value, fieldId);

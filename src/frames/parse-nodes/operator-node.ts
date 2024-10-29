@@ -1,4 +1,4 @@
-import { escapeAngleBrackets } from "../helpers";
+import { escapeHtmlChars } from "../helpers";
 import { POWER } from "../symbols";
 import { PunctuationNode } from "./punctuation-node";
 
@@ -8,7 +8,7 @@ export class OperatorNode extends PunctuationNode {
   }
 
   renderAsHtml(): string {
-    return escapeAngleBrackets(this.renderAsSource());
+    return escapeHtmlChars(this.renderAsSource());
   }
 
   renderAsSource(): string {

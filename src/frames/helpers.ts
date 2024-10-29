@@ -113,8 +113,8 @@ export function expandCollapseAll(file: File) {
     file.getFirstChild().select(true, false);
   }
 }
-export function escapeAngleBrackets(str: string): string {
-  return str.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+export function escapeHtmlChars(str: string): string {
+  return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
 export function helper_compileMsgAsHtml(loc: Frame | Field): string {
@@ -133,7 +133,7 @@ export function helper_compileMsgAsHtml(loc: Frame | Field): string {
   if (compile === DisplayStatus.error || compile === DisplayStatus.warning) {
     cls = DisplayStatus[compile];
   }
-  const toDisplay = escapeAngleBrackets(msg);
+  const toDisplay = escapeHtmlChars(msg);
   return cls === "" ? "<msg></msg>" : ` <msg class="${cls}">${toDisplay}</msg>`;
 }
 
