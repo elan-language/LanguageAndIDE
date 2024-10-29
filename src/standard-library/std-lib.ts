@@ -497,6 +497,11 @@ export class StdLib {
     return s.trim();
   }
 
+  @elanFunction(FunctionOptions.pureExtension, ElanList(ElanString))
+  split(s: string, separator: string): string[] {
+    return s.split(separator);
+  }
+
   @elanFunction(FunctionOptions.pure, ElanInt)
   floor(n: number) {
     return Math.floor(n);

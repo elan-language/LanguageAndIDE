@@ -747,4 +747,30 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "[3, 1, 2]");
   });
+
+  test("Pass_split", async () => {
+    const code = `# FFFF Elan Beta 3 valid
+
+main
+  let s be "Now is the time..."
+  let words be s.split(" ")
+  print words
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  const s = "Now is the time...";
+  const words = _stdlib.split(s, " ");
+  system.printLine(_stdlib.asString(words));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "Now,is,the,time...");
+  });
 });
