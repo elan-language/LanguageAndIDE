@@ -1,5 +1,6 @@
 import {
   ClassOptions,
+  ElanArray,
   ElanBoolean,
   ElanClass,
   elanClass,
@@ -7,6 +8,8 @@ import {
   elanFunction,
   elanGenericParamT1Type,
   ElanInt,
+  elanIterableType,
+  ElanList,
   elanProperty,
   ElanT1,
   FunctionOptions,
@@ -87,11 +90,47 @@ export class ElanSet<T1> {
     return copy;
   }
 
+  @elanFunction(FunctionOptions.pure, ElanClass(ElanSet))
+  difference(@elanClassType(ElanSet) other: ElanSet<T1>): ElanSet<T1> {
+    const copy = this.copyOfThis();
+    copy.contents = this.contents.difference(other.contents);
+    return copy;
+  }
+
+  @elanFunction(FunctionOptions.pure, ElanClass(ElanSet))
+  intersection(@elanClassType(ElanSet) other: ElanSet<T1>): ElanSet<T1> {
+    const copy = this.copyOfThis();
+    copy.contents = this.contents.intersection(other.contents);
+    return copy;
+  }
+
+  @elanFunction(FunctionOptions.pure)
+  isDisjointFrom(@elanClassType(ElanSet) other: ElanSet<T1>): boolean {
+    return this.contents.isDisjointFrom(other.contents);
+  }
+
+  @elanFunction(FunctionOptions.pure)
+  isSubsetOf(@elanClassType(ElanSet) other: ElanSet<T1>): boolean {
+    return this.contents.isSubsetOf(other.contents);
+  }
+
+  @elanFunction(FunctionOptions.pure)
+  isSupersetOf(@elanClassType(ElanSet) other: ElanSet<T1>): boolean {
+    return this.contents.isSupersetOf(other.contents);
+  }
+
+  @elanFunction(FunctionOptions.pure, ElanArray(ElanT1))
+  asArray(@elanClassType(ElanSet) other: ElanSet<T1>): T1[] {
+    return Array.from(this.contents);
+  }
+
+  @elanFunction(FunctionOptions.pure, ElanList(ElanT1))
+  asList(@elanClassType(ElanSet) other: ElanSet<T1>): T1[] {
+    return Array.from(this.contents);
+  }
+
   @elanFunction(FunctionOptions.pure)
   asString(): string {
     return this._stdLib.asString(this._stdLib.asList(Array.from(this.contents)));
   }
-  //TODO
-  // difference, intersection, union, isDisjointFrom, isSubsetOf, isSupersetOf
-  // asList, asArray, asString
 }
