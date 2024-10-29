@@ -139,6 +139,7 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
   }
 
   toString() {
-    return `${this.precedingNode}[${this.index1}]`;
+    const pn = this.precedingNode ? `${this.precedingNode}` : "";
+    return `${pn}[${this.index1}]`;
   }
 }

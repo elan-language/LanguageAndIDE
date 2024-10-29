@@ -20,7 +20,6 @@ export class TextFileReader {
   private system?: System;
 
   status: number = 0; //0 = Closed, 1 = Open
-  fileName: string = "";
   content: string[] = [];
   currentLine = 0;
 
@@ -46,7 +45,7 @@ export class TextFileReader {
     return this.content.join("\n");
   }
 
-  @elanProcedure(ProcedureOptions.async)
+  @elanProcedure()
   close() {
     if (this.status === 0) {
       throw new ElanRuntimeError("Cannot use any method on a closed file");

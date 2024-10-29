@@ -24,6 +24,8 @@ import { LitBoolean } from "../src/frames/parse-nodes/lit-boolean";
 import { LitFloat } from "../src/frames/parse-nodes/lit-float";
 import { LitInt } from "../src/frames/parse-nodes/lit-int";
 import { LitString } from "../src/frames/parse-nodes/lit-string";
+import { LitStringInterpolation } from "../src/frames/parse-nodes/lit-string-interpolation";
+import { LitStringNonEmpty } from "../src/frames/parse-nodes/lit-string-non-empty";
 import { LitTuple } from "../src/frames/parse-nodes/lit-tuple";
 import { LitValueNode } from "../src/frames/parse-nodes/lit-value";
 import { LiteralNode } from "../src/frames/parse-nodes/literal-node";
@@ -36,12 +38,11 @@ import { PunctuationNode } from "../src/frames/parse-nodes/punctuation-node";
 import { Qualifier } from "../src/frames/parse-nodes/qualifier";
 import { ReferenceNode } from "../src/frames/parse-nodes/reference-node";
 import { RegExMatchNode } from "../src/frames/parse-nodes/regex-match-node";
-import { SetClause } from "../src/frames/parse-nodes/set-clause";
 import { SpaceNode } from "../src/frames/parse-nodes/space-node";
-import { StringInterpolation } from "../src/frames/parse-nodes/string-interpolation";
 import { Term } from "../src/frames/parse-nodes/term";
 import { TermChained } from "../src/frames/parse-nodes/term-chained";
 import { TermSimple } from "../src/frames/parse-nodes/term-simple";
+import { ToClause } from "../src/frames/parse-nodes/to-clause";
 import { TupleNode } from "../src/frames/parse-nodes/tuple-node";
 import { TypeNode } from "../src/frames/parse-nodes/type-node";
 import { TypeSimpleNode } from "../src/frames/parse-nodes/type-simple-node";
@@ -206,11 +207,11 @@ suite("Parsing Nodes", () => {
     );
   });
   test("Set Clause", () => {
-    testNodeParse(new SetClause(), "x to p.x + 3", ParseStatus.valid, "", "", "", "");
+    testNodeParse(new ToClause(), "x to p.x + 3", ParseStatus.valid, "", "", "", "");
   });
   test("CSV of set clauses", () => {
     testNodeParse(
-      new CSV(() => new SetClause(), 1),
+      new CSV(() => new ToClause(), 1),
       "x to p.x + 3, y to p.y - 1",
       ParseStatus.valid,
       "",
@@ -1356,10 +1357,18 @@ suite("Parsing Nodes", () => {
     );
   });
   test("String Interpolation", () => {
-    testNodeParse(new StringInterpolation(), ``, ParseStatus.empty, "", "", "", "");
-    testNodeParse(new StringInterpolation(), "{x + 1}", ParseStatus.valid, "{x + 1}", "", "", "");
-    testNodeParse(new StringInterpolation(), "{x", ParseStatus.incomplete, "{x", "", "", "");
-    testNodeParse(new StringInterpolation(), "{}", ParseStatus.invalid, "", "{}", "", "");
+    testNodeParse(new LitStringInterpolation(), ``, ParseStatus.empty, "", "", "", "");
+    testNodeParse(
+      new LitStringInterpolation(),
+      "{x + 1}",
+      ParseStatus.valid,
+      "{x + 1}",
+      "",
+      "",
+      "",
+    );
+    testNodeParse(new LitStringInterpolation(), "{x", ParseStatus.incomplete, "{x", "", "", "");
+    testNodeParse(new LitStringInterpolation(), "{}", ParseStatus.invalid, "", "{}", "", "");
   });
   test("LitString", () => {
     testNodeParse(new LitString(), `""`, ParseStatus.valid, `""`, "", "", `<string>""</string>`);
@@ -1385,9 +1394,28 @@ suite("Parsing Nodes", () => {
     testNodeParse(new LitString(), `"`, ParseStatus.incomplete, `"`, "", "", "");
     testNodeParse(new LitString(), `abc`, ParseStatus.invalid, "", "abc", "", "");
     testNodeParse(new LitString(), `'abc'`, ParseStatus.invalid, "", "'abc'", "", "");
+    //Test embedded html
+    testNodeParse(
+      new LitStringNonEmpty(),
+      `"<p>abc</p>"`,
+      ParseStatus.valid,
+      `"<p>abc</p>"`,
+      "",
+      `"<p>abc</p>"`,
+      `<string>"&lt;p&gt;abc&lt;/p&gt;"</string>`,
+    );
+    testNodeParse(
+      new LitStringNonEmpty(),
+      `"&#123;curly braces&#125;"`,
+      ParseStatus.valid,
+      `"&#123;curly braces&#125;"`,
+      "",
+      `"&#123;curly braces&#125;"`,
+      `<string>"&amp;#123;curly braces&amp;#125;"</string>`,
+    );
   });
   test("Interpolated strings", () => {
-    const field = () => new StringInterpolation();
+    const field = () => new LitStringInterpolation();
     const plainText = () => new RegExMatchNode(Regexes.nonEmptyStringContent);
     const segment = () => new Alternatives([field, plainText]);
     testNodeParse(segment(), `abc`, ParseStatus.valid, "abc", "");

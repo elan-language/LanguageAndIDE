@@ -574,6 +574,26 @@ main
 end main
 
 function foo(a as Int, b as Int) return Int
+  set a to 1
+  return a * b
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["May not re-assign the parameter a"]);
+  });
+
+  test("Fail_CannotModifyParam1", async () => {
+    const code = `# FFFF Elan Beta 3 valid
+
+main
+  var result set to foo(3,4)
+  print result
+end main
+
+function foo(a as Int, b as Int) return Int
   set a to a + 1
   return a * b
 end function`;
@@ -582,7 +602,7 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not reassign parameter: a"]);
+    assertDoesNotCompile(fileImpl, ["May not re-assign the parameter a"]);
   });
 
   test("Fail_CannotUpdateArray", async () => {

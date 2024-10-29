@@ -14,9 +14,9 @@ import { ClassType } from "../symbols/class-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { transforms } from "./ast-helpers";
 import { ExprAsn } from "./expr-asn";
-import { SetAsn } from "./set-asn";
+import { ToAsn } from "./to-asn";
 
-export class WithAsn extends AbstractAstNode implements AstNode {
+export class CopyWithAsn extends AbstractAstNode implements AstNode {
   constructor(
     private readonly obj: ExprAsn,
     private readonly withClause: AstCollectionNode,
@@ -48,7 +48,7 @@ export class WithAsn extends AbstractAstNode implements AstNode {
       mustBeRecord(classSymbol.symbolType(), this.compileErrors, this.fieldId);
 
       if (isClass(classSymbol)) {
-        for (const ast of this.withClause.items as SetAsn[]) {
+        for (const ast of this.withClause.items as ToAsn[]) {
           const propertyId = ast.id;
           const type = ast.symbolType();
 

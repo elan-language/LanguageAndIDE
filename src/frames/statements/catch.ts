@@ -59,7 +59,7 @@ export class Catch extends FrameWithStatements implements Statement, ElanSymbol 
   }
 
   renderAsHtml(): string {
-    return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><top><expand>+</expand><keyword>catch </keyword>${this.variable.renderAsHtml()}${this.compileMsgAsHtml()}{${this.getFrNo()}</top>
+    return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><top><expand>+</expand><keyword>catch </keyword>${this.variable.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</top>
 ${this.renderChildrenAsHtml()}        
 </statement>`;
   }

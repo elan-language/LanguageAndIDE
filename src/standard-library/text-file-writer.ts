@@ -17,7 +17,7 @@ export class TextFileWriter {
   content: string[] = [];
   currentLine = 0;
 
-  @elanProcedure(ProcedureOptions.async)
+  @elanProcedure()
   writeLine(data: string) {
     if (this.status === 0) {
       throw new ElanRuntimeError("Cannot use any method on a closed file");
@@ -30,7 +30,7 @@ export class TextFileWriter {
     if (this.status === 0) {
       throw new ElanRuntimeError("Cannot use any method on a closed file");
     }
-    this.system!.elanInputOutput.writeFile(this.fileName, this.content.join("\n"));
     this.status = 0;
+    return this.system!.elanInputOutput.writeFile(this.fileName, this.content.join("\n"));
   }
 }

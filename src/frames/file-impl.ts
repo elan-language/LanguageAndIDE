@@ -1,3 +1,4 @@
+import { ElanCompilerError } from "../elan-compiler-error";
 import { StdLibSymbols } from "../standard-library/std-lib-symbols";
 import { AssertOutcome } from "../system";
 import { AbstractSelector } from "./abstract-selector";
@@ -80,7 +81,7 @@ export class FileImpl implements File, Scope {
   private _map: Map<string, Selectable>;
   private _factory: StatementFactory;
   private ignoreHashOnParsing: boolean = false;
-  private _stdLibSymbols = new StdLibSymbols(); // todo needs to be populated with .d.ts
+  private _stdLibSymbols: StdLibSymbols;
   private _nextId: number = 0;
   private _testError?: Error;
   private _frNo: number = 0;
@@ -92,6 +93,7 @@ export class FileImpl implements File, Scope {
     private transform: Transforms,
     ignoreHashOnParsing?: boolean,
   ) {
+    this._stdLibSymbols = new StdLibSymbols();
     this._map = new Map<string, Selectable>();
     this._factory = new StatementFactoryImpl();
     const selector = new GlobalSelector(this);
@@ -523,6 +525,11 @@ export class FileImpl implements File, Scope {
   }
 
   async parseFrom(source: CodeSource): Promise<void> {
+    if (!this._stdLibSymbols.isInitialised) {
+      this.parseError = this._stdLibSymbols.error;
+      this._parseStatus = ParseStatus.invalid;
+      return;
+    }
     try {
       this.parseError = undefined;
       this._parseStatus = ParseStatus.default;
@@ -655,7 +662,9 @@ export class FileImpl implements File, Scope {
     return this.libraryScope.resolveSymbol(id, transforms, this);
   }
 
-  libraryScope = this._stdLibSymbols;
+  get libraryScope() {
+    return this._stdLibSymbols;
+  }
 }
 
 export const cannotLoadFile = `Cannot load file: it has been created or modified outside Elan IDE`;

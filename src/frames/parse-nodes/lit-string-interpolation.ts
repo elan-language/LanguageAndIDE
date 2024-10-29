@@ -3,7 +3,7 @@ import { AbstractSequence } from "./abstract-sequence";
 import { ExprNode } from "./expr-node";
 import { PunctuationNode } from "./punctuation-node";
 
-export class StringInterpolation extends AbstractSequence {
+export class LitStringInterpolation extends AbstractSequence {
   expr: ExprNode | undefined;
 
   parseText(text: string): void {

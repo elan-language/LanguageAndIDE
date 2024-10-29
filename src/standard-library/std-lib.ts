@@ -8,6 +8,7 @@ import {
   ElanBoolean,
   ElanClass,
   elanClassExport,
+  elanClassType,
   elanConstant,
   elanDictionaryType,
   ElanFloat,
@@ -34,15 +35,19 @@ import {
 import { hasHiddenType } from "../has-hidden-type";
 import { StubInputOutput } from "../stub-input-output";
 import { System } from "../system";
+import { BaseVG } from "./base-vg";
 import { BlockGraphics } from "./block-graphics";
+import { CircleVG } from "./circle-vg";
+import { GraphicsBase } from "./graphics-base";
+import { LineVG } from "./line-vg";
 import { Queue } from "./queue";
 import { Random } from "./random";
+import { RectangleVG } from "./rectangle-vg";
+import { ElanSet } from "./set";
 import { Stack } from "./stack";
 import { TextFileReader } from "./text-file-reader";
 import { TextFileWriter } from "./text-file-writer";
-import { ElanSet } from "./set";
-import { VGBase } from "./vg-base";
-import { VGCircle } from "./vg-circle";
+import { Turtle } from "./turtle";
 import { VectorGraphics } from "./vector-graphics";
 
 export class StdLib {
@@ -53,9 +58,6 @@ export class StdLib {
   system: System;
 
   // types
-  @elanClassExport(BlockGraphics)
-  BlockGraphics = BlockGraphics;
-
   @elanClassExport(TextFileReader)
   TextFileReader = TextFileReader;
 
@@ -74,14 +76,29 @@ export class StdLib {
   @elanClassExport(ElanSet)
   Set = ElanSet;
 
+  @elanClassExport(GraphicsBase)
+  GraphicsBase = GraphicsBase;
+
+  @elanClassExport(BlockGraphics)
+  BlockGraphics = BlockGraphics;
+
+  @elanClassExport(Turtle)
+  Turtle = Turtle;
+
   @elanClassExport(VectorGraphics)
   VectorGraphics = VectorGraphics;
 
-  @elanClassExport(VGBase)
-  VGBase = VGBase;
+  @elanClassExport(BaseVG)
+  BaseVG = BaseVG;
 
-  @elanClassExport(VGCircle)
-  VGCircle = VGCircle;
+  @elanClassExport(CircleVG)
+  CircleVG = CircleVG;
+
+  @elanClassExport(LineVG)
+  LineVG = LineVG;
+
+  @elanClassExport(RectangleVG)
+  RectangleVG = RectangleVG;
 
   // Standard colours
 
@@ -979,14 +996,18 @@ export class StdLib {
 
   //File operations
   @elanFunction(FunctionOptions.impureAsync, ElanClass(TextFileReader))
-  openFileForReading(fileName: string): Promise<TextFileReader> {
-    return this.system.elanInputOutput.readFile(fileName).then((s) => {
-      const tf = this.system.initialise(new TextFileReader());
-      tf.fileName = fileName;
-      tf.status = 1;
-      tf.content = s ? s.split("\n") : [];
-      return tf;
-    });
+  openFileForReading(): Promise<TextFileReader> {
+    return this.system.elanInputOutput.readFile().then(
+      (s) => {
+        const tf = this.system.initialise(new TextFileReader());
+        tf.status = 1;
+        tf.content = s ? s.split("\n") : [];
+        return tf;
+      },
+      (e) => {
+        throw new ElanRuntimeError(e);
+      },
+    );
   }
 
   @elanFunction(FunctionOptions.pure, ElanClass(TextFileWriter))
@@ -995,5 +1016,28 @@ export class StdLib {
     tf.fileName = fileName;
     tf.status = 1;
     return tf;
+  }
+
+  // Graphics
+  @elanProcedure(ProcedureOptions.extension)
+  clearGraphics(@elanClassType(GraphicsBase) g: GraphicsBase) {
+    this.system!.elanInputOutput.clearGraphics();
+  }
+
+  @elanFunction(FunctionOptions.impureAsyncExtension, ElanString)
+  getKeystroke(@elanClassType(GraphicsBase) g: GraphicsBase): Promise<string> {
+    return this.system!.elanInputOutput.getKeystroke();
+  }
+
+  @elanFunction(FunctionOptions.impureAsyncExtension, ElanTuple([ElanString, ElanString]))
+  getKeystrokeWithModifier(
+    @elanClassType(GraphicsBase) g: GraphicsBase,
+  ): Promise<[string, string]> {
+    return this.system!.elanInputOutput.getKeystrokeWithModifier();
+  }
+
+  @elanProcedure(ProcedureOptions.extension)
+  clearKeyBuffer(@elanClassType(GraphicsBase) g: GraphicsBase) {
+    this.system!.elanInputOutput.clearKeyBuffer();
   }
 }

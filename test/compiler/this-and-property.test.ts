@@ -262,6 +262,6 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not reassign parameter: p1"]);
+    assertDoesNotCompile(fileImpl, ["May not re-assign the parameter p1"]);
   });
 });

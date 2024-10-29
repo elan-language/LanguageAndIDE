@@ -1,16 +1,20 @@
 import {
+  ClassOptions,
   ElanClass,
-  elanFunction,
-  elanProcedure,
-  ElanString,
-  ElanTuple,
-  elanType,
+  ElanInt,
   FunctionOptions,
   ProcedureOptions,
+  elanClass,
+  elanClassType,
+  elanFunction,
+  elanProcedure,
 } from "../elan-type-annotations";
 import { System } from "../system";
-import { VGBase } from "./vg-base";
+import { BaseVG } from "./base-vg";
+import { GraphicsBase } from "./graphics-base";
+import { StdLib } from "./std-lib";
 
+@elanClass(ClassOptions.record, [], [], [ElanClass(GraphicsBase)])
 export class VectorGraphics {
   // this must be implemented by hand on all stdlib classes
   static emptyInstance() {
@@ -19,43 +23,72 @@ export class VectorGraphics {
 
   constructor() {}
 
+  private _stdLib = new StdLib();
+
   private system?: System;
 
-  private internalRep: VGBase[] = [];
+  private internalRep: BaseVG[] = [];
+
+  @elanFunction(FunctionOptions.pure, ElanInt)
+  count(): number {
+    return this.internalRep.length;
+  }
 
   @elanFunction(FunctionOptions.pure, ElanClass(VectorGraphics))
-  add(@elanType(ElanClass(VGBase)) obj: VGBase): VectorGraphics {
+  add(@elanClassType(BaseVG) obj: BaseVG): VectorGraphics {
     const copy = this.system!.initialise(new VectorGraphics());
     copy.internalRep = this.internalRep;
     copy.internalRep.push(obj);
     return copy;
   }
 
+  @elanFunction(FunctionOptions.pure, ElanClass(VectorGraphics))
+  remove(@elanClassType(BaseVG) existing: BaseVG): VectorGraphics {
+    const copy = this.system!.initialise(new VectorGraphics());
+    copy.internalRep = this.internalRep;
+    if (copy.internalRep.includes(existing)) {
+      const i = copy.internalRep.indexOf(existing);
+      //previously copy.internalRep.splice(i, 1) didn't work?
+      copy.internalRep = copy.internalRep.slice(0, i).concat(copy.internalRep.slice(i + 1));
+    }
+    return copy;
+  }
+
+  @elanFunction(FunctionOptions.pure, ElanClass(VectorGraphics))
+  removeLast(): VectorGraphics {
+    const copy = this.system!.initialise(new VectorGraphics());
+    copy.internalRep = this.internalRep.slice(0, this.internalRep.length - 1);
+    return copy;
+  }
+
+  @elanFunction(FunctionOptions.pure, ElanClass(VectorGraphics))
+  replace(
+    @elanClassType(BaseVG) existing: BaseVG,
+    @elanClassType(BaseVG) replacement: BaseVG,
+  ): VectorGraphics {
+    const copy = this.system!.initialise(new VectorGraphics());
+    copy.internalRep = this.internalRep;
+    if (copy.internalRep.includes(existing)) {
+      const i = copy.internalRep.indexOf(existing);
+      copy.internalRep = copy.internalRep
+        .slice(0, i)
+        .concat([replacement])
+        .concat(copy.internalRep.slice(i + 1));
+    }
+    return copy;
+  }
+
+  @elanFunction(FunctionOptions.pure)
+  asHtml(): string {
+    const content = this.internalRep.reduce((html, ob) => html + "  " + ob.asHtml() + "\n", "");
+    const html = `<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">\n${content}</svg>\n`;
+    return html;
+  }
+
   @elanProcedure(ProcedureOptions.async)
-  draw(): Promise<void> {
-    const html = `<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">\n${this.internalRep.reduce((html, ob) => html + "  " + ob.renderAsSVG() + "\n", "")}</svg>\n`;
+  display(): Promise<void> {
+    const html = this.asHtml();
     this.system!.elanInputOutput.drawGraphics(html);
-    return this.pause(0);
-  }
-
-  pause(ms: number): Promise<void> {
-    return new Promise((resolve) => {
-      setTimeout(() => resolve(), ms);
-    });
-  }
-
-  @elanFunction(FunctionOptions.impureAsync, ElanString)
-  getKeystroke(): Promise<string> {
-    return this.system!.elanInputOutput.getKeystroke();
-  }
-
-  @elanFunction(FunctionOptions.impureAsync, ElanTuple([ElanString, ElanString]))
-  getKeystrokeWithModifier(): Promise<[string, string]> {
-    return this.system!.elanInputOutput.getKeystrokeWithModifier();
-  }
-
-  @elanProcedure()
-  clearKeyBuffer() {
-    this.system!.elanInputOutput.clearKeyBuffer();
+    return this._stdLib.pause(0);
   }
 }

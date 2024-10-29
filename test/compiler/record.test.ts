@@ -47,7 +47,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "0");
   });
 
-  ignore_test("Fail_NewWithParam", async () => {
+  test("Fail_NewWithParam", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
 main
@@ -66,7 +66,7 @@ end record`;
     assertDoesNotCompile(fileImpl, ["Parameters expected: 0 got: 1"]);
   });
 
-  ignore_test("Pass_instantiateUsingWith", async () => {
+  test("Pass_instantiateUsingWith", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
 main
@@ -82,14 +82,16 @@ end record`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var f = system.initialise(new Foo()); //Something more needed
+  var f = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.p1 = 3; _a.p2 = "hello"; return _a;})();
   system.printLine(_stdlib.asString(f.p1));
   system.printLine(_stdlib.asString(f.p2));
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", ""]]);};
   p1 = 0;
+
+  p2 = "";
 
 }
 return [main, _tests];}`;
@@ -224,17 +226,112 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "0");
   });
 
+  test("Pass_ImmutableProperties", async () => {
+    const code = `# FFFF Elan Beta 3 valid
+
+main
+ 
+end main
+
+record Foo
+  property p1 as Int
+  property p2 as Float
+  property p3 as String
+  property p4 as Boolean
+  property p5 as Regex
+  property p6 as {Int}
+  property p7 as {String:Int}
+  property p8 as Bar
+end record
+
+record Bar
+  property p1 as Int
+end record
+`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", 0], ["p3", ""], ["p4", false], ["p5", system.emptyRegex()], ["p6", system.emptyImmutableList()], ["p7", system.emptyImmutableDictionary()]]);};
+  p1 = 0;
+
+  p2 = 0;
+
+  p3 = "";
+
+  p4 = false;
+
+  p5 = system.emptyRegex();
+
+  p6 = system.emptyImmutableList();
+
+  p7 = system.emptyImmutableDictionary();
+
+  _p8;
+  get p8() {
+    return this._p8 ??= Bar.emptyInstance();
+  }
+  set p8(p8) {
+    this._p8 = p8;
+  }
+
+}
+
+class Bar {
+  static emptyInstance() { return system.emptyClass(Bar, [["p1", 0]]);};
+  p1 = 0;
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "");
+  });
+
   test("Fail_PrivateProperty", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
 record Foo
   private property p1 as Int
 
-end class`;
+end record`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
+  });
+
+  test("Fail_NotImmutableProperty", async () => {
+    const code = `# FFFF Elan Beta 3 valid
+
+record Foo
+  property p1 as [Int] 
+  property p2 as [String:Int] 
+  property p3 as Bar
+end record
+
+class Bar
+  constructor()
+  end constructor
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Property p1 is not of an immutable type.",
+      "Property p2 is not of an immutable type.",
+      "Property p3 is not of an immutable type.",
+    ]);
   });
 });

@@ -5,7 +5,7 @@ import { WebWorkerMessage, WebWorkerWriteMessage } from "./web/web-worker-messag
 export class StubInputOutput implements ElanInputOutput {
   constructor() {}
 
-  readFile(path: string): Promise<string> {
+  readFile(): Promise<string> {
     return new Promise<string>((rs, rj) => {
       onmessage = (e) => {
         const data = e.data as WebWorkerMessage;
@@ -13,12 +13,16 @@ export class StubInputOutput implements ElanInputOutput {
         if (data.type === "read") {
           rs(data.value as string);
         }
+
+        if (data.type === "status" && data.status === "error") {
+          rj(data.error as string);
+        }
       };
-      postMessage(this.writeMsg("readFile", [path]));
+      postMessage(this.writeMsg("readFile"));
     });
   }
 
-  writeFile(path: string, data: string): Promise<void> {
+  writeFile(fileName: string, data: string): Promise<void> {
     return new Promise<void>((rs, rj) => {
       onmessage = (e) => {
         const data = e.data as WebWorkerMessage;
@@ -26,8 +30,11 @@ export class StubInputOutput implements ElanInputOutput {
         if (data.type === "read") {
           rs();
         }
+        if (data.type === "status" && data.status === "error") {
+          rj(data.error as string);
+        }
       };
-      postMessage(this.writeMsg("writeFile", [path, data]));
+      postMessage(this.writeMsg("writeFile", [fileName, data]));
     });
   }
 

@@ -14,8 +14,10 @@ export class StdLibClass implements Class {
   constructor(
     private readonly name: string,
     public readonly abstract: boolean,
+    public readonly immutable: boolean,
     public readonly children: ElanSymbol[],
     public readonly ofTypes: SymbolType[],
+    public readonly inheritTypes: SymbolType[],
     private readonly scope: Scope,
   ) {
     this.symbolId = this.name;
@@ -27,8 +29,12 @@ export class StdLibClass implements Class {
 
   symbolId: string;
 
+  isImmutable() {
+    return this.immutable;
+  }
+
   symbolType(transforms?: Transforms): SymbolType {
-    return new ClassType(this.name, this.abstract, false, [], this);
+    return new ClassType(this.name, this.abstract, this.immutable, this.inheritTypes, this);
   }
 
   symbolScope: SymbolScope = SymbolScope.stdlib;

@@ -6,7 +6,7 @@ import { MemberSelector } from "../class-members/member-selector";
 import { Property } from "../class-members/property";
 import { CodeSource } from "../code-source";
 import { CompileError } from "../compile-error";
-import { mustBeUniqueNameInScope } from "../compile-rules";
+import { mustBeImmutableType, mustBeUniqueNameInScope } from "../compile-rules";
 import { Regexes } from "../fields/regexes";
 import { TypeNameField } from "../fields/type-name-field";
 import { Class } from "../interfaces/class";
@@ -193,11 +193,14 @@ ${parentHelper_renderChildrenAsSource(this)}\r
 end record\r\n`;
   }
 
-  private propertiesToInit() {
-    const pp = this.getChildren().filter(
+  private properties() {
+    return this.getChildren().filter(
       (c) => c instanceof Property || c instanceof AbstractProperty,
     ) as (AbstractProperty | Property)[];
-    const ps = pp
+  }
+
+  private propertiesToInit() {
+    const ps = this.properties()
       .map((p) => p.initCode())
       .filter((s) => s)
       .join(", ");
@@ -221,10 +224,15 @@ end record\r\n`;
     );
 
     const asString = "";
+    const body = parentHelper_compileChildren(this, transforms);
+
+    for (const p of this.properties()) {
+      mustBeImmutableType(p.name.text, p.symbolType(), this.compileErrors, this.htmlId);
+    }
 
     return `class ${name} {\r
   static emptyInstance() { return system.emptyClass(${name}, ${this.propertiesToInit()});};\r
-${parentHelper_compileChildren(this, transforms)}\r${asString}\r
+${body}\r${asString}\r
 }\r\n`;
   }
 

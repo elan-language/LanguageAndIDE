@@ -38,6 +38,7 @@ import {
   isMember,
   isLet,
 } from "./helpers";
+import { AstIdNode } from "./interfaces/ast-id-node";
 import { AstNode } from "./interfaces/ast-node";
 import { ElanSymbol } from "./interfaces/elan-symbol";
 import { Parent } from "./interfaces/parent";
@@ -292,7 +293,7 @@ export function mustBePropertyAndPublic(
   if (symbol instanceof Property && symbol.private === true) {
     compileErrors.push(new PrivateMemberCompileError(symbol.name.text, location));
   }
-  if (!(symbol instanceof Property)) {
+  if (symbol.symbolScope !== SymbolScope.property) {
     compileErrors.push(new UndefinedSymbolCompileError(symbol.symbolId, location));
   }
 }
@@ -540,6 +541,19 @@ export function mustBeCompatibleMutableType(
 ) {
   if (lhs.isImmutable !== rhs.isImmutable) {
     FailIncompatible(lhs, rhs, compileErrors, location);
+  }
+}
+
+export function mustBeImmutableType(
+  name: string,
+  type: SymbolType,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  if (!type.isImmutable) {
+    compileErrors.push(
+      new SyntaxCompileError(`Property ${name} is not of an immutable type.`, location),
+    );
   }
 }
 
@@ -797,11 +811,11 @@ export function mustNotBeParameter(
 
   if (s === SymbolScope.parameter) {
     if (isInsideFunctionOrConstructor(parent)) {
-      compileErrors.push(new ReassignCompileError(`parameter: ${getId(assignable)}`, location));
+      compileErrors.push(new MutateCompileError(getId(assignable), "parameter", location));
     } else {
       // only mutate indexed Array
       if (!isIndexed(assignable)) {
-        compileErrors.push(new ReassignCompileError(`parameter: ${getId(assignable)}`, location));
+        compileErrors.push(new MutateCompileError(getId(assignable), "parameter", location));
       }
     }
   }
@@ -812,7 +826,7 @@ export function cannotCallOnParameter(
   compileErrors: CompileError[],
   location: string,
 ) {
-  compileErrors.push(new MutateCompileError(`parameter: ${getId(assignable)}`, location));
+  compileErrors.push(new MutateCompileError(getId(assignable), "parameter", location));
 }
 
 export function mustNotBeCounter(
@@ -823,7 +837,7 @@ export function mustNotBeCounter(
   const s = assignable.symbolScope;
 
   if (s === SymbolScope.counter) {
-    compileErrors.push(new MutateCompileError(`counter`, location));
+    compileErrors.push(new MutateCompileError(getId(assignable), "loop counter", location));
   }
 }
 
@@ -835,7 +849,7 @@ export function mustNotBeConstant(
   const s = assignable.symbolScope;
 
   if (s === SymbolScope.program) {
-    compileErrors.push(new MutateCompileError(`constant`, location));
+    compileErrors.push(new MutateCompileError(getId(assignable), "constant", location));
   }
 }
 
@@ -876,7 +890,7 @@ export function mustBeUniqueValueInScope(
 
 export function mustNotBeLet(symbol: ElanSymbol, compileErrors: CompileError[], location: string) {
   if (symbol instanceof LetStatement) {
-    compileErrors.push(new MutateCompileError(symbol.symbolId, location));
+    compileErrors.push(new MutateCompileError(symbol.symbolId, mapToPurpose(symbol), location));
   }
 }
 

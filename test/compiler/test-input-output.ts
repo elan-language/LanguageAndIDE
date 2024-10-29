@@ -8,7 +8,7 @@ export class TestInputOutput implements ElanInputOutput {
     return Promise.resolve();
   }
   
-  readFile(path: string): Promise<string> {
+  readFile(): Promise<string> {
     return Promise.resolve("Line1\nLine2\nLine3");
   }
   

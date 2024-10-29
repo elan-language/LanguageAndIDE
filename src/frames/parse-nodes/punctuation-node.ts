@@ -1,4 +1,4 @@
-import { escapeAngleBrackets } from "../helpers";
+import { escapeHtmlChars } from "../helpers";
 import { ParseStatus } from "../status-enums";
 import { FixedTextNode } from "./fixed-text-node";
 
@@ -23,7 +23,7 @@ export class PunctuationNode extends FixedTextNode {
   }
 
   renderAsHtml(): string {
-    return escapeAngleBrackets(this.renderAsSource());
+    return escapeHtmlChars(this.renderAsSource());
   }
 
   getCompletionAsHtml(): string {

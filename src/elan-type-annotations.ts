@@ -5,6 +5,7 @@ import {
   ElanMethodDescriptor,
   IElanFunctionDescriptor,
   IElanProcedureDescriptor,
+  isConstantDescriptor,
   isFunctionDescriptor,
   isProcedureDescriptor,
   TypeDescriptor,
@@ -56,9 +57,11 @@ export class ElanProcedureDescriptor implements ElanMethodDescriptor, IElanProce
 
 export class ElanClassDescriptor implements ElanDescriptor {
   constructor(
+    public readonly isImmutable: boolean = false,
     public readonly isAbstract: boolean = false,
     public readonly ofTypes: TypeDescriptor[] = [],
     public readonly parameters: TypeDescriptor[] = [],
+    public readonly inherits: ElanClassTypeDescriptor[] = [],
     public readonly alias?: string,
   ) {}
 
@@ -194,7 +197,9 @@ function removeUnderscore(name: string) {
 }
 
 export class ElanClassTypeDescriptor implements TypeDescriptor {
-  constructor(private readonly cls: { name: string; prototype: object }) {}
+  constructor(
+    private readonly cls: { name: string; prototype: object; emptyInstance: () => object },
+  ) {}
 
   isClass = true;
 
@@ -210,9 +215,11 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
       return tempMap.get(className)!;
     }
 
-    const names = Object.getOwnPropertyNames(this.cls.prototype);
+    const names = Object.getOwnPropertyNames(this.cls.prototype).concat(
+      Object.getOwnPropertyNames(this.cls.emptyInstance()),
+    );
+
     const children: [string, SymbolType][] = [];
-    const ofTypes: SymbolType[] = [];
 
     tempMap.set(className, new ClassType(className, false, false, [], undefined!));
 
@@ -235,19 +242,23 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
         children.push([name, metadata.mapType()]);
       }
 
-      // if (isConstantDescriptor(metadata)) {
-      //   this.symbols.set(name, this.getSymbol(name, metadata.mapType()));
-      // }
-    }
-
-    for (const ot of classMetadata.ofTypes) {
-      ofTypes.push(ot.mapType());
+      if (isConstantDescriptor(metadata)) {
+        children.push([name, metadata.mapType()]);
+      }
     }
 
     const classType = tempMap.get(className)!;
     tempMap.delete(className);
 
-    const classTypeDef = new StdLibClass(className, classMetadata.isAbstract, [], [], scope!);
+    const classTypeDef = new StdLibClass(
+      className,
+      classMetadata.isAbstract,
+      classMetadata.isImmutable,
+      [],
+      [],
+      [],
+      scope!,
+    );
 
     classType.updateScope(classTypeDef);
 
@@ -255,8 +266,12 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
       classTypeDef.children.push(getSymbol(c[0], c[1], SymbolScope.property));
     }
 
-    for (const ot of ofTypes) {
-      classTypeDef.ofTypes.push(ot);
+    for (const ot of classMetadata.ofTypes) {
+      classTypeDef.ofTypes.push(ot.mapType());
+    }
+
+    for (const inherits of classMetadata.inherits) {
+      classTypeDef.inheritTypes.push(inherits.mapType());
     }
 
     return classType;
@@ -283,7 +298,7 @@ export class TypescriptTypeDescriptor implements TypeDescriptor {
       case "Array":
         throw new ElanCompilerError("Typescript 'Array' must be mapped into Elan types");
     }
-    throw new Error("NotImplemented: " + this.name);
+    throw new ElanCompilerError("Missing type annotation in stdlib class");
   }
 }
 
@@ -340,12 +355,16 @@ export function elanClass(
   options?: ClassOptions,
   ofTypes?: TypeDescriptor[],
   params?: TypeDescriptor[],
+  inherits?: ElanClassTypeDescriptor[],
   alias?: string,
 ) {
+  const [isImmutable, isAbstract] = mapClassOptions(options ?? ClassOptions.concrete);
   const classDesc = new ElanClassDescriptor(
-    mapClassOptions(options ?? ClassOptions.concrete),
+    isImmutable,
+    isAbstract,
     ofTypes ?? [],
     params ?? [],
+    inherits ?? [],
     alias,
   );
   return function (target: object) {
@@ -365,7 +384,23 @@ export function elanConstant(elanDesc?: TypeDescriptor) {
   };
 }
 
-export function elanClassExport(cls: { name: string; prototype: object }) {
+export function elanProperty(elanDesc?: TypeDescriptor) {
+  return function (target: object, propertyKey: string) {
+    const typeMetadata = Reflect.getMetadata("design:type", target, propertyKey);
+
+    if (!elanDesc && typeMetadata && typeMetadata.name) {
+      elanDesc = new TypescriptTypeDescriptor(typeMetadata.name);
+    }
+
+    Reflect.defineMetadata(elanMetadataKey, elanDesc, target, propertyKey);
+  };
+}
+
+export function elanClassExport(cls: {
+  name: string;
+  prototype: object;
+  emptyInstance: () => object;
+}) {
   let elanDesc = ElanClass(cls) as TypeDescriptor;
   return function (target: object, propertyKey: string) {
     const typeMetadata = Reflect.getMetadata("design:type", target, propertyKey);
@@ -414,7 +449,7 @@ export function ElanAbstractDictionary(keyType: TypeDescriptor, valueType: TypeD
   return new ElanValueTypeDescriptor("AbstractDictionary", keyType, valueType);
 }
 
-export function ElanClass(cls: { name: string; prototype: object }) {
+export function ElanClass(cls: { name: string; prototype: object; emptyInstance: () => object }) {
   return new ElanClassTypeDescriptor(cls);
 }
 
@@ -494,6 +529,14 @@ export function elanFuncType(parameters: TypeDescriptor[], returnType: TypeDescr
   return elanType(ElanFunc(parameters, returnType));
 }
 
+export function elanClassType(cls: {
+  name: string;
+  prototype: object;
+  emptyInstance: () => object;
+}) {
+  return elanType(ElanClass(cls));
+}
+
 export enum FunctionOptions {
   pure,
   pureExtension,
@@ -515,6 +558,7 @@ export enum ProcedureOptions {
 export enum ClassOptions {
   concrete,
   abstract,
+  record,
 }
 
 function mapFunctionOptions(
@@ -554,12 +598,14 @@ function mapProcedureOptions(options: ProcedureOptions): [boolean, boolean] {
   }
 }
 
-function mapClassOptions(options: ClassOptions): boolean {
+function mapClassOptions(options: ClassOptions): [boolean, boolean] {
   switch (options) {
     case ClassOptions.concrete:
-      return false;
+      return [false, false];
     case ClassOptions.abstract:
-      return true;
+      return [false, true];
+    case ClassOptions.record:
+      return [true, false];
   }
 }
 

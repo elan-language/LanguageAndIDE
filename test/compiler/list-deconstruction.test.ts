@@ -812,6 +812,9 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not mutate x", "May not mutate y"]);
+    assertDoesNotCompile(fileImpl, [
+      "May not re-assign the 'let' x",
+      "May not re-assign the 'let' y",
+    ]);
   });
 });

@@ -1,24 +1,27 @@
 import { ElanRuntimeError } from "../elan-runtime-error";
 import {
+  ClassOptions,
   ElanClass,
-  elanFunction,
   ElanInt,
-  elanIntType,
-  elanProcedure,
-  ElanString,
-  ElanTuple,
   FunctionOptions,
   ProcedureOptions,
+  elanClass,
+  elanFunction,
+  elanIntType,
+  elanProcedure,
 } from "../elan-type-annotations";
 import { System } from "../system";
+import { GraphicsBase } from "./graphics-base";
 
-export class BlockGraphics {
+@elanClass(ClassOptions.record, [], [], [ElanClass(GraphicsBase)])
+export class BlockGraphics extends GraphicsBase {
   // this must be implemented by hand on all stdlib classes
   static emptyInstance() {
     return new BlockGraphics();
   }
 
   constructor() {
+    super();
     this.internalRep = this.initialisedGraphics(0xffffff);
   }
 
@@ -178,20 +181,15 @@ export class BlockGraphics {
     return this.safeIndex(this.getDetails(x, y), 2) as number;
   }
 
-  @elanProcedure()
-  clearGraphics() {
-    this.system!.elanInputOutput.clearGraphics();
-  }
-
   pause(ms: number): Promise<void> {
     return new Promise((resolve) => {
       setTimeout(() => resolve(), ms);
     });
   }
 
-  @elanProcedure(ProcedureOptions.async)
-  draw(): Promise<void> {
-    let rendered = "";
+  @elanFunction(FunctionOptions.pure)
+  asHtml(): string {
+    let rendered = `<div id="block-graphics">`;
 
     for (let y = 0; y < this.ySize; y++) {
       for (let x = 0; x < this.xSize; x++) {
@@ -199,8 +197,7 @@ export class BlockGraphics {
         rendered = `${rendered}<div style="color:${this.asHex(f)};background-color:${this.asHex(b)};">${c}</div>`;
       }
     }
-    this.system!.elanInputOutput.drawGraphics(rendered);
-    return this.pause(0);
+    return rendered + "</div>";
   }
 
   private asHex(n: number): string {
@@ -209,18 +206,10 @@ export class BlockGraphics {
     return `#${h6}`;
   }
 
-  @elanFunction(FunctionOptions.impureAsync, ElanString)
-  getKeystroke(): Promise<string> {
-    return this.system!.elanInputOutput.getKeystroke();
-  }
-
-  @elanFunction(FunctionOptions.impureAsync, ElanTuple([ElanString, ElanString]))
-  getKeystrokeWithModifier(): Promise<[string, string]> {
-    return this.system!.elanInputOutput.getKeystrokeWithModifier();
-  }
-
-  @elanProcedure()
-  clearKeyBuffer() {
-    this.system!.elanInputOutput.clearKeyBuffer();
+  @elanProcedure(ProcedureOptions.async)
+  display(): Promise<void> {
+    const html = this.asHtml();
+    this.system!.elanInputOutput.drawGraphics(html);
+    return this.pause(0);
   }
 }

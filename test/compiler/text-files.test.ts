@@ -37,14 +37,14 @@ return [main, _tests];}`;
     const code = `# FFFF Elan Beta 3 valid
 
 main
-  var tf set to openFileForReading("data.txt")
+  var tf set to openFileForReading()
   var txt set to tf.readToEnd()
   print txt
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var tf = await _stdlib.openFileForReading("data.txt");
+  var tf = await _stdlib.openFileForReading();
   var txt = tf.readToEnd();
   system.printLine(_stdlib.asString(txt));
 }
@@ -63,7 +63,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan Beta 3 valid
 
 main
-  var tf set to openFileForReading("data.txt")
+  var tf set to openFileForReading()
 
   while not tf.endOfFile()
     print tf.readLine()
@@ -72,7 +72,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var tf = await _stdlib.openFileForReading("data.txt");
+  var tf = await _stdlib.openFileForReading();
   while (!tf.endOfFile()) {
     system.printLine(_stdlib.asString(tf.readLine()));
   }
@@ -100,7 +100,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var tf = _stdlib.createFileForWriting("data.txt");
-  await tf.writeLine("something");
+  tf.writeLine("something");
   await tf.saveAndClose();
 }
 return [main, _tests];}`;
