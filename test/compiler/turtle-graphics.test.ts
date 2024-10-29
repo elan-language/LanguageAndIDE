@@ -281,4 +281,38 @@ return [main, _tests];}`;
 `,
     );
   });
+  test("Pass_PlaceAt", async () => {
+    const code = `# FFFF Elan Beta 3 valid
+
+main
+  let t be new Turtle()
+  call t.show()
+  call t.placeAt(20, 30)
+  print t.asHtml()
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  const t = system.initialise(new _stdlib.Turtle());
+  t.show();
+  t.placeAt(20, 30);
+  system.printLine(_stdlib.asString(t.asHtml()));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(
+      fileImpl,
+      `<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="20%" cy="40%" r="2.25%" stroke="#000000" stroke-width="0%" fill="#008000" />
+  <line x1="20%" y1="40%" x2="20%" y2="37.333333333333336%" stroke="#000000" stroke-width="0.6%" />
+</svg>
+`,
+    );
+  });
 });

@@ -172,6 +172,8 @@ export class Turtle extends GraphicsBase {
   @elanProcedure()
   placeAt(x: number, y: number) {
     this.removeTurtleIfShown();
+    this.x = x;
+    this.y = y;
     this.addTurtleIfShown();
     this.vg.display();
   }
