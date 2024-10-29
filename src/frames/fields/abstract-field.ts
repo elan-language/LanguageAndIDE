@@ -414,7 +414,7 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   protected fieldAsInput(): string {
-    return `<input spellcheck="false" data-cursor="${this.cursorPos}" size="${this.charCount()}" style="width: ${this.fieldWidth()}" value="${this.escapeDoubleQuotes(this.text)}">`;
+    return `<input spellcheck="false" data-cursor="${this.cursorPos}" size="${this.charCount()}" style="width: ${this.fieldWidth()}" value="${this.escapeDoubleQuotesAndEscapes(this.text)}">`;
   }
 
   public charCount(): number {
@@ -425,7 +425,7 @@ export abstract class AbstractField implements Selectable, Field {
     return this.text.length === 0 ? "2px" : `${this.text.length}ch`;
   }
 
-  private escapeDoubleQuotes(str: string): string {
+  private escapeDoubleQuotesAndEscapes(str: string): string {
     return str.replace(/&/g, "&amp;").replace(/"/g, "&quot;");
   }
 
