@@ -1,4 +1,3 @@
-import { ElanCompilerError } from "../elan-compiler-error";
 import { StdLibSymbols } from "../standard-library/std-lib-symbols";
 import { AssertOutcome } from "../system";
 import { AbstractSelector } from "./abstract-selector";
@@ -274,8 +273,8 @@ export class FileImpl implements File, Scope {
   }
 
   compile(): string {
-    const stdLib = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {`;
-    return `${stdLib}\n${this.compileGlobals()}return [main, _tests];}`;
+    const stdlib = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {`;
+    return `${stdlib}\n${this.compileGlobals()}return [main, _tests];}`;
   }
 
   compileAsWorker(base: string): string {
@@ -292,8 +291,8 @@ export class FileImpl implements File, Scope {
   }
 };`;
 
-    const stdLib = `import { StdLib } from "${base}/elan-api.js"; var system; var _stdlib; var _tests = []; async function program() { _stdlib = new StdLib(); system = _stdlib.system;`;
-    return `${stdLib}\n${this.compileGlobals()}return [main, _tests];}\n${onmsg}`;
+    const stdlib = `import { StdLib } from "${base}/elan-api.js"; var system; var _stdlib; var _tests = []; async function program() { _stdlib = new StdLib(); system = _stdlib.system;`;
+    return `${stdlib}\n${this.compileGlobals()}return [main, _tests];}\n${onmsg}`;
   }
 
   renderHashableContent(): string {

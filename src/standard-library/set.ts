@@ -35,7 +35,7 @@ export class ElanSet<T1> {
     return this._system!;
   }
 
-  private _stdLib: StdLib = new StdLib();
+  private stdlib!: StdLib; // injected
 
   constructor() {
     this.contents = new Set<T1>(); //Initialised in set system
@@ -131,6 +131,6 @@ export class ElanSet<T1> {
 
   @elanFunction(FunctionOptions.pure)
   asString(): string {
-    return this._stdLib.asString(this._stdLib.asList(Array.from(this.contents)));
+    return this.stdlib.asString(this.stdlib.asList(Array.from(this.contents)));
   }
 }

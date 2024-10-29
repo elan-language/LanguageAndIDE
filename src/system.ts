@@ -17,6 +17,12 @@ export class AssertOutcome {
 export class System {
   constructor(public readonly elanInputOutput: ElanInputOutput) {}
 
+  private _stdlib: any;
+
+  set stdlib(stdlib: any) {
+    this._stdlib = stdlib;
+  }
+
   // constant immutables
   emptyImmutableListSingleton = this.list([]);
   emptyIterableSingleton = this.iter([]);
@@ -104,6 +110,10 @@ export class System {
 
     if ("system" in (toInit as object)) {
       (toInit as any).system = this;
+    }
+
+    if ("stdlib" in (toInit as object)) {
+      (toInit as any).stdlib = this._stdlib;
     }
 
     return toInit;
