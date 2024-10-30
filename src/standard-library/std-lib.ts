@@ -281,6 +281,11 @@ export class StdLib {
     delete dict[key];
   }
 
+  @elanFunction(FunctionOptions.pureExtension)
+  replace(s1: string, match: string, replacement: string): string {
+    return s1.replaceAll(match, replacement);
+  }
+
   @elanFunction(FunctionOptions.pureExtension, ElanInt)
   length<T1>(
     @elanIterableType(ElanT1)

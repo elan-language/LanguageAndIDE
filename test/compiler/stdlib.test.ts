@@ -823,4 +823,31 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "Now.is.the.time...");
   });
+  test("Pass_replace", async () => {
+    const code = `# FFFF Elan Beta 3 valid
+
+main
+  let s1 be "[a] [b]"
+  let s2 be s1.replace("[",unicode(123)).replace("]", unicode(125))
+  print s1
+  print s2
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  const s1 = "[a] [b]";
+  const s2 = _stdlib.replace(_stdlib.replace(s1, "[", _stdlib.unicode(123)), "]", _stdlib.unicode(125));
+  system.printLine(_stdlib.asString(s1));
+  system.printLine(_stdlib.asString(s2));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[a] [b]{a} {b}");
+  });
 });
