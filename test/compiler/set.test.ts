@@ -110,7 +110,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{4,3}");
+    await assertObjectCodeExecutes(fileImpl, "{4, 3}");
   });
   test("Pass_SetDifference", async () => {
     const code = `# FFFF Elan Beta 3 valid
@@ -141,7 +141,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{2,6}");
+    await assertObjectCodeExecutes(fileImpl, "{2, 6}");
   });
   test("Pass_IsDisjointFrom", async () => {
     const code = `# FFFF Elan Beta 3 valid
@@ -163,7 +163,7 @@ async function main() {
   const st2 = st0.add(3).add(1).add(4).add(9);
   const st3 = st0.add(8).add(9);
   system.printLine(_stdlib.asString(st1.isDisjointFrom(st2)));
-  system.printLine(_stdlib.asString(st1.isDisjointFrom(s3)));
+  system.printLine(_stdlib.asString(st1.isDisjointFrom(st3)));
   system.printLine(_stdlib.asString(st2.isDisjointFrom(st3)));
 }
 return [main, _tests];}`;
@@ -182,7 +182,7 @@ return [main, _tests];}`;
 main
   let st0 be new Set<of Int>()
   let st1 be st0.add(2).add(4).add(6).add(3)
-  let st2 be sr0.add(4).add(6)
+  let st2 be st0.add(4).add(6)
   let st3 be st0.add(4).add(6).add(1)
   print st2.isSubsetOf(st1)
   print st2.isSupersetOf(st1)
@@ -196,11 +196,14 @@ end main`;
 async function main() {
   const st0 = system.initialise(new _stdlib.Set());
   const st1 = st0.add(2).add(4).add(6).add(3);
-  const st2 = st0.add(3).add(1).add(4).add(9);
-  const st3 = st0..add(8).add(9);
-  system.printLine(_stdlib.asString(st1.isDisjointFrom(st2)));
-  system.printLine(_stdlib.asString(st1.isDisjointFrom(s3)));
-  system.printLine(_stdlib.asString(st2.isDisjointFrom(st3)));
+  const st2 = st0.add(4).add(6);
+  const st3 = st0.add(4).add(6).add(1);
+  system.printLine(_stdlib.asString(st2.isSubsetOf(st1)));
+  system.printLine(_stdlib.asString(st2.isSupersetOf(st1)));
+  system.printLine(_stdlib.asString(st1.isSupersetOf(st2)));
+  system.printLine(_stdlib.asString(st1.isSupersetOf(st3)));
+  system.printLine(_stdlib.asString(st3.isSupersetOf(st0)));
+  system.printLine(_stdlib.asString(st0.isSubsetOf(st3)));
 }
 return [main, _tests];}`;
 

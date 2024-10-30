@@ -45,7 +45,7 @@ export class ElanSet<T1> {
 
   private copyOfThis(): ElanSet<T1> {
     const copy = this.system!.initialise(new ElanSet<T1>());
-    copy.contents = this.contents;
+    copy.contents = new Set<T1>(this.contents);
     return copy;
   }
 
@@ -109,12 +109,12 @@ export class ElanSet<T1> {
     return this.contents.isDisjointFrom(other.contents);
   }
 
-  @elanFunction(FunctionOptions.pure)
+  @elanFunction(FunctionOptions.pure, ElanBoolean)
   isSubsetOf(@elanClassType(ElanSet) other: ElanSet<T1>): boolean {
     return this.contents.isSubsetOf(other.contents);
   }
 
-  @elanFunction(FunctionOptions.pure)
+  @elanFunction(FunctionOptions.pure, ElanBoolean)
   isSupersetOf(@elanClassType(ElanSet) other: ElanSet<T1>): boolean {
     return this.contents.isSupersetOf(other.contents);
   }
