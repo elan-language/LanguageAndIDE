@@ -144,13 +144,6 @@ export class CallStatement extends AbstractFrame implements Statement {
     const procSymbolType = procSymbol.symbolType(transforms);
     const parameterList = this.args.getOrTransformAstNode(transforms);
 
-    if (qualifier instanceof QualifierAsn && isAstIdNode(qualifier.value)) {
-      const qSymbol = this.getParentScope().resolveSymbol(qualifier.value.id, transforms, this);
-      if (qSymbol.symbolScope === SymbolScope.parameter) {
-        cannotCallOnParameter(qualifier.value, this.compileErrors, this.htmlId);
-      }
-    }
-
     if (isAstCollectionNode(parameterList)) {
       let callParameters = parameterList.items;
       let isAsync: boolean = false;

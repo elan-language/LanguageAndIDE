@@ -888,6 +888,21 @@ end function`;
     assertDoesNotCompile(fileImpl, ["Name a not unique in scope"]);
   });
 
+  ignore_test("Fail_OutOnParameter", async () => {
+    const code = `# FFFF Elan Beta 3 valid
+
+function foo(out a as Int) return Int
+  return 0
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Name a not unique in scope"]);
+  });
+
   test("Fail_OperatorsAndProceduresWithFunctionKeyword", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
