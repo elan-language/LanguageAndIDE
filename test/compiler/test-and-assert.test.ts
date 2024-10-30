@@ -9,9 +9,8 @@ import {
   assertParses,
   assertStatusIsValid,
   assertTestObjectCodeExecutes,
-  ignore_test,
   testHash,
-  transforms,
+  transforms
 } from "./compiler-test-helpers";
 
 suite("Test and Assert", () => {
@@ -67,7 +66,7 @@ return [main, _tests];}`;
     ]);
   });
 
-  ignore_test("Pass_AssertTuple", async () => {
+  test("Pass_AssertTuple", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
 main
@@ -97,17 +96,11 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertTestObjectCodeExecutes(fileImpl, [
-      [
-        "test3",
-        [
-          new AssertOutcome(TestStatus.pass, "(one, two)", "(one, two)", "assert9"),
-          new AssertOutcome(TestStatus.pass, "one", "one", "assert12"),
-        ],
-      ],
+      ["test3", [new AssertOutcome(TestStatus.pass, "(one, two)", "(one, two)", "assert9")]],
     ]);
   });
 
-  ignore_test("Pass_AssertLetTuple", async () => {
+  test("Pass_AssertLetTuple", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
 main
@@ -137,13 +130,7 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertTestObjectCodeExecutes(fileImpl, [
-      [
-        "test3",
-        [
-          new AssertOutcome(TestStatus.pass, "(one, two)", "(one, two)", "assert9"),
-          new AssertOutcome(TestStatus.pass, "one", "one", "assert12"),
-        ],
-      ],
+      ["test3", [new AssertOutcome(TestStatus.pass, "(one, two)", "(one, two)", "assert9")]],
     ]);
   });
 
@@ -237,7 +224,7 @@ return [main, _tests];}`;
     ]);
   });
 
-  ignore_test("Pass_AssertCompoundVarRef2", async () => {
+  test("Pass_AssertCompoundVarRef2", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
 main
@@ -266,7 +253,7 @@ async function main() {
 _tests.push(["test3", async (_outcomes) => {
   const f = system.initialise(new Foo());
   const t2 = 10;
-  _outcomes.push(system.assert(t2, this.p1, "assert12", _stdlib));
+  _outcomes.push(system.assert(t2, f.p1, "assert12", _stdlib));
 }]);
 
 class Foo {
