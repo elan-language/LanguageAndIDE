@@ -384,14 +384,17 @@ export class FileImpl implements File, Scope {
     );
   }
 
-  async refreshAllStatuses(testRunner: (jsCode: string) => Promise<[string, AssertOutcome[]][]>) {
+  async refreshAllStatuses(
+    testRunner: (jsCode: string) => Promise<[string, AssertOutcome[]][]>,
+    compileIfParsed?: boolean,
+  ) {
     let code = "";
     this._parseStatus = ParseStatus.default as ParseStatus;
     this.parseError = undefined;
     this.updateAllParseStatus();
     this.resetAllCompileStatusAndErrors();
 
-    if (this._parseStatus === ParseStatus.valid && !this._fieldBeingEdited) {
+    if (this._parseStatus === ParseStatus.valid && (!this._fieldBeingEdited || compileIfParsed)) {
       code = this.compile();
       this.updateAllCompileStatus();
     }

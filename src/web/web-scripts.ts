@@ -107,9 +107,9 @@ fetchProfile()
     setup(new DefaultProfile());
   });
 
-function refreshAndDisplay() {
+function refreshAndDisplay(compileIfParsed?: boolean) {
   getTestRunner(system, stdlib).then((t) => {
-    file.refreshAllStatuses(t).then(
+    file.refreshAllStatuses(t, compileIfParsed).then(
       () => renderAsHtml(),
       (e) => showError(e as Error, file.fileName, false),
     );
@@ -385,11 +385,29 @@ function updateContent(text: string) {
   document.body.style.cursor = "default";
 }
 
+let inactivityTimer: any | undefined = undefined;
+const inactivityTimeout = 3000;
+
+function inactivityRefresh() {
+  if (
+    file.readRunStatus() !== RunStatus.running &&
+    file.readCompileStatus() === CompileStatus.default
+  ) {
+    refreshAndDisplay(true);
+  }
+
+  inactivityTimer = setTimeout(inactivityRefresh, inactivityTimeout);
+}
+
 function postMessage(e: editorEvent) {
   if (file.readRunStatus() === RunStatus.running) {
     // no change while running
     return;
   }
+
+  clearTimeout(inactivityTimer);
+
+  inactivityTimer = setTimeout(inactivityRefresh, inactivityTimeout);
 
   try {
     let isBeingEdited = false;
