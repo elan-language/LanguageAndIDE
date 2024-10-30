@@ -6,7 +6,6 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -953,51 +952,6 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "1");
-  });
-
-  // pending with implementation
-  ignore_test("Pass_defaultCannotBeReplacedUsingWith", async () => {
-    const code = `# FFFF Elan Beta 3 valid
-
-main
-  var p set to empty Player
-  var p1 set to new Player("other player")
-  var p2 set to p with {name set to "foo", otherPlayer set to p1}
-  print type(p2)
-  print p2.name
-  print p2.otherPlayer
-  print p2.otherPlayer.name
-end main
-
-class Player
-    constructor(name String)
-        set property.name to name
-    end constructor
-
-    property name String
-
-    property otherPlayer Player
-
-    function asString() as String
-        return name
-    end function
-
-end class`;
-
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      "empty Listempty Dictionaryempty Arraytruetruetruetrue",
-    );
   });
 
   test("Fail_UseOfKeywordAsName", async () => {

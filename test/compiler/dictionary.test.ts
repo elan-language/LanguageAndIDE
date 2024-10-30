@@ -629,22 +629,6 @@ end main
     assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
   });
 
-  ignore_test("Fail_getForKey", async () => {
-    const code = `# FFFF Elan Beta 3 valid
-
-main
-  var a set to ["a":1, "b":3, "z":10]
-  print a.getValueByKey("a")
-end main
-`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Dictionary to ImmutableDictionary"]);
-  });
-
   test("Fail_putAtKey", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
