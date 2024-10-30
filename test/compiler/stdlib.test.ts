@@ -620,12 +620,12 @@ return [main, _tests];}`;
     const code = `# FFFF Elan Beta 3 valid
 
 main
-  print stringForUnicode(65)
+  print unicode(65)
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  system.printLine(_stdlib.asString(_stdlib.stringForUnicode(65)));
+  system.printLine(_stdlib.asString(_stdlib.unicode(65)));
 }
 return [main, _tests];}`;
 

@@ -182,7 +182,7 @@ export class StdLib {
   }
 
   @elanFunction()
-  stringForUnicode(@elanIntType() n: number): string {
+  unicode(@elanIntType() n: number): string {
     return String.fromCharCode(n);
   }
 
