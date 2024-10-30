@@ -6,7 +6,6 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -78,54 +77,6 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "Hello World!");
-  });
-
-  ignore_test("Fail_DeclareSameVarNameWithDifferentCase", async () => {
-    const code = `# FFFF Elan Beta 3 valid
-
-main
-  var fOO set to 1
-  var foo set to 1
-end main`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [""]);
-  });
-
-  ignore_test("Fail_ElanKeywordWithChangedCase", async () => {
-    const code = `# FFFF Elan Beta 3 valid
-
-main
-    var pRocedure set to 1
-end main`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [""]);
-  });
-
-  ignore_test("Fail_ElanKeywordTypeEvenWithChangedCase", async () => {
-    const code = `# FFFF Elan Beta 3 valid
-
-class Main
-  constructor()
-  end constructor
-
-  function asString() return String
-    return ""
-  end function
-end class`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [""]);
   });
 
   test("Fail_KeywordWithCorrectCaseIfAlteredCaseAlreadyUsed", async () => {

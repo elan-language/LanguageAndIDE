@@ -10,7 +10,7 @@ import {
   assertStatusIsValid,
   assertTestObjectCodeExecutes,
   testHash,
-  transforms
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("Test and Assert", () => {

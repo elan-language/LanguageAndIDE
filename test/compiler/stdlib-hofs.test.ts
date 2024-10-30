@@ -6,7 +6,6 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -488,33 +487,6 @@ async function main() {
   system.printLine(_stdlib.asString(_stdlib.any(global.source, (x) => x > 20)));
   system.printLine(_stdlib.asString(_stdlib.any(global.source, (x) => (x % 2) === 0)));
   system.printLine(_stdlib.asString(_stdlib.any(global.source, (x) => x > 40)));
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "truetruefalse");
-  });
-
-  ignore_test("Pass_groupBy", async () => {
-    const code = `# FFFF Elan Beta 3 valid
-
-constant source set to {2, 3, 5, 7, 1, 3, 7, 9, 3, 7, 1, 7}
-main
-  print source.groupBy(lambda x as Int => x)
-end main`;
-
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {
-  source = system.list([2, 3, 5, 7, 1, 3, 7, 9, 3, 7, 1, 7]);
-
-};
-async function main() {
-  system.printLine(_stdlib.asString(_stdlib.groupBy(global.source, (x) => x)));
 }
 return [main, _tests];}`;
 

@@ -7,7 +7,6 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -300,35 +299,6 @@ async function main() {
   var a = 3;
   var b = 4;
   var c = \`\${_stdlib.asString(a)} x \${_stdlib.asString(b)} = \${_stdlib.asString(a * b)}\`;
-  system.printLine(_stdlib.asString(c));
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "3 x 4 = 12");
-  });
-
-  // not supported also Pass_literalNewline
-  ignore_test("Pass_UseBracesInString", async () => {
-    const code = `# FFFF Elan Beta 3 valid
-
-main
-  var a set to 3
-  var b set to 4
-  var c set to "{{{a} x {b}}} = {a * b}"
-  print c
-end main`;
-
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-async function main() {
-  var a = 3;
-  var b = 4;
-  var c = \`\${a} x \${b} = \${a * b}\`;
   system.printLine(_stdlib.asString(c));
 }
 return [main, _tests];}`;
