@@ -291,7 +291,7 @@ export class FileImpl implements File, Scope {
   }
 };`;
 
-    const stdlib = `import { StdLib } from "${base}/elan-api.js"; var system; var _stdlib; var _tests = []; async function program() { _stdlib = new StdLib(); system = _stdlib.system;`;
+    const stdlib = `import { StdLib } from "${base}/elan-api.js"; var system; var _stdlib; var _tests = []; async function program() { _stdlib = new StdLib(); system = _stdlib.system; system.stdlib = _stdlib  `;
     return `${stdlib}\n${this.compileGlobals()}return [main, _tests];}\n${onmsg}`;
   }
 
