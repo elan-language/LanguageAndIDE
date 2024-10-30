@@ -1,5 +1,9 @@
 import { CodeSource } from "../code-source";
-import { mustBeUniqueNameInScope, mustNotBeOutParameter, mustNotBeRedefined } from "../compile-rules";
+import {
+  mustBeUniqueNameInScope,
+  mustNotBeOutParameter,
+  mustNotBeRedefined,
+} from "../compile-rules";
 import { isConstructor, isFunction } from "../helpers";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstNode } from "../interfaces/ast-node";
