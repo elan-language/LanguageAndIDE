@@ -386,7 +386,7 @@ function updateContent(text: string) {
 }
 
 let inactivityTimer: any | undefined = undefined;
-const inactivityTimeout = 3000;
+const inactivityTimeout = 1000;
 
 function inactivityRefresh() {
   if (
