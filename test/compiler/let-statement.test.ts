@@ -6,7 +6,6 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -44,73 +43,6 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "9");
-  });
-
-  ignore_test("Pass_proveCached", async () => {
-    const code = `# FFFF Elan Beta 3 valid
-
-main
-  var z set to foo1()
-  var x, y set to z
-  call y.setP1(10)
-  print x.p1
-  print y.p1
-end main
-
-class Foo
-  constructor()
-  end constructor
-
-  property p1 as Int
-
-  procedure setP1(i as Int)
-    set property.p1 to i
-  end procedure
-end class
-
-function foo1() return (Foo, Foo) 
-  let x be new Foo()
-  let y be x
-  return (x, y)
-end function`;
-
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-async function main() {
-  var z = foo1();
-  var x, y = z;
-  await y.setP1(10);
-  system.printLine(_stdlib.asString(x.p1));
-  system.printLine(_stdlib.asString(y.p1));
-}
-
-class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
-  constructor() {
-
-  }
-
-  p1 = 0;
-
-  async setP1(i) {
-    this.p1 = i;
-  }
-
-}
-
-function foo1() {
-  const x = system.initialise(new Foo());
-  const y = x;
-  return system.tuple([x, y]);
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "1010");
   });
 
   test("Pass_InLoop", async () => {

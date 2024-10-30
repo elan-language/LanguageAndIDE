@@ -7,7 +7,6 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -962,7 +961,7 @@ end function`;
     ]);
   });
 
-  ignore_test("Fail_NoIndexing", async () => {
+  test("Fail_NoIndexing", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
 main
@@ -971,24 +970,14 @@ main
 end main
 
 function p1() return Int
-  var a set to [1,2]
-  call a.putAt(0, 2)
+  var a set to [1, 2]
+  set a[0] to 2
   return a[0]
-end function
-
-function p2() return Int
-  var a set to ["a":1, "b":2]
-  set a["a"] to 2
-  return a["a"]
 end function`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "May not set an indexed value in a function: a",
-      "May not set an indexed value in a function: a",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 });

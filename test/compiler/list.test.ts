@@ -8,7 +8,6 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -787,23 +786,6 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     await assertObjectCodeDoesNotExecute(fileImpl, "Out of range index: 5 size: 5");
-  });
-
-  ignore_test("Fail_CannotIndex", async () => {
-    const code = `# FFFF Elan Beta 3 valid
-
-main
-  var a set to {4, 5, 6, 7, 8}
-  var b set to a[5]
-end main
-`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot index List"]);
   });
 
   test("Fail_CannotPutAt", async () => {

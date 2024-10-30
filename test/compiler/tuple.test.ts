@@ -3,11 +3,11 @@ import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
   assertDoesNotCompile,
   assertDoesNotParse,
+  assertObjectCodeDoesNotExecute,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -209,8 +209,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "(4, Pear)");
   });
 
-  // This test now correctly throws an out of range (runtime) error. Not sure how to test for runtime errors RP
-  ignore_test("Fail_OutOfRangeError", async () => {
+  test("Fail_OutOfRangeError", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
 main
@@ -234,7 +233,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "Out of range error");
+    await assertObjectCodeDoesNotExecute(fileImpl, "Out of range error");
   });
 
   test("Fail_AssignItemToWrongType", async () => {
