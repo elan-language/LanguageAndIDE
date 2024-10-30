@@ -307,14 +307,14 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "bar");
   });
 
-  ignore_test("Fail_ExtensionParameterCount", async () => {
+  test("Fail_ExtensionParameterCount", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
 constant a set to {"a":1}
 
 main
-  var b set to a.getValueByKey()
-  var c set to a.getValueByKey("a", 1)
+  var b set to a.withPutAtKey()
+  var c set to a.withPutAtKey("a", 1, 2)
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -322,8 +322,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Parameters expected: 1 got: 0",
-      "Parameters expected: 1 got: 2",
+      "Parameters expected: 2 got: 0",
+      "Parameters expected: 2 got: 3",
     ]);
   });
 

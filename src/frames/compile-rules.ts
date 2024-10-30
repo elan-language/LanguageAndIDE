@@ -368,17 +368,19 @@ export function mustMatchParameters(
   compileErrors: CompileError[],
   location: string,
 ) {
+  const expected = isExtension ? ofType.length - 1 : ofType.length;
+  const actual = isExtension ? parms.length - 1 : parms.length;
+
+  if (expected !== actual) {
+    compileErrors.push(new ParametersCompileError(expected, actual, location));
+  }
+
   const maxLen = parms.length > ofType.length ? parms.length : ofType.length;
 
   for (let i = 0; i < maxLen; i++) {
     const p = parms[i];
     const t = ofType[i];
-
-    if (p === undefined || t === undefined) {
-      const expected = isExtension ? ofType.length - 1 : ofType.length;
-      const actual = isExtension ? parms.length - 1 : parms.length;
-      compileErrors.push(new ParametersCompileError(expected, actual, location));
-    } else {
+    if (p && t) {
       mustBeCompatibleType(t, p.symbolType(), compileErrors, location);
     }
   }

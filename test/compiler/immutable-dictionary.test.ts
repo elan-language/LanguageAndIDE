@@ -592,11 +592,11 @@ end main`;
     assertDoesNotCompile(fileImpl, ["Incompatible types ImmutableDictionary to Dictionary"]);
   });
 
-  test("Fail_recursive definition", async () => {
+  test("Fail_undefined", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
 main
-  var a set to a.getValueByKey("a")
+  var a set to a.withPutAtKey("a", 1)
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
