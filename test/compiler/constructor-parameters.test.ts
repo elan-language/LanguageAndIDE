@@ -69,4 +69,21 @@ end class`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["assigning to a property requires a prefix"]);
   });
+
+  test("Fail_OutParameter", async () => {
+    const code = `# FFFF Elan Beta 3 valid
+
+class Foo
+    constructor(out a as Int)
+    end constructor
+
+    property p1 as Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'out' parameters are only supported on procedures."]);
+  });
 });

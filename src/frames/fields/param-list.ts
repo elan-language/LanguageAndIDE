@@ -1,5 +1,6 @@
 import { CodeSource } from "../code-source";
-import { mustBeUniqueNameInScope, mustNotBeRedefined } from "../compile-rules";
+import { mustBeUniqueNameInScope, mustNotBeOutParameter, mustNotBeRedefined } from "../compile-rules";
+import { isConstructor, isFunction } from "../helpers";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstNode } from "../interfaces/ast-node";
 import { ElanSymbol } from "../interfaces/elan-symbol";
@@ -11,6 +12,7 @@ import { ParamDefNode } from "../parse-nodes/param-def-node";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { ParseStatus } from "../status-enums";
 import { DuplicateSymbol } from "../symbols/duplicate-symbol";
+import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { isAstCollectionNode, isAstIdNode, transforms } from "../syntax-nodes/ast-helpers";
 import { EmptyAsn } from "../syntax-nodes/empty-asn";
@@ -119,6 +121,18 @@ export class ParamList extends AbstractField implements Scope {
     mustNotBeRedefined(symbol, this.compileErrors, this.htmlId);
   }
 
+  private mustNotBeOutOnFunctionOrConstructor(id: string, transforms: Transforms) {
+    // up two or we just get the parameter again
+    const parentScope = this.getParentScope();
+
+    if (isFunction(parentScope) || isConstructor(parentScope)) {
+      const symbol = parentScope.resolveSymbol(id, transforms, this);
+      if (symbol.symbolScope === SymbolScope.outParameter) {
+        mustNotBeOutParameter(symbol, this.compileErrors, this.htmlId);
+      }
+    }
+  }
+
   private getIdNodes(parms: AstNode | EmptyAsn): AstIdNode[] {
     if (isAstCollectionNode(parms)) {
       return parms.items.filter((n) => isAstIdNode(n)) as AstIdNode[];
@@ -136,6 +150,8 @@ export class ParamList extends AbstractField implements Scope {
       const idNodes = this.getIdNodes(parms);
 
       for (const idNode of idNodes) {
+        this.mustNotBeOutOnFunctionOrConstructor(idNode.id, transforms);
+
         if (idNodes.length > 1) {
           mustBeUniqueNameInScope(idNode.id, this, transforms, this.compileErrors, this.htmlId);
         }

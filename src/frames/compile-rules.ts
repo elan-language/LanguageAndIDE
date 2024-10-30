@@ -933,6 +933,16 @@ export function mustNotBeRedefined(
   }
 }
 
+export function mustNotBeOutParameter(
+  variable: ElanSymbol,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  compileErrors.push(
+    new SyntaxCompileError("'out' parameters are only supported on procedures.", location),
+  );
+}
+
 export function mustBeIterable(
   symbolType: SymbolType,
   compileErrors: CompileError[],

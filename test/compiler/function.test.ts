@@ -888,7 +888,7 @@ end function`;
     assertDoesNotCompile(fileImpl, ["Name a not unique in scope"]);
   });
 
-  ignore_test("Fail_OutOnParameter", async () => {
+  test("Fail_OutOnParameter", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
 function foo(out a as Int) return Int
@@ -900,7 +900,7 @@ end function`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name a not unique in scope"]);
+    assertDoesNotCompile(fileImpl, ["'out' parameters are only supported on procedures."]);
   });
 
   test("Fail_OperatorsAndProceduresWithFunctionKeyword", async () => {
