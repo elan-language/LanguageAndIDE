@@ -123,7 +123,7 @@ main
   call printEach(arr)
 end main
   
-procedure printEach(target as Iterable<of Float>)
+procedure printEach(target as Iterable<of Int>)
   each x in target
     print x
   end each
