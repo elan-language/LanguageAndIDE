@@ -577,7 +577,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types String to Array"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types String to [String]"]);
   });
 
   test("Fail_1DArrayAccessedAs2D2", async () => {
@@ -593,7 +593,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Int to Array"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Int to [Int]"]);
   });
 
   test("Fail_2DArrayAccessedAs1D", async () => {
@@ -609,7 +609,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types String to Array"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types String to [String]"]);
   });
 
   test("Fail_OutOfRange", async () => {
@@ -643,7 +643,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Boolean to Array"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Boolean to [String]"]);
   });
 
   test("Fail_2DArrayAdd", async () => {
@@ -659,7 +659,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types String to Array"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types String to [String]"]);
   });
 
   test("Fail_IndexWrongType1", async () => {

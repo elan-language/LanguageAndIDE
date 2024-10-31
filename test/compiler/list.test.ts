@@ -802,7 +802,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types List to Array"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types {Int} to [Int]"]);
   });
 
   test("Fail_CannotSetIndex", async () => {
@@ -834,7 +834,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types ImmutableDictionary to List"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types {String:String} to {String}"]);
   });
 
   test("Fail_add", async () => {
@@ -851,7 +851,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types List to Array"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types {String} to [String]"]);
   });
 
   test("Fail_insertAt", async () => {
@@ -868,7 +868,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types List to Array"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types {String} to [String]"]);
   });
 
   test("Fail_removeAt", async () => {
@@ -885,7 +885,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types List to Array"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types {String} to [String]"]);
   });
 
   test("Fail_removeFirst", async () => {
@@ -901,7 +901,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types List to Array"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types {String} to [String]"]);
   });
 
   test("Fail_removeAll", async () => {
@@ -917,7 +917,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types List to Array"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types {String} to [String]"]);
   });
 
   test("Fail_withoutGenericType", async () => {
@@ -949,7 +949,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types Array to List try converting with '.asList()'",
+      "Incompatible types [Int] to {Int} try converting with '.asList()'",
     ]);
   });
 });

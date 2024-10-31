@@ -550,7 +550,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Array to Array"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types [Int] to [String]"]);
   });
 
   test("Fail_DeconstructIntoWrongType4", async () => {
@@ -569,7 +569,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Array to Int"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types [Int] to Int"]);
   });
 
   test("Fail_DeconstructIntoWrongType5", async () => {
@@ -588,7 +588,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Int to Array"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Int to [Int]"]);
   });
 
   test("Fail_DeconstructIntoWrongType6", async () => {
@@ -608,7 +608,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types Array to List try converting with '.asList()'",
+      "Incompatible types [Int] to {Int} try converting with '.asList()'",
     ]);
   });
 
@@ -645,7 +645,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Array to Array"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types [Int] to [String]"]);
   });
 
   test("Fail_CannotDeconstruct1", async () => {
@@ -732,7 +732,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types ImmutableDictionary to Array"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types {Int:Int} to [Int]"]);
   });
 
   test("Fail_CannotDeconstruct5", async () => {
@@ -751,7 +751,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Int to Array"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Int to [Int]"]);
   });
 
   test("Fail_DeconstructEmptyArray1", async () => {

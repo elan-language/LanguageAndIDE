@@ -1134,7 +1134,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types Procedure to Array",
+      "Incompatible types Procedure ([Generic Parameter T1], Generic Parameter T1) to [Int]",
       "Cannot call Procedure",
     ]);
   });

@@ -477,7 +477,7 @@ enum Fruit apple, orange, pear`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Enum Fruit to Int"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Fruit to Int"]);
   });
 
   test("Fail_undefinedEnum", async () => {

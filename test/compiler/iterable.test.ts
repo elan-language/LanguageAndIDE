@@ -380,7 +380,7 @@ end procedure`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types List to Iterable<of String>"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types {Int} to Iterable<of String>"]);
   });
 
   test("Fail_Indexing1", async () => {
@@ -435,7 +435,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types Iterable<of Int> to List try converting Iterable to a concrete type with e.g. '.asList()'",
+      "Incompatible types Iterable<of Int> to {Int} try converting Iterable to a concrete type with e.g. '.asList()'",
     ]);
   });
 });

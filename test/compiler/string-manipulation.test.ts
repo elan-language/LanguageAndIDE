@@ -368,7 +368,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types String to Array"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types String to [String]"]);
   });
 
   test("Fail_ComparisonOperators", async () => {

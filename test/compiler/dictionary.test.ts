@@ -642,7 +642,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types ImmutableDictionary to Dictionary"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types {String:Int} to [String:Int]"]);
   });
 
   test("Fail_SetInvalidValueType", async () => {
@@ -675,7 +675,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Dictionary to ImmutableDictionary"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types [String:Int] to {String:Int}"]);
   });
 
   test("Fail_withoutGenericType", async () => {

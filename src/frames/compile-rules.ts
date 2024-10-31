@@ -413,9 +413,7 @@ function FailIncompatible(
   }
 
   const unknown = lhs === UnknownType.Instance || rhs === UnknownType.Instance;
-  compileErrors.push(
-    new TypesCompileError(rhs.toString(), lhs.toString(), addInfo, location, unknown),
-  );
+  compileErrors.push(new TypesCompileError(rhs.name, lhs.name, addInfo, location, unknown));
 }
 
 function FailNotNumber(lhs: SymbolType, compileErrors: CompileError[], location: string) {

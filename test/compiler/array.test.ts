@@ -703,7 +703,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types List to Array"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types {String} to [String]"]);
   });
 
   test("Fail_withInsert", async () => {
@@ -720,7 +720,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types List to Array"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types {String} to [String]"]);
   });
 
   test("Fail_withRemove", async () => {
@@ -737,7 +737,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Unknown to Array"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Unknown to [String]"]);
   });
 
   test("Fail_putAt_asFunction", async () => {
@@ -754,7 +754,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types List to Array"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types {String} to [String]"]);
   });
 
   test("Fail_appendWithPlus", async () => {
@@ -788,7 +788,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types String to Array"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types String to [String]"]);
   });
 
   test("Fail_withRemoveFirst", async () => {
@@ -804,7 +804,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types List to Array"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types {String} to [String]"]);
   });
 
   test("Fail_withRemoveAll", async () => {
@@ -820,7 +820,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types List to Array"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types {String} to [String]"]);
   });
 
   test("Fail_assignRange", async () => {

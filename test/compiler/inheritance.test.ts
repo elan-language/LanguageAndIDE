@@ -1626,7 +1626,7 @@ end function
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types List to List"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types {Bar} to {Foo}"]);
   });
 
   // #482
