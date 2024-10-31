@@ -1,6 +1,7 @@
 import {
   ClassOptions,
   ElanArray,
+  elanArrayType,
   ElanBoolean,
   ElanClass,
   elanClass,
@@ -10,6 +11,7 @@ import {
   ElanInt,
   elanIterableType,
   ElanList,
+  elanListType,
   elanProperty,
   ElanT1,
   FunctionOptions,
@@ -73,6 +75,20 @@ export class ElanSet<T1> {
   add(@elanGenericParamT1Type() item: T1): ElanSet<T1> {
     const copy = this.copyOfThis();
     copy.contents.add(item);
+    return copy;
+  }
+
+  @elanFunction(FunctionOptions.pure, ElanClass(ElanSet))
+  addFromList(@elanListType(ElanT1) list: T1[]): ElanSet<T1> {
+    const copy = this.copyOfThis();
+    list.forEach((item) => copy.contents.add(item));
+    return copy;
+  }
+
+  @elanFunction(FunctionOptions.pure, ElanClass(ElanSet))
+  addFromArray(@elanArrayType(ElanT1) list: T1[]): ElanSet<T1> {
+    const copy = this.copyOfThis();
+    list.forEach((item) => copy.contents.add(item));
     return copy;
   }
 
