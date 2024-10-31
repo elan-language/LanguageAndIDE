@@ -7,7 +7,6 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -1629,9 +1628,7 @@ end function
     assertDoesNotCompile(fileImpl, ["Incompatible types {Bar} to {Foo}"]);
   });
 
-  // #482
-  // as invariance 1
-  ignore_test("Fail_Invariance2", async () => {
+  test("Fail_Invariance2", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
 main
@@ -1660,13 +1657,10 @@ end procedure
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Incompatible types Array<of Class Bar> to Array<of Class Foo>",
-    ]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types [Bar] to [Foo]"]);
   });
 
-  // #482
-  ignore_test("Fail_Invariance3", async () => {
+  test("Fail_Invariance3", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
 main
@@ -1694,9 +1688,7 @@ end function
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Incompatible types Array<of Class Bar> to Array<of Class Foo>",
-    ]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types {String:Bar} to {String:Foo}"]);
   });
 
   test("Fail_InheritFromNonexistentClass", async () => {

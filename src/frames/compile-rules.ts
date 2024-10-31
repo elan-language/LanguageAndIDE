@@ -213,6 +213,7 @@ export function mustBeDeconstructableType(
 }
 
 export function mustBePureFunctionSymbol(
+  symbolId: string,
   symbolType: SymbolType,
   scope: Scope,
   compileErrors: CompileError[],
@@ -231,7 +232,12 @@ export function mustBePureFunctionSymbol(
     }
   } else if (!(symbolType instanceof FunctionType)) {
     compileErrors.push(
-      new CannotUseLikeAFunction(symbolType.name, location, symbolType instanceof UnknownType),
+      new CannotUseLikeAFunction(
+        symbolId,
+        symbolType.name,
+        location,
+        symbolType instanceof UnknownType,
+      ),
     );
   }
 }

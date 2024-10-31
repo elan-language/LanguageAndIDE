@@ -83,8 +83,13 @@ export class CannotUseSystemMethodInAFunction extends CompileError {
   }
 }
 export class CannotUseLikeAFunction extends CompileError {
-  constructor(id: string, location: string, unknown: boolean) {
-    super(Priority.illegalOperation, `Cannot call ${id}`, location, unknown);
+  constructor(id: string, type: string, location: string, unknown: boolean) {
+    super(
+      Priority.illegalOperation,
+      `Cannot call '${id}' type ${type} in an expression`,
+      location,
+      unknown,
+    );
   }
 }
 

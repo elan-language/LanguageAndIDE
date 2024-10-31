@@ -514,7 +514,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot call [String]"]);
+    assertDoesNotCompile(fileImpl, ["Cannot call 'a' type [String] in an expression"]);
   });
 
   test("Fail_ApplyIndexToANonIndexable", async () => {

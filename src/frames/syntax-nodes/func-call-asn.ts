@@ -74,7 +74,13 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
     const [funcSymbol, funcSymbolType] = this.getSymbolAndType();
 
     mustBeKnownSymbol(funcSymbol, this.compileErrors, this.fieldId);
-    mustBePureFunctionSymbol(funcSymbolType, this.scope, this.compileErrors, this.fieldId);
+    mustBePureFunctionSymbol(
+      funcSymbol.symbolId,
+      funcSymbolType,
+      this.scope,
+      this.compileErrors,
+      this.fieldId,
+    );
 
     if (!isMemberOnFieldsClass(funcSymbol, transforms(), this.scope)) {
       mustBePublicMember(funcSymbol, this.compileErrors, this.fieldId);
