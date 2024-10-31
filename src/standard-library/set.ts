@@ -51,16 +51,6 @@ export class ElanSet<T1> {
     return copy;
   }
 
-  // todo update stdlib classes with proper properties and remove these and update test
-  @elanProperty(ElanInt)
-  get size() {
-    return this.contents.size;
-  }
-
-  @elanProperty(ElanInt)
-  initialSize: number = 0;
-  // end
-
   @elanFunction(FunctionOptions.pure, ElanInt)
   length() {
     return this.contents.size;
