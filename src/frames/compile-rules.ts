@@ -86,7 +86,7 @@ export function mustBeOfSymbolType(
 ) {
   const unknown = exprType?.name === undefined || ofType.name === undefined;
   if (exprType?.name !== ofType.name) {
-    compileErrors.push(new TypeCompileError(ofType.toString(), location, unknown));
+    compileErrors.push(new TypeCompileError(ofType.name, location, unknown));
   }
 }
 
