@@ -559,21 +559,13 @@ function isNumber(st: SymbolType) {
   return st instanceof IntType || st instanceof FloatType;
 }
 
-export function mustBeInvariantType(
-  lhs: SymbolType,
-  rhs: SymbolType,
-  immutable: boolean,
-  compileErrors: CompileError[],
-  location: string,
-) {
+export function isInvariantType(lhs: SymbolType, rhs: SymbolType, immutable: boolean) {
   if (lhs instanceof FloatType && immutable && isNumber(rhs)) {
-    // OK Float/Int -> Float on immutable 
-    return;
+    // OK Float/Int -> Float on immutable
+    return true;
   }
 
-  if (lhs.name !== rhs.name) {
-    FailIncompatible(lhs, rhs, compileErrors, location);
-  }
+  return lhs.name === rhs.name;
 }
 
 export function mustBeCompatibleType(
@@ -604,7 +596,10 @@ export function mustBeCompatibleType(
   }
 
   if (lhs instanceof ListType && rhs instanceof ListType) {
-    mustBeInvariantType(lhs.ofType, rhs.ofType, true, compileErrors, location);
+    if (!isInvariantType(lhs.ofType, rhs.ofType, true)) {
+      FailIncompatible(lhs, rhs, compileErrors, location);
+    }
+    return;
   }
 
   if (lhs instanceof ListType && !(rhs instanceof ListType)) {
@@ -613,7 +608,10 @@ export function mustBeCompatibleType(
   }
 
   if (lhs instanceof ArrayType && rhs instanceof ArrayType) {
-    mustBeInvariantType(lhs.ofType, rhs.ofType, false, compileErrors, location);
+    if (!isInvariantType(lhs.ofType, rhs.ofType, true)) {
+      FailIncompatible(lhs, rhs, compileErrors, location);
+    }
+    return;
   }
 
   if (lhs instanceof ArrayType && !(rhs instanceof ArrayType)) {
@@ -622,8 +620,12 @@ export function mustBeCompatibleType(
   }
 
   if (lhs instanceof DictionaryType && rhs instanceof DictionaryType) {
-    mustBeInvariantType(lhs.keyType, rhs.keyType, false, compileErrors, location);
-    mustBeInvariantType(lhs.valueType, rhs.valueType, false, compileErrors, location);
+    if (!isInvariantType(lhs.keyType, rhs.keyType, true)) {
+      FailIncompatible(lhs, rhs, compileErrors, location);
+    }
+    if (!isInvariantType(lhs.valueType, rhs.valueType, true)) {
+      FailIncompatible(lhs, rhs, compileErrors, location);
+    }
     return;
   }
 
@@ -633,8 +635,12 @@ export function mustBeCompatibleType(
   }
 
   if (lhs instanceof ImmutableDictionaryType && rhs instanceof ImmutableDictionaryType) {
-    mustBeInvariantType(lhs.keyType, rhs.keyType, true, compileErrors, location);
-    mustBeInvariantType(lhs.valueType, rhs.valueType, true, compileErrors, location);
+    if (!isInvariantType(lhs.keyType, rhs.keyType, true)) {
+      FailIncompatible(lhs, rhs, compileErrors, location);
+    }
+    if (!isInvariantType(lhs.valueType, rhs.valueType, true)) {
+      FailIncompatible(lhs, rhs, compileErrors, location);
+    }
     return;
   }
 
@@ -644,8 +650,12 @@ export function mustBeCompatibleType(
   }
 
   if (lhs instanceof AbstractDictionaryType && isAnyDictionaryType(rhs)) {
-    mustBeInvariantType(lhs.keyType, rhs.keyType, true, compileErrors, location);
-    mustBeInvariantType(lhs.valueType, rhs.valueType, true, compileErrors, location);
+    if (!isInvariantType(lhs.keyType, rhs.keyType, true)) {
+      FailIncompatible(lhs, rhs, compileErrors, location);
+    }
+    if (!isInvariantType(lhs.valueType, rhs.valueType, true)) {
+      FailIncompatible(lhs, rhs, compileErrors, location);
+    }
     return;
   }
 
@@ -673,7 +683,9 @@ export function mustBeCompatibleType(
   }
 
   if (lhs instanceof IterableType && isIterableType(rhs)) {
-    mustBeInvariantType(lhs.ofType, rhs.ofType, true, compileErrors, location);
+    if (!isInvariantType(lhs.ofType, rhs.ofType, true)) {
+      FailIncompatible(lhs, rhs, compileErrors, location);
+    }
     return;
   }
 

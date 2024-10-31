@@ -1597,9 +1597,7 @@ end function
     assertDoesNotCompile(fileImpl, ["Incompatible types Foo to Bar"]);
   });
 
-  // #482
-  // todo fix by resolveing all types properly in func call
-  ignore_test("Fail_Invariance1", async () => {
+  test("Fail_Invariance1", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
 main
@@ -1628,7 +1626,7 @@ end function
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types List<of Class Bar> to List<of Class Foo>"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types List to List"]);
   });
 
   // #482

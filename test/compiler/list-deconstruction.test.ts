@@ -550,7 +550,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Array to Array"]);
   });
 
   test("Fail_DeconstructIntoWrongType4", async () => {
@@ -645,7 +645,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Array to Array"]);
   });
 
   test("Fail_CannotDeconstruct1", async () => {
