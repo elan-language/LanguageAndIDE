@@ -754,6 +754,6 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot range Dictionary"]);
+    assertDoesNotCompile(fileImpl, ["Cannot range [Int:Int]"]);
   });
 });

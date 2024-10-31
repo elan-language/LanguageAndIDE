@@ -924,8 +924,8 @@ end function`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "Cannot do equality operations on Procedures or Functions",
-      "Incompatible types Function to Float or Int",
-      "Incompatible types Function to Float or Int",
+      "Incompatible types Func<of  => Int> to Float or Int",
+      "Incompatible types Func<of  => Int> to Float or Int",
     ]);
   });
 
@@ -953,8 +953,8 @@ end function`;
       "Cannot do equality operations on Procedures or Functions",
       "To evaluate function 'p1' add brackets. Or to create a reference to 'p1', precede it by 'function '",
       "To evaluate function 'p2' add brackets. Or to create a reference to 'p2', precede it by 'function '",
-      "Incompatible types Function to Float or Int",
-      "Incompatible types Function to Float or Int",
+      "Incompatible types Func<of  => Int> to Float or Int",
+      "Incompatible types Func<of  => Int> to Float or Int",
       "To evaluate function 'p1' add brackets. Or to create a reference to 'p1', precede it by 'function '",
       "To evaluate function 'p2' add brackets. Or to create a reference to 'p2', precede it by 'function '",
       "To evaluate function 'p1' add brackets. Or to create a reference to 'p1', precede it by 'function '",

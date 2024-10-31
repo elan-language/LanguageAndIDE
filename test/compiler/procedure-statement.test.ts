@@ -1116,8 +1116,8 @@ end procedure`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "Cannot do equality operations on Procedures or Functions",
-      "Incompatible types Procedure to Float or Int",
-      "Incompatible types Procedure to Float or Int",
+      "Incompatible types Procedure () to Float or Int",
+      "Incompatible types Procedure () to Float or Int",
     ]);
   });
 
@@ -1135,7 +1135,7 @@ end main`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "Incompatible types Procedure ([Generic Parameter T1], Generic Parameter T1) to [Int]",
-      "Cannot call Procedure",
+      "Cannot call Procedure ([Generic Parameter T1], Generic Parameter T1)",
     ]);
   });
 

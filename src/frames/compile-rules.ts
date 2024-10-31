@@ -154,11 +154,7 @@ export function mustBeRecord(
 ) {
   if (!symbolType.isImmutable) {
     compileErrors.push(
-      new MustBeRecordCompileError(
-        symbolType.toString(),
-        location,
-        symbolType instanceof UnknownType,
-      ),
+      new MustBeRecordCompileError(symbolType.name, location, symbolType instanceof UnknownType),
     );
   }
 }
@@ -189,7 +185,7 @@ export function mustBeProcedure(
 ) {
   if (!(symbolType instanceof ProcedureType)) {
     compileErrors.push(
-      new CannotCallAFunction(symbolType.toString(), location, symbolType instanceof UnknownType),
+      new CannotCallAFunction(symbolType.name, location, symbolType instanceof UnknownType),
     );
   }
 }
@@ -227,7 +223,7 @@ export function mustBePureFunctionSymbol(
       const imPure = symbolType instanceof FunctionType && !symbolType.isPure;
       compileErrors.push(
         new CannotUseSystemMethodInAFunction(
-          symbolType.toString(),
+          symbolType.name,
           location,
           symbolType instanceof UnknownType,
         ),
@@ -235,11 +231,7 @@ export function mustBePureFunctionSymbol(
     }
   } else if (!(symbolType instanceof FunctionType)) {
     compileErrors.push(
-      new CannotUseLikeAFunction(
-        symbolType.toString(),
-        location,
-        symbolType instanceof UnknownType,
-      ),
+      new CannotUseLikeAFunction(symbolType.name, location, symbolType instanceof UnknownType),
     );
   }
 }
@@ -252,11 +244,7 @@ export function mustBeIndexableSymbol(
 ) {
   if (!(read && (isIndexableType(symbolType) || isAnyDictionaryType(symbolType)))) {
     compileErrors.push(
-      new NotIndexableCompileError(
-        symbolType.toString(),
-        location,
-        symbolType instanceof UnknownType,
-      ),
+      new NotIndexableCompileError(symbolType.name, location, symbolType instanceof UnknownType),
     );
   }
 }
@@ -269,11 +257,7 @@ export function mustBeRangeableSymbol(
 ) {
   if (!(read && isIndexableType(symbolType))) {
     compileErrors.push(
-      new NotRangeableCompileError(
-        symbolType.toString(),
-        location,
-        symbolType instanceof UnknownType,
-      ),
+      new NotRangeableCompileError(symbolType.name, location, symbolType instanceof UnknownType),
     );
   }
 }
@@ -284,7 +268,7 @@ export function mustBeAbstractClass(
   location: string,
 ) {
   if (type instanceof ClassType && !type.isAbstract) {
-    compileErrors.push(new MustBeAbstractCompileError(type.toString(), location));
+    compileErrors.push(new MustBeAbstractCompileError(type.name, location));
   }
 }
 
@@ -327,8 +311,8 @@ export function mustImplementSuperClasses(
       if (subSymbol instanceof UnknownSymbol) {
         compileErrors.push(
           new MustImplementCompileError(
-            classType.toString(),
-            superClassType.toString(),
+            classType.name,
+            superClassType.name,
             superSymbol.symbolId,
             location,
           ),
@@ -352,7 +336,7 @@ export function mustBeConcreteClass(
   location: string,
 ) {
   if (classType.isAbstract) {
-    compileErrors.push(new MustBeConcreteCompileError(classType.toString(), location));
+    compileErrors.push(new MustBeConcreteCompileError(classType.name, location));
   }
 }
 
@@ -433,7 +417,7 @@ function FailIncompatible(
 
 function FailNotNumber(lhs: SymbolType, compileErrors: CompileError[], location: string) {
   const unknown = lhs === UnknownType.Instance;
-  compileErrors.push(new TypesCompileError(lhs.toString(), "Float or Int", "", location, unknown));
+  compileErrors.push(new TypesCompileError(lhs.name, "Float or Int", "", location, unknown));
 }
 
 function FailCannotCompareProcFunc(compileErrors: CompileError[], location: string) {
@@ -978,11 +962,7 @@ export function mustBeIterable(
 ) {
   if (!isIterableType(symbolType)) {
     compileErrors.push(
-      new NotIterableCompileError(
-        symbolType.toString(),
-        location,
-        symbolType instanceof UnknownType,
-      ),
+      new NotIterableCompileError(symbolType.name, location, symbolType instanceof UnknownType),
     );
   }
 }

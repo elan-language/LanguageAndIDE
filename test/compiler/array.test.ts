@@ -514,7 +514,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot call Array"]);
+    assertDoesNotCompile(fileImpl, ["Cannot call [String]"]);
   });
 
   test("Fail_ApplyIndexToANonIndexable", async () => {
@@ -771,7 +771,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Array to Float or Int"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types [String] to Float or Int"]);
   });
 
   test("Fail_prependWithPlus", async () => {

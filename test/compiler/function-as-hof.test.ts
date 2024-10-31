@@ -468,7 +468,7 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types Function to Float or Int",
+      "Incompatible types Func<of Int => Int> to Float or Int",
       "To evaluate function 'ff' add brackets. Or to create a reference to 'ff', precede it by 'function '",
     ]);
   });
@@ -489,6 +489,6 @@ end function`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Function to Float or Int"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Func<of Int => Int> to Float or Int"]);
   });
 });
