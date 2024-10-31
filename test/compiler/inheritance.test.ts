@@ -1417,9 +1417,9 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Expression must be Int",
-      "Expression must be Procedure (Int)",
-      "Expression must be Func<of  => Int>",
+      "Member 'p1' must be of type Int",
+      "Member 'setP1' must be of type Procedure (Int)",
+      "Member 'product' must be of type Func<of  => Int>",
     ]);
   });
 
@@ -1464,7 +1464,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Expression must be Func<of  => Int>"]);
+    assertDoesNotCompile(fileImpl, ["Member 'product' must be of type Func<of  => Int>"]);
   });
 
   test("Fail_AbstractClassDefinesMethodBody", async () => {

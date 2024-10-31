@@ -8,6 +8,7 @@ import {
   DuplicateKeyCompileError,
   ExtensionCompileError,
   FunctionRefCompileError,
+  MemberTypeCompileError,
   MustBeAbstractCompileError,
   MustBeConcreteCompileError,
   MustBeRecordCompileError,
@@ -87,6 +88,19 @@ export function mustBeOfSymbolType(
   const unknown = exprType?.name === undefined || ofType.name === undefined;
   if (exprType?.name !== ofType.name) {
     compileErrors.push(new TypeCompileError(ofType.name, location, unknown));
+  }
+}
+
+export function mustBeMemberOfSymbolType(
+  name: string,
+  exprType: SymbolType | undefined,
+  ofType: SymbolType,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  const unknown = exprType?.name === undefined || ofType.name === undefined;
+  if (exprType?.name !== ofType.name) {
+    compileErrors.push(new MemberTypeCompileError(name, ofType.name, location, unknown));
   }
 }
 
@@ -320,7 +334,8 @@ export function mustImplementSuperClasses(
           ),
         );
       } else {
-        mustBeOfSymbolType(
+        mustBeMemberOfSymbolType(
+          superSymbol.symbolId,
           subSymbol.symbolType(transforms),
           superSymbol.symbolType(transforms),
           compileErrors,

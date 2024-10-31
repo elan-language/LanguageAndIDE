@@ -36,6 +36,12 @@ export class TypeCompileError extends CompileError {
   }
 }
 
+export class MemberTypeCompileError extends CompileError {
+  constructor(name: string, type: string, location: string, unknown: boolean) {
+    super(Priority.typeError, `Member '${name}' must be of type ${type}`, location, unknown);
+  }
+}
+
 export class TypesCompileError extends CompileError {
   constructor(type1: string, type2: string, addInfo: string, location: string, unknown: boolean) {
     super(
