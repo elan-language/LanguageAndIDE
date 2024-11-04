@@ -215,4 +215,62 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "truefalsetruefalsetruetrue");
   });
+  test("Pass_AddFromList", async () => {
+    const code = `# FFFF Elan Beta 3 valid
+
+main
+  let st0 be new Set<of Int>()
+  let st1 be st0.addFromList({2,4,6,3})
+  print st1
+  let st2 be st1.addFromList({2,5,6})
+  print st2
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  const st0 = system.initialise(new _stdlib.Set());
+  const st1 = st0.addFromList(system.list([2, 4, 6, 3]));
+  system.printLine(_stdlib.asString(st1));
+  const st2 = st1.addFromList(system.list([2, 5, 6]));
+  system.printLine(_stdlib.asString(st2));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "{2, 4, 6, 3}{2, 4, 6, 3, 5}");
+  });
+  test("Pass_AddFromArray", async () => {
+    const code = `# FFFF Elan Beta 3 valid
+
+main
+  let st0 be new Set<of Int>()
+  let st1 be st0.addFromArray([2,4,6,3])
+  print st1
+  let st2 be st1.addFromArray([2,5,6])
+  print st2
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  const st0 = system.initialise(new _stdlib.Set());
+  const st1 = st0.addFromArray(system.literalArray([2, 4, 6, 3]));
+  system.printLine(_stdlib.asString(st1));
+  const st2 = st1.addFromArray(system.literalArray([2, 5, 6]));
+  system.printLine(_stdlib.asString(st2));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "{2, 4, 6, 3}{2, 4, 6, 3, 5}");
+  });
 });

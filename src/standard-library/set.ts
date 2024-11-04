@@ -1,6 +1,7 @@
 import {
   ClassOptions,
   ElanArray,
+  elanArrayType,
   ElanBoolean,
   ElanClass,
   elanClass,
@@ -10,6 +11,7 @@ import {
   ElanInt,
   elanIterableType,
   ElanList,
+  elanListType,
   elanProperty,
   ElanT1,
   FunctionOptions,
@@ -49,16 +51,6 @@ export class ElanSet<T1> {
     return copy;
   }
 
-  // todo update stdlib classes with proper properties and remove these and update test
-  @elanProperty(ElanInt)
-  get size() {
-    return this.contents.size;
-  }
-
-  @elanProperty(ElanInt)
-  initialSize: number = 0;
-  // end
-
   @elanFunction(FunctionOptions.pure, ElanInt)
   length() {
     return this.contents.size;
@@ -73,6 +65,20 @@ export class ElanSet<T1> {
   add(@elanGenericParamT1Type() item: T1): ElanSet<T1> {
     const copy = this.copyOfThis();
     copy.contents.add(item);
+    return copy;
+  }
+
+  @elanFunction(FunctionOptions.pure, ElanClass(ElanSet))
+  addFromList(@elanListType(ElanT1) list: T1[]): ElanSet<T1> {
+    const copy = this.copyOfThis();
+    list.forEach((item) => copy.contents.add(item));
+    return copy;
+  }
+
+  @elanFunction(FunctionOptions.pure, ElanClass(ElanSet))
+  addFromArray(@elanArrayType(ElanT1) list: T1[]): ElanSet<T1> {
+    const copy = this.copyOfThis();
+    list.forEach((item) => copy.contents.add(item));
     return copy;
   }
 

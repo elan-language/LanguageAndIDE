@@ -295,4 +295,27 @@ return [main, _tests];}`;
 `,
     );
   });
+  test("Pass_ReadPropertyOnObject", async () => {
+    const code = `# FFFF Elan Beta 3 valid
+
+main
+  let circ be new CircleVG()
+  print circ.cx
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  const circ = system.initialise(new _stdlib.CircleVG());
+  system.printLine(_stdlib.asString(circ.cx));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, `100`);
+  });
 });
