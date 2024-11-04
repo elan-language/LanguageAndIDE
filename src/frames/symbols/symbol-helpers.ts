@@ -510,7 +510,7 @@ export function symbolMatches(id: string, all: boolean, symbols: ElanSymbol[]) {
   const uid = id.toUpperCase();
   const sw = symbols.filter((s) => matchStart(uid, s));
   let inc: ElanSymbol[] = [];
-  const limit = sw.length === 0 ? 2 : 3;
+  const limit = 2; // only add includes if >= limit
 
   if (uid.length >= limit) {
     inc = symbols.filter((s) => !sw.includes(s)).filter((s) => matchIncludes(uid, s));
