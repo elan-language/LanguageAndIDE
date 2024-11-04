@@ -376,6 +376,9 @@ end main`;
         "keys",
         "Func<of AbstractDictionary <Generic Parameter T1,Generic Parameter T2> => {Generic Parameter T1}>",
       ],
+      ["hasKey", "*"],
+      ["withPutAtKey", "*"],
+      ["withRemoveAtKey", "*"],
     ] as [string, string][];
 
     await assertAutocompletes(fileImpl, "expr8", "e", 5, expected);
