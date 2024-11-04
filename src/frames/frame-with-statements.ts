@@ -31,7 +31,7 @@ import {
   parentHelper_selectFirstChild,
 } from "./parent-helpers";
 import { StatementSelector } from "./statements/statement-selector";
-import { isSymbol } from "./symbols/symbol-helpers";
+import { isSymbol, symbolMatches } from "./symbols/symbol-helpers";
 import { Transforms } from "./syntax-nodes/transforms";
 
 export abstract class FrameWithStatements extends AbstractFrame implements Parent, Collapsible {
@@ -255,21 +255,14 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
 
   symbolMatches(id: string, all: boolean, initialScope?: Frame): ElanSymbol[] {
     const matches = this.getParent().symbolMatches(id, all, this);
-    const localMatches: ElanSymbol[] = [];
+    let localMatches: ElanSymbol[] = [];
 
     const fst = this.getFirstChild();
     let range = this.getChildRange(fst, initialScope!);
     if (range.length > 1) {
       range = range.slice(0, range.length - 1);
-
-      for (const f of range) {
-        if (isSymbol(f) && (id || all)) {
-          const sids = this.getIds(f.symbolId);
-          if (sids.some((sid) => sid.startsWith(id) || all)) {
-            localMatches.push(f);
-          }
-        }
-      }
+      const symbols = range.filter((r) => isSymbol(r)) as ElanSymbol[];
+      localMatches = symbolMatches(id, all, symbols);
     }
 
     return localMatches.concat(matches);

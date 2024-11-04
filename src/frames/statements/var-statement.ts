@@ -10,6 +10,7 @@ import { Frame } from "../interfaces/frame";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
 import { setKeyword, toKeyword, varKeyword } from "../keywords";
+import { symbolMatches } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { getIds, wrapDeconstruction } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
@@ -101,11 +102,8 @@ export class VarStatement extends AbstractFrame implements Statement, ElanSymbol
 
   symbolMatches(id: string, all: boolean, initialScope?: Frame): ElanSymbol[] {
     const matches = super.symbolMatches(id, all, initialScope);
+    const localMatches = symbolMatches(id, all, [this as ElanSymbol]);
 
-    if (this.symbolId.startsWith(id) || all) {
-      return [this as ElanSymbol].concat(matches);
-    }
-
-    return matches;
+    return localMatches.concat(matches);
   }
 }

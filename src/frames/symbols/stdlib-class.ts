@@ -6,7 +6,7 @@ import { constructorKeyword, thisKeyword } from "../keywords";
 import { Transforms } from "../syntax-nodes/transforms";
 import { ClassType } from "./class-type";
 import { DuplicateSymbol } from "./duplicate-symbol";
-import { isSymbol } from "./symbol-helpers";
+import { isSymbol, symbolMatches } from "./symbol-helpers";
 import { SymbolScope } from "./symbol-scope";
 import { UnknownSymbol } from "./unknown-symbol";
 
@@ -85,9 +85,11 @@ export class StdLibClass implements Class {
   symbolMatches(id: string, all: boolean, initialScope?: Scope): ElanSymbol[] {
     const otherMatches = this.getParentScope().symbolMatches(id, all, this);
 
-    const matches = this.getChildren().filter(
-      (f) => f.symbolId !== constructorKeyword && isSymbol(f) && (f.symbolId.startsWith(id) || all),
+    const symbols = this.getChildren().filter(
+      (f) => f.symbolId !== constructorKeyword && isSymbol(f),
     ) as ElanSymbol[];
+
+    const matches = symbolMatches(id, all, symbols);
 
     return matches.concat(otherMatches);
   }

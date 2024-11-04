@@ -16,6 +16,7 @@ import { ParamDefNode } from "../parse-nodes/param-def-node";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { ParseStatus } from "../status-enums";
 import { DuplicateSymbol } from "../symbols/duplicate-symbol";
+import { symbolMatches } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { isAstCollectionNode, isAstIdNode, transforms } from "../syntax-nodes/ast-helpers";
@@ -41,19 +42,15 @@ export class ParamList extends AbstractField implements Scope {
     const ast = this.getOrTransformAstNode(transforms());
 
     if (isAstCollectionNode(ast)) {
-      const matches: ElanSymbol[] = [];
-      for (const n of ast.items) {
-        if (isAstIdNode(n)) {
-          if (n.id.startsWith(id) || all) {
-            matches.push({
-              symbolId: n.id,
-              symbolType: () => n.symbolType(),
-              symbolScope: n.symbolScope,
-            });
-          }
-        }
-      }
-      return matches;
+      const symbols: ElanSymbol[] = ast.items
+        .filter((n) => isAstIdNode(n))
+        .map((n) => ({
+          symbolId: n.id,
+          symbolType: () => n.symbolType(),
+          symbolScope: n.symbolScope,
+        }));
+
+      return symbolMatches(id, all, symbols);
     }
 
     return [];

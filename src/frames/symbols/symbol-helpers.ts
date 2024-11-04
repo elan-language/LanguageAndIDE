@@ -397,6 +397,10 @@ export function removeIfSingleFullMatch(symbols: ElanSymbol[], id: string): Elan
   }
 }
 
+function orderSymbol(s1: ElanSymbol, s2: ElanSymbol) {
+  return s1.symbolId.localeCompare(s2.symbolId);
+}
+
 export function filteredSymbols(
   id: string,
   transforms: Transforms,
@@ -404,9 +408,15 @@ export function filteredSymbols(
   scope: Scope,
 ): [string, ElanSymbol[]] {
   const [match, matches] = matchingSymbols(id, transforms, scope);
-  const filtered = removeIfSingleFullMatch(matches.filter(filter), match);
-  const ordered = filtered.sort((s1, s2) => s1.symbolId.localeCompare(s2.symbolId));
-  return [match, ordered];
+  const filtered = removeIfSingleFullMatch(matches.filter(filter), match).filter(
+    (e) => !e.symbolId.startsWith("_"),
+  );
+
+  const startsWith = filtered
+    .filter((s) => s.symbolId.toUpperCase().startsWith(match.toUpperCase()))
+    .sort(orderSymbol);
+  const includes = filtered.filter((s) => !startsWith.includes(s)).sort(orderSymbol);
+  return [match, startsWith.concat(includes)];
 }
 
 export function hasPrivateMembers(ct: ClassType) {
@@ -460,4 +470,51 @@ export function updateScope(qualifier: AstQualifierNode | undefined, originalSco
   }
 
   return currentScope;
+}
+
+function symbolMatch(id: string, symbolId: string, all: boolean) {
+  if (all) {
+    return true;
+  }
+
+  const uid = id.toUpperCase();
+  const usid = symbolId.toUpperCase();
+  return usid.startsWith(uid) || usid.includes(uid);
+}
+
+function getIds(sid: string) {
+  if (sid.includes(",")) {
+    return sid.split(",").map((s) => s.trim());
+  }
+  if (sid.includes(":")) {
+    return sid.split(":").map((s) => s.trim());
+  }
+  return [sid];
+}
+
+function matchStart(id: string, s: ElanSymbol) {
+  const sids = getIds(s.symbolId).map((s) => s.toUpperCase());
+  return sids.some((sid) => sid.startsWith(id));
+}
+
+function matchIncludes(id: string, s: ElanSymbol) {
+  const sids = getIds(s.symbolId).map((s) => s.toUpperCase());
+  return sids.some((sid) => sid.includes(id));
+}
+
+export function symbolMatches(id: string, all: boolean, symbols: ElanSymbol[]) {
+  if (all) {
+    return symbols;
+  }
+
+  const uid = id.toUpperCase();
+  const sw = symbols.filter((s) => matchStart(uid, s));
+  let inc: ElanSymbol[] = [];
+  const limit = sw.length === 0 ? 2 : 3;
+
+  if (uid.length >= limit) {
+    inc = symbols.filter((s) => !sw.includes(s)).filter((s) => matchIncludes(uid, s));
+  }
+
+  return sw.concat(inc);
 }

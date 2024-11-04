@@ -54,7 +54,7 @@ import {
 import { CommentStatement } from "../statements/comment-statement";
 import { ClassType } from "../symbols/class-type";
 import { DuplicateSymbol } from "../symbols/duplicate-symbol";
-import { getGlobalScope, isSymbol } from "../symbols/symbol-helpers";
+import { getGlobalScope, isSymbol, symbolMatches } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { UnknownType } from "../symbols/unknown-type";
@@ -430,9 +430,11 @@ ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
   symbolMatches(id: string, all: boolean, initialScope?: Frame | undefined): ElanSymbol[] {
     const otherMatches = this.getParent().symbolMatches(id, all, this);
 
-    const matches = this.getChildren().filter(
-      (f) => !(f instanceof Constructor) && isSymbol(f) && (f.symbolId.startsWith(id) || all),
+    const symbols = this.getChildren().filter(
+      (f) => !(f instanceof Constructor) && isSymbol(f),
     ) as ElanSymbol[];
+
+    const matches = symbolMatches(id, all, symbols);
 
     return matches.concat(otherMatches);
   }

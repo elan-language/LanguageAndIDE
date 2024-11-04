@@ -275,7 +275,13 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [["foo", "Int"]] as [string, string][];
+    const expected = [
+      ["foo", "*"],
+      ["createFileForWriting", "*"],
+      ["isBefore", "*"],
+      ["isBeforeOrSameAs", "*"],
+      ["openFileForReading", "*"],
+    ] as [string, string][];
 
     await assertAutocompletes(fileImpl, "expr8", "o", 1, expected);
   });
@@ -291,7 +297,13 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [["foo", "Int"]] as [string, string][];
+    const expected = [
+      ["foo", "*"],
+      ["createFileForWriting", "*"],
+      ["isBefore", "*"],
+      ["isBeforeOrSameAs", "*"],
+      ["openFileForReading", "*"],
+    ] as [string, string][];
 
     await assertAutocompletes(fileImpl, "expr8", "o", 5, expected);
   });
@@ -312,8 +324,12 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["foo", "Int"],
+      ["foo", "*"],
       ["foobar", "Func<of  => Int>"],
+      ["createFileForWriting", "*"],
+      ["isBefore", "*"],
+      ["isBeforeOrSameAs", "*"],
+      ["openFileForReading", "*"],
     ] as [string, string][];
 
     await assertAutocompletes(fileImpl, "expr8", "o", 5, expected);

@@ -3,7 +3,7 @@ import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../syntax-nodes/transforms";
-import { isSymbol } from "./symbol-helpers";
+import { isSymbol, symbolMatches } from "./symbol-helpers";
 import { SymbolScope } from "./symbol-scope";
 import { UnknownSymbol } from "./unknown-symbol";
 
@@ -21,13 +21,9 @@ export class ClassType implements SymbolType, Scope {
   }
 
   symbolMatches(id: string, all: boolean): ElanSymbol[] {
-    const matches: ElanSymbol[] = [];
-    for (const f of this.scope!.getChildren()) {
-      if (isSymbol(f) && (f.symbolId.startsWith(id) || all)) {
-        matches.push(f);
-      }
-    }
-    return matches;
+    const symbols = this.scope!.getChildren().filter((f) => isSymbol(f)) as ElanSymbol[];
+
+    return symbolMatches(id, all, symbols);
   }
 
   isAssignableFrom(otherType: SymbolType): boolean {

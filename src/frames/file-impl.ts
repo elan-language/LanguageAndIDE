@@ -53,7 +53,7 @@ import { ScratchPad } from "./scratch-pad";
 import { StatementFactoryImpl } from "./statement-factory-impl";
 import { CompileStatus, DisplayStatus, ParseStatus, RunStatus, TestStatus } from "./status-enums";
 import { DuplicateSymbol } from "./symbols/duplicate-symbol";
-import { isSymbol } from "./symbols/symbol-helpers";
+import { isSymbol, symbolMatches } from "./symbols/symbol-helpers";
 import { Transforms } from "./syntax-nodes/transforms";
 
 // for web editor bundle
@@ -107,7 +107,7 @@ export class FileImpl implements File, Scope {
   symbolMatches(id: string, all: boolean): ElanSymbol[] {
     const libMatches = this.libraryScope.symbolMatches(id, all);
     const globalSymbols = this.getChildren().filter((c) => isSymbol(c)) as ElanSymbol[];
-    const matches = globalSymbols.filter((s) => s.symbolId.startsWith(id) || all);
+    const matches = symbolMatches(id, all, globalSymbols);
 
     return matches.concat(libMatches);
   }
