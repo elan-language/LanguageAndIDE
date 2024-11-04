@@ -386,11 +386,12 @@ function updateContent(text: string) {
 }
 
 let inactivityTimer: any | undefined = undefined;
-const inactivityTimeout = 1000;
+const inactivityTimeout = 2000;
 
 function inactivityRefresh() {
   if (
     file.readRunStatus() !== RunStatus.running &&
+    file.readParseStatus() === ParseStatus.valid &&
     file.readCompileStatus() === CompileStatus.default
   ) {
     refreshAndDisplay(true);
