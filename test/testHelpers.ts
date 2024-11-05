@@ -169,9 +169,15 @@ export async function assertAutocompletes(
   char: string,
   at: number,
   expected: [string, string][],
+  clear? : boolean
 ): Promise<void> {
   assertParses(f);
   const fld = f.getById(id) as AbstractField;
+
+  if (clear) {
+    fld.text = "";
+  }
+
   fld.select();
   fld.cursorPos = at;
   fld.processKey(getEvent(char));
