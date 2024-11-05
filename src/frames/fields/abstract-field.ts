@@ -14,6 +14,7 @@ import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { Frame } from "../interfaces/frame";
 import { Selectable } from "../interfaces/selectable";
+import { propertyKeyword } from "../keywords";
 import { Overtyper } from "../overtyper";
 import { CSV } from "../parse-nodes/csv";
 import { ParseNode } from "../parse-nodes/parse-node";
@@ -294,7 +295,14 @@ export abstract class AbstractField implements Selectable, Field {
       this.text = this.text.slice(0, li);
     }
 
-    this.text = this.text + this.getAutocompleteText();
+    const propertyPrefix = `${propertyKeyword}.`;
+    const appendText = this.getAutocompleteText();
+
+    if (this.text === propertyPrefix && appendText.startsWith(propertyPrefix)) {
+      this.text = "";
+    }
+
+    this.text = this.text + appendText;
     this.autoCompSelected = undefined;
     this.parseCurrentText();
     this.cursorPos = this.text.length;

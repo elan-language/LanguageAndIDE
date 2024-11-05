@@ -163,24 +163,7 @@ function getEvent(char: string) {
   } as editorEvent;
 }
 
-export async function assertAutocompletes(
-  f: FileImpl,
-  id: string,
-  char: string,
-  at: number,
-  expected: [string, string][],
-  clear? : boolean
-): Promise<void> {
-  assertParses(f);
-  const fld = f.getById(id) as AbstractField;
-
-  if (clear) {
-    fld.text = "";
-  }
-
-  fld.select();
-  fld.cursorPos = at;
-  fld.processKey(getEvent(char));
+async function doAsserts(f: FileImpl, fld : AbstractField, expected: [string, string][]) {
   await f.renderAsHtml();
   const symbols = fld.autocompleteSymbols;
 
@@ -196,6 +179,50 @@ export async function assertAutocompletes(
       assert.strictEqual(s.symbolType(transforms()).name, e[1]);
     }
   }
+} 
+
+
+export async function assertAutocompletes(
+  f: FileImpl,
+  id: string,
+  char: string,
+  at: number,
+  expected: [string, string][],
+  clear? : boolean
+): Promise<void> {
+  assertParses(f);
+  
+  const fld = f.getById(id) as AbstractField;
+
+  if (clear) {
+    fld.text = "";
+  }
+
+  fld.select();
+  fld.cursorPos = at;
+  fld.processKey(getEvent(char));
+  await doAsserts(f, fld, expected);
+}
+
+export async function assertAutocompletesWithString(
+  f: FileImpl,
+  id: string,
+  text: string,
+  expected: [string, string][],
+): Promise<void> {
+  assertParses(f);
+  const fld = f.getById(id) as AbstractField;
+
+  fld.text = "";
+  
+  fld.select();
+  fld.cursorPos = 0;
+
+  for(const c of text) {
+    fld.processKey(getEvent(c));
+  }
+  
+  await doAsserts(f, fld, expected);
 }
 
 export async function readAsDOM(f: File) {

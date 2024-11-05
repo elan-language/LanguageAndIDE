@@ -1,7 +1,7 @@
 import { DefaultProfile } from "../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../src/frames/file-impl";
 import { ignore_test, testHash, transforms } from "./compiler/compiler-test-helpers";
-import { assertAutocompletes } from "./testHelpers";
+import { assertAutocompletes, assertAutocompletesWithString } from "./testHelpers";
 
 suite("Autocomplete", () => {
   test("Pass_LocalVars", async () => {
@@ -515,5 +515,136 @@ end class`;
     ] as [string, string][];
 
     await assertAutocompletes(fileImpl, "ident24", "f", 0, expected, true);
+  });
+
+  test("Pass_properties2", async () => {
+    const code = `# FFFF Elan Beta 3 valid
+
+main
+
+end main
+
+class Foo
+  constructor()
+
+  end constructor
+
+  procedure pp1()
+    var f set to 0
+    var p set to 0
+    var bar set to 0
+    set f to 0
+  end procedure
+
+  property foo as Int
+  property b as Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [["foo", "*"]] as [string, string][];
+
+    await assertAutocompletes(fileImpl, "ident24", "o", 1, expected);
+  });
+
+  test("Pass_properties3", async () => {
+    const code = `# FFFF Elan Beta 3 valid
+
+main
+
+end main
+
+class Foo
+  constructor()
+
+  end constructor
+
+  procedure pp1()
+    var f set to 0
+    var p set to 0
+    var bar set to 0
+    set f to 0
+  end procedure
+
+  property foo as Int
+  property b as Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["p", "*"],
+      ["foo", "*"],
+      ["b", "*"],
+    ] as [string, string][];
+
+    await assertAutocompletes(fileImpl, "ident24", "p", 0, expected, true);
+  });
+
+  test("Pass_properties4", async () => {
+    const code = `# FFFF Elan Beta 3 valid
+
+main
+
+end main
+
+class Foo
+  constructor()
+
+  end constructor
+
+  procedure pp1()
+    var f set to 0
+    var p set to 0
+    var bar set to 0
+    set p to 0
+  end procedure
+
+  property foo as Int
+  property b as Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["foo", "*"],
+      ["b", "*"],
+    ] as [string, string][];
+
+    await assertAutocompletes(fileImpl, "ident24", "r", 1, expected);
+  });
+
+  test("Pass_properties5", async () => {
+    const code = `# FFFF Elan Beta 3 valid
+
+main
+
+end main
+
+class Foo
+  constructor()
+
+  end constructor
+
+  procedure pp1()
+    var f set to 0
+    var p set to 0
+    var bar set to 0
+    set f to 0
+  end procedure
+
+  property foo as Int
+  property b as Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [["foo", "*"]] as [string, string][];
+
+    await assertAutocompletesWithString(fileImpl, "ident24", "property.f", expected);
   });
 });

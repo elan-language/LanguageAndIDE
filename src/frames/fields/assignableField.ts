@@ -9,8 +9,11 @@ import { DeconstructedTuple } from "../parse-nodes/deconstructed-tuple";
 import { ParseNode } from "../parse-nodes/parse-node";
 import {
   filteredSymbols,
+  isInsideClass,
   isMemberOnFieldsClass,
+  isProperty,
   isVarOrPropertyStatement,
+  removeIfSingleFullMatch,
 } from "../symbols/symbol-helpers";
 import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
@@ -36,9 +39,31 @@ export class AssignableField extends AbstractField {
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>
     source.readUntil(/(\s+to\s+)|\r|\n/);
 
+  allPropertiesInScope() {
+    const all = this.getHolder().symbolMatches("", true, this.getHolder());
+    return all.filter((s) => isProperty(s)) as ElanSymbol[];
+  }
+
   matchingSymbolsForId(): [string, ElanSymbol[]] {
+    const scope = this.getHolder();
     const id = this.rootNode?.matchedText ?? "";
-    return filteredSymbols(id, transforms(), (s) => isVarOrPropertyStatement(s), this.getHolder());
+    let symbols = filteredSymbols(id, transforms(), (s) => isVarOrPropertyStatement(s), scope);
+
+    if (isInsideClass(scope)) {
+      const prefix = "property.";
+
+      if (prefix.startsWith(id) && id.length <= prefix.length) {
+        const [match, existing] = symbols;
+        const updated = existing.concat(this.allPropertiesInScope());
+        symbols = [match, updated];
+      } else if (id.startsWith(prefix)) {
+        const [match] = symbols;
+        symbols = filteredSymbols(match, transforms(), (s) => isProperty(s), scope);
+      }
+    }
+    const [match, origSymbols] = symbols;
+
+    return [match, removeIfSingleFullMatch(origSymbols, match)];
   }
 
   protected override getId(s: ElanSymbol) {

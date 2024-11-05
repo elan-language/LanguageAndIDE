@@ -98,6 +98,10 @@ export function isMemberOnFieldsClass(s: ElanSymbol, transforms: Transforms, sco
   return isMember(s) && isMember(matchingMember) && s.getClass() === matchingMember.getClass();
 }
 
+export function isInsideClass(scope: Scope) {
+  return getClassScope(scope) !== NullScope.Instance;
+}
+
 export function scopePrefix(
   symbol: ElanSymbol,
   compileErors: CompileError[],
@@ -408,9 +412,7 @@ export function filteredSymbols(
   scope: Scope,
 ): [string, ElanSymbol[]] {
   const [match, matches] = matchingSymbols(id, transforms, scope);
-  const filtered = removeIfSingleFullMatch(matches.filter(filter), match).filter(
-    (e) => !e.symbolId.startsWith("_"),
-  );
+  const filtered = matches.filter(filter).filter((e) => !e.symbolId.startsWith("_"));
 
   const startsWith = filtered
     .filter((s) => s.symbolId.toUpperCase().startsWith(match.toUpperCase()))

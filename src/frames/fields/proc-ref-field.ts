@@ -6,7 +6,12 @@ import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { InstanceProcRef } from "../parse-nodes/instanceProcRef";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { ParseStatus } from "../status-enums";
-import { filteredSymbols, isIdOrProcedure, isProcedure } from "../symbols/symbol-helpers";
+import {
+  filteredSymbols,
+  isIdOrProcedure,
+  isProcedure,
+  removeIfSingleFullMatch,
+} from "../symbols/symbol-helpers";
 import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
 
@@ -32,12 +37,14 @@ export class ProcRefField extends AbstractField {
 
   matchingSymbolsForId(): [string, ElanSymbol[]] {
     const id = this.rootNode?.matchedText ?? "";
-    return filteredSymbols(
+    const [match, symbols] = filteredSymbols(
       id,
       transforms(),
       (s) => isIdOrProcedure(s, transforms()),
       this.getHolder(),
     );
+
+    return [match, removeIfSingleFullMatch(symbols, match)];
   }
 
   protected override getId(s: ElanSymbol) {

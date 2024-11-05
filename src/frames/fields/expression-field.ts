@@ -9,6 +9,7 @@ import {
   isExpression,
   isFunction,
   isMemberOnFieldsClass,
+  removeIfSingleFullMatch,
 } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { transforms } from "../syntax-nodes/ast-helpers";
@@ -37,12 +38,14 @@ export class ExpressionField extends AbstractField {
 
   matchingSymbolsForId(): [string, ElanSymbol[]] {
     const id = this.rootNode?.matchedText ?? "";
-    return filteredSymbols(
+    const [match, symbols] = filteredSymbols(
       id,
       transforms(),
       (s) => isExpression(s, transforms()),
       this.getHolder(),
     );
+
+    return [match, removeIfSingleFullMatch(symbols, match)];
   }
 
   public textAsHtml(): string {
