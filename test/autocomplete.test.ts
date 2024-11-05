@@ -712,4 +712,63 @@ end class`;
 
     await assertAutocompletes(fileImpl, "ident24", "a", 1, expected);
   });
+
+  test("Pass_private1", async () => {
+    const code = `# FFFF Elan Beta 3 valid
+
+main
+  var foo set to new Foo()
+  call foo.p()
+end main
+
+class Foo
+  constructor()
+  end constructor
+
+  private procedure pp1()
+  end procedure
+
+  procedure pp2()
+  end procedure
+
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [["pp2", "*"]] as [string, string][];
+
+    await assertAutocompletesWithString(fileImpl, "ident7", "foo.p", expected);
+  });
+
+  test("Pass_private2", async () => {
+    const code = `# FFFF Elan Beta 3 valid
+
+main
+ 
+end main
+
+class Foo
+  constructor()
+  end constructor
+
+  private procedure pp1()
+  end procedure
+
+  procedure pp2()
+    call p()
+  end procedure
+
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["pp1", "*"],
+      ["pp2", "*"],
+    ] as [string, string][];
+
+    await assertAutocompletesWithString(fileImpl, "ident19", "pp", expected);
+  });
 });

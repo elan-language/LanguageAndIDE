@@ -263,7 +263,7 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
     classType.updateScope(classTypeDef);
 
     for (const c of children) {
-      classTypeDef.children.push(getSymbol(c[0], c[1], SymbolScope.property));
+      classTypeDef.children.push(getSymbol(c[0], c[1], SymbolScope.member));
     }
 
     for (const ot of classMetadata.ofTypes) {

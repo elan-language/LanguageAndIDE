@@ -87,6 +87,6 @@ ${this.indent()}}\r
   }
 
   get symbolScope() {
-    return SymbolScope.property;
+    return SymbolScope.member;
   }
 }

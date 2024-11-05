@@ -89,5 +89,5 @@ ${this.indent()}}\r
     return this.name.renderAsSource();
   }
 
-  symbolScope = SymbolScope.property;
+  symbolScope = SymbolScope.member;
 }

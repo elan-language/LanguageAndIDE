@@ -296,7 +296,7 @@ export function mustBePropertyAndPublic(
   if (symbol instanceof Property && symbol.private === true) {
     compileErrors.push(new PrivateMemberCompileError(symbol.name.text, location));
   }
-  if (symbol.symbolScope !== SymbolScope.property) {
+  if (symbol.symbolScope !== SymbolScope.member) {
     compileErrors.push(new UndefinedSymbolCompileError(symbol.symbolId, location));
   }
 }
@@ -785,7 +785,7 @@ export function mustNotBePropertyOnFunctionMethod(
   if (isFunction(parent) && isMember(parent)) {
     const s = assignable.symbolScope;
 
-    if (s === SymbolScope.property) {
+    if (s === SymbolScope.member) {
       compileErrors.push(new ReassignCompileError(`property: ${getId(assignable)}`, location));
     }
   }
@@ -800,7 +800,7 @@ export function mustBePropertyPrefixedOnAssignable(
   if (isMember(parent)) {
     const s = assignable.symbolScope;
 
-    if (s === SymbolScope.property) {
+    if (s === SymbolScope.member) {
       if (isAstIndexableNode(assignable) && !assignable.qualifier) {
         compileErrors.push(
           new SyntaxCompileError(`assigning to a property requires a prefix`, location),
@@ -943,7 +943,7 @@ export function mustNotBeRedefined(
 ) {
   if (
     !(variable instanceof UnknownSymbol) &&
-    !(variable.symbolScope === SymbolScope.stdlib || variable.symbolScope === SymbolScope.property)
+    !(variable.symbolScope === SymbolScope.stdlib || variable.symbolScope === SymbolScope.member)
   ) {
     compileErrors.push(
       new RedefinedCompileError(variable.symbolId, mapToPurpose(variable), location),

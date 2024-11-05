@@ -5,7 +5,6 @@ export enum SymbolScope {
   program,
   parameter,
   outParameter,
-  property,
   member,
   local,
   counter,

@@ -17,6 +17,7 @@ import { File } from "../interfaces/file";
 import { Frame } from "../interfaces/frame";
 import { GenericSymbolType } from "../interfaces/generic-symbol-type";
 import { IterableSymbolType } from "../interfaces/iterable-symbol-type";
+import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
@@ -102,6 +103,14 @@ export function isInsideClass(scope: Scope) {
   return getClassScope(scope) !== NullScope.Instance;
 }
 
+export function isPrivateMember(s: ElanSymbol | Member): boolean {
+  return isMember(s) && s.private;
+}
+
+export function isPublicMember(s: ElanSymbol | Member): boolean {
+  return isMember(s) && !s.private;
+}
+
 export function scopePrefix(
   symbol: ElanSymbol,
   compileErors: CompileError[],
@@ -133,7 +142,7 @@ export function scopePrefix(
     }
   }
 
-  if (symbol.symbolScope === SymbolScope.property) {
+  if (symbol.symbolScope === SymbolScope.member) {
     return `this.`;
   }
 
@@ -358,7 +367,7 @@ export function matchingSymbols(
       if (isClassTypeDef(cls)) {
         return [
           propId,
-          cls.symbolMatches(propId, !propId).filter((s) => s.symbolScope === SymbolScope.property),
+          cls.symbolMatches(propId, !propId).filter((s) => isPublicMember(s)),
         ];
       }
       return [propId, []];

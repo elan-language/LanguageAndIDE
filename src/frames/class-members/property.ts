@@ -108,7 +108,7 @@ ${this.indent()}}\r\n`;
   }
 
   get symbolScope(): SymbolScope {
-    return SymbolScope.property;
+    return SymbolScope.member;
   }
 
   public initCode() {
