@@ -39,4 +39,4 @@ const booleanSymbol: ElanSymbol = {
   symbolScope: SymbolScope.program,
 };
 
-export const elanSymbols = [intSymbol, floatSymbol, stringSymbol];
+export const elanSymbols = [intSymbol, floatSymbol, stringSymbol, booleanSymbol];
