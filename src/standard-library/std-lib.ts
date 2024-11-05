@@ -310,22 +310,22 @@ export class StdLib {
     return s1.toLowerCase();
   }
 
-  @elanFunction()
+  @elanFunction(FunctionOptions.pureExtension)
   isBefore(s1: string, s2: string): boolean {
     return s1 < s2;
   }
 
-  @elanFunction()
+  @elanFunction(FunctionOptions.pureExtension)
   isAfter(s1: string, s2: string): boolean {
     return s1 > s2;
   }
 
-  @elanFunction()
+  @elanFunction(FunctionOptions.pureExtension)
   isAfterOrSameAs(s1: string, s2: string): boolean {
     return s1 > s2 || s1 === s2;
   }
 
-  @elanFunction()
+  @elanFunction(FunctionOptions.pureExtension)
   isBeforeOrSameAs(s1: string, s2: string): boolean {
     return s1 < s2 || s1 === s2;
   }

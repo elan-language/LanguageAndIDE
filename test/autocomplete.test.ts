@@ -298,8 +298,6 @@ end main`;
     const expected = [
       ["foo", "*"],
       ["createFileForWriting", "*"],
-      ["isBefore", "*"],
-      ["isBeforeOrSameAs", "*"],
       ["openFileForReading", "*"],
     ] as [string, string][];
 
@@ -320,8 +318,6 @@ end main`;
     const expected = [
       ["foo", "*"],
       ["createFileForWriting", "*"],
-      ["isBefore", "*"],
-      ["isBeforeOrSameAs", "*"],
       ["openFileForReading", "*"],
     ] as [string, string][];
 
@@ -347,8 +343,6 @@ end function`;
       ["foo", "*"],
       ["foobar", "Func<of  => Int>"],
       ["createFileForWriting", "*"],
-      ["isBefore", "*"],
-      ["isBeforeOrSameAs", "*"],
       ["openFileForReading", "*"],
     ] as [string, string][];
 

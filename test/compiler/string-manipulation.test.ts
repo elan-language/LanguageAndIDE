@@ -228,12 +228,12 @@ return [main, _tests];}`;
     const code = `# FFFF Elan Beta 3 valid
 
 main
-  print isBefore("abc", "abC")
-  print isAfter("abcd", "abc")
-  print isAfterOrSameAs("abc", "abc")
-  print isBeforeOrSameAs("abc", "abc")
-  print isAfterOrSameAs("abcd", "abc")
-  print isBeforeOrSameAs("abcd", "abc")
+  print "abc".isBefore("abC")
+  print "abcd".isAfter("abc")
+  print "abc".isAfterOrSameAs("abc")
+  print "abc".isBeforeOrSameAs("abc")
+  print "abcd".isAfterOrSameAs("abc")
+  print "abcd".isBeforeOrSameAs("abc")
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {

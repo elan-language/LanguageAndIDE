@@ -536,7 +536,7 @@ return [main, _tests];}`;
 
 constant source set to "dbcd"
 main
-  print source.sortBy(lambda x as String, y as String => if x is y then 0 else if isAfter(x, y) then 1 else -1).asArray()
+  print source.sortBy(lambda x as String, y as String => if x is y then 0 else if x.isAfter(y) then 1 else -1).asArray()
   print source
 end main`;
 
