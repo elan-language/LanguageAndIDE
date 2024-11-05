@@ -9,6 +9,7 @@ import {
   isExpression,
   isFunction,
   isMemberOnFieldsClass,
+  isProperty,
   removeIfSingleFullMatch,
 } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
@@ -68,10 +69,10 @@ export class ExpressionField extends AbstractField {
   }
 
   protected override getSymbolId(symbol: ElanSymbol) {
-    return symbol.symbolScope === SymbolScope.property &&
+    return isProperty(symbol) &&
       !this.text.includes(".") &&
       this.autocompleteSymbols.filter((s) => s.symbolId === symbol.symbolId).length > 1
-      ? `property.${symbol.symbolId}`
+      ? `${propertyKeyword}.${symbol.symbolId}`
       : symbol.symbolId;
   }
 }

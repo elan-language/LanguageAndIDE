@@ -19,6 +19,7 @@ import { Overtyper } from "../overtyper";
 import { CSV } from "../parse-nodes/csv";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { CompileStatus, DisplayStatus, ParseStatus } from "../status-enums";
+import { isProperty } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownType } from "../symbols/unknown-type";
 import { EmptyAsn } from "../syntax-nodes/empty-asn";
@@ -531,8 +532,8 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   protected getSymbolId(symbol: ElanSymbol) {
-    return symbol.symbolScope === SymbolScope.property && !this.text.includes(".")
-      ? `property.${symbol.symbolId}`
+    return isProperty(symbol) && !this.text.includes(".")
+      ? `${propertyKeyword}.${symbol.symbolId}`
       : symbol.symbolId;
   }
 
