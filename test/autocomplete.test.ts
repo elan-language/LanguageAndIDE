@@ -885,4 +885,69 @@ end function`;
 
     await assertAutocompletesWithString(fileImpl, "params6", "a as {Float:B", expected);
   });
+
+  test("Pass_typeName5", async () => {
+    const code = `# FFFF Elan Beta 3 valid
+
+main
+ 
+end main
+
+function foo(a as String) return String
+  return a
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["BaseVG", "*"],
+      ["BlockGraphics", "*"],
+      ["Boolean", "*"],
+    ] as [string, string][];
+
+    await assertAutocompletesWithString(fileImpl, "params6", "a as Int, b as B", expected);
+  });
+
+  test("Pass_typeName6", async () => {
+    const code = `# FFFF Elan Beta 3 valid
+
+main
+ 
+end main
+
+function foo(a as String) return String
+  return a
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [["Int", "*"]] as [string, string][];
+
+    await assertAutocompletesWithString(fileImpl, "params6", "a as Set<of I", expected);
+  });
+
+  test("Pass_typeName7", async () => {
+    const code = `# FFFF Elan Beta 3 valid
+
+main
+ 
+end main
+
+function foo(a as String) return String
+  return a
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["GraphicsBase", "*"],
+      ["BlockGraphics", "*"],
+      ["VectorGraphics", "*"],
+    ] as [string, string][];
+
+    await assertAutocompletesWithString(fileImpl, "params6", "a as Graphics", expected);
+  });
 });

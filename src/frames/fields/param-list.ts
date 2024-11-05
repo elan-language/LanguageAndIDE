@@ -179,15 +179,15 @@ export class ParamList extends AbstractField implements Scope {
       return super.matchingSymbolsForId();
     }
 
-    const lastParam = params[params.length - 1];
+    const lastParam = params[params.length - 1].trimStart();
 
     const tokens = lastParam.split(" ");
 
-    if (tokens.length !== 3) {
+    if (tokens.length < 3) {
       return super.matchingSymbolsForId();
     }
 
-    let id = tokens[2].replaceAll("[", "").replaceAll("{", "");
+    let id = tokens[tokens.length - 1].replaceAll("[", "").replaceAll("{", "");
     const colonIndex = id.indexOf(":");
 
     if (colonIndex >= 0) {
