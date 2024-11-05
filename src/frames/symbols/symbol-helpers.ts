@@ -365,10 +365,7 @@ export function matchingSymbols(
       const cls = getGlobalScope(scope).resolveSymbol(qualSt.className, transforms, scope);
 
       if (isClassTypeDef(cls)) {
-        return [
-          propId,
-          cls.symbolMatches(propId, !propId).filter((s) => isPublicMember(s)),
-        ];
+        return [propId, cls.symbolMatches(propId, !propId).filter((s) => isPublicMember(s))];
       }
       return [propId, []];
     }

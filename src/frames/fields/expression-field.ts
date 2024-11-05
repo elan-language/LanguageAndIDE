@@ -12,7 +12,6 @@ import {
   isProperty,
   removeIfSingleFullMatch,
 } from "../symbols/symbol-helpers";
-import { SymbolScope } from "../symbols/symbol-scope";
 import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
 

@@ -771,4 +771,34 @@ end class`;
 
     await assertAutocompletesWithString(fileImpl, "ident19", "pp", expected);
   });
+
+  test("Pass_assert1", async () => {
+    const code = `# FFFF Elan Beta 3 valid
+
+main
+ 
+end main
+
+class Foo
+  constructor()
+  end constructor
+
+  function ff() return Int
+    return 0
+  end function
+
+end class
+
+test tt
+  var gr set to new Foo()
+  assert gr.ff() is 0
+end test`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [["ff", "*"]] as [string, string][];
+
+    await assertAutocompletesWithString(fileImpl, "text24", "gr.", expected);
+  });
 });
