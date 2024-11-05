@@ -344,6 +344,11 @@ export function isExpression(s: ElanSymbol, transforms: Transforms) {
   return !isProcedure(s, transforms);
 }
 
+export function isTypeName(s: ElanSymbol) {
+  const firstChar = s.symbolId[0] ?? "";
+  return firstChar.toUpperCase() === firstChar;
+}
+
 export function matchingSymbols(
   id: string,
   transforms: Transforms,

@@ -16,7 +16,13 @@ import { ParamDefNode } from "../parse-nodes/param-def-node";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { ParseStatus } from "../status-enums";
 import { DuplicateSymbol } from "../symbols/duplicate-symbol";
-import { symbolMatches } from "../symbols/symbol-helpers";
+import {
+  filteredSymbols,
+  isExpression,
+  isTypeName,
+  removeIfSingleFullMatch,
+  symbolMatches,
+} from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { isAstCollectionNode, isAstIdNode, transforms } from "../syntax-nodes/ast-helpers";
@@ -164,5 +170,46 @@ export class ParamList extends AbstractField implements Scope {
     }
 
     return "";
+  }
+  matchingSymbolsForId(): [string, ElanSymbol[]] {
+    const text = this.rootNode?.matchedText ?? "";
+
+    const params = text.split(",");
+    if (params.length === 0) {
+      return super.matchingSymbolsForId();
+    }
+
+    const lastParam = params[params.length - 1];
+
+    const tokens = lastParam.split(" ");
+
+    if (tokens.length !== 3) {
+      return super.matchingSymbolsForId();
+    }
+
+    let id = tokens[2].replaceAll("[", "").replaceAll("{", "");
+    const colonIndex = id.indexOf(":");
+
+    if (colonIndex >= 0) {
+      id = id.slice(colonIndex + 1);
+    }
+
+    const [match, symbols] = filteredSymbols(
+      id,
+      transforms(),
+      (s) => isTypeName(s),
+      this.getHolder(),
+    );
+
+    return [match, removeIfSingleFullMatch(symbols, match)];
+  }
+
+  public textAsHtml(): string {
+    let popupAsHtml = "";
+    if (this.showAutoComplete()) {
+      [this.autocompleteMatch, this.autocompleteSymbols] = this.matchingSymbolsForId();
+      popupAsHtml = this.popupAsHtml();
+    }
+    return popupAsHtml + super.textAsHtml();
   }
 }

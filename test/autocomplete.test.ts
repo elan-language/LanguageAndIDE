@@ -772,7 +772,7 @@ end class`;
     await assertAutocompletesWithString(fileImpl, "ident19", "pp", expected);
   });
 
-  test("Pass_assert1", async () => {
+  test("Pass_assert", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
 main
@@ -800,5 +800,28 @@ end test`;
     const expected = [["ff", "*"]] as [string, string][];
 
     await assertAutocompletesWithString(fileImpl, "text24", "gr.", expected);
+  });
+
+  test("Pass_typeName", async () => {
+    const code = `# FFFF Elan Beta 3 valid
+
+main
+ 
+end main
+
+function foo(a as String) return String
+  return a
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["Set", "*"],
+      ["Stack", "*"],
+      ["String", "*"],
+    ] as [string, string][];
+
+    await assertAutocompletesWithString(fileImpl, "params6", "a as S", expected);
   });
 });
