@@ -647,4 +647,69 @@ end class`;
 
     await assertAutocompletesWithString(fileImpl, "ident24", "property.f", expected);
   });
+
+  test("Pass_properties6", async () => {
+    const code = `# FFFF Elan Beta 3 valid
+
+main
+
+end main
+
+class Foo
+  constructor()
+
+  end constructor
+
+  procedure pp1()
+    var f set to 0
+    var p set to 0
+    var bar set to 0
+    set f to 0
+  end procedure
+
+  property foo as Int
+  property b as Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["b", "*"],
+      ["bar", "*"],
+    ] as [string, string][];
+
+    await assertAutocompletes(fileImpl, "ident24", "b", 0, expected, true);
+  });
+
+  test("Pass_properties6", async () => {
+    const code = `# FFFF Elan Beta 3 valid
+
+main
+
+end main
+
+class Foo
+  constructor()
+
+  end constructor
+
+  procedure pp1()
+    var f set to 0
+    var p set to 0
+    var bar set to 0
+    set b to 0
+  end procedure
+
+  property foo as Int
+  property b as Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [["bar", "*"]] as [string, string][];
+
+    await assertAutocompletes(fileImpl, "ident24", "a", 1, expected);
+  });
 });
