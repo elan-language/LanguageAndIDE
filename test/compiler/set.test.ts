@@ -12,7 +12,7 @@ import {
 
 suite("Set", () => {
   test("Pass_SetAddRemoveLength", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var st set to new Set<of Int>()
@@ -52,7 +52,7 @@ return [main, _tests];}`;
   });
 
   ignore_test("Pass_SetUnion", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var st1 set to new Set<of Int>()
@@ -83,7 +83,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "{2, 4, 6, 1, 9}");
   });
   ignore_test("Pass_SetIntersection", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var st1 set to new Set<of Int>()
@@ -114,7 +114,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "{4, 3}");
   });
   ignore_test("Pass_SetDifference", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var st1 set to new Set<of Int>()
@@ -145,7 +145,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "{2, 6}");
   });
   ignore_test("Pass_IsDisjointFrom", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   let st0 be new Set<of Int>()
@@ -178,7 +178,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "falsetruefalse");
   });
   ignore_test("Pass_IsSubsetOfIsSupersetOf", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   let st0 be new Set<of Int>()
@@ -217,7 +217,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "truefalsetruefalsetruetrue");
   });
   test("Pass_AddFromList", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   let st0 be new Set<of Int>()
@@ -246,7 +246,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "{2, 4, 6, 3}{2, 4, 6, 3, 5}");
   });
   test("Pass_AddFromArray", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   let st0 be new Set<of Int>()

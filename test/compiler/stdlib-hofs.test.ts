@@ -12,7 +12,7 @@ import {
 
 suite("StdLib HOFs", () => {
   test("Pass_filter", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
@@ -43,7 +43,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_filterString", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 constant source set to "onetwo"
 main
@@ -70,7 +70,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_filterInFunction", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
@@ -106,7 +106,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_map", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
@@ -138,7 +138,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_mapString", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 constant source set to "onetwo"
 main
@@ -165,7 +165,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_mapTestType", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}.asIter()
@@ -191,7 +191,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_reduce", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
@@ -222,7 +222,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_reduceString", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 constant source set to "onetwo"
 main
@@ -249,7 +249,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_reduceToImmutableDictionary", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 constant source set to {"three", "four"}
 main
@@ -280,7 +280,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_max", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
@@ -307,7 +307,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_maxBy", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
@@ -334,7 +334,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_maxBy1", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 constant source set to {{1}, {2, 2}}
 main
@@ -361,7 +361,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_maxBy2", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 constant source set to {"apple", "orange", "pear"}
 main
@@ -388,7 +388,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_length", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
@@ -415,7 +415,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_min", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
@@ -442,7 +442,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_minBy", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
@@ -469,7 +469,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_any", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
@@ -500,7 +500,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_sortBy", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
@@ -532,7 +532,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_sortByString", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 constant source set to "dbcd"
 main
@@ -561,7 +561,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_MaxOnNonNumeric", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 constant source set to {"apple", "orange", "pair"}
 main
@@ -576,7 +576,7 @@ end main`;
   });
 
   test("Fail_MaxLambdaReturningNonNumeric", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 constant source set to {"apple", "orange", "pair"}
 main

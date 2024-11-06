@@ -12,7 +12,7 @@ import {
 
 suite("VectorGraphics", () => {
   test("Fail_CannotCreateAbstractClass", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var svg set to new BaseVG()
@@ -27,7 +27,7 @@ end main`;
   });
 
   test("Pass_VectorGraphicsEmpty", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   let vg be new VectorGraphics()
@@ -56,7 +56,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AddDefaultObjects", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   let vg be new VectorGraphics()
@@ -96,7 +96,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_FullySpecifiedObject", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   let vg be new VectorGraphics()
@@ -130,7 +130,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_RemoveLast", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   let vg be new VectorGraphics()
@@ -171,7 +171,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Remove", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   let vg be new VectorGraphics()
@@ -212,7 +212,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_RemoveFirst", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   let vg be new VectorGraphics()
@@ -253,7 +253,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Replace", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   let vg be new VectorGraphics()
@@ -296,7 +296,7 @@ return [main, _tests];}`;
     );
   });
   test("Pass_ReadPropertyOnObject", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   let circ be new CircleVG()

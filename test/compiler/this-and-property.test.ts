@@ -13,7 +13,7 @@ import {
 
 suite("This and Property", () => {
   test("Pass_DisambiguateParamAndProperty", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var x set to new Foo(7)
@@ -64,7 +64,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_UsingThisAsAnInstance", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var f set to new Foo()
@@ -131,7 +131,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_UsingPropertyAsIndex", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var f set to new Foo()
@@ -183,7 +183,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_UsingPropertyAsIndex1", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var f set to new Foo()
@@ -210,7 +210,7 @@ end class`;
   });
 
   test("Fail_NoSuchProperty", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
     var x set to new Foo(7)
@@ -238,7 +238,7 @@ end class`;
   });
 
   test("Fail_MissingSelfCausesCompileErrorDueToAssigningToParam", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
     var x set to new Foo(7)

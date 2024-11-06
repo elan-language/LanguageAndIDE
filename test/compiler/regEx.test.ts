@@ -13,7 +13,7 @@ import {
 
 suite("Regex", () => {
   test("Pass_LiteralRegex", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var r set to /a+/
@@ -41,7 +41,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_RegexAsParameter", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var r set to /a+/
@@ -73,7 +73,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ReturnRegex", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var r set to empty Regex
@@ -107,7 +107,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ContainsEscapedForwardSlash", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var r set to /a\\/b/
@@ -138,7 +138,7 @@ return [main, _tests];}`;
   });
 
   test("fail_missing end slash", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var r set to /a+
@@ -151,7 +151,7 @@ end main`;
   });
 
   test("Fail_boundedByQuotes", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var r set to "/a+/"

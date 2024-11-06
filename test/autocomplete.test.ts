@@ -5,7 +5,7 @@ import { assertAutocompletes, assertAutocompletesWithString } from "./testHelper
 
 suite("Autocomplete", () => {
   test("Pass_LocalVars", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var foo set to 1
@@ -25,7 +25,7 @@ end main`;
   });
 
   test("Pass_LocalVarsCaseInsensitive", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var foo set to 1
@@ -45,7 +45,7 @@ end main`;
   });
 
   test("Pass_InClass", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
 
@@ -76,7 +76,7 @@ end class`;
   });
 
   test("Pass_FiltersByInput", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var foo set to 1
@@ -93,7 +93,7 @@ end main`;
   });
 
   test("Pass_NoConstant", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 constant fooyon set to 3
 
@@ -115,7 +115,7 @@ end main`;
   });
 
   test("Pass_CallLocalVars", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 procedure fooyon()
 
@@ -140,7 +140,7 @@ end main`;
   });
 
   test("Pass_CallMembers", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 class Foo
   constructor()
@@ -183,7 +183,7 @@ end main`;
   //RP: Failing because no auto-complete options are found. Yet all three expected show up when using the editor with same code?
   //Note that the three have all changed from being instance methods, to extension methods
   ignore_test("Pass_CallLibMembers", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var foo set to new BlockGraphics()
@@ -203,7 +203,7 @@ end main`;
   });
 
   test("Pass_CallMembersFilter", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 class Foo
   constructor()
@@ -240,7 +240,7 @@ end main`;
   });
 
   test("Pass_CallExtensions", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var foo set to [1, 2]
@@ -266,7 +266,7 @@ end main`;
   });
 
   test("Pass_CallExtensionsFilter", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var foo set to [1, 2]
@@ -285,7 +285,7 @@ end main`;
   });
 
   test("Pass_ExpressionId", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var foo set to 1
@@ -305,7 +305,7 @@ end main`;
   });
 
   test("Pass_ExpressionLocalVar", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var foo set to 1
@@ -325,7 +325,7 @@ end main`;
   });
 
   test("Pass_ExpressionLocalFunction", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var foo set to 1
@@ -350,7 +350,7 @@ end function`;
   });
 
   test("Pass_ExpressionDictionaryExtension", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var foo set to {"a":1}
@@ -375,7 +375,7 @@ end main`;
   });
 
   test("Pass_ExpressionAbstractDictionaryExtension", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var foo set to {"a":1}
@@ -399,7 +399,7 @@ end main`;
   });
 
   test("Pass_CallImmutableDict", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var foo set to {"a":1}
@@ -415,7 +415,7 @@ end main`;
   });
 
   test("Pass_CallDict", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var foo set to ["a":1]
@@ -434,7 +434,7 @@ end main`;
   });
 
   test("Pass_ExprDict", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var foo set to ["a":1]
@@ -455,7 +455,7 @@ end main`;
   });
 
   test("Pass_ExprImmutableDict", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var foo set to {"a":1}
@@ -478,7 +478,7 @@ end main`;
   });
 
   test("Pass_properties1", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
 
@@ -512,7 +512,7 @@ end class`;
   });
 
   test("Pass_properties2", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
 
@@ -543,7 +543,7 @@ end class`;
   });
 
   test("Pass_properties3", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
 
@@ -578,7 +578,7 @@ end class`;
   });
 
   test("Pass_properties4", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
 
@@ -612,7 +612,7 @@ end class`;
   });
 
   test("Pass_properties5", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
 
@@ -643,7 +643,7 @@ end class`;
   });
 
   test("Pass_properties6", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
 
@@ -677,7 +677,7 @@ end class`;
   });
 
   test("Pass_properties6", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
 
@@ -708,7 +708,7 @@ end class`;
   });
 
   test("Pass_private1", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var foo set to new Foo()
@@ -736,7 +736,7 @@ end class`;
   });
 
   test("Pass_private2", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
  
@@ -767,7 +767,7 @@ end class`;
   });
 
   test("Pass_assert", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
  
@@ -797,7 +797,7 @@ end test`;
   });
 
   test("Pass_typeName1", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
  
@@ -820,7 +820,7 @@ end function`;
   });
 
   test("Pass_typeName2", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
  
@@ -839,7 +839,7 @@ end function`;
   });
 
   test("Pass_typeName3", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
  
@@ -858,7 +858,7 @@ end function`;
   });
 
   test("Pass_typeName4", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
  
@@ -881,7 +881,7 @@ end function`;
   });
 
   test("Pass_typeName5", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
  
@@ -904,7 +904,7 @@ end function`;
   });
 
   test("Pass_typeName6", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
  
@@ -923,7 +923,7 @@ end function`;
   });
 
   test("Pass_typeName7", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
  
