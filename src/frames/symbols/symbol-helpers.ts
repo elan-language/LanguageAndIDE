@@ -21,7 +21,7 @@ import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
-import { libraryKeyword, withKeyword } from "../keywords";
+import { libraryKeyword, toKeyword, withKeyword } from "../keywords";
 import { Qualifier } from "../parse-nodes/qualifier";
 import { isAstIdNode, isAstQualifiedNode, transforms } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
@@ -425,6 +425,16 @@ function matchingSymbolsOnRecord(
   return [propId, []];
 }
 
+function isWithClause(tokens: string[]) {
+  const lastButOneToken = tokens[tokens.length - 2];
+  const lastButTwoToken = tokens[tokens.length - 3];
+
+  return (
+    tokens.includes(withKeyword) &&
+    (lastButOneToken === withKeyword || lastButTwoToken === `${toKeyword}`)
+  );
+}
+
 export function matchingSymbols(
   id: string,
   transforms: Transforms,
@@ -438,9 +448,11 @@ export function matchingSymbols(
     return matchingSymbolsWithQualifier(id, dotIndex, transforms, scope);
   }
 
-  if (tokens.length >= 4 && tokens[tokens.length - 2] === withKeyword) {
+  if (tokens.length >= 4 && isWithClause(tokens)) {
+    const withIndex = tokens.indexOf(withKeyword);
+
     return matchingSymbolsOnRecord(
-      tokens[tokens.length - 3],
+      tokens[withIndex - 1],
       tokens[tokens.length - 1],
       transforms,
       scope,
