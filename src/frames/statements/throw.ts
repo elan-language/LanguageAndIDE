@@ -1,10 +1,10 @@
-import { ExceptionMessage } from "../fields/exception-message";
-import { Parent } from "../interfaces/parent";
 import { AbstractFrame } from "../abstract-frame";
-import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
+import { ExceptionMessage } from "../fields/exception-message";
+import { Field } from "../interfaces/field";
+import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
-import { throwKeyword } from "../keywords";
+import { exceptionKeyword, throwKeyword } from "../keywords";
 import { Transforms } from "../syntax-nodes/transforms";
 
 export class Throw extends AbstractFrame implements Statement {
@@ -20,7 +20,7 @@ export class Throw extends AbstractFrame implements Statement {
   }
   parseFrom(source: CodeSource): void {
     source.removeIndent();
-    source.remove("throw ");
+    source.remove(`${throwKeyword} ${exceptionKeyword} `);
     this.text.parseFrom(source);
     source.removeNewLine();
   }
@@ -31,11 +31,11 @@ export class Throw extends AbstractFrame implements Statement {
     return "throw";
   }
   renderAsHtml(): string {
-    return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>throw </keyword>${this.text.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</statement>`;
+    return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>${throwKeyword} ${exceptionKeyword} </keyword>${this.text.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</statement>`;
   }
 
   renderAsSource(): string {
-    return `${this.indent()}throw ${this.text.renderAsSource()}`;
+    return `${this.indent()}${throwKeyword} ${exceptionKeyword} ${this.text.renderAsSource()}`;
   }
 
   compile(transforms: Transforms): string {

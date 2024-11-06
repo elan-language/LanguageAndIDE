@@ -1,24 +1,29 @@
-import { Catch } from "./catch";
-import { Parent } from "../interfaces/parent";
-import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { FrameWithStatements } from "../frame-with-statements";
-import { tryKeyword } from "../keywords";
+import { Field } from "../interfaces/field";
+import { Parent } from "../interfaces/parent";
+import { catchingKeyword, endKeyword, tryKeyword } from "../keywords";
 import { Transforms } from "../syntax-nodes/transforms";
+import { CatchingStatement } from "./catching-statement";
+import { DoingStatement } from "./doing-statement";
 
 export class TryCatch extends FrameWithStatements {
-  private catch: Catch;
+  private doing: DoingStatement;
+  private catch: CatchingStatement;
 
   constructor(parent: Parent) {
     super(parent);
-    this.catch = new Catch(this);
+    this.getChildren().pop()!; //remove the selector added as first child by superclass
+    this.doing = new DoingStatement(this);
+    this.getChildren().push(this.doing);
+    this.catch = new CatchingStatement(this);
     this.getChildren().push(this.catch);
   }
   initialKeywords(): string {
     return tryKeyword;
   }
   minimumNumberOfChildrenExceeded(): boolean {
-    return this.getChildren().length > 2; //catch +
+    return this.getChildren().length > 2; //doing + catching
   }
 
   getFields(): Field[] {
@@ -29,9 +34,13 @@ export class TryCatch extends FrameWithStatements {
     return "try";
   }
 
+  public getDoingStatement(): DoingStatement {
+    return this.getChildren().filter((m) => "isDoing" in m)[0] as DoingStatement;
+  }
+
   renderAsHtml(): string {
     return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<top><expand>+</expand><keyword>try </keyword>${this.compileMsgAsHtml()}${this.getFrNo()}</top>
+<top><expand>+</expand><keyword>${tryKeyword} </keyword>${this.compileMsgAsHtml()}${this.getFrNo()}</top>
 ${this.renderChildrenAsHtml()}
 <keyword>end try</keyword>
 </statement>`;
@@ -39,14 +48,16 @@ ${this.renderChildrenAsHtml()}
   renderAsSource(): string {
     return `${this.indent()}try\r
 ${this.renderChildrenAsSource()}\r
-${this.indent()}end try`;
+${this.indent()}${endKeyword} ${tryKeyword}`;
   }
   parseTop(source: CodeSource): void {
-    source.remove("try");
+    source.remove(tryKeyword);
+    source.removeNewLine();
+    this.getDoingStatement().parseFrom(source);
   }
   parseBottom(source: CodeSource): boolean {
     let result = false;
-    if (source.isMatch("catch ")) {
+    if (source.isMatch(`${catchingKeyword} `)) {
       result = true;
       this.catch.parseFrom(source);
     }

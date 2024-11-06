@@ -861,7 +861,7 @@ end main
     const code = `# FFFF Elan Beta 4 valid
 
 procedure f(p as Float)
-  return 0
+
 end procedure
 
 main

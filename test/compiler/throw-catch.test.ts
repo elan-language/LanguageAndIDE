@@ -16,7 +16,7 @@ suite("Throw Catch", () => {
     const code = `# FFFF Elan Beta 4 valid
 
 main
-    throw "Foo"
+    throw exception "Foo"
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -39,7 +39,7 @@ return [main, _tests];}`;
 
 main
   var msg set to "Foo"
-  throw msg
+  throw exception msg
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -63,7 +63,7 @@ return [main, _tests];}`;
 
 main
   var bar set to 1
-  throw "{bar}"
+  throw exception "{bar}"
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -90,7 +90,7 @@ main
 end main
  
 procedure foo()
-  throw "Foo"
+  throw exception "Foo"
 end procedure`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -117,22 +117,23 @@ return [main, _tests];}`;
 
 main
   try
-    call foo()
-    print "not caught"
-  catch e
-    print e
+    doing
+      call foo()
+      print "not caught"
+    catching exception in e
+      print e
   end try
 end main
 
 procedure foo()
-  throw "Foo"
+  throw exception "Foo"
 end procedure`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   try {
-    await foo();
-    system.printLine(_stdlib.asString("not caught"));
+      await foo();
+      system.printLine(_stdlib.asString("not caught"));
   } catch (_e) {
       var e = _e.message;
       system.printLine(_stdlib.asString(e));
@@ -158,12 +159,13 @@ return [main, _tests];}`;
 
 main
   try
-    var x set to empty [Foo]
-    var y set to x[1]
-    var z set to y.p1
-    print "not caught"
-  catch e
-    print e
+    doing
+      var x set to empty [Foo]
+      var y set to x[1]
+      var z set to y.p1
+      print "not caught"
+    catching exception in e
+      print e
   end try
 end main
 
@@ -178,10 +180,10 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   try {
-    var x = system.emptyArray();
-    var y = system.safeIndex(x, 1);
-    var z = y.p1;
-    system.printLine(_stdlib.asString("not caught"));
+      var x = system.emptyArray();
+      var y = system.safeIndex(x, 1);
+      var z = y.p1;
+      system.printLine(_stdlib.asString("not caught"));
   } catch (_e) {
       var e = _e.message;
       system.printLine(_stdlib.asString(e));
@@ -213,24 +215,25 @@ return [main, _tests];}`;
 
 main
   try
-    call foo()
-    print "not caught"
-  catch e
-    var s set to ""
-    set s to e
-    print s
+    doing
+      call foo()
+      print "not caught"
+    catching exception in e
+      var s set to ""
+      set s to e
+      print s
   end try
 end main
   
 procedure foo()
-  throw "Foo"
+  throw exception "Foo"
 end procedure`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   try {
-    await foo();
-    system.printLine(_stdlib.asString("not caught"));
+      await foo();
+      system.printLine(_stdlib.asString("not caught"));
   } catch (_e) {
       var e = _e.message;
       var s = "";
@@ -261,7 +264,7 @@ main
 end main
  
 function foo(x String) as String
-  throw x
+  throw exception x
   return x
 end function
 `;
@@ -285,7 +288,7 @@ main
 end main
   
 procedure foo()
-  throw "Foo"
+  throw exception "Foo"
 end procedure
 `;
 
@@ -300,7 +303,7 @@ end procedure
 
 main
   var msg set to "Foo"
-  throw msg + bar
+  throw exception msg + bar
 end main
 `;
 

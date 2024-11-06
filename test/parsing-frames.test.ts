@@ -103,7 +103,7 @@ suite("Parsing Frame Tests", async () => {
     assert.equal(p.renderAsSource(), code);
   });
   test("parse Frames - throw", () => {
-    const code = `  throw "Failure"`;
+    const code = `  throw exception "Failure"`;
     const source = new CodeSourceFromString(code + "\n");
     const fl = new FileImpl(hash, new DefaultProfile(), transforms());
     const m = new MainFrame(fl);
@@ -113,7 +113,7 @@ suite("Parsing Frame Tests", async () => {
     assert.equal(setTo.renderAsSource(), code);
   });
   test("parse Frames - throw with variable", () => {
-    const code = `  throw message1`;
+    const code = `  throw exception message1`;
     const source = new CodeSourceFromString(code + "\n");
     const fl = new FileImpl(hash, new DefaultProfile(), transforms());
     const m = new MainFrame(fl);
@@ -223,12 +223,12 @@ end main
   });
 
   test("parse Frames - main with all single-line statements", async () => {
-    const code = `# 33ef06c8f01835d0c015778b8e152454dbdff423c539ee0e8a4f568a7ce31cd1 Elan Beta 4 valid
+    const code = `# e391500fdf66883f40bc6097aa877de79d6f85c35d17a520eef5a3ca560d5e45 Elan Beta 4 valid
 
 main
   var name set to value or expression
   set a to 3 + 4
-  throw "message"
+  throw exception "message"
   call signIn(rwp, password)
   print "Hello World!"
 end main

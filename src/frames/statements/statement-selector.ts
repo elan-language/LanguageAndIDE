@@ -7,7 +7,6 @@ import {
   assertKeyword,
   callKeyword,
   caseKeyword,
-  catchKeyword,
   commentMarker,
   defaultKeyword,
   eachKeyword,
@@ -17,7 +16,6 @@ import {
   letKeyword,
   printKeyword,
   repeatKeyword,
-  returnKeyword,
   setKeyword,
   switchKeyword,
   throwKeyword,
@@ -40,7 +38,6 @@ export class StatementSelector extends AbstractSelector {
       [assertKeyword, (parent: Parent) => this.factory.newAssert(parent)],
       [callKeyword, (parent: Parent) => this.factory.newCall(parent)],
       [caseKeyword, (parent: Parent) => this.factory.newCase(parent)],
-      [catchKeyword, (parent: Parent) => this.factory.newCatch(parent)],
       [defaultKeyword, (parent: Parent) => this.factory.newDefault(parent)],
       [eachKeyword, (parent: Parent) => this.factory.newEach(parent)],
       [elseKeyword, (parent: Parent) => this.factory.newElse(parent)],
@@ -49,7 +46,6 @@ export class StatementSelector extends AbstractSelector {
       [letKeyword, (parent: Parent) => this.factory.newLet(parent)],
       [printKeyword, (parent: Parent) => this.factory.newPrint(parent)],
       [repeatKeyword, (parent: Parent) => this.factory.newRepeat(parent)],
-      [returnKeyword, (parent: Parent) => this.factory.newReturn(parent)],
       [setKeyword, (parent: Parent) => this.factory.newSet(parent)],
       [switchKeyword, (parent: Parent) => this.factory.newSwitch(parent)],
       [throwKeyword, (parent: Parent) => this.factory.newThrow(parent)],
@@ -80,8 +76,6 @@ export class StatementSelector extends AbstractSelector {
       result = false;
     } else if (keyword === assertKeyword) {
       return this.isWithinATest();
-    } else if (keyword === returnKeyword || keyword === catchKeyword) {
-      result = !userEntry;
     } else if (keyword === printKeyword || keyword === callKeyword) {
       result = !(this.isWithinAFunction() || this.isWithinATest() || this.isWithinAConstructor());
     } else {

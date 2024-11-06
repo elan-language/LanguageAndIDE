@@ -5,15 +5,17 @@ export const assertKeyword = "assert";
 export const beKeyword = "be";
 export const callKeyword = "call";
 export const caseKeyword = "case";
-export const catchKeyword = "catch";
+export const catchingKeyword = "catching";
 export const classKeyword = "class";
 export const constantKeyword = "constant";
 export const constructorKeyword = "constructor";
 export const copyKeyword = "copy";
 export const defaultKeyword = "default";
 export const divKeyword = "div";
+export const doingKeyword = "doing";
 export const eachKeyword = "each";
 export const elseKeyword = "else";
+export const exceptionKeyword = "exception";
 export const emptyKeyword = "empty";
 export const endKeyword = "end";
 export const enumKeyword = "enum";
@@ -78,7 +80,7 @@ export const allKeywords = [
   beKeyword,
   callKeyword,
   caseKeyword,
-  catchKeyword,
+  catchingKeyword,
   classKeyword,
   constantKeyword,
   constructorKeyword,
@@ -90,6 +92,7 @@ export const allKeywords = [
   emptyKeyword,
   endKeyword,
   enumKeyword,
+  exceptionKeyword,
   falseKeyword,
   forKeyword,
   fromKeyword,
@@ -141,6 +144,7 @@ export const reservedWords = [
   "boolean",
   "break",
   "byte",
+  "catch",
   "char",
   "const",
   "continue",

@@ -8,12 +8,12 @@ import { Frame } from "../interfaces/frame";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
 import { SymbolType } from "../interfaces/symbol-type";
-import { catchKeyword } from "../keywords";
+import { catchingKeyword } from "../keywords";
 import { StringType } from "../symbols/string-type";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { Transforms } from "../syntax-nodes/transforms";
 
-export class Catch extends FrameWithStatements implements Statement, ElanSymbol {
+export class CatchingStatement extends FrameWithStatements implements Statement, ElanSymbol {
   isStatement = true;
   variable: IdentifierField;
 
@@ -22,6 +22,7 @@ export class Catch extends FrameWithStatements implements Statement, ElanSymbol 
     this.variable = new IdentifierField(this);
     this.variable.setPlaceholder("variableName");
     this.variable.setFieldToKnownValidText("e");
+    this.movable = false;
   }
 
   get symbolId() {
@@ -37,7 +38,7 @@ export class Catch extends FrameWithStatements implements Statement, ElanSymbol 
   }
 
   initialKeywords(): string {
-    return catchKeyword;
+    return catchingKeyword;
   }
 
   delete(): void {} //Does nothing as catch cannot be deleted
@@ -59,18 +60,18 @@ export class Catch extends FrameWithStatements implements Statement, ElanSymbol 
   }
 
   renderAsHtml(): string {
-    return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><top><expand>+</expand><keyword>catch </keyword>${this.variable.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</top>
+    return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><top><expand>+</expand><keyword>catching exception in </keyword>${this.variable.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</top>
 ${this.renderChildrenAsHtml()}        
 </statement>`;
   }
 
   renderAsSource(): string {
-    return `${this.indent()}catch ${this.variable.renderAsSource()}\r
+    return `${this.indent()}catching exception in ${this.variable.renderAsSource()}\r
 ${this.renderChildrenAsSource()}`;
   }
 
   parseTop(source: CodeSource): void {
-    source.remove("catch ");
+    source.remove("catching exception in ");
     this.variable.parseFrom(source);
   }
   parseBottom(source: CodeSource): boolean {

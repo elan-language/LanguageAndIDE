@@ -1,9 +1,9 @@
-# 3bb08a17a414ff13b7a5ed4cad451b3899200c76f3d635c570c41191fa0e7cdb Elan Beta 4 valid
+# eb6c68cf8ef97c7aa64bcd0ea826206a4dd469740d55255156728cb0a9d39ed4 Elan Beta 4 valid
 
 main
   var a set to 3
   set a to 3 + 4
-  throw "error"
+  throw exception "error"
   call signIn(rwp, password)
   print "Hello World!"
   while newGame
@@ -37,7 +37,9 @@ main
 
   end if
   try
-    catch e
+    doing
+
+    catching exception in e
 
   end try
   switch result

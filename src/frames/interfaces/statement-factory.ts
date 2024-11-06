@@ -7,6 +7,7 @@ export interface StatementFactory {
   newCase(parent: Parent): Frame;
   newCatch(parent: Parent): Frame;
   newDefault(parent: Parent): Frame;
+  newDoing(parent: Parent): Frame;
   newEach(parent: Parent): Frame;
   newElse(parent: Parent): Frame;
   newFor(parent: Parent): Frame;

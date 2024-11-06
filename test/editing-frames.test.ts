@@ -44,14 +44,14 @@ suite("Editing Frames", () => {
     const file = T03_mainWithAllStatements();
     const if_st = file.getById("if37");
     if_st.processKey(shift_enter()); //Insert above
-    const newSel = file.getById("select68");
+    const newSel = file.getById("select70");
     assert.equal(if_st.isSelected(), false);
     assert.equal(newSel.isSelected(), true);
     newSel.processKey(down());
     assert.equal(if_st.isSelected(), true);
     assert.equal(newSel.isSelected(), false);
     if_st.processKey(enter()); //Insert below
-    const newSel2 = file.getById("select69");
+    const newSel2 = file.getById("select71");
     assert.equal(if_st.isSelected(), false);
     newSel2.processKey(up());
     assert.equal(if_st.isSelected(), true);
@@ -60,7 +60,7 @@ suite("Editing Frames", () => {
     const file = T03_mainWithAllStatements();
     const if_st = file.getById("if47");
     if_st.processKey(enter()); //Should insert selector below
-    const newSel = file.getById("select68"); //New a selector
+    const newSel = file.getById("select70"); //New a selector
     assert.equal(newSel.isSelected(), true);
     newSel.processKey(up()); //Go back up to 'if'
     assert.equal(newSel.isSelected(), false);
@@ -91,7 +91,7 @@ suite("Editing Frames", () => {
     const expr5 = file.getById("expr5") as ExpressionField;
     expr5.select();
     expr5.processKey(enter());
-    const newSel = file.getById("select68"); //New selector
+    const newSel = file.getById("select70"); //New selector
     assert.equal(newSel.isSelected(), true);
     newSel.processKey(up());
     assert.equal(newSel.isSelected(), false);
@@ -102,7 +102,7 @@ suite("Editing Frames", () => {
     const file = T03_mainWithAllStatements();
     const printEx = file.getById("expr15");
     printEx.processKey(enter());
-    const stateSel = file.getById("select68");
+    const stateSel = file.getById("select70");
     assert.equal(stateSel.isSelected(), true);
   });
 
@@ -226,7 +226,7 @@ suite("Editing Frames", () => {
     const set6 = file.getById("set6");
     set6.processKey(enter());
     const selector = main.getChildren()[1];
-    assert.equal(selector.getHtmlId(), "select68");
+    assert.equal(selector.getHtmlId(), "select70");
     selector.processKey(ctrl_v());
     const pasted = main.getChildren()[1];
     assert.equal(pasted.getHtmlId(), "var3");
@@ -245,7 +245,7 @@ suite("Editing Frames", () => {
     assert.equal(firstStatement.getHtmlId(), "throw9");
     firstStatement.select(true, false);
     firstStatement.processKey(enter());
-    const newSel = file.getById("select68");
+    const newSel = file.getById("select70");
     newSel.select();
     newSel.processKey(ctrl_v());
     const second = main.getChildren()[1];
