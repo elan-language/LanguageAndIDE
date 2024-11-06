@@ -34,14 +34,8 @@ export class StatementFactoryImpl implements StatementFactory {
   public newCase(parent: Parent): Frame {
     return new Case(parent);
   }
-  public newCatch(parent: Parent): Frame {
-    return new CatchingStatement(parent);
-  }
   public newDefault(parent: Parent): Frame {
     return new DefaultStatement(parent);
-  }
-  public newDoing(parent: Parent): Frame {
-    return new DoingStatement(parent);
   }
   public newEach(parent: Parent): Frame {
     return new Each(parent);
@@ -64,17 +58,11 @@ export class StatementFactoryImpl implements StatementFactory {
   public newRepeat(parent: Parent): Frame {
     return new Repeat(parent);
   }
-  public newReturn(parent: Parent): Frame {
-    return new ReturnStatement(parent);
-  }
   public newSet(parent: Parent): Frame {
     return new SetStatement(parent);
   }
   public newSwitch(parent: Parent): Frame {
     return new Switch(parent);
-  }
-  public newThen(parent: Parent): Frame {
-    return new ThenStatement(parent);
   }
   public newThrow(parent: Parent): Frame {
     return new Throw(parent);
