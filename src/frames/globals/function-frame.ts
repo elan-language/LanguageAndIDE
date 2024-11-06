@@ -29,7 +29,6 @@ export abstract class FunctionFrame extends FrameWithStatements implements Paren
     this.name = new IdentifierField(this);
     this.params = new ParamList(this);
     this.returnType = new TypeField(this);
-    this.returnType.setPlaceholder("return type");
     this.getChildren().push(new ReturnStatement(this));
   }
   initialKeywords(): string {

@@ -6,7 +6,6 @@ import { falseKeyword, trueKeyword } from "../keywords";
 export class LitBoolean extends AbstractAlternatives {
   constructor() {
     super();
-    this.completionWhenEmpty = "true or false";
   }
 
   parseText(text: string): void {

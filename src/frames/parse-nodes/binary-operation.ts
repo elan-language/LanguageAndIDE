@@ -7,7 +7,7 @@ import { OperatorNode } from "./operator-node";
 export class BinaryOperation extends AbstractAlternatives {
   constructor() {
     super();
-    this.completionWhenEmpty = "operator ";
+    this.completionWhenEmpty = "<pr>operator </pr>";
   }
   parseText(text: string): void {
     this.alternatives.push(new OperatorNode(PLUS));

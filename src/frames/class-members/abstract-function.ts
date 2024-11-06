@@ -29,7 +29,6 @@ export class AbstractFunction extends AbstractFrame implements Member, ElanSymbo
     this.name = new IdentifierField(this);
     this.params = new ParamList(this);
     this.returnType = new TypeField(this);
-    this.returnType.setPlaceholder("return type");
   }
 
   getClass(): ClassFrame {

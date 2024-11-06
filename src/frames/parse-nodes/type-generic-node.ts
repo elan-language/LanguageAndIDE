@@ -17,7 +17,6 @@ export class TypeGenericNode extends AbstractSequence {
 
   constructor() {
     super();
-    this.completionWhenEmpty = "Type";
   }
   parseText(text: string): void {
     this.remainingText = text;

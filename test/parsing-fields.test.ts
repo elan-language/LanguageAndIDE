@@ -41,7 +41,7 @@ suite("Field Parsing Tests", () => {
     assert.equal(id.readParseStatus(), ParseStatus.valid);
     assert.equal(
       id.renderAsHtml(),
-      `<field id="var4" class="ok" tabindex=0><text>ab_1</text><placeholder>name</placeholder><completion></completion><msg></msg><help title="A variable name must start with a lower-case letter, optionally followed by any letters (lower or upper case), and/or numeric digits, and/or underscores - nothing else. (For'tuple deconstruction' or 'list deconstruction' consult documentation.)">?</help></field>`,
+      `<field id="var4" class="ok" tabindex=0><text>ab_1</text><placeholder><pr>name</pr></placeholder><completion></completion><msg></msg><help title="A variable name must start with a lower-case letter, optionally followed by any letters (lower or upper case), and/or numeric digits, and/or underscores - nothing else. (For'tuple deconstruction' or 'list deconstruction' consult documentation.)">?</help></field>`,
     );
     id.setFieldToKnownValidText("Ab_1");
     id.parseCurrentText();
@@ -63,7 +63,7 @@ suite("Field Parsing Tests", () => {
     assert.equal(id.readParseStatus(), ParseStatus.valid);
     assert.equal(
       id.renderAsHtml(),
-      `<field id="var4" class="ok" tabindex=0><text>ab_1</text><placeholder>name</placeholder><completion></completion><msg></msg><help title="A variable name must start with a lower-case letter, optionally followed by any letters (lower or upper case), and/or numeric digits, and/or underscores - nothing else. (For'tuple deconstruction' or 'list deconstruction' consult documentation.)">?</help></field>`,
+      `<field id="var4" class="ok" tabindex=0><text>ab_1</text><placeholder><pr>name</pr></placeholder><completion></completion><msg></msg><help title="A variable name must start with a lower-case letter, optionally followed by any letters (lower or upper case), and/or numeric digits, and/or underscores - nothing else. (For'tuple deconstruction' or 'list deconstruction' consult documentation.)">?</help></field>`,
     );
     id.setFieldToKnownValidText("Ab_1");
     id.parseCurrentText();

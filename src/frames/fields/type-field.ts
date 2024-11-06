@@ -1,12 +1,9 @@
-import { UnknownType } from "../symbols/unknown-type";
 import { CodeSource } from "../code-source";
+import { isAstType } from "../helpers";
+import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Frame } from "../interfaces/frame";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { TypeNode } from "../parse-nodes/type-node";
-import { Transforms } from "../syntax-nodes/transforms";
-import { AbstractField } from "./abstract-field";
-import { isAstType } from "../helpers";
-import { ElanSymbol } from "../interfaces/elan-symbol";
 import {
   filteredSymbols,
   isTypeName,
@@ -14,13 +11,15 @@ import {
   removeTypeSymbols,
 } from "../symbols/symbol-helpers";
 import { transforms } from "../syntax-nodes/ast-helpers";
+import { Transforms } from "../syntax-nodes/transforms";
+import { AbstractField } from "./abstract-field";
 
 export class TypeField extends AbstractField {
   isParseByNodes = true;
   constructor(holder: Frame) {
     super(holder);
     this.useHtmlTags = true;
-    this.placeholder = "Type";
+    this.placeholder = "<pr>Type</pr>";
     this.help = `A simple Type name must begin with an upper-case letter. More complex types are: 'generic type', 'tuple type', 'function type' - consult documentation for these.`;
   }
   getIdPrefix(): string {

@@ -14,7 +14,7 @@ export class BinaryExpression extends AbstractSequence {
 
   constructor() {
     super();
-    this.completionWhenEmpty = "expression";
+    this.completionWhenEmpty = "<pr>expression</pr>";
   }
 
   parseText(text: string): void {

@@ -10,6 +10,11 @@ export class ToClause extends AbstractSequence {
   property: IdentifierNode | undefined;
   expr: ExprNode | undefined;
 
+  constructor() {
+    super();
+    this.completionWhenEmpty = "<pr>name</pr> to <pr>expression</pr>";
+  }
+
   parseText(text: string): void {
     this.property = new IdentifierNode();
     const sp0 = new SpaceNode(Space.required);

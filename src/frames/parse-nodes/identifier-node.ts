@@ -5,7 +5,7 @@ import { matchRegEx } from "./parse-node-helpers";
 export class IdentifierNode extends AbstractParseNode {
   constructor() {
     super();
-    this.completionWhenEmpty = "name";
+    this.completionWhenEmpty = "<pr>name</pr>";
   }
 
   parseText(text: string): void {

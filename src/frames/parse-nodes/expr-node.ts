@@ -10,18 +10,19 @@ import { Term } from "./term";
 export class ExprNode extends AbstractAlternatives {
   constructor() {
     super();
-    this.completionWhenEmpty = "expression";
+    this.completionWhenEmpty = "<pr>expression</pr>";
   }
 
   parseText(text: string): void {
-    this.alternatives.push(new Term());
-    this.alternatives.push(new BinaryExpression());
+    //evaluate options that start with a keyword, first
     this.alternatives.push(new NewInstance());
-    this.alternatives.push(new EmptyOfTypeNode());
     this.alternatives.push(new CopyWith());
     this.alternatives.push(new IfExpr());
     this.alternatives.push(new Lambda());
-    //TODO FunctionRef to be added here
+    this.alternatives.push(new EmptyOfTypeNode());
+    //then others
+    this.alternatives.push(new Term());
+    this.alternatives.push(new BinaryExpression());
     super.parseText(text);
   }
 }

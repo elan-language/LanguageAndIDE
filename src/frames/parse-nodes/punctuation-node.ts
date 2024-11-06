@@ -30,7 +30,7 @@ export class PunctuationNode extends FixedTextNode {
     let comp = ``;
     const matched = this.matchedText.length;
     const kw = this.fixedText.length;
-    if (this.status === ParseStatus.empty) {
+    if (matched === 0) {
       comp = `${this.fixedText}`;
     } else if (matched === kw && this.remainingText === "") {
       comp = ``;

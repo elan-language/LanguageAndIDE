@@ -5,7 +5,7 @@ import { TypeSimpleNode } from "./type-simple-node";
 export class TypeSimpleOrGeneric extends AbstractAlternatives {
   constructor() {
     super();
-    this.completionWhenEmpty = "Type";
+    this.completionWhenEmpty = "<pr>Type</pr>";
   }
   parseText(text: string): void {
     this.remainingText = text;

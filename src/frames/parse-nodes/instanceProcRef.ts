@@ -12,7 +12,6 @@ export class InstanceProcRef extends AbstractSequence {
 
   constructor() {
     super();
-    this.completionWhenEmpty = "variable";
   }
 
   parseText(text: string): void {

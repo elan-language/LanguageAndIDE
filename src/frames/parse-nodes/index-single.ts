@@ -10,7 +10,6 @@ export class IndexSingle extends AbstractSequence {
 
   constructor() {
     super();
-    this.completionWhenEmpty = "name";
   }
 
   parseText(text: string): void {

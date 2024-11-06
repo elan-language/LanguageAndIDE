@@ -10,7 +10,6 @@ import { Sequence } from "./sequence";
 export class LitFloat extends AbstractSequence {
   constructor() {
     super();
-    this.completionWhenEmpty = "numeric value";
   }
 
   parseText(text: string): void {

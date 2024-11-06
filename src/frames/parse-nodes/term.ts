@@ -5,7 +5,7 @@ import { TermSimple } from "./term-simple";
 export class Term extends AbstractAlternatives {
   constructor() {
     super();
-    this.completionWhenEmpty = "expression";
+    this.completionWhenEmpty = "<pr>expression</pr>";
   }
 
   parseText(text: string): void {

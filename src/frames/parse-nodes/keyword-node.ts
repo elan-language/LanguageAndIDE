@@ -1,6 +1,6 @@
+import { andKeyword, isKeyword, notKeyword, orKeyword } from "../keywords";
 import { ParseStatus } from "../status-enums";
 import { FixedTextNode } from "./fixed-text-node";
-import { andKeyword, isKeyword, notKeyword, orKeyword } from "../keywords";
 
 export class KeywordNode extends FixedTextNode {
   constructor(keyword: string) {
@@ -31,7 +31,7 @@ export class KeywordNode extends FixedTextNode {
     let comp = ``;
     const matched = this.matchedText.length;
     const kw = this.fixedText.length;
-    if (this.status === ParseStatus.empty) {
+    if (matched === 0) {
       comp = `${this.fixedText}`;
     } else if (matched === kw && this.remainingText === "") {
       comp = ``;

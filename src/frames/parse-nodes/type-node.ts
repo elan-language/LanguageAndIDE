@@ -1,19 +1,18 @@
-import { AbstractAlternatives } from "./abstract-alternatives";
-import { TypeSimpleOrGeneric } from "./type-simple-or-generic";
-import { TypeTupleNode } from "./type-tuple-node";
-import { FuncTypeNode } from "./func-type-node";
 import { OPEN_BRACE, OPEN_BRACKET, OPEN_SQ_BRACKET } from "../symbols";
-import { TypeGenericNode } from "./type-generic-node";
-import { TypeSimpleNode } from "./type-simple-node";
-import { TypeListNode } from "./type-list-node";
-import { TypeImmutableListNode } from "./type-immutable-list-node";
+import { AbstractAlternatives } from "./abstract-alternatives";
+import { FuncTypeNode } from "./func-type-node";
 import { TypeDictionaryNode } from "./type-dictionary-node";
+import { TypeGenericNode } from "./type-generic-node";
 import { TypeImmutableDictionaryNode } from "./type-immutable-dictionary-node";
+import { TypeImmutableListNode } from "./type-immutable-list-node";
+import { TypeListNode } from "./type-list-node";
+import { TypeSimpleNode } from "./type-simple-node";
+import { TypeTupleNode } from "./type-tuple-node";
 
 export class TypeNode extends AbstractAlternatives {
   constructor() {
     super();
-    this.completionWhenEmpty = "Type";
+    this.completionWhenEmpty = "<pr>Type</pr>";
   }
 
   parseText(text: string): void {

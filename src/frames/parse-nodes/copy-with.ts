@@ -12,7 +12,6 @@ export class CopyWith extends AbstractSequence {
 
   constructor() {
     super();
-    this.completionWhenEmpty = "expression";
   }
 
   parseText(text: string): void {

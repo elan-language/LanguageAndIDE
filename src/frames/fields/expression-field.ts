@@ -22,7 +22,7 @@ export class ExpressionField extends AbstractField {
   constructor(holder: Frame, readUntil = /\r?\n/) {
     super(holder);
     this.readUntil = readUntil;
-    this.setPlaceholder("expression");
+    this.setPlaceholder("<pr>expression</pr>");
     this.help = "Field may contain a literal value, a reference to a variable, or an expression";
   }
   getIdPrefix(): string {

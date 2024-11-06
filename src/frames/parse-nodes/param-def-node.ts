@@ -13,6 +13,11 @@ export class ParamDefNode extends AbstractSequence {
   type: TypeNode | undefined;
   out: OptionalNode | undefined;
 
+  constructor() {
+    super();
+    this.completionWhenEmpty = "<pr>name</pr> as <pr>Type</pr>";
+  }
+
   parseText(text: string): void {
     if (text.trim().length > 0) {
       const outSpace = new Sequence([
@@ -30,11 +35,5 @@ export class ParamDefNode extends AbstractSequence {
       this.addElement(this.type);
       super.parseText(text);
     }
-  }
-
-  getCompletionAsHtml(): string {
-    return this.matchedText.length === 0
-      ? "<pr>parameter definition</pr>"
-      : super.getCompletionAsHtml();
   }
 }
