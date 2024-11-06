@@ -226,7 +226,7 @@ export class FileImpl implements File, Scope {
   }
 
   private getVersion() {
-    return "Elan Beta 3";
+    return "Elan Beta 4";
   }
 
   private getProfileName() {

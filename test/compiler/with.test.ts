@@ -14,7 +14,7 @@ import {
 
 suite("With", () => {
   test("Pass_SingleSetToVar", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var a set to new Foo()
@@ -52,7 +52,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_SingleSetToSet", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var a set to new Foo()
@@ -88,7 +88,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_SingleSetToLet", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var a set to foo()
@@ -134,7 +134,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_CopyLet", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var a set to foo()
@@ -180,7 +180,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_SingleSetToReturn", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var a set to foo()
@@ -224,7 +224,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_MultiSet", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var a set to new Foo()
@@ -270,7 +270,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_CopiedObjectStillValid", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var a set to new Foo()
@@ -313,7 +313,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ExpressionSimple", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var a set to new Foo()
@@ -351,7 +351,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ExpressionNew", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var a set to new Foo()
@@ -400,7 +400,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ExpressionIndex", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var a set to [0,2]
@@ -440,7 +440,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_MultiExpressionIndex", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var a set to [0,2]
@@ -488,7 +488,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ExpressionIndex1", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var a set to {0,2}
@@ -528,7 +528,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ExpressionExtension", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var a set to {0,2,3}
@@ -568,7 +568,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_WrongType", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var b set to new Foo()
@@ -588,7 +588,7 @@ end record`;
   });
 
   test("Fail_NotClass", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var a set to {1, 2}
@@ -604,7 +604,7 @@ end main`;
   });
 
   test("Fail_NotClass1", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var a set to {3}
@@ -620,7 +620,7 @@ end main`;
   });
 
   test("Fail_NoSuchProperty", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var b set to new Foo()
@@ -640,7 +640,7 @@ end record`;
   });
 
   test("Fail_PrivateProperty", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 record Foo
   private property b as Int
@@ -653,7 +653,7 @@ end record`;
   });
 
   test("Fail_NotImmutable", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var b set to new Foo()

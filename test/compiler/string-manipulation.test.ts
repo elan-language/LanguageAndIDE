@@ -13,7 +13,7 @@ import {
 
 suite("String Manipulation", () => {
   test("Pass_AppendStrings", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var a set to "Hello"
@@ -39,7 +39,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AppendOrPrependChar", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   print "_" + "Hello" + "!"
@@ -61,7 +61,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AppendFloat", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   print "Hello" + 3.1
@@ -83,7 +83,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Indexing", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var a set to "abcde"
@@ -107,7 +107,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_IndexingAndAppend", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var a set to "abcde"
@@ -135,7 +135,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_SetIndex", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var a set to "abcde"
@@ -163,7 +163,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Ranges", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var a set to "abcde"
@@ -191,7 +191,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_EqualityTesting", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
     print "abc" is "abc"
@@ -225,7 +225,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ComparisonMethods", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   print "abc".isBefore("abC")
@@ -257,7 +257,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_UseAsStringExplicitly", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var a set to "abcde"
@@ -285,7 +285,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Interpolation", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var a set to 3
@@ -313,7 +313,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AppendStringToFloat", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var a set to 3.1 + "Hello"
@@ -337,7 +337,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_IndexOutOfRange", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var a set to "abcde"
@@ -354,7 +354,7 @@ end main
   });
 
   test("Fail_SetIndex", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var a set to "abcde"
@@ -372,7 +372,7 @@ end main
   });
 
   test("Fail_ComparisonOperators", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   print "abc" < "abC"
@@ -399,7 +399,7 @@ end main
   });
 
   test("Fail_CoerceNumberToString", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var a set to "abcde"

@@ -11,7 +11,7 @@ import {
 
 suite("Printing Symbols", () => {
   test("Pass_CommonSymbolsAccessibleFromUKKeyboard", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   print "¬!£$%^&*()@~#|<>'"

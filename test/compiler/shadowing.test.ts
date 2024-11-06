@@ -13,7 +13,7 @@ import {
 
 suite("Shadowing", () => {
   test("Fail_LocalShadowsConstant", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 constant a set to 4
 
@@ -33,7 +33,7 @@ end main`;
   });
 
   test("Fail_IdShadowsFunction", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   print foo()
@@ -58,7 +58,7 @@ end function`;
   });
 
   test("Fail_IdShadowsProcedure", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   call foo()
@@ -83,7 +83,7 @@ end function`;
   });
 
   test("Fail_IdShadowsParameter", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   call foo(1)
@@ -103,7 +103,7 @@ end procedure`;
   });
 
   test("Fail_IdShadowsVariable", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var a set to 1
@@ -121,7 +121,7 @@ end main`;
   });
 
   test("Fail_IdShadowsLet", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   let a be 1
@@ -139,7 +139,7 @@ end main`;
   });
 
   test("Fail_LetShadowsLet", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   let a be 1
@@ -157,7 +157,7 @@ end main`;
   });
 
   test("Fail_ParameterShadowsConst", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 constant x set to 1
 
@@ -180,7 +180,7 @@ end function`;
   });
 
   test("Pass_DisambiguateLocalVariableFromLibConstant", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var pi set to library.pi
@@ -204,7 +204,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DisambiguateLocalLetFromLibConstant", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   let pi be library.pi
@@ -228,7 +228,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DisambiguateLibFunctionFromLocalAndInstanceFunctions", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
     var f set to new Foo()
@@ -285,7 +285,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_global", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 const a = 4
 const b = global.a
@@ -301,7 +301,7 @@ end main`;
   });
 
   test("Fail_ShadowParameter1", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var result set to foo(3,4)
@@ -323,7 +323,7 @@ end function`;
   });
 
   test("Fail_ShadowParameter2", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var result set to foo(3,4)

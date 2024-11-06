@@ -13,7 +13,7 @@ import {
 
 suite("Lambda", () => {
   test("Pass_PassAsParam", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   call printModified(4, lambda x as Int => x * 3)
@@ -43,7 +43,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_TupleArg", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   call printModified((4, 5), lambda t as (Int, Int) => first(t))
@@ -83,7 +83,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AssignALambdaToAVariable", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var l set to lambda x as Int => x * 5
@@ -107,7 +107,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AssignALambdaToAProperty", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var foo set to new Foo()
@@ -160,7 +160,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_lambdaInExpression", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var l set to lambda x as Int => x * 5
@@ -184,7 +184,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ReturnALambda", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var l set to getFunc()
@@ -216,7 +216,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ParameterlessLambda", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var x set to 3
@@ -242,7 +242,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ReturnAParameterLessLambda", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var l set to getFunc(5)
@@ -274,7 +274,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_ImmediateInvoke", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var l set to getFunc()(5)
@@ -292,7 +292,7 @@ end function`;
   });
 
   test("Fail_PassLambdaWithWrongTypes", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   call printModified(4, lambda x as Int => x.asString())
@@ -310,7 +310,7 @@ end procedure`;
   });
 
   test("Fail_InvokeLambdaWithWrongType", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   call printModified("4", lambda x as Int => x + 3)
@@ -328,7 +328,7 @@ end procedure`;
   });
 
   test("Fail_PassLambdaWithWrongTypes1", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   call printModified(4, lambda x as Int => x)
@@ -348,7 +348,7 @@ end procedure`;
   });
 
   test("Fail_PassLambdaWithWrongTypes2", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   call printModified(4, lambda => 0)
@@ -368,7 +368,7 @@ end procedure`;
   });
 
   test("Fail_InvokeLambdaWithWrongTypes", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   call printModified(4, lambda => 0)

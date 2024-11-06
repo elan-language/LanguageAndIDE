@@ -13,7 +13,7 @@ import {
 
 suite("Variables", () => {
   test("Pass_Int", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var a set to 3
@@ -37,7 +37,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_IntVariable", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var a set to 3
@@ -63,7 +63,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Int_Expression", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var a set to 3 + 4
@@ -87,7 +87,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Reassign", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var a set to 3
@@ -113,7 +113,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_CoerceFloatToIntVar", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var a set to 3.1
@@ -139,7 +139,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_OperatorCoverage", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var a set to 3 - 4
@@ -194,7 +194,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Enum", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var a set to Fruit.apple
@@ -223,7 +223,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Iter", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 constant a set to {1, 2}
 
@@ -255,7 +255,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_WrongKeyword", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   variable a set to 3
@@ -268,7 +268,7 @@ end main`;
   });
 
   test("Fail_GlobalVariable", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 var a set to 4
 main
@@ -282,7 +282,7 @@ end main`;
   });
 
   test("Fail_AssignIncompatibleType", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var a set to "astring"
@@ -297,7 +297,7 @@ end main`;
   });
 
   test("Fail_NotInitialized", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var a
@@ -311,7 +311,7 @@ end main`;
   });
 
   test("Fail_InvalidVariableName1", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var A = 4.1
@@ -324,7 +324,7 @@ end main`;
   });
 
   test("Fail_InvalidVariableName2", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var a@b set to 4.1
@@ -337,7 +337,7 @@ end main`;
   });
 
   test("Fail_UseOfKeywordAsName", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var if set to 4.1
@@ -353,7 +353,7 @@ end main`;
   });
 
   test("Fail_UseOfReservedwordAsName", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var break set to 4.1
@@ -369,7 +369,7 @@ end main`;
   });
 
   test("Fail_TypeCheck1", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 function f() return Int
   return 0
@@ -396,7 +396,7 @@ end main`;
   });
 
   test("Fail_TypeCheck2", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var a set to createArray(3, "")
@@ -421,7 +421,7 @@ end main`;
   });
 
   test("Fail_RecursiveDefinition", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var x set to x + 1
@@ -438,7 +438,7 @@ end main`;
   });
 
   test("Fail_referenceToExtensionFunction", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var i set to [1,2]
@@ -454,7 +454,7 @@ end main`;
   });
 
   test("Fail_referenceToExtensionFunction1", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `# FFFF Elan Beta 4 valid
 
 main
   var i set to [1,2]
