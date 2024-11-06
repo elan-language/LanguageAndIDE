@@ -6,6 +6,14 @@ import { TypeNode } from "../parse-nodes/type-node";
 import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractField } from "./abstract-field";
 import { isAstType } from "../helpers";
+import { ElanSymbol } from "../interfaces/elan-symbol";
+import {
+  filteredSymbols,
+  isTypeName,
+  removeIfSingleFullMatch,
+  removeTypeSymbols,
+} from "../symbols/symbol-helpers";
+import { transforms } from "../syntax-nodes/ast-helpers";
 
 export class TypeField extends AbstractField {
   isParseByNodes = true;
@@ -37,5 +45,28 @@ export class TypeField extends AbstractField {
 
   symbolType(transforms?: Transforms) {
     return this.getOrTransformAstNode(transforms).symbolType();
+  }
+
+  matchingSymbolsForId(): [string, ElanSymbol[]] {
+    const text = this.rootNode?.matchedText ?? "";
+    const id = removeTypeSymbols(text);
+
+    const [match, symbols] = filteredSymbols(
+      id,
+      transforms(),
+      (s) => isTypeName(s),
+      this.getHolder(),
+    );
+
+    return [match, removeIfSingleFullMatch(symbols, match)];
+  }
+
+  public textAsHtml(): string {
+    let popupAsHtml = "";
+    if (this.showAutoComplete()) {
+      [this.autocompleteMatch, this.autocompleteSymbols] = this.matchingSymbolsForId();
+      popupAsHtml = this.popupAsHtml();
+    }
+    return popupAsHtml + super.textAsHtml();
   }
 }

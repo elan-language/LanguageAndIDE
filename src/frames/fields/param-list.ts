@@ -21,6 +21,7 @@ import {
   isExpression,
   isTypeName,
   removeIfSingleFullMatch,
+  removeTypeSymbols,
   symbolMatches,
 } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
@@ -187,12 +188,7 @@ export class ParamList extends AbstractField implements Scope {
       return super.matchingSymbolsForId();
     }
 
-    let id = tokens[tokens.length - 1].replaceAll("[", "").replaceAll("{", "");
-    const colonIndex = id.indexOf(":");
-
-    if (colonIndex >= 0) {
-      id = id.slice(colonIndex + 1);
-    }
+    const id = removeTypeSymbols(tokens[tokens.length - 1]);
 
     const [match, symbols] = filteredSymbols(
       id,
