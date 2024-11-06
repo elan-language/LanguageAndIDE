@@ -354,6 +354,11 @@ export function isTypeName(s: ElanSymbol) {
   return firstChar.toUpperCase() === firstChar;
 }
 
+function upToParams(id: string) {
+  const openParamsIndex = id.indexOf("(");
+  return openParamsIndex >= 0 ? id.slice(0, openParamsIndex) : id;
+}
+
 function matchingSymbolsWithQualifier(
   id: string,
   dotIndex: number,
@@ -363,12 +368,9 @@ function matchingSymbolsWithQualifier(
   let qualId = id.slice(0, dotIndex);
   const propId = id.slice(dotIndex + 1);
 
-  const openParamsIndex = qualId.indexOf("(");
   const closeParamsIndex = qualId.indexOf(")");
 
-  if (openParamsIndex >= 0) {
-    qualId = qualId.slice(0, openParamsIndex);
-  }
+  qualId = upToParams(qualId);
 
   const qual = scope.resolveSymbol(qualId, transforms, scope);
   let qualSt: SymbolType | undefined = undefined;
@@ -409,6 +411,8 @@ function matchingSymbolsOnRecord(
   transforms: Transforms,
   scope: Scope,
 ): [string, ElanSymbol[]] {
+  recordId = upToParams(recordId);
+
   const record = scope.resolveSymbol(recordId, transforms, scope);
 
   // class scope so all or matching symbols on class
