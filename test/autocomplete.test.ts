@@ -24,6 +24,21 @@ end main`;
     await assertAutocompletes(fileImpl, "ident10", "o", 1, expected);
   });
 
+  test("Pass_IgnoreOperator", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+main
+  var foo set to 1
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [] as [string, string][];
+
+    await assertAutocompletes(fileImpl, "expr5", " ", 1, expected);
+  });
+
   test("Pass_LocalVarsCaseInsensitive", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
@@ -1115,6 +1130,26 @@ end main`;
     const expected = [] as [string, string][];
 
     await assertAutocompletesWithString(fileImpl, "expr8", "copy a ", expected);
+  });
+
+  test("Pass_withIgnoreKeyword2", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+    main
+      var a set to new Foo()
+      var b set to copy a with a to 2
+    end main
+    
+    record Foo
+      property a as Int
+    end record`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [] as [string, string][];
+
+    await assertAutocompletesWithString(fileImpl, "expr8", "copy a w", expected);
   });
 
   test("Pass_with2", async () => {
