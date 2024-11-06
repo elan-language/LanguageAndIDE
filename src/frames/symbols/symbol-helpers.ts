@@ -6,7 +6,7 @@ import {
   cannotAccessPrivateMemberInAbstractClass,
 } from "../compile-rules";
 import { ClassFrame } from "../globals/class-frame";
-import { isConstant, isFile, isMember, isScope } from "../helpers";
+import { isClass, isConstant, isFile, isMember, isScope } from "../helpers";
 import { AstNode } from "../interfaces/ast-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { Class } from "../interfaces/class";
@@ -315,6 +315,10 @@ export function matchType(actualType: SymbolType, paramType: SymbolType): boolea
     );
   }
 
+  if (paramType instanceof ClassType) {
+    return paramType.isAssignableFrom(actualType);
+  }
+
   // Todo when we have extensions on Class
 
   return false;
@@ -373,22 +377,22 @@ function matchingSymbolsWithQualifier(
   qualId = upToParams(qualId);
 
   const qual = scope.resolveSymbol(qualId, transforms, scope);
-  let qualSt: SymbolType | undefined = undefined;
 
   // class scope so all or matching symbols on class
-  qualSt = qual.symbolType(transforms);
+  let qualSt = qual.symbolType(transforms);
 
   if (isFunctionType(qualSt) && closeParamsIndex > 0) {
     qualSt = qualSt.returnType;
   }
 
+  let classSymbols: ElanSymbol[] = [];
+
   if (qualSt instanceof ClassType) {
     const cls = getGlobalScope(scope).resolveSymbol(qualSt.className, transforms, scope);
 
     if (isClassTypeDef(cls)) {
-      return [propId, cls.symbolMatches(propId, !propId).filter((s) => isPublicMember(s))];
+      classSymbols = cls.symbolMatches(propId, !propId).filter((s) => isPublicMember(s));
     }
-    return [propId, []];
   }
 
   const allExtensions = getGlobalScope(scope)
@@ -402,7 +406,7 @@ function matchingSymbolsWithQualifier(
       );
     });
 
-  return [propId, allExtensions];
+  return [propId, classSymbols.concat(allExtensions)];
 }
 
 function matchingSymbolsOnRecord(

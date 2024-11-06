@@ -830,7 +830,10 @@ end test`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [["ff", "*"]] as [string, string][];
+    const expected = [
+      ["asString", "*"],
+      ["ff", "*"],
+    ] as [string, string][];
 
     await assertAutocompletesWithString(fileImpl, "text24", "gr.", expected);
   });
@@ -1053,6 +1056,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
+      ["asString", "*"],
       ["f1", "*"],
       ["f2", "*"],
       ["f3", "*"],
@@ -1092,6 +1096,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
+      ["asString", "*"],
       ["f1", "*"],
       ["f2", "*"],
       ["f3", "*"],
@@ -1307,5 +1312,24 @@ end main`;
     ] as [string, string][];
 
     await assertAutocompletesWithString(fileImpl, "expr5", "new Foo() with aa to 0, a", expected);
+  });
+
+  test("Pass_libExtension", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+    main
+      var foo set to new BlockGraphics()
+      call foo()
+    end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["clearGraphics", "*"],
+      ["clearKeyBuffer", "*"],
+    ] as [string, string][];
+
+    await assertAutocompletesWithString(fileImpl, "ident7", "foo.", expected);
   });
 });
