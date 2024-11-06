@@ -1,19 +1,13 @@
-import { UnknownType } from "../symbols/unknown-type";
 import { CodeSource } from "../code-source";
+import { isAstType } from "../helpers";
+import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Frame } from "../interfaces/frame";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { TypeNode } from "../parse-nodes/type-node";
+import { filteredSymbols, isTypeName, removeIfSingleFullMatch } from "../symbols/symbol-helpers";
+import { transforms } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractField } from "./abstract-field";
-import { isAstType } from "../helpers";
-import { ElanSymbol } from "../interfaces/elan-symbol";
-import {
-  filteredSymbols,
-  isTypeName,
-  removeIfSingleFullMatch,
-  removeTypeSymbols,
-} from "../symbols/symbol-helpers";
-import { transforms } from "../syntax-nodes/ast-helpers";
 
 export class TypeField extends AbstractField {
   isParseByNodes = true;
@@ -48,8 +42,7 @@ export class TypeField extends AbstractField {
   }
 
   matchingSymbolsForId(): [string, ElanSymbol[]] {
-    const text = this.rootNode?.matchedText ?? "";
-    const id = removeTypeSymbols(text);
+    const id = this.rootNode?.matchedText ?? "";
 
     const [match, symbols] = filteredSymbols(
       id,

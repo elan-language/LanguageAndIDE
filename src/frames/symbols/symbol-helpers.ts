@@ -494,11 +494,12 @@ function orderSymbol(s1: ElanSymbol, s2: ElanSymbol) {
 }
 
 export function filteredSymbols(
-  id: string,
+  text: string,
   transforms: Transforms,
   filter: (s: ElanSymbol) => boolean,
   scope: Scope,
 ): [string, ElanSymbol[]] {
+  const id = removeTypeSymbols(text);
   const [match, matches] = matchingSymbols(id, transforms, scope);
   const filtered = matches.filter(filter).filter((e) => !e.symbolId.startsWith("_"));
 
@@ -609,7 +610,7 @@ export function symbolMatches(id: string, all: boolean, symbols: ElanSymbol[]) {
   return sw.concat(inc);
 }
 
-export function removeTypeSymbols(s: string): string {
+export function removeTypeSymbols(s: string) {
   let id = s.replaceAll("[", "").replaceAll("{", "");
   const colonIndex = id.indexOf(":");
 

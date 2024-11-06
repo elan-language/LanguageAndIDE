@@ -39,6 +39,30 @@ end main`;
     await assertAutocompletes(fileImpl, "expr5", " ", 1, expected);
   });
 
+  test("Pass_emptyType", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+main
+  var foo set to 0
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["inputFloat", "*"],
+      ["inputFloatBetween", "*"],
+      ["inputInt", "*"],
+      ["inputIntBetween", "*"],
+      ["inputString", "*"],
+      ["inputStringFromOptions", "*"],
+      ["inputStringWithLimits", "*"],
+      ["Int", "*"],
+    ] as [string, string][];
+
+    await assertAutocompletesWithString(fileImpl, "expr5", "empty [I", expected);
+  });
+
   test("Pass_LocalVarsCaseInsensitive", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
