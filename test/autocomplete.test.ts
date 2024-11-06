@@ -1262,4 +1262,50 @@ end main`;
 
     await assertAutocompletesWithString(fileImpl, "expr5", "new Foo() with ", expected);
   });
+
+  test("Pass_newWith2", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+    main
+      var a set to new Foo() with a to 2
+    end main
+    
+    record Foo
+      property aa as Int
+      property ab as Int
+    end record`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["aa", "*"],
+      ["ab", "*"],
+    ] as [string, string][];
+
+    await assertAutocompletesWithString(fileImpl, "expr5", "new Foo() with a", expected);
+  });
+
+  test("Pass_newWith3", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+    main
+      var a set to new Foo() with a to 2
+    end main
+    
+    record Foo
+      property aa as Int
+      property ab as Int
+    end record`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["aa", "*"],
+      ["ab", "*"],
+    ] as [string, string][];
+
+    await assertAutocompletesWithString(fileImpl, "expr5", "new Foo() with aa to 0, a", expected);
+  });
 });
