@@ -1314,7 +1314,7 @@ end main`;
     await assertAutocompletesWithString(fileImpl, "expr5", "new Foo() with aa to 0, a", expected);
   });
 
-  test("Pass_libExtension", async () => {
+  test("Pass_libExtension1", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
     main
@@ -1328,8 +1328,37 @@ end main`;
     const expected = [
       ["clearGraphics", "*"],
       ["clearKeyBuffer", "*"],
+      ["display", "*"],
     ] as [string, string][];
 
     await assertAutocompletesWithString(fileImpl, "ident7", "foo.", expected);
+  });
+
+  test("Pass_libExtension2", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+    main
+      var foo set to new BlockGraphics()
+      var a set to foo
+    end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["asHtml", "*"],
+      ["asString", "*"],
+      ["getBackground", "*"],
+      ["getChar", "*"],
+      ["getForeground", "*"],
+      ["getKeystroke", "*"],
+      ["getKeystrokeWithModifier", "*"],
+      ["withBackground", "*"],
+      ["withBlock", "*"],
+      ["withText", "*"],
+      ["withUnicode", "*"],
+    ] as [string, string][];
+
+    await assertAutocompletesWithString(fileImpl, "expr8", "foo.", expected);
   });
 });

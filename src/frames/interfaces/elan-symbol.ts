@@ -6,4 +6,5 @@ export interface ElanSymbol {
   symbolId: string;
   symbolType(transforms?: Transforms): SymbolType;
   symbolScope: SymbolScope;
+  isMember?: boolean;
 }
