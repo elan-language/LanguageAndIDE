@@ -21,7 +21,8 @@ import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
-import { libraryKeyword } from "../keywords";
+import { libraryKeyword, withKeyword } from "../keywords";
+import { Qualifier } from "../parse-nodes/qualifier";
 import { isAstIdNode, isAstQualifiedNode, transforms } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractDictionaryType } from "./abstract-dictionary-type";
@@ -336,6 +337,10 @@ export function isFunction(s: ElanSymbol, transforms: Transforms) {
   return s.symbolType(transforms) instanceof FunctionType;
 }
 
+export function isFunctionType(s: SymbolType): s is FunctionType {
+  return !!s && s instanceof FunctionType;
+}
+
 export function isIdOrProcedure(s: ElanSymbol, transforms: Transforms) {
   return isProcedure(s, transforms) || isVarStatement(s);
 }
@@ -349,6 +354,77 @@ export function isTypeName(s: ElanSymbol) {
   return firstChar.toUpperCase() === firstChar;
 }
 
+function matchingSymbolsWithQualifier(
+  id: string,
+  dotIndex: number,
+  transforms: Transforms,
+  scope: Scope,
+): [string, ElanSymbol[]] {
+  let qualId = id.slice(0, dotIndex);
+  const propId = id.slice(dotIndex + 1);
+
+  const openParamsIndex = qualId.indexOf("(");
+  const closeParamsIndex = qualId.indexOf(")");
+
+  if (openParamsIndex >= 0) {
+    qualId = qualId.slice(0, openParamsIndex);
+  }
+
+  const qual = scope.resolveSymbol(qualId, transforms, scope);
+  let qualSt: SymbolType | undefined = undefined;
+
+  // class scope so all or matching symbols on class
+  qualSt = qual.symbolType(transforms);
+
+  if (isFunctionType(qualSt) && closeParamsIndex > 0) {
+    qualSt = qualSt.returnType;
+  }
+
+  if (qualSt instanceof ClassType) {
+    const cls = getGlobalScope(scope).resolveSymbol(qualSt.className, transforms, scope);
+
+    if (isClassTypeDef(cls)) {
+      return [propId, cls.symbolMatches(propId, !propId).filter((s) => isPublicMember(s))];
+    }
+    return [propId, []];
+  }
+
+  const allExtensions = getGlobalScope(scope)
+    .libraryScope.symbolMatches(propId, !propId)
+    .filter((s) => {
+      const st = s.symbolType(transforms);
+      return (
+        (st instanceof ProcedureType || st instanceof FunctionType) &&
+        st.isExtension &&
+        isPossibleExtensionForType(qualSt, st)
+      );
+    });
+
+  return [propId, allExtensions];
+}
+
+function matchingSymbolsOnRecord(
+  recordId: string,
+  propId: string,
+  transforms: Transforms,
+  scope: Scope,
+): [string, ElanSymbol[]] {
+  const record = scope.resolveSymbol(recordId, transforms, scope);
+
+  // class scope so all or matching symbols on class
+  const recordSt = record.symbolType(transforms);
+
+  if (recordSt instanceof ClassType) {
+    const cls = getGlobalScope(scope).resolveSymbol(recordSt.className, transforms, scope);
+
+    if (isClassTypeDef(cls)) {
+      return [propId, cls.symbolMatches(propId, !propId).filter((s) => isPublicMember(s))];
+    }
+  }
+
+  return [propId, []];
+}
+
 export function matchingSymbols(
   id: string,
   transforms: Transforms,
@@ -359,34 +435,23 @@ export function matchingSymbols(
   const dotIndex = id.indexOf(".");
 
   if (dotIndex >= 0) {
-    const qualId = id.slice(0, dotIndex);
-    const propId = id.slice(dotIndex + 1);
+    return matchingSymbolsWithQualifier(id, dotIndex, transforms, scope);
+  }
 
-    const qual = scope.resolveSymbol(qualId, transforms, scope);
+  if (tokens.length >= 4 && tokens[tokens.length - 2] === withKeyword) {
+    return matchingSymbolsOnRecord(
+      tokens[tokens.length - 3],
+      tokens[tokens.length - 1],
+      transforms,
+      scope,
+    );
+  }
 
-    // class scope so all or matching symbols on class
-    const qualSt = qual.symbolType(transforms);
-    if (qualSt instanceof ClassType) {
-      const cls = getGlobalScope(scope).resolveSymbol(qualSt.className, transforms, scope);
+  const openParamsIndex = id.indexOf("(");
+  const closeParamsIndex = id.indexOf(")");
 
-      if (isClassTypeDef(cls)) {
-        return [propId, cls.symbolMatches(propId, !propId).filter((s) => isPublicMember(s))];
-      }
-      return [propId, []];
-    }
-
-    const allExtensions = getGlobalScope(scope)
-      .libraryScope.symbolMatches(propId, !propId)
-      .filter((s) => {
-        const st = s.symbolType(transforms);
-        return (
-          (st instanceof ProcedureType || st instanceof FunctionType) &&
-          st.isExtension &&
-          isPossibleExtensionForType(qualSt, st)
-        );
-      });
-
-    return [propId, allExtensions];
+  if (openParamsIndex >= 0 && closeParamsIndex === -1) {
+    id = id.slice(openParamsIndex + 1);
   }
 
   const allNotExtensions = scope.symbolMatches(id, !id, scope).filter((s) => {
