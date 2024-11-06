@@ -38,6 +38,7 @@ export class ExpressionField extends AbstractField {
 
   matchingSymbolsForId(): [string, ElanSymbol[]] {
     const id = this.rootNode?.matchedText ?? "";
+
     const [match, symbols] = filteredSymbols(
       id,
       transforms(),

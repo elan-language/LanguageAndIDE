@@ -405,6 +405,13 @@ export function matchingSymbols(
       });
 
     return [propId, allExtensions];
+  } else {
+    const openParamsIndex = id.indexOf("(");
+    const closeParamsIndex = id.indexOf(")");
+
+    if (openParamsIndex >= 0 && closeParamsIndex === -1) {
+      id = id.slice(openParamsIndex + 1);
+    }
   }
 
   const allNotExtensions = scope.symbolMatches(id, !id, scope).filter((s) => {

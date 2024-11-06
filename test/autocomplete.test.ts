@@ -1060,4 +1060,20 @@ end class`;
 
     await assertAutocompletesWithString(fileImpl, "expr5", "foo(1).", expected);
   });
+
+  test("Pass_complexExpression1", async () => {
+    const code = `# FFFF Elan Beta 3 valid
+
+main
+  var alpha set to 0
+  var beta set to abs(alpha)
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [["alpha", "*"]] as [string, string][];
+
+    await assertAutocompletesWithString(fileImpl, "expr8", "abs(al", expected);
+  });
 });
