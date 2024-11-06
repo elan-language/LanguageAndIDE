@@ -944,4 +944,42 @@ end function`;
 
     await assertAutocompletesWithString(fileImpl, "params6", "a as Graphics", expected);
   });
+
+  test("Pass_returnType1", async () => {
+    const code = `# FFFF Elan Beta 3 valid
+
+function foo(a as String) return String
+  return a
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["Set", "*"],
+      ["Stack", "*"],
+      ["String", "*"],
+    ] as [string, string][];
+
+    await assertAutocompletesWithString(fileImpl, "type5", "S", expected);
+  });
+
+  test("Pass_returnType2", async () => {
+    const code = `# FFFF Elan Beta 3 valid
+
+function foo(a as String) return String
+  return a
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["GraphicsBase", "*"],
+      ["BlockGraphics", "*"],
+      ["VectorGraphics", "*"],
+    ] as [string, string][];
+
+    await assertAutocompletesWithString(fileImpl, "type5", "Graphics", expected);
+  });
 });

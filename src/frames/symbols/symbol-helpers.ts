@@ -531,3 +531,14 @@ export function symbolMatches(id: string, all: boolean, symbols: ElanSymbol[]) {
 
   return sw.concat(inc);
 }
+
+export function removeTypeSymbols(s: string): string {
+  let id = s.replaceAll("[", "").replaceAll("{", "");
+  const colonIndex = id.indexOf(":");
+
+  if (colonIndex >= 0) {
+    id = id.slice(colonIndex + 1);
+  }
+
+  return id;
+}
