@@ -982,4 +982,43 @@ end function`;
 
     await assertAutocompletesWithString(fileImpl, "type5", "Graphics", expected);
   });
+
+  test("Pass_functionResult", async () => {
+    const code = `# FFFF Elan Beta 3 valid
+
+main
+  var a set to foo().f1()
+end main
+
+function foo() return Bar
+  return new Bar()
+end function
+
+class Bar
+  constructor()
+  end constructor
+
+  function f1() return Int
+    return 0
+  end function
+
+  function f2() return String
+    return ""
+  end function
+
+  property f3 as Int
+
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["f1", "*"],
+      ["f2", "*"],
+      ["f3", "*"],
+    ] as [string, string][];
+
+    await assertAutocompletesWithString(fileImpl, "expr5", "foo().", expected);
+  });
 });
