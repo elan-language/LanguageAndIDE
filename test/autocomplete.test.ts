@@ -1097,6 +1097,26 @@ end main`;
     await assertAutocompletesWithString(fileImpl, "expr8", "copy a with ", expected);
   });
 
+  test("Pass_withIgnoreKeyword1", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+    main
+      var a set to new Foo()
+      var b set to copy a with a to 2
+    end main
+    
+    record Foo
+      property a as Int
+    end record`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [] as [string, string][];
+
+    await assertAutocompletesWithString(fileImpl, "expr8", "copy a ", expected);
+  });
+
   test("Pass_with2", async () => {
     const code = `# FFFF Elan Beta 4 valid
 

@@ -618,7 +618,19 @@ export abstract class AbstractField implements Selectable, Field {
       this.selected &&
       this.cursorPos === this.text.length &&
       this.readParseStatus() !== ParseStatus.invalid &&
-      this.getCompletion() !== '"'
+      this.requiresSymbolComplete()
     );
+  }
+
+  protected requiresSymbolComplete() {
+    if (this.text.endsWith(" ")) {
+      const completion = this.getCompletion().trim();
+
+      return (
+        completion === "" ||
+        completion.startsWith("<pr>")
+      );
+    }
+    return true;
   }
 }
