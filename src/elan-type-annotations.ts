@@ -10,6 +10,7 @@ import {
   isProcedureDescriptor,
   TypeDescriptor,
 } from "./elan-type-interfaces";
+import { isMember } from "./frames/helpers";
 import { ElanSymbol } from "./frames/interfaces/elan-symbol";
 import { Scope } from "./frames/interfaces/scope";
 import { SymbolType } from "./frames/interfaces/symbol-type";
@@ -614,9 +615,11 @@ export function getSymbol(id: string, st: SymbolType, ss: SymbolScope): ElanSymb
     return st.scope!;
   }
 
-  return {
+  const symbol = {
     symbolId: id,
     symbolType: () => st,
     symbolScope: ss,
   };
+
+  return ss === SymbolScope.member ? { isMember: true, ...symbol } : symbol;
 }

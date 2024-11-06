@@ -18,10 +18,8 @@ import { ParseStatus } from "../status-enums";
 import { DuplicateSymbol } from "../symbols/duplicate-symbol";
 import {
   filteredSymbols,
-  isExpression,
   isTypeName,
   removeIfSingleFullMatch,
-  removeTypeSymbols,
   symbolMatches,
 } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
@@ -188,7 +186,7 @@ export class ParamList extends AbstractField implements Scope {
       return super.matchingSymbolsForId();
     }
 
-    const id = removeTypeSymbols(tokens[tokens.length - 1]);
+    const id = tokens[tokens.length - 1];
 
     const [match, symbols] = filteredSymbols(
       id,

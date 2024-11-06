@@ -24,6 +24,45 @@ end main`;
     await assertAutocompletes(fileImpl, "ident10", "o", 1, expected);
   });
 
+  test("Pass_IgnoreOperator", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+main
+  var foo set to 1
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [] as [string, string][];
+
+    await assertAutocompletes(fileImpl, "expr5", " ", 1, expected);
+  });
+
+  test("Pass_emptyType", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+main
+  var foo set to 0
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["inputFloat", "*"],
+      ["inputFloatBetween", "*"],
+      ["inputInt", "*"],
+      ["inputIntBetween", "*"],
+      ["inputString", "*"],
+      ["inputStringFromOptions", "*"],
+      ["inputStringWithLimits", "*"],
+      ["Int", "*"],
+    ] as [string, string][];
+
+    await assertAutocompletesWithString(fileImpl, "expr5", "empty [I", expected);
+  });
+
   test("Pass_LocalVarsCaseInsensitive", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
@@ -791,7 +830,10 @@ end test`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [["ff", "*"]] as [string, string][];
+    const expected = [
+      ["asString", "*"],
+      ["ff", "*"],
+    ] as [string, string][];
 
     await assertAutocompletesWithString(fileImpl, "text24", "gr.", expected);
   });
@@ -1014,6 +1056,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
+      ["asString", "*"],
       ["f1", "*"],
       ["f2", "*"],
       ["f3", "*"],
@@ -1053,6 +1096,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
+      ["asString", "*"],
       ["f1", "*"],
       ["f2", "*"],
       ["f3", "*"],
@@ -1097,6 +1141,66 @@ end main`;
     await assertAutocompletesWithString(fileImpl, "expr8", "copy a with ", expected);
   });
 
+  test("Pass_withIgnoreKeyword1", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+    main
+      var a set to new Foo()
+      var b set to copy a with a to 2
+    end main
+    
+    record Foo
+      property a as Int
+    end record`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [] as [string, string][];
+
+    await assertAutocompletesWithString(fileImpl, "expr8", "copy a ", expected);
+  });
+
+  test("Pass_withIgnoreKeyword2", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+    main
+      var a set to new Foo()
+      var b set to copy a with a to 2
+    end main
+    
+    record Foo
+      property a as Int
+    end record`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [] as [string, string][];
+
+    await assertAutocompletesWithString(fileImpl, "expr8", "copy a w", expected);
+  });
+
+  test("Pass_withIgnoreKeyword3", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+    main
+      var a set to new Foo()
+      var b set to copy a with a to 2
+    end main
+    
+    record Foo
+      property a as Int
+    end record`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [] as [string, string][];
+
+    await assertAutocompletesWithString(fileImpl, "expr8", "copy a with a ", expected);
+  });
+
   test("Pass_with2", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
@@ -1119,5 +1223,142 @@ end main`;
     ] as [string, string][];
 
     await assertAutocompletesWithString(fileImpl, "expr8", "copy a with a", expected);
+  });
+
+  test("Pass_with3", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+    main
+      var a set to new Foo()
+      var b set to copy a with a to 2
+    end main
+    
+    record Foo
+      property aa as Int
+      property ab as Int
+    end record`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["aa", "*"],
+      ["ab", "*"],
+    ] as [string, string][];
+
+    await assertAutocompletesWithString(fileImpl, "expr8", "copy a with aa to 0, a", expected);
+  });
+
+  test("Pass_newWith1", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+    main
+      var a set to new Foo() with a to 2
+    end main
+    
+    record Foo
+      property a as Int
+    end record`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [["a", "*"]] as [string, string][];
+
+    await assertAutocompletesWithString(fileImpl, "expr5", "new Foo() with ", expected);
+  });
+
+  test("Pass_newWith2", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+    main
+      var a set to new Foo() with a to 2
+    end main
+    
+    record Foo
+      property aa as Int
+      property ab as Int
+    end record`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["aa", "*"],
+      ["ab", "*"],
+    ] as [string, string][];
+
+    await assertAutocompletesWithString(fileImpl, "expr5", "new Foo() with a", expected);
+  });
+
+  test("Pass_newWith3", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+    main
+      var a set to new Foo() with a to 2
+    end main
+    
+    record Foo
+      property aa as Int
+      property ab as Int
+    end record`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["aa", "*"],
+      ["ab", "*"],
+    ] as [string, string][];
+
+    await assertAutocompletesWithString(fileImpl, "expr5", "new Foo() with aa to 0, a", expected);
+  });
+
+  test("Pass_libExtension1", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+    main
+      var foo set to new BlockGraphics()
+      call foo()
+    end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["clearGraphics", "*"],
+      ["clearKeyBuffer", "*"],
+      ["display", "*"],
+    ] as [string, string][];
+
+    await assertAutocompletesWithString(fileImpl, "ident7", "foo.", expected);
+  });
+
+  test("Pass_libExtension2", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+    main
+      var foo set to new BlockGraphics()
+      var a set to foo
+    end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["asHtml", "*"],
+      ["asString", "*"],
+      ["getBackground", "*"],
+      ["getChar", "*"],
+      ["getForeground", "*"],
+      ["getKeystroke", "*"],
+      ["getKeystrokeWithModifier", "*"],
+      ["withBackground", "*"],
+      ["withBlock", "*"],
+      ["withText", "*"],
+      ["withUnicode", "*"],
+    ] as [string, string][];
+
+    await assertAutocompletesWithString(fileImpl, "expr8", "foo.", expected);
   });
 });

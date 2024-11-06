@@ -6,7 +6,7 @@ import {
   cannotAccessPrivateMemberInAbstractClass,
 } from "../compile-rules";
 import { ClassFrame } from "../globals/class-frame";
-import { isConstant, isFile, isMember, isScope } from "../helpers";
+import { isClass, isConstant, isFile, isMember, isScope } from "../helpers";
 import { AstNode } from "../interfaces/ast-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { Class } from "../interfaces/class";
@@ -21,7 +21,7 @@ import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
-import { libraryKeyword, withKeyword } from "../keywords";
+import { libraryKeyword, toKeyword, withKeyword } from "../keywords";
 import { Qualifier } from "../parse-nodes/qualifier";
 import { isAstIdNode, isAstQualifiedNode, transforms } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
@@ -315,6 +315,10 @@ export function matchType(actualType: SymbolType, paramType: SymbolType): boolea
     );
   }
 
+  if (paramType instanceof ClassType) {
+    return paramType.isAssignableFrom(actualType);
+  }
+
   // Todo when we have extensions on Class
 
   return false;
@@ -354,6 +358,11 @@ export function isTypeName(s: ElanSymbol) {
   return firstChar.toUpperCase() === firstChar;
 }
 
+function upToParams(id: string) {
+  const openParamsIndex = id.indexOf("(");
+  return openParamsIndex >= 0 ? id.slice(0, openParamsIndex) : id;
+}
+
 function matchingSymbolsWithQualifier(
   id: string,
   dotIndex: number,
@@ -363,30 +372,27 @@ function matchingSymbolsWithQualifier(
   let qualId = id.slice(0, dotIndex);
   const propId = id.slice(dotIndex + 1);
 
-  const openParamsIndex = qualId.indexOf("(");
   const closeParamsIndex = qualId.indexOf(")");
 
-  if (openParamsIndex >= 0) {
-    qualId = qualId.slice(0, openParamsIndex);
-  }
+  qualId = upToParams(qualId);
 
   const qual = scope.resolveSymbol(qualId, transforms, scope);
-  let qualSt: SymbolType | undefined = undefined;
 
   // class scope so all or matching symbols on class
-  qualSt = qual.symbolType(transforms);
+  let qualSt = qual.symbolType(transforms);
 
   if (isFunctionType(qualSt) && closeParamsIndex > 0) {
     qualSt = qualSt.returnType;
   }
 
+  let classSymbols: ElanSymbol[] = [];
+
   if (qualSt instanceof ClassType) {
     const cls = getGlobalScope(scope).resolveSymbol(qualSt.className, transforms, scope);
 
     if (isClassTypeDef(cls)) {
-      return [propId, cls.symbolMatches(propId, !propId).filter((s) => isPublicMember(s))];
+      classSymbols = cls.symbolMatches(propId, !propId).filter((s) => isPublicMember(s));
     }
-    return [propId, []];
   }
 
   const allExtensions = getGlobalScope(scope)
@@ -400,7 +406,7 @@ function matchingSymbolsWithQualifier(
       );
     });
 
-  return [propId, allExtensions];
+  return [propId, classSymbols.concat(allExtensions)];
 }
 
 function matchingSymbolsOnRecord(
@@ -409,6 +415,8 @@ function matchingSymbolsOnRecord(
   transforms: Transforms,
   scope: Scope,
 ): [string, ElanSymbol[]] {
+  recordId = upToParams(recordId);
+
   const record = scope.resolveSymbol(recordId, transforms, scope);
 
   // class scope so all or matching symbols on class
@@ -425,6 +433,16 @@ function matchingSymbolsOnRecord(
   return [propId, []];
 }
 
+function isWithClause(tokens: string[]) {
+  const lastButOneToken = tokens[tokens.length - 2];
+  const lastButTwoToken = tokens[tokens.length - 3];
+
+  return (
+    tokens.includes(withKeyword) &&
+    (lastButOneToken === withKeyword || lastButTwoToken === `${toKeyword}`)
+  );
+}
+
 export function matchingSymbols(
   id: string,
   transforms: Transforms,
@@ -438,9 +456,11 @@ export function matchingSymbols(
     return matchingSymbolsWithQualifier(id, dotIndex, transforms, scope);
   }
 
-  if (tokens.length >= 4 && tokens[tokens.length - 2] === withKeyword) {
+  if (tokens.length >= 4 && isWithClause(tokens)) {
+    const withIndex = tokens.indexOf(withKeyword);
+
     return matchingSymbolsOnRecord(
-      tokens[tokens.length - 3],
+      tokens[withIndex - 1],
       tokens[tokens.length - 1],
       transforms,
       scope,
@@ -482,11 +502,12 @@ function orderSymbol(s1: ElanSymbol, s2: ElanSymbol) {
 }
 
 export function filteredSymbols(
-  id: string,
+  text: string,
   transforms: Transforms,
   filter: (s: ElanSymbol) => boolean,
   scope: Scope,
 ): [string, ElanSymbol[]] {
+  const id = removeTypeSymbols(text);
   const [match, matches] = matchingSymbols(id, transforms, scope);
   const filtered = matches.filter(filter).filter((e) => !e.symbolId.startsWith("_"));
 
@@ -597,7 +618,7 @@ export function symbolMatches(id: string, all: boolean, symbols: ElanSymbol[]) {
   return sw.concat(inc);
 }
 
-export function removeTypeSymbols(s: string): string {
+export function removeTypeSymbols(s: string) {
   let id = s.replaceAll("[", "").replaceAll("{", "");
   const colonIndex = id.indexOf(":");
 
