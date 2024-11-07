@@ -114,6 +114,57 @@ end class`;
     await assertAutocompletes(fileImpl, "ident15", "a", 1, expected);
   });
 
+  test("Pass_InConstructor", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+class Foo
+  constructor()
+    set a to 0
+  end constructor
+
+  property aa2 as Int
+  property aa3 as Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["aa2", "Int"],
+      ["aa3", "Int"],
+    ] as [string, string][];
+
+    await assertAutocompletesWithString(fileImpl, "ident9", " ", expected);
+  });
+
+  test("Pass_InProcedure", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+class Foo
+  constructor()
+  end constructor
+
+  procedure pp()
+    var a set to 0
+    set a to 0
+  end procedure
+
+  property aa2 as Int
+  property aa3 as Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["a", "Int"],
+      ["aa2", "Int"],
+      ["aa3", "Int"],
+    ] as [string, string][];
+
+    await assertAutocompletesWithString(fileImpl, "ident16", " ", expected);
+  });
+
   test("Pass_FiltersByInput", async () => {
     const code = `# FFFF Elan Beta 4 valid
 

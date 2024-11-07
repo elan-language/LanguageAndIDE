@@ -1,3 +1,4 @@
+import exp from "constants";
 import { CodeSource } from "../code-source";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Frame } from "../interfaces/frame";
@@ -54,7 +55,9 @@ export class AssignableField extends AbstractField {
 
       if (prefix.startsWith(id) && id.length <= prefix.length) {
         const [match, existing] = symbols;
-        const updated = existing.concat(this.allPropertiesInScope());
+        const allProperties = this.allPropertiesInScope();
+
+        const updated = existing.filter((s) => !allProperties.includes(s)).concat(allProperties);
         symbols = [match, updated];
       } else if (id.startsWith(prefix)) {
         const [match] = symbols;
