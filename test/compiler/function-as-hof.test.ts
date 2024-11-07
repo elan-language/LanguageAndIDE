@@ -15,7 +15,7 @@ suite("Function as HOF", () => {
     const code = `# FFFF Elan Beta 4 valid
 
 main
-  call printModified(3, function twice)
+  call printModified(3, ref twice)
 end main
   
 procedure printModified(i as Float, f as Func<of Float => Float>)
@@ -53,7 +53,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan Beta 4 valid
 
 main
-  call printModified(3, function twice)
+  call printModified(3, ref twice)
 end main
   
 procedure printModified(i as Float, f as Func<of => Float>)
@@ -91,7 +91,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan Beta 4 valid
 
 main
-  call printIt("Hello", "e", function find)
+  call printIt("Hello", "e", ref find)
 end main
   
 procedure printIt(s as String, c as String, f as Func<of String, String => Int>)
@@ -134,7 +134,7 @@ main
 end main
   
 function getFunc() return Func<of Float => Float>
-  return function twice
+  return ref twice
 end function
   
 function twice(x as Float) return Float
@@ -169,7 +169,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan Beta 4 valid
 
 main
-  var f set to function twice
+  var f set to ref twice
   print f(5)
 end main
   
@@ -201,7 +201,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan Beta 4 valid
 
 main
-  var f set to new Foo(function ff)
+  var f set to new Foo(ref ff)
   print f.pf(5)
 end main
 
@@ -252,7 +252,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan Beta 4 valid
 
 main
-  print function ff
+  print ref ff
 end main
 
 function ff(a as Int) return Int
@@ -278,7 +278,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "function ff");
   });
 
-  test("Fail_SetAsVariableWithoutFunctionKeyword", async () => {
+  test("Fail_SetAsVariableWithoutRefKeyword", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
 main
@@ -296,7 +296,7 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "To evaluate function 'twice' add brackets. Or to create a reference to 'twice', precede it by 'function '",
+      "To evaluate function 'twice' add brackets. Or to create a reference to 'twice', precede it by 'ref'",
     ]);
   });
 
@@ -304,7 +304,7 @@ end function`;
     const code = `# FFFF Elan Beta 4 valid
 
 main
-  call printModified(3, power)
+  call printModified(3, ref power)
 end main
   
 procedure printModified(i as Int, f as Func<of Int => Int>)
@@ -328,7 +328,7 @@ end function`;
     const code = `# FFFF Elan Beta 4 valid
 
 main
-  call printModified(3, power)
+  call printModified(3, ref power)
 end main
   
 procedure printModified(i as Int, f as Func<of Int => Int>)
@@ -355,7 +355,7 @@ main
 end main
 
 function getFunc() return Func<of Int => Int>
-  return twice
+  return ref twice
 end function
 
 function twice(x as Int) return Int
@@ -369,7 +369,7 @@ end function`;
     assertDoesNotCompile(fileImpl, ["Parameters expected: 1 got: 0"]);
   });
 
-  test("Fail_PassAsParamWithoutFunctionKeyword", async () => {
+  test("Fail_PassAsParamWithoutRefKeyword", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
 main
@@ -390,11 +390,11 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "To evaluate function 'twice' add brackets. Or to create a reference to 'twice', precede it by 'function '",
+      "To evaluate function 'twice' add brackets. Or to create a reference to 'twice', precede it by 'ref'",
     ]);
   });
 
-  test("Fail_ReturnAFunctionWithoutFunctionKeyword", async () => {
+  test("Fail_ReturnAFunctionWithoutRefKeyword", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
 main
@@ -416,11 +416,11 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "To evaluate function 'twice' add brackets. Or to create a reference to 'twice', precede it by 'function '",
+      "To evaluate function 'twice' add brackets. Or to create a reference to 'twice', precede it by 'ref'",
     ]);
   });
 
-  test("Fail_SetAsPropertyWithoutFunctionKeyword", async () => {
+  test("Fail_SetAsPropertyWithoutRefKeyword", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
 main
@@ -447,7 +447,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "To evaluate function 'ff' add brackets. Or to create a reference to 'ff', precede it by 'function '",
+      "To evaluate function 'ff' add brackets. Or to create a reference to 'ff', precede it by 'ref'",
     ]);
   });
 
@@ -469,7 +469,7 @@ end function`;
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "Incompatible types Func<of Int => Int> to Float or Int",
-      "To evaluate function 'ff' add brackets. Or to create a reference to 'ff', precede it by 'function '",
+      "To evaluate function 'ff' add brackets. Or to create a reference to 'ff', precede it by 'ref'",
     ]);
   });
 
@@ -477,7 +477,7 @@ end function`;
     const code = `# FFFF Elan Beta 4 valid
 
 main
-  var f set to 1 + function ff
+  var f set to 1 + ref ff
 end main
 
 function ff(a as Int) return Int

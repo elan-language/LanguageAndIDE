@@ -356,7 +356,7 @@ end function
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompileWithId(fileImpl, "print3", [
-      "To evaluate function 'foo' add brackets. Or to create a reference to 'foo', precede it by 'function '",
+      "To evaluate function 'foo' add brackets. Or to create a reference to 'foo', precede it by 'ref'",
     ]);
   });
 
@@ -378,7 +378,7 @@ end function
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompileWithId(fileImpl, "print3", [
-      "To evaluate function 'foo' add brackets. Or to create a reference to 'foo', precede it by 'function '",
+      "To evaluate function 'foo' add brackets. Or to create a reference to 'foo', precede it by 'ref'",
     ]);
   });
 });

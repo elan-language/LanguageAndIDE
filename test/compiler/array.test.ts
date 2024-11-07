@@ -878,8 +878,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan Beta 4 valid
 
 main
-  var foo1 set to function foo
-  var body set to [function foo, function foo1]
+  var foo1 set to ref foo
+  var body set to [ref foo, ref foo1]
   var foo2 set to body[0]
   print foo2(1)
 end main

@@ -242,7 +242,7 @@ export class FunctionRefCompileError extends CompileError {
   constructor(id: string, location: string) {
     super(
       Priority.illegalOperation,
-      `To evaluate function '${id}' add brackets. Or to create a reference to '${id}', precede it by 'function '`,
+      `To evaluate function '${id}' add brackets. Or to create a reference to '${id}', precede it by 'ref'`,
       location,
       false,
     );

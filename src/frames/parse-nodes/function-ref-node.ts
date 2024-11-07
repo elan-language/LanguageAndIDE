@@ -1,4 +1,4 @@
-import { functionKeyword } from "../keywords";
+import { functionKeyword, refKeyword } from "../keywords";
 import { AbstractSequence } from "./abstract-sequence";
 import { IdentifierNode } from "./identifier-node";
 import { KeywordNode } from "./keyword-node";
@@ -10,7 +10,7 @@ export class FunctionRefNode extends AbstractSequence {
 
   parseText(text: string): void {
     if (text.trim().length > 0) {
-      this.addElement(new KeywordNode(functionKeyword));
+      this.addElement(new KeywordNode(refKeyword));
       this.addElement(new SpaceNode(Space.required));
       this.name = new IdentifierNode();
       this.addElement(this.name);
@@ -18,6 +18,6 @@ export class FunctionRefNode extends AbstractSequence {
     }
   }
   renderAsHtml(): string {
-    return `<keyword>function</keyword> <method>${this.name!.renderAsHtml()}</method>`;
+    return `<keyword>${refKeyword}</keyword> <method>${this.name!.renderAsHtml()}</method>`;
   }
 }

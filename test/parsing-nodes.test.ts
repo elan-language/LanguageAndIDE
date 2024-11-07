@@ -1526,7 +1526,7 @@ suite("Parsing Nodes", () => {
       `property.a[1].b().c(d)[e]`,
       "",
     );
-    testNodeParse(new ExprNode(), `function foo`, ParseStatus.valid, `function foo`, "");
-    testNodeParse(new ExprNode(), `function `, ParseStatus.incomplete, `function `, "");
+    testNodeParse(new ExprNode(), `ref foo`, ParseStatus.valid, `ref foo`, "");
+    testNodeParse(new ExprNode(), `ref `, ParseStatus.incomplete, `ref `, "");
   });
 });
