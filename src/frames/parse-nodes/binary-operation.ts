@@ -1,36 +1,156 @@
 import { andKeyword, divKeyword, isKeyword, isntKeyword, modKeyword, orKeyword } from "../keywords";
-import { DIVIDE, GE, GT, LE, LT, MINUS, MULT, PLUS, POWER } from "../symbols";
-import { AbstractAlternatives } from "./abstract-alternatives";
-import { KeywordNode } from "./keyword-node";
-import { OperatorNode } from "./operator-node";
+import { ParseStatus } from "../status-enums";
+import { DIVIDE, GT, LT, MINUS, MULT, PLUS, POWER } from "../symbols";
+import { AbstractParseNode } from "./abstract-parse-node";
 
-export class BinaryOperation extends AbstractAlternatives {
+export class BinaryOperation extends AbstractParseNode {
   constructor() {
     super();
     this.completionWhenEmpty = "<pr>operator </pr>";
   }
+
+  keyword: boolean = false;
+  closePacked: boolean = false;
+  completion: string = "";
+
   parseText(text: string): void {
-    this.alternatives.push(new OperatorNode(PLUS));
-    this.alternatives.push(new OperatorNode(MINUS));
-    this.alternatives.push(new OperatorNode(MULT));
-    this.alternatives.push(new OperatorNode(DIVIDE));
-    this.alternatives.push(new OperatorNode(GT));
-    this.alternatives.push(new OperatorNode(LT));
-    this.alternatives.push(new OperatorNode(GE));
-    this.alternatives.push(new OperatorNode(LE));
-    this.alternatives.push(new OperatorNode(POWER));
-    this.alternatives.push(new KeywordNode(isKeyword));
-    this.alternatives.push(new KeywordNode(isntKeyword));
-    this.alternatives.push(new KeywordNode(andKeyword));
-    this.alternatives.push(new KeywordNode(orKeyword));
-    this.alternatives.push(new KeywordNode(divKeyword));
-    this.alternatives.push(new KeywordNode(modKeyword));
-    super.parseText(text.trimStart());
+    this.remainingText = text;
+    if (this.remainingText.length > 0) {
+      if (this.nextChar() === " ") {
+        this.moveCharsToMatched(1, ParseStatus.incomplete);
+      }
+      if (this.nextChar() === GT || this.nextChar() === LT) {
+        this.processComparison();
+      } else if (this.nextChar() === "i") {
+        this.processEquality();
+      } else if (
+        this.nextChar() === POWER ||
+        this.nextChar() === MULT ||
+        this.nextChar() === DIVIDE
+      ) {
+        this.moveCharsToMatched(1, ParseStatus.valid);
+        this.closePacked = true;
+      } else if (this.nextChar() === PLUS || this.nextChar() === MINUS) {
+        this.moveCharsToMatched(1, ParseStatus.valid);
+      } else {
+        this.processKeywords();
+      }
+      if (this.status === ParseStatus.valid && this.nextChar() === " ") {
+        this.moveCharsToMatched(1, ParseStatus.valid);
+      }
+      if (
+        this.remainingText.length > 0 &&
+        (this.status === ParseStatus.empty || this.status === ParseStatus.incomplete)
+      ) {
+        this.status = ParseStatus.invalid;
+      }
+    }
   }
 
-  compile(): string {
-    const code = super.compile();
+  private nextChar(): string {
+    return this.remainingText.length > 0 ? this.remainingText[0] : "";
+  }
 
-    return code;
+  private moveCharsToMatched(n: number, st: ParseStatus): void {
+    this.matchedText = this.matchedText + this.remainingText.slice(0, n);
+    this.remainingText = this.remainingText.slice(n);
+    this.status = st;
+  }
+
+  private processComparison(): void {
+    this.moveCharsToMatched(1, ParseStatus.incomplete);
+    if (this.nextChar() === "=") {
+      this.moveCharsToMatched(1, ParseStatus.valid);
+    } else if (this.remainingText.length === 0) {
+      this.status = ParseStatus.incomplete;
+    } else {
+      this.status = ParseStatus.valid; //but leave all remaining characters
+    }
+  }
+
+  private processEquality(): void {
+    if (this.remainingText.length === 1) {
+      this.moveCharsToMatched(1, ParseStatus.incomplete);
+      this.completion = "s";
+    } else if (this.remainingText.startsWith("isnt")) {
+      this.moveCharsToMatched(4, ParseStatus.valid);
+      this.keyword = true;
+    } else if (this.remainingText.startsWith("isn")) {
+      this.moveCharsToMatched(3, ParseStatus.incomplete);
+      this.completion = "t";
+    } else if (this.remainingText.length > 2 && this.remainingText.startsWith("is")) {
+      this.moveCharsToMatched(2, ParseStatus.valid);
+      this.keyword = true;
+    } else if (this.remainingText.startsWith("is")) {
+      this.moveCharsToMatched(2, ParseStatus.incomplete);
+    }
+  }
+
+  private attemptToMatchKw(kw: string): boolean {
+    if (this.remainingText.startsWith(kw)) {
+      this.moveCharsToMatched(kw.length, ParseStatus.valid);
+      this.keyword = true;
+      return true;
+    } else if (kw.startsWith(this.remainingText)) {
+      this.completion = kw.slice(this.remainingText.length);
+      this.moveCharsToMatched(this.remainingText.length, ParseStatus.incomplete);
+      return true;
+    }
+    return false;
+  }
+
+  private processKeywords() {
+    const keywords = [andKeyword, orKeyword, divKeyword, modKeyword];
+    let match = false;
+    let i = 0;
+    while (!match && i < keywords.length) {
+      match = this.attemptToMatchKw(keywords[i]);
+      i++;
+    }
+  }
+
+  renderAsHtml(): string {
+    const open = this.keyword ? "<keyword>" : "";
+    const close = this.keyword ? "</keyword>" : "";
+    return `${open}${this.renderAsSource()}${close}`;
+  }
+
+  renderAsSource(): string {
+    let source = "";
+    if (this.status === ParseStatus.valid) {
+      const space = this.closePacked ? "" : " ";
+      source = `${space}${this.matchedText.trim()}${space}`;
+    } else {
+      source = this.matchedText;
+    }
+    return source;
+  }
+
+  override compile(): string {
+    const matched = this.matchedText.trim();
+    switch (matched) {
+      case isKeyword:
+        return "===";
+      case isntKeyword:
+        return "!==";
+      case andKeyword:
+        return "&&";
+      case orKeyword:
+        return "||";
+      case modKeyword:
+        return "%";
+      case POWER:
+        return "**";
+      default:
+        return matched;
+    }
+  }
+
+  getCompletionAsHtml(): string {
+    let completion = this.completion;
+    if (this.matchedText === "" || this.matchedText === " ") {
+      completion = "<pr>operator </pr>";
+    } 
+    return completion;
   }
 }

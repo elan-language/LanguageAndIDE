@@ -68,25 +68,6 @@ suite("Parsing Nodes", () => {
     testNodeParse(new UnaryExpression(), "-", ParseStatus.incomplete, "-", "", "-", "");
     testNodeParse(new UnaryExpression(), "+4", ParseStatus.invalid, "", "+4", "", "");
   });
-  test("BinOp", () => {
-    testNodeParse(new BinaryOperation(), "", ParseStatus.empty, "", "", "");
-    testNodeParse(new BinaryOperation(), "  ", ParseStatus.empty, "", "", "");
-    testNodeParse(new BinaryOperation(), "+", ParseStatus.valid, "+", "", "+", "");
-    testNodeParse(new BinaryOperation(), "-", ParseStatus.valid, "-", "", "-", "");
-    testNodeParse(new BinaryOperation(), "*", ParseStatus.valid, "*", "", "*", "");
-    testNodeParse(new BinaryOperation(), "/", ParseStatus.valid, "/", "", "/", "");
-    testNodeParse(new BinaryOperation(), ">", ParseStatus.valid, ">", "", ">", "");
-    testNodeParse(new BinaryOperation(), "<", ParseStatus.valid, "<", "", "<", "");
-    testNodeParse(new BinaryOperation(), ">=", ParseStatus.valid, ">=", "", ">=", "");
-    testNodeParse(new BinaryOperation(), "<=", ParseStatus.valid, "<=", "", "<=", "");
-    testNodeParse(new BinaryOperation(), "< =", ParseStatus.valid, "<", " =", "<", "");
-
-    testNodeParse(new BinaryOperation(), "is", ParseStatus.valid, "is", "", "is", "");
-    testNodeParse(new BinaryOperation(), "isnt", ParseStatus.valid, "isnt", "", "isnt", "");
-    testNodeParse(new BinaryOperation(), "and", ParseStatus.valid, "and", "", "and", "");
-    testNodeParse(new BinaryOperation(), "or", ParseStatus.valid, "or", "", "or", "");
-    testNodeParse(new BinaryOperation(), "%", ParseStatus.invalid, "", "%", "");
-  });
   test("IndexableTerm", () => {
     testNodeParse(new Term(), "a", ParseStatus.valid, "a", "", "a", "");
   });
@@ -1528,5 +1509,137 @@ suite("Parsing Nodes", () => {
     );
     testNodeParse(new ExprNode(), `ref foo`, ParseStatus.valid, `ref foo`, "");
     testNodeParse(new ExprNode(), `ref `, ParseStatus.incomplete, `ref `, "");
+  });
+  test("OperatorAmbiguity#728", () => {
+    //Test operations
+    testNodeParse(new BinaryOperation(), ``, ParseStatus.empty, "", "", "", "");
+    testNodeParse(new BinaryOperation(), ` `, ParseStatus.incomplete, " ", "", " ", " ");
+    testNodeParse(new BinaryOperation(), `+`, ParseStatus.valid, "+", "", " + ", " + ");
+    testNodeParse(new BinaryOperation(), ` +`, ParseStatus.valid, " +", "", " + ", " + ");
+    testNodeParse(new BinaryOperation(), ` + `, ParseStatus.valid, " + ", "", " + ", " + ");
+    testNodeParse(new BinaryOperation(), `*`, ParseStatus.valid, "*", "", "*", "*");
+    testNodeParse(new BinaryOperation(), ` *`, ParseStatus.valid, " *", "", "*", "*");
+    testNodeParse(new BinaryOperation(), ` * `, ParseStatus.valid, " * ", "", "*", "*");
+    testNodeParse(new BinaryOperation(), `>=`, ParseStatus.valid, ">=", "", " >= ", " >= ");
+    testNodeParse(new BinaryOperation(), ` >=`, ParseStatus.valid, " >=", "", " >= ", " >= ");
+    testNodeParse(new BinaryOperation(), ` >= `, ParseStatus.valid, " >= ", "", " >= ", " >= ");
+    testNodeParse(new BinaryOperation(), `>`, ParseStatus.incomplete, ">", "", ">", ">");
+    testNodeParse(new BinaryOperation(), ` >`, ParseStatus.incomplete, " >", "", " >", " >");
+    testNodeParse(new BinaryOperation(), `> `, ParseStatus.valid, "> ", "", " > ", " > ");
+    testNodeParse(new BinaryOperation(), ` > `, ParseStatus.valid, " > ", "", " > ", " > ");
+    testNodeParse(new BinaryOperation(), `is`, ParseStatus.incomplete, "is", "", "is", "is");
+    testNodeParse(
+      new BinaryOperation(),
+      `is `,
+      ParseStatus.valid,
+      "is ",
+      "",
+      " is ",
+      "<keyword> is </keyword>",
+    );
+    testNodeParse(new BinaryOperation(), `isn`, ParseStatus.incomplete, "isn", "", "isn", "isn");
+    testNodeParse(
+      new BinaryOperation(),
+      `isnt`,
+      ParseStatus.valid,
+      "isnt",
+      "",
+      " isnt ",
+      "<keyword> isnt </keyword>",
+    );
+    testNodeParse(
+      new BinaryOperation(),
+      ` and `,
+      ParseStatus.valid,
+      " and ",
+      "",
+      " and ",
+      "<keyword> and </keyword>",
+    );
+    testNodeParse(
+      new BinaryOperation(),
+      `and`,
+      ParseStatus.valid,
+      "and",
+      "",
+      " and ",
+      "<keyword> and </keyword>",
+    );
+    testNodeParse(
+      new BinaryOperation(),
+      `anda`,
+      ParseStatus.valid,
+      "and",
+      "a",
+      " and ",
+      "<keyword> and </keyword>",
+    );
+
+    testNodeParse(new BinaryOperation(), `an`, ParseStatus.incomplete, "an", "", "an", "an");
+    testNodeParse(new BinaryOperation(), `not`, ParseStatus.invalid, "", "not", "", "");
+
+    //test expressions
+    testNodeParse(new BinaryExpression(), `3+`, ParseStatus.incomplete, "3+", "", "3 + ", "3 + ");
+    testNodeParse(new BinaryExpression(), `3 +`, ParseStatus.incomplete, "3 +", "", "3 + ", "3 + ");
+    testNodeParse(new BinaryExpression(), `3 `, ParseStatus.incomplete, "3 ", "", "3 ", "3 ");
+    testNodeParse(new BinaryExpression(), `3+4`, ParseStatus.valid, "3+4", "", "3 + 4", "3 + 4");
+    testNodeParse(
+      new BinaryExpression(),
+      `3>=4`,
+      ParseStatus.valid,
+      "3>=4",
+      "",
+      "3 >= 4",
+      "3 >= 4",
+    );
+    testNodeParse(new BinaryExpression(), `3>`, ParseStatus.incomplete, "3>", "", "3>", "3>");
+    testNodeParse(new BinaryExpression(), `3> `, ParseStatus.incomplete, "3> ", "", "3 > ", "3 > ");
+    testNodeParse(new BinaryExpression(), `3> 4`, ParseStatus.valid, "3> 4", "", "3 > 4", "3 > 4");
+    testNodeParse(new BinaryExpression(), `3>4`, ParseStatus.valid, "3>4", "", "3 > 4", "3 > 4");
+    testNodeParse(
+      new BinaryExpression(),
+      `3 > 4`,
+      ParseStatus.valid,
+      "3 > 4",
+      "",
+      "3 > 4",
+      "3 > 4",
+    );
+    testNodeParse(
+      new BinaryExpression(),
+      `3>=`,
+      ParseStatus.incomplete,
+      "3>=",
+      "",
+      "3 >= ",
+      "3 >= ",
+    );
+    testNodeParse(
+      new BinaryExpression(),
+      `3>=4`,
+      ParseStatus.valid,
+      "3>=4",
+      "",
+      "3 >= 4",
+      "3 >= 4",
+    );
+    testNodeParse(
+      new BinaryExpression(),
+      `3 is 4`,
+      ParseStatus.valid,
+      "3 is 4",
+      "",
+      "3 is 4",
+      "3<keyword> is </keyword>4",
+    );
+    testNodeParse(
+      new BinaryExpression(),
+      `11 div 3`,
+      ParseStatus.valid,
+      "11 div 3",
+      "",
+      "11 div 3",
+      "11<keyword> div </keyword>3",
+    );
   });
 });

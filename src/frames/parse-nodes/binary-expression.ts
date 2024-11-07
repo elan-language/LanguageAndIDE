@@ -20,10 +20,8 @@ export class BinaryExpression extends AbstractSequence {
   parseText(text: string): void {
     this.lhs = new Term();
     this.addElement(this.lhs);
-    this.addElement(new SpaceNode(Space.ignored));
     this.op = new BinaryOperation();
     this.addElement(this.op);
-    this.addElement(new SpaceNode(Space.ignored));
     this.rhs = new ExprNode();
     this.addElement(this.rhs);
     return super.parseText(text);
@@ -36,28 +34,9 @@ export class BinaryExpression extends AbstractSequence {
   }
 
   renderAsHtml(): string {
-    const op = this.op?.bestMatch?.matchedText;
-    let sp = op ? " " : "";
-    if (op && [MULT, DIVIDE, POWER].includes(op)) {
-      sp = "";
-    }
-    return `${this.lhs?.renderAsHtml()}${sp}${this.op!.renderAsHtml()}${sp}${this.rhs?.renderAsHtml()}`;
+    return `${this.lhs?.renderAsHtml()}${this.op!.renderAsHtml()}${this.rhs?.renderAsHtml()}`;
   }
   renderAsSource(): string {
-    let sp1 = "";
-    let sp2 = "";
-    const op = this.op!.bestMatch;
-    if (op) {
-      if (![MULT, DIVIDE, POWER].includes(op.matchedText)) {
-        sp1 = " ";
-        if (this.op!.status === ParseStatus.valid) {
-          sp2 = " ";
-        }
-      }
-    } else if (this.matchedText.endsWith(" ")) {
-      this.remainingText = "";
-      sp1 = " ";
-    }
-    return `${this.lhs?.renderAsSource()}${sp1}${this.op!.renderAsSource()}${sp2}${this.rhs?.renderAsSource()}`;
+    return `${this.lhs?.renderAsSource()}${this.op!.renderAsSource()}${this.rhs?.renderAsSource()}`;
   }
 }
