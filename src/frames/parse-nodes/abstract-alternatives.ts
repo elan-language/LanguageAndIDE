@@ -1,6 +1,6 @@
+import { ParseStatus } from "../status-enums";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { ParseNode } from "./parse-node";
-import { ParseStatus } from "../status-enums";
 
 export abstract class AbstractAlternatives extends AbstractParseNode {
   alternatives: ParseNode[] = [];
@@ -52,6 +52,7 @@ export abstract class AbstractAlternatives extends AbstractParseNode {
     return this.bestMatch ? this.bestMatch.compile() : "";
   }
   getCompletionAsHtml(): string {
-    return this.bestMatch ? this.bestMatch.getCompletionAsHtml() : super.getCompletionAsHtml();
+    const c = this.bestMatch ? this.bestMatch.getCompletionAsHtml() : super.getCompletionAsHtml();
+    return c;
   }
 }

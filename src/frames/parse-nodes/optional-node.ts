@@ -40,6 +40,9 @@ export class OptionalNode extends AbstractParseNode {
   }
 
   getCompletionAsHtml(): string {
-    return this.matchedNode ? this.matchedNode.getCompletionAsHtml() : super.getCompletionAsHtml();
+    const c = this.matchedNode
+      ? this.matchedNode.getCompletionAsHtml()
+      : super.getCompletionAsHtml();
+    return c;
   }
 }

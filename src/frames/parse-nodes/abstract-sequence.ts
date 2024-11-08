@@ -47,8 +47,10 @@ export abstract class AbstractSequence extends AbstractParseNode {
     return this.elements.reduce((result, current) => result + current.compile(), "");
   }
   getCompletionAsHtml(): string {
-    return this.elements.length > 0
-      ? this.elements.reduce((result, current) => `${result}${current.getCompletionAsHtml()}`, "")
-      : super.getCompletionAsHtml();
+    const c =
+      this.elements.length > 0
+        ? this.elements.reduce((result, current) => `${result}${current.getCompletionAsHtml()}`, "")
+        : super.getCompletionAsHtml();
+    return c;
   }
 }

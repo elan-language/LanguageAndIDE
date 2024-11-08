@@ -150,7 +150,7 @@ export class BinaryOperation extends AbstractParseNode {
     let completion = this.completion;
     if (this.matchedText === "" || this.matchedText === " ") {
       completion = "<pr>operator </pr>";
-    } 
+    }
     return completion;
   }
 }

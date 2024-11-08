@@ -9,7 +9,6 @@ import { Space } from "../src/frames/parse-nodes/parse-node-helpers";
 import { SpaceNode } from "../src/frames/parse-nodes/space-node";
 import { TypeNode } from "../src/frames/parse-nodes/type-node";
 import { ParseStatus } from "../src/frames/status-enums";
-import { ignore_test } from "./compiler/compiler-test-helpers";
 import { testCompletion } from "./testHelpers";
 
 suite("Parsing - Completions", () => {
@@ -93,26 +92,47 @@ suite("Parsing - Completions", () => {
       "<pr>Type</pr>(<pr>arguments</pr>)",
     );
   });
-  ignore_test("Func", () => {
+  test("Func", () => {
     testCompletion(new TypeNode(), "Fu", ParseStatus.valid, "");
     testCompletion(
       new TypeNode(),
       "Func",
       ParseStatus.incomplete,
-      "<of <pr>Type</pr> => <pr>Type</pr>>",
+      "<of <pr>input Type(s)</pr>=> <pr>return Type</pr>>",
     );
     testCompletion(
       new TypeNode(),
       "Func<",
       ParseStatus.incomplete,
-      "of <pr></pr>=> <pr>Type</pr>>",
+      "of <pr>input Type(s)</pr>=> <pr>return Type</pr>>",
     );
-    testCompletion(new TypeNode(), "Func<of Foo", ParseStatus.incomplete, " => <pr>Type</pr>>");
+    testCompletion(
+      new TypeNode(),
+      "Func<of Foo",
+      ParseStatus.incomplete,
+      " => <pr>return Type</pr>>",
+    );
     testCompletion(
       new TypeNode(),
       "Func<of Foo,",
       ParseStatus.incomplete,
-      "<pr>Type</pr>> ???  => <pr>expression</pr>",
+      "<pr>Type</pr> => <pr>return Type</pr>>",
+    );
+  });
+  test("Func 2", () => {
+    testCompletion(
+      new ParamDefNode(),
+      "f as Func",
+      ParseStatus.incomplete,
+      "<of <pr>input Type(s)</pr>=> <pr>return Type</pr>>",
+    );
+  });
+  test("Func 3", () => {
+    testCompletion(
+      new CSV(() => new ParamDefNode(), 0),
+      "f as Func",
+      ParseStatus.incomplete,
+      "<of <pr>input Type(s)</pr>=> <pr>return Type</pr>>",
     );
   });
   test("Lambda", () => {
