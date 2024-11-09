@@ -2,6 +2,7 @@ import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
   assertDoesNotCompile,
+  assertObjectCodeDoesNotExecute,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
@@ -317,5 +318,100 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, `100`);
+  });
+
+  test("Pass_TransparentFill", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+main
+  let vg be new VectorGraphics()
+  let circ be new CircleVG() with cx to 90, cy to 70, r to 13, stroke to red, strokeWidth to 2, fill to -1
+  let vg2 be vg.add(circ)
+  print vg2.asHtml()
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  const vg = system.initialise(new _stdlib.VectorGraphics());
+  const circ = (() => {const _a = {...system.initialise(new _stdlib.CircleVG())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new _stdlib.CircleVG()))); _a.cx = 90; _a.cy = 70; _a.r = 13; _a.stroke = _stdlib.red; _a.strokeWidth = 2; _a.fill = -1; return _a;})();
+  const vg2 = vg.add(circ);
+  system.printLine(_stdlib.asString(vg2.asHtml()));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(
+      fileImpl,
+      `<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="90%" cy="93.33333333333333%" r="14.625%" stroke="#ff0000" stroke-width="0.6%" fill="none" />
+</svg>
+`,
+    );
+  });
+
+  test("Pass_StrokeCannotBeNegative", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+main
+  let vg be new VectorGraphics()
+  let circ be new CircleVG() with stroke to -1
+  let vg2 be vg.add(circ)
+  print vg2.asHtml()
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  const vg = system.initialise(new _stdlib.VectorGraphics());
+  const circ = (() => {const _a = {...system.initialise(new _stdlib.CircleVG())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new _stdlib.CircleVG()))); _a.stroke = -1; return _a;})();
+  const vg2 = vg.add(circ);
+  system.printLine(_stdlib.asString(vg2.asHtml()));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeDoesNotExecute(
+      fileImpl,
+      `stroke colour cannot be negative (because a stroke cannot be transparent)`,
+    );
+  });
+  test("Pass_ColourCannotBeLargerThanFFFFFF", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+main
+  let vg be new VectorGraphics()
+  let circ be new CircleVG() with fill to 0x1000000
+  let vg2 be vg.add(circ)
+  print vg2.asHtml()
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  const vg = system.initialise(new _stdlib.VectorGraphics());
+  const circ = (() => {const _a = {...system.initialise(new _stdlib.CircleVG())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new _stdlib.CircleVG()))); _a.fill = 16777216; return _a;})();
+  const vg2 = vg.add(circ);
+  system.printLine(_stdlib.asString(vg2.asHtml()));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeDoesNotExecute(
+      fileImpl,
+      `colour must be in the range 0x0 to 0xffffff (0 to 16777215)`,
+    );
   });
 });
