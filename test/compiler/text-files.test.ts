@@ -33,19 +33,19 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
   });
 
-  test("Pass_ReadToEnd", async () => {
+  test("Pass_ReadAll", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
 main
   var tf set to openFileForReading()
-  var txt set to tf.readToEnd()
+  var txt set to tf.readAll()
   print txt
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var tf = await _stdlib.openFileForReading();
-  var txt = tf.readToEnd();
+  var txt = tf.readAll();
   system.printLine(_stdlib.asString(txt));
 }
 return [main, _tests];}`;
@@ -57,6 +57,34 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "Line1\nLine2\nLine3");
+  });
+
+  test("Pass_ReadToEnd", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+main
+  var tf set to openFileForReading()
+  var pass set to tf.readLine()
+  var txt set to tf.readToEnd()
+  print txt
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var tf = await _stdlib.openFileForReading();
+  var pass = tf.readLine();
+  var txt = tf.readToEnd();
+  system.printLine(_stdlib.asString(txt));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "Line2\nLine3");
   });
 
   test("Pass_ReadLine", async () => {
