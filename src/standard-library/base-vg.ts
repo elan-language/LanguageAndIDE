@@ -38,7 +38,9 @@ export class BaseVG {
 
   strokeAsColour(): string {
     if (this.stroke < 0) {
-      throw new ElanRuntimeError(`stroke colour cannot be negative (because a stroke cannot be transparent)`);
+      throw new ElanRuntimeError(
+        `stroke colour cannot be negative (because a stroke cannot be transparent)`,
+      );
     }
     return this.asColour(this.stroke);
   }

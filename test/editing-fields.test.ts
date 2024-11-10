@@ -2,6 +2,7 @@ import assert from "assert";
 import { DefaultProfile } from "../src/frames/default-profile";
 import { FileImpl } from "../src/frames/file-impl";
 import { Constant } from "../src/frames/globals/constant";
+import { GlobalComment } from "../src/frames/globals/global-comment";
 import { GlobalFunction } from "../src/frames/globals/global-function";
 import { MainFrame } from "../src/frames/globals/main-frame";
 import { CallStatement } from "../src/frames/statements/call-statement";
@@ -10,7 +11,7 @@ import { SetStatement } from "../src/frames/statements/set-statement";
 import { VarStatement } from "../src/frames/statements/var-statement";
 import { hash } from "../src/util";
 import { transforms } from "./compiler/compiler-test-helpers";
-import { key } from "./testHelpers";
+import { key, tab } from "./testHelpers";
 
 suite("Editing Fields Tests", () => {
   test("Entry of text with formatting", () => {
@@ -173,6 +174,25 @@ suite("Editing Fields Tests", () => {
     assert.equal(expr.text, "a is ");
     assert.equal(expr.cursorPos, 5);
     assert.equal(expr.getCompletion(), "<pr>expression</pr>");
+  });
+
+  test("Ensure Html tag in a comment is not recognised - #840", () => {
+    const comment = new GlobalComment(new FileImpl(hash, new DefaultProfile(), transforms()));
+    const field = comment.text;
+    field.select();
+    field.processKey(key("<"));
+    field.processKey(key("p"));
+    field.processKey(key(">"));
+    assert.equal(field.text, "<p>");
+    assert.equal(
+      field.renderAsHtml(),
+      `<field id="comment2" class="selected focused optional ok" tabindex=0><text><input spellcheck="false" data-cursor="3" size="2" style="width: 3ch" value="<p>"></text><placeholder>comment</placeholder><completion></completion><msg></msg><help title="Any text on a single line.">?</help></field>`,
+    );
+    field.processKey(tab());
+    assert.equal(
+      field.renderAsHtml(),
+      `<field id="comment2" class="optional ok" tabindex=0><text>&lt;p&gt;</text><placeholder>comment</placeholder><completion></completion><msg></msg><help title="Any text on a single line.">?</help></field>`,
+    );
   });
 
   test("Tabbing to use plain text completions #485", () => {

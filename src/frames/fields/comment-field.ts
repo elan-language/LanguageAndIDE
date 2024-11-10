@@ -1,4 +1,5 @@
 import { CodeSource } from "../code-source";
+import { escapeHtmlChars } from "../helpers";
 import { Frame } from "../interfaces/frame";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { RegExMatchNode } from "../parse-nodes/regex-match-node";
@@ -24,5 +25,9 @@ export class CommentField extends AbstractField {
 
   getIdPrefix(): string {
     return "comment";
+  }
+  renderAsHtml(): string {
+    const txt = this.isSelected() ? this.textAsHtml() : escapeHtmlChars(this.textAsHtml());
+    return `<field id="${this.htmlId}" class="${this.cls()}" tabindex=0><text>${txt}</text><placeholder>${this.placeholder}</placeholder><completion>${this.getCompletion()}</completion>${this.getMessage()}<help title="${this.help}">?</help></field>`;
   }
 }
