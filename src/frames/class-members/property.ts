@@ -53,7 +53,7 @@ export class Property extends AbstractFrame implements Member, ElanSymbol {
   }
 
   renderAsHtml(): string {
-    return `<property class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.modifierAsHtml()}<el-kw>${propertyKeyword} </el-kw>${this.name.renderAsHtml()}<el-kw> ${asKeyword} </el-kw>${this.type.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</property>`;
+    return `<el-prop class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.modifierAsHtml()}<el-kw>${propertyKeyword} </el-kw>${this.name.renderAsHtml()}<el-kw> ${asKeyword} </el-kw>${this.type.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-prop>`;
   }
 
   renderAsSource(): string {
