@@ -239,4 +239,5 @@ export enum TokenType {
   none,
   identifier,
   property,
+  type,
 }

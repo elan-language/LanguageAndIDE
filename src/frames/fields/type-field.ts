@@ -1,10 +1,15 @@
 import { CodeSource } from "../code-source";
-import { isAstType } from "../helpers";
+import { isAstType, TokenType } from "../helpers";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Frame } from "../interfaces/frame";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { TypeNode } from "../parse-nodes/type-node";
-import { filteredSymbols, isTypeName, removeIfSingleFullMatch } from "../symbols/symbol-helpers";
+import {
+  filteredSymbols,
+  filterForTokenType,
+  isTypeName,
+  removeIfSingleFullMatch,
+} from "../symbols/symbol-helpers";
 import { transforms } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractField } from "./abstract-field";
@@ -54,9 +59,21 @@ export class TypeField extends AbstractField {
     return [match, removeIfSingleFullMatch(symbols, match)];
   }
 
+  matchingSymbolsForIdNew(id: string, tokenType: TokenType): [string, ElanSymbol[]] {
+    const [match, symbols] = filteredSymbols(
+      id,
+      transforms(),
+      filterForTokenType(tokenType),
+      this.getHolder(),
+    );
+
+    return [match, removeIfSingleFullMatch(symbols, match)];
+  }
+
   public textAsHtml(): string {
     let popupAsHtml = "";
-    if (this.showAutoComplete()) {
+    const [id, tokenType] = this.getToMatchAndTokenType();
+    if (this.showAutoCompleteNew(tokenType)) {
       [this.autocompleteMatch, this.autocompleteSymbols] = this.matchingSymbolsForId();
       popupAsHtml = this.popupAsHtml();
     }

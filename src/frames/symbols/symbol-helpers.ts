@@ -353,8 +353,8 @@ export function isExpression(s: ElanSymbol, transforms: Transforms) {
   return !isProcedure(s, transforms);
 }
 
-export function isTypeName(s: ElanSymbol) {
-  const firstChar = s.symbolId[0] ?? "";
+export function isTypeName(s?: ElanSymbol) {
+  const firstChar = s?.symbolId[0] ?? "";
   return firstChar.toUpperCase() === firstChar;
 }
 
@@ -637,5 +637,7 @@ export function filterForTokenType(tt: TokenType): (s?: ElanSymbol) => boolean {
       return isVarOrPropertyStatement;
     case TokenType.property:
       return isProperty;
+    case TokenType.type:
+      return isTypeName;
   }
 }
