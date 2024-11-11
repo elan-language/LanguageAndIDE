@@ -92,11 +92,11 @@ statement, constructor, property, classDef > function, classDef > procedure, cla
 
 statement:not(.multiline), constant{
     padding-left: 1ch; /* Indent 2nd and subsequent lines if el-txt wraps */
-    el-txt-indent: -1ch;
+    text-indent: -1ch;
 }
 
 .autocomplete-popup * {
-    el-txt-indent: 0;
+    text-indent: 0;
 }
 
 el-hdr, constant, main, procedure, function, enum, classDef, constructor, property, member, global, test {
@@ -302,7 +302,7 @@ frno {
     color: darkgrey;
     font-size: 11pt;
     margin-left: 5px;
-    el-txt-indent: 0;
+    text-indent: 0;
 }
 
 constant frno, constant.multiline.collapsed frno {
@@ -319,7 +319,7 @@ statement.selected > frno
  {
     background-color: var(--selection);
     color: white;
-    el-txt-indent: 0;
+    text-indent: 0;
 }
 
 
