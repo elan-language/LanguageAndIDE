@@ -1,11 +1,11 @@
 import { AbstractFrame } from "../abstract-frame";
 import { CodeSource } from "../code-source";
 import {
-    cannotPassAsOutParameter,
-    mustBeKnownSymbol,
-    mustBeProcedure,
-    mustBePublicMember,
-    mustCallExtensionViaQualifier
+  cannotPassAsOutParameter,
+  mustBeKnownSymbol,
+  mustBeProcedure,
+  mustBePublicMember,
+  mustCallExtensionViaQualifier,
 } from "../compile-rules";
 import { ArgListField } from "../fields/arg-list-field";
 import { ProcRefField } from "../fields/proc-ref-field";
@@ -18,15 +18,15 @@ import { Statement } from "../interfaces/statement";
 import { callKeyword } from "../keywords";
 import { ProcedureType } from "../symbols/procedure-type";
 import {
-    isMemberOnFieldsClass,
-    scopePrefix,
-    updateScopeAndQualifier,
+  isMemberOnFieldsClass,
+  scopePrefix,
+  updateScopeAndQualifier,
 } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import {
-    isAstCollectionNode,
-    isAstIdNode,
-    matchParametersAndTypes,
+  isAstCollectionNode,
+  isAstIdNode,
+  matchParametersAndTypes,
 } from "../syntax-nodes/ast-helpers";
 import { QualifierAsn } from "../syntax-nodes/qualifier-asn";
 import { Transforms } from "../syntax-nodes/transforms";

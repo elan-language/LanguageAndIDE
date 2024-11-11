@@ -5,10 +5,10 @@ import { Frame } from "../interfaces/frame";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { TypeNode } from "../parse-nodes/type-node";
 import {
-    filteredSymbols,
-    filterForTokenType,
-    isTypeName,
-    removeIfSingleFullMatch,
+  filteredSymbols,
+  filterForTokenType,
+  isTypeName,
+  removeIfSingleFullMatch,
 } from "../symbols/symbol-helpers";
 import { transforms } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";

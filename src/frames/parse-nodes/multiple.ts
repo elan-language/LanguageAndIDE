@@ -1,3 +1,4 @@
+import { TokenType } from "../helpers";
 import { ParseStatus } from "../status-enums";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { ParseNode } from "./parse-node";
@@ -65,5 +66,13 @@ export class Multiple extends AbstractParseNode {
       (result, current) => `${result}${current.getCompletionAsHtml()}`,
       "",
     );
+  }
+
+  getToMatchAndTokenType(): [string, TokenType] {
+    const elems = this.getElements();
+    if (elems.length === 0) {
+      return ["", TokenType.none];
+    }
+    return elems[elems.length - 1].getToMatchAndTokenType();
   }
 }

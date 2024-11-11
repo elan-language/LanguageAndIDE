@@ -1,12 +1,12 @@
 import { CodeSource } from "../code-source";
 import { CompileError } from "../compile-error";
 import {
-    TokenType,
-    escapeHtmlChars,
-    helper_CompileOrParseAsDisplayStatus,
-    helper_compileMsgAsHtml,
-    helper_deriveCompileStatusFromErrors,
-    isCollapsible,
+  TokenType,
+  escapeHtmlChars,
+  helper_CompileOrParseAsDisplayStatus,
+  helper_compileMsgAsHtml,
+  helper_deriveCompileStatusFromErrors,
+  isCollapsible,
 } from "../helpers";
 import { AstNode } from "../interfaces/ast-node";
 import { editorEvent } from "../interfaces/editor-event";
@@ -635,8 +635,7 @@ export abstract class AbstractField implements Selectable, Field {
     const completion = this.getCompletion();
     if (this.text.endsWith(" ")) {
       return (
-        completion === "" ||
-        (completion.startsWith("<i>") && !completion.startsWith("<i>operator"))
+        completion === "" || (completion.startsWith("<i>") && !completion.startsWith("<i>operator"))
       );
     }
     return (

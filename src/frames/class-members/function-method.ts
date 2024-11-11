@@ -1,8 +1,8 @@
 import { CodeSource } from "../code-source";
 import {
-    mustBeCompatibleType,
-    mustBeKnownSymbolType,
-    mustBeUniqueNameInScope,
+  mustBeCompatibleType,
+  mustBeKnownSymbolType,
+  mustBeUniqueNameInScope,
 } from "../compile-rules";
 import { ClassFrame } from "../globals/class-frame";
 import { FunctionFrame } from "../globals/function-frame";

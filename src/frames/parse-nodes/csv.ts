@@ -1,3 +1,4 @@
+import { TokenType } from "../helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { CommaNode } from "./comma-node";
 import { Multiple } from "./multiple";
@@ -38,5 +39,20 @@ export class CSV extends AbstractSequence {
       comp = el.getCompletionAsHtml();
     }
     return comp;
+  }
+
+  getToMatchAndTokenType(): [string, TokenType] {
+    const elems = this.getElements();
+    if (elems.length === 0) {
+      return ["", TokenType.none];
+    }
+
+    if (elems.length === 2) {
+      if ((elems[1] as Multiple).getElements().length > 0) {
+        return elems[1].getToMatchAndTokenType();
+      }
+    }
+
+    return elems[0].getToMatchAndTokenType();
   }
 }

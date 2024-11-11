@@ -11,10 +11,10 @@ import { Property } from "../class-members/property";
 import { CodeSource } from "../code-source";
 import { CompileError } from "../compile-error";
 import {
-    mustBeAbstractClass,
-    mustBeKnownSymbolType,
-    mustBeUniqueNameInScope,
-    mustImplementSuperClasses,
+  mustBeAbstractClass,
+  mustBeKnownSymbolType,
+  mustBeUniqueNameInScope,
+  mustImplementSuperClasses,
 } from "../compile-rules";
 import { InheritsFrom } from "../fields/inheritsFrom";
 import { Regexes } from "../fields/regexes";
@@ -32,24 +32,24 @@ import { StatementFactory } from "../interfaces/statement-factory";
 import { SymbolType } from "../interfaces/symbol-type";
 import { abstractKeyword, classKeyword, constructorKeyword, thisKeyword } from "../keywords";
 import {
-    parentHelper_addChildAfter,
-    parentHelper_addChildBefore,
-    parentHelper_aggregateCompileErrorsOfChildren,
-    parentHelper_compileChildren,
-    parentHelper_getChildAfter,
-    parentHelper_getChildBefore,
-    parentHelper_getChildRange,
-    parentHelper_getFirstChild,
-    parentHelper_getFirstSelectorAsDirectChild,
-    parentHelper_getLastChild,
-    parentHelper_insertOrGotoChildSelector,
-    parentHelper_moveSelectedChildrenDownOne,
-    parentHelper_moveSelectedChildrenUpOne,
-    parentHelper_readWorstCompileStatusOfChildren,
-    parentHelper_readWorstParseStatusOfChildren,
-    parentHelper_removeChild,
-    parentHelper_renderChildrenAsHtml,
-    parentHelper_renderChildrenAsSource,
+  parentHelper_addChildAfter,
+  parentHelper_addChildBefore,
+  parentHelper_aggregateCompileErrorsOfChildren,
+  parentHelper_compileChildren,
+  parentHelper_getChildAfter,
+  parentHelper_getChildBefore,
+  parentHelper_getChildRange,
+  parentHelper_getFirstChild,
+  parentHelper_getFirstSelectorAsDirectChild,
+  parentHelper_getLastChild,
+  parentHelper_insertOrGotoChildSelector,
+  parentHelper_moveSelectedChildrenDownOne,
+  parentHelper_moveSelectedChildrenUpOne,
+  parentHelper_readWorstCompileStatusOfChildren,
+  parentHelper_readWorstParseStatusOfChildren,
+  parentHelper_removeChild,
+  parentHelper_renderChildrenAsHtml,
+  parentHelper_renderChildrenAsSource,
 } from "../parent-helpers";
 import { CommentStatement } from "../statements/comment-statement";
 import { ClassType } from "../symbols/class-type";
