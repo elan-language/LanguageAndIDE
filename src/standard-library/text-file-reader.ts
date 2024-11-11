@@ -41,6 +41,7 @@ export class TextFileReader {
     if (this.status === 0) {
       throw new ElanRuntimeError("Cannot use any method on a closed file");
     }
+    this.status = 0;
     return this.content.join("\n");
   }
 
