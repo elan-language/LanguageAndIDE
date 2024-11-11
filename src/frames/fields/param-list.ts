@@ -204,6 +204,6 @@ export class ParamList extends AbstractField implements Scope {
       [this.autocompleteMatch, this.autocompleteSymbols] = this.matchingSymbolsForId();
       popupAsHtml = this.popupAsHtml();
     }
-    return popupAsHtml + super.textAsHtml();
+    return super.textAsHtml() + popupAsHtml;
   }
 }
