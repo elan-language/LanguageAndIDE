@@ -91,6 +91,6 @@ export class AssertStatement extends AbstractFrame implements Statement {
       cls = DisplayStatus[DisplayStatus.ok];
       msg = `pass`;
     }
-    return ` <msg class="${cls}">${msg}</msg>`;
+    return ` <el-msg class="${cls}">${msg}</el-msg>`;
   }
 }

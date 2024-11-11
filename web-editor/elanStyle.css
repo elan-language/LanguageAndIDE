@@ -239,29 +239,29 @@ el-field.selected.empty.optional el-compl, el-field.selected.empty.optional el-c
     display: none;
 }
 
-/*  msg */
-msg {
+/*  el-msg */
+el-msg {
     display: inline;
     color: var(--reverseText);
 }
 
-msg.ok {
+el-msg.ok {
     background-color: var(--ok);
 }
-msg.warning {
+el-msg.warning {
     background-color: var(--warning);
 }
-msg.error {
+el-msg.error {
     background-color: var(--error);
 }
 
-/* el-field msg */
+/* el-field el-msg */
 
-el-field msg {
+el-field el-msg {
     display: none;
 }
 
-el-field.selected msg, el-field.selected msg * {
+el-field.selected el-msg, el-field.selected el-msg * {
     display: inline;
 }
 

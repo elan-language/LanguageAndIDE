@@ -134,7 +134,7 @@ export function helper_compileMsgAsHtml(loc: Frame | Field): string {
     cls = DisplayStatus[compile];
   }
   const toDisplay = escapeHtmlChars(msg);
-  return cls === "" ? "<msg></msg>" : ` <msg class="${cls}">${toDisplay}</msg>`;
+  return cls === "" ? "<el-msg></el-msg>" : ` <el-msg class="${cls}">${toDisplay}</el-msg>`;
 }
 
 export function helper_deriveCompileStatusFromErrors(errors: CompileError[]): CompileStatus {

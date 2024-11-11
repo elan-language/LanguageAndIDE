@@ -128,6 +128,6 @@ ${this.compileChildren(transforms)}\r
   }
 
   testMsgAsHtml(): string {
-    return ` <msg class="${DisplayStatus[DisplayStatus.error]}">failed to run</msg>`;
+    return ` <el-msg class="${DisplayStatus[DisplayStatus.error]}">failed to run</el-msg>`;
   }
 }

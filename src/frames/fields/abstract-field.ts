@@ -468,7 +468,7 @@ export abstract class AbstractField implements Selectable, Field {
 
   protected getMessage(): string {
     return this.parseErrorMsg !== ""
-      ? `<msg class="${DisplayStatus[DisplayStatus.error]}"> ${this.parseErrorMsg}</msg>`
+      ? `<el-msg class="${DisplayStatus[DisplayStatus.error]}"> ${this.parseErrorMsg}</el-msg>`
       : helper_compileMsgAsHtml(this);
   }
 

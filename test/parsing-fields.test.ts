@@ -27,7 +27,7 @@ suite("Field Parsing Tests", () => {
     assert.equal(text.readParseStatus(), ParseStatus.valid);
     assert.equal(
       text.renderAsHtml(),
-      `<el-field id="comment4" class="optional ok" tabindex=0><el-txt>Hello</el-txt><el-place>comment</el-place><el-compl></el-compl><msg></msg><el-help title="Any text on a single line.">?</el-help></el-field>`,
+      `<el-field id="comment4" class="optional ok" tabindex=0><el-txt>Hello</el-txt><el-place>comment</el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Any text on a single line.">?</el-help></el-field>`,
     );
   });
   test("parse varDefField", () => {
@@ -41,7 +41,7 @@ suite("Field Parsing Tests", () => {
     assert.equal(id.readParseStatus(), ParseStatus.valid);
     assert.equal(
       id.renderAsHtml(),
-      `<el-field id="var4" class="ok" tabindex=0><el-txt>ab_1</el-txt><el-place><i>name</i></el-place><el-compl></el-compl><msg></msg><el-help title="A variable name must start with a lower-case letter, optionally followed by any letters (lower or upper case), and/or numeric digits, and/or underscores - nothing else. (For'tuple deconstruction' or 'list deconstruction' consult documentation.)">?</el-help></el-field>`,
+      `<el-field id="var4" class="ok" tabindex=0><el-txt>ab_1</el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="A variable name must start with a lower-case letter, optionally followed by any letters (lower or upper case), and/or numeric digits, and/or underscores - nothing else. (For'tuple deconstruction' or 'list deconstruction' consult documentation.)">?</el-help></el-field>`,
     );
     id.setFieldToKnownValidText("Ab_1");
     id.parseCurrentText();
@@ -63,7 +63,7 @@ suite("Field Parsing Tests", () => {
     assert.equal(id.readParseStatus(), ParseStatus.valid);
     assert.equal(
       id.renderAsHtml(),
-      `<el-field id="var4" class="ok" tabindex=0><el-txt>ab_1</el-txt><el-place><i>name</i></el-place><el-compl></el-compl><msg></msg><el-help title="A variable name must start with a lower-case letter, optionally followed by any letters (lower or upper case), and/or numeric digits, and/or underscores - nothing else. (For'tuple deconstruction' or 'list deconstruction' consult documentation.)">?</el-help></el-field>`,
+      `<el-field id="var4" class="ok" tabindex=0><el-txt>ab_1</el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="A variable name must start with a lower-case letter, optionally followed by any letters (lower or upper case), and/or numeric digits, and/or underscores - nothing else. (For'tuple deconstruction' or 'list deconstruction' consult documentation.)">?</el-help></el-field>`,
     );
     id.setFieldToKnownValidText("Ab_1");
     id.parseCurrentText();
