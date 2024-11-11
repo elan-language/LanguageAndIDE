@@ -46,7 +46,7 @@ el-field.selected el-txt {
 el-method, el-method el-field.ok el-txt {
     color: var(--method);
 }
-type {
+el-type {
     color: var(--type);
 }
 string {
@@ -144,10 +144,10 @@ expand {
 }
 
 /* Fields */
-el-field.warning, el-field.warning el-kw, el-field.warning type, el-field.warning string, el-field.warning el-method {
+el-field.warning, el-field.warning el-kw, el-field.warning el-type, el-field.warning string, el-field.warning el-method {
     background-color: var(--warning);
 }
-.error el-field, el-field.error el-kw, el-field.error  type, el-field.error  string, el-field.error el-method {
+.error el-field, el-field.error el-kw, el-field.error  el-type, el-field.error  string, el-field.error el-method {
     color: var(--defaultText);
 }
 

@@ -138,7 +138,7 @@ suite("Parsing Nodes", () => {
       "empty [Int]",
       "",
       "",
-      "<el-kw>empty</el-kw> [<type>Int</type>]",
+      "<el-kw>empty</el-kw> [<el-type>Int</el-type>]",
     );
     testNodeParse(
       new ExprNode(),
@@ -147,7 +147,7 @@ suite("Parsing Nodes", () => {
       "empty {Int}",
       "",
       "",
-      "<el-kw>empty</el-kw> {<type>Int</type>}",
+      "<el-kw>empty</el-kw> {<el-type>Int</el-type>}",
     );
     testNodeParse(
       new ExprNode(),
@@ -156,7 +156,7 @@ suite("Parsing Nodes", () => {
       "empty [Int:String]",
       "",
       "",
-      "<el-kw>empty</el-kw> [<type>Int</type>:<type>String</type>]",
+      "<el-kw>empty</el-kw> [<el-type>Int</el-type>:<el-type>String</el-type>]",
     );
     testNodeParse(
       new ExprNode(),
@@ -165,7 +165,7 @@ suite("Parsing Nodes", () => {
       "empty {Int:Boolean}",
       "",
       "",
-      "<el-kw>empty</el-kw> {<type>Int</type>:<type>Boolean</type>}",
+      "<el-kw>empty</el-kw> {<el-type>Int</el-type>:<el-type>Boolean</el-type>}",
     );
     testNodeParse(
       new ExprNode(),
@@ -174,7 +174,7 @@ suite("Parsing Nodes", () => {
       "empty String",
       "",
       "",
-      "<el-kw>empty</el-kw> <type>String</type>",
+      "<el-kw>empty</el-kw> <el-type>String</el-type>",
     );
     testNodeParse(new ExprNode(), "empty Lit<of Int>", ParseStatus.valid, "", "", "", "");
     testNodeParse(
@@ -803,7 +803,7 @@ suite("Parsing Nodes", () => {
       "Foo",
       "",
       "",
-      "<type>Foo</type>",
+      "<el-type>Foo</el-type>",
     );
     testNodeParse(new TypeSimpleNode(), `foo`, ParseStatus.invalid, "", "foo", "");
   });
@@ -828,7 +828,7 @@ suite("Parsing Nodes", () => {
       "Foo<of Bar>",
       "",
       "",
-      "<type>Foo</type>&lt;<el-kw>of</el-kw> <type>Bar</type>&gt;",
+      "<el-type>Foo</el-type>&lt;<el-kw>of</el-kw> <el-type>Bar</el-type>&gt;",
     );
     testNodeParse(
       new TypeSimpleOrGeneric(),
@@ -837,7 +837,7 @@ suite("Parsing Nodes", () => {
       "Foo<of List<of Bar>>",
       "",
       "",
-      "<type>Foo</type>&lt;<el-kw>of</el-kw> <type>List</type>&lt;<el-kw>of</el-kw> <type>Bar</type>&gt;&gt;",
+      "<el-type>Foo</el-type>&lt;<el-kw>of</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Bar</el-type>&gt;&gt;",
     );
     testNodeParse(
       new TypeSimpleOrGeneric(),
@@ -846,7 +846,7 @@ suite("Parsing Nodes", () => {
       "Dictionary<of Bar, Yon>",
       "",
       "",
-      "<type>Dictionary</type>&lt;<el-kw>of</el-kw> <type>Bar</type>, <type>Yon</type>&gt;",
+      "<el-type>Dictionary</el-type>&lt;<el-kw>of</el-kw> <el-type>Bar</el-type>, <el-type>Yon</el-type>&gt;",
     );
     testNodeParse(
       new TypeSimpleOrGeneric(),
@@ -855,7 +855,7 @@ suite("Parsing Nodes", () => {
       "List<of (Bar, Yon)>",
       "",
       "",
-      "<type>List</type>&lt;<el-kw>of</el-kw> (<type>Bar</type>, <type>Yon</type>)&gt;",
+      "<el-type>List</el-type>&lt;<el-kw>of</el-kw> (<el-type>Bar</el-type>, <el-type>Yon</el-type>)&gt;",
     );
   });
   test("TypeNode", () => {
@@ -1047,7 +1047,7 @@ suite("Parsing Nodes", () => {
       "x as String",
       "",
       "x as String",
-      "x <el-kw>as</el-kw> <type>String</type>",
+      "x <el-kw>as</el-kw> <el-type>String</el-type>",
     );
     testNodeParse(
       new ParamDefNode(),
@@ -1056,7 +1056,7 @@ suite("Parsing Nodes", () => {
       "out x as String",
       "",
       "out x as String",
-      "<el-kw>out</el-kw> x <el-kw>as</el-kw> <type>String</type>",
+      "<el-kw>out</el-kw> x <el-kw>as</el-kw> <el-type>String</el-type>",
     );
     testNodeParse(
       new ParamDefNode(),
