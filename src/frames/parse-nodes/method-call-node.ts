@@ -21,6 +21,6 @@ export class MethodCallNode extends AbstractSequence {
     }
   }
   renderAsHtml(): string {
-    return `<method>${this.name!.renderAsHtml()}</method>(${this.args!.renderAsHtml()})`;
+    return `<el-method>${this.name!.renderAsHtml()}</el-method>(${this.args!.renderAsHtml()})`;
   }
 }

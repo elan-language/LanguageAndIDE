@@ -53,7 +53,7 @@ export abstract class ProcedureFrame extends FrameWithStatements implements Elan
   }
   public renderAsHtml(): string {
     return `<procedure class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<top><expand>+</expand><el-kw>procedure </el-kw><method>${this.name.renderAsHtml()}</method>(${this.params.renderAsHtml()})${this.compileMsgAsHtml()}${this.getFrNo()}</top>
+<top><expand>+</expand><el-kw>procedure </el-kw><el-method>${this.name.renderAsHtml()}</el-method>(${this.params.renderAsHtml()})${this.compileMsgAsHtml()}${this.getFrNo()}</top>
 ${this.renderChildrenAsHtml()}
 <el-kw>end procedure</el-kw>
 </procedure>`;

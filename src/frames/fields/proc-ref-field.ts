@@ -8,11 +8,11 @@ import { InstanceProcRef } from "../parse-nodes/instanceProcRef";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { ParseStatus } from "../status-enums";
 import {
-  filteredSymbols,
-  filterForTokenType,
-  isIdOrProcedure,
-  isProcedure,
-  removeIfSingleFullMatch,
+    filteredSymbols,
+    filterForTokenType,
+    isIdOrProcedure,
+    isProcedure,
+    removeIfSingleFullMatch,
 } from "../symbols/symbol-helpers";
 import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
@@ -74,7 +74,7 @@ export class ProcRefField extends AbstractField {
     } else if (this.readParseStatus() === ParseStatus.valid) {
       const bestMatch = (this.rootNode! as Alternatives).bestMatch;
       if (bestMatch instanceof IdentifierNode) {
-        text = `<method>${this.text}</method>`;
+        text = `<el-method>${this.text}</el-method>`;
       } else {
         text = (bestMatch as InstanceProcRef).renderAsHtml();
       }

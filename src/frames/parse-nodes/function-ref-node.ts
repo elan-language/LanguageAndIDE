@@ -18,6 +18,6 @@ export class FunctionRefNode extends AbstractSequence {
     }
   }
   renderAsHtml(): string {
-    return `<el-kw>${refKeyword}</el-kw> <method>${this.name!.renderAsHtml()}</method>`;
+    return `<el-kw>${refKeyword}</el-kw> <el-method>${this.name!.renderAsHtml()}</el-method>`;
   }
 }

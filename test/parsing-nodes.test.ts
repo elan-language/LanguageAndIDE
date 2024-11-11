@@ -627,7 +627,7 @@ suite("Parsing Nodes", () => {
   //     `foo()`,
   //     "",
   //     "foo()",
-  //     "<method>foo</method>()",
+  //     "<el-method>foo</el-method>()",
   //   );
   //   testNodeParse(
   //     new MethodCallNode(),
@@ -652,7 +652,7 @@ suite("Parsing Nodes", () => {
   //     ``,
   //     "",
   //     "bar.foo(a)",
-  //     "bar.<method>foo</method>(a)",
+  //     "bar.<el-method>foo</el-method>(a)",
   //   );
   //   testNodeParse(
   //     new MethodCallNode(),
@@ -661,7 +661,7 @@ suite("Parsing Nodes", () => {
   //     ``,
   //     "",
   //     "global.foo()",
-  //     "<el-kw>global</el-kw>.<method>foo</method>()",
+  //     "<el-kw>global</el-kw>.<el-method>foo</el-method>()",
   //   );
   //   testNodeParse(
   //     new MethodCallNode(),
@@ -670,7 +670,7 @@ suite("Parsing Nodes", () => {
   //     ``,
   //     "",
   //     "library.foo()",
-  //     "<el-kw>library</el-kw>.<method>foo</method>()",
+  //     "<el-kw>library</el-kw>.<el-method>foo</el-method>()",
   //   );
   //   testNodeParse(
   //     new MethodCallNode(),
@@ -689,7 +689,7 @@ suite("Parsing Nodes", () => {
   //     ``,
   //     "",
   //     "a[0].isBefore(b[0])",
-  //     "a[0].<method>isBefore</method>(b[0])",
+  //     "a[0].<el-method>isBefore</el-method>(b[0])",
   //   );
   // });
   test("Lists", () => {
@@ -1491,7 +1491,7 @@ suite("Parsing Nodes", () => {
       `this.a.b()`,
       "",
       "this.a.b()",
-      "<el-kw>this</el-kw>.a.<method>b</method>()",
+      "<el-kw>this</el-kw>.a.<el-method>b</el-method>()",
     );
     testNodeParse(
       new ExprNode(),

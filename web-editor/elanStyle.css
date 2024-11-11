@@ -43,7 +43,7 @@ el-field.selected el-txt {
     border-color: black;
     position:relative; /* Ensures that the border is not overwritten by textfields in the line below */ 
 }
-method, method el-field.ok el-txt {
+el-method, el-method el-field.ok el-txt {
     color: var(--method);
 }
 type {
@@ -144,10 +144,10 @@ expand {
 }
 
 /* Fields */
-el-field.warning, el-field.warning el-kw, el-field.warning type, el-field.warning string, el-field.warning method {
+el-field.warning, el-field.warning el-kw, el-field.warning type, el-field.warning string, el-field.warning el-method {
     background-color: var(--warning);
 }
-.error el-field, el-field.error el-kw, el-field.error  type, el-field.error  string, el-field.error method {
+.error el-field, el-field.error el-kw, el-field.error  type, el-field.error  string, el-field.error el-method {
     color: var(--defaultText);
 }
 
@@ -313,7 +313,7 @@ statement.selected:not(.multiline) frno,
 .multiline.selected > top frno, 
 constant.selected frno, 
 .selected ~ frno, 
-method:has(el-field.selected) ~ frno,
+el-method:has(el-field.selected) ~ frno,
 frno:has(~ el-field.selected), /* this and next clause specifically for 'repeat expression' el-field */
 statement.selected > frno  
  {

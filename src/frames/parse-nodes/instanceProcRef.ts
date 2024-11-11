@@ -28,7 +28,7 @@ export class InstanceProcRef extends AbstractSequence {
   }
 
   renderAsHtml(): string {
-    return `${this.prefix!.matchedNode ? this.prefix?.matchedNode.renderAsHtml() : ""}<method>${this.simple?.renderAsHtml()}</method>`;
+    return `${this.prefix!.matchedNode ? this.prefix?.matchedNode.renderAsHtml() : ""}<el-method>${this.simple?.renderAsHtml()}</el-method>`;
   }
 
   getToMatchAndTokenType(): [string, TokenType] {
