@@ -133,7 +133,7 @@ suite("Selector tests", () => {
     assert.equal(help, " set switch");
     assert.equal(
       s.renderAsHtml(),
-      `<statement class="ok" id='select3' tabindex="0"><selector><el-txt>s</el-txt><placeholder>new code</placeholder><help class="selector"> set switch</help></selector></statement>`,
+      `<el-statement class="ok" id='select3' tabindex="0"><selector><el-txt>s</el-txt><placeholder>new code</placeholder><help class="selector"> set switch</help></selector></el-statement>`,
     );
   });
 

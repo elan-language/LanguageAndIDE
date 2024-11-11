@@ -36,11 +36,11 @@ export class IfStatement extends FrameWithStatements implements Statement {
   }
 
   renderAsHtml(): string {
-    return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
+    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><el-kw>if </el-kw>${this.condition.renderAsHtml()}${this.getFrNo()}</top>${this.compileMsgAsHtml()}
 ${this.renderChildrenAsHtml()}
 <el-kw>end if</el-kw>
-</statement>`;
+</el-statement>`;
   }
   renderAsSource(): string {
     return `${this.indent()}if ${this.condition.renderAsSource()}\r

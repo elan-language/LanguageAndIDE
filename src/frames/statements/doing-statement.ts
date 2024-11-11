@@ -25,10 +25,10 @@ export class DoingStatement extends FrameWithStatements implements Statement {
     return doingKeyword;
   }
   renderAsHtml(): string {
-    return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
+    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><el-kw>${doingKeyword} </el-kw>${this.getFrNo()}</top>
 ${this.renderChildrenAsHtml()}
-</statement>`;
+</el-statement>`;
   }
 
   renderAsSource(): string {
