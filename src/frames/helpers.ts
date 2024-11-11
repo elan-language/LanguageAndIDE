@@ -234,3 +234,10 @@ export function mapSymbolType(ids: string[], st: SymbolType) {
 export function mapIds(ids: string[]) {
   return ids.length > 1 ? `[${ids.join(", ")}]` : ids[0];
 }
+
+export enum TokenType {
+  none,
+  identifier,
+  property,
+  type,
+}

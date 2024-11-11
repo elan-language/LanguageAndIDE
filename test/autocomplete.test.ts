@@ -134,7 +134,7 @@ end class`;
       ["aa3", "Int"],
     ] as [string, string][];
 
-    await assertAutocompletesWithString(fileImpl, "ident9", " ", expected);
+    await assertAutocompletesWithString(fileImpl, "ident9", "a", expected);
   });
 
   test("Pass_InProcedure", async () => {
@@ -162,7 +162,7 @@ end class`;
       ["aa3", "Int"],
     ] as [string, string][];
 
-    await assertAutocompletesWithString(fileImpl, "ident16", " ", expected);
+    await assertAutocompletesWithString(fileImpl, "ident16", "a", expected);
   });
 
   test("Pass_FiltersByInput", async () => {

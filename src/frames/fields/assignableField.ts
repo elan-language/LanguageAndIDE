@@ -10,6 +10,7 @@ import { DeconstructedTuple } from "../parse-nodes/deconstructed-tuple";
 import { ParseNode } from "../parse-nodes/parse-node";
 import {
   filteredSymbols,
+  filterForTokenType,
   isInsideClass,
   isMemberOnFieldsClass,
   isProperty,
@@ -18,6 +19,8 @@ import {
 } from "../symbols/symbol-helpers";
 import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
+import { ParseStatus } from "../status-enums";
+import { TokenType } from "../helpers";
 
 export class AssignableField extends AbstractField {
   constructor(holder: Frame) {
@@ -45,10 +48,9 @@ export class AssignableField extends AbstractField {
     return all.filter((s) => isProperty(s)) as ElanSymbol[];
   }
 
-  matchingSymbolsForId(): [string, ElanSymbol[]] {
+  matchingSymbolsForIdNew(id: string, tokeType: TokenType): [string, ElanSymbol[]] {
     const scope = this.getHolder();
-    const id = this.rootNode?.matchedText ?? "";
-    let symbols = filteredSymbols(id, transforms(), (s) => isVarOrPropertyStatement(s), scope);
+    let symbols = filteredSymbols(id, transforms(), filterForTokenType(tokeType), scope);
 
     if (isInsideClass(scope)) {
       const prefix = "property.";
@@ -78,8 +80,12 @@ export class AssignableField extends AbstractField {
 
   public textAsHtml(): string {
     let popupAsHtml = "";
-    if (this.showAutoComplete()) {
-      [this.autocompleteMatch, this.autocompleteSymbols] = this.matchingSymbolsForId();
+    const [id, tokenType] = this.getToMatchAndTokenType();
+    if (this.showAutoCompleteNew(tokenType)) {
+      [this.autocompleteMatch, this.autocompleteSymbols] = this.matchingSymbolsForIdNew(
+        id,
+        tokenType,
+      );
       popupAsHtml = this.popupAsHtml();
     }
     return super.textAsHtml() + popupAsHtml;

@@ -1,3 +1,4 @@
+import { TokenType } from "../helpers";
 import { OPEN_BRACE, OPEN_BRACKET, OPEN_SQ_BRACKET } from "../symbols";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { FuncTypeNode } from "./func-type-node";
@@ -35,5 +36,9 @@ export class TypeNode extends AbstractAlternatives {
       }
       super.parseText(text.trimStart());
     }
+  }
+
+  override getToMatchAndTokenType(): [string, TokenType] {
+    return [this.matchedText, TokenType.type];
   }
 }

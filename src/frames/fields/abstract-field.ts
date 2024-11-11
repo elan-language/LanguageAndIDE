@@ -1,6 +1,7 @@
 import { CodeSource } from "../code-source";
 import { CompileError } from "../compile-error";
 import {
+  TokenType,
   escapeHtmlChars,
   helper_CompileOrParseAsDisplayStatus,
   helper_compileMsgAsHtml,
@@ -622,6 +623,15 @@ export abstract class AbstractField implements Selectable, Field {
     );
   }
 
+  protected showAutoCompleteNew(tt: TokenType) {
+    return (
+      tt !== TokenType.none &&
+      this.selected &&
+      this.cursorPos === this.text.length &&
+      this.readParseStatus() !== ParseStatus.invalid
+    );
+  }
+
   protected requiresSymbolComplete() {
     const completion = this.getCompletion();
     if (this.text.endsWith(" ")) {
@@ -639,5 +649,9 @@ export abstract class AbstractField implements Selectable, Field {
       completion === ">" ||
       completion.startsWith("<pr>")
     );
+  }
+
+  protected getToMatchAndTokenType(): [string, TokenType] {
+    return this.rootNode ? this.rootNode.getToMatchAndTokenType() : ["", TokenType.none];
   }
 }

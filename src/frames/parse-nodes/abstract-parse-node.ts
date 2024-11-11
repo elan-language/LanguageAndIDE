@@ -1,3 +1,4 @@
+import { TokenType } from "../helpers";
 import { ParseStatus } from "../status-enums";
 import { ParseNode } from "./parse-node";
 
@@ -46,5 +47,9 @@ export abstract class AbstractParseNode implements ParseNode {
     this.matchedText = other.matchedText;
     this.remainingText = other.remainingText;
     this.errorMessage = other.errorMessage;
+  }
+
+  getToMatchAndTokenType(): [string, TokenType] {
+    return ["", TokenType.none];
   }
 }
