@@ -176,11 +176,11 @@ export class RecordFrame extends AbstractFrame implements Frame, Parent, Collaps
   }
 
   public renderAsHtml(): string {
-    return `<classDef class="${this.cls()}" id='${this.htmlId}' tabindex="0">
+    return `<el-class class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><el-kw>record </el-kw>${this.name.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</top>
 ${parentHelper_renderChildrenAsHtml(this)}
 <el-kw>end record</el-kw>
-</classDef>`;
+</el-class>`;
   }
 
   indent(): string {

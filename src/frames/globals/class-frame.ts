@@ -231,11 +231,11 @@ export class ClassFrame extends AbstractFrame implements Frame, Parent, Collapsi
   }
 
   public renderAsHtml(): string {
-    return `<classDef class="${this.cls()}" id='${this.htmlId}' tabindex="0">
+    return `<el-class class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand>${this.modifiersAsHtml()}<el-kw>class </el-kw>${this.name.renderAsHtml()}${this.inheritanceAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</top>
 ${parentHelper_renderChildrenAsHtml(this)}
 <el-kw>end class</el-kw>
-</classDef>`;
+</el-class>`;
   }
 
   indent(): string {
