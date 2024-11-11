@@ -473,7 +473,7 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   renderAsHtml(): string {
-    return `<el-field id="${this.htmlId}" class="${this.cls()}" tabindex=0><el-txt>${this.textAsHtml()}</el-txt><el-place>${this.placeholder}</el-place><completion>${this.getCompletion()}</completion>${this.getMessage()}<help title="${this.help}">?</help></el-field>`;
+    return `<el-field id="${this.htmlId}" class="${this.cls()}" tabindex=0><el-txt>${this.textAsHtml()}</el-txt><el-place>${this.placeholder}</el-place><el-compl>${this.getCompletion()}</el-compl>${this.getMessage()}<help title="${this.help}">?</help></el-field>`;
   }
 
   indent(): string {
