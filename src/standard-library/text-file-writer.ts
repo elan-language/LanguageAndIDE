@@ -26,6 +26,20 @@ export class TextFileWriter {
   }
 
   @elanProcedure(ProcedureOptions.async)
+  writeWholeFile(data: string) {
+    if (this.status === 0) {
+      throw new ElanRuntimeError("Cannot use any method on a closed file");
+    }
+    if (this.content.length > 0) {
+      throw new ElanRuntimeError(
+        "Cannot call 'writeWholeFile' if content has already been written using 'writeLine'",
+      );
+    }
+    this.status = 0;
+    return this.system!.elanInputOutput.writeFile(this.fileName, data);
+  }
+
+  @elanProcedure(ProcedureOptions.async)
   saveAndClose() {
     if (this.status === 0) {
       throw new ElanRuntimeError("Cannot use any method on a closed file");

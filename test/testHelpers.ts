@@ -94,9 +94,7 @@ export function wrap(html: string) {
 <title>Elan Editor</title>
 </head>
 <body>
-<elan-code>
 ${html}
-</elan-code>
 </body>
 </html>`;
 }
