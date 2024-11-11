@@ -639,5 +639,7 @@ export function filterForTokenType(tt: TokenType): (s?: ElanSymbol) => boolean {
       return isProperty;
     case TokenType.type:
       return isTypeName;
+    case TokenType.idOrProcedure:
+      return (s?: ElanSymbol) => isIdOrProcedure(s!, transforms());
   }
 }

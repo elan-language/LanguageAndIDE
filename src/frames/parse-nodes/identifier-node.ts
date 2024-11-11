@@ -1,4 +1,5 @@
 import { Regexes } from "../fields/regexes";
+import { TokenType } from "../helpers";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { matchRegEx } from "./parse-node-helpers";
 
@@ -16,5 +17,9 @@ export class IdentifierNode extends AbstractParseNode {
         Regexes.identifier,
       );
     }
+  }
+
+  getToMatchAndTokenType(): [string, TokenType] {
+    return [this.matchedText, TokenType.idOrProcedure];
   }
 }

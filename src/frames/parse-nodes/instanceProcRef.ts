@@ -1,3 +1,4 @@
+import { TokenType } from "../helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
 import { DotAfter } from "./dot-after";
@@ -28,5 +29,9 @@ export class InstanceProcRef extends AbstractSequence {
 
   renderAsHtml(): string {
     return `${this.prefix!.matchedNode ? this.prefix?.matchedNode.renderAsHtml() : ""}<method>${this.simple?.renderAsHtml()}</method>`;
+  }
+
+  getToMatchAndTokenType(): [string, TokenType] {
+    return [this.matchedText, TokenType.idOrProcedure];
   }
 }
