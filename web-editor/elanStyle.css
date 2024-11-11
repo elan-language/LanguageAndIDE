@@ -82,7 +82,7 @@ el-hdr .ok {
 
 
 /* Horizontal and vertical spacing */
-el-statement, constructor, property, classDef > function, classDef > procedure, classDef > member {
+el-statement, el-constructor, property, classDef > function, classDef > procedure, classDef > member {
     display: block;
     background-color: var(--defaultBackground);
     border-left-style: solid;
@@ -99,7 +99,7 @@ el-statement:not(.multiline), constant{
     text-indent: 0;
 }
 
-el-hdr, constant, main, procedure, function, enum, classDef, constructor, property, member, global, test {
+el-hdr, constant, main, procedure, function, enum, classDef, el-constructor, property, member, global, test {
     display: block;
     padding-bottom: 1ch;
 }
