@@ -6,7 +6,7 @@ import {
   cannotAccessPrivateMemberInAbstractClass,
 } from "../compile-rules";
 import { ClassFrame } from "../globals/class-frame";
-import { isClass, isConstant, isFile, isMember, isScope } from "../helpers";
+import { isClass, isConstant, isFile, isMember, isScope, TokenType } from "../helpers";
 import { AstNode } from "../interfaces/ast-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { Class } from "../interfaces/class";
@@ -627,4 +627,15 @@ export function removeTypeSymbols(s: string) {
   }
 
   return id;
+}
+
+export function filterForTokenType(tt: TokenType): (s?: ElanSymbol) => boolean {
+  switch (tt) {
+    case TokenType.none:
+      return () => false;
+    case TokenType.identifier:
+      return isVarOrPropertyStatement;
+    case TokenType.property:
+      return isProperty;
+  }
 }

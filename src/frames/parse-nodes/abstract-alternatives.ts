@@ -1,3 +1,4 @@
+import { TokenType } from "../helpers";
 import { ParseStatus } from "../status-enums";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { ParseNode } from "./parse-node";
@@ -54,5 +55,9 @@ export abstract class AbstractAlternatives extends AbstractParseNode {
   getCompletionAsHtml(): string {
     const c = this.bestMatch ? this.bestMatch.getCompletionAsHtml() : super.getCompletionAsHtml();
     return c;
+  }
+
+  override getToMatchAndTokenType(): [string, TokenType] {
+    return this.bestMatch?.getToMatchAndTokenType() ?? super.getToMatchAndTokenType();
   }
 }

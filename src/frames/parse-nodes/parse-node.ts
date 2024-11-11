@@ -1,3 +1,4 @@
+import { TokenType } from "../helpers";
 import { ParseStatus } from "../status-enums";
 
 export interface ParseNode {
@@ -14,4 +15,6 @@ export interface ParseNode {
 
   getCompletionAsHtml(): string;
   setCompletionWhenEmpty(ph: string): void;
+
+  getToMatchAndTokenType(): [string, TokenType];
 }
