@@ -297,7 +297,7 @@ el-select el-place  {
     display: none;
 }
 
-frno {
+el-fr {
     float: right;
     color: darkgrey;
     font-size: 11pt;
@@ -305,17 +305,17 @@ frno {
     text-indent: 0;
 }
 
-el-const frno, el-const.multiline.collapsed frno {
+el-const el-fr, el-const.multiline.collapsed el-fr {
     display: inline-block;
 }
 
-el-statement.selected:not(.multiline) frno, 
-.multiline.selected > el-top frno, 
-el-const.selected frno, 
-.selected ~ frno, 
-el-method:has(el-field.selected) ~ frno,
-frno:has(~ el-field.selected), /* this and next clause specifically for 'repeat expression' el-field */
-el-statement.selected > frno  
+el-statement.selected:not(.multiline) el-fr, 
+.multiline.selected > el-top el-fr, 
+el-const.selected el-fr, 
+.selected ~ el-fr, 
+el-method:has(el-field.selected) ~ el-fr,
+el-fr:has(~ el-field.selected), /* this and next clause specifically for 'repeat expression' el-field */
+el-statement.selected > el-fr  
  {
     background-color: var(--selection);
     color: white;
