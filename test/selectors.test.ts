@@ -95,7 +95,7 @@ suite("Selector tests", () => {
     assert.equal(help, " procedure property");
     assert.equal(
       s.renderAsHtml(),
-      `<member class="ok" id='select8' tabindex="0"><selector><el-txt>pro</el-txt><placeholder>new code</placeholder><help class="selector"> procedure property</help></selector></member>`,
+      `<el-member class="ok" id='select8' tabindex="0"><selector><el-txt>pro</el-txt><placeholder>new code</placeholder><help class="selector"> procedure property</help></selector></el-member>`,
     );
   });
 
@@ -118,7 +118,7 @@ suite("Selector tests", () => {
     assert.equal(s.getCompletion(), " procedure property");
     assert.equal(
       s.renderAsHtml(),
-      `<member class="ok" id='select8' tabindex="0"><selector><el-txt>abstract pro</el-txt><placeholder>new code</placeholder><help class="selector"> procedure property</help></selector></member>`,
+      `<el-member class="ok" id='select8' tabindex="0"><selector><el-txt>abstract pro</el-txt><placeholder>new code</placeholder><help class="selector"> procedure property</help></selector></el-member>`,
     );
   });
 

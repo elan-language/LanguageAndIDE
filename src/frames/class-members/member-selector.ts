@@ -5,18 +5,18 @@ import { Frame } from "../interfaces/frame";
 import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
 import {
-  abstractFunctionKeywords,
-  abstractKeyword,
-  abstractProcedureKeywords,
-  abstractPropertyKeywords,
-  commentMarker,
-  functionKeyword,
-  privateFunctionKeywords,
-  privateKeyword,
-  privateProcedureKeywords,
-  privatePropertyKeywords,
-  procedureKeyword,
-  propertyKeyword,
+    abstractFunctionKeywords,
+    abstractKeyword,
+    abstractProcedureKeywords,
+    abstractPropertyKeywords,
+    commentMarker,
+    functionKeyword,
+    privateFunctionKeywords,
+    privateKeyword,
+    privateProcedureKeywords,
+    privatePropertyKeywords,
+    procedureKeyword,
+    propertyKeyword,
 } from "../keywords";
 
 export class MemberSelector extends AbstractSelector implements Member {
@@ -70,7 +70,7 @@ export class MemberSelector extends AbstractSelector implements Member {
   }
 
   renderAsHtml(): string {
-    return `<member class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.textToDisplayAsHtml()}</member>`;
+    return `<el-member class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.textToDisplayAsHtml()}</el-member>`;
   }
 
   indent(): string {
