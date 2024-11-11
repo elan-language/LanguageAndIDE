@@ -59,7 +59,7 @@ el-regex {
 }
 
 /* Header & comments */
-comment *, comment el-field.ok el-txt  {
+el-comment *, el-comment el-field.ok el-txt  {
     color: var(--comment);
 }
 
@@ -104,7 +104,7 @@ header, constant, main, procedure, function, enum, classDef, constructor, proper
     padding-bottom: 1ch;
 }
 
-global:has(comment) {
+global:has(el-comment) {
     padding-bottom: 0;
 }
 
