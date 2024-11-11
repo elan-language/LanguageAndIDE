@@ -5,7 +5,6 @@ import {
   elanProcedure,
   ElanString,
   FunctionOptions,
-  ProcedureOptions,
 } from "../elan-type-annotations";
 import { System } from "../system";
 
@@ -38,15 +37,7 @@ export class TextFileReader {
   }
 
   @elanFunction(FunctionOptions.impure, ElanString)
-  readToEnd(): string {
-    if (this.status === 0) {
-      throw new ElanRuntimeError("Cannot use any method on a closed file");
-    }
-    return this.content.slice(this.currentLine).join("\n");
-  }
-
-  @elanFunction(FunctionOptions.impure, ElanString)
-  readAll(): string {
+  readWholeFile(): string {
     if (this.status === 0) {
       throw new ElanRuntimeError("Cannot use any method on a closed file");
     }
