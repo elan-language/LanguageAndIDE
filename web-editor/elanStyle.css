@@ -113,7 +113,7 @@ el-global:has(el-comment) {
     border-left-color: var(--selection);
 }
 
-.selected > el-top, .selected > el-top *, .selected > el-kw, .selected > el-field, .selected > el-field *, .selected > el-txt, .selected > placeholder, .selected > completion {
+.selected > el-top, .selected > el-top *, .selected > el-kw, .selected > el-field, .selected > el-field *, .selected > el-txt, .selected > el-place, .selected > completion {
     background-color: var(--selection);
     border-right-color: var(--selection);
 }
@@ -169,47 +169,47 @@ el-field.selected.ok.optional.empty el-txt, el-field.selected.ok.optional.empty 
     background-color: var(--optional);
 }
 
-/* el-field placeholder */
-el-field placeholder {
+/* el-field el-place */
+el-field el-place {
   display: none; 
 }
 
-el-field.empty placeholder, el-field.empty placeholder * {
+el-field.empty el-place, el-field.empty el-place * {
     display: inline;
     color: var(--reverseText);
 }
 
-el-field.empty.optional placeholder, el-field.empty.optional placeholder * {
+el-field.empty.optional el-place, el-field.empty.optional el-place * {
     display: none;
     color: var(--optional);
 }
 
-el-field.empty.selected placeholder, el-field.empty.selected placeholder * {
+el-field.empty.selected el-place, el-field.empty.selected el-place * {
     display: inline;
     color: var(--reverseText);
     background-color: var(--warning);
 }
 
-el-field.empty.optional.selected placeholder, el-field.empty.optional.selected placeholder * {
+el-field.empty.optional.selected el-place, el-field.empty.optional.selected el-place * {
     display: inline;
     color: var(--reverseText);
     background-color: var(--optional);
 }
 
-el-field.empty.optional.selected placeholder, el-field.empty.optional.selected placeholder * {
+el-field.empty.optional.selected el-place, el-field.empty.optional.selected el-place * {
     display: inline;
 }
 
 /* ... however, different rules when it is the 'holding' frame that is selected */
-.selected > el-top el-field.empty placeholder, .selected > el-field.empty placeholder {
+.selected > el-top el-field.empty el-place, .selected > el-field.empty el-place {
     display:inline;
     color: var(--warning);
 }
-.selected > el-top el-field.empty.optional placeholder, .selected > el-field.empty.optional placeholder {
+.selected > el-top el-field.empty.optional el-place, .selected > el-field.empty.optional el-place {
     display:inline;
     color: var(--reverseText);
 }
-el-field.selected ~ el-field.empty placeholder, el-field.selected ~ el-field.empty.optional placeholder{
+el-field.selected ~ el-field.empty el-place, el-field.selected ~ el-field.empty.optional el-place{
     display: inline;
 }
 
@@ -285,15 +285,15 @@ el-field.selected msg, el-field.selected msg * {
     color: var(--defaultText);
   }
 
-  /* selector placeholder */
-selector placeholder  {
+  /* selector el-place */
+selector el-place  {
     display: none;
 }
-.empty > selector placeholder {
+.empty > selector el-place {
     display: inline;
     color: var(--optional);
 }
-.selected > selector placeholder {
+.selected > selector el-place {
     display: none;
 }
 

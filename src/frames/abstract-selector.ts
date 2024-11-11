@@ -125,7 +125,7 @@ export abstract class AbstractSelector extends AbstractFrame {
     this.text = "";
   }
   textToDisplayAsHtml(): string {
-    return `<selector><el-txt>${this.text}</el-txt><placeholder>${this.label}</placeholder><help class="selector">${this.getCompletion()}</help></selector>`;
+    return `<selector><el-txt>${this.text}</el-txt><el-place>${this.label}</el-place><help class="selector">${this.getCompletion()}</help></selector>`;
   }
   renderAsSource(): string {
     return `${this.indent()}`;
