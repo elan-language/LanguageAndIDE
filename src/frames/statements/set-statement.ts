@@ -1,13 +1,13 @@
 import { AbstractFrame } from "../abstract-frame";
 import { CodeSource } from "../code-source";
 import {
-    mustBeCompatibleNode,
-    mustBePropertyPrefixedOnAssignable,
-    mustNotBeConstant,
-    mustNotBeCounter,
-    mustNotBeLet,
-    mustNotBeParameter,
-    mustNotBePropertyOnFunctionMethod
+  mustBeCompatibleNode,
+  mustBePropertyPrefixedOnAssignable,
+  mustNotBeConstant,
+  mustNotBeCounter,
+  mustNotBeLet,
+  mustNotBeParameter,
+  mustNotBePropertyOnFunctionMethod,
 } from "../compile-rules";
 import { AssignableField } from "../fields/assignableField";
 import { ExpressionField } from "../fields/expression-field";

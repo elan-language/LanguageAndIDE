@@ -4,7 +4,7 @@ import {
   mustNotBeOutParameter,
   mustNotBeRedefined,
 } from "../compile-rules";
-import { isConstructor, isFunction } from "../helpers";
+import { isConstructor, isFunction, TokenType } from "../helpers";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstNode } from "../interfaces/ast-node";
 import { ElanSymbol } from "../interfaces/elan-symbol";
@@ -18,6 +18,7 @@ import { ParseStatus } from "../status-enums";
 import { DuplicateSymbol } from "../symbols/duplicate-symbol";
 import {
   filteredSymbols,
+  filterForTokenType,
   isTypeName,
   removeIfSingleFullMatch,
   symbolMatches,
@@ -198,10 +199,42 @@ export class ParamList extends AbstractField implements Scope {
     return [match, removeIfSingleFullMatch(symbols, match)];
   }
 
+  matchingSymbolsForIdNew(id: string, tokenType: TokenType): [string, ElanSymbol[]] {
+    //const text = this.rootNode?.matchedText ?? "";
+
+    // const params = text.split(",");
+    // if (params.length === 0) {
+    //   return super.matchingSymbolsForId();
+    // }
+
+    // const lastParam = params[params.length - 1].trimStart();
+
+    // const tokens = lastParam.split(" ");
+
+    // if (tokens.length < 3) {
+    //   return super.matchingSymbolsForId();
+    // }
+
+    // const id = tokens[tokens.length - 1];
+
+    const [match, symbols] = filteredSymbols(
+      id,
+      transforms(),
+      filterForTokenType(tokenType),
+      this.getHolder(),
+    );
+
+    return [match, removeIfSingleFullMatch(symbols, match)];
+  }
+
   public textAsHtml(): string {
     let popupAsHtml = "";
-    if (this.showAutoComplete()) {
-      [this.autocompleteMatch, this.autocompleteSymbols] = this.matchingSymbolsForId();
+    const [id, tokenType] = this.getToMatchAndTokenType();
+    if (this.showAutoCompleteNew(tokenType)) {
+      [this.autocompleteMatch, this.autocompleteSymbols] = this.matchingSymbolsForIdNew(
+        id,
+        tokenType,
+      );
       popupAsHtml = this.popupAsHtml();
     }
     return super.textAsHtml() + popupAsHtml;

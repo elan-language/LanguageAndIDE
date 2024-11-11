@@ -15,12 +15,12 @@ import { MainFrame } from "./globals/main-frame";
 import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
 import {
-    expandCollapseAll,
-    helper_compileStatusAsDisplayStatus,
-    helper_parseStatusAsDisplayStatus,
-    helper_runStatusAsDisplayStatus,
-    helper_testStatusAsDisplayStatus,
-    isSelector,
+  expandCollapseAll,
+  helper_compileStatusAsDisplayStatus,
+  helper_parseStatusAsDisplayStatus,
+  helper_runStatusAsDisplayStatus,
+  helper_testStatusAsDisplayStatus,
+  isSelector,
 } from "./helpers";
 import { editorEvent } from "./interfaces/editor-event";
 import { ElanSymbol } from "./interfaces/elan-symbol";
@@ -33,21 +33,21 @@ import { Scope } from "./interfaces/scope";
 import { Selectable } from "./interfaces/selectable";
 import { StatementFactory } from "./interfaces/statement-factory";
 import {
-    parentHelper_addChildAfter,
-    parentHelper_addChildBefore,
-    parentHelper_aggregateCompileErrorsOfChildren,
-    parentHelper_getChildAfter,
-    parentHelper_getChildBefore,
-    parentHelper_getChildRange,
-    parentHelper_getFirstChild,
-    parentHelper_getLastChild,
-    parentHelper_insertOrGotoChildSelector,
-    parentHelper_readWorstCompileStatusOfChildren,
-    parentHelper_readWorstParseStatusOfChildren,
-    parentHelper_removeChild,
-    parentHelper_renderChildrenAsHtml,
-    parentHelper_renderChildrenAsSource,
-    worstParseStatus,
+  parentHelper_addChildAfter,
+  parentHelper_addChildBefore,
+  parentHelper_aggregateCompileErrorsOfChildren,
+  parentHelper_getChildAfter,
+  parentHelper_getChildBefore,
+  parentHelper_getChildRange,
+  parentHelper_getFirstChild,
+  parentHelper_getLastChild,
+  parentHelper_insertOrGotoChildSelector,
+  parentHelper_readWorstCompileStatusOfChildren,
+  parentHelper_readWorstParseStatusOfChildren,
+  parentHelper_removeChild,
+  parentHelper_renderChildrenAsHtml,
+  parentHelper_renderChildrenAsSource,
+  worstParseStatus,
 } from "./parent-helpers";
 import { ScratchPad } from "./scratch-pad";
 import { StatementFactoryImpl } from "./statement-factory-impl";

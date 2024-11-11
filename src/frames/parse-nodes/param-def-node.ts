@@ -1,4 +1,6 @@
+import { TokenType } from "../helpers";
 import { asKeyword, outKeyword } from "../keywords";
+import { ParseStatus } from "../status-enums";
 import { AbstractSequence } from "./abstract-sequence";
 import { IdentifierNode } from "./identifier-node";
 import { KeywordNode } from "./keyword-node";
@@ -35,5 +37,13 @@ export class ParamDefNode extends AbstractSequence {
       this.addElement(this.type);
       super.parseText(text);
     }
+  }
+
+  getToMatchAndTokenType(): [string, TokenType] {
+    if (this.getElements()[4].status === ParseStatus.valid) {
+      return this.getElements()[5].getToMatchAndTokenType();
+    }
+
+    return ["", TokenType.none];
   }
 }

@@ -5,12 +5,12 @@ import { propertyKeyword } from "../keywords";
 import { ExprNode } from "../parse-nodes/expr-node";
 import { ParseNode } from "../parse-nodes/parse-node";
 import {
-    filteredSymbols,
-    isExpression,
-    isFunction,
-    isMemberOnFieldsClass,
-    isProperty,
-    removeIfSingleFullMatch,
+  filteredSymbols,
+  isExpression,
+  isFunction,
+  isMemberOnFieldsClass,
+  isProperty,
+  removeIfSingleFullMatch,
 } from "../symbols/symbol-helpers";
 import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";

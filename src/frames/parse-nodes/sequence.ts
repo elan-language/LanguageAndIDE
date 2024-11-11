@@ -1,3 +1,4 @@
+import { TokenType } from "../helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { ParseNode } from "./parse-node";
 
@@ -15,5 +16,11 @@ export class Sequence extends AbstractSequence {
       });
     }
     super.parseText(text);
+  }
+
+  getToMatchAndTokenType(): [string, TokenType] {
+    const elems = this.getElements();
+
+    return elems[elems.length - 1].getToMatchAndTokenType();
   }
 }

@@ -3,6 +3,7 @@ import { UnknownType } from "../symbols/unknown-type";
 import { ParseStatus } from "../status-enums";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { ParseNode } from "./parse-node";
+import { TokenType } from "../helpers";
 
 export class OptionalNode extends AbstractParseNode {
   option: ParseNode;
@@ -44,5 +45,9 @@ export class OptionalNode extends AbstractParseNode {
       ? this.matchedNode.getCompletionAsHtml()
       : super.getCompletionAsHtml();
     return c;
+  }
+
+  getToMatchAndTokenType(): [string, TokenType] {
+    return this.matchedNode?.getToMatchAndTokenType() ?? ["", TokenType.none];
   }
 }
