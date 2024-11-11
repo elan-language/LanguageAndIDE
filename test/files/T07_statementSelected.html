@@ -17,29 +17,29 @@
 <el-statement class="ok" id='print14' tabindex="0"><el-kw>print </el-kw><el-field id="expr15" class="optional ok" tabindex=0><el-txt><el-str>"Hello World!"</el-str></el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><msg></msg><el-help title="Field may contain a literal value, a reference to a variable, or an expression">?</el-help></el-field><msg></msg><frno>6</frno></el-statement>
 <el-statement class="ok multiline" id='while16' tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>while </el-kw><el-field id="expr18" class="ok" tabindex=0><el-txt>newGame</el-txt><el-place>condition</el-place><el-compl></el-compl><msg></msg><el-help title="Field may contain a literal value, a reference to a variable, or an expression">?</el-help></el-field><msg></msg><frno>7</frno></el-top>
-<el-statement class="ok empty" id='select17' tabindex="0"><selector><el-txt></el-txt><el-place>new code</el-place><el-help class="selector"> call each for if let print repeat set switch throw try var while #</el-help></selector></el-statement>
+<el-statement class="ok empty" id='select17' tabindex="0"><el-select><el-txt></el-txt><el-place>new code</el-place><el-help class="selector"> call each for if let print repeat set switch throw try var while #</el-help></el-select></el-statement>
 <el-kw>end while</el-kw>
 </el-statement>
 <el-statement class="ok multiline" id='repeat19' tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>repeat</el-kw></el-top><frno>8</frno>
-<el-statement class="ok empty" id='select20' tabindex="0"><selector><el-txt></el-txt><el-place>new code</el-place><el-help class="selector"> call each for if let print repeat set switch throw try var while #</el-help></selector></el-statement>
+<el-statement class="ok empty" id='select20' tabindex="0"><el-select><el-txt></el-txt><el-place>new code</el-place><el-help class="selector"> call each for if let print repeat set switch throw try var while #</el-help></el-select></el-statement>
 <el-kw>end repeat when </el-kw><el-field id="expr21" class="ok" tabindex=0><el-txt>score > 20</el-txt><el-place>condition</el-place><el-compl></el-compl><msg></msg><el-help title="Field may contain a literal value, a reference to a variable, or an expression">?</el-help></el-field>
 <msg></msg></el-statement>
 <el-statement class="selected focused ok multiline" id='for22' tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident24" class="ok" tabindex=0><el-txt>i</el-txt><el-place>variableName</el-place><el-compl></el-compl><msg></msg><el-help title="A variable name must start with a lower-case letter, optionally followed by any letters (lower or upper case), and/or numeric digits, and/or underscores - nothing else.">?</el-help></el-field><el-kw> from </el-kw><el-field id="expr25" class="ok" tabindex=0><el-txt>1</el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><msg></msg><el-help title="Field may contain a literal value, a reference to a variable, or an expression">?</el-help></el-field><el-kw> to </el-kw><el-field id="expr26" class="ok" tabindex=0><el-txt>10</el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><msg></msg><el-help title="Field may contain a literal value, a reference to a variable, or an expression">?</el-help></el-field><el-kw> step </el-kw><el-field id="expr27" class="ok" tabindex=0><el-txt>1</el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><msg></msg><el-help title="Field may contain a literal value, a reference to a variable, or an expression">?</el-help></el-field><msg></msg><frno>9</frno></el-top>
-<el-statement class="ok empty" id='select23' tabindex="0"><selector><el-txt></el-txt><el-place>new code</el-place><el-help class="selector"> call each for if let print repeat set switch throw try var while #</el-help></selector></el-statement>
+<el-statement class="ok empty" id='select23' tabindex="0"><el-select><el-txt></el-txt><el-place>new code</el-place><el-help class="selector"> call each for if let print repeat set switch throw try var while #</el-help></el-select></el-statement>
 <el-kw>end for</el-kw>
 </el-statement>
 <el-statement class="ok multiline" id='each28' tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>each </el-kw><el-field id="ident30" class="ok" tabindex=0><el-txt>letter</el-txt><el-place>variableName</el-place><el-compl></el-compl><msg></msg><el-help title="A variable name must start with a lower-case letter, optionally followed by any letters (lower or upper case), and/or numeric digits, and/or underscores - nothing else.">?</el-help></el-field><el-kw> in </el-kw><el-field id="expr31" class="ok" tabindex=0><el-txt><el-str>"Charlie Duke"</el-str></el-txt><el-place>iterable value or expression</el-place><el-compl></el-compl><msg></msg><el-help title="Field may contain a literal value, a reference to a variable, or an expression">?</el-help></el-field><msg></msg><frno>10</frno></el-top>
-<el-statement class="ok empty" id='select29' tabindex="0"><selector><el-txt></el-txt><el-place>new code</el-place><el-help class="selector"> call each for if let print repeat set switch throw try var while #</el-help></selector></el-statement>
+<el-statement class="ok empty" id='select29' tabindex="0"><el-select><el-txt></el-txt><el-place>new code</el-place><el-help class="selector"> call each for if let print repeat set switch throw try var while #</el-help></el-select></el-statement>
 <el-kw>end each</el-kw>
 </el-statement>
 <el-statement class="ok multiline" id='if32' tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field id="expr34" class="ok" tabindex=0><el-txt>y > 4</el-txt><el-place>condition</el-place><el-compl></el-compl><msg></msg><el-help title="Field may contain a literal value, a reference to a variable, or an expression">?</el-help></el-field><frno>11</frno></el-top><msg></msg>
 <el-statement class="ok multiline" id='then35' tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>then </el-kw><frno>12</frno></el-top>
-<el-statement class="ok empty" id='select36' tabindex="0"><selector><el-txt></el-txt><el-place>new code</el-place><el-help class="selector"> call each for if let print repeat set switch throw try var while #</el-help></selector></el-statement>
+<el-statement class="ok empty" id='select36' tabindex="0"><el-select><el-txt></el-txt><el-place>new code</el-place><el-help class="selector"> call each for if let print repeat set switch throw try var while #</el-help></el-select></el-statement>
 </el-statement>
 <el-kw>end if</el-kw>
 </el-statement>
@@ -47,11 +47,11 @@
 <el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field id="expr39" class="ok" tabindex=0><el-txt>y > 4</el-txt><el-place>condition</el-place><el-compl></el-compl><msg></msg><el-help title="Field may contain a literal value, a reference to a variable, or an expression">?</el-help></el-field><frno>13</frno></el-top><msg></msg>
 <el-statement class="ok multiline" id='then40' tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>then </el-kw><frno>14</frno></el-top>
-<el-statement class="ok empty" id='select41' tabindex="0"><selector><el-txt></el-txt><el-place>new code</el-place><el-help class="selector"> call each for if let print repeat set switch throw try var while #</el-help></selector></el-statement>
+<el-statement class="ok empty" id='select41' tabindex="0"><el-select><el-txt></el-txt><el-place>new code</el-place><el-help class="selector"> call each for if let print repeat set switch throw try var while #</el-help></el-select></el-statement>
 </el-statement>
 <el-statement class="ok multiline" id='else42' tabindex="0">
     <el-top><el-expand>+</el-expand><el-kw>else </el-kw><el-field id="elif45" class="empty optional ok" tabindex=0><el-txt></el-txt><el-place>if</el-place><el-compl></el-compl><msg></msg><el-help title="Type 'i' to add an 'if condition' to this 'else clause'.">?</el-help></el-field><msg></msg><frno>15</frno></el-top>
-<el-statement class="ok empty" id='select43' tabindex="0"><selector><el-txt></el-txt><el-place>new code</el-place><el-help class="selector"> call each for if let print repeat set switch throw try var while #</el-help></selector></el-statement>
+<el-statement class="ok empty" id='select43' tabindex="0"><el-select><el-txt></el-txt><el-place>new code</el-place><el-help class="selector"> call each for if let print repeat set switch throw try var while #</el-help></el-select></el-statement>
 </el-statement>
 <el-kw>end if</el-kw>
 </el-statement>
@@ -59,15 +59,15 @@
 <el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field id="expr48" class="ok" tabindex=0><el-txt>y > 4</el-txt><el-place>condition</el-place><el-compl></el-compl><msg></msg><el-help title="Field may contain a literal value, a reference to a variable, or an expression">?</el-help></el-field><frno>16</frno></el-top><msg></msg>
 <el-statement class="ok multiline" id='then49' tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>then </el-kw><frno>17</frno></el-top>
-<el-statement class="ok empty" id='select50' tabindex="0"><selector><el-txt></el-txt><el-place>new code</el-place><el-help class="selector"> call each for if let print repeat set switch throw try var while #</el-help></selector></el-statement>
+<el-statement class="ok empty" id='select50' tabindex="0"><el-select><el-txt></el-txt><el-place>new code</el-place><el-help class="selector"> call each for if let print repeat set switch throw try var while #</el-help></el-select></el-statement>
 </el-statement>
 <el-statement class="ok multiline" id='else51' tabindex="0">
     <el-top><el-expand>+</el-expand><el-kw>else </el-kw><el-kw>if </el-kw><el-field id="expr53" class="ok" tabindex=0><el-txt>y > 10</el-txt><el-place>condition</el-place><el-compl></el-compl><msg></msg><el-help title="Field may contain a literal value, a reference to a variable, or an expression">?</el-help></el-field><msg></msg><frno>18</frno></el-top>
-<el-statement class="ok empty" id='select52' tabindex="0"><selector><el-txt></el-txt><el-place>new code</el-place><el-help class="selector"> call each for if let print repeat set switch throw try var while #</el-help></selector></el-statement>
+<el-statement class="ok empty" id='select52' tabindex="0"><el-select><el-txt></el-txt><el-place>new code</el-place><el-help class="selector"> call each for if let print repeat set switch throw try var while #</el-help></el-select></el-statement>
 </el-statement>
 <el-statement class="ok multiline" id='else55' tabindex="0">
     <el-top><el-expand>+</el-expand><el-kw>else </el-kw><el-field id="elif58" class="empty optional ok" tabindex=0><el-txt></el-txt><el-place>if</el-place><el-compl></el-compl><msg></msg><el-help title="Type 'i' to add an 'if condition' to this 'else clause'.">?</el-help></el-field><msg></msg><frno>19</frno></el-top>
-<el-statement class="ok empty" id='select56' tabindex="0"><selector><el-txt></el-txt><el-place>new code</el-place><el-help class="selector"> call each for if let print repeat set switch throw try var while #</el-help></selector></el-statement>
+<el-statement class="ok empty" id='select56' tabindex="0"><el-select><el-txt></el-txt><el-place>new code</el-place><el-help class="selector"> call each for if let print repeat set switch throw try var while #</el-help></el-select></el-statement>
 </el-statement>
 <el-kw>end if</el-kw>
 </el-statement>
@@ -75,10 +75,10 @@
 <el-top><el-expand>+</el-expand><el-kw>try </el-kw><msg></msg><frno>20</frno></el-top>
 <el-statement class="ok multiline" id='doing61' tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>doing </el-kw><frno>21</frno></el-top>
-<el-statement class="ok empty" id='select62' tabindex="0"><selector><el-txt></el-txt><el-place>new code</el-place><el-help class="selector"> call each for if let print repeat set switch throw try var while #</el-help></selector></el-statement>
+<el-statement class="ok empty" id='select62' tabindex="0"><el-select><el-txt></el-txt><el-place>new code</el-place><el-help class="selector"> call each for if let print repeat set switch throw try var while #</el-help></el-select></el-statement>
 </el-statement>
 <el-statement class="ok multiline" id='catch63' tabindex="0"><el-top><el-expand>+</el-expand><el-kw>catching exception in </el-kw><el-field id="ident65" class="ok" tabindex=0><el-txt>e</el-txt><el-place>variableName</el-place><el-compl></el-compl><msg></msg><el-help title="A variable name must start with a lower-case letter, optionally followed by any letters (lower or upper case), and/or numeric digits, and/or underscores - nothing else.">?</el-help></el-field><msg></msg><frno>22</frno></el-top>
-<el-statement class="ok empty" id='select64' tabindex="0"><selector><el-txt></el-txt><el-place>new code</el-place><el-help class="selector"> call each for if let print repeat set switch throw try var while #</el-help></selector></el-statement>        
+<el-statement class="ok empty" id='select64' tabindex="0"><el-select><el-txt></el-txt><el-place>new code</el-place><el-help class="selector"> call each for if let print repeat set switch throw try var while #</el-help></el-select></el-statement>        
 </el-statement>
 <el-kw>end try</el-kw>
 </el-statement>
@@ -86,9 +86,9 @@
 <el-top><el-expand>+</el-expand><el-kw>switch </el-kw><el-field id="expr68" class="ok" tabindex=0><el-txt>result</el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><msg></msg><el-help title="Field may contain a literal value, a reference to a variable, or an expression">?</el-help></el-field><msg></msg><frno>23</frno></el-top>
 <el-statement class="ok multiline" id='default69' tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>default </el-kw><msg></msg><frno>24</frno></el-top>
-<el-statement class="ok empty" id='select70' tabindex="0"><selector><el-txt></el-txt><el-place>new code</el-place><el-help class="selector"> call each for if let print repeat set switch throw try var while #</el-help></selector></el-statement>
+<el-statement class="ok empty" id='select70' tabindex="0"><el-select><el-txt></el-txt><el-place>new code</el-place><el-help class="selector"> call each for if let print repeat set switch throw try var while #</el-help></el-select></el-statement>
 </el-statement>
-<el-statement class="ok empty" id='select67' tabindex="0"><selector><el-txt></el-txt><el-place>new code</el-place><el-help class="selector"> case</el-help></selector></el-statement>
+<el-statement class="ok empty" id='select67' tabindex="0"><el-select><el-txt></el-txt><el-place>new code</el-place><el-help class="selector"> case</el-help></el-select></el-statement>
 <el-kw>end switch</el-kw>
 </el-statement>
 <el-kw>end main</el-kw>

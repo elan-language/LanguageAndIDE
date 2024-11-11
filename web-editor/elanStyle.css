@@ -266,14 +266,14 @@ el-field.selected msg, el-field.selected msg * {
 }
 
 /* Selectors */
-  selector * {
+  el-select * {
     background-color: var(--reverseText);
     color: var(--optional);
   }
-  selector el-help {
+  el-select el-help {
     display: none; 
   }
-  .selected > selector el-help {
+  .selected > el-select el-help {
     border-style: solid;
     border-color: black;
     border-width: 1px;
@@ -281,19 +281,19 @@ el-field.selected msg, el-field.selected msg * {
     background-color: var(--optional);
     color: var(--reverseText);
   }
-  .selected > selector el-txt {
+  .selected > el-select el-txt {
     color: var(--defaultText);
   }
 
-  /* selector el-place */
-selector el-place  {
+  /* el-select el-place */
+el-select el-place  {
     display: none;
 }
-.empty > selector el-place {
+.empty > el-select el-place {
     display: inline;
     color: var(--optional);
 }
-.selected > selector el-place {
+.selected > el-select el-place {
     display: none;
 }
 
