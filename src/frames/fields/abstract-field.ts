@@ -1,12 +1,12 @@
 import { CodeSource } from "../code-source";
 import { CompileError } from "../compile-error";
 import {
-  TokenType,
-  escapeHtmlChars,
-  helper_CompileOrParseAsDisplayStatus,
-  helper_compileMsgAsHtml,
-  helper_deriveCompileStatusFromErrors,
-  isCollapsible,
+    TokenType,
+    escapeHtmlChars,
+    helper_CompileOrParseAsDisplayStatus,
+    helper_compileMsgAsHtml,
+    helper_deriveCompileStatusFromErrors,
+    isCollapsible,
 } from "../helpers";
 import { AstNode } from "../interfaces/ast-node";
 import { editorEvent } from "../interfaces/editor-event";
@@ -21,7 +21,6 @@ import { CSV } from "../parse-nodes/csv";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { CompileStatus, DisplayStatus, ParseStatus } from "../status-enums";
 import { isProperty } from "../symbols/symbol-helpers";
-import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownType } from "../symbols/unknown-type";
 import { EmptyAsn } from "../syntax-nodes/empty-asn";
 import { Transforms } from "../syntax-nodes/transforms";
@@ -116,7 +115,7 @@ export abstract class AbstractField implements Selectable, Field {
 
   getPlainTextCompletion(): string {
     const comps = this.getCompletion();
-    const i = comps.indexOf("<pr>");
+    const i = comps.indexOf("<i>");
     return i === -1 ? comps : comps.substring(0, i);
   }
 
@@ -637,7 +636,7 @@ export abstract class AbstractField implements Selectable, Field {
     if (this.text.endsWith(" ")) {
       return (
         completion === "" ||
-        (completion.startsWith("<pr>") && !completion.startsWith("<pr>operator"))
+        (completion.startsWith("<i>") && !completion.startsWith("<i>operator"))
       );
     }
     return (
@@ -647,7 +646,7 @@ export abstract class AbstractField implements Selectable, Field {
       completion === "]" ||
       completion === "}" ||
       completion === ">" ||
-      completion.startsWith("<pr>")
+      completion.startsWith("<i>")
     );
   }
 

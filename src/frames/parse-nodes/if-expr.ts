@@ -15,7 +15,7 @@ export class IfExpr extends AbstractSequence {
       this.addElement(new KeywordNode(ifKeyword));
       this.addElement(new SpaceNode(Space.required));
       this.condition = new ExprNode();
-      this.condition.setCompletionWhenEmpty("<pr>condition </pr>");
+      this.condition.setCompletionWhenEmpty("<i>condition </i>");
       this.addElement(this.condition);
       this.addElement(new SpaceNode(Space.required));
       this.addElement(new KeywordNode(thenKeyword));

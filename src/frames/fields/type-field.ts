@@ -5,10 +5,10 @@ import { Frame } from "../interfaces/frame";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { TypeNode } from "../parse-nodes/type-node";
 import {
-  filteredSymbols,
-  filterForTokenType,
-  isTypeName,
-  removeIfSingleFullMatch,
+    filteredSymbols,
+    filterForTokenType,
+    isTypeName,
+    removeIfSingleFullMatch,
 } from "../symbols/symbol-helpers";
 import { transforms } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
@@ -19,7 +19,7 @@ export class TypeField extends AbstractField {
   constructor(holder: Frame) {
     super(holder);
     this.useHtmlTags = true;
-    this.placeholder = "<pr>Type</pr>";
+    this.placeholder = "<i>Type</i>";
     this.help = `A simple Type name must begin with an upper-case letter. More complex types are: 'generic type', 'tuple type', 'function type' - consult documentation for these.`;
   }
   getIdPrefix(): string {

@@ -28,12 +28,12 @@ export class FuncTypeNode extends AbstractSequence {
       const sp = () => new SpaceNode(Space.required);
       const inputTypesSp = new Sequence([inputTypes, sp]);
       this.inputTypes = new OptionalNode(inputTypesSp);
-      this.inputTypes.setCompletionWhenEmpty("<pr>input Type(s)</pr>");
+      this.inputTypes.setCompletionWhenEmpty("<i>input Type(s)</i>");
       this.addElement(this.inputTypes);
       this.addElement(new PunctuationNode(ARROW));
       this.addElement(new SpaceNode(Space.required));
       this.returnType = new TypeNode();
-      this.returnType.setCompletionWhenEmpty("<pr>return Type</pr>");
+      this.returnType.setCompletionWhenEmpty("<i>return Type</i>");
       this.addElement(this.returnType);
       this.addElement(new PunctuationNode(GT));
       super.parseText(text.trimStart());

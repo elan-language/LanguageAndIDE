@@ -6,7 +6,7 @@ import { AbstractParseNode } from "./abstract-parse-node";
 export class BinaryOperation extends AbstractParseNode {
   constructor() {
     super();
-    this.completionWhenEmpty = "<pr>operator </pr>";
+    this.completionWhenEmpty = "<i>operator </i>";
   }
 
   keyword: boolean = false;
@@ -149,7 +149,7 @@ export class BinaryOperation extends AbstractParseNode {
   getCompletionAsHtml(): string {
     let completion = this.completion;
     if (this.matchedText === "" || this.matchedText === " ") {
-      completion = "<pr>operator </pr>";
+      completion = "<i>operator </i>";
     }
     return completion;
   }

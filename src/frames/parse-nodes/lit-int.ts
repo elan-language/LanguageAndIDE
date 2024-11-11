@@ -5,7 +5,7 @@ import { matchRegEx } from "./parse-node-helpers";
 export class LitInt extends AbstractParseNode {
   constructor() {
     super();
-    this.completionWhenEmpty = "<pr>integer value </pr>";
+    this.completionWhenEmpty = "<i>integer value </i>";
   }
 
   parseText(text: string): void {

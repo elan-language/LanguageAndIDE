@@ -1,10 +1,6 @@
-import { ParseStatus } from "../status-enums";
-import { DIVIDE, MULT, POWER } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { BinaryOperation } from "./binary-operation";
 import { ExprNode } from "./expr-node";
-import { Space } from "./parse-node-helpers";
-import { SpaceNode } from "./space-node";
 import { Term } from "./term";
 
 export class BinaryExpression extends AbstractSequence {
@@ -14,7 +10,7 @@ export class BinaryExpression extends AbstractSequence {
 
   constructor() {
     super();
-    this.completionWhenEmpty = "<pr>expression</pr>";
+    this.completionWhenEmpty = "<i>expression</i>";
   }
 
   parseText(text: string): void {

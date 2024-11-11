@@ -10,7 +10,7 @@ export class ArgListField extends AbstractField {
 
   constructor(holder: Frame) {
     super(holder);
-    this.setPlaceholder("<pr>arguments<pr>");
+    this.setPlaceholder("<i>arguments<i>");
     this.setOptional(true);
     this.help = `list of zero or more arguments, comma separated. Each argument may be a literal value, variable, or simple expression.`;
   }

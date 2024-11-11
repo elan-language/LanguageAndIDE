@@ -15,34 +15,34 @@ suite("Parsing - Completions", () => {
   //TODO - merge the completions tests into the parse node tests
 
   test("Generic Type", () => {
-    testCompletion(new TypeNode(), "", ParseStatus.empty, "<pr>Type</pr>");
+    testCompletion(new TypeNode(), "", ParseStatus.empty, "<i>Type</i>");
     testCompletion(new TypeNode(), "Foo", ParseStatus.valid, "");
-    testCompletion(new TypeNode(), "Foo<of ", ParseStatus.incomplete, "<pr>Type</pr>>");
-    testCompletion(new TypeNode(), "Foo<", ParseStatus.incomplete, "of <pr>Type</pr>>");
-    testCompletion(new TypeNode(), "Foo<of", ParseStatus.incomplete, " <pr>Type</pr>>");
+    testCompletion(new TypeNode(), "Foo<of ", ParseStatus.incomplete, "<i>Type</i>>");
+    testCompletion(new TypeNode(), "Foo<", ParseStatus.incomplete, "of <i>Type</i>>");
+    testCompletion(new TypeNode(), "Foo<of", ParseStatus.incomplete, " <i>Type</i>>");
     testCompletion(new TypeNode(), "Foo<of Bar", ParseStatus.incomplete, ">");
     testCompletion(new TypeNode(), "Foo<of Bar>", ParseStatus.valid, "");
-    testCompletion(new TypeNode(), "Foo<of Bar,", ParseStatus.incomplete, "<pr>Type</pr>>");
-    testCompletion(new TypeNode(), "Foo<of (Bar,", ParseStatus.incomplete, "<pr>Type</pr>)>");
+    testCompletion(new TypeNode(), "Foo<of Bar,", ParseStatus.incomplete, "<i>Type</i>>");
+    testCompletion(new TypeNode(), "Foo<of (Bar,", ParseStatus.incomplete, "<i>Type</i>)>");
   });
 
   test("Tuple Type", () => {
     testCompletion(new TypeNode(), "(Foo, Bar)", ParseStatus.valid, "");
-    testCompletion(new TypeNode(), "(", ParseStatus.incomplete, "<pr>Type</pr>)");
+    testCompletion(new TypeNode(), "(", ParseStatus.incomplete, "<i>Type</i>)");
     testCompletion(new TypeNode(), "(Foo", ParseStatus.incomplete, ")");
-    testCompletion(new TypeNode(), "(Foo,", ParseStatus.incomplete, "<pr>Type</pr>)");
-    testCompletion(new TypeNode(), "(Foo, ", ParseStatus.incomplete, "<pr>Type</pr>)"); //TODO Stangely failing - completion shows '))' - even though it is working correctly in the web editor
+    testCompletion(new TypeNode(), "(Foo,", ParseStatus.incomplete, "<i>Type</i>)");
+    testCompletion(new TypeNode(), "(Foo, ", ParseStatus.incomplete, "<i>Type</i>)"); //TODO Stangely failing - completion shows '))' - even though it is working correctly in the web editor
     testCompletion(new TypeNode(), "(Foo,Bar", ParseStatus.incomplete, ")");
   });
 
   test("ExprNode2", () => {
     testCompletion(new ExprNode(), "a + b", ParseStatus.valid, "");
-    testCompletion(new ExprNode(), "a +", ParseStatus.incomplete, "<pr>expression</pr>");
-    testCompletion(new ExprNode(), "a + ", ParseStatus.incomplete, "<pr>expression</pr>");
-    //testCompletion(new ExprNode2(), "(", ParseStatus.incomplete, "<pr>expression</pr>)");
-    testCompletion(new ExprNode(), "(a +", ParseStatus.incomplete, "<pr>expression</pr>)");
+    testCompletion(new ExprNode(), "a +", ParseStatus.incomplete, "<i>expression</i>");
+    testCompletion(new ExprNode(), "a + ", ParseStatus.incomplete, "<i>expression</i>");
+    //testCompletion(new ExprNode2(), "(", ParseStatus.incomplete, "<i>expression</i>)");
+    testCompletion(new ExprNode(), "(a +", ParseStatus.incomplete, "<i>expression</i>)");
     testCompletion(new ExprNode(), "(a + b", ParseStatus.incomplete, ")");
-    testCompletion(new ExprNode(), "(a + b)*", ParseStatus.incomplete, "<pr>expression</pr>");
+    testCompletion(new ExprNode(), "(a + b)*", ParseStatus.incomplete, "<i>expression</i>");
   });
 
   test("CSV of Identifier", () => {
@@ -50,7 +50,7 @@ suite("Parsing - Completions", () => {
       new CSV(() => new IdentifierNode(), 0),
       "foo,",
       ParseStatus.incomplete,
-      "<pr>name</pr>",
+      "<i>name</i>",
     );
     testCompletion(new CSV(() => new IdentifierNode(), 0), "foo, bar, yon", ParseStatus.valid, "");
   });
@@ -68,20 +68,20 @@ suite("Parsing - Completions", () => {
   });
 
   test("ParamDef", () => {
-    testCompletion(new ParamDefNode(), "", ParseStatus.empty, "<pr>name</pr> as <pr>Type</pr>");
-    testCompletion(new ParamDefNode(), "a", ParseStatus.incomplete, " as <pr>Type</pr>");
-    testCompletion(new ParamDefNode(), "ax", ParseStatus.incomplete, " as <pr>Type</pr>");
-    testCompletion(new ParamDefNode(), "ax ", ParseStatus.incomplete, "as <pr>Type</pr>");
-    testCompletion(new ParamDefNode(), "ax a", ParseStatus.incomplete, "s <pr>Type</pr>");
-    testCompletion(new ParamDefNode(), "ax as", ParseStatus.incomplete, " <pr>Type</pr>");
-    testCompletion(new ParamDefNode(), "ax as ", ParseStatus.incomplete, "<pr>Type</pr>");
+    testCompletion(new ParamDefNode(), "", ParseStatus.empty, "<i>name</i> as <i>Type</i>");
+    testCompletion(new ParamDefNode(), "a", ParseStatus.incomplete, " as <i>Type</i>");
+    testCompletion(new ParamDefNode(), "ax", ParseStatus.incomplete, " as <i>Type</i>");
+    testCompletion(new ParamDefNode(), "ax ", ParseStatus.incomplete, "as <i>Type</i>");
+    testCompletion(new ParamDefNode(), "ax a", ParseStatus.incomplete, "s <i>Type</i>");
+    testCompletion(new ParamDefNode(), "ax as", ParseStatus.incomplete, " <i>Type</i>");
+    testCompletion(new ParamDefNode(), "ax as ", ParseStatus.incomplete, "<i>Type</i>");
     testCompletion(new ParamDefNode(), "ax as Int", ParseStatus.valid, "");
   });
 
   test("BinaryExpression", () => {
-    testCompletion(new BinaryExpression(), "a + ", ParseStatus.incomplete, "<pr>expression</pr>");
-    testCompletion(new BinaryExpression(), "a +", ParseStatus.incomplete, "<pr>expression</pr>");
-    testCompletion(new BinaryExpression(), "a+ ", ParseStatus.incomplete, "<pr>expression</pr>");
+    testCompletion(new BinaryExpression(), "a + ", ParseStatus.incomplete, "<i>expression</i>");
+    testCompletion(new BinaryExpression(), "a +", ParseStatus.incomplete, "<i>expression</i>");
+    testCompletion(new BinaryExpression(), "a+ ", ParseStatus.incomplete, "<i>expression</i>");
   });
 
   test("NewInstance", () => {
@@ -89,7 +89,7 @@ suite("Parsing - Completions", () => {
       new NewInstance(),
       "new ",
       ParseStatus.incomplete,
-      "<pr>Type</pr>(<pr>arguments</pr>)",
+      "<i>Type</i>(<i>arguments</i>)",
     );
   });
   test("Func", () => {
@@ -98,25 +98,25 @@ suite("Parsing - Completions", () => {
       new TypeNode(),
       "Func",
       ParseStatus.incomplete,
-      "<of <pr>input Type(s)</pr>=> <pr>return Type</pr>>",
+      "<of <i>input Type(s)</i>=> <i>return Type</i>>",
     );
     testCompletion(
       new TypeNode(),
       "Func<",
       ParseStatus.incomplete,
-      "of <pr>input Type(s)</pr>=> <pr>return Type</pr>>",
+      "of <i>input Type(s)</i>=> <i>return Type</i>>",
     );
     testCompletion(
       new TypeNode(),
       "Func<of Foo",
       ParseStatus.incomplete,
-      " => <pr>return Type</pr>>",
+      " => <i>return Type</i>>",
     );
     testCompletion(
       new TypeNode(),
       "Func<of Foo,",
       ParseStatus.incomplete,
-      "<pr>Type</pr> => <pr>return Type</pr>>",
+      "<i>Type</i> => <i>return Type</i>>",
     );
   });
   test("Func 2", () => {
@@ -124,7 +124,7 @@ suite("Parsing - Completions", () => {
       new ParamDefNode(),
       "f as Func",
       ParseStatus.incomplete,
-      "<of <pr>input Type(s)</pr>=> <pr>return Type</pr>>",
+      "<of <i>input Type(s)</i>=> <i>return Type</i>>",
     );
   });
   test("Func 3", () => {
@@ -132,7 +132,7 @@ suite("Parsing - Completions", () => {
       new CSV(() => new ParamDefNode(), 0),
       "f as Func",
       ParseStatus.incomplete,
-      "<of <pr>input Type(s)</pr>=> <pr>return Type</pr>>",
+      "<of <i>input Type(s)</i>=> <i>return Type</i>>",
     );
   });
   test("Lambda", () => {
@@ -141,25 +141,25 @@ suite("Parsing - Completions", () => {
       new Lambda(),
       "lambda ",
       ParseStatus.incomplete,
-      "<pr>name</pr> as <pr>Type</pr>, ...=> <pr>expression</pr>",
+      "<i>name</i> as <i>Type</i>, ...=> <i>expression</i>",
     );
     testCompletion(
       new Lambda(),
       "lambda x as Int ",
       ParseStatus.incomplete,
-      "=> <pr>expression</pr>",
+      "=> <i>expression</i>",
     );
     testCompletion(
       new Lambda(),
       "lambda x as Int,",
       ParseStatus.incomplete,
-      "<pr>name</pr> as <pr>Type</pr> => <pr>expression</pr>",
+      "<i>name</i> as <i>Type</i> => <i>expression</i>",
     );
     testCompletion(
       new Lambda(),
       "lambda x as Int =",
       ParseStatus.incomplete,
-      "> <pr>expression</pr>",
+      "> <i>expression</i>",
     );
   });
 });

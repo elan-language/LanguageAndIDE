@@ -5,12 +5,12 @@ import { propertyKeyword } from "../keywords";
 import { ExprNode } from "../parse-nodes/expr-node";
 import { ParseNode } from "../parse-nodes/parse-node";
 import {
-  filteredSymbols,
-  isExpression,
-  isFunction,
-  isMemberOnFieldsClass,
-  isProperty,
-  removeIfSingleFullMatch,
+    filteredSymbols,
+    isExpression,
+    isFunction,
+    isMemberOnFieldsClass,
+    isProperty,
+    removeIfSingleFullMatch,
 } from "../symbols/symbol-helpers";
 import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
@@ -22,7 +22,7 @@ export class ExpressionField extends AbstractField {
   constructor(holder: Frame, readUntil = /\r?\n/) {
     super(holder);
     this.readUntil = readUntil;
-    this.setPlaceholder("<pr>expression</pr>");
+    this.setPlaceholder("<i>expression</i>");
     this.help = "Field may contain a literal value, a reference to a variable, or an expression";
   }
   getIdPrefix(): string {

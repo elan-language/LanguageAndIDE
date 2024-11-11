@@ -11,7 +11,7 @@ export class WithClause extends AbstractSequence {
 
   constructor() {
     super();
-    this.completionWhenEmpty = " with <pr>name</pr> to <pr>expression</pr>";
+    this.completionWhenEmpty = " with <i>name</i> to <i>expression</i>";
   }
 
   parseText(text: string): void {

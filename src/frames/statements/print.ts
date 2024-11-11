@@ -15,7 +15,7 @@ export class Print extends AbstractFrame implements Statement {
     super(parent);
     this.expr = new ExpressionField(this);
     this.expr.setOptional(true);
-    this.expr.setPlaceholder("<pr>expression</pr>");
+    this.expr.setPlaceholder("<i>expression</i>");
   }
   initialKeywords(): string {
     return printKeyword;

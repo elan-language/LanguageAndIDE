@@ -13,7 +13,7 @@ import { TypeTupleNode } from "./type-tuple-node";
 export class TypeNode extends AbstractAlternatives {
   constructor() {
     super();
-    this.completionWhenEmpty = "<pr>Type</pr>";
+    this.completionWhenEmpty = "<i>Type</i>";
   }
 
   parseText(text: string): void {

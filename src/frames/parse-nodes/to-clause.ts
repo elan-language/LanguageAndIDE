@@ -12,7 +12,7 @@ export class ToClause extends AbstractSequence {
 
   constructor() {
     super();
-    this.completionWhenEmpty = "<pr>name</pr> to <pr>expression</pr>";
+    this.completionWhenEmpty = "<i>name</i> to <i>expression</i>";
   }
 
   parseText(text: string): void {

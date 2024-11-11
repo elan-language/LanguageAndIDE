@@ -9,10 +9,6 @@
     font-style: normal;
 }
 
-pr { /* 'prompt' */
-    font-style: italic;
-}
-
 *:focus {
     outline: none;
 }
