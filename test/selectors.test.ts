@@ -79,7 +79,7 @@ suite("Selector tests", () => {
     assert.equal(help, " constant class");
     assert.equal(
       g.renderAsHtml(),
-      `<global class="default" id='select1' tabindex="0"><selector><text>c</text><placeholder>new code</placeholder><help class="selector"> constant class</help></selector></global>`,
+      `<global class="default" id='select1' tabindex="0"><selector><el-txt>c</el-txt><placeholder>new code</placeholder><help class="selector"> constant class</help></selector></global>`,
     );
   });
 
@@ -95,7 +95,7 @@ suite("Selector tests", () => {
     assert.equal(help, " procedure property");
     assert.equal(
       s.renderAsHtml(),
-      `<member class="ok" id='select8' tabindex="0"><selector><text>pro</text><placeholder>new code</placeholder><help class="selector"> procedure property</help></selector></member>`,
+      `<member class="ok" id='select8' tabindex="0"><selector><el-txt>pro</el-txt><placeholder>new code</placeholder><help class="selector"> procedure property</help></selector></member>`,
     );
   });
 
@@ -118,7 +118,7 @@ suite("Selector tests", () => {
     assert.equal(s.getCompletion(), " procedure property");
     assert.equal(
       s.renderAsHtml(),
-      `<member class="ok" id='select8' tabindex="0"><selector><text>abstract pro</text><placeholder>new code</placeholder><help class="selector"> procedure property</help></selector></member>`,
+      `<member class="ok" id='select8' tabindex="0"><selector><el-txt>abstract pro</el-txt><placeholder>new code</placeholder><help class="selector"> procedure property</help></selector></member>`,
     );
   });
 
@@ -133,7 +133,7 @@ suite("Selector tests", () => {
     assert.equal(help, " set switch");
     assert.equal(
       s.renderAsHtml(),
-      `<statement class="ok" id='select3' tabindex="0"><selector><text>s</text><placeholder>new code</placeholder><help class="selector"> set switch</help></selector></statement>`,
+      `<statement class="ok" id='select3' tabindex="0"><selector><el-txt>s</el-txt><placeholder>new code</placeholder><help class="selector"> set switch</help></selector></statement>`,
     );
   });
 

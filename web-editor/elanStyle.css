@@ -34,16 +34,16 @@ span {
 el-ky {
     color: var(--keyword);
 } 
-el-field text {
+el-field el-txt {
     border-style:hidden;
     border-width: 1px;
 }
-el-field.selected text {
+el-field.selected el-txt {
     border-style: solid;
     border-color: black;
-    position:relative; /* Ensures that the border is not overwritten by text fields in the line below */ 
+    position:relative; /* Ensures that the border is not overwritten by textfields in the line below */ 
 }
-method, method el-field.ok text {
+method, method el-field.ok el-txt {
     color: var(--method);
 }
 type {
@@ -59,7 +59,7 @@ regex {
 }
 
 /* Header & comments */
-comment *, comment el-field.ok text  {
+comment *, comment el-field.ok el-txt  {
     color: var(--comment);
 }
 
@@ -91,12 +91,12 @@ statement, constructor, property, classDef > function, classDef > procedure, cla
 }
 
 statement:not(.multiline), constant{
-    padding-left: 1ch; /* Indent 2nd and subsequent lines if text wraps */
-    text-indent: -1ch;
+    padding-left: 1ch; /* Indent 2nd and subsequent lines if el-txt wraps */
+    el-txt-indent: -1ch;
 }
 
 .autocomplete-popup * {
-    text-indent: 0;
+    el-txt-indent: 0;
 }
 
 header, constant, main, procedure, function, enum, classDef, constructor, property, member, global, test {
@@ -113,7 +113,7 @@ global:has(comment) {
     border-left-color: var(--selection);
 }
 
-.selected > clause *, .selected > top, .selected > top *, .selected > el-kw, .selected > el-field, .selected > el-field *, .selected > text, .selected > placeholder, .selected > completion {
+.selected > clause *, .selected > top, .selected > top *, .selected > el-kw, .selected > el-field, .selected > el-field *, .selected > el-txt, .selected > placeholder, .selected > completion {
     background-color: var(--selection);
     border-right-color: var(--selection);
 }
@@ -151,21 +151,21 @@ el-field.warning, el-field.warning el-kw, el-field.warning type, el-field.warnin
     color: var(--defaultText);
 }
 
-/* el-field-text*/
-el-field text {
+/* el-field-el-txt*/
+el-field el-txt {
     color: var(--defaultText);
     background-color: var(--defaultBackground);
 }
-el-field.error text, el-field.error input  {
+el-field.error el-txt, el-field.error input  {
     background-color: var(--error);
 }
-el-field.warning text, el-field.warning input {
+el-field.warning el-txt, el-field.warning input {
     background-color: var(--warning);
 }
-el-field.selected.ok text, el-field.selected.ok input {
+el-field.selected.ok el-txt, el-field.selected.ok input {
     background-color: var(--ok);
 }
-el-field.selected.ok.optional.empty text, el-field.selected.ok.optional.empty input {
+el-field.selected.ok.optional.empty el-txt, el-field.selected.ok.optional.empty input {
     background-color: var(--optional);
 }
 
@@ -281,7 +281,7 @@ el-field.selected msg, el-field.selected msg * {
     background-color: var(--optional);
     color: var(--reverseText);
   }
-  .selected > selector text {
+  .selected > selector el-txt {
     color: var(--defaultText);
   }
 
@@ -302,7 +302,7 @@ frno {
     color: darkgrey;
     font-size: 11pt;
     margin-left: 5px;
-    text-indent: 0;
+    el-txt-indent: 0;
 }
 
 constant frno, constant.multiline.collapsed frno {
@@ -319,7 +319,7 @@ statement.selected > frno
  {
     background-color: var(--selection);
     color: white;
-    text-indent: 0;
+    el-txt-indent: 0;
 }
 
 
