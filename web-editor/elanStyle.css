@@ -82,7 +82,7 @@ el-hdr .ok {
 
 
 /* Horizontal and vertical spacing */
-el-statement, el-constructor, el-property, el-class > function, el-class > procedure, el-class > member {
+el-statement, el-constructor, el-property, el-class > el-func, el-class > procedure, el-class > member {
     display: block;
     background-color: var(--defaultBackground);
     border-left-style: solid;
