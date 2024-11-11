@@ -240,4 +240,5 @@ export enum TokenType {
   identifier,
   property,
   type,
+  idOrProcedure,
 }

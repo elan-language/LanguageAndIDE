@@ -1,4 +1,5 @@
 import { CodeSource } from "../code-source";
+import { TokenType } from "../helpers";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Frame } from "../interfaces/frame";
 import { Alternatives } from "../parse-nodes/alternatives";
@@ -8,6 +9,7 @@ import { ParseNode } from "../parse-nodes/parse-node";
 import { ParseStatus } from "../status-enums";
 import {
   filteredSymbols,
+  filterForTokenType,
   isIdOrProcedure,
   isProcedure,
   removeIfSingleFullMatch,
@@ -47,6 +49,17 @@ export class ProcRefField extends AbstractField {
     return [match, removeIfSingleFullMatch(symbols, match)];
   }
 
+  matchingSymbolsForIdNew(id: string, tokenType: TokenType): [string, ElanSymbol[]] {
+    const [match, symbols] = filteredSymbols(
+      id,
+      transforms(),
+      filterForTokenType(tokenType),
+      this.getHolder(),
+    );
+
+    return [match, removeIfSingleFullMatch(symbols, match)];
+  }
+
   protected override getId(s: ElanSymbol) {
     if (isProcedure(s, transforms())) {
       return s.symbolId;
@@ -73,8 +86,12 @@ export class ProcRefField extends AbstractField {
 
   public textAsHtml(): string {
     let text: string;
-    if (this.showAutoComplete()) {
-      [this.autocompleteMatch, this.autocompleteSymbols] = this.matchingSymbolsForId();
+    const [id, tokenType] = this.getToMatchAndTokenType();
+    if (this.showAutoCompleteNew(tokenType)) {
+      [this.autocompleteMatch, this.autocompleteSymbols] = this.matchingSymbolsForIdNew(
+        id,
+        tokenType,
+      );
       const popupAsHtml = this.popupAsHtml();
       text = popupAsHtml + this.nonAutoTextAsHtml();
     } else {
