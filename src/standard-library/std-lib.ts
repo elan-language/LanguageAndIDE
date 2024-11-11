@@ -628,24 +628,6 @@ export class StdLib {
     return source.some(predicate);
   }
 
-  @elanFunction(FunctionOptions.pureExtension, ElanIterable(ElanT2))
-  groupBy<T1>(
-    @elanIterableType(ElanT1) source: T1[],
-    @elanFuncType([ElanT1], ElanT2)
-    predicate: (value: T1) => T1,
-  ) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const result = {} as any;
-
-    for (const i of source) {
-      if (result[i]) {
-        result[i].push(i);
-      } else {
-        result[i] = this.asList([i]);
-      }
-    }
-  }
-
   @elanFunction(FunctionOptions.pureExtension)
   contains<T1>(
     @elanIterableType(ElanT1) source: T1[],
