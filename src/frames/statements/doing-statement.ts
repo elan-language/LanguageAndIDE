@@ -1,10 +1,10 @@
-import { Parent } from "../interfaces/parent";
-import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { FrameWithStatements } from "../frame-with-statements";
+import { Field } from "../interfaces/field";
+import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
+import { catchingKeyword, doingKeyword } from "../keywords";
 import { Transforms } from "../syntax-nodes/transforms";
-import { catchingKeyword, doingKeyword, thenKeyword } from "../keywords";
 
 export class DoingStatement extends FrameWithStatements implements Statement {
   isDoing = true;
@@ -26,7 +26,7 @@ export class DoingStatement extends FrameWithStatements implements Statement {
   }
   renderAsHtml(): string {
     return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<top><expand>+</expand><keyword>${doingKeyword} </keyword>${this.getFrNo()}</top>
+<top><expand>+</expand><el-kw>${doingKeyword} </el-kw>${this.getFrNo()}</top>
 ${this.renderChildrenAsHtml()}
 </statement>`;
   }

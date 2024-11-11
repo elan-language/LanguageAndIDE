@@ -1,4 +1,4 @@
-import { functionKeyword, refKeyword } from "../keywords";
+import { refKeyword } from "../keywords";
 import { AbstractSequence } from "./abstract-sequence";
 import { IdentifierNode } from "./identifier-node";
 import { KeywordNode } from "./keyword-node";
@@ -18,6 +18,6 @@ export class FunctionRefNode extends AbstractSequence {
     }
   }
   renderAsHtml(): string {
-    return `<keyword>${refKeyword}</keyword> <method>${this.name!.renderAsHtml()}</method>`;
+    return `<el-kw>${refKeyword}</el-kw> <method>${this.name!.renderAsHtml()}</method>`;
   }
 }

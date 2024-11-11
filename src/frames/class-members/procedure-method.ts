@@ -27,7 +27,7 @@ export class ProcedureMethod extends ProcedureFrame implements Member {
   }
 
   private modifierAsHtml(): string {
-    return this.private ? `<keyword>private </keyword>` : "";
+    return this.private ? `<el-kw>private </el-kw>` : "";
   }
 
   private modifierAsSource(): string {
@@ -47,9 +47,9 @@ ${this.indent()}end procedure\r
 
   public renderAsHtml(): string {
     return `<procedure class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<top><expand>+</expand>${this.modifierAsHtml()}<keyword>procedure </keyword><method>${this.name.renderAsHtml()}</method>(${this.params.renderAsHtml()})${this.compileMsgAsHtml()}${this.getFrNo()}</top>
+<top><expand>+</expand>${this.modifierAsHtml()}<el-kw>procedure </el-kw><method>${this.name.renderAsHtml()}</method>(${this.params.renderAsHtml()})${this.compileMsgAsHtml()}${this.getFrNo()}</top>
 ${this.renderChildrenAsHtml()}
-<keyword>end procedure</keyword>
+<el-kw>end procedure</el-kw>
 </procedure>`;
   }
 

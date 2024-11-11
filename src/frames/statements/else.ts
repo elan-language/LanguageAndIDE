@@ -1,13 +1,13 @@
-import { Parent } from "../interfaces/parent";
-import { IfSelector } from "../fields/if-selector";
-import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
-import { singleIndent } from "../helpers";
+import { mustBeOfType } from "../compile-rules";
 import { ExpressionField } from "../fields/expression-field";
+import { IfSelector } from "../fields/if-selector";
 import { FrameWithStatements } from "../frame-with-statements";
+import { singleIndent } from "../helpers";
+import { Field } from "../interfaces/field";
+import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
 import { elseKeyword } from "../keywords";
-import { mustBeOfType } from "../compile-rules";
 import { BooleanType } from "../symbols/boolean-type";
 import { Transforms } from "../syntax-nodes/transforms";
 
@@ -41,7 +41,7 @@ export class Else extends FrameWithStatements implements Statement {
   }
   private ifClauseAsHtml(): string {
     return this.hasIf
-      ? `<keyword>if </keyword>${this.condition.renderAsHtml()}`
+      ? `<el-kw>if </el-kw>${this.condition.renderAsHtml()}`
       : `${this.selectIfClause.renderAsHtml()}`;
   }
 
@@ -64,7 +64,7 @@ export class Else extends FrameWithStatements implements Statement {
 
   renderAsHtml(): string {
     return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-    <top><expand>+</expand><keyword>else </keyword>${this.ifClauseAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</top>
+    <top><expand>+</expand><el-kw>else </el-kw>${this.ifClauseAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</top>
 ${this.renderChildrenAsHtml()}
 </statement>`;
   }

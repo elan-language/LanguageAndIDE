@@ -46,14 +46,14 @@ export class Property extends AbstractFrame implements Member, ElanSymbol {
     return "prop";
   }
   private modifierAsHtml(): string {
-    return this.private ? `<keyword>private </keyword>` : "";
+    return this.private ? `<el-kw>private </el-kw>` : "";
   }
   private modifierAsSource(): string {
     return this.private ? `private ` : "";
   }
 
   renderAsHtml(): string {
-    return `<property class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.modifierAsHtml()}<keyword>${propertyKeyword} </keyword>${this.name.renderAsHtml()}<keyword> ${asKeyword} </keyword>${this.type.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</property>`;
+    return `<property class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.modifierAsHtml()}<el-kw>${propertyKeyword} </el-kw>${this.name.renderAsHtml()}<el-kw> ${asKeyword} </el-kw>${this.type.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</property>`;
   }
 
   renderAsSource(): string {

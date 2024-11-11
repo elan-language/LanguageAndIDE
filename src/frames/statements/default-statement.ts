@@ -25,7 +25,7 @@ export class DefaultStatement extends FrameWithStatements implements Statement {
   }
   renderAsHtml(): string {
     return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<top><expand>+</expand><keyword>default </keyword>${this.compileMsgAsHtml()}${this.getFrNo()}</top>
+<top><expand>+</expand><el-kw>default </el-kw>${this.compileMsgAsHtml()}${this.getFrNo()}</top>
 ${this.renderChildrenAsHtml()}
 </statement>`;
   }

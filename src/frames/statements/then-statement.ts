@@ -1,10 +1,10 @@
-import { Parent } from "../interfaces/parent";
-import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { FrameWithStatements } from "../frame-with-statements";
+import { Field } from "../interfaces/field";
+import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
-import { Transforms } from "../syntax-nodes/transforms";
 import { thenKeyword } from "../keywords";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export class ThenStatement extends FrameWithStatements implements Statement {
   isThen = true;
@@ -26,7 +26,7 @@ export class ThenStatement extends FrameWithStatements implements Statement {
   }
   renderAsHtml(): string {
     return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<top><expand>+</expand><keyword>then </keyword>${this.getFrNo()}</top>
+<top><expand>+</expand><el-kw>then </el-kw>${this.getFrNo()}</top>
 ${this.renderChildrenAsHtml()}
 </statement>`;
   }

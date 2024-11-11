@@ -30,9 +30,9 @@ export class Repeat extends FrameWithStatements implements Statement {
   }
   renderAsHtml(): string {
     return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<top><expand>+</expand><keyword>repeat</keyword></top>${this.getFrNo()}
+<top><expand>+</expand><el-kw>repeat</el-kw></top>${this.getFrNo()}
 ${this.renderChildrenAsHtml()}
-<keyword>end repeat when </keyword>${this.condition.renderAsHtml()}
+<el-kw>end repeat when </el-kw>${this.condition.renderAsHtml()}
 ${this.compileMsgAsHtml()}</statement>`;
   }
   renderAsSource(): string {

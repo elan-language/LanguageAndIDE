@@ -1,8 +1,8 @@
 import { CodeSource } from "../code-source";
 import {
-  mustBeCompatibleType,
-  mustBeKnownSymbolType,
-  mustBeUniqueNameInScope,
+    mustBeCompatibleType,
+    mustBeKnownSymbolType,
+    mustBeUniqueNameInScope,
 } from "../compile-rules";
 import { ClassFrame } from "../globals/class-frame";
 import { FunctionFrame } from "../globals/function-frame";
@@ -31,7 +31,7 @@ export class FunctionMethod extends FunctionFrame implements Member {
   }
 
   private modifierAsHtml(): string {
-    return this.private ? `<keyword>private </keyword>` : "";
+    return this.private ? `<el-kw>private </el-kw>` : "";
   }
 
   private modifierAsSource(): string {
@@ -50,9 +50,9 @@ ${this.indent()}${endKeyword} ${functionKeyword}\r
   }
   public renderAsHtml(): string {
     return `<function class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<top><expand>+</expand>${this.modifierAsHtml()}<keyword>${functionKeyword} </keyword><method>${this.name.renderAsHtml()}</method>(${this.params.renderAsHtml()})<keyword> ${returnKeyword} </keyword>${this.returnType.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</top>
+<top><expand>+</expand>${this.modifierAsHtml()}<el-kw>${functionKeyword} </el-kw><method>${this.name.renderAsHtml()}</method>(${this.params.renderAsHtml()})<el-kw> ${returnKeyword} </el-kw>${this.returnType.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</top>
 ${this.renderChildrenAsHtml()}
-<keyword>${endKeyword} ${functionKeyword}</keyword>
+<el-kw>${endKeyword} ${functionKeyword}</el-kw>
 </function>`;
   }
   public override compile(transforms: Transforms): string {

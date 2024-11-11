@@ -11,10 +11,10 @@ import { Property } from "../class-members/property";
 import { CodeSource } from "../code-source";
 import { CompileError } from "../compile-error";
 import {
-  mustBeAbstractClass,
-  mustBeKnownSymbolType,
-  mustBeUniqueNameInScope,
-  mustImplementSuperClasses,
+    mustBeAbstractClass,
+    mustBeKnownSymbolType,
+    mustBeUniqueNameInScope,
+    mustImplementSuperClasses,
 } from "../compile-rules";
 import { InheritsFrom } from "../fields/inheritsFrom";
 import { Regexes } from "../fields/regexes";
@@ -32,24 +32,24 @@ import { StatementFactory } from "../interfaces/statement-factory";
 import { SymbolType } from "../interfaces/symbol-type";
 import { abstractKeyword, classKeyword, constructorKeyword, thisKeyword } from "../keywords";
 import {
-  parentHelper_addChildAfter,
-  parentHelper_addChildBefore,
-  parentHelper_aggregateCompileErrorsOfChildren,
-  parentHelper_compileChildren,
-  parentHelper_getChildAfter,
-  parentHelper_getChildBefore,
-  parentHelper_getChildRange,
-  parentHelper_getFirstChild,
-  parentHelper_getFirstSelectorAsDirectChild,
-  parentHelper_getLastChild,
-  parentHelper_insertOrGotoChildSelector,
-  parentHelper_moveSelectedChildrenDownOne,
-  parentHelper_moveSelectedChildrenUpOne,
-  parentHelper_readWorstCompileStatusOfChildren,
-  parentHelper_readWorstParseStatusOfChildren,
-  parentHelper_removeChild,
-  parentHelper_renderChildrenAsHtml,
-  parentHelper_renderChildrenAsSource,
+    parentHelper_addChildAfter,
+    parentHelper_addChildBefore,
+    parentHelper_aggregateCompileErrorsOfChildren,
+    parentHelper_compileChildren,
+    parentHelper_getChildAfter,
+    parentHelper_getChildBefore,
+    parentHelper_getChildRange,
+    parentHelper_getFirstChild,
+    parentHelper_getFirstSelectorAsDirectChild,
+    parentHelper_getLastChild,
+    parentHelper_insertOrGotoChildSelector,
+    parentHelper_moveSelectedChildrenDownOne,
+    parentHelper_moveSelectedChildrenUpOne,
+    parentHelper_readWorstCompileStatusOfChildren,
+    parentHelper_readWorstParseStatusOfChildren,
+    parentHelper_removeChild,
+    parentHelper_renderChildrenAsHtml,
+    parentHelper_renderChildrenAsSource,
 } from "../parent-helpers";
 import { CommentStatement } from "../statements/comment-statement";
 import { ClassType } from "../symbols/class-type";
@@ -205,8 +205,8 @@ export class ClassFrame extends AbstractFrame implements Frame, Parent, Collapsi
   }
   private modifiersAsHtml(): string {
     let result = "";
-    result += this.isAbstract() ? `<keyword>abstract </keyword>` : ``;
-    result += this.isImmutable() ? `<keyword>immutable </keyword>` : ``;
+    result += this.isAbstract() ? `<el-kw>abstract </el-kw>` : ``;
+    result += this.isImmutable() ? `<el-kw>immutable </el-kw>` : ``;
     return result;
   }
   private modifiersAsSource(): string {
@@ -232,9 +232,9 @@ export class ClassFrame extends AbstractFrame implements Frame, Parent, Collapsi
 
   public renderAsHtml(): string {
     return `<classDef class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<top><expand>+</expand>${this.modifiersAsHtml()}<keyword>class </keyword>${this.name.renderAsHtml()}${this.inheritanceAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</top>
+<top><expand>+</expand>${this.modifiersAsHtml()}<el-kw>class </el-kw>${this.name.renderAsHtml()}${this.inheritanceAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</top>
 ${parentHelper_renderChildrenAsHtml(this)}
-<keyword>end class</keyword>
+<el-kw>end class</el-kw>
 </classDef>`;
   }
 

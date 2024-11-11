@@ -40,9 +40,9 @@ export class TryCatch extends FrameWithStatements {
 
   renderAsHtml(): string {
     return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<top><expand>+</expand><keyword>${tryKeyword} </keyword>${this.compileMsgAsHtml()}${this.getFrNo()}</top>
+<top><expand>+</expand><el-kw>${tryKeyword} </el-kw>${this.compileMsgAsHtml()}${this.getFrNo()}</top>
 ${this.renderChildrenAsHtml()}
-<keyword>end try</keyword>
+<el-kw>end try</el-kw>
 </statement>`;
   }
   renderAsSource(): string {

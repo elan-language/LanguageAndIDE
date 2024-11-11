@@ -119,7 +119,7 @@ suite("Parsing Nodes", () => {
       "this",
       "",
       "this",
-      "<keyword>this</keyword>",
+      "<el-kw>this</el-kw>",
     );
     testNodeParse(
       new ExprNode(),
@@ -138,7 +138,7 @@ suite("Parsing Nodes", () => {
       "empty [Int]",
       "",
       "",
-      "<keyword>empty</keyword> [<type>Int</type>]",
+      "<el-kw>empty</el-kw> [<type>Int</type>]",
     );
     testNodeParse(
       new ExprNode(),
@@ -147,7 +147,7 @@ suite("Parsing Nodes", () => {
       "empty {Int}",
       "",
       "",
-      "<keyword>empty</keyword> {<type>Int</type>}",
+      "<el-kw>empty</el-kw> {<type>Int</type>}",
     );
     testNodeParse(
       new ExprNode(),
@@ -156,7 +156,7 @@ suite("Parsing Nodes", () => {
       "empty [Int:String]",
       "",
       "",
-      "<keyword>empty</keyword> [<type>Int</type>:<type>String</type>]",
+      "<el-kw>empty</el-kw> [<type>Int</type>:<type>String</type>]",
     );
     testNodeParse(
       new ExprNode(),
@@ -165,7 +165,7 @@ suite("Parsing Nodes", () => {
       "empty {Int:Boolean}",
       "",
       "",
-      "<keyword>empty</keyword> {<type>Int</type>:<type>Boolean</type>}",
+      "<el-kw>empty</el-kw> {<type>Int</type>:<type>Boolean</type>}",
     );
     testNodeParse(
       new ExprNode(),
@@ -174,7 +174,7 @@ suite("Parsing Nodes", () => {
       "empty String",
       "",
       "",
-      "<keyword>empty</keyword> <type>String</type>",
+      "<el-kw>empty</el-kw> <type>String</type>",
     );
     testNodeParse(new ExprNode(), "empty Lit<of Int>", ParseStatus.valid, "", "", "", "");
     testNodeParse(
@@ -246,7 +246,7 @@ suite("Parsing Nodes", () => {
       "true",
       "",
       "true",
-      "<keyword>true</keyword>",
+      "<el-kw>true</el-kw>",
     );
     testNodeParse(new LitBoolean(), " trueX", ParseStatus.valid, "true", "X", "true", "");
     testNodeParse(new LitBoolean(), " false", ParseStatus.valid, "false", "", "false", "");
@@ -410,7 +410,7 @@ suite("Parsing Nodes", () => {
       " abstract",
       "",
       "abstract",
-      "<keyword>abstract</keyword>",
+      "<el-kw>abstract</el-kw>",
     );
     testNodeParse(
       new OptionalNode(new KeywordNode(abstractKeyword)),
@@ -661,7 +661,7 @@ suite("Parsing Nodes", () => {
   //     ``,
   //     "",
   //     "global.foo()",
-  //     "<keyword>global</keyword>.<method>foo</method>()",
+  //     "<el-kw>global</el-kw>.<method>foo</method>()",
   //   );
   //   testNodeParse(
   //     new MethodCallNode(),
@@ -670,7 +670,7 @@ suite("Parsing Nodes", () => {
   //     ``,
   //     "",
   //     "library.foo()",
-  //     "<keyword>library</keyword>.<method>foo</method>()",
+  //     "<el-kw>library</el-kw>.<method>foo</method>()",
   //   );
   //   testNodeParse(
   //     new MethodCallNode(),
@@ -828,7 +828,7 @@ suite("Parsing Nodes", () => {
       "Foo<of Bar>",
       "",
       "",
-      "<type>Foo</type>&lt;<keyword>of</keyword> <type>Bar</type>&gt;",
+      "<type>Foo</type>&lt;<el-kw>of</el-kw> <type>Bar</type>&gt;",
     );
     testNodeParse(
       new TypeSimpleOrGeneric(),
@@ -837,7 +837,7 @@ suite("Parsing Nodes", () => {
       "Foo<of List<of Bar>>",
       "",
       "",
-      "<type>Foo</type>&lt;<keyword>of</keyword> <type>List</type>&lt;<keyword>of</keyword> <type>Bar</type>&gt;&gt;",
+      "<type>Foo</type>&lt;<el-kw>of</el-kw> <type>List</type>&lt;<el-kw>of</el-kw> <type>Bar</type>&gt;&gt;",
     );
     testNodeParse(
       new TypeSimpleOrGeneric(),
@@ -846,7 +846,7 @@ suite("Parsing Nodes", () => {
       "Dictionary<of Bar, Yon>",
       "",
       "",
-      "<type>Dictionary</type>&lt;<keyword>of</keyword> <type>Bar</type>, <type>Yon</type>&gt;",
+      "<type>Dictionary</type>&lt;<el-kw>of</el-kw> <type>Bar</type>, <type>Yon</type>&gt;",
     );
     testNodeParse(
       new TypeSimpleOrGeneric(),
@@ -855,7 +855,7 @@ suite("Parsing Nodes", () => {
       "List<of (Bar, Yon)>",
       "",
       "",
-      "<type>List</type>&lt;<keyword>of</keyword> (<type>Bar</type>, <type>Yon</type>)&gt;",
+      "<type>List</type>&lt;<el-kw>of</el-kw> (<type>Bar</type>, <type>Yon</type>)&gt;",
     );
   });
   test("TypeNode", () => {
@@ -1047,7 +1047,7 @@ suite("Parsing Nodes", () => {
       "x as String",
       "",
       "x as String",
-      "x <keyword>as</keyword> <type>String</type>",
+      "x <el-kw>as</el-kw> <type>String</type>",
     );
     testNodeParse(
       new ParamDefNode(),
@@ -1056,7 +1056,7 @@ suite("Parsing Nodes", () => {
       "out x as String",
       "",
       "out x as String",
-      "<keyword>out</keyword> x <keyword>as</keyword> <type>String</type>",
+      "<el-kw>out</el-kw> x <el-kw>as</el-kw> <type>String</type>",
     );
     testNodeParse(
       new ParamDefNode(),
@@ -1491,7 +1491,7 @@ suite("Parsing Nodes", () => {
       `this.a.b()`,
       "",
       "this.a.b()",
-      "<keyword>this</keyword>.a.<method>b</method>()",
+      "<el-kw>this</el-kw>.a.<method>b</method>()",
     );
     testNodeParse(
       new ExprNode(),
@@ -1535,7 +1535,7 @@ suite("Parsing Nodes", () => {
       "is ",
       "",
       " is ",
-      "<keyword> is </keyword>",
+      "<el-kw> is </el-kw>",
     );
     testNodeParse(new BinaryOperation(), `isn`, ParseStatus.incomplete, "isn", "", "isn", "isn");
     testNodeParse(
@@ -1545,7 +1545,7 @@ suite("Parsing Nodes", () => {
       "isnt",
       "",
       " isnt ",
-      "<keyword> isnt </keyword>",
+      "<el-kw> isnt </el-kw>",
     );
     testNodeParse(
       new BinaryOperation(),
@@ -1554,7 +1554,7 @@ suite("Parsing Nodes", () => {
       " and ",
       "",
       " and ",
-      "<keyword> and </keyword>",
+      "<el-kw> and </el-kw>",
     );
     testNodeParse(
       new BinaryOperation(),
@@ -1563,7 +1563,7 @@ suite("Parsing Nodes", () => {
       "and",
       "",
       " and ",
-      "<keyword> and </keyword>",
+      "<el-kw> and </el-kw>",
     );
     testNodeParse(
       new BinaryOperation(),
@@ -1572,7 +1572,7 @@ suite("Parsing Nodes", () => {
       "and",
       "a",
       " and ",
-      "<keyword> and </keyword>",
+      "<el-kw> and </el-kw>",
     );
 
     testNodeParse(new BinaryOperation(), `an`, ParseStatus.incomplete, "an", "", "an", "an");
@@ -1630,7 +1630,7 @@ suite("Parsing Nodes", () => {
       "3 is 4",
       "",
       "3 is 4",
-      "3<keyword> is </keyword>4",
+      "3<el-kw> is </el-kw>4",
     );
     testNodeParse(
       new BinaryExpression(),
@@ -1639,7 +1639,7 @@ suite("Parsing Nodes", () => {
       "11 div 3",
       "",
       "11 div 3",
-      "11<keyword> div </keyword>3",
+      "11<el-kw> div </el-kw>3",
     );
   });
 });

@@ -1,13 +1,11 @@
 import { AbstractFrame } from "../abstract-frame";
-import { Constructor } from "../class-members/constructor";
 import { CodeSource } from "../code-source";
 import {
-  cannotCallOnParameter,
-  cannotPassAsOutParameter,
-  mustBeKnownSymbol,
-  mustBeProcedure,
-  mustBePublicMember,
-  mustCallExtensionViaQualifier,
+    cannotPassAsOutParameter,
+    mustBeKnownSymbol,
+    mustBeProcedure,
+    mustBePublicMember,
+    mustCallExtensionViaQualifier
 } from "../compile-rules";
 import { ArgListField } from "../fields/arg-list-field";
 import { ProcRefField } from "../fields/proc-ref-field";
@@ -20,15 +18,15 @@ import { Statement } from "../interfaces/statement";
 import { callKeyword } from "../keywords";
 import { ProcedureType } from "../symbols/procedure-type";
 import {
-  isMemberOnFieldsClass,
-  scopePrefix,
-  updateScopeAndQualifier,
+    isMemberOnFieldsClass,
+    scopePrefix,
+    updateScopeAndQualifier,
 } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import {
-  isAstCollectionNode,
-  isAstIdNode,
-  matchParametersAndTypes,
+    isAstCollectionNode,
+    isAstIdNode,
+    matchParametersAndTypes,
 } from "../syntax-nodes/ast-helpers";
 import { QualifierAsn } from "../syntax-nodes/qualifier-asn";
 import { Transforms } from "../syntax-nodes/transforms";
@@ -69,7 +67,7 @@ export class CallStatement extends AbstractFrame implements Statement {
   }
 
   renderAsHtml(): string {
-    return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><top><keyword>call </keyword>${this.proc.renderAsHtml()}(${this.args.renderAsHtml()})${this.compileMsgAsHtml()}${this.getFrNo()}</statement>`;
+    return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><top><el-kw>call </el-kw>${this.proc.renderAsHtml()}(${this.args.renderAsHtml()})${this.compileMsgAsHtml()}${this.getFrNo()}</statement>`;
   }
 
   renderAsSource(): string {

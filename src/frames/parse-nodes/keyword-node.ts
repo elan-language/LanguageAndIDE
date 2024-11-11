@@ -42,7 +42,7 @@ export class KeywordNode extends FixedTextNode {
   }
 
   renderAsHtml(): string {
-    return `<keyword>${this.renderAsSource()}</keyword>`;
+    return `<el-kw>${this.renderAsSource()}</el-kw>`;
   }
   renderAsSource(): string {
     return this.matchedText.trim();

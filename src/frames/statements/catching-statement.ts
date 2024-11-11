@@ -60,7 +60,7 @@ export class CatchingStatement extends FrameWithStatements implements Statement,
   }
 
   renderAsHtml(): string {
-    return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><top><expand>+</expand><keyword>catching exception in </keyword>${this.variable.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</top>
+    return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><top><expand>+</expand><el-kw>catching exception in </el-kw>${this.variable.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</top>
 ${this.renderChildrenAsHtml()}        
 </statement>`;
   }

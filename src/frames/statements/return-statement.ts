@@ -1,9 +1,9 @@
-import { ExpressionField } from "../fields/expression-field";
-import { Parent } from "../interfaces/parent";
-import { Field } from "../interfaces/field";
-import { CodeSource } from "../code-source";
-import { Statement } from "../interfaces/statement";
 import { AbstractFrame } from "../abstract-frame";
+import { CodeSource } from "../code-source";
+import { ExpressionField } from "../fields/expression-field";
+import { Field } from "../interfaces/field";
+import { Parent } from "../interfaces/parent";
+import { Statement } from "../interfaces/statement";
 import { returnKeyword } from "../keywords";
 import { Transforms } from "../syntax-nodes/transforms";
 
@@ -31,7 +31,7 @@ export class ReturnStatement extends AbstractFrame implements Statement {
     return "return";
   }
   renderAsHtml(): string {
-    return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>return </keyword>${this.expr.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</statement>`;
+    return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><el-kw>return </el-kw>${this.expr.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</statement>`;
   }
 
   renderAsSource(): string {

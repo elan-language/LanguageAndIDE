@@ -1,14 +1,13 @@
 import { AbstractFrame } from "../abstract-frame";
 import { CodeSource } from "../code-source";
 import {
-  mustBeCompatibleNode,
-  mustBeFunctionRefIfFunction,
-  mustBePropertyPrefixedOnAssignable,
-  mustNotBeConstant,
-  mustNotBeCounter,
-  mustNotBeLet,
-  mustNotBeParameter,
-  mustNotBePropertyOnFunctionMethod,
+    mustBeCompatibleNode,
+    mustBePropertyPrefixedOnAssignable,
+    mustNotBeConstant,
+    mustNotBeCounter,
+    mustNotBeLet,
+    mustNotBeParameter,
+    mustNotBePropertyOnFunctionMethod
 } from "../compile-rules";
 import { AssignableField } from "../fields/assignableField";
 import { ExpressionField } from "../fields/expression-field";
@@ -49,7 +48,7 @@ export class SetStatement extends AbstractFrame implements Statement {
     return "set";
   }
   renderAsHtml(): string {
-    return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>${setKeyword} </keyword>${this.assignable.renderAsHtml()}<keyword> ${toKeyword} </keyword>${this.expr.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</statement>`;
+    return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><el-kw>${setKeyword} </el-kw>${this.assignable.renderAsHtml()}<el-kw> ${toKeyword} </el-kw>${this.expr.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</statement>`;
   }
   renderAsSource(): string {
     return `${this.indent()}${setKeyword} ${this.assignable.renderAsSource()} ${toKeyword} ${this.expr.renderAsSource()}`;

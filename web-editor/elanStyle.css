@@ -31,7 +31,7 @@ el-hash {
 span {
     background-color: inherit;
 }
-keyword {
+el-ky {
     color: var(--keyword);
 } 
 field text {
@@ -113,7 +113,7 @@ global:has(comment) {
     border-left-color: var(--selection);
 }
 
-.selected > clause *, .selected > top, .selected > top *, .selected > keyword, .selected > field, .selected > field *, .selected > text, .selected > placeholder, .selected > completion {
+.selected > clause *, .selected > top, .selected > top *, .selected > el-kw, .selected > field, .selected > field *, .selected > text, .selected > placeholder, .selected > completion {
     background-color: var(--selection);
     border-right-color: var(--selection);
 }
@@ -144,10 +144,10 @@ expand {
 }
 
 /* Fields */
-field.warning, field.warning keyword, field.warning type, field.warning string, field.warning method {
+field.warning, field.warning el-kw, field.warning type, field.warning string, field.warning method {
     background-color: var(--warning);
 }
-.error field, field.error keyword, field.error  type, field.error  string, field.error method {
+.error field, field.error el-kw, field.error  type, field.error  string, field.error method {
     color: var(--defaultText);
 }
 

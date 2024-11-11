@@ -62,7 +62,7 @@ export class OptionalKeyword extends AbstractField {
     if (this.selected) {
       return super.textAsHtml();
     } else {
-      const c = this.keywordExists() ? `<keyword> ${this.text}</keyword>` : ``;
+      const c = this.keywordExists() ? `<el-kw> ${this.text}</el-kw>` : ``;
       return c;
     }
   }

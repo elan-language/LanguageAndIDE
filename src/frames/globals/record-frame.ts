@@ -21,24 +21,24 @@ import { StatementFactory } from "../interfaces/statement-factory";
 import { SymbolType } from "../interfaces/symbol-type";
 import { constructorKeyword, recordKeyword, thisKeyword } from "../keywords";
 import {
-  parentHelper_addChildAfter,
-  parentHelper_addChildBefore,
-  parentHelper_aggregateCompileErrorsOfChildren,
-  parentHelper_compileChildren,
-  parentHelper_getChildAfter,
-  parentHelper_getChildBefore,
-  parentHelper_getChildRange,
-  parentHelper_getFirstChild,
-  parentHelper_getFirstSelectorAsDirectChild,
-  parentHelper_getLastChild,
-  parentHelper_insertOrGotoChildSelector,
-  parentHelper_moveSelectedChildrenDownOne,
-  parentHelper_moveSelectedChildrenUpOne,
-  parentHelper_readWorstCompileStatusOfChildren,
-  parentHelper_readWorstParseStatusOfChildren,
-  parentHelper_removeChild,
-  parentHelper_renderChildrenAsHtml,
-  parentHelper_renderChildrenAsSource,
+    parentHelper_addChildAfter,
+    parentHelper_addChildBefore,
+    parentHelper_aggregateCompileErrorsOfChildren,
+    parentHelper_compileChildren,
+    parentHelper_getChildAfter,
+    parentHelper_getChildBefore,
+    parentHelper_getChildRange,
+    parentHelper_getFirstChild,
+    parentHelper_getFirstSelectorAsDirectChild,
+    parentHelper_getLastChild,
+    parentHelper_insertOrGotoChildSelector,
+    parentHelper_moveSelectedChildrenDownOne,
+    parentHelper_moveSelectedChildrenUpOne,
+    parentHelper_readWorstCompileStatusOfChildren,
+    parentHelper_readWorstParseStatusOfChildren,
+    parentHelper_removeChild,
+    parentHelper_renderChildrenAsHtml,
+    parentHelper_renderChildrenAsSource,
 } from "../parent-helpers";
 import { CommentStatement } from "../statements/comment-statement";
 import { ClassType } from "../symbols/class-type";
@@ -177,9 +177,9 @@ export class RecordFrame extends AbstractFrame implements Frame, Parent, Collaps
 
   public renderAsHtml(): string {
     return `<classDef class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<top><expand>+</expand><keyword>record </keyword>${this.name.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</top>
+<top><expand>+</expand><el-kw>record </el-kw>${this.name.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</top>
 ${parentHelper_renderChildrenAsHtml(this)}
-<keyword>end record</keyword>
+<el-kw>end record</el-kw>
 </classDef>`;
   }
 

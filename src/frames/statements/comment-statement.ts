@@ -41,7 +41,7 @@ export class CommentStatement extends AbstractFrame implements Statement, Member
     return "com";
   }
   renderAsHtml(): string {
-    return `<statement><comment class="${this.cls()}" id='${this.htmlId}' tabindex="0"><top><keyword># </keyword>${this.text.renderAsHtml()}</top></comment></statement>`;
+    return `<statement><comment class="${this.cls()}" id='${this.htmlId}' tabindex="0"><top><el-kw># </el-kw>${this.text.renderAsHtml()}</top></comment></statement>`;
   }
   renderAsSource(): string {
     return `${this.indent()}# ${this.text.renderAsSource()}`;
