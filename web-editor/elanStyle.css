@@ -24,7 +24,7 @@ input, input:focus , input:active{
 
 /* Basic Colour scheme */
 
-hash {
+el-hash {
     display: none;
 }
 
