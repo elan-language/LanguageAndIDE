@@ -99,7 +99,7 @@ el-statement:not(.multiline), el-const{
     text-indent: 0;
 }
 
-el-hdr, el-const, main, el-proc, el-func, enum, el-class, el-constructor, el-property, el-member, el-global, test {
+el-hdr, el-const, main, el-proc, el-func, enum, el-class, el-constructor, el-property, el-member, el-global, el-test {
     display: block;
     padding-bottom: 1ch;
 }
@@ -132,7 +132,7 @@ expand {
     margin-right: 1ch;
     /* cursor: pointer; why only this? */
 }
-/* colour corresponds to worst of parseStatus and compileStatus (and testStatus - for tests only)*/
+/* colour corresponds to worst of parseStatus and compileStatus (and el-testStatus - for el-tests only)*/
 .multiline.collapsed expand {
     background-color: var(--ok);
 }

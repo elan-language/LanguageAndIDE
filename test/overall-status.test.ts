@@ -37,7 +37,7 @@ suite("Overall Status Tests", () => {
     assert.equal(f.readTestStatus(), TestStatus.pass);
     //1. Make a test fail
     const test64 = f.getById("test64");
-    assert.equal(test64.renderAsHtml().startsWith(`<test class="ok`), true);
+    assert.equal(test64.renderAsHtml().startsWith(`<el-test class="ok`), true);
     const exp20 = f.getById("expr20");
     exp20.select();
     exp20.processKey(key("Backspace"));
@@ -46,14 +46,14 @@ suite("Overall Status Tests", () => {
     assert.equal(f.readParseStatus(), ParseStatus.valid);
     assert.equal(f.readCompileStatus(), CompileStatus.ok);
     assert.equal(f.readTestStatus(), TestStatus.fail);
-    assert.equal(test64.renderAsHtml().startsWith(`<test class="error`), true);
+    assert.equal(test64.renderAsHtml().startsWith(`<el-test class="error`), true);
     exp20.processKey(key("Backspace"));
     exp20.processKey(key("1"));
     await f.refreshAllStatuses(runner);
     assert.equal(f.readParseStatus(), ParseStatus.valid);
     assert.equal(f.readCompileStatus(), CompileStatus.ok);
     assert.equal(f.readTestStatus(), TestStatus.pass);
-    assert.equal(test64.renderAsHtml().startsWith(`<test class="ok`), true);
+    assert.equal(test64.renderAsHtml().startsWith(`<el-test class="ok`), true);
     //2. Make a parse fail
     let v4 = f.getById("var4");
     v4.select();

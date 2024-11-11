@@ -66,11 +66,11 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
     return "test";
   }
   public renderAsHtml(): string {
-    return `<test class="${this.cls()}" id='${this.htmlId}' tabindex="0">
+    return `<el-test class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><el-kw>test </el-kw>${this.testName.renderAsHtml()}${this.compileOrTestMsgAsHtml()}${this.getFrNo()}</top>
 ${this.renderChildrenAsHtml()}
 <el-kw>end test</el-kw>
-</test>`;
+</el-test>`;
   }
   indent(): string {
     return "";
