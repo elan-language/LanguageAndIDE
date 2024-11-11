@@ -43,6 +43,6 @@ export class AssertActualField extends AbstractField {
       [this.autocompleteMatch, this.autocompleteSymbols] = this.matchingSymbolsForId();
       popupAsHtml = this.popupAsHtml();
     }
-    return popupAsHtml + super.textAsHtml();
+    return super.textAsHtml() + popupAsHtml;
   }
 }
