@@ -54,7 +54,7 @@ el-string {
     white-space: pre;
 }
 
-regex {
+el-regex {
     color: var(--string);
 }
 
