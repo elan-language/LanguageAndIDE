@@ -26,7 +26,7 @@ export class DoingStatement extends FrameWithStatements implements Statement {
   }
   renderAsHtml(): string {
     return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<top><el-expand>+</el-expand><el-kw>${doingKeyword} </el-kw>${this.getFrNo()}</top>
+<el-top><el-expand>+</el-expand><el-kw>${doingKeyword} </el-kw>${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
 </el-statement>`;
   }

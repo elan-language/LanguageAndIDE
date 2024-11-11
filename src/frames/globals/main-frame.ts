@@ -28,7 +28,7 @@ export class MainFrame extends FrameWithStatements implements GlobalFrame {
 
   public renderAsHtml(): string {
     return `<main class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<top><el-expand>+</el-expand><el-kw>main</el-kw>${this.getFrNo()}</top>
+<el-top><el-expand>+</el-expand><el-kw>main</el-kw>${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
 <el-kw>end main</el-kw>
 </main>`;

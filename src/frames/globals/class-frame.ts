@@ -232,7 +232,7 @@ export class ClassFrame extends AbstractFrame implements Frame, Parent, Collapsi
 
   public renderAsHtml(): string {
     return `<el-class class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<top><el-expand>+</el-expand>${this.modifiersAsHtml()}<el-kw>class </el-kw>${this.name.renderAsHtml()}${this.inheritanceAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</top>
+<el-top><el-expand>+</el-expand>${this.modifiersAsHtml()}<el-kw>class </el-kw>${this.name.renderAsHtml()}${this.inheritanceAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
 ${parentHelper_renderChildrenAsHtml(this)}
 <el-kw>end class</el-kw>
 </el-class>`;

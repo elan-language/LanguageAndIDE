@@ -67,7 +67,7 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
   }
   public renderAsHtml(): string {
     return `<el-test class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<top><el-expand>+</el-expand><el-kw>test </el-kw>${this.testName.renderAsHtml()}${this.compileOrTestMsgAsHtml()}${this.getFrNo()}</top>
+<el-top><el-expand>+</el-expand><el-kw>test </el-kw>${this.testName.renderAsHtml()}${this.compileOrTestMsgAsHtml()}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
 <el-kw>end test</el-kw>
 </el-test>`;

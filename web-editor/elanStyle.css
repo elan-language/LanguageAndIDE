@@ -113,7 +113,7 @@ el-global:has(el-comment) {
     border-left-color: var(--selection);
 }
 
-.selected > top, .selected > top *, .selected > el-kw, .selected > el-field, .selected > el-field *, .selected > el-txt, .selected > placeholder, .selected > completion {
+.selected > el-top, .selected > el-top *, .selected > el-kw, .selected > el-field, .selected > el-field *, .selected > el-txt, .selected > placeholder, .selected > completion {
     background-color: var(--selection);
     border-right-color: var(--selection);
 }
@@ -122,7 +122,7 @@ el-global:has(el-comment) {
 el-expand {
     display: none;
 }
-.multiline.collapsed > :not(top) {
+.multiline.collapsed > :not(el-top) {
     display: none;
 }
 .multiline.collapsed el-expand {
@@ -201,11 +201,11 @@ el-field.empty.optional.selected placeholder, el-field.empty.optional.selected p
 }
 
 /* ... however, different rules when it is the 'holding' frame that is selected */
-.selected > top el-field.empty placeholder, .selected > el-field.empty placeholder {
+.selected > el-top el-field.empty placeholder, .selected > el-field.empty placeholder {
     display:inline;
     color: var(--warning);
 }
-.selected > top el-field.empty.optional placeholder, .selected > el-field.empty.optional placeholder {
+.selected > el-top el-field.empty.optional placeholder, .selected > el-field.empty.optional placeholder {
     display:inline;
     color: var(--reverseText);
 }
@@ -310,7 +310,7 @@ el-const frno, el-const.multiline.collapsed frno {
 }
 
 el-statement.selected:not(.multiline) frno, 
-.multiline.selected > top frno, 
+.multiline.selected > el-top frno, 
 el-const.selected frno, 
 .selected ~ frno, 
 el-method:has(el-field.selected) ~ frno,

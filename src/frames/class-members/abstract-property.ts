@@ -44,7 +44,7 @@ export class AbstractProperty extends AbstractFrame implements Member, ElanSymbo
   }
 
   renderAsHtml(): string {
-    return `<el-prop class="${this.cls()}" id='${this.htmlId}' tabindex="0"><top><el-kw>abstract property </el-kw>${this.name.renderAsHtml()}</el-kw> as </keyword ${this.type.renderAsHtml()}</top>${this.compileMsgAsHtml()}${this.getFrNo()}</el-prop>`;
+    return `<el-prop class="${this.cls()}" id='${this.htmlId}' tabindex="0"><el-top><el-kw>abstract property </el-kw>${this.name.renderAsHtml()}</el-kw> as </keyword ${this.type.renderAsHtml()}</el-top>${this.compileMsgAsHtml()}${this.getFrNo()}</el-prop>`;
   }
 
   renderAsSource(): string {
