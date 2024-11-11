@@ -27,7 +27,7 @@ export class GlobalComment extends AbstractFrame implements GlobalFrame {
     return "com";
   }
   renderAsHtml(): string {
-    return `<global><el-comment class="${this.cls()}" id='${this.htmlId}' tabindex="0"><top># ${this.text.renderAsHtml()}</top></el-comment></global>`;
+    return `<el-global><el-comment class="${this.cls()}" id='${this.htmlId}' tabindex="0"><top># ${this.text.renderAsHtml()}</top></el-comment></el-global>`;
   }
 
   indent(): string {

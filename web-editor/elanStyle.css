@@ -99,12 +99,12 @@ el-statement:not(.multiline), el-const{
     text-indent: 0;
 }
 
-el-hdr, el-const, main, el-proc, el-func, enum, el-class, el-constructor, el-property, el-member, global, test {
+el-hdr, el-const, main, el-proc, el-func, enum, el-class, el-constructor, el-property, el-member, el-global, test {
     display: block;
     padding-bottom: 1ch;
 }
 
-global:has(el-comment) {
+el-global:has(el-comment) {
     padding-bottom: 0;
 }
 

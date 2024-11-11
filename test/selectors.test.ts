@@ -79,7 +79,7 @@ suite("Selector tests", () => {
     assert.equal(help, " constant class");
     assert.equal(
       g.renderAsHtml(),
-      `<global class="default" id='select1' tabindex="0"><selector><el-txt>c</el-txt><placeholder>new code</placeholder><help class="selector"> constant class</help></selector></global>`,
+      `<el-global class="default" id='select1' tabindex="0"><selector><el-txt>c</el-txt><placeholder>new code</placeholder><help class="selector"> constant class</help></selector></el-global>`,
     );
   });
 

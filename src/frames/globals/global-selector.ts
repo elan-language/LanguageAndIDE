@@ -4,16 +4,16 @@ import { Frame } from "../interfaces/frame";
 import { GlobalFrame } from "../interfaces/global-frame";
 import { Parent } from "../interfaces/parent";
 import {
-  abstractKeyword,
-  classKeyword,
-  commentMarker,
-  constantKeyword,
-  enumKeyword,
-  functionKeyword,
-  mainKeyword,
-  procedureKeyword,
-  recordKeyword,
-  testKeyword,
+    abstractKeyword,
+    classKeyword,
+    commentMarker,
+    constantKeyword,
+    enumKeyword,
+    functionKeyword,
+    mainKeyword,
+    procedureKeyword,
+    recordKeyword,
+    testKeyword,
 } from "../keywords";
 import { ParseStatus } from "../status-enums";
 
@@ -57,7 +57,7 @@ export class GlobalSelector extends AbstractSelector implements GlobalFrame {
   }
 
   renderAsHtml(): string {
-    return `<global class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.textToDisplayAsHtml()}</global>`;
+    return `<el-global class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.textToDisplayAsHtml()}</el-global>`;
   }
 
   indent(): string {
