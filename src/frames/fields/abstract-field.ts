@@ -1,12 +1,12 @@
 import { CodeSource } from "../code-source";
 import { CompileError } from "../compile-error";
 import {
-    TokenType,
-    escapeHtmlChars,
-    helper_CompileOrParseAsDisplayStatus,
-    helper_compileMsgAsHtml,
-    helper_deriveCompileStatusFromErrors,
-    isCollapsible,
+  TokenType,
+  escapeHtmlChars,
+  helper_CompileOrParseAsDisplayStatus,
+  helper_compileMsgAsHtml,
+  helper_deriveCompileStatusFromErrors,
+  isCollapsible,
 } from "../helpers";
 import { AstNode } from "../interfaces/ast-node";
 import { editorEvent } from "../interfaces/editor-event";

@@ -8,11 +8,11 @@ import { InstanceProcRef } from "../parse-nodes/instanceProcRef";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { ParseStatus } from "../status-enums";
 import {
-    filteredSymbols,
-    filterForTokenType,
-    isIdOrProcedure,
-    isProcedure,
-    removeIfSingleFullMatch,
+  filteredSymbols,
+  filterForTokenType,
+  isIdOrProcedure,
+  isProcedure,
+  removeIfSingleFullMatch,
 } from "../symbols/symbol-helpers";
 import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";

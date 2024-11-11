@@ -31,7 +31,7 @@ el-hash {
 span {
     background-color: inherit;
 }
-el-ky {
+el-kw {
     color: var(--keyword);
 } 
 el-field el-txt {
@@ -220,7 +220,7 @@ el-field el-help, el-field.selected.ok el-help {
 el-field.selected el-help, el-field.selected.ok.optional el-help  {
     display: inline;
     color: var(--reverseText);
-    background-color: var(--el-help);
+    background-color: var(--help);
 }
 
 /* el-field el-compl */
