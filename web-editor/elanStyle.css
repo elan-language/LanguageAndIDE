@@ -213,14 +213,14 @@ el-field.selected ~ el-field.empty el-place, el-field.selected ~ el-field.empty.
     display: inline;
 }
 
-/* el-field help */
-el-field help, el-field.selected.ok help {
+/* el-field el-help */
+el-field el-help, el-field.selected.ok el-help {
     display: none;
 }
-el-field.selected help, el-field.selected.ok.optional help  {
+el-field.selected el-help, el-field.selected.ok.optional el-help  {
     display: inline;
     color: var(--reverseText);
-    background-color: var(--help);
+    background-color: var(--el-help);
 }
 
 /* el-field el-compl */
@@ -270,10 +270,10 @@ el-field.selected msg, el-field.selected msg * {
     background-color: var(--reverseText);
     color: var(--optional);
   }
-  selector help {
+  selector el-help {
     display: none; 
   }
-  .selected > selector help {
+  .selected > selector el-help {
     border-style: solid;
     border-color: black;
     border-width: 1px;

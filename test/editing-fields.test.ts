@@ -186,12 +186,12 @@ suite("Editing Fields Tests", () => {
     assert.equal(field.text, "<p>");
     assert.equal(
       field.renderAsHtml(),
-      `<el-field id="comment2" class="selected focused optional ok" tabindex=0><el-txt><input spellcheck="false" data-cursor="3" size="2" style="width: 3ch" value="<p>"></el-txt><el-place>comment</el-place><el-compl></el-compl><msg></msg><help title="Any text on a single line.">?</help></el-field>`,
+      `<el-field id="comment2" class="selected focused optional ok" tabindex=0><el-txt><input spellcheck="false" data-cursor="3" size="2" style="width: 3ch" value="<p>"></el-txt><el-place>comment</el-place><el-compl></el-compl><msg></msg><el-help title="Any text on a single line.">?</el-help></el-field>`,
     );
     field.processKey(tab());
     assert.equal(
       field.renderAsHtml(),
-      `<el-field id="comment2" class="optional ok" tabindex=0><el-txt>&lt;p&gt;</el-txt><el-place>comment</el-place><el-compl></el-compl><msg></msg><help title="Any text on a single line.">?</help></el-field>`,
+      `<el-field id="comment2" class="optional ok" tabindex=0><el-txt>&lt;p&gt;</el-txt><el-place>comment</el-place><el-compl></el-compl><msg></msg><el-help title="Any text on a single line.">?</el-help></el-field>`,
     );
   });
 

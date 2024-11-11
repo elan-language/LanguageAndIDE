@@ -1,12 +1,12 @@
 import { CodeSource } from "../code-source";
 import { CompileError } from "../compile-error";
 import {
-  TokenType,
-  escapeHtmlChars,
-  helper_CompileOrParseAsDisplayStatus,
-  helper_compileMsgAsHtml,
-  helper_deriveCompileStatusFromErrors,
-  isCollapsible,
+    TokenType,
+    escapeHtmlChars,
+    helper_CompileOrParseAsDisplayStatus,
+    helper_compileMsgAsHtml,
+    helper_deriveCompileStatusFromErrors,
+    isCollapsible,
 } from "../helpers";
 import { AstNode } from "../interfaces/ast-node";
 import { editorEvent } from "../interfaces/editor-event";
@@ -473,7 +473,7 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   renderAsHtml(): string {
-    return `<el-field id="${this.htmlId}" class="${this.cls()}" tabindex=0><el-txt>${this.textAsHtml()}</el-txt><el-place>${this.placeholder}</el-place><el-compl>${this.getCompletion()}</el-compl>${this.getMessage()}<help title="${this.help}">?</help></el-field>`;
+    return `<el-field id="${this.htmlId}" class="${this.cls()}" tabindex=0><el-txt>${this.textAsHtml()}</el-txt><el-place>${this.placeholder}</el-place><el-compl>${this.getCompletion()}</el-compl>${this.getMessage()}<el-help title="${this.help}">?</el-help></el-field>`;
   }
 
   indent(): string {

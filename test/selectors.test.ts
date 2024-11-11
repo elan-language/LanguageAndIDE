@@ -79,7 +79,7 @@ suite("Selector tests", () => {
     assert.equal(help, " constant class");
     assert.equal(
       g.renderAsHtml(),
-      `<el-global class="default" id='select1' tabindex="0"><selector><el-txt>c</el-txt><el-place>new code</el-place><help class="selector"> constant class</help></selector></el-global>`,
+      `<el-global class="default" id='select1' tabindex="0"><selector><el-txt>c</el-txt><el-place>new code</el-place><el-help class="selector"> constant class</el-help></selector></el-global>`,
     );
   });
 
@@ -95,7 +95,7 @@ suite("Selector tests", () => {
     assert.equal(help, " procedure property");
     assert.equal(
       s.renderAsHtml(),
-      `<el-member class="ok" id='select8' tabindex="0"><selector><el-txt>pro</el-txt><el-place>new code</el-place><help class="selector"> procedure property</help></selector></el-member>`,
+      `<el-member class="ok" id='select8' tabindex="0"><selector><el-txt>pro</el-txt><el-place>new code</el-place><el-help class="selector"> procedure property</el-help></selector></el-member>`,
     );
   });
 
@@ -118,7 +118,7 @@ suite("Selector tests", () => {
     assert.equal(s.getCompletion(), " procedure property");
     assert.equal(
       s.renderAsHtml(),
-      `<el-member class="ok" id='select8' tabindex="0"><selector><el-txt>abstract pro</el-txt><el-place>new code</el-place><help class="selector"> procedure property</help></selector></el-member>`,
+      `<el-member class="ok" id='select8' tabindex="0"><selector><el-txt>abstract pro</el-txt><el-place>new code</el-place><el-help class="selector"> procedure property</el-help></selector></el-member>`,
     );
   });
 
@@ -133,7 +133,7 @@ suite("Selector tests", () => {
     assert.equal(help, " set switch");
     assert.equal(
       s.renderAsHtml(),
-      `<el-statement class="ok" id='select3' tabindex="0"><selector><el-txt>s</el-txt><el-place>new code</el-place><help class="selector"> set switch</help></selector></el-statement>`,
+      `<el-statement class="ok" id='select3' tabindex="0"><selector><el-txt>s</el-txt><el-place>new code</el-place><el-help class="selector"> set switch</el-help></selector></el-statement>`,
     );
   });
 
