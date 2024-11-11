@@ -137,7 +137,7 @@ suite("Field Parsing Tests", () => {
     assert.equal(expr.textAsSource(), `"{op} times {op2} equals {op1*op2}"`);
     assert.equal(
       expr.textAsHtml(),
-      `<string>"</string>{op}<string> times </string>{op2}<string> equals </string>{op1*op2}<string>"</string>`,
+      `<el-str>"</el-str>{op}<el-str> times </el-str>{op2}<el-str> equals </el-str>{op1*op2}<el-str>"</el-str>`,
     );
   });
 

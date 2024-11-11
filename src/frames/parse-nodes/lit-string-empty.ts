@@ -16,6 +16,6 @@ export class LitStringEmpty extends AbstractSequence {
     }
   }
   renderAsHtml(): string {
-    return `<string>${this.renderAsSource()}</string>`;
+    return `<el-str>${this.renderAsSource()}</el-str>`;
   }
 }

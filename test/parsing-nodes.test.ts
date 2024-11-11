@@ -764,7 +764,7 @@ suite("Parsing Nodes", () => {
       "",
       "",
       "",
-      `{<string>"apple"</string>, <string>"pear"</string>}`,
+      `{<el-str>"apple"</el-str>, <el-str>"pear"</el-str>}`,
     );
     testNodeParse(
       new ListNode(() => new LiteralNode()),
@@ -773,7 +773,7 @@ suite("Parsing Nodes", () => {
       "",
       "",
       "",
-      `{<string>"apple"</string>, <string>"pear"</string>}`,
+      `{<el-str>"apple"</el-str>, <el-str>"pear"</el-str>}`,
     );
   });
   test("List of expressions", () => {
@@ -1303,7 +1303,7 @@ suite("Parsing Nodes", () => {
       "",
       "",
       "",
-      `{<string>"apple"</string>, <string>"pear"</string>}`,
+      `{<el-str>"apple"</el-str>, <el-str>"pear"</el-str>}`,
     );
     testNodeParse(new LiteralNode(), `{4, 5, 2, 3}`, ParseStatus.valid, "", "", "", `{4, 5, 2, 3}`);
   });
@@ -1352,7 +1352,7 @@ suite("Parsing Nodes", () => {
     testNodeParse(new LitStringInterpolation(), "{}", ParseStatus.invalid, "", "{}", "", "");
   });
   test("LitString", () => {
-    testNodeParse(new LitString(), `""`, ParseStatus.valid, `""`, "", "", `<string>""</string>`);
+    testNodeParse(new LitString(), `""`, ParseStatus.valid, `""`, "", "", `<el-str>""</el-str>`);
     testNodeParse(
       new LitString(),
       `"abc"`,
@@ -1360,7 +1360,7 @@ suite("Parsing Nodes", () => {
       `"abc"`,
       "",
       "",
-      `<string>"abc"</string>`,
+      `<el-str>"abc"</el-str>`,
     );
     testNodeParse(
       new LitString(),
@@ -1369,7 +1369,7 @@ suite("Parsing Nodes", () => {
       `"abc def"`,
       "",
       "",
-      `<string>"abc def"</string>`,
+      `<el-str>"abc def"</el-str>`,
     );
     testNodeParse(new LitString(), `"abc`, ParseStatus.incomplete, `"abc`, "", "", "");
     testNodeParse(new LitString(), `"`, ParseStatus.incomplete, `"`, "", "", "");
@@ -1383,7 +1383,7 @@ suite("Parsing Nodes", () => {
       `"<p>abc</p>"`,
       "",
       `"<p>abc</p>"`,
-      `<string>"&lt;p&gt;abc&lt;/p&gt;"</string>`,
+      `<el-str>"&lt;p&gt;abc&lt;/p&gt;"</el-str>`,
     );
     testNodeParse(
       new LitStringNonEmpty(),
@@ -1392,7 +1392,7 @@ suite("Parsing Nodes", () => {
       `"&#123;curly braces&#125;"`,
       "",
       `"&#123;curly braces&#125;"`,
-      `<string>"&amp;#123;curly braces&amp;#125;"</string>`,
+      `<el-str>"&amp;#123;curly braces&amp;#125;"</el-str>`,
     );
   });
   test("Interpolated strings", () => {
