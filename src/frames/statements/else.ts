@@ -63,10 +63,10 @@ export class Else extends FrameWithStatements implements Statement {
   }
 
   renderAsHtml(): string {
-    return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
+    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
     <top><expand>+</expand><el-kw>else </el-kw>${this.ifClauseAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</top>
 ${this.renderChildrenAsHtml()}
-</statement>`;
+</el-statement>`;
   }
 
   indent(): string {

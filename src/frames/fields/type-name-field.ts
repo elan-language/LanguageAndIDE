@@ -30,7 +30,7 @@ export class TypeNameField extends AbstractField {
     if (this.selected) {
       return super.textAsHtml();
     } else {
-      return `<type>${this.text}</type>`;
+      return `<el-type>${this.text}</el-type>`;
     }
   }
 }

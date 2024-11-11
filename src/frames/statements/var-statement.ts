@@ -45,7 +45,7 @@ export class VarStatement extends AbstractFrame implements Statement, ElanSymbol
   }
 
   renderAsHtml(): string {
-    return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><el-kw>${varKeyword} </el-kw>${this.name.renderAsHtml()}<el-kw> ${setKeyword} ${toKeyword} </el-kw>${this.expr.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</statement>`;
+    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><el-kw>${varKeyword} </el-kw>${this.name.renderAsHtml()}<el-kw> ${setKeyword} ${toKeyword} </el-kw>${this.expr.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-statement>`;
   }
 
   renderAsSource(): string {

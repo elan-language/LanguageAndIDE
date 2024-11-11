@@ -46,7 +46,7 @@ export class AssertStatement extends AbstractFrame implements Statement {
   }
 
   renderAsHtml(): string {
-    return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><el-kw>assert </el-kw>${this.actual.renderAsHtml()}<el-kw> is </el-kw>${this.expected.renderAsHtml()}${this.compileOrTestMsgAsHtml()}${this.getFrNo()}</statement>`;
+    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><el-kw>assert </el-kw>${this.actual.renderAsHtml()}<el-kw> is </el-kw>${this.expected.renderAsHtml()}${this.compileOrTestMsgAsHtml()}${this.getFrNo()}</el-statement>`;
   }
 
   renderAsSource(): string {

@@ -16,6 +16,6 @@ export class LitString extends AbstractAlternatives {
     }
   }
   renderAsHtml(): string {
-    return `<string>${this.renderAsSource()}</string>`;
+    return `<el-str>${this.renderAsSource()}</el-str>`;
   }
 }

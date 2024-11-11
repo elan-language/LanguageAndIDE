@@ -24,10 +24,10 @@ export class DefaultStatement extends FrameWithStatements implements Statement {
     return "default";
   }
   renderAsHtml(): string {
-    return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
+    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><el-kw>default </el-kw>${this.compileMsgAsHtml()}${this.getFrNo()}</top>
 ${this.renderChildrenAsHtml()}
-</statement>`;
+</el-statement>`;
   }
 
   renderAsSource(): string {

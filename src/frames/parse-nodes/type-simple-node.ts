@@ -6,6 +6,6 @@ export class TypeSimpleNode extends RegExMatchNode {
     this.completionWhenEmpty = "<i>Type</i>";
   }
   renderAsHtml(): string {
-    return `<type>${this.renderAsSource()}</type>`;
+    return `<el-type>${this.renderAsSource()}</el-type>`;
   }
 }

@@ -63,7 +63,7 @@ suite("Overall Status Tests", () => {
     v4 = f.getById("var4");
     assert.equal(v4.renderAsSource(), "");
     assert.equal(
-      v4.renderAsHtml().startsWith(`<field id="var4" class="selected focused empty warning"`),
+      v4.renderAsHtml().startsWith(`<el-field id="var4" class="selected focused empty warning"`),
       true,
     );
     await f.refreshAllStatuses(runner);
@@ -72,7 +72,7 @@ suite("Overall Status Tests", () => {
     assert.equal(m1.renderAsHtml().startsWith(`<main class="warning`), true);
     v4.processKey(key("L"));
     assert.equal(
-      v4.renderAsHtml().startsWith(`<field id="var4" class="selected focused error"`),
+      v4.renderAsHtml().startsWith(`<el-field id="var4" class="selected focused error"`),
       true,
     );
     await f.refreshAllStatuses(runner);

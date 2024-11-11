@@ -38,11 +38,11 @@ export class Each extends FrameWithStatements implements Statement {
     return "each";
   }
   renderAsHtml(): string {
-    return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
+    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><el-kw>each </el-kw>${this.variable.renderAsHtml()}<el-kw> in </el-kw>${this.iter.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</top>
 ${this.renderChildrenAsHtml()}
 <el-kw>end each</el-kw>
-</statement>`;
+</el-statement>`;
   }
 
   renderAsSource(): string {

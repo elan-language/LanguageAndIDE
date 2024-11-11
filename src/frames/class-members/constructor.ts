@@ -47,11 +47,11 @@ export class Constructor extends FrameWithStatements implements ElanSymbol, Memb
   }
 
   public renderAsHtml(): string {
-    return `<constructor class="${this.cls()}" id='${this.htmlId}' tabindex="0">
+    return `<el-constructor class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><el-kw>constructor</el-kw>(${this.params.renderAsHtml()})${this.compileMsgAsHtml()}${this.getFrNo()}</top>
 ${this.renderChildrenAsHtml()}
 <el-kw>end constructor</el-kw>
-</constructor>`;
+</el-constructor>`;
   }
 
   public renderAsSource(): string {
