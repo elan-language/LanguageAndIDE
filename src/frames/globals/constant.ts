@@ -52,7 +52,7 @@ export class Constant extends AbstractFrame implements ElanSymbol, GlobalFrame, 
     return "const";
   }
   renderAsHtml(): string {
-    return `<constant class="${this.cls()}" id='${this.htmlId}' tabindex="0"><top><expand>+</expand><el-kw>constant </el-kw>${this.name.renderAsHtml()}</top><el-kw> set to </el-kw>${this.value.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</constant>`;
+    return `<el-const class="${this.cls()}" id='${this.htmlId}' tabindex="0"><top><expand>+</expand><el-kw>constant </el-kw>${this.name.renderAsHtml()}</top><el-kw> set to </el-kw>${this.value.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-const>`;
   }
 
   indent(): string {

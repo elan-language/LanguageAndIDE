@@ -62,7 +62,7 @@ export class Enum extends AbstractFrame implements ElanSymbol, GlobalFrame, Coll
     return `<enum class="${this.cls()}" id='${this.htmlId}' tabindex="0"><top><expand>+</expand><el-kw>enum </el-kw>${this.name.renderAsHtml()}</top> ${this.values.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</enum>`;
   }
 
-  //`<constant class="${this.cls()}" id='${this.htmlId}' tabindex="0"><top><expand>+</expand><el-kw>constant </el-kw>${this.name.renderAsHtml()}</top><el-kw> set to </el-kw>${this.value.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</constant>`;
+  //`<el-const class="${this.cls()}" id='${this.htmlId}' tabindex="0"><top><expand>+</expand><el-kw>constant </el-kw>${this.name.renderAsHtml()}</top><el-kw> set to </el-kw>${this.value.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-const>`;
 
   indent(): string {
     return "";

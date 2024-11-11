@@ -90,7 +90,7 @@ el-statement, el-constructor, el-property, el-class > el-func, el-class > el-pro
     border-color: var(--defaultBackground);
 }
 
-el-statement:not(.multiline), constant{
+el-statement:not(.multiline), el-const{
     padding-left: 1ch; /* Indent 2nd and subsequent lines if el-txt wraps */
     text-indent: -1ch;
 }
@@ -99,7 +99,7 @@ el-statement:not(.multiline), constant{
     text-indent: 0;
 }
 
-el-hdr, constant, main, el-proc, el-func, enum, el-class, el-constructor, el-property, el-member, global, test {
+el-hdr, el-const, main, el-proc, el-func, enum, el-class, el-constructor, el-property, el-member, global, test {
     display: block;
     padding-bottom: 1ch;
 }
@@ -305,13 +305,13 @@ frno {
     text-indent: 0;
 }
 
-constant frno, constant.multiline.collapsed frno {
+el-const frno, el-const.multiline.collapsed frno {
     display: inline-block;
 }
 
 el-statement.selected:not(.multiline) frno, 
 .multiline.selected > top frno, 
-constant.selected frno, 
+el-const.selected frno, 
 .selected ~ frno, 
 el-method:has(el-field.selected) ~ frno,
 frno:has(~ el-field.selected), /* this and next clause specifically for 'repeat expression' el-field */
