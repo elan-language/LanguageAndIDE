@@ -82,7 +82,7 @@ el-hdr .ok {
 
 
 /* Horizontal and vertical spacing */
-el-statement, el-constructor, el-property, el-class > el-func, el-class > procedure, el-class > member {
+el-statement, el-constructor, el-property, el-class > el-func, el-class > el-proc, el-class > member {
     display: block;
     background-color: var(--defaultBackground);
     border-left-style: solid;
@@ -99,7 +99,7 @@ el-statement:not(.multiline), constant{
     text-indent: 0;
 }
 
-el-hdr, constant, main, procedure, el-func, enum, el-class, el-constructor, el-property, member, global, test {
+el-hdr, constant, main, el-proc, el-func, enum, el-class, el-constructor, el-property, member, global, test {
     display: block;
     padding-bottom: 1ch;
 }

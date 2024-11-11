@@ -48,8 +48,8 @@ export class AbstractProcedure extends AbstractFrame implements Member, ElanSymb
   }
 
   renderAsHtml(): string {
-    return `<procedure class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<top><el-kw>abstract procedure </el-kw><el-method>${this.name.renderAsHtml()}</el-method>(${this.params.renderAsHtml()})</top>${this.compileMsgAsHtml()}${this.getFrNo()}</procedure>
+    return `<el-proc class="${this.cls()}" id='${this.htmlId}' tabindex="0">
+<top><el-kw>abstract procedure </el-kw><el-method>${this.name.renderAsHtml()}</el-method>(${this.params.renderAsHtml()})</top>${this.compileMsgAsHtml()}${this.getFrNo()}</el-proc>
 `;
   }
 
