@@ -9,7 +9,7 @@ export class TestInputOutput implements ElanInputOutput {
   }
   
   readFile(): Promise<string> {
-    return Promise.resolve("Line1\nLine2\nLine3");
+    return Promise.resolve("Line1 \n Line2\n\rLine3");
   }
   
   getKeystroke(): Promise<string> {

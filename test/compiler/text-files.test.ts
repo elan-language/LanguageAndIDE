@@ -56,7 +56,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "Line1\nLine2\nLine3");
+    await assertObjectCodeExecutes(fileImpl, "Line1 \n Line2\n\rLine3");
   });
 
   test("Pass_ReadLine", async () => {

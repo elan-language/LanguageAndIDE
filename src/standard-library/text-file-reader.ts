@@ -29,7 +29,7 @@ export class TextFileReader {
     }
     let line = "";
     if (this.currentLine < this.content.length) {
-      line = this.content[this.currentLine];
+      line = this.content[this.currentLine].trim();
       this.currentLine++;
     }
 
