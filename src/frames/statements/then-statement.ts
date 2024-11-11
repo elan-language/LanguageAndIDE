@@ -26,7 +26,7 @@ export class ThenStatement extends FrameWithStatements implements Statement {
   }
   renderAsHtml(): string {
     return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<top><expand>+</expand><el-kw>then </el-kw>${this.getFrNo()}</top>
+<top><el-expand>+</el-expand><el-kw>then </el-kw>${this.getFrNo()}</top>
 ${this.renderChildrenAsHtml()}
 </el-statement>`;
   }

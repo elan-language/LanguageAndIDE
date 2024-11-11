@@ -109,23 +109,23 @@ el-global:has(el-comment) {
 }
 
 /* Frame selection */
-.selected > * , .selected > clause *{
+.selected > * {
     border-left-color: var(--selection);
 }
 
-.selected > clause *, .selected > top, .selected > top *, .selected > el-kw, .selected > el-field, .selected > el-field *, .selected > el-txt, .selected > placeholder, .selected > completion {
+.selected > top, .selected > top *, .selected > el-kw, .selected > el-field, .selected > el-field *, .selected > el-txt, .selected > placeholder, .selected > completion {
     background-color: var(--selection);
     border-right-color: var(--selection);
 }
 
 /* Multline Collapse / Expand */
-expand {
+el-expand {
     display: none;
 }
 .multiline.collapsed > :not(top) {
     display: none;
 }
-.multiline.collapsed expand {
+.multiline.collapsed el-expand {
     display:inline;
     font-weight: bold;
     color: var(--reverseText);
@@ -133,13 +133,13 @@ expand {
     /* cursor: pointer; why only this? */
 }
 /* colour corresponds to worst of parseStatus and compileStatus (and el-testStatus - for el-tests only)*/
-.multiline.collapsed expand {
+.multiline.collapsed el-expand {
     background-color: var(--ok);
 }
-.multiline.collapsed.warning expand {
+.multiline.collapsed.warning el-expand {
     background-color: var(--warning);
 }
-.multiline.collapsed.error expand {
+.multiline.collapsed.error el-expand {
     background-color: var(--error);
 }
 
