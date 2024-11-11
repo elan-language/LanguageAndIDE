@@ -34,16 +34,16 @@ span {
 el-ky {
     color: var(--keyword);
 } 
-field text {
+el-field text {
     border-style:hidden;
     border-width: 1px;
 }
-field.selected text {
+el-field.selected text {
     border-style: solid;
     border-color: black;
     position:relative; /* Ensures that the border is not overwritten by text fields in the line below */ 
 }
-method, method field.ok text {
+method, method el-field.ok text {
     color: var(--method);
 }
 type {
@@ -59,7 +59,7 @@ regex {
 }
 
 /* Header & comments */
-comment *, comment field.ok text  {
+comment *, comment el-field.ok text  {
     color: var(--comment);
 }
 
@@ -113,7 +113,7 @@ global:has(comment) {
     border-left-color: var(--selection);
 }
 
-.selected > clause *, .selected > top, .selected > top *, .selected > el-kw, .selected > field, .selected > field *, .selected > text, .selected > placeholder, .selected > completion {
+.selected > clause *, .selected > top, .selected > top *, .selected > el-kw, .selected > el-field, .selected > el-field *, .selected > text, .selected > placeholder, .selected > completion {
     background-color: var(--selection);
     border-right-color: var(--selection);
 }
@@ -144,98 +144,98 @@ expand {
 }
 
 /* Fields */
-field.warning, field.warning el-kw, field.warning type, field.warning string, field.warning method {
+el-field.warning, el-field.warning el-kw, el-field.warning type, el-field.warning string, el-field.warning method {
     background-color: var(--warning);
 }
-.error field, field.error el-kw, field.error  type, field.error  string, field.error method {
+.error el-field, el-field.error el-kw, el-field.error  type, el-field.error  string, el-field.error method {
     color: var(--defaultText);
 }
 
-/* field-text*/
-field text {
+/* el-field-text*/
+el-field text {
     color: var(--defaultText);
     background-color: var(--defaultBackground);
 }
-field.error text, field.error input  {
+el-field.error text, el-field.error input  {
     background-color: var(--error);
 }
-field.warning text, field.warning input {
+el-field.warning text, el-field.warning input {
     background-color: var(--warning);
 }
-field.selected.ok text, field.selected.ok input {
+el-field.selected.ok text, el-field.selected.ok input {
     background-color: var(--ok);
 }
-field.selected.ok.optional.empty text, field.selected.ok.optional.empty input {
+el-field.selected.ok.optional.empty text, el-field.selected.ok.optional.empty input {
     background-color: var(--optional);
 }
 
-/* field placeholder */
-field placeholder {
+/* el-field placeholder */
+el-field placeholder {
   display: none; 
 }
 
-field.empty placeholder, field.empty placeholder * {
+el-field.empty placeholder, el-field.empty placeholder * {
     display: inline;
     color: var(--reverseText);
 }
 
-field.empty.optional placeholder, field.empty.optional placeholder * {
+el-field.empty.optional placeholder, el-field.empty.optional placeholder * {
     display: none;
     color: var(--optional);
 }
 
-field.empty.selected placeholder, field.empty.selected placeholder * {
+el-field.empty.selected placeholder, el-field.empty.selected placeholder * {
     display: inline;
     color: var(--reverseText);
     background-color: var(--warning);
 }
 
-field.empty.optional.selected placeholder, field.empty.optional.selected placeholder * {
+el-field.empty.optional.selected placeholder, el-field.empty.optional.selected placeholder * {
     display: inline;
     color: var(--reverseText);
     background-color: var(--optional);
 }
 
-field.empty.optional.selected placeholder, field.empty.optional.selected placeholder * {
+el-field.empty.optional.selected placeholder, el-field.empty.optional.selected placeholder * {
     display: inline;
 }
 
 /* ... however, different rules when it is the 'holding' frame that is selected */
-.selected > top field.empty placeholder, .selected > field.empty placeholder {
+.selected > top el-field.empty placeholder, .selected > el-field.empty placeholder {
     display:inline;
     color: var(--warning);
 }
-.selected > top field.empty.optional placeholder, .selected > field.empty.optional placeholder {
+.selected > top el-field.empty.optional placeholder, .selected > el-field.empty.optional placeholder {
     display:inline;
     color: var(--reverseText);
 }
-field.selected ~ field.empty placeholder, field.selected ~ field.empty.optional placeholder{
+el-field.selected ~ el-field.empty placeholder, el-field.selected ~ el-field.empty.optional placeholder{
     display: inline;
 }
 
-/* field help */
-field help, field.selected.ok help {
+/* el-field help */
+el-field help, el-field.selected.ok help {
     display: none;
 }
-field.selected help, field.selected.ok.optional help  {
+el-field.selected help, el-field.selected.ok.optional help  {
     display: inline;
     color: var(--reverseText);
     background-color: var(--help);
 }
 
-/* field completion */
-field completion  {
+/* el-field completion */
+el-field completion  {
     display: none;
 }
 
-field.selected completion, field.selected completion * {
+el-field.selected completion, el-field.selected completion * {
     display: inline;
     color: var(--reverseText);
     background-color: var(--warning);
 }
 
-field.selected.empty completion, field.selected.empty completion *,
-field.selected.empty.optional completion, field.selected.empty.optional completion *  {
+el-field.selected.empty completion, el-field.selected.empty completion *,
+el-field.selected.empty.optional completion, el-field.selected.empty.optional completion *  {
     display: none;
 }
 
@@ -255,13 +255,13 @@ msg.error {
     background-color: var(--error);
 }
 
-/* field msg */
+/* el-field msg */
 
-field msg {
+el-field msg {
     display: none;
 }
 
-field.selected msg, field.selected msg * {
+el-field.selected msg, el-field.selected msg * {
     display: inline;
 }
 
@@ -313,8 +313,8 @@ statement.selected:not(.multiline) frno,
 .multiline.selected > top frno, 
 constant.selected frno, 
 .selected ~ frno, 
-method:has(field.selected) ~ frno,
-frno:has(~ field.selected), /* this and next clause specifically for 'repeat expression' field */
+method:has(el-field.selected) ~ frno,
+frno:has(~ el-field.selected), /* this and next clause specifically for 'repeat expression' el-field */
 statement.selected > frno  
  {
     background-color: var(--selection);

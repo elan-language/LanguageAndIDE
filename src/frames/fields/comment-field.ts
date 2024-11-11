@@ -28,6 +28,6 @@ export class CommentField extends AbstractField {
   }
   renderAsHtml(): string {
     const txt = this.isSelected() ? this.textAsHtml() : escapeHtmlChars(this.textAsHtml());
-    return `<field id="${this.htmlId}" class="${this.cls()}" tabindex=0><text>${txt}</text><placeholder>${this.placeholder}</placeholder><completion>${this.getCompletion()}</completion>${this.getMessage()}<help title="${this.help}">?</help></field>`;
+    return `<el-field id="${this.htmlId}" class="${this.cls()}" tabindex=0><text>${txt}</text><placeholder>${this.placeholder}</placeholder><completion>${this.getCompletion()}</completion>${this.getMessage()}<help title="${this.help}">?</help></el-field>`;
   }
 }
