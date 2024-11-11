@@ -67,16 +67,16 @@ el-comment *, el-comment el-field.ok el-txt  {
     display: none;
 }
 
-header, header * {
+el-hdr, el-hdr * {
     color: var(--comment);
 }
-header .error {
+el-hdr .error {
     color: var(--error)
 }
-header .warning {
+el-hdr .warning {
     color: var(--warning)
 }
-header .ok {
+el-hdr .ok {
     color: var(--ok)
 }
 
@@ -99,7 +99,7 @@ statement:not(.multiline), constant{
     el-txt-indent: 0;
 }
 
-header, constant, main, procedure, function, enum, classDef, constructor, property, member, global, test {
+el-hdr, constant, main, procedure, function, enum, classDef, constructor, property, member, global, test {
     display: block;
     padding-bottom: 1ch;
 }
