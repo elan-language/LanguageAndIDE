@@ -32,8 +32,10 @@ export class CopyWith extends AbstractSequence {
     if (this.original && !this.original?.remainingText.includes(" ")) {
       return this.original.getToMatchAndTokenType();
     }
-
     const [id, tokenType] = this.withClause!.getToMatchAndTokenType();
+    //Explanation:  the user is asked for a property name (id) - which will be "" initially
+    //However, the symbol table is not being asked to match 'id', but 'instance.id'
+    //so that user is offered only the properties for that instance type.
     return [`${this.original?.matchedText}.${id}`, tokenType];
   }
 }
