@@ -1,3 +1,4 @@
+import { TokenType } from "../helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
 import { ArrayNode } from "./array-list-node";
@@ -58,5 +59,9 @@ export class TermSimple extends AbstractSequence {
     this.addElement(this.alternatives);
     this.addElement(this.optIndex);
     super.parseText(text);
+  }
+
+  getToMatchAndTokenType(): [string, TokenType] {
+    return [this.matchedText, TokenType.expression];
   }
 }

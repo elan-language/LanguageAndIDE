@@ -1,4 +1,6 @@
+import { TokenType } from "../helpers";
 import { copyKeyword } from "../keywords";
+import { ParseStatus } from "../status-enums";
 import { AbstractSequence } from "./abstract-sequence";
 import { IdentifierNode } from "./identifier-node";
 import { KeywordNode } from "./keyword-node";
@@ -24,5 +26,14 @@ export class CopyWith extends AbstractSequence {
       this.addElement(this.withClause);
       return super.parseText(text);
     }
+  }
+
+  getToMatchAndTokenType(): [string, TokenType] {
+    if (this.original && !this.original?.remainingText.includes(" ")) {
+      return this.original.getToMatchAndTokenType();
+    }
+
+    const [id, tokenType] = this.withClause!.getToMatchAndTokenType();
+    return [`${this.original?.matchedText}.${id}`, tokenType];
   }
 }

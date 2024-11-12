@@ -49,16 +49,7 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [
-      ["inputFloat", "*"],
-      ["inputFloatBetween", "*"],
-      ["inputInt", "*"],
-      ["inputIntBetween", "*"],
-      ["inputString", "*"],
-      ["inputStringFromOptions", "*"],
-      ["inputStringWithLimits", "*"],
-      ["Int", "*"],
-    ] as [string, string][];
+    const expected = [["Int", "*"]] as [string, string][];
 
     await assertAutocompletesWithString(fileImpl, "expr5", "empty [I", expected);
   });

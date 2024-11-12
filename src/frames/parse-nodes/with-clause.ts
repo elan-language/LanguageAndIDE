@@ -1,4 +1,6 @@
+import { TokenType } from "../helpers";
 import { withKeyword } from "../keywords";
+import { ParseStatus } from "../status-enums";
 import { AbstractSequence } from "./abstract-sequence";
 import { CSV } from "./csv";
 import { KeywordNode } from "./keyword-node";
@@ -23,5 +25,14 @@ export class WithClause extends AbstractSequence {
       this.addElement(this.toClauses);
       return super.parseText(text);
     }
+  }
+
+  getToMatchAndTokenType(): [string, TokenType] {
+    const elems = this.getElements();
+    if (elems[2].status === ParseStatus.valid) {
+      return elems[3].getToMatchAndTokenType();
+    }
+
+    return ["", TokenType.none];
   }
 }

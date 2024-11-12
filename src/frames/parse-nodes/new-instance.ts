@@ -1,3 +1,4 @@
+import { TokenType } from "../helpers";
 import { newKeyword } from "../keywords";
 import { CLOSE_BRACKET, OPEN_BRACKET } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
@@ -29,5 +30,15 @@ export class NewInstance extends AbstractSequence {
     this.withClause = new OptionalNode(new WithClause());
     this.addElement(this.withClause);
     super.parseText(text);
+  }
+
+  getToMatchAndTokenType(): [string, TokenType] {
+    const [id, tokenType] = this.withClause!.getToMatchAndTokenType();
+
+    if (tokenType !== TokenType.none) {
+      return [`${this.type?.matchedText}.${id}`, tokenType];
+    }
+
+    return [this.type?.matchedText ?? "", TokenType.type];
   }
 }

@@ -1,4 +1,5 @@
 import { CodeSource } from "../code-source";
+import { TokenType } from "../helpers";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Frame } from "../interfaces/frame";
 import { propertyKeyword } from "../keywords";
@@ -6,6 +7,7 @@ import { ExprNode } from "../parse-nodes/expr-node";
 import { ParseNode } from "../parse-nodes/parse-node";
 import {
   filteredSymbols,
+  filterForTokenType,
   isExpression,
   isFunction,
   isMemberOnFieldsClass,
@@ -51,10 +53,25 @@ export class ExpressionField extends AbstractField {
     return [match, removeIfSingleFullMatch(symbols, match)];
   }
 
+  matchingSymbolsForIdNew(id: string, tokenType: TokenType): [string, ElanSymbol[]] {
+    const [match, symbols] = filteredSymbols(
+      id,
+      transforms(),
+      filterForTokenType(tokenType),
+      this.getHolder(),
+    );
+
+    return [match, removeIfSingleFullMatch(symbols, match)];
+  }
+
   public textAsHtml(): string {
     let popupAsHtml = "";
-    if (this.showAutoComplete()) {
-      [this.autocompleteMatch, this.autocompleteSymbols] = this.matchingSymbolsForId();
+    const [id, tokenType] = this.getToMatchAndTokenType();
+    if (this.showAutoCompleteNew(tokenType)) {
+      [this.autocompleteMatch, this.autocompleteSymbols] = this.matchingSymbolsForIdNew(
+        id,
+        tokenType,
+      );
       popupAsHtml = this.popupAsHtml();
     }
     return super.textAsHtml() + popupAsHtml;

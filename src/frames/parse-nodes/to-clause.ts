@@ -1,4 +1,6 @@
+import { TokenType } from "../helpers";
 import { toKeyword } from "../keywords";
+import { ParseStatus } from "../status-enums";
 import { AbstractSequence } from "./abstract-sequence";
 import { ExprNode } from "./expr-node";
 import { IdentifierNode } from "./identifier-node";
@@ -33,5 +35,18 @@ export class ToClause extends AbstractSequence {
     const code = codeArray.join(" ");
 
     return code;
+  }
+
+  getToMatchAndTokenType(): [string, TokenType] {
+    const elems = this.getElements();
+    if (elems[3].status === ParseStatus.valid) {
+      return elems[4].getToMatchAndTokenType();
+    }
+
+    if (elems[1].status !== ParseStatus.valid) {
+      return [elems[0].matchedText, TokenType.property];
+    }
+
+    return ["", TokenType.none];
   }
 }

@@ -1,3 +1,4 @@
+import { TokenType } from "../helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
 import { DotBefore } from "./dot-before";
@@ -25,5 +26,9 @@ export class TermChained extends AbstractSequence {
       this.addElement(this.tail);
       super.parseText(text);
     }
+  }
+
+  getToMatchAndTokenType(): [string, TokenType] {
+    return [this.matchedText, TokenType.expression];
   }
 }

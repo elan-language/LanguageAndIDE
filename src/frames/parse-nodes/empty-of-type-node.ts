@@ -1,3 +1,4 @@
+import { TokenType } from "../helpers";
 import { emptyKeyword } from "../keywords";
 import { AbstractSequence } from "./abstract-sequence";
 import { KeywordNode } from "./keyword-node";
@@ -14,5 +15,9 @@ export class EmptyOfTypeNode extends AbstractSequence {
     this.type = new TypeNode();
     this.addElement(this.type);
     super.parseText(text);
+  }
+
+  getToMatchAndTokenType(): [string, TokenType] {
+    return [this.type?.matchedText ?? "", TokenType.type];
   }
 }
