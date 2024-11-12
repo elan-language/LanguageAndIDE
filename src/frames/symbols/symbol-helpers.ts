@@ -409,40 +409,6 @@ function matchingSymbolsWithQualifier(
   return [propId, classSymbols.concat(allExtensions)];
 }
 
-function matchingSymbolsOnRecord(
-  recordId: string,
-  propId: string,
-  transforms: Transforms,
-  scope: Scope,
-): [string, ElanSymbol[]] {
-  recordId = upToParams(recordId);
-
-  const record = scope.resolveSymbol(recordId, transforms, scope);
-
-  // class scope so all or matching symbols on class
-  const recordSt = record.symbolType(transforms);
-
-  if (recordSt instanceof ClassType) {
-    const cls = getGlobalScope(scope).resolveSymbol(recordSt.className, transforms, scope);
-
-    if (isClassTypeDef(cls)) {
-      return [propId, cls.symbolMatches(propId, !propId).filter((s) => isPublicMember(s))];
-    }
-  }
-
-  return [propId, []];
-}
-
-function isWithClause(tokens: string[]) {
-  const lastButOneToken = tokens[tokens.length - 2];
-  const lastButTwoToken = tokens[tokens.length - 3];
-
-  return (
-    tokens.includes(withKeyword) &&
-    (lastButOneToken === withKeyword || lastButTwoToken === `${toKeyword}`)
-  );
-}
-
 export function matchingSymbols(
   id: string,
   transforms: Transforms,
@@ -454,17 +420,6 @@ export function matchingSymbols(
 
   if (dotIndex >= 0) {
     return matchingSymbolsWithQualifier(id, dotIndex, transforms, scope);
-  }
-
-  if (tokens.length >= 4 && isWithClause(tokens)) {
-    const withIndex = tokens.indexOf(withKeyword);
-
-    return matchingSymbolsOnRecord(
-      tokens[withIndex - 1],
-      tokens[tokens.length - 1],
-      transforms,
-      scope,
-    );
   }
 
   const openParamsIndex = id.indexOf("(");
