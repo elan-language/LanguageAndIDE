@@ -1,5 +1,4 @@
 import { CodeSource } from "../code-source";
-import { TokenType } from "../helpers";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Frame } from "../interfaces/frame";
 import { Alternatives } from "../parse-nodes/alternatives";
@@ -7,13 +6,7 @@ import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { InstanceProcRef } from "../parse-nodes/instanceProcRef";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { ParseStatus } from "../status-enums";
-import {
-  filteredSymbols,
-  filterForTokenType,
-  isIdOrProcedure,
-  isProcedure,
-  removeIfSingleFullMatch,
-} from "../symbols/symbol-helpers";
+import { isProcedure } from "../symbols/symbol-helpers";
 import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
 
@@ -36,29 +29,6 @@ export class ProcRefField extends AbstractField {
     return this.rootNode;
   }
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) => source.readUntil(/\(/);
-
-  matchingSymbolsForId(): [string, ElanSymbol[]] {
-    const id = this.rootNode?.matchedText ?? "";
-    const [match, symbols] = filteredSymbols(
-      id,
-      transforms(),
-      (s) => isIdOrProcedure(s, transforms()),
-      this.getHolder(),
-    );
-
-    return [match, removeIfSingleFullMatch(symbols, match)];
-  }
-
-  matchingSymbolsForIdNew(id: string, tokenType: TokenType): [string, ElanSymbol[]] {
-    const [match, symbols] = filteredSymbols(
-      id,
-      transforms(),
-      filterForTokenType(tokenType),
-      this.getHolder(),
-    );
-
-    return [match, removeIfSingleFullMatch(symbols, match)];
-  }
 
   protected override getId(s: ElanSymbol) {
     if (isProcedure(s, transforms())) {
@@ -87,10 +57,11 @@ export class ProcRefField extends AbstractField {
   public textAsHtml(): string {
     let text: string;
     const [id, tokenType] = this.getToMatchAndTokenType();
-    if (this.showAutoCompleteNew(tokenType)) {
-      [this.autocompleteMatch, this.autocompleteSymbols] = this.matchingSymbolsForIdNew(
+    if (this.showAutoComplete(tokenType)) {
+      [this.autocompleteMatch, this.autocompleteSymbols] = this.matchingSymbolsForId(
         id,
         tokenType,
+        transforms(),
       );
       const popupAsHtml = this.popupAsHtml();
       text = popupAsHtml + this.nonAutoTextAsHtml();

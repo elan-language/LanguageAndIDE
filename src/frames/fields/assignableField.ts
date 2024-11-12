@@ -1,5 +1,5 @@
-import exp from "constants";
 import { CodeSource } from "../code-source";
+import { TokenType } from "../helpers";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Frame } from "../interfaces/frame";
 import { propertyKeyword } from "../keywords";
@@ -14,13 +14,11 @@ import {
   isInsideClass,
   isMemberOnFieldsClass,
   isProperty,
-  isVarOrPropertyStatement,
   removeIfSingleFullMatch,
 } from "../symbols/symbol-helpers";
 import { transforms } from "../syntax-nodes/ast-helpers";
+import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractField } from "./abstract-field";
-import { ParseStatus } from "../status-enums";
-import { TokenType } from "../helpers";
 
 export class AssignableField extends AbstractField {
   constructor(holder: Frame) {
@@ -48,9 +46,13 @@ export class AssignableField extends AbstractField {
     return all.filter((s) => isProperty(s)) as ElanSymbol[];
   }
 
-  matchingSymbolsForIdNew(id: string, tokeType: TokenType): [string, ElanSymbol[]] {
+  override matchingSymbolsForId(
+    id: string,
+    tokeType: TokenType,
+    transforms: Transforms,
+  ): [string, ElanSymbol[]] {
     const scope = this.getHolder();
-    let symbols = filteredSymbols(id, transforms(), filterForTokenType(tokeType), scope);
+    let symbols = filteredSymbols(id, transforms, filterForTokenType(tokeType), scope);
 
     if (isInsideClass(scope)) {
       const prefix = "property.";
@@ -63,7 +65,7 @@ export class AssignableField extends AbstractField {
         symbols = [match, updated];
       } else if (id.startsWith(prefix)) {
         const [match] = symbols;
-        symbols = filteredSymbols(match, transforms(), (s) => isProperty(s), scope);
+        symbols = filteredSymbols(match, transforms, (s) => isProperty(s), scope);
       }
     }
     const [match, origSymbols] = symbols;
@@ -81,10 +83,11 @@ export class AssignableField extends AbstractField {
   public textAsHtml(): string {
     let popupAsHtml = "";
     const [id, tokenType] = this.getToMatchAndTokenType();
-    if (this.showAutoCompleteNew(tokenType)) {
-      [this.autocompleteMatch, this.autocompleteSymbols] = this.matchingSymbolsForIdNew(
+    if (this.showAutoComplete(tokenType)) {
+      [this.autocompleteMatch, this.autocompleteSymbols] = this.matchingSymbolsForId(
         id,
         tokenType,
+        transforms(),
       );
       popupAsHtml = this.popupAsHtml();
     }

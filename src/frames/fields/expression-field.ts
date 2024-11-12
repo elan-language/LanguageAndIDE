@@ -1,19 +1,10 @@
 import { CodeSource } from "../code-source";
-import { TokenType } from "../helpers";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Frame } from "../interfaces/frame";
 import { propertyKeyword } from "../keywords";
 import { ExprNode } from "../parse-nodes/expr-node";
 import { ParseNode } from "../parse-nodes/parse-node";
-import {
-  filteredSymbols,
-  filterForTokenType,
-  isExpression,
-  isFunction,
-  isMemberOnFieldsClass,
-  isProperty,
-  removeIfSingleFullMatch,
-} from "../symbols/symbol-helpers";
+import { isFunction, isMemberOnFieldsClass, isProperty } from "../symbols/symbol-helpers";
 import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
 
@@ -38,39 +29,14 @@ export class ExpressionField extends AbstractField {
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>
     source.readUntil(this.readUntil);
 
-  matchingSymbolsForId(): [string, ElanSymbol[]] {
-    const id = this.rootNode?.matchedText ?? "";
-
-    const completion = this.getCompletion();
-
-    const [match, symbols] = filteredSymbols(
-      id,
-      transforms(),
-      (s) => isExpression(s, transforms()),
-      this.getHolder(),
-    );
-
-    return [match, removeIfSingleFullMatch(symbols, match)];
-  }
-
-  matchingSymbolsForIdNew(id: string, tokenType: TokenType): [string, ElanSymbol[]] {
-    const [match, symbols] = filteredSymbols(
-      id,
-      transforms(),
-      filterForTokenType(tokenType),
-      this.getHolder(),
-    );
-
-    return [match, removeIfSingleFullMatch(symbols, match)];
-  }
-
   public textAsHtml(): string {
     let popupAsHtml = "";
     const [id, tokenType] = this.getToMatchAndTokenType();
-    if (this.showAutoCompleteNew(tokenType)) {
-      [this.autocompleteMatch, this.autocompleteSymbols] = this.matchingSymbolsForIdNew(
+    if (this.showAutoComplete(tokenType)) {
+      [this.autocompleteMatch, this.autocompleteSymbols] = this.matchingSymbolsForId(
         id,
         tokenType,
+        transforms(),
       );
       popupAsHtml = this.popupAsHtml();
     }

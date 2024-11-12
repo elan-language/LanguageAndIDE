@@ -20,7 +20,12 @@ import { Overtyper } from "../overtyper";
 import { CSV } from "../parse-nodes/csv";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { CompileStatus, DisplayStatus, ParseStatus } from "../status-enums";
-import { isProperty } from "../symbols/symbol-helpers";
+import {
+  filterForTokenType,
+  filteredSymbols,
+  isProperty,
+  removeIfSingleFullMatch,
+} from "../symbols/symbol-helpers";
 import { UnknownType } from "../symbols/unknown-type";
 import { EmptyAsn } from "../syntax-nodes/empty-asn";
 import { Transforms } from "../syntax-nodes/transforms";
@@ -527,8 +532,19 @@ export abstract class AbstractField implements Selectable, Field {
     return UnknownType.Instance;
   }
 
-  matchingSymbolsForId(): [string, ElanSymbol[]] {
-    return ["", []];
+  matchingSymbolsForId(
+    id: string,
+    tokenType: TokenType,
+    transforms: Transforms,
+  ): [string, ElanSymbol[]] {
+    const [match, symbols] = filteredSymbols(
+      id,
+      transforms,
+      filterForTokenType(tokenType),
+      this.getHolder(),
+    );
+
+    return [match, removeIfSingleFullMatch(symbols, match)];
   }
 
   protected getSymbolId(symbol: ElanSymbol) {
@@ -613,39 +629,12 @@ export abstract class AbstractField implements Selectable, Field {
     }
   }
 
-  protected showAutoComplete() {
-    return (
-      this.selected &&
-      this.cursorPos === this.text.length &&
-      this.readParseStatus() !== ParseStatus.invalid &&
-      this.requiresSymbolComplete()
-    );
-  }
-
-  protected showAutoCompleteNew(tt: TokenType) {
+  protected showAutoComplete(tt: TokenType) {
     return (
       tt !== TokenType.none &&
       this.selected &&
       this.cursorPos === this.text.length &&
       this.readParseStatus() !== ParseStatus.invalid
-    );
-  }
-
-  protected requiresSymbolComplete() {
-    const completion = this.getCompletion();
-    if (this.text.endsWith(" ")) {
-      return (
-        completion === "" || (completion.startsWith("<i>") && !completion.startsWith("<i>operator"))
-      );
-    }
-    return (
-      completion.startsWith(" ") ||
-      completion.startsWith(")") ||
-      completion === "" ||
-      completion === "]" ||
-      completion === "}" ||
-      completion === ">" ||
-      completion.startsWith("<i>")
     );
   }
 

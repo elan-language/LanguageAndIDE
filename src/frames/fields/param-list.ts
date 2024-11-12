@@ -4,7 +4,7 @@ import {
   mustNotBeOutParameter,
   mustNotBeRedefined,
 } from "../compile-rules";
-import { isConstructor, isFunction, TokenType } from "../helpers";
+import { isConstructor, isFunction } from "../helpers";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstNode } from "../interfaces/ast-node";
 import { ElanSymbol } from "../interfaces/elan-symbol";
@@ -16,13 +16,7 @@ import { ParamDefNode } from "../parse-nodes/param-def-node";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { ParseStatus } from "../status-enums";
 import { DuplicateSymbol } from "../symbols/duplicate-symbol";
-import {
-  filteredSymbols,
-  filterForTokenType,
-  isTypeName,
-  removeIfSingleFullMatch,
-  symbolMatches,
-} from "../symbols/symbol-helpers";
+import { symbolMatches } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { isAstCollectionNode, isAstIdNode, transforms } from "../syntax-nodes/ast-helpers";
@@ -171,69 +165,15 @@ export class ParamList extends AbstractField implements Scope {
 
     return "";
   }
-  matchingSymbolsForId(): [string, ElanSymbol[]] {
-    const text = this.rootNode?.matchedText ?? "";
-
-    const params = text.split(",");
-    if (params.length === 0) {
-      return super.matchingSymbolsForId();
-    }
-
-    const lastParam = params[params.length - 1].trimStart();
-
-    const tokens = lastParam.split(" ");
-
-    if (tokens.length < 3) {
-      return super.matchingSymbolsForId();
-    }
-
-    const id = tokens[tokens.length - 1];
-
-    const [match, symbols] = filteredSymbols(
-      id,
-      transforms(),
-      (s) => isTypeName(s),
-      this.getHolder(),
-    );
-
-    return [match, removeIfSingleFullMatch(symbols, match)];
-  }
-
-  matchingSymbolsForIdNew(id: string, tokenType: TokenType): [string, ElanSymbol[]] {
-    //const text = this.rootNode?.matchedText ?? "";
-
-    // const params = text.split(",");
-    // if (params.length === 0) {
-    //   return super.matchingSymbolsForId();
-    // }
-
-    // const lastParam = params[params.length - 1].trimStart();
-
-    // const tokens = lastParam.split(" ");
-
-    // if (tokens.length < 3) {
-    //   return super.matchingSymbolsForId();
-    // }
-
-    // const id = tokens[tokens.length - 1];
-
-    const [match, symbols] = filteredSymbols(
-      id,
-      transforms(),
-      filterForTokenType(tokenType),
-      this.getHolder(),
-    );
-
-    return [match, removeIfSingleFullMatch(symbols, match)];
-  }
 
   public textAsHtml(): string {
     let popupAsHtml = "";
     const [id, tokenType] = this.getToMatchAndTokenType();
-    if (this.showAutoCompleteNew(tokenType)) {
-      [this.autocompleteMatch, this.autocompleteSymbols] = this.matchingSymbolsForIdNew(
+    if (this.showAutoComplete(tokenType)) {
+      [this.autocompleteMatch, this.autocompleteSymbols] = this.matchingSymbolsForId(
         id,
         tokenType,
+        transforms(),
       );
       popupAsHtml = this.popupAsHtml();
     }
