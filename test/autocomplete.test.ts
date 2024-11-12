@@ -54,6 +54,19 @@ end main`;
     await assertAutocompletesWithString(fileImpl, "expr5", "empty [I", expected);
   });
 
+  test("Pass_emptyExpression", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+main
+  var foo set to 0
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    await assertAutocompletesWithString(fileImpl, "expr5", " ", 58);
+  });
+
   test("Pass_LocalVarsCaseInsensitive", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
@@ -1402,5 +1415,58 @@ end main`;
     ] as [string, string][];
 
     await assertAutocompletesWithString(fileImpl, "expr8", "foo.", expected);
+  });
+
+  test("Pass_newType1", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+main
+  let foo be new BlockGraphics()
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["BaseVG", "*"],
+      ["BlockGraphics", "*"],
+      ["Boolean", "*"],
+    ] as [string, string][];
+
+    await assertAutocompletesWithString(fileImpl, "expr5", "new B", expected);
+  });
+
+  test("Pass_newType2", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+main
+  let foo be new BlockGraphics()
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["BaseVG", "*"],
+      ["BlockGraphics", "*"],
+      ["Boolean", "*"],
+      ["CircleVG", "*"],
+      ["Float", "*"],
+      ["GraphicsBase", "*"],
+      ["Int", "*"],
+      ["LineVG", "*"],
+      ["Queue", "*"],
+      ["Random", "*"],
+      ["RectangleVG", "*"],
+      ["Set", "*"],
+      ["Stack", "*"],
+      ["String", "*"],
+      ["TextFileReader", "*"],
+      ["TextFileWriter", "*"],
+      ["Turtle", "*"],
+      ["VectorGraphics", "*"],
+    ] as [string, string][];
+
+    await assertAutocompletesWithString(fileImpl, "expr5", "new ", expected);
   });
 });

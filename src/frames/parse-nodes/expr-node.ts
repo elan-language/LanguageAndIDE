@@ -1,3 +1,4 @@
+import { TokenType } from "../helpers";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { BinaryExpression } from "./binary-expression";
 import { CopyWith } from "./copy-with";
@@ -24,5 +25,12 @@ export class ExprNode extends AbstractAlternatives {
     this.alternatives.push(new Term());
     this.alternatives.push(new BinaryExpression());
     super.parseText(text);
+  }
+
+  getToMatchAndTokenType(): [string, TokenType] {
+    if (this.matchedText === "") {
+      return ["", TokenType.expression];
+    }
+    return super.getToMatchAndTokenType();
   }
 }
