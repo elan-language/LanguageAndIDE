@@ -37,7 +37,7 @@ export class ProcRefField extends AbstractField {
     return s.symbolId + ".";
   }
 
-  private nonAutoTextAsHtml() {
+  public textAsHtml(): string {
     let text: string;
     if (this.isSelected()) {
       text = this.fieldAsInput();
@@ -51,24 +51,7 @@ export class ProcRefField extends AbstractField {
     } else {
       text = super.textAsHtml();
     }
-    return text;
-  }
-
-  public textAsHtml(): string {
-    let text: string;
-    const [id, tokenType] = this.getToMatchAndTokenType();
-    if (this.showAutoComplete(tokenType)) {
-      [this.autocompleteMatch, this.autocompleteSymbols] = this.matchingSymbolsForId(
-        id,
-        tokenType,
-        transforms(),
-      );
-      const popupAsHtml = this.popupAsHtml();
-      text = popupAsHtml + this.nonAutoTextAsHtml();
-    } else {
-      text = this.nonAutoTextAsHtml();
-    }
-    return text;
+    return text + this.symbolCompletionAsHtml(transforms());
   }
 
   isEndMarker(key: string) {

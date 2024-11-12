@@ -30,17 +30,7 @@ export class ExpressionField extends AbstractField {
     source.readUntil(this.readUntil);
 
   public textAsHtml(): string {
-    let popupAsHtml = "";
-    const [id, tokenType] = this.getToMatchAndTokenType();
-    if (this.showAutoComplete(tokenType)) {
-      [this.autocompleteMatch, this.autocompleteSymbols] = this.matchingSymbolsForId(
-        id,
-        tokenType,
-        transforms(),
-      );
-      popupAsHtml = this.popupAsHtml();
-    }
-    return super.textAsHtml() + popupAsHtml;
+    return super.textAsHtml() + this.symbolCompletionAsHtml(transforms());
   }
 
   protected override getId(s: ElanSymbol) {
