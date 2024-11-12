@@ -85,8 +85,12 @@ export function isProperty(s?: ElanSymbol): s is Property {
   return !!s && "isProperty" in s;
 }
 
-export function isVarOrPropertyStatement(s?: ElanSymbol): boolean {
-  return !!s && (isVarStatement(s) || isProperty(s));
+export function isOutParameter(s?: ElanSymbol): boolean {
+  return !!s && s.symbolScope === SymbolScope.outParameter;
+}
+
+export function isAssignable(s?: ElanSymbol): boolean {
+  return !!s && (isVarStatement(s) || isProperty(s) || isOutParameter(s));
 }
 
 export function isClassTypeDef(s?: ElanSymbol | Scope): s is Class {
@@ -588,7 +592,7 @@ export function filterForTokenType(tt: TokenType): (s?: ElanSymbol) => boolean {
     case TokenType.none:
       return () => false;
     case TokenType.assignable:
-      return isVarOrPropertyStatement;
+      return isAssignable;
     case TokenType.property:
       return isProperty;
     case TokenType.type:
