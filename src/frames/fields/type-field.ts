@@ -44,7 +44,7 @@ export class TypeField extends AbstractField {
     return super.textAsHtml() + this.symbolCompletionAsHtml(transforms());
   }
 
-  protected override getId(symbol: ElanSymbol) {
+  protected override getSymbolCompleteId(symbol: ElanSymbol) {
     return isGenericClass(symbol) ? `${symbol.symbolId}<of ` : symbol.symbolId;
   }
 
@@ -52,7 +52,7 @@ export class TypeField extends AbstractField {
     return isGenericClass(symbol) ? `${symbol.symbolId}&lt;of` : symbol.symbolId;
   }
 
-  protected override getSymbolId(symbol: ElanSymbol) {
+  protected override getDisplaySymbolId(symbol: ElanSymbol) {
     return this.mapTypeId(symbol);
   }
 }

@@ -6,7 +6,7 @@ import {
   cannotAccessPrivateMemberInAbstractClass,
 } from "../compile-rules";
 import { ClassFrame } from "../globals/class-frame";
-import { isClass, isConstant, isFile, isMember, isScope, TokenType } from "../helpers";
+import { isConstant, isFile, isMember, isScope, TokenType } from "../helpers";
 import { AstNode } from "../interfaces/ast-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { Class } from "../interfaces/class";
@@ -21,8 +21,7 @@ import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
-import { libraryKeyword, toKeyword, withKeyword } from "../keywords";
-import { Qualifier } from "../parse-nodes/qualifier";
+import { libraryKeyword } from "../keywords";
 import { isAstIdNode, isAstQualifiedNode, transforms } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractDictionaryType } from "./abstract-dictionary-type";
@@ -588,7 +587,7 @@ export function filterForTokenType(tt: TokenType): (s?: ElanSymbol) => boolean {
   switch (tt) {
     case TokenType.none:
       return () => false;
-    case TokenType.identifier:
+    case TokenType.assignable:
       return isVarOrPropertyStatement;
     case TokenType.property:
       return isProperty;

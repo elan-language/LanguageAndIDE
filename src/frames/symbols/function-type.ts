@@ -19,6 +19,6 @@ export class FunctionType implements SymbolType {
   }
 
   toString(): string {
-    return "Function";
+    return "Func";
   }
 }

@@ -49,7 +49,10 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [["Int", "*"]] as [string, string][];
+    const expected = [
+      ["Int", "*"],
+      ["Iterable", "*"],
+    ] as [string, string][];
 
     await assertAutocompletesWithString(fileImpl, "expr5", "empty [I", expected);
   });
@@ -930,7 +933,10 @@ end function`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [["Int", "*"]] as [string, string][];
+    const expected = [
+      ["Int", "*"],
+      ["Iterable", "*"],
+    ] as [string, string][];
 
     await assertAutocompletesWithString(fileImpl, "params6", "a as [I", expected);
   });
@@ -949,7 +955,10 @@ end function`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [["Float", "*"]] as [string, string][];
+    const expected = [
+      ["Float", "*"],
+      ["Func", "*"],
+    ] as [string, string][];
 
     await assertAutocompletesWithString(fileImpl, "params6", "a as {F", expected);
   });
@@ -1014,7 +1023,10 @@ end function`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [["Int", "*"]] as [string, string][];
+    const expected = [
+      ["Int", "*"],
+      ["Iterable", "*"],
+    ] as [string, string][];
 
     await assertAutocompletesWithString(fileImpl, "params6", "a as Set<of I", expected);
   });
@@ -1452,8 +1464,10 @@ end main`;
       ["Boolean", "*"],
       ["CircleVG", "*"],
       ["Float", "*"],
+      ["Func", "*"],
       ["GraphicsBase", "*"],
       ["Int", "*"],
+      ["Iterable", "*"],
       ["LineVG", "*"],
       ["Queue", "*"],
       ["Random", "*"],

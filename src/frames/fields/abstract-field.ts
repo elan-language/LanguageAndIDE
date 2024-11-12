@@ -285,12 +285,12 @@ export abstract class AbstractField implements Selectable, Field {
     }
   }
 
-  protected getId(s?: ElanSymbol) {
+  protected getSymbolCompleteId(s?: ElanSymbol) {
     return s ? s.symbolId : "";
   }
 
-  private getAutocompleteText() {
-    return this.getId(this.autoCompSelected);
+  private getSymbolCompleteText() {
+    return this.getSymbolCompleteId(this.autoCompSelected);
   }
 
   private replaceAutocompletedText() {
@@ -302,7 +302,7 @@ export abstract class AbstractField implements Selectable, Field {
     }
 
     const propertyPrefix = `${propertyKeyword}.`;
-    const appendText = this.getAutocompleteText();
+    const appendText = this.getSymbolCompleteText();
 
     if (this.text === propertyPrefix && appendText.startsWith(propertyPrefix)) {
       this.text = "";
@@ -547,7 +547,7 @@ export abstract class AbstractField implements Selectable, Field {
     return [match, removeIfSingleFullMatch(symbols, match)];
   }
 
-  protected getSymbolId(symbol: ElanSymbol) {
+  protected getDisplaySymbolId(symbol: ElanSymbol) {
     return isProperty(symbol) && !this.text.includes(".")
       ? `${propertyKeyword}.${symbol.symbolId}`
       : symbol.symbolId;
@@ -586,7 +586,7 @@ export abstract class AbstractField implements Selectable, Field {
 
     for (let i = startIndex; i < lastIndex; i++) {
       const symbol = symbols[i];
-      const symbolId = this.getSymbolId(symbol);
+      const symbolId = this.getDisplaySymbolId(symbol);
       const selected = count === 1 || this.markIfSelected(symbol) ? " selected" : "";
 
       symbolAsHtml.push(
