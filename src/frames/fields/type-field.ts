@@ -1,5 +1,6 @@
 import { CodeSource } from "../code-source";
-import { isAstType } from "../helpers";
+import { isAstType, isGenericClass } from "../helpers";
+import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Frame } from "../interfaces/frame";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { TypeNode } from "../parse-nodes/type-node";
@@ -41,5 +42,17 @@ export class TypeField extends AbstractField {
 
   public textAsHtml(): string {
     return super.textAsHtml() + this.symbolCompletionAsHtml(transforms());
+  }
+
+  protected override getId(symbol: ElanSymbol) {
+    return isGenericClass(symbol) ? `${symbol.symbolId}<of ` : symbol.symbolId;
+  }
+
+  mapTypeId(symbol: ElanSymbol) {
+    return isGenericClass(symbol) ? `${symbol.symbolId}&lt;of` : symbol.symbolId;
+  }
+
+  protected override getSymbolId(symbol: ElanSymbol) {
+    return this.mapTypeId(symbol);
   }
 }

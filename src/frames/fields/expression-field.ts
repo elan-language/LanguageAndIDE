@@ -1,4 +1,5 @@
 import { CodeSource } from "../code-source";
+import { isGenericClass } from "../helpers";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Frame } from "../interfaces/frame";
 import { propertyKeyword } from "../keywords";
@@ -33,21 +34,32 @@ export class ExpressionField extends AbstractField {
     return super.textAsHtml() + this.symbolCompletionAsHtml(transforms());
   }
 
-  protected override getId(s: ElanSymbol) {
-    if (isFunction(s, transforms())) {
-      return s.symbolId + "(";
+  protected override getId(symbol: ElanSymbol) {
+    if (isFunction(symbol, transforms())) {
+      return symbol.symbolId + "(";
     }
-    if (isMemberOnFieldsClass(s, transforms(), this.getHolder())) {
-      return `${propertyKeyword}.${s.symbolId}`;
+    if (isMemberOnFieldsClass(symbol, transforms(), this.getHolder())) {
+      return `${propertyKeyword}.${symbol.symbolId}`;
     }
-    return s.symbolId;
+    if (isGenericClass(symbol)) {
+      return `${symbol.symbolId}<of `;
+    }
+    return symbol.symbolId;
   }
 
-  protected override getSymbolId(symbol: ElanSymbol) {
+  mapPropertyId(symbol: ElanSymbol) {
     return isProperty(symbol) &&
       !this.text.includes(".") &&
       this.autocompleteSymbols.filter((s) => s.symbolId === symbol.symbolId).length > 1
       ? `${propertyKeyword}.${symbol.symbolId}`
       : symbol.symbolId;
+  }
+
+  mapTypeId(symbol: ElanSymbol) {
+    return isGenericClass(symbol) ? `${symbol.symbolId}&lt;of` : symbol.symbolId;
+  }
+
+  protected override getSymbolId(symbol: ElanSymbol) {
+    return isProperty(symbol) ? this.mapPropertyId(symbol) : this.mapTypeId(symbol);
   }
 }

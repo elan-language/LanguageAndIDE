@@ -34,6 +34,10 @@ export function isClass(f?: ElanSymbol | Scope): f is Class {
   return !!f && "genericParamMatches" in f;
 }
 
+export function isGenericClass(f?: ElanSymbol | Scope): boolean {
+  return isClass(f) && f.ofTypes.length > 0;
+}
+
 export function isFrame(f?: Selectable | Scope): f is Frame {
   return !!f && "isFrame" in f;
 }
