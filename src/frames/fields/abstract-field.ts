@@ -641,4 +641,18 @@ export abstract class AbstractField implements Selectable, Field {
   protected getToMatchAndTokenType(): [string, TokenType] {
     return this.rootNode ? this.rootNode.getToMatchAndTokenType() : ["", TokenType.none];
   }
+
+  protected symbolCompletionAsHtml(transforms: Transforms): string {
+    let popupAsHtml = "";
+    const [id, tokenType] = this.getToMatchAndTokenType();
+    if (this.showAutoComplete(tokenType)) {
+      [this.autocompleteMatch, this.autocompleteSymbols] = this.matchingSymbolsForId(
+        id,
+        tokenType,
+        transforms,
+      );
+      popupAsHtml = this.popupAsHtml();
+    }
+    return popupAsHtml;
+  }
 }
