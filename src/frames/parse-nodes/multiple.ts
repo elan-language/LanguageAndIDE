@@ -31,25 +31,27 @@ export class Multiple extends AbstractParseNode {
         if (node.status === ParseStatus.valid) {
           this.elements.push(node);
           toParse = node.remainingText;
+          this.activeSubNode = node;
         } else if (node.status === ParseStatus.incomplete && node.remainingText.trim() === "") {
           this.elements.push(node);
           toParse = node.remainingText;
+          this.activeSubNode = node;
         } else {
           cont = false;
         }
-      }
-      if (this.elements.length === 0 && this.minimum === 0) {
-        this.status = ParseStatus.valid;
-        this.remainingText = toParse;
-      } else if (this.elements.length >= this.minimum) {
-        const last = this.elements[this.elements.length - 1];
-        this.status = last.status;
-        const matchedLength = text.length - toParse.length;
-        this.matchedText = text.substring(0, matchedLength);
-        this.remainingText = toParse;
-      } else {
-        this.status = ParseStatus.invalid;
-        this.remainingText = text;
+        if (this.elements.length === 0 && this.minimum === 0) {
+          this.status = ParseStatus.valid;
+          this.remainingText = toParse;
+        } else if (this.elements.length >= this.minimum) {
+          const last = this.elements[this.elements.length - 1];
+          this.status = last.status;
+          const matchedLength = text.length - toParse.length;
+          this.matchedText = text.substring(0, matchedLength);
+          this.remainingText = toParse;
+        } else {
+          this.status = ParseStatus.invalid;
+          this.remainingText = text;
+        }
       }
     }
   }
@@ -74,5 +76,9 @@ export class Multiple extends AbstractParseNode {
       return ["", TokenType.none];
     }
     return elems[elems.length - 1].getToMatchAndTokenType();
+  }
+
+  getActiveParseNode(): ParseNode {
+    return this;
   }
 }

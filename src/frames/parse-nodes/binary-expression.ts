@@ -37,16 +37,4 @@ export class BinaryExpression extends AbstractSequence {
   renderAsSource(): string {
     return `${this.lhs?.renderAsSource()}${this.op!.renderAsSource()}${this.rhs?.renderAsSource()}`;
   }
-
-  getToMatchAndTokenType(): [string, TokenType] {
-    if (this.rhs && this.rhs.status === ParseStatus.valid) {
-      return this.rhs.getToMatchAndTokenType();
-    }
-
-    if (this.lhs && this.lhs?.remainingText !== " ") {
-      return this.lhs.getToMatchAndTokenType();
-    }
-
-    return ["", TokenType.none];
-  }
 }

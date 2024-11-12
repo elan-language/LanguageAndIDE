@@ -8,6 +8,7 @@ export abstract class AbstractParseNode implements ParseNode {
   completionWhenEmpty: string = "";
   remainingText: string = "";
   errorMessage: string = "";
+  activeSubNode: ParseNode = this;
 
   setCompletionWhenEmpty(ph: string) {
     this.completionWhenEmpty = ph;
@@ -51,5 +52,10 @@ export abstract class AbstractParseNode implements ParseNode {
 
   getToMatchAndTokenType(): [string, TokenType] {
     return ["", TokenType.none];
+  }
+
+  getActiveParseNode(): ParseNode {
+    const active = this.activeSubNode;
+    return active === this ? active : active.getActiveParseNode();
   }
 }

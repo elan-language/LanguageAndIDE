@@ -1,4 +1,6 @@
 import { Regexes } from "../fields/regexes";
+import { TokenType } from "../helpers";
+import { ParseStatus } from "../status-enums";
 import { DOUBLE_QUOTES } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
@@ -30,5 +32,14 @@ export class LitStringNonEmpty extends AbstractSequence {
   }
   renderAsHtml(): string {
     return `<el-str>"${this.segments!.renderAsHtml()}"</el-str>`;
+  }
+
+  getToMatchAndTokenType(): [string, TokenType] {
+    let result: [string, TokenType] = ["", TokenType.none];
+    const active = this.getActiveParseNode();
+    if (active !== this) {
+      result = active.getToMatchAndTokenType();
+    }
+    return result;
   }
 }

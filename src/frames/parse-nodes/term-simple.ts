@@ -60,8 +60,4 @@ export class TermSimple extends AbstractSequence {
     this.addElement(this.optIndex);
     super.parseText(text);
   }
-
-  getToMatchAndTokenType(): [string, TokenType] {
-    return [this.matchedText, TokenType.expression];
-  }
 }

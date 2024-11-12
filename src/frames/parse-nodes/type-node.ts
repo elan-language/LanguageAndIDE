@@ -37,8 +37,4 @@ export class TypeNode extends AbstractAlternatives {
       super.parseText(text.trimStart());
     }
   }
-
-  override getToMatchAndTokenType(): [string, TokenType] {
-    return [this.matchedText, TokenType.type];
-  }
 }
