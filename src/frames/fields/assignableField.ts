@@ -48,11 +48,11 @@ export class AssignableField extends AbstractField {
 
   override matchingSymbolsForId(
     id: string,
-    tokeType: TokenType,
+    tokenType: TokenType,
     transforms: Transforms,
   ): [string, ElanSymbol[]] {
     const scope = this.getHolder();
-    let symbols = filteredSymbols(id, transforms, filterForTokenType(tokeType), scope);
+    let symbols = filteredSymbols(id, transforms, filterForTokenType(tokenType), scope);
 
     if (isInsideClass(scope)) {
       const prefix = "property.";
@@ -81,16 +81,6 @@ export class AssignableField extends AbstractField {
   }
 
   public textAsHtml(): string {
-    let popupAsHtml = "";
-    const [id, tokenType] = this.getToMatchAndTokenType();
-    if (this.showAutoComplete(tokenType)) {
-      [this.autocompleteMatch, this.autocompleteSymbols] = this.matchingSymbolsForId(
-        id,
-        tokenType,
-        transforms(),
-      );
-      popupAsHtml = this.popupAsHtml();
-    }
-    return super.textAsHtml() + popupAsHtml;
+    return super.textAsHtml() + this.symbolCompletionAsHtml(transforms());
   }
 }
