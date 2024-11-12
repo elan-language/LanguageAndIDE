@@ -528,7 +528,22 @@ export class FileImpl implements File, Scope {
     return new TestFrame(this);
   }
 
-  async parseFrom(source: CodeSource): Promise<void> {
+  getNextSelector(merge?: boolean) {
+    if (merge) {
+      const last = this.getLastChild();
+      if ("isSelector" in last) {
+        return last as GlobalSelector;
+      }
+
+      parentHelper_insertOrGotoChildSelector(this, true, last);
+
+      return this.getLastChild();
+    }
+
+    return this.getFirstSelectorAsDirectChild();
+  }
+
+  async parseFrom(source: CodeSource, merge?: boolean): Promise<void> {
     if (!this._stdLibSymbols.isInitialised) {
       this.parseError = this._stdLibSymbols.error;
       this._parseStatus = ParseStatus.invalid;
@@ -547,7 +562,7 @@ export class FileImpl implements File, Scope {
         if (source.isMatchRegEx(Regexes.newLine)) {
           source.removeNewLine();
         } else {
-          this.getFirstSelectorAsDirectChild().parseFrom(source);
+          this.getNextSelector(merge).parseFrom(source);
         }
       }
       this.removeAllSelectorsThatCanBe();
