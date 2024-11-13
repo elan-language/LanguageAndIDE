@@ -7,25 +7,24 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("Impure Function", () => {
-  ignore_test("Pass_CanUseImpureMethodsWithinExpressionsInMainOrProcedure", async () => {
+  test("Pass_CanUseImpureMethodsWithinExpressionsInMainOrProcedure", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
 main
   var gr set to new BlockGraphics()
-  var k set to gr.getKey()
+  var k set to getKey()
   var r set to randomInt(1, 6)
   set r to randomInt(1, 6) * 10
   call bar(randomInt(1,6))
 end main
 
 procedure foo(gr as BlockGraphics)
-  var k set to gr.getKey()
+  var k set to getKey()
   var r set to randomInt(1, 6)
   set r to randomInt(1, 6) * 10
 end procedure
@@ -37,14 +36,14 @@ end procedure
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var gr = system.initialise(new _stdlib.BlockGraphics());
-  var k = await _stdlib.getKey(gr);
+  var k = await _stdlib.getKey();
   var r = _stdlib.randomInt(1, 6);
   r = _stdlib.randomInt(1, 6) * 10;
   await bar(_stdlib.randomInt(1, 6));
 }
 
 async function foo(gr) {
-  var k = await _stdlib.getKey(gr);
+  var k = await _stdlib.getKey();
   var r = _stdlib.randomInt(1, 6);
   r = _stdlib.randomInt(1, 6) * 10;
 }

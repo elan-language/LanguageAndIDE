@@ -7,7 +7,6 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -205,19 +204,19 @@ return [main, _tests];}`;
     await assertGraphicsContains(fileImpl, 0, "");
   });
 
-  ignore_test("Pass_getKey", async () => {
+  test("Pass_getKey", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
 main
   var gr set to new BlockGraphics()
-  var a set to gr.getKey()
+  var a set to getKey()
   print a
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var gr = system.initialise(new _stdlib.BlockGraphics());
-  var a = await _stdlib.getKey(gr);
+  var a = await _stdlib.getKey();
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -231,19 +230,19 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "");
   });
 
-  ignore_test("Pass_getKeyWithModifier", async () => {
+  test("Pass_getKeyWithModifier", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
 main
   var gr set to new BlockGraphics()
-  var a set to gr.getKeyWithModifier()
+  var a set to getKeyWithModifier()
   print a
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var gr = system.initialise(new _stdlib.BlockGraphics());
-  var a = await _stdlib.getKeyWithModifier(gr);
+  var a = await _stdlib.getKeyWithModifier();
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;

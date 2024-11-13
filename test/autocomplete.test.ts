@@ -57,7 +57,7 @@ end main`;
     await assertAutocompletesWithString(fileImpl, "expr5", "empty [I", expected);
   });
 
-  ignore_test("Pass_emptyExpression", async () => {
+  test("Pass_emptyExpression", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
 main
@@ -67,7 +67,7 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    await assertAutocompletesWithString(fileImpl, "expr5", " ", 58);
+    await assertAutocompletesWithString(fileImpl, "expr5", " ", 60);
   });
 
   test("Pass_LocalVarsCaseInsensitive", async () => {
@@ -268,7 +268,7 @@ end main`;
     await assertAutocompletes(fileImpl, "ident13", "o", 1, expected);
   });
 
-  ignore_test("Pass_CallLocalVars", async () => {
+  test("Pass_CallLocalVars", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
 procedure fooyon()
@@ -288,6 +288,7 @@ end main`;
       ["foo", "Int"],
       ["foobar", "Int"],
       ["fooyon", "Procedure ()"],
+      ["waitForAnyKey", "Procedure ()"],
     ] as [string, string][];
 
     await assertAutocompletes(fileImpl, "ident14", "o", 1, expected);
@@ -1458,7 +1459,7 @@ end main`;
     await assertAutocompletesWithString(fileImpl, "ident7", "foo.", expected);
   });
 
-  ignore_test("Pass_libExtension2", async () => {
+  test("Pass_libExtension2", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
     main
@@ -1475,8 +1476,6 @@ end main`;
       ["getBackground", "*"],
       ["getChar", "*"],
       ["getForeground", "*"],
-      ["getKey", "*"],
-      ["getKeyWithModifier", "*"],
       ["withBackground", "*"],
       ["withBlock", "*"],
       ["withText", "*"],
