@@ -219,10 +219,8 @@ export class WebInputOutput implements ElanInputOutput {
 
   waitForAnyKey(): Promise<void> {
     return new Promise<void>((rs, rj) => {
-      let k = "";
       const timeOut = setInterval(() => {
-        k = this.peekKey();
-        if (k !== "") {
+        if (this.peekKey() !== "") {
           clearInterval(timeOut);
           rs();
         }
@@ -233,11 +231,7 @@ export class WebInputOutput implements ElanInputOutput {
   private peekKey(): string {
     this.graphics.focus();
     const buffer = this.keyBuffer;
-    let ks = "";
-    if (buffer.length > 0) {
-      ks = buffer[buffer.length - 1].key;
-    }
-    return ks;
+    return buffer.length > 0 ? buffer[buffer.length - 1].key : "";
   }
 
   getKey() {
