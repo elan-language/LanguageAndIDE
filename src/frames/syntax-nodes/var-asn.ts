@@ -12,6 +12,7 @@ import { SymbolType } from "../interfaces/symbol-type";
 import { IntType } from "../symbols/int-type";
 import {
   isAnyDictionaryType,
+  isDeconstructedType,
   isGenericSymbolType,
   isMemberOnFieldsClass,
   scopePrefix,
@@ -102,6 +103,11 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
 
   symbolType() {
     const rootType = this.rootSymbolType();
+
+    if (isDeconstructedType(rootType)) {
+      return rootType.symbolTypeFor(this.id);
+    }
+
     return this.isIndex() ? this.getIndexAndOfType(rootType)[1] : rootType;
   }
 

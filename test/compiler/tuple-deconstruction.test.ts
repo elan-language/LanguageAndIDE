@@ -601,6 +601,35 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "3Int(1, 2)(Int, Int)");
   });
 
+  test("Pass_DeconstructTupleTypes", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+main
+  var a set to (1, "string")
+  var y, z set to a
+  set y to y
+  set z to z
+end main
+`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.tuple([1, "string"]);
+  var [y, z] = a;
+  y = y;
+  z = z;
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "");
+  });
+
   test("Fail_DeconstructIntoWrongType", async () => {
     const code = `# FFFF Elan Beta 4 valid
 

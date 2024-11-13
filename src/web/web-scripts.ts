@@ -117,7 +117,7 @@ function refreshAndDisplay(compileIfParsed?: boolean) {
   });
 }
 
-function initialDisplay() {
+function initialDisplay(reset: boolean) {
   clearDisplays();
 
   const ps = file.readParseStatus();
@@ -125,7 +125,7 @@ function initialDisplay() {
     refreshAndDisplay();
   } else {
     const msg = file.parseError || "Failed load code";
-    showError(new Error(msg), file.fileName, true);
+    showError(new Error(msg), file.fileName, reset);
   }
 }
 
@@ -137,12 +137,12 @@ function displayFile() {
     file.parseFrom(code).then(
       () => {
         file.fileName = previousFileName || file.defaultFileName;
-        initialDisplay();
+        initialDisplay(true);
       },
       (e) => showError(e, previousFileName || file.defaultFileName, true),
     );
   } else {
-    initialDisplay();
+    initialDisplay(true);
   }
 }
 
@@ -614,7 +614,7 @@ function handleUpload(event: Event) {
       file = new FileImpl(hash, profile, transforms());
       file.fileName = fileName;
       file.parseFrom(code).then(
-        () => initialDisplay(),
+        () => initialDisplay(true),
         (e) => showError(e, fileName, true),
       );
     });
@@ -636,11 +636,11 @@ function handleMerge(event: Event) {
     const reader = new FileReader();
     reader.addEventListener("load", (event: any) => {
       const rawCode = event.target.result;
-      const code = new CodeSourceFromString(rawCode);
+      const newCode = new CodeSourceFromString(rawCode);
 
-      file.parseFrom(code, true).then(
-        () => initialDisplay(),
-        (e) => showError(e, fileName, true),
+      file.parseFrom(newCode, true).then(
+        () => initialDisplay(false),
+        (e) => showError(e, fileName, false),
       );
     });
     reader.readAsText(elanFile);
@@ -694,7 +694,7 @@ for (const elem of demoFiles) {
         file = new FileImpl(hash, profile, transforms());
         file.fileName = fileName;
         file.parseFrom(code).then(
-          () => initialDisplay(),
+          () => initialDisplay(true),
           (e) => showError(e, fileName, true),
         );
       });
