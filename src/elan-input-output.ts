@@ -13,9 +13,9 @@ export interface ElanInputOutput {
 
   drawGraphics(html: string): void;
 
-  getKeystroke(): Promise<string>;
+  getKey(): Promise<string>;
 
-  getKeystrokeWithModifier(): Promise<[string, string]>;
+  getKeyWithModifier(): Promise<[string, string]>;
 
   clearKeyBuffer(): void;
 

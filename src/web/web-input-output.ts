@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ElanInputOutput } from "../elan-input-output";
-import { ElanRuntimeError } from "../elan-runtime-error";
 
 export class WebInputOutput implements ElanInputOutput {
   keyBuffer: KeyboardEvent[] = [];
@@ -218,7 +217,7 @@ export class WebInputOutput implements ElanInputOutput {
     });
   }
 
-  getKeystroke() {
+  getKey() {
     const evt = this.keyBuffer.pop();
     const ks = evt ? evt.key : "";
 
@@ -229,7 +228,7 @@ export class WebInputOutput implements ElanInputOutput {
     return e.ctrlKey ? "Control" : e.shiftKey ? "Shift" : e.altKey ? "Alt" : "";
   }
 
-  getKeystrokeWithModifier(): Promise<[string, string]> {
+  getKeyWithModifier(): Promise<[string, string]> {
     const evt = this.keyBuffer.pop();
     const ks: [string, string] = evt ? [evt.key, this.getModKey(evt)] : ["", ""];
 

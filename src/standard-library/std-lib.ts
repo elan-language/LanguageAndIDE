@@ -1032,15 +1032,15 @@ export class StdLib {
   }
 
   @elanFunction(FunctionOptions.impureAsyncExtension, ElanString)
-  getKeystroke(@elanClassType(GraphicsBase) g: GraphicsBase): Promise<string> {
-    return this.system!.elanInputOutput.getKeystroke();
+  getKey(@elanClassType(GraphicsBase) g: GraphicsBase): Promise<string> {
+    return this.system!.elanInputOutput.getKey();
   }
 
   @elanFunction(FunctionOptions.impureAsyncExtension, ElanTuple([ElanString, ElanString]))
-  getKeystrokeWithModifier(
+  getKeyWithModifier(
     @elanClassType(GraphicsBase) g: GraphicsBase,
   ): Promise<[string, string]> {
-    return this.system!.elanInputOutput.getKeystrokeWithModifier();
+    return this.system!.elanInputOutput.getKeyWithModifier();
   }
 
   @elanProcedure(ProcedureOptions.extension)

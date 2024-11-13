@@ -12,11 +12,11 @@ export class TestInputOutput implements ElanInputOutput {
     return Promise.resolve("Line1 \n Line2\n\rLine3");
   }
   
-  getKeystroke(): Promise<string> {
+  getKey(): Promise<string> {
     return Promise.resolve("");
   }
 
-  getKeystrokeWithModifier(): Promise<[string, string]> {
+  getKeyWithModifier(): Promise<[string, string]> {
     const t = ["", ""] as [string, string];
     (t as unknown as hasHiddenType)._type = "Tuple";
     return  Promise.resolve(t);

@@ -75,7 +75,7 @@ export class StubInputOutput implements ElanInputOutput {
     });
   }
 
-  getKeystroke() {
+  getKey() {
     return new Promise<string>((rs, rj) => {
       onmessage = (e) => {
         const data = e.data as WebWorkerMessage;
@@ -84,7 +84,7 @@ export class StubInputOutput implements ElanInputOutput {
           rs(data.value as string);
         }
       };
-      postMessage(this.writeMsg("getKeystroke"));
+      postMessage(this.writeMsg("getKey"));
     });
   }
 
@@ -92,7 +92,7 @@ export class StubInputOutput implements ElanInputOutput {
     return e.ctrlKey ? "Control" : e.shiftKey ? "Shift" : e.altKey ? "Alt" : "";
   }
 
-  getKeystrokeWithModifier(): Promise<[string, string]> {
+  getKeyWithModifier(): Promise<[string, string]> {
     return new Promise<[string, string]>((rs, rj) => {
       onmessage = (e) => {
         const data = e.data as WebWorkerMessage;
@@ -103,7 +103,7 @@ export class StubInputOutput implements ElanInputOutput {
           rs(data.value as [string, string]);
         }
       };
-      postMessage(this.writeMsg("getKeystrokeWithModifier"));
+      postMessage(this.writeMsg("getKeyWithModifier"));
     });
   }
 

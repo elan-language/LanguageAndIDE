@@ -204,19 +204,19 @@ return [main, _tests];}`;
     await assertGraphicsContains(fileImpl, 0, "");
   });
 
-  test("Pass_getKeystroke", async () => {
+  test("Pass_getKey", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
 main
   var gr set to new BlockGraphics()
-  var a set to gr.getKeystroke()
+  var a set to gr.getKey()
   print a
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var gr = system.initialise(new _stdlib.BlockGraphics());
-  var a = await _stdlib.getKeystroke(gr);
+  var a = await _stdlib.getKey(gr);
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -230,19 +230,19 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "");
   });
 
-  test("Pass_getKeystrokeWithModifier", async () => {
+  test("Pass_getKeyWithModifier", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
 main
   var gr set to new BlockGraphics()
-  var a set to gr.getKeystrokeWithModifier()
+  var a set to gr.getKeyWithModifier()
   print a
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var gr = system.initialise(new _stdlib.BlockGraphics());
-  var a = await _stdlib.getKeystrokeWithModifier(gr);
+  var a = await _stdlib.getKeyWithModifier(gr);
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
