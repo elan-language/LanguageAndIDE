@@ -66,17 +66,25 @@ import { RegexType } from "./symbols/regex-type";
 import { StringType } from "./symbols/string-type";
 import {
   isAnyDictionaryType,
+  isClassTypeDef,
   isDeconstructedType,
   isGenericSymbolType,
   isIndexableType,
   isIterableType,
   isListType,
+  isProperty,
 } from "./symbols/symbol-helpers";
 import { SymbolScope } from "./symbols/symbol-scope";
 import { TupleType } from "./symbols/tuple-type";
 import { UnknownSymbol } from "./symbols/unknown-symbol";
 import { UnknownType } from "./symbols/unknown-type";
-import { InFunctionScope, isAstIdNode, isAstIndexableNode } from "./syntax-nodes/ast-helpers";
+import {
+  getIds,
+  InFunctionScope,
+  isAstIdNode,
+  isAstIndexableNode,
+  transforms,
+} from "./syntax-nodes/ast-helpers";
 import { Transforms } from "./syntax-nodes/transforms";
 
 export function mustBeOfSymbolType(
@@ -757,14 +765,54 @@ export function mustBeCompatibleType(
   }
 }
 
+function mustBeCompatibleDeconstruction(
+  lhs: AstNode,
+  rhs: AstNode,
+  scope: Scope,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  const ids = getIds(lhs);
+  const lst = lhs.symbolType() as TupleType;
+  const rst = rhs.symbolType() as ClassType;
+
+  const classDef = scope.resolveSymbol(rst.name, transforms(), scope);
+
+  if (isClassTypeDef(classDef)) {
+    const childSymbols = classDef.getChildren().filter((s) => isProperty(s));
+
+    for (let i = 0; i < ids.length; i++) {
+      const id = ids[i];
+      if (childSymbols.map((s) => s.symbolId).includes(id)) {
+        const llst = lst.ofTypes[i];
+        const rrst = childSymbols.find((s) => s.symbolId === id)!.symbolType();
+
+        mustBeCompatibleType(llst, rrst, compileErrors, location);
+      } else {
+        compileErrors.push(
+          new SyntaxCompileError("No such property 'id' on record 'rst.name'", location),
+        );
+      }
+    }
+  }
+}
+
 export function mustBeCompatibleNode(
   lhs: AstNode,
   rhs: AstNode,
+  scope: Scope,
   compileErrors: CompileError[],
   location: string,
 ) {
   const lst = lhs.symbolType();
   const rst = rhs.symbolType();
+
+  if (lst instanceof TupleType && rst instanceof ClassType) {
+    if (rst.isImmutable) {
+      mustBeCompatibleDeconstruction(lhs, rhs, scope, compileErrors, location);
+      return;
+    }
+  }
 
   mustBeCompatibleType(lst, rst, compileErrors, location);
 }

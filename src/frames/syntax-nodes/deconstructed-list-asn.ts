@@ -23,7 +23,7 @@ export class DeconstructedListAsn extends AbstractAstNode implements AstIdNode {
 
   compile(): string {
     this.compileErrors = [];
-    return `[${this.head.compile()}, ${this.tail.compile()}]`;
+    return `${this.head.compile()}, ${this.tail.compile()}`;
   }
 
   symbolType() {

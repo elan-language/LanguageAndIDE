@@ -15,7 +15,7 @@ import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
 import { setKeyword, toKeyword } from "../keywords";
-import { getIds, wrapDeconstruction } from "../syntax-nodes/ast-helpers";
+import { getIds, wrapDeconstructionLhs, wrapDeconstructionRhs } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 
 export class SetStatement extends AbstractFrame implements Statement {
@@ -66,7 +66,13 @@ export class SetStatement extends AbstractFrame implements Statement {
       this.htmlId,
     );
 
-    mustBeCompatibleNode(assignableAstNode, exprAstNode, this.compileErrors, this.htmlId);
+    mustBeCompatibleNode(
+      assignableAstNode,
+      exprAstNode,
+      this.getParent(),
+      this.compileErrors,
+      this.htmlId,
+    );
     mustNotBeParameter(assignableAstNode, this.getParent(), this.compileErrors, this.htmlId);
     mustNotBeConstant(assignableAstNode, this.compileErrors, this.htmlId);
     mustNotBeCounter(assignableAstNode, this.compileErrors, this.htmlId);
@@ -85,8 +91,14 @@ export class SetStatement extends AbstractFrame implements Statement {
       mustNotBeLet(symbol, this.compileErrors, this.htmlId);
     }
 
-    const rhs = wrapDeconstruction(assignableAstNode, this.expr.compile(transforms));
+    const lhs = wrapDeconstructionLhs(
+      assignableAstNode,
+      exprAstNode,
+      this.assignable.compile(transforms),
+    );
 
-    return `${this.indent()}${this.assignable.compile(transforms)} = ${rhs};`;
+    const rhs = wrapDeconstructionRhs(assignableAstNode, this.expr.compile(transforms));
+
+    return `${this.indent()}${lhs} = ${rhs};`;
   }
 }

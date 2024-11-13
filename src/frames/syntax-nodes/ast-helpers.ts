@@ -13,6 +13,7 @@ import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { AbstractDictionaryType } from "../symbols/abstract-dictionary-type";
 import { ArrayType } from "../symbols/array-list-type";
+import { ClassType } from "../symbols/class-type";
 import { DictionaryType } from "../symbols/dictionary-type";
 import { FunctionType } from "../symbols/function-type";
 import { GenericParameterType } from "../symbols/generic-parameter-type";
@@ -303,13 +304,28 @@ export function mapOperation(op: string): OperationSymbol {
   throw new ElanCompilerError(`Cannot map operation ${op}`);
 }
 
-export function wrapDeconstruction(lhs: AstNode, code: string) {
+export function wrapDeconstructionRhs(lhs: AstNode, code: string) {
   if (lhs instanceof DeconstructedListAsn) {
     return `system.deconstructList(${code})`;
   }
 
   if (lhs instanceof DeconstructedTupleAsn) {
     return code;
+  }
+  return code;
+}
+
+export function wrapDeconstructionLhs(lhs: AstNode, rhs: AstNode, code: string) {
+  if (lhs instanceof DeconstructedListAsn) {
+    return `[${code}]`;
+  }
+
+  if (lhs instanceof DeconstructedTupleAsn && rhs.symbolType() instanceof ClassType) {
+    return `{${code}}`;
+  }
+
+  if (lhs instanceof DeconstructedTupleAsn) {
+    return `[${code}]`;
   }
   return code;
 }
