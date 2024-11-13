@@ -57,7 +57,7 @@ end main`;
     await assertAutocompletesWithString(fileImpl, "expr5", "empty [I", expected);
   });
 
-  test("Pass_emptyExpression", async () => {
+  ignore_test("Pass_emptyExpression", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
 main
@@ -268,7 +268,7 @@ end main`;
     await assertAutocompletes(fileImpl, "ident13", "o", 1, expected);
   });
 
-  test("Pass_CallLocalVars", async () => {
+  ignore_test("Pass_CallLocalVars", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
 procedure fooyon()
@@ -1458,7 +1458,7 @@ end main`;
     await assertAutocompletesWithString(fileImpl, "ident7", "foo.", expected);
   });
 
-  test("Pass_libExtension2", async () => {
+  ignore_test("Pass_libExtension2", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
     main

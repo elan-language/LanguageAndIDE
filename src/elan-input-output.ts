@@ -13,6 +13,8 @@ export interface ElanInputOutput {
 
   drawGraphics(html: string): void;
 
+  waitForAnyKey(): Promise<void>;
+
   getKey(): Promise<string>;
 
   getKeyWithModifier(): Promise<[string, string]>;

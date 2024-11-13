@@ -1031,15 +1031,18 @@ export class StdLib {
     this.system!.elanInputOutput.clearGraphics();
   }
 
-  @elanFunction(FunctionOptions.impureAsyncExtension, ElanString)
-  getKey(@elanClassType(GraphicsBase) g: GraphicsBase): Promise<string> {
+  @elanProcedure(ProcedureOptions.async)
+  waitForAnyKey() {
+    return this.system.elanInputOutput.waitForAnyKey();
+  }
+
+  @elanFunction(FunctionOptions.impureAsync, ElanString)
+  getKey(): Promise<string> {
     return this.system!.elanInputOutput.getKey();
   }
 
-  @elanFunction(FunctionOptions.impureAsyncExtension, ElanTuple([ElanString, ElanString]))
-  getKeyWithModifier(
-    @elanClassType(GraphicsBase) g: GraphicsBase,
-  ): Promise<[string, string]> {
+  @elanFunction(FunctionOptions.impureAsync, ElanTuple([ElanString, ElanString]))
+  getKeyWithModifier(): Promise<[string, string]> {
     return this.system!.elanInputOutput.getKeyWithModifier();
   }
 

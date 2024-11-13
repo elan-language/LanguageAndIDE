@@ -2,6 +2,9 @@ import { ElanInputOutput } from "../../src/elan-input-output";
 import { hasHiddenType } from "../../src/has-hidden-type";
 
 export class TestInputOutput implements ElanInputOutput {
+  waitForAnyKey(): Promise<void> {
+    throw new Error("Method not implemented.");
+  }
 
   writeFile(path: string, data: string): Promise<void> {
     this.printed = data;

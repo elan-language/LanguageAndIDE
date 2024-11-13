@@ -75,6 +75,15 @@ export class StubInputOutput implements ElanInputOutput {
     });
   }
 
+  waitForAnyKey(): Promise<void> {
+    return new Promise<void>((rs, rj) => {
+      onmessage = (e) => {
+        rs();
+      };
+      postMessage(this.writeMsg("waitForAnyKey"));
+    });
+  }
+
   getKey() {
     return new Promise<string>((rs, rj) => {
       onmessage = (e) => {

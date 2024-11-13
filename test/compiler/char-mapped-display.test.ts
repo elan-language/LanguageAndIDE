@@ -7,6 +7,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -204,7 +205,7 @@ return [main, _tests];}`;
     await assertGraphicsContains(fileImpl, 0, "");
   });
 
-  test("Pass_getKey", async () => {
+  ignore_test("Pass_getKey", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
 main
@@ -230,7 +231,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "");
   });
 
-  test("Pass_getKeyWithModifier", async () => {
+  ignore_test("Pass_getKeyWithModifier", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
 main

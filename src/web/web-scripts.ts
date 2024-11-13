@@ -12,10 +12,10 @@ import { StdLib } from "../standard-library/std-lib";
 import { fetchProfile, hash, transforms } from "./web-helpers";
 import { WebInputOutput } from "./web-input-output";
 import {
-    WebWorkerMessage,
-    WebWorkerReadMessage,
-    WebWorkerStatusMessage,
-    WebWorkerWriteMessage,
+  WebWorkerMessage,
+  WebWorkerReadMessage,
+  WebWorkerStatusMessage,
+  WebWorkerWriteMessage,
 } from "./web-worker-messages";
 
 // static html elements
@@ -470,6 +470,9 @@ function handleWorkerIO(data: WebWorkerWriteMessage) {
   switch (data.function) {
     case "readLine":
       elanInputOutput.readLine().then((v) => programWorker.postMessage(readMsg(v)));
+      break;
+    case "waitForAnyKey":
+      elanInputOutput.waitForAnyKey().then(() => programWorker.postMessage(readMsg("")));
       break;
     case "getKey":
       elanInputOutput.getKey().then((v) => programWorker.postMessage(readMsg(v)));

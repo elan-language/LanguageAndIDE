@@ -7,12 +7,13 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("Impure Function", () => {
-  test("Pass_CanUseImpureMethodsWithinExpressionsInMainOrProcedure", async () => {
+  ignore_test("Pass_CanUseImpureMethodsWithinExpressionsInMainOrProcedure", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
 main

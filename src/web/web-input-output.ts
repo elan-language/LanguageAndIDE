@@ -217,21 +217,40 @@ export class WebInputOutput implements ElanInputOutput {
     });
   }
 
-  getKey() {
-    const evt = this.keyBuffer.pop();
-    const ks = evt ? evt.key : "";
+  waitForAnyKey(): Promise<void> {
+    let k = "";
+    while (k === "") {
+      k = this.peekKey();
+    }
+    return Promise.resolve();
+  }
 
+  private peekKey(): string {
+    this.graphics.focus();
+    const buffer = this.keyBuffer;
+    let ks = "";
+    if (buffer.length > 0) {
+      ks = buffer[buffer.length - 1].key;
+    }
+    return ks;
+  }
+
+  getKey() {
+    this.graphics.focus();
+    const evt = this.keyBuffer[0];
+    this.keyBuffer = this.keyBuffer.slice(1);
+    const ks = evt ? evt.key : "";
     return Promise.resolve(ks);
   }
 
-  getModKey(e: KeyboardEvent) {
+  private getModKey(e: KeyboardEvent) {
     return e.ctrlKey ? "Control" : e.shiftKey ? "Shift" : e.altKey ? "Alt" : "";
   }
 
   getKeyWithModifier(): Promise<[string, string]> {
+    this.graphics.focus();
     const evt = this.keyBuffer.pop();
     const ks: [string, string] = evt ? [evt.key, this.getModKey(evt)] : ["", ""];
-
     return Promise.resolve(ks);
   }
 
