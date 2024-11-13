@@ -233,14 +233,14 @@ return [main, _tests];}`;
     const code = `# FFFF Elan Beta 4 valid
 
 main
-  call print("Hello")
-  print "World"
+  call printNoLine("Hello")
+  print "!"
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  _stdlib.print("Hello");
-  system.printLine(_stdlib.asString("World"));
+  _stdlib.printNoLine("Hello");
+  system.printLine(_stdlib.asString("!"));
 }
 return [main, _tests];}`;
 
@@ -250,7 +250,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "HelloWorld"); //Unfortunately, the test methods don't print newlines either way!
+    await assertObjectCodeExecutes(fileImpl, "Hello!"); //Unfortunately, the test methods don't print newlines either way!
   });
 
   test("Pass printTab", async () => {
