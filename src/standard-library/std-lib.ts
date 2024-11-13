@@ -674,7 +674,12 @@ export class StdLib {
   }
 
   @elanProcedure()
-  print(s: string) {
+  printLine(s: string) {
+    this.system.elanInputOutput.print(`${s}\n`);
+  }
+
+  @elanProcedure()
+  printNoLine(s: string) {
     this.system.elanInputOutput.print(s);
   }
 
@@ -734,7 +739,7 @@ export class StdLib {
 
   //Input functions
   private prompt(prompt: string) {
-    this.print(prompt);
+    this.printNoLine(prompt);
   }
 
   @elanFunction(FunctionOptions.impureAsync, ElanString)
