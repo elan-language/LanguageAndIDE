@@ -1,6 +1,3 @@
-import { Regexes } from "../fields/regexes";
-import { TokenType } from "../helpers";
-import { ParseStatus } from "../status-enums";
 import { DOUBLE_QUOTES } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
@@ -8,7 +5,6 @@ import { LitStringInterpolation } from "./lit-string-interpolation";
 import { LitStringOrdinaryContents } from "./lit-string-ordinary-contents";
 import { Multiple } from "./multiple";
 import { PunctuationNode } from "./punctuation-node";
-import { RegExMatchNode } from "./regex-match-node";
 
 export class LitStringNonEmpty extends AbstractSequence {
   segments: Multiple | undefined;
@@ -32,14 +28,5 @@ export class LitStringNonEmpty extends AbstractSequence {
   }
   renderAsHtml(): string {
     return `<el-str>"${this.segments!.renderAsHtml()}"</el-str>`;
-  }
-
-  getToMatchAndTokenType(): [string, TokenType] {
-    let result: [string, TokenType] = ["", TokenType.none];
-    const active = this.getActiveParseNode();
-    if (active !== this) {
-      result = active.getToMatchAndTokenType();
-    }
-    return result;
   }
 }

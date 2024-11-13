@@ -639,11 +639,7 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   protected getToMatchAndTokenType(): [string, TokenType] {
-    if (!this.rootNode) {
-      this.rootNode = this.initialiseRoot();
-    }
-    const active = this.rootNode!.getActiveParseNode();
-    return active ? active.getToMatchAndTokenType() : ["", TokenType.none];
+    return this.rootNode ? this.rootNode.getToMatchAndTokenType() : ["", TokenType.none];
   }
 
   protected symbolCompletionAsHtml(transforms: Transforms): string {
