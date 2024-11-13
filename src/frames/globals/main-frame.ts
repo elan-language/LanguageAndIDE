@@ -1,9 +1,11 @@
 import { CodeSource } from "../code-source";
+import { mustNotHaveDuplicateMain } from "../compile-rules";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { GlobalFrame } from "../interfaces/global-frame";
 import { mainKeyword } from "../keywords";
+import { DuplicateSymbol } from "../symbols/duplicate-symbol";
 import { Transforms } from "../syntax-nodes/transforms";
 
 export class MainFrame extends FrameWithStatements implements GlobalFrame {
@@ -15,9 +17,11 @@ export class MainFrame extends FrameWithStatements implements GlobalFrame {
     super(parent);
     this.file = parent;
   }
+
   initialKeywords(): string {
     return mainKeyword;
   }
+
   getFields(): Field[] {
     return []; //no direct fields
   }
@@ -26,9 +30,13 @@ export class MainFrame extends FrameWithStatements implements GlobalFrame {
     return "main";
   }
 
+  get symbolId() {
+    return "__main";
+  }
+
   public renderAsHtml(): string {
     return `<main class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>main</el-kw>${this.getFrNo()}</el-top>
+<el-top><el-expand>+</el-expand><el-kw>main</el-kw>${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
 <el-kw>end main</el-kw>
 </main>`;
@@ -47,6 +55,13 @@ end main\r
 
   public compile(transforms: Transforms): string {
     this.compileErrors = [];
+
+    const existingMain = this.resolveSymbol("__main", transforms, this);
+
+    if (existingMain instanceof DuplicateSymbol) {
+      mustNotHaveDuplicateMain(this.compileErrors, this.htmlId);
+    }
+
     return `async function main() {\r
 ${this.compileStatements(transforms)}\r
 }\r

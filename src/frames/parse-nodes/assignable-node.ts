@@ -23,7 +23,7 @@ export class AssignableNode extends AbstractSequence {
     const bestMatch = this.simpleOrProp.bestMatch;
 
     if (bestMatch instanceof IdentifierNode) {
-      return [bestMatch.matchedText, TokenType.identifier];
+      return [bestMatch.matchedText, TokenType.assignable];
     }
 
     if (bestMatch instanceof Sequence) {

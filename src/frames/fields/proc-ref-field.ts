@@ -30,7 +30,7 @@ export class ProcRefField extends AbstractField {
   }
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) => source.readUntil(/\(/);
 
-  protected override getId(s: ElanSymbol) {
+  protected override getSymbolCompleteId(s: ElanSymbol) {
     if (isProcedure(s, transforms())) {
       return s.symbolId;
     }

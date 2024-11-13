@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ElanInputOutput } from "../elan-input-output";
-import { ElanRuntimeError } from "../elan-runtime-error";
 
 export class WebInputOutput implements ElanInputOutput {
   keyBuffer: KeyboardEvent[] = [];
@@ -218,21 +217,39 @@ export class WebInputOutput implements ElanInputOutput {
     });
   }
 
-  getKeystroke() {
-    const evt = this.keyBuffer.pop();
-    const ks = evt ? evt.key : "";
+  waitForAnyKey(): Promise<void> {
+    return new Promise<void>((rs, rj) => {
+      const timeOut = setInterval(() => {
+        if (this.peekKey() !== "") {
+          clearInterval(timeOut);
+          rs();
+        }
+      }, 250);
+    });
+  }
 
+  private peekKey(): string {
+    this.graphics.focus();
+    const buffer = this.keyBuffer;
+    return buffer.length > 0 ? buffer[buffer.length - 1].key : "";
+  }
+
+  getKey() {
+    this.graphics.focus();
+    const evt = this.keyBuffer[0];
+    this.keyBuffer = this.keyBuffer.slice(1);
+    const ks = evt ? evt.key : "";
     return Promise.resolve(ks);
   }
 
-  getModKey(e: KeyboardEvent) {
+  private getModKey(e: KeyboardEvent) {
     return e.ctrlKey ? "Control" : e.shiftKey ? "Shift" : e.altKey ? "Alt" : "";
   }
 
-  getKeystrokeWithModifier(): Promise<[string, string]> {
+  getKeyWithModifier(): Promise<[string, string]> {
+    this.graphics.focus();
     const evt = this.keyBuffer.pop();
     const ks: [string, string] = evt ? [evt.key, this.getModKey(evt)] : ["", ""];
-
     return Promise.resolve(ks);
   }
 

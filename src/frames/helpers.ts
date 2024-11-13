@@ -31,7 +31,11 @@ export function isFile(f?: Scope): f is File {
 }
 
 export function isClass(f?: ElanSymbol | Scope): f is Class {
-  return !!f && "genericParamMatches" in f;
+  return !!f && "isClass" in f;
+}
+
+export function isGenericClass(f?: ElanSymbol | Scope): boolean {
+  return isClass(f) && f.ofTypes?.length > 0;
 }
 
 export function isFrame(f?: Selectable | Scope): f is Frame {
@@ -237,7 +241,7 @@ export function mapIds(ids: string[]) {
 
 export enum TokenType {
   none,
-  identifier,
+  assignable,
   property,
   type,
   idOrProcedure,

@@ -49,7 +49,10 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [["Int", "*"]] as [string, string][];
+    const expected = [
+      ["Int", "*"],
+      ["Iterable", "*"],
+    ] as [string, string][];
 
     await assertAutocompletesWithString(fileImpl, "expr5", "empty [I", expected);
   });
@@ -64,7 +67,7 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    await assertAutocompletesWithString(fileImpl, "expr5", " ", 58);
+    await assertAutocompletesWithString(fileImpl, "expr5", " ", 60);
   });
 
   test("Pass_LocalVarsCaseInsensitive", async () => {
@@ -169,6 +172,63 @@ end class`;
     await assertAutocompletesWithString(fileImpl, "ident16", "a", expected);
   });
 
+  test("Pass_InProcedureParameter", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+class Foo
+  constructor()
+  end constructor
+
+  procedure pp(aa4 as Int)
+    var a set to 0
+    set a to 0
+  end procedure
+
+  property aa2 as Int
+  property aa3 as Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["a", "Int"],
+      ["aa2", "Int"],
+      ["aa3", "Int"],
+    ] as [string, string][];
+
+    await assertAutocompletesWithString(fileImpl, "ident16", "a", expected);
+  });
+
+  test("Pass_InProcedureOutParameter", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+class Foo
+  constructor()
+  end constructor
+
+  procedure pp(out aa4 as Int)
+    var a set to 0
+    set a to 0
+  end procedure
+
+  property aa2 as Int
+  property aa3 as Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["a", "Int"],
+      ["aa2", "Int"],
+      ["aa3", "Int"],
+      ["aa4", "Int"],
+    ] as [string, string][];
+
+    await assertAutocompletesWithString(fileImpl, "ident16", "a", expected);
+  });
+
   test("Pass_FiltersByInput", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
@@ -228,6 +288,7 @@ end main`;
       ["foo", "Int"],
       ["foobar", "Int"],
       ["fooyon", "Procedure ()"],
+      ["waitForAnyKey", "Procedure ()"],
     ] as [string, string][];
 
     await assertAutocompletes(fileImpl, "ident14", "o", 1, expected);
@@ -930,7 +991,10 @@ end function`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [["Int", "*"]] as [string, string][];
+    const expected = [
+      ["Int", "*"],
+      ["Iterable", "*"],
+    ] as [string, string][];
 
     await assertAutocompletesWithString(fileImpl, "params6", "a as [I", expected);
   });
@@ -949,7 +1013,10 @@ end function`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [["Float", "*"]] as [string, string][];
+    const expected = [
+      ["Float", "*"],
+      ["Func", "*"],
+    ] as [string, string][];
 
     await assertAutocompletesWithString(fileImpl, "params6", "a as {F", expected);
   });
@@ -1014,7 +1081,10 @@ end function`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [["Int", "*"]] as [string, string][];
+    const expected = [
+      ["Int", "*"],
+      ["Iterable", "*"],
+    ] as [string, string][];
 
     await assertAutocompletesWithString(fileImpl, "params6", "a as Set<of I", expected);
   });
@@ -1406,8 +1476,6 @@ end main`;
       ["getBackground", "*"],
       ["getChar", "*"],
       ["getForeground", "*"],
-      ["getKeystroke", "*"],
-      ["getKeystrokeWithModifier", "*"],
       ["withBackground", "*"],
       ["withBlock", "*"],
       ["withText", "*"],
@@ -1452,8 +1520,10 @@ end main`;
       ["Boolean", "*"],
       ["CircleVG", "*"],
       ["Float", "*"],
+      ["Func", "*"],
       ["GraphicsBase", "*"],
       ["Int", "*"],
+      ["Iterable", "*"],
       ["LineVG", "*"],
       ["Queue", "*"],
       ["Random", "*"],

@@ -1,8 +1,8 @@
 import { TokenType } from "../helpers";
 import { OPEN_BRACE, OPEN_BRACKET, OPEN_SQ_BRACKET } from "../symbols";
 import { AbstractAlternatives } from "./abstract-alternatives";
-import { FuncTypeNode } from "./func-type-node";
 import { TypeDictionaryNode } from "./type-dictionary-node";
+import { TypeFuncNode } from "./type-func-node";
 import { TypeGenericNode } from "./type-generic-node";
 import { TypeImmutableDictionaryNode } from "./type-immutable-dictionary-node";
 import { TypeImmutableListNode } from "./type-immutable-list-node";
@@ -21,7 +21,7 @@ export class TypeNode extends AbstractAlternatives {
     if (text.length > 0) {
       if (text.trimStart().startsWith("Func")) {
         // tested first because 'Func' is *syntactically* valid simple type
-        this.alternatives.push(new FuncTypeNode());
+        this.alternatives.push(new TypeFuncNode());
       } else if (text.trimStart().startsWith(OPEN_BRACKET)) {
         this.alternatives.push(new TypeTupleNode());
       } else if (text.trimStart().startsWith(OPEN_SQ_BRACKET)) {

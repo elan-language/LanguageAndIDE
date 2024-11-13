@@ -847,7 +847,7 @@ end procedure
     const code = `# FFFF Elan Beta 4 valid
 
 main
-  call print(""Hello World!"")
+  call printNoLine(""Hello World!"")
 end main
 `;
 

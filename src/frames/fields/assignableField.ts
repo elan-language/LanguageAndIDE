@@ -73,7 +73,7 @@ export class AssignableField extends AbstractField {
     return [match, removeIfSingleFullMatch(origSymbols, match)];
   }
 
-  protected override getId(s: ElanSymbol) {
+  protected override getSymbolCompleteId(s: ElanSymbol) {
     if (isMemberOnFieldsClass(s, transforms(), this.getHolder())) {
       return `${propertyKeyword}.${s.symbolId}`;
     }

@@ -2,6 +2,9 @@ import { ElanInputOutput } from "../../src/elan-input-output";
 import { hasHiddenType } from "../../src/has-hidden-type";
 
 export class TestInputOutput implements ElanInputOutput {
+  waitForAnyKey(): Promise<void> {
+    throw new Error("Method not implemented.");
+  }
 
   writeFile(path: string, data: string): Promise<void> {
     this.printed = data;
@@ -12,11 +15,11 @@ export class TestInputOutput implements ElanInputOutput {
     return Promise.resolve("Line1 \n Line2\n\rLine3");
   }
   
-  getKeystroke(): Promise<string> {
+  getKey(): Promise<string> {
     return Promise.resolve("");
   }
 
-  getKeystrokeWithModifier(): Promise<[string, string]> {
+  getKeyWithModifier(): Promise<[string, string]> {
     const t = ["", ""] as [string, string];
     (t as unknown as hasHiddenType)._type = "Tuple";
     return  Promise.resolve(t);

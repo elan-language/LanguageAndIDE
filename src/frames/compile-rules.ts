@@ -961,6 +961,12 @@ export function mustNotBeOutParameter(
   );
 }
 
+export function mustNotHaveDuplicateMain(compileErrors: CompileError[], location: string) {
+  compileErrors.push(
+    new SyntaxCompileError("There can only be one 'main' in a program.", location),
+  );
+}
+
 export function mustBeIterable(
   symbolType: SymbolType,
   compileErrors: CompileError[],

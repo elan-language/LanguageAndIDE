@@ -674,7 +674,12 @@ export class StdLib {
   }
 
   @elanProcedure()
-  print(s: string) {
+  printLine(s: string) {
+    this.system.elanInputOutput.print(`${s}\n`);
+  }
+
+  @elanProcedure()
+  printNoLine(s: string) {
     this.system.elanInputOutput.print(s);
   }
 
@@ -734,7 +739,7 @@ export class StdLib {
 
   //Input functions
   private prompt(prompt: string) {
-    this.print(prompt);
+    this.printNoLine(prompt);
   }
 
   @elanFunction(FunctionOptions.impureAsync, ElanString)
@@ -1026,16 +1031,19 @@ export class StdLib {
     this.system!.elanInputOutput.clearGraphics();
   }
 
-  @elanFunction(FunctionOptions.impureAsyncExtension, ElanString)
-  getKeystroke(@elanClassType(GraphicsBase) g: GraphicsBase): Promise<string> {
-    return this.system!.elanInputOutput.getKeystroke();
+  @elanProcedure(ProcedureOptions.async)
+  waitForAnyKey() {
+    return this.system.elanInputOutput.waitForAnyKey();
   }
 
-  @elanFunction(FunctionOptions.impureAsyncExtension, ElanTuple([ElanString, ElanString]))
-  getKeystrokeWithModifier(
-    @elanClassType(GraphicsBase) g: GraphicsBase,
-  ): Promise<[string, string]> {
-    return this.system!.elanInputOutput.getKeystrokeWithModifier();
+  @elanFunction(FunctionOptions.impureAsync, ElanString)
+  getKey(): Promise<string> {
+    return this.system!.elanInputOutput.getKey();
+  }
+
+  @elanFunction(FunctionOptions.impureAsync, ElanTuple([ElanString, ElanString]))
+  getKeyWithModifier(): Promise<[string, string]> {
+    return this.system!.elanInputOutput.getKeyWithModifier();
   }
 
   @elanProcedure(ProcedureOptions.extension)

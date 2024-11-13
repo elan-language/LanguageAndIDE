@@ -32,6 +32,7 @@ const trimButton = document.getElementById("trim") as HTMLButtonElement;
 const consoleDiv = document.getElementById("console") as HTMLDivElement;
 const graphicsDiv = document.getElementById("graphics") as HTMLDivElement;
 const loadButton = document.getElementById("load") as HTMLButtonElement;
+const mergeButton = document.getElementById("merge") as HTMLButtonElement;
 const saveButton = document.getElementById("save") as HTMLButtonElement;
 const codeTitle = document.getElementById("code-title") as HTMLDivElement;
 const parse = document.getElementById("parse") as HTMLDivElement;
@@ -116,7 +117,7 @@ function refreshAndDisplay(compileIfParsed?: boolean) {
   });
 }
 
-function initialDisplay() {
+function initialDisplay(reset: boolean) {
   clearDisplays();
 
   const ps = file.readParseStatus();
@@ -124,7 +125,7 @@ function initialDisplay() {
     refreshAndDisplay();
   } else {
     const msg = file.parseError || "Failed load code";
-    showError(new Error(msg), file.fileName, true);
+    showError(new Error(msg), file.fileName, reset);
   }
 }
 
@@ -136,12 +137,12 @@ function displayFile() {
     file.parseFrom(code).then(
       () => {
         file.fileName = previousFileName || file.defaultFileName;
-        initialDisplay();
+        initialDisplay(true);
       },
       (e) => showError(e, previousFileName || file.defaultFileName, true),
     );
   } else {
-    initialDisplay();
+    initialDisplay(true);
   }
 }
 
@@ -169,6 +170,7 @@ function updateDisplayValues() {
     //enable(pauseButton);
     const msg = "Program is running";
     disable(loadButton, msg);
+    disable(mergeButton, msg);
     disable(saveButton, msg);
     disable(newButton, msg);
     disable(demosButton, msg);
@@ -183,6 +185,7 @@ function updateDisplayValues() {
     //disable(pauseButton, msg);
 
     enable(loadButton, "Load code from a file");
+    enable(mergeButton, "Merge code from a file");
     enable(newButton, "Clear the current code and start anew");
     enable(demosButton, "Load a demonstration program");
     enable(trimButton);
@@ -468,11 +471,14 @@ function handleWorkerIO(data: WebWorkerWriteMessage) {
     case "readLine":
       elanInputOutput.readLine().then((v) => programWorker.postMessage(readMsg(v)));
       break;
-    case "getKeystroke":
-      elanInputOutput.getKeystroke().then((v) => programWorker.postMessage(readMsg(v)));
+    case "waitForAnyKey":
+      elanInputOutput.waitForAnyKey().then(() => programWorker.postMessage(readMsg("")));
       break;
-    case "getKeystrokeWithModifier":
-      elanInputOutput.getKeystrokeWithModifier().then((v) => programWorker.postMessage(readMsg(v)));
+    case "getKey":
+      elanInputOutput.getKey().then((v) => programWorker.postMessage(readMsg(v)));
+      break;
+    case "getKeyWithModifier":
+      elanInputOutput.getKeyWithModifier().then((v) => programWorker.postMessage(readMsg(v)));
       break;
     case "readFile":
       elanInputOutput.readFile().then(
@@ -579,18 +585,20 @@ newButton?.addEventListener("click", () => {
   resetFile(true);
 });
 
-function chooser(event: Event) {
-  const f = document.createElement("input");
-  f.style.display = "none";
-  f.type = "file";
-  f.name = "file";
-  f.accept = ".elan";
-  codeControls.appendChild(f);
-  f.addEventListener("change", handleUpload);
-  f.click();
+function chooser(uploader: (event: Event) => void) {
+  return () => {
+    const f = document.createElement("input");
+    f.style.display = "none";
+    f.type = "file";
+    f.name = "file";
+    f.accept = ".elan";
+    codeControls.appendChild(f);
+    f.addEventListener("change", uploader);
+    f.click();
+  };
 }
 
-loadButton.addEventListener("click", chooser);
+loadButton.addEventListener("click", chooser(handleUpload));
 
 function handleUpload(event: Event) {
   const elanFile = (event.target as any).files?.[0] as any;
@@ -606,8 +614,33 @@ function handleUpload(event: Event) {
       file = new FileImpl(hash, profile, transforms());
       file.fileName = fileName;
       file.parseFrom(code).then(
-        () => initialDisplay(),
+        () => initialDisplay(true),
         (e) => showError(e, fileName, true),
+      );
+    });
+    reader.readAsText(elanFile);
+  }
+
+  event.preventDefault();
+}
+
+mergeButton.addEventListener("click", chooser(handleMerge));
+
+function handleMerge(event: Event) {
+  const elanFile = (event.target as any).files?.[0] as any;
+
+  if (elanFile) {
+    const fileName = elanFile.name;
+    document.body.style.cursor = "wait";
+    clearDisplays();
+    const reader = new FileReader();
+    reader.addEventListener("load", (event: any) => {
+      const rawCode = event.target.result;
+      const newCode = new CodeSourceFromString(rawCode);
+
+      file.parseFrom(newCode, true).then(
+        () => initialDisplay(false),
+        (e) => showError(e, fileName, false),
       );
     });
     reader.readAsText(elanFile);
@@ -661,7 +694,7 @@ for (const elem of demoFiles) {
         file = new FileImpl(hash, profile, transforms());
         file.fileName = fileName;
         file.parseFrom(code).then(
-          () => initialDisplay(),
+          () => initialDisplay(true),
           (e) => showError(e, fileName, true),
         );
       });

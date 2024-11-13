@@ -14,6 +14,6 @@ export class IterableType implements IterableSymbolType {
   }
 
   toString(): string {
-    return this.name;
+    return "Iterable";
   }
 }
