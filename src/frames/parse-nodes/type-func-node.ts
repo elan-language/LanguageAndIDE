@@ -10,7 +10,7 @@ import { Sequence } from "./sequence";
 import { SpaceNode } from "./space-node";
 import { TypeNode } from "./type-node";
 
-export class FuncTypeNode extends AbstractSequence {
+export class TypeFuncNode extends AbstractSequence {
   inputTypes: OptionalNode | undefined;
   returnType: TypeNode | undefined;
 
