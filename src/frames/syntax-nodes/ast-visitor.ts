@@ -19,7 +19,6 @@ import { DotAfter } from "../parse-nodes/dot-after";
 import { DotBefore } from "../parse-nodes/dot-before";
 import { EmptyOfTypeNode } from "../parse-nodes/empty-of-type-node";
 import { EnumVal } from "../parse-nodes/enum-val";
-import { FuncTypeNode } from "../parse-nodes/func-type-node";
 import { FunctionRefNode } from "../parse-nodes/function-ref-node";
 import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { IfExpr } from "../parse-nodes/if-expr";
@@ -56,6 +55,7 @@ import { TermSimple } from "../parse-nodes/term-simple";
 import { ToClause } from "../parse-nodes/to-clause";
 import { TupleNode } from "../parse-nodes/tuple-node";
 import { TypeDictionaryNode } from "../parse-nodes/type-dictionary-node";
+import { TypeFuncNode } from "../parse-nodes/type-func-node";
 import { TypeGenericNode } from "../parse-nodes/type-generic-node";
 import { TypeImmutableDictionaryNode } from "../parse-nodes/type-immutable-dictionary-node";
 import { TypeImmutableListNode } from "../parse-nodes/type-immutable-list-node";
@@ -266,7 +266,7 @@ export function transform(
     return new TypeAsn(type, [key, value], fieldId, scope);
   }
 
-  if (node instanceof FuncTypeNode) {
+  if (node instanceof TypeFuncNode) {
     const type = "Func";
 
     const inp = node.inputTypes?.matchedNode
