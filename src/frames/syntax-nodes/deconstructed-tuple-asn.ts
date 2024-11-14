@@ -26,8 +26,7 @@ export class DeconstructedTupleAsn extends AbstractAstNode implements AstIdNode 
 
   compile(): string {
     this.compileErrors = [];
-    const it = this.items.map((p) => p.compile()).join(", ");
-    return `[${it}]`;
+    return this.items.map((p) => p.compile()).join(", ");
   }
 
   symbolType() {

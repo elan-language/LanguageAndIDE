@@ -16,23 +16,35 @@ suite("Record Deconstruction", () => {
     const code = `# FFFF Elan Beta 4 valid
 
 main
-  var x set to (3, "Apple")
-  var y set to 0
-  var z set to ""
-  set y, z to x
-  print y
-  print z
+  var x set to new Foo() with a to 100, b to "fred"
+  var a set to 0
+  var b set to ""
+  set a, b to x
+  print a
+  print b
 end main
-`;
+
+record Foo
+  property a as Int
+  property b as String
+end record`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var x = system.tuple([3, "Apple"]);
-  var y = 0;
-  var z = "";
-  [y, z] = x;
-  system.printLine(_stdlib.asString(y));
-  system.printLine(_stdlib.asString(z));
+  var x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = 100; _a.b = "fred"; return _a;})();
+  var a = 0;
+  var b = "";
+  {a, b} = x;
+  system.printLine(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(b));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["a", 0], ["b", ""]]);};
+  a = 0;
+
+  b = "";
+
 }
 return [main, _tests];}`;
 

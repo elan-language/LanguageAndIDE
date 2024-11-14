@@ -11,7 +11,7 @@ import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
 import { beKeyword, letKeyword } from "../keywords";
 import { SymbolScope } from "../symbols/symbol-scope";
-import { getIds, wrapDeconstruction } from "../syntax-nodes/ast-helpers";
+import { getIds, wrapDeconstructionRhs } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 
 export class LetStatement extends AbstractFrame implements Statement, ElanSymbol {
@@ -84,7 +84,9 @@ export class LetStatement extends AbstractFrame implements Statement, ElanSymbol
     const val = this.expr.compile(transforms);
 
     const rhs =
-      ids.length === 1 ? val : wrapDeconstruction(this.name.getOrTransformAstNode(transforms), val);
+      ids.length === 1
+        ? val
+        : wrapDeconstructionRhs(this.name.getOrTransformAstNode(transforms), val);
 
     return `${this.indent()}const ${mapIds(ids)} = ${rhs};`;
   }

@@ -12,7 +12,7 @@ import { Statement } from "../interfaces/statement";
 import { setKeyword, toKeyword, varKeyword } from "../keywords";
 import { symbolMatches } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
-import { getIds, wrapDeconstruction } from "../syntax-nodes/ast-helpers";
+import { getIds, wrapDeconstructionRhs } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 
 export class VarStatement extends AbstractFrame implements Statement, ElanSymbol {
@@ -70,7 +70,7 @@ export class VarStatement extends AbstractFrame implements Statement, ElanSymbol
       mustNotBeRedefined(symbol, this.compileErrors, this.htmlId);
     }
 
-    const rhs = wrapDeconstruction(
+    const rhs = wrapDeconstructionRhs(
       this.name.getOrTransformAstNode(transforms),
       this.expr.compile(transforms),
     );
