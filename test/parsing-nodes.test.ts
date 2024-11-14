@@ -1644,6 +1644,6 @@ suite("Parsing Nodes", () => {
     );
   });
   ignore_test("GetActiveNode#857", () => {
-    testGetActiveNode(new ExprNode(), `a`, ParseStatus.valid, IdentifierNode.name); 
+    testGetActiveNode(new ExprNode(), `a`, ParseStatus.valid, IdentifierNode.name);
   });
 });
