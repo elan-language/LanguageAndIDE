@@ -166,8 +166,7 @@ function updateDisplayValues() {
 
   if (isRunning) {
     disable(runButton, "Program is already running");
-    enable(stopButton);
-    //enable(pauseButton);
+    enable(stopButton, "Stop the program");
     const msg = "Program is running";
     disable(loadButton, msg);
     disable(appendButton, msg);
@@ -185,11 +184,11 @@ function updateDisplayValues() {
     //disable(pauseButton, msg);
 
     enable(loadButton, "Load code from a file");
-    enable(appendButton, "Append code from a file");
-    enable(newButton, "Clear the current code and start anew");
+    enable(appendButton, "Append code from a file onto the end of the existing code");
+    enable(newButton, "Clear the current code and start afresh");
     enable(demosButton, "Load a demonstration program");
-    enable(trimButton);
-    enable(expandCollapseButton);
+    enable(trimButton, "Remove all 'newCode' selectors that can be removed");
+    enable(expandCollapseButton, "Expand / Collapse all code regions");
 
     for (const elem of demoFiles) {
       elem.removeAttribute("hidden");
@@ -200,7 +199,7 @@ function updateDisplayValues() {
     } else if (!isParsing) {
       disable(saveButton, "Code must be parsing in order to save");
     } else {
-      enable(saveButton, "Save code as file to the Download directory");
+      enable(saveButton, "Save the code into a file");
     }
 
     if (!file.containsMain()) {
