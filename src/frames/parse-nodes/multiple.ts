@@ -78,7 +78,7 @@ export class Multiple extends AbstractParseNode {
     return elems[elems.length - 1].getToMatchAndTokenType();
   }
 
-  getActiveParseNode(): ParseNode {
+  getActiveNode(): ParseNode {
     return this;
   }
 }

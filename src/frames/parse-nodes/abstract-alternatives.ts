@@ -61,7 +61,7 @@ export abstract class AbstractAlternatives extends AbstractParseNode {
     return this.bestMatch?.getToMatchAndTokenType() ?? super.getToMatchAndTokenType();
   }
 
-  getActiveParseNode(): ParseNode {
-    return this.bestMatch ? this.bestMatch!.getActiveParseNode() : this;
+  getActiveNode(): ParseNode {
+    return this.bestMatch ? this.bestMatch!.getActiveNode() : this;
   }
 }

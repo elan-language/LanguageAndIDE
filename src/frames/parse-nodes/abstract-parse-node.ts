@@ -54,8 +54,8 @@ export abstract class AbstractParseNode implements ParseNode {
     return ["", TokenType.none];
   }
 
-  getActiveParseNode(): ParseNode {
+  getActiveNode(): ParseNode {
     const active = this.activeSubNode;
-    return active === this ? active : active.getActiveParseNode();
+    return active === this ? active : active.getActiveNode();
   }
 }

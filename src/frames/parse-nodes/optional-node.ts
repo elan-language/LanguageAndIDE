@@ -49,7 +49,7 @@ export class OptionalNode extends AbstractParseNode {
     return this.matchedNode?.getToMatchAndTokenType() ?? ["", TokenType.none];
   }
 
-  getActiveParseNode(): ParseNode {
+  getActiveNode(): ParseNode {
     return this.matchedNode ?? this;
   }
 }

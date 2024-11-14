@@ -17,5 +17,5 @@ export interface ParseNode {
   setCompletionWhenEmpty(ph: string): void;
 
   getToMatchAndTokenType(): [string, TokenType];
-  getActiveParseNode(): ParseNode;
+  getActiveNode(): ParseNode;
 }
