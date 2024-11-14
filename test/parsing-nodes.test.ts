@@ -50,7 +50,8 @@ import { TypeSimpleOrGeneric } from "../src/frames/parse-nodes/type-simple-or-ge
 import { UnaryExpression } from "../src/frames/parse-nodes/unary-expression";
 import { ParseStatus } from "../src/frames/status-enums";
 import { DOT } from "../src/frames/symbols";
-import { testNodeParse } from "./testHelpers";
+import { ignore_test } from "./compiler/compiler-test-helpers";
+import { testGetActiveNode, testNodeParse } from "./testHelpers";
 
 suite("Parsing Nodes", () => {
   test("UnaryExpression", () => {
@@ -1641,5 +1642,8 @@ suite("Parsing Nodes", () => {
       "11 div 3",
       "11<el-kw> div </el-kw>3",
     );
+  });
+  ignore_test("GetActiveNode#857", () => {
+    testGetActiveNode(new ExprNode(), `a`, ParseStatus.valid, IdentifierNode.name); 
   });
 });
