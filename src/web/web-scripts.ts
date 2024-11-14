@@ -32,7 +32,7 @@ const trimButton = document.getElementById("trim") as HTMLButtonElement;
 const consoleDiv = document.getElementById("console") as HTMLDivElement;
 const graphicsDiv = document.getElementById("graphics") as HTMLDivElement;
 const loadButton = document.getElementById("load") as HTMLButtonElement;
-const mergeButton = document.getElementById("merge") as HTMLButtonElement;
+const appendButton = document.getElementById("append") as HTMLButtonElement;
 const saveButton = document.getElementById("save") as HTMLButtonElement;
 const codeTitle = document.getElementById("code-title") as HTMLDivElement;
 const parse = document.getElementById("parse") as HTMLDivElement;
@@ -170,7 +170,7 @@ function updateDisplayValues() {
     //enable(pauseButton);
     const msg = "Program is running";
     disable(loadButton, msg);
-    disable(mergeButton, msg);
+    disable(appendButton, msg);
     disable(saveButton, msg);
     disable(newButton, msg);
     disable(demosButton, msg);
@@ -185,7 +185,7 @@ function updateDisplayValues() {
     //disable(pauseButton, msg);
 
     enable(loadButton, "Load code from a file");
-    enable(mergeButton, "Merge code from a file");
+    enable(appendButton, "Append code from a file");
     enable(newButton, "Clear the current code and start anew");
     enable(demosButton, "Load a demonstration program");
     enable(trimButton);
@@ -624,9 +624,9 @@ function handleUpload(event: Event) {
   event.preventDefault();
 }
 
-mergeButton.addEventListener("click", chooser(handleMerge));
+appendButton.addEventListener("click", chooser(handleAppend));
 
-function handleMerge(event: Event) {
+function handleAppend(event: Event) {
   const elanFile = (event.target as any).files?.[0] as any;
 
   if (elanFile) {
