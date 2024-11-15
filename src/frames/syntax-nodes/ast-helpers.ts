@@ -304,29 +304,30 @@ export function mapOperation(op: string): OperationSymbol {
   throw new ElanCompilerError(`Cannot map operation ${op}`);
 }
 
-export function wrapDeconstructionRhs(lhs: AstNode, rhs: AstNode) {
+export function wrapDeconstructionRhs(lhs: AstNode, rhs: AstNode, isAssignment: boolean) {
   const code = rhs.compile();
+  const closeBracket = isAssignment ? ")" : "";
 
   if (lhs instanceof DeconstructedListAsn) {
     return `system.deconstructList(${code})`;
   }
 
   if (lhs instanceof DeconstructedTupleAsn && rhs.symbolType() instanceof ClassType) {
-    return `${code})`;
+    return `${code}${closeBracket}`;
   }
   return code;
 }
 
-export function wrapDeconstructionLhs(lhs: AstNode, rhs: AstNode) {
+export function wrapDeconstructionLhs(lhs: AstNode, rhs: AstNode, isAssignment: boolean) {
   const code = lhs.compile();
+  const openBracket = isAssignment ? "(" : "";
 
   if (lhs instanceof DeconstructedListAsn) {
     return `[${code}]`;
   }
 
   if (lhs instanceof DeconstructedTupleAsn && rhs.symbolType() instanceof ClassType) {
-    //code = code.split(",").map(s => s.trim()).map(s => `${s}:${s}`).join(", ");
-    return `({${code}}`;
+    return `${openBracket}{${code}}`;
   }
 
   if (lhs instanceof DeconstructedTupleAsn) {

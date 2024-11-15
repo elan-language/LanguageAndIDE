@@ -17,8 +17,10 @@ import { Statement } from "./interfaces/statement";
 import { SymbolType } from "./interfaces/symbol-type";
 import { CompileStatus, DisplayStatus, ParseStatus, RunStatus, TestStatus } from "./status-enums";
 import { ArrayType } from "./symbols/array-list-type";
+import { ClassType } from "./symbols/class-type";
 import { DeconstructedListType } from "./symbols/deconstructed-list-type";
 import { DeconstructedTupleType } from "./symbols/deconstructed-tuple-type";
+import { DeconstructedRecordType } from "./symbols/deconstructed-record-type";
 import { ListType } from "./symbols/list-type";
 import { TupleType } from "./symbols/tuple-type";
 
@@ -228,6 +230,11 @@ export function mapSymbolType(ids: string[], st: SymbolType) {
   if (ids.length > 1 && st instanceof TupleType) {
     return new DeconstructedTupleType(ids, st.ofTypes);
   }
+
+  if (ids.length > 1 && st instanceof ClassType && st.isImmutable) {
+    return new DeconstructedRecordType(ids, st.scope as Class);
+  }
+
   if (ids.length === 2 && (st instanceof ArrayType || st instanceof ListType)) {
     return new DeconstructedListType(ids[0], ids[1], st.ofType, st);
   }
