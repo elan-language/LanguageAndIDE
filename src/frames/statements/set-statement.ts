@@ -91,13 +91,9 @@ export class SetStatement extends AbstractFrame implements Statement {
       mustNotBeLet(symbol, this.compileErrors, this.htmlId);
     }
 
-    const lhs = wrapDeconstructionLhs(
-      assignableAstNode,
-      exprAstNode,
-      this.assignable.compile(transforms),
-    );
+    const lhs = wrapDeconstructionLhs(assignableAstNode, exprAstNode);
 
-    const rhs = wrapDeconstructionRhs(assignableAstNode, this.expr.compile(transforms));
+    const rhs = wrapDeconstructionRhs(assignableAstNode, exprAstNode);
 
     return `${this.indent()}${lhs} = ${rhs};`;
   }

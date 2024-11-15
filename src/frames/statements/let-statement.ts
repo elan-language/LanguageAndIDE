@@ -81,12 +81,13 @@ export class LetStatement extends AbstractFrame implements Statement, ElanSymbol
       mustNotBeRedefined(symbol, this.compileErrors, this.htmlId);
     }
 
-    const val = this.expr.compile(transforms);
-
     const rhs =
       ids.length === 1
-        ? val
-        : wrapDeconstructionRhs(this.name.getOrTransformAstNode(transforms), val);
+        ? this.expr.compile(transforms)
+        : wrapDeconstructionRhs(
+            this.name.getOrTransformAstNode(transforms),
+            this.expr.getOrTransformAstNode(transforms),
+          );
 
     return `${this.indent()}const ${mapIds(ids)} = ${rhs};`;
   }

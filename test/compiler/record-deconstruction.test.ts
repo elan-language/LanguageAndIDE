@@ -12,7 +12,7 @@ import {
 } from "./compiler-test-helpers";
 
 suite("Record Deconstruction", () => {
-  ignore_test("Pass_DeconstructIntoExistingVariables", async () => {
+  test("Pass_DeconstructIntoExistingVariables", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
 main
@@ -34,7 +34,7 @@ async function main() {
   var x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = 100; _a.b = "fred"; return _a;})();
   var a = 0;
   var b = "";
-  {a, b} = x;
+  ({a, b} = x);
   system.printLine(_stdlib.asString(a));
   system.printLine(_stdlib.asString(b));
 }
@@ -54,7 +54,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "3Apple");
+    await assertObjectCodeExecutes(fileImpl, "100fred");
   });
 
   ignore_test("Pass_CreateAndDeconstructAFourTuple", async () => {
