@@ -17,7 +17,7 @@ export class EmptyOfTypeNode extends AbstractSequence {
     super.parseText(text);
   }
 
-  getToMatchAndTokenType(): [string, TokenType] {
-    return [this.type?.matchedText ?? "", TokenType.type];
+  override getToMatchAndTokenType(): [string, TokenType] {
+    return [this.matchedText, TokenType.type];
   }
 }

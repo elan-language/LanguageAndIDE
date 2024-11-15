@@ -3,6 +3,7 @@ export enum ParseStatus {
   empty,
   incomplete,
   valid,
+  complete,
   default,
 }
 

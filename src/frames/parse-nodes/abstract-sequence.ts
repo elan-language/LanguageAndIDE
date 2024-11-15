@@ -27,6 +27,7 @@ export abstract class AbstractSequence extends AbstractParseNode {
       } else {
         worstStatus = node.status < worstStatus ? node.status : worstStatus;
       }
+      this.activeSubNode = node;
       i++;
     }
     this.status = worstStatus;

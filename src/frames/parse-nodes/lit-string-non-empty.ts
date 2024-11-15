@@ -1,4 +1,3 @@
-import { Regexes } from "../fields/regexes";
 import { DOUBLE_QUOTES } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
@@ -6,7 +5,6 @@ import { LitStringInterpolation } from "./lit-string-interpolation";
 import { LitStringOrdinaryContents } from "./lit-string-ordinary-contents";
 import { Multiple } from "./multiple";
 import { PunctuationNode } from "./punctuation-node";
-import { RegExMatchNode } from "./regex-match-node";
 
 export class LitStringNonEmpty extends AbstractSequence {
   segments: Multiple | undefined;
