@@ -51,6 +51,7 @@ import { ArrayType } from "./symbols/array-list-type";
 import { BooleanType } from "./symbols/boolean-type";
 import { ClassType } from "./symbols/class-type";
 import { DeconstructedListType } from "./symbols/deconstructed-list-type";
+import { DeconstructedTupleType } from "./symbols/deconstructed-tuple-type";
 import { DictionaryType } from "./symbols/dictionary-type";
 import { DuplicateSymbol } from "./symbols/duplicate-symbol";
 import { EnumType } from "./symbols/enum-type";
@@ -675,15 +676,27 @@ export function mustBeCompatibleType(
     return;
   }
 
-  if (lhs instanceof TupleType && rhs instanceof TupleType) {
+  if (
+    (lhs instanceof TupleType || lhs instanceof DeconstructedTupleType) &&
+    rhs instanceof TupleType
+  ) {
     if (lhs.ofTypes.length === rhs.ofTypes.length) {
       mustBeCompatibleTypes(lhs.ofTypes, rhs.ofTypes, compileErrors, location);
     } else {
-      FailIncompatible(lhs, rhs, compileErrors, location);
+      if (lhs instanceof DeconstructedTupleType) {
+        compileErrors.push(
+          new SyntaxCompileError(`Wrong number of deconstructed variables`, location),
+        );
+      } else {
+        FailIncompatible(lhs, rhs, compileErrors, location);
+      }
     }
   }
 
-  if (lhs instanceof TupleType && !(rhs instanceof TupleType)) {
+  if (
+    (lhs instanceof TupleType || lhs instanceof DeconstructedTupleType) &&
+    !(rhs instanceof TupleType)
+  ) {
     FailIncompatible(lhs, rhs, compileErrors, location);
     return;
   }
@@ -789,9 +802,10 @@ function mustBeCompatibleDeconstruction(
 
         mustBeCompatibleType(llst, rrst, compileErrors, location);
       } else {
-        compileErrors.push(
-          new SyntaxCompileError("No such property 'id' on record 'rst.name'", location),
-        );
+        const msg = id
+          ? `No such property '${id}' on record '${rst.name}`
+          : "Cannot discard in record deconstruction";
+        compileErrors.push(new SyntaxCompileError(msg, location));
       }
     }
   }
@@ -807,12 +821,18 @@ export function mustBeCompatibleNode(
   const lst = lhs.symbolType();
   const rst = rhs.symbolType();
 
-  if (lst instanceof TupleType && rst instanceof ClassType) {
+  if (lst instanceof DeconstructedTupleType && rst instanceof ClassType) {
     if (rst.isImmutable) {
       mustBeCompatibleDeconstruction(lhs, rhs, scope, compileErrors, location);
       return;
     }
   }
+
+  // if (lst instanceof DeconstructedTupleType && rst instanceof TupleType) {
+  //   if (lst.ofTypes.length > rst.ofTypes.length) {
+  //     compileErrors.push(new SyntaxCompileError(`Too many deconstructed variables`, location));
+  //   }
+  // }
 
   mustBeCompatibleType(lst, rst, compileErrors, location);
 }

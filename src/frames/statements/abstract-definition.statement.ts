@@ -1,6 +1,11 @@
 import { AbstractFrame } from "../abstract-frame";
 import { CodeSource } from "../code-source";
-import { mustBeDeconstructableType, mustNotBeKeyword, mustNotBeRedefined } from "../compile-rules";
+import {
+  mustBeCompatibleNode,
+  mustBeDeconstructableType,
+  mustNotBeKeyword,
+  mustNotBeRedefined,
+} from "../compile-rules";
 import { ExpressionField } from "../fields/expression-field";
 import { VarDefField } from "../fields/var-def-field";
 import { mapIds, mapSymbolType } from "../helpers";
@@ -56,25 +61,22 @@ export abstract class AbstractDefinitionStatement
       mustBeDeconstructableType(this.symbolType(transforms), this.compileErrors, this.htmlId);
     }
 
+    const lhs = this.name.getOrTransformAstNode(transforms);
+    const rhs = this.expr.getOrTransformAstNode(transforms);
+
+    mustBeCompatibleNode(lhs, rhs, this.getParent(), this.compileErrors, this.htmlId);
+
     for (const i of ids) {
       mustNotBeKeyword(i, this.compileErrors, this.htmlId);
       const symbol = this.getParent().resolveSymbol(i!, transforms, this);
       mustNotBeRedefined(symbol, this.compileErrors, this.htmlId);
     }
 
-    const lhs = wrapDeconstructionLhs(
-      this.name.getOrTransformAstNode(transforms),
-      this.expr.getOrTransformAstNode(transforms),
-      false,
-    );
+    const lhsCode = wrapDeconstructionLhs(lhs, rhs, false);
 
-    const rhs = wrapDeconstructionRhs(
-      this.name.getOrTransformAstNode(transforms),
-      this.expr.getOrTransformAstNode(transforms),
-      false,
-    );
+    const rhsCode = wrapDeconstructionRhs(lhs, rhs, false);
 
-    return `${this.indent()}${this.getJsKeyword()} ${lhs} = ${rhs};`;
+    return `${this.indent()}${this.getJsKeyword()} ${lhsCode} = ${rhsCode};`;
   }
 
   get symbolId() {

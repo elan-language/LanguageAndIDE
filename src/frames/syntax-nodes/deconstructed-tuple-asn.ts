@@ -1,5 +1,6 @@
 import { CompileError } from "../compile-error";
 import { AstIdNode } from "../interfaces/ast-id-node";
+import { DeconstructedTupleType } from "../symbols/deconstructed-tuple-type";
 import { TupleType } from "../symbols/tuple-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 
@@ -30,7 +31,10 @@ export class DeconstructedTupleAsn extends AbstractAstNode implements AstIdNode 
   }
 
   symbolType() {
-    return new TupleType(this.items.map((i) => i.symbolType()));
+    return new DeconstructedTupleType(
+      this.items.map((i) => i.id),
+      this.items.map((i) => i.symbolType()),
+    );
   }
 
   toString() {

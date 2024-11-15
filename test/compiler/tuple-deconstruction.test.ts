@@ -679,7 +679,7 @@ end main
 
 main
   var x set to (3,"Apple")
-  var z set to ""
+  var z set to 0
   var z, y set to x
   print y
   print z
