@@ -17,6 +17,9 @@ export class IdentifierNode extends AbstractParseNode {
         Regexes.identifier,
       );
     }
+    if (this.remainingText.length > 0) {
+      this.complete = true;
+    }
   }
 
   getToMatchAndTokenType(): [string, TokenType] {
