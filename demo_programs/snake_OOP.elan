@@ -1,0 +1,202 @@
+# fa77910927f61df49af16fca32f79990e8f21001e625c012b3954936f06b9630 Elan Beta 4 valid
+
+# Use the W,A,S,D keys to change Snake direction
+main
+  var gr set to new BlockGraphics()
+  var snake set to new Snake()
+  var apple set to new Apple()
+  call apple.newRandomPosition(snake)
+  while not snake.gameOver()
+    set gr to snake.updateGraphics(gr)
+    set gr to apple.updateGraphics(gr)
+    call gr.display()
+    call pause(150)
+    call snake.clockTick(getKey(), apple)
+  end while
+  print "Game Over! Score: {snake.score()}"
+end main
+
+class Snake
+  constructor()
+    let tail be new Square(20, 15)
+    set property.currentDir to Direction.right
+    set property.body to [tail]
+    set property.head to tail.getAdjacentSquare(currentDir)
+    set property.priorTail to tail
+  end constructor
+
+  private property currentDir as Direction
+
+  private property head as Square
+
+  private property body as [Square]
+
+  private property priorTail as Square
+
+  procedure clockTick(key as String, out apple as Apple)
+    call setDirection(key)
+    set property.priorTail to body[0]
+    call body.append(head)
+    set property.head to head.getAdjacentSquare(currentDir)
+    if head is apple.location
+      then
+        call apple.newRandomPosition(this)
+      else
+        set body to body[1..]
+    end if
+  end procedure
+
+  function updateGraphics(gr as BlockGraphics) return BlockGraphics
+    var gr2 set to head.updateGraphics(gr, green)
+    if body[0] isnt priorTail
+      then
+        set gr2 to priorTail.updateGraphics(gr, white)
+    end if
+    return gr2
+  end function
+
+  function score() return Int
+    return body.length() - 1
+  end function
+
+  function bodyCovers(sq as Square) return Boolean
+    var result set to false
+    each seg in body
+      if (seg is sq)
+        then
+          set result to true
+      end if
+    end each
+    return result
+  end function
+
+  function gameOver() return Boolean
+    return bodyCovers(head) or head.hasHitEdge()
+  end function
+
+  private procedure setDirection(key as String)
+    switch key
+      case "w"
+        set property.currentDir to Direction.up
+      case "s"
+        set property.currentDir to Direction.down
+      case "a"
+        set property.currentDir to Direction.left
+      case "d"
+        set property.currentDir to Direction.right
+    end switch
+  end procedure
+
+end class
+
+class Apple
+  constructor()
+
+  end constructor
+
+  property location as Square
+
+  procedure newRandomPosition(snake as Snake)
+    repeat
+      let ranX be randomInt(0, 39)
+      let ranY be randomInt(0, 29)
+      set location to new Square(ranX, ranY)
+    end repeat when not snake.bodyCovers(location)
+  end procedure
+
+  function updateGraphics(gr as BlockGraphics) return BlockGraphics
+    return location.updateGraphics(gr, red)
+  end function
+
+end class
+
+class Square
+  constructor(x as Int, y as Int)
+    set property.x to x
+    set property.y to y
+  end constructor
+
+  private property x as Int
+
+  private property y as Int
+
+  function getAdjacentSquare(d as Direction) return Square
+    var newX set to x
+    var newY set to y
+    switch d
+      case Direction.left
+        set newX to x - 1
+      case Direction.right
+        set newX to x + 1
+      case Direction.up
+        set newY to y - 1
+      case Direction.down
+        set newY to y + 1
+    end switch
+    return new Square(newX, newY)
+  end function
+
+  function hasHitEdge() return Boolean
+    return (x is -1) or (y is -1) or (x is 40) or (y is 30)
+  end function
+
+  function updateGraphics(gr as BlockGraphics, colour as Int) return BlockGraphics
+    return gr.withBlock(x, y, colour)
+  end function
+
+end class
+
+enum Direction up, down, left, right
+
+# 92 frames (excluding tests)
+test snake
+  let snake be new Snake()
+  # bodyCovers
+  assert snake.bodyCovers(new Square(20, 15)) is true
+  assert snake.bodyCovers(new Square(21, 15)) is false
+  # gameOver, score - can only test for default - which is not thorough test
+  assert snake.gameOver() is false
+  assert snake.score() is 0
+  # updateGraphics - can test only on new Snake - not a thorough test
+  var gr set to new BlockGraphics()
+  set gr to gr.withBlock(20, 15, green)
+  set gr to snake.updateGraphics(gr)
+  assert gr.getBackground(20, 15) is green
+  assert gr.getBackground(21, 15) is green
+end test
+
+test apple
+  # constructor has no user code to test
+  # newRandomPosition is a procedure
+  # updateGraphics can only be tested minimally, with default location (0,0)
+  var gr set to new BlockGraphics()
+  let apple be new Apple()
+  set gr to apple.updateGraphics(gr)
+  assert gr.getBackground(0, 0) is red
+end test
+
+test square
+  # constructor - not testable as properties are private
+  # getAdjacentSquare
+  let sq1 be new Square(3, 4)
+  assert sq1.getAdjacentSquare(Direction.up) is new Square(3, 3)
+  assert sq1.getAdjacentSquare(Direction.down) is new Square(3, 5)
+  assert sq1.getAdjacentSquare(Direction.left) is new Square(2, 4)
+  assert sq1.getAdjacentSquare(Direction.right) is new Square(4, 4)
+  let sq2 be new Square(0, 0)
+  let sq3 be new Square(-1, 0)
+  assert sq2.getAdjacentSquare(Direction.left) is sq3
+  # hasHitEdge
+  assert (new Square(0, 0)).hasHitEdge() is false
+  assert (new Square(39, 20)).hasHitEdge() is false
+  assert (new Square(-1, 3)).hasHitEdge() is true
+  assert (new Square(3, -1)).hasHitEdge() is true
+  assert (new Square(40, 3)).hasHitEdge() is true
+  assert (new Square(3, 30)).hasHitEdge() is true
+  # updateGraphics
+  var gr set to new BlockGraphics()
+  set gr to sq1.updateGraphics(gr, blue)
+  assert gr.getBackground(3, 4) is blue
+end test
+
+# Testcoverage: 43% (40/94 frames)

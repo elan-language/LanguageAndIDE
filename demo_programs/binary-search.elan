@@ -1,0 +1,56 @@
+# b8ca667be3feb52a99f499bcaef2938e75027377ebcc9d01eb7799caf5b5b36d Elan Beta 4 valid
+
+main
+  let fruit be ["apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"]
+  var exit set to false
+  while not exit
+    let wanted be inputString("What type of fruit do you want ('x' to exit)? ")
+    if wanted isnt "x"
+      then
+        let result be binarySearch(fruit, wanted)
+        if result
+          then
+            print "We can supply a {wanted}"
+          else
+            print "Sorry, we cannot supply a {wanted}"
+        end if
+      else
+        set exit to true
+    end if
+  end while
+end main
+
+function binarySearch(list as [String], item as String) return Boolean
+  var result set to false
+  if list.length() > 0
+    then
+      let mid be list.length() div 2
+      let value be list[mid]
+      if item is value
+        then
+          set result to true
+        else if item.isBefore(value)
+          set result to binarySearch(list[..mid], item)
+        else
+          set result to binarySearch(list[mid + 1..], item)
+      end if
+  end if
+  return result
+end function
+
+test 
+  let li1 be ["lemon", "lime", "orange"]
+  assert binarySearch(li1, "lemon") is true
+  assert binarySearch(li1, "lime") is true
+  assert binarySearch(li1, "orange") is true
+  assert binarySearch(li1, "pear") is false
+  let li2 be ["lemon", "orange"]
+  assert binarySearch(li2, "lemon") is true
+  assert binarySearch(li2, "orange") is true
+  assert binarySearch(li2, "pear") is false
+  let li3 be ["lemon"]
+  assert binarySearch(li3, "lemon") is true
+  assert binarySearch(li3, "lime") is false
+  let li4 be empty [String]
+  assert binarySearch(li4, "pear") is false
+end test
