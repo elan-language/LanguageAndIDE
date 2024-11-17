@@ -18,4 +18,5 @@ export interface ParseNode {
 
   getToMatchAndTokenType(): [string, TokenType];
   getActiveNode(): ParseNode;
+  isComplete(): boolean;
 }

@@ -21,10 +21,10 @@ export abstract class AbstractSequence extends AbstractParseNode {
       i++;
       const node = this.elements[i] as AbstractParseNode;
       this.activeSubNode = node;
-      const moreText = this.remainingText.length > 0;
       const lastNode = i === this.elements.length - 1;
       node.parseText(this.remainingText);
       this.remainingText = node.remainingText;
+      const moreText = this.remainingText.length > 0;
       continueToNextNode = false; //default - unless set true again below
       if (node.isComplete()) {
         // Only possible if also valid
@@ -35,17 +35,24 @@ export abstract class AbstractSequence extends AbstractParseNode {
           this.status = ParseStatus.incomplete;
           continueToNextNode = true;
         }
-      } else if (node.isValid()) {
+      } else if (node.isValid()) { 
         this.status = ParseStatus.valid;
-        if (!moreText) {
-        } else if (lastNode) {
-          this.complete = true;
-        } else {
-          continueToNextNode = true;
+        if (moreText) {
+          if (lastNode) {
+            this.complete = true;
+          } else {
+            continueToNextNode = true;
+          }
         }
       } else if (node.isIncomplete()) {
         if (moreText) {
           this.status = ParseStatus.invalid;
+        } else {
+          this.status = ParseStatus.incomplete;
+        }
+      } else if (node.isEmpty()) {
+        if (i === 0) {
+          this.status = ParseStatus.empty;
         } else {
           this.status = ParseStatus.incomplete;
         }
@@ -54,7 +61,7 @@ export abstract class AbstractSequence extends AbstractParseNode {
       }
     } //Finally...
     if (this.isInvalid()) {
-      this.remainingText = text; // Is this necessary?
+      this.remainingText = text; 
     } else {
       this.matchedText = text.substring(0, text.length - this.remainingText.length);
     }

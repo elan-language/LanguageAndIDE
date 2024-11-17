@@ -357,20 +357,22 @@ export function testNodeParse(
   if (html && html !== "") {
     assert.equal(node.renderAsHtml(), html);
   }
-}export function testGetActiveNode(
+}
+
+export function testParseCompletionAndActiveNode(
   node: ParseNode,
   text: string,
   status: ParseStatus,
-  expectedType: string
+  activeNodeType: string,
+  complete = false,
 ) {
   node.parseText(text);
   assert.equal(node.status, status);
   const active = node.getActiveNode();
   const cls = active.constructor.name;
-  assert.equal(expectedType, cls);
+  assert.equal(activeNodeType, cls);
+  assert.equal(node.isComplete(), complete);
 }
-
-
 
 export function testCompletion(
   node: ParseNode,

@@ -5,7 +5,7 @@ import { Space } from "./parse-node-helpers";
 
 export class SpaceNode extends AbstractParseNode {
   type: Space;
-  
+
   constructor(type: Space) {
     super();
     this.type = type;
@@ -30,7 +30,7 @@ export class SpaceNode extends AbstractParseNode {
       } else {
         this.status = ParseStatus.valid;
         this.complete = true;
-      } 
+      }
     }
   }
 

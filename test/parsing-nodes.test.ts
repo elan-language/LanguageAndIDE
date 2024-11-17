@@ -1,5 +1,6 @@
 import { Regexes } from "../src/frames/fields/regexes";
 import { abstractKeyword } from "../src/frames/keywords";
+import { AbstractSequence } from "../src/frames/parse-nodes/abstract-sequence";
 import { Alternatives } from "../src/frames/parse-nodes/alternatives";
 import { BinaryExpression } from "../src/frames/parse-nodes/binary-expression";
 import { BinaryOperation } from "../src/frames/parse-nodes/binary-operation";
@@ -50,8 +51,7 @@ import { TypeSimpleOrGeneric } from "../src/frames/parse-nodes/type-simple-or-ge
 import { UnaryExpression } from "../src/frames/parse-nodes/unary-expression";
 import { ParseStatus } from "../src/frames/status-enums";
 import { DOT } from "../src/frames/symbols";
-import { ignore_test } from "./compiler/compiler-test-helpers";
-import { testGetActiveNode, testNodeParse } from "./testHelpers";
+import { testNodeParse, testParseCompletionAndActiveNode } from "./testHelpers";
 
 suite("Parsing Nodes", () => {
   test("UnaryExpression", () => {
@@ -1643,7 +1643,36 @@ suite("Parsing Nodes", () => {
       "11<el-kw> div </el-kw>3",
     );
   });
-  ignore_test("GetActiveNode#857", () => {
-    testGetActiveNode(new ExprNode(), `a`, ParseStatus.valid, IdentifierNode.name);
+  test("RevisedParseMethodForAbstractSequence#857", () => {
+    testParseCompletionAndActiveNode(
+      new test_seq(),
+      `ab`,
+      ParseStatus.incomplete,
+      PunctuationNode.name,
+      false,
+    );
+    testParseCompletionAndActiveNode(
+      new test_seq(),
+      `abc`,
+      ParseStatus.valid,
+      PunctuationNode.name,
+      true,
+    );
+    testParseCompletionAndActiveNode(
+      new test_seq(),
+      `ac`,
+      ParseStatus.valid,
+      PunctuationNode.name,
+      true,
+    );
   });
 });
+
+class test_seq extends AbstractSequence {
+  parseText(text: string): void {
+    this.addElement(new PunctuationNode("a"));
+    this.addElement(new OptionalNode(new PunctuationNode("b")));
+    this.addElement(new PunctuationNode("c"));
+    super.parseText(text);
+  }
+}
