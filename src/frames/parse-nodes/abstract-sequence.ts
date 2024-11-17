@@ -37,12 +37,8 @@ export abstract class AbstractSequence extends AbstractParseNode {
         }
       } else if (node.isValid()) { 
         this.status = ParseStatus.valid;
-        if (moreText) {
-          if (lastNode) {
-            this.complete = true;
-          } else {
-            continueToNextNode = true;
-          }
+        if (!lastNode) {
+          continueToNextNode = true;
         }
       } else if (node.isIncomplete()) {
         if (moreText) {
