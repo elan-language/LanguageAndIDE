@@ -14,30 +14,52 @@ export abstract class AbstractSequence extends AbstractParseNode {
   }
 
   parseText(text: string): void {
-    let i = 0; //Index
-    let remaining = text;
-    let worstStatus: ParseStatus = ParseStatus.default;
-    while (i < this.elements.length && worstStatus >= ParseStatus.valid) {
-      const node = this.elements[i];
-      node.parseText(remaining);
-      remaining = node.remainingText;
-      if (node.status === ParseStatus.empty) {
-        worstStatus =
-          worstStatus === ParseStatus.default ? ParseStatus.empty : ParseStatus.incomplete;
-      } else {
-        worstStatus = node.status < worstStatus ? node.status : worstStatus;
-      }
-      this.activeSubNode = node;
+    let i = -1; // Because incremented at start of loop
+    this.remainingText = text;
+    let continueToNextNode = true;
+    while (continueToNextNode) {
       i++;
-    }
-    this.status = worstStatus;
-    if (worstStatus > ParseStatus.invalid) {
-      this.remainingText = remaining;
-      this.matchedText = text.substring(0, text.length - this.remainingText.length);
+      const node = this.elements[i] as AbstractParseNode;
+      this.activeSubNode = node;
+      const moreText = this.remainingText.length > 0;
+      const lastNode = i === this.elements.length - 1;
+      node.parseText(this.remainingText);
+      this.remainingText = node.remainingText;
+      continueToNextNode = false; //default - unless set true again below
+      if (node.isComplete()) {
+        // Only possible if also valid
+        if (lastNode) {
+          this.status = ParseStatus.valid;
+          this.complete = true;
+        } else {
+          this.status = ParseStatus.incomplete;
+          continueToNextNode = true;
+        }
+      } else if (node.isValid()) {
+        this.status = ParseStatus.valid;
+        if (!moreText) {
+        } else if (lastNode) {
+          this.complete = true;
+        } else {
+          continueToNextNode = true;
+        }
+      } else if (node.isIncomplete()) {
+        if (moreText) {
+          this.status = ParseStatus.invalid;
+        } else {
+          this.status = ParseStatus.incomplete;
+        }
+      } else if (node.isInvalid()) {
+        this.status = ParseStatus.invalid;
+      }
+    } //Finally...
+    if (this.isInvalid()) {
+      this.remainingText = text; // Is this necessary?
     } else {
-      this.remainingText = text;
+      this.matchedText = text.substring(0, text.length - this.remainingText.length);
     }
   }
+
   renderAsHtml(): string {
     return this.elements.reduce((result, current) => result + current.renderAsHtml(), "");
   }
