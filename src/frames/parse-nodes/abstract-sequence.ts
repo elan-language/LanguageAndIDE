@@ -52,13 +52,12 @@ export abstract class AbstractSequence extends AbstractParseNode {
           continueLoop = !lastNode;
         }
       } else if (node.isIncomplete()) {
+        continueLoop = false;
         if (moreText) {
           this.status = ParseStatus.invalid;
-          continueLoop = false;
         } else {
           this.status = ParseStatus.incomplete;
           this.activeNodeForSymbolCompl = node;
-          continueLoop = !lastNode;
         }
       } else if (node.isEmpty()) {
         if (firstNode) {

@@ -606,6 +606,8 @@ suite("Parsing Nodes", () => {
       "",
       "fook",
     );
+    testNodeParse(new CSV(() => new KeywordNode("foo"), 0), ``, ParseStatus.valid, "", "");
+    testNodeParse(new CSV(() => new KeywordNode("foo"), 1), `fo`, ParseStatus.incomplete, "fo", "");
     testNodeParse(new CSV(() => new KeywordNode("foo"), 0), `fo`, ParseStatus.incomplete, "fo", "");
     testNodeParse(
       new CSV(() => new KeywordNode("foo"), 2),
