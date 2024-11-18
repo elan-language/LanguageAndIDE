@@ -6,7 +6,6 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -724,18 +723,22 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "a FooFooString");
   });
 
-  ignore_test("Fail_DeconstructIntoWrongType", async () => {
+  test("Fail_DeconstructIntoWrongType", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
 main
-  var x set to (3,"Apple")
-  var y set to 0
-  var z set to ""
-  set z, y to x
-  print y
-  print z
+  var x set to new Foo() with a to 100, b to "fred"
+  var a set to ""
+  var b set to 0
+  set a, b to x
+  print a
+  print b
 end main
-`;
+
+record Foo
+  property a as Int
+  property b as String
+end record`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -748,79 +751,45 @@ end main
     ]);
   });
 
-  ignore_test("Fail_DeconstructIntoMixed1", async () => {
+  test("Fail_DeconstructIntoMixed1", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
 main
-  var x set to (3,"Apple")
-  var z set to ""
-  set z, y to x
-  print y
-  print z
+  var x set to new Foo() with a to 100, b to "fred"
+  var a set to ""
+  set a, b to x
+  print a
+  print b
 end main
-`;
+
+record Foo
+  property a as Int
+  property b as String
+end record`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String", "y is not defined"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String", "b is not defined"]);
   });
 
-  ignore_test("Fail_DeconstructIntoMixed2", async () => {
+  test("Fail_DeconstructIntoMixed2", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
 main
-  var x set to (3,"Apple")
-  var z set to ""
-  var z, y set to x
-  print y
-  print z
+  var x set to new Foo() with a to 100, b to "fred"
+  var a set to ""
+  var a, b set to x
+  print a
+  print b
 end main
-`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "The identifier 'z' is already used for a variable and cannot be re-defined here.",
-    ]);
-  });
-
-  ignore_test("Fail_DeconstructIntoWrongTypeWithDiscard", async () => {
-    const code = `# FFFF Elan Beta 4 valid
-
-main
-  var x set to (3, "Apple")
-  var y set to ""
-  set y, _ to x
-  print y
-end main
-`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
-  });
-
-  ignore_test("Fail_DeconstructIntoExistingLetVariables", async () => {
-    const code = `# FFFF Elan Beta 4 valid
-
-main
-  var x set to (3, "Apple")
-  let y be 0
-  let z be ""
-  set y, z to x
-  print y
-  print z
-end main
-`;
+record Foo
+  property a as Int
+  property b as String
+end record`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -828,19 +797,56 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "May not re-assign the 'let' y",
-      "May not re-assign the 'let' z",
+      "Incompatible types Int to String",
+      "The identifier 'a' is already used for a variable and cannot be re-defined here.",
     ]);
   });
 
-  ignore_test("Fail_CannotDeconstruct", async () => {
+  test("Fail_DeconstructIntoExistingLetVariables", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
 main
-  var a set to 1
-  var x,y set to a
+  var x set to new Foo() with a to 100, b to "fred"
+  let a be 0
+  let b be ""
+  set a, b to x
+  print a
+  print b
 end main
-`;
+
+record Foo
+  property a as Int
+  property b as String
+end record`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "May not re-assign the 'let' a",
+      "May not re-assign the 'let' b",
+    ]);
+  });
+
+  test("Fail_CannotDeconstructNew", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+main
+  var x set to new Foo()
+  var a, b set to x
+  print a
+  print b
+end main
+
+class Foo
+  constructor()
+  end constructor
+
+  property a as Int
+  property b as String
+end class`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -850,14 +856,51 @@ end main
     assertDoesNotCompile(fileImpl, ["Expression must be able to be deconstructed"]);
   });
 
-  ignore_test("Fail_CannotDeconstructLet", async () => {
+  test("Fail_CannotDeconstructExisting", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
 main
-  var a set to 1
-  let x, y be a
+  var x set to new Foo()
+  var a set to 0
+  var b set to ""
+  set a, b to x
+  print a
+  print b
 end main
-`;
+
+class Foo
+  constructor()
+  end constructor
+
+  property a as Int
+  property b as String
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Expression must be able to be deconstructed"]);
+  });
+
+  test("Fail_CannotDeconstructLet", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+main
+  var x set to new Foo()
+  let a, b be x
+  print a
+  print b
+end main
+
+class Foo
+  constructor()
+  end constructor
+
+  property a as Int
+  property b as String
+end class`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));

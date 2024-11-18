@@ -2,6 +2,7 @@ import { AbstractFrame } from "../abstract-frame";
 import { CodeSource } from "../code-source";
 import {
   mustBeCompatibleNode,
+  mustBeDeconstructableType,
   mustBePropertyPrefixedOnAssignable,
   mustNotBeConstant,
   mustNotBeCounter,
@@ -11,6 +12,7 @@ import {
 } from "../compile-rules";
 import { AssignableField } from "../fields/assignableField";
 import { ExpressionField } from "../fields/expression-field";
+import { mapSymbolType } from "../helpers";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
@@ -54,10 +56,26 @@ export class SetStatement extends AbstractFrame implements Statement {
     return `${this.indent()}${setKeyword} ${this.assignable.renderAsSource()} ${toKeyword} ${this.expr.renderAsSource()}`;
   }
 
+  ids(transforms?: Transforms) {
+    return getIds(this.assignable.getOrTransformAstNode(transforms));
+  }
+
+  symbolType(transforms?: Transforms) {
+    const ids = this.ids(transforms);
+    const st = this.expr.symbolType(transforms);
+    return mapSymbolType(ids, st);
+  }
+
   compile(transforms: Transforms): string {
     this.compileErrors = [];
     const assignableAstNode = this.assignable.getOrTransformAstNode(transforms);
     const exprAstNode = this.expr.getOrTransformAstNode(transforms);
+
+    const ids = this.ids(transforms);
+
+    if (ids.length > 1) {
+      mustBeDeconstructableType(this.symbolType(transforms), this.compileErrors, this.htmlId);
+    }
 
     mustNotBePropertyOnFunctionMethod(
       assignableAstNode,
@@ -83,8 +101,6 @@ export class SetStatement extends AbstractFrame implements Statement {
       this.compileErrors,
       this.htmlId,
     );
-
-    const ids = getIds(assignableAstNode);
 
     for (const id of ids) {
       const symbol = this.getParent().resolveSymbol(id, transforms, this);
