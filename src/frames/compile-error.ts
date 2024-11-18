@@ -108,7 +108,7 @@ export class NotRangeableCompileError extends CompileError {
 
 export class NotNewableCompileError extends CompileError {
   constructor(type: string, location: string, unknown: boolean) {
-    super(Priority.illegalOperation, `Cannot new ${type}`, location, unknown);
+    super(Priority.typeError, `Cannot new ${type}`, location, unknown);
   }
 }
 

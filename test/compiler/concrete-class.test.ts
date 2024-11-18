@@ -1000,4 +1000,34 @@ end main`;
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["<of Type(s)> expected: 0 got: 1"]);
   });
+
+  test("Fail_CannotNewUnknownType", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+main
+  var x set to new FooBar()
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["FooBar is not defined", "Cannot new FooBar"]);
+  });
+
+  test("Fail_CannotNewNonClassType", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+main
+  var x set to new Int()
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Cannot new Int"]);
+  });
 });
