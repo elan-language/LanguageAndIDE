@@ -132,7 +132,7 @@ export class CallStatement extends AbstractFrame implements Statement {
 
     const procSymbol = currentScope.resolveSymbol(id, transforms, this);
 
-    mustBeKnownSymbol(procSymbol, this.compileErrors, this.htmlId);
+    mustBeKnownSymbol(procSymbol, currentScope, this.compileErrors, this.htmlId);
     mustBeProcedure(procSymbol.symbolType(transforms), this.compileErrors, this.htmlId);
 
     if (!isMemberOnFieldsClass(procSymbol, transforms, this)) {

@@ -83,7 +83,7 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
       mustBePublicMember(symbol, this.compileErrors, this.fieldId);
     }
 
-    mustBeKnownSymbol(symbol, this.compileErrors, this.fieldId);
+    mustBeKnownSymbol(symbol, undefined, this.compileErrors, this.fieldId);
 
     const prefix = scopePrefix(symbol, this.compileErrors, this.scope, this.fieldId);
     const postfix = this.index

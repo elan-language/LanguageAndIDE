@@ -137,11 +137,13 @@ export function mustNotHaveConditionalAfterUnconditionalElse(
 
 export function mustBeKnownSymbol(
   symbol: ElanSymbol,
+  scope: Scope | undefined,
   compileErrors: CompileError[],
   location: string,
 ) {
   if (symbol instanceof UnknownSymbol) {
-    compileErrors.push(new UndefinedSymbolCompileError(symbol.symbolId, location));
+    const type = isClass(scope) ? scope.symbolId : "";
+    compileErrors.push(new UndefinedSymbolCompileError(symbol.symbolId, type, location));
   }
 }
 
@@ -152,7 +154,7 @@ export function mustBeKnownSymbolType(
   location: string,
 ) {
   if (symbolType instanceof UnknownType) {
-    compileErrors.push(new UndefinedSymbolCompileError(originalName, location));
+    compileErrors.push(new UndefinedSymbolCompileError(originalName, "", location));
   }
 }
 
@@ -306,7 +308,7 @@ export function mustBePropertyAndPublic(
     compileErrors.push(new PrivateMemberCompileError(symbol.name.text, location));
   }
   if (symbol.symbolScope !== SymbolScope.member) {
-    compileErrors.push(new UndefinedSymbolCompileError(symbol.symbolId, location));
+    compileErrors.push(new UndefinedSymbolCompileError(symbol.symbolId, "", location));
   }
 }
 
