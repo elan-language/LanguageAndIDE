@@ -1675,62 +1675,100 @@ suite("Parsing Nodes", () => {
   });
   test("RevisedParseMethodForAbstractSequence#857", () => {
     testParseCompletionAndActiveNode(
-      new test_seq(),
-      ``,
-      ParseStatus.empty,
-      PunctuationNode.name,
+      new test_seq1(),
+      `foo 45`,
+      ParseStatus.valid,
+      LitInt.name,
       false,
     );
     testParseCompletionAndActiveNode(
-      new test_seq(),
-      `a`,
+      new test_seq1(),
+      `foo `,
       ParseStatus.incomplete,
-      PunctuationNode.name,
+      LitInt.name,
       false,
     );
     testParseCompletionAndActiveNode(
-      new test_seq(),
-      `ab`,
-      ParseStatus.valid,
-      PunctuationNode.name,
-      true,
-    );
-    testParseCompletionAndActiveNode(
-      new test_seq2(),
-      `abc`,
-      ParseStatus.valid,
-      PunctuationNode.name,
-      true,
-    );
-    testParseCompletionAndActiveNode(
-      new test_seq2(),
-      `ac`,
-      ParseStatus.valid,
-      PunctuationNode.name,
-      true,
-    );
-    testParseCompletionAndActiveNode(
-      new test_seq2(),
-      `ab`,
+      new test_seq1(),
+      `foo`,
       ParseStatus.incomplete,
-      PunctuationNode.name,
+      SpaceNode.name,
+      false,
+    );
+    testParseCompletionAndActiveNode(
+      new test_seq2(),
+      `3.1 end`,
+      ParseStatus.valid,
+      KeywordNode.name,
+      true,
+    );
+    testParseCompletionAndActiveNode(
+      new test_seq2(),
+      `3.1 en`,
+      ParseStatus.incomplete,
+      KeywordNode.name,
+      false,
+    );
+    testParseCompletionAndActiveNode(
+      new LitFloat(),
+      `3.`,
+      ParseStatus.incomplete,
+      RegExMatchNode.name,
+      false,
+    );
+    testParseCompletionAndActiveNode(
+      new LitFloat(),
+      `3.1`,
+      ParseStatus.valid,
+      OptionalNode.name,
+      false,
+    );
+    testParseCompletionAndActiveNode(
+      new test_seq2(),
+      `3.1`,
+      ParseStatus.incomplete,
+      OptionalNode.name, //for exponent. Should technically still be the RegexMatchNode for fractional part
+      // since it could be extended. But unimportand as there is no symbol completion for any literal
+      false,
+    );
+    testParseCompletionAndActiveNode(
+      new CSV(() => new LitInt(), 2),
+      `12,34`,
+      ParseStatus.valid,
+      LitInt.name,
       false,
     );
   });
+  testParseCompletionAndActiveNode(
+    new CSV(() => new LitInt(), 1),
+    `12`,
+    ParseStatus.valid,
+    Multiple.name,
+    false,
+  );
+  testParseCompletionAndActiveNode(
+    new CSV(() => new LitInt(), 1),
+    `12,`,
+    ParseStatus.incomplete,
+    SpaceNode.name,
+    false,
+  );
 });
 
-class test_seq extends AbstractSequence {
+class test_seq1 extends AbstractSequence {
   parseText(text: string): void {
-    this.addElement(new PunctuationNode("a"));
-    this.addElement(new PunctuationNode("b"));
+    this.addElement(new KeywordNode("foo"));
+    this.addElement(new SpaceNode(Space.required));
+    this.addElement(new LitInt());
     super.parseText(text);
   }
 }
+
 class test_seq2 extends AbstractSequence {
   parseText(text: string): void {
-    this.addElement(new PunctuationNode("a"));
-    this.addElement(new OptionalNode(new PunctuationNode("b")));
-    this.addElement(new PunctuationNode("c"));
+    this.addElement(new LitFloat());
+    this.addElement(new SpaceNode(Space.required));
+    this.addElement(new KeywordNode("end"));
     super.parseText(text);
   }
 }

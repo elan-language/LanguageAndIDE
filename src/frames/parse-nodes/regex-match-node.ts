@@ -15,9 +15,6 @@ export class RegExMatchNode extends AbstractParseNode {
     if (text.length > 0) {
       [this.status, this.matchedText, this.remainingText] = matchRegEx(text, this.regx);
     }
-    if (this.status === ParseStatus.valid && this.remainingText.length > 0) {
-      this._done = true;
-    }
   }
 
   renderAsSource(): string {

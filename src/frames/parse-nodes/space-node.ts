@@ -16,7 +16,7 @@ export class SpaceNode extends AbstractParseNode {
       if (this.type === Space.required) {
         this.status = ParseStatus.empty;
       } else {
-        this.status = ParseStatus.valid;      
+        this.status = ParseStatus.valid;
       }
     } else {
       this.remainingText = text;

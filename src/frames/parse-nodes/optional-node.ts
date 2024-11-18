@@ -52,6 +52,6 @@ export class OptionalNode extends AbstractParseNode {
   }
 
   getActiveNode(): ParseNode {
-    return this.matchedNode ?? this;
+    return this.matchedNode ? this.matchedNode.getActiveNode() : this;
   }
 }

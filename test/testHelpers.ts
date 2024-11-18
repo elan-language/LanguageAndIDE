@@ -370,7 +370,7 @@ export function testParseCompletionAndActiveNode(
   assert.equal(node.status, status);
   const active = node.getActiveNode();
   const cls = active.constructor.name;
-  assert.equal(activeNodeType, cls);
+  assert.equal(cls, activeNodeType);
   assert.equal(node.isDone(), done);
 }
 

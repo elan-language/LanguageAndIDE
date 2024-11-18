@@ -31,11 +31,11 @@ export class Multiple extends AbstractParseNode {
         if (node.status === ParseStatus.valid) {
           this.elements.push(node);
           toParse = node.remainingText;
-          this.activeNodeForSymbolCompl = node;
+          this.activeNodeForSymbolCompl = node.getActiveNode();
         } else if (node.status === ParseStatus.incomplete && node.remainingText.trim() === "") {
           this.elements.push(node);
           toParse = node.remainingText;
-          this.activeNodeForSymbolCompl = node;
+          this.activeNodeForSymbolCompl = node.getActiveNode();
         } else {
           cont = false;
         }
@@ -79,6 +79,7 @@ export class Multiple extends AbstractParseNode {
   }
 
   getActiveNode(): ParseNode {
-    return this;
+    const n = this.elements.length;
+    return n > 0 ? this.elements[n - 1].getActiveNode() : this;
   }
 }

@@ -22,32 +22,33 @@ export abstract class AbstractSequence extends AbstractParseNode {
       const node = this.elements[i] as AbstractParseNode;
       const firstNode = i === 0;
       const lastNode = i === this.elements.length - 1;
-      const nextNode = lastNode? undefined : this.elements[i+1];
+      const nextNode = lastNode ? undefined : this.elements[i + 1];
       node.parseText(this.remainingText);
       this.remainingText = node.remainingText;
       const moreText = this.remainingText.length > 0;
-      if (node.isDone()) {  
+      if (node.isDone()) {
         if (lastNode) {
           this.status = ParseStatus.valid;
           this._done = true;
           continueLoop = false;
         } else {
           this.status = ParseStatus.incomplete;
-          this.activeNodeForSymbolCompl = nextNode!;
+          this.activeNodeForSymbolCompl = nextNode!.getActiveNode();
           continueLoop = true;
         }
-      } else if (node.isValid()) { 
+      } else if (node.isValid()) {
         if (moreText) {
           if (lastNode) {
             this.status = ParseStatus.valid;
             this._done = true;
             continueLoop = false;
           } else {
-            this.activeNodeForSymbolCompl = nextNode!;
+            this.activeNodeForSymbolCompl = nextNode!.getActiveNode();
             continueLoop = true;
           }
-        } else { //No more text
-          this.activeNodeForSymbolCompl = node;
+        } else {
+          //No more text
+          this.activeNodeForSymbolCompl = node.getActiveNode();
           this.status = ParseStatus.valid;
           continueLoop = !lastNode;
         }
@@ -57,12 +58,12 @@ export abstract class AbstractSequence extends AbstractParseNode {
           this.status = ParseStatus.invalid;
         } else {
           this.status = ParseStatus.incomplete;
-          this.activeNodeForSymbolCompl = node;
+          this.activeNodeForSymbolCompl = node.getActiveNode();
         }
       } else if (node.isEmpty()) {
         if (firstNode) {
           this.status = ParseStatus.empty;
-          this.activeNodeForSymbolCompl = node;
+          this.activeNodeForSymbolCompl = node.getActiveNode();
         } else {
           this.status = ParseStatus.incomplete;
           // activeNodeForSymbolCompl unchanged
@@ -74,7 +75,7 @@ export abstract class AbstractSequence extends AbstractParseNode {
       }
     } //Finally...
     if (this.isInvalid()) {
-      this.remainingText = text; 
+      this.remainingText = text;
     } else {
       this.matchedText = text.substring(0, text.length - this.remainingText.length);
     }
