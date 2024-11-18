@@ -26,11 +26,11 @@ export class LiteralEnumAsn extends AbstractAstNode implements AstNode {
 
     const symbol = this.scope.resolveSymbol(this.type.name, transforms(), this.scope);
 
-    mustBeKnownSymbol(symbol, this.compileErrors, this.fieldId);
+    mustBeKnownSymbol(symbol, undefined, this.compileErrors, this.fieldId);
 
     if (isScope(symbol)) {
       const value = symbol.resolveSymbol(this.value, transforms(), this.scope);
-      mustBeKnownSymbol(value, this.compileErrors, this.fieldId);
+      mustBeKnownSymbol(value, undefined, this.compileErrors, this.fieldId);
     }
 
     return `${this.type.name}.${this.value}`;

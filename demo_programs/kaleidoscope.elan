@@ -1,0 +1,15 @@
+# a0db89a4e8ef23c8fb995eb0437a7fbcb2309463e3108407aef91ab9d9359624 Elan Beta 4 valid
+
+main
+  var gr set to new BlockGraphics()
+  while true
+    let x be randomInt(0, 19)
+    let y be randomInt(0, 14)
+    let colour be randomInt(0, 2^24 - 1)
+    set gr to gr.withBlock(20 + x, 15 - y, colour)
+    set gr to gr.withBlock(20 + x, 15 + y, colour)
+    set gr to gr.withBlock(20 - x, 15 - y, colour)
+    set gr to gr.withBlock(20 - x, 15 + y, colour)
+    call gr.display()
+  end while
+end main

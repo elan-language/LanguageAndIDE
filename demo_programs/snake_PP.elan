@@ -1,0 +1,180 @@
+# 46ca1e99955f7d58863fbcce3db2ec907d3ec4913fe4aa7d61bda2f72461a897 Elan Beta 4 valid
+
+# Use the W,A,S,D keys to change Snake direction
+main
+  var gr set to new BlockGraphics()
+  var head set to [20, 15]
+  var tail set to head
+  var body set to [head]
+  var currentDir set to "right"
+  var gameOn set to true
+  var apple set to [0, 0]
+  call setAppleToRandomPosition(apple, body)
+  while gameOn
+    set gr to updateGraphics(gr, head, tail, body, apple)
+    call gr.display()
+    set currentDir to directionByKey(currentDir, getKey())
+    set tail to body[0]
+    call body.append(head)
+    set head to getAdjacentSquare(head, currentDir)
+    set gameOn to not hasHitEdge(head) and not overlaps(body, head)
+    call eatAppleIfPoss(head, body, apple)
+    call pause(150)
+  end while
+  print "Game Over! Score: {body.length() - 1}"
+end main
+
+procedure setAppleToRandomPosition(out apple as [Int], body as [[Int]])
+  repeat
+    call apple.putAt(0, randomInt(0, 39))
+    call apple.putAt(1, randomInt(0, 29))
+  end repeat when not overlaps(body, apple)
+end procedure
+
+procedure eatAppleIfPoss(head as [Int], out body as [[Int]], apple as [Int])
+  if head is apple
+    then
+      call setAppleToRandomPosition(apple, body)
+    else
+      call body.removeAt(0)
+  end if
+end procedure
+
+function updateGraphics(gr as BlockGraphics, head as [Int], tail as [Int], body as [[Int]], apple as [Int]) return BlockGraphics
+  var gr2 set to gr.withBlock(head[0], head[1], green)
+  if body[0] is tail
+    then
+      set gr2 to gr2.withBlock(tail[0], tail[1], green)
+    else
+      set gr2 to gr2.withBlock(tail[0], tail[1], white)
+  end if
+  set gr2 to gr2.withBlock(apple[0], apple[1], red)
+  return gr2
+end function
+
+function hasHitEdge(head as [Int]) return Boolean
+  return (head[0] < 0) or (head[1] < 0) or (head[0] > 39) or (head[1] > 29)
+end function
+
+function getAdjacentSquare(sq as [Int], dir as String) return [Int]
+  var newX set to sq[0]
+  var newY set to sq[1]
+  switch dir
+    case "left"
+      set newX to newX - 1
+    case "right"
+      set newX to newX + 1
+    case "up"
+      set newY to newY - 1
+    case "down"
+      set newY to newY + 1
+  end switch
+  return [newX, newY]
+end function
+
+function overlaps(body as [[Int]], sq as [Int]) return Boolean
+  var result set to false
+  each seg in body
+    if (seg is sq)
+      then
+        set result to true
+    end if
+  end each
+  return result
+end function
+
+function directionByKey(current as String, key as String) return String
+  var dir set to current
+  switch key
+    case "w"
+      set dir to "up"
+    case "s"
+      set dir to "down"
+    case "a"
+      set dir to "left"
+    case "d"
+      set dir to "right"
+  end switch
+  return dir
+end function
+
+# 73 frames (excluding tests)
+test updateGraphicsOneSegmentBody
+  var gr set to new BlockGraphics()
+  let head be [20, 15]
+  let tail be [20, 15]
+  let body be [head]
+  let apple be [6, 7]
+  set gr to updateGraphics(gr, head, tail, body, apple)
+  # First check the default (by looking at top-left block)
+  assert gr.getBackground(0, 0) is white
+  # test apple
+  assert gr.getBackground(6, 7) is red
+  # test snake is just one block by checking all around
+  assert gr.getBackground(20, 15) is green
+  assert gr.getBackground(19, 15) is white
+  assert gr.getBackground(21, 15) is white
+  assert gr.getBackground(20, 14) is white
+  assert gr.getBackground(20, 16) is white
+end test
+
+test updateGraphicsLongerBody3SegmentBody
+  var gr set to new BlockGraphics()
+  # draw existing 2-seg snake
+  set gr to gr.withBlock(30, 20, green).withBlock(30, 21, green).withBlock(30, 22, green)
+  # define snake's new position
+  let head be [30, 23]
+  let tail be [30, 20]
+  let body be [[30, 21], [30, 22], head]
+  let apple be [0, 0]
+  set gr to updateGraphics(gr, head, tail, body, apple)
+  # test snake is just one block by checking all around
+  assert gr.getBackground(30, 20) is white
+  assert gr.getBackground(30, 21) is green
+  assert gr.getBackground(30, 22) is green
+  assert gr.getBackground(30, 23) is green
+end test
+
+test hasHitEdge
+  assert hasHitEdge([0, 0]) is false
+  assert hasHitEdge([0, 29]) is false
+  assert hasHitEdge([39, 0]) is false
+  assert hasHitEdge([29, 29]) is false
+  assert hasHitEdge([-1, 5]) is true
+  assert hasHitEdge([5, 30]) is true
+  assert hasHitEdge([40, 5]) is true
+  assert hasHitEdge([5, -1]) is true
+end test
+
+test getAdjacentSquare
+  let sq be [20, 15]
+  assert getAdjacentSquare(sq, "up") is [20, 14]
+  assert getAdjacentSquare(sq, "down") is [20, 16]
+  assert getAdjacentSquare(sq, "left") is [19, 15]
+  assert getAdjacentSquare(sq, "right") is [21, 15]
+  # unexpected input:
+  assert getAdjacentSquare(sq, "x") is sq
+  # boundary
+  assert getAdjacentSquare([0, 15], "left") is [-1, 15]
+end test
+
+test directionByKey
+  let current be "up"
+  assert directionByKey(current, "") is "up"
+  assert directionByKey(current, "x") is "up"
+  assert directionByKey(current, "w") is "up"
+  assert directionByKey(current, "s") is "down"
+  assert directionByKey(current, "a") is "left"
+  assert directionByKey(current, "d") is "right"
+  assert directionByKey(current, "D") is "up"
+end test
+
+test overlaps
+  let body be [[1, 2], [3, 4]]
+  assert overlaps(body, [1, 2]) is true
+  assert overlaps(body, [3, 4]) is true
+  assert overlaps(body, [1]) is false
+  assert overlaps(body, [2, 1]) is false
+end test
+
+# Test coverage: 59% (43/73 frames)

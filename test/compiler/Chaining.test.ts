@@ -661,6 +661,6 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["fd is not defined"]);
+    assertDoesNotCompile(fileImpl, ["fd is not defined for type 'Bar'"]);
   });
 });

@@ -66,8 +66,9 @@ export class SyntaxCompileError extends CompileError {
 }
 
 export class UndefinedSymbolCompileError extends CompileError {
-  constructor(id: string, location: string) {
-    super(Priority.unknownIdentifier, `${id} is not defined`, location, true);
+  constructor(id: string, type: string, location: string) {
+    const postfix = type ? ` for type '${type}'` : "";
+    super(Priority.unknownIdentifier, `${id} is not defined${postfix}`, location, true);
   }
 }
 
@@ -107,7 +108,7 @@ export class NotRangeableCompileError extends CompileError {
 
 export class NotNewableCompileError extends CompileError {
   constructor(type: string, location: string, unknown: boolean) {
-    super(Priority.illegalOperation, `Cannot new ${type}`, location, unknown);
+    super(Priority.typeError, `Cannot new ${type}`, location, unknown);
   }
 }
 

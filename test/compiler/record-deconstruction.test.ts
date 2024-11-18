@@ -6,7 +6,6 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -218,7 +217,7 @@ end record`;
     assertDoesNotCompile(fileImpl, ["Cannot discard in record deconstruction"]);
   });
 
-  ignore_test("Pass_DeconstructIntoNewVariablesTypeCheck", async () => {
+  test("Pass_DeconstructIntoNewVariablesTypeCheck", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
 main
@@ -239,115 +238,22 @@ end record`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "3Apple");
-  });
-
-  ignore_test("Pass_DeconstructTupleWithListIntoNew", async () => {
-    const code = `# FFFF Elan Beta 4 valid
-
-main
-  var a set to [1,2]
-  var x set to (3, a)
-  var y, z set to x
-  print y
-  print typeof y
-  print z
-  print typeof z
-end main
-`;
-
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-async function main() {
-  var a = system.literalArray([1, 2]);
-  var x = system.tuple([3, a]);
-  var [y, z] = x;
-  system.printLine(_stdlib.asString(y));
-  system.printLine(_stdlib.asString("Int"));
-  system.printLine(_stdlib.asString(z));
-  system.printLine(_stdlib.asString("[Int]"));
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "3Int[1, 2][Int]");
-  });
-
-  ignore_test("Pass_DeconstructTupleWithListIntoNewLet", async () => {
-    const code = `# FFFF Elan Beta 4 valid
-
-main
-  var a set to [1,2]
-  var x set to (3, a)
-  let y, z be x
-  print y
-  print typeof y
-  print z
-  print typeof z
-end main
-`;
-
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-async function main() {
-  var a = system.literalArray([1, 2]);
-  var x = system.tuple([3, a]);
-  const [y, z] = x;
-  system.printLine(_stdlib.asString(y));
-  system.printLine(_stdlib.asString("Int"));
-  system.printLine(_stdlib.asString(z));
-  system.printLine(_stdlib.asString("[Int]"));
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "3Int[1, 2][Int]");
-  });
-
-  ignore_test("Pass_DeconstructTupleWithListIntoExisting", async () => {
-    const code = `# FFFF Elan Beta 4 valid
-
-main
-  var a set to [1,2]
-  var x set to (3, a)
-  var y set to 0
-  var z set to empty [Int]
-  set y, z to x
-  print y
-  print typeof y
-  print z
-  print typeof z
-end main
-`;
-
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-async function main() {
-  var a = system.literalArray([1, 2]);
-  var x = system.tuple([3, a]);
+  var x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = 100; _a.b = "fred"; return _a;})();
+  var {a, b} = x;
   var y = 0;
-  var z = system.emptyArray();
-  [y, z] = x;
+  var z = "";
+  y = a;
+  z = b;
   system.printLine(_stdlib.asString(y));
-  system.printLine(_stdlib.asString("Int"));
   system.printLine(_stdlib.asString(z));
-  system.printLine(_stdlib.asString("[Int]"));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["a", 0], ["b", ""]]);};
+  a = 0;
+
+  b = "";
+
 }
 return [main, _tests];}`;
 
@@ -357,130 +263,482 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "3Int[1, 2][Int]");
+    await assertObjectCodeExecutes(fileImpl, "100fred");
   });
 
-  ignore_test("Pass_DeconstructTupleWithTupleIntoNew", async () => {
+  test("Pass_DeconstructRecordWithListIntoNew", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
 main
-  var a set to (1,2)
-  var x set to (3, a)
-  var y, z set to x
-  print y
-  print typeof y
-  print z
-  print typeof z
-end main
-`;
-
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-async function main() {
-  var a = system.tuple([1, 2]);
-  var x = system.tuple([3, a]);
-  var [y, z] = x;
-  system.printLine(_stdlib.asString(y));
-  system.printLine(_stdlib.asString("Int"));
-  system.printLine(_stdlib.asString(z));
-  system.printLine(_stdlib.asString("(Int, Int)"));
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "3Int(1, 2)(Int, Int)");
-  });
-
-  ignore_test("Pass_DeconstructTupleWithTupleIntoNewLet", async () => {
-    const code = `# FFFF Elan Beta 4 valid
-
-main
-  var a set to (1,2)
-  var x set to (3, a)
-  let y, z be x
-  print y
-  print typeof y
-  print z
-  print typeof z
-end main
-`;
-
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-async function main() {
-  var a = system.tuple([1, 2]);
-  var x = system.tuple([3, a]);
-  const [y, z] = x;
-  system.printLine(_stdlib.asString(y));
-  system.printLine(_stdlib.asString("Int"));
-  system.printLine(_stdlib.asString(z));
-  system.printLine(_stdlib.asString("(Int, Int)"));
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "3Int(1, 2)(Int, Int)");
-  });
-
-  ignore_test("Pass_DeconstructTupleWithTupleIntoExisting", async () => {
-    const code = `# FFFF Elan Beta 4 valid
-
-main
-  var a set to (1, 2)
-  var x set to (3, a)
-  var y set to 0
-  var z set to (0, 0)
-  set y, z to x
-  print y
-  print typeof y
-  print z
-  print typeof z
-end main
-`;
-
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-async function main() {
-  var a = system.tuple([1, 2]);
-  var x = system.tuple([3, a]);
-  var y = 0;
-  var z = system.tuple([0, 0]);
-  [y, z] = x;
-  system.printLine(_stdlib.asString(y));
-  system.printLine(_stdlib.asString("Int"));
-  system.printLine(_stdlib.asString(z));
-  system.printLine(_stdlib.asString("(Int, Int)"));
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "3Int(1, 2)(Int, Int)");
-  });
-
-  ignore_test("Fail_DeconstructIntoWrongType", async () => {
-    const code = `# FFFF Elan Beta 4 valid
-
-main
-  var x set to (3,"Apple")
-  var y set to 0
+  var x set to new Foo() with a to {1,2}, b to "fred"
+  var a, b set to x
+  var y set to empty {Int}
   var z set to ""
-  set z, y to x
+  set y to a
+  set z to b
   print y
   print z
 end main
-`;
+
+record Foo
+  property a as {Int}
+  property b as String
+end record`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = system.list([1, 2]); _a.b = "fred"; return _a;})();
+  var {a, b} = x;
+  var y = system.emptyImmutableList();
+  var z = "";
+  y = a;
+  z = b;
+  system.printLine(_stdlib.asString(y));
+  system.printLine(_stdlib.asString(z));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["a", system.emptyImmutableList()], ["b", ""]]);};
+  a = system.emptyImmutableList();
+
+  b = "";
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "{1, 2}fred");
+  });
+
+  test("Pass_DeconstructLetRecordWithListIntoNewLet", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+main
+  let x be new Foo() with a to {1,2}, b to "fred"
+  let a, b be x
+  print a
+  print typeof a
+  print b
+  print typeof b
+end main
+
+record Foo
+  property a as {Int}
+  property b as String
+end record`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  const x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = system.list([1, 2]); _a.b = "fred"; return _a;})();
+  const {a, b} = x;
+  system.printLine(_stdlib.asString(a));
+  system.printLine(_stdlib.asString("{Int}"));
+  system.printLine(_stdlib.asString(b));
+  system.printLine(_stdlib.asString("String"));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["a", system.emptyImmutableList()], ["b", ""]]);};
+  a = system.emptyImmutableList();
+
+  b = "";
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "{1, 2}{Int}fredString");
+  });
+
+  test("Pass_DeconstructVarRecordWithListIntoNewLet", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+main
+  var x set to new Foo() with a to {1,2}, b to "fred"
+  let a, b be x
+  print a
+  print typeof a
+  print b
+  print typeof b
+end main
+
+record Foo
+  property a as {Int}
+  property b as String
+end record`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = system.list([1, 2]); _a.b = "fred"; return _a;})();
+  const {a, b} = x;
+  system.printLine(_stdlib.asString(a));
+  system.printLine(_stdlib.asString("{Int}"));
+  system.printLine(_stdlib.asString(b));
+  system.printLine(_stdlib.asString("String"));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["a", system.emptyImmutableList()], ["b", ""]]);};
+  a = system.emptyImmutableList();
+
+  b = "";
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "{1, 2}{Int}fredString");
+  });
+
+  test("Pass_DeconstructVarRecordWithRecordIntoNewVar", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+main
+  var x set to new Foo() with a to {1,2}, b to "fred"
+  var y set to new Bar() with c to x
+  var c, d set to y
+  print c
+  print typeof c
+  print d
+  print typeof d
+end main
+
+record Foo
+  property a as {Int}
+  property b as String
+end record
+
+record Bar
+  property c as Foo
+  property d as String
+end record`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = system.list([1, 2]); _a.b = "fred"; return _a;})();
+  var y = (() => {const _a = {...system.initialise(new Bar())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Bar()))); _a.c = x; return _a;})();
+  var {c, d} = y;
+  system.printLine(_stdlib.asString(c));
+  system.printLine(_stdlib.asString("Foo"));
+  system.printLine(_stdlib.asString(d));
+  system.printLine(_stdlib.asString("String"));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["a", system.emptyImmutableList()], ["b", ""]]);};
+  a = system.emptyImmutableList();
+
+  b = "";
+
+}
+
+class Bar {
+  static emptyInstance() { return system.emptyClass(Bar, [["d", ""]]);};
+  _c;
+  get c() {
+    return this._c ??= Foo.emptyInstance();
+  }
+  set c(c) {
+    this._c = c;
+  }
+
+  d = "";
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "a FooFooString");
+  });
+
+  test("Pass_DeconstructLetRecordWithRecordIntoNewVar", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+main
+  let x be new Foo() with a to {1,2}, b to "fred"
+  let y be new Bar() with c to x
+  var c, d set to y
+  print c
+  print typeof c
+  print d
+  print typeof d
+end main
+
+record Foo
+  property a as {Int}
+  property b as String
+end record
+
+record Bar
+  property c as Foo
+  property d as String
+end record`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  const x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = system.list([1, 2]); _a.b = "fred"; return _a;})();
+  const y = (() => {const _a = {...system.initialise(new Bar())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Bar()))); _a.c = x; return _a;})();
+  var {c, d} = y;
+  system.printLine(_stdlib.asString(c));
+  system.printLine(_stdlib.asString("Foo"));
+  system.printLine(_stdlib.asString(d));
+  system.printLine(_stdlib.asString("String"));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["a", system.emptyImmutableList()], ["b", ""]]);};
+  a = system.emptyImmutableList();
+
+  b = "";
+
+}
+
+class Bar {
+  static emptyInstance() { return system.emptyClass(Bar, [["d", ""]]);};
+  _c;
+  get c() {
+    return this._c ??= Foo.emptyInstance();
+  }
+  set c(c) {
+    this._c = c;
+  }
+
+  d = "";
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "a FooFooString");
+  });
+
+  //
+  test("Pass_DeconstructRecordWithListIntoExisting", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+main
+  var x set to new Foo() with a to {1,2}, b to "fred"
+  var a set to empty {Int}
+  var b set to ""
+  set a, b to x
+  print a
+  print b
+end main
+
+record Foo
+  property a as {Int}
+  property b as String
+end record`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = system.list([1, 2]); _a.b = "fred"; return _a;})();
+  var a = system.emptyImmutableList();
+  var b = "";
+  ({a, b} = x);
+  system.printLine(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(b));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["a", system.emptyImmutableList()], ["b", ""]]);};
+  a = system.emptyImmutableList();
+
+  b = "";
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "{1, 2}fred");
+  });
+
+  test("Pass_DeconstructVarRecordWithRecordIntoExistingVar", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+main
+  var x set to new Foo() with a to {1,2}, b to "fred"
+  var y set to new Bar() with c to x
+  var c set to empty Foo
+  var d set to ""
+  set c, d to y
+  print c
+  print typeof c
+  print d
+  print typeof d
+end main
+
+record Foo
+  property a as {Int}
+  property b as String
+end record
+
+record Bar
+  property c as Foo
+  property d as String
+end record`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = system.list([1, 2]); _a.b = "fred"; return _a;})();
+  var y = (() => {const _a = {...system.initialise(new Bar())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Bar()))); _a.c = x; return _a;})();
+  var c = Foo.emptyInstance();
+  var d = "";
+  ({c, d} = y);
+  system.printLine(_stdlib.asString(c));
+  system.printLine(_stdlib.asString("Foo"));
+  system.printLine(_stdlib.asString(d));
+  system.printLine(_stdlib.asString("String"));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["a", system.emptyImmutableList()], ["b", ""]]);};
+  a = system.emptyImmutableList();
+
+  b = "";
+
+}
+
+class Bar {
+  static emptyInstance() { return system.emptyClass(Bar, [["d", ""]]);};
+  _c;
+  get c() {
+    return this._c ??= Foo.emptyInstance();
+  }
+  set c(c) {
+    this._c = c;
+  }
+
+  d = "";
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "a FooFooString");
+  });
+
+  test("Pass_DeconstructLetRecordWithRecordIntoExistingVar", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+main
+  let x be new Foo() with a to {1,2}, b to "fred"
+  let y be new Bar() with c to x
+  var c set to empty Foo
+  var d set to ""
+  set c, d to y
+  print c
+  print typeof c
+  print d
+  print typeof d
+end main
+
+record Foo
+  property a as {Int}
+  property b as String
+end record
+
+record Bar
+  property c as Foo
+  property d as String
+end record`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  const x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = system.list([1, 2]); _a.b = "fred"; return _a;})();
+  const y = (() => {const _a = {...system.initialise(new Bar())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Bar()))); _a.c = x; return _a;})();
+  var c = Foo.emptyInstance();
+  var d = "";
+  ({c, d} = y);
+  system.printLine(_stdlib.asString(c));
+  system.printLine(_stdlib.asString("Foo"));
+  system.printLine(_stdlib.asString(d));
+  system.printLine(_stdlib.asString("String"));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["a", system.emptyImmutableList()], ["b", ""]]);};
+  a = system.emptyImmutableList();
+
+  b = "";
+
+}
+
+class Bar {
+  static emptyInstance() { return system.emptyClass(Bar, [["d", ""]]);};
+  _c;
+  get c() {
+    return this._c ??= Foo.emptyInstance();
+  }
+  set c(c) {
+    this._c = c;
+  }
+
+  d = "";
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "a FooFooString");
+  });
+
+  test("Fail_DeconstructIntoWrongType", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+main
+  var x set to new Foo() with a to 100, b to "fred"
+  var a set to ""
+  var b set to 0
+  set a, b to x
+  print a
+  print b
+end main
+
+record Foo
+  property a as Int
+  property b as String
+end record`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -493,79 +751,45 @@ end main
     ]);
   });
 
-  ignore_test("Fail_DeconstructIntoMixed1", async () => {
+  test("Fail_DeconstructIntoMixed1", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
 main
-  var x set to (3,"Apple")
-  var z set to ""
-  set z, y to x
-  print y
-  print z
+  var x set to new Foo() with a to 100, b to "fred"
+  var a set to ""
+  set a, b to x
+  print a
+  print b
 end main
-`;
+
+record Foo
+  property a as Int
+  property b as String
+end record`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String", "y is not defined"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String", "b is not defined"]);
   });
 
-  ignore_test("Fail_DeconstructIntoMixed2", async () => {
+  test("Fail_DeconstructIntoMixed2", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
 main
-  var x set to (3,"Apple")
-  var z set to ""
-  var z, y set to x
-  print y
-  print z
+  var x set to new Foo() with a to 100, b to "fred"
+  var a set to ""
+  var a, b set to x
+  print a
+  print b
 end main
-`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "The identifier 'z' is already used for a variable and cannot be re-defined here.",
-    ]);
-  });
-
-  ignore_test("Fail_DeconstructIntoWrongTypeWithDiscard", async () => {
-    const code = `# FFFF Elan Beta 4 valid
-
-main
-  var x set to (3, "Apple")
-  var y set to ""
-  set y, _ to x
-  print y
-end main
-`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
-  });
-
-  ignore_test("Fail_DeconstructIntoExistingLetVariables", async () => {
-    const code = `# FFFF Elan Beta 4 valid
-
-main
-  var x set to (3, "Apple")
-  let y be 0
-  let z be ""
-  set y, z to x
-  print y
-  print z
-end main
-`;
+record Foo
+  property a as Int
+  property b as String
+end record`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -573,19 +797,56 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "May not re-assign the 'let' y",
-      "May not re-assign the 'let' z",
+      "Incompatible types Int to String",
+      "The identifier 'a' is already used for a variable and cannot be re-defined here.",
     ]);
   });
 
-  ignore_test("Fail_CannotDeconstruct", async () => {
+  test("Fail_DeconstructIntoExistingLetVariables", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
 main
-  var a set to 1
-  var x,y set to a
+  var x set to new Foo() with a to 100, b to "fred"
+  let a be 0
+  let b be ""
+  set a, b to x
+  print a
+  print b
 end main
-`;
+
+record Foo
+  property a as Int
+  property b as String
+end record`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "May not re-assign the 'let' a",
+      "May not re-assign the 'let' b",
+    ]);
+  });
+
+  test("Fail_CannotDeconstructNew", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+main
+  var x set to new Foo()
+  var a, b set to x
+  print a
+  print b
+end main
+
+class Foo
+  constructor()
+  end constructor
+
+  property a as Int
+  property b as String
+end class`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -595,14 +856,51 @@ end main
     assertDoesNotCompile(fileImpl, ["Expression must be able to be deconstructed"]);
   });
 
-  ignore_test("Fail_CannotDeconstructLet", async () => {
+  test("Fail_CannotDeconstructExisting", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
 main
-  var a set to 1
-  let x, y be a
+  var x set to new Foo()
+  var a set to 0
+  var b set to ""
+  set a, b to x
+  print a
+  print b
 end main
-`;
+
+class Foo
+  constructor()
+  end constructor
+
+  property a as Int
+  property b as String
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Expression must be able to be deconstructed"]);
+  });
+
+  test("Fail_CannotDeconstructLet", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+main
+  var x set to new Foo()
+  let a, b be x
+  print a
+  print b
+end main
+
+class Foo
+  constructor()
+  end constructor
+
+  property a as Int
+  property b as String
+end class`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));

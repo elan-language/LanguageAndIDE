@@ -761,7 +761,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types {Int:Int} to [Int]"]);
+    assertDoesNotCompile(fileImpl, ["Expression must be able to be deconstructed"]);
   });
 
   test("Fail_CannotDeconstruct5", async () => {
@@ -780,7 +780,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Int to [Int]"]);
+    assertDoesNotCompile(fileImpl, ["Expression must be able to be deconstructed"]);
   });
 
   test("Fail_DeconstructEmptyArray1", async () => {

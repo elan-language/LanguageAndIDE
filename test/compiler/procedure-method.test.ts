@@ -299,7 +299,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["calculate is not defined"]);
+    assertDoesNotCompile(fileImpl, ["calculate is not defined for type 'Foo'"]);
   });
 
   test("Fail_ParameterUnknownType", async () => {

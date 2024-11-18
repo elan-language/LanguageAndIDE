@@ -1,0 +1,47 @@
+# e31f8bdb7d09f420322ccbb704efa93b120844981f6813dd619aad14ab554b8b Elan Beta 4 valid
+
+main
+  var g set to new BlockGraphics()
+  var x set to 20
+  var y set to 15
+  while true
+    set g to g.withText(x, y, "*", red, black)
+    call g.display()
+    call pause(100)
+    set g to g.withBlock(x, y, black)
+    call g.display()
+    let r be randomInt(0, 3)
+    switch r
+      case 0
+        set x to lesserOf(x + 1, 39)
+      case 1
+        set x to greaterOf(x - 1, 0)
+      case 2
+        set y to lesserOf(y + 1, 29)
+      case 3
+        set y to greaterOf(y - 1, 0)
+    end switch
+  end while
+end main
+
+function lesserOf(value as Int, max as Int) return Int
+  return if value > max then max else value
+end function
+
+function greaterOf(value as Int, min as Int) return Int
+  return if value < min then min else value
+end function
+
+test lesserOf
+  assert lesserOf(5, 10) is 5
+  assert lesserOf(10, 10) is 10
+  assert lesserOf(11, 10) is 10
+  assert lesserOf(-1, 10) is -1
+end test
+
+test greaterOf
+  assert greaterOf(7, 3) is 7
+  assert greaterOf(3, 3) is 3
+  assert greaterOf(2, 3) is 3
+  assert greaterOf(-1, 0) is 0
+end test

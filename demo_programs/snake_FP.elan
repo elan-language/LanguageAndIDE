@@ -1,0 +1,266 @@
+# e3e1cf860d69dd5810c6126205c437a828e25ac556418d17dbbd96dbfe09fe2a Elan Beta 4 valid
+
+# Use the W,A,S,D keys to change Snake direction
+main
+  let rnd be new Random()
+  call rnd.initialiseFromClock()
+  var game set to newGame(rnd)
+  set game to newApple(game)
+  while game.isOn
+    set game to updateGraphics(game)
+    let gr be game.graphics
+    call gr.display()
+    call pause(150)
+    set game to clockTick(game, getKey())
+  end while
+  print "Game Over! Score: {score(game)}"
+end main
+
+function clockTick(g as Game, k as String) return Game
+  let g2 be if k is "" then g else copy g with key to k
+  let g3 be moveSnake(g2)
+  let g4 be eatAppleIfPoss(g3)
+  return if gameOver(g4) then copy g4 with isOn to false else g4
+end function
+
+function updateGraphics(g as Game) return Game
+  let g2 be copy g with graphics to g.graphics.withBlock(g.apple.x, g.apple.y, red)
+  let g3 be copy g2 with graphics to g2.graphics.withBlock(g2.head.x, g2.head.y, green)
+  let tail be g3.body[0]
+  let tailColour be if tail is g3.priorTail then green else white
+  return copy g3 with graphics to g3.graphics.withBlock(tail.x, tail.y, tailColour)
+end function
+
+function newApple(g as Game) return Game
+  let x, rnd2 be g.rnd.nextInt(0, 39)
+  let y, rnd3 be rnd2.nextInt(0, 29)
+  let apple2 be newSquare(x, y)
+  let g2 be copy g with apple to apple2, rnd to rnd3
+  return if bodyOverlaps(g2, apple2) then newApple(g2) else g2
+end function
+
+function score(g as Game) return Int
+  return g.body.length() - 2
+end function
+
+function moveSnake(g as Game) return Game
+  let k be g.key
+  let x be g.head.x
+  let y be g.head.y
+  let newX be if k is "a" then x - 1 else if k is "d" then x + 1 else x
+  let newY be if k is "w" then y - 1 else if k is "s" then y + 1 else y
+  return copy g with body to g.body + g.head, head to newSquare(newX, newY)
+end function
+
+function eatAppleIfPoss(g as Game) return Game
+  let tail be g.body[0]
+  let moveTail be g.body[1..g.body.length()]
+  return if overApple(g) then newApple(g) else copy g with priorTail to tail, body to moveTail
+end function
+
+function overApple(g as Game) return Boolean
+  return g.head is g.apple
+end function
+
+function gameOver(g as Game) return Boolean
+  return bodyOverlaps(g, g.head) or hasHitEdge(g)
+end function
+
+function hasHitEdge(g as Game) return Boolean
+  let x be g.head.x
+  let y be g.head.y
+  return (x is -1) or (y is -1) or (x is 40) or (y is 30)
+end function
+
+function bodyOverlaps(g as Game, target as Square) return Boolean
+  return g.body.filter(lambda s as Square => s is target).length() > 0
+end function
+
+function newGame(rnd as Random) return Game
+  return new Game() with rnd to rnd, graphics to new BlockGraphics(), head to newSquare(22, 15), body to {newSquare(20, 15), newSquare(21, 15)}, priorTail to empty Square, key to "d", isOn to true
+end function
+
+record Game
+  property head as Square
+
+  property body as {Square}
+
+  property priorTail as Square
+
+  property apple as Square
+
+  property isOn as Boolean
+
+  property rnd as Random
+
+  property graphics as BlockGraphics
+
+  property key as String
+
+end record
+
+function newSquare(x as Int, y as Int) return Square
+  return new Square() with x to x, y to y
+end function
+
+record Square
+  property x as Int
+
+  property y as Int
+
+end record
+
+# 68 frames (excluding tests)
+test clockTick
+  let g1 be newGame(new Random())
+  let g2 be newApple(g1)
+  let g3 be clockTick(g2, "s")
+  assert g3.head is newSquare(22, 16)
+  assert g3.body.length() is 2
+  assert g3.priorTail is g2.body[0]
+  assert g3.isOn is true
+  let g4 be copy g3 with apple to newSquare(22, 17)
+  let g5 be clockTick(g4, "s")
+  assert g5.body.length() is 3
+  assert g5.priorTail is g4.priorTail
+  assert g5.isOn is true
+  let g6 be copy g5 with head to newSquare(22, 29)
+  let g7 be clockTick(g6, "s")
+  assert g7.isOn is false
+end test
+
+test updateGraphics
+  let g1 be newGame(new Random())
+  let g2 be newApple(g1)
+  let g3 be updateGraphics(g2)
+  assert g3.graphics.getBackground(12, 15) is red
+  assert g3.graphics.getBackground(22, 15) is green
+  assert g3.graphics.getBackground(21, 15) is white
+  let g4 be clockTick(g3, "d")
+  let g5 be updateGraphics(g4)
+  assert g4.graphics.getBackground(12, 15) is red
+  assert g4.graphics.getBackground(22, 15) is green
+  assert g4.graphics.getBackground(23, 15) is green
+end test
+
+test newApple
+  let g1 be newGame(new Random())
+  assert g1.apple is empty Square
+  let g2 be newApple(g1)
+  assert g2.apple is newSquare(12, 15)
+  let g3 be newApple(g2)
+  assert g3.apple is newSquare(10, 12)
+  # test that apple is never over snake
+  let g4 be newGame(new Random())
+  let g5 be copy g4 with body to {newSquare(12, 15)}
+  let g6 be newApple(g5)
+  assert g6.apple is newSquare(10, 12)
+end test
+
+test score
+  let g1 be newGame(new Random())
+  assert score(g1) is 0
+  let g2 be copy g1 with body to {newSquare(4, 4), newSquare(5, 4)}
+  assert score(g2) is 0
+  let g3 be copy g1 with body to {newSquare(3, 4), newSquare(4, 4), newSquare(5, 4)}
+  assert score(g3) is 1
+  let g4 be copy g1 with body to {newSquare(3, 4), newSquare(4, 4), newSquare(5, 4), newSquare(5, 5)}
+  assert score(g4) is 2
+end test
+
+test moveSnake
+  let g1 be newGame(new Random())
+  let g2 be copy g1 with key to "a"
+  let g3 be moveSnake(g2)
+  assert g3.head is newSquare(21, 15)
+  let g4 be copy g1 with key to "d"
+  let g5 be moveSnake(g4)
+  assert g5.head is newSquare(23, 15)
+  let g6 be copy g1 with key to "w"
+  let g7 be moveSnake(g6)
+  assert g7.head is newSquare(22, 14)
+  let g8 be copy g1 with key to "s"
+  let g9 be moveSnake(g8)
+  assert g9.head is newSquare(22, 16)
+end test
+
+test eatAppleIfPoss
+  let g1 be newGame(new Random())
+  assert g1.body.length() is 2
+  # negative case
+  let g2 be copy g1 with apple to newSquare(23, 15)
+  let g3 be eatAppleIfPoss(g2)
+  assert g3.body.length() is 1
+  assert g3.apple is g2.apple
+  assert g3.priorTail is g2.body[0]
+  # positive case
+  let g4 be copy g2 with head to newSquare(23, 15)
+  let g5 be eatAppleIfPoss(g4)
+  assert g5.body.length() is 2
+  assert g5.apple is newSquare(12, 15)
+  assert g5.priorTail is g1.priorTail
+end test
+
+test overApple
+  let g1 be newGame(new Random())
+  let g2 be copy g1 with apple to newSquare(23, 15)
+  assert overApple(g2) is false
+  let g3 be copy g2 with head to newSquare(23, 15)
+  assert overApple(g3) is true
+end test
+
+test gameOver
+  let g1 be newGame(new Random())
+  assert gameOver(g1) is false
+  let g2 be copy g1 with head to newSquare(0, 0)
+  assert gameOver(g2) is false
+  let g3 be copy g1 with head to newSquare(40, 15)
+  assert gameOver(g3) is true
+  let g4 be copy g1 with head to newSquare(21, 15)
+  assert gameOver(g4) is true
+end test
+
+test headIsAtEdge
+  let g1 be newGame(new Random())
+  assert hasHitEdge(g1) is false
+  let g2 be copy g1 with head to newSquare(40, 15)
+  assert hasHitEdge(g2) is true
+  let g3 be copy g1 with head to newSquare(-1, 15)
+  assert hasHitEdge(g3) is true
+  let g4 be copy g1 with head to newSquare(20, 30)
+  assert hasHitEdge(g4) is true
+  let g5 be copy g1 with head to newSquare(20, -1)
+  assert hasHitEdge(g5) is true
+end test
+
+test bodyOverlaps
+  let g1 be newGame(new Random())
+  let g2 be copy g1 with body to {newSquare(3, 4), newSquare(4, 4), newSquare(5, 4)}
+  assert bodyOverlaps(g2, newSquare(3, 4)) is true
+  assert bodyOverlaps(g2, newSquare(4, 4)) is true
+  assert bodyOverlaps(g2, newSquare(5, 4)) is true
+  assert bodyOverlaps(g2, newSquare(2, 4)) is false
+  assert bodyOverlaps(g2, newSquare(6, 2)) is false
+end test
+
+test newSquare
+  let sq be newSquare(3, 4)
+  assert sq.x is 3
+  assert sq.y is 4
+end test
+
+test newGame
+  let rnd be new Random()
+  let game be newGame(rnd)
+  assert game.rnd is rnd
+  assert game.head is newSquare(22, 15)
+  let body be game.body
+  assert body.length() is 2
+  assert body[0] is newSquare(20, 15)
+  assert body[1] is newSquare(21, 15)
+  assert game.priorTail is newSquare(0, 0)
+  assert game.key is "d"
+  assert game.isOn is true
+end test
+
+# Test coverage: 92% (62/68 frames)
