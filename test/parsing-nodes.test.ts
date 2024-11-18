@@ -539,13 +539,22 @@ suite("Parsing Nodes", () => {
       "",
       "a, ",
     );
+    testNodeParse(new CSV(() => new PunctuationNode("a"), 0), `x`, ParseStatus.valid, ``, "x", "");
+    testNodeParse(
+      new CSV(() => new PunctuationNode("a"), 1),
+      `x`,
+      ParseStatus.invalid,
+      ``,
+      "x",
+      "",
+    );
     testNodeParse(
       new CSV(() => new PunctuationNode("a"), 0),
       `a,a,x`,
       ParseStatus.valid,
-      `a,b,c`,
-      "",
-      "a, b, c",
+      `a,a`,
+      ",x",
+      "a, a",
     );
     testNodeParse(new CSV(() => new LitInt(), 0), ``, ParseStatus.valid, ``, "", "");
     testNodeParse(new CSV(() => new LitInt(), 1), ``, ParseStatus.empty, ``, "", "");
@@ -567,7 +576,9 @@ suite("Parsing Nodes", () => {
       "",
       "a, b, c",
     );
-
+    testNodeParse(new CSV(() => new IdentifierNode(), 0), `1`, ParseStatus.valid, ``, "1", "");
+    testNodeParse(new CSV(() => new IdentifierNode(), 1), `1`, ParseStatus.invalid, ``, "1", "");
+    testNodeParse(new CSV(() => new IdentifierNode(), 0), `a,1`, ParseStatus.valid, `a`, ",1", "");
     testNodeParse(
       new CSV(() => new IdentifierNode(), 0),
       `a,b,1`,
