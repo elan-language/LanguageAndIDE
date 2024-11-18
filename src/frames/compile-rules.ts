@@ -798,7 +798,7 @@ function mustBeCompatibleDeconstruction(
       const id = ids[i];
       if (childSymbols.map((s) => s.symbolId).includes(id)) {
         const llst = lst.ofTypes[i];
-        const rrst = childSymbols.find((s) => s.symbolId === id)!.symbolType();
+        const rrst = childSymbols.find((s) => s.symbolId === id)!.symbolType(transforms());
 
         mustBeCompatibleType(llst, rrst, compileErrors, location);
       } else {
