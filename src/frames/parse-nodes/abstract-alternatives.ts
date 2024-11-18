@@ -5,7 +5,8 @@ import { ParseNode } from "./parse-node";
 
 export abstract class AbstractAlternatives extends AbstractParseNode {
   alternatives: ParseNode[] = [];
-  bestMatch?: ParseNode;
+  firstBestMatch?: ParseNode;
+  additionalBestMatches: ParseNode[] = [];
 
   constructor() {
     super();
@@ -20,48 +21,53 @@ export abstract class AbstractAlternatives extends AbstractParseNode {
         const alt = this.alternatives[i];
         alt.parseText(text);
         if (alt.status === ParseStatus.valid && alt.remainingText.length === 0) {
-          this.bestMatch = alt;
+          this.firstBestMatch = alt;
           cont = false;
+        } else if (!this.firstBestMatch) {
+          this.firstBestMatch = alt;
         } else if (
-          !this.bestMatch ||
-          alt.remainingText.length < this.bestMatch.remainingText.length ||
-          (alt.remainingText.length === this.bestMatch.remainingText.length &&
-            alt.status > this.bestMatch.status)
+          alt.remainingText.length < this.firstBestMatch.remainingText.length ||
+          (alt.remainingText.length === this.firstBestMatch.remainingText.length &&
+            alt.status > this.firstBestMatch.status)
         ) {
-          this.bestMatch = alt;
+          this.firstBestMatch = alt;
+          this.additionalBestMatches = [];
+        } else if (alt.remainingText.length === this.firstBestMatch.remainingText.length &&
+          alt.status === this.firstBestMatch.status) {
+          this.additionalBestMatches.push(alt);
         }
         i++;
       }
-      if (this.bestMatch!.status > ParseStatus.invalid) {
-        this.status = this.bestMatch!.status;
-        this.matchedText = this.bestMatch!.matchedText;
-        this.remainingText = this.bestMatch!.remainingText;
+      if (this.firstBestMatch!.status > ParseStatus.invalid) {
+        this.status = this.firstBestMatch!.status;
+        this.matchedText = this.firstBestMatch!.matchedText;
+        this.remainingText = this.firstBestMatch!.remainingText;
       } else {
-        this.bestMatch = undefined;
+        this.firstBestMatch = undefined;
         this.status = ParseStatus.invalid;
       }
     }
   }
 
   renderAsHtml(): string {
-    return this.bestMatch ? this.bestMatch.renderAsHtml() : "";
+    return this.firstBestMatch ? this.firstBestMatch.renderAsHtml() : "";
   }
   renderAsSource(): string {
-    return this.bestMatch ? this.bestMatch.renderAsSource() : "";
+    return this.firstBestMatch ? this.firstBestMatch.renderAsSource() : "";
   }
   compile(): string {
-    return this.bestMatch ? this.bestMatch.compile() : "";
+    return this.firstBestMatch ? this.firstBestMatch.compile() : "";
   }
   getCompletionAsHtml(): string {
-    const c = this.bestMatch ? this.bestMatch.getCompletionAsHtml() : super.getCompletionAsHtml();
+    const c = this.firstBestMatch ? this.firstBestMatch.getCompletionAsHtml() : super.getCompletionAsHtml();
     return c;
   }
 
   override getToMatchAndTokenType(): [string, TokenType] {
-    return this.bestMatch?.getToMatchAndTokenType() ?? super.getToMatchAndTokenType();
+    return this.firstBestMatch?.getToMatchAndTokenType() ?? super.getToMatchAndTokenType();
   }
 
   getActiveNode(): ParseNode {
-    return this.bestMatch ? this.bestMatch!.getActiveNode() : this;
+    return this.firstBestMatch ? this.firstBestMatch!.getActiveNode() : this;
   }
 }
