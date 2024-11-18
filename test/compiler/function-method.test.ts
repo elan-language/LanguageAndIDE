@@ -685,6 +685,36 @@ end class`;
     assertDoesNotCompile(fileImpl, ["times is not defined"]);
   });
 
+  test("Fail_FunctionisNotDefined", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+main
+  var f set to new Foo()
+  var v set to 0
+  set v to f.noSuch()
+end main
+
+class Foo
+    constructor()
+      
+    end constructor
+
+    function such() return Int
+        return 0
+    end function
+
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types Unknown to Int",
+      "noSuch is not defined for type 'Foo'",
+    ]);
+  });
+
   test("Fail_FunctionMethodCannotMutateProperty", async () => {
     const code = `# FFFF Elan Beta 4 valid
 

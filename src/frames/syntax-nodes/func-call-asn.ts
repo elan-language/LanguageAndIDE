@@ -73,7 +73,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
     let parameters = [...this.parameters];
     const [funcSymbol, funcSymbolType] = this.getSymbolAndType();
 
-    mustBeKnownSymbol(funcSymbol, undefined, this.compileErrors, this.fieldId);
+    mustBeKnownSymbol(funcSymbol, this.updatedScope, this.compileErrors, this.fieldId);
     mustBePureFunctionSymbol(
       funcSymbol.symbolId,
       funcSymbolType,
