@@ -21,11 +21,13 @@ export class OptionalNode extends AbstractParseNode {
         option.status === ParseStatus.valid ||
         (option.status === ParseStatus.incomplete && option.remainingText.trim() === "")
       ) {
+        this._done = option.isDone();
         this.updateFrom(option);
         this.matchedNode = option;
       } else {
         this.status = ParseStatus.valid;
         this.remainingText = text;
+        this._done = true;
       }
     } else {
       this.status = ParseStatus.valid;

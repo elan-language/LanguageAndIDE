@@ -17,7 +17,7 @@ export class LitInt extends AbstractParseNode {
         Regexes.negatableLitInt,
       );
       if (this.status === ParseStatus.valid && this.remainingText.length > 0) {
-        this.complete = true;
+        this._done = true;
       }
     }
   }

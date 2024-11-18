@@ -364,14 +364,14 @@ export function testParseCompletionAndActiveNode(
   text: string,
   status: ParseStatus,
   activeNodeType: string,
-  complete = false,
+  done = false,
 ) {
   node.parseText(text);
   assert.equal(node.status, status);
   const active = node.getActiveNode();
   const cls = active.constructor.name;
   assert.equal(activeNodeType, cls);
-  assert.equal(node.isComplete(), complete);
+  assert.equal(node.isDone(), done);
 }
 
 export function testCompletion(

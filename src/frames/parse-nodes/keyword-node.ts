@@ -18,7 +18,7 @@ export class KeywordNode extends FixedTextNode {
         if (lcLetters[0] === target) {
           const n = this.numLeadingSpaces(text) + this.fixedText.length;
           this.set(ParseStatus.valid, text.substring(0, n), text.substring(n));
-          this.complete = true;
+          this._done = true;
         } else if (target.startsWith(trimmed)) {
           this.set(ParseStatus.incomplete, text, "");
         } else {

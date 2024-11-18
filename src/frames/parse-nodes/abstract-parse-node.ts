@@ -8,11 +8,11 @@ export abstract class AbstractParseNode implements ParseNode {
   completionWhenEmpty: string = "";
   remainingText: string = "";
   errorMessage: string = "";
-  activeSubNode: ParseNode = this;
+  activeNodeForSymbolCompl: ParseNode = this;
   //Complete means that parseNode is valid and that no more text may be taken
   //By default, parse nodes are never complete. Only ones that can return true are:
   //SpaceNode and sub-classes of FixedTextNode or of AbstractSequence
-  complete: boolean = false;
+  _done: boolean = false;
 
   setCompletionWhenEmpty(ph: string) {
     this.completionWhenEmpty = ph;
@@ -59,12 +59,12 @@ export abstract class AbstractParseNode implements ParseNode {
   }
 
   getActiveNode(): ParseNode {
-    const active = this.activeSubNode;
+    const active = this.activeNodeForSymbolCompl;
     return active === this ? active : active.getActiveNode();
   }
 
-  isComplete(): boolean {
-    return this.complete;
+  isDone(): boolean {
+    return this._done;
   }
   isValid(): boolean {
     return this.status === ParseStatus.valid;

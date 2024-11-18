@@ -31,11 +31,11 @@ export class Multiple extends AbstractParseNode {
         if (node.status === ParseStatus.valid) {
           this.elements.push(node);
           toParse = node.remainingText;
-          this.activeSubNode = node;
+          this.activeNodeForSymbolCompl = node;
         } else if (node.status === ParseStatus.incomplete && node.remainingText.trim() === "") {
           this.elements.push(node);
           toParse = node.remainingText;
-          this.activeSubNode = node;
+          this.activeNodeForSymbolCompl = node;
         } else {
           cont = false;
         }

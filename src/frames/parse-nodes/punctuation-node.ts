@@ -14,7 +14,7 @@ export class PunctuationNode extends FixedTextNode {
       if (text.startsWith(target)) {
         const n = this.numLeadingSpaces(text) + this.fixedText.length;
         this.set(ParseStatus.valid, text.substring(0, n), text.substring(n));
-        this.complete = true;
+        this._done = true;
       } else if (target.startsWith(text)) {
         this.set(ParseStatus.incomplete, text, "");
       } else {

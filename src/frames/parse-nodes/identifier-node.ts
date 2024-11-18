@@ -18,7 +18,7 @@ export class IdentifierNode extends AbstractParseNode {
       );
     }
     if (this.remainingText.length > 0) {
-      this.complete = true;
+      this._done = true;
     }
   }
 

@@ -523,16 +523,32 @@ suite("Parsing Nodes", () => {
     testNodeParse(new CommaNode(), `,,`, ParseStatus.valid, `,`, ",", "");
   });
   test("CSV", () => {
+    testNodeParse(
+      new CSV(() => new PunctuationNode("a"), 0),
+      `a,a,a`,
+      ParseStatus.valid,
+      `a,a,a`,
+      "",
+      "a, a, a",
+    );
+    testNodeParse(
+      new CSV(() => new PunctuationNode("a"), 0),
+      `a,`,
+      ParseStatus.incomplete,
+      `a,`,
+      "",
+      "a, ",
+    );
+    testNodeParse(
+      new CSV(() => new PunctuationNode("a"), 0),
+      `a,a,x`,
+      ParseStatus.valid,
+      `a,b,c`,
+      "",
+      "a, b, c",
+    );
     testNodeParse(new CSV(() => new LitInt(), 0), ``, ParseStatus.valid, ``, "", "");
     testNodeParse(new CSV(() => new LitInt(), 1), ``, ParseStatus.empty, ``, "", "");
-    testNodeParse(
-      new CSV(() => new LitInt(), 0),
-      `2, 4,3, 1`,
-      ParseStatus.valid,
-      `2, 4,3, 1`,
-      "",
-      "2, 4, 3, 1",
-    );
     testNodeParse(new CSV(() => new LitInt(), 0), `2`, ParseStatus.valid, `2`, "", "");
     testNodeParse(new CSV(() => new LitInt(), 1), `2`, ParseStatus.valid, `2`, "", "");
     testNodeParse(
@@ -551,6 +567,7 @@ suite("Parsing Nodes", () => {
       "",
       "a, b, c",
     );
+
     testNodeParse(
       new CSV(() => new IdentifierNode(), 0),
       `a,b,1`,
@@ -1646,29 +1663,57 @@ suite("Parsing Nodes", () => {
   test("RevisedParseMethodForAbstractSequence#857", () => {
     testParseCompletionAndActiveNode(
       new test_seq(),
-      `ab`,
+      ``,
+      ParseStatus.empty,
+      PunctuationNode.name,
+      false,
+    );
+    testParseCompletionAndActiveNode(
+      new test_seq(),
+      `a`,
       ParseStatus.incomplete,
       PunctuationNode.name,
       false,
     );
     testParseCompletionAndActiveNode(
       new test_seq(),
+      `ab`,
+      ParseStatus.valid,
+      PunctuationNode.name,
+      true,
+    );
+    testParseCompletionAndActiveNode(
+      new test_seq2(),
       `abc`,
       ParseStatus.valid,
       PunctuationNode.name,
       true,
     );
     testParseCompletionAndActiveNode(
-      new test_seq(),
+      new test_seq2(),
       `ac`,
       ParseStatus.valid,
       PunctuationNode.name,
       true,
     );
+    testParseCompletionAndActiveNode(
+      new test_seq2(),
+      `ab`,
+      ParseStatus.incomplete,
+      PunctuationNode.name,
+      false,
+    );
   });
 });
 
 class test_seq extends AbstractSequence {
+  parseText(text: string): void {
+    this.addElement(new PunctuationNode("a"));
+    this.addElement(new PunctuationNode("b"));
+    super.parseText(text);
+  }
+}
+class test_seq2 extends AbstractSequence {
   parseText(text: string): void {
     this.addElement(new PunctuationNode("a"));
     this.addElement(new OptionalNode(new PunctuationNode("b")));

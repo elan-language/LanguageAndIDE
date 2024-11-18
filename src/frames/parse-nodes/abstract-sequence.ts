@@ -16,44 +16,62 @@ export abstract class AbstractSequence extends AbstractParseNode {
   parseText(text: string): void {
     let i = -1; // Because incremented at start of loop
     this.remainingText = text;
-    let continueToNextNode = true;
-    while (continueToNextNode) {
+    let continueLoop = true;
+    while (continueLoop) {
       i++;
       const node = this.elements[i] as AbstractParseNode;
-      this.activeSubNode = node;
+      const firstNode = i === 0;
       const lastNode = i === this.elements.length - 1;
+      const nextNode = lastNode? undefined : this.elements[i+1];
       node.parseText(this.remainingText);
       this.remainingText = node.remainingText;
       const moreText = this.remainingText.length > 0;
-      continueToNextNode = false; //default - unless set true again below
-      if (node.isComplete()) {
-        // Only possible if also valid
+      if (node.isDone()) {  
         if (lastNode) {
           this.status = ParseStatus.valid;
-          this.complete = true;
+          this._done = true;
+          continueLoop = false;
         } else {
           this.status = ParseStatus.incomplete;
-          continueToNextNode = true;
+          this.activeNodeForSymbolCompl = nextNode!;
+          continueLoop = true;
         }
       } else if (node.isValid()) { 
-        this.status = ParseStatus.valid;
-        if (!lastNode) {
-          continueToNextNode = true;
+        if (moreText) {
+          if (lastNode) {
+            this.status = ParseStatus.valid;
+            this._done = true;
+            continueLoop = false;
+          } else {
+            this.activeNodeForSymbolCompl = nextNode!;
+            continueLoop = true;
+          }
+        } else { //No more text
+          this.activeNodeForSymbolCompl = node;
+          this.status = ParseStatus.valid;
+          continueLoop = !lastNode;
         }
       } else if (node.isIncomplete()) {
         if (moreText) {
           this.status = ParseStatus.invalid;
+          continueLoop = false;
         } else {
           this.status = ParseStatus.incomplete;
+          this.activeNodeForSymbolCompl = node;
+          continueLoop = !lastNode;
         }
       } else if (node.isEmpty()) {
-        if (i === 0) {
+        if (firstNode) {
           this.status = ParseStatus.empty;
+          this.activeNodeForSymbolCompl = node;
         } else {
           this.status = ParseStatus.incomplete;
+          // activeNodeForSymbolCompl unchanged
         }
+        continueLoop = false;
       } else if (node.isInvalid()) {
         this.status = ParseStatus.invalid;
+        continueLoop = false;
       }
     } //Finally...
     if (this.isInvalid()) {

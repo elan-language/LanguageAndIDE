@@ -16,7 +16,7 @@ export class SpaceNode extends AbstractParseNode {
       if (this.type === Space.required) {
         this.status = ParseStatus.empty;
       } else {
-        this.status = ParseStatus.valid;
+        this.status = ParseStatus.valid;      
       }
     } else {
       this.remainingText = text;
@@ -24,12 +24,12 @@ export class SpaceNode extends AbstractParseNode {
       if (matches !== null && matches.length > 0) {
         this.remainingText = text.replace(matches[0], "");
         this.status = ParseStatus.valid;
-        this.complete = true;
+        this._done = true;
       } else if (this.type === Space.required) {
         this.status = ParseStatus.invalid;
       } else {
         this.status = ParseStatus.valid;
-        this.complete = true;
+        this._done = true;
       }
     }
   }
