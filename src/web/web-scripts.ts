@@ -45,6 +45,7 @@ const demoFiles = document.getElementsByClassName("demo-file");
 let file: File;
 let doOnce = true;
 let profile: Profile;
+let lastSavedHash = "";
 
 const elanInputOutput = new WebInputOutput(consoleDiv, graphicsDiv);
 
@@ -55,7 +56,7 @@ function setup(p: Profile) {
 }
 
 function renderAsHtml() {
-  file.renderAsHtml().then(
+  return file.renderAsHtml().then(
     (c) => updateContent(c),
     (e) => showError(e as Error, file.fileName, false),
   );
@@ -109,10 +110,15 @@ fetchProfile()
   });
 
 function refreshAndDisplay(compileIfParsed?: boolean) {
-  getTestRunner(system, stdlib).then((t) => {
-    file.refreshAllStatuses(t, compileIfParsed).then(
-      () => renderAsHtml(),
-      (e) => showError(e as Error, file.fileName, false),
+  return getTestRunner(system, stdlib).then((t) => {
+    return file.refreshAllStatuses(t, compileIfParsed).then(
+      () => {
+        return renderAsHtml();
+      },
+      (e) => {
+        showError(e as Error, file.fileName, false);
+        return;
+      },
     );
   });
 }
@@ -122,7 +128,7 @@ function initialDisplay(reset: boolean) {
 
   const ps = file.readParseStatus();
   if (ps === ParseStatus.valid || ps === ParseStatus.default) {
-    refreshAndDisplay();
+    refreshAndDisplay().then(() => (lastSavedHash = file.currentHash));
   } else {
     const msg = file.parseError || "Failed load code";
     showError(new Error(msg), file.fileName, reset);
@@ -151,7 +157,9 @@ function getModKey(e: KeyboardEvent | MouseEvent) {
 }
 
 function updateDisplayValues() {
-  codeTitle.innerText = `File: ${file.fileName}`;
+  const unsaved = lastSavedHash === file.currentHash ? "" : " UNSAVED";
+
+  codeTitle.innerText = `File: ${file.fileName}${unsaved}`;
   parse.setAttribute("class", file.readParseStatusForDashboard());
   compile.setAttribute("class", file.readCompileStatusForDashboard());
   test.setAttribute("class", file.readTestStatusForDashboard());
@@ -676,6 +684,7 @@ function handleDownload(event: Event) {
     aElement.click();
     URL.revokeObjectURL(href);
     saveButton.classList.remove("unsaved");
+    lastSavedHash = file.currentHash;
     event.preventDefault();
     renderAsHtml();
   });

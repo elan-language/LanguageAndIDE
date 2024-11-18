@@ -89,4 +89,5 @@ export interface File extends Parent {
 
   getFrNo(): string;
   removeAllSelectorsThatCanBe(): void;
+  currentHash: string;
 }
