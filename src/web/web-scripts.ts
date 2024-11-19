@@ -55,6 +55,7 @@ let profile: Profile;
 let lastSavedHash = "";
 let programWorker: Worker;
 let inactivityTimer: any | undefined = undefined;
+const lastDirId = "elan-files";
 
 // add all the listeners
 
@@ -671,6 +672,7 @@ async function handleChromeUploadOrAppend(upload: boolean) {
   const [fileHandle] = await window.showOpenFilePicker({
     startIn: "documents",
     types: [{ accept: { "text/plain": ".elan" } }],
+    id: lastDirId,
   });
   const codeFile = await fileHandle.getFile();
   const fileName = codeFile.name;
