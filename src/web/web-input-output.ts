@@ -56,6 +56,7 @@ export class WebInputOutput implements ElanInputOutput {
   chromeChooser() {
     const f = document.createElement("input");
     const g = document.getElementById("graphics") as HTMLElement;
+    f.style.display = "none";
     g.appendChild(f);
     return f;
   }
