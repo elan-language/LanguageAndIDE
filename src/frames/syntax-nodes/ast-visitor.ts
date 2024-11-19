@@ -340,8 +340,8 @@ export function transform(
   }
 
   if (node instanceof AbstractAlternatives) {
-    if (node.firstBestMatch) {
-      return transform(node.firstBestMatch, fieldId, scope);
+    if (node.bestMatch) {
+      return transform(node.bestMatch, fieldId, scope);
     }
     return new EmptyAsn(fieldId);
   }
@@ -493,13 +493,13 @@ export function transform(
 
     const sp = node.simpleOrProp;
 
-    if (sp.firstBestMatch instanceof IdentifierNode) {
-      const idNode = transform(sp.firstBestMatch, fieldId, scope);
+    if (sp.bestMatch instanceof IdentifierNode) {
+      const idNode = transform(sp.bestMatch, fieldId, scope);
       if (isAstIdNode(idNode)) {
         id = idNode.id;
       }
-    } else if (sp.firstBestMatch instanceof Sequence) {
-      const [i0, i1] = transformMany(sp.firstBestMatch, fieldId, scope).items;
+    } else if (sp.bestMatch instanceof Sequence) {
+      const [i0, i1] = transformMany(sp.bestMatch, fieldId, scope).items;
       if (isAstQualifierNode(i0)) {
         q = i0;
       }

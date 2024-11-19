@@ -5,8 +5,7 @@ import { ParseNode } from "./parse-node";
 
 export abstract class AbstractAlternatives extends AbstractParseNode {
   alternatives: ParseNode[] = [];
-  firstBestMatch?: ParseNode;
-  additionalBestMatches: ParseNode[] = [];
+  bestMatch?: ParseNode;
 
   constructor() {
     super();
@@ -21,57 +20,48 @@ export abstract class AbstractAlternatives extends AbstractParseNode {
         const alt = this.alternatives[i];
         alt.parseText(text);
         if (alt.status === ParseStatus.valid && alt.remainingText.length === 0) {
-          this.firstBestMatch = alt;
+          this.bestMatch = alt;
           cont = false;
-        } else if (!this.firstBestMatch) {
-          this.firstBestMatch = alt;
         } else if (
-          alt.remainingText.length < this.firstBestMatch.remainingText.length ||
-          (alt.remainingText.length === this.firstBestMatch.remainingText.length &&
-            alt.status > this.firstBestMatch.status)
+          !this.bestMatch ||
+          alt.remainingText.length < this.bestMatch.remainingText.length ||
+          (alt.remainingText.length === this.bestMatch.remainingText.length &&
+            alt.status > this.bestMatch.status)
         ) {
-          this.firstBestMatch = alt;
-          this.additionalBestMatches = [];
-        } else if (
-          alt.remainingText.length === this.firstBestMatch.remainingText.length &&
-          alt.status === this.firstBestMatch.status
-        ) {
-          this.additionalBestMatches.push(alt);
+          this.bestMatch = alt;
         }
         i++;
       }
-      if (this.firstBestMatch!.status > ParseStatus.invalid) {
-        this.status = this.firstBestMatch!.status;
-        this.matchedText = this.firstBestMatch!.matchedText;
-        this.remainingText = this.firstBestMatch!.remainingText;
+      if (this.bestMatch!.status > ParseStatus.invalid) {
+        this.status = this.bestMatch!.status;
+        this.matchedText = this.bestMatch!.matchedText;
+        this.remainingText = this.bestMatch!.remainingText;
       } else {
-        this.firstBestMatch = undefined;
+        this.bestMatch = undefined;
         this.status = ParseStatus.invalid;
       }
     }
   }
 
   renderAsHtml(): string {
-    return this.firstBestMatch ? this.firstBestMatch.renderAsHtml() : "";
+    return this.bestMatch ? this.bestMatch.renderAsHtml() : "";
   }
   renderAsSource(): string {
-    return this.firstBestMatch ? this.firstBestMatch.renderAsSource() : "";
+    return this.bestMatch ? this.bestMatch.renderAsSource() : "";
   }
   compile(): string {
-    return this.firstBestMatch ? this.firstBestMatch.compile() : "";
+    return this.bestMatch ? this.bestMatch.compile() : "";
   }
   getCompletionAsHtml(): string {
-    const c = this.firstBestMatch
-      ? this.firstBestMatch.getCompletionAsHtml()
-      : super.getCompletionAsHtml();
+    const c = this.bestMatch ? this.bestMatch.getCompletionAsHtml() : super.getCompletionAsHtml();
     return c;
   }
 
   override getToMatchAndTokenType(): [string, TokenType] {
-    return this.firstBestMatch?.getToMatchAndTokenType() ?? super.getToMatchAndTokenType();
+    return this.bestMatch?.getToMatchAndTokenType() ?? super.getToMatchAndTokenType();
   }
 
   getActiveNode(): ParseNode {
-    return this.firstBestMatch ? this.firstBestMatch!.getActiveNode() : this;
+    return this.bestMatch ? this.bestMatch!.getActiveNode() : this;
   }
 }

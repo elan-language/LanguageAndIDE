@@ -42,7 +42,7 @@ export class ProcRefField extends AbstractField {
     if (this.isSelected()) {
       text = this.fieldAsInput();
     } else if (this.readParseStatus() === ParseStatus.valid) {
-      const bestMatch = (this.rootNode! as Alternatives).firstBestMatch;
+      const bestMatch = (this.rootNode! as Alternatives).bestMatch;
       if (bestMatch instanceof IdentifierNode) {
         text = `<el-method>${this.text}</el-method>`;
       } else {
