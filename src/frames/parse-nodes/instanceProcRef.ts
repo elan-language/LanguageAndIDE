@@ -31,7 +31,7 @@ export class InstanceProcRef extends AbstractSequence {
     return `${this.prefix!.matchedNode ? this.prefix?.matchedNode.renderAsHtml() : ""}<el-method>${this.simple?.renderAsHtml()}</el-method>`;
   }
 
-  getSymbolCompletionSpec(): SymbolCompletionSpec {
+  getSymbolCompletionSpecOld(): SymbolCompletionSpec {
     return new SymbolCompletionSpec(this.matchedText, [TokenType.idOrProcedure]);
   }
 }

@@ -32,8 +32,8 @@ export class NewInstance extends AbstractSequence {
     super.parseText(text);
   }
 
-  getSymbolCompletionSpec(): SymbolCompletionSpec {
-    const spec = this.withClause!.getSymbolCompletionSpec();
+  getSymbolCompletionSpecOld(): SymbolCompletionSpec {
+    const spec = this.withClause!.getSymbolCompletionSpecOld();
     const id = spec.toMatch;
     const tokenType = spec.tokenTypes.values().next()!.value!;
     if (tokenType !== TokenType.none) {

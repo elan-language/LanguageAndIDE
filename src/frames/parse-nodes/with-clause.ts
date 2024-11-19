@@ -27,10 +27,10 @@ export class WithClause extends AbstractSequence {
     }
   }
 
-  getSymbolCompletionSpec(): SymbolCompletionSpec {
+  getSymbolCompletionSpecOld(): SymbolCompletionSpec {
     const elems = this.getElements();
     if (elems[2].status === ParseStatus.valid) {
-      return elems[3].getSymbolCompletionSpec();
+      return elems[3].getSymbolCompletionSpecOld();
     }
 
     return new SymbolCompletionSpec("", [TokenType.none]);

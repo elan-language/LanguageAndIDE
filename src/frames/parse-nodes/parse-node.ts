@@ -16,7 +16,7 @@ export interface ParseNode {
   getSyntaxCompletionAsHtml(): string;
   setSyntaxCompletionWhenEmpty(ph: string): void;
 
-  getSymbolCompletionSpec(): SymbolCompletionSpec;
+  getSymbolCompletionSpecOld(): SymbolCompletionSpec;
   getActiveNode(): ParseNode;
   isDone(): boolean;
   isValid(): boolean;

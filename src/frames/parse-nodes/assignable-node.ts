@@ -19,7 +19,7 @@ export class AssignableNode extends AbstractSequence {
     this.addElement(this.simpleOrProp);
   }
 
-  override getSymbolCompletionSpec(): SymbolCompletionSpec {
+  override getSymbolCompletionSpecOld(): SymbolCompletionSpec {
     const bestMatch = this.simpleOrProp.bestMatch;
 
     if (bestMatch instanceof IdentifierNode) {

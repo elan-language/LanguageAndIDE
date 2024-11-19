@@ -54,7 +54,7 @@ export abstract class AbstractParseNode implements ParseNode {
     this.errorMessage = other.errorMessage;
   }
 
-  getSymbolCompletionSpec(): SymbolCompletionSpec {
+  getSymbolCompletionSpecOld(): SymbolCompletionSpec {
     return new SymbolCompletionSpec("", [TokenType.none]);
   }
 

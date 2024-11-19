@@ -27,11 +27,11 @@ export class CopyWith extends AbstractSequence {
     }
   }
 
-  getSymbolCompletionSpec(): SymbolCompletionSpec {
+  getSymbolCompletionSpecOld(): SymbolCompletionSpec {
     if (this.original && !this.original?.remainingText.includes(" ")) {
-      return this.original.getSymbolCompletionSpec();
+      return this.original.getSymbolCompletionSpecOld();
     }
-    const spec = this.withClause!.getSymbolCompletionSpec();
+    const spec = this.withClause!.getSymbolCompletionSpecOld();
     const id = spec.toMatch;
     const tokenType = spec.tokenTypes.values().next()!.value!;
     //Explanation:  the user is asked for a property name (id) - which will be "" initially

@@ -39,11 +39,11 @@ export class ParamDefNode extends AbstractSequence {
     }
   }
 
-  getSymbolCompletionSpec(): SymbolCompletionSpec {
+  getSymbolCompletionSpecOld(): SymbolCompletionSpec {
     const elements = this.getElements();
 
     if (elements.length >= 6 && this.getElements()[4].status === ParseStatus.valid) {
-      return this.getElements()[5].getSymbolCompletionSpec();
+      return this.getElements()[5].getSymbolCompletionSpecOld();
     }
 
     return new SymbolCompletionSpec("", [TokenType.none]);
