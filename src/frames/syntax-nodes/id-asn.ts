@@ -52,7 +52,7 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
     const symbol = this.getSymbol();
 
     mustNotBeKeyword(this.id, this.compileErrors, this.fieldId);
-    mustBeKnownSymbol(symbol, undefined, this.compileErrors, this.fieldId);
+    mustBeKnownSymbol(symbol, this.updatedScope, this.compileErrors, this.fieldId);
 
     if (!isMemberOnFieldsClass(symbol, transforms(), this.scope)) {
       mustBePublicMember(symbol, this.compileErrors, this.fieldId);
