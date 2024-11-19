@@ -32,11 +32,11 @@ export class CSV extends AbstractSequence {
     super.parseText(text);
   }
 
-  getCompletionAsHtml(): string {
-    let comp = super.getCompletionAsHtml();
+  getSyntaxCompletionAsHtml(): string {
+    let comp = super.getSyntaxCompletionAsHtml();
     if (this.minimum > 0 && this.matchedText.length === 0) {
       const el = this.elementConstructor();
-      comp = el.getCompletionAsHtml();
+      comp = el.getSyntaxCompletionAsHtml();
     }
     return comp;
   }

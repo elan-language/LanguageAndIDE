@@ -24,7 +24,7 @@ export class NewInstance extends AbstractSequence {
     this.addElement(this.type);
     this.addElement(new PunctuationNode(OPEN_BRACKET));
     this.args = new CSV(() => new ExprNode(), 0);
-    this.args.setCompletionWhenEmpty("<i>arguments</i>");
+    this.args.setSyntaxCompletionWhenEmpty("<i>arguments</i>");
     this.addElement(this.args);
     this.addElement(new PunctuationNode(CLOSE_BRACKET));
     this.withClause = new OptionalNode(new WithClause());

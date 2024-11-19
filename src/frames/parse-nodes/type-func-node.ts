@@ -28,19 +28,19 @@ export class TypeFuncNode extends AbstractSequence {
       const sp = () => new SpaceNode(Space.required);
       const inputTypesSp = new Sequence([inputTypes, sp]);
       this.inputTypes = new OptionalNode(inputTypesSp);
-      this.inputTypes.setCompletionWhenEmpty("<i>input Type(s)</i>");
+      this.inputTypes.setSyntaxCompletionWhenEmpty("<i>input Type(s)</i>");
       this.addElement(this.inputTypes);
       this.addElement(new PunctuationNode(ARROW));
       this.addElement(new SpaceNode(Space.required));
       this.returnType = new TypeNode();
-      this.returnType.setCompletionWhenEmpty("<i>return Type</i>");
+      this.returnType.setSyntaxCompletionWhenEmpty("<i>return Type</i>");
       this.addElement(this.returnType);
       this.addElement(new PunctuationNode(GT));
       super.parseText(text.trimStart());
     }
   }
 
-  getCompletionAsHtml(): string {
-    return super.getCompletionAsHtml();
+  getSyntaxCompletionAsHtml(): string {
+    return super.getSyntaxCompletionAsHtml();
   }
 }

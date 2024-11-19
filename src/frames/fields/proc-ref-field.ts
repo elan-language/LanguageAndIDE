@@ -25,7 +25,7 @@ export class ProcRefField extends AbstractField {
   }
   initialiseRoot(): ParseNode {
     this.rootNode = new Alternatives([this.proc, this.qualProc]);
-    this.rootNode.setCompletionWhenEmpty(this.placeholder); //Need to test proc first, otherwise valid proc would be treated as instance part of an incomplete qualProc
+    this.rootNode.setSyntaxCompletionWhenEmpty(this.placeholder); //Need to test proc first, otherwise valid proc would be treated as instance part of an incomplete qualProc
     return this.rootNode;
   }
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) => source.readUntil(/\(/);

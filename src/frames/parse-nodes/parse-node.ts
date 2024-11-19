@@ -13,8 +13,8 @@ export interface ParseNode {
   renderAsSource(): string;
   compile(): string;
 
-  getCompletionAsHtml(): string;
-  setCompletionWhenEmpty(ph: string): void;
+  getSyntaxCompletionAsHtml(): string;
+  setSyntaxCompletionWhenEmpty(ph: string): void;
 
   getSymbolCompletionSpec(): SymbolCompletionSpec;
   getActiveNode(): ParseNode;

@@ -27,7 +27,7 @@ export class PunctuationNode extends FixedTextNode {
     return escapeHtmlChars(this.renderAsSource());
   }
 
-  getCompletionAsHtml(): string {
+  getSyntaxCompletionAsHtml(): string {
     let comp = ``;
     const matched = this.matchedText.length;
     const kw = this.fixedText.length;

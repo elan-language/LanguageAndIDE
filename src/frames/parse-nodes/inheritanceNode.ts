@@ -16,7 +16,7 @@ export class InheritanceNode extends AbstractSequence {
       this.addElement(this.inherits);
       this.addElement(new SpaceNode(Space.required));
       this.typeList = new CSV(() => new TypeNode(), 1);
-      this.typeList.setCompletionWhenEmpty("Type(s) - comma-separated");
+      this.typeList.setSyntaxCompletionWhenEmpty("Type(s) - comma-separated");
       this.addElement(this.typeList);
       super.parseText(text);
     }

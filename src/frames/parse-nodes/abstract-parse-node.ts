@@ -14,11 +14,11 @@ export abstract class AbstractParseNode implements ParseNode {
   //SpaceNode and sub-classes of FixedTextNode or of AbstractSequence
   _done: boolean = false;
 
-  setCompletionWhenEmpty(ph: string) {
+  setSyntaxCompletionWhenEmpty(ph: string) {
     this.completionWhenEmpty = ph;
   }
 
-  getCompletionAsHtml(): string {
+  getSyntaxCompletionAsHtml(): string {
     return this.matchedText === "" ? `${this.completionWhenEmpty}` : "";
   }
 

@@ -23,7 +23,7 @@ export class Lambda extends AbstractSequence {
       const sp = () => new SpaceNode(Space.required);
       const paramListSp = new Sequence([paramList, sp]);
       this.params = new OptionalNode(paramListSp);
-      this.params.setCompletionWhenEmpty("<i>name</i> as <i>Type</i>, ...");
+      this.params.setSyntaxCompletionWhenEmpty("<i>name</i> as <i>Type</i>, ...");
       this.addElement(this.params);
       this.addElement(new PunctuationNode(ARROW));
       this.addElement(new SpaceNode(Space.required));

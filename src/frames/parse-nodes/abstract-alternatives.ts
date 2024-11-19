@@ -52,8 +52,8 @@ export abstract class AbstractAlternatives extends AbstractParseNode {
   compile(): string {
     return this.bestMatch ? this.bestMatch.compile() : "";
   }
-  getCompletionAsHtml(): string {
-    const c = this.bestMatch ? this.bestMatch.getCompletionAsHtml() : super.getCompletionAsHtml();
+  getSyntaxCompletionAsHtml(): string {
+    const c = this.bestMatch ? this.bestMatch.getSyntaxCompletionAsHtml() : super.getSyntaxCompletionAsHtml();
     return c;
   }
 

@@ -14,7 +14,7 @@ export abstract class FixedTextNode extends AbstractParseNode {
     return `must match ${this.fixedText}`;
   }
 
-  getCompletionAsHtml(): string {
+  getSyntaxCompletionAsHtml(): string {
     return this.status === ParseStatus.empty ? `${this.fixedText}` : "";
   }
 }

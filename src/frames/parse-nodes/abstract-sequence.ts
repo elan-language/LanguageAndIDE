@@ -90,11 +90,11 @@ export abstract class AbstractSequence extends AbstractParseNode {
   compile(): string {
     return this.elements.reduce((result, current) => result + current.compile(), "");
   }
-  getCompletionAsHtml(): string {
+  getSyntaxCompletionAsHtml(): string {
     const c =
       this.elements.length > 0
-        ? this.elements.reduce((result, current) => `${result}${current.getCompletionAsHtml()}`, "")
-        : super.getCompletionAsHtml();
+        ? this.elements.reduce((result, current) => `${result}${current.getSyntaxCompletionAsHtml()}`, "")
+        : super.getSyntaxCompletionAsHtml();
     return c;
   }
 }

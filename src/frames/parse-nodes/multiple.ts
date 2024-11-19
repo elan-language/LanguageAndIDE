@@ -63,9 +63,9 @@ export class Multiple extends AbstractParseNode {
     return this.elements.reduce((result, current) => result + current.renderAsSource(), "");
   }
 
-  getCompletionAsHtml(): string {
+  getSyntaxCompletionAsHtml(): string {
     return this.elements.reduce(
-      (result, current) => `${result}${current.getCompletionAsHtml()}`,
+      (result, current) => `${result}${current.getSyntaxCompletionAsHtml()}`,
       "",
     );
   }

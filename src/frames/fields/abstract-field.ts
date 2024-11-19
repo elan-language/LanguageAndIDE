@@ -116,7 +116,7 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   getCompletion(): string {
-    return this.rootNode ? this.rootNode.getCompletionAsHtml() : "";
+    return this.rootNode ? this.rootNode.getSyntaxCompletionAsHtml() : "";
   }
 
   getPlainTextCompletion(): string {
@@ -639,7 +639,7 @@ export abstract class AbstractField implements Selectable, Field {
     );
   }
 
-  protected getSymbolCompletionSpec(): SymbolCompletionSpec {
+  protected getSymbolCompletionSpecOld(): SymbolCompletionSpec {
     return this.rootNode
       ? this.rootNode.getSymbolCompletionSpec()
       : new SymbolCompletionSpec("", [TokenType.none]);
@@ -647,7 +647,7 @@ export abstract class AbstractField implements Selectable, Field {
 
   protected symbolCompletionAsHtml(transforms: Transforms): string {
     let popupAsHtml = "";
-    const spec = this.getSymbolCompletionSpec();
+    const spec = this.getSymbolCompletionSpecOld();
     const tokenType = spec.tokenTypes.values().next()!.value!;
     if (this.showAutoComplete(tokenType)) {
       [this.autocompleteMatch, this.autocompleteSymbols] = this.matchingSymbolsForId(

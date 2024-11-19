@@ -382,7 +382,7 @@ export function testCompletion(
 ) {
   node.parseText(text);
   assert.equal(node.status, status);
-  assert.equal(node.getCompletionAsHtml(), completion);
+  assert.equal(node.getSyntaxCompletionAsHtml(), completion);
 }
 
 export const intType = IntType.Instance;
