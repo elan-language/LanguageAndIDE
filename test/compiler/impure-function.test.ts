@@ -77,7 +77,7 @@ end procedure
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot call 'foo' type Procedure () in an expression"]);
+    assertDoesNotCompile(fileImpl, ["Cannot call procedure 'foo' within an expression"]);
   });
 
   test("Fail_CannotCallAFunctionLikeAProcedure", async () => {

@@ -603,3 +603,15 @@ export function filterForTokenType(tt: TokenType): (s?: ElanSymbol) => boolean {
       return (s?: ElanSymbol) => isExpression(s!, transforms()) && !isTypeName(s);
   }
 }
+
+export function symbolScopeToFriendlyName(ss: SymbolScope) {
+  switch (ss) {
+    case SymbolScope.member:
+      return "property";
+    case SymbolScope.parameter:
+    case SymbolScope.outParameter:
+      return "parameter";
+    default:
+      return "identifier";
+  }
+}
