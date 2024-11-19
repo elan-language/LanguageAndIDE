@@ -32,8 +32,10 @@ export abstract class AbstractAlternatives extends AbstractParseNode {
         ) {
           this.firstBestMatch = alt;
           this.additionalBestMatches = [];
-        } else if (alt.remainingText.length === this.firstBestMatch.remainingText.length &&
-          alt.status === this.firstBestMatch.status) {
+        } else if (
+          alt.remainingText.length === this.firstBestMatch.remainingText.length &&
+          alt.status === this.firstBestMatch.status
+        ) {
           this.additionalBestMatches.push(alt);
         }
         i++;
@@ -59,7 +61,9 @@ export abstract class AbstractAlternatives extends AbstractParseNode {
     return this.firstBestMatch ? this.firstBestMatch.compile() : "";
   }
   getCompletionAsHtml(): string {
-    const c = this.firstBestMatch ? this.firstBestMatch.getCompletionAsHtml() : super.getCompletionAsHtml();
+    const c = this.firstBestMatch
+      ? this.firstBestMatch.getCompletionAsHtml()
+      : super.getCompletionAsHtml();
     return c;
   }
 
