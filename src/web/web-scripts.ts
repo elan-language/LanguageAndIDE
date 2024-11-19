@@ -42,19 +42,123 @@ const runStatus = document.getElementById("run-status") as HTMLDivElement;
 const codeControls = document.getElementById("code-controls") as HTMLDivElement;
 const demoFiles = document.getElementsByClassName("demo-file");
 
-let file: File;
-let doOnce = true;
-let profile: Profile;
-let lastSavedHash = "";
-
-const elanInputOutput = new WebInputOutput(consoleDiv, graphicsDiv);
-
-let inactivityTimer: any | undefined = undefined;
 const inactivityTimeout = 2000;
 const stdlib = new StdLib();
 const system = stdlib.system;
 system.stdlib = stdlib; // to allow injection
 
+const elanInputOutput = new WebInputOutput(consoleDiv, graphicsDiv);
+
+let file: File;
+let doOnce = true;
+let profile: Profile;
+let lastSavedHash = "";
+let programWorker: Worker;
+let inactivityTimer: any | undefined = undefined;
+
+// add all the listeners
+
+trimButton.addEventListener("click", async () => {
+  file.removeAllSelectorsThatCanBe();
+  await renderAsHtml();
+});
+
+runButton?.addEventListener("click", async () => {
+  try {
+    clearDisplays();
+    file.setRunStatus(RunStatus.running);
+    await updateDisplayValues();
+    const path = `${document.location.origin}${document.location.pathname}`.replace(
+      "/index.html",
+      "",
+    );
+    const jsCode = file.compileAsWorker(path);
+    const asUrl = "data:text/javascript;base64," + btoa(jsCode);
+
+    programWorker = new Worker(asUrl, { type: "module" });
+
+    programWorker.onmessage = async (e: MessageEvent<WebWorkerMessage>) => {
+      const data = e.data;
+
+      switch (data.type) {
+        case "write":
+          await handleWorkerIO(data);
+          break;
+        case "status":
+          switch (data.status) {
+            case "finished":
+              await handleWorkerFinished();
+              break;
+            case "error":
+              await handleWorkerError(data);
+              break;
+          }
+      }
+    };
+
+    programWorker.onerror = async (ev: ErrorEvent) => {
+      const err = new ElanRuntimeError(ev.message);
+      await showError(err, file.fileName, false);
+      file.setRunStatus(RunStatus.error);
+      await updateDisplayValues();
+    };
+
+    programWorker.postMessage({ type: "start" } as WebWorkerMessage);
+  } catch (e) {
+    console.warn(e);
+    file.setRunStatus(RunStatus.error);
+    await updateDisplayValues();
+  }
+});
+
+stopButton?.addEventListener("click", async () => {
+  programWorker?.terminate();
+  file.setRunStatus(RunStatus.default);
+  await updateDisplayValues();
+});
+
+clearConsoleButton?.addEventListener("click", () => {
+  elanInputOutput.clearConsole();
+});
+
+clearGraphicsButton?.addEventListener("click", () => {
+  elanInputOutput.clearGraphics();
+});
+
+expandCollapseButton?.addEventListener("click", async () => {
+  file.expandCollapseAll();
+  await renderAsHtml();
+});
+
+newButton?.addEventListener("click", async () => {
+  clearDisplays();
+  await resetFile();
+});
+
+loadButton.addEventListener("click", chooser(handleUpload));
+
+appendButton.addEventListener("click", chooser(handleAppend));
+
+saveButton.addEventListener("click", handleDownload);
+
+for (const elem of demoFiles) {
+  elem.addEventListener("click", async () => {
+    const fileName = `${elem.id}`;
+    const f = await fetch(fileName, { mode: "same-origin" });
+    const rawCode = await f.text();
+    const code = new CodeSourceFromString(rawCode);
+    file = new FileImpl(hash, profile, transforms());
+    file.fileName = fileName;
+    try {
+      await file.parseFrom(code);
+      await initialDisplay(true);
+    } catch (e) {
+      await showError(e as Error, fileName, true);
+    }
+  });
+}
+
+// fetch profile triggers page display
 fetchProfile()
   .then(async (p) => await setup(p))
   .catch(async (e) => {
@@ -133,6 +237,7 @@ async function initialDisplay(reset: boolean) {
   if (ps === ParseStatus.valid || ps === ParseStatus.default) {
     await refreshAndDisplay();
     lastSavedHash = file.currentHash;
+    updateNameAndSavedStatus();
   } else {
     const msg = file.parseError || "Failed load code";
     await showError(new Error(msg), file.fileName, reset);
@@ -160,10 +265,13 @@ function getModKey(e: KeyboardEvent | MouseEvent) {
   return { control: e.ctrlKey, shift: e.shiftKey, alt: e.altKey };
 }
 
-async function updateDisplayValues() {
+function updateNameAndSavedStatus() {
   const unsaved = lastSavedHash === file.currentHash ? "" : " UNSAVED";
-
   codeTitle.innerText = `File: ${file.fileName}${unsaved}`;
+}
+
+async function updateDisplayValues() {
+  updateNameAndSavedStatus();
   parse.setAttribute("class", file.readParseStatusForDashboard());
   compile.setAttribute("class", file.readCompileStatusForDashboard());
   test.setAttribute("class", file.readTestStatusForDashboard());
@@ -456,13 +564,6 @@ async function postMessage(e: editorEvent) {
   }
 }
 
-trimButton.addEventListener("click", async () => {
-  file.removeAllSelectorsThatCanBe();
-  await renderAsHtml();
-});
-
-let programWorker: Worker;
-
 function readMsg(value: string | [string, string]) {
   return { type: "read", value: value } as WebWorkerReadMessage;
 }
@@ -526,78 +627,6 @@ async function handleWorkerError(data: WebWorkerStatusMessage) {
   await updateDisplayValues();
 }
 
-runButton?.addEventListener("click", async () => {
-  try {
-    clearDisplays();
-    file.setRunStatus(RunStatus.running);
-    await updateDisplayValues();
-    const path = `${document.location.origin}${document.location.pathname}`.replace(
-      "/index.html",
-      "",
-    );
-    const jsCode = file.compileAsWorker(path);
-    const asUrl = "data:text/javascript;base64," + btoa(jsCode);
-
-    programWorker = new Worker(asUrl, { type: "module" });
-
-    programWorker.onmessage = async (e: MessageEvent<WebWorkerMessage>) => {
-      const data = e.data;
-
-      switch (data.type) {
-        case "write":
-          await handleWorkerIO(data);
-          break;
-        case "status":
-          switch (data.status) {
-            case "finished":
-              await handleWorkerFinished();
-              break;
-            case "error":
-              await handleWorkerError(data);
-              break;
-          }
-      }
-    };
-
-    programWorker.onerror = async (ev: ErrorEvent) => {
-      const err = new ElanRuntimeError(ev.message);
-      await showError(err, file.fileName, false);
-      file.setRunStatus(RunStatus.error);
-      await updateDisplayValues();
-    };
-
-    programWorker.postMessage({ type: "start" } as WebWorkerMessage);
-  } catch (e) {
-    console.warn(e);
-    file.setRunStatus(RunStatus.error);
-    await updateDisplayValues();
-  }
-});
-
-stopButton?.addEventListener("click", async () => {
-  programWorker?.terminate();
-  file.setRunStatus(RunStatus.default);
-  await updateDisplayValues();
-});
-
-clearConsoleButton?.addEventListener("click", () => {
-  elanInputOutput.clearConsole();
-});
-
-clearGraphicsButton?.addEventListener("click", () => {
-  elanInputOutput.clearGraphics();
-});
-
-expandCollapseButton?.addEventListener("click", async () => {
-  file.expandCollapseAll();
-  await renderAsHtml();
-});
-
-newButton?.addEventListener("click", async () => {
-  clearDisplays();
-  await resetFile();
-});
-
 function chooser(uploader: (event: Event) => void) {
   return () => {
     const f = document.createElement("input");
@@ -610,8 +639,6 @@ function chooser(uploader: (event: Event) => void) {
     f.click();
   };
 }
-
-loadButton.addEventListener("click", chooser(handleUpload));
 
 function handleUpload(event: Event) {
   const elanFile = (event.target as any).files?.[0] as any;
@@ -638,8 +665,6 @@ function handleUpload(event: Event) {
 
   event.preventDefault();
 }
-
-appendButton.addEventListener("click", chooser(handleAppend));
 
 function handleAppend(event: Event) {
   const elanFile = (event.target as any).files?.[0] as any;
@@ -697,23 +722,4 @@ async function handleDownload(event: Event) {
   lastSavedHash = file.currentHash;
   event.preventDefault();
   await renderAsHtml();
-}
-
-saveButton.addEventListener("click", handleDownload);
-
-for (const elem of demoFiles) {
-  elem.addEventListener("click", async () => {
-    const fileName = `${elem.id}`;
-    const f = await fetch(fileName, { mode: "same-origin" });
-    const rawCode = await f.text();
-    const code = new CodeSourceFromString(rawCode);
-    file = new FileImpl(hash, profile, transforms());
-    file.fileName = fileName;
-    try {
-      await file.parseFrom(code);
-      await initialDisplay(true);
-    } catch (e) {
-      await showError(e as Error, fileName, true);
-    }
-  });
 }
