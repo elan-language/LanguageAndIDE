@@ -1,4 +1,4 @@
-import { TokenType } from "../helpers";
+import { SymbolCompletionSpec, TokenType } from "../helpers";
 import { propertyKeyword } from "../keywords";
 import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
@@ -19,19 +19,19 @@ export class AssignableNode extends AbstractSequence {
     this.addElement(this.simpleOrProp);
   }
 
-  override getSymbolCompletionSpec(): [string, TokenType] {
+  override getSymbolCompletionSpec(): SymbolCompletionSpec {
     const bestMatch = this.simpleOrProp.bestMatch;
 
     if (bestMatch instanceof IdentifierNode) {
-      return [bestMatch.matchedText, TokenType.assignable];
+      return new SymbolCompletionSpec(bestMatch.matchedText, TokenType.assignable);
     }
 
     if (bestMatch instanceof Sequence) {
       const elements = bestMatch.getElements();
 
-      return [elements[1].matchedText ?? "", TokenType.property];
+      return new SymbolCompletionSpec(elements[1].matchedText ?? "", TokenType.property);
     }
 
-    return ["", TokenType.none];
+    return new SymbolCompletionSpec("", TokenType.none);
   }
 }

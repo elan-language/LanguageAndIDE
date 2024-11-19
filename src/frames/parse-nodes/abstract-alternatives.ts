@@ -1,4 +1,4 @@
-import { TokenType } from "../helpers";
+import { SymbolCompletionSpec } from "../helpers";
 import { ParseStatus } from "../status-enums";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { ParseNode } from "./parse-node";
@@ -57,7 +57,7 @@ export abstract class AbstractAlternatives extends AbstractParseNode {
     return c;
   }
 
-  override getSymbolCompletionSpec(): [string, TokenType] {
+  override getSymbolCompletionSpec(): SymbolCompletionSpec {
     return this.bestMatch?.getSymbolCompletionSpec() ?? super.getSymbolCompletionSpec();
   }
 

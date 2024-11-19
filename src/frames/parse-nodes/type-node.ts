@@ -1,4 +1,4 @@
-import { TokenType } from "../helpers";
+import { SymbolCompletionSpec, TokenType } from "../helpers";
 import { OPEN_BRACE, OPEN_BRACKET, OPEN_SQ_BRACKET } from "../symbols";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { TypeDictionaryNode } from "./type-dictionary-node";
@@ -38,7 +38,7 @@ export class TypeNode extends AbstractAlternatives {
     }
   }
 
-  override getSymbolCompletionSpec(): [string, TokenType] {
-    return [this.matchedText, TokenType.type];
+  override getSymbolCompletionSpec(): SymbolCompletionSpec {
+    return new SymbolCompletionSpec(this.matchedText, TokenType.type);
   }
 }

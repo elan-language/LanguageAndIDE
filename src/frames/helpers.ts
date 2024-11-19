@@ -19,8 +19,8 @@ import { CompileStatus, DisplayStatus, ParseStatus, RunStatus, TestStatus } from
 import { ArrayType } from "./symbols/array-list-type";
 import { ClassType } from "./symbols/class-type";
 import { DeconstructedListType } from "./symbols/deconstructed-list-type";
-import { DeconstructedTupleType } from "./symbols/deconstructed-tuple-type";
 import { DeconstructedRecordType } from "./symbols/deconstructed-record-type";
+import { DeconstructedTupleType } from "./symbols/deconstructed-tuple-type";
 import { ListType } from "./symbols/list-type";
 import { TupleType } from "./symbols/tuple-type";
 
@@ -256,9 +256,11 @@ export enum TokenType {
 }
 
 export class SymbolCompletionSpec {
-
+  constructor(toMatch: string, oneToken: TokenType) {
+    this.toMatch = toMatch;
+    this.tokenTypes.push(oneToken);
+  }
   toMatch: string = "";
-  tokens: TokenType[] = [];
-  keywordsToOffer: string[] = []; 
-
+  tokenTypes: TokenType[] = [];
+  keywordsToOffer: string[] = [];
 }

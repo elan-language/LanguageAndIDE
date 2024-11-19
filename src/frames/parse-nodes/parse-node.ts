@@ -1,4 +1,4 @@
-import { TokenType } from "../helpers";
+import { SymbolCompletionSpec } from "../helpers";
 import { ParseStatus } from "../status-enums";
 
 export interface ParseNode {
@@ -16,7 +16,7 @@ export interface ParseNode {
   getCompletionAsHtml(): string;
   setCompletionWhenEmpty(ph: string): void;
 
-  getSymbolCompletionSpec(): [string, TokenType];
+  getSymbolCompletionSpec(): SymbolCompletionSpec;
   getActiveNode(): ParseNode;
   isDone(): boolean;
   isValid(): boolean;

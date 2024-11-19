@@ -1,4 +1,4 @@
-import { TokenType } from "../helpers";
+import { SymbolCompletionSpec } from "../helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { ParseNode } from "./parse-node";
 
@@ -18,7 +18,7 @@ export class Sequence extends AbstractSequence {
     super.parseText(text);
   }
 
-  getSymbolCompletionSpec(): [string, TokenType] {
+  getSymbolCompletionSpec(): SymbolCompletionSpec {
     const elems = this.getElements();
 
     return elems[elems.length - 1].getSymbolCompletionSpec();

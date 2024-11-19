@@ -1,12 +1,13 @@
 import { CodeSource } from "../code-source";
 import { CompileError } from "../compile-error";
 import {
-    TokenType,
-    escapeHtmlChars,
-    helper_CompileOrParseAsDisplayStatus,
-    helper_compileMsgAsHtml,
-    helper_deriveCompileStatusFromErrors,
-    isCollapsible,
+  SymbolCompletionSpec,
+  TokenType,
+  escapeHtmlChars,
+  helper_CompileOrParseAsDisplayStatus,
+  helper_compileMsgAsHtml,
+  helper_deriveCompileStatusFromErrors,
+  isCollapsible,
 } from "../helpers";
 import { AstNode } from "../interfaces/ast-node";
 import { editorEvent } from "../interfaces/editor-event";
@@ -21,10 +22,10 @@ import { CSV } from "../parse-nodes/csv";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { CompileStatus, DisplayStatus, ParseStatus } from "../status-enums";
 import {
-    filterForTokenType,
-    filteredSymbols,
-    isProperty,
-    removeIfSingleFullMatch,
+  filterForTokenType,
+  filteredSymbols,
+  isProperty,
+  removeIfSingleFullMatch,
 } from "../symbols/symbol-helpers";
 import { UnknownType } from "../symbols/unknown-type";
 import { EmptyAsn } from "../syntax-nodes/empty-asn";
@@ -638,16 +639,19 @@ export abstract class AbstractField implements Selectable, Field {
     );
   }
 
-  protected getSymbolCompletionSpec(): [string, TokenType] {
-    return this.rootNode ? this.rootNode.getSymbolCompletionSpec() : ["", TokenType.none];
+  protected getSymbolCompletionSpec(): SymbolCompletionSpec {
+    return this.rootNode
+      ? this.rootNode.getSymbolCompletionSpec()
+      : new SymbolCompletionSpec("", TokenType.none);
   }
 
   protected symbolCompletionAsHtml(transforms: Transforms): string {
     let popupAsHtml = "";
-    const [id, tokenType] = this.getSymbolCompletionSpec();
+    const spec = this.getSymbolCompletionSpec();
+    const tokenType = spec.tokenTypes[0];
     if (this.showAutoComplete(tokenType)) {
       [this.autocompleteMatch, this.autocompleteSymbols] = this.matchingSymbolsForId(
-        id,
+        spec.toMatch,
         tokenType,
         transforms,
       );

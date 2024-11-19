@@ -1,4 +1,4 @@
-import { TokenType } from "../helpers";
+import { SymbolCompletionSpec, TokenType } from "../helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { CommaNode } from "./comma-node";
 import { Multiple } from "./multiple";
@@ -41,10 +41,10 @@ export class CSV extends AbstractSequence {
     return comp;
   }
 
-  getSymbolCompletionSpec(): [string, TokenType] {
+  getSymbolCompletionSpec(): SymbolCompletionSpec {
     const elems = this.getElements();
     if (elems.length === 0) {
-      return ["", TokenType.none];
+      return new SymbolCompletionSpec("", TokenType.none);
     }
 
     if (elems.length === 2) {

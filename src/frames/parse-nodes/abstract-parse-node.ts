@@ -1,4 +1,4 @@
-import { TokenType } from "../helpers";
+import { SymbolCompletionSpec, TokenType } from "../helpers";
 import { ParseStatus } from "../status-enums";
 import { ParseNode } from "./parse-node";
 
@@ -54,8 +54,8 @@ export abstract class AbstractParseNode implements ParseNode {
     this.errorMessage = other.errorMessage;
   }
 
-  getSymbolCompletionSpec(): [string, TokenType] {
-    return ["", TokenType.none];
+  getSymbolCompletionSpec(): SymbolCompletionSpec {
+    return new SymbolCompletionSpec("", TokenType.none);
   }
 
   getActiveNode(): ParseNode {

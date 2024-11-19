@@ -1,4 +1,4 @@
-import { TokenType } from "../helpers";
+import { SymbolCompletionSpec } from "../helpers";
 import { copyKeyword } from "../keywords";
 import { AbstractSequence } from "./abstract-sequence";
 import { IdentifierNode } from "./identifier-node";
@@ -27,14 +27,16 @@ export class CopyWith extends AbstractSequence {
     }
   }
 
-  getSymbolCompletionSpec(): [string, TokenType] {
+  getSymbolCompletionSpec(): SymbolCompletionSpec {
     if (this.original && !this.original?.remainingText.includes(" ")) {
       return this.original.getSymbolCompletionSpec();
     }
-    const [id, tokenType] = this.withClause!.getSymbolCompletionSpec();
+    const spec = this.withClause!.getSymbolCompletionSpec();
+    const id = spec.toMatch;
+    const tokenType = spec.tokenTypes[0];
     //Explanation:  the user is asked for a property name (id) - which will be "" initially
     //However, the symbol table is not being asked to match 'id', but 'instance.id'
     //so that user is offered only the properties for that instance type.
-    return [`${this.original?.matchedText}.${id}`, tokenType];
+    return new SymbolCompletionSpec(`${this.original?.matchedText}.${id}`, tokenType);
   }
 }

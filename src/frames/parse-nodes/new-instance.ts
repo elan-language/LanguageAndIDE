@@ -1,4 +1,4 @@
-import { TokenType } from "../helpers";
+import { SymbolCompletionSpec, TokenType } from "../helpers";
 import { newKeyword } from "../keywords";
 import { CLOSE_BRACKET, OPEN_BRACKET } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
@@ -32,13 +32,14 @@ export class NewInstance extends AbstractSequence {
     super.parseText(text);
   }
 
-  getSymbolCompletionSpec(): [string, TokenType] {
-    const [id, tokenType] = this.withClause!.getSymbolCompletionSpec();
-
+  getSymbolCompletionSpec(): SymbolCompletionSpec {
+    const spec = this.withClause!.getSymbolCompletionSpec();
+    const id = spec.toMatch;
+    const tokenType = spec.tokenTypes[0];
     if (tokenType !== TokenType.none) {
-      return [`${this.type?.matchedText}.${id}`, tokenType];
+      return new SymbolCompletionSpec(`${this.type?.matchedText}.${id}`, tokenType);
     }
 
-    return [this.type?.matchedText ?? "", TokenType.type];
+    return new SymbolCompletionSpec(this.type?.matchedText ?? "", TokenType.type);
   }
 }
