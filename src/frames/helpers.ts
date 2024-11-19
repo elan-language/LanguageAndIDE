@@ -254,3 +254,11 @@ export enum TokenType {
   idOrProcedure,
   expression,
 }
+
+export class SymbolCompletionSpec {
+
+  toMatch: string = "";
+  tokens: TokenType[] = [];
+  keywordsToOffer: string[] = []; 
+
+}

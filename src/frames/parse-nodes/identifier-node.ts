@@ -22,7 +22,7 @@ export class IdentifierNode extends AbstractParseNode {
     }
   }
 
-  getToMatchAndTokenType(): [string, TokenType] {
+  getSymbolCompletionSpec(): [string, TokenType] {
     return [this.matchedText, TokenType.idOrProcedure];
   }
 }

@@ -38,13 +38,13 @@ export class BinaryExpression extends AbstractSequence {
     return `${this.lhs?.renderAsSource()}${this.op!.renderAsSource()}${this.rhs?.renderAsSource()}`;
   }
 
-  getToMatchAndTokenType(): [string, TokenType] {
+  getSymbolCompletionSpec(): [string, TokenType] {
     if (this.rhs && this.rhs.status === ParseStatus.valid) {
-      return this.rhs.getToMatchAndTokenType();
+      return this.rhs.getSymbolCompletionSpec();
     }
 
     if (this.lhs && this.lhs?.remainingText !== " ") {
-      return this.lhs.getToMatchAndTokenType();
+      return this.lhs.getSymbolCompletionSpec();
     }
 
     return ["", TokenType.none];

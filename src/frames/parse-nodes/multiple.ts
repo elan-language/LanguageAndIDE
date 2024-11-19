@@ -70,12 +70,12 @@ export class Multiple extends AbstractParseNode {
     );
   }
 
-  getToMatchAndTokenType(): [string, TokenType] {
+  getSymbolCompletionSpec(): [string, TokenType] {
     const elems = this.getElements();
     if (elems.length === 0) {
       return ["", TokenType.none];
     }
-    return elems[elems.length - 1].getToMatchAndTokenType();
+    return elems[elems.length - 1].getSymbolCompletionSpec();
   }
 
   getActiveNode(): ParseNode {

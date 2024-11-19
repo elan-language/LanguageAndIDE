@@ -61,7 +61,7 @@ export class TermSimple extends AbstractSequence {
     super.parseText(text);
   }
 
-  getToMatchAndTokenType(): [string, TokenType] {
+  getSymbolCompletionSpec(): [string, TokenType] {
     return [this.matchedText, TokenType.expression];
   }
 }

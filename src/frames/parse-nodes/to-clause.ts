@@ -37,10 +37,10 @@ export class ToClause extends AbstractSequence {
     return code;
   }
 
-  getToMatchAndTokenType(): [string, TokenType] {
+  getSymbolCompletionSpec(): [string, TokenType] {
     const elems = this.getElements();
     if (elems[3].status === ParseStatus.valid) {
-      return elems[4].getToMatchAndTokenType();
+      return elems[4].getSymbolCompletionSpec();
     }
 
     if (elems[1].status !== ParseStatus.valid) {

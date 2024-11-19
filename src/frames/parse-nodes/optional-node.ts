@@ -47,8 +47,8 @@ export class OptionalNode extends AbstractParseNode {
     return c;
   }
 
-  getToMatchAndTokenType(): [string, TokenType] {
-    return this.matchedNode?.getToMatchAndTokenType() ?? ["", TokenType.none];
+  getSymbolCompletionSpec(): [string, TokenType] {
+    return this.matchedNode?.getSymbolCompletionSpec() ?? ["", TokenType.none];
   }
 
   getActiveNode(): ParseNode {

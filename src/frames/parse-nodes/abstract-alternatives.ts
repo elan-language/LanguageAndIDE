@@ -57,8 +57,8 @@ export abstract class AbstractAlternatives extends AbstractParseNode {
     return c;
   }
 
-  override getToMatchAndTokenType(): [string, TokenType] {
-    return this.bestMatch?.getToMatchAndTokenType() ?? super.getToMatchAndTokenType();
+  override getSymbolCompletionSpec(): [string, TokenType] {
+    return this.bestMatch?.getSymbolCompletionSpec() ?? super.getSymbolCompletionSpec();
   }
 
   getActiveNode(): ParseNode {

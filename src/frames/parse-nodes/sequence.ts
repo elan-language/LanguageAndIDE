@@ -18,9 +18,9 @@ export class Sequence extends AbstractSequence {
     super.parseText(text);
   }
 
-  getToMatchAndTokenType(): [string, TokenType] {
+  getSymbolCompletionSpec(): [string, TokenType] {
     const elems = this.getElements();
 
-    return elems[elems.length - 1].getToMatchAndTokenType();
+    return elems[elems.length - 1].getSymbolCompletionSpec();
   }
 }

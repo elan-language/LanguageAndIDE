@@ -41,7 +41,7 @@ export class CSV extends AbstractSequence {
     return comp;
   }
 
-  getToMatchAndTokenType(): [string, TokenType] {
+  getSymbolCompletionSpec(): [string, TokenType] {
     const elems = this.getElements();
     if (elems.length === 0) {
       return ["", TokenType.none];
@@ -49,10 +49,10 @@ export class CSV extends AbstractSequence {
 
     if (elems.length === 2) {
       if ((elems[1] as Multiple).getElements().length > 0) {
-        return elems[1].getToMatchAndTokenType();
+        return elems[1].getSymbolCompletionSpec();
       }
     }
 
-    return elems[0].getToMatchAndTokenType();
+    return elems[0].getSymbolCompletionSpec();
   }
 }

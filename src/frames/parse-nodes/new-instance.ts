@@ -32,8 +32,8 @@ export class NewInstance extends AbstractSequence {
     super.parseText(text);
   }
 
-  getToMatchAndTokenType(): [string, TokenType] {
-    const [id, tokenType] = this.withClause!.getToMatchAndTokenType();
+  getSymbolCompletionSpec(): [string, TokenType] {
+    const [id, tokenType] = this.withClause!.getSymbolCompletionSpec();
 
     if (tokenType !== TokenType.none) {
       return [`${this.type?.matchedText}.${id}`, tokenType];

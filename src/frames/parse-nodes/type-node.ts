@@ -38,7 +38,7 @@ export class TypeNode extends AbstractAlternatives {
     }
   }
 
-  override getToMatchAndTokenType(): [string, TokenType] {
+  override getSymbolCompletionSpec(): [string, TokenType] {
     return [this.matchedText, TokenType.type];
   }
 }
