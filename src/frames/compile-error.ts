@@ -83,11 +83,23 @@ export class CannotUseSystemMethodInAFunction extends CompileError {
     super(Priority.illegalOperation, `Cannot use a system method in a function`, location, unknown);
   }
 }
+
 export class CannotUseLikeAFunction extends CompileError {
   constructor(id: string, type: string, location: string, unknown: boolean) {
     super(
       Priority.illegalOperation,
-      `Cannot call '${id}' type ${type} in an expression`,
+      `Cannot call procedure '${id}' within an expression`,
+      location,
+      unknown,
+    );
+  }
+}
+
+export class CannotCallAsAMethod extends CompileError {
+  constructor(id: string, symbolType: string, location: string, unknown: boolean) {
+    super(
+      Priority.illegalOperation,
+      `Cannot invoke ${symbolType} '${id}' as a method`,
       location,
       unknown,
     );

@@ -468,7 +468,7 @@ end main`;
     assertParses(fileImpl);
     assertDoesNotCompileWithId(fileImpl, "expr11", [
       "x is not defined",
-      "Cannot call 'x' type Unknown in an expression",
+      "Cannot invoke identifier 'x' as a method",
     ]);
   });
 });

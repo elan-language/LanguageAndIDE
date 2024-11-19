@@ -77,6 +77,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
     mustBePureFunctionSymbol(
       funcSymbol.symbolId,
       funcSymbolType,
+      funcSymbol.symbolScope,
       this.scope,
       this.compileErrors,
       this.fieldId,

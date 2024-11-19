@@ -1030,4 +1030,33 @@ end main`;
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["Cannot new Int"]);
   });
+
+  test("Fail_PropertyIsNotDefined", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+main
+ 
+end main
+
+class Foo
+    constructor()
+    end constructor
+
+    property vg as VectorGraphics
+
+    procedure bar()
+      set property.vg to vg.noSuch  
+    end procedure
+
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types Unknown to VectorGraphics",
+      "noSuch is not defined for type 'VectorGraphics'",
+    ]);
+  });
 });

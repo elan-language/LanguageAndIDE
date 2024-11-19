@@ -1,6 +1,7 @@
 import { Property } from "./class-members/property";
 import {
   CannotCallAFunction,
+  CannotCallAsAMethod,
   CannotUseLikeAFunction,
   CannotUseSystemMethodInAFunction,
   CompileError,
@@ -74,6 +75,7 @@ import {
   isIterableType,
   isListType,
   isProperty,
+  symbolScopeToFriendlyName,
 } from "./symbols/symbol-helpers";
 import { SymbolScope } from "./symbols/symbol-scope";
 import { TupleType } from "./symbols/tuple-type";
@@ -226,13 +228,13 @@ export function mustBeDeconstructableType(
 export function mustBePureFunctionSymbol(
   symbolId: string,
   symbolType: SymbolType,
+  symbolScope: SymbolScope,
   scope: Scope,
   compileErrors: CompileError[],
   location: string,
 ) {
   if (InFunctionScope(scope)) {
     if (!(symbolType instanceof FunctionType) || !symbolType.isPure) {
-      const imPure = symbolType instanceof FunctionType && !symbolType.isPure;
       compileErrors.push(
         new CannotUseSystemMethodInAFunction(
           symbolType.name,
@@ -241,11 +243,20 @@ export function mustBePureFunctionSymbol(
         ),
       );
     }
-  } else if (!(symbolType instanceof FunctionType)) {
+  } else if (symbolType instanceof ProcedureType) {
     compileErrors.push(
       new CannotUseLikeAFunction(
         symbolId,
         symbolType.name,
+        location,
+        symbolType instanceof UnknownType,
+      ),
+    );
+  } else if (!(symbolType instanceof FunctionType)) {
+    compileErrors.push(
+      new CannotCallAsAMethod(
+        symbolId,
+        symbolScopeToFriendlyName(symbolScope),
         location,
         symbolType instanceof UnknownType,
       ),
