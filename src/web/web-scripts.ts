@@ -45,20 +45,36 @@ const demoFiles = document.getElementsByClassName("demo-file");
 let file: File;
 let doOnce = true;
 let profile: Profile;
+let lastSavedHash = "";
 
 const elanInputOutput = new WebInputOutput(consoleDiv, graphicsDiv);
 
-function setup(p: Profile) {
+let inactivityTimer: any | undefined = undefined;
+const inactivityTimeout = 2000;
+const stdlib = new StdLib();
+const system = stdlib.system;
+system.stdlib = stdlib; // to allow injection
+
+fetchProfile()
+  .then(async (p) => await setup(p))
+  .catch(async (e) => {
+    console.warn("profile not found - using default");
+    await setup(new DefaultProfile());
+  });
+
+async function setup(p: Profile) {
   profile = p;
   file = new FileImpl(hash, profile, transforms());
-  displayFile();
+  await displayFile();
 }
 
-function renderAsHtml() {
-  file.renderAsHtml().then(
-    (c) => updateContent(c),
-    (e) => showError(e as Error, file.fileName, false),
-  );
+async function renderAsHtml() {
+  const content = await file.renderAsHtml();
+  try {
+    await updateContent(content);
+  } catch (e) {
+    await showError(e as Error, file.fileName, false);
+  }
 }
 
 function clearDisplays() {
@@ -66,18 +82,17 @@ function clearDisplays() {
   elanInputOutput.clearGraphics();
 }
 
-function resetFile(reset: boolean) {
-  clearDisplays();
-  if (reset) {
-    file = new FileImpl(hash, profile, transforms());
-    renderAsHtml();
-  }
+async function resetFile() {
+  file = new FileImpl(hash, profile, transforms());
+  await renderAsHtml();
 }
 
-function showError(err: Error, fileName: string, reset: boolean) {
+async function showError(err: Error, fileName: string, reset: boolean) {
+  clearDisplays();
   if (reset) {
-    resetFile(true);
+    await resetFile();
   }
+
   file.fileName = fileName;
 
   if (err.message === cannotLoadFile) {
@@ -101,48 +116,43 @@ function showError(err: Error, fileName: string, reset: boolean) {
   document.body.style.cursor = "default";
 }
 
-fetchProfile()
-  .then((p) => setup(p))
-  .catch((e) => {
-    console.warn("profile not found - using default");
-    setup(new DefaultProfile());
-  });
-
-function refreshAndDisplay(compileIfParsed?: boolean) {
-  getTestRunner(system, stdlib).then((t) => {
-    file.refreshAllStatuses(t, compileIfParsed).then(
-      () => renderAsHtml(),
-      (e) => showError(e as Error, file.fileName, false),
-    );
-  });
+async function refreshAndDisplay(compileIfParsed?: boolean) {
+  const testRunner = await getTestRunner(system, stdlib);
+  await file.refreshAllStatuses(testRunner, compileIfParsed);
+  try {
+    await renderAsHtml();
+  } catch (e) {
+    await showError(e as Error, file.fileName, false);
+  }
 }
 
-function initialDisplay(reset: boolean) {
+async function initialDisplay(reset: boolean) {
   clearDisplays();
 
   const ps = file.readParseStatus();
   if (ps === ParseStatus.valid || ps === ParseStatus.default) {
-    refreshAndDisplay();
+    await refreshAndDisplay();
+    lastSavedHash = file.currentHash;
   } else {
     const msg = file.parseError || "Failed load code";
-    showError(new Error(msg), file.fileName, reset);
+    await showError(new Error(msg), file.fileName, reset);
   }
 }
 
-function displayFile() {
+async function displayFile() {
   const previousCode = localStorage.getItem("elan-code");
   const previousFileName = localStorage.getItem("elan-file");
   if (previousCode) {
     const code = new CodeSourceFromString(previousCode);
-    file.parseFrom(code).then(
-      () => {
-        file.fileName = previousFileName || file.defaultFileName;
-        initialDisplay(true);
-      },
-      (e) => showError(e, previousFileName || file.defaultFileName, true),
-    );
+    try {
+      await file.parseFrom(code);
+      file.fileName = previousFileName || file.defaultFileName;
+      await initialDisplay(true);
+    } catch (e) {
+      await showError(e as Error, previousFileName || file.defaultFileName, true);
+    }
   } else {
-    initialDisplay(true);
+    await initialDisplay(true);
   }
 }
 
@@ -150,8 +160,10 @@ function getModKey(e: KeyboardEvent | MouseEvent) {
   return { control: e.ctrlKey, shift: e.shiftKey, alt: e.altKey };
 }
 
-function updateDisplayValues() {
-  codeTitle.innerText = `File: ${file.fileName}`;
+async function updateDisplayValues() {
+  const unsaved = lastSavedHash === file.currentHash ? "" : " UNSAVED";
+
+  codeTitle.innerText = `File: ${file.fileName}${unsaved}`;
   parse.setAttribute("class", file.readParseStatusForDashboard());
   compile.setAttribute("class", file.readCompileStatusForDashboard());
   test.setAttribute("class", file.readTestStatusForDashboard());
@@ -217,7 +229,7 @@ function updateDisplayValues() {
   const testErr = file.getTestError();
   if (testErr) {
     const err = testErr instanceof ElanRuntimeError ? testErr : new ElanRuntimeError(testErr);
-    showError(err, file.fileName, false);
+    await showError(err, file.fileName, false);
   }
 }
 
@@ -225,6 +237,7 @@ function disable(button: HTMLButtonElement, msg = "") {
   button.setAttribute("disabled", "");
   button.setAttribute("title", msg);
 }
+
 function enable(button: HTMLButtonElement, msg = "") {
   button.removeAttribute("disabled");
   button.setAttribute("title", msg);
@@ -233,7 +246,7 @@ function enable(button: HTMLButtonElement, msg = "") {
 /**
  * Render the document
  */
-function updateContent(text: string) {
+async function updateContent(text: string) {
   file.setRunStatus(RunStatus.default);
   doOnce = doOnce === undefined || doOnce ? true : false;
 
@@ -367,14 +380,14 @@ function updateContent(text: string) {
 
   if (file.readParseStatus() === ParseStatus.valid) {
     // save to local store
-    file.renderAsSource().then((code) => {
-      localStorage.setItem("elan-code", code);
-      localStorage.setItem("elan-file", file.fileName);
-      saveButton.classList.add("unsaved");
-    });
+    const code = await file.renderAsSource();
+
+    localStorage.setItem("elan-code", code);
+    localStorage.setItem("elan-file", file.fileName);
+    saveButton.classList.add("unsaved");
   }
 
-  updateDisplayValues();
+  await updateDisplayValues();
 
   const dbgFocused = document.querySelectorAll(".focused");
 
@@ -382,27 +395,24 @@ function updateContent(text: string) {
   if (dbgFocused.length > 1) {
     let msg = "multiple focused ";
     dbgFocused.forEach((n) => (msg = `${msg}, Node: ${(n.nodeName, n.id)} `));
-    showError(new Error(msg), file.fileName, false);
+    await showError(new Error(msg), file.fileName, false);
   }
   document.body.style.cursor = "default";
 }
 
-let inactivityTimer: any | undefined = undefined;
-const inactivityTimeout = 2000;
-
-function inactivityRefresh() {
+async function inactivityRefresh() {
   if (
     file.readRunStatus() !== RunStatus.running &&
     file.readParseStatus() === ParseStatus.valid &&
     file.readCompileStatus() === CompileStatus.default
   ) {
-    refreshAndDisplay(true);
+    await refreshAndDisplay(true);
   }
 
   inactivityTimer = setTimeout(inactivityRefresh, inactivityTimeout);
 }
 
-function postMessage(e: editorEvent) {
+async function postMessage(e: editorEvent) {
   if (file.readRunStatus() === RunStatus.running) {
     // no change while running
     return;
@@ -418,41 +428,37 @@ function postMessage(e: editorEvent) {
       case "click":
         isBeingEdited = file.getFieldBeingEdited(); //peek at value as may be changed
         if (handleClick(e, file) && isBeingEdited) {
-          refreshAndDisplay();
+          await refreshAndDisplay();
         } else {
-          renderAsHtml();
+          await renderAsHtml();
         }
         return;
       case "dblclick":
         isBeingEdited = file.getFieldBeingEdited(); //peek at value as may be changed
         if (handleDblClick(e, file) && isBeingEdited) {
-          refreshAndDisplay();
+          await refreshAndDisplay();
         } else {
-          renderAsHtml();
+          await renderAsHtml();
         }
         return;
       case "key":
         const codeChanged = handleKey(e, file);
         if (codeChanged === true) {
-          refreshAndDisplay();
+          await refreshAndDisplay();
         } else if (codeChanged === false) {
-          renderAsHtml();
+          await renderAsHtml();
         }
         // undefined just return
         return;
     }
   } catch (e) {
-    showError(e as Error, file.fileName, false);
+    await showError(e as Error, file.fileName, false);
   }
 }
 
-const stdlib = new StdLib();
-const system = stdlib.system;
-system.stdlib = stdlib; // to allow injection
-
-trimButton.addEventListener("click", () => {
-  const keys = file.removeAllSelectorsThatCanBe();
-  renderAsHtml();
+trimButton.addEventListener("click", async () => {
+  file.removeAllSelectorsThatCanBe();
+  await renderAsHtml();
 });
 
 let programWorker: Worker;
@@ -461,63 +467,70 @@ function readMsg(value: string | [string, string]) {
   return { type: "read", value: value } as WebWorkerReadMessage;
 }
 
-function errorMsg(value: string | [string, string]) {
+function errorMsg(value: unknown) {
   return { type: "status", status: "error", error: value } as WebWorkerStatusMessage;
 }
 
-function handleWorkerIO(data: WebWorkerWriteMessage) {
+async function handleWorkerIO(data: WebWorkerWriteMessage) {
   switch (data.function) {
     case "readLine":
-      elanInputOutput.readLine().then((v) => programWorker.postMessage(readMsg(v)));
+      const line = await elanInputOutput.readLine();
+      programWorker.postMessage(readMsg(line));
       break;
     case "waitForAnyKey":
-      elanInputOutput.waitForAnyKey().then(() => programWorker.postMessage(readMsg("")));
+      await elanInputOutput.waitForAnyKey();
+      programWorker.postMessage(readMsg(""));
       break;
     case "getKey":
-      elanInputOutput.getKey().then((v) => programWorker.postMessage(readMsg(v)));
+      const key = await elanInputOutput.getKey();
+      programWorker.postMessage(readMsg(key));
       break;
     case "getKeyWithModifier":
-      elanInputOutput.getKeyWithModifier().then((v) => programWorker.postMessage(readMsg(v)));
+      const keyWithMod = await elanInputOutput.getKeyWithModifier();
+      programWorker.postMessage(readMsg(keyWithMod));
       break;
     case "readFile":
-      elanInputOutput.readFile().then(
-        (v) => programWorker.postMessage(readMsg(v)),
-        (e) => programWorker.postMessage(errorMsg(e)),
-      );
-
+      try {
+        const file = await elanInputOutput.readFile();
+        programWorker.postMessage(readMsg(file));
+      } catch (e) {
+        programWorker.postMessage(errorMsg(e));
+      }
       break;
     case "writeFile":
-      elanInputOutput.writeFile(data.parameters[0] as string, data.parameters[1] as string).then(
-        () => programWorker.postMessage(readMsg("")),
-        (e) => programWorker.postMessage(errorMsg(e)),
-      );
+      try {
+        await elanInputOutput.writeFile(data.parameters[0] as string, data.parameters[1] as string);
+        programWorker.postMessage(readMsg(""));
+      } catch (e) {
+        programWorker.postMessage(errorMsg(e));
+      }
       break;
     default:
       (elanInputOutput as any)[data.function](...data.parameters);
   }
 }
 
-function handleWorkerFinished() {
+async function handleWorkerFinished() {
   programWorker.terminate();
   console.info("elan program completed OK");
   file.setRunStatus(RunStatus.default);
-  updateDisplayValues();
+  await updateDisplayValues();
 }
 
-function handleWorkerError(data: WebWorkerStatusMessage) {
+async function handleWorkerError(data: WebWorkerStatusMessage) {
   programWorker.terminate();
   const e = data.error;
   const err = e instanceof ElanRuntimeError ? e : new ElanRuntimeError(e as any);
-  showError(err, file.fileName, false);
+  await showError(err, file.fileName, false);
   file.setRunStatus(RunStatus.error);
-  updateDisplayValues();
+  await updateDisplayValues();
 }
 
-runButton?.addEventListener("click", () => {
+runButton?.addEventListener("click", async () => {
   try {
     clearDisplays();
     file.setRunStatus(RunStatus.running);
-    updateDisplayValues();
+    await updateDisplayValues();
     const path = `${document.location.origin}${document.location.pathname}`.replace(
       "/index.html",
       "",
@@ -527,44 +540,44 @@ runButton?.addEventListener("click", () => {
 
     programWorker = new Worker(asUrl, { type: "module" });
 
-    programWorker.onmessage = (e: MessageEvent<WebWorkerMessage>) => {
+    programWorker.onmessage = async (e: MessageEvent<WebWorkerMessage>) => {
       const data = e.data;
 
       switch (data.type) {
         case "write":
-          handleWorkerIO(data);
+          await handleWorkerIO(data);
           break;
         case "status":
           switch (data.status) {
             case "finished":
-              handleWorkerFinished();
+              await handleWorkerFinished();
               break;
             case "error":
-              handleWorkerError(data);
+              await handleWorkerError(data);
               break;
           }
       }
     };
 
-    programWorker.onerror = (ev: ErrorEvent) => {
+    programWorker.onerror = async (ev: ErrorEvent) => {
       const err = new ElanRuntimeError(ev.message);
-      showError(err, file.fileName, false);
+      await showError(err, file.fileName, false);
       file.setRunStatus(RunStatus.error);
-      updateDisplayValues();
+      await updateDisplayValues();
     };
 
     programWorker.postMessage({ type: "start" } as WebWorkerMessage);
   } catch (e) {
     console.warn(e);
     file.setRunStatus(RunStatus.error);
-    updateDisplayValues();
+    await updateDisplayValues();
   }
 });
 
-stopButton?.addEventListener("click", () => {
+stopButton?.addEventListener("click", async () => {
   programWorker?.terminate();
   file.setRunStatus(RunStatus.default);
-  updateDisplayValues();
+  await updateDisplayValues();
 });
 
 clearConsoleButton?.addEventListener("click", () => {
@@ -575,13 +588,14 @@ clearGraphicsButton?.addEventListener("click", () => {
   elanInputOutput.clearGraphics();
 });
 
-expandCollapseButton?.addEventListener("click", () => {
+expandCollapseButton?.addEventListener("click", async () => {
   file.expandCollapseAll();
-  renderAsHtml();
+  await renderAsHtml();
 });
 
-newButton?.addEventListener("click", () => {
-  resetFile(true);
+newButton?.addEventListener("click", async () => {
+  clearDisplays();
+  await resetFile();
 });
 
 function chooser(uploader: (event: Event) => void) {
@@ -607,15 +621,17 @@ function handleUpload(event: Event) {
     document.body.style.cursor = "wait";
     clearDisplays();
     const reader = new FileReader();
-    reader.addEventListener("load", (event: any) => {
+    reader.addEventListener("load", async (event: any) => {
       const rawCode = event.target.result;
       const code = new CodeSourceFromString(rawCode);
       file = new FileImpl(hash, profile, transforms());
       file.fileName = fileName;
-      file.parseFrom(code).then(
-        () => initialDisplay(true),
-        (e) => showError(e, fileName, true),
-      );
+      try {
+        await file.parseFrom(code);
+        await initialDisplay(true);
+      } catch (e) {
+        await showError(e as Error, fileName, true);
+      }
     });
     reader.readAsText(elanFile);
   }
@@ -633,14 +649,15 @@ function handleAppend(event: Event) {
     document.body.style.cursor = "wait";
     clearDisplays();
     const reader = new FileReader();
-    reader.addEventListener("load", (event: any) => {
+    reader.addEventListener("load", async (event: any) => {
       const rawCode = event.target.result;
       const newCode = new CodeSourceFromString(rawCode);
-
-      file.parseFrom(newCode, true).then(
-        () => initialDisplay(false),
-        (e) => showError(e, fileName, false),
-      );
+      try {
+        await file.parseFrom(newCode, true);
+        await initialDisplay(false);
+      } catch (e) {
+        await showError(e as Error, fileName, false);
+      }
     });
     reader.readAsText(elanFile);
   }
@@ -648,7 +665,7 @@ function handleAppend(event: Event) {
   event.preventDefault();
 }
 
-function handleDownload(event: Event) {
+async function handleDownload(event: Event) {
   let fileName = prompt("Please enter your file name", file.fileName);
 
   if (fileName === null) {
@@ -665,37 +682,38 @@ function handleDownload(event: Event) {
   }
 
   file.fileName = fileName;
-  file.renderAsSource().then((code) => {
-    const blob = new Blob([code], { type: "plain/text" });
+  const code = await file.renderAsSource();
 
-    const aElement = document.createElement("a");
-    aElement.setAttribute("download", fileName!);
-    const href = URL.createObjectURL(blob);
-    aElement.href = href;
-    aElement.setAttribute("target", "_blank");
-    aElement.click();
-    URL.revokeObjectURL(href);
-    saveButton.classList.remove("unsaved");
-    event.preventDefault();
-    renderAsHtml();
-  });
+  const blob = new Blob([code], { type: "plain/text" });
+
+  const aElement = document.createElement("a");
+  aElement.setAttribute("download", fileName!);
+  const href = URL.createObjectURL(blob);
+  aElement.href = href;
+  aElement.setAttribute("target", "_blank");
+  aElement.click();
+  URL.revokeObjectURL(href);
+  saveButton.classList.remove("unsaved");
+  lastSavedHash = file.currentHash;
+  event.preventDefault();
+  await renderAsHtml();
 }
 
 saveButton.addEventListener("click", handleDownload);
 
 for (const elem of demoFiles) {
-  elem.addEventListener("click", () => {
+  elem.addEventListener("click", async () => {
     const fileName = `${elem.id}`;
-    return fetch(fileName, { mode: "same-origin" })
-      .then((f) => f.text())
-      .then((rawCode) => {
-        const code = new CodeSourceFromString(rawCode);
-        file = new FileImpl(hash, profile, transforms());
-        file.fileName = fileName;
-        file.parseFrom(code).then(
-          () => initialDisplay(true),
-          (e) => showError(e, fileName, true),
-        );
-      });
+    const f = await fetch(fileName, { mode: "same-origin" });
+    const rawCode = await f.text();
+    const code = new CodeSourceFromString(rawCode);
+    file = new FileImpl(hash, profile, transforms());
+    file.fileName = fileName;
+    try {
+      await file.parseFrom(code);
+      await initialDisplay(true);
+    } catch (e) {
+      await showError(e as Error, fileName, true);
+    }
   });
 }

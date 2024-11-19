@@ -63,6 +63,7 @@ export { CodeSourceFromString };
 //var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 
 export class FileImpl implements File, Scope {
+  currentHash: string = "";
   isParent: boolean = true;
   hasFields: boolean = true;
   isFile: boolean = true;
@@ -212,8 +213,8 @@ export class FileImpl implements File, Scope {
   public async renderAsHtml(): Promise<string> {
     this._frNo = 1;
     const globals = parentHelper_renderChildrenAsHtml(this);
-    const hash = await this.getHash();
-    return `<el-header># <el-hash>${hash}</el-hash> ${this.getVersion()}${this.getProfileName()} <span id="fileStatus" class="${this.parseStatusAsString()}">${this.parseStatusAsString()}</span></el-header>\r\n${globals}`;
+    this.currentHash = await this.getHash();
+    return `<el-header># <el-hash>${this.currentHash}</el-hash> ${this.getVersion()}${this.getProfileName()} <span id="fileStatus" class="${this.parseStatusAsString()}">${this.parseStatusAsString()}</span></el-header>\r\n${globals}`;
   }
 
   public indent(): string {
@@ -270,8 +271,8 @@ export class FileImpl implements File, Scope {
 
   async renderAsSource(): Promise<string> {
     const content = this.renderHashableContent();
-    const hash = await this.getHash(content);
-    return `# ${hash} ${content}`;
+    this.currentHash = await this.getHash(content);
+    return `# ${this.currentHash} ${content}`;
   }
 
   compile(): string {

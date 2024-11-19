@@ -156,10 +156,10 @@ el-field el-txt {
     color: var(--defaultText);
     background-color: var(--defaultBackground);
 }
-el-field.error el-txt, el-field.error input  {
+el-field.error *, el-field.error input  {
     background-color: var(--error);
 }
-el-field.warning el-txt, el-field.warning input {
+el-field.warning *, el-field.warning input {
     background-color: var(--warning);
 }
 el-field.selected.ok el-txt, el-field.selected.ok input {
