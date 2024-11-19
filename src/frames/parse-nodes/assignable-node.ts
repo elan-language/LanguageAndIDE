@@ -20,7 +20,7 @@ export class AssignableNode extends AbstractSequence {
   }
 
   override getToMatchAndTokenType(): [string, TokenType] {
-    const bestMatch = this.simpleOrProp.firstBestMatch;
+    const bestMatch = this.simpleOrProp.bestMatch;
 
     if (bestMatch instanceof IdentifierNode) {
       return [bestMatch.matchedText, TokenType.assignable];
