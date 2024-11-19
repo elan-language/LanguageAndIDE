@@ -256,11 +256,26 @@ export enum TokenType {
 }
 
 export class SymbolCompletionSpec {
-  constructor(toMatch: string, oneToken: TokenType) {
+  constructor(toMatch: string, tts: TokenType[]) {
     this.toMatch = toMatch;
-    this.tokenTypes.push(oneToken);
+    this.addTokenTypes(tts);
   }
   toMatch: string = "";
-  tokenTypes: TokenType[] = [];
+  tokenTypes: Set<TokenType> = new Set<TokenType>();
   keywordsToOffer: string[] = [];
+
+  addTokenTypes(tokenTypes: TokenType[]): void {
+    const toAdd = new Set<TokenType>(tokenTypes);
+    // TODO Correct code is:
+    // this.tokenTypes.union(toAdd);
+    // Due to a build issue (on RP machine only), need to do it without 'union'
+    toAdd.forEach(tt => this.tokenTypes.add(tt));
+  }
+  addKeyword(keyword: string) {
+    // v. unlikely that any one node will need to add > 1
+    const trimmed = keyword.trim();
+    if (trimmed.length > 0) {
+      this.keywordsToOffer.push(keyword.trim() + " ");
+    }
+  }
 }

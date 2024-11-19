@@ -44,9 +44,9 @@ export class ToClause extends AbstractSequence {
     }
 
     if (elems[1].status !== ParseStatus.valid) {
-      return new SymbolCompletionSpec(elems[0].matchedText, TokenType.property);
+      return new SymbolCompletionSpec(elems[0].matchedText, [TokenType.property]);
     }
 
-    return new SymbolCompletionSpec("", TokenType.none);
+    return new SymbolCompletionSpec("", [TokenType.none]);
   }
 }

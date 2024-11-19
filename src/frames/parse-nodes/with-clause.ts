@@ -33,6 +33,6 @@ export class WithClause extends AbstractSequence {
       return elems[3].getSymbolCompletionSpec();
     }
 
-    return new SymbolCompletionSpec("", TokenType.none);
+    return new SymbolCompletionSpec("", [TokenType.none]);
   }
 }

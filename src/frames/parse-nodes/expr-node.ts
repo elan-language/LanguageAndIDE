@@ -29,7 +29,7 @@ export class ExprNode extends AbstractAlternatives {
 
   getSymbolCompletionSpec(): SymbolCompletionSpec {
     if (this.matchedText === "") {
-      return new SymbolCompletionSpec("", TokenType.expression);
+      return new SymbolCompletionSpec("", [TokenType.expression]);
     }
     return super.getSymbolCompletionSpec();
   }

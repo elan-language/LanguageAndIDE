@@ -46,6 +46,6 @@ export class ParamDefNode extends AbstractSequence {
       return this.getElements()[5].getSymbolCompletionSpec();
     }
 
-    return new SymbolCompletionSpec("", TokenType.none);
+    return new SymbolCompletionSpec("", [TokenType.none]);
   }
 }

@@ -29,6 +29,6 @@ export class TermChained extends AbstractSequence {
   }
 
   getSymbolCompletionSpec(): SymbolCompletionSpec {
-    return new SymbolCompletionSpec(this.matchedText, TokenType.expression);
+    return new SymbolCompletionSpec(this.matchedText, [TokenType.expression]);
   }
 }

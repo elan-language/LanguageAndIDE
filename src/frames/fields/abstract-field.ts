@@ -642,13 +642,13 @@ export abstract class AbstractField implements Selectable, Field {
   protected getSymbolCompletionSpec(): SymbolCompletionSpec {
     return this.rootNode
       ? this.rootNode.getSymbolCompletionSpec()
-      : new SymbolCompletionSpec("", TokenType.none);
+      : new SymbolCompletionSpec("", [TokenType.none]);
   }
 
   protected symbolCompletionAsHtml(transforms: Transforms): string {
     let popupAsHtml = "";
     const spec = this.getSymbolCompletionSpec();
-    const tokenType = spec.tokenTypes[0];
+    const tokenType = spec.tokenTypes.values().next()!.value!;
     if (this.showAutoComplete(tokenType)) {
       [this.autocompleteMatch, this.autocompleteSymbols] = this.matchingSymbolsForId(
         spec.toMatch,

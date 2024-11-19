@@ -35,11 +35,11 @@ export class NewInstance extends AbstractSequence {
   getSymbolCompletionSpec(): SymbolCompletionSpec {
     const spec = this.withClause!.getSymbolCompletionSpec();
     const id = spec.toMatch;
-    const tokenType = spec.tokenTypes[0];
+    const tokenType = spec.tokenTypes.values().next()!.value!;
     if (tokenType !== TokenType.none) {
-      return new SymbolCompletionSpec(`${this.type?.matchedText}.${id}`, tokenType);
+      return new SymbolCompletionSpec(`${this.type?.matchedText}.${id}`, [tokenType]);
     }
 
-    return new SymbolCompletionSpec(this.type?.matchedText ?? "", TokenType.type);
+    return new SymbolCompletionSpec(this.type?.matchedText ?? "", [TokenType.type]);
   }
 }

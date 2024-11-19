@@ -73,7 +73,7 @@ export class Multiple extends AbstractParseNode {
   getSymbolCompletionSpec(): SymbolCompletionSpec {
     const elems = this.getElements();
     if (elems.length === 0) {
-      return new SymbolCompletionSpec("", TokenType.none);
+      return new SymbolCompletionSpec("", [TokenType.none]);
     }
     return elems[elems.length - 1].getSymbolCompletionSpec();
   }

@@ -32,6 +32,6 @@ export class InstanceProcRef extends AbstractSequence {
   }
 
   getSymbolCompletionSpec(): SymbolCompletionSpec {
-    return new SymbolCompletionSpec(this.matchedText, TokenType.idOrProcedure);
+    return new SymbolCompletionSpec(this.matchedText, [TokenType.idOrProcedure]);
   }
 }

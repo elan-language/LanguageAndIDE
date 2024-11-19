@@ -23,6 +23,6 @@ export class IdentifierNode extends AbstractParseNode {
   }
 
   getSymbolCompletionSpec(): SymbolCompletionSpec {
-    return new SymbolCompletionSpec(this.matchedText, TokenType.idOrProcedure);
+    return new SymbolCompletionSpec(this.matchedText, [TokenType.idOrProcedure]);
   }
 }

@@ -55,7 +55,7 @@ export abstract class AbstractParseNode implements ParseNode {
   }
 
   getSymbolCompletionSpec(): SymbolCompletionSpec {
-    return new SymbolCompletionSpec("", TokenType.none);
+    return new SymbolCompletionSpec("", [TokenType.none]);
   }
 
   getActiveNode(): ParseNode {

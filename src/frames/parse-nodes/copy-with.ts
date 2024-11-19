@@ -33,10 +33,10 @@ export class CopyWith extends AbstractSequence {
     }
     const spec = this.withClause!.getSymbolCompletionSpec();
     const id = spec.toMatch;
-    const tokenType = spec.tokenTypes[0];
+    const tokenType = spec.tokenTypes.values().next()!.value!;
     //Explanation:  the user is asked for a property name (id) - which will be "" initially
     //However, the symbol table is not being asked to match 'id', but 'instance.id'
     //so that user is offered only the properties for that instance type.
-    return new SymbolCompletionSpec(`${this.original?.matchedText}.${id}`, tokenType);
+    return new SymbolCompletionSpec(`${this.original?.matchedText}.${id}`, [tokenType]);
   }
 }
