@@ -5,6 +5,7 @@ export class WebInputOutput implements ElanInputOutput {
   keyBuffer: KeyboardEvent[] = [];
 
   private graphics: HTMLElement;
+  private lastDirId = "elan-data";
 
   constructor(
     private readonly consoleWindow: { innerHTML: string },
@@ -23,23 +24,9 @@ export class WebInputOutput implements ElanInputOutput {
     this.graphics.focus();
   }
 
-  handleUpload(event: Event) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const elanFile = (event.target as any).files?.[0] as any;
-
-    if (elanFile) {
-      const fileName = elanFile.name;
-      document.body.style.cursor = "wait";
-      const reader = new FileReader();
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-
-      reader.addEventListener("load", (event: any) => {
-        const rawCode = event.target.result;
-      });
-      reader.readAsText(elanFile);
-    }
-
-    event.preventDefault();
+  useChromeFileAPI() {
+    //return "showOpenFilePicker" in self;
+    return false;
   }
 
   chooser() {
@@ -48,7 +35,6 @@ export class WebInputOutput implements ElanInputOutput {
     f.style.display = "none";
     f.type = "file";
     f.name = "file";
-    //f.accept = ".elan";
     g.appendChild(f);
     return f;
   }
@@ -68,26 +54,31 @@ export class WebInputOutput implements ElanInputOutput {
 
     return new Promise<string>((rs, rj) => {
       chooser.addEventListener("click", async () => {
-        [fileHandle] = await window.showOpenFilePicker({
-          startIn: "documents",
-        });
-        const file = await fileHandle.getFile();
+        try {
+          [fileHandle] = await window.showOpenFilePicker({
+            startIn: "documents",
+            id: this.lastDirId,
+          });
+          const file = await fileHandle.getFile();
 
-        if (file.type !== "text/plain") {
-          rj(`cannot load non text file ${file.name} of type ${file.type}`);
-        } else {
-          const contents = await file.text();
-          rs(contents);
+          if (file.type !== "text/plain") {
+            rj(`cannot load non text file ${file.name} of type ${file.type}`);
+          } else {
+            const contents = await file.text();
+            rs(contents);
+          }
+        } catch (e) {
+          rj("read cancelled");
         }
       });
 
       chooser.click();
+      document.getElementById("graphics")?.removeChild(chooser);
     });
   }
 
   readFile(): Promise<string> {
-    if ("showOpenFilePicker" in self) {
-      // The `showOpenFilePicker()` method of the File System Access API is supported.
+    if (this.useChromeFileAPI()) {
       return this.readFileChrome();
     }
 
@@ -107,25 +98,31 @@ export class WebInputOutput implements ElanInputOutput {
               const content = (event.target as FileReader).result as string;
               rs(content);
             });
+
             reader.readAsText(elanFile);
           }
         }
 
         event.preventDefault();
       });
+
+      inp.addEventListener("cancel", (event: Event) => {
+        rj("read cancelled");
+        event.preventDefault();
+      });
       inp.click();
     });
   }
 
-  writeFileChrome(fileName: string, data: string): Promise<void> {
-    return self
-      .showSaveFilePicker({
-        suggestedName: fileName,
-        startIn: "documents",
-      })
-      .then((fh) => fh.createWritable())
-      .then((writeable) => writeable.write(data).then(() => writeable))
-      .then((writeable) => writeable.close());
+  async writeFileChrome(fileName: string, data: string): Promise<void> {
+    const fh = await self.showSaveFilePicker({
+      suggestedName: fileName,
+      startIn: "documents",
+      id: this.lastDirId,
+    });
+    const writeable = await fh.createWritable();
+    await writeable.write(data);
+    return await writeable.close();
   }
 
   writeFile(fileName: string, data: string): Promise<void> {
@@ -137,8 +134,7 @@ export class WebInputOutput implements ElanInputOutput {
       fileName = `${fileName}.txt`;
     }
 
-    if ("showSaveFilePicker" in self) {
-      // The `showOpenFilePicker()` method of the File System Access API is supported.
+    if (this.useChromeFileAPI()) {
       return this.writeFileChrome(fileName, data);
     }
 

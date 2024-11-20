@@ -140,7 +140,7 @@ loadButton.addEventListener("click", chooser(getUploader()));
 
 appendButton.addEventListener("click", chooser(getAppender()));
 
-saveButton.addEventListener("click", handleDownload);
+saveButton.addEventListener("click", getDownloader());
 
 for (const elem of demoFiles) {
   elem.addEventListener("click", async () => {
@@ -630,6 +630,7 @@ function chooser(uploader: (event: Event) => void) {
         codeControls.appendChild(f);
         f.addEventListener("click", uploader);
         f.click();
+        codeControls.removeChild(f);
       }
     : () => {
         const f = document.createElement("input");
@@ -640,6 +641,7 @@ function chooser(uploader: (event: Event) => void) {
         codeControls.appendChild(f);
         f.addEventListener("change", uploader);
         f.click();
+        codeControls.removeChild(f);
       };
 }
 
@@ -650,6 +652,11 @@ function useChromeFileAPI() {
 function getUploader() {
   // The `showOpenFilePicker()` method of the File System Access API is supported.
   return useChromeFileAPI() ? handleChromeUpload : handleUpload;
+}
+
+function getDownloader() {
+  // The `showOpenFilePicker()` method of the File System Access API is supported.
+  return useChromeFileAPI() ? handleChromeDownload : handleDownload;
 }
 
 function getAppender() {
@@ -669,18 +676,23 @@ async function readAndParse(rawCode: string, fileName: string, reset: boolean, a
 }
 
 async function handleChromeUploadOrAppend(upload: boolean) {
-  const [fileHandle] = await window.showOpenFilePicker({
-    startIn: "documents",
-    types: [{ accept: { "text/plain": ".elan" } }],
-    id: lastDirId,
-  });
-  const codeFile = await fileHandle.getFile();
-  const fileName = codeFile.name;
-  const rawCode = await codeFile.text();
-  if (upload) {
-    file = new FileImpl(hash, profile, transforms());
+  try {
+    const [fileHandle] = await window.showOpenFilePicker({
+      startIn: "documents",
+      types: [{ accept: { "text/plain": ".elan" } }],
+      id: lastDirId,
+    });
+    const codeFile = await fileHandle.getFile();
+    const fileName = codeFile.name;
+    const rawCode = await codeFile.text();
+    if (upload) {
+      file = new FileImpl(hash, profile, transforms());
+    }
+    await readAndParse(rawCode, fileName, upload, !upload);
+  } catch (e) {
+    // user cancelled
+    return;
   }
-  await readAndParse(rawCode, fileName, upload, !upload);
 }
 
 async function handleChromeUpload() {
@@ -752,4 +764,30 @@ async function handleDownload(event: Event) {
   lastSavedHash = file.currentHash;
   event.preventDefault();
   await renderAsHtml();
+}
+
+async function handleChromeDownload(event: Event) {
+  const code = await file.renderAsSource();
+
+  try {
+    const fh = await showSaveFilePicker({
+      suggestedName: file.fileName,
+      startIn: "documents",
+      id: lastDirId,
+    });
+
+    const writeable = await fh.createWritable();
+    await writeable.write(code);
+    await writeable.close();
+
+    saveButton.classList.remove("unsaved");
+    lastSavedHash = file.currentHash;
+
+    await renderAsHtml();
+  } catch (e) {
+    // user cancelled
+    return;
+  } finally {
+    event.preventDefault();
+  }
 }
