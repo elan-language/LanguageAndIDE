@@ -715,7 +715,7 @@ async function handleChromeUploadOrAppend(upload: boolean) {
   try {
     const [fileHandle] = await window.showOpenFilePicker({
       startIn: "documents",
-      types: [{ accept: { "text/plain": ".elan" } }],
+      types: [{ accept: { "text/elan": ".elan" } }],
       id: lastDirId,
     });
     const codeFile = await fileHandle.getFile();
@@ -811,8 +811,11 @@ async function chromeSave(code: string) {
   const fh = await showSaveFilePicker({
     suggestedName: file.fileName,
     startIn: "documents",
+    types: [{ accept: { "text/elan": ".elan" } }],
     id: lastDirId,
   });
+
+  file.fileName = fh.name;
 
   const writeable = await fh.createWritable();
   await writeable.write(code);
