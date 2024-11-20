@@ -5,10 +5,12 @@ import { matchRegEx } from "./parse-node-helpers";
 
 export class IdentifierNode extends AbstractParseNode {
   private tokenTypes: TokenType[];
+  private constraintId: () => string;
 
-  constructor(tokenTypes: TokenType[]) {
+  constructor(tokenTypes: TokenType[], constraintId = () => "") {
     super();
     this.tokenTypes = tokenTypes;
+    this.constraintId = constraintId;
     this.completionWhenEmpty = "<i>name</i>";
   }
 
@@ -31,5 +33,9 @@ export class IdentifierNode extends AbstractParseNode {
 
   symbolCompletion_tokenTypes(): TokenType[] {
     return this.tokenTypes;
+  }
+
+  symbolCompleton_constraintId(): string {
+    return this.constraintId();
   }
 }
