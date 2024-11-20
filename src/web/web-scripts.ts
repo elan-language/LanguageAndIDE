@@ -301,6 +301,8 @@ async function updateDisplayValues() {
   const isCompiling = file.readCompileStatus() === CompileStatus.ok;
   const isRunning = file.readRunStatus() === RunStatus.running;
 
+  saveButton.hidden = !!autoSaveFileHandle;
+
   if (isRunning) {
     disable(runButton, "Program is already running");
     enable(stopButton, "Stop the program");
@@ -332,10 +334,12 @@ async function updateDisplayValues() {
       elem.removeAttribute("hidden");
     }
 
-    if (autoSaveFileHandle) {
-      disable(autoSaveButton, "Auto-save is already activated - will save whenever code parses");
-    } else if (useChromeFileAPI()) {
-      enable(autoSaveButton, "Select file to auto save to - will save whenever code parses");
+    if (useChromeFileAPI()) {
+      if (!isParsing) {
+        disable(autoSaveButton, "Code must be parsing in order to save");
+      } else {
+        enable(autoSaveButton, "Select file to auto save to - will save whenever code parses");
+      }
     }
 
     if (isEmpty) {
@@ -842,12 +846,20 @@ async function handleChromeDownload(event: Event) {
 }
 
 async function handleChromeAutoSave(event: Event) {
+  if (autoSaveFileHandle) {
+    autoSaveFileHandle = undefined;
+    autoSaveButton.innerText = "Auto";
+    await updateDisplayValues();
+    return;
+  }
+
   const code = await file.renderAsSource();
 
   try {
     autoSaveFileHandle = await chromeSave(code);
     lastSavedHash = file.currentHash;
     await renderAsHtml();
+    autoSaveButton.innerText = "Auto-off";
   } catch (e) {
     // user cancelled
     return;
