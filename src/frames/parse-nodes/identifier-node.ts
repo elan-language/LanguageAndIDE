@@ -1,11 +1,14 @@
 import { Regexes } from "../fields/regexes";
-import { TokenType } from "../helpers";
+import { SymbolCompletionSpec, TokenType } from "../helpers";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { matchRegEx } from "./parse-node-helpers";
 
 export class IdentifierNode extends AbstractParseNode {
-  constructor() {
+  private tokenTypes: TokenType[];
+
+  constructor(tokenTypes: TokenType[]) {
     super();
+    this.tokenTypes = tokenTypes;
     this.completionWhenEmpty = "<i>name</i>";
   }
 
@@ -17,9 +20,16 @@ export class IdentifierNode extends AbstractParseNode {
         Regexes.identifier,
       );
     }
+    if (this.isValid() && this.remainingText.length > 0) {
+      this._done = true;
+    }
   }
 
-  getToMatchAndTokenType(): [string, TokenType] {
-    return [this.matchedText, TokenType.idOrProcedure];
+  getSymbolCompletionSpecOld(): SymbolCompletionSpec {
+    return new SymbolCompletionSpec(this.matchedText, [TokenType.idOrProcedure]);
+  }
+
+  getApplicableTokenTypes(): TokenType[] {
+    return this.tokenTypes;
   }
 }

@@ -1,5 +1,5 @@
 import { CodeSource } from "../code-source";
-import { isAstType, isGenericClass } from "../helpers";
+import { isAstType, isGenericClass, TokenType } from "../helpers";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Frame } from "../interfaces/frame";
 import { ParseNode } from "../parse-nodes/parse-node";
@@ -14,14 +14,15 @@ export class TypeField extends AbstractField {
     super(holder);
     this.useHtmlTags = true;
     this.placeholder = "<i>Type</i>";
-    this.help = `A simple Type name must begin with an upper-case letter. More complex types are: 'generic type', 'tuple type', 'function type' - consult documentation for these.`;
+    this.help = `A simple Type name must begin with an upper-case letter. See manual for Array, List, an  Dictionary types, 'generic type', 'tuple type', 'function type' - consult documentation for these.`;
   }
   getIdPrefix(): string {
     return "type";
   }
+ 
   initialiseRoot(): ParseNode {
     this.astNode = undefined;
-    this.rootNode = new TypeNode();
+    this.rootNode = new TypeNode([TokenType.type_concrete, TokenType.type_abstract]);
     return this.rootNode;
   }
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>

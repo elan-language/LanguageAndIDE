@@ -14,6 +14,7 @@ export class PunctuationNode extends FixedTextNode {
       if (text.startsWith(target)) {
         const n = this.numLeadingSpaces(text) + this.fixedText.length;
         this.set(ParseStatus.valid, text.substring(0, n), text.substring(n));
+        this._done = true;
       } else if (target.startsWith(text)) {
         this.set(ParseStatus.incomplete, text, "");
       } else {
@@ -26,7 +27,7 @@ export class PunctuationNode extends FixedTextNode {
     return escapeHtmlChars(this.renderAsSource());
   }
 
-  getCompletionAsHtml(): string {
+  getSyntaxCompletionAsHtml(): string {
     let comp = ``;
     const matched = this.matchedText.length;
     const kw = this.fixedText.length;

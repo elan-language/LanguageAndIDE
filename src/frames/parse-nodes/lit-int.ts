@@ -1,4 +1,5 @@
 import { Regexes } from "../fields/regexes";
+import { ParseStatus } from "../status-enums";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { matchRegEx } from "./parse-node-helpers";
 
@@ -15,6 +16,9 @@ export class LitInt extends AbstractParseNode {
         text,
         Regexes.negatableLitInt,
       );
+      if (this.status === ParseStatus.valid && this.remainingText.length > 0) {
+        this._done = true;
+      }
     }
   }
 }

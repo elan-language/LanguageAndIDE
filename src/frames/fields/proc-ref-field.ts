@@ -1,4 +1,5 @@
 import { CodeSource } from "../code-source";
+import { TokenType } from "../helpers";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Frame } from "../interfaces/frame";
 import { Alternatives } from "../parse-nodes/alternatives";
@@ -11,9 +12,16 @@ import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
 
 export class ProcRefField extends AbstractField {
+  tokenTypes = [
+    TokenType.id_let,
+    TokenType.id_parameter_out,
+    TokenType.id_parameter_regular,
+    TokenType.id_property,
+    TokenType.id_variable,
+  ];
   isParseByNodes = true;
   qualProc = () => new InstanceProcRef(); // These two are alternatives, not a combination!
-  proc = () => new IdentifierNode(); // These two are alternatives, not a combination
+  proc = () => new IdentifierNode([]); // These two are alternatives, not a combination
 
   constructor(holder: Frame) {
     super(holder);
@@ -25,7 +33,7 @@ export class ProcRefField extends AbstractField {
   }
   initialiseRoot(): ParseNode {
     this.rootNode = new Alternatives([this.proc, this.qualProc]);
-    this.rootNode.setCompletionWhenEmpty(this.placeholder); //Need to test proc first, otherwise valid proc would be treated as instance part of an incomplete qualProc
+    this.rootNode.setSyntaxCompletionWhenEmpty(this.placeholder); //Need to test proc first, otherwise valid proc would be treated as instance part of an incomplete qualProc
     return this.rootNode;
   }
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) => source.readUntil(/\(/);

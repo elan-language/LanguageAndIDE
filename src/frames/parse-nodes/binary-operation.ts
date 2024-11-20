@@ -32,6 +32,7 @@ export class BinaryOperation extends AbstractParseNode {
         this.closePacked = true;
       } else if (this.nextChar() === PLUS || this.nextChar() === MINUS) {
         this.moveCharsToMatched(1, ParseStatus.valid);
+        this._done = true;
       } else {
         this.processKeywords();
       }
@@ -61,10 +62,12 @@ export class BinaryOperation extends AbstractParseNode {
     this.moveCharsToMatched(1, ParseStatus.incomplete);
     if (this.nextChar() === "=") {
       this.moveCharsToMatched(1, ParseStatus.valid);
+      this._done = true;
     } else if (this.remainingText.length === 0) {
       this.status = ParseStatus.incomplete;
     } else {
       this.status = ParseStatus.valid; //but leave all remaining characters
+      this._done = true;
     }
   }
 
@@ -75,12 +78,14 @@ export class BinaryOperation extends AbstractParseNode {
     } else if (this.remainingText.startsWith("isnt")) {
       this.moveCharsToMatched(4, ParseStatus.valid);
       this.keyword = true;
+      this._done = true;
     } else if (this.remainingText.startsWith("isn")) {
       this.moveCharsToMatched(3, ParseStatus.incomplete);
       this.completion = "t";
     } else if (this.remainingText.length > 2 && this.remainingText.startsWith("is")) {
       this.moveCharsToMatched(2, ParseStatus.valid);
       this.keyword = true;
+      this._done = true;
     } else if (this.remainingText.startsWith("is")) {
       this.moveCharsToMatched(2, ParseStatus.incomplete);
     }
@@ -90,6 +95,7 @@ export class BinaryOperation extends AbstractParseNode {
     if (this.remainingText.startsWith(kw)) {
       this.moveCharsToMatched(kw.length, ParseStatus.valid);
       this.keyword = true;
+      this._done = true;
       return true;
     } else if (kw.startsWith(this.remainingText)) {
       this.completion = kw.slice(this.remainingText.length);
@@ -146,7 +152,7 @@ export class BinaryOperation extends AbstractParseNode {
     }
   }
 
-  getCompletionAsHtml(): string {
+  getSyntaxCompletionAsHtml(): string {
     let completion = this.completion;
     if (this.matchedText === "" || this.matchedText === " ") {
       completion = "<i>operator </i>";

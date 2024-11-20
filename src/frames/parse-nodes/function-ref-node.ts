@@ -1,3 +1,4 @@
+import { TokenType } from "../helpers";
 import { refKeyword } from "../keywords";
 import { AbstractSequence } from "./abstract-sequence";
 import { IdentifierNode } from "./identifier-node";
@@ -12,7 +13,7 @@ export class FunctionRefNode extends AbstractSequence {
     if (text.trim().length > 0) {
       this.addElement(new KeywordNode(refKeyword));
       this.addElement(new SpaceNode(Space.required));
-      this.name = new IdentifierNode();
+      this.name = new IdentifierNode([TokenType.method_function]);
       this.addElement(this.name);
       super.parseText(text);
     }

@@ -1,5 +1,4 @@
-import { UnknownType } from "../symbols/unknown-type";
-import { Field } from "../interfaces/field";
+import { ParseStatus } from "../status-enums";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { matchRegEx } from "./parse-node-helpers";
 

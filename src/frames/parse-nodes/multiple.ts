@@ -1,4 +1,4 @@
-import { TokenType } from "../helpers";
+import { SymbolCompletionSpec, TokenType } from "../helpers";
 import { ParseStatus } from "../status-enums";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { ParseNode } from "./parse-node";
@@ -31,11 +31,11 @@ export class Multiple extends AbstractParseNode {
         if (node.status === ParseStatus.valid) {
           this.elements.push(node);
           toParse = node.remainingText;
-          this.activeSubNode = node;
+          this.activeNodeForSymbolCompl = node.getActiveNode();
         } else if (node.status === ParseStatus.incomplete && node.remainingText.trim() === "") {
           this.elements.push(node);
           toParse = node.remainingText;
-          this.activeSubNode = node;
+          this.activeNodeForSymbolCompl = node.getActiveNode();
         } else {
           cont = false;
         }
@@ -63,22 +63,23 @@ export class Multiple extends AbstractParseNode {
     return this.elements.reduce((result, current) => result + current.renderAsSource(), "");
   }
 
-  getCompletionAsHtml(): string {
+  getSyntaxCompletionAsHtml(): string {
     return this.elements.reduce(
-      (result, current) => `${result}${current.getCompletionAsHtml()}`,
+      (result, current) => `${result}${current.getSyntaxCompletionAsHtml()}`,
       "",
     );
   }
 
-  getToMatchAndTokenType(): [string, TokenType] {
+  getSymbolCompletionSpecOld(): SymbolCompletionSpec {
     const elems = this.getElements();
     if (elems.length === 0) {
-      return ["", TokenType.none];
+      return new SymbolCompletionSpec("", [TokenType.none]);
     }
-    return elems[elems.length - 1].getToMatchAndTokenType();
+    return elems[elems.length - 1].getSymbolCompletionSpecOld();
   }
 
   getActiveNode(): ParseNode {
-    return this;
+    const n = this.elements.length;
+    return n > 0 ? this.elements[n - 1].getActiveNode() : this;
   }
 }

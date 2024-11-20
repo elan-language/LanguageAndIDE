@@ -1,4 +1,4 @@
-import { TokenType } from "../helpers";
+import { SymbolCompletionSpec, TokenType } from "../helpers";
 import { asKeyword, outKeyword } from "../keywords";
 import { ParseStatus } from "../status-enums";
 import { AbstractSequence } from "./abstract-sequence";
@@ -28,24 +28,24 @@ export class ParamDefNode extends AbstractSequence {
       ]);
       this.out = new OptionalNode(outSpace);
       this.addElement(this.out);
-      this.name = new IdentifierNode();
+      this.name = new IdentifierNode([]);
       this.addElement(this.name);
       this.addElement(new SpaceNode(Space.required));
       this.addElement(new KeywordNode(asKeyword));
       this.addElement(new SpaceNode(Space.required));
-      this.type = new TypeNode();
+      this.type = new TypeNode([TokenType.type_concrete, TokenType.type_abstract]);
       this.addElement(this.type);
       super.parseText(text);
     }
   }
 
-  getToMatchAndTokenType(): [string, TokenType] {
+  getSymbolCompletionSpecOld(): SymbolCompletionSpec {
     const elements = this.getElements();
 
     if (elements.length >= 6 && this.getElements()[4].status === ParseStatus.valid) {
-      return this.getElements()[5].getToMatchAndTokenType();
+      return this.getElements()[5].getSymbolCompletionSpecOld();
     }
 
-    return ["", TokenType.none];
+    return new SymbolCompletionSpec("", [TokenType.none]);
   }
 }

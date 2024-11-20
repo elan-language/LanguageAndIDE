@@ -14,30 +14,73 @@ export abstract class AbstractSequence extends AbstractParseNode {
   }
 
   parseText(text: string): void {
-    let i = 0; //Index
-    let remaining = text;
-    let worstStatus: ParseStatus = ParseStatus.default;
-    while (i < this.elements.length && worstStatus >= ParseStatus.valid) {
-      const node = this.elements[i];
-      node.parseText(remaining);
-      remaining = node.remainingText;
-      if (node.status === ParseStatus.empty) {
-        worstStatus =
-          worstStatus === ParseStatus.default ? ParseStatus.empty : ParseStatus.incomplete;
-      } else {
-        worstStatus = node.status < worstStatus ? node.status : worstStatus;
-      }
-      this.activeSubNode = node;
+    let i = -1; // Because incremented at start of loop
+    this.remainingText = text;
+    let continueLoop = true;
+    while (continueLoop) {
       i++;
-    }
-    this.status = worstStatus;
-    if (worstStatus > ParseStatus.invalid) {
-      this.remainingText = remaining;
-      this.matchedText = text.substring(0, text.length - this.remainingText.length);
-    } else {
+      const node = this.elements[i] as AbstractParseNode;
+      const firstNode = i === 0;
+      const lastNode = i === this.elements.length - 1;
+      const nextNode = lastNode ? undefined : this.elements[i + 1];
+      node.parseText(this.remainingText);
+      this.remainingText = node.remainingText;
+      const moreText = this.remainingText.length > 0;
+      if (node.isDone()) {
+        if (lastNode) {
+          this.status = ParseStatus.valid;
+          this._done = true;
+          continueLoop = false;
+        } else {
+          this.status = ParseStatus.incomplete;
+          this.activeNodeForSymbolCompl = nextNode!.getActiveNode();
+          continueLoop = true;
+        }
+      } else if (node.isValid()) {
+        if (moreText) {
+          if (lastNode) {
+            this.status = ParseStatus.valid;
+            this._done = true;
+            continueLoop = false;
+          } else {
+            this.activeNodeForSymbolCompl = nextNode!.getActiveNode();
+            continueLoop = true;
+          }
+        } else {
+          //No more text
+          this.activeNodeForSymbolCompl = node.getActiveNode();
+          this.status = ParseStatus.valid;
+          continueLoop = !lastNode;
+        }
+      } else if (node.isIncomplete()) {
+        continueLoop = false;
+        if (moreText) {
+          this.status = ParseStatus.invalid;
+        } else {
+          this.status = ParseStatus.incomplete;
+          this.activeNodeForSymbolCompl = node.getActiveNode();
+        }
+      } else if (node.isEmpty()) {
+        if (firstNode) {
+          this.status = ParseStatus.empty;
+          this.activeNodeForSymbolCompl = node.getActiveNode();
+        } else {
+          this.status = ParseStatus.incomplete;
+          // activeNodeForSymbolCompl unchanged
+        }
+        continueLoop = false;
+      } else if (node.isInvalid()) {
+        this.status = ParseStatus.invalid;
+        continueLoop = false;
+      }
+    } //Finally...
+    if (this.isInvalid()) {
       this.remainingText = text;
+    } else {
+      this.matchedText = text.substring(0, text.length - this.remainingText.length);
     }
   }
+
   renderAsHtml(): string {
     return this.elements.reduce((result, current) => result + current.renderAsHtml(), "");
   }
@@ -47,11 +90,14 @@ export abstract class AbstractSequence extends AbstractParseNode {
   compile(): string {
     return this.elements.reduce((result, current) => result + current.compile(), "");
   }
-  getCompletionAsHtml(): string {
+  getSyntaxCompletionAsHtml(): string {
     const c =
       this.elements.length > 0
-        ? this.elements.reduce((result, current) => `${result}${current.getCompletionAsHtml()}`, "")
-        : super.getCompletionAsHtml();
+        ? this.elements.reduce(
+            (result, current) => `${result}${current.getSyntaxCompletionAsHtml()}`,
+            "",
+          )
+        : super.getSyntaxCompletionAsHtml();
     return c;
   }
 }

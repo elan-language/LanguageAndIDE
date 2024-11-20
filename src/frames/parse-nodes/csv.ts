@@ -1,4 +1,4 @@
-import { TokenType } from "../helpers";
+import { SymbolCompletionSpec, TokenType } from "../helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { CommaNode } from "./comma-node";
 import { Multiple } from "./multiple";
@@ -32,27 +32,27 @@ export class CSV extends AbstractSequence {
     super.parseText(text);
   }
 
-  getCompletionAsHtml(): string {
-    let comp = super.getCompletionAsHtml();
+  getSyntaxCompletionAsHtml(): string {
+    let comp = super.getSyntaxCompletionAsHtml();
     if (this.minimum > 0 && this.matchedText.length === 0) {
       const el = this.elementConstructor();
-      comp = el.getCompletionAsHtml();
+      comp = el.getSyntaxCompletionAsHtml();
     }
     return comp;
   }
 
-  getToMatchAndTokenType(): [string, TokenType] {
+  getSymbolCompletionSpecOld(): SymbolCompletionSpec {
     const elems = this.getElements();
     if (elems.length === 0) {
-      return ["", TokenType.none];
+      return new SymbolCompletionSpec("", [TokenType.none]);
     }
 
     if (elems.length === 2) {
       if ((elems[1] as Multiple).getElements().length > 0) {
-        return elems[1].getToMatchAndTokenType();
+        return elems[1].getSymbolCompletionSpecOld();
       }
     }
 
-    return elems[0].getToMatchAndTokenType();
+    return elems[0].getSymbolCompletionSpecOld();
   }
 }

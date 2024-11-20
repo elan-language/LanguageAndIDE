@@ -1,3 +1,4 @@
+import { TokenType } from "../helpers";
 import { inheritsKeyword } from "../keywords";
 import { AbstractSequence } from "./abstract-sequence";
 import { CSV } from "./csv";
@@ -15,8 +16,8 @@ export class InheritanceNode extends AbstractSequence {
       this.inherits = new KeywordNode(inheritsKeyword);
       this.addElement(this.inherits);
       this.addElement(new SpaceNode(Space.required));
-      this.typeList = new CSV(() => new TypeNode(), 1);
-      this.typeList.setCompletionWhenEmpty("Type(s) - comma-separated");
+      this.typeList = new CSV(() => new TypeNode([TokenType.type_abstract]), 1);
+      this.typeList.setSyntaxCompletionWhenEmpty("Type(s) - comma-separated");
       this.addElement(this.typeList);
       super.parseText(text);
     }

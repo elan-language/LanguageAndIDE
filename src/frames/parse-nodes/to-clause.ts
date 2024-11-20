@@ -1,4 +1,4 @@
-import { TokenType } from "../helpers";
+import { SymbolCompletionSpec, TokenType } from "../helpers";
 import { toKeyword } from "../keywords";
 import { ParseStatus } from "../status-enums";
 import { AbstractSequence } from "./abstract-sequence";
@@ -18,7 +18,7 @@ export class ToClause extends AbstractSequence {
   }
 
   parseText(text: string): void {
-    this.property = new IdentifierNode();
+    this.property = new IdentifierNode([TokenType.id_property]);
     const sp0 = new SpaceNode(Space.required);
     const to = new KeywordNode(toKeyword);
     const sp1 = new SpaceNode(Space.required);
@@ -37,16 +37,16 @@ export class ToClause extends AbstractSequence {
     return code;
   }
 
-  getToMatchAndTokenType(): [string, TokenType] {
+  getSymbolCompletionSpecOld(): SymbolCompletionSpec {
     const elems = this.getElements();
     if (elems[3].status === ParseStatus.valid) {
-      return elems[4].getToMatchAndTokenType();
+      return elems[4].getSymbolCompletionSpecOld();
     }
 
     if (elems[1].status !== ParseStatus.valid) {
-      return [elems[0].matchedText, TokenType.property];
+      return new SymbolCompletionSpec(elems[0].matchedText, [TokenType.id_property]);
     }
 
-    return ["", TokenType.none];
+    return new SymbolCompletionSpec("", [TokenType.none]);
   }
 }

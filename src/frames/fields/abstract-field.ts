@@ -1,6 +1,7 @@
 import { CodeSource } from "../code-source";
 import { CompileError } from "../compile-error";
 import {
+  SymbolCompletionSpec,
   TokenType,
   escapeHtmlChars,
   helper_CompileOrParseAsDisplayStatus,
@@ -115,7 +116,7 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   getCompletion(): string {
-    return this.rootNode ? this.rootNode.getCompletionAsHtml() : "";
+    return this.rootNode ? this.rootNode.getSyntaxCompletionAsHtml() : "";
   }
 
   getPlainTextCompletion(): string {
@@ -638,16 +639,19 @@ export abstract class AbstractField implements Selectable, Field {
     );
   }
 
-  protected getToMatchAndTokenType(): [string, TokenType] {
-    return this.rootNode ? this.rootNode.getToMatchAndTokenType() : ["", TokenType.none];
+  protected getSymbolCompletionSpecOld(): SymbolCompletionSpec {
+    return this.rootNode
+      ? this.rootNode.getSymbolCompletionSpecOld()
+      : new SymbolCompletionSpec("", [TokenType.none]);
   }
 
   protected symbolCompletionAsHtml(transforms: Transforms): string {
     let popupAsHtml = "";
-    const [id, tokenType] = this.getToMatchAndTokenType();
+    const spec = this.getSymbolCompletionSpecOld();
+    const tokenType = spec.tokenTypes.values().next()!.value!;
     if (this.showAutoComplete(tokenType)) {
       [this.autocompleteMatch, this.autocompleteSymbols] = this.matchingSymbolsForId(
-        id,
+        spec.toMatch,
         tokenType,
         transforms,
       );

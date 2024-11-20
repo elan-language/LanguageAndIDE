@@ -22,7 +22,7 @@ import { assertParses, transforms } from "./compiler/compiler-test-helpers";
 import { getTestSystem } from "./compiler/test-system";
 
 // flag to update test file
-const updateTestFiles = true;
+const updateTestFiles = false;
 
 export async function assertEffectOfActionNew(
   sourceFile: string,
@@ -357,20 +357,22 @@ export function testNodeParse(
   if (html && html !== "") {
     assert.equal(node.renderAsHtml(), html);
   }
-}export function testGetActiveNode(
+}
+
+export function testParseCompletionAndActiveNode(
   node: ParseNode,
   text: string,
   status: ParseStatus,
-  expectedType: string
+  activeNodeType: string,
+  done = false,
 ) {
   node.parseText(text);
   assert.equal(node.status, status);
   const active = node.getActiveNode();
   const cls = active.constructor.name;
-  assert.equal(expectedType, cls);
+  assert.equal(cls, activeNodeType);
+  assert.equal(node.isDone(), done);
 }
-
-
 
 export function testCompletion(
   node: ParseNode,
@@ -380,7 +382,7 @@ export function testCompletion(
 ) {
   node.parseText(text);
   assert.equal(node.status, status);
-  assert.equal(node.getCompletionAsHtml(), completion);
+  assert.equal(node.getSyntaxCompletionAsHtml(), completion);
 }
 
 export const intType = IntType.Instance;

@@ -1,4 +1,4 @@
-import { TokenType } from "../helpers";
+import { SymbolCompletionSpec, TokenType } from "../helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
 import { ArrayNode } from "./array-list-node";
@@ -61,7 +61,7 @@ export class TermSimple extends AbstractSequence {
     super.parseText(text);
   }
 
-  getToMatchAndTokenType(): [string, TokenType] {
-    return [this.matchedText, TokenType.expression];
+  getSymbolCompletionSpecOld(): SymbolCompletionSpec {
+    return new SymbolCompletionSpec(this.matchedText, [TokenType.expression]);
   }
 }

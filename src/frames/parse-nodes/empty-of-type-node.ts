@@ -1,4 +1,4 @@
-import { TokenType } from "../helpers";
+import { SymbolCompletionSpec, TokenType } from "../helpers";
 import { emptyKeyword } from "../keywords";
 import { AbstractSequence } from "./abstract-sequence";
 import { KeywordNode } from "./keyword-node";
@@ -12,12 +12,12 @@ export class EmptyOfTypeNode extends AbstractSequence {
   parseText(text: string): void {
     this.addElement(new KeywordNode(emptyKeyword));
     this.addElement(new SpaceNode(Space.required));
-    this.type = new TypeNode();
+    this.type = new TypeNode([TokenType.type_concrete]);
     this.addElement(this.type);
     super.parseText(text);
   }
 
-  override getToMatchAndTokenType(): [string, TokenType] {
-    return [this.matchedText, TokenType.type];
+  override getSymbolCompletionSpecOld(): SymbolCompletionSpec {
+    return new SymbolCompletionSpec(this.matchedText, [TokenType.type]);
   }
 }

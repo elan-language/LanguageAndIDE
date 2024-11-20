@@ -1,4 +1,4 @@
-import { TokenType } from "../helpers";
+import { SymbolCompletionSpec, TokenType } from "../helpers";
 import { ParseStatus } from "../status-enums";
 import { ParseNode } from "./parse-node";
 
@@ -8,13 +8,17 @@ export abstract class AbstractParseNode implements ParseNode {
   completionWhenEmpty: string = "";
   remainingText: string = "";
   errorMessage: string = "";
-  activeSubNode: ParseNode = this;
+  activeNodeForSymbolCompl: ParseNode = this;
+  //Complete means that parseNode is valid and that no more text may be taken
+  //By default, parse nodes are never complete. Only ones that can return true are:
+  //SpaceNode and sub-classes of FixedTextNode or of AbstractSequence
+  _done: boolean = false;
 
-  setCompletionWhenEmpty(ph: string) {
+  setSyntaxCompletionWhenEmpty(ph: string) {
     this.completionWhenEmpty = ph;
   }
 
-  getCompletionAsHtml(): string {
+  getSyntaxCompletionAsHtml(): string {
     return this.matchedText === "" ? `${this.completionWhenEmpty}` : "";
   }
 
@@ -50,12 +54,39 @@ export abstract class AbstractParseNode implements ParseNode {
     this.errorMessage = other.errorMessage;
   }
 
-  getToMatchAndTokenType(): [string, TokenType] {
-    return ["", TokenType.none];
+  getSymbolCompletionSpec(): SymbolCompletionSpec {
+    return this.getActiveNode().getSymbolCompletionSpec();
+  }
+
+  getApplicableTokenTypes(): TokenType[] {
+    return [];
+  }
+  getKeywordsForSymbolComplete(): string[] {
+    return [];
+  }
+
+  getSymbolCompletionSpecOld(): SymbolCompletionSpec {
+    return new SymbolCompletionSpec("", [TokenType.none]);
   }
 
   getActiveNode(): ParseNode {
-    const active = this.activeSubNode;
+    const active = this.activeNodeForSymbolCompl;
     return active === this ? active : active.getActiveNode();
+  }
+
+  isDone(): boolean {
+    return this._done;
+  }
+  isValid(): boolean {
+    return this.status === ParseStatus.valid;
+  }
+  isIncomplete(): boolean {
+    return this.status === ParseStatus.incomplete;
+  }
+  isEmpty(): boolean {
+    return this.status === ParseStatus.empty;
+  }
+  isInvalid(): boolean {
+    return this.status === ParseStatus.invalid;
   }
 }

@@ -1,4 +1,4 @@
-import { TokenType } from "../helpers";
+import { SymbolCompletionSpec, TokenType } from "../helpers";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { BinaryExpression } from "./binary-expression";
 import { CopyWith } from "./copy-with";
@@ -27,10 +27,10 @@ export class ExprNode extends AbstractAlternatives {
     super.parseText(text);
   }
 
-  getToMatchAndTokenType(): [string, TokenType] {
+  getSymbolCompletionSpecOld(): SymbolCompletionSpec {
     if (this.matchedText === "") {
-      return ["", TokenType.expression];
+      return new SymbolCompletionSpec("", [TokenType.expression]);
     }
-    return super.getToMatchAndTokenType();
+    return super.getSymbolCompletionSpecOld();
   }
 }

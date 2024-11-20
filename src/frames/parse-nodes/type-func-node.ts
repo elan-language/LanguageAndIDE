@@ -1,3 +1,4 @@
+import { TokenType } from "../helpers";
 import { ofKeyword } from "../keywords";
 import { ARROW, GT } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
@@ -14,6 +15,8 @@ export class TypeFuncNode extends AbstractSequence {
   inputTypes: OptionalNode | undefined;
   returnType: TypeNode | undefined;
 
+  tokenTypes =[TokenType.type_concrete, TokenType.type_abstract];
+
   constructor() {
     super();
   }
@@ -24,23 +27,23 @@ export class TypeFuncNode extends AbstractSequence {
       this.addElement(new PunctuationNode("Func<"));
       this.addElement(new KeywordNode(ofKeyword));
       this.addElement(new SpaceNode(Space.required));
-      const inputTypes = () => new CSV(() => new TypeNode(), 1);
+      const inputTypes = () => new CSV(() => new TypeNode(this.tokenTypes), 1);
       const sp = () => new SpaceNode(Space.required);
       const inputTypesSp = new Sequence([inputTypes, sp]);
       this.inputTypes = new OptionalNode(inputTypesSp);
-      this.inputTypes.setCompletionWhenEmpty("<i>input Type(s)</i>");
+      this.inputTypes.setSyntaxCompletionWhenEmpty("<i>input Type(s)</i>");
       this.addElement(this.inputTypes);
       this.addElement(new PunctuationNode(ARROW));
       this.addElement(new SpaceNode(Space.required));
-      this.returnType = new TypeNode();
-      this.returnType.setCompletionWhenEmpty("<i>return Type</i>");
+      this.returnType = new TypeNode(this.tokenTypes);
+      this.returnType.setSyntaxCompletionWhenEmpty("<i>return Type</i>");
       this.addElement(this.returnType);
       this.addElement(new PunctuationNode(GT));
       super.parseText(text.trimStart());
     }
   }
 
-  getCompletionAsHtml(): string {
-    return super.getCompletionAsHtml();
+  getSyntaxCompletionAsHtml(): string {
+    return super.getSyntaxCompletionAsHtml();
   }
 }

@@ -24,8 +24,12 @@ export class SpaceNode extends AbstractParseNode {
       if (matches !== null && matches.length > 0) {
         this.remainingText = text.replace(matches[0], "");
         this.status = ParseStatus.valid;
+        this._done = true;
+      } else if (this.type === Space.required) {
+        this.status = ParseStatus.invalid;
       } else {
-        this.status = this.type === Space.required ? ParseStatus.invalid : ParseStatus.valid;
+        this.status = ParseStatus.valid;
+        this._done = true;
       }
     }
   }
@@ -38,7 +42,7 @@ export class SpaceNode extends AbstractParseNode {
     return this.type === Space.ignored || this.status === ParseStatus.empty ? "" : " ";
   }
 
-  getCompletionAsHtml(): string {
+  getSyntaxCompletionAsHtml(): string {
     return this.status === ParseStatus.empty && this.type === Space.required ? " " : "";
   }
 

@@ -1,4 +1,4 @@
-import { TokenType } from "../helpers";
+import { SymbolCompletionSpec, TokenType } from "../helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
 import { DotBefore } from "./dot-before";
@@ -28,7 +28,7 @@ export class TermChained extends AbstractSequence {
     }
   }
 
-  getToMatchAndTokenType(): [string, TokenType] {
-    return [this.matchedText, TokenType.expression];
+  getSymbolCompletionSpecOld(): SymbolCompletionSpec {
+    return new SymbolCompletionSpec(this.matchedText, [TokenType.expression]);
   }
 }

@@ -10,7 +10,7 @@ export class DeconstructedTuple extends AbstractSequence {
 
   parseText(text: string): void {
     if (text.length > 0) {
-      const id = () => new IdentifierNode();
+      const id = () => new IdentifierNode([]);
       const discard = () => new PunctuationNode(UNDERSCORE);
       const element = () => new Alternatives([id, discard]);
       this.csv = new CSV(element, 2);

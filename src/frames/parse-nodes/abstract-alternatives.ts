@@ -1,4 +1,4 @@
-import { TokenType } from "../helpers";
+import { SymbolCompletionSpec } from "../helpers";
 import { ParseStatus } from "../status-enums";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { ParseNode } from "./parse-node";
@@ -52,13 +52,15 @@ export abstract class AbstractAlternatives extends AbstractParseNode {
   compile(): string {
     return this.bestMatch ? this.bestMatch.compile() : "";
   }
-  getCompletionAsHtml(): string {
-    const c = this.bestMatch ? this.bestMatch.getCompletionAsHtml() : super.getCompletionAsHtml();
+  getSyntaxCompletionAsHtml(): string {
+    const c = this.bestMatch
+      ? this.bestMatch.getSyntaxCompletionAsHtml()
+      : super.getSyntaxCompletionAsHtml();
     return c;
   }
 
-  override getToMatchAndTokenType(): [string, TokenType] {
-    return this.bestMatch?.getToMatchAndTokenType() ?? super.getToMatchAndTokenType();
+  override getSymbolCompletionSpecOld(): SymbolCompletionSpec {
+    return this.bestMatch?.getSymbolCompletionSpecOld() ?? super.getSymbolCompletionSpecOld();
   }
 
   getActiveNode(): ParseNode {
