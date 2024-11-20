@@ -55,6 +55,7 @@ let profile: Profile;
 let lastSavedHash = "";
 let programWorker: Worker;
 let inactivityTimer: any | undefined = undefined;
+const lastDirId = "elan-files";
 
 // add all the listeners
 
@@ -135,9 +136,9 @@ newButton?.addEventListener("click", async () => {
   await resetFile();
 });
 
-loadButton.addEventListener("click", chooser(handleUpload));
+loadButton.addEventListener("click", chooser(getUploader()));
 
-appendButton.addEventListener("click", chooser(handleAppend));
+appendButton.addEventListener("click", chooser(getAppender()));
 
 saveButton.addEventListener("click", handleDownload);
 
@@ -146,15 +147,9 @@ for (const elem of demoFiles) {
     const fileName = `${elem.id}`;
     const f = await fetch(fileName, { mode: "same-origin" });
     const rawCode = await f.text();
-    const code = new CodeSourceFromString(rawCode);
     file = new FileImpl(hash, profile, transforms());
     file.fileName = fileName;
-    try {
-      await file.parseFrom(code);
-      await initialDisplay(true);
-    } catch (e) {
-      await showError(e as Error, fileName, true);
-    }
+    await readAndParse(rawCode, fileName, true);
   });
 }
 
@@ -628,66 +623,101 @@ async function handleWorkerError(data: WebWorkerStatusMessage) {
 }
 
 function chooser(uploader: (event: Event) => void) {
-  return () => {
-    const f = document.createElement("input");
-    f.style.display = "none";
-    f.type = "file";
-    f.name = "file";
-    f.accept = ".elan";
-    codeControls.appendChild(f);
-    f.addEventListener("change", uploader);
-    f.click();
-  };
+  return useChromeFileAPI()
+    ? () => {
+        const f = document.createElement("input");
+        f.style.display = "none";
+        codeControls.appendChild(f);
+        f.addEventListener("click", uploader);
+        f.click();
+      }
+    : () => {
+        const f = document.createElement("input");
+        f.style.display = "none";
+        f.type = "file";
+        f.name = "file";
+        f.accept = ".elan";
+        codeControls.appendChild(f);
+        f.addEventListener("change", uploader);
+        f.click();
+      };
+}
+
+function useChromeFileAPI() {
+  return "showOpenFilePicker" in self;
+}
+
+function getUploader() {
+  // The `showOpenFilePicker()` method of the File System Access API is supported.
+  return useChromeFileAPI() ? handleChromeUpload : handleUpload;
+}
+
+function getAppender() {
+  // The `showOpenFilePicker()` method of the File System Access API is supported.
+  return useChromeFileAPI() ? handleChromeAppend : handleAppend;
+}
+
+async function readAndParse(rawCode: string, fileName: string, reset: boolean, append?: boolean) {
+  const code = new CodeSourceFromString(rawCode);
+  file.fileName = fileName;
+  try {
+    await file.parseFrom(code, append);
+    await initialDisplay(reset);
+  } catch (e) {
+    await showError(e as Error, fileName, reset);
+  }
+}
+
+async function handleChromeUploadOrAppend(upload: boolean) {
+  const [fileHandle] = await window.showOpenFilePicker({
+    startIn: "documents",
+    types: [{ accept: { "text/plain": ".elan" } }],
+    id: lastDirId,
+  });
+  const codeFile = await fileHandle.getFile();
+  const fileName = codeFile.name;
+  const rawCode = await codeFile.text();
+  if (upload) {
+    file = new FileImpl(hash, profile, transforms());
+  }
+  await readAndParse(rawCode, fileName, upload, !upload);
+}
+
+async function handleChromeUpload() {
+  await handleChromeUploadOrAppend(true);
+}
+
+async function handleChromeAppend() {
+  await handleChromeUploadOrAppend(false);
+}
+
+function handleUploadOrAppend(event: Event, upload: boolean) {
+  const elanFile = (event.target as any).files?.[0] as any;
+
+  if (elanFile) {
+    const fileName = elanFile.name;
+    document.body.style.cursor = "wait";
+    clearDisplays();
+    const reader = new FileReader();
+    reader.addEventListener("load", async (event: any) => {
+      const rawCode = event.target.result;
+      if (upload) {
+        file = new FileImpl(hash, profile, transforms());
+      }
+      await readAndParse(rawCode, fileName, upload, !upload);
+    });
+    reader.readAsText(elanFile);
+  }
+
+  event.preventDefault();
 }
 
 function handleUpload(event: Event) {
-  const elanFile = (event.target as any).files?.[0] as any;
-
-  if (elanFile) {
-    const fileName = elanFile.name;
-    document.body.style.cursor = "wait";
-    clearDisplays();
-    const reader = new FileReader();
-    reader.addEventListener("load", async (event: any) => {
-      const rawCode = event.target.result;
-      const code = new CodeSourceFromString(rawCode);
-      file = new FileImpl(hash, profile, transforms());
-      file.fileName = fileName;
-      try {
-        await file.parseFrom(code);
-        await initialDisplay(true);
-      } catch (e) {
-        await showError(e as Error, fileName, true);
-      }
-    });
-    reader.readAsText(elanFile);
-  }
-
-  event.preventDefault();
+  handleUploadOrAppend(event, true);
 }
 
 function handleAppend(event: Event) {
-  const elanFile = (event.target as any).files?.[0] as any;
-
-  if (elanFile) {
-    const fileName = elanFile.name;
-    document.body.style.cursor = "wait";
-    clearDisplays();
-    const reader = new FileReader();
-    reader.addEventListener("load", async (event: any) => {
-      const rawCode = event.target.result;
-      const newCode = new CodeSourceFromString(rawCode);
-      try {
-        await file.parseFrom(newCode, true);
-        await initialDisplay(false);
-      } catch (e) {
-        await showError(e as Error, fileName, false);
-      }
-    });
-    reader.readAsText(elanFile);
-  }
-
-  event.preventDefault();
+  handleUploadOrAppend(event, false);
 }
 
 async function handleDownload(event: Event) {
