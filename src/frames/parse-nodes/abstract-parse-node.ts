@@ -1,4 +1,4 @@
-import { SymbolCompletionSpec, TokenType } from "../helpers";
+import { SymbolCompletionSpec, SymbolCompletionSpec_Old, TokenType } from "../helpers";
 import { ParseStatus } from "../status-enums";
 import { ParseNode } from "./parse-node";
 
@@ -54,19 +54,26 @@ export abstract class AbstractParseNode implements ParseNode {
     this.errorMessage = other.errorMessage;
   }
 
-  getSymbolCompletionSpec(): SymbolCompletionSpec {
-    return this.getActiveNode().getSymbolCompletionSpec();
+  symbolCompletion_getSpec(): SymbolCompletionSpec {
+    const active = this.getActiveNode();
+    return this.getActiveNode().symbolCompletion_getSpec();
   }
 
-  getApplicableTokenTypes(): TokenType[] {
+  symbolCompletion_tokenTypes(): TokenType[] {
     return [];
   }
-  getKeywordsForSymbolComplete(): string[] {
+  symbolCompleton_keywords(): string[] {
     return [];
+  }
+  symbolCompleton_constraintId(): string {
+    return "";
+  }
+  symbolCompleton_toMatch(): string {
+    return "";
   }
 
-  getSymbolCompletionSpecOld(): SymbolCompletionSpec {
-    return new SymbolCompletionSpec("", [TokenType.none]);
+  symbolCompletion_getSpec_Old(): SymbolCompletionSpec_Old {
+    return new SymbolCompletionSpec_Old("", [TokenType.none]);
   }
 
   getActiveNode(): ParseNode {

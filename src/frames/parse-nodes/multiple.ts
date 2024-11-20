@@ -1,4 +1,4 @@
-import { SymbolCompletionSpec, TokenType } from "../helpers";
+import { SymbolCompletionSpec_Old, TokenType } from "../helpers";
 import { ParseStatus } from "../status-enums";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { ParseNode } from "./parse-node";
@@ -70,12 +70,12 @@ export class Multiple extends AbstractParseNode {
     );
   }
 
-  getSymbolCompletionSpecOld(): SymbolCompletionSpec {
+  symbolCompletion_getSpec_Old(): SymbolCompletionSpec_Old {
     const elems = this.getElements();
     if (elems.length === 0) {
-      return new SymbolCompletionSpec("", [TokenType.none]);
+      return new SymbolCompletionSpec_Old("", [TokenType.none]);
     }
-    return elems[elems.length - 1].getSymbolCompletionSpecOld();
+    return elems[elems.length - 1].symbolCompletion_getSpec_Old();
   }
 
   getActiveNode(): ParseNode {

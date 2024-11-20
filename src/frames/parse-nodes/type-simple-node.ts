@@ -13,7 +13,7 @@ export class TypeSimpleNode extends RegExMatchNode {
     return `<el-type>${this.renderAsSource()}</el-type>`;
   }
 
-  getApplicableTokenTypes(): TokenType[] {
+  symbolCompletion_tokenTypes(): TokenType[] {
     return this.tokenTypes;
   }
 }

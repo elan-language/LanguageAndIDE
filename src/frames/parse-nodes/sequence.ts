@@ -1,4 +1,4 @@
-import { SymbolCompletionSpec } from "../helpers";
+import { SymbolCompletionSpec_Old } from "../helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { ParseNode } from "./parse-node";
 
@@ -18,9 +18,9 @@ export class Sequence extends AbstractSequence {
     super.parseText(text);
   }
 
-  getSymbolCompletionSpecOld(): SymbolCompletionSpec {
+  symbolCompletion_getSpec_Old(): SymbolCompletionSpec_Old {
     const elems = this.getElements();
 
-    return elems[elems.length - 1].getSymbolCompletionSpecOld();
+    return elems[elems.length - 1].symbolCompletion_getSpec_Old();
   }
 }

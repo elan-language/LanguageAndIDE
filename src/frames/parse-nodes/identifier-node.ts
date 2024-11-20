@@ -1,5 +1,5 @@
 import { Regexes } from "../fields/regexes";
-import { SymbolCompletionSpec, TokenType } from "../helpers";
+import { SymbolCompletionSpec_Old, TokenType } from "../helpers";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { matchRegEx } from "./parse-node-helpers";
 
@@ -25,11 +25,11 @@ export class IdentifierNode extends AbstractParseNode {
     }
   }
 
-  getSymbolCompletionSpecOld(): SymbolCompletionSpec {
-    return new SymbolCompletionSpec(this.matchedText, [TokenType.idOrProcedure]);
+  symbolCompletion_getSpec_Old(): SymbolCompletionSpec_Old {
+    return new SymbolCompletionSpec_Old(this.matchedText, [TokenType.idOrProcedure]);
   }
 
-  getApplicableTokenTypes(): TokenType[] {
+  symbolCompletion_tokenTypes(): TokenType[] {
     return this.tokenTypes;
   }
 }

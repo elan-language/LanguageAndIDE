@@ -65,7 +65,7 @@ export class KeywordNode extends FixedTextNode {
     }
   }
 
-  getKeywordsForSymbolComplete(): string[] {
+  symbolCompleton_keywords(): string[] {
     return [this.fixedText];
   }
 }

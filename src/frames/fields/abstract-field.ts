@@ -1,7 +1,7 @@
 import { CodeSource } from "../code-source";
 import { CompileError } from "../compile-error";
 import {
-  SymbolCompletionSpec,
+  SymbolCompletionSpec_Old,
   TokenType,
   escapeHtmlChars,
   helper_CompileOrParseAsDisplayStatus,
@@ -639,10 +639,10 @@ export abstract class AbstractField implements Selectable, Field {
     );
   }
 
-  protected getSymbolCompletionSpecOld(): SymbolCompletionSpec {
+  protected getSymbolCompletionSpecOld(): SymbolCompletionSpec_Old {
     return this.rootNode
-      ? this.rootNode.getSymbolCompletionSpecOld()
-      : new SymbolCompletionSpec("", [TokenType.none]);
+      ? this.rootNode.symbolCompletion_getSpec_Old()
+      : new SymbolCompletionSpec_Old("", [TokenType.none]);
   }
 
   protected symbolCompletionAsHtml(transforms: Transforms): string {

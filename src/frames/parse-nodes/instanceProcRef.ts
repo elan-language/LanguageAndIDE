@@ -1,4 +1,4 @@
-import { SymbolCompletionSpec, TokenType } from "../helpers";
+import { SymbolCompletionSpec_Old, TokenType } from "../helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
 import { DotAfter } from "./dot-after";
@@ -38,7 +38,7 @@ export class InstanceProcRef extends AbstractSequence {
     return `${this.prefix!.matchedNode ? this.prefix?.matchedNode.renderAsHtml() : ""}<el-method>${this.simple?.renderAsHtml()}</el-method>`;
   }
 
-  getSymbolCompletionSpecOld(): SymbolCompletionSpec {
-    return new SymbolCompletionSpec(this.matchedText, [TokenType.idOrProcedure]);
+  symbolCompletion_getSpec_Old(): SymbolCompletionSpec_Old {
+    return new SymbolCompletionSpec_Old(this.matchedText, [TokenType.idOrProcedure]);
   }
 }

@@ -1,4 +1,4 @@
-import { SymbolCompletionSpec, TokenType } from "../helpers";
+import { SymbolCompletionSpec_Old, TokenType } from "../helpers";
 import { toKeyword } from "../keywords";
 import { ParseStatus } from "../status-enums";
 import { AbstractSequence } from "./abstract-sequence";
@@ -37,16 +37,16 @@ export class ToClause extends AbstractSequence {
     return code;
   }
 
-  getSymbolCompletionSpecOld(): SymbolCompletionSpec {
+  symbolCompletion_getSpec_Old(): SymbolCompletionSpec_Old {
     const elems = this.getElements();
     if (elems[3].status === ParseStatus.valid) {
-      return elems[4].getSymbolCompletionSpecOld();
+      return elems[4].symbolCompletion_getSpec_Old();
     }
 
     if (elems[1].status !== ParseStatus.valid) {
-      return new SymbolCompletionSpec(elems[0].matchedText, [TokenType.id_property]);
+      return new SymbolCompletionSpec_Old(elems[0].matchedText, [TokenType.id_property]);
     }
 
-    return new SymbolCompletionSpec("", [TokenType.none]);
+    return new SymbolCompletionSpec_Old("", [TokenType.none]);
   }
 }

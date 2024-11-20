@@ -1,4 +1,4 @@
-import { SymbolCompletionSpec, TokenType } from "../helpers";
+import { SymbolCompletionSpec_Old, TokenType } from "../helpers";
 import { ParseStatus } from "../status-enums";
 import { AbstractSequence } from "./abstract-sequence";
 import { BinaryOperation } from "./binary-operation";
@@ -38,15 +38,15 @@ export class BinaryExpression extends AbstractSequence {
     return `${this.lhs?.renderAsSource()}${this.op!.renderAsSource()}${this.rhs?.renderAsSource()}`;
   }
 
-  getSymbolCompletionSpecOld(): SymbolCompletionSpec {
+  symbolCompletion_getSpec_Old(): SymbolCompletionSpec_Old {
     if (this.rhs && this.rhs.status === ParseStatus.valid) {
-      return this.rhs.getSymbolCompletionSpecOld();
+      return this.rhs.symbolCompletion_getSpec_Old();
     }
 
     if (this.lhs && this.lhs?.remainingText !== " ") {
-      return this.lhs.getSymbolCompletionSpecOld();
+      return this.lhs.symbolCompletion_getSpec_Old();
     }
 
-    return new SymbolCompletionSpec("", [TokenType.none]);
+    return new SymbolCompletionSpec_Old("", [TokenType.none]);
   }
 }
