@@ -54,11 +54,23 @@ export abstract class AbstractParseNode implements ParseNode {
     this.errorMessage = other.errorMessage;
   }
 
-  symbolCompletion_getSpec(): SymbolCompletionSpec {
-    const active = this.getActiveNode();
-    return this.getActiveNode().symbolCompletion_getSpec();
+  symbolCompletion_getSpec_Old(): SymbolCompletionSpec_Old {
+    return new SymbolCompletionSpec_Old("", [TokenType.none]);
   }
 
+  symbolCompletion_getSpec(): SymbolCompletionSpec {
+    const active = this.getActiveNode();
+    const isThis = active === this;
+    const toMatch = isThis ? "" : active.symbolCompleton_toMatch();
+    const tokens = isThis ? [] : active.symbolCompletion_tokenTypes();
+    const keywords = isThis ? [] : active.symbolCompleton_keywords();
+    const constraintId = isThis ? "" : active.symbolCompleton_constraintId();
+    return new SymbolCompletionSpec(toMatch, tokens, keywords, constraintId);
+  }
+
+  symbolCompleton_toMatch(): string {
+    return "";
+  }
   symbolCompletion_tokenTypes(): TokenType[] {
     return [];
   }
@@ -67,13 +79,6 @@ export abstract class AbstractParseNode implements ParseNode {
   }
   symbolCompleton_constraintId(): string {
     return "";
-  }
-  symbolCompleton_toMatch(): string {
-    return "";
-  }
-
-  symbolCompletion_getSpec_Old(): SymbolCompletionSpec_Old {
-    return new SymbolCompletionSpec_Old("", [TokenType.none]);
   }
 
   getActiveNode(): ParseNode {

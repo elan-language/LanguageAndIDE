@@ -283,13 +283,16 @@ export class SymbolCompletionSpec_Old {
 }
 
 export class SymbolCompletionSpec {
-  constructor(toMatch: string, tts: TokenType[]) {
+  constructor(toMatch: string, tts: TokenType[], keywords: string[], constrainingId : string) {
     this.toMatch = toMatch;
     this.addTokenTypes(tts);
+    this.keywords = keywords;
+    this.constrainingId = constrainingId;
   }
   toMatch: string = "";
   tokenTypes: Set<TokenType> = new Set<TokenType>();
-  keywordsToOffer: string[] = [];
+  keywords: string[];
+  constrainingId: string;
 
   addTokenTypes(tokenTypes: TokenType[]): void {
     const toAdd = new Set<TokenType>(tokenTypes);
@@ -302,7 +305,7 @@ export class SymbolCompletionSpec {
     // v. unlikely that any one node will need to add > 1
     const trimmed = keyword.trim();
     if (trimmed.length > 0) {
-      this.keywordsToOffer.push(keyword.trim() + " ");
+      this.keywords.push(keyword.trim() + " ");
     }
   }
 }
