@@ -17,7 +17,7 @@ export class LitBoolean extends AbstractAlternatives {
     }
   }
 
-  getKeywordsForSymbolComplete(): string[] {
+  symbolCompleton_keywords(): string[] {
     return [trueKeyword, falseKeyword];
   }
 }

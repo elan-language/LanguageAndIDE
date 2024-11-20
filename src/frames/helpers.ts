@@ -265,6 +265,23 @@ export enum TokenType {
   id_enumValue,
 }
 
+export class SymbolCompletionSpec_Old {
+  constructor(toMatch: string, tts: TokenType[]) {
+    this.toMatch = toMatch;
+    this.addTokenTypes(tts);
+  }
+  toMatch: string = "";
+  tokenTypes: Set<TokenType> = new Set<TokenType>();
+
+  addTokenTypes(tokenTypes: TokenType[]): void {
+    const toAdd = new Set<TokenType>(tokenTypes);
+    // TODO Correct code is:
+    // this.tokenTypes.union(toAdd);
+    // Due to a build issue (on RP machine only), need to do it without 'union'
+    toAdd.forEach((tt) => this.tokenTypes.add(tt));
+  }
+}
+
 export class SymbolCompletionSpec {
   constructor(toMatch: string, tts: TokenType[]) {
     this.toMatch = toMatch;

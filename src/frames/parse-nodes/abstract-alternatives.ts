@@ -1,4 +1,4 @@
-import { SymbolCompletionSpec } from "../helpers";
+import { SymbolCompletionSpec_Old } from "../helpers";
 import { ParseStatus } from "../status-enums";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { ParseNode } from "./parse-node";
@@ -59,8 +59,8 @@ export abstract class AbstractAlternatives extends AbstractParseNode {
     return c;
   }
 
-  override getSymbolCompletionSpecOld(): SymbolCompletionSpec {
-    return this.bestMatch?.getSymbolCompletionSpecOld() ?? super.getSymbolCompletionSpecOld();
+  override symbolCompletion_getSpec_Old(): SymbolCompletionSpec_Old {
+    return this.bestMatch?.symbolCompletion_getSpec_Old() ?? super.symbolCompletion_getSpec_Old();
   }
 
   getActiveNode(): ParseNode {

@@ -1,4 +1,4 @@
-import { SymbolCompletionSpec, TokenType } from "../helpers";
+import { SymbolCompletionSpec_Old, TokenType } from "../helpers";
 import { emptyKeyword } from "../keywords";
 import { AbstractSequence } from "./abstract-sequence";
 import { KeywordNode } from "./keyword-node";
@@ -17,7 +17,7 @@ export class EmptyOfTypeNode extends AbstractSequence {
     super.parseText(text);
   }
 
-  override getSymbolCompletionSpecOld(): SymbolCompletionSpec {
-    return new SymbolCompletionSpec(this.matchedText, [TokenType.type]);
+  override symbolCompletion_getSpec_Old(): SymbolCompletionSpec_Old {
+    return new SymbolCompletionSpec_Old(this.matchedText, [TokenType.type]);
   }
 }

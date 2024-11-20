@@ -1,4 +1,4 @@
-import { SymbolCompletionSpec, TokenType } from "../helpers";
+import { SymbolCompletionSpec_Old, TokenType } from "../helpers";
 import { ParseStatus } from "../status-enums";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { ParseNode } from "./parse-node";
@@ -47,10 +47,10 @@ export class OptionalNode extends AbstractParseNode {
     return c;
   }
 
-  getSymbolCompletionSpecOld(): SymbolCompletionSpec {
+  symbolCompletion_getSpec_Old(): SymbolCompletionSpec_Old {
     return (
-      this.matchedNode?.getSymbolCompletionSpecOld() ??
-      new SymbolCompletionSpec("", [TokenType.none])
+      this.matchedNode?.symbolCompletion_getSpec_Old() ??
+      new SymbolCompletionSpec_Old("", [TokenType.none])
     );
   }
 
