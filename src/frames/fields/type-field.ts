@@ -19,7 +19,7 @@ export class TypeField extends AbstractField {
   getIdPrefix(): string {
     return "type";
   }
- 
+
   initialiseRoot(): ParseNode {
     this.astNode = undefined;
     this.rootNode = new TypeNode([TokenType.type_concrete, TokenType.type_abstract]);

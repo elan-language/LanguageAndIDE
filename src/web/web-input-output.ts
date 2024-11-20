@@ -25,8 +25,7 @@ export class WebInputOutput implements ElanInputOutput {
   }
 
   useChromeFileAPI() {
-    //return "showOpenFilePicker" in self;
-    return false;
+    return "showOpenFilePicker" in self;
   }
 
   chooser() {
@@ -115,14 +114,18 @@ export class WebInputOutput implements ElanInputOutput {
   }
 
   async writeFileChrome(fileName: string, data: string): Promise<void> {
-    const fh = await self.showSaveFilePicker({
-      suggestedName: fileName,
-      startIn: "documents",
-      id: this.lastDirId,
-    });
-    const writeable = await fh.createWritable();
-    await writeable.write(data);
-    return await writeable.close();
+    try {
+      const fh = await self.showSaveFilePicker({
+        suggestedName: fileName,
+        startIn: "documents",
+        id: this.lastDirId,
+      });
+      const writeable = await fh.createWritable();
+      await writeable.write(data);
+      return await writeable.close();
+    } catch (e) {
+      throw new Error("write cancelled");
+    }
   }
 
   writeFile(fileName: string, data: string): Promise<void> {
@@ -151,7 +154,7 @@ export class WebInputOutput implements ElanInputOutput {
 
         rs();
       } catch (e) {
-        rj(e);
+        rj("write cancelled");
       }
     });
   }

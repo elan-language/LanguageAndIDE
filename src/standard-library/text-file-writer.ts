@@ -26,7 +26,7 @@ export class TextFileWriter {
   }
 
   @elanProcedure(ProcedureOptions.async)
-  writeWholeFile(data: string) {
+  async writeWholeFile(data: string) {
     if (this.status === 0) {
       throw new ElanRuntimeError("Cannot use any method on a closed file");
     }
@@ -36,15 +36,23 @@ export class TextFileWriter {
       );
     }
     this.status = 0;
-    return this.system!.elanInputOutput.writeFile(this.fileName, data);
+    try {
+      await this.system!.elanInputOutput.writeFile(this.fileName, data);
+    } catch (e) {
+      throw new ElanRuntimeError(e as Error);
+    }
   }
 
   @elanProcedure(ProcedureOptions.async)
-  saveAndClose() {
+  async saveAndClose() {
     if (this.status === 0) {
       throw new ElanRuntimeError("Cannot use any method on a closed file");
     }
     this.status = 0;
-    return this.system!.elanInputOutput.writeFile(this.fileName, this.content.join("\n"));
+    try {
+      await this.system!.elanInputOutput.writeFile(this.fileName, this.content.join("\n"));
+    } catch (e) {
+      throw new ElanRuntimeError(e as Error);
+    }
   }
 }
