@@ -34,6 +34,7 @@ const graphicsDiv = document.getElementById("graphics") as HTMLDivElement;
 const loadButton = document.getElementById("load") as HTMLButtonElement;
 const appendButton = document.getElementById("append") as HTMLButtonElement;
 const saveButton = document.getElementById("save") as HTMLButtonElement;
+const autoSaveButton = document.getElementById("auto-save") as HTMLButtonElement;
 const codeTitle = document.getElementById("code-title") as HTMLDivElement;
 const parse = document.getElementById("parse") as HTMLDivElement;
 const compile = document.getElementById("compile") as HTMLDivElement;
@@ -48,6 +49,7 @@ const system = stdlib.system;
 system.stdlib = stdlib; // to allow injection
 
 const elanInputOutput = new WebInputOutput(consoleDiv, graphicsDiv);
+const lastDirId = "elan-files";
 
 let file: File;
 let doOnce = true;
@@ -55,7 +57,9 @@ let profile: Profile;
 let lastSavedHash = "";
 let programWorker: Worker;
 let inactivityTimer: any | undefined = undefined;
-const lastDirId = "elan-files";
+let autoSaveFileHandle: FileSystemFileHandle | undefined = undefined;
+
+autoSaveButton.hidden = !useChromeFileAPI();
 
 // add all the listeners
 
@@ -143,6 +147,8 @@ loadButton.addEventListener("click", chooser(getUploader()));
 appendButton.addEventListener("click", chooser(getAppender()));
 
 saveButton.addEventListener("click", getDownloader());
+
+autoSaveButton.addEventListener("click", handleChromeAutoSave);
 
 for (const elem of demoFiles) {
   elem.addEventListener("click", async () => {
@@ -504,6 +510,9 @@ async function updateContent(text: string) {
     localStorage.setItem("elan-code", code);
     localStorage.setItem("elan-file", file.fileName);
     saveButton.classList.add("unsaved");
+
+    // autosave if setup
+    autoSave(code);
   }
 
   await updateDisplayValues();
@@ -791,20 +800,25 @@ async function handleDownload(event: Event) {
   await renderAsHtml();
 }
 
+async function chromeSave(code: string) {
+  const fh = await showSaveFilePicker({
+    suggestedName: file.fileName,
+    startIn: "documents",
+    id: lastDirId,
+  });
+
+  const writeable = await fh.createWritable();
+  await writeable.write(code);
+  await writeable.close();
+  return fh;
+}
+
 async function handleChromeDownload(event: Event) {
   updateFileName();
   const code = await file.renderAsSource();
 
   try {
-    const fh = await showSaveFilePicker({
-      suggestedName: file.fileName,
-      startIn: "documents",
-      id: lastDirId,
-    });
-
-    const writeable = await fh.createWritable();
-    await writeable.write(code);
-    await writeable.close();
+    await chromeSave(code);
 
     saveButton.classList.remove("unsaved");
     lastSavedHash = file.currentHash;
@@ -815,5 +829,35 @@ async function handleChromeDownload(event: Event) {
     return;
   } finally {
     event.preventDefault();
+  }
+}
+
+async function handleChromeAutoSave(event: Event) {
+  updateFileName();
+  const code = await file.renderAsSource();
+
+  try {
+    autoSaveFileHandle = await chromeSave(code);
+    lastSavedHash = file.currentHash;
+    await renderAsHtml();
+  } catch (e) {
+    // user cancelled
+    return;
+  } finally {
+    event.preventDefault();
+  }
+}
+
+async function autoSave(code: string) {
+  if (autoSaveFileHandle) {
+    try {
+      const writeable = await autoSaveFileHandle.createWritable();
+      await writeable.write(code);
+      await writeable.close();
+      lastSavedHash = file.currentHash;
+      updateNameAndSavedStatus();
+    } catch (e) {
+      console.warn("autosave failed");
+    }
   }
 }
