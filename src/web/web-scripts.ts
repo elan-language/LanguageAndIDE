@@ -308,6 +308,7 @@ async function updateDisplayValues() {
     disable(loadButton, msg);
     disable(appendButton, msg);
     disable(saveButton, msg);
+    disable(autoSaveButton, msg);
     disable(newButton, msg);
     disable(demosButton, msg);
     disable(trimButton, msg);
@@ -329,6 +330,12 @@ async function updateDisplayValues() {
 
     for (const elem of demoFiles) {
       elem.removeAttribute("hidden");
+    }
+
+    if (autoSaveFileHandle) {
+      disable(autoSaveButton, "Auto-save is already activated - will save whenever code parses");
+    } else if (useChromeFileAPI()) {
+      enable(autoSaveButton, "Select file to auto save to - will save whenever code parses");
     }
 
     if (isEmpty) {
@@ -814,7 +821,6 @@ async function chromeSave(code: string) {
 }
 
 async function handleChromeDownload(event: Event) {
-  updateFileName();
   const code = await file.renderAsSource();
 
   try {
@@ -833,7 +839,6 @@ async function handleChromeDownload(event: Event) {
 }
 
 async function handleChromeAutoSave(event: Event) {
-  updateFileName();
   const code = await file.renderAsSource();
 
   try {
