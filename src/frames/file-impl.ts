@@ -642,6 +642,12 @@ export class FileImpl implements File, Scope {
         }
         break;
       }
+      case "t": {
+        if (e.modKey.alt) {
+          this.removeAllSelectorsThatCanBe();
+        }
+        break;
+      }
     }
     this.setFieldBeingEdited(false);
     return codeHasChanged;

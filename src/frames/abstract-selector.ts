@@ -167,6 +167,12 @@ export abstract class AbstractSelector extends AbstractFrame {
           break;
         }
       }
+      case "t": {
+        if (e.modKey.alt) {
+          this.getFile().removeAllSelectorsThatCanBe();
+          break;
+        }
+      }
       default: {
         if (!key || key.length === 1) {
           key = key?.toLowerCase();

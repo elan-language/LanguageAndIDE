@@ -227,6 +227,12 @@ export abstract class AbstractFrame implements Frame {
           break;
         }
       }
+      case "t": {
+        if (e.modKey.alt) {
+          this.getFile().removeAllSelectorsThatCanBe();
+          break;
+        }
+      }
       case "ArrowUp": {
         if (e.modKey.control && this.movable) {
           this.getParent().moveSelectedChildrenUpOne();
