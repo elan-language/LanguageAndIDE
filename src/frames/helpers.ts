@@ -283,7 +283,7 @@ export class SymbolCompletionSpec_Old {
 }
 
 export class SymbolCompletionSpec {
-  constructor(toMatch: string, tts: TokenType[], keywords: string[], constrainingId : string) {
+  constructor(toMatch: string, tts: TokenType[], keywords: string[], constrainingId: string) {
     this.toMatch = toMatch;
     this.addTokenTypes(tts);
     this.keywords = keywords;
