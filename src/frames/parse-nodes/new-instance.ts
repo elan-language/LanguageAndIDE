@@ -27,7 +27,7 @@ export class NewInstance extends AbstractSequence {
     this.args.setSyntaxCompletionWhenEmpty("<i>arguments</i>");
     this.addElement(this.args);
     this.addElement(new PunctuationNode(CLOSE_BRACKET));
-    this.withClause = new OptionalNode(new WithClause());
+    this.withClause = new OptionalNode(new WithClause(() => this.type!.matchedText));
     this.addElement(this.withClause);
     super.parseText(text);
   }

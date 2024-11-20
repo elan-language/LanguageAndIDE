@@ -69,7 +69,7 @@ export abstract class AbstractParseNode implements ParseNode {
   }
 
   symbolCompleton_toMatch(): string {
-    return "";
+    return this.matchedText;
   }
   symbolCompletion_tokenTypes(): TokenType[] {
     return [];

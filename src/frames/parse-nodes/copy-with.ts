@@ -29,7 +29,7 @@ export class CopyWith extends AbstractSequence {
       this.addElement(new SpaceNode(Space.required));
       this.original = new IdentifierNode(this.tokenTypes);
       this.addElement(this.original);
-      this.withClause = new WithClause();
+      this.withClause = new WithClause(() => this.original!.matchedText);
       this.addElement(this.withClause);
       return super.parseText(text);
     }
