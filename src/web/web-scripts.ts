@@ -132,8 +132,10 @@ expandCollapseButton?.addEventListener("click", async () => {
 });
 
 newButton?.addEventListener("click", async () => {
-  clearDisplays();
-  await resetFile();
+  if (checkForUnsavedChanges()) {
+    clearDisplays();
+    await resetFile();
+  }
 });
 
 loadButton.addEventListener("click", chooser(getUploader()));
@@ -144,12 +146,14 @@ saveButton.addEventListener("click", getDownloader());
 
 for (const elem of demoFiles) {
   elem.addEventListener("click", async () => {
-    const fileName = `${elem.id}`;
-    const f = await fetch(fileName, { mode: "same-origin" });
-    const rawCode = await f.text();
-    file = new FileImpl(hash, profile, transforms());
-    file.fileName = fileName;
-    await readAndParse(rawCode, fileName, true);
+    if (checkForUnsavedChanges()) {
+      const fileName = `${elem.id}`;
+      const f = await fetch(fileName, { mode: "same-origin" });
+      const rawCode = await f.text();
+      file = new FileImpl(hash, profile, transforms());
+      file.fileName = fileName;
+      await readAndParse(rawCode, fileName, true);
+    }
   });
 }
 
@@ -160,6 +164,14 @@ fetchProfile()
     console.warn("profile not found - using default");
     await setup(new DefaultProfile());
   });
+
+function checkForUnsavedChanges(): boolean {
+  if (hasUnsavedChanges()) {
+    return confirm("You have unsaved changes - they will be lost unless you cancel");
+  }
+
+  return true;
+}
 
 async function setup(p: Profile) {
   profile = p;
@@ -260,8 +272,12 @@ function getModKey(e: KeyboardEvent | MouseEvent) {
   return { control: e.ctrlKey, shift: e.shiftKey, alt: e.altKey };
 }
 
+function hasUnsavedChanges() {
+  return !(lastSavedHash === file.currentHash);
+}
+
 function updateNameAndSavedStatus() {
-  const unsaved = lastSavedHash === file.currentHash ? "" : " UNSAVED";
+  const unsaved = hasUnsavedChanges() ? " UNSAVED" : "";
   codeTitle.innerText = `File: ${file.fileName}${unsaved}`;
 }
 
@@ -625,23 +641,27 @@ async function handleWorkerError(data: WebWorkerStatusMessage) {
 function chooser(uploader: (event: Event) => void) {
   return useChromeFileAPI()
     ? () => {
-        const f = document.createElement("input");
-        f.style.display = "none";
-        codeControls.appendChild(f);
-        f.addEventListener("click", uploader);
-        f.click();
-        codeControls.removeChild(f);
+        if (checkForUnsavedChanges()) {
+          const f = document.createElement("input");
+          f.style.display = "none";
+          codeControls.appendChild(f);
+          f.addEventListener("click", uploader);
+          f.click();
+          codeControls.removeChild(f);
+        }
       }
     : () => {
-        const f = document.createElement("input");
-        f.style.display = "none";
-        f.type = "file";
-        f.name = "file";
-        f.accept = ".elan";
-        codeControls.appendChild(f);
-        f.addEventListener("change", uploader);
-        f.click();
-        codeControls.removeChild(f);
+        if (checkForUnsavedChanges()) {
+          const f = document.createElement("input");
+          f.style.display = "none";
+          f.type = "file";
+          f.name = "file";
+          f.accept = ".elan";
+          codeControls.appendChild(f);
+          f.addEventListener("change", uploader);
+          f.click();
+          codeControls.removeChild(f);
+        }
       };
 }
 
