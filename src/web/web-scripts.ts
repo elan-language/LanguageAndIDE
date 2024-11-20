@@ -732,7 +732,7 @@ function handleAppend(event: Event) {
   handleUploadOrAppend(event, false);
 }
 
-async function handleDownload(event: Event) {
+function updateFileName() {
   let fileName = prompt("Please enter your file name", file.fileName);
 
   if (fileName === null) {
@@ -749,12 +749,17 @@ async function handleDownload(event: Event) {
   }
 
   file.fileName = fileName;
+}
+
+async function handleDownload(event: Event) {
+  updateFileName();
+
   const code = await file.renderAsSource();
 
   const blob = new Blob([code], { type: "plain/text" });
 
   const aElement = document.createElement("a");
-  aElement.setAttribute("download", fileName!);
+  aElement.setAttribute("download", file.fileName!);
   const href = URL.createObjectURL(blob);
   aElement.href = href;
   aElement.setAttribute("target", "_blank");
@@ -767,6 +772,7 @@ async function handleDownload(event: Event) {
 }
 
 async function handleChromeDownload(event: Event) {
+  updateFileName();
   const code = await file.renderAsSource();
 
   try {
