@@ -21,7 +21,7 @@ export class EnumValues extends AbstractField {
   }
   initialiseRoot(): ParseNode {
     this.astNode = undefined;
-    this.rootNode = new CSV(() => new IdentifierNode(), 1);
+    this.rootNode = new CSV(() => new IdentifierNode([]), 1);
     return this.rootNode;
   }
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>

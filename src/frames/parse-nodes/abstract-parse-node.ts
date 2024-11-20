@@ -54,6 +54,17 @@ export abstract class AbstractParseNode implements ParseNode {
     this.errorMessage = other.errorMessage;
   }
 
+  getSymbolCompletionSpec(): SymbolCompletionSpec {
+    return this.getActiveNode().getSymbolCompletionSpec();
+  }
+
+  getApplicableTokenTypes(): TokenType[] {
+    return [];
+  }
+  getKeywordsForSymbolComplete(): string[] {
+    return [];
+  }
+
   getSymbolCompletionSpecOld(): SymbolCompletionSpec {
     return new SymbolCompletionSpec("", [TokenType.none]);
   }

@@ -1,3 +1,4 @@
+import { TokenType } from "../helpers";
 import { ofKeyword } from "../keywords";
 import { GT, LT } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
@@ -14,19 +15,21 @@ import { TypeSimpleNode } from "./type-simple-node";
 export class TypeGenericNode extends AbstractSequence {
   simpleType: TypeSimpleNode | undefined;
   generic: Sequence | undefined;
+  tokenTypes: TokenType[] = [];
 
-  constructor() {
+  constructor(tokenTypes: TokenType[]) {
     super();
+    this.tokenTypes = tokenTypes;
   }
   parseText(text: string): void {
     this.remainingText = text;
     if (text.length > 0) {
-      this.simpleType = new TypeSimpleNode();
+      this.simpleType = new TypeSimpleNode(this.tokenTypes);
       const lt = () => new PunctuationNode(LT);
       const of = () => new KeywordNode(ofKeyword);
       const sp = () => new SpaceNode(Space.required);
-      const type = () => new TypeNode();
-      const commaType = () => new Sequence([() => new CommaNode(), () => new TypeNode()]);
+      const type = () => new TypeNode(this.tokenTypes);
+      const commaType = () => new Sequence([() => new CommaNode(), () => new TypeNode(this.tokenTypes)]);
       const commaTypes = () => new Multiple(commaType, 0);
       const gt = () => new PunctuationNode(GT);
       this.generic = new Sequence([lt, of, sp, type, commaTypes, gt]);

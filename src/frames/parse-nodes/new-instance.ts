@@ -20,7 +20,7 @@ export class NewInstance extends AbstractSequence {
   parseText(text: string): void {
     this.addElement(new KeywordNode(newKeyword));
     this.addElement(new SpaceNode(Space.required));
-    this.type = new TypeSimpleOrGeneric();
+    this.type = new TypeSimpleOrGeneric([TokenType.type_concrete]);
     this.addElement(this.type);
     this.addElement(new PunctuationNode(OPEN_BRACKET));
     this.args = new CSV(() => new ExprNode(), 0);

@@ -1,3 +1,4 @@
+import { TokenType } from "../helpers";
 import { ofKeyword } from "../keywords";
 import { ARROW, GT } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
@@ -14,6 +15,8 @@ export class TypeFuncNode extends AbstractSequence {
   inputTypes: OptionalNode | undefined;
   returnType: TypeNode | undefined;
 
+  tokenTypes =[TokenType.type_concrete, TokenType.type_abstract];
+
   constructor() {
     super();
   }
@@ -24,7 +27,7 @@ export class TypeFuncNode extends AbstractSequence {
       this.addElement(new PunctuationNode("Func<"));
       this.addElement(new KeywordNode(ofKeyword));
       this.addElement(new SpaceNode(Space.required));
-      const inputTypes = () => new CSV(() => new TypeNode(), 1);
+      const inputTypes = () => new CSV(() => new TypeNode(this.tokenTypes), 1);
       const sp = () => new SpaceNode(Space.required);
       const inputTypesSp = new Sequence([inputTypes, sp]);
       this.inputTypes = new OptionalNode(inputTypesSp);
@@ -32,7 +35,7 @@ export class TypeFuncNode extends AbstractSequence {
       this.addElement(this.inputTypes);
       this.addElement(new PunctuationNode(ARROW));
       this.addElement(new SpaceNode(Space.required));
-      this.returnType = new TypeNode();
+      this.returnType = new TypeNode(this.tokenTypes);
       this.returnType.setSyntaxCompletionWhenEmpty("<i>return Type</i>");
       this.addElement(this.returnType);
       this.addElement(new PunctuationNode(GT));

@@ -1,11 +1,19 @@
+import { TokenType } from "../helpers";
 import { RegExMatchNode } from "./regex-match-node";
 
 export class TypeSimpleNode extends RegExMatchNode {
-  constructor() {
+  tokenTypes: TokenType[] = [];
+
+  constructor(tokenTypes: TokenType[]) {
     super(/^\s*[A-Z]\w*/);
     this.completionWhenEmpty = "<i>Type</i>";
+    this.tokenTypes = tokenTypes;
   }
   renderAsHtml(): string {
     return `<el-type>${this.renderAsSource()}</el-type>`;
+  }
+
+  getApplicableTokenTypes(): TokenType[] {
+    return this.tokenTypes;
   }
 }

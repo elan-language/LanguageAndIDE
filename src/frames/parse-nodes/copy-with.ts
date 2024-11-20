@@ -1,4 +1,4 @@
-import { SymbolCompletionSpec } from "../helpers";
+import { SymbolCompletionSpec, TokenType } from "../helpers";
 import { copyKeyword } from "../keywords";
 import { AbstractSequence } from "./abstract-sequence";
 import { IdentifierNode } from "./identifier-node";
@@ -10,6 +10,14 @@ import { WithClause } from "./with-clause";
 export class CopyWith extends AbstractSequence {
   original: IdentifierNode | undefined;
   withClause: WithClause | undefined;
+  tokenTypes = [
+    TokenType.id_let,
+    TokenType.id_parameter_out,
+    TokenType.id_parameter_regular,
+    TokenType.id_parameter_out,
+    TokenType.id_property,
+    TokenType.id_variable,
+  ];
 
   constructor() {
     super();
@@ -19,7 +27,7 @@ export class CopyWith extends AbstractSequence {
     if (text.length > 0) {
       this.addElement(new KeywordNode(copyKeyword));
       this.addElement(new SpaceNode(Space.required));
-      this.original = new IdentifierNode();
+      this.original = new IdentifierNode(this.tokenTypes);
       this.addElement(this.original);
       this.withClause = new WithClause();
       this.addElement(this.withClause);

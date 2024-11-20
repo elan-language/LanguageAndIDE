@@ -10,12 +10,12 @@ export class DeconstructedList extends AbstractSequence {
 
   parseText(text: string): void {
     if (text.length > 0) {
-      const head = () => new IdentifierNode();
+      const head = () => new IdentifierNode([]);
       const discard = () => new PunctuationNode(UNDERSCORE);
       this.head = new Alternatives([head, discard]);
       this.addElement(this.head);
       this.addElement(new PunctuationNode(COLON));
-      const tail = () => new IdentifierNode();
+      const tail = () => new IdentifierNode([]);
       this.tail = new Alternatives([tail, discard]);
       this.addElement(this.tail);
       super.parseText(text);

@@ -16,7 +16,7 @@ export class IdentifierField extends AbstractField {
 
   initialiseRoot(): ParseNode {
     this.astNode = undefined;
-    this.rootNode = new IdentifierNode();
+    this.rootNode = new IdentifierNode([]);
     return this.rootNode;
   }
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>

@@ -19,7 +19,7 @@ export class ConstantLiteralNode extends AbstractAlternatives {
         () => new ConstantLiteralNode(),
       ),
     );
-    this.alternatives.push(new IdentifierNode()); // But compile rule to enforce that it can only be another constant, not a variable
+    this.alternatives.push(new IdentifierNode([])); // But compile rule to enforce that it can only be another constant, not a variable
     super.parseText(text);
   }
 }

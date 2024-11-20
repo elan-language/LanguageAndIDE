@@ -10,6 +10,13 @@ import { Qualifier } from "./qualifier";
 export class InstanceProcRef extends AbstractSequence {
   prefix: OptionalNode | undefined;
   simple: IdentifierNode | undefined;
+  tokenTypes = [
+    TokenType.id_let,
+    TokenType.id_parameter_out,
+    TokenType.id_parameter_regular,
+    TokenType.id_property,
+    TokenType.id_variable,
+  ];
 
   constructor() {
     super();
@@ -20,7 +27,7 @@ export class InstanceProcRef extends AbstractSequence {
       const qualifier = () => new DotAfter(new Qualifier());
       const instance = () => new DotAfter(new InstanceNode());
       this.prefix = new OptionalNode(new Alternatives([qualifier, instance]));
-      this.simple = new IdentifierNode();
+      this.simple = new IdentifierNode(this.tokenTypes);
       this.addElement(this.prefix);
       this.addElement(this.simple!);
       super.parseText(text);

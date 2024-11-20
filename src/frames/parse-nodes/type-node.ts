@@ -11,9 +11,12 @@ import { TypeSimpleNode } from "./type-simple-node";
 import { TypeTupleNode } from "./type-tuple-node";
 
 export class TypeNode extends AbstractAlternatives {
-  constructor() {
+  tokenTypes: TokenType[] = [];
+
+  constructor(tokenTypes: TokenType[]) {
     super();
     this.completionWhenEmpty = "<i>Type</i>";
+    this.tokenTypes = tokenTypes;
   }
 
   parseText(text: string): void {
@@ -25,14 +28,14 @@ export class TypeNode extends AbstractAlternatives {
       } else if (text.trimStart().startsWith(OPEN_BRACKET)) {
         this.alternatives.push(new TypeTupleNode());
       } else if (text.trimStart().startsWith(OPEN_SQ_BRACKET)) {
-        this.alternatives.push(new TypeListNode());
-        this.alternatives.push(new TypeDictionaryNode());
+        this.alternatives.push(new TypeListNode(this.tokenTypes));
+        this.alternatives.push(new TypeDictionaryNode(this.tokenTypes));
       } else if (text.trimStart().startsWith(OPEN_BRACE)) {
-        this.alternatives.push(new TypeImmutableListNode());
-        this.alternatives.push(new TypeImmutableDictionaryNode());
+        this.alternatives.push(new TypeImmutableListNode(this.tokenTypes));
+        this.alternatives.push(new TypeImmutableDictionaryNode(this.tokenTypes));
       } else {
-        this.alternatives.push(new TypeSimpleNode());
-        this.alternatives.push(new TypeGenericNode());
+        this.alternatives.push(new TypeSimpleNode(this.tokenTypes));
+        this.alternatives.push(new TypeGenericNode(this.tokenTypes));
       }
       super.parseText(text.trimStart());
     }

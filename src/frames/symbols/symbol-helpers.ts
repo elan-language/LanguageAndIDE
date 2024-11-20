@@ -589,11 +589,9 @@ export function removeTypeSymbols(s: string) {
 
 export function filterForTokenType(tt: TokenType): (s?: ElanSymbol) => boolean {
   switch (tt) {
-    case TokenType.none:
-      return () => false;
     case TokenType.assignable:
       return isAssignable;
-    case TokenType.property:
+    case TokenType.id_property:
       return isProperty;
     case TokenType.type:
       return isTypeName;
@@ -601,6 +599,8 @@ export function filterForTokenType(tt: TokenType): (s?: ElanSymbol) => boolean {
       return (s?: ElanSymbol) => isIdOrProcedure(s!, transforms());
     case TokenType.expression:
       return (s?: ElanSymbol) => isExpression(s!, transforms()) && !isTypeName(s);
+    default:
+      return () => false;
   }
 }
 

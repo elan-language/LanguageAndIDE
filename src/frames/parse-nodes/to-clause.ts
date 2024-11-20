@@ -18,7 +18,7 @@ export class ToClause extends AbstractSequence {
   }
 
   parseText(text: string): void {
-    this.property = new IdentifierNode();
+    this.property = new IdentifierNode([TokenType.id_property]);
     const sp0 = new SpaceNode(Space.required);
     const to = new KeywordNode(toKeyword);
     const sp1 = new SpaceNode(Space.required);
@@ -44,7 +44,7 @@ export class ToClause extends AbstractSequence {
     }
 
     if (elems[1].status !== ParseStatus.valid) {
-      return new SymbolCompletionSpec(elems[0].matchedText, [TokenType.property]);
+      return new SymbolCompletionSpec(elems[0].matchedText, [TokenType.id_property]);
     }
 
     return new SymbolCompletionSpec("", [TokenType.none]);

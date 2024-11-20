@@ -16,4 +16,8 @@ export class LitBoolean extends AbstractAlternatives {
       super.parseText(text.trimStart());
     }
   }
+
+  getKeywordsForSymbolComplete(): string[] {
+    return [trueKeyword, falseKeyword];
+  }
 }

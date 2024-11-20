@@ -4,8 +4,11 @@ import { AbstractParseNode } from "./abstract-parse-node";
 import { matchRegEx } from "./parse-node-helpers";
 
 export class IdentifierNode extends AbstractParseNode {
-  constructor() {
+  private tokenTypes: TokenType[];
+
+  constructor(tokenTypes: TokenType[]) {
     super();
+    this.tokenTypes = tokenTypes;
     this.completionWhenEmpty = "<i>name</i>";
   }
 
@@ -24,5 +27,9 @@ export class IdentifierNode extends AbstractParseNode {
 
   getSymbolCompletionSpecOld(): SymbolCompletionSpec {
     return new SymbolCompletionSpec(this.matchedText, [TokenType.idOrProcedure]);
+  }
+
+  getApplicableTokenTypes(): TokenType[] {
+    return this.tokenTypes;
   }
 }

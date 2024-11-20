@@ -64,4 +64,8 @@ export class KeywordNode extends FixedTextNode {
         return this.matchedText;
     }
   }
+
+  getKeywordsForSymbolComplete(): string[] {
+    return [this.fixedText];
+  }
 }

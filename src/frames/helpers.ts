@@ -238,7 +238,6 @@ export function mapSymbolType(ids: string[], st: SymbolType) {
   if (ids.length === 2 && (st instanceof ArrayType || st instanceof ListType)) {
     return new DeconstructedListType(ids[0], ids[1], st.ofType, st);
   }
-
   return st;
 }
 
@@ -247,12 +246,23 @@ export function mapIds(ids: string[]) {
 }
 
 export enum TokenType {
-  none,
-  assignable,
-  property,
-  type,
-  idOrProcedure,
-  expression,
+  none, // TODO Need eventually for this to be removed. Since all methods deal with TokenType[], 'none' is signified by an empty array
+  assignable, //TODO remove - use [variable, parameterOut]
+  type, // TODO to go, in favour of more specific entries below
+  idOrProcedure, // TODO remove - should not be needed as list will be made up of more specific sub-lists
+  expression, // TODO, remove
+  method_function,
+  method_procedure,
+  method_system,
+  type_concrete,
+  type_abstract,
+  id_constant,
+  id_let,
+  id_variable,
+  id_parameter_regular,
+  id_parameter_out,
+  id_property,
+  id_enumValue,
 }
 
 export class SymbolCompletionSpec {
@@ -269,7 +279,7 @@ export class SymbolCompletionSpec {
     // TODO Correct code is:
     // this.tokenTypes.union(toAdd);
     // Due to a build issue (on RP machine only), need to do it without 'union'
-    toAdd.forEach(tt => this.tokenTypes.add(tt));
+    toAdd.forEach((tt) => this.tokenTypes.add(tt));
   }
   addKeyword(keyword: string) {
     // v. unlikely that any one node will need to add > 1

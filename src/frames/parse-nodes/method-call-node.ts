@@ -1,3 +1,4 @@
+import { TokenType } from "../helpers";
 import { CLOSE_BRACKET, OPEN_BRACKET } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { CSV } from "./csv";
@@ -11,7 +12,7 @@ export class MethodCallNode extends AbstractSequence {
 
   parseText(text: string): void {
     if (text.trim().length > 0) {
-      this.name = new IdentifierNode();
+      this.name = new IdentifierNode([TokenType.method_function, TokenType.method_system]);
       this.args = new CSV(() => new ExprNode(), 0);
       this.addElement(this.name);
       this.addElement(new PunctuationNode(OPEN_BRACKET));
