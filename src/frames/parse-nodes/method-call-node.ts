@@ -26,4 +26,12 @@ export class MethodCallNode extends AbstractSequence {
   renderAsHtml(): string {
     return `<el-method>${this.name!.renderAsHtml()}</el-method>(${this.args!.renderAsHtml()})`;
   }
+
+  symbolCompletion_tokenTypes(): Set<TokenType> {
+    if (this.getElements().length === 0 ) {
+      return new Set<TokenType>([TokenType.method_function, TokenType.method_system]);
+    } else {
+      return super.symbolCompletion_tokenTypes();
+    }
+  }
 }
