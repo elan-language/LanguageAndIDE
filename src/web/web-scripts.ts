@@ -63,6 +63,10 @@ autoSaveButton.hidden = !useChromeFileAPI();
 
 // add all the listeners
 
+consoleDiv.addEventListener("click", () => {
+  const inp = consoleDiv.getElementsByTagName("input")?.[0]?.focus();
+});
+
 trimButton.addEventListener("click", async () => {
   file.removeAllSelectorsThatCanBe();
   await renderAsHtml();
