@@ -197,7 +197,7 @@ export class WebInputOutput implements ElanInputOutput {
   }
 
   readLine() {
-    this.previousContent = `${this.previousContent}<input id = "inp" type="text" autofocus></input>`;
+    this.previousContent = `${this.previousContent}<input id = "inp" type="text" autofocus tabindex="2"></input>`;
     this.consoleWindow.innerHTML = this.renderConsole();
     const inp = document.getElementById("inp") as HTMLInputElement;
     inp.focus();

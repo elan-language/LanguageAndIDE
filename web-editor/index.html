@@ -13,7 +13,7 @@
         <div id="code-title">Code</div>
         <div id="code-controls">
             <div class="dropdown">
-                <button id="demos" class="plain">Demo</button>
+                <button id="demos" class="plain" tabindex="1">Demo</button>
                 <div class="dropdown-content">
                    <!-- <div class="demo-file" id="demo/pathfinder.elan">Pathfinder</div>
                     <div class="demo-file" id="demo/snake_PP.elan">Snake - procedural</div>
@@ -22,24 +22,24 @@
                     -->
                   </div>          
             </div>
-            <button id="load" class="plain">Load</button>
-            <button id="append" class="plain">Append</button>
-            <button id="save" class="plain">Save</button>
-            <button id="auto-save" class="plain">Auto</button>
-            <button id="new" class="plain">New</button>
-            <button id="trim" class="plain">Trim</button>
-            <button id="expand-collapse" class="plain">+/-</button>     
+            <button id="load" class="plain" tabindex="1">Load</button>
+            <button id="append" class="plain" tabindex="1">Append</button>
+            <button id="save" class="plain" tabindex="1">Save</button>
+            <button id="auto-save" class="plain" tabindex="1">Auto</button>
+            <button id="new" class="plain" tabindex="1">New</button>
+            <button id="trim" class="plain" tabindex="1">Trim</button>
+            <button id="expand-collapse" class="plain" tabindex="1">+/-</button>     
         </div>
-        <div class="elan-code" data-code="" tabindex="0"></div>
+        <div class="elan-code" data-code=""></div>
         <img id="logo" src="images/reverse-logo.png">
         <div id="help">
-        <a id="videos" href="https://www.youtube.com/playlist?list=PLhZaBW7EbafOPO4YyuovGI1prCViAeVKM" target="_blank" rel="noopener noreferrer">Videos</a>
-        <a id="manual" title="Open the Reference Manual" href="reference-manual.pdf" target="_blank" rel="noopener noreferrer">Help</a>
+        <a id="videos" href="https://www.youtube.com/playlist?list=PLhZaBW7EbafOPO4YyuovGI1prCViAeVKM" target="_blank" rel="noopener noreferrer" tabindex="3">Videos</a>
+        <a id="manual" title="Open the Reference Manual" href="reference-manual.pdf" target="_blank" rel="noopener noreferrer" tabindex="3">Help</a>
         </div>
         <div id="console-title">Console</div>
-        <button id="clear-console" class="plain">Clear</button>
-        <div id="console" tabindex="0"></div>
-        <div id="status-names" tabindex="0">
+        <button id="clear-console" class="plain"  tabindex="2">Clear</button>
+        <div id="console"></div>
+        <div id="status-names">
             <div>Parse</div>
             <div>Compile</div>
             <div>Test</div>
@@ -52,12 +52,12 @@
             <div id="run-status" class=""></div>
         </div>
         <div id="run-controls">
-            <button id="run-button" class="icon"><img src="images/Run.png"></button>
-            <button id="stop" class="icon" disabled><img src="images/Stop.png"></button>
+            <button id="run-button" class="icon"  tabindex="1"><img src="images/Run.png"></button>
+            <button id="stop" class="icon" disabled  tabindex="1"><img src="images/Stop.png"></button>
         </div>
-        <div id="graphics-title" tabindex="0">Graphics</div>
-        <button id="clear-graphics" class="plain">Clear</button>
-        <div id="graphics" tabindex="0">
+        <div id="graphics-title">Graphics</div>
+        <button id="clear-graphics" class="plain" tabindex="2">Clear</button>
+        <div id="graphics" tabindex="2">
         </div>
         <script src="elan-api.js" type="module"></script>
         <script src="web-scripts.js"></script>
