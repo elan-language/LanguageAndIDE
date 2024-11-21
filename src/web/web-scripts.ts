@@ -557,6 +557,11 @@ async function postMessage(e: editorEvent) {
     return;
   }
 
+  if (e.key === "Escape") {
+    demosButton.focus();
+    return;
+  }
+
   clearTimeout(inactivityTimer);
 
   inactivityTimer = setTimeout(inactivityRefresh, inactivityTimeout);
