@@ -154,11 +154,6 @@ export abstract class AbstractField implements Selectable, Field {
     const textLen = this.text.length;
     this.processAutocompleteText(e.autocomplete);
     switch (key) {
-      case "Escape": {
-        this.holder.select(true, false);
-        this.noLongerEditingField();
-        break;
-      }
       case "Home": {
         this.cursorPos = 0;
         break;
