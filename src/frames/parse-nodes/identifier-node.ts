@@ -38,7 +38,7 @@ export class IdentifierNode extends AbstractParseNode {
     return this.tokenTypes;
   }
 
-  symbolCompleton_constraintId(): string {
+  symbolCompletion_constraintId(): string {
     return this.constraintId();
   }
 }
