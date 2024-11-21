@@ -62,9 +62,13 @@ export abstract class AbstractParseNode implements ParseNode {
     const active = this.getActiveNode();
     const isThis = active === this;
     const toMatch = isThis ? this.symbolCompletion_toMatch() : active.symbolCompletion_toMatch();
-    const tokens = isThis ? this.symbolCompletion_tokenTypes() : active.symbolCompletion_tokenTypes();
+    const tokens = isThis
+      ? this.symbolCompletion_tokenTypes()
+      : active.symbolCompletion_tokenTypes();
     const keywords = isThis ? this.symbolCompletion_keywords() : active.symbolCompletion_keywords();
-    const constraintId = isThis ? this.symbolCompletion_constraintId() : active.symbolCompletion_constraintId();
+    const constraintId = isThis
+      ? this.symbolCompletion_constraintId()
+      : active.symbolCompletion_constraintId();
     return new SymbolCompletionSpec(toMatch, tokens, keywords, constraintId);
   }
 

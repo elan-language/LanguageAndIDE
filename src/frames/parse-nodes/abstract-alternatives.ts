@@ -89,12 +89,12 @@ export abstract class AbstractAlternatives extends AbstractParseNode {
       const pm = pms[i];
       const pm_tts = Array.from(pm.symbolCompletion_tokenTypes());
       for (let j = 0; j < pm_tts.length; j++) {
-        const tt = pm_tts[0];
+        const tt = pm_tts[j];
         tts.add(tt);
       }
     }
     return tts;
-    
+
     /* should be just: return this.potentialMatches().reduce(
       (prev, m) => prev.union(m.symbolCompletion_tokenTypes()),
       new Set<TokenType>(),
@@ -102,11 +102,11 @@ export abstract class AbstractAlternatives extends AbstractParseNode {
   }
 
   override symbolCompletion_keywords(): string[] {
-    const kws: string[]  = [];
+    let kws: string[] = [];
     const pms = this.potentialMatches();
     for (let i = 0; i < pms.length; i++) {
       const toAdd = pms[i].symbolCompletion_keywords();
-      kws.concat(toAdd);
+      kws = kws.concat(toAdd);
     }
     return kws;
   }

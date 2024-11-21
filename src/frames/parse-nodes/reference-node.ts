@@ -9,11 +9,13 @@ import { MethodCallNode } from "./method-call-node";
 // A reference node is a variable, or a functionCall, or just 'this'
 export class ReferenceNode extends AbstractAlternatives {
   tokenTypes = new Set([
+    TokenType.id_constant,
     TokenType.id_let,
     TokenType.id_parameter_out,
     TokenType.id_parameter_regular,
     TokenType.id_property,
     TokenType.id_variable,
+    TokenType.id_enumValue,
   ]);
 
   parseText(text: string): void {
