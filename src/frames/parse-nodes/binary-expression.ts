@@ -47,6 +47,6 @@ export class BinaryExpression extends AbstractSequence {
       return this.lhs.symbolCompletion_getSpec_Old();
     }
 
-    return new SymbolCompletionSpec_Old("", [TokenType.none]);
+    return new SymbolCompletionSpec_Old("", new Set<TokenType>([TokenType.none]));
   }
 }

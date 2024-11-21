@@ -1,4 +1,4 @@
-import { SymbolCompletionSpec_Old } from "../helpers";
+import { SymbolCompletionSpec_Old, TokenType } from "../helpers";
 import { ParseStatus } from "../status-enums";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { ParseNode } from "./parse-node";
@@ -64,6 +64,50 @@ export abstract class AbstractAlternatives extends AbstractParseNode {
   }
 
   getActiveNode(): ParseNode {
-    return this.bestMatch ? this.bestMatch!.getActiveNode() : this;
+    if (this.bestMatchIsOnlyMatch()) {
+      return this.bestMatch!.getActiveNode();
+    } else {
+      return this as ParseNode;
+    }
+  }
+
+  bestMatchIsOnlyMatch(): boolean {
+    return (
+      this.bestMatch !== undefined &&
+      this.alternatives.filter((alt) => alt.status !== ParseStatus.invalid).length === 0
+    );
+  }
+
+  potentialMatches(): ParseNode[] {
+    return this.alternatives.filter((alt) => alt.status !== ParseStatus.invalid);
+  }
+
+  override symbolCompletion_tokenTypes(): Set<TokenType> {
+    const tts = new Set<TokenType>();
+    const pms = this.potentialMatches();
+    for (let i = 0; i < pms.length; i++) {
+      const pm = pms[i];
+      const pm_tts = Array.from(pm.symbolCompletion_tokenTypes());
+      for (let j = 0; j < pm_tts.length; j++) {
+        const tt = pm_tts[0];
+        tts.add(tt);
+      }
+    }
+    return tts;
+    
+    /* should be just: return this.potentialMatches().reduce(
+      (prev, m) => prev.union(m.symbolCompletion_tokenTypes()),
+      new Set<TokenType>(),
+    ); */
+  }
+
+  override symbolCompletion_keywords(): string[] {
+    const kws: string[]  = [];
+    const pms = this.potentialMatches();
+    for (let i = 0; i < pms.length; i++) {
+      const toAdd = pms[i].symbolCompletion_keywords();
+      kws.concat(toAdd);
+    }
+    return kws;
   }
 }

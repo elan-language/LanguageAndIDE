@@ -28,12 +28,14 @@ export class ParamDefNode extends AbstractSequence {
       ]);
       this.out = new OptionalNode(outSpace);
       this.addElement(this.out);
-      this.name = new IdentifierNode([]);
+      this.name = new IdentifierNode();
       this.addElement(this.name);
       this.addElement(new SpaceNode(Space.required));
       this.addElement(new KeywordNode(asKeyword));
       this.addElement(new SpaceNode(Space.required));
-      this.type = new TypeNode([TokenType.type_concrete, TokenType.type_abstract]);
+      this.type = new TypeNode(
+        new Set<TokenType>([TokenType.type_concrete, TokenType.type_abstract]),
+      );
       this.addElement(this.type);
       super.parseText(text);
     }
@@ -46,6 +48,6 @@ export class ParamDefNode extends AbstractSequence {
       return this.getElements()[5].symbolCompletion_getSpec_Old();
     }
 
-    return new SymbolCompletionSpec_Old("", [TokenType.none]);
+    return new SymbolCompletionSpec_Old("", new Set<TokenType>([TokenType.none]));
   }
 }

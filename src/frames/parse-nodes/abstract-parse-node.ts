@@ -55,30 +55,34 @@ export abstract class AbstractParseNode implements ParseNode {
   }
 
   symbolCompletion_getSpec_Old(): SymbolCompletionSpec_Old {
-    return new SymbolCompletionSpec_Old("", [TokenType.none]);
+    return new SymbolCompletionSpec_Old("", new Set<TokenType>([TokenType.none]));
   }
 
   symbolCompletion_getSpec(): SymbolCompletionSpec {
     const active = this.getActiveNode();
     const isThis = active === this;
-    const toMatch = isThis ? "" : active.symbolCompleton_toMatch();
-    const tokens = isThis ? [] : active.symbolCompletion_tokenTypes();
-    const keywords = isThis ? [] : active.symbolCompleton_keywords();
-    const constraintId = isThis ? "" : active.symbolCompleton_constraintId();
+    const toMatch = isThis ? this.symbolCompletion_toMatch() : active.symbolCompletion_toMatch();
+    const tokens = isThis ? this.symbolCompletion_tokenTypes() : active.symbolCompletion_tokenTypes();
+    const keywords = isThis ? this.symbolCompletion_keywords() : active.symbolCompletion_keywords();
+    const constraintId = isThis ? this.symbolCompletion_constraintId() : active.symbolCompletion_constraintId();
     return new SymbolCompletionSpec(toMatch, tokens, keywords, constraintId);
   }
 
-  symbolCompleton_toMatch(): string {
-    return this.matchedText;
+  symbolCompletion_toMatch(): string {
+    const active = this.activeNodeForSymbolCompl;
+    return active === this ? this.matchedText : active.symbolCompletion_toMatch();
   }
-  symbolCompletion_tokenTypes(): TokenType[] {
-    return [];
+  symbolCompletion_tokenTypes(): Set<TokenType> {
+    const active = this.activeNodeForSymbolCompl;
+    return active === this ? new Set<TokenType>() : active.symbolCompletion_tokenTypes();
   }
-  symbolCompleton_keywords(): string[] {
-    return [];
+  symbolCompletion_keywords(): string[] {
+    const active = this.activeNodeForSymbolCompl;
+    return active === this ? [] : active.symbolCompletion_keywords();
   }
-  symbolCompleton_constraintId(): string {
-    return "";
+  symbolCompletion_constraintId(): string {
+    const active = this.activeNodeForSymbolCompl;
+    return active === this ? "" : active.symbolCompletion_constraintId();
   }
 
   getActiveNode(): ParseNode {

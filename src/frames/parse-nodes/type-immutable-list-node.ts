@@ -8,9 +8,9 @@ import { TypeSimpleNode } from "./type-simple-node";
 export class TypeImmutableListNode extends AbstractSequence {
   simpleType: TypeSimpleNode | undefined;
   generic: TypeNode | undefined;
-  tokenTypes: TokenType[] = [];
+  tokenTypes: Set<TokenType> = new Set<TokenType>();
 
-  constructor(tokenTypes: TokenType[]) {
+  constructor(tokenTypes: Set<TokenType>) {
     super();
     this.tokenTypes = tokenTypes;
   }
@@ -18,7 +18,9 @@ export class TypeImmutableListNode extends AbstractSequence {
   parseText(text: string): void {
     this.remainingText = text;
     if (text.length > 0) {
-      this.simpleType = new TypeSimpleNode([TokenType.type_abstract, TokenType.type_concrete]); //Not added to elements, as not present in the text
+      this.simpleType = new TypeSimpleNode(
+        new Set<TokenType>([TokenType.type_abstract, TokenType.type_concrete]),
+      ); //Not added to elements, as not present in the text
       this.simpleType.parseText("List");
       this.addElement(new PunctuationNode(OPEN_BRACE));
       this.generic = new TypeNode(this.tokenTypes);

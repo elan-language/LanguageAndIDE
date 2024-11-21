@@ -50,7 +50,7 @@ export class OptionalNode extends AbstractParseNode {
   symbolCompletion_getSpec_Old(): SymbolCompletionSpec_Old {
     return (
       this.matchedNode?.symbolCompletion_getSpec_Old() ??
-      new SymbolCompletionSpec_Old("", [TokenType.none])
+      new SymbolCompletionSpec_Old("", new Set<TokenType>([TokenType.none]))
     );
   }
 

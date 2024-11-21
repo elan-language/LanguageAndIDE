@@ -10,13 +10,13 @@ import { Qualifier } from "./qualifier";
 export class InstanceProcRef extends AbstractSequence {
   prefix: OptionalNode | undefined;
   simple: IdentifierNode | undefined;
-  tokenTypes = [
+  tokenTypes = new Set([
     TokenType.id_let,
     TokenType.id_parameter_out,
     TokenType.id_parameter_regular,
     TokenType.id_property,
     TokenType.id_variable,
-  ];
+  ]);
 
   constructor() {
     super();
@@ -39,6 +39,9 @@ export class InstanceProcRef extends AbstractSequence {
   }
 
   symbolCompletion_getSpec_Old(): SymbolCompletionSpec_Old {
-    return new SymbolCompletionSpec_Old(this.matchedText, [TokenType.idOrProcedure]);
+    return new SymbolCompletionSpec_Old(
+      this.matchedText,
+      new Set<TokenType>([TokenType.idOrProcedure]),
+    );
   }
 }

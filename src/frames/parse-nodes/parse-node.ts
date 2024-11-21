@@ -20,10 +20,10 @@ export interface ParseNode {
   symbolCompletion_getSpec_Old(): SymbolCompletionSpec_Old;
 
   symbolCompletion_getSpec(): SymbolCompletionSpec;
-  symbolCompletion_tokenTypes(): TokenType[];
-  symbolCompleton_keywords(): string[];
-  symbolCompleton_constraintId(): string;
-  symbolCompleton_toMatch(): string;
+  symbolCompletion_tokenTypes(): Set<TokenType>;
+  symbolCompletion_keywords(): string[];
+  symbolCompletion_constraintId(): string;
+  symbolCompletion_toMatch(): string;
 
   getActiveNode(): ParseNode;
   isDone(): boolean;

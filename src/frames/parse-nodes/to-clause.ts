@@ -20,7 +20,10 @@ export class ToClause extends AbstractSequence {
   }
 
   parseText(text: string): void {
-    this.property = new IdentifierNode([TokenType.id_property], this.constraintId);
+    this.property = new IdentifierNode(
+      new Set<TokenType>([TokenType.id_property]),
+      this.constraintId,
+    );
     const sp0 = new SpaceNode(Space.required);
     const to = new KeywordNode(toKeyword);
     const sp1 = new SpaceNode(Space.required);
@@ -46,9 +49,12 @@ export class ToClause extends AbstractSequence {
     }
 
     if (elems[1].status !== ParseStatus.valid) {
-      return new SymbolCompletionSpec_Old(elems[0].matchedText, [TokenType.id_property]);
+      return new SymbolCompletionSpec_Old(
+        elems[0].matchedText,
+        new Set<TokenType>([TokenType.id_property]),
+      );
     }
 
-    return new SymbolCompletionSpec_Old("", [TokenType.none]);
+    return new SymbolCompletionSpec_Old("", new Set<TokenType>([TokenType.none]));
   }
 }
