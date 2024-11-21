@@ -642,7 +642,7 @@ export abstract class AbstractField implements Selectable, Field {
   protected getSymbolCompletionSpecOld(): SymbolCompletionSpec_Old {
     return this.rootNode
       ? this.rootNode.symbolCompletion_getSpec_Old()
-      : new SymbolCompletionSpec_Old("", [TokenType.none]);
+      : new SymbolCompletionSpec_Old("", new Set<TokenType>([TokenType.none]));
   }
 
   protected symbolCompletionAsHtml(transforms: Transforms): string {

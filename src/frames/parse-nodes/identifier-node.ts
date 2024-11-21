@@ -4,10 +4,10 @@ import { AbstractParseNode } from "./abstract-parse-node";
 import { matchRegEx } from "./parse-node-helpers";
 
 export class IdentifierNode extends AbstractParseNode {
-  private tokenTypes: TokenType[];
+  private tokenTypes: Set<TokenType>;
   private constraintId: () => string;
 
-  constructor(tokenTypes: TokenType[], constraintId = () => "") {
+  constructor(tokenTypes: Set<TokenType> = new Set<TokenType>(), constraintId = () => "") {
     super();
     this.tokenTypes = tokenTypes;
     this.constraintId = constraintId;
@@ -28,10 +28,13 @@ export class IdentifierNode extends AbstractParseNode {
   }
 
   symbolCompletion_getSpec_Old(): SymbolCompletionSpec_Old {
-    return new SymbolCompletionSpec_Old(this.matchedText, [TokenType.idOrProcedure]);
+    return new SymbolCompletionSpec_Old(
+      this.matchedText,
+      new Set<TokenType>([TokenType.idOrProcedure]),
+    );
   }
 
-  symbolCompletion_tokenTypes(): TokenType[] {
+  symbolCompletion_tokenTypes(): Set<TokenType> {
     return this.tokenTypes;
   }
 

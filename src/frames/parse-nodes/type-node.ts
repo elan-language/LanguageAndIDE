@@ -11,9 +11,9 @@ import { TypeSimpleNode } from "./type-simple-node";
 import { TypeTupleNode } from "./type-tuple-node";
 
 export class TypeNode extends AbstractAlternatives {
-  tokenTypes: TokenType[] = [];
+  tokenTypes: Set<TokenType> = new Set<TokenType>();
 
-  constructor(tokenTypes: TokenType[]) {
+  constructor(tokenTypes: Set<TokenType> = new Set<TokenType>()) {
     super();
     this.completionWhenEmpty = "<i>Type</i>";
     this.tokenTypes = tokenTypes;
@@ -42,6 +42,6 @@ export class TypeNode extends AbstractAlternatives {
   }
 
   override symbolCompletion_getSpec_Old(): SymbolCompletionSpec_Old {
-    return new SymbolCompletionSpec_Old(this.matchedText, [TokenType.type]);
+    return new SymbolCompletionSpec_Old(this.matchedText, new Set<TokenType>([TokenType.type]));
   }
 }

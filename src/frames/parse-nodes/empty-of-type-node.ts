@@ -12,12 +12,12 @@ export class EmptyOfTypeNode extends AbstractSequence {
   parseText(text: string): void {
     this.addElement(new KeywordNode(emptyKeyword));
     this.addElement(new SpaceNode(Space.required));
-    this.type = new TypeNode([TokenType.type_concrete]);
+    this.type = new TypeNode(new Set<TokenType>([TokenType.type_concrete]));
     this.addElement(this.type);
     super.parseText(text);
   }
 
   override symbolCompletion_getSpec_Old(): SymbolCompletionSpec_Old {
-    return new SymbolCompletionSpec_Old(this.matchedText, [TokenType.type]);
+    return new SymbolCompletionSpec_Old(this.matchedText, new Set<TokenType>([TokenType.type]));
   }
 }

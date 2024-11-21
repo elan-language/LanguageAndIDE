@@ -21,7 +21,7 @@ export class ProcRefField extends AbstractField {
   ];
   isParseByNodes = true;
   qualProc = () => new InstanceProcRef(); // These two are alternatives, not a combination!
-  proc = () => new IdentifierNode([]); // These two are alternatives, not a combination
+  proc = () => new IdentifierNode(); // These two are alternatives, not a combination
 
   constructor(holder: Frame) {
     super(holder);

@@ -20,7 +20,7 @@ export class NewInstance extends AbstractSequence {
   parseText(text: string): void {
     this.addElement(new KeywordNode(newKeyword));
     this.addElement(new SpaceNode(Space.required));
-    this.type = new TypeSimpleOrGeneric([TokenType.type_concrete]);
+    this.type = new TypeSimpleOrGeneric(new Set<TokenType>([TokenType.type_concrete]));
     this.addElement(this.type);
     this.addElement(new PunctuationNode(OPEN_BRACKET));
     this.args = new CSV(() => new ExprNode(), 0);
@@ -37,9 +37,15 @@ export class NewInstance extends AbstractSequence {
     const id = spec.toMatch;
     const tokenType = spec.tokenTypes.values().next()!.value!;
     if (tokenType !== TokenType.none) {
-      return new SymbolCompletionSpec_Old(`${this.type?.matchedText}.${id}`, [tokenType]);
+      return new SymbolCompletionSpec_Old(
+        `${this.type?.matchedText}.${id}`,
+        new Set<TokenType>([tokenType]),
+      );
     }
 
-    return new SymbolCompletionSpec_Old(this.type?.matchedText ?? "", [TokenType.type]);
+    return new SymbolCompletionSpec_Old(
+      this.type?.matchedText ?? "",
+      new Set<TokenType>([TokenType.type]),
+    );
   }
 }

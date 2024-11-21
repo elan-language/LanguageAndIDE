@@ -8,7 +8,11 @@ import { ParseNode } from "../parse-nodes/parse-node";
 import { AbstractField } from "./abstract-field";
 
 export class ExceptionMessage extends AbstractField {
-  tokenTypes: TokenType[] = [TokenType.id_constant, TokenType.id_let, TokenType.id_variable];
+  tokenTypes: Set<TokenType> = new Set<TokenType>([
+    TokenType.id_constant,
+    TokenType.id_let,
+    TokenType.id_variable,
+  ]);
   isParseByNodes = true;
   constructor(holder: Frame) {
     super(holder);

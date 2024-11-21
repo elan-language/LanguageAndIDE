@@ -10,14 +10,14 @@ import { WithClause } from "./with-clause";
 export class CopyWith extends AbstractSequence {
   original: IdentifierNode | undefined;
   withClause: WithClause | undefined;
-  tokenTypes = [
+  tokenTypes = new Set([
     TokenType.id_let,
     TokenType.id_parameter_out,
     TokenType.id_parameter_regular,
     TokenType.id_parameter_out,
     TokenType.id_property,
     TokenType.id_variable,
-  ];
+  ]);
 
   constructor() {
     super();
@@ -45,6 +45,9 @@ export class CopyWith extends AbstractSequence {
     //Explanation:  the user is asked for a property name (id) - which will be "" initially
     //However, the symbol table is not being asked to match 'id', but 'instance.id'
     //so that user is offered only the properties for that instance type.
-    return new SymbolCompletionSpec_Old(`${this.original?.matchedText}.${id}`, [tokenType]);
+    return new SymbolCompletionSpec_Old(
+      `${this.original?.matchedText}.${id}`,
+      new Set<TokenType>([tokenType]),
+    );
   }
 }

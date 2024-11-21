@@ -6,6 +6,7 @@ import { CodeSourceFromString } from "../src/frames/code-source";
 import { DefaultProfile } from "../src/frames/default-profile";
 import { AbstractField } from "../src/frames/fields/abstract-field";
 import { FileImpl } from "../src/frames/file-impl";
+import { TokenType } from "../src/frames/helpers";
 import { editorEvent } from "../src/frames/interfaces/editor-event";
 import { File } from "../src/frames/interfaces/file";
 import { ParseNode } from "../src/frames/parse-nodes/parse-node";
@@ -359,7 +360,7 @@ export function testNodeParse(
   }
 }
 
-export function testParseCompletionAndActiveNode(
+export function testActiveNodeAndDone(
   node: ParseNode,
   text: string,
   status: ParseStatus,
@@ -372,6 +373,21 @@ export function testParseCompletionAndActiveNode(
   const cls = active.constructor.name;
   assert.equal(cls, activeNodeType);
   assert.equal(node.isDone(), done);
+}
+
+export function testSymbolCompletionSpec(node: ParseNode, text: string, status: ParseStatus, activeNode: string,
+  toMatch = "", tokenTypes: TokenType[], keywords: string[] = [], constrainingId: string = "")
+  {
+  node.parseText(text); 
+  assert.equal(node.status, status);
+  const active = node.getActiveNode();
+  const cls = active.constructor.name;
+  const spec = node.symbolCompletion_getSpec();
+  assert.equal(cls, activeNode);
+  assert.equal(spec.toMatch, toMatch);
+  assert.equal(Array.from(spec.tokenTypes.values()).toString(), tokenTypes.toString());
+  assert.equal(spec.keywords.toString(), keywords.toString());
+  assert.equal(spec.constrainingId, constrainingId);
 }
 
 export function testCompletion(

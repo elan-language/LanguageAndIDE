@@ -4,9 +4,9 @@ import { TypeGenericNode } from "./type-generic-node";
 import { TypeSimpleNode } from "./type-simple-node";
 
 export class TypeSimpleOrGeneric extends AbstractAlternatives {
-  tokenTypes: TokenType[] = [];
+  tokenTypes: Set<TokenType> = new Set<TokenType>();
 
-  constructor(tokenTypes: TokenType[]) {
+  constructor(tokenTypes: Set<TokenType> = new Set<TokenType>()) {
     super();
     this.completionWhenEmpty = "<i>Type</i>";
     this.tokenTypes = tokenTypes;

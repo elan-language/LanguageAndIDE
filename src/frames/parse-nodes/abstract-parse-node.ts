@@ -55,14 +55,14 @@ export abstract class AbstractParseNode implements ParseNode {
   }
 
   symbolCompletion_getSpec_Old(): SymbolCompletionSpec_Old {
-    return new SymbolCompletionSpec_Old("", [TokenType.none]);
+    return new SymbolCompletionSpec_Old("", new Set<TokenType>([TokenType.none]));
   }
 
   symbolCompletion_getSpec(): SymbolCompletionSpec {
     const active = this.getActiveNode();
     const isThis = active === this;
     const toMatch = isThis ? "" : active.symbolCompleton_toMatch();
-    const tokens = isThis ? [] : active.symbolCompletion_tokenTypes();
+    const tokens = isThis ? new Set<TokenType>() : active.symbolCompletion_tokenTypes();
     const keywords = isThis ? [] : active.symbolCompleton_keywords();
     const constraintId = isThis ? "" : active.symbolCompleton_constraintId();
     return new SymbolCompletionSpec(toMatch, tokens, keywords, constraintId);
@@ -71,8 +71,8 @@ export abstract class AbstractParseNode implements ParseNode {
   symbolCompleton_toMatch(): string {
     return this.matchedText;
   }
-  symbolCompletion_tokenTypes(): TokenType[] {
-    return [];
+  symbolCompletion_tokenTypes(): Set<TokenType> {
+    return new Set<TokenType>();
   }
   symbolCompleton_keywords(): string[] {
     return [];

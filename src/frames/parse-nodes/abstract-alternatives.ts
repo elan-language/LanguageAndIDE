@@ -1,4 +1,5 @@
-import { SymbolCompletionSpec_Old } from "../helpers";
+import { PassThrough } from "stream";
+import { SymbolCompletionSpec_Old, TokenType } from "../helpers";
 import { ParseStatus } from "../status-enums";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { ParseNode } from "./parse-node";
@@ -64,6 +65,28 @@ export abstract class AbstractAlternatives extends AbstractParseNode {
   }
 
   getActiveNode(): ParseNode {
-    return this.bestMatch ? this.bestMatch!.getActiveNode() : this;
+    if (this.bestMatchIsOnlyMatch()) {
+      return this.bestMatch!.getActiveNode();
+    } else {
+      return this as ParseNode;
+    }
+  }
+
+  bestMatchIsOnlyMatch(): boolean {
+    return (
+      this.bestMatch !== undefined &&
+      this.alternatives.filter((alt) => alt.status !== ParseStatus.invalid).length === 0
+    );
+  }
+
+  potentialMatches(): ParseNode[] {
+    return this.alternatives.filter((alt) => alt.status !== ParseStatus.invalid);
+  }
+
+  override symbolCompletion_tokenTypes(): Set<TokenType> {
+    return this.potentialMatches().reduce(
+      (prev, m) => prev.union(m.symbolCompletion_tokenTypes()),
+      new Set<TokenType>(),
+    );
   }
 }

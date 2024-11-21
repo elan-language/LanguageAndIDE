@@ -15,9 +15,9 @@ import { TypeSimpleNode } from "./type-simple-node";
 export class TypeGenericNode extends AbstractSequence {
   simpleType: TypeSimpleNode | undefined;
   generic: Sequence | undefined;
-  tokenTypes: TokenType[] = [];
+  tokenTypes: Set<TokenType> = new Set<TokenType>();
 
-  constructor(tokenTypes: TokenType[]) {
+  constructor(tokenTypes: Set<TokenType>) {
     super();
     this.tokenTypes = tokenTypes;
   }

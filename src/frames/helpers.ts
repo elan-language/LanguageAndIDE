@@ -246,7 +246,7 @@ export function mapIds(ids: string[]) {
 }
 
 export enum TokenType {
-  none, // TODO Need eventually for this to be removed. Since all methods deal with TokenType[], 'none' is signified by an empty array
+  none, // TODO Need eventually for this to be removed. Since all methods deal with Set<TokenType>, 'none' is signified by an empty array
   assignable, //TODO remove - use [variable, parameterOut]
   type, // TODO to go, in favour of more specific entries below
   idOrProcedure, // TODO remove - should not be needed as list will be made up of more specific sub-lists
@@ -266,14 +266,14 @@ export enum TokenType {
 }
 
 export class SymbolCompletionSpec_Old {
-  constructor(toMatch: string, tts: TokenType[]) {
+  constructor(toMatch: string, tts: Set<TokenType>) {
     this.toMatch = toMatch;
     this.addTokenTypes(tts);
   }
   toMatch: string = "";
   tokenTypes: Set<TokenType> = new Set<TokenType>();
 
-  addTokenTypes(tokenTypes: TokenType[]): void {
+  addTokenTypes(tokenTypes: Set<TokenType>): void {
     const toAdd = new Set<TokenType>(tokenTypes);
     // TODO Correct code is:
     // this.tokenTypes.union(toAdd);
@@ -283,7 +283,7 @@ export class SymbolCompletionSpec_Old {
 }
 
 export class SymbolCompletionSpec {
-  constructor(toMatch: string, tts: TokenType[], keywords: string[], constrainingId: string) {
+  constructor(toMatch: string, tts: Set<TokenType>, keywords: string[], constrainingId: string) {
     this.toMatch = toMatch;
     this.addTokenTypes(tts);
     this.keywords = keywords;
@@ -294,13 +294,13 @@ export class SymbolCompletionSpec {
   keywords: string[];
   constrainingId: string;
 
-  addTokenTypes(tokenTypes: TokenType[]): void {
-    const toAdd = new Set<TokenType>(tokenTypes);
+  addTokenTypes(tokenTypes: Set<TokenType>): void {
     // TODO Correct code is:
     // this.tokenTypes.union(toAdd);
     // Due to a build issue (on RP machine only), need to do it without 'union'
-    toAdd.forEach((tt) => this.tokenTypes.add(tt));
+    tokenTypes.forEach((tt) => this.tokenTypes.add(tt));
   }
+
   addKeyword(keyword: string) {
     // v. unlikely that any one node will need to add > 1
     const trimmed = keyword.trim();

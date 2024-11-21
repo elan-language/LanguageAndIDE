@@ -12,7 +12,9 @@ export class MethodCallNode extends AbstractSequence {
 
   parseText(text: string): void {
     if (text.trim().length > 0) {
-      this.name = new IdentifierNode([TokenType.method_function, TokenType.method_system]);
+      this.name = new IdentifierNode(
+        new Set<TokenType>([TokenType.method_function, TokenType.method_system]),
+      );
       this.args = new CSV(() => new ExprNode(), 0);
       this.addElement(this.name);
       this.addElement(new PunctuationNode(OPEN_BRACKET));

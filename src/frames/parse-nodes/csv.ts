@@ -44,7 +44,7 @@ export class CSV extends AbstractSequence {
   symbolCompletion_getSpec_Old(): SymbolCompletionSpec_Old {
     const elems = this.getElements();
     if (elems.length === 0) {
-      return new SymbolCompletionSpec_Old("", [TokenType.none]);
+      return new SymbolCompletionSpec_Old("", new Set<TokenType>([TokenType.none]));
     }
 
     if (elems.length === 2) {

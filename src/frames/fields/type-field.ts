@@ -22,7 +22,9 @@ export class TypeField extends AbstractField {
 
   initialiseRoot(): ParseNode {
     this.astNode = undefined;
-    this.rootNode = new TypeNode([TokenType.type_concrete, TokenType.type_abstract]);
+    this.rootNode = new TypeNode(
+      new Set<TokenType>([TokenType.type_concrete, TokenType.type_abstract]),
+    );
     return this.rootNode;
   }
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>

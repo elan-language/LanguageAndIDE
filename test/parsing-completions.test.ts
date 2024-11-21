@@ -15,24 +15,24 @@ suite("Parsing - Completions", () => {
   //TODO - merge the completions tests into the parse node tests
 
   test("Generic Type", () => {
-    testCompletion(new TypeNode([]), "", ParseStatus.empty, "<i>Type</i>");
-    testCompletion(new TypeNode([]), "Foo", ParseStatus.valid, "");
-    testCompletion(new TypeNode([]), "Foo<of ", ParseStatus.incomplete, "<i>Type</i>>");
-    testCompletion(new TypeNode([]), "Foo<", ParseStatus.incomplete, "of <i>Type</i>>");
-    testCompletion(new TypeNode([]), "Foo<of", ParseStatus.incomplete, " <i>Type</i>>");
-    testCompletion(new TypeNode([]), "Foo<of Bar", ParseStatus.incomplete, ">");
-    testCompletion(new TypeNode([]), "Foo<of Bar>", ParseStatus.valid, "");
-    testCompletion(new TypeNode([]), "Foo<of Bar,", ParseStatus.incomplete, "<i>Type</i>>");
-    testCompletion(new TypeNode([]), "Foo<of (Bar,", ParseStatus.incomplete, "<i>Type</i>)>");
+    testCompletion(new TypeNode(), "", ParseStatus.empty, "<i>Type</i>");
+    testCompletion(new TypeNode(), "Foo", ParseStatus.valid, "");
+    testCompletion(new TypeNode(), "Foo<of ", ParseStatus.incomplete, "<i>Type</i>>");
+    testCompletion(new TypeNode(), "Foo<", ParseStatus.incomplete, "of <i>Type</i>>");
+    testCompletion(new TypeNode(), "Foo<of", ParseStatus.incomplete, " <i>Type</i>>");
+    testCompletion(new TypeNode(), "Foo<of Bar", ParseStatus.incomplete, ">");
+    testCompletion(new TypeNode(), "Foo<of Bar>", ParseStatus.valid, "");
+    testCompletion(new TypeNode(), "Foo<of Bar,", ParseStatus.incomplete, "<i>Type</i>>");
+    testCompletion(new TypeNode(), "Foo<of (Bar,", ParseStatus.incomplete, "<i>Type</i>)>");
   });
 
   test("Tuple Type", () => {
-    testCompletion(new TypeNode([]), "(Foo, Bar)", ParseStatus.valid, "");
-    testCompletion(new TypeNode([]), "(", ParseStatus.incomplete, "<i>Type</i>)");
-    testCompletion(new TypeNode([]), "(Foo", ParseStatus.incomplete, ")");
-    testCompletion(new TypeNode([]), "(Foo,", ParseStatus.incomplete, "<i>Type</i>)");
-    testCompletion(new TypeNode([]), "(Foo, ", ParseStatus.incomplete, "<i>Type</i>)"); //TODO Stangely failing - completion shows '))' - even though it is working correctly in the web editor
-    testCompletion(new TypeNode([]), "(Foo,Bar", ParseStatus.incomplete, ")");
+    testCompletion(new TypeNode(), "(Foo, Bar)", ParseStatus.valid, "");
+    testCompletion(new TypeNode(), "(", ParseStatus.incomplete, "<i>Type</i>)");
+    testCompletion(new TypeNode(), "(Foo", ParseStatus.incomplete, ")");
+    testCompletion(new TypeNode(), "(Foo,", ParseStatus.incomplete, "<i>Type</i>)");
+    testCompletion(new TypeNode(), "(Foo, ", ParseStatus.incomplete, "<i>Type</i>)"); //TODO Stangely failing - completion shows '))' - even though it is working correctly in the web editor
+    testCompletion(new TypeNode(), "(Foo,Bar", ParseStatus.incomplete, ")");
   });
 
   test("ExprNode2", () => {
@@ -47,17 +47,12 @@ suite("Parsing - Completions", () => {
 
   test("CSV of Identifier", () => {
     testCompletion(
-      new CSV(() => new IdentifierNode([]), 0),
+      new CSV(() => new IdentifierNode(), 0),
       "foo,",
       ParseStatus.incomplete,
       "<i>name</i>",
     );
-    testCompletion(
-      new CSV(() => new IdentifierNode([]), 0),
-      "foo, bar, yon",
-      ParseStatus.valid,
-      "",
-    );
+    testCompletion(new CSV(() => new IdentifierNode(), 0), "foo, bar, yon", ParseStatus.valid, "");
   });
 
   test("SpaceNode", () => {
@@ -98,27 +93,27 @@ suite("Parsing - Completions", () => {
     );
   });
   test("Func", () => {
-    testCompletion(new TypeNode([]), "Fu", ParseStatus.valid, "");
+    testCompletion(new TypeNode(), "Fu", ParseStatus.valid, "");
     testCompletion(
-      new TypeNode([]),
+      new TypeNode(),
       "Func",
       ParseStatus.incomplete,
       "<of <i>input Type(s)</i>=> <i>return Type</i>>",
     );
     testCompletion(
-      new TypeNode([]),
+      new TypeNode(),
       "Func<",
       ParseStatus.incomplete,
       "of <i>input Type(s)</i>=> <i>return Type</i>>",
     );
     testCompletion(
-      new TypeNode([]),
+      new TypeNode(),
       "Func<of Foo",
       ParseStatus.incomplete,
       " => <i>return Type</i>>",
     );
     testCompletion(
-      new TypeNode([]),
+      new TypeNode(),
       "Func<of Foo,",
       ParseStatus.incomplete,
       "<i>Type</i> => <i>return Type</i>>",

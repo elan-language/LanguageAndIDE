@@ -20,7 +20,7 @@ export interface ParseNode {
   symbolCompletion_getSpec_Old(): SymbolCompletionSpec_Old;
 
   symbolCompletion_getSpec(): SymbolCompletionSpec;
-  symbolCompletion_tokenTypes(): TokenType[];
+  symbolCompletion_tokenTypes(): Set<TokenType>;
   symbolCompleton_keywords(): string[];
   symbolCompleton_constraintId(): string;
   symbolCompleton_toMatch(): string;
