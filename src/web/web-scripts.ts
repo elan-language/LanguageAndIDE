@@ -51,11 +51,14 @@ system.stdlib = stdlib; // to allow injection
 const elanInputOutput = new WebInputOutput(consoleDiv, graphicsDiv);
 const lastDirId = "elan-files";
 const undoRedoFiles: string[] = [];
+let previousFileIndex: number = -1;
+let nextFileIndex: number = -1;
 
 let file: File;
 let doOnce = true;
 let profile: Profile;
 let lastSavedHash = "";
+let undoRedoHash = "";
 let programWorker: Worker;
 let inactivityTimer: any | undefined = undefined;
 let autoSaveFileHandle: FileSystemFileHandle | undefined = undefined;
@@ -64,8 +67,18 @@ autoSaveButton.hidden = !useChromeFileAPI();
 
 // add all the listeners
 
+// temp code for testing
+
+document.getElementById("temp-undo")!.addEventListener("click", async () => {
+  await undo();
+});
+
+document.getElementById("temp-redo")!.addEventListener("click", () => {
+  redo();
+});
+
 consoleDiv.addEventListener("click", () => {
-  const inp = consoleDiv.getElementsByTagName("input")?.[0]?.focus();
+  consoleDiv.getElementsByTagName("input")?.[0]?.focus();
 });
 
 trimButton.addEventListener("click", async () => {
@@ -262,17 +275,21 @@ async function initialDisplay(reset: boolean) {
   }
 }
 
+async function displayCode(rawCode: string, fileName?: string) {
+  const code = new CodeSourceFromString(rawCode);
+  try {
+    await file.parseFrom(code);
+    file.fileName = fileName || file.defaultFileName;
+    await initialDisplay(true);
+  } catch (e) {
+    await showError(e as Error, fileName || file.defaultFileName, true);
+  }
+}
+
 async function displayFile() {
   const [previousCode, previousFileName] = getLastLocalSave();
   if (previousCode) {
-    const code = new CodeSourceFromString(previousCode);
-    try {
-      await file.parseFrom(code);
-      file.fileName = previousFileName || file.defaultFileName;
-      await initialDisplay(true);
-    } catch (e) {
-      await showError(e as Error, previousFileName || file.defaultFileName, true);
-    }
+    await displayCode(previousCode, previousFileName);
   } else {
     await initialDisplay(true);
   }
@@ -533,19 +550,30 @@ async function updateContent(text: string) {
 }
 
 async function localAndAutoSave() {
+  let code = "";
+
   if (file.readParseStatus() === ParseStatus.valid) {
     // save to local store
-    const code = await file.renderAsSource();
 
-    const timestamp = Date.now();
-    const id = `elan-code-${timestamp}`;
+    if (undoRedoHash !== file.currentHash) {
+      code = await file.renderAsSource();
+      const timestamp = Date.now();
+      const id = `elan-code-${timestamp}`;
 
-    undoRedoFiles.push(id);
+      // todo logic here - if were saving a previous version we dont want to reset the indexes
 
-    localStorage.setItem("last-code-id", id);
-    localStorage.setItem(id, code);
-    localStorage.setItem("elan-file", file.fileName);
-    saveButton.classList.add("unsaved");
+      undoRedoFiles.push(id);
+      previousFileIndex = undoRedoFiles.length > 1 ? undoRedoFiles.length - 2 : -1;
+      nextFileIndex = -1;
+
+      localStorage.setItem("last-code-id", id);
+      localStorage.setItem(id, code);
+      localStorage.setItem("elan-file", file.fileName);
+      saveButton.classList.add("unsaved");
+      undoRedoHash = file.currentHash;
+    }
+
+    code = code ?? (await file.renderAsSource());
 
     // autosave if setup
     autoSave(code);
@@ -559,6 +587,23 @@ function getLastLocalSave(): [string, string] {
 
   return [previousCode || "", previousFileName || ""];
 }
+
+async function undo() {
+  if (previousFileIndex > -1) {
+    const previousId = undoRedoFiles[previousFileIndex];
+    nextFileIndex = previousFileIndex;
+    previousFileIndex = previousFileIndex - 1;
+    previousFileIndex = previousFileIndex < -1 ? -1 : previousFileIndex;
+    const previousCode = localStorage.getItem(previousId);
+    if (previousCode) {
+      const fn = file.fileName;
+      file = new FileImpl(hash, profile, transforms());
+      await displayCode(previousCode, fn);
+    }
+  }
+}
+
+function redo() {}
 
 async function inactivityRefresh() {
   if (
@@ -895,7 +940,7 @@ async function handleChromeAutoSave(event: Event) {
 }
 
 async function autoSave(code: string) {
-  if (autoSaveFileHandle) {
+  if (autoSaveFileHandle && hasUnsavedChanges()) {
     try {
       const writeable = await autoSaveFileHandle.createWritable();
       await writeable.write(code);
