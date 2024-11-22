@@ -57,4 +57,12 @@ export class ToClause extends AbstractSequence {
 
     return new SymbolCompletionSpec_Old("", new Set<TokenType>([TokenType.none]));
   }
+
+  symbolCompletion_tokenTypes(): Set<TokenType> {
+    if (this.getElements().length === 0) {
+      return new Set<TokenType>([TokenType.id_property]);
+    } else {
+      return super.symbolCompletion_tokenTypes();
+    }
+  }
 }

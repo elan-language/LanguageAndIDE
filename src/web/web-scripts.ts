@@ -359,7 +359,10 @@ async function updateDisplayValues() {
       if (!isParsing) {
         disable(autoSaveButton, "Code must be parsing in order to save");
       } else {
-        enable(autoSaveButton, "Select file to auto save to - will save whenever code parses");
+        enable(
+          autoSaveButton,
+          "Save to file now and then auto-save to same file whenever code is changed and parses",
+        );
       }
     }
 
@@ -931,6 +934,7 @@ async function handleChromeAutoSave(event: Event) {
     lastSavedHash = file.currentHash;
     await renderAsHtml();
     autoSaveButton.innerText = "Auto-off";
+    autoSaveButton.setAttribute("title", "Click to turn auto-save off and resume manual saving.");
   } catch (e) {
     // user cancelled
     return;

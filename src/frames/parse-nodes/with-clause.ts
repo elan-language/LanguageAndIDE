@@ -37,4 +37,8 @@ export class WithClause extends AbstractSequence {
 
     return new SymbolCompletionSpec_Old("", new Set<TokenType>([TokenType.none]));
   }
+
+  symbolCompletion_keywords(): string[] {
+    return this.getElements().length === 0 ? [withKeyword] : super.symbolCompletion_keywords();
+  }
 }

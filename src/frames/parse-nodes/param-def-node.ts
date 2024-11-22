@@ -50,4 +50,8 @@ export class ParamDefNode extends AbstractSequence {
 
     return new SymbolCompletionSpec_Old("", new Set<TokenType>([TokenType.none]));
   }
+
+  symbolCompletion_keywords(): string[] {
+    return this.getElements().length === 0 ? [outKeyword] : super.symbolCompletion_keywords();
+  }
 }

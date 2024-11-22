@@ -22,4 +22,8 @@ export class InheritanceNode extends AbstractSequence {
       super.parseText(text);
     }
   }
+
+  symbolCompletion_keywords(): string[] {
+    return this.getElements().length === 0 ? [inheritsKeyword] : super.symbolCompletion_keywords();
+  }
 }

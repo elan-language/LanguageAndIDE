@@ -3,6 +3,7 @@ import { AbstractSequence } from "./abstract-sequence";
 import { IdentifierNode } from "./identifier-node";
 import { IndexSingle } from "./index-single";
 import { OptionalNode } from "./optional-node";
+import { allIds } from "./parse-node-helpers";
 
 export class InstanceNode extends AbstractSequence {
   variable: IdentifierNode | undefined;
@@ -22,6 +23,14 @@ export class InstanceNode extends AbstractSequence {
       this.addElement(this.variable);
       this.addElement(this.index);
       super.parseText(text);
+    }
+  }
+
+  symbolCompletion_tokenTypes(): Set<TokenType> {
+    if (this.getElements().length === 0) {
+      return new Set<TokenType>(allIds);
+    } else {
+      return super.symbolCompletion_tokenTypes();
     }
   }
 }

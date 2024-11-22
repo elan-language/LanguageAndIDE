@@ -1,7 +1,10 @@
+import { TokenType } from "../helpers";
+import { propertyKeyword } from "../keywords";
 import { COLON, UNDERSCORE } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
 import { IdentifierNode } from "./identifier-node";
+import { assignableIds } from "./parse-node-helpers";
 import { PunctuationNode } from "./punctuation-node";
 
 export class DeconstructedList extends AbstractSequence {
@@ -20,5 +23,17 @@ export class DeconstructedList extends AbstractSequence {
       this.addElement(this.tail);
       super.parseText(text);
     }
+  }
+
+  symbolCompletion_tokenTypes(): Set<TokenType> {
+    if (this.getElements().length === 0) {
+      return new Set<TokenType>(assignableIds);
+    } else {
+      return super.symbolCompletion_tokenTypes();
+    }
+  }
+
+  symbolCompletion_keywords(): string[] {
+    return this.getElements().length === 0 ? [propertyKeyword] : super.symbolCompletion_keywords();
   }
 }

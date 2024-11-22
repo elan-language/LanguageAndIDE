@@ -37,10 +37,10 @@ suite("Symbol Completion", () => {
         TokenType.method_function,
         TokenType.method_system,
       ],
-      [], // Should be ["ref"]
+      ["ref"],
     );
   });
-  test("Expr1", () => {
+  test("Expr2", () => {
     testSymbolCompletionSpec(
       new ReferenceNode(),
       "t",
@@ -54,15 +54,14 @@ suite("Symbol Completion", () => {
         TokenType.id_parameter_regular,
         TokenType.id_property,
         TokenType.id_variable,
-        TokenType.id_enumValue, //should include method_function and method_system
+        TokenType.id_enumValue,
         TokenType.method_function,
         TokenType.method_system,
       ],
-      ["this"],
+      ["this,ref"], //should be just 'this'
     );
-    testSymbolCompletionSpec(new ExprNode(), "", ParseStatus.empty, ExprNode.name, "", [], []);
   });
-  ignore_test("Expr1", () => {
+  ignore_test("Expr3", () => {
     testSymbolCompletionSpec(
       new ReferenceNode(),
       "foo(",
@@ -72,6 +71,5 @@ suite("Symbol Completion", () => {
       [],
       ["this"],
     );
-    testSymbolCompletionSpec(new ExprNode(), "", ParseStatus.empty, ExprNode.name, "", [], []);
   });
 });

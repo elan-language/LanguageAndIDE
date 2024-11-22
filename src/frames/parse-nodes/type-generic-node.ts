@@ -5,7 +5,7 @@ import { AbstractSequence } from "./abstract-sequence";
 import { CommaNode } from "./comma-node";
 import { KeywordNode } from "./keyword-node";
 import { Multiple } from "./multiple";
-import { Space } from "./parse-node-helpers";
+import { conreteAndAbstractTypes, Space } from "./parse-node-helpers";
 import { PunctuationNode } from "./punctuation-node";
 import { Sequence } from "./sequence";
 import { SpaceNode } from "./space-node";
@@ -37,6 +37,14 @@ export class TypeGenericNode extends AbstractSequence {
       this.addElement(this.simpleType);
       this.addElement(this.generic);
       super.parseText(text);
+    }
+  }
+
+  symbolCompletion_tokenTypes(): Set<TokenType> {
+    if (this.getElements().length === 0) {
+      return new Set<TokenType>(conreteAndAbstractTypes);
+    } else {
+      return super.symbolCompletion_tokenTypes();
     }
   }
 }

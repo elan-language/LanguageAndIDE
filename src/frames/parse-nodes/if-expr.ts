@@ -30,4 +30,8 @@ export class IfExpr extends AbstractSequence {
       super.parseText(text);
     }
   }
+
+  symbolCompletion_keywords(): string[] {
+    return this.getElements().length === 0 ? [ifKeyword] : super.symbolCompletion_keywords();
+  }
 }

@@ -20,4 +20,8 @@ export class EmptyOfTypeNode extends AbstractSequence {
   override symbolCompletion_getSpec_Old(): SymbolCompletionSpec_Old {
     return new SymbolCompletionSpec_Old(this.matchedText, new Set<TokenType>([TokenType.type]));
   }
+
+  symbolCompletion_keywords(): string[] {
+    return this.getElements().length === 0 ? [emptyKeyword] : super.symbolCompletion_keywords();
+  }
 }

@@ -48,4 +48,8 @@ export class NewInstance extends AbstractSequence {
       new Set<TokenType>([TokenType.type]),
     );
   }
+
+  symbolCompletion_keywords(): string[] {
+    return this.getElements().length === 0 ? [newKeyword] : super.symbolCompletion_keywords();
+  }
 }
