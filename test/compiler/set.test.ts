@@ -51,7 +51,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "3322{7, 5}");
   });
 
-  ignore_test("Pass_SetUnion", async () => {
+  test("Pass_SetUnion", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
 main
