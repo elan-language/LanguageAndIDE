@@ -1,6 +1,6 @@
-import { SymbolCompletionSpec_Old, TokenType } from "../helpers";
 import { asKeyword, outKeyword } from "../keywords";
 import { ParseStatus } from "../status-enums";
+import { SymbolCompletionSpec_Old, TokenType } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { IdentifierNode } from "./identifier-node";
 import { KeywordNode } from "./keyword-node";
@@ -51,7 +51,9 @@ export class ParamDefNode extends AbstractSequence {
     return new SymbolCompletionSpec_Old("", new Set<TokenType>([TokenType.none]));
   }
 
-  symbolCompletion_keywords(): string[] {
-    return this.getElements().length === 0 ? [outKeyword] : super.symbolCompletion_keywords();
+  symbolCompletion_keywords(): Set<string> {
+    return this.getElements().length === 0
+      ? new Set<string>([outKeyword])
+      : super.symbolCompletion_keywords();
   }
 }

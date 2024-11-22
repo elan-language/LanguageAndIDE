@@ -1,4 +1,4 @@
-import { TokenType } from "../helpers";
+import { TokenType } from "../symbol-completion-helpers";
 import { RegExMatchNode } from "./regex-match-node";
 
 export class TypeSimpleNode extends RegExMatchNode {

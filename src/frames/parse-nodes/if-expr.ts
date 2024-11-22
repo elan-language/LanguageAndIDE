@@ -31,7 +31,9 @@ export class IfExpr extends AbstractSequence {
     }
   }
 
-  symbolCompletion_keywords(): string[] {
-    return this.getElements().length === 0 ? [ifKeyword] : super.symbolCompletion_keywords();
+  symbolCompletion_keywords(): Set<string> {
+    return this.getElements().length === 0
+      ? new Set<string>([ifKeyword])
+      : super.symbolCompletion_keywords();
   }
 }

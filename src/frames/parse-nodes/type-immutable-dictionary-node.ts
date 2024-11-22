@@ -1,4 +1,4 @@
-import { TokenType } from "../helpers";
+import { TokenType } from "../symbol-completion-helpers";
 import { CLOSE_BRACE, COLON, OPEN_BRACE } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { PunctuationNode } from "./punctuation-node";

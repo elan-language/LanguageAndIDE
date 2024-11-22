@@ -16,7 +16,9 @@ export class TypeOfNode extends AbstractSequence {
     super.parseText(text);
   }
 
-  symbolCompletion_keywords(): string[] {
-    return this.getElements().length === 0 ? [typeofKeyword] : super.symbolCompletion_keywords();
+  symbolCompletion_keywords(): Set<string> {
+    return this.getElements().length === 0
+      ? new Set<string>([typeofKeyword])
+      : super.symbolCompletion_keywords();
   }
 }

@@ -1,5 +1,5 @@
-import { SymbolCompletionSpec_Old, TokenType } from "../helpers";
 import { emptyKeyword } from "../keywords";
+import { SymbolCompletionSpec_Old, TokenType } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { KeywordNode } from "./keyword-node";
 import { Space } from "./parse-node-helpers";
@@ -21,7 +21,9 @@ export class EmptyOfTypeNode extends AbstractSequence {
     return new SymbolCompletionSpec_Old(this.matchedText, new Set<TokenType>([TokenType.type]));
   }
 
-  symbolCompletion_keywords(): string[] {
-    return this.getElements().length === 0 ? [emptyKeyword] : super.symbolCompletion_keywords();
+  symbolCompletion_keywords(): Set<string> {
+    return this.getElements().length === 0
+      ? new Set<string>([emptyKeyword])
+      : super.symbolCompletion_keywords();
   }
 }

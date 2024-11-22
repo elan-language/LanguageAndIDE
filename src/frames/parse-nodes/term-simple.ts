@@ -1,4 +1,4 @@
-import { SymbolCompletionSpec_Old, TokenType } from "../helpers";
+import { SymbolCompletionSpec_Old, TokenType } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
 import { ArrayNode } from "./array-list-node";

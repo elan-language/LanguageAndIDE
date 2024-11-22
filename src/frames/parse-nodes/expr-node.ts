@@ -1,4 +1,4 @@
-import { SymbolCompletionSpec_Old, TokenType } from "../helpers";
+import { SymbolCompletionSpec_Old, TokenType } from "../symbol-completion-helpers";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { BinaryExpression } from "./binary-expression";
 import { CopyWith } from "./copy-with";

@@ -1,5 +1,5 @@
-import { SymbolCompletionSpec_Old, TokenType } from "../helpers";
 import { ParseStatus } from "../status-enums";
+import { SymbolCompletionSpec_Old, TokenType } from "../symbol-completion-helpers";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { ParseNode } from "./parse-node";
 
@@ -85,6 +85,7 @@ export abstract class AbstractAlternatives extends AbstractParseNode {
   }
 
   override symbolCompletion_tokenTypes(): Set<TokenType> {
+    //TODO: re-write using 'union' method, once this works on local build!
     const tts = new Set<TokenType>();
     const pms = this.potentialMatches();
     for (let i = 0; i < pms.length; i++) {
@@ -92,7 +93,9 @@ export abstract class AbstractAlternatives extends AbstractParseNode {
       const pm_tts = Array.from(pm.symbolCompletion_tokenTypes());
       for (let j = 0; j < pm_tts.length; j++) {
         const tt = pm_tts[j];
-        tts.add(tt);
+        if (!tts.has(tt)) {
+          tts.add(tt);
+        }
       }
     }
     return tts;
@@ -103,13 +106,25 @@ export abstract class AbstractAlternatives extends AbstractParseNode {
     ); */
   }
 
-  override symbolCompletion_keywords(): string[] {
-    let kws: string[] = [];
+  override symbolCompletion_keywords(): Set<string> {
+    //TODO: re-write using 'union' method, once this works on local build!
+    const keywords = new Set<string>();
     const pms = this.potentialMatches();
     for (let i = 0; i < pms.length; i++) {
-      const toAdd = pms[i].symbolCompletion_keywords();
-      kws = kws.concat(toAdd);
+      const pm = pms[i];
+      const pm_tts = Array.from(pm.symbolCompletion_keywords());
+      for (let j = 0; j < pm_tts.length; j++) {
+        const tt = pm_tts[j];
+        if (!keywords.has(tt)) {
+          keywords.add(tt);
+        }
+      }
     }
-    return kws;
+    return keywords;
+
+    /* should be just: return this.potentialMatches().reduce(
+      (prev, m) => prev.union(m.symbolCompletion_tokenTypes()),
+      new Set<TokenType>(),
+    ); */
   }
 }

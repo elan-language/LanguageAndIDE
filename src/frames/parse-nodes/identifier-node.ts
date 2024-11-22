@@ -1,5 +1,5 @@
 import { Regexes } from "../fields/regexes";
-import { SymbolCompletionSpec_Old, TokenType } from "../helpers";
+import { SymbolCompletionSpec_Old, TokenType } from "../symbol-completion-helpers";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { matchRegEx } from "./parse-node-helpers";
 

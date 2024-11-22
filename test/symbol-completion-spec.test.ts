@@ -1,9 +1,9 @@
-import { TokenType } from "../src/frames/helpers";
 import { ExprNode } from "../src/frames/parse-nodes/expr-node";
 import { IdentifierNode } from "../src/frames/parse-nodes/identifier-node";
 import { MethodCallNode } from "../src/frames/parse-nodes/method-call-node";
 import { ReferenceNode } from "../src/frames/parse-nodes/reference-node";
 import { ParseStatus } from "../src/frames/status-enums";
+import { TokenType } from "../src/frames/symbol-completion-helpers";
 import { ignore_test } from "./compiler/compiler-test-helpers";
 import { testSymbolCompletionSpec } from "./testHelpers";
 
@@ -19,7 +19,7 @@ suite("Symbol Completion", () => {
       [],
     );
   });
-  test("Expr1", () => {
+  test("Reference1", () => {
     testSymbolCompletionSpec(
       new ReferenceNode(),
       "r",
@@ -40,7 +40,7 @@ suite("Symbol Completion", () => {
       ["ref"],
     );
   });
-  test("Expr2", () => {
+  test("Reference2", () => {
     testSymbolCompletionSpec(
       new ReferenceNode(),
       "t",
@@ -61,15 +61,46 @@ suite("Symbol Completion", () => {
       ["this"],
     );
   });
-  ignore_test("Expr3", () => {
+  ignore_test("Expression1", () => {
     testSymbolCompletionSpec(
-      new ReferenceNode(),
-      "foo(",
-      ParseStatus.incomplete,
+      new ExprNode(),
+      "t",
+      ParseStatus.valid,
+      ReferenceNode.name,
+      "t",
+      [
+        TokenType.id_constant,
+        TokenType.id_let,
+        TokenType.id_parameter_out,
+        TokenType.id_parameter_regular,
+        TokenType.id_property,
+        TokenType.id_variable,
+        TokenType.id_enumValue,
+        TokenType.method_function,
+        TokenType.method_system,
+      ],
+      ["this"],
+    );
+  });
+  ignore_test("Expression_Empty", () => {
+    testSymbolCompletionSpec(
+      new ExprNode(),
+      "",
+      ParseStatus.empty,
       ExprNode.name,
-      "foo(",
-      [],
-      ["this, ref, new, lambda, empty"],
+      "",
+      [
+        TokenType.id_constant,
+        TokenType.id_let,
+        TokenType.id_parameter_out,
+        TokenType.id_parameter_regular,
+        TokenType.id_property,
+        TokenType.id_variable,
+        TokenType.id_enumValue,
+        TokenType.method_function,
+        TokenType.method_system,
+      ],
+      ["new,copy,if,lambda,empty,this,ref"], // Not showing 'this,ref' - which should be coming from Term
     );
   });
 });

@@ -1,5 +1,9 @@
-import { SymbolCompletionSpec, SymbolCompletionSpec_Old, TokenType } from "../helpers";
 import { ParseStatus } from "../status-enums";
+import {
+  SymbolCompletionSpec,
+  SymbolCompletionSpec_Old,
+  TokenType,
+} from "../symbol-completion-helpers";
 
 export interface ParseNode {
   status: ParseStatus;
@@ -21,7 +25,7 @@ export interface ParseNode {
 
   symbolCompletion_getSpec(): SymbolCompletionSpec;
   symbolCompletion_tokenTypes(): Set<TokenType>;
-  symbolCompletion_keywords(): string[];
+  symbolCompletion_keywords(): Set<string>;
   symbolCompletion_constraintId(): string;
   symbolCompletion_toMatch(): string;
 

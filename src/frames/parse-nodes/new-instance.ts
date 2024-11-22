@@ -1,5 +1,5 @@
-import { SymbolCompletionSpec_Old, TokenType } from "../helpers";
 import { newKeyword } from "../keywords";
+import { SymbolCompletionSpec_Old, TokenType } from "../symbol-completion-helpers";
 import { CLOSE_BRACKET, OPEN_BRACKET } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { CSV } from "./csv";
@@ -49,7 +49,9 @@ export class NewInstance extends AbstractSequence {
     );
   }
 
-  symbolCompletion_keywords(): string[] {
-    return this.getElements().length === 0 ? [newKeyword] : super.symbolCompletion_keywords();
+  symbolCompletion_keywords(): Set<string> {
+    return this.getElements().length === 0
+      ? new Set<string>([newKeyword])
+      : super.symbolCompletion_keywords();
   }
 }

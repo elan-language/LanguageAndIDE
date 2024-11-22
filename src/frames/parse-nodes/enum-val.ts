@@ -1,4 +1,4 @@
-import { TokenType } from "../helpers";
+import { TokenType } from "../symbol-completion-helpers";
 import { DOT } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { IdentifierNode } from "./identifier-node";

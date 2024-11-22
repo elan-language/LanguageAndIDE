@@ -1,6 +1,6 @@
-import { SymbolCompletionSpec_Old, TokenType } from "../helpers";
 import { toKeyword } from "../keywords";
 import { ParseStatus } from "../status-enums";
+import { SymbolCompletionSpec_Old, TokenType } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { ExprNode } from "./expr-node";
 import { IdentifierNode } from "./identifier-node";

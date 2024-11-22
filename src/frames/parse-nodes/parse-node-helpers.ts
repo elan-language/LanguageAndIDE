@@ -1,6 +1,6 @@
-import { TokenType } from "../helpers";
 import { copyKeyword, emptyKeyword, ifKeyword, lambdaKeyword, newKeyword } from "../keywords";
 import { ParseStatus } from "../status-enums";
+import { TokenType } from "../symbol-completion-helpers";
 import { FixedTextNode } from "./fixed-text-node";
 import { ParseNode } from "./parse-node";
 import { SpaceNode } from "./space-node";
@@ -73,10 +73,10 @@ export const conreteAndAbstractTypes: TokenType[] = [
   TokenType.type_abstract,
   TokenType.type_concrete,
 ];
-export const allKeywordsThatCanStartAnExpression: string[] = [
+export const allKeywordsThatCanStartAnExpression: Set<string> = new Set([
   newKeyword,
   copyKeyword,
   ifKeyword,
   lambdaKeyword,
   emptyKeyword,
-];
+]);

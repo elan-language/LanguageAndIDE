@@ -1,4 +1,3 @@
-import { TokenType } from "../helpers";
 import { thisKeyword } from "../keywords";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { FunctionRefNode } from "./function-ref-node";

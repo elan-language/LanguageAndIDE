@@ -1,4 +1,4 @@
-import { TokenType } from "../helpers";
+import { TokenType } from "../symbol-completion-helpers";
 import { propertyKeyword } from "../keywords";
 import { COLON, UNDERSCORE } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
@@ -33,7 +33,9 @@ export class DeconstructedList extends AbstractSequence {
     }
   }
 
-  symbolCompletion_keywords(): string[] {
-    return this.getElements().length === 0 ? [propertyKeyword] : super.symbolCompletion_keywords();
+  symbolCompletion_keywords(): Set<string> {
+    return this.getElements().length === 0
+      ? new Set<string>([propertyKeyword])
+      : super.symbolCompletion_keywords();
   }
 }

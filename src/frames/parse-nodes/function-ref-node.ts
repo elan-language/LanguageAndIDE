@@ -1,4 +1,4 @@
-import { TokenType } from "../helpers";
+import { TokenType } from "../symbol-completion-helpers";
 import { refKeyword } from "../keywords";
 import { AbstractSequence } from "./abstract-sequence";
 import { IdentifierNode } from "./identifier-node";
@@ -22,7 +22,9 @@ export class FunctionRefNode extends AbstractSequence {
     return `<el-kw>${refKeyword}</el-kw> <el-method>${this.name!.renderAsHtml()}</el-method>`;
   }
 
-  symbolCompletion_keywords(): string[] {
-    return this.getElements().length === 0 ? [refKeyword] : super.symbolCompletion_keywords();
+  symbolCompletion_keywords(): Set<string> {
+    return this.getElements().length === 0
+      ? new Set<string>([refKeyword])
+      : super.symbolCompletion_keywords();
   }
 }

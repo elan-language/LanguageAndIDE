@@ -33,7 +33,9 @@ export class Lambda extends AbstractSequence {
     }
   }
 
-  symbolCompletion_keywords(): string[] {
-    return this.getElements().length === 0 ? [lambdaKeyword] : super.symbolCompletion_keywords();
+  symbolCompletion_keywords(): Set<string> {
+    return this.getElements().length === 0
+      ? new Set<string>([lambdaKeyword])
+      : super.symbolCompletion_keywords();
   }
 }

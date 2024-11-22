@@ -1,5 +1,5 @@
-import { TokenType } from "../helpers";
 import { ofKeyword } from "../keywords";
+import { TokenType } from "../symbol-completion-helpers";
 import { ARROW, GT } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { CSV } from "./csv";

@@ -1,8 +1,7 @@
 import { CodeSource } from "../code-source";
 import { CompileError } from "../compile-error";
+import { SymbolCompletionSpec_Old, TokenType } from "../symbol-completion-helpers";
 import {
-  SymbolCompletionSpec_Old,
-  TokenType,
   escapeHtmlChars,
   helper_CompileOrParseAsDisplayStatus,
   helper_compileMsgAsHtml,

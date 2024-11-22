@@ -1,4 +1,4 @@
-import { SymbolCompletionSpec_Old } from "../helpers";
+import { SymbolCompletionSpec_Old } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { ParseNode } from "./parse-node";
 

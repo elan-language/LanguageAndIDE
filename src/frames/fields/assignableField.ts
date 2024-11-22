@@ -1,5 +1,5 @@
 import { CodeSource } from "../code-source";
-import { TokenType } from "../helpers";
+import { TokenType } from "../symbol-completion-helpers";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Frame } from "../interfaces/frame";
 import { propertyKeyword } from "../keywords";

@@ -1,4 +1,4 @@
-import { TokenType } from "../helpers";
+import { TokenType } from "../symbol-completion-helpers";
 import { inheritsKeyword } from "../keywords";
 import { AbstractSequence } from "./abstract-sequence";
 import { CSV } from "./csv";
@@ -23,7 +23,9 @@ export class InheritanceNode extends AbstractSequence {
     }
   }
 
-  symbolCompletion_keywords(): string[] {
-    return this.getElements().length === 0 ? [inheritsKeyword] : super.symbolCompletion_keywords();
+  symbolCompletion_keywords(): Set<string> {
+    return this.getElements().length === 0
+      ? new Set<string>([inheritsKeyword])
+      : super.symbolCompletion_keywords();
   }
 }

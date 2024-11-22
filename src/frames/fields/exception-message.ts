@@ -1,5 +1,5 @@
 import { CodeSource } from "../code-source";
-import { TokenType } from "../helpers";
+import { TokenType } from "../symbol-completion-helpers";
 import { Frame } from "../interfaces/frame";
 import { Alternatives } from "../parse-nodes/alternatives";
 import { IdentifierNode } from "../parse-nodes/identifier-node";

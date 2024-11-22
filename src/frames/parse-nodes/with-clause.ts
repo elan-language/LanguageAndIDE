@@ -1,6 +1,6 @@
-import { SymbolCompletionSpec_Old, TokenType } from "../helpers";
 import { withKeyword } from "../keywords";
 import { ParseStatus } from "../status-enums";
+import { SymbolCompletionSpec_Old, TokenType } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { CSV } from "./csv";
 import { KeywordNode } from "./keyword-node";
@@ -38,7 +38,9 @@ export class WithClause extends AbstractSequence {
     return new SymbolCompletionSpec_Old("", new Set<TokenType>([TokenType.none]));
   }
 
-  symbolCompletion_keywords(): string[] {
-    return this.getElements().length === 0 ? [withKeyword] : super.symbolCompletion_keywords();
+  symbolCompletion_keywords(): Set<string> {
+    return this.getElements().length === 0
+      ? new Set<string>([withKeyword])
+      : super.symbolCompletion_keywords();
   }
 }

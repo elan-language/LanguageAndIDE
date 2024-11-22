@@ -1,4 +1,4 @@
-import { TokenType } from "../helpers";
+import { TokenType } from "../symbol-completion-helpers";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { TypeGenericNode } from "./type-generic-node";
 import { TypeSimpleNode } from "./type-simple-node";

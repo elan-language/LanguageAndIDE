@@ -1,4 +1,4 @@
-import { SymbolCompletionSpec_Old, TokenType } from "../helpers";
+import { SymbolCompletionSpec_Old, TokenType } from "../symbol-completion-helpers";
 import { OPEN_BRACE, OPEN_BRACKET, OPEN_SQ_BRACKET } from "../symbols";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { TypeDictionaryNode } from "./type-dictionary-node";
