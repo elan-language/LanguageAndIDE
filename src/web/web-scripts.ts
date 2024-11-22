@@ -50,6 +50,7 @@ system.stdlib = stdlib; // to allow injection
 
 const elanInputOutput = new WebInputOutput(consoleDiv, graphicsDiv);
 const lastDirId = "elan-files";
+const undoRedoFiles: string[] = [];
 
 let file: File;
 let doOnce = true;
@@ -262,8 +263,7 @@ async function initialDisplay(reset: boolean) {
 }
 
 async function displayFile() {
-  const previousCode = localStorage.getItem("elan-code");
-  const previousFileName = localStorage.getItem("elan-file");
+  const [previousCode, previousFileName] = getLastLocalSave();
   if (previousCode) {
     const code = new CodeSourceFromString(previousCode);
     try {
@@ -521,18 +521,7 @@ async function updateContent(text: string) {
     }
   }
 
-  if (file.readParseStatus() === ParseStatus.valid) {
-    // save to local store
-    const code = await file.renderAsSource();
-
-    localStorage.setItem("elan-code", code);
-    localStorage.setItem("elan-file", file.fileName);
-    saveButton.classList.add("unsaved");
-
-    // autosave if setup
-    autoSave(code);
-  }
-
+  await localAndAutoSave();
   await updateDisplayValues();
 
   const dbgFocused = document.querySelectorAll(".focused");
@@ -544,6 +533,34 @@ async function updateContent(text: string) {
     await showError(new Error(msg), file.fileName, false);
   }
   document.body.style.cursor = "default";
+}
+
+async function localAndAutoSave() {
+  if (file.readParseStatus() === ParseStatus.valid) {
+    // save to local store
+    const code = await file.renderAsSource();
+
+    const timestamp = Date.now();
+    const id = `elan-code-${timestamp}`;
+
+    undoRedoFiles.push(id);
+
+    localStorage.setItem("last-code-id", id);
+    localStorage.setItem(id, code);
+    localStorage.setItem("elan-file", file.fileName);
+    saveButton.classList.add("unsaved");
+
+    // autosave if setup
+    autoSave(code);
+  }
+}
+
+function getLastLocalSave(): [string, string] {
+  const id = localStorage.getItem("last-code-id") ?? "";
+  const previousCode = localStorage.getItem(id);
+  const previousFileName = localStorage.getItem("elan-file");
+
+  return [previousCode || "", previousFileName || ""];
 }
 
 async function inactivityRefresh() {
