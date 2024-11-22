@@ -156,7 +156,7 @@ expandCollapseButton?.addEventListener("click", async () => {
 newButton?.addEventListener("click", async () => {
   if (checkForUnsavedChanges()) {
     clearDisplays();
-    clearEditorSettings();
+    clearUndoRedoAndAutoSave();
     await resetFile();
   }
 });
@@ -218,7 +218,7 @@ function clearDisplays() {
   elanInputOutput.clearGraphics();
 }
 
-function clearEditorSettings() {
+function clearUndoRedoAndAutoSave() {
   autoSaveFileHandle = undefined;
   previousFileIndex = nextFileIndex = -1;
   localStorage.clear();
@@ -645,7 +645,7 @@ async function redo() {
     const nextId = undoRedoFiles[nextFileIndex];
     nextFileIndex = nextFileIndex + 1;
     nextFileIndex = nextFileIndex > undoRedoFiles.length - 1 ? -1 : nextFileIndex;
-    previousFileIndex = nextFileIndex - 2;
+    previousFileIndex = previousFileIndex + 1;
     previousFileIndex = previousFileIndex < -1 ? -1 : previousFileIndex;
     const previousCode = localStorage.getItem(nextId);
     if (previousCode) {
@@ -850,6 +850,7 @@ async function handleChromeUploadOrAppend(upload: boolean) {
     const rawCode = await codeFile.text();
     if (upload) {
       file = new FileImpl(hash, profile, transforms());
+      clearUndoRedoAndAutoSave();
     }
     await readAndParse(rawCode, fileName, upload, !upload);
   } catch (e) {
@@ -878,6 +879,7 @@ function handleUploadOrAppend(event: Event, upload: boolean) {
       const rawCode = event.target.result;
       if (upload) {
         file = new FileImpl(hash, profile, transforms());
+        clearUndoRedoAndAutoSave();
       }
       await readAndParse(rawCode, fileName, upload, !upload);
     });
