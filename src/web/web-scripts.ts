@@ -53,6 +53,7 @@ const lastDirId = "elan-files";
 let undoRedoFiles: string[] = [];
 let previousFileIndex: number = -1;
 let nextFileIndex: number = -1;
+let undoRedoing: boolean = false;
 
 let file: File;
 let doOnce = true;
@@ -271,7 +272,6 @@ async function refreshAndDisplay(compileIfParsed?: boolean) {
 
 async function initialDisplay(reset: boolean) {
   clearDisplays();
-  clearEditorSettings();
 
   const ps = file.readParseStatus();
   if (ps === ParseStatus.valid || ps === ParseStatus.default) {
@@ -567,14 +567,18 @@ async function localAndAutoSave() {
   if (file.readParseStatus() === ParseStatus.valid) {
     // save to local store
 
-    if (undoRedoHash !== file.currentHash) {
+    if (undoRedoHash !== file.currentHash && !undoRedoing) {
       code = await file.renderAsSource();
       const timestamp = Date.now();
       const id = `elan-code-${timestamp}`;
 
-      if (previousFileIndex !== -1 || previousFileIndex !== undoRedoFiles.length - 2) {
-        // indices are point to earlier ids - trim ids and saved files
-        //const unusedIds =
+      if (previousFileIndex !== -1 && previousFileIndex !== undoRedoFiles.length - 2) {
+        const trimedIds = undoRedoFiles.slice(previousFileIndex + 2);
+        undoRedoFiles = undoRedoFiles.slice(0, previousFileIndex + 2);
+
+        for (const id of trimedIds) {
+          localStorage.removeItem(id);
+        }
       }
 
       undoRedoFiles.push(id);
@@ -587,12 +591,15 @@ async function localAndAutoSave() {
       saveButton.classList.add("unsaved");
       undoRedoHash = file.currentHash;
     }
-
-    code = code ?? (await file.renderAsSource());
-
-    // autosave if setup
-    autoSave(code);
   }
+
+  undoRedoHash = file.currentHash;
+  undoRedoing = false;
+
+  code = code ?? (await file.renderAsSource());
+
+  // autosave if setup
+  autoSave(code);
 }
 
 function getLastLocalSave(): [string, string] {
@@ -612,6 +619,7 @@ async function undo() {
     previousFileIndex = previousFileIndex < -1 ? -1 : previousFileIndex;
     const previousCode = localStorage.getItem(previousId);
     if (previousCode) {
+      undoRedoing = true;
       const fn = file.fileName;
       file = new FileImpl(hash, profile, transforms());
       await displayCode(previousCode, fn);
@@ -628,6 +636,7 @@ async function redo() {
     previousFileIndex = previousFileIndex < -1 ? -1 : previousFileIndex;
     const previousCode = localStorage.getItem(nextId);
     if (previousCode) {
+      undoRedoing = true;
       const fn = file.fileName;
       file = new FileImpl(hash, profile, transforms());
       await displayCode(previousCode, fn);
