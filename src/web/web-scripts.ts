@@ -35,6 +35,9 @@ const loadButton = document.getElementById("load") as HTMLButtonElement;
 const appendButton = document.getElementById("append") as HTMLButtonElement;
 const saveButton = document.getElementById("save") as HTMLButtonElement;
 const autoSaveButton = document.getElementById("auto-save") as HTMLButtonElement;
+const undoButton = document.getElementById("undo") as HTMLButtonElement;
+const redoButton = document.getElementById("redo") as HTMLButtonElement;
+
 const codeTitle = document.getElementById("code-title") as HTMLDivElement;
 const parse = document.getElementById("parse") as HTMLDivElement;
 const compile = document.getElementById("compile") as HTMLDivElement;
@@ -50,9 +53,10 @@ system.stdlib = stdlib; // to allow injection
 
 const elanInputOutput = new WebInputOutput(consoleDiv, graphicsDiv);
 const lastDirId = "elan-files";
-const undoRedoFiles: string[] = [];
+let undoRedoFiles: string[] = [];
 let previousFileIndex: number = -1;
 let nextFileIndex: number = -1;
+let undoRedoing: boolean = false;
 
 let file: File;
 let doOnce = true;
@@ -69,13 +73,9 @@ autoSaveButton.hidden = !useChromeFileAPI();
 
 // temp code for testing
 
-document.getElementById("temp-undo")!.addEventListener("click", async () => {
-  await undo();
-});
+undoButton.addEventListener("click", undo);
 
-document.getElementById("temp-redo")!.addEventListener("click", () => {
-  redo();
-});
+redoButton.addEventListener("click", redo);
 
 consoleDiv.addEventListener("click", () => {
   consoleDiv.getElementsByTagName("input")?.[0]?.focus();
@@ -156,7 +156,9 @@ expandCollapseButton?.addEventListener("click", async () => {
 newButton?.addEventListener("click", async () => {
   if (checkForUnsavedChanges()) {
     clearDisplays();
-    await resetFile();
+    clearUndoRedoAndAutoSave();
+    file = new FileImpl(hash, profile, transforms());
+    await initialDisplay(false);
   }
 });
 
@@ -217,6 +219,13 @@ function clearDisplays() {
   elanInputOutput.clearGraphics();
 }
 
+function clearUndoRedoAndAutoSave() {
+  autoSaveFileHandle = undefined;
+  previousFileIndex = nextFileIndex = -1;
+  localStorage.clear();
+  undoRedoFiles = [];
+}
+
 async function resetFile() {
   file = new FileImpl(hash, profile, transforms());
   await renderAsHtml();
@@ -275,7 +284,7 @@ async function initialDisplay(reset: boolean) {
   }
 }
 
-async function displayCode(rawCode: string, fileName?: string) {
+async function displayCode(rawCode: string, fileName: string) {
   const code = new CodeSourceFromString(rawCode);
   try {
     await file.parseFrom(code);
@@ -336,6 +345,8 @@ async function updateDisplayValues() {
     disable(demosButton, msg);
     disable(trimButton, msg);
     disable(expandCollapseButton, msg);
+    disable(undoButton, msg);
+    disable(redoButton, msg);
     for (const elem of demoFiles) {
       elem.setAttribute("hidden", "");
     }
@@ -383,6 +394,18 @@ async function updateDisplayValues() {
       );
     } else {
       enable(runButton, "Run the program");
+    }
+
+    if (previousFileIndex === -1) {
+      disable(undoButton, "Nothing to undo");
+    } else {
+      enable(undoButton, "Undo last change");
+    }
+
+    if (nextFileIndex === -1) {
+      disable(redoButton, "Nothing to redo");
+    } else {
+      enable(redoButton, "Redo last change");
     }
   }
 
@@ -558,12 +581,19 @@ async function localAndAutoSave() {
   if (file.readParseStatus() === ParseStatus.valid) {
     // save to local store
 
-    if (undoRedoHash !== file.currentHash) {
+    if (undoRedoHash !== file.currentHash && !undoRedoing) {
       code = await file.renderAsSource();
       const timestamp = Date.now();
       const id = `elan-code-${timestamp}`;
 
-      // todo logic here - if were saving a previous version we dont want to reset the indexes
+      if (previousFileIndex !== -1 && previousFileIndex !== undoRedoFiles.length - 2) {
+        const trimedIds = undoRedoFiles.slice(previousFileIndex + 2);
+        undoRedoFiles = undoRedoFiles.slice(0, previousFileIndex + 2);
+
+        for (const id of trimedIds) {
+          localStorage.removeItem(id);
+        }
+      }
 
       undoRedoFiles.push(id);
       previousFileIndex = undoRedoFiles.length > 1 ? undoRedoFiles.length - 2 : -1;
@@ -575,12 +605,15 @@ async function localAndAutoSave() {
       saveButton.classList.add("unsaved");
       undoRedoHash = file.currentHash;
     }
-
-    code = code ?? (await file.renderAsSource());
-
-    // autosave if setup
-    autoSave(code);
   }
+
+  undoRedoHash = file.currentHash;
+  undoRedoing = false;
+
+  code = code ?? (await file.renderAsSource());
+
+  // autosave if setup
+  autoSave(code);
 }
 
 function getLastLocalSave(): [string, string] {
@@ -594,11 +627,13 @@ function getLastLocalSave(): [string, string] {
 async function undo() {
   if (previousFileIndex > -1) {
     const previousId = undoRedoFiles[previousFileIndex];
-    nextFileIndex = previousFileIndex;
+    nextFileIndex = previousFileIndex + 1;
+    nextFileIndex = nextFileIndex > undoRedoFiles.length - 1 ? -1 : nextFileIndex;
     previousFileIndex = previousFileIndex - 1;
     previousFileIndex = previousFileIndex < -1 ? -1 : previousFileIndex;
     const previousCode = localStorage.getItem(previousId);
     if (previousCode) {
+      undoRedoing = true;
       const fn = file.fileName;
       file = new FileImpl(hash, profile, transforms());
       await displayCode(previousCode, fn);
@@ -606,7 +641,22 @@ async function undo() {
   }
 }
 
-function redo() {}
+async function redo() {
+  if (nextFileIndex > -1) {
+    const nextId = undoRedoFiles[nextFileIndex];
+    nextFileIndex = nextFileIndex + 1;
+    nextFileIndex = nextFileIndex > undoRedoFiles.length - 1 ? -1 : nextFileIndex;
+    previousFileIndex = previousFileIndex + 1;
+    previousFileIndex = previousFileIndex < -1 ? -1 : previousFileIndex;
+    const previousCode = localStorage.getItem(nextId);
+    if (previousCode) {
+      undoRedoing = true;
+      const fn = file.fileName;
+      file = new FileImpl(hash, profile, transforms());
+      await displayCode(previousCode, fn);
+    }
+  }
+}
 
 async function inactivityRefresh() {
   if (
@@ -801,6 +851,7 @@ async function handleChromeUploadOrAppend(upload: boolean) {
     const rawCode = await codeFile.text();
     if (upload) {
       file = new FileImpl(hash, profile, transforms());
+      clearUndoRedoAndAutoSave();
     }
     await readAndParse(rawCode, fileName, upload, !upload);
   } catch (e) {
@@ -829,6 +880,7 @@ function handleUploadOrAppend(event: Event, upload: boolean) {
       const rawCode = event.target.result;
       if (upload) {
         file = new FileImpl(hash, profile, transforms());
+        clearUndoRedoAndAutoSave();
       }
       await readAndParse(rawCode, fileName, upload, !upload);
     });
