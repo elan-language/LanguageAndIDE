@@ -157,7 +157,8 @@ newButton?.addEventListener("click", async () => {
   if (checkForUnsavedChanges()) {
     clearDisplays();
     clearUndoRedoAndAutoSave();
-    await resetFile();
+    file = new FileImpl(hash, profile, transforms());
+    await initialDisplay(false);
   }
 });
 
