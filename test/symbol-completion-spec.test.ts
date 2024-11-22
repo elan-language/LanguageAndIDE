@@ -1,7 +1,12 @@
 import { ExprNode } from "../src/frames/parse-nodes/expr-node";
 import { IdentifierNode } from "../src/frames/parse-nodes/identifier-node";
+import { KeywordNode } from "../src/frames/parse-nodes/keyword-node";
+import { LitBoolean } from "../src/frames/parse-nodes/lit-boolean";
+import { LitValueNode } from "../src/frames/parse-nodes/lit-value";
 import { MethodCallNode } from "../src/frames/parse-nodes/method-call-node";
 import { ReferenceNode } from "../src/frames/parse-nodes/reference-node";
+import { Term } from "../src/frames/parse-nodes/term";
+import { TermSimple } from "../src/frames/parse-nodes/term-simple";
 import { ParseStatus } from "../src/frames/status-enums";
 import { TokenType } from "../src/frames/symbol-completion-helpers";
 import { ignore_test } from "./compiler/compiler-test-helpers";
@@ -66,7 +71,7 @@ suite("Symbol Completion", () => {
       new ExprNode(),
       "t",
       ParseStatus.valid,
-      ReferenceNode.name,
+      ExprNode.name, //because t could be start of literal boolean also
       "t",
       [
         TokenType.id_constant,
@@ -79,10 +84,42 @@ suite("Symbol Completion", () => {
         TokenType.method_function,
         TokenType.method_system,
       ],
-      ["this"],
+      ["this", "true"],
     );
   });
-  ignore_test("Expression_Empty", () => {
+  ignore_test("TermSimple", () => {
+    testSymbolCompletionSpec(
+      new TermSimple(),
+      "t",
+      ParseStatus.valid,
+      Term.name, //coming back as optional node - see note on #857
+      "t",
+      [
+        TokenType.id_constant,
+        TokenType.id_let,
+        TokenType.id_parameter_out,
+        TokenType.id_parameter_regular,
+        TokenType.id_property,
+        TokenType.id_variable,
+        TokenType.id_enumValue,
+        TokenType.method_function,
+        TokenType.method_system,
+      ],
+      ["this", "true"],
+    );
+  });
+  test("LitValueNode", () => {
+    testSymbolCompletionSpec(
+      new LitValueNode(),
+      "t",
+      ParseStatus.incomplete,
+      KeywordNode.name,
+      "t",
+      [],
+      ["true"],
+    );
+  });
+  test("Expression_Empty", () => {
     testSymbolCompletionSpec(
       new ExprNode(),
       "",

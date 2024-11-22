@@ -28,7 +28,12 @@ export class SymbolCompletionSpec_Old {
 }
 
 export class SymbolCompletionSpec {
-  constructor(toMatch: string, tokenTypes: Set<TokenType>, keywords: Set<string>, constrainingId: string) {
+  constructor(
+    toMatch: string,
+    tokenTypes: Set<TokenType>,
+    keywords: Set<string>,
+    constrainingId: string,
+  ) {
     this.toMatch = toMatch;
     this.tokenTypes = tokenTypes;
     this.keywords = keywords;
