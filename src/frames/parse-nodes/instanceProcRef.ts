@@ -1,10 +1,12 @@
 import { SymbolCompletionSpec_Old, TokenType } from "../helpers";
+import { libraryKeyword, propertyKeyword } from "../keywords";
 import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
 import { DotAfter } from "./dot-after";
 import { IdentifierNode } from "./identifier-node";
 import { InstanceNode } from "./instanceNode";
 import { OptionalNode } from "./optional-node";
+import { allIds } from "./parse-node-helpers";
 import { Qualifier } from "./qualifier";
 
 export class InstanceProcRef extends AbstractSequence {
@@ -43,5 +45,19 @@ export class InstanceProcRef extends AbstractSequence {
       this.matchedText,
       new Set<TokenType>([TokenType.idOrProcedure]),
     );
+  }
+
+  symbolCompletion_tokenTypes(): Set<TokenType> {
+    if (this.getElements().length === 0) {
+      return new Set<TokenType>(allIds);
+    } else {
+      return super.symbolCompletion_tokenTypes();
+    }
+  }
+
+  symbolCompletion_keywords(): string[] {
+    return this.getElements().length === 0
+      ? [libraryKeyword, propertyKeyword]
+      : super.symbolCompletion_keywords();
   }
 }

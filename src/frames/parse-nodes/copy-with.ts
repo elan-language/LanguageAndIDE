@@ -50,4 +50,8 @@ export class CopyWith extends AbstractSequence {
       new Set<TokenType>([tokenType]),
     );
   }
+
+  symbolCompletion_keywords(): string[] {
+    return this.getElements().length === 0 ? [copyKeyword] : super.symbolCompletion_keywords();
+  }
 }

@@ -1,8 +1,14 @@
 import { SymbolCompletionSpec_Old, TokenType } from "../helpers";
+import { newKeyword } from "../keywords";
 import { ParseStatus } from "../status-enums";
 import { AbstractSequence } from "./abstract-sequence";
 import { BinaryOperation } from "./binary-operation";
 import { ExprNode } from "./expr-node";
+import {
+  allIds,
+  allIdsAndMethods,
+  allKeywordsThatCanStartAnExpression,
+} from "./parse-node-helpers";
 import { Term } from "./term";
 
 export class BinaryExpression extends AbstractSequence {
@@ -48,5 +54,19 @@ export class BinaryExpression extends AbstractSequence {
     }
 
     return new SymbolCompletionSpec_Old("", new Set<TokenType>([TokenType.none]));
+  }
+
+  symbolCompletion_tokenTypes(): Set<TokenType> {
+    if (this.getElements().length === 0) {
+      return new Set<TokenType>(allIdsAndMethods);
+    } else {
+      return super.symbolCompletion_tokenTypes();
+    }
+  }
+
+  symbolCompletion_keywords(): string[] {
+    return this.getElements().length === 0
+      ? allKeywordsThatCanStartAnExpression
+      : super.symbolCompletion_keywords();
   }
 }

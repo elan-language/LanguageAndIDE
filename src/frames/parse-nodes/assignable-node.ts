@@ -5,6 +5,7 @@ import { Alternatives } from "./alternatives";
 import { DotAfter } from "./dot-after";
 import { IdentifierNode } from "./identifier-node";
 import { KeywordNode } from "./keyword-node";
+import { assignableIds } from "./parse-node-helpers";
 import { Sequence } from "./sequence";
 
 export class AssignableNode extends AbstractSequence {
@@ -44,5 +45,17 @@ export class AssignableNode extends AbstractSequence {
     }
 
     return new SymbolCompletionSpec_Old("", new Set<TokenType>([TokenType.none]));
+  }
+
+  symbolCompletion_tokenTypes(): Set<TokenType> {
+    if (this.getElements().length === 0) {
+      return new Set<TokenType>(assignableIds);
+    } else {
+      return super.symbolCompletion_tokenTypes();
+    }
+  }
+
+  symbolCompletion_keywords(): string[] {
+    return this.getElements().length === 0 ? [propertyKeyword] : super.symbolCompletion_keywords();
   }
 }

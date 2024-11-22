@@ -1,3 +1,5 @@
+import { TokenType } from "../helpers";
+import { copyKeyword, emptyKeyword, ifKeyword, lambdaKeyword, newKeyword } from "../keywords";
 import { ParseStatus } from "../status-enums";
 import { FixedTextNode } from "./fixed-text-node";
 import { ParseNode } from "./parse-node";
@@ -35,3 +37,46 @@ export enum Space {
   added, // optionalfor input but rendered in output irrespective  e.g. between binary operator and terms
   required, //Required for input and represented in output e.g. after keyword
 }
+
+export const allIds: TokenType[] = [
+  TokenType.id_constant,
+  TokenType.id_let,
+  TokenType.id_parameter_out,
+  TokenType.id_parameter_regular,
+  TokenType.id_property,
+  TokenType.id_variable,
+  TokenType.id_enumValue,
+];
+export const allMethods: TokenType[] = [
+  TokenType.method_function,
+  TokenType.method_function,
+  TokenType.method_system,
+];
+export const allIdsAndMethods: TokenType[] = [
+  TokenType.id_constant,
+  TokenType.id_let,
+  TokenType.id_parameter_out,
+  TokenType.id_parameter_regular,
+  TokenType.id_property,
+  TokenType.id_variable,
+  TokenType.id_enumValue,
+  TokenType.method_function,
+  TokenType.method_function,
+  TokenType.method_system,
+];
+export const assignableIds: TokenType[] = [
+  TokenType.id_parameter_out,
+  TokenType.id_variable,
+  TokenType.id_property,
+];
+export const conreteAndAbstractTypes: TokenType[] = [
+  TokenType.type_abstract,
+  TokenType.type_concrete,
+];
+export const allKeywordsThatCanStartAnExpression: string[] = [
+  newKeyword,
+  copyKeyword,
+  ifKeyword,
+  lambdaKeyword,
+  emptyKeyword,
+];
