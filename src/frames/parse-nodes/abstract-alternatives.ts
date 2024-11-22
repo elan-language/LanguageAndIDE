@@ -63,7 +63,7 @@ export abstract class AbstractAlternatives extends AbstractParseNode {
     return this.bestMatch?.symbolCompletion_getSpec_Old() ?? super.symbolCompletion_getSpec_Old();
   }
 
- override getActiveNode(): ParseNode {
+  override getActiveNode(): ParseNode {
     if (this.bestMatchIsOnlyMatch()) {
       return this.bestMatch!.getActiveNode();
     } else {
