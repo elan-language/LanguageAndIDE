@@ -50,7 +50,7 @@ system.stdlib = stdlib; // to allow injection
 
 const elanInputOutput = new WebInputOutput(consoleDiv, graphicsDiv);
 const lastDirId = "elan-files";
-const undoRedoFiles: string[] = [];
+let undoRedoFiles: string[] = [];
 let previousFileIndex: number = -1;
 let nextFileIndex: number = -1;
 
@@ -156,6 +156,7 @@ expandCollapseButton?.addEventListener("click", async () => {
 newButton?.addEventListener("click", async () => {
   if (checkForUnsavedChanges()) {
     clearDisplays();
+    clearEditorSettings();
     await resetFile();
   }
 });
@@ -217,6 +218,13 @@ function clearDisplays() {
   elanInputOutput.clearGraphics();
 }
 
+function clearEditorSettings() {
+  autoSaveFileHandle = undefined;
+  previousFileIndex = nextFileIndex = -1;
+  localStorage.clear();
+  undoRedoFiles = [];
+}
+
 async function resetFile() {
   file = new FileImpl(hash, profile, transforms());
   await renderAsHtml();
@@ -263,6 +271,7 @@ async function refreshAndDisplay(compileIfParsed?: boolean) {
 
 async function initialDisplay(reset: boolean) {
   clearDisplays();
+  clearEditorSettings();
 
   const ps = file.readParseStatus();
   if (ps === ParseStatus.valid || ps === ParseStatus.default) {
@@ -275,7 +284,7 @@ async function initialDisplay(reset: boolean) {
   }
 }
 
-async function displayCode(rawCode: string, fileName?: string) {
+async function displayCode(rawCode: string, fileName: string) {
   const code = new CodeSourceFromString(rawCode);
   try {
     await file.parseFrom(code);
@@ -563,7 +572,10 @@ async function localAndAutoSave() {
       const timestamp = Date.now();
       const id = `elan-code-${timestamp}`;
 
-      // todo logic here - if were saving a previous version we dont want to reset the indexes
+      if (previousFileIndex !== -1 || previousFileIndex !== undoRedoFiles.length - 2) {
+        // indices are point to earlier ids - trim ids and saved files
+        //const unusedIds =
+      }
 
       undoRedoFiles.push(id);
       previousFileIndex = undoRedoFiles.length > 1 ? undoRedoFiles.length - 2 : -1;
@@ -594,7 +606,8 @@ function getLastLocalSave(): [string, string] {
 async function undo() {
   if (previousFileIndex > -1) {
     const previousId = undoRedoFiles[previousFileIndex];
-    nextFileIndex = previousFileIndex;
+    nextFileIndex = previousFileIndex + 1;
+    nextFileIndex = nextFileIndex > undoRedoFiles.length - 1 ? -1 : nextFileIndex;
     previousFileIndex = previousFileIndex - 1;
     previousFileIndex = previousFileIndex < -1 ? -1 : previousFileIndex;
     const previousCode = localStorage.getItem(previousId);
@@ -606,7 +619,21 @@ async function undo() {
   }
 }
 
-function redo() {}
+async function redo() {
+  if (nextFileIndex > -1) {
+    const nextId = undoRedoFiles[nextFileIndex];
+    nextFileIndex = nextFileIndex + 1;
+    nextFileIndex = nextFileIndex > undoRedoFiles.length - 1 ? -1 : nextFileIndex;
+    previousFileIndex = nextFileIndex - 2;
+    previousFileIndex = previousFileIndex < -1 ? -1 : previousFileIndex;
+    const previousCode = localStorage.getItem(nextId);
+    if (previousCode) {
+      const fn = file.fileName;
+      file = new FileImpl(hash, profile, transforms());
+      await displayCode(previousCode, fn);
+    }
+  }
+}
 
 async function inactivityRefresh() {
   if (
