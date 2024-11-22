@@ -85,46 +85,14 @@ export abstract class AbstractAlternatives extends AbstractParseNode {
   }
 
   override symbolCompletion_tokenTypes(): Set<TokenType> {
-    //TODO: re-write using 'union' method, once this works on local build!
-    const tts = new Set<TokenType>();
-    const pms = this.potentialMatches();
-    for (let i = 0; i < pms.length; i++) {
-      const pm = pms[i];
-      const pm_tts = Array.from(pm.symbolCompletion_tokenTypes());
-      for (let j = 0; j < pm_tts.length; j++) {
-        const tt = pm_tts[j];
-        if (!tts.has(tt)) {
-          tts.add(tt);
-        }
-      }
-    }
-    return tts;
-
-    /* should be just: return this.potentialMatches().reduce(
+    return this.potentialMatches().reduce(
       (prev, m) => prev.union(m.symbolCompletion_tokenTypes()),
-      new Set<TokenType>(),
-    ); */
+      new Set<TokenType>());
   }
 
   override symbolCompletion_keywords(): Set<string> {
-    //TODO: re-write using 'union' method, once this works on local build!
-    const keywords = new Set<string>();
-    const pms = this.potentialMatches();
-    for (let i = 0; i < pms.length; i++) {
-      const pm = pms[i];
-      const pm_tts = Array.from(pm.symbolCompletion_keywords());
-      for (let j = 0; j < pm_tts.length; j++) {
-        const tt = pm_tts[j];
-        if (!keywords.has(tt)) {
-          keywords.add(tt);
-        }
-      }
-    }
-    return keywords;
-
-    /* should be just: return this.potentialMatches().reduce(
-      (prev, m) => prev.union(m.symbolCompletion_tokenTypes()),
-      new Set<TokenType>(),
-    ); */
+    return this.potentialMatches().reduce(
+      (prev, m) => prev.union(m.symbolCompletion_keywords()),
+      new Set<string>());
   }
 }

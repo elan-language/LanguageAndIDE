@@ -19,26 +19,18 @@ export enum TokenType {
 }
 
 export class SymbolCompletionSpec_Old {
-  constructor(toMatch: string, tts: Set<TokenType>) {
+  constructor(toMatch: string, tokenTypes: Set<TokenType>) {
     this.toMatch = toMatch;
-    this.addTokenTypes(tts);
+    this.tokenTypes = tokenTypes;
   }
   toMatch: string = "";
-  tokenTypes: Set<TokenType> = new Set<TokenType>();
-
-  addTokenTypes(tokenTypes: Set<TokenType>): void {
-    const toAdd = new Set<TokenType>(tokenTypes);
-    // TODO Correct code is:
-    // this.tokenTypes.union(toAdd);
-    // Due to a build issue (on RP machine only), need to do it without 'union'
-    toAdd.forEach((tt) => this.tokenTypes.add(tt));
-  }
+  tokenTypes: Set<TokenType>;
 }
 
 export class SymbolCompletionSpec {
-  constructor(toMatch: string, tts: Set<TokenType>, keywords: Set<string>, constrainingId: string) {
+  constructor(toMatch: string, tokenTypes: Set<TokenType>, keywords: Set<string>, constrainingId: string) {
     this.toMatch = toMatch;
-    this.addTokenTypes(tts);
+    this.tokenTypes = tokenTypes;
     this.keywords = keywords;
     this.constrainingId = constrainingId;
   }
@@ -46,18 +38,4 @@ export class SymbolCompletionSpec {
   tokenTypes: Set<TokenType> = new Set<TokenType>();
   keywords: Set<string>;
   constrainingId: string;
-
-  addTokenTypes(tokenTypes: Set<TokenType>): void {
-    // TODO Correct code is:
-    // this.tokenTypes.union(toAdd);
-    // Due to a build issue (on RP machine only), need to do it without 'union'
-    tokenTypes.forEach((tt) => this.tokenTypes.add(tt));
-  }
-
-  addKeyword(keyword: string) {
-    const trimmed = keyword.trim();
-    if (trimmed.length > 0 && !this.keywords.has(trimmed)) {
-      this.keywords.add(trimmed + " ");
-    }
-  }
 }
