@@ -35,6 +35,9 @@ const loadButton = document.getElementById("load") as HTMLButtonElement;
 const appendButton = document.getElementById("append") as HTMLButtonElement;
 const saveButton = document.getElementById("save") as HTMLButtonElement;
 const autoSaveButton = document.getElementById("auto-save") as HTMLButtonElement;
+const undoButton = document.getElementById("undo") as HTMLButtonElement;
+const redoButton = document.getElementById("redo") as HTMLButtonElement;
+
 const codeTitle = document.getElementById("code-title") as HTMLDivElement;
 const parse = document.getElementById("parse") as HTMLDivElement;
 const compile = document.getElementById("compile") as HTMLDivElement;
@@ -70,13 +73,9 @@ autoSaveButton.hidden = !useChromeFileAPI();
 
 // temp code for testing
 
-document.getElementById("temp-undo")!.addEventListener("click", async () => {
-  await undo();
-});
+undoButton.addEventListener("click", undo);
 
-document.getElementById("temp-redo")!.addEventListener("click", () => {
-  redo();
-});
+redoButton.addEventListener("click", redo);
 
 consoleDiv.addEventListener("click", () => {
   consoleDiv.getElementsByTagName("input")?.[0]?.focus();
@@ -345,6 +344,8 @@ async function updateDisplayValues() {
     disable(demosButton, msg);
     disable(trimButton, msg);
     disable(expandCollapseButton, msg);
+    disable(undoButton, msg);
+    disable(redoButton, msg);
     for (const elem of demoFiles) {
       elem.setAttribute("hidden", "");
     }
@@ -392,6 +393,18 @@ async function updateDisplayValues() {
       );
     } else {
       enable(runButton, "Run the program");
+    }
+
+    if (previousFileIndex === -1) {
+      disable(undoButton, "Nothing to undo");
+    } else {
+      enable(undoButton, "Undo last change");
+    }
+
+    if (nextFileIndex === -1) {
+      disable(redoButton, "Nothing to redo");
+    } else {
+      enable(redoButton, "Redo last change");
     }
   }
 

@@ -87,12 +87,14 @@ export abstract class AbstractAlternatives extends AbstractParseNode {
   override symbolCompletion_tokenTypes(): Set<TokenType> {
     return this.potentialMatches().reduce(
       (prev, m) => prev.union(m.symbolCompletion_tokenTypes()),
-      new Set<TokenType>());
+      new Set<TokenType>(),
+    );
   }
 
   override symbolCompletion_keywords(): Set<string> {
     return this.potentialMatches().reduce(
       (prev, m) => prev.union(m.symbolCompletion_keywords()),
-      new Set<string>());
+      new Set<string>(),
+    );
   }
 }
