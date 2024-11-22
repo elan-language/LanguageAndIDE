@@ -58,7 +58,7 @@ suite("Symbol Completion", () => {
         TokenType.method_function,
         TokenType.method_system,
       ],
-      ["this,ref"], //should be just 'this'
+      ["this"],
     );
   });
   ignore_test("Expr3", () => {
@@ -69,7 +69,7 @@ suite("Symbol Completion", () => {
       ExprNode.name,
       "foo(",
       [],
-      ["this"],
+      ["this, ref, new, lambda, empty"],
     );
   });
 });

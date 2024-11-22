@@ -14,21 +14,23 @@ export abstract class AbstractAlternatives extends AbstractParseNode {
   parseText(text: string): void {
     this.remainingText = text;
     if (this.remainingText.length > 0) {
-      let cont = true;
+      let open = true;
       let i = 0;
-      while (i < this.alternatives.length && cont) {
+      while (i < this.alternatives.length) {
         const alt = this.alternatives[i];
         alt.parseText(text);
-        if (alt.status === ParseStatus.valid && alt.remainingText.length === 0) {
-          this.bestMatch = alt;
-          cont = false;
-        } else if (
-          !this.bestMatch ||
-          alt.remainingText.length < this.bestMatch.remainingText.length ||
-          (alt.remainingText.length === this.bestMatch.remainingText.length &&
-            alt.status > this.bestMatch.status)
-        ) {
-          this.bestMatch = alt;
+        if (open) {
+          if (alt.isValid() && alt.remainingText.length === 0) {
+            this.bestMatch = alt;
+            open = false;
+          } else if (
+            !this.bestMatch ||
+            alt.remainingText.length < this.bestMatch.remainingText.length ||
+            (alt.remainingText.length === this.bestMatch.remainingText.length &&
+              alt.status > this.bestMatch.status)
+          ) {
+            this.bestMatch = alt;
+          }
         }
         i++;
       }

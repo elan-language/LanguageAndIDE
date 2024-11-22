@@ -1,4 +1,3 @@
-import { TokenType } from "../helpers";
 import { ParseStatus } from "../status-enums";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { ParseNode } from "./parse-node";
@@ -18,7 +17,7 @@ export abstract class AbstractSequence extends AbstractParseNode {
     let i = -1; // Because incremented at start of loop
     this.remainingText = text;
     let continueLoop = true;
-    while (continueLoop) {
+    while (this.elements.length > 0 && continueLoop) {
       i++;
       const node = this.elements[i] as AbstractParseNode;
       const firstNode = i === 0;
