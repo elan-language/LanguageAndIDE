@@ -92,7 +92,7 @@ suite("Symbol Completion", () => {
       new TermSimple(),
       "t",
       ParseStatus.valid,
-      Term.name, //coming back as optional node - see note on #857
+      Term.name, //coming back as Alternatives
       "t",
       [
         TokenType.id_constant,

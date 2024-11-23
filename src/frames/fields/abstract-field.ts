@@ -1,6 +1,5 @@
 import { CodeSource } from "../code-source";
 import { CompileError } from "../compile-error";
-import { SymbolCompletionSpec_Old, TokenType } from "../symbol-completion-helpers";
 import {
   escapeHtmlChars,
   helper_CompileOrParseAsDisplayStatus,
@@ -20,6 +19,7 @@ import { Overtyper } from "../overtyper";
 import { CSV } from "../parse-nodes/csv";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { CompileStatus, DisplayStatus, ParseStatus } from "../status-enums";
+import { SymbolCompletionSpec_Old, TokenType } from "../symbol-completion-helpers";
 import {
   filterForTokenType,
   filteredSymbols,
@@ -90,7 +90,9 @@ export abstract class AbstractField implements Selectable, Field {
     const text = this.readToDelimiter(source);
     const root = this.initialiseRoot();
     this.parseCompleteTextUsingNode(text, root);
-    if (this._parseStatus !== ParseStatus.valid) {
+    if (this.isOptional() && this._parseStatus === ParseStatus.empty) {
+      this._parseStatus = ParseStatus.valid;
+    } else if (this._parseStatus !== ParseStatus.valid) {
       throw new Error(`Parse error at ${source.getRemainingCode()}`);
     }
   }

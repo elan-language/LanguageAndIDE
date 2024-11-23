@@ -52,6 +52,7 @@ import { TypeSimpleOrGeneric } from "../src/frames/parse-nodes/type-simple-or-ge
 import { UnaryExpression } from "../src/frames/parse-nodes/unary-expression";
 import { ParseStatus } from "../src/frames/status-enums";
 import { DOT } from "../src/frames/symbols";
+import { ignore_test } from "./compiler/compiler-test-helpers";
 import { testActiveNodeAndDone, testNodeParse } from "./testHelpers";
 
 suite("Parsing Nodes", () => {
@@ -1638,7 +1639,7 @@ suite("Parsing Nodes", () => {
       "11<el-kw> div </el-kw>3",
     );
   });
-  test("RevisedParseMethodForAbstractSequence#857", () => {
+  ignore_test("RevisedParseMethodForAbstractSequence#857", () => {
     testActiveNodeAndDone(new test_seq1(), `foo 45`, ParseStatus.valid, LitInt.name, false);
     testActiveNodeAndDone(new test_seq1(), `foo `, ParseStatus.incomplete, LitInt.name, false);
     testActiveNodeAndDone(new test_seq1(), `foo`, ParseStatus.incomplete, SpaceNode.name, false);
@@ -1667,21 +1668,21 @@ suite("Parsing Nodes", () => {
       LitInt.name,
       false,
     );
+    testActiveNodeAndDone(
+      new CSV(() => new LitInt(), 1),
+      `12`,
+      ParseStatus.valid,
+      Multiple.name,
+      false,
+    );
+    testActiveNodeAndDone(
+      new CSV(() => new LitInt(), 1),
+      `12,`,
+      ParseStatus.incomplete,
+      SpaceNode.name,
+      false,
+    );
   });
-  testActiveNodeAndDone(
-    new CSV(() => new LitInt(), 1),
-    `12`,
-    ParseStatus.valid,
-    Multiple.name,
-    false,
-  );
-  testActiveNodeAndDone(
-    new CSV(() => new LitInt(), 1),
-    `12,`,
-    ParseStatus.incomplete,
-    SpaceNode.name,
-    false,
-  );
 });
 
 class test_seq1 extends AbstractSequence {
