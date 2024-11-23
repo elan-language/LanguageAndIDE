@@ -47,9 +47,8 @@ export abstract class AbstractSequence extends AbstractParseNode {
             continueLoop = true;
           }
         } else {
-          if (node.matchedText.length > 0 || firstNode) {
-            this.activeNodeForSymbolCompl = node.getActiveNode();
-          }
+          //No more text
+          this.activeNodeForSymbolCompl = node.getActiveNode();
           this.status = ParseStatus.valid;
           continueLoop = !lastNode;
         }
