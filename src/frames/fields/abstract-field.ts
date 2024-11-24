@@ -218,6 +218,12 @@ export abstract class AbstractField implements Selectable, Field {
         }
         break;
       }
+      case "t": {
+        if (e.modKey.alt) {
+          this.getFile().removeAllSelectorsThatCanBe();
+          break;
+        }
+      }
       default: {
         if (key === "o" && e.modKey.control && isCollapsible(this.holder)) {
           this.holder.expandCollapse();
