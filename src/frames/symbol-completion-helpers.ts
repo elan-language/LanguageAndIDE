@@ -9,6 +9,7 @@ export enum TokenType {
   method_system,
   type_concrete,
   type_abstract,
+  type_enum,
   id_constant,
   id_let,
   id_variable,

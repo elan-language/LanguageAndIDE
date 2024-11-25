@@ -11,7 +11,7 @@ export class EnumVal extends AbstractSequence {
   val: IdentifierNode | undefined;
 
   parseText(text: string): void {
-    this.type = new TypeSimpleNode();
+    this.type = new TypeSimpleNode(new Set([TokenType.type_enum]));
     this.addElement(this.type);
     this.addElement(new PunctuationNode(DOT));
     this.val = new IdentifierNode(new Set<TokenType>([TokenType.id_enumValue]));
@@ -26,4 +26,6 @@ export class EnumVal extends AbstractSequence {
       return super.symbolCompletion_tokenTypes();
     }
   }
+
+
 }

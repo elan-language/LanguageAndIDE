@@ -6,6 +6,7 @@ import { LitValueNode } from "../src/frames/parse-nodes/lit-value";
 import { MethodCallNode } from "../src/frames/parse-nodes/method-call-node";
 import { ReferenceNode } from "../src/frames/parse-nodes/reference-node";
 import { TermSimple } from "../src/frames/parse-nodes/term-simple";
+import { TypeSimpleNode } from "../src/frames/parse-nodes/type-simple-node";
 import { ParseStatus } from "../src/frames/status-enums";
 import { TokenType } from "../src/frames/symbol-completion-helpers";
 import { testSymbolCompletionSpec } from "./testHelpers";
@@ -85,7 +86,7 @@ suite("Symbol Completion", () => {
       ["true", "this", "typeof"],
     );
   });
-  test("Expressio21", () => {
+  test("Expression2", () => {
     testSymbolCompletionSpec(
       new ExprNode(),
       "th",
@@ -157,6 +158,17 @@ suite("Symbol Completion", () => {
         TokenType.method_system,
       ],
       ["new,copy,if,lambda,empty,this,ref"], // Not showing 'this,ref' - which should be coming from Term
+    );
+  });
+  test("Expression3", () => {
+    testSymbolCompletionSpec(
+      new ExprNode(),
+      "Foo",
+      ParseStatus.incomplete,
+      ExprNode.name, //Because can be a term, or a binary expression
+      "Foo",
+      [TokenType.type_enum],
+      [],
     );
   });
 });
