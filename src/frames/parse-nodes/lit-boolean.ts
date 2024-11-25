@@ -18,6 +18,13 @@ export class LitBoolean extends AbstractAlternatives {
   }
 
   symbolCompletion_keywords(): Set<string> {
-    return new Set<string>([trueKeyword, falseKeyword]);
+    let set = new Set<string>();
+    if (trueKeyword.startsWith(this.matchedText)) {
+      set = set.add(trueKeyword);
+    }
+    if (falseKeyword.startsWith(this.matchedText)) {
+      set = set.add(falseKeyword);
+    }
+    return set;
   }
 }

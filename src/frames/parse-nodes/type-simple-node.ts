@@ -4,7 +4,7 @@ import { RegExMatchNode } from "./regex-match-node";
 export class TypeSimpleNode extends RegExMatchNode {
   tokenTypes: Set<TokenType> = new Set<TokenType>();
 
-  constructor(tokenTypes: Set<TokenType> = new Set<TokenType>()) {
+  constructor(tokenTypes: Set<TokenType> = new Set<TokenType>([TokenType.type_abstract, TokenType.type_concrete, TokenType.type_enum])) {
     super(/^\s*[A-Z]\w*/);
     this.completionWhenEmpty = "<i>Type</i>";
     this.tokenTypes = tokenTypes;
