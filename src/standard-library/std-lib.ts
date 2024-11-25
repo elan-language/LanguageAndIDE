@@ -739,7 +739,7 @@ export class StdLib {
 
   //Input functions
   private prompt(prompt: string) {
-    this.printNoLine(prompt);
+    this.printLine(prompt);
   }
 
   @elanFunction(FunctionOptions.impureAsync, ElanString)

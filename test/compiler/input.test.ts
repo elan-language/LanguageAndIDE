@@ -32,7 +32,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "Felicity", "Felicity");
+    await assertObjectCodeExecutes(fileImpl, "\nFelicity", "Felicity");
   });
 
   test("Pass_InputStringWithPrompt", async () => {
@@ -56,7 +56,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "Your nameFred", "Fred");
+    await assertObjectCodeExecutes(fileImpl, "Your name\nFred", "Fred");
   });
 
   test("Pass_InputInt", async () => {
@@ -82,7 +82,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "123", "123");
+    await assertObjectCodeExecutes(fileImpl, "\n123", "123");
   });
 
   test("Pass_InputFloat", async () => {
@@ -108,7 +108,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "123.4", "123.4");
+    await assertObjectCodeExecutes(fileImpl, "\n123.4", "123.4");
   });
 
   test("Pass_ReuseVariable", async () => {
@@ -138,7 +138,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "Fred", "Fred");
+    await assertObjectCodeExecutes(fileImpl, "\nFred", "Fred");
   });
 
   test("Pass_InputStringWithLimits", async () => {
@@ -162,7 +162,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "apromptxxx", "xxx");
+    await assertObjectCodeExecutes(fileImpl, "aprompt\nxxx", "xxx");
   });
 
   test("Pass_InputStringFromOptions", async () => {
@@ -186,7 +186,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "aprompty", "y");
+    await assertObjectCodeExecutes(fileImpl, "aprompt\ny", "y");
   });
 
   test("Pass_InputInt1", async () => {
@@ -212,7 +212,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "aprompt101", "101");
+    await assertObjectCodeExecutes(fileImpl, "aprompt\n101", "101");
   });
 
   test("Pass_InputIntBetween", async () => {
@@ -238,7 +238,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "aprompt5", "5");
+    await assertObjectCodeExecutes(fileImpl, "aprompt\n5", "5");
   });
 
   test("Pass_InputFloat1", async () => {
@@ -264,7 +264,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "aprompt1.01", "1.01");
+    await assertObjectCodeExecutes(fileImpl, "aprompt\n1.01", "1.01");
   });
 
   test("Pass_InputFloatBetween", async () => {
@@ -290,7 +290,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "aprompt0.5", "0.5");
+    await assertObjectCodeExecutes(fileImpl, "aprompt\n0.5", "0.5");
   });
 
   test("Fail_ReuseVariableWrongType", async () => {
@@ -331,6 +331,6 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "Hello Fred", "Fred");
+    await assertObjectCodeExecutes(fileImpl, "\nHello Fred", "Fred");
   });
 });
