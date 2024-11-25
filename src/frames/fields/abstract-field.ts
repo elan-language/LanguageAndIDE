@@ -539,7 +539,7 @@ export abstract class AbstractField implements Selectable, Field {
     const [match, symbols] = filteredSymbols(
       spec.toMatch,
       transforms,
-      filtersForTokenType(spec.tokenTypes),
+      filtersForTokenType(spec.tokenTypes, transforms),
       this.getHolder(),
     );
 

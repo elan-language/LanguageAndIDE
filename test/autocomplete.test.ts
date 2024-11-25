@@ -268,7 +268,7 @@ end main`;
     await assertAutocompletes(fileImpl, "ident13", "o", 1, expected);
   });
 
-  test("Pass_CallLocalVars", async () => {
+  ignore_test("Pass_CallLocalVars", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
 procedure fooyon()

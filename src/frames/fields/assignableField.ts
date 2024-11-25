@@ -54,7 +54,7 @@ export class AssignableField extends AbstractField {
     let symbols = filteredSymbols(
       spec.toMatch,
       transforms,
-      filtersForTokenType(spec.tokenTypes),
+      filtersForTokenType(spec.tokenTypes, transforms),
       scope,
     );
 
