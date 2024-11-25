@@ -26,6 +26,4 @@ export class EnumVal extends AbstractSequence {
       return super.symbolCompletion_tokenTypes();
     }
   }
-
-
 }

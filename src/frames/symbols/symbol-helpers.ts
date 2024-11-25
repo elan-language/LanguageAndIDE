@@ -643,6 +643,8 @@ export function filterForTokenType(
       return isTypeName;
     case TokenType.type_abstract:
       return isAbstractTypeName;
+    case TokenType.type_enum:
+      return isEnum;
     case TokenType.id_constant:
       return isConstant;
     case TokenType.id_let:
