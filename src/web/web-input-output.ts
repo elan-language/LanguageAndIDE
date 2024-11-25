@@ -192,7 +192,8 @@ export class WebInputOutput implements ElanInputOutput {
 
   stopReading() {
     clearInterval(this.currentInterval);
-    this.previousContent = `${this.previousContent.slice(0, -48)}`;
+    const inputOffset = this.previousContent.indexOf("<input");
+    this.previousContent = `${this.previousContent.slice(0, inputOffset)}`;
     this.graphics.focus();
   }
 
