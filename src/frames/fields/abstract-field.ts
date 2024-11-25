@@ -535,15 +535,10 @@ export abstract class AbstractField implements Selectable, Field {
     return UnknownType.Instance;
   }
 
-  matchingSymbolsForId(spec: SymbolCompletionSpec, transforms: Transforms): [string, ElanSymbol[]] {
-    const [match, symbols] = filteredSymbols(
-      spec.toMatch,
-      transforms,
-      filtersForTokenType(spec.tokenTypes, transforms),
-      this.getHolder(),
-    );
+  matchingSymbolsForId(spec: SymbolCompletionSpec, transforms: Transforms): ElanSymbol[] {
+    const symbols = filteredSymbols(spec, transforms, this.getHolder());
 
-    return [match, removeIfSingleFullMatch(symbols, match)];
+    return removeIfSingleFullMatch(symbols, spec.toMatch);
   }
 
   protected getDisplaySymbolId(symbol: ElanSymbol) {
@@ -648,10 +643,8 @@ export abstract class AbstractField implements Selectable, Field {
     const spec = this.getSymbolCompletionSpec();
     const tokenTypes = spec.tokenTypes;
     if (this.showAutoComplete(tokenTypes)) {
-      [this.autocompleteMatch, this.autocompleteSymbols] = this.matchingSymbolsForId(
-        spec,
-        transforms,
-      );
+      this.autocompleteMatch = spec.toMatch;
+      this.autocompleteSymbols = this.matchingSymbolsForId(spec, transforms);
       popupAsHtml = this.popupAsHtml();
     }
     return popupAsHtml;

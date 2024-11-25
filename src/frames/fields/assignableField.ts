@@ -46,36 +46,29 @@ export class AssignableField extends AbstractField {
     return all.filter((s) => isProperty(s)) as ElanSymbol[];
   }
 
-  override matchingSymbolsForId(
-    spec: SymbolCompletionSpec,
-    transforms: Transforms,
-  ): [string, ElanSymbol[]] {
+  override matchingSymbolsForId(spec: SymbolCompletionSpec, transforms: Transforms): ElanSymbol[] {
     const scope = this.getHolder();
-    let symbols = filteredSymbols(
-      spec.toMatch,
-      transforms,
-      filtersForTokenType(spec.tokenTypes, transforms),
-      scope,
-    );
+    let symbols = filteredSymbols(spec, transforms, scope);
 
     if (isInsideClass(scope)) {
       const prefix = "property.";
 
       if (prefix.startsWith(spec.toMatch) && spec.toMatch.length <= prefix.length) {
-        const [match, existing] = symbols;
         const allProperties = this.allPropertiesInScope();
 
-        const updated = existing.filter((s) => !allProperties.includes(s)).concat(allProperties);
-        symbols = [match, updated];
+        symbols = symbols.filter((s) => !allProperties.includes(s)).concat(allProperties);
       } else if (spec.toMatch.startsWith(prefix)) {
-        const [match] = symbols;
-        const filter: (s?: ElanSymbol) => boolean = (s) => isProperty(s);
-        symbols = filteredSymbols(match, transforms, [filter], scope);
+        const newSpec = new SymbolCompletionSpec(
+          spec.toMatch,
+          new Set<TokenType>([TokenType.id_property]),
+          new Set<string>(),
+          "",
+        );
+        symbols = filteredSymbols(newSpec, transforms, scope);
       }
     }
-    const [match, origSymbols] = symbols;
 
-    return [match, removeIfSingleFullMatch(origSymbols, match)];
+    return removeIfSingleFullMatch(symbols, spec.toMatch);
   }
 
   protected override getSymbolCompleteId(s: ElanSymbol) {
