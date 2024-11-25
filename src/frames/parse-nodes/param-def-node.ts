@@ -1,6 +1,5 @@
 import { asKeyword, outKeyword } from "../keywords";
-import { ParseStatus } from "../status-enums";
-import { SymbolCompletionSpec_Old, TokenType } from "../symbol-completion-helpers";
+import { TokenType } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { IdentifierNode } from "./identifier-node";
 import { KeywordNode } from "./keyword-node";
@@ -39,16 +38,6 @@ export class ParamDefNode extends AbstractSequence {
       this.addElement(this.type);
       super.parseText(text);
     }
-  }
-
-  symbolCompletion_getSpec_Old(): SymbolCompletionSpec_Old {
-    const elements = this.getElements();
-
-    if (elements.length >= 6 && this.getElements()[4].status === ParseStatus.valid) {
-      return this.getElements()[5].symbolCompletion_getSpec_Old();
-    }
-
-    return new SymbolCompletionSpec_Old("", new Set<TokenType>([TokenType.none]));
   }
 
   symbolCompletion_keywords(): Set<string> {

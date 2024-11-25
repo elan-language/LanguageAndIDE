@@ -1,9 +1,5 @@
 import { ParseStatus } from "../status-enums";
-import {
-  SymbolCompletionSpec,
-  SymbolCompletionSpec_Old,
-  TokenType,
-} from "../symbol-completion-helpers";
+import { SymbolCompletionSpec, TokenType } from "../symbol-completion-helpers";
 import { ParseNode } from "./parse-node";
 
 export abstract class AbstractParseNode implements ParseNode {
@@ -56,10 +52,6 @@ export abstract class AbstractParseNode implements ParseNode {
     this.matchedText = other.matchedText;
     this.remainingText = other.remainingText;
     this.errorMessage = other.errorMessage;
-  }
-
-  symbolCompletion_getSpec_Old(): SymbolCompletionSpec_Old {
-    return new SymbolCompletionSpec_Old("", new Set<TokenType>([TokenType.none]));
   }
 
   symbolCompletion_getSpec(): SymbolCompletionSpec {

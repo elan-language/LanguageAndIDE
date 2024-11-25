@@ -1,9 +1,5 @@
 import { ParseStatus } from "../status-enums";
-import {
-  SymbolCompletionSpec,
-  SymbolCompletionSpec_Old,
-  TokenType,
-} from "../symbol-completion-helpers";
+import { SymbolCompletionSpec, TokenType } from "../symbol-completion-helpers";
 
 export interface ParseNode {
   status: ParseStatus;
@@ -19,9 +15,6 @@ export interface ParseNode {
 
   getSyntaxCompletionAsHtml(): string;
   setSyntaxCompletionWhenEmpty(ph: string): void;
-
-  //Temporary duplication: 'old' eventually to be removed
-  symbolCompletion_getSpec_Old(): SymbolCompletionSpec_Old;
 
   symbolCompletion_getSpec(): SymbolCompletionSpec;
   symbolCompletion_tokenTypes(): Set<TokenType>;

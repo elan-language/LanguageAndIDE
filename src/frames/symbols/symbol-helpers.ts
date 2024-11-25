@@ -82,12 +82,20 @@ export function isVarStatement(s?: ElanSymbol): boolean {
   return !!s && "isVarStatement" in s;
 }
 
+export function isLetStatement(s?: ElanSymbol): boolean {
+  return !!s && "isLet" in s;
+}
+
 export function isProperty(s?: ElanSymbol): s is Property {
   return !!s && "isProperty" in s;
 }
 
 export function isOutParameter(s?: ElanSymbol): boolean {
   return !!s && s.symbolScope === SymbolScope.outParameter;
+}
+
+export function isParameter(s?: ElanSymbol): boolean {
+  return !!s && s.symbolScope === SymbolScope.parameter;
 }
 
 export function isAssignable(s?: ElanSymbol): boolean {
@@ -460,15 +468,25 @@ function orderSymbol(s1: ElanSymbol, s2: ElanSymbol) {
   return s1.symbolId.localeCompare(s2.symbolId);
 }
 
+function filterSymbols(matches: ElanSymbol[], filters: ((s: ElanSymbol) => boolean)[]) {
+  let filtered: ElanSymbol[] = [];
+
+  for (const f of filters) {
+    filtered = filtered.concat(matches.filter(f));
+  }
+
+  return filtered.filter((e) => !e.symbolId.startsWith("_"));
+}
+
 export function filteredSymbols(
   text: string,
   transforms: Transforms,
-  filter: (s: ElanSymbol) => boolean,
+  filters: ((s: ElanSymbol) => boolean)[],
   scope: Scope,
 ): [string, ElanSymbol[]] {
   const id = removeTypeSymbols(text);
   const [match, matches] = matchingSymbols(id, transforms, scope);
-  const filtered = matches.filter(filter).filter((e) => !e.symbolId.startsWith("_"));
+  const filtered = filterSymbols(matches, filters);
 
   const startsWith = filtered
     .filter((s) => s.symbolId.toUpperCase().startsWith(match.toUpperCase()))
@@ -590,19 +608,41 @@ export function removeTypeSymbols(s: string) {
 
 export function filterForTokenType(tt: TokenType): (s?: ElanSymbol) => boolean {
   switch (tt) {
-    case TokenType.assignable:
-      return isAssignable;
+    case TokenType.method_function:
+      return () => false;
+    case TokenType.method_procedure:
+      return () => false;
+    case TokenType.method_system:
+      return () => false;
+    case TokenType.type_concrete:
+      return isTypeName;
+    case TokenType.type_abstract:
+      return () => false;
+    case TokenType.id_constant:
+      return () => false;
+    case TokenType.id_let:
+      return isLetStatement;
+    case TokenType.id_variable:
+      return isVarStatement;
+    case TokenType.id_parameter_regular:
+      return isParameter;
+    case TokenType.id_parameter_out:
+      return isOutParameter;
     case TokenType.id_property:
       return isProperty;
-    case TokenType.type:
-      return isTypeName;
-    case TokenType.idOrProcedure:
-      return (s?: ElanSymbol) => isIdOrProcedure(s!, transforms());
-    case TokenType.expression:
-      return (s?: ElanSymbol) => isExpression(s!, transforms()) && !isTypeName(s);
-    default:
+    case TokenType.id_enumValue:
       return () => false;
   }
+}
+
+export function filtersForTokenType(tt: Set<TokenType>): ((s?: ElanSymbol) => boolean)[] {
+  const filters: ((s?: ElanSymbol) => boolean)[] = [];
+
+  for (const f of tt) {
+    filters.push(filterForTokenType(f));
+  }
+
+  return filters;
 }
 
 export function symbolScopeToFriendlyName(ss: SymbolScope) {

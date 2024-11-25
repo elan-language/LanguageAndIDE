@@ -19,10 +19,10 @@ import { Overtyper } from "../overtyper";
 import { CSV } from "../parse-nodes/csv";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { CompileStatus, DisplayStatus, ParseStatus } from "../status-enums";
-import { SymbolCompletionSpec_Old, TokenType } from "../symbol-completion-helpers";
+import { SymbolCompletionSpec, TokenType } from "../symbol-completion-helpers";
 import {
-  filterForTokenType,
   filteredSymbols,
+  filtersForTokenType,
   isProperty,
   removeIfSingleFullMatch,
 } from "../symbols/symbol-helpers";
@@ -535,15 +535,11 @@ export abstract class AbstractField implements Selectable, Field {
     return UnknownType.Instance;
   }
 
-  matchingSymbolsForId(
-    id: string,
-    tokenType: TokenType,
-    transforms: Transforms,
-  ): [string, ElanSymbol[]] {
+  matchingSymbolsForId(spec: SymbolCompletionSpec, transforms: Transforms): [string, ElanSymbol[]] {
     const [match, symbols] = filteredSymbols(
-      id,
+      spec.toMatch,
       transforms,
-      filterForTokenType(tokenType),
+      filtersForTokenType(spec.tokenTypes),
       this.getHolder(),
     );
 
@@ -632,29 +628,28 @@ export abstract class AbstractField implements Selectable, Field {
     }
   }
 
-  protected showAutoComplete(tt: TokenType) {
+  protected showAutoComplete(tt: Set<TokenType>) {
     return (
-      tt !== TokenType.none &&
+      tt.size > 0 &&
       this.selected &&
       this.cursorPos === this.text.length &&
       this.readParseStatus() !== ParseStatus.invalid
     );
   }
 
-  protected getSymbolCompletionSpecOld(): SymbolCompletionSpec_Old {
+  protected getSymbolCompletionSpec(): SymbolCompletionSpec {
     return this.rootNode
-      ? this.rootNode.symbolCompletion_getSpec_Old()
-      : new SymbolCompletionSpec_Old("", new Set<TokenType>([TokenType.none]));
+      ? this.rootNode.symbolCompletion_getSpec()
+      : new SymbolCompletionSpec("", new Set<TokenType>(), new Set<string>(), "");
   }
 
   protected symbolCompletionAsHtml(transforms: Transforms): string {
     let popupAsHtml = "";
-    const spec = this.getSymbolCompletionSpecOld();
-    const tokenType = spec.tokenTypes.values().next()!.value!;
-    if (this.showAutoComplete(tokenType)) {
+    const spec = this.getSymbolCompletionSpec();
+    const tokenTypes = spec.tokenTypes;
+    if (this.showAutoComplete(tokenTypes)) {
       [this.autocompleteMatch, this.autocompleteSymbols] = this.matchingSymbolsForId(
-        spec.toMatch,
-        tokenType,
+        spec,
         transforms,
       );
       popupAsHtml = this.popupAsHtml();

@@ -1,5 +1,5 @@
 import { ParseStatus } from "../status-enums";
-import { SymbolCompletionSpec_Old, TokenType } from "../symbol-completion-helpers";
+import { TokenType } from "../symbol-completion-helpers";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { ParseNode } from "./parse-node";
 
@@ -59,10 +59,6 @@ export abstract class AbstractAlternatives extends AbstractParseNode {
       ? this.bestMatch.getSyntaxCompletionAsHtml()
       : super.getSyntaxCompletionAsHtml();
     return c;
-  }
-
-  override symbolCompletion_getSpec_Old(): SymbolCompletionSpec_Old {
-    return this.bestMatch?.symbolCompletion_getSpec_Old() ?? super.symbolCompletion_getSpec_Old();
   }
 
   override getActiveNode(): ParseNode {

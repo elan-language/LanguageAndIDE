@@ -1,5 +1,4 @@
 import { CodeSource } from "../code-source";
-import { TokenType } from "../symbol-completion-helpers";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Frame } from "../interfaces/frame";
 import { propertyKeyword } from "../keywords";
@@ -8,9 +7,10 @@ import { AssignableNode } from "../parse-nodes/assignable-node";
 import { DeconstructedList } from "../parse-nodes/deconstructed-list";
 import { DeconstructedTuple } from "../parse-nodes/deconstructed-tuple";
 import { ParseNode } from "../parse-nodes/parse-node";
+import { SymbolCompletionSpec, TokenType } from "../symbol-completion-helpers";
 import {
   filteredSymbols,
-  filterForTokenType,
+  filtersForTokenType,
   isInsideClass,
   isMemberOnFieldsClass,
   isProperty,
@@ -47,25 +47,30 @@ export class AssignableField extends AbstractField {
   }
 
   override matchingSymbolsForId(
-    id: string,
-    tokenType: TokenType,
+    spec: SymbolCompletionSpec,
     transforms: Transforms,
   ): [string, ElanSymbol[]] {
     const scope = this.getHolder();
-    let symbols = filteredSymbols(id, transforms, filterForTokenType(tokenType), scope);
+    let symbols = filteredSymbols(
+      spec.toMatch,
+      transforms,
+      filtersForTokenType(spec.tokenTypes),
+      scope,
+    );
 
     if (isInsideClass(scope)) {
       const prefix = "property.";
 
-      if (prefix.startsWith(id) && id.length <= prefix.length) {
+      if (prefix.startsWith(spec.toMatch) && spec.toMatch.length <= prefix.length) {
         const [match, existing] = symbols;
         const allProperties = this.allPropertiesInScope();
 
         const updated = existing.filter((s) => !allProperties.includes(s)).concat(allProperties);
         symbols = [match, updated];
-      } else if (id.startsWith(prefix)) {
+      } else if (spec.toMatch.startsWith(prefix)) {
         const [match] = symbols;
-        symbols = filteredSymbols(match, transforms, (s) => isProperty(s), scope);
+        const filter: (s?: ElanSymbol) => boolean = (s) => isProperty(s);
+        symbols = filteredSymbols(match, transforms, [filter], scope);
       }
     }
     const [match, origSymbols] = symbols;

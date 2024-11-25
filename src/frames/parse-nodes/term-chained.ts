@@ -1,4 +1,3 @@
-import { SymbolCompletionSpec_Old, TokenType } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
 import { DotBefore } from "./dot-before";
@@ -26,12 +25,5 @@ export class TermChained extends AbstractSequence {
       this.addElement(this.tail);
       super.parseText(text);
     }
-  }
-
-  symbolCompletion_getSpec_Old(): SymbolCompletionSpec_Old {
-    return new SymbolCompletionSpec_Old(
-      this.matchedText,
-      new Set<TokenType>([TokenType.expression]),
-    );
   }
 }

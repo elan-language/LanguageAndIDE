@@ -1,6 +1,4 @@
 import { withKeyword } from "../keywords";
-import { ParseStatus } from "../status-enums";
-import { SymbolCompletionSpec_Old, TokenType } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { CSV } from "./csv";
 import { KeywordNode } from "./keyword-node";
@@ -27,15 +25,6 @@ export class WithClause extends AbstractSequence {
       this.addElement(this.toClauses);
       return super.parseText(text);
     }
-  }
-
-  symbolCompletion_getSpec_Old(): SymbolCompletionSpec_Old {
-    const elems = this.getElements();
-    if (elems[2].status === ParseStatus.valid) {
-      return elems[3].symbolCompletion_getSpec_Old();
-    }
-
-    return new SymbolCompletionSpec_Old("", new Set<TokenType>([TokenType.none]));
   }
 
   symbolCompletion_keywords(): Set<string> {

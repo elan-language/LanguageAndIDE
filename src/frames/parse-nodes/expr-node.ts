@@ -1,4 +1,3 @@
-import { SymbolCompletionSpec_Old, TokenType } from "../symbol-completion-helpers";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { BinaryExpression } from "./binary-expression";
 import { CopyWith } from "./copy-with";
@@ -25,12 +24,5 @@ export class ExprNode extends AbstractAlternatives {
     this.alternatives.push(new Term());
     this.alternatives.push(new BinaryExpression());
     super.parseText(text);
-  }
-
-  symbolCompletion_getSpec_Old(): SymbolCompletionSpec_Old {
-    if (this.matchedText === "") {
-      return new SymbolCompletionSpec_Old("", new Set<TokenType>([TokenType.expression]));
-    }
-    return super.symbolCompletion_getSpec_Old();
   }
 }

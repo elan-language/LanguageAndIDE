@@ -1,5 +1,5 @@
 import { libraryKeyword, propertyKeyword } from "../keywords";
-import { SymbolCompletionSpec_Old, TokenType } from "../symbol-completion-helpers";
+import { TokenType } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
 import { DotAfter } from "./dot-after";
@@ -38,13 +38,6 @@ export class InstanceProcRef extends AbstractSequence {
 
   renderAsHtml(): string {
     return `${this.prefix!.matchedNode ? this.prefix?.matchedNode.renderAsHtml() : ""}<el-method>${this.simple?.renderAsHtml()}</el-method>`;
-  }
-
-  symbolCompletion_getSpec_Old(): SymbolCompletionSpec_Old {
-    return new SymbolCompletionSpec_Old(
-      this.matchedText,
-      new Set<TokenType>([TokenType.idOrProcedure]),
-    );
   }
 
   symbolCompletion_tokenTypes(): Set<TokenType> {

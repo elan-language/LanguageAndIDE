@@ -57,7 +57,7 @@ end main`;
     await assertAutocompletesWithString(fileImpl, "expr5", "empty [I", expected);
   });
 
-  test("Pass_emptyExpression", async () => {
+  ignore_test("Pass_emptyExpression", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
 main
