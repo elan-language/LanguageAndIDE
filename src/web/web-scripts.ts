@@ -51,8 +51,12 @@ const stdlib = new StdLib();
 const system = stdlib.system;
 system.stdlib = stdlib; // to allow injection
 
-const elanInputOutput = new WebInputOutput(consoleDiv, graphicsDiv);
+// well known ids
 const lastDirId = "elan-files";
+const lastCodeId = "last-code-id";
+const lastFileName = "last-file-name";
+
+const elanInputOutput = new WebInputOutput(consoleDiv, graphicsDiv);
 let undoRedoFiles: string[] = [];
 let previousFileIndex: number = -1;
 let nextFileIndex: number = -1;
@@ -70,8 +74,6 @@ let autoSaveFileHandle: FileSystemFileHandle | undefined = undefined;
 autoSaveButton.hidden = !useChromeFileAPI();
 
 // add all the listeners
-
-// temp code for testing
 
 undoButton.addEventListener("click", undo);
 
@@ -192,11 +194,9 @@ fetchProfile()
   });
 
 function checkForUnsavedChanges(): boolean {
-  if (hasUnsavedChanges()) {
-    return confirm("You have unsaved changes - they will be lost unless you cancel");
-  }
-
-  return true;
+  return hasUnsavedChanges()
+    ? confirm("You have unsaved changes - they will be lost unless you cancel")
+    : true;
 }
 
 async function setup(p: Profile) {
@@ -257,7 +257,7 @@ async function showError(err: Error, fileName: string, reset: boolean) {
   } else {
     elanInputOutput.printLine(err.message ?? "Unknown error parsing file");
   }
-  document.body.style.cursor = "default";
+  cursorDefault();
 }
 
 async function refreshAndDisplay(compileIfParsed?: boolean) {
@@ -276,7 +276,6 @@ async function initialDisplay(reset: boolean) {
   const ps = file.readParseStatus();
   if (ps === ParseStatus.valid || ps === ParseStatus.default) {
     await refreshAndDisplay();
-    lastSavedHash = file.currentHash;
     updateNameAndSavedStatus();
   } else {
     const msg = file.parseError || "Failed load code";
@@ -426,6 +425,53 @@ function enable(button: HTMLButtonElement, msg = "") {
   button.setAttribute("title", msg);
 }
 
+function getEditorMsg(
+  type: "key" | "click" | "dblclick",
+  target: "frame" | "window",
+  id: string | undefined,
+  key: string | undefined,
+  modKey: { control: boolean; shift: boolean; alt: boolean },
+  selection: number | undefined,
+  autocomplete: string | undefined,
+): editorEvent {
+  switch (type) {
+    case "key":
+      return {
+        type: type,
+        target: target,
+        id: id,
+        key: key,
+        modKey: modKey,
+        autocomplete: autocomplete,
+      };
+    case "click":
+    case "dblclick":
+      return {
+        type: type,
+        target: target,
+        id: id,
+        modKey: modKey,
+        selection: selection,
+      };
+  }
+}
+
+function getAndPostEditorMsg(
+  event: Event,
+  type: "key" | "click" | "dblclick",
+  target: "frame" | "window",
+  modKey: { control: boolean; shift: boolean; alt: boolean },
+  id?: string | undefined,
+  key?: string | undefined,
+  selection?: number | undefined,
+  autocomplete?: string | undefined,
+) {
+  const msg = getEditorMsg(type, target, id, key, modKey, selection, autocomplete);
+  postMessage(msg);
+  event.preventDefault();
+  event.stopPropagation();
+}
+
 /**
  * Render the document
  */
@@ -442,31 +488,14 @@ async function updateContent(text: string) {
 
     frame.addEventListener("keydown", (event: Event) => {
       const ke = event as KeyboardEvent;
-      const msg: editorEvent = {
-        type: "key",
-        target: "frame",
-        id: id,
-        key: ke.key,
-        modKey: getModKey(ke),
-      };
-      postMessage(msg);
-      event.preventDefault();
-      event.stopPropagation();
+      getAndPostEditorMsg(event, "key", "frame", getModKey(ke), id, ke.key);
     });
 
     frame.addEventListener("click", (event) => {
-      const ke = event as PointerEvent;
-      const selection = (event.target as HTMLInputElement).selectionStart as number | undefined;
-      const msg: editorEvent = {
-        type: "click",
-        target: "frame",
-        id: id,
-        modKey: getModKey(ke),
-        selection: selection,
-      };
-      postMessage(msg);
-      event.preventDefault();
-      event.stopPropagation();
+      const pe = event as PointerEvent;
+      const selection = (event.target as HTMLInputElement).selectionStart ?? undefined;
+
+      getAndPostEditorMsg(event, "click", "frame", getModKey(pe), id, undefined, selection);
     });
 
     frame.addEventListener("mousedown", (event) => {
@@ -474,15 +503,7 @@ async function updateContent(text: string) {
       const me = event as MouseEvent;
       if (me.button === 0 && me.shiftKey) {
         // left button only
-        const msg: editorEvent = {
-          type: "click",
-          target: "frame",
-          id: id,
-          modKey: getModKey(me),
-        };
-        postMessage(msg);
-        event.preventDefault();
-        event.stopPropagation();
+        getAndPostEditorMsg(event, "click", "frame", getModKey(me), id);
       }
     });
 
@@ -492,15 +513,7 @@ async function updateContent(text: string) {
 
     frame.addEventListener("dblclick", (event) => {
       const ke = event as KeyboardEvent;
-      const msg: editorEvent = {
-        type: "dblclick",
-        target: "frame",
-        id: id,
-        modKey: getModKey(ke),
-      };
-      postMessage(msg);
-      event.preventDefault();
-      event.stopPropagation();
+      getAndPostEditorMsg(event, "dblclick", "frame", getModKey(ke), id);
     });
   }
 
@@ -513,15 +526,7 @@ async function updateContent(text: string) {
 
     elanCode!.addEventListener("keydown", (event: Event) => {
       const ke = event as KeyboardEvent;
-      const msg: editorEvent = {
-        type: "key",
-        target: "window",
-        key: ke.key,
-        modKey: getModKey(ke),
-      };
-      postMessage(msg);
-      event.preventDefault();
-      event.stopPropagation();
+      getAndPostEditorMsg(event, "key", "window", getModKey(ke), undefined, ke.key);
     });
   }
 
@@ -546,17 +551,17 @@ async function updateContent(text: string) {
         const ke = event as PointerEvent;
         const tgt = ke.target as HTMLDivElement;
         const id = tgt.dataset.id;
-        const msg: editorEvent = {
-          type: "key",
-          target: "frame",
-          key: "Enter",
-          id: id,
-          modKey: getModKey(ke),
-          autocomplete: tgt.innerText,
-        };
-        postMessage(msg);
-        event.preventDefault();
-        event.stopPropagation();
+
+        getAndPostEditorMsg(
+          event,
+          "key",
+          "frame",
+          getModKey(ke),
+          id,
+          "Enter",
+          undefined,
+          tgt.innerText,
+        );
       });
     }
   }
@@ -572,7 +577,7 @@ async function updateContent(text: string) {
     dbgFocused.forEach((n) => (msg = `${msg}, Node: ${(n.nodeName, n.id)} `));
     await showError(new Error(msg), file.fileName, false);
   }
-  document.body.style.cursor = "default";
+  cursorDefault();
 }
 
 async function localAndAutoSave() {
@@ -584,7 +589,7 @@ async function localAndAutoSave() {
     if (undoRedoHash !== file.currentHash && !undoRedoing) {
       code = await file.renderAsSource();
       const timestamp = Date.now();
-      const id = `elan-code-${timestamp}`;
+      const id = `${file.fileName}.${timestamp}`;
 
       if (previousFileIndex !== -1 && previousFileIndex !== undoRedoFiles.length - 2) {
         const trimedIds = undoRedoFiles.slice(previousFileIndex + 2);
@@ -599,9 +604,9 @@ async function localAndAutoSave() {
       previousFileIndex = undoRedoFiles.length > 1 ? undoRedoFiles.length - 2 : -1;
       nextFileIndex = -1;
 
-      localStorage.setItem("last-code-id", id);
+      localStorage.setItem(lastCodeId, id);
       localStorage.setItem(id, code);
-      localStorage.setItem("elan-file", file.fileName);
+      localStorage.setItem(lastFileName, file.fileName);
       saveButton.classList.add("unsaved");
       undoRedoHash = file.currentHash;
     }
@@ -617,11 +622,11 @@ async function localAndAutoSave() {
 }
 
 function getLastLocalSave(): [string, string] {
-  const id = localStorage.getItem("last-code-id") ?? "";
+  const id = localStorage.getItem(lastCodeId) ?? "";
   const previousCode = localStorage.getItem(id);
-  const previousFileName = localStorage.getItem("elan-file");
+  const previousFileName = localStorage.getItem(lastFileName) ?? "";
 
-  return [previousCode || "", previousFileName || ""];
+  return [previousCode ?? "", previousFileName];
 }
 
 async function undo() {
@@ -633,6 +638,8 @@ async function undo() {
     previousFileIndex = previousFileIndex < -1 ? -1 : previousFileIndex;
     const previousCode = localStorage.getItem(previousId);
     if (previousCode) {
+      disable(undoButton, "Undoing...");
+      cursorWait();
       undoRedoing = true;
       const fn = file.fileName;
       file = new FileImpl(hash, profile, transforms());
@@ -643,6 +650,7 @@ async function undo() {
 
 async function redo() {
   if (nextFileIndex > -1) {
+    disable(undoButton, "Undoing...");
     const nextId = undoRedoFiles[nextFileIndex];
     nextFileIndex = nextFileIndex + 1;
     nextFileIndex = nextFileIndex > undoRedoFiles.length - 1 ? -1 : nextFileIndex;
@@ -650,6 +658,8 @@ async function redo() {
     previousFileIndex = previousFileIndex < -1 ? -1 : previousFileIndex;
     const previousCode = localStorage.getItem(nextId);
     if (previousCode) {
+      disable(redoButton, "Redoing...");
+      cursorWait();
       undoRedoing = true;
       const fn = file.fileName;
       file = new FileImpl(hash, profile, transforms());
@@ -783,30 +793,25 @@ async function handleWorkerError(data: WebWorkerStatusMessage) {
 }
 
 function chooser(uploader: (event: Event) => void) {
-  return useChromeFileAPI()
-    ? () => {
-        if (checkForUnsavedChanges()) {
-          const f = document.createElement("input");
-          f.style.display = "none";
-          codeControls.appendChild(f);
-          f.addEventListener("click", uploader);
-          f.click();
-          codeControls.removeChild(f);
-        }
+  return () => {
+    if (checkForUnsavedChanges()) {
+      const f = document.createElement("input");
+      f.style.display = "none";
+
+      if (useChromeFileAPI()) {
+        f.addEventListener("click", uploader);
+      } else {
+        f.type = "file";
+        f.name = "file";
+        f.accept = ".elan";
+        f.addEventListener("change", uploader);
       }
-    : () => {
-        if (checkForUnsavedChanges()) {
-          const f = document.createElement("input");
-          f.style.display = "none";
-          f.type = "file";
-          f.name = "file";
-          f.accept = ".elan";
-          codeControls.appendChild(f);
-          f.addEventListener("change", uploader);
-          f.click();
-          codeControls.removeChild(f);
-        }
-      };
+
+      codeControls.appendChild(f);
+      f.click();
+      codeControls.removeChild(f);
+    }
+  };
 }
 
 function useChromeFileAPI() {
@@ -868,12 +873,20 @@ async function handleChromeAppend() {
   await handleChromeUploadOrAppend(false);
 }
 
+function cursorWait() {
+  document.body.style.cursor = "wait";
+}
+
+function cursorDefault() {
+  document.body.style.cursor = "default";
+}
+
 function handleUploadOrAppend(event: Event, upload: boolean) {
   const elanFile = (event.target as any).files?.[0] as any;
 
   if (elanFile) {
     const fileName = elanFile.name;
-    document.body.style.cursor = "wait";
+    cursorWait();
     clearDisplays();
     const reader = new FileReader();
     reader.addEventListener("load", async (event: any) => {
@@ -915,6 +928,7 @@ function updateFileName() {
   }
 
   file.fileName = fileName;
+  localStorage.setItem(lastFileName, file.fileName);
 }
 
 async function handleDownload(event: Event) {
@@ -946,6 +960,7 @@ async function chromeSave(code: string) {
   });
 
   file.fileName = fh.name;
+  localStorage.setItem(lastFileName, file.fileName);
 
   const writeable = await fh.createWritable();
   await writeable.write(code);
