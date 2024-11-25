@@ -28,9 +28,7 @@ body {
     font-size: var(--ideTitleSize);
   }
   #code-title {
-    grid-row: 1;
-    grid-column: 17 / 32;
-    margin-left: 10px;
+    display: inline;
 }
 #console-title {
   grid-row: 5;
@@ -115,7 +113,7 @@ body {
   }
  #code-controls {
     grid-row: 1;
-    grid-column: 1/17;
+    grid-column: 1/32;
     background-color: var(--ideDefaultBackground);
     margin-left: 10px;
   }
