@@ -794,6 +794,8 @@ end class`;
 
     const expected = [["foo", "*"]] as [string, string][];
 
+    //RP: returning the *variable* 'f' as well as the property 'foo'
+    // This is either a scoping error or the list of TokenTypes is wrong
     await assertAutocompletesWithString(fileImpl, "ident24", "property.f", expected);
   });
 
@@ -1109,7 +1111,6 @@ end function`;
       ["VectorGraphics", "*"],
     ] as [string, string][];
 
-    //RP: Failing because GraphicsBase is being duplicated in the list.
     await assertAutocompletesWithString(fileImpl, "params6", "a as Graphics", expected);
   });
 
