@@ -456,7 +456,7 @@ function getEditorMsg(
   }
 }
 
-function handleEditorEvent(
+async function handleEditorEvent(
   event: Event,
   type: "key" | "click" | "dblclick",
   target: "frame" | "window",
@@ -467,6 +467,19 @@ function handleEditorEvent(
   autocomplete?: string | undefined,
 ) {
   const msg = getEditorMsg(type, target, id, key, modKey, selection, autocomplete);
+
+  if (msg.modKey.control && msg.key === "v") {
+    if (event.target instanceof HTMLInputElement) {
+      event.target.addEventListener("paste", async (event: ClipboardEvent) => {
+        const txt = await navigator.clipboard.readText();
+        const mk = { control: false, shift: false, alt: false };
+        await handleEditorEvent(event, "key", "frame", mk, id, txt);
+      });
+      event.stopPropagation();
+      return;
+    }
+  }
+
   handleKeyAndRender(msg);
   event.preventDefault();
   event.stopPropagation();
