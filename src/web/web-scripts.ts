@@ -59,6 +59,7 @@ const lastFileName = "last-file-name";
 const elanInputOutput = new WebInputOutput(consoleDiv, graphicsDiv);
 let undoRedoFiles: string[] = [];
 let previousFileIndex: number = -1;
+let currentFileIndex: number = -1;
 let nextFileIndex: number = -1;
 let undoRedoing: boolean = false;
 
@@ -221,7 +222,7 @@ function clearDisplays() {
 
 function clearUndoRedoAndAutoSave() {
   autoSaveFileHandle = undefined;
-  previousFileIndex = nextFileIndex = -1;
+  previousFileIndex = nextFileIndex = currentFileIndex = -1;
   localStorage.clear();
   undoRedoFiles = [];
 }
@@ -316,6 +317,11 @@ function updateNameAndSavedStatus() {
   codeTitle.innerText = `File: ${file.fileName}${unsaved}`;
 }
 
+function canUndo() {
+  const isParsing = file.readParseStatus() === ParseStatus.valid;
+  return (isParsing && previousFileIndex > -1) || (!isParsing && currentFileIndex > -1);
+}
+
 async function updateDisplayValues() {
   updateNameAndSavedStatus();
   parse.setAttribute("class", file.readParseStatusForDashboard());
@@ -395,10 +401,10 @@ async function updateDisplayValues() {
       enable(runButton, "Run the program");
     }
 
-    if (previousFileIndex === -1) {
-      disable(undoButton, "Nothing to undo");
-    } else {
+    if (canUndo()) {
       enable(undoButton, "Undo last change");
+    } else {
+      disable(undoButton, "Nothing to undo");
     }
 
     if (nextFileIndex === -1) {
@@ -629,6 +635,7 @@ async function localAndAutoSave() {
 
       undoRedoFiles.push(id);
       previousFileIndex = undoRedoFiles.length > 1 ? undoRedoFiles.length - 2 : -1;
+      currentFileIndex = undoRedoFiles.length - 1;
       nextFileIndex = -1;
 
       localStorage.setItem(lastCodeId, id);
@@ -657,11 +664,15 @@ function getLastLocalSave(): [string, string] {
 }
 
 async function undo() {
-  if (previousFileIndex > -1) {
-    const previousId = undoRedoFiles[previousFileIndex];
-    nextFileIndex = previousFileIndex + 1;
+  if (canUndo()) {
+    const isParsing = file.readParseStatus() === ParseStatus.valid;
+    const indexToUse = isParsing ? previousFileIndex : currentFileIndex;
+
+    const previousId = undoRedoFiles[indexToUse];
+    currentFileIndex = indexToUse;
+    nextFileIndex = indexToUse + 1;
     nextFileIndex = nextFileIndex > undoRedoFiles.length - 1 ? -1 : nextFileIndex;
-    previousFileIndex = previousFileIndex - 1;
+    previousFileIndex = indexToUse - 1;
     previousFileIndex = previousFileIndex < -1 ? -1 : previousFileIndex;
     const previousCode = localStorage.getItem(previousId);
     if (previousCode) {
@@ -679,6 +690,7 @@ async function redo() {
   if (nextFileIndex > -1) {
     disable(undoButton, "Undoing...");
     const nextId = undoRedoFiles[nextFileIndex];
+    currentFileIndex = nextFileIndex;
     nextFileIndex = nextFileIndex + 1;
     nextFileIndex = nextFileIndex > undoRedoFiles.length - 1 ? -1 : nextFileIndex;
     previousFileIndex = previousFileIndex + 1;
