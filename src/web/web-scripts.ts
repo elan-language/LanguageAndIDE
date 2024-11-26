@@ -663,47 +663,40 @@ function getLastLocalSave(): [string, string] {
   return [previousCode ?? "", previousFileName];
 }
 
+function updateIndexes(indexJustUsed: number) {
+  currentFileIndex = indexJustUsed;
+  nextFileIndex = indexJustUsed + 1;
+  nextFileIndex = nextFileIndex > undoRedoFiles.length - 1 ? -1 : nextFileIndex;
+  previousFileIndex = indexJustUsed - 1;
+  previousFileIndex = previousFileIndex < -1 ? -1 : previousFileIndex;
+}
+
+async function replaceCode(indexToUse: number, msg: string) {
+  const id = undoRedoFiles[indexToUse];
+  updateIndexes(indexToUse);
+  const code = localStorage.getItem(id);
+  if (code) {
+    disable(undoButton, msg);
+    disable(redoButton, msg);
+    cursorWait();
+    undoRedoing = true;
+    const fn = file.fileName;
+    file = new FileImpl(hash, profile, transforms());
+    await displayCode(code, fn);
+  }
+}
+
 async function undo() {
   if (canUndo()) {
     const isParsing = file.readParseStatus() === ParseStatus.valid;
     const indexToUse = isParsing ? previousFileIndex : currentFileIndex;
-
-    const previousId = undoRedoFiles[indexToUse];
-    currentFileIndex = indexToUse;
-    nextFileIndex = indexToUse + 1;
-    nextFileIndex = nextFileIndex > undoRedoFiles.length - 1 ? -1 : nextFileIndex;
-    previousFileIndex = indexToUse - 1;
-    previousFileIndex = previousFileIndex < -1 ? -1 : previousFileIndex;
-    const previousCode = localStorage.getItem(previousId);
-    if (previousCode) {
-      disable(undoButton, "Undoing...");
-      cursorWait();
-      undoRedoing = true;
-      const fn = file.fileName;
-      file = new FileImpl(hash, profile, transforms());
-      await displayCode(previousCode, fn);
-    }
+    await replaceCode(indexToUse, "Undoing...");
   }
 }
 
 async function redo() {
   if (nextFileIndex > -1) {
-    disable(undoButton, "Undoing...");
-    const nextId = undoRedoFiles[nextFileIndex];
-    currentFileIndex = nextFileIndex;
-    nextFileIndex = nextFileIndex + 1;
-    nextFileIndex = nextFileIndex > undoRedoFiles.length - 1 ? -1 : nextFileIndex;
-    previousFileIndex = previousFileIndex + 1;
-    previousFileIndex = previousFileIndex < -1 ? -1 : previousFileIndex;
-    const previousCode = localStorage.getItem(nextId);
-    if (previousCode) {
-      disable(redoButton, "Redoing...");
-      cursorWait();
-      undoRedoing = true;
-      const fn = file.fileName;
-      file = new FileImpl(hash, profile, transforms());
-      await displayCode(previousCode, fn);
-    }
+    await replaceCode(nextFileIndex, "Redoing...");
   }
 }
 
