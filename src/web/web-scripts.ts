@@ -456,7 +456,7 @@ function getEditorMsg(
   }
 }
 
-function getAndPostEditorMsg(
+function handleEditorEvent(
   event: Event,
   type: "key" | "click" | "dblclick",
   target: "frame" | "window",
@@ -467,7 +467,7 @@ function getAndPostEditorMsg(
   autocomplete?: string | undefined,
 ) {
   const msg = getEditorMsg(type, target, id, key, modKey, selection, autocomplete);
-  postMessage(msg);
+  handleKeyAndRender(msg);
   event.preventDefault();
   event.stopPropagation();
 }
@@ -488,14 +488,14 @@ async function updateContent(text: string) {
 
     frame.addEventListener("keydown", (event: Event) => {
       const ke = event as KeyboardEvent;
-      getAndPostEditorMsg(event, "key", "frame", getModKey(ke), id, ke.key);
+      handleEditorEvent(event, "key", "frame", getModKey(ke), id, ke.key);
     });
 
     frame.addEventListener("click", (event) => {
       const pe = event as PointerEvent;
       const selection = (event.target as HTMLInputElement).selectionStart ?? undefined;
 
-      getAndPostEditorMsg(event, "click", "frame", getModKey(pe), id, undefined, selection);
+      handleEditorEvent(event, "click", "frame", getModKey(pe), id, undefined, selection);
     });
 
     frame.addEventListener("mousedown", (event) => {
@@ -503,7 +503,7 @@ async function updateContent(text: string) {
       const me = event as MouseEvent;
       if (me.button === 0 && me.shiftKey) {
         // left button only
-        getAndPostEditorMsg(event, "click", "frame", getModKey(me), id);
+        handleEditorEvent(event, "click", "frame", getModKey(me), id);
       }
     });
 
@@ -513,7 +513,7 @@ async function updateContent(text: string) {
 
     frame.addEventListener("dblclick", (event) => {
       const ke = event as KeyboardEvent;
-      getAndPostEditorMsg(event, "dblclick", "frame", getModKey(ke), id);
+      handleEditorEvent(event, "dblclick", "frame", getModKey(ke), id);
     });
   }
 
@@ -526,7 +526,7 @@ async function updateContent(text: string) {
 
     elanCode!.addEventListener("keydown", (event: Event) => {
       const ke = event as KeyboardEvent;
-      getAndPostEditorMsg(event, "key", "window", getModKey(ke), undefined, ke.key);
+      handleEditorEvent(event, "key", "window", getModKey(ke), undefined, ke.key);
     });
   }
 
@@ -552,7 +552,7 @@ async function updateContent(text: string) {
         const tgt = ke.target as HTMLDivElement;
         const id = tgt.dataset.id;
 
-        getAndPostEditorMsg(
+        handleEditorEvent(
           event,
           "key",
           "frame",
@@ -680,7 +680,7 @@ async function inactivityRefresh() {
   inactivityTimer = setTimeout(inactivityRefresh, inactivityTimeout);
 }
 
-async function postMessage(e: editorEvent) {
+async function handleKeyAndRender(e: editorEvent) {
   if (file.readRunStatus() === RunStatus.running) {
     // no change while running
     return;
