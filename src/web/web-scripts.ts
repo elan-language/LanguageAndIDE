@@ -480,6 +480,13 @@ async function handleEditorEvent(
     }
   }
 
+  if (msg.modKey.control && msg.key === "c") {
+    if (event.target instanceof HTMLInputElement) {
+      // allow event
+      return;
+    }
+  }
+
   handleKeyAndRender(msg);
   event.preventDefault();
   event.stopPropagation();
