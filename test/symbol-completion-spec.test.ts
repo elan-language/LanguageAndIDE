@@ -6,6 +6,7 @@ import { LitValueNode } from "../src/frames/parse-nodes/lit-value";
 import { MethodCallNode } from "../src/frames/parse-nodes/method-call-node";
 import { ReferenceNode } from "../src/frames/parse-nodes/reference-node";
 import { TermSimple } from "../src/frames/parse-nodes/term-simple";
+import { TypeListNode } from "../src/frames/parse-nodes/type-list-node";
 import { TypeSimpleNode } from "../src/frames/parse-nodes/type-simple-node";
 import { ParseStatus } from "../src/frames/status-enums";
 import { TokenType } from "../src/frames/symbol-completion-helpers";
@@ -168,6 +169,17 @@ suite("Symbol Completion", () => {
       ExprNode.name, //Because can be a term, or a binary expression
       "Foo",
       [TokenType.type_enum],
+      [],
+    );
+  });
+  test("Expression4", () => {
+    testSymbolCompletionSpec(
+      new ExprNode(),
+      "empty [I",
+      ParseStatus.incomplete,
+      TypeListNode.name, //Because can be a term, or a binary expression
+      "empty [I",
+      [TokenType.type_concrete],
       [],
     );
   });

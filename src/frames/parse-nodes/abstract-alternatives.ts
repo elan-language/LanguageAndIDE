@@ -70,10 +70,15 @@ export abstract class AbstractAlternatives extends AbstractParseNode {
   }
 
   bestMatchIsOnlyMatch(): boolean {
-    return (
-      this.bestMatch !== undefined &&
-      this.alternatives.filter((alt) => alt.status !== ParseStatus.invalid).length === 1
-    );
+    if ( this.bestMatch !== undefined) {
+      const bestMatchLength = this.bestMatch!.matchedText.length;
+     const allMatches  = this.alternatives.filter(
+        (alt) => alt.status !== ParseStatus.invalid && 
+        alt.matchedText.length === bestMatchLength);
+       return  allMatches.length === 1;
+    } else {
+      return false;
+    }
   }
 
   potentialMatches(): ParseNode[] {

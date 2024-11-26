@@ -28,4 +28,7 @@ export class TypeListNode extends AbstractSequence {
       super.parseText(text);
     }
   }
+  override symbolCompletion_tokenTypes(): Set<TokenType> {
+    return this.matchedText.length === 0 ? this.tokenTypes : super.symbolCompletion_tokenTypes();
+  }
 }
