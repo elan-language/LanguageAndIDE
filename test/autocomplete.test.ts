@@ -1109,6 +1109,7 @@ end function`;
       ["VectorGraphics", "*"],
     ] as [string, string][];
 
+    //RP: Failing because GraphicsBase is being duplicated in the list.
     await assertAutocompletesWithString(fileImpl, "params6", "a as Graphics", expected);
   });
 

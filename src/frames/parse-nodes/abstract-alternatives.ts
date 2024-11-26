@@ -70,19 +70,15 @@ export abstract class AbstractAlternatives extends AbstractParseNode {
   }
 
   bestMatchIsOnlyMatch(): boolean {
-    if ( this.bestMatch !== undefined) {
-      const bestMatchLength = this.bestMatch!.matchedText.length;
-     const allMatches  = this.alternatives.filter(
-        (alt) => alt.status !== ParseStatus.invalid && 
-        alt.matchedText.length === bestMatchLength);
-       return  allMatches.length === 1;
-    } else {
-      return false;
-    }
+    return this.potentialMatches().length === 1;
   }
 
   potentialMatches(): ParseNode[] {
-    return this.alternatives.filter((alt) => alt.status !== ParseStatus.invalid);
+    const best = this.bestMatch;
+    const bestMatchLength = best? best.matchedText.length: 0;
+    return this.alternatives.filter(
+      (alt) => alt.status !== ParseStatus.invalid &&
+      alt.matchedText.length === bestMatchLength);
   }
 
   override symbolCompletion_tokenTypes(): Set<TokenType> {

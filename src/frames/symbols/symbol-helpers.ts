@@ -637,7 +637,7 @@ export function filterForTokenType(
     case TokenType.method_system:
       return (s?: ElanSymbol) => isSystemFunction(s!, transforms);
     case TokenType.type_concrete:
-      return isTypeName;
+      return isConcreteTypeName;
     case TokenType.type_abstract:
       return isAbstractTypeName;
     case TokenType.type_enum:
