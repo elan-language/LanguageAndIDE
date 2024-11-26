@@ -431,7 +431,7 @@ function getEditorMsg(
   id: string | undefined,
   key: string | undefined,
   modKey: { control: boolean; shift: boolean; alt: boolean },
-  selection: number | undefined,
+  selection: [number, number] | undefined,
   autocomplete: string | undefined,
 ): editorEvent {
   switch (type) {
@@ -463,7 +463,7 @@ async function handleEditorEvent(
   modKey: { control: boolean; shift: boolean; alt: boolean },
   id?: string | undefined,
   key?: string | undefined,
-  selection?: number | undefined,
+  selection?: [number, number] | undefined,
   autocomplete?: string | undefined,
 ) {
   const msg = getEditorMsg(type, target, id, key, modKey, selection, autocomplete);
@@ -506,7 +506,11 @@ async function updateContent(text: string) {
 
     frame.addEventListener("click", (event) => {
       const pe = event as PointerEvent;
-      const selection = (event.target as HTMLInputElement).selectionStart ?? undefined;
+      const selectionStart = (event.target as HTMLInputElement).selectionStart ?? undefined;
+      const selectionEnd = (event.target as HTMLInputElement).selectionEnd ?? undefined;
+
+      const selection: [number, number] | undefined =
+        selectionStart === undefined ? undefined : [selectionStart, selectionEnd ?? selectionStart];
 
       handleEditorEvent(event, "click", "frame", getModKey(pe), id, undefined, selection);
     });
@@ -544,11 +548,14 @@ async function updateContent(text: string) {
   }
 
   if (input) {
-    const cursor = input.dataset.cursor as string;
-    const pIndex = parseInt(cursor) as number;
-    const cursorIndex = Number.isNaN(pIndex) ? input.value.length : pIndex;
+    const cursorStart = input.dataset.cursorstart as string;
+    const cursorEnd = input.dataset.cursorend as string;
+    const startIndex = parseInt(cursorStart) as number;
+    const endIndex = parseInt(cursorEnd) as number;
+    const cursorIndex1 = Number.isNaN(startIndex) ? input.value.length : startIndex;
+    const cursorIndex2 = Number.isNaN(endIndex) ? input.value.length : endIndex;
 
-    input.setSelectionRange(cursorIndex, cursorIndex);
+    input.setSelectionRange(cursorIndex1, cursorIndex2);
     input.focus();
   } else if (focused) {
     focused.focus();

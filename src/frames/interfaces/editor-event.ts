@@ -4,6 +4,6 @@ export interface editorEvent {
   key?: string;
   modKey: { control: boolean; shift: boolean; alt: boolean };
   id?: string;
-  selection?: number;
+  selection?: [number, number];
   autocomplete?: string;
 }
