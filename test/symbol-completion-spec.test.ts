@@ -2,12 +2,14 @@ import { Alternatives } from "../src/frames/parse-nodes/alternatives";
 import { AssignableNode } from "../src/frames/parse-nodes/assignable-node";
 import { ExprNode } from "../src/frames/parse-nodes/expr-node";
 import { IdentifierNode } from "../src/frames/parse-nodes/identifier-node";
+import { InstanceProcRef } from "../src/frames/parse-nodes/instanceProcRef";
 import { KeywordNode } from "../src/frames/parse-nodes/keyword-node";
 import { LitValueNode } from "../src/frames/parse-nodes/lit-value";
 import { MethodCallNode } from "../src/frames/parse-nodes/method-call-node";
 import { ReferenceNode } from "../src/frames/parse-nodes/reference-node";
 import { TermSimple } from "../src/frames/parse-nodes/term-simple";
 import { TypeNode } from "../src/frames/parse-nodes/type-node";
+import { TypeSimpleOrGeneric } from "../src/frames/parse-nodes/type-simple-or-generic";
 import { ParseStatus } from "../src/frames/status-enums";
 import { TokenType } from "../src/frames/symbol-completion-helpers";
 import { testSymbolCompletionSpec } from "./testHelpers";
@@ -191,6 +193,29 @@ suite("Symbol Completion", () => {
       IdentifierNode.name, //Because can be a term, or a binary expression
       "f",
       [TokenType.id_property],
+      [],
+    );
+  });
+  test("InstanceProcRef", () => {
+    testSymbolCompletionSpec(
+      new InstanceProcRef(),
+      "foo.",
+      ParseStatus.incomplete,
+      IdentifierNode.name,
+      "",
+      [TokenType.method_procedure],
+      [],
+      "foo",
+    );
+  });
+  test("Expression_new", () => {
+    testSymbolCompletionSpec(
+      new ExprNode(),
+      "new ",
+      ParseStatus.incomplete,
+      TypeSimpleOrGeneric.name,
+      "",
+      [TokenType.type_concrete],
       [],
     );
   });

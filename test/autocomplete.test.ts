@@ -1513,13 +1513,11 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["BaseVG", "*"],
       ["BlockGraphics", "*"],
       ["Boolean", "*"],
       ["CircleVG", "*"],
       ["Float", "*"],
       ["Func", "*"],
-      ["GraphicsBase", "*"],
       ["Int", "*"],
       ["Iterable", "*"],
       ["LineVG", "*"],
