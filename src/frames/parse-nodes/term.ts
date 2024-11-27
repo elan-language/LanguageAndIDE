@@ -1,6 +1,7 @@
-import { functionKeyword, newKeyword, refKeyword, thisKeyword } from "../keywords";
+import { refKeyword, thisKeyword } from "../keywords";
 import { TokenType } from "../symbol-completion-helpers";
 import { AbstractAlternatives } from "./abstract-alternatives";
+import { ParseNode } from "./parse-node";
 import { allIdsAndMethods } from "./parse-node-helpers";
 import { TermChained } from "./term-chained";
 import { TermSimple } from "./term-simple";
@@ -30,6 +31,15 @@ export class Term extends AbstractAlternatives {
       return new Set<string>([thisKeyword, refKeyword]);
     } else {
       return super.symbolCompletion_keywords();
+    }
+  }
+
+  override getActiveNode(): ParseNode {
+    const best = this.bestMatch;
+    if (best) {
+      return best!.getActiveNode(); //Because any symbol completion is valid for TermChained also
+    } else {
+      return this as ParseNode;
     }
   }
 }

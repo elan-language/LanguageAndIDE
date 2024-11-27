@@ -9,9 +9,11 @@ import { MethodCallNode } from "../src/frames/parse-nodes/method-call-node";
 import { ReferenceNode } from "../src/frames/parse-nodes/reference-node";
 import { TermSimple } from "../src/frames/parse-nodes/term-simple";
 import { TypeNode } from "../src/frames/parse-nodes/type-node";
+import { TypeSimpleNode } from "../src/frames/parse-nodes/type-simple-node";
 import { TypeSimpleOrGeneric } from "../src/frames/parse-nodes/type-simple-or-generic";
 import { ParseStatus } from "../src/frames/status-enums";
 import { TokenType } from "../src/frames/symbol-completion-helpers";
+import { ignore_test } from "./compiler/compiler-test-helpers";
 import { testSymbolCompletionSpec } from "./testHelpers";
 
 suite("Symbol Completion", () => {
@@ -73,7 +75,7 @@ suite("Symbol Completion", () => {
       new ExprNode(),
       "t",
       ParseStatus.valid,
-      ExprNode.name, //because t could be start of literal boolean, or typeof  also
+      Alternatives.name, //because t could be start of literal boolean, or typeof  also
       "t",
       [
         TokenType.id_constant,
@@ -94,7 +96,7 @@ suite("Symbol Completion", () => {
       new ExprNode(),
       "th",
       ParseStatus.valid,
-      ExprNode.name, //because t could be start of literal boolean, or typeof  also
+      ReferenceNode.name, //because t could be start of literal boolean, or typeof  also
       "th",
       [
         TokenType.id_constant,
@@ -168,7 +170,7 @@ suite("Symbol Completion", () => {
       new ExprNode(),
       "Foo",
       ParseStatus.incomplete,
-      ExprNode.name, //Because can be a term, or a binary expression
+      TypeSimpleNode.name,
       "Foo",
       [TokenType.type_enum],
       [],
@@ -216,6 +218,17 @@ suite("Symbol Completion", () => {
       TypeSimpleOrGeneric.name,
       "",
       [TokenType.type_concrete],
+      [],
+    );
+  });
+  ignore_test("Expression_dotCall", () => {
+    testSymbolCompletionSpec(
+      new ExprNode(),
+      "foo().",
+      ParseStatus.incomplete,
+      Alternatives.name,
+      "",
+      [TokenType.method_function, TokenType.method_system, TokenType.id_property],
       [],
     );
   });
