@@ -463,39 +463,39 @@ function getEditorMsg(
   }
 }
 
+function handlePaste(event: Event, target: HTMLInputElement, msg: editorEvent): boolean {
+  target.addEventListener("paste", async (event: ClipboardEvent) => {
+    const txt = await navigator.clipboard.readText();
+    const mk = { control: false, shift: false, alt: false };
+    await handleEditorEvent(event, "key", "frame", mk, msg.id, txt);
+  });
+  event.stopPropagation();
+  return true;
+}
+
+function handleCut(event: Event, target: HTMLInputElement, msg: editorEvent) {
+  // outside of handler or selection is gone
+  const start = target.selectionStart ?? 0;
+  const end = target.selectionEnd ?? 0;
+  target.addEventListener("cut", async (event: ClipboardEvent) => {
+    const txt = document.getSelection()?.toString() ?? "";
+    await navigator.clipboard.writeText(txt);
+    const mk = { control: false, shift: false, alt: false };
+    await handleEditorEvent(event, "key", "frame", mk, msg.id, "Delete", [start, end]);
+  });
+  event.stopPropagation();
+  return true;
+}
+
 function handleCutAndPaste(event: Event, msg: editorEvent) {
-  if (msg.modKey.control && msg.key === "v") {
-    if (event.target instanceof HTMLInputElement) {
-      event.target.addEventListener("paste", async (event: ClipboardEvent) => {
-        const txt = await navigator.clipboard.readText();
-        const mk = { control: false, shift: false, alt: false };
-        await handleEditorEvent(event, "key", "frame", mk, msg.id, txt);
-      });
-      event.stopPropagation();
-      return true;
-    }
-  }
-
-  if (msg.modKey.control && msg.key === "c") {
-    if (event.target instanceof HTMLInputElement) {
-      // allow event
-      return true;
-    }
-  }
-
-  if (msg.modKey.control && msg.key === "x") {
-    if (event.target instanceof HTMLInputElement) {
-      const inp = event.target;
-      event.target.addEventListener("cut", async (event: ClipboardEvent) => {
-        const txt = document.getSelection()?.toString() ?? "";
-        navigator.clipboard.writeText(txt);
-        const start = inp.selectionStart ?? 0;
-        const end = inp.selectionEnd ?? 0;
-        const mk = { control: false, shift: false, alt: false };
-        await handleEditorEvent(event, "key", "frame", mk, msg.id, "Delete", [start, end]);
-      });
-      event.stopPropagation();
-      return true;
+  if (event.target instanceof HTMLInputElement && msg.modKey.control) {
+    switch (msg.key) {
+      case "v":
+        return handlePaste(event, event.target, msg);
+      case "x":
+        return handleCut(event, event.target, msg);
+      case "c":
+        return true;
     }
   }
 
