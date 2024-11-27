@@ -463,34 +463,23 @@ function getEditorMsg(
   }
 }
 
-async function handleEditorEvent(
-  event: Event,
-  type: "key" | "click" | "dblclick",
-  target: "frame" | "window",
-  modKey: { control: boolean; shift: boolean; alt: boolean },
-  id?: string | undefined,
-  key?: string | undefined,
-  selection?: [number, number] | undefined,
-  autocomplete?: string | undefined,
-) {
-  const msg = getEditorMsg(type, target, id, key, modKey, selection, autocomplete);
-
+function handleCutAndPaste(event: Event, msg: editorEvent) {
   if (msg.modKey.control && msg.key === "v") {
     if (event.target instanceof HTMLInputElement) {
       event.target.addEventListener("paste", async (event: ClipboardEvent) => {
         const txt = await navigator.clipboard.readText();
         const mk = { control: false, shift: false, alt: false };
-        await handleEditorEvent(event, "key", "frame", mk, id, txt);
+        await handleEditorEvent(event, "key", "frame", mk, msg.id, txt);
       });
       event.stopPropagation();
-      return;
+      return true;
     }
   }
 
   if (msg.modKey.control && msg.key === "c") {
     if (event.target instanceof HTMLInputElement) {
       // allow event
-      return;
+      return true;
     }
   }
 
@@ -503,11 +492,30 @@ async function handleEditorEvent(
         const start = inp.selectionStart ?? 0;
         const end = inp.selectionEnd ?? 0;
         const mk = { control: false, shift: false, alt: false };
-        await handleEditorEvent(event, "key", "frame", mk, id, "Delete", [start, end]);
+        await handleEditorEvent(event, "key", "frame", mk, msg.id, "Delete", [start, end]);
       });
       event.stopPropagation();
-      return;
+      return true;
     }
+  }
+
+  return false;
+}
+
+async function handleEditorEvent(
+  event: Event,
+  type: "key" | "click" | "dblclick",
+  target: "frame" | "window",
+  modKey: { control: boolean; shift: boolean; alt: boolean },
+  id?: string | undefined,
+  key?: string | undefined,
+  selection?: [number, number] | undefined,
+  autocomplete?: string | undefined,
+) {
+  const msg = getEditorMsg(type, target, id, key, modKey, selection, autocomplete);
+
+  if (handleCutAndPaste(event, msg)) {
+    return;
   }
 
   handleKeyAndRender(msg);
