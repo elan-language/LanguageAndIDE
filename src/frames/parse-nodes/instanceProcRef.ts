@@ -11,14 +11,8 @@ import { Qualifier } from "./qualifier";
 
 export class InstanceProcRef extends AbstractSequence {
   prefix: OptionalNode | undefined;
-  simple: IdentifierNode | undefined;
-  tokenTypes = new Set([
-    TokenType.id_let,
-    TokenType.id_parameter_out,
-    TokenType.id_parameter_regular,
-    TokenType.id_property,
-    TokenType.id_variable,
-  ]);
+  procName: IdentifierNode | undefined;
+  tokenTypes = new Set([TokenType.method_procedure]);
 
   constructor() {
     super();
@@ -27,17 +21,18 @@ export class InstanceProcRef extends AbstractSequence {
   parseText(text: string): void {
     if (text.length > 0) {
       const qualifier = () => new DotAfter(new Qualifier());
-      const instance = () => new DotAfter(new InstanceNode());
-      this.prefix = new OptionalNode(new Alternatives([qualifier, instance]));
-      this.simple = new IdentifierNode(this.tokenTypes);
+      const instance = new InstanceNode();
+      const instanceDot = () => new DotAfter(instance);
+      this.prefix = new OptionalNode(new Alternatives([qualifier, instanceDot]));
+      this.procName = new IdentifierNode(this.tokenTypes, () => instance.matchedText);
       this.addElement(this.prefix);
-      this.addElement(this.simple!);
+      this.addElement(this.procName!);
       super.parseText(text);
     }
   }
 
   renderAsHtml(): string {
-    return `${this.prefix!.matchedNode ? this.prefix?.matchedNode.renderAsHtml() : ""}<el-method>${this.simple?.renderAsHtml()}</el-method>`;
+    return `${this.prefix!.matchedNode ? this.prefix?.matchedNode.renderAsHtml() : ""}<el-method>${this.procName?.renderAsHtml()}</el-method>`;
   }
 
   symbolCompletion_tokenTypes(): Set<TokenType> {
@@ -53,4 +48,6 @@ export class InstanceProcRef extends AbstractSequence {
       ? new Set<string>([libraryKeyword, propertyKeyword])
       : super.symbolCompletion_keywords();
   }
+
+
 }

@@ -39,7 +39,7 @@ end main`;
     await assertAutocompletes(fileImpl, "expr5", " ", 1, expected);
   });
 
-  test("Pass_emptyType", async () => {
+  test("Pass_emptyArrayType", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
 main
@@ -998,7 +998,7 @@ end function`;
     await assertAutocompletesWithString(fileImpl, "params6", "a as [I", expected);
   });
 
-  test("Pass_typeName3", async () => {
+  test("Pass_type_in_braces", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
 main
@@ -1020,7 +1020,7 @@ end function`;
     await assertAutocompletesWithString(fileImpl, "params6", "a as {F", expected);
   });
 
-  test("Pass_typeName4", async () => {
+  test("Pass_type_immutableDictionary", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
 main

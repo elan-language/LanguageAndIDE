@@ -1035,8 +1035,7 @@ end procedure`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'if' is a keyword, and may not be used as an identifier"]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_UseOfReservedwordAsParamName", async () => {

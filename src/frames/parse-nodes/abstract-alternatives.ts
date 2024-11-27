@@ -23,6 +23,7 @@ export abstract class AbstractAlternatives extends AbstractParseNode {
           if (alt.isValid() && alt.remainingText.length === 0) {
             this.bestMatch = alt;
             open = false;
+            this._done = alt.isDone();
           } else if (
             !this.bestMatch ||
             alt.remainingText.length < this.bestMatch.remainingText.length ||

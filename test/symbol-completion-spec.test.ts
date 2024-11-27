@@ -177,7 +177,7 @@ suite("Symbol Completion", () => {
       new ExprNode(),
       "empty [I",
       ParseStatus.incomplete,
-      TypeNode.name, //Because can be a term, or a binary expression
+      TypeNode.name,
       "[I",
       [TokenType.type_concrete],
       [],
