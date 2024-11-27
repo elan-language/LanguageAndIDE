@@ -179,13 +179,19 @@ export abstract class AbstractField implements Selectable, Field {
         break;
       }
       case "ArrowLeft": {
-        if (this.cursorPos > 0) {
+        if (e.modKey.control) {
+          this.cursorWordLeft();
+        } else if (this.cursorPos > 0) {
           this.setSelection(this.cursorPos - 1);
         }
         break;
       }
       case "ArrowRight": {
-        this.cursorRight();
+        if (e.modKey.control) {
+          this.cursorWordRight();
+        } else {
+          this.cursorRight();
+        }
         break;
       }
       case "ArrowUp": {
@@ -299,6 +305,48 @@ export abstract class AbstractField implements Selectable, Field {
         this.setSelection(this.text.length);
         this.codeHasChanged = true;
       }
+    }
+  }
+
+  private isWordBreakCharRight(c: string) {
+    return c === " " || c === "." || c === "(";
+  }
+
+  private isWordBreakCharLeft(c: string) {
+    return c === " " || c === "." || c === ")";
+  }
+
+  private cursorWordRight() {
+    const textLen = this.text.length;
+    if (this.cursorPos < textLen) {
+      for (let i = this.cursorPos + 1; i < textLen; i++) {
+        const nextChar = this.text[i];
+
+        if (this.isWordBreakCharRight(nextChar)) {
+          this.setSelection(i);
+          return;
+        }
+      }
+      this.setSelection(textLen);
+    }
+  }
+
+  private cursorWordLeft() {
+    if (this.cursorPos > 0) {
+      // if we start next to a break we should skip over it
+      const startIndex = this.isWordBreakCharLeft(this.text[this.cursorPos - 1])
+        ? this.cursorPos - 1
+        : this.cursorPos;
+
+      for (let i = startIndex; i > 0; i--) {
+        const nextChar = this.text[i - 1];
+
+        if (this.isWordBreakCharLeft(nextChar)) {
+          this.setSelection(i);
+          return;
+        }
+      }
+      this.setSelection(0);
     }
   }
 
