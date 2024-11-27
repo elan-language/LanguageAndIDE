@@ -960,6 +960,79 @@ end function`;
     ]);
   });
 
+  test("Fail_FunctionWithoutRefKeyword", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+main
+  print a.b
+end main
+
+function a() return Int
+  return 0
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "To evaluate function 'a' add brackets. Or to create a reference to 'a', precede it by 'ref'",
+    ]);
+  });
+
+  test("Fail_FunctionMethodWithoutRefKeyword", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+main
+  let g be new BlockGraphics()
+  let g2 be g.withBlock
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "To evaluate function 'withBlock' add brackets. Or to create a reference to 'withBlock', precede it by 'ref'",
+    ]);
+  });
+
+  test("Fail_LibFunctionWithoutRefKeyword", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+main
+  print abs.b
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "To evaluate function 'abs' add brackets. Or to create a reference to 'abs', precede it by 'ref'",
+    ]);
+  });
+
+  test("Fail_PrintLibFunctionWithoutRefKeyword", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+main
+  print abs
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "To evaluate function 'abs' add brackets. Or to create a reference to 'abs', precede it by 'ref'",
+    ]);
+  });
+
   test("Fail_NoIndexing", async () => {
     const code = `# FFFF Elan Beta 4 valid
 

@@ -1108,7 +1108,7 @@ export function mustBeFunctionRefIfFunction(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (isFunction(symbol)) {
+  if (symbol.symbolType() instanceof FunctionType) {
     compileErrors.push(new FunctionRefCompileError(symbol.symbolId, location));
   }
 }

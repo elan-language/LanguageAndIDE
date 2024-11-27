@@ -46,6 +46,7 @@ export abstract class AbstractField implements Selectable, Field {
   private _parseStatus: ParseStatus;
   private _compileStatus: CompileStatus = CompileStatus.default;
   cursorPos: number = 0; //Relative to LH end of text
+  selectionEnd: number = 0; //Relative to LH end of text
   protected rootNode?: ParseNode;
   protected astNode?: AstNode;
   protected completion: string = "";
@@ -149,6 +150,11 @@ export abstract class AbstractField implements Selectable, Field {
     }
   }
 
+  setSelection(start: number, end?: number) {
+    this.cursorPos = start;
+    this.selectionEnd = end ?? start;
+  }
+
   processKey(e: editorEvent): boolean {
     this.codeHasChanged = false;
     const key = e.key;
@@ -156,11 +162,11 @@ export abstract class AbstractField implements Selectable, Field {
     this.processAutocompleteText(e.autocomplete);
     switch (key) {
       case "Home": {
-        this.cursorPos = 0;
+        this.setSelection(0);
         break;
       }
       case "End": {
-        this.cursorPos = textLen;
+        this.setSelection(textLen);
         break;
       }
       case "Tab": {
@@ -173,13 +179,19 @@ export abstract class AbstractField implements Selectable, Field {
         break;
       }
       case "ArrowLeft": {
-        if (this.cursorPos > 0) {
-          this.cursorPos--;
+        if (e.modKey.control) {
+          this.cursorWordLeft();
+        } else if (this.cursorPos > 0) {
+          this.setSelection(this.cursorPos - 1);
         }
         break;
       }
       case "ArrowRight": {
-        this.cursorRight();
+        if (e.modKey.control) {
+          this.cursorWordRight();
+        } else {
+          this.cursorRight();
+        }
         break;
       }
       case "ArrowUp": {
@@ -197,12 +209,12 @@ export abstract class AbstractField implements Selectable, Field {
         } else if (this.cursorPos > 0) {
           const reduced = this.text.slice(0, this.cursorPos - 1) + this.text.slice(this.cursorPos);
           this.text = reduced;
-          this.cursorPos--;
+          this.setSelection(this.cursorPos - 1);
           const cursorBeforeParse = this.cursorPos;
           this.parseCurrentText();
           if (this.text.length > reduced.length) {
             this.text = reduced;
-            this.cursorPos = cursorBeforeParse;
+            this.setSelection(cursorBeforeParse);
           }
           this.codeHasChanged = true;
           this.editingField();
@@ -210,8 +222,9 @@ export abstract class AbstractField implements Selectable, Field {
         break;
       }
       case "Delete": {
-        if (this.cursorPos < textLen) {
-          this.text = this.text.slice(0, this.cursorPos) + this.text.slice(this.cursorPos + 1);
+        if (e.selection || this.cursorPos < textLen) {
+          const [start, end] = e.selection ?? [this.cursorPos, this.cursorPos];
+          this.text = this.text.slice(0, start) + this.text.slice(end + 1);
           this.parseCurrentText();
           this.codeHasChanged = true;
           this.editingField();
@@ -233,6 +246,13 @@ export abstract class AbstractField implements Selectable, Field {
           this.noLongerEditingField();
         } else if (key?.length === 1) {
           this.processInput(key);
+          this.codeHasChanged = true;
+          this.holder.hasBeenAddedTo();
+          this.editingField();
+        } else if (key && key.length > 1) {
+          for (const c of key) {
+            this.processInput(c);
+          }
           this.codeHasChanged = true;
           this.holder.hasBeenAddedTo();
           this.editingField();
@@ -268,7 +288,7 @@ export abstract class AbstractField implements Selectable, Field {
         const preParse = this.text.length;
         this.parseCurrentText();
         const afterParse = this.text.length;
-        this.cursorPos = this.cursorPos + 1 + afterParse - preParse;
+        this.setSelection(this.cursorPos + 1 + afterParse - preParse);
       }
     }
   }
@@ -276,15 +296,57 @@ export abstract class AbstractField implements Selectable, Field {
   private cursorRight() {
     const textLen = this.text.length;
     if (this.cursorPos < textLen) {
-      this.cursorPos++;
+      this.setSelection(this.cursorPos + 1);
     } else {
       const completions = this.getPlainTextCompletion();
       if (completions.length > 0) {
         this.text = this.text + completions;
         this.parseCurrentText();
-        this.cursorPos = this.text.length;
+        this.setSelection(this.text.length);
         this.codeHasChanged = true;
       }
+    }
+  }
+
+  private isWordBreakCharRight(c: string) {
+    return c === " " || c === "." || c === "(";
+  }
+
+  private isWordBreakCharLeft(c: string) {
+    return c === " " || c === "." || c === ")";
+  }
+
+  private cursorWordRight() {
+    const textLen = this.text.length;
+    if (this.cursorPos < textLen) {
+      for (let i = this.cursorPos + 1; i < textLen; i++) {
+        const nextChar = this.text[i];
+
+        if (this.isWordBreakCharRight(nextChar)) {
+          this.setSelection(i);
+          return;
+        }
+      }
+      this.setSelection(textLen);
+    }
+  }
+
+  private cursorWordLeft() {
+    if (this.cursorPos > 0) {
+      // if we start next to a break we should skip over it
+      const startIndex = this.isWordBreakCharLeft(this.text[this.cursorPos - 1])
+        ? this.cursorPos - 1
+        : this.cursorPos;
+
+      for (let i = startIndex; i > 0; i--) {
+        const nextChar = this.text[i - 1];
+
+        if (this.isWordBreakCharLeft(nextChar)) {
+          this.setSelection(i);
+          return;
+        }
+      }
+      this.setSelection(0);
     }
   }
 
@@ -314,7 +376,7 @@ export abstract class AbstractField implements Selectable, Field {
     this.text = this.text + appendText;
     this.autoCompSelected = undefined;
     this.parseCurrentText();
-    this.cursorPos = this.text.length;
+    this.setSelection(this.text.length);
     this.codeHasChanged = true;
   }
 
@@ -395,11 +457,16 @@ export abstract class AbstractField implements Selectable, Field {
     this.compileErrors = this.aggregateCompileErrors(); //Needed in this case because the compile errors will be on the ASTNodes
     this._compileStatus = helper_deriveCompileStatusFromErrors(this.compileErrors);
   }
-  select(withFocus?: boolean, multiSelect?: boolean, selection?: number): void {
+  select(withFocus?: boolean, multiSelect?: boolean, selection?: [number, number]): void {
     this.deselectAll();
     this.selected = true;
     this.focus();
-    this.cursorPos = selection ?? this.text.length;
+    if (selection) {
+      const [start, end] = selection;
+      this.setSelection(start, end);
+    } else {
+      this.setSelection(this.text.length);
+    }
   }
 
   isSelected(): boolean {
@@ -431,7 +498,7 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   protected fieldAsInput(): string {
-    return `<input spellcheck="false" data-cursor="${this.cursorPos}" size="${this.charCount()}" style="width: ${this.fieldWidth()}" value="${this.escapeDoubleQuotesAndEscapes(this.text)}">`;
+    return `<input spellcheck="false" data-cursorstart="${this.cursorPos}" data-cursorend="${this.selectionEnd}" size="${this.charCount()}" style="width: ${this.fieldWidth()}" value="${this.escapeDoubleQuotesAndEscapes(this.text)}">`;
   }
 
   public charCount(): number {

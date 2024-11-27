@@ -4,7 +4,7 @@ import { editorEvent } from "./editor-event";
 
 export interface Selectable {
   isSelected(): boolean;
-  select(withFocus?: boolean, multiSelect?: boolean, selection?: number): void;
+  select(withFocus?: boolean, multiSelect?: boolean, selection?: [number, number]): void;
   deselect(): void;
 
   isFocused(): boolean;

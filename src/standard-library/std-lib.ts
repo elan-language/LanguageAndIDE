@@ -205,6 +205,12 @@ export class StdLib {
     return list;
   }
 
+  @elanFunction(FunctionOptions.pureExtension, ElanClass(ElanSet))
+  asSet<T1>(@elanIterableType(ElanT1) arr: T1[]): ElanSet<T1> {
+    const set = this.system.initialise(new ElanSet<T1>());
+    return set.addFromArray(arr);
+  }
+
   @elanFunction(FunctionOptions.pure, ElanIterable(ElanInt))
   range(@elanIntType() start: number, @elanIntType() end: number): number[] {
     const seq = [];

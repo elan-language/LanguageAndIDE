@@ -857,7 +857,7 @@ end main`;
     const code = `# FFFF Elan Beta 4 valid
 
 main
-    var body set to [head]
+    var body set to [ref head]
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -914,7 +914,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan Beta 4 valid
 
 main
-  var arr set to [typeAndProperties]
+  var arr set to [ref typeAndProperties]
   var tp1 set to arr[0]
   print tp1("")
 end main`;

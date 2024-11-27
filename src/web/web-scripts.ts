@@ -51,12 +51,19 @@ const stdlib = new StdLib();
 const system = stdlib.system;
 system.stdlib = stdlib; // to allow injection
 
-const elanInputOutput = new WebInputOutput(consoleDiv, graphicsDiv);
+// well known ids
 const lastDirId = "elan-files";
+const lastCodeId = "last-code-id";
+const lastFileName = "last-file-name";
+const lastSavedStatus = "last-saved-status";
+
+const elanInputOutput = new WebInputOutput(consoleDiv, graphicsDiv);
 let undoRedoFiles: string[] = [];
 let previousFileIndex: number = -1;
+let currentFileIndex: number = -1;
 let nextFileIndex: number = -1;
 let undoRedoing: boolean = false;
+let refreshing: boolean = false;
 
 let file: File;
 let doOnce = true;
@@ -70,8 +77,6 @@ let autoSaveFileHandle: FileSystemFileHandle | undefined = undefined;
 autoSaveButton.hidden = !useChromeFileAPI();
 
 // add all the listeners
-
-// temp code for testing
 
 undoButton.addEventListener("click", undo);
 
@@ -192,11 +197,9 @@ fetchProfile()
   });
 
 function checkForUnsavedChanges(): boolean {
-  if (hasUnsavedChanges()) {
-    return confirm("You have unsaved changes - they will be lost unless you cancel");
-  }
-
-  return true;
+  return hasUnsavedChanges()
+    ? confirm("You have unsaved changes - they will be lost unless you cancel")
+    : true;
 }
 
 async function setup(p: Profile) {
@@ -221,9 +224,10 @@ function clearDisplays() {
 
 function clearUndoRedoAndAutoSave() {
   autoSaveFileHandle = undefined;
-  previousFileIndex = nextFileIndex = -1;
+  previousFileIndex = nextFileIndex = currentFileIndex = -1;
   localStorage.clear();
   undoRedoFiles = [];
+  lastSavedHash = "";
 }
 
 async function resetFile() {
@@ -257,7 +261,7 @@ async function showError(err: Error, fileName: string, reset: boolean) {
   } else {
     elanInputOutput.printLine(err.message ?? "Unknown error parsing file");
   }
-  document.body.style.cursor = "default";
+  cursorDefault();
 }
 
 async function refreshAndDisplay(compileIfParsed?: boolean) {
@@ -276,7 +280,10 @@ async function initialDisplay(reset: boolean) {
   const ps = file.readParseStatus();
   if (ps === ParseStatus.valid || ps === ParseStatus.default) {
     await refreshAndDisplay();
-    lastSavedHash = file.currentHash;
+    if (!refreshing) {
+      lastSavedHash = file.currentHash;
+    }
+    refreshing = false;
     updateNameAndSavedStatus();
   } else {
     const msg = file.parseError || "Failed load code";
@@ -298,6 +305,7 @@ async function displayCode(rawCode: string, fileName: string) {
 async function displayFile() {
   const [previousCode, previousFileName] = getLastLocalSave();
   if (previousCode) {
+    refreshing = true;
     await displayCode(previousCode, previousFileName);
   } else {
     await initialDisplay(true);
@@ -315,6 +323,11 @@ function hasUnsavedChanges() {
 function updateNameAndSavedStatus() {
   const unsaved = hasUnsavedChanges() ? " UNSAVED" : "";
   codeTitle.innerText = `File: ${file.fileName}${unsaved}`;
+}
+
+function canUndo() {
+  const isParsing = file.readParseStatus() === ParseStatus.valid;
+  return (isParsing && previousFileIndex > -1) || (!isParsing && currentFileIndex > -1);
 }
 
 async function updateDisplayValues() {
@@ -396,10 +409,10 @@ async function updateDisplayValues() {
       enable(runButton, "Run the program");
     }
 
-    if (previousFileIndex === -1) {
-      disable(undoButton, "Nothing to undo");
-    } else {
+    if (canUndo()) {
       enable(undoButton, "Undo last change");
+    } else {
+      disable(undoButton, "Nothing to undo");
     }
 
     if (nextFileIndex === -1) {
@@ -426,6 +439,98 @@ function enable(button: HTMLButtonElement, msg = "") {
   button.setAttribute("title", msg);
 }
 
+function getEditorMsg(
+  type: "key" | "click" | "dblclick",
+  target: "frame" | "window",
+  id: string | undefined,
+  key: string | undefined,
+  modKey: { control: boolean; shift: boolean; alt: boolean },
+  selection: [number, number] | undefined,
+  autocomplete: string | undefined,
+): editorEvent {
+  switch (type) {
+    case "key":
+      return {
+        type: type,
+        target: target,
+        id: id,
+        key: key,
+        modKey: modKey,
+        selection: selection,
+        autocomplete: autocomplete,
+      };
+    case "click":
+    case "dblclick":
+      return {
+        type: type,
+        target: target,
+        id: id,
+        modKey: modKey,
+        selection: selection,
+      };
+  }
+}
+
+function handlePaste(event: Event, target: HTMLInputElement, msg: editorEvent): boolean {
+  target.addEventListener("paste", async (event: ClipboardEvent) => {
+    const txt = await navigator.clipboard.readText();
+    const mk = { control: false, shift: false, alt: false };
+    await handleEditorEvent(event, "key", "frame", mk, msg.id, txt);
+  });
+  event.stopPropagation();
+  return true;
+}
+
+function handleCut(event: Event, target: HTMLInputElement, msg: editorEvent) {
+  // outside of handler or selection is gone
+  const start = target.selectionStart ?? 0;
+  const end = target.selectionEnd ?? 0;
+  target.addEventListener("cut", async (event: ClipboardEvent) => {
+    const txt = document.getSelection()?.toString() ?? "";
+    await navigator.clipboard.writeText(txt);
+    const mk = { control: false, shift: false, alt: false };
+    await handleEditorEvent(event, "key", "frame", mk, msg.id, "Delete", [start, end]);
+  });
+  event.stopPropagation();
+  return true;
+}
+
+function handleCutAndPaste(event: Event, msg: editorEvent) {
+  if (event.target instanceof HTMLInputElement && msg.modKey.control) {
+    switch (msg.key) {
+      case "v":
+        return handlePaste(event, event.target, msg);
+      case "x":
+        return handleCut(event, event.target, msg);
+      case "c":
+        return true;
+    }
+  }
+
+  return false;
+}
+
+async function handleEditorEvent(
+  event: Event,
+  type: "key" | "click" | "dblclick",
+  target: "frame" | "window",
+  modKey: { control: boolean; shift: boolean; alt: boolean },
+  id?: string | undefined,
+  key?: string | undefined,
+  selection?: [number, number] | undefined,
+  autocomplete?: string | undefined,
+) {
+  const msg = getEditorMsg(type, target, id, key, modKey, selection, autocomplete);
+
+  if (handleCutAndPaste(event, msg)) {
+    return;
+  }
+
+  handleKeyAndRender(msg);
+  event.preventDefault();
+  event.stopPropagation();
+}
+
 /**
  * Render the document
  */
@@ -442,31 +547,18 @@ async function updateContent(text: string) {
 
     frame.addEventListener("keydown", (event: Event) => {
       const ke = event as KeyboardEvent;
-      const msg: editorEvent = {
-        type: "key",
-        target: "frame",
-        id: id,
-        key: ke.key,
-        modKey: getModKey(ke),
-      };
-      postMessage(msg);
-      event.preventDefault();
-      event.stopPropagation();
+      handleEditorEvent(event, "key", "frame", getModKey(ke), id, ke.key);
     });
 
     frame.addEventListener("click", (event) => {
-      const ke = event as PointerEvent;
-      const selection = (event.target as HTMLInputElement).selectionStart as number | undefined;
-      const msg: editorEvent = {
-        type: "click",
-        target: "frame",
-        id: id,
-        modKey: getModKey(ke),
-        selection: selection,
-      };
-      postMessage(msg);
-      event.preventDefault();
-      event.stopPropagation();
+      const pe = event as PointerEvent;
+      const selectionStart = (event.target as HTMLInputElement).selectionStart ?? undefined;
+      const selectionEnd = (event.target as HTMLInputElement).selectionEnd ?? undefined;
+
+      const selection: [number, number] | undefined =
+        selectionStart === undefined ? undefined : [selectionStart, selectionEnd ?? selectionStart];
+
+      handleEditorEvent(event, "click", "frame", getModKey(pe), id, undefined, selection);
     });
 
     frame.addEventListener("mousedown", (event) => {
@@ -474,15 +566,7 @@ async function updateContent(text: string) {
       const me = event as MouseEvent;
       if (me.button === 0 && me.shiftKey) {
         // left button only
-        const msg: editorEvent = {
-          type: "click",
-          target: "frame",
-          id: id,
-          modKey: getModKey(me),
-        };
-        postMessage(msg);
-        event.preventDefault();
-        event.stopPropagation();
+        handleEditorEvent(event, "click", "frame", getModKey(me), id);
       }
     });
 
@@ -492,15 +576,7 @@ async function updateContent(text: string) {
 
     frame.addEventListener("dblclick", (event) => {
       const ke = event as KeyboardEvent;
-      const msg: editorEvent = {
-        type: "dblclick",
-        target: "frame",
-        id: id,
-        modKey: getModKey(ke),
-      };
-      postMessage(msg);
-      event.preventDefault();
-      event.stopPropagation();
+      handleEditorEvent(event, "dblclick", "frame", getModKey(ke), id);
     });
   }
 
@@ -513,24 +589,19 @@ async function updateContent(text: string) {
 
     elanCode!.addEventListener("keydown", (event: Event) => {
       const ke = event as KeyboardEvent;
-      const msg: editorEvent = {
-        type: "key",
-        target: "window",
-        key: ke.key,
-        modKey: getModKey(ke),
-      };
-      postMessage(msg);
-      event.preventDefault();
-      event.stopPropagation();
+      handleEditorEvent(event, "key", "window", getModKey(ke), undefined, ke.key);
     });
   }
 
   if (input) {
-    const cursor = input.dataset.cursor as string;
-    const pIndex = parseInt(cursor) as number;
-    const cursorIndex = Number.isNaN(pIndex) ? input.value.length : pIndex;
+    const cursorStart = input.dataset.cursorstart as string;
+    const cursorEnd = input.dataset.cursorend as string;
+    const startIndex = parseInt(cursorStart) as number;
+    const endIndex = parseInt(cursorEnd) as number;
+    const cursorIndex1 = Number.isNaN(startIndex) ? input.value.length : startIndex;
+    const cursorIndex2 = Number.isNaN(endIndex) ? input.value.length : endIndex;
 
-    input.setSelectionRange(cursorIndex, cursorIndex);
+    input.setSelectionRange(cursorIndex1, cursorIndex2);
     input.focus();
   } else if (focused) {
     focused.focus();
@@ -546,17 +617,17 @@ async function updateContent(text: string) {
         const ke = event as PointerEvent;
         const tgt = ke.target as HTMLDivElement;
         const id = tgt.dataset.id;
-        const msg: editorEvent = {
-          type: "key",
-          target: "frame",
-          key: "Enter",
-          id: id,
-          modKey: getModKey(ke),
-          autocomplete: tgt.innerText,
-        };
-        postMessage(msg);
-        event.preventDefault();
-        event.stopPropagation();
+
+        handleEditorEvent(
+          event,
+          "key",
+          "frame",
+          getModKey(ke),
+          id,
+          "Enter",
+          undefined,
+          tgt.innerText,
+        );
       });
     }
   }
@@ -572,7 +643,7 @@ async function updateContent(text: string) {
     dbgFocused.forEach((n) => (msg = `${msg}, Node: ${(n.nodeName, n.id)} `));
     await showError(new Error(msg), file.fileName, false);
   }
-  document.body.style.cursor = "default";
+  cursorDefault();
 }
 
 async function localAndAutoSave() {
@@ -584,7 +655,7 @@ async function localAndAutoSave() {
     if (undoRedoHash !== file.currentHash && !undoRedoing) {
       code = await file.renderAsSource();
       const timestamp = Date.now();
-      const id = `elan-code-${timestamp}`;
+      const id = `${file.fileName}.${timestamp}`;
 
       if (previousFileIndex !== -1 && previousFileIndex !== undoRedoFiles.length - 2) {
         const trimedIds = undoRedoFiles.slice(previousFileIndex + 2);
@@ -597,11 +668,12 @@ async function localAndAutoSave() {
 
       undoRedoFiles.push(id);
       previousFileIndex = undoRedoFiles.length > 1 ? undoRedoFiles.length - 2 : -1;
+      currentFileIndex = undoRedoFiles.length - 1;
       nextFileIndex = -1;
 
-      localStorage.setItem("last-code-id", id);
+      localStorage.setItem(lastCodeId, id);
       localStorage.setItem(id, code);
-      localStorage.setItem("elan-file", file.fileName);
+      localStorage.setItem(lastFileName, file.fileName);
       saveButton.classList.add("unsaved");
       undoRedoHash = file.currentHash;
     }
@@ -617,44 +689,48 @@ async function localAndAutoSave() {
 }
 
 function getLastLocalSave(): [string, string] {
-  const id = localStorage.getItem("last-code-id") ?? "";
+  const id = localStorage.getItem(lastCodeId) ?? "";
   const previousCode = localStorage.getItem(id);
-  const previousFileName = localStorage.getItem("elan-file");
+  const previousFileName = localStorage.getItem(lastFileName) ?? "";
+  lastSavedHash = localStorage.getItem(lastSavedStatus) ?? "";
 
-  return [previousCode || "", previousFileName || ""];
+  return [previousCode ?? "", previousFileName];
+}
+
+function updateIndexes(indexJustUsed: number) {
+  currentFileIndex = indexJustUsed;
+  nextFileIndex = indexJustUsed + 1;
+  nextFileIndex = nextFileIndex > undoRedoFiles.length - 1 ? -1 : nextFileIndex;
+  previousFileIndex = indexJustUsed - 1;
+  previousFileIndex = previousFileIndex < -1 ? -1 : previousFileIndex;
+}
+
+async function replaceCode(indexToUse: number, msg: string) {
+  const id = undoRedoFiles[indexToUse];
+  updateIndexes(indexToUse);
+  const code = localStorage.getItem(id);
+  if (code) {
+    disable(undoButton, msg);
+    disable(redoButton, msg);
+    cursorWait();
+    undoRedoing = true;
+    const fn = file.fileName;
+    file = new FileImpl(hash, profile, transforms());
+    await displayCode(code, fn);
+  }
 }
 
 async function undo() {
-  if (previousFileIndex > -1) {
-    const previousId = undoRedoFiles[previousFileIndex];
-    nextFileIndex = previousFileIndex + 1;
-    nextFileIndex = nextFileIndex > undoRedoFiles.length - 1 ? -1 : nextFileIndex;
-    previousFileIndex = previousFileIndex - 1;
-    previousFileIndex = previousFileIndex < -1 ? -1 : previousFileIndex;
-    const previousCode = localStorage.getItem(previousId);
-    if (previousCode) {
-      undoRedoing = true;
-      const fn = file.fileName;
-      file = new FileImpl(hash, profile, transforms());
-      await displayCode(previousCode, fn);
-    }
+  if (canUndo()) {
+    const isParsing = file.readParseStatus() === ParseStatus.valid;
+    const indexToUse = isParsing ? previousFileIndex : currentFileIndex;
+    await replaceCode(indexToUse, "Undoing...");
   }
 }
 
 async function redo() {
   if (nextFileIndex > -1) {
-    const nextId = undoRedoFiles[nextFileIndex];
-    nextFileIndex = nextFileIndex + 1;
-    nextFileIndex = nextFileIndex > undoRedoFiles.length - 1 ? -1 : nextFileIndex;
-    previousFileIndex = previousFileIndex + 1;
-    previousFileIndex = previousFileIndex < -1 ? -1 : previousFileIndex;
-    const previousCode = localStorage.getItem(nextId);
-    if (previousCode) {
-      undoRedoing = true;
-      const fn = file.fileName;
-      file = new FileImpl(hash, profile, transforms());
-      await displayCode(previousCode, fn);
-    }
+    await replaceCode(nextFileIndex, "Redoing...");
   }
 }
 
@@ -670,7 +746,7 @@ async function inactivityRefresh() {
   inactivityTimer = setTimeout(inactivityRefresh, inactivityTimeout);
 }
 
-async function postMessage(e: editorEvent) {
+async function handleKeyAndRender(e: editorEvent) {
   if (file.readRunStatus() === RunStatus.running) {
     // no change while running
     return;
@@ -783,30 +859,25 @@ async function handleWorkerError(data: WebWorkerStatusMessage) {
 }
 
 function chooser(uploader: (event: Event) => void) {
-  return useChromeFileAPI()
-    ? () => {
-        if (checkForUnsavedChanges()) {
-          const f = document.createElement("input");
-          f.style.display = "none";
-          codeControls.appendChild(f);
-          f.addEventListener("click", uploader);
-          f.click();
-          codeControls.removeChild(f);
-        }
+  return () => {
+    if (checkForUnsavedChanges()) {
+      const f = document.createElement("input");
+      f.style.display = "none";
+
+      if (useChromeFileAPI()) {
+        f.addEventListener("click", uploader);
+      } else {
+        f.type = "file";
+        f.name = "file";
+        f.accept = ".elan";
+        f.addEventListener("change", uploader);
       }
-    : () => {
-        if (checkForUnsavedChanges()) {
-          const f = document.createElement("input");
-          f.style.display = "none";
-          f.type = "file";
-          f.name = "file";
-          f.accept = ".elan";
-          codeControls.appendChild(f);
-          f.addEventListener("change", uploader);
-          f.click();
-          codeControls.removeChild(f);
-        }
-      };
+
+      codeControls.appendChild(f);
+      f.click();
+      codeControls.removeChild(f);
+    }
+  };
 }
 
 function useChromeFileAPI() {
@@ -868,12 +939,20 @@ async function handleChromeAppend() {
   await handleChromeUploadOrAppend(false);
 }
 
+function cursorWait() {
+  document.body.style.cursor = "wait";
+}
+
+function cursorDefault() {
+  document.body.style.cursor = "default";
+}
+
 function handleUploadOrAppend(event: Event, upload: boolean) {
   const elanFile = (event.target as any).files?.[0] as any;
 
   if (elanFile) {
     const fileName = elanFile.name;
-    document.body.style.cursor = "wait";
+    cursorWait();
     clearDisplays();
     const reader = new FileReader();
     reader.addEventListener("load", async (event: any) => {
@@ -915,6 +994,7 @@ function updateFileName() {
   }
 
   file.fileName = fileName;
+  localStorage.setItem(lastFileName, file.fileName);
 }
 
 async function handleDownload(event: Event) {
@@ -933,6 +1013,7 @@ async function handleDownload(event: Event) {
   URL.revokeObjectURL(href);
   saveButton.classList.remove("unsaved");
   lastSavedHash = file.currentHash;
+  localStorage.setItem(lastSavedStatus, lastSavedHash);
   event.preventDefault();
   await renderAsHtml();
 }
@@ -946,6 +1027,7 @@ async function chromeSave(code: string) {
   });
 
   file.fileName = fh.name;
+  localStorage.setItem(lastFileName, file.fileName);
 
   const writeable = await fh.createWritable();
   await writeable.write(code);
@@ -961,6 +1043,7 @@ async function handleChromeDownload(event: Event) {
 
     saveButton.classList.remove("unsaved");
     lastSavedHash = file.currentHash;
+    localStorage.setItem(lastSavedStatus, lastSavedHash);
 
     await renderAsHtml();
   } catch (e) {
@@ -984,6 +1067,7 @@ async function handleChromeAutoSave(event: Event) {
   try {
     autoSaveFileHandle = await chromeSave(code);
     lastSavedHash = file.currentHash;
+    localStorage.setItem(lastSavedStatus, lastSavedHash);
     await renderAsHtml();
     autoSaveButton.innerText = "Auto-off";
     autoSaveButton.setAttribute("title", "Click to turn auto-save off and resume manual saving.");
@@ -1002,6 +1086,7 @@ async function autoSave(code: string) {
       await writeable.write(code);
       await writeable.close();
       lastSavedHash = file.currentHash;
+      localStorage.setItem(lastSavedStatus, lastSavedHash);
       updateNameAndSavedStatus();
     } catch (e) {
       console.warn("autosave failed");

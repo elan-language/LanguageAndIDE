@@ -121,7 +121,7 @@ class Foo
   end constructor
 
   procedure setP1(p as Func<of Int => Int>)
-    set property.p1 to p
+    set property.p1 to ref p
   end procedure
 
   property p1 as Func<of Int => Int>
