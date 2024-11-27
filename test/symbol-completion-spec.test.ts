@@ -229,7 +229,7 @@ suite("Symbol Completion", () => {
       "",
       [TokenType.id_property, TokenType.method_function, TokenType.method_system],
       [],
-      "foo()",
+      "foo",
     );
   });
   test("Expression_instanceDotCall", () => {
