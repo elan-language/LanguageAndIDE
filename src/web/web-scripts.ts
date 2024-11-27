@@ -493,6 +493,24 @@ async function handleEditorEvent(
     }
   }
 
+  // to complete #35
+  // if (msg.modKey.control && msg.key === "x") {
+  //   if (event.target instanceof HTMLInputElement) {
+  //     const inp = event.target;
+  //     event.target.addEventListener("cut", async (event: ClipboardEvent) => {
+  //       const selection = document.getSelection();
+  //       const cut = selection?.toString();
+
+  //       const txt = inp.value;
+  //       const mk = { control: false, shift: false, alt: false };
+  //       await handleEditorEvent(event, "click", "frame", mk, id, undefined, [0, 0]);
+  //       await handleEditorEvent(event, "key", "frame", mk, id, txt);
+  //     });
+  //     event.stopPropagation();
+  //     return;
+  //   }
+  // }
+
   handleKeyAndRender(msg);
   event.preventDefault();
   event.stopPropagation();
