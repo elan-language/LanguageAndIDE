@@ -1,4 +1,5 @@
 import { Alternatives } from "../src/frames/parse-nodes/alternatives";
+import { AssignableNode } from "../src/frames/parse-nodes/assignable-node";
 import { ExprNode } from "../src/frames/parse-nodes/expr-node";
 import { IdentifierNode } from "../src/frames/parse-nodes/identifier-node";
 import { KeywordNode } from "../src/frames/parse-nodes/keyword-node";
@@ -179,6 +180,17 @@ suite("Symbol Completion", () => {
       TypeNode.name, //Because can be a term, or a binary expression
       "[I",
       [TokenType.type_concrete],
+      [],
+    );
+  });
+  test("Assignable", () => {
+    testSymbolCompletionSpec(
+      new AssignableNode(),
+      "property.f",
+      ParseStatus.valid,
+      IdentifierNode.name, //Because can be a term, or a binary expression
+      "f",
+      [TokenType.id_property],
       [],
     );
   });

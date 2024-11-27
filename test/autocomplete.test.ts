@@ -793,9 +793,6 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [["foo", "*"]] as [string, string][];
-
-    //RP: returning the *variable* 'f' as well as the property 'foo'
-    // This is either a scoping error or the list of TokenTypes is wrong
     await assertAutocompletesWithString(fileImpl, "ident24", "property.f", expected);
   });
 

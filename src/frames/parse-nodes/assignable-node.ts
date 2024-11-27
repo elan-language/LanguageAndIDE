@@ -18,9 +18,10 @@ export class AssignableNode extends AbstractSequence {
 
   constructor() {
     super();
-    const propDot = () => new DotAfter(new KeywordNode(propertyKeyword));
     const simple = () => new IdentifierNode(this.tokenTypes);
-    const qualProp = () => new Sequence([propDot, simple]);
+    const propDot = () => new DotAfter(new KeywordNode(propertyKeyword));
+    const prop = () => new IdentifierNode(new Set([TokenType.id_property]));
+    const qualProp = () => new Sequence([propDot, prop]);
     this.simpleOrProp = new Alternatives([simple, qualProp]);
     this.addElement(this.simpleOrProp);
   }
