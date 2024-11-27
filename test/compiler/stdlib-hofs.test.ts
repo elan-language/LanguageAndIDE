@@ -560,6 +560,40 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[b, c, d, d]dbcd");
   });
 
+  test("Pass_asSet", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+constant source set to {"apple", "orange", "pair", "apple"}
+main
+  print source.asSet()
+  print source.asIter().asSet()
+  print source.asArray().asSet()
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {
+  source = system.list(["apple", "orange", "pair", "apple"]);
+
+};
+async function main() {
+  system.printLine(_stdlib.asString(_stdlib.asSet(global.source)));
+  system.printLine(_stdlib.asString(_stdlib.asSet(_stdlib.asIter(global.source))));
+  system.printLine(_stdlib.asString(_stdlib.asSet(_stdlib.asArray(global.source))));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "{apple, orange, pair}{apple, orange, pair}{apple, orange, pair}",
+    );
+  });
+
   test("Fail_MaxOnNonNumeric", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
