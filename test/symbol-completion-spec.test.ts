@@ -1,3 +1,4 @@
+import { ProcRefField } from "../src/frames/fields/proc-ref-field";
 import { Alternatives } from "../src/frames/parse-nodes/alternatives";
 import { AssignableNode } from "../src/frames/parse-nodes/assignable-node";
 import { ExprNode } from "../src/frames/parse-nodes/expr-node";
@@ -240,6 +241,18 @@ suite("Symbol Completion", () => {
       Alternatives.name,
       "",
       [TokenType.id_property, TokenType.method_function, TokenType.method_system],
+      [],
+      "foo",
+    );
+  });
+  test("Expression_instanceDotCall", () => {
+    testSymbolCompletionSpec(
+      new InstanceProcRef(),
+      "foo.wi",
+      ParseStatus.valid,
+      IdentifierNode.name,
+      "wi",
+      [TokenType.method_procedure],
       [],
       "foo",
     );
