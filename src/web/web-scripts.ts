@@ -448,6 +448,7 @@ function getEditorMsg(
         id: id,
         key: key,
         modKey: modKey,
+        selection: selection,
         autocomplete: autocomplete,
       };
     case "click":
@@ -493,23 +494,21 @@ async function handleEditorEvent(
     }
   }
 
-  // to complete #35
-  // if (msg.modKey.control && msg.key === "x") {
-  //   if (event.target instanceof HTMLInputElement) {
-  //     const inp = event.target;
-  //     event.target.addEventListener("cut", async (event: ClipboardEvent) => {
-  //       const selection = document.getSelection();
-  //       const cut = selection?.toString();
-
-  //       const txt = inp.value;
-  //       const mk = { control: false, shift: false, alt: false };
-  //       await handleEditorEvent(event, "click", "frame", mk, id, undefined, [0, 0]);
-  //       await handleEditorEvent(event, "key", "frame", mk, id, txt);
-  //     });
-  //     event.stopPropagation();
-  //     return;
-  //   }
-  // }
+  if (msg.modKey.control && msg.key === "x") {
+    if (event.target instanceof HTMLInputElement) {
+      const inp = event.target;
+      event.target.addEventListener("cut", async (event: ClipboardEvent) => {
+        const txt = document.getSelection()?.toString() ?? "";
+        navigator.clipboard.writeText(txt);
+        const start = inp.selectionStart ?? 0;
+        const end = inp.selectionEnd ?? 0;
+        const mk = { control: false, shift: false, alt: false };
+        await handleEditorEvent(event, "key", "frame", mk, id, "Delete", [start, end]);
+      });
+      event.stopPropagation();
+      return;
+    }
+  }
 
   handleKeyAndRender(msg);
   event.preventDefault();

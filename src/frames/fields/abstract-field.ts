@@ -216,8 +216,9 @@ export abstract class AbstractField implements Selectable, Field {
         break;
       }
       case "Delete": {
-        if (this.cursorPos < textLen) {
-          this.text = this.text.slice(0, this.cursorPos) + this.text.slice(this.cursorPos + 1);
+        if (e.selection || this.cursorPos < textLen) {
+          const [start, end] = e.selection ?? [this.cursorPos, this.cursorPos];
+          this.text = this.text.slice(0, start) + this.text.slice(end + 1);
           this.parseCurrentText();
           this.codeHasChanged = true;
           this.editingField();
