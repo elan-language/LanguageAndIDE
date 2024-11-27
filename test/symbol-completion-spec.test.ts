@@ -13,7 +13,6 @@ import { TypeSimpleNode } from "../src/frames/parse-nodes/type-simple-node";
 import { TypeSimpleOrGeneric } from "../src/frames/parse-nodes/type-simple-or-generic";
 import { ParseStatus } from "../src/frames/status-enums";
 import { TokenType } from "../src/frames/symbol-completion-helpers";
-import { ignore_test } from "./compiler/compiler-test-helpers";
 import { testSymbolCompletionSpec } from "./testHelpers";
 
 suite("Symbol Completion", () => {
@@ -221,15 +220,28 @@ suite("Symbol Completion", () => {
       [],
     );
   });
-  ignore_test("Expression_dotCall", () => {
+  test("Expression_functionDotCall", () => {
     testSymbolCompletionSpec(
       new ExprNode(),
       "foo().",
       ParseStatus.incomplete,
       Alternatives.name,
       "",
-      [TokenType.method_function, TokenType.method_system, TokenType.id_property],
+      [TokenType.id_property, TokenType.method_function, TokenType.method_system],
       [],
+      "foo()",
+    );
+  });
+  test("Expression_instanceDotCall", () => {
+    testSymbolCompletionSpec(
+      new ExprNode(),
+      "foo.",
+      ParseStatus.incomplete,
+      Alternatives.name,
+      "",
+      [TokenType.id_property, TokenType.method_function, TokenType.method_system],
+      [],
+      "foo",
     );
   });
 });
