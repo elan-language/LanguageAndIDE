@@ -1,12 +1,12 @@
 import { TokenType } from "../symbol-completion-helpers";
 import { OPEN_BRACE, OPEN_BRACKET, OPEN_SQ_BRACKET } from "../symbols";
 import { AbstractAlternatives } from "./abstract-alternatives";
+import { TypeArrayNode } from "./type-array-node";
 import { TypeDictionaryNode } from "./type-dictionary-node";
 import { TypeFuncNode } from "./type-func-node";
 import { TypeGenericNode } from "./type-generic-node";
 import { TypeImmutableDictionaryNode } from "./type-immutable-dictionary-node";
 import { TypeImmutableListNode } from "./type-immutable-list-node";
-import { TypeListNode } from "./type-list-node";
 import { TypeSimpleNode } from "./type-simple-node";
 import { TypeTupleNode } from "./type-tuple-node";
 
@@ -28,7 +28,7 @@ export class TypeNode extends AbstractAlternatives {
       } else if (text.trimStart().startsWith(OPEN_BRACKET)) {
         this.alternatives.push(new TypeTupleNode());
       } else if (text.trimStart().startsWith(OPEN_SQ_BRACKET)) {
-        this.alternatives.push(new TypeListNode(this.tokenTypes));
+        this.alternatives.push(new TypeArrayNode(this.tokenTypes));
         this.alternatives.push(new TypeDictionaryNode(this.tokenTypes));
       } else if (text.trimStart().startsWith(OPEN_BRACE)) {
         this.alternatives.push(new TypeImmutableListNode(this.tokenTypes));

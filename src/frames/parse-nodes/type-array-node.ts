@@ -5,7 +5,7 @@ import { PunctuationNode } from "./punctuation-node";
 import { TypeNode } from "./type-node";
 import { TypeSimpleNode } from "./type-simple-node";
 
-export class TypeListNode extends AbstractSequence {
+export class TypeArrayNode extends AbstractSequence {
   simpleType: TypeSimpleNode | undefined;
   generic: TypeNode | undefined;
   tokenTypes: Set<TokenType> = new Set<TokenType>();

@@ -54,12 +54,12 @@ import { TermChained } from "../parse-nodes/term-chained";
 import { TermSimple } from "../parse-nodes/term-simple";
 import { ToClause } from "../parse-nodes/to-clause";
 import { TupleNode } from "../parse-nodes/tuple-node";
+import { TypeArrayNode } from "../parse-nodes/type-array-node";
 import { TypeDictionaryNode } from "../parse-nodes/type-dictionary-node";
 import { TypeFuncNode } from "../parse-nodes/type-func-node";
 import { TypeGenericNode } from "../parse-nodes/type-generic-node";
 import { TypeImmutableDictionaryNode } from "../parse-nodes/type-immutable-dictionary-node";
 import { TypeImmutableListNode } from "../parse-nodes/type-immutable-list-node";
-import { TypeListNode } from "../parse-nodes/type-list-node";
 import { TypeOfNode } from "../parse-nodes/type-of-node";
 import { TypeSimpleNode } from "../parse-nodes/type-simple-node";
 import { TypeTupleNode } from "../parse-nodes/type-tuple-node";
@@ -253,7 +253,7 @@ export function transform(
     return new TypeAsn(type, gp, fieldId, scope);
   }
 
-  if (node instanceof TypeListNode || node instanceof TypeImmutableListNode) {
+  if (node instanceof TypeArrayNode || node instanceof TypeImmutableListNode) {
     const type = node.simpleType!.matchedText;
     const gp = transform(node.generic, fieldId, scope)!;
     return new TypeAsn(type, [gp], fieldId, scope);
