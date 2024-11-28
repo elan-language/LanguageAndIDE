@@ -457,8 +457,8 @@ export function matchingSymbols(
   transforms: Transforms,
   scope: Scope,
 ): ElanSymbol[] {
-  if (spec.constrainingId) {
-    return matchingSymbolsWithQualifier(spec.toMatch, spec.constrainingId, transforms, scope);
+  if (spec.context) {
+    return matchingSymbolsWithQualifier(spec.toMatch, spec.context, transforms, scope);
   }
 
   const allNotExtensions = scope.symbolMatches(spec.toMatch, !spec.toMatch, scope).filter((s) => {

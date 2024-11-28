@@ -22,9 +22,8 @@ import { CompileStatus, DisplayStatus, ParseStatus } from "../status-enums";
 import { SymbolCompletionSpec, TokenType } from "../symbol-completion-helpers";
 import {
   filteredSymbols,
-  filtersForTokenType,
   isProperty,
-  removeIfSingleFullMatch,
+  removeIfSingleFullMatch
 } from "../symbols/symbol-helpers";
 import { UnknownType } from "../symbols/unknown-type";
 import { EmptyAsn } from "../syntax-nodes/empty-asn";
@@ -712,8 +711,8 @@ export abstract class AbstractField implements Selectable, Field {
   protected symbolCompletionAsHtml(transforms: Transforms): string {
     let popupAsHtml = "";
     const spec = this.getSymbolCompletionSpec();
-    if (spec.constrainingId === "") {
-      spec.constrainingId = this.extractContextFromText();
+    if (spec.context === "") {
+      spec.context = this.extractContextFromText();
     }
     const tokenTypes = spec.tokenTypes;
     if (this.showAutoComplete(tokenTypes)) {

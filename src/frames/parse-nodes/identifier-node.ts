@@ -7,12 +7,12 @@ import { matchRegEx } from "./parse-node-helpers";
 
 export class IdentifierNode extends AbstractParseNode {
   private tokenTypes: Set<TokenType>;
-  private constraintId: () => string;
+  private contextGenerator: () => string;
 
-  constructor(tokenTypes: Set<TokenType> = new Set<TokenType>(), constraintId = () => "") {
+  constructor(tokenTypes: Set<TokenType> = new Set<TokenType>(), contextGenerator = () => "") {
     super();
     this.tokenTypes = tokenTypes;
-    this.constraintId = constraintId;
+    this.contextGenerator = contextGenerator;
     this.completionWhenEmpty = "<i>name</i>";
   }
 
@@ -41,7 +41,7 @@ export class IdentifierNode extends AbstractParseNode {
     return this.tokenTypes;
   }
 
-  symbolCompletion_constraintId(): string {
-    return this.constraintId();
+  symbolCompletion_context(): string {
+    return this.contextGenerator();
   }
 }

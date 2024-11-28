@@ -10,18 +10,18 @@ import { SpaceNode } from "./space-node";
 export class ToClause extends AbstractSequence {
   property: IdentifierNode | undefined;
   expr: ExprNode | undefined;
-  private constraintId: () => string;
+  private context: () => string;
 
-  constructor(constraintId: () => string) {
+  constructor(context: () => string) {
     super();
-    this.constraintId = constraintId;
+    this.context = context;
     this.completionWhenEmpty = "<i>name</i> to <i>expression</i>";
   }
 
   parseText(text: string): void {
     this.property = new IdentifierNode(
       new Set<TokenType>([TokenType.id_property]),
-      this.constraintId,
+      this.context,
     );
     const sp0 = new SpaceNode(Space.required);
     const to = new KeywordNode(toKeyword);

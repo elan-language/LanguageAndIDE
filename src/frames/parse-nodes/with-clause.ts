@@ -8,11 +8,11 @@ import { ToClause } from "./to-clause";
 
 export class WithClause extends AbstractSequence {
   toClauses: CSV | undefined;
-  private constraintId: () => string;
+  private context: () => string;
 
-  constructor(constraintId: () => string) {
+  constructor(context: () => string) {
     super();
-    this.constraintId = constraintId;
+    this.context = context;
     this.completionWhenEmpty = " with <i>name</i> to <i>expression</i>";
   }
 
@@ -21,7 +21,7 @@ export class WithClause extends AbstractSequence {
       this.addElement(new SpaceNode(Space.added));
       this.addElement(new KeywordNode(withKeyword));
       this.addElement(new SpaceNode(Space.required));
-      this.toClauses = new CSV(() => new ToClause(this.constraintId), 1);
+      this.toClauses = new CSV(() => new ToClause(this.context), 1);
       this.addElement(this.toClauses);
       return super.parseText(text);
     }

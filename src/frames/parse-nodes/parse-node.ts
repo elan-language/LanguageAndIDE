@@ -19,7 +19,7 @@ export interface ParseNode {
   symbolCompletion_getSpec(): SymbolCompletionSpec;
   symbolCompletion_tokenTypes(): Set<TokenType>;
   symbolCompletion_keywords(): Set<string>;
-  symbolCompletion_constraintId(): string;
+  symbolCompletion_context(): string;
   symbolCompletion_toMatch(): string;
 
   getActiveNode(): ParseNode;

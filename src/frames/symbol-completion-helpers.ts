@@ -19,15 +19,15 @@ export class SymbolCompletionSpec {
     toMatch: string,
     tokenTypes: Set<TokenType>,
     keywords: Set<string>,
-    constrainingId: string,
+    context: string,
   ) {
     this.toMatch = toMatch;
     this.tokenTypes = tokenTypes;
     this.keywords = keywords;
-    this.constrainingId = constrainingId;
+    this.context = context;
   }
   toMatch: string = "";
   tokenTypes: Set<TokenType> = new Set<TokenType>();
   keywords: Set<string>;
-  constrainingId: string;
+  context: string;
 }
