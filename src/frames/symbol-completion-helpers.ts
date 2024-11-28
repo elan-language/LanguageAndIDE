@@ -24,24 +24,10 @@ export class SymbolCompletionSpec {
     this.toMatch = toMatch;
     this.tokenTypes = tokenTypes;
     this.keywords = keywords;
-    this.constrainingId = this.stripConstrainingId(constrainingId); 
+    this.constrainingId = constrainingId;
   }
   toMatch: string = "";
   tokenTypes: Set<TokenType> = new Set<TokenType>();
   keywords: Set<string>;
   constrainingId: string;
-
-  // strip off trailing dot and/or arguments & brackets
-  stripConstrainingId(input: string) {
-    let output = input;
-    if (output.endsWith(".")) {
-      output = output.slice(0, output.length - 1);
-    }
-    if (output.endsWith(")")) {
-      //TODO: needs to be more sophisticated - to ensure we get the *matching* bracket if there are multiple
-      const open = output.indexOf("(");
-      output = output.slice(0,open);
-    }
-    return output;
-  }
 }

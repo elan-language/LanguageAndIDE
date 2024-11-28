@@ -34,7 +34,7 @@ export class IdentifierNode extends AbstractParseNode {
   }
 
   matchesKeyword(): boolean {
-    return allKeywords.filter(k => this.matchedText === k).length > 0;
+    return allKeywords.filter((k) => this.matchedText === k).length > 0;
   }
 
   symbolCompletion_tokenTypes(): Set<TokenType> {

@@ -48,6 +48,4 @@ export class InstanceProcRef extends AbstractSequence {
       ? new Set<string>([libraryKeyword, propertyKeyword])
       : super.symbolCompletion_keywords();
   }
-
-
 }

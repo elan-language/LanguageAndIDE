@@ -76,10 +76,10 @@ export abstract class AbstractAlternatives extends AbstractParseNode {
 
   potentialMatches(): ParseNode[] {
     const best = this.bestMatch;
-    const bestMatchLength = best? best.matchedText.length: 0;
+    const bestMatchLength = best ? best.matchedText.length : 0;
     return this.alternatives.filter(
-      (alt) => alt.status !== ParseStatus.invalid &&
-      alt.matchedText.length === bestMatchLength);
+      (alt) => alt.status !== ParseStatus.invalid && alt.matchedText.length === bestMatchLength,
+    );
   }
 
   override symbolCompletion_tokenTypes(): Set<TokenType> {

@@ -604,8 +604,12 @@ export abstract class AbstractField implements Selectable, Field {
 
   matchingSymbolsForId(spec: SymbolCompletionSpec, transforms: Transforms): ElanSymbol[] {
     const symbols = filteredSymbols(spec, transforms, this.getHolder());
-
     return removeIfSingleFullMatch(symbols, spec.toMatch);
+  }
+
+  extractContextFromText(): string {
+    const rgx = /(.*\.)*(([A-Za-z_]*)(\(.*\))*)\..*/;
+    return rgx.test(this.text) ? this.text.match(rgx)![3] : "";
   }
 
   protected getDisplaySymbolId(symbol: ElanSymbol) {
@@ -708,6 +712,9 @@ export abstract class AbstractField implements Selectable, Field {
   protected symbolCompletionAsHtml(transforms: Transforms): string {
     let popupAsHtml = "";
     const spec = this.getSymbolCompletionSpec();
+    if (spec.constrainingId === "") {
+      spec.constrainingId = this.extractContextFromText();
+    }
     const tokenTypes = spec.tokenTypes;
     if (this.showAutoComplete(tokenTypes)) {
       this.autocompleteMatch = spec.toMatch;

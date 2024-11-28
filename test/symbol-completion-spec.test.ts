@@ -1,3 +1,4 @@
+import assert from "assert";
 import { Alternatives } from "../src/frames/parse-nodes/alternatives";
 import { AssignableNode } from "../src/frames/parse-nodes/assignable-node";
 import { ExprNode } from "../src/frames/parse-nodes/expr-node";
@@ -16,7 +17,7 @@ import { TokenType } from "../src/frames/symbol-completion-helpers";
 import { ignore_test } from "./compiler/compiler-test-helpers";
 import { testSymbolCompletionSpec } from "./testHelpers";
 
-suite("Symbol Completion", () => {
+suite("Symbol Completion Spec", () => {
   test("MethodCallNode", () => {
     testSymbolCompletionSpec(
       new MethodCallNode(),
@@ -230,7 +231,6 @@ suite("Symbol Completion", () => {
       "",
       [TokenType.id_property, TokenType.method_function, TokenType.method_system],
       [],
-      "foo",
     );
   });
   test("Expression_instanceDotCall", () => {
@@ -242,7 +242,6 @@ suite("Symbol Completion", () => {
       "",
       [TokenType.id_property, TokenType.method_function, TokenType.method_system],
       [],
-      "foo",
     );
   });
   test("InstanceProcRef", () => {
@@ -257,16 +256,19 @@ suite("Symbol Completion", () => {
       "foo",
     );
   });
-  ignore_test("Expression6", () => {
-    testSymbolCompletionSpec(
-      new ExprNode(),
-      "foo.ke",
-      ParseStatus.valid,
-      Alternatives.name,
-      "ke",
-      [TokenType.id_property, TokenType.method_function, TokenType.method_system],
-      [],
-      "foo",
-    );
+  test("RegexForExtractingContext", () => {
+    const rgx = /(.*\.)*(([A-Za-z_]*)(\(.*\))*)\..*/;
+    const test1 = "foo.bar().yon((3+4)*5).qux";
+    assert.equal(test1.match(rgx)![3], "yon");
+    const test2 = "foo.bar().yon((3+4)*5).";
+    assert.equal(test2.match(rgx)![3], "yon");
+    const test3 = "foo.bar().yon((3+4)*5)";
+    assert.equal(test3.match(rgx)![3], "bar");
+    const test4 = "foo.";
+    assert.equal(test4.match(rgx)![3], "foo");
+    const test5 = "foo";
+    assert.equal(rgx.test(test5), false);
+    const test6 = "foo(bar)";
+    assert.equal(rgx.test(test6), false);
   });
 });
