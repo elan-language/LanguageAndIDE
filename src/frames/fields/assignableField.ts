@@ -48,15 +48,11 @@ export class AssignableField extends AbstractField {
   override matchingSymbolsForId(spec: SymbolCompletionSpec, transforms: Transforms): ElanSymbol[] {
     const scope = this.getHolder();
     let symbols = filteredSymbols(spec, transforms, scope);
-
     if (isInsideClass(scope)) {
-      const prefix = "property.";
-
-      if (prefix.startsWith(spec.toMatch) && spec.toMatch.length <= prefix.length) {
+      if (propertyKeyword.startsWith(spec.toMatch)) {
         const allProperties = this.allPropertiesInScope();
-
         symbols = symbols.filter((s) => !allProperties.includes(s)).concat(allProperties);
-      } else if (spec.toMatch.startsWith(prefix)) {
+      } else if (spec.context === propertyKeyword) {
         const newSpec = new SymbolCompletionSpec(
           spec.toMatch,
           new Set<TokenType>([TokenType.id_property]),
@@ -66,7 +62,6 @@ export class AssignableField extends AbstractField {
         symbols = filteredSymbols(newSpec, transforms, scope);
       }
     }
-
     return removeIfSingleFullMatch(symbols, spec.toMatch);
   }
 
