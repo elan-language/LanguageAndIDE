@@ -1,4 +1,3 @@
-import { ProcRefField } from "../src/frames/fields/proc-ref-field";
 import { Alternatives } from "../src/frames/parse-nodes/alternatives";
 import { AssignableNode } from "../src/frames/parse-nodes/assignable-node";
 import { ExprNode } from "../src/frames/parse-nodes/expr-node";
@@ -14,6 +13,7 @@ import { TypeSimpleNode } from "../src/frames/parse-nodes/type-simple-node";
 import { TypeSimpleOrGeneric } from "../src/frames/parse-nodes/type-simple-or-generic";
 import { ParseStatus } from "../src/frames/status-enums";
 import { TokenType } from "../src/frames/symbol-completion-helpers";
+import { ignore_test } from "./compiler/compiler-test-helpers";
 import { testSymbolCompletionSpec } from "./testHelpers";
 
 suite("Symbol Completion", () => {
@@ -245,7 +245,7 @@ suite("Symbol Completion", () => {
       "foo",
     );
   });
-  test("Expression_instanceDotCall", () => {
+  test("InstanceProcRef", () => {
     testSymbolCompletionSpec(
       new InstanceProcRef(),
       "foo.wi",
@@ -253,6 +253,18 @@ suite("Symbol Completion", () => {
       IdentifierNode.name,
       "wi",
       [TokenType.method_procedure],
+      [],
+      "foo",
+    );
+  });
+  ignore_test("Expression6", () => {
+    testSymbolCompletionSpec(
+      new ExprNode(),
+      "foo.ke",
+      ParseStatus.valid,
+      Alternatives.name,
+      "ke",
+      [TokenType.id_property, TokenType.method_function, TokenType.method_system],
       [],
       "foo",
     );

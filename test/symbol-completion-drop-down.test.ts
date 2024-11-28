@@ -3,7 +3,7 @@ import { CodeSourceFromString, FileImpl } from "../src/frames/file-impl";
 import { ignore_test, testHash, transforms } from "./compiler/compiler-test-helpers";
 import { assertAutocompletes, assertAutocompletesWithString } from "./testHelpers";
 
-suite("Autocomplete", () => {
+suite("SymbolCompletionDropDown", () => {
   test("Pass_LocalVars", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
