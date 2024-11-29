@@ -174,7 +174,6 @@ button.icon:disabled img {
 
 button.plain, button.plain:hover, button.plain:active, button.plain:focus  {
     background-color: var(--idePanelBackground);
-    opacity: 75%;
     border: none;
     outline:none;
     height: 22px;
@@ -190,7 +189,7 @@ button.plain, button.plain:hover, button.plain:active, button.plain:focus  {
 }
 
 button.plain:hover:enabled, button.plain:active, button.plain:focus, #help *:hover {
-    opacity: 100%;
+  text-decoration: underline;
 }
 
 button.plain:disabled {
