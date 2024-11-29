@@ -551,27 +551,37 @@ function getIds(sid: string) {
 }
 
 function matchStart(id: string, s: ElanSymbol) {
-  const sids = getIds(s.symbolId).map((s) => s.toUpperCase());
+  let sids = getIds(s.symbolId);
+  if (!hasAnyUpperCase(id)) {
+    id = id.toUpperCase();
+    sids = sids.map((s) => s.toUpperCase());
+  }
   return sids.some((sid) => sid.startsWith(id));
 }
 
+function hasAnyUpperCase(id: string): boolean {
+  return Array.from(id).filter(c => c.toUpperCase() === c).length > 0;
+}
+
 function matchIncludes(id: string, s: ElanSymbol) {
-  const sids = getIds(s.symbolId).map((s) => s.toUpperCase());
+  let sids = getIds(s.symbolId);
+  if (!hasAnyUpperCase(id)) {
+    id = id.toUpperCase();
+    sids = sids.map((s) => s.toUpperCase());
+  }
   return sids.some((sid) => sid.includes(id));
 }
 
 export function symbolMatches(id: string, all: boolean, symbols: ElanSymbol[]) {
   if (all) {
     return symbols;
-  }
-
-  const uid = id.toUpperCase();
-  const sw = symbols.filter((s) => matchStart(uid, s));
+  };
+  const sw = symbols.filter((s) => matchStart(id, s));
   let inc: ElanSymbol[] = [];
-  const limit = 2; // only add includes if >= limit
+  const limit = 1; // only add includes if >= limit
 
-  if (uid.length >= limit) {
-    inc = symbols.filter((s) => !sw.includes(s)).filter((s) => matchIncludes(uid, s));
+  if (id.length >= limit) {
+    inc = symbols.filter((s) => !sw.includes(s)).filter((s) => matchIncludes(id, s));
   }
 
   return sw.concat(inc);
