@@ -1,5 +1,5 @@
 import { TokenType } from "../symbol-completion-helpers";
-import { CLOSE_SQ_BRACKET, COLON, OPEN_SQ_BRACKET } from "../symbols";
+import { COLON } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { PunctuationNode } from "./punctuation-node";
 import { TypeNode } from "./type-node";
@@ -22,13 +22,11 @@ export class TypeDictionaryNode extends AbstractSequence {
         new Set<TokenType>([TokenType.type_abstract, TokenType.type_concrete]),
       ); //Not added to elements, as not present in the text
       this.simpleType.parseText("Dictionary");
-      this.addElement(new PunctuationNode(OPEN_SQ_BRACKET));
       this.keyType = new TypeNode(this.tokenTypes);
       this.addElement(this.keyType);
       this.addElement(new PunctuationNode(COLON));
       this.valueType = new TypeNode(this.tokenTypes);
       this.addElement(this.valueType);
-      this.addElement(new PunctuationNode(CLOSE_SQ_BRACKET));
       super.parseText(text);
     }
   }

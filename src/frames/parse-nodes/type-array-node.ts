@@ -21,10 +21,8 @@ export class TypeArrayNode extends AbstractSequence {
         new Set<TokenType>([TokenType.type_abstract, TokenType.type_concrete]),
       ); //Not added to elements, as not present in the text
       this.simpleType.parseText("Array");
-      this.addElement(new PunctuationNode(OPEN_SQ_BRACKET));
       this.generic = new TypeNode(this.tokenTypes);
       this.addElement(this.generic);
-      this.addElement(new PunctuationNode(CLOSE_SQ_BRACKET));
       super.parseText(text);
     }
   }

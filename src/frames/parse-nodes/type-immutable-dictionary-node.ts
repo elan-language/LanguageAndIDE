@@ -22,13 +22,11 @@ export class TypeImmutableDictionaryNode extends AbstractSequence {
         new Set<TokenType>([TokenType.type_abstract, TokenType.type_concrete]),
       ); //Not added to elements, as not present in the text
       this.simpleType.parseText("ImmutableDictionary");
-      this.addElement(new PunctuationNode(OPEN_BRACE));
       this.keyType = new TypeNode(this.tokenTypes);
       this.addElement(this.keyType);
       this.addElement(new PunctuationNode(COLON));
       this.valueType = new TypeNode(this.tokenTypes);
       this.addElement(this.valueType);
-      this.addElement(new PunctuationNode(CLOSE_BRACE));
       super.parseText(text);
     }
   }

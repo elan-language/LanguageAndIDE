@@ -1,6 +1,9 @@
 import { TokenType } from "../symbol-completion-helpers";
-import { OPEN_BRACE, OPEN_BRACKET, OPEN_SQ_BRACKET } from "../symbols";
+import { CLOSE_BRACE, CLOSE_SQ_BRACKET, OPEN_BRACE, OPEN_BRACKET, OPEN_SQ_BRACKET } from "../symbols";
 import { AbstractAlternatives } from "./abstract-alternatives";
+import { Alternatives } from "./alternatives";
+import { PunctuationNode } from "./punctuation-node";
+import { Sequence } from "./sequence";
 import { TypeArrayNode } from "./type-array-node";
 import { TypeDictionaryNode } from "./type-dictionary-node";
 import { TypeFuncNode } from "./type-func-node";
@@ -27,12 +30,22 @@ export class TypeNode extends AbstractAlternatives {
         this.alternatives.push(new TypeFuncNode());
       } else if (text.trimStart().startsWith(OPEN_BRACKET)) {
         this.alternatives.push(new TypeTupleNode());
-      } else if (text.trimStart().startsWith(OPEN_SQ_BRACKET)) {
-        this.alternatives.push(new TypeArrayNode(this.tokenTypes));
-        this.alternatives.push(new TypeDictionaryNode(this.tokenTypes));
+      } else if (text.trimStart().startsWith(OPEN_SQ_BRACKET)) {  
+        const open = () => new PunctuationNode(OPEN_SQ_BRACKET);
+        const close = () => new PunctuationNode(CLOSE_SQ_BRACKET);
+        const array = () => new TypeArrayNode(this.tokenTypes);
+        const dict = () => new TypeDictionaryNode(this.tokenTypes);
+        const arrayDict = () => new Alternatives([array, dict]);
+        const typeInSqBrackets = new Sequence([open, arrayDict, close]);
+        this.alternatives.push(typeInSqBrackets);
       } else if (text.trimStart().startsWith(OPEN_BRACE)) {
-        this.alternatives.push(new TypeImmutableListNode(this.tokenTypes));
-        this.alternatives.push(new TypeImmutableDictionaryNode(this.tokenTypes));
+        const open = () => new PunctuationNode(OPEN_BRACE);
+        const close = () => new PunctuationNode(CLOSE_BRACE);
+        const immList = () => new TypeImmutableListNode(this.tokenTypes);
+        const immDict = () => new TypeImmutableDictionaryNode(this.tokenTypes);
+        const listDict = () => new Alternatives([immList, immDict]);
+        const typeInBraces = new Sequence([open, listDict, close]);
+        this.alternatives.push(typeInBraces);
       } else {
         this.alternatives.push(new TypeSimpleNode(this.tokenTypes));
         this.alternatives.push(new TypeGenericNode(this.tokenTypes));
