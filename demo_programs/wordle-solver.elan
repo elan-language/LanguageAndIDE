@@ -1,4 +1,4 @@
-# b6d522969b440c2eed29fdc74b6a6a09bf8cbcdf0653c82ba8656431def333e8 Elan Beta 4 valid
+# f11d1c9ed9a9f53d4622dad6bfb84f53ec6f5ada51103c5a9654146b879a1d38 Elan Beta 4 valid
 
 # Wordle Solver: in 'hard' mode (every attempt must be a valid possible answer)
 # Mark each letter of program's attempt word with:
@@ -12,8 +12,7 @@ main
   var mark set to ""
   var attempt set to "RAISE"
   while mark isnt "*****"
-    print attempt
-    set mark to inputString("")
+    set mark to inputString(attempt)
     set possible to possibleAnswersAfterAttempt(possible, attempt, mark)
     set attempt to bestAttempt(possible)
   end while
