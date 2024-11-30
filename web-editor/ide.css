@@ -188,7 +188,7 @@ button.plain, button.plain:hover, button.plain:active, button.plain:focus  {
     color: black; /* To prevent the help a-link being coloured mauve when visited*/
 }
 
-button.plain:hover:enabled, button.plain:active, button.plain:focus, #help *:hover {
+button.plain:hover:enabled, button.plain:active, button.plain:focus, #help *:hover, #help *:focus {
   text-decoration: underline;
 }
 
@@ -264,7 +264,8 @@ button#expand-collapse {
   color: white;
 }
 
-.elan-code:not( :focus-within) {
+.elan-code:not( :focus-within),
+ #graphics:not(:focus) {
   opacity: 0.75;  
 }
 
@@ -272,3 +273,4 @@ button#expand-collapse {
   background-color: var(--selection);
   width: 100%;
 }
+
