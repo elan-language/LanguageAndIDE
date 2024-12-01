@@ -76,7 +76,7 @@ end main`;
 main
   var foo set to 1
   var fooBar set to 2
-  set f to 1
+  set foo to 1
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -84,7 +84,7 @@ end main`;
 
     const expected = [["fooBar", "Int"]] as [string, string][];
 
-    await assertAutocompletes(fileImpl, "ident10", "oob", 1, expected);
+    await assertAutocompletes(fileImpl, "ident10", "b", 3, expected);
   });
 
   test("Pass_LocalVarsCaseInsensitive2", async () => {

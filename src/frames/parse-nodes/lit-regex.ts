@@ -32,6 +32,6 @@ export class LitRegEx extends AbstractSequence {
   }
 
   renderAsHtml(): string {
-    return `<el-regex>${this.renderAsSource()}</el-regex>`;
+    return `/<el-regex>${this.content?.renderAsHtml()}</el-regex>/`;
   }
 }

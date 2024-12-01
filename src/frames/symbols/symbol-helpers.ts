@@ -560,7 +560,7 @@ function matchStart(id: string, s: ElanSymbol) {
 }
 
 function hasAnyUpperCase(id: string): boolean {
-  return Array.from(id).filter(c => c.toUpperCase() === c).length > 0;
+  return Array.from(id).filter((c) => c.toUpperCase() === c).length > 0;
 }
 
 function matchIncludes(id: string, s: ElanSymbol) {
@@ -575,7 +575,7 @@ function matchIncludes(id: string, s: ElanSymbol) {
 export function symbolMatches(id: string, all: boolean, symbols: ElanSymbol[]) {
   if (all) {
     return symbols;
-  };
+  }
   const sw = symbols.filter((s) => matchStart(id, s));
   let inc: ElanSymbol[] = [];
   const limit = 1; // only add includes if >= limit

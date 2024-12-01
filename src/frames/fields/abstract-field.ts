@@ -249,13 +249,6 @@ export abstract class AbstractField implements Selectable, Field {
           this.codeHasChanged = true;
           this.holder.hasBeenAddedTo();
           this.editingField();
-        } else if (key && key.length > 1) {
-          for (const c of key) {
-            this.processInput(c);
-          }
-          this.codeHasChanged = true;
-          this.holder.hasBeenAddedTo();
-          this.editingField();
         }
       }
     }
