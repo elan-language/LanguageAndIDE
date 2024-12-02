@@ -249,7 +249,7 @@ async function showError(err: Error, fileName: string, reset: boolean) {
     let msg = "";
     let stack = "";
     if (err instanceof ElanRuntimeError) {
-      msg = "A Runtime error occured in the Elan code";
+      msg = "A Runtime error occurred in the Elan code";
       stack = err.elanStack;
     } else {
       msg =
