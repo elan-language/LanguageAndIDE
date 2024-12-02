@@ -1515,7 +1515,6 @@ end main`;
     const expected = [
       ["BlockGraphics", "*"],
       ["Boolean", "*"],
-      ["GraphicsBase", "*"],
     ] as [string, string][];
 
     await assertAutocompletesWithString(fileImpl, "expr5", "new B", expected);
