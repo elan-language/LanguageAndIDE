@@ -10,11 +10,13 @@ export class EmptyOfTypeNode extends AbstractSequence {
   type: TypeNode | undefined;
 
   parseText(text: string): void {
-    this.addElement(new KeywordNode(emptyKeyword));
-    this.addElement(new SpaceNode(Space.required));
-    this.type = new TypeNode(new Set<TokenType>([TokenType.type_concrete]));
-    this.addElement(this.type);
-    super.parseText(text);
+    if (text.trim().length > 0) {
+      this.addElement(new KeywordNode(emptyKeyword));
+      this.addElement(new SpaceNode(Space.required));
+      this.type = new TypeNode(new Set<TokenType>([TokenType.type_concrete]));
+      this.addElement(this.type);
+      super.parseText(text);
+    }
   }
 
   symbolCompletion_keywords(): Set<string> {

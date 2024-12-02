@@ -162,4 +162,12 @@ suite("Parsing - Completions", () => {
       "> <i>expression</i>",
     );
   });
+  test("#884", () => {
+    testCompletion(
+      new ExprNode(),
+      "3 +  ", //extra space
+      ParseStatus.incomplete,
+      "<i>expression</i>",
+    );
+  });
 });

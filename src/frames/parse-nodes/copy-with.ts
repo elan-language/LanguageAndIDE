@@ -24,7 +24,7 @@ export class CopyWith extends AbstractSequence {
   }
 
   parseText(text: string): void {
-    if (text.length > 0) {
+    if (text.trim().length > 0) {
       this.addElement(new KeywordNode(copyKeyword));
       this.addElement(new SpaceNode(Space.required));
       this.original = new IdentifierNode(this.tokenTypes);
