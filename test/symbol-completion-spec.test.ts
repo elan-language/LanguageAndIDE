@@ -182,8 +182,8 @@ suite("Symbol Completion Spec", () => {
       new ExprNode(),
       "empty [I",
       ParseStatus.incomplete,
-      TypeNode.name,
-      "[I",
+      Alternatives.name,
+      "I",
       [TokenType.type_concrete],
       [],
     );

@@ -15,12 +15,7 @@ export enum TokenType {
 }
 
 export class SymbolCompletionSpec {
-  constructor(
-    toMatch: string,
-    tokenTypes: Set<TokenType>,
-    keywords: Set<string>,
-    context: string,
-  ) {
+  constructor(toMatch: string, tokenTypes: Set<TokenType>, keywords: Set<string>, context: string) {
     this.toMatch = toMatch;
     this.tokenTypes = tokenTypes;
     this.keywords = keywords;

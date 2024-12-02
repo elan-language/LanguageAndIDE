@@ -20,11 +20,7 @@ import { CSV } from "../parse-nodes/csv";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { CompileStatus, DisplayStatus, ParseStatus } from "../status-enums";
 import { SymbolCompletionSpec, TokenType } from "../symbol-completion-helpers";
-import {
-  filteredSymbols,
-  isProperty,
-  removeIfSingleFullMatch
-} from "../symbols/symbol-helpers";
+import { filteredSymbols, isProperty, removeIfSingleFullMatch } from "../symbols/symbol-helpers";
 import { UnknownType } from "../symbols/unknown-type";
 import { EmptyAsn } from "../syntax-nodes/empty-asn";
 import { Transforms } from "../syntax-nodes/transforms";

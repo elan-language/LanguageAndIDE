@@ -13,7 +13,7 @@ import {
   isInsideClass,
   isMemberOnFieldsClass,
   isProperty,
-  removeIfSingleFullMatch
+  removeIfSingleFullMatch,
 } from "../symbols/symbol-helpers";
 import { transforms } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";

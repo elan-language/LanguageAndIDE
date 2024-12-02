@@ -60,6 +60,7 @@ import { TypeFuncNode } from "../parse-nodes/type-func-node";
 import { TypeGenericNode } from "../parse-nodes/type-generic-node";
 import { TypeImmutableDictionaryNode } from "../parse-nodes/type-immutable-dictionary-node";
 import { TypeImmutableListNode } from "../parse-nodes/type-immutable-list-node";
+import { TypeInDelimiters } from "../parse-nodes/type-in-delimiters";
 import { TypeOfNode } from "../parse-nodes/type-of-node";
 import { TypeSimpleNode } from "../parse-nodes/type-simple-node";
 import { TypeTupleNode } from "../parse-nodes/type-tuple-node";
@@ -299,6 +300,10 @@ export function transform(
       return transform(node.matchedNode, fieldId, scope);
     }
     return undefined;
+  }
+
+  if (node instanceof TypeInDelimiters) {
+    return transform(node.alternatives, fieldId, scope);
   }
 
   if (node instanceof WithClause) {

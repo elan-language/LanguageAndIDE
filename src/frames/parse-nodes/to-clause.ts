@@ -19,10 +19,7 @@ export class ToClause extends AbstractSequence {
   }
 
   parseText(text: string): void {
-    this.property = new IdentifierNode(
-      new Set<TokenType>([TokenType.id_property]),
-      this.context,
-    );
+    this.property = new IdentifierNode(new Set<TokenType>([TokenType.id_property]), this.context);
     const sp0 = new SpaceNode(Space.required);
     const to = new KeywordNode(toKeyword);
     const sp1 = new SpaceNode(Space.required);
