@@ -1,0 +1,13 @@
+# abb1b9c3dcd36e795e390fa60a1006c00409074fb12fd313d1153192538e4aa7 Elan Beta 4 valid
+
+main
+  var t set to new Turtle()
+  call t.placeAt(0, 0)
+  call t.turnToHeading(90)
+  call t.show()
+  for i from 75 to 0 step -1
+    call t.move(i)
+    call t.turn(90)
+    call t.pause(300)
+  end for
+end main
