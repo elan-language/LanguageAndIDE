@@ -11,7 +11,7 @@ export class IfExpr extends AbstractSequence {
   whenFalse: ExprNode | undefined;
 
   parseText(text: string): void {
-    if (text.length > 0) {
+    if (text.trim().length > 0) {
       this.addElement(new KeywordNode(ifKeyword));
       this.addElement(new SpaceNode(Space.required));
       this.condition = new ExprNode();

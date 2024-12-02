@@ -18,18 +18,20 @@ export class NewInstance extends AbstractSequence {
   withClause: OptionalNode | undefined;
 
   parseText(text: string): void {
-    this.addElement(new KeywordNode(newKeyword));
-    this.addElement(new SpaceNode(Space.required));
-    this.type = new TypeSimpleOrGeneric(new Set<TokenType>([TokenType.type_concrete]));
-    this.addElement(this.type);
-    this.addElement(new PunctuationNode(OPEN_BRACKET));
-    this.args = new CSV(() => new ExprNode(), 0);
-    this.args.setSyntaxCompletionWhenEmpty("<i>arguments</i>");
-    this.addElement(this.args);
-    this.addElement(new PunctuationNode(CLOSE_BRACKET));
-    this.withClause = new OptionalNode(new WithClause(() => this.type!.matchedText));
-    this.addElement(this.withClause);
-    super.parseText(text);
+    if (text.trim().length > 0) {
+      this.addElement(new KeywordNode(newKeyword));
+      this.addElement(new SpaceNode(Space.required));
+      this.type = new TypeSimpleOrGeneric(new Set<TokenType>([TokenType.type_concrete]));
+      this.addElement(this.type);
+      this.addElement(new PunctuationNode(OPEN_BRACKET));
+      this.args = new CSV(() => new ExprNode(), 0);
+      this.args.setSyntaxCompletionWhenEmpty("<i>arguments</i>");
+      this.addElement(this.args);
+      this.addElement(new PunctuationNode(CLOSE_BRACKET));
+      this.withClause = new OptionalNode(new WithClause(() => this.type!.matchedText));
+      this.addElement(this.withClause);
+      super.parseText(text);
+    }
   }
 
   symbolCompletion_keywords(): Set<string> {

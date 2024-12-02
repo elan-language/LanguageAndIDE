@@ -9,10 +9,12 @@ export class Qualifier extends AbstractAlternatives {
   }
 
   parseText(text: string): void {
-    const lib = new KeywordNode(libraryKeyword);
-    const prop = new KeywordNode(propertyKeyword);
-    this.alternatives.push(lib);
-    this.alternatives.push(prop);
-    super.parseText(text);
+    if (text.trim().length > 0) {
+      const lib = new KeywordNode(libraryKeyword);
+      const prop = new KeywordNode(propertyKeyword);
+      this.alternatives.push(lib);
+      this.alternatives.push(prop);
+      super.parseText(text);
+    }
   }
 }
