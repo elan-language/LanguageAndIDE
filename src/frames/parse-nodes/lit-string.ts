@@ -15,7 +15,4 @@ export class LitString extends AbstractAlternatives {
       super.parseText(text);
     }
   }
-  renderAsHtml(): string {
-    return `<el-str>${this.renderAsSource()}</el-str>`;
-  }
 }

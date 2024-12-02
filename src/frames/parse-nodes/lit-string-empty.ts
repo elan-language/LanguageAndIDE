@@ -3,11 +3,6 @@ import { AbstractSequence } from "./abstract-sequence";
 import { PunctuationNode } from "./punctuation-node";
 
 export class LitStringEmpty extends AbstractSequence {
-  constructor() {
-    super();
-    this.completionWhenEmpty = `"string"`;
-  }
-
   parseText(text: string): void {
     if (text.length > 0) {
       this.addElement(new PunctuationNode(DOUBLE_QUOTES));
@@ -16,6 +11,6 @@ export class LitStringEmpty extends AbstractSequence {
     }
   }
   renderAsHtml(): string {
-    return `<el-str>${this.renderAsSource()}</el-str>`;
+    return `""`;
   }
 }

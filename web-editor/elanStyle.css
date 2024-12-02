@@ -95,10 +95,6 @@ el-statement:not(.multiline), el-const{
     text-indent: -1ch;
 }
 
-.autocomplete-popup * {
-    text-indent: 0;
-}
-
 el-header, el-const, main, el-proc, el-func, el-enum, el-class, el-constructor, el-prop, el-member, el-global, el-test {
     display: block;
     padding-bottom: 1ch;
@@ -238,6 +234,12 @@ el-field.selected.empty el-compl, el-field.selected.empty el-compl *,
 el-field.selected.empty.optional el-compl, el-field.selected.empty.optional el-compl *  {
     display: none;
 }
+
+el-field .autocomplete-popup, el-field .autocomplete-popup * {
+    text-indent: 0;
+    background-color: lightgray;
+}
+
 
 /*  el-msg */
 el-msg {

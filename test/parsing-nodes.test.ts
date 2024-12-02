@@ -24,6 +24,7 @@ import { ListNode } from "../src/frames/parse-nodes/list-node";
 import { LitBoolean } from "../src/frames/parse-nodes/lit-boolean";
 import { LitFloat } from "../src/frames/parse-nodes/lit-float";
 import { LitInt } from "../src/frames/parse-nodes/lit-int";
+import { LitRegEx } from "../src/frames/parse-nodes/lit-regex";
 import { LitString } from "../src/frames/parse-nodes/lit-string";
 import { LitStringInterpolation } from "../src/frames/parse-nodes/lit-string-interpolation";
 import { LitStringNonEmpty } from "../src/frames/parse-nodes/lit-string-non-empty";
@@ -762,7 +763,7 @@ suite("Parsing Nodes", () => {
       "",
       "",
       "",
-      `{<el-str>"apple"</el-str>, <el-str>"pear"</el-str>}`,
+      `{"<el-str>apple</el-str>", "<el-str>pear</el-str>"}`,
     );
     testNodeParse(
       new ListNode(() => new LiteralNode()),
@@ -771,7 +772,7 @@ suite("Parsing Nodes", () => {
       "",
       "",
       "",
-      `{<el-str>"apple"</el-str>, <el-str>"pear"</el-str>}`,
+      `{"<el-str>apple</el-str>", "<el-str>pear</el-str>"}`,
     );
   });
   test("List of expressions", () => {
@@ -1301,7 +1302,7 @@ suite("Parsing Nodes", () => {
       "",
       "",
       "",
-      `{<el-str>"apple"</el-str>, <el-str>"pear"</el-str>}`,
+      `{"<el-str>apple</el-str>", "<el-str>pear</el-str>"}`,
     );
     testNodeParse(new LiteralNode(), `{4, 5, 2, 3}`, ParseStatus.valid, "", "", "", `{4, 5, 2, 3}`);
   });
@@ -1350,7 +1351,7 @@ suite("Parsing Nodes", () => {
     testNodeParse(new LitStringInterpolation(), "{}", ParseStatus.invalid, "", "{}", "", "");
   });
   test("LitString", () => {
-    testNodeParse(new LitString(), `""`, ParseStatus.valid, `""`, "", "", `<el-str>""</el-str>`);
+    testNodeParse(new LitString(), `""`, ParseStatus.valid, `""`, "", "", `""`);
     testNodeParse(
       new LitString(),
       `"abc"`,
@@ -1358,7 +1359,7 @@ suite("Parsing Nodes", () => {
       `"abc"`,
       "",
       "",
-      `<el-str>"abc"</el-str>`,
+      `"<el-str>abc</el-str>"`,
     );
     testNodeParse(
       new LitString(),
@@ -1367,7 +1368,7 @@ suite("Parsing Nodes", () => {
       `"abc def"`,
       "",
       "",
-      `<el-str>"abc def"</el-str>`,
+      `"<el-str>abc def</el-str>"`,
     );
     testNodeParse(new LitString(), `"abc`, ParseStatus.incomplete, `"abc`, "", "", "");
     testNodeParse(new LitString(), `"`, ParseStatus.incomplete, `"`, "", "", "");
@@ -1381,7 +1382,7 @@ suite("Parsing Nodes", () => {
       `"<p>abc</p>"`,
       "",
       `"<p>abc</p>"`,
-      `<el-str>"&lt;p&gt;abc&lt;/p&gt;"</el-str>`,
+      `"<el-str>&lt;p&gt;abc&lt;/p&gt;</el-str>"`,
     );
     testNodeParse(
       new LitStringNonEmpty(),
@@ -1390,7 +1391,7 @@ suite("Parsing Nodes", () => {
       `"&#123;curly braces&#125;"`,
       "",
       `"&#123;curly braces&#125;"`,
-      `<el-str>"&amp;#123;curly braces&amp;#125;"</el-str>`,
+      `"<el-str>&amp;#123;curly braces&amp;#125;</el-str>"`,
     );
   });
   test("Interpolated strings", () => {
@@ -1682,6 +1683,17 @@ suite("Parsing Nodes", () => {
       ParseStatus.incomplete,
       SpaceNode.name,
       false,
+    );
+  });
+  test("LitRegex", () => {
+    testNodeParse(
+      new LitRegEx(),
+      `/abc+.*/`,
+      ParseStatus.valid,
+      `/abc+.*/`,
+      "",
+      "/abc+.*/",
+      `/<el-regex>abc+.*</el-regex>/`,
     );
   });
 });

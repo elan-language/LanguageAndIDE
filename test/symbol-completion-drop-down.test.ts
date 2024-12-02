@@ -70,7 +70,24 @@ end main`;
     await assertAutocompletesWithString(fileImpl, "expr5", " ", 60);
   });
 
-  test("Pass_LocalVarsCaseInsensitive", async () => {
+  test("Pass_LocalVarsCaseInsensitive1", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+main
+  var foo set to 1
+  var fooBar set to 2
+  set foo to 1
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [["fooBar", "Int"]] as [string, string][];
+
+    await assertAutocompletes(fileImpl, "ident10", "b", 3, expected);
+  });
+
+  test("Pass_LocalVarsCaseInsensitive2", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
 main
@@ -82,10 +99,7 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [
-      ["foo", "Int"],
-      ["foobar", "Int"],
-    ] as [string, string][];
+    const expected = [] as [string, string][];
 
     await assertAutocompletes(fileImpl, "ident10", "O", 1, expected);
   });
@@ -1015,6 +1029,8 @@ end function`;
     const expected = [
       ["Float", "*"],
       ["Func", "*"],
+      ["TextFileReader", "*"],
+      ["TextFileWriter", "*"],
     ] as [string, string][];
 
     await assertAutocompletesWithString(fileImpl, "params6", "a as {F", expected);
@@ -1038,6 +1054,7 @@ end function`;
       ["BaseVG", "*"],
       ["BlockGraphics", "*"],
       ["Boolean", "*"],
+      ["GraphicsBase", "*"],
     ] as [string, string][];
 
     await assertAutocompletesWithString(fileImpl, "params6", "a as {Float:B", expected);
@@ -1061,6 +1078,7 @@ end function`;
       ["BaseVG", "*"],
       ["BlockGraphics", "*"],
       ["Boolean", "*"],
+      ["GraphicsBase", "*"],
     ] as [string, string][];
 
     await assertAutocompletesWithString(fileImpl, "params6", "a as Int, b as B", expected);
@@ -1497,6 +1515,7 @@ end main`;
     const expected = [
       ["BlockGraphics", "*"],
       ["Boolean", "*"],
+      ["GraphicsBase", "*"],
     ] as [string, string][];
 
     await assertAutocompletesWithString(fileImpl, "expr5", "new B", expected);
