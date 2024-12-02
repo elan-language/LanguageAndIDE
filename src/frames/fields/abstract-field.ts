@@ -223,8 +223,8 @@ export abstract class AbstractField implements Selectable, Field {
       }
       case "Delete": {
         if (e.selection || this.cursorPos < textLen) {
-          const [start, end] = e.selection ?? [this.cursorPos, this.cursorPos];
-          this.text = this.text.slice(0, start) + this.text.slice(end + 1);
+          const [start, end] = e.selection ?? [this.cursorPos, this.cursorPos + 1];
+          this.text = this.text.slice(0, start) + this.text.slice(end);
           this.parseCurrentText();
           this.codeHasChanged = true;
           this.editingField();
@@ -246,6 +246,13 @@ export abstract class AbstractField implements Selectable, Field {
           this.noLongerEditingField();
         } else if (key?.length === 1) {
           this.processInput(key);
+          this.codeHasChanged = true;
+          this.holder.hasBeenAddedTo();
+          this.editingField();
+        } else if (key && key.length > 1) {
+          for (const c of key) {
+            this.processInput(c);
+          }
           this.codeHasChanged = true;
           this.holder.hasBeenAddedTo();
           this.editingField();
