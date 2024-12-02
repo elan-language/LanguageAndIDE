@@ -1,0 +1,29 @@
+# f16290b8167b06f6017181f329cea172be410ba3d7e68453436cb0fd751efd6e Elan Beta 4 valid
+
+main
+  var vg set to new VectorGraphics()
+  let bubbles be new Array<of CircleVG>()
+  for i from 0 to 19 step 1
+    let b be new CircleVG() with cx to i*5 + 2, cy to 75, r to 1, fill to -1, stroke to white
+    call bubbles.append(b)
+    set vg to vg.add(b)
+  end for
+  while true
+    call refresh(bubbles, vg)
+    call pause(5)
+  end while
+end main
+
+procedure refresh(bubbles as [CircleVG], out vg as VectorGraphics)
+  for i from 0 to 19 step 1
+    let b be bubbles[i]
+    var b2 set to copy b with cy to b.cy - 1, r to b.r + 0.2
+    if random() < 0.05
+      then
+        set b2 to copy b2 with cx to randomInt(0, 99), r to 1, cy to 75, stroke to randomInt(0, 2^24 - 1)
+    end if
+    set vg to vg.replace(b, b2)
+    call bubbles.putAt(i, b2)
+    call vg.display()
+  end for
+end procedure
