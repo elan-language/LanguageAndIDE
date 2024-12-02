@@ -440,7 +440,7 @@ function enable(button: HTMLButtonElement, msg = "") {
 }
 
 function getEditorMsg(
-  type: "key" | "click" | "dblclick",
+  type: "key" | "click" | "dblclick" | "paste",
   target: "frame" | "window",
   id: string | undefined,
   key: string | undefined,
@@ -449,6 +449,7 @@ function getEditorMsg(
   autocomplete: string | undefined,
 ): editorEvent {
   switch (type) {
+    case "paste":
     case "key":
       return {
         type: type,
@@ -475,7 +476,7 @@ function handlePaste(event: Event, target: HTMLInputElement, msg: editorEvent): 
   target.addEventListener("paste", async (event: ClipboardEvent) => {
     const txt = await navigator.clipboard.readText();
     const mk = { control: false, shift: false, alt: false };
-    await handleEditorEvent(event, "key", "frame", mk, msg.id, txt);
+    await handleEditorEvent(event, "paste", "frame", mk, msg.id, txt);
   });
   event.stopPropagation();
   return true;
@@ -510,8 +511,12 @@ function handleCutAndPaste(event: Event, msg: editorEvent) {
   return false;
 }
 
-function isSupportedKey(key: string | undefined) {
-  switch (key) {
+function isSupportedKey(evt: editorEvent) {
+  if (evt.type === "paste") {
+    return true;
+  }
+
+  switch (evt.key) {
     case "Home":
     case "End":
     case "Tab":
@@ -524,13 +529,13 @@ function isSupportedKey(key: string | undefined) {
     case "Delete":
       return true;
     default:
-      return !key || key.length === 1;
+      return !evt.key || evt.key.length === 1;
   }
 }
 
 async function handleEditorEvent(
   event: Event,
-  type: "key" | "click" | "dblclick",
+  type: "key" | "click" | "dblclick" | "paste",
   target: "frame" | "window",
   modKey: { control: boolean; shift: boolean; alt: boolean },
   id?: string | undefined,
@@ -538,12 +543,12 @@ async function handleEditorEvent(
   selection?: [number, number] | undefined,
   autocomplete?: string | undefined,
 ) {
-  if (!isSupportedKey(key)) {
+  const msg = getEditorMsg(type, target, id, key, modKey, selection, autocomplete);
+
+  if (!isSupportedKey(msg)) {
     // discard
     return;
   }
-
-  const msg = getEditorMsg(type, target, id, key, modKey, selection, autocomplete);
 
   if (handleCutAndPaste(event, msg)) {
     return;
@@ -803,6 +808,7 @@ async function handleKeyAndRender(e: editorEvent) {
           await renderAsHtml();
         }
         return;
+      case "paste":
       case "key":
         const codeChanged = handleKey(e, file);
         if (codeChanged === true) {
