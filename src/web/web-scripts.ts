@@ -510,6 +510,24 @@ function handleCutAndPaste(event: Event, msg: editorEvent) {
   return false;
 }
 
+function isSupportedKey(key: string | undefined) {
+  switch (key) {
+    case "Home":
+    case "End":
+    case "Tab":
+    case "Enter":
+    case "ArrowLeft":
+    case "ArrowRight":
+    case "ArrowUp":
+    case "ArrowDown":
+    case "Backspace":
+    case "Delete":
+      return true;
+    default:
+      return !key || key.length === 1;
+  }
+}
+
 async function handleEditorEvent(
   event: Event,
   type: "key" | "click" | "dblclick",
@@ -520,6 +538,11 @@ async function handleEditorEvent(
   selection?: [number, number] | undefined,
   autocomplete?: string | undefined,
 ) {
+  if (!isSupportedKey(key)) {
+    // discard
+    return;
+  }
+
   const msg = getEditorMsg(type, target, id, key, modKey, selection, autocomplete);
 
   if (handleCutAndPaste(event, msg)) {
