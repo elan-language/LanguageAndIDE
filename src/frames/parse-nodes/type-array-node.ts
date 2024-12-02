@@ -5,7 +5,7 @@ import { PunctuationNode } from "./punctuation-node";
 import { TypeNode } from "./type-node";
 import { TypeSimpleNode } from "./type-simple-node";
 
-export class TypeListNode extends AbstractSequence {
+export class TypeArrayNode extends AbstractSequence {
   simpleType: TypeSimpleNode | undefined;
   generic: TypeNode | undefined;
   tokenTypes: Set<TokenType> = new Set<TokenType>();
@@ -21,11 +21,12 @@ export class TypeListNode extends AbstractSequence {
         new Set<TokenType>([TokenType.type_abstract, TokenType.type_concrete]),
       ); //Not added to elements, as not present in the text
       this.simpleType.parseText("Array");
-      this.addElement(new PunctuationNode(OPEN_SQ_BRACKET));
       this.generic = new TypeNode(this.tokenTypes);
       this.addElement(this.generic);
-      this.addElement(new PunctuationNode(CLOSE_SQ_BRACKET));
       super.parseText(text);
     }
+  }
+  override symbolCompletion_tokenTypes(): Set<TokenType> {
+    return this.matchedText.length === 0 ? this.tokenTypes : super.symbolCompletion_tokenTypes();
   }
 }

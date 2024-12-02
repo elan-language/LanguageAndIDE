@@ -6,11 +6,11 @@ import { CodeSourceFromString } from "../src/frames/code-source";
 import { DefaultProfile } from "../src/frames/default-profile";
 import { AbstractField } from "../src/frames/fields/abstract-field";
 import { FileImpl } from "../src/frames/file-impl";
-import { TokenType } from "../src/frames/symbol-completion-helpers";
 import { editorEvent } from "../src/frames/interfaces/editor-event";
 import { File } from "../src/frames/interfaces/file";
 import { ParseNode } from "../src/frames/parse-nodes/parse-node";
 import { ParseStatus } from "../src/frames/status-enums";
+import { TokenType } from "../src/frames/symbol-completion-helpers";
 import { BooleanType } from "../src/frames/symbols/boolean-type";
 import { FloatType } from "../src/frames/symbols/float-type";
 import { IntType } from "../src/frames/symbols/int-type";
@@ -387,7 +387,7 @@ export function testSymbolCompletionSpec(node: ParseNode, text: string, status: 
   assert.equal(spec.toMatch, toMatch);
   assert.equal(Array.from(spec.tokenTypes).join(","), tokenTypes.join(","));
   assert.equal(Array.from(spec.keywords).join(","), keywords.join(","));
-  assert.equal(spec.constrainingId, constrainingId);
+  assert.equal(spec.context, constrainingId);
 }
 
 export function testCompletion(

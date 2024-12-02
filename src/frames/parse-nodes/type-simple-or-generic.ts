@@ -19,4 +19,8 @@ export class TypeSimpleOrGeneric extends AbstractAlternatives {
       super.parseText(text);
     }
   }
+
+  override symbolCompletion_tokenTypes(): Set<TokenType> {
+    return this.matchedText.length === 0 ? this.tokenTypes : super.symbolCompletion_tokenTypes();
+  }
 }

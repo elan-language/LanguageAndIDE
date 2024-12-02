@@ -19,13 +19,8 @@ import { Overtyper } from "../overtyper";
 import { CSV } from "../parse-nodes/csv";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { CompileStatus, DisplayStatus, ParseStatus } from "../status-enums";
-import { SymbolCompletionSpec_Old, TokenType } from "../symbol-completion-helpers";
-import {
-  filterForTokenType,
-  filteredSymbols,
-  isProperty,
-  removeIfSingleFullMatch,
-} from "../symbols/symbol-helpers";
+import { SymbolCompletionSpec, TokenType } from "../symbol-completion-helpers";
+import { filteredSymbols, isProperty, removeIfSingleFullMatch } from "../symbols/symbol-helpers";
 import { UnknownType } from "../symbols/unknown-type";
 import { EmptyAsn } from "../syntax-nodes/empty-asn";
 import { Transforms } from "../syntax-nodes/transforms";
@@ -602,19 +597,14 @@ export abstract class AbstractField implements Selectable, Field {
     return UnknownType.Instance;
   }
 
-  matchingSymbolsForId(
-    id: string,
-    tokenType: TokenType,
-    transforms: Transforms,
-  ): [string, ElanSymbol[]] {
-    const [match, symbols] = filteredSymbols(
-      id,
-      transforms,
-      filterForTokenType(tokenType),
-      this.getHolder(),
-    );
+  matchingSymbolsForId(spec: SymbolCompletionSpec, transforms: Transforms): ElanSymbol[] {
+    const symbols = filteredSymbols(spec, transforms, this.getHolder());
+    return removeIfSingleFullMatch(symbols, spec.toMatch);
+  }
 
-    return [match, removeIfSingleFullMatch(symbols, match)];
+  extractContextFromText(): string {
+    const rgx = /(.*\.)*(([A-Za-z_]*)(\(.*\))*)\..*/;
+    return rgx.test(this.text) ? this.text.match(rgx)![3] : "";
   }
 
   protected getDisplaySymbolId(symbol: ElanSymbol) {
@@ -699,31 +689,31 @@ export abstract class AbstractField implements Selectable, Field {
     }
   }
 
-  protected showAutoComplete(tt: TokenType) {
+  protected showAutoComplete(tt: Set<TokenType>) {
     return (
-      tt !== TokenType.none &&
+      tt.size > 0 &&
       this.selected &&
       this.cursorPos === this.text.length &&
       this.readParseStatus() !== ParseStatus.invalid
     );
   }
 
-  protected getSymbolCompletionSpecOld(): SymbolCompletionSpec_Old {
+  protected getSymbolCompletionSpec(): SymbolCompletionSpec {
     return this.rootNode
-      ? this.rootNode.symbolCompletion_getSpec_Old()
-      : new SymbolCompletionSpec_Old("", new Set<TokenType>([TokenType.none]));
+      ? this.rootNode.symbolCompletion_getSpec()
+      : new SymbolCompletionSpec("", new Set<TokenType>(), new Set<string>(), "");
   }
 
   protected symbolCompletionAsHtml(transforms: Transforms): string {
     let popupAsHtml = "";
-    const spec = this.getSymbolCompletionSpecOld();
-    const tokenType = spec.tokenTypes.values().next()!.value!;
-    if (this.showAutoComplete(tokenType)) {
-      [this.autocompleteMatch, this.autocompleteSymbols] = this.matchingSymbolsForId(
-        spec.toMatch,
-        tokenType,
-        transforms,
-      );
+    const spec = this.getSymbolCompletionSpec();
+    if (spec.context === "") {
+      spec.context = this.extractContextFromText();
+    }
+    const tokenTypes = spec.tokenTypes;
+    if (this.showAutoComplete(tokenTypes)) {
+      this.autocompleteMatch = spec.toMatch;
+      this.autocompleteSymbols = this.matchingSymbolsForId(spec, transforms);
       popupAsHtml = this.popupAsHtml();
     }
     return popupAsHtml;

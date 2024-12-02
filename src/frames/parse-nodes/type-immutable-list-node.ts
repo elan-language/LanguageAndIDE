@@ -22,10 +22,8 @@ export class TypeImmutableListNode extends AbstractSequence {
         new Set<TokenType>([TokenType.type_abstract, TokenType.type_concrete]),
       ); //Not added to elements, as not present in the text
       this.simpleType.parseText("List");
-      this.addElement(new PunctuationNode(OPEN_BRACE));
       this.generic = new TypeNode(this.tokenTypes);
       this.addElement(this.generic);
-      this.addElement(new PunctuationNode(CLOSE_BRACE));
       super.parseText(text);
     }
   }

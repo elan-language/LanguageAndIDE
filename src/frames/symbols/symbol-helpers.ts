@@ -6,7 +6,8 @@ import {
   cannotAccessPrivateMemberInAbstractClass,
 } from "../compile-rules";
 import { ClassFrame } from "../globals/class-frame";
-import { isConstant, isFile, isMember, isScope } from "../helpers";
+import { Enum } from "../globals/enum";
+import { isClass, isConstant, isFile, isMember, isScope } from "../helpers";
 import { AstNode } from "../interfaces/ast-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { Class } from "../interfaces/class";
@@ -22,7 +23,7 @@ import { Parent } from "../interfaces/parent";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { libraryKeyword } from "../keywords";
-import { TokenType } from "../symbol-completion-helpers";
+import { SymbolCompletionSpec, TokenType } from "../symbol-completion-helpers";
 import { isAstIdNode, isAstQualifiedNode, transforms } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractDictionaryType } from "./abstract-dictionary-type";
@@ -31,6 +32,7 @@ import { ArrayType } from "./array-list-type";
 import { BooleanType } from "./boolean-type";
 import { ClassType } from "./class-type";
 import { DictionaryType } from "./dictionary-type";
+import { EnumType } from "./enum-type";
 import { FloatType } from "./float-type";
 import { FunctionType } from "./function-type";
 import { GenericParameterType } from "./generic-parameter-type";
@@ -82,6 +84,10 @@ export function isVarStatement(s?: ElanSymbol): boolean {
   return !!s && "isVarStatement" in s;
 }
 
+export function isLetStatement(s?: ElanSymbol): boolean {
+  return !!s && "isLet" in s;
+}
+
 export function isProperty(s?: ElanSymbol): s is Property {
   return !!s && "isProperty" in s;
 }
@@ -90,12 +96,24 @@ export function isOutParameter(s?: ElanSymbol): boolean {
   return !!s && s.symbolScope === SymbolScope.outParameter;
 }
 
+export function isParameter(s?: ElanSymbol): boolean {
+  return !!s && s.symbolScope === SymbolScope.parameter;
+}
+
 export function isAssignable(s?: ElanSymbol): boolean {
   return !!s && (isVarStatement(s) || isProperty(s) || isOutParameter(s));
 }
 
 export function isClassTypeDef(s?: ElanSymbol | Scope): s is Class {
   return !!s && "genericParamMatches" in s;
+}
+
+export function isEnumValue(s?: ElanSymbol): boolean {
+  return !!s && s.symbolType() instanceof EnumType;
+}
+
+export function isEnum(s?: ElanSymbol): boolean {
+  return !!s && s instanceof Enum;
 }
 
 export function isMemberOnFieldsClass(s: ElanSymbol, transforms: Transforms, scope: Scope) {
@@ -345,6 +363,22 @@ export function isFunction(s: ElanSymbol, transforms: Transforms) {
   return s.symbolType(transforms) instanceof FunctionType;
 }
 
+export function isPureFunction(s: ElanSymbol, transforms: Transforms) {
+  if (isFunction(s, transforms)) {
+    const ft = s.symbolType();
+    return ft instanceof FunctionType && ft.isPure;
+  }
+  return false;
+}
+
+export function isSystemFunction(s: ElanSymbol, transforms: Transforms) {
+  if (isFunction(s, transforms)) {
+    const ft = s.symbolType();
+    return ft instanceof FunctionType && !ft.isPure;
+  }
+  return false;
+}
+
 export function isFunctionType(s: SymbolType): s is FunctionType {
   return !!s && s instanceof FunctionType;
 }
@@ -362,30 +396,35 @@ export function isTypeName(s?: ElanSymbol) {
   return firstChar.toUpperCase() === firstChar;
 }
 
+export function isAbstractClass(s?: ElanSymbol) {
+  return isClass(s) && s.abstract;
+}
+
+export function isConcreteTypeName(s?: ElanSymbol) {
+  return isTypeName(s) && !isAbstractClass(s);
+}
+
+export function isAbstractTypeName(s?: ElanSymbol) {
+  return isTypeName(s) && isAbstractClass(s);
+}
+
 function upToParams(id: string) {
   const openParamsIndex = id.indexOf("(");
   return openParamsIndex >= 0 ? id.slice(0, openParamsIndex) : id;
 }
 
 function matchingSymbolsWithQualifier(
-  id: string,
-  dotIndex: number,
+  propId: string,
+  qualId: string,
   transforms: Transforms,
   scope: Scope,
-): [string, ElanSymbol[]] {
-  let qualId = id.slice(0, dotIndex);
-  const propId = id.slice(dotIndex + 1);
-
-  const closeParamsIndex = qualId.indexOf(")");
-
-  qualId = upToParams(qualId);
-
+): ElanSymbol[] {
   const qual = scope.resolveSymbol(qualId, transforms, scope);
 
   // class scope so all or matching symbols on class
   let qualSt = qual.symbolType(transforms);
 
-  if (isFunctionType(qualSt) && closeParamsIndex > 0) {
+  if (isFunctionType(qualSt)) {
     qualSt = qualSt.returnType;
   }
 
@@ -410,30 +449,19 @@ function matchingSymbolsWithQualifier(
       );
     });
 
-  return [propId, classSymbols.concat(allExtensions)];
+  return classSymbols.concat(allExtensions);
 }
 
 export function matchingSymbols(
-  id: string,
+  spec: SymbolCompletionSpec,
   transforms: Transforms,
   scope: Scope,
-): [string, ElanSymbol[]] {
-  const tokens = id.split(" ");
-  id = tokens.length > 0 ? tokens[tokens.length - 1].trim() : "";
-  const dotIndex = id.indexOf(".");
-
-  if (dotIndex >= 0) {
-    return matchingSymbolsWithQualifier(id, dotIndex, transforms, scope);
+): ElanSymbol[] {
+  if (spec.context) {
+    return matchingSymbolsWithQualifier(spec.toMatch, spec.context, transforms, scope);
   }
 
-  const openParamsIndex = id.indexOf("(");
-  const closeParamsIndex = id.indexOf(")");
-
-  if (openParamsIndex >= 0 && closeParamsIndex === -1) {
-    id = id.slice(openParamsIndex + 1);
-  }
-
-  const allNotExtensions = scope.symbolMatches(id, !id, scope).filter((s) => {
+  const allNotExtensions = scope.symbolMatches(spec.toMatch, !spec.toMatch, scope).filter((s) => {
     const st = s.symbolType(transforms);
     let isCall = false;
     let isExtension = false;
@@ -445,7 +473,7 @@ export function matchingSymbols(
     return !isCall || (isCall && !isExtension);
   });
 
-  return [id, allNotExtensions];
+  return allNotExtensions;
 }
 
 export function removeIfSingleFullMatch(symbols: ElanSymbol[], id: string): ElanSymbol[] {
@@ -460,21 +488,30 @@ function orderSymbol(s1: ElanSymbol, s2: ElanSymbol) {
   return s1.symbolId.localeCompare(s2.symbolId);
 }
 
+function filterSymbols(matches: ElanSymbol[], filters: ((s: ElanSymbol) => boolean)[]) {
+  let filtered: ElanSymbol[] = [];
+
+  for (const f of filters) {
+    filtered = filtered.concat(matches.filter(f));
+  }
+
+  return filtered.filter((e) => !e.symbolId.startsWith("_"));
+}
+
 export function filteredSymbols(
-  text: string,
+  spec: SymbolCompletionSpec,
   transforms: Transforms,
-  filter: (s: ElanSymbol) => boolean,
   scope: Scope,
-): [string, ElanSymbol[]] {
-  const id = removeTypeSymbols(text);
-  const [match, matches] = matchingSymbols(id, transforms, scope);
-  const filtered = matches.filter(filter).filter((e) => !e.symbolId.startsWith("_"));
+): ElanSymbol[] {
+  const matches = matchingSymbols(spec, transforms, scope);
+  const filters = filtersForTokenType(spec.tokenTypes, transforms);
+  const filtered = filterSymbols(matches, filters);
 
   const startsWith = filtered
-    .filter((s) => s.symbolId.toUpperCase().startsWith(match.toUpperCase()))
+    .filter((s) => s.symbolId.toUpperCase().startsWith(spec.toMatch.toUpperCase()))
     .sort(orderSymbol);
   const includes = filtered.filter((s) => !startsWith.includes(s)).sort(orderSymbol);
-  return [match, startsWith.concat(includes)];
+  return startsWith.concat(includes);
 }
 
 export function hasPrivateMembers(ct: ClassType) {
@@ -598,21 +635,51 @@ export function removeTypeSymbols(s: string) {
   return id;
 }
 
-export function filterForTokenType(tt: TokenType): (s?: ElanSymbol) => boolean {
+export function filterForTokenType(
+  tt: TokenType,
+  transforms: Transforms,
+): (s?: ElanSymbol) => boolean {
   switch (tt) {
-    case TokenType.assignable:
-      return isAssignable;
+    case TokenType.method_function:
+      return (s?: ElanSymbol) => isPureFunction(s!, transforms);
+    case TokenType.method_procedure:
+      return (s?: ElanSymbol) => isProcedure(s!, transforms);
+    case TokenType.method_system:
+      return (s?: ElanSymbol) => isSystemFunction(s!, transforms);
+    case TokenType.type_concrete:
+      return isConcreteTypeName;
+    case TokenType.type_abstract:
+      return isAbstractTypeName;
+    case TokenType.type_enum:
+      return isEnum;
+    case TokenType.id_constant:
+      return isConstant;
+    case TokenType.id_let:
+      return isLetStatement;
+    case TokenType.id_variable:
+      return isVarStatement;
+    case TokenType.id_parameter_regular:
+      return isParameter;
+    case TokenType.id_parameter_out:
+      return isOutParameter;
     case TokenType.id_property:
       return isProperty;
-    case TokenType.type:
-      return isTypeName;
-    case TokenType.idOrProcedure:
-      return (s?: ElanSymbol) => isIdOrProcedure(s!, transforms());
-    case TokenType.expression:
-      return (s?: ElanSymbol) => isExpression(s!, transforms()) && !isTypeName(s);
-    default:
-      return () => false;
+    case TokenType.id_enumValue:
+      return isEnumValue;
   }
+}
+
+export function filtersForTokenType(
+  tokenTypes: Set<TokenType>,
+  transforms: Transforms,
+): ((s?: ElanSymbol) => boolean)[] {
+  const filters: ((s?: ElanSymbol) => boolean)[] = [];
+
+  for (const f of tokenTypes) {
+    filters.push(filterForTokenType(f, transforms));
+  }
+
+  return filters;
 }
 
 export function symbolScopeToFriendlyName(ss: SymbolScope) {

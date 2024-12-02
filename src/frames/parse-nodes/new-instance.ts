@@ -1,5 +1,5 @@
 import { newKeyword } from "../keywords";
-import { SymbolCompletionSpec_Old, TokenType } from "../symbol-completion-helpers";
+import { TokenType } from "../symbol-completion-helpers";
 import { CLOSE_BRACKET, OPEN_BRACKET } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { CSV } from "./csv";
@@ -30,23 +30,6 @@ export class NewInstance extends AbstractSequence {
     this.withClause = new OptionalNode(new WithClause(() => this.type!.matchedText));
     this.addElement(this.withClause);
     super.parseText(text);
-  }
-
-  symbolCompletion_getSpec_Old(): SymbolCompletionSpec_Old {
-    const spec = this.withClause!.symbolCompletion_getSpec_Old();
-    const id = spec.toMatch;
-    const tokenType = spec.tokenTypes.values().next()!.value!;
-    if (tokenType !== TokenType.none) {
-      return new SymbolCompletionSpec_Old(
-        `${this.type?.matchedText}.${id}`,
-        new Set<TokenType>([tokenType]),
-      );
-    }
-
-    return new SymbolCompletionSpec_Old(
-      this.type?.matchedText ?? "",
-      new Set<TokenType>([TokenType.type]),
-    );
   }
 
   symbolCompletion_keywords(): Set<string> {

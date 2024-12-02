@@ -1,5 +1,4 @@
 import { CodeSource } from "../code-source";
-import { TokenType } from "../symbol-completion-helpers";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Frame } from "../interfaces/frame";
 import { propertyKeyword } from "../keywords";
@@ -8,9 +7,9 @@ import { AssignableNode } from "../parse-nodes/assignable-node";
 import { DeconstructedList } from "../parse-nodes/deconstructed-list";
 import { DeconstructedTuple } from "../parse-nodes/deconstructed-tuple";
 import { ParseNode } from "../parse-nodes/parse-node";
+import { SymbolCompletionSpec, TokenType } from "../symbol-completion-helpers";
 import {
   filteredSymbols,
-  filterForTokenType,
   isInsideClass,
   isMemberOnFieldsClass,
   isProperty,
@@ -46,31 +45,24 @@ export class AssignableField extends AbstractField {
     return all.filter((s) => isProperty(s)) as ElanSymbol[];
   }
 
-  override matchingSymbolsForId(
-    id: string,
-    tokenType: TokenType,
-    transforms: Transforms,
-  ): [string, ElanSymbol[]] {
+  override matchingSymbolsForId(spec: SymbolCompletionSpec, transforms: Transforms): ElanSymbol[] {
     const scope = this.getHolder();
-    let symbols = filteredSymbols(id, transforms, filterForTokenType(tokenType), scope);
-
+    let symbols = filteredSymbols(spec, transforms, scope);
     if (isInsideClass(scope)) {
-      const prefix = "property.";
-
-      if (prefix.startsWith(id) && id.length <= prefix.length) {
-        const [match, existing] = symbols;
+      if (propertyKeyword.startsWith(spec.toMatch)) {
         const allProperties = this.allPropertiesInScope();
-
-        const updated = existing.filter((s) => !allProperties.includes(s)).concat(allProperties);
-        symbols = [match, updated];
-      } else if (id.startsWith(prefix)) {
-        const [match] = symbols;
-        symbols = filteredSymbols(match, transforms, (s) => isProperty(s), scope);
+        symbols = symbols.filter((s) => !allProperties.includes(s)).concat(allProperties);
+      } else if (spec.context === propertyKeyword) {
+        const newSpec = new SymbolCompletionSpec(
+          spec.toMatch,
+          new Set<TokenType>([TokenType.id_property]),
+          new Set<string>(),
+          "",
+        );
+        symbols = filteredSymbols(newSpec, transforms, scope);
       }
     }
-    const [match, origSymbols] = symbols;
-
-    return [match, removeIfSingleFullMatch(origSymbols, match)];
+    return removeIfSingleFullMatch(symbols, spec.toMatch);
   }
 
   protected override getSymbolCompleteId(s: ElanSymbol) {

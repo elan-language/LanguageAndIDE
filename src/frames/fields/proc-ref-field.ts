@@ -1,5 +1,4 @@
 import { CodeSource } from "../code-source";
-import { TokenType } from "../symbol-completion-helpers";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Frame } from "../interfaces/frame";
 import { Alternatives } from "../parse-nodes/alternatives";
@@ -7,6 +6,7 @@ import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { InstanceProcRef } from "../parse-nodes/instanceProcRef";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { ParseStatus } from "../status-enums";
+import { TokenType } from "../symbol-completion-helpers";
 import { isProcedure } from "../symbols/symbol-helpers";
 import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
@@ -21,7 +21,7 @@ export class ProcRefField extends AbstractField {
   ];
   isParseByNodes = true;
   qualProc = () => new InstanceProcRef(); // These two are alternatives, not a combination!
-  proc = () => new IdentifierNode(); // These two are alternatives, not a combination
+  proc = () => new IdentifierNode(new Set([TokenType.method_procedure])); // These two are alternatives, not a combination
 
   constructor(holder: Frame) {
     super(holder);

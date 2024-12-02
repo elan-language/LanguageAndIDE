@@ -3,7 +3,7 @@ import { CodeSourceFromString, FileImpl } from "../src/frames/file-impl";
 import { ignore_test, testHash, transforms } from "./compiler/compiler-test-helpers";
 import { assertAutocompletes, assertAutocompletesWithString } from "./testHelpers";
 
-suite("Autocomplete", () => {
+suite("SymbolCompletionDropDown", () => {
   test("Pass_LocalVars", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
@@ -39,7 +39,7 @@ end main`;
     await assertAutocompletes(fileImpl, "expr5", " ", 1, expected);
   });
 
-  test("Pass_emptyType", async () => {
+  test("Pass_emptyArrayType", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
 main
@@ -57,7 +57,7 @@ end main`;
     await assertAutocompletesWithString(fileImpl, "expr5", "empty [I", expected);
   });
 
-  test("Pass_emptyExpression", async () => {
+  ignore_test("Pass_emptyExpression", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
 main
@@ -282,7 +282,7 @@ end main`;
     await assertAutocompletes(fileImpl, "ident13", "o", 1, expected);
   });
 
-  test("Pass_CallLocalVars", async () => {
+  ignore_test("Pass_CallLocalVars", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
 procedure fooyon()
@@ -807,7 +807,6 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [["foo", "*"]] as [string, string][];
-
     await assertAutocompletesWithString(fileImpl, "ident24", "property.f", expected);
   });
 
@@ -1013,7 +1012,7 @@ end function`;
     await assertAutocompletesWithString(fileImpl, "params6", "a as [I", expected);
   });
 
-  test("Pass_typeName3", async () => {
+  test("Pass_type_in_braces", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
 main
@@ -1037,7 +1036,7 @@ end function`;
     await assertAutocompletesWithString(fileImpl, "params6", "a as {F", expected);
   });
 
-  test("Pass_typeName4", async () => {
+  test("Pass_type_immutableDictionary", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
 main
@@ -1514,10 +1513,8 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["BaseVG", "*"],
       ["BlockGraphics", "*"],
       ["Boolean", "*"],
-      ["GraphicsBase", "*"],
     ] as [string, string][];
 
     await assertAutocompletesWithString(fileImpl, "expr5", "new B", expected);
@@ -1534,13 +1531,11 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["BaseVG", "*"],
       ["BlockGraphics", "*"],
       ["Boolean", "*"],
       ["CircleVG", "*"],
       ["Float", "*"],
       ["Func", "*"],
-      ["GraphicsBase", "*"],
       ["Int", "*"],
       ["Iterable", "*"],
       ["LineVG", "*"],

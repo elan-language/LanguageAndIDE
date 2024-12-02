@@ -1,17 +1,23 @@
+import assert from "assert";
 import { Alternatives } from "../src/frames/parse-nodes/alternatives";
+import { AssignableNode } from "../src/frames/parse-nodes/assignable-node";
 import { ExprNode } from "../src/frames/parse-nodes/expr-node";
 import { IdentifierNode } from "../src/frames/parse-nodes/identifier-node";
+import { InstanceProcRef } from "../src/frames/parse-nodes/instanceProcRef";
 import { KeywordNode } from "../src/frames/parse-nodes/keyword-node";
 import { LitValueNode } from "../src/frames/parse-nodes/lit-value";
 import { MethodCallNode } from "../src/frames/parse-nodes/method-call-node";
 import { ReferenceNode } from "../src/frames/parse-nodes/reference-node";
 import { TermSimple } from "../src/frames/parse-nodes/term-simple";
+import { TypeNode } from "../src/frames/parse-nodes/type-node";
 import { TypeSimpleNode } from "../src/frames/parse-nodes/type-simple-node";
+import { TypeSimpleOrGeneric } from "../src/frames/parse-nodes/type-simple-or-generic";
 import { ParseStatus } from "../src/frames/status-enums";
 import { TokenType } from "../src/frames/symbol-completion-helpers";
+import { ignore_test } from "./compiler/compiler-test-helpers";
 import { testSymbolCompletionSpec } from "./testHelpers";
 
-suite("Symbol Completion", () => {
+suite("Symbol Completion Spec", () => {
   test("MethodCallNode", () => {
     testSymbolCompletionSpec(
       new MethodCallNode(),
@@ -70,7 +76,7 @@ suite("Symbol Completion", () => {
       new ExprNode(),
       "t",
       ParseStatus.valid,
-      ExprNode.name, //because t could be start of literal boolean, or typeof  also
+      Alternatives.name, //because t could be start of literal boolean, or typeof  also
       "t",
       [
         TokenType.id_constant,
@@ -91,7 +97,7 @@ suite("Symbol Completion", () => {
       new ExprNode(),
       "th",
       ParseStatus.valid,
-      ExprNode.name, //because t could be start of literal boolean, or typeof  also
+      ReferenceNode.name, //because t could be start of literal boolean, or typeof  also
       "th",
       [
         TokenType.id_constant,
@@ -165,10 +171,104 @@ suite("Symbol Completion", () => {
       new ExprNode(),
       "Foo",
       ParseStatus.incomplete,
-      ExprNode.name, //Because can be a term, or a binary expression
+      TypeSimpleNode.name,
       "Foo",
       [TokenType.type_enum],
       [],
     );
+  });
+  test("Expression4", () => {
+    testSymbolCompletionSpec(
+      new ExprNode(),
+      "empty [I",
+      ParseStatus.incomplete,
+      Alternatives.name,
+      "I",
+      [TokenType.type_concrete],
+      [],
+    );
+  });
+  test("Assignable", () => {
+    testSymbolCompletionSpec(
+      new AssignableNode(),
+      "property.f",
+      ParseStatus.valid,
+      IdentifierNode.name, //Because can be a term, or a binary expression
+      "f",
+      [TokenType.id_property],
+      [],
+    );
+  });
+  test("InstanceProcRef", () => {
+    testSymbolCompletionSpec(
+      new InstanceProcRef(),
+      "foo.",
+      ParseStatus.incomplete,
+      IdentifierNode.name,
+      "",
+      [TokenType.method_procedure],
+      [],
+      "foo",
+    );
+  });
+  test("Expression_new", () => {
+    testSymbolCompletionSpec(
+      new ExprNode(),
+      "new ",
+      ParseStatus.incomplete,
+      TypeSimpleOrGeneric.name,
+      "",
+      [TokenType.type_concrete],
+      [],
+    );
+  });
+  test("Expression_functionDotCall", () => {
+    testSymbolCompletionSpec(
+      new ExprNode(),
+      "foo().",
+      ParseStatus.incomplete,
+      Alternatives.name,
+      "",
+      [TokenType.id_property, TokenType.method_function, TokenType.method_system],
+      [],
+    );
+  });
+  test("Expression_instanceDotCall", () => {
+    testSymbolCompletionSpec(
+      new ExprNode(),
+      "foo.",
+      ParseStatus.incomplete,
+      Alternatives.name,
+      "",
+      [TokenType.id_property, TokenType.method_function, TokenType.method_system],
+      [],
+    );
+  });
+  test("InstanceProcRef", () => {
+    testSymbolCompletionSpec(
+      new InstanceProcRef(),
+      "foo.wi",
+      ParseStatus.valid,
+      IdentifierNode.name,
+      "wi",
+      [TokenType.method_procedure],
+      [],
+      "foo",
+    );
+  });
+  test("RegexForExtractingContext", () => {
+    const rgx = /(.*\.)*(([A-Za-z_]*)(\(.*\))*)\..*/;
+    const test1 = "foo.bar().yon((3+4)*5).qux";
+    assert.equal(test1.match(rgx)![3], "yon");
+    const test2 = "foo.bar().yon((3+4)*5).";
+    assert.equal(test2.match(rgx)![3], "yon");
+    const test3 = "foo.bar().yon((3+4)*5)";
+    assert.equal(test3.match(rgx)![3], "bar");
+    const test4 = "foo.";
+    assert.equal(test4.match(rgx)![3], "foo");
+    const test5 = "foo";
+    assert.equal(rgx.test(test5), false);
+    const test6 = "foo(bar)";
+    assert.equal(rgx.test(test6), false);
   });
 });

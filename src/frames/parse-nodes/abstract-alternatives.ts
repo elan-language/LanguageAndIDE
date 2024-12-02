@@ -1,5 +1,5 @@
 import { ParseStatus } from "../status-enums";
-import { SymbolCompletionSpec_Old, TokenType } from "../symbol-completion-helpers";
+import { TokenType } from "../symbol-completion-helpers";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { ParseNode } from "./parse-node";
 
@@ -23,6 +23,7 @@ export abstract class AbstractAlternatives extends AbstractParseNode {
           if (alt.isValid() && alt.remainingText.length === 0) {
             this.bestMatch = alt;
             open = false;
+            this._done = alt.isDone();
           } else if (
             !this.bestMatch ||
             alt.remainingText.length < this.bestMatch.remainingText.length ||
@@ -61,10 +62,6 @@ export abstract class AbstractAlternatives extends AbstractParseNode {
     return c;
   }
 
-  override symbolCompletion_getSpec_Old(): SymbolCompletionSpec_Old {
-    return this.bestMatch?.symbolCompletion_getSpec_Old() ?? super.symbolCompletion_getSpec_Old();
-  }
-
   override getActiveNode(): ParseNode {
     if (this.bestMatchIsOnlyMatch()) {
       return this.bestMatch!.getActiveNode();
@@ -74,14 +71,15 @@ export abstract class AbstractAlternatives extends AbstractParseNode {
   }
 
   bestMatchIsOnlyMatch(): boolean {
-    return (
-      this.bestMatch !== undefined &&
-      this.alternatives.filter((alt) => alt.status !== ParseStatus.invalid).length === 1
-    );
+    return this.potentialMatches().length === 1;
   }
 
   potentialMatches(): ParseNode[] {
-    return this.alternatives.filter((alt) => alt.status !== ParseStatus.invalid);
+    const best = this.bestMatch;
+    const bestMatchLength = best ? best.matchedText.length : 0;
+    return this.alternatives.filter(
+      (alt) => alt.status !== ParseStatus.invalid && alt.matchedText.length === bestMatchLength,
+    );
   }
 
   override symbolCompletion_tokenTypes(): Set<TokenType> {

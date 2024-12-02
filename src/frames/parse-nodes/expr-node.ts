@@ -1,4 +1,3 @@
-import { SymbolCompletionSpec_Old, TokenType } from "../symbol-completion-helpers";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { BinaryExpression } from "./binary-expression";
 import { CopyWith } from "./copy-with";
@@ -6,6 +5,7 @@ import { EmptyOfTypeNode } from "./empty-of-type-node";
 import { IfExpr } from "./if-expr";
 import { Lambda } from "./lambda";
 import { NewInstance } from "./new-instance";
+import { ParseNode } from "./parse-node";
 import { Term } from "./term";
 
 export class ExprNode extends AbstractAlternatives {
@@ -27,10 +27,12 @@ export class ExprNode extends AbstractAlternatives {
     super.parseText(text);
   }
 
-  symbolCompletion_getSpec_Old(): SymbolCompletionSpec_Old {
-    if (this.matchedText === "") {
-      return new SymbolCompletionSpec_Old("", new Set<TokenType>([TokenType.expression]));
+  override getActiveNode(): ParseNode {
+    const best = this.bestMatch;
+    if (this.bestMatchIsOnlyMatch() || best instanceof Term) {
+      return best!.getActiveNode(); //Because any symbol completion is valid for BinaryExpression also
+    } else {
+      return this as ParseNode;
     }
-    return super.symbolCompletion_getSpec_Old();
   }
 }

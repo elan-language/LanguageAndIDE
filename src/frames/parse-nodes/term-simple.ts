@@ -1,4 +1,3 @@
-import { SymbolCompletionSpec_Old, TokenType } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
 import { ArrayNode } from "./array-list-node";
@@ -59,12 +58,5 @@ export class TermSimple extends AbstractSequence {
     this.addElement(this.alternatives);
     this.addElement(this.optIndex);
     super.parseText(text);
-  }
-
-  symbolCompletion_getSpec_Old(): SymbolCompletionSpec_Old {
-    return new SymbolCompletionSpec_Old(
-      this.matchedText,
-      new Set<TokenType>([TokenType.expression]),
-    );
   }
 }

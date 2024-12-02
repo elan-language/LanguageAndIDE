@@ -1,16 +1,18 @@
 import { Regexes } from "../fields/regexes";
-import { SymbolCompletionSpec_Old, TokenType } from "../symbol-completion-helpers";
+import { allKeywords } from "../keywords";
+import { ParseStatus } from "../status-enums";
+import { TokenType } from "../symbol-completion-helpers";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { matchRegEx } from "./parse-node-helpers";
 
 export class IdentifierNode extends AbstractParseNode {
   private tokenTypes: Set<TokenType>;
-  private constraintId: () => string;
+  private contextGenerator: () => string;
 
-  constructor(tokenTypes: Set<TokenType> = new Set<TokenType>(), constraintId = () => "") {
+  constructor(tokenTypes: Set<TokenType> = new Set<TokenType>(), contextGenerator = () => "") {
     super();
     this.tokenTypes = tokenTypes;
-    this.constraintId = constraintId;
+    this.contextGenerator = contextGenerator;
     this.completionWhenEmpty = "<i>name</i>";
   }
 
@@ -23,22 +25,23 @@ export class IdentifierNode extends AbstractParseNode {
       );
     }
     if (this.isValid() && this.remainingText.length > 0) {
-      this._done = true;
+      if (this.matchesKeyword()) {
+        this.status = ParseStatus.invalid;
+      } else {
+        this._done = true;
+      }
     }
   }
 
-  symbolCompletion_getSpec_Old(): SymbolCompletionSpec_Old {
-    return new SymbolCompletionSpec_Old(
-      this.matchedText,
-      new Set<TokenType>([TokenType.idOrProcedure]),
-    );
+  matchesKeyword(): boolean {
+    return allKeywords.filter((k) => this.matchedText === k).length > 0;
   }
 
   symbolCompletion_tokenTypes(): Set<TokenType> {
     return this.tokenTypes;
   }
 
-  symbolCompletion_constraintId(): string {
-    return this.constraintId();
+  symbolCompletion_context(): string {
+    return this.contextGenerator();
   }
 }
