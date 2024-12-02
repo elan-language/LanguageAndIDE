@@ -21,6 +21,7 @@ export class TypeInDelimiters extends AbstractSequence {
     this.alternatives = alternatives;
     this.closeSymbol = closeSymbol;
     this.tokenTypes = tokenTypes;
+    this.alternatives.completionWhenEmpty = "<i>Type</i>";
   }
   parseText(text: string): void {
     this.remainingText = text;

@@ -7,9 +7,8 @@ import {
   OPEN_SQ_BRACKET,
 } from "../symbols";
 import { AbstractAlternatives } from "./abstract-alternatives";
+import { AbstractParseNode } from "./abstract-parse-node";
 import { Alternatives } from "./alternatives";
-import { PunctuationNode } from "./punctuation-node";
-import { Sequence } from "./sequence";
 import { TypeArrayNode } from "./type-array-node";
 import { TypeDictionaryNode } from "./type-dictionary-node";
 import { TypeFuncNode } from "./type-func-node";
