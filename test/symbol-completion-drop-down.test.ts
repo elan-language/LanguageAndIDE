@@ -24,6 +24,25 @@ end main`;
     await assertAutocompletes(fileImpl, "ident10", "o", 1, expected);
   });
 
+  test("Pass_Let", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+main
+  let foo be foo
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["foo", "foo", "foo"],
+      ["createFileForWriting", "createFileForWriting", "createFileForWriting("],
+      ["openFileForReading", "openFileForReading", "openFileForReading("],
+    ] as [string, string, string][];
+
+    await assertAutocompletesWithString(fileImpl, "expr5", "fo", expected);
+  });
+
   test("Pass_keyword", async () => {
     const code = `# FFFF Elan Beta 4 valid
 

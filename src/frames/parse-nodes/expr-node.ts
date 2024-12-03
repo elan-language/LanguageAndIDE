@@ -72,7 +72,7 @@ export class ExprNode extends AbstractAlternatives {
       emptyKeyword,
       thisKeyword,
       refKeyword,
-      notKeyword
+      notKeyword,
     ]);
   }
 }
