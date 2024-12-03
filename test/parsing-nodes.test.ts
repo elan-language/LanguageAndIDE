@@ -45,6 +45,7 @@ import { SpaceNode } from "../src/frames/parse-nodes/space-node";
 import { Term } from "../src/frames/parse-nodes/term";
 import { TermChained } from "../src/frames/parse-nodes/term-chained";
 import { TermSimple } from "../src/frames/parse-nodes/term-simple";
+import { TermSimpleWithOptIndex } from "../src/frames/parse-nodes/term-simple-with-opt-index";
 import { ToClause } from "../src/frames/parse-nodes/to-clause";
 import { TupleNode } from "../src/frames/parse-nodes/tuple-node";
 import { TypeNode } from "../src/frames/parse-nodes/type-node";
@@ -1438,14 +1439,20 @@ suite("Parsing Nodes", () => {
   // });
 
   test("#670 new parse node structure for terms & expressions", () => {
-    testNodeParse(new ReferenceNode(), `abc`, ParseStatus.valid, "abc", "");
-    testNodeParse(new ReferenceNode(), `abc()`, ParseStatus.valid, "abc()", "");
-    testNodeParse(new ReferenceNode(), `this`, ParseStatus.valid, "this", "");
-    testNodeParse(new ReferenceNode(), `abc(def, ghi)`, ParseStatus.valid, "abc(def, ghi)", "");
-    testNodeParse(new TermSimple(), `abc[1]`, ParseStatus.valid, "abc[1]", "");
-    testNodeParse(new TermSimple(), `abc[1][2]`, ParseStatus.valid, "abc[1]", "[2]");
-    testNodeParse(new TermSimple(), `abc[1..2]`, ParseStatus.valid, "abc[1..2]", "");
-    testNodeParse(new TermSimple(), `abc(def, ghi)[0]`, ParseStatus.valid, "abc(def, ghi)[0]", "");
+    testNodeParse(new TermSimple(), `abc`, ParseStatus.valid, "abc", "");
+    testNodeParse(new TermSimple(), `abc()`, ParseStatus.valid, "abc()", "");
+    testNodeParse(new TermSimple(), `this`, ParseStatus.valid, "this", "");
+    testNodeParse(new TermSimple(), `abc(def, ghi)`, ParseStatus.valid, "abc(def, ghi)", "");
+    testNodeParse(new TermSimpleWithOptIndex(), `abc[1]`, ParseStatus.valid, "abc[1]", "");
+    testNodeParse(new TermSimpleWithOptIndex(), `abc[1][2]`, ParseStatus.valid, "abc[1]", "[2]");
+    testNodeParse(new TermSimpleWithOptIndex(), `abc[1..2]`, ParseStatus.valid, "abc[1..2]", "");
+    testNodeParse(
+      new TermSimpleWithOptIndex(),
+      `abc(def, ghi)[0]`,
+      ParseStatus.valid,
+      "abc(def, ghi)[0]",
+      "",
+    );
     testNodeParse(new TermSimple(), `(def, ghi)`, ParseStatus.valid, "(def, ghi)", ""); // tuple
     testNodeParse(new TermSimple(), `[def, ghi]`, ParseStatus.valid, "[def, ghi]", "");
     testNodeParse(

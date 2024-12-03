@@ -76,7 +76,7 @@ suite("Symbol Completion Spec", () => {
       new ExprNode(),
       "t",
       ParseStatus.valid,
-      Alternatives.name, //because t could be start of literal boolean, or typeof  also
+      TermSimple.name, //because t could be start of literal boolean, or typeof  also
       "t",
       [
         TokenType.id_constant,
@@ -118,7 +118,7 @@ suite("Symbol Completion Spec", () => {
       new TermSimple(),
       "t",
       ParseStatus.valid,
-      Alternatives.name, //coming back as Alternatives
+      TermSimple.name, //coming back as Alternatives
       "t",
       [
         TokenType.id_constant,
@@ -314,6 +314,28 @@ suite("Symbol Completion Spec", () => {
         TokenType.method_system,
       ],
       ["new", "not"],
+      "",
+    );
+  });
+  test("Bracketed expression", () => {
+    testSymbolCompletionSpec(
+      new ExprNode(),
+      "(",
+      ParseStatus.incomplete,
+      TermSimple.name,
+      "",
+      [
+        TokenType.id_constant,
+        TokenType.id_let,
+        TokenType.id_parameter_out,
+        TokenType.id_parameter_regular,
+        TokenType.id_property,
+        TokenType.id_variable,
+        TokenType.id_enumValue,
+        TokenType.method_function,
+        TokenType.method_system,
+      ],
+      ["new,copy,if,lambda,empty,this,ref,not"],
       "",
     );
   });

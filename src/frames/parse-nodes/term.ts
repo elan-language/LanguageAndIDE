@@ -4,7 +4,7 @@ import { AbstractAlternatives } from "./abstract-alternatives";
 import { ParseNode } from "./parse-node";
 import { allIdsAndMethods } from "./parse-node-helpers";
 import { TermChained } from "./term-chained";
-import { TermSimple } from "./term-simple";
+import { TermSimpleWithOptIndex } from "./term-simple-with-opt-index";
 
 export class Term extends AbstractAlternatives {
   constructor() {
@@ -13,7 +13,7 @@ export class Term extends AbstractAlternatives {
   }
 
   parseText(text: string): void {
-    this.alternatives.push(new TermSimple());
+    this.alternatives.push(new TermSimpleWithOptIndex());
     this.alternatives.push(new TermChained());
     super.parseText(text);
   }
