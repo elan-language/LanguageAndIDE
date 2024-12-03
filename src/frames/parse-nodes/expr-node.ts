@@ -41,12 +41,17 @@ export class ExprNode extends AbstractAlternatives {
   }
 
   override getActiveNode(): ParseNode {
+    let active = this as ParseNode;
     const best = this.bestMatch;
-    if (this.bestMatchIsOnlyMatch() || best instanceof Term) {
-      return best!.getActiveNode(); //Because any symbol completion is valid for BinaryExpression also
-    } else {
-      return this as ParseNode;
+    if (
+      this.bestMatchIsOnlyMatch() ||
+      (best instanceof Term &&
+        this.potentialMatches().length === 2 &&
+        this.potentialMatches()[1] instanceof BinaryExpression)
+    ) {
+      active = best!.getActiveNode(); //Because any symbol completion is valid for BinaryExpression also
     }
+    return active;
   }
 
   override symbolCompletion_tokenTypes(): Set<TokenType> {
@@ -64,7 +69,7 @@ export class ExprNode extends AbstractAlternatives {
   }
 
   override symbolCompletion_keywords(): Set<string> {
-    return new Set([
+    let kws = [
       newKeyword,
       copyKeyword,
       ifKeyword,
@@ -73,6 +78,11 @@ export class ExprNode extends AbstractAlternatives {
       thisKeyword,
       refKeyword,
       notKeyword,
-    ]);
+    ];
+    const trim = this.matchedText.trim();
+    if (trim.length > 0) {
+      kws = kws.filter((kw) => kw.startsWith(trim));
+    }
+    return new Set(kws);
   }
 }
