@@ -161,6 +161,11 @@ export class BinaryOperation extends AbstractParseNode {
   }
 
   override symbolCompletion_keywords(): Set<string> {
-    return new Set([andKeyword, divKeyword, isKeyword, isntKeyword, modKeyword, orKeyword]);
+    let kws = [andKeyword, divKeyword, isKeyword, isntKeyword, modKeyword, orKeyword];
+    const trim = this.matchedText.trim();
+    if (trim.length > 0) {
+      kws = kws.filter((kw) => kw.startsWith(trim));
+    }
+    return new Set(kws);
   }
 }

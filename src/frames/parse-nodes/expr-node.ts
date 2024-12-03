@@ -1,11 +1,12 @@
 import {
-  newKeyword,
   copyKeyword,
+  emptyKeyword,
   ifKeyword,
   lambdaKeyword,
-  emptyKeyword,
-  thisKeyword,
+  newKeyword,
+  notKeyword,
   refKeyword,
+  thisKeyword,
 } from "../keywords";
 import { TokenType } from "../symbol-completion-helpers";
 import { AbstractAlternatives } from "./abstract-alternatives";
@@ -71,6 +72,7 @@ export class ExprNode extends AbstractAlternatives {
       emptyKeyword,
       thisKeyword,
       refKeyword,
+      notKeyword
     ]);
   }
 }
