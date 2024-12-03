@@ -220,7 +220,7 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
       Object.getOwnPropertyNames(this.cls.emptyInstance()),
     );
 
-    const children: [string, SymbolType][] = [];
+    const children: [string, SymbolType, MemberType][] = [];
 
     tempMap.set(className, new ClassType(className, false, false, [], undefined!));
 
@@ -232,19 +232,19 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
         | undefined;
 
       if (name === "constructor") {
-        children.push([name, classMetadata.mapType()]);
+        children.push([name, classMetadata.mapType(), MemberType.procedure]);
       }
 
       if (isFunctionDescriptor(metadata)) {
-        children.push([name, metadata.mapType()]);
+        children.push([name, metadata.mapType(), MemberType.function]);
       }
 
       if (isProcedureDescriptor(metadata)) {
-        children.push([name, metadata.mapType()]);
+        children.push([name, metadata.mapType(), MemberType.procedure]);
       }
 
       if (isConstantDescriptor(metadata)) {
-        children.push([name, metadata.mapType()]);
+        children.push([name, metadata.mapType(), MemberType.property]);
       }
     }
 
@@ -264,7 +264,7 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
     classType.updateScope(classTypeDef);
 
     for (const c of children) {
-      classTypeDef.children.push(getSymbol(c[0], c[1], SymbolScope.member));
+      classTypeDef.children.push(getSymbol(c[0], c[1], SymbolScope.member, c[2]));
     }
 
     for (const ot of classMetadata.ofTypes) {
@@ -610,7 +610,18 @@ function mapClassOptions(options: ClassOptions): [boolean, boolean] {
   }
 }
 
-export function getSymbol(id: string, st: SymbolType, ss: SymbolScope): ElanSymbol {
+export enum MemberType {
+  property,
+  function,
+  procedure,
+}
+
+export function getSymbol(
+  id: string,
+  st: SymbolType,
+  ss: SymbolScope,
+  mt?: MemberType,
+): ElanSymbol {
   if (st instanceof ClassType) {
     return st.scope!;
   }
@@ -619,7 +630,17 @@ export function getSymbol(id: string, st: SymbolType, ss: SymbolScope): ElanSymb
     symbolId: id,
     symbolType: () => st,
     symbolScope: ss,
-  };
+  } as ElanSymbol;
 
-  return ss === SymbolScope.member ? { isMember: true, ...symbol } : symbol;
+  if (ss === SymbolScope.member) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (symbol as any)["isMember"] = true;
+  }
+
+  if (mt === MemberType.property) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (symbol as any)["isProperty"] = true;
+  }
+
+  return symbol;
 }

@@ -1674,4 +1674,22 @@ end main`;
 
     await assertAutocompletesWithString(fileImpl, "args8", "0, new C", expected);
   });
+
+  test("Pass_withParameters", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+main
+  let c be new CircleVG() with cx to 1
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["cx", "cx", "cx"],
+      ["cy", "cy", "cy"],
+    ] as [string, string, string][];
+
+    await assertAutocompletesWithString(fileImpl, "expr5", "new CircleVG() with c", expected);
+  });
 });

@@ -39,8 +39,8 @@ export class SymbolWrapper {
 
     const symbol = this.wrapped as ElanSymbol;
 
-    if (isProperty(symbol)) {
-      return `${propertyKeyword}.${this.name}`;
+    if (isMemberOnFieldsClass(symbol, this.transforms, this.scope)) {
+      return `${propertyKeyword}.${symbol.symbolId}`;
     }
 
     return isGenericClass(symbol) ? `${this.name}&lt;of` : this.name;
