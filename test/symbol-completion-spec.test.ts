@@ -163,7 +163,7 @@ suite("Symbol Completion Spec", () => {
         TokenType.method_function,
         TokenType.method_system,
       ],
-      ["new,copy,if,lambda,empty,this,ref"], // Not showing 'this,ref' - which should be coming from Term
+      ["new,copy,if,lambda,empty,this,ref,not"], // Not showing 'this,ref' - which should be coming from Term
     );
   });
   test("Expression3", () => {
