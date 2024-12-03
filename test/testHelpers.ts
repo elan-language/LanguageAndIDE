@@ -182,6 +182,10 @@ async function doAsserts(f: FileImpl, fld : AbstractField, expected: [string, st
     if (e[1] !== "*") {
       assert.strictEqual(s.displayName, e[1]);
     }
+
+    if (e[1] !== "*") {
+      assert.strictEqual(s.insertedText, e[2]);
+    }
   }
 } 
 

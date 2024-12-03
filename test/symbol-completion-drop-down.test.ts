@@ -17,8 +17,8 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["foo", "*", "*"],
-      ["foobar", "*", "*"],
+      ["foo", "foo", "foo"],
+      ["foobar", "foobar", "foobar"],
     ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "ident10", "o", 1, expected);
@@ -35,7 +35,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["not", "*", "*"],
+      ["not", "not", "not "],
       ["bitNot", "*", "*"],
     ] as [string, string, string][];
 
