@@ -361,7 +361,9 @@ export abstract class AbstractField implements Selectable, Field {
       this.text = "";
     }
 
-    this.text = this.text + appendText;
+    const optSpace = this.text && this.autoCompSelected?.isKeyword ? " " : "";
+
+    this.text = `${this.text}${optSpace}${appendText}`;
     this.autoCompSelected = undefined;
     this.parseCurrentText();
     this.setSelection(this.text.length);
