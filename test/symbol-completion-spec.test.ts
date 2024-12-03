@@ -76,7 +76,7 @@ suite("Symbol Completion Spec", () => {
       new ExprNode(),
       "t",
       ParseStatus.valid,
-      Alternatives.name, //because t could be start of literal boolean, or typeof  also
+      TermSimple.name, //because t could be start of literal boolean, or typeof  also
       "t",
       [
         TokenType.id_constant,
@@ -118,7 +118,7 @@ suite("Symbol Completion Spec", () => {
       new TermSimple(),
       "t",
       ParseStatus.valid,
-      Alternatives.name, //coming back as Alternatives
+      TermSimple.name, //coming back as Alternatives
       "t",
       [
         TokenType.id_constant,
@@ -322,8 +322,8 @@ suite("Symbol Completion Spec", () => {
       new ExprNode(),
       "(",
       ParseStatus.incomplete,
-      Alternatives.name,
-      "(",
+      TermSimple.name,
+      "",
       [
         TokenType.id_constant,
         TokenType.id_let,

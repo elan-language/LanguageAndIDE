@@ -51,7 +51,7 @@ import { RegExMatchNode } from "../parse-nodes/regex-match-node";
 import { Sequence } from "../parse-nodes/sequence";
 import { SpaceNode } from "../parse-nodes/space-node";
 import { TermChained } from "../parse-nodes/term-chained";
-import { TermSimple } from "../parse-nodes/term-simple";
+import { TermSimpleWithOptIndex } from "../parse-nodes/term-simple-with-opt-index";
 import { ToClause } from "../parse-nodes/to-clause";
 import { TupleNode } from "../parse-nodes/tuple-node";
 import { TypeArrayNode } from "../parse-nodes/type-array-node";
@@ -406,14 +406,14 @@ export function transform(
     return obj;
   }
 
-  if (node instanceof TermSimple) {
-    const alts = transform(node.alternatives, fieldId, scope) as ExprAsn;
+  if (node instanceof TermSimpleWithOptIndex) {
+    const termSimple = transform(node.termSimple, fieldId, scope) as ExprAsn;
     const index = transform(node.optIndex, fieldId, scope) as IndexAsn | undefined;
     if (index) {
-      index.updateScopeAndChain(scope, alts);
+      index.updateScopeAndChain(scope, termSimple);
       return index;
     }
-    return alts;
+    return termSimple;
   }
 
   if (node instanceof TermChained) {
