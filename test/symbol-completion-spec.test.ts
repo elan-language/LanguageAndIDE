@@ -317,4 +317,26 @@ suite("Symbol Completion Spec", () => {
       "",
     );
   });
+  test("Bracketed expression", () => {
+    testSymbolCompletionSpec(
+      new ExprNode(),
+      "(",
+      ParseStatus.incomplete,
+      Alternatives.name,
+      "(",
+      [
+        TokenType.id_constant,
+        TokenType.id_let,
+        TokenType.id_parameter_out,
+        TokenType.id_parameter_regular,
+        TokenType.id_property,
+        TokenType.id_variable,
+        TokenType.id_enumValue,
+        TokenType.method_function,
+        TokenType.method_system,
+      ],
+      ["new,copy,if,lambda,empty,this,ref,not"],
+      "",
+    );
+  });
 });

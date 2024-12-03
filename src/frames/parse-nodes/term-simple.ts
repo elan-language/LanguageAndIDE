@@ -1,3 +1,4 @@
+import { TokenType } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
 import { ArrayNode } from "./array-list-node";
@@ -17,6 +18,17 @@ import { UnaryExpression } from "./unary-expression";
 export class TermSimple extends AbstractSequence {
   alternatives: Alternatives | undefined;
   optIndex: OptionalNode | undefined;
+  defaultTokenTypes = new Set([
+    TokenType.id_constant,
+    TokenType.id_let,
+    TokenType.id_parameter_out,
+    TokenType.id_parameter_regular,
+    TokenType.id_property,
+    TokenType.id_variable,
+    TokenType.id_enumValue,
+    TokenType.method_function,
+    TokenType.method_system,
+  ]);
 
   constructor() {
     super();
@@ -43,18 +55,10 @@ export class TermSimple extends AbstractSequence {
       const tuple = () => new TupleNode();
       const unary = () => new UnaryExpression();
       const bracketed = () => new BracketedExpression();
-      this.alternatives = new Alternatives([
-        litVal,
-        ref,
-        typeOf,
-        immList,
-        arrList,
-        dict,
-        immDict,
-        tuple,
-        unary,
-        bracketed,
-      ]);
+      this.alternatives = new Alternatives(
+        [litVal, ref, typeOf, immList, arrList, dict, immDict, tuple, unary, bracketed],
+        this.defaultTokenTypes,
+      );
       this.optIndex = new OptionalNode(new IndexSingle());
       this.addElement(this.alternatives);
       this.addElement(this.optIndex);
