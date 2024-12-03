@@ -162,7 +162,7 @@ function getEvent(char: string) {
   } as editorEvent;
 }
 
-async function doAsserts(f: FileImpl, fld : AbstractField, expected: [string, string][] | number) {
+async function doAsserts(f: FileImpl, fld : AbstractField, expected: [string, string, string][] | number) {
   await f.renderAsHtml();
   const symbols = fld.autocompleteSymbols;
 
@@ -175,7 +175,7 @@ async function doAsserts(f: FileImpl, fld : AbstractField, expected: [string, st
 
   for (let i = 0; i < expected.length; i++) {
     const s = symbols[i];
-    const e = expected[i] as [string, string];
+    const e = expected[i] as [string, string, string];
 
     assert.strictEqual(s.name, e[0]);
 
@@ -191,7 +191,7 @@ export async function assertAutocompletes(
   id: string,
   char: string,
   at: number,
-  expected: [string, string][],
+  expected: [string, string, string][],
   clear? : boolean
 ): Promise<void> {
   assertParses(f);
@@ -212,7 +212,7 @@ export async function assertAutocompletesWithString(
   f: FileImpl,
   id: string,
   text: string,
-  expected: [string, string][] | number,
+  expected: [string, string, string][] | number,
 ): Promise<void> {
   assertParses(f);
   const fld = f.getById(id) as AbstractField;

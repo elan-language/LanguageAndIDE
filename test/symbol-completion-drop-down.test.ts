@@ -17,9 +17,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["foo", "*"],
-      ["foobar", "*"],
-    ] as [string, string][];
+      ["foo", "*", "*"],
+      ["foobar", "*", "*"],
+    ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "ident10", "o", 1, expected);
   });
@@ -35,9 +35,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["not", "*"],
-      ["bitNot", "*"],
-    ] as [string, string][];
+      ["not", "*", "*"],
+      ["bitNot", "*", "*"],
+    ] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "expr5", "no", expected);
   });
@@ -53,13 +53,13 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["and", "*"],
-      ["div", "*"],
-      ["is", "*"],
-      ["isnt", "*"],
-      ["mod", "*"],
-      ["or", "*"],
-    ] as [string, string][];
+      ["and", "*", "*"],
+      ["div", "*", "*"],
+      ["is", "*", "*"],
+      ["isnt", "*", "*"],
+      ["mod", "*", "*"],
+      ["or", "*", "*"],
+    ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "expr5", " ", 1, expected);
   });
@@ -75,9 +75,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["Int", "*"],
-      ["Iterable", "*"],
-    ] as [string, string][];
+      ["Int", "*", "*"],
+      ["Iterable", "*", "*"],
+    ] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "expr5", "empty [I", expected);
   });
@@ -107,7 +107,7 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [["fooBar", "*"]] as [string, string][];
+    const expected = [["fooBar", "*", "*"]] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "ident10", "b", 3, expected);
   });
@@ -124,7 +124,7 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [] as [string, string][];
+    const expected = [] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "ident10", "O", 1, expected);
   });
@@ -153,9 +153,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["aa2", "*"],
-      ["aa3", "*"],
-    ] as [string, string][];
+      ["aa2", "*", "*"],
+      ["aa3", "*", "*"],
+    ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "ident15", "a", 1, expected);
   });
@@ -176,9 +176,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["aa2", "*"],
-      ["aa3", "*"],
-    ] as [string, string][];
+      ["aa2", "*", "*"],
+      ["aa3", "*", "*"],
+    ] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "ident9", "a", expected);
   });
@@ -203,10 +203,10 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["a", "*"],
-      ["aa2", "*"],
-      ["aa3", "*"],
-    ] as [string, string][];
+      ["a", "*", "*"],
+      ["aa2", "*", "*"],
+      ["aa3", "*", "*"],
+    ] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "ident16", "a", expected);
   });
@@ -231,10 +231,10 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["a", "*"],
-      ["aa2", "*"],
-      ["aa3", "*"],
-    ] as [string, string][];
+      ["a", "*", "*"],
+      ["aa2", "*", "*"],
+      ["aa3", "*", "*"],
+    ] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "ident16", "a", expected);
   });
@@ -259,11 +259,11 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["a", "*"],
-      ["aa2", "*"],
-      ["aa3", "*"],
-      ["aa4", "*"],
-    ] as [string, string][];
+      ["a", "*", "*"],
+      ["aa2", "*", "*"],
+      ["aa3", "*", "*"],
+      ["aa4", "*", "*"],
+    ] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "ident16", "a", expected);
   });
@@ -280,7 +280,7 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [["foobar", "*"]] as [string, string][];
+    const expected = [["foobar", "*", "*"]] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "ident10", "b", 3, expected);
   });
@@ -300,9 +300,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["foo", "*"],
-      ["foobar", "*"],
-    ] as [string, string][];
+      ["foo", "*", "*"],
+      ["foobar", "*", "*"],
+    ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "ident13", "o", 1, expected);
   });
@@ -324,11 +324,11 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["foo", "*"],
-      ["foobar", "*"],
+      ["foo", "*", "*"],
+      ["foobar", "*", "*"],
       ["fooyon", "Procedure ()"],
       ["waitForAnyKey", "Procedure ()"],
-    ] as [string, string][];
+    ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "ident14", "o", 1, expected);
   });
@@ -366,10 +366,10 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["pproc3", "*"],
-      ["proc1", "*"],
-      ["proc2", "*"],
-    ] as [string, string][];
+      ["pproc3", "*", "*"],
+      ["proc1", "*", "*"],
+      ["proc2", "*", "*"],
+    ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "ident36", ".", 3, expected);
   });
@@ -388,10 +388,10 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["clearGraphics", "Procedure ()"],
-      ["clearKeyBuffer", "Procedure ()"],
-      ["display", "Procedure ()"],
-    ] as [string, string][];
+      ["clearGraphics", "*", "*"],
+      ["clearKeyBuffer", "*", "*"],
+      ["display", "*", "*"],
+    ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "ident7", ".", 3, expected);
   });
@@ -428,7 +428,7 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [["pproc3", "*"]] as [string, string][];
+    const expected = [["pproc3", "*", "*"]] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "ident36", "p", 5, expected);
   });
@@ -445,16 +445,16 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["append", "*"],
-      ["appendList", "*"],
-      ["insertAt", "*"],
-      ["prepend", "*"],
-      ["prependList", "*"],
-      ["putAt", "*"],
-      ["removeAll", "*"],
-      ["removeAt", "*"],
-      ["removeFirst", "*"],
-    ] as [string, string][];
+      ["append", "*", "*"],
+      ["appendList", "*", "*"],
+      ["insertAt", "*", "*"],
+      ["prepend", "*", "*"],
+      ["prependList", "*", "*"],
+      ["putAt", "*", "*"],
+      ["removeAll", "*", "*"],
+      ["removeAt", "*", "*"],
+      ["removeFirst", "*", "*"],
+    ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "ident7", ".", 3, expected);
   });
@@ -471,9 +471,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["append", "*"],
-      ["appendList", "*"],
-    ] as [string, string][];
+      ["append", "*", "*"],
+      ["appendList", "*", "*"],
+    ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "ident7", "p", 5, expected);
   });
@@ -490,10 +490,10 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["foo", "*"],
-      ["createFileForWriting", "*"],
-      ["openFileForReading", "*"],
-    ] as [string, string][];
+      ["foo", "*", "*"],
+      ["createFileForWriting", "*", "*"],
+      ["openFileForReading", "*", "*"],
+    ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "expr8", "o", 1, expected);
   });
@@ -510,10 +510,10 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["foo", "*"],
-      ["createFileForWriting", "*"],
-      ["openFileForReading", "*"],
-    ] as [string, string][];
+      ["foo", "*", "*"],
+      ["createFileForWriting", "*", "*"],
+      ["openFileForReading", "*", "*"],
+    ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "expr8", "o", 5, expected);
   });
@@ -534,11 +534,11 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["foo", "*"],
-      ["foobar", "*"],
-      ["createFileForWriting", "*"],
-      ["openFileForReading", "*"],
-    ] as [string, string][];
+      ["foo", "*", "*"],
+      ["foobar", "*", "*"],
+      ["createFileForWriting", "*", "*"],
+      ["openFileForReading", "*", "*"],
+    ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "expr8", "o", 5, expected);
   });
@@ -555,9 +555,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["withPutAtKey", "*"],
-      ["withRemoveAtKey", "*"],
-    ] as [string, string][];
+      ["withPutAtKey", "*", "*"],
+      ["withRemoveAtKey", "*", "*"],
+    ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "expr8", "i", 5, expected);
   });
@@ -574,11 +574,11 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["keys", "*"],
-      ["hasKey", "*"],
-      ["withPutAtKey", "*"],
-      ["withRemoveAtKey", "*"],
-    ] as [string, string][];
+      ["keys", "*", "*"],
+      ["hasKey", "*", "*"],
+      ["withPutAtKey", "*", "*"],
+      ["withRemoveAtKey", "*", "*"],
+    ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "expr8", "e", 5, expected);
   });
@@ -594,7 +594,7 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [] as [string, string][];
+    const expected = [] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "ident7", ".", 3, expected);
   });
@@ -611,9 +611,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["putAtKey", "*"],
-      ["removeAtKey", "*"],
-    ] as [string, string][];
+      ["putAtKey", "*", "*"],
+      ["removeAtKey", "*", "*"],
+    ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "ident7", ".", 3, expected);
   });
@@ -630,11 +630,11 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["asString", "*"],
-      ["hasKey", "*"],
-      ["keys", "*"],
-      ["values", "*"],
-    ] as [string, string][];
+      ["asString", "*", "*"],
+      ["hasKey", "*", "*"],
+      ["keys", "*", "*"],
+      ["values", "*", "*"],
+    ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "expr8", ".", 3, expected);
   });
@@ -651,13 +651,13 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["asString", "*"],
-      ["hasKey", "*"],
-      ["keys", "*"],
-      ["values", "*"],
-      ["withPutAtKey", "*"],
-      ["withRemoveAtKey", "*"],
-    ] as [string, string][];
+      ["asString", "*", "*"],
+      ["hasKey", "*", "*"],
+      ["keys", "*", "*"],
+      ["values", "*", "*"],
+      ["withPutAtKey", "*", "*"],
+      ["withRemoveAtKey", "*", "*"],
+    ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "expr8", ".", 3, expected);
   });
@@ -689,9 +689,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["f", "*"],
-      ["foo", "*"],
-    ] as [string, string][];
+      ["f", "*", "*"],
+      ["foo", "*", "*"],
+    ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "ident24", "f", 0, expected, true);
   });
@@ -722,7 +722,7 @@ end class`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [["foo", "*"]] as [string, string][];
+    const expected = [["foo", "*", "*"]] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "ident24", "o", 1, expected);
   });
@@ -754,11 +754,11 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["property", "*"],
-      ["p", "*"],
-      ["foo", "*"],
-      ["b", "*"],
-    ] as [string, string][];
+      ["property", "*", "*"],
+      ["p", "*", "*"],
+      ["foo", "*", "*"],
+      ["b", "*", "*"],
+    ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "ident24", "p", 0, expected, true);
   });
@@ -790,10 +790,10 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["property", "*"],
-      ["foo", "*"],
-      ["b", "*"],
-    ] as [string, string][];
+      ["property", "*", "*"],
+      ["foo", "*", "*"],
+      ["b", "*", "*"],
+    ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "ident24", "r", 1, expected);
   });
@@ -824,7 +824,7 @@ end class`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [["foo", "*"]] as [string, string][];
+    const expected = [["foo", "*", "*"]] as [string, string, string][];
     await assertAutocompletesWithString(fileImpl, "ident24", "property.f", expected);
   });
 
@@ -855,9 +855,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["b", "*"],
-      ["bar", "*"],
-    ] as [string, string][];
+      ["b", "*", "*"],
+      ["bar", "*", "*"],
+    ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "ident24", "b", 0, expected, true);
   });
@@ -888,7 +888,7 @@ end class`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [["bar", "*"]] as [string, string][];
+    const expected = [["bar", "*", "*"]] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "ident24", "a", 1, expected);
   });
@@ -916,7 +916,7 @@ end class`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [["pp2", "*"]] as [string, string][];
+    const expected = [["pp2", "*", "*"]] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "ident7", "foo.p", expected);
   });
@@ -945,9 +945,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["pp1", "*"],
-      ["pp2", "*"],
-    ] as [string, string][];
+      ["pp1", "*", "*"],
+      ["pp2", "*", "*"],
+    ] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "ident19", "pp", expected);
   });
@@ -978,9 +978,9 @@ end test`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["asString", "*"],
-      ["ff", "*"],
-    ] as [string, string][];
+      ["asString", "*", "*"],
+      ["ff", "*", "*"],
+    ] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "text24", "gr.", expected);
   });
@@ -1000,10 +1000,10 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["Set", "*"],
-      ["Stack", "*"],
-      ["String", "*"],
-    ] as [string, string][];
+      ["Set", "*", "*"],
+      ["Stack", "*", "*"],
+      ["String", "*", "*"],
+    ] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "params6", "a as S", expected);
   });
@@ -1023,9 +1023,9 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["Int", "*"],
-      ["Iterable", "*"],
-    ] as [string, string][];
+      ["Int", "*", "*"],
+      ["Iterable", "*", "*"],
+    ] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "params6", "a as [I", expected);
   });
@@ -1045,11 +1045,11 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["Float", "*"],
-      ["Func", "*"],
-      ["TextFileReader", "*"],
-      ["TextFileWriter", "*"],
-    ] as [string, string][];
+      ["Float", "*", "*"],
+      ["Func", "*", "*"],
+      ["TextFileReader", "*", "*"],
+      ["TextFileWriter", "*", "*"],
+    ] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "params6", "a as {F", expected);
   });
@@ -1069,11 +1069,11 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["BaseVG", "*"],
-      ["BlockGraphics", "*"],
-      ["Boolean", "*"],
-      ["GraphicsBase", "*"],
-    ] as [string, string][];
+      ["BaseVG", "*", "*"],
+      ["BlockGraphics", "*", "*"],
+      ["Boolean", "*", "*"],
+      ["GraphicsBase", "*", "*"],
+    ] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "params6", "a as {Float:B", expected);
   });
@@ -1093,11 +1093,11 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["BaseVG", "*"],
-      ["BlockGraphics", "*"],
-      ["Boolean", "*"],
-      ["GraphicsBase", "*"],
-    ] as [string, string][];
+      ["BaseVG", "*", "*"],
+      ["BlockGraphics", "*", "*"],
+      ["Boolean", "*", "*"],
+      ["GraphicsBase", "*", "*"],
+    ] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "params6", "a as Int, b as B", expected);
   });
@@ -1117,9 +1117,9 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["Int", "*"],
-      ["Iterable", "*"],
-    ] as [string, string][];
+      ["Int", "*", "*"],
+      ["Iterable", "*", "*"],
+    ] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "params6", "a as Set<of I", expected);
   });
@@ -1139,10 +1139,10 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["GraphicsBase", "*"],
-      ["BlockGraphics", "*"],
-      ["VectorGraphics", "*"],
-    ] as [string, string][];
+      ["GraphicsBase", "*", "*"],
+      ["BlockGraphics", "*", "*"],
+      ["VectorGraphics", "*", "*"],
+    ] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "params6", "a as Graphics", expected);
   });
@@ -1158,10 +1158,10 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["Set", "*"],
-      ["Stack", "*"],
-      ["String", "*"],
-    ] as [string, string][];
+      ["Set", "*", "*"],
+      ["Stack", "*", "*"],
+      ["String", "*", "*"],
+    ] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "type5", "S", expected);
   });
@@ -1177,10 +1177,10 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["GraphicsBase", "*"],
-      ["BlockGraphics", "*"],
-      ["VectorGraphics", "*"],
-    ] as [string, string][];
+      ["GraphicsBase", "*", "*"],
+      ["BlockGraphics", "*", "*"],
+      ["VectorGraphics", "*", "*"],
+    ] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "type5", "Graphics", expected);
   });
@@ -1216,11 +1216,11 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["asString", "*"],
-      ["f1", "*"],
-      ["f2", "*"],
-      ["f3", "*"],
-    ] as [string, string][];
+      ["asString", "*", "*"],
+      ["f1", "*", "*"],
+      ["f2", "*", "*"],
+      ["f3", "*", "*"],
+    ] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "expr5", "foo().", expected);
   });
@@ -1256,11 +1256,11 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["asString", "*"],
-      ["f1", "*"],
-      ["f2", "*"],
-      ["f3", "*"],
-    ] as [string, string][];
+      ["asString", "*", "*"],
+      ["f1", "*", "*"],
+      ["f2", "*", "*"],
+      ["f3", "*", "*"],
+    ] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "expr5", "foo(1).", expected);
   });
@@ -1276,7 +1276,7 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [["alpha", "*"]] as [string, string][];
+    const expected = [["alpha", "*", "*"]] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "expr8", "abs(al", expected);
   });
@@ -1296,7 +1296,7 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [["a", "*"]] as [string, string][];
+    const expected = [["a", "*", "*"]] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "expr8", "copy a with ", expected);
   });
@@ -1316,7 +1316,7 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [["with", "*"]] as [string, string][];
+    const expected = [["with", "*", "*"]] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "expr8", "copy a ", expected);
   });
@@ -1336,7 +1336,7 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [["with", "*"]] as [string, string][];
+    const expected = [["with", "*", "*"]] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "expr8", "copy a w", expected);
   });
@@ -1356,7 +1356,7 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [["to", "*"]] as [string, string][];
+    const expected = [["to", "*", "*"]] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "expr8", "copy a with a ", expected);
   });
@@ -1378,9 +1378,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["aa", "*"],
-      ["ab", "*"],
-    ] as [string, string][];
+      ["aa", "*", "*"],
+      ["ab", "*", "*"],
+    ] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "expr8", "copy a with a", expected);
   });
@@ -1402,9 +1402,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["aa", "*"],
-      ["ab", "*"],
-    ] as [string, string][];
+      ["aa", "*", "*"],
+      ["ab", "*", "*"],
+    ] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "expr8", "copy a with aa to 0, a", expected);
   });
@@ -1423,7 +1423,7 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [["a", "*"]] as [string, string][];
+    const expected = [["a", "*", "*"]] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "expr5", "new Foo() with ", expected);
   });
@@ -1444,9 +1444,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["aa", "*"],
-      ["ab", "*"],
-    ] as [string, string][];
+      ["aa", "*", "*"],
+      ["ab", "*", "*"],
+    ] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "expr5", "new Foo() with a", expected);
   });
@@ -1467,9 +1467,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["aa", "*"],
-      ["ab", "*"],
-    ] as [string, string][];
+      ["aa", "*", "*"],
+      ["ab", "*", "*"],
+    ] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "expr5", "new Foo() with aa to 0, a", expected);
   });
@@ -1486,10 +1486,10 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["clearGraphics", "*"],
-      ["clearKeyBuffer", "*"],
-      ["display", "*"],
-    ] as [string, string][];
+      ["clearGraphics", "*", "*"],
+      ["clearKeyBuffer", "*", "*"],
+      ["display", "*", "*"],
+    ] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "ident7", "foo.", expected);
   });
@@ -1506,16 +1506,16 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["asHtml", "*"],
-      ["asString", "*"],
-      ["getBackground", "*"],
-      ["getChar", "*"],
-      ["getForeground", "*"],
-      ["withBackground", "*"],
-      ["withBlock", "*"],
-      ["withText", "*"],
-      ["withUnicode", "*"],
-    ] as [string, string][];
+      ["asHtml", "*", "*"],
+      ["asString", "*", "*"],
+      ["getBackground", "*", "*"],
+      ["getChar", "*", "*"],
+      ["getForeground", "*", "*"],
+      ["withBackground", "*", "*"],
+      ["withBlock", "*", "*"],
+      ["withText", "*", "*"],
+      ["withUnicode", "*", "*"],
+    ] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "expr8", "foo.", expected);
   });
@@ -1531,9 +1531,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["BlockGraphics", "*"],
-      ["Boolean", "*"],
-    ] as [string, string][];
+      ["BlockGraphics", "*", "*"],
+      ["Boolean", "*", "*"],
+    ] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "expr5", "new B", expected);
   });
@@ -1549,25 +1549,25 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["BlockGraphics", "*"],
-      ["Boolean", "*"],
-      ["CircleVG", "*"],
-      ["Float", "*"],
-      ["Func", "*"],
-      ["Int", "*"],
-      ["Iterable", "*"],
-      ["LineVG", "*"],
-      ["Queue", "*"],
-      ["Random", "*"],
-      ["RectangleVG", "*"],
-      ["Set", "*"],
-      ["Stack", "*"],
-      ["String", "*"],
-      ["TextFileReader", "*"],
-      ["TextFileWriter", "*"],
-      ["Turtle", "*"],
-      ["VectorGraphics", "*"],
-    ] as [string, string][];
+      ["BlockGraphics", "*", "*"],
+      ["Boolean", "*", "*"],
+      ["CircleVG", "*", "*"],
+      ["Float", "*", "*"],
+      ["Func", "*", "*"],
+      ["Int", "*", "*"],
+      ["Iterable", "*", "*"],
+      ["LineVG", "*", "*"],
+      ["Queue", "*", "*"],
+      ["Random", "*", "*"],
+      ["RectangleVG", "*", "*"],
+      ["Set", "*", "*"],
+      ["Stack", "*", "*"],
+      ["String", "*", "*"],
+      ["TextFileReader", "*", "*"],
+      ["TextFileWriter", "*", "*"],
+      ["Turtle", "*", "*"],
+      ["VectorGraphics", "*", "*"],
+    ] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "expr5", "new ", expected);
   });
