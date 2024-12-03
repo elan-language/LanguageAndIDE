@@ -82,7 +82,7 @@ end main`;
     await assertAutocompletesWithString(fileImpl, "expr5", "empty [I", expected);
   });
 
-  ignore_test("Pass_emptyExpression", async () => {
+  test("Pass_emptyExpression", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
 main
@@ -92,7 +92,7 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    await assertAutocompletesWithString(fileImpl, "expr5", " ", 60);
+    await assertAutocompletesWithString(fileImpl, "expr5", " ", 59);
   });
 
   test("Pass_LocalVarsCaseInsensitive1", async () => {
@@ -153,8 +153,8 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["aa2", "*", "*"],
-      ["aa3", "*", "*"],
+      ["aa2", "property.aa2", "property.aa2"],
+      ["aa3", "property.aa3", "property.aa3"],
     ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "ident15", "a", 1, expected);
