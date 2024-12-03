@@ -3,7 +3,13 @@ import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Scope } from "../interfaces/scope";
 import { propertyKeyword } from "../keywords";
 import { Transforms } from "../syntax-nodes/transforms";
-import { isFunction, isMemberOnFieldsClass, isProperty } from "./symbol-helpers";
+import {
+  isCallStatement,
+  isFunction,
+  isMemberOnFieldsClass,
+  isProcedure,
+  isProperty,
+} from "./symbol-helpers";
 
 export class SymbolWrapper {
   constructor(
@@ -53,13 +59,16 @@ export class SymbolWrapper {
       return `${this.name}(`;
     }
 
-    // if (isProcedure(this.wrapped, transforms())) {
-    //   return s.symbolId;
-    // }
-    // return s.symbolId + ".";
+    if (isProcedure(symbol, this.transforms)) {
+      return `${this.name}(`;
+    }
 
     if (isMemberOnFieldsClass(symbol, this.transforms, this.scope)) {
       return `${propertyKeyword}.${symbol.symbolId}`;
+    }
+
+    if (isCallStatement(this.scope)) {
+      return `${this.name}.`;
     }
 
     return this.name;

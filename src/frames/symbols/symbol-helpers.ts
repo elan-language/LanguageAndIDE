@@ -88,6 +88,10 @@ export function isLetStatement(s?: ElanSymbol): boolean {
   return !!s && "isLet" in s;
 }
 
+export function isCallStatement(s?: ElanSymbol | Scope): boolean {
+  return !!s && "isCall" in s;
+}
+
 export function isProperty(s?: ElanSymbol): s is Property {
   return !!s && "isProperty" in s;
 }

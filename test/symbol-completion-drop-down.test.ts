@@ -176,8 +176,8 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["aa2", "*", "*"],
-      ["aa3", "*", "*"],
+      ["aa2", "property.aa2", "property.aa2"],
+      ["aa3", "property.aa3", "property.aa3"],
     ] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "ident9", "a", expected);
@@ -203,9 +203,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["a", "*", "*"],
-      ["aa2", "*", "*"],
-      ["aa3", "*", "*"],
+      ["a", "a", "a"],
+      ["aa2", "property.aa2", "property.aa2"],
+      ["aa3", "property.aa3", "property.aa3"],
     ] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "ident16", "a", expected);
@@ -231,9 +231,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["a", "*", "*"],
-      ["aa2", "*", "*"],
-      ["aa3", "*", "*"],
+      ["a", "a", "a"],
+      ["aa2", "property.aa2", "property.aa2"],
+      ["aa3", "property.aa3", "property.aa3"],
     ] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "ident16", "a", expected);
@@ -259,10 +259,10 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["a", "*", "*"],
-      ["aa2", "*", "*"],
-      ["aa3", "*", "*"],
-      ["aa4", "*", "*"],
+      ["a", "a", "a"],
+      ["aa2", "property.aa2", "property.aa2"],
+      ["aa3", "property.aa3", "property.aa3"],
+      ["aa4", "aa4", "aa4"],
     ] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "ident16", "a", expected);
@@ -280,7 +280,7 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [["foobar", "*", "*"]] as [string, string, string][];
+    const expected = [["foobar", "foobar", "foobar"]] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "ident10", "b", 3, expected);
   });
@@ -300,14 +300,14 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["foo", "*", "*"],
-      ["foobar", "*", "*"],
+      ["foo", "foo", "foo"],
+      ["foobar", "foobar", "foobar"],
     ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "ident13", "o", 1, expected);
   });
 
-  ignore_test("Pass_CallLocalVars", async () => {
+  test("Pass_CallLocalVars", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
 procedure fooyon()
@@ -324,10 +324,10 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["foo", "*", "*"],
-      ["foobar", "*", "*"],
-      ["fooyon", "Procedure ()"],
-      ["waitForAnyKey", "Procedure ()"],
+      ["foo", "foo", "foo."],
+      ["foobar", "foobar", "foobar."],
+      ["fooyon", "fooyon", "fooyon("],
+      ["waitForAnyKey", "waitForAnyKey", "waitForAnyKey("],
     ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "ident14", "o", 1, expected);

@@ -689,6 +689,10 @@ export abstract class AbstractField implements Selectable, Field {
       : new SymbolCompletionSpec("", new Set<TokenType>(), new Set<string>(), "");
   }
 
+  orderSymbol(s1: SymbolWrapper, s2: SymbolWrapper) {
+    return s1.name.localeCompare(s2.name);
+  }
+
   protected symbolCompletionAsHtml(transforms: Transforms): string {
     let popupAsHtml = "";
     const spec = this.getSymbolCompletionSpec();
@@ -698,9 +702,9 @@ export abstract class AbstractField implements Selectable, Field {
     if (this.showAutoComplete(spec)) {
       this.autocompleteMatch = spec.toMatch;
       const scope = this.getHolder();
-      const keywords = Array.from(spec.keywords).map(
-        (k) => new SymbolWrapper(k, transforms, scope),
-      );
+      const keywords = Array.from(spec.keywords)
+        .map((k) => new SymbolWrapper(k, transforms, scope))
+        .sort(this.orderSymbol);
       const symbols = this.matchingSymbolsForId(spec, transforms).map(
         (s) => new SymbolWrapper(s, transforms, scope),
       );
