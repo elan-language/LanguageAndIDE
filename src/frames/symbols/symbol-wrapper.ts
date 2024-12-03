@@ -60,7 +60,7 @@ export class SymbolWrapper {
     }
 
     if (isProcedure(symbol, this.transforms)) {
-      return `${this.name}(`;
+      return `${this.name}`;
     }
 
     if (isMemberOnFieldsClass(symbol, this.transforms, this.scope)) {

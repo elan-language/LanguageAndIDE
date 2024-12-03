@@ -326,8 +326,8 @@ end main`;
     const expected = [
       ["foo", "foo", "foo."],
       ["foobar", "foobar", "foobar."],
-      ["fooyon", "fooyon", "fooyon("],
-      ["waitForAnyKey", "waitForAnyKey", "waitForAnyKey("],
+      ["fooyon", "fooyon", "fooyon"],
+      ["waitForAnyKey", "waitForAnyKey", "waitForAnyKey"],
     ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "ident14", "o", 1, expected);
