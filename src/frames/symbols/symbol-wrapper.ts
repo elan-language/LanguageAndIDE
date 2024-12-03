@@ -1,10 +1,16 @@
 import { isGenericClass } from "../helpers";
 import { ElanSymbol } from "../interfaces/elan-symbol";
+import { Scope } from "../interfaces/scope";
 import { propertyKeyword } from "../keywords";
-import { isProperty } from "./symbol-helpers";
+import { Transforms } from "../syntax-nodes/transforms";
+import { isFunction, isMemberOnFieldsClass, isProperty } from "./symbol-helpers";
 
 export class SymbolWrapper {
-  constructor(private readonly wrapped: ElanSymbol | string) {
+  constructor(
+    private readonly wrapped: ElanSymbol | string,
+    private readonly transforms: Transforms,
+    private readonly scope: Scope,
+  ) {
     if (typeof wrapped === "string") {
       this.name = wrapped;
       this.isKeyword = true;
@@ -23,11 +29,13 @@ export class SymbolWrapper {
       return this.name;
     }
 
-    if (isProperty(this.wrapped as ElanSymbol)) {
+    const symbol = this.wrapped as ElanSymbol;
+
+    if (isProperty(symbol)) {
       return `${propertyKeyword}.${this.name}`;
     }
 
-    return isGenericClass(this.wrapped as ElanSymbol) ? `${this.name}&lt;of` : this.name;
+    return isGenericClass(symbol) ? `${this.name}&lt;of` : this.name;
   }
 
   get insertedText() {
@@ -35,31 +43,24 @@ export class SymbolWrapper {
       return this.name + " ";
     }
 
-    // if (isGenericClass(this.wrapped)) {
+    const symbol = this.wrapped as ElanSymbol;
 
-    //  return `${symbol.symbolId}<of `;
-    // }
+    if (isGenericClass(symbol)) {
+      return `${this.name}<of `;
+    }
+
+    if (isFunction(symbol, this.transforms)) {
+      return `${this.name}(`;
+    }
 
     // if (isProcedure(this.wrapped, transforms())) {
     //   return s.symbolId;
     // }
     // return s.symbolId + ".";
 
-    // if (isMemberOnFieldsClass(symbol, transforms(), this.getHolder())) {
-    //   return `${propertyKeyword}.${symbol.symbolId}`;
-    // }
-    // if (isGenericClass(symbol)) {
-    //   return `${symbol.symbolId}<of `;
-    // }
-    // if (isFunction(symbol, transforms())) {
-    //   return symbol.symbolId + "(";
-    // }
-    // return symbol.symbolId;
-
-    // if (isMemberOnFieldsClass(s, transforms(), this.getHolder())) {
-    //   return `${propertyKeyword}.${s.symbolId}`;
-    // }
-    // return s.symbolId;
+    if (isMemberOnFieldsClass(symbol, this.transforms, this.scope)) {
+      return `${propertyKeyword}.${symbol.symbolId}`;
+    }
 
     return this.name;
   }

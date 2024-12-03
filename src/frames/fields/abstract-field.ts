@@ -695,8 +695,13 @@ export abstract class AbstractField implements Selectable, Field {
     }
     if (this.showAutoComplete(spec)) {
       this.autocompleteMatch = spec.toMatch;
-      const keywords = Array.from(spec.keywords).map((k) => new SymbolWrapper(k));
-      const symbols = this.matchingSymbolsForId(spec, transforms).map((s) => new SymbolWrapper(s));
+      const scope = this.getHolder();
+      const keywords = Array.from(spec.keywords).map(
+        (k) => new SymbolWrapper(k, transforms, scope),
+      );
+      const symbols = this.matchingSymbolsForId(spec, transforms).map(
+        (s) => new SymbolWrapper(s, transforms, scope),
+      );
       this.autocompleteSymbols = keywords.concat(symbols);
       popupAsHtml = this.popupAsHtml();
     }

@@ -36,7 +36,7 @@ end main`;
 
     const expected = [
       ["not", "not", "not "],
-      ["bitNot", "*", "*"],
+      ["bitNot", "bitNot", "bitNot("],
     ] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "expr5", "no", expected);
@@ -53,12 +53,12 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["and", "*", "*"],
-      ["div", "*", "*"],
-      ["is", "*", "*"],
-      ["isnt", "*", "*"],
-      ["mod", "*", "*"],
-      ["or", "*", "*"],
+      ["and", "and", "and "],
+      ["div", "div", "div "],
+      ["is", "is", "is "],
+      ["isnt", "isnt", "isnt "],
+      ["mod", "mod", "mod "],
+      ["or", "or", "or "],
     ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "expr5", " ", 1, expected);
@@ -75,8 +75,8 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["Int", "*", "*"],
-      ["Iterable", "*", "*"],
+      ["Int", "Int", "Int"],
+      ["Iterable", "Iterable&lt;of", "Iterable<of "],
     ] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "expr5", "empty [I", expected);
