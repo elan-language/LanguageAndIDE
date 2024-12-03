@@ -24,6 +24,26 @@ end main`;
     await assertAutocompletes(fileImpl, "ident10", "o", 1, expected);
   });
 
+  ignore_test("Pass_LocalVars1", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+main
+  var foo set to 1
+  var foobar set to 2
+  set f to 1
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["foo", "foo", "foo"],
+      ["foobar", "foobar", "foobar"],
+    ] as [string, string, string][];
+
+    await assertAutocompletesWithString(fileImpl, "ident10", " ", expected);
+  });
+
   test("Pass_Let", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
