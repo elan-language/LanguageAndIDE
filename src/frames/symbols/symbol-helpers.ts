@@ -88,6 +88,10 @@ export function isLetStatement(s?: ElanSymbol): boolean {
   return !!s && "isLet" in s;
 }
 
+export function isCallStatement(s?: ElanSymbol | Scope): boolean {
+  return !!s && "isCall" in s;
+}
+
 export function isProperty(s?: ElanSymbol): s is Property {
   return !!s && "isProperty" in s;
 }
@@ -622,17 +626,6 @@ export function symbolMatches(id: string, all: boolean, symbols: ElanSymbol[]) {
   }
 
   return sw.concat(inc);
-}
-
-export function removeTypeSymbols(s: string) {
-  let id = s.replaceAll("[", "").replaceAll("{", "");
-  const colonIndex = id.indexOf(":");
-
-  if (colonIndex >= 0) {
-    id = id.slice(colonIndex + 1);
-  }
-
-  return id;
 }
 
 export function filterForTokenType(

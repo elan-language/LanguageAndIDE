@@ -35,6 +35,7 @@ import { VarStatement } from "./var-statement";
 
 export class CallStatement extends AbstractFrame implements Statement {
   isStatement = true;
+  isCall = true;
   proc: ProcRefField;
   args: ArgListField;
 

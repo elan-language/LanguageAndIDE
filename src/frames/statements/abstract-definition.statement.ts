@@ -24,7 +24,6 @@ export abstract class AbstractDefinitionStatement
   implements Statement, ElanSymbol
 {
   isStatement = true;
-  isVarStatement = true;
   name: VarDefField;
   expr: ExpressionField;
 
