@@ -3,6 +3,7 @@ import { Frame } from "../interfaces/frame";
 
 import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { ParseNode } from "../parse-nodes/parse-node";
+import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
 
 export class IdentifierField extends AbstractField {
@@ -27,5 +28,9 @@ export class IdentifierField extends AbstractField {
   }
   isEndMarker(key: string) {
     return key === " " || key === "(";
+  }
+
+  symbolCompletion(): string {
+    return this.symbolCompletionAsHtml(transforms());
   }
 }

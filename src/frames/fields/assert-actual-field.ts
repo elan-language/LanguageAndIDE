@@ -23,7 +23,7 @@ export class AssertActualField extends AbstractField {
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>
     source.readUntil(/\sis\s/);
 
-  public textAsHtml(): string {
-    return super.textAsHtml() + this.symbolCompletionAsHtml(transforms());
+  symbolCompletion(): string {
+    return this.symbolCompletionAsHtml(transforms());
   }
 }

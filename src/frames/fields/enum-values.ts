@@ -4,7 +4,7 @@ import { Frame } from "../interfaces/frame";
 import { CSV } from "../parse-nodes/csv";
 import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { ParseNode } from "../parse-nodes/parse-node";
-import { isAstCollectionNode } from "../syntax-nodes/ast-helpers";
+import { isAstCollectionNode, transforms } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractField } from "./abstract-field";
 
@@ -55,5 +55,9 @@ export class EnumValues extends AbstractField {
     }
 
     return "";
+  }
+
+  symbolCompletion(): string {
+    return this.symbolCompletionAsHtml(transforms());
   }
 }

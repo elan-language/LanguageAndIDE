@@ -44,11 +44,7 @@ export class TypeField extends AbstractField {
     return this.getOrTransformAstNode(transforms).symbolType();
   }
 
-  public textAsHtml(): string {
-    return super.textAsHtml() + this.symbolCompletionAsHtml(transforms());
-  }
-
-  mapTypeId(symbol: ElanSymbol) {
-    return isGenericClass(symbol) ? `${symbol.symbolId}&lt;of` : symbol.symbolId;
+  symbolCompletion(): string {
+    return this.symbolCompletionAsHtml(transforms());
   }
 }

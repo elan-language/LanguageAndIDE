@@ -4,6 +4,7 @@ import { Frame } from "../interfaces/frame";
 import { KeywordNode } from "../parse-nodes/keyword-node";
 import { OptionalNode } from "../parse-nodes/optional-node";
 import { ParseNode } from "../parse-nodes/parse-node";
+import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
 
 export class OptionalKeyword extends AbstractField {
@@ -65,5 +66,9 @@ export class OptionalKeyword extends AbstractField {
       const c = this.keywordExists() ? `<el-kw> ${this.text}</el-kw>` : ``;
       return c;
     }
+  }
+
+  symbolCompletion(): string {
+    return this.symbolCompletionAsHtml(transforms());
   }
 }

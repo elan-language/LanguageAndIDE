@@ -1658,4 +1658,20 @@ end record`;
 
     await assertAutocompletesWithString(fileImpl, "ident10", "a", expected);
   });
+
+  test("Pass_Parameter", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+main
+  var bubbles set to empty [CircleVG]  
+  call bubbles.putAt(0, new CircleVG())
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [["CircleVG", "CircleVG", "CircleVG"]] as [string, string, string][];
+
+    await assertAutocompletesWithString(fileImpl, "args8", "0, new C", expected);
+  });
 });

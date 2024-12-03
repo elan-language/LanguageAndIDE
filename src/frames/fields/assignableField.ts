@@ -64,7 +64,7 @@ export class AssignableField extends AbstractField {
     return removeIfSingleFullMatch(symbols, spec.toMatch);
   }
 
-  public textAsHtml(): string {
-    return super.textAsHtml() + this.symbolCompletionAsHtml(transforms());
+  symbolCompletion(): string {
+    return this.symbolCompletionAsHtml(transforms());
   }
 }

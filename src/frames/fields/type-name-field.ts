@@ -3,6 +3,7 @@ import { Frame } from "../interfaces/frame";
 
 import { ParseNode } from "../parse-nodes/parse-node";
 import { TypeSimpleNode } from "../parse-nodes/type-simple-node";
+import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
 
 export class TypeNameField extends AbstractField {
@@ -32,5 +33,9 @@ export class TypeNameField extends AbstractField {
     } else {
       return `<el-type>${this.text}</el-type>`;
     }
+  }
+
+  symbolCompletion(): string {
+    return this.symbolCompletionAsHtml(transforms());
   }
 }

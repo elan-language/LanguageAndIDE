@@ -6,6 +6,7 @@ import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { LitString as LitStringNonEmpty } from "../parse-nodes/lit-string";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { AbstractField } from "./abstract-field";
+import { transforms } from "../syntax-nodes/ast-helpers";
 
 export class ExceptionMessage extends AbstractField {
   tokenTypes: Set<TokenType> = new Set<TokenType>([
@@ -32,4 +33,8 @@ export class ExceptionMessage extends AbstractField {
   }
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>
     source.readToEndOfLine();
+
+  symbolCompletion(): string {
+    return this.symbolCompletionAsHtml(transforms());
+  }
 }
