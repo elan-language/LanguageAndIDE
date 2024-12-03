@@ -684,6 +684,7 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   protected getSymbolCompletionSpec(): SymbolCompletionSpec {
+    const rn = this.rootNode ?? this.initialiseRoot();
     return this.rootNode
       ? this.rootNode.symbolCompletion_getSpec()
       : new SymbolCompletionSpec("", new Set<TokenType>(), new Set<string>(), "");
