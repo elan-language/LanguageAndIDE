@@ -170,15 +170,7 @@ export class ParamList extends AbstractField implements Scope {
     return super.textAsHtml() + this.symbolCompletionAsHtml(transforms());
   }
 
-  protected override getSymbolCompleteId(symbol: ElanSymbol) {
-    return isGenericClass(symbol) ? `${symbol.symbolId}<of ` : symbol.symbolId;
-  }
-
   mapTypeId(symbol: ElanSymbol) {
     return isGenericClass(symbol) ? `${symbol.symbolId}&lt;of` : symbol.symbolId;
-  }
-
-  protected override getDisplaySymbolId(symbol: ElanSymbol) {
-    return this.mapTypeId(symbol);
   }
 }

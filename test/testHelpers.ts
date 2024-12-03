@@ -177,10 +177,10 @@ async function doAsserts(f: FileImpl, fld : AbstractField, expected: [string, st
     const s = symbols[i];
     const e = expected[i] as [string, string];
 
-    assert.strictEqual(s.symbolId, e[0]);
+    assert.strictEqual(s.name, e[0]);
 
     if (e[1] !== "*") {
-      assert.strictEqual(s.symbolType(transforms()).name, e[1]);
+      assert.strictEqual(s.displayName, e[1]);
     }
   }
 } 

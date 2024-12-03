@@ -20,7 +20,8 @@ import { CSV } from "../parse-nodes/csv";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { CompileStatus, DisplayStatus, ParseStatus } from "../status-enums";
 import { SymbolCompletionSpec, TokenType } from "../symbol-completion-helpers";
-import { filteredSymbols, isProperty, removeIfSingleFullMatch } from "../symbols/symbol-helpers";
+import { filteredSymbols, removeIfSingleFullMatch } from "../symbols/symbol-helpers";
+import { SymbolWrapper } from "../symbols/symbol-wrapper";
 import { UnknownType } from "../symbols/unknown-type";
 import { EmptyAsn } from "../syntax-nodes/empty-asn";
 import { Transforms } from "../syntax-nodes/transforms";
@@ -49,9 +50,9 @@ export abstract class AbstractField implements Selectable, Field {
   protected help: string = "help TBD";
   overtyper = new Overtyper();
   codeHasChanged: boolean = false;
-  autocompleteSymbols: ElanSymbol[] = [];
+  autocompleteSymbols: SymbolWrapper[] = [];
   autocompleteMatch: string = "";
-  protected autoCompSelected?: ElanSymbol;
+  protected autoCompSelected?: SymbolWrapper;
 
   constructor(holder: Frame) {
     this.holder = holder;
@@ -141,7 +142,7 @@ export abstract class AbstractField implements Selectable, Field {
 
   processAutocompleteText(txt: string | undefined) {
     if (txt) {
-      this.autoCompSelected = this.autocompleteSymbols.find((s) => s.symbolId === txt);
+      this.autoCompSelected = this.autocompleteSymbols.find((s) => s.name === txt);
     }
   }
 
@@ -345,14 +346,6 @@ export abstract class AbstractField implements Selectable, Field {
     }
   }
 
-  protected getSymbolCompleteId(s?: ElanSymbol) {
-    return s ? s.symbolId : "";
-  }
-
-  private getSymbolCompleteText() {
-    return this.getSymbolCompleteId(this.autoCompSelected);
-  }
-
   private replaceAutocompletedText() {
     // todo this will need refinement
 
@@ -362,7 +355,7 @@ export abstract class AbstractField implements Selectable, Field {
     }
 
     const propertyPrefix = `${propertyKeyword}.`;
-    const appendText = this.getSymbolCompleteText();
+    const appendText = this.autoCompSelected?.insertedText ?? "";
 
     if (this.text === propertyPrefix && appendText.startsWith(propertyPrefix)) {
       this.text = "";
@@ -607,23 +600,13 @@ export abstract class AbstractField implements Selectable, Field {
     return rgx.test(this.text) ? this.text.match(rgx)![3] : "";
   }
 
-  protected getDisplaySymbolId(symbol: ElanSymbol) {
-    return isProperty(symbol) && !this.text.includes(".")
-      ? `${propertyKeyword}.${symbol.symbolId}`
-      : symbol.symbolId;
-  }
-
   protected popupAsHtml() {
     const symbols = this.autocompleteSymbols;
     const symbolAsHtml: string[] = [];
     const count = this.autocompleteSymbols.length;
     // we're doing a ref equality below so make sure same objects!
     this.autoCompSelected = this.autoCompSelected
-      ? symbols.filter(
-          (s) =>
-            s.symbolId === this.autoCompSelected?.symbolId &&
-            s.symbolScope === this.autoCompSelected.symbolScope,
-        )[0]
+      ? symbols.filter((s) => s.matches(this.autoCompSelected))[0]
       : undefined;
     const selectedIndex = this.autoCompSelected ? symbols.indexOf(this.autoCompSelected) : 0;
     let popupAsHtml = "";
@@ -646,12 +629,12 @@ export abstract class AbstractField implements Selectable, Field {
 
     for (let i = startIndex; i < lastIndex; i++) {
       const symbol = symbols[i];
-      const symbolId = this.getDisplaySymbolId(symbol);
+      const name = symbol.displayName;
       const selected = count === 1 || this.markIfSelected(symbol) ? " selected" : "";
 
       symbolAsHtml.push(
         // Can add back in ${isP}  and ${symbolType}
-        `<div class="autocomplete-item${selected}" data-id="${this.htmlId}">${symbolId}</div>`,
+        `<div class="autocomplete-item${selected}" data-id="${this.htmlId}">${name}</div>`,
       );
     }
 
@@ -666,7 +649,7 @@ export abstract class AbstractField implements Selectable, Field {
     return popupAsHtml;
   }
 
-  private markIfSelected(symbol: ElanSymbol) {
+  private markIfSelected(symbol: SymbolWrapper) {
     return symbol === this.autoCompSelected;
   }
 
@@ -689,9 +672,9 @@ export abstract class AbstractField implements Selectable, Field {
     }
   }
 
-  protected showAutoComplete(tt: Set<TokenType>) {
+  protected showAutoComplete(spec: SymbolCompletionSpec) {
     return (
-      tt.size > 0 &&
+      (spec.tokenTypes.size > 0 || spec.keywords.size > 0) &&
       this.selected &&
       this.cursorPos === this.text.length &&
       this.readParseStatus() !== ParseStatus.invalid
@@ -710,10 +693,11 @@ export abstract class AbstractField implements Selectable, Field {
     if (spec.context === "") {
       spec.context = this.extractContextFromText();
     }
-    const tokenTypes = spec.tokenTypes;
-    if (this.showAutoComplete(tokenTypes)) {
+    if (this.showAutoComplete(spec)) {
       this.autocompleteMatch = spec.toMatch;
-      this.autocompleteSymbols = this.matchingSymbolsForId(spec, transforms);
+      const keywords = Array.from(spec.keywords).map((k) => new SymbolWrapper(k));
+      const symbols = this.matchingSymbolsForId(spec, transforms).map((s) => new SymbolWrapper(s));
+      this.autocompleteSymbols = keywords.concat(symbols);
       popupAsHtml = this.popupAsHtml();
     }
     return popupAsHtml;

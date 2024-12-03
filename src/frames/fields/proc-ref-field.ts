@@ -1,5 +1,4 @@
 import { CodeSource } from "../code-source";
-import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Frame } from "../interfaces/frame";
 import { Alternatives } from "../parse-nodes/alternatives";
 import { IdentifierNode } from "../parse-nodes/identifier-node";
@@ -7,7 +6,6 @@ import { InstanceProcRef } from "../parse-nodes/instanceProcRef";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { ParseStatus } from "../status-enums";
 import { TokenType } from "../symbol-completion-helpers";
-import { isProcedure } from "../symbols/symbol-helpers";
 import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
 
@@ -37,13 +35,6 @@ export class ProcRefField extends AbstractField {
     return this.rootNode;
   }
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) => source.readUntil(/\(/);
-
-  protected override getSymbolCompleteId(s: ElanSymbol) {
-    if (isProcedure(s, transforms())) {
-      return s.symbolId;
-    }
-    return s.symbolId + ".";
-  }
 
   public textAsHtml(): string {
     let text: string;

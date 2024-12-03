@@ -1,4 +1,12 @@
-import { newKeyword, copyKeyword, ifKeyword, lambdaKeyword, emptyKeyword, thisKeyword, refKeyword } from "../keywords";
+import {
+  newKeyword,
+  copyKeyword,
+  ifKeyword,
+  lambdaKeyword,
+  emptyKeyword,
+  thisKeyword,
+  refKeyword,
+} from "../keywords";
 import { TokenType } from "../symbol-completion-helpers";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { BinaryExpression } from "./binary-expression";
@@ -28,7 +36,7 @@ export class ExprNode extends AbstractAlternatives {
       this.alternatives.push(new Term());
       this.alternatives.push(new BinaryExpression());
       super.parseText(text);
-    };
+    }
   }
 
   override getActiveNode(): ParseNode {
@@ -41,7 +49,8 @@ export class ExprNode extends AbstractAlternatives {
   }
 
   override symbolCompletion_tokenTypes(): Set<TokenType> {
-    return new Set([        TokenType.id_constant,
+    return new Set([
+      TokenType.id_constant,
       TokenType.id_let,
       TokenType.id_parameter_out,
       TokenType.id_parameter_regular,
@@ -49,11 +58,19 @@ export class ExprNode extends AbstractAlternatives {
       TokenType.id_variable,
       TokenType.id_enumValue,
       TokenType.method_function,
-      TokenType.method_system
+      TokenType.method_system,
     ]);
   }
 
   override symbolCompletion_keywords(): Set<string> {
-    return new Set([newKeyword,copyKeyword,ifKeyword,lambdaKeyword,emptyKeyword,thisKeyword,refKeyword]);
+    return new Set([
+      newKeyword,
+      copyKeyword,
+      ifKeyword,
+      lambdaKeyword,
+      emptyKeyword,
+      thisKeyword,
+      refKeyword,
+    ]);
   }
 }

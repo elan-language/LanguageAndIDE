@@ -11,7 +11,6 @@ import { SymbolCompletionSpec, TokenType } from "../symbol-completion-helpers";
 import {
   filteredSymbols,
   isInsideClass,
-  isMemberOnFieldsClass,
   isProperty,
   removeIfSingleFullMatch,
 } from "../symbols/symbol-helpers";
@@ -63,13 +62,6 @@ export class AssignableField extends AbstractField {
       }
     }
     return removeIfSingleFullMatch(symbols, spec.toMatch);
-  }
-
-  protected override getSymbolCompleteId(s: ElanSymbol) {
-    if (isMemberOnFieldsClass(s, transforms(), this.getHolder())) {
-      return `${propertyKeyword}.${s.symbolId}`;
-    }
-    return s.symbolId;
   }
 
   public textAsHtml(): string {
