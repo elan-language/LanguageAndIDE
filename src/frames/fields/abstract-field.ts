@@ -19,7 +19,7 @@ import { Overtyper } from "../overtyper";
 import { CSV } from "../parse-nodes/csv";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { CompileStatus, DisplayStatus, ParseStatus } from "../status-enums";
-import { SymbolCompletionSpec, TokenType } from "../symbol-completion-helpers";
+import { SymbolCompletionSpec } from "../symbol-completion-helpers";
 import { filteredSymbols, removeIfSingleFullMatch } from "../symbols/symbol-helpers";
 import { SymbolWrapper } from "../symbols/symbol-wrapper";
 import { UnknownType } from "../symbols/unknown-type";
@@ -476,7 +476,7 @@ export abstract class AbstractField implements Selectable, Field {
   public textAsHtml(): string {
     let html = "";
     if (this.selected) {
-      html = this.fieldAsInput();
+      html = this.fieldAsInput() + this.symbolCompletion();
     } else {
       if (this.rootNode && this._parseStatus === ParseStatus.valid) {
         html = this.rootNode.renderAsHtml();
@@ -685,9 +685,7 @@ export abstract class AbstractField implements Selectable, Field {
 
   protected getSymbolCompletionSpec(): SymbolCompletionSpec {
     const rn = this.rootNode ?? this.initialiseRoot();
-    return this.rootNode
-      ? this.rootNode.symbolCompletion_getSpec()
-      : new SymbolCompletionSpec("", new Set<TokenType>(), new Set<string>(), "");
+    return rn.symbolCompletion_getSpec();
   }
 
   orderSymbol(s1: SymbolWrapper, s2: SymbolWrapper) {
@@ -714,4 +712,6 @@ export abstract class AbstractField implements Selectable, Field {
     }
     return popupAsHtml;
   }
+
+  abstract symbolCompletion(): string;
 }

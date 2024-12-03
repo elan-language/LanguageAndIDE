@@ -6,6 +6,7 @@ import { DeconstructedList } from "../parse-nodes/deconstructed-list";
 import { DeconstructedTuple } from "../parse-nodes/deconstructed-tuple";
 import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { ParseNode } from "../parse-nodes/parse-node";
+import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
 
 export class VarDefField extends AbstractField {
@@ -31,5 +32,9 @@ export class VarDefField extends AbstractField {
 
   isEndMarker(key: string) {
     return key === " ";
+  }
+
+  symbolCompletion(): string {
+    return this.symbolCompletionAsHtml(transforms());
   }
 }

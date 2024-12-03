@@ -6,6 +6,7 @@ import { OptionalNode } from "../parse-nodes/optional-node";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { Else } from "../statements/else";
 import { ParseStatus } from "../status-enums";
+import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
 import { Regexes } from "./regexes";
 
@@ -61,5 +62,9 @@ export class IfSelector extends AbstractField {
       this.codeHasChanged = super.processKey(keyEvent);
     }
     return this.codeHasChanged;
+  }
+
+  symbolCompletion(): string {
+    return this.symbolCompletionAsHtml(transforms());
   }
 }

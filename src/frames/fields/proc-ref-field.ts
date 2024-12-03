@@ -39,7 +39,7 @@ export class ProcRefField extends AbstractField {
   public textAsHtml(): string {
     let text: string;
     if (this.isSelected()) {
-      text = this.fieldAsInput();
+      text = this.fieldAsInput() + this.symbolCompletion();
     } else if (this.readParseStatus() === ParseStatus.valid) {
       const bestMatch = (this.rootNode! as Alternatives).bestMatch;
       if (bestMatch instanceof IdentifierNode) {
@@ -50,10 +50,14 @@ export class ProcRefField extends AbstractField {
     } else {
       text = super.textAsHtml();
     }
-    return text + this.symbolCompletionAsHtml(transforms());
+    return text;
   }
 
   isEndMarker(key: string) {
     return key === "(";
+  }
+
+  symbolCompletion(): string {
+    return this.symbolCompletionAsHtml(transforms());
   }
 }

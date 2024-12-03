@@ -3,6 +3,7 @@ import { Frame } from "../interfaces/frame";
 import { CSV } from "../parse-nodes/csv";
 import { ExprNode } from "../parse-nodes/expr-node";
 import { ParseNode } from "../parse-nodes/parse-node";
+import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
 
 export class ArgListField extends AbstractField {
@@ -34,5 +35,9 @@ export class ArgListField extends AbstractField {
 
   isEndMarker(key: string) {
     return this.text === "" && key === ")";
+  }
+
+  symbolCompletion(): string {
+    return this.symbolCompletionAsHtml(transforms());
   }
 }

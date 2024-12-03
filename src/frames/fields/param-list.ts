@@ -4,7 +4,7 @@ import {
   mustNotBeOutParameter,
   mustNotBeRedefined,
 } from "../compile-rules";
-import { isConstructor, isFunction, isGenericClass } from "../helpers";
+import { isConstructor, isFunction } from "../helpers";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstNode } from "../interfaces/ast-node";
 import { ElanSymbol } from "../interfaces/elan-symbol";
@@ -166,11 +166,7 @@ export class ParamList extends AbstractField implements Scope {
     return "";
   }
 
-  public textAsHtml(): string {
-    return super.textAsHtml() + this.symbolCompletionAsHtml(transforms());
-  }
-
-  mapTypeId(symbol: ElanSymbol) {
-    return isGenericClass(symbol) ? `${symbol.symbolId}&lt;of` : symbol.symbolId;
+  symbolCompletion(): string {
+    return this.symbolCompletionAsHtml(transforms());
   }
 }

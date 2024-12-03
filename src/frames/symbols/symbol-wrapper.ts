@@ -4,7 +4,9 @@ import { Scope } from "../interfaces/scope";
 import { propertyKeyword } from "../keywords";
 import { Transforms } from "../syntax-nodes/transforms";
 import {
+  isAbstractTypeName,
   isCallStatement,
+  isConcreteTypeName,
   isFunction,
   isMemberOnFieldsClass,
   isProcedure,
@@ -60,6 +62,10 @@ export class SymbolWrapper {
     }
 
     if (isProcedure(symbol, this.transforms)) {
+      return `${this.name}`;
+    }
+
+    if (isConcreteTypeName(symbol) || isAbstractTypeName(symbol)) {
       return `${this.name}`;
     }
 

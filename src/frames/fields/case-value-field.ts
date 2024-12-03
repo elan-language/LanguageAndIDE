@@ -2,6 +2,7 @@ import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
 import { LitValueNode } from "../parse-nodes/lit-value";
 import { ParseNode } from "../parse-nodes/parse-node";
+import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
 
 export class CaseValueField extends AbstractField {
@@ -19,4 +20,8 @@ export class CaseValueField extends AbstractField {
   }
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>
     source.readToEndOfLine();
+
+  symbolCompletion(): string {
+    return this.symbolCompletionAsHtml(transforms());
+  }
 }

@@ -15,18 +15,21 @@ export class ExpressionField extends AbstractField {
     this.setPlaceholder("<i>expression</i>");
     this.help = "Field may contain a literal value, a reference to a variable, or an expression";
   }
+
   getIdPrefix(): string {
     return "expr";
   }
+
   initialiseRoot(): ParseNode {
     this.astNode = undefined;
     this.rootNode = new ExprNode();
     return this.rootNode;
   }
+
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>
     source.readUntil(this.readUntil);
 
-  public textAsHtml(): string {
-    return super.textAsHtml() + this.symbolCompletionAsHtml(transforms());
+  symbolCompletion(): string {
+    return this.symbolCompletionAsHtml(transforms());
   }
 }

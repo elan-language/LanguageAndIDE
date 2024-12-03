@@ -1604,11 +1604,74 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["aa", "*", "*"],
-      ["ab", "*", "*"],
-      ["ac", "*", "*"],
+      ["aa", "aa", "aa"],
+      ["ab", "ab", "ab"],
+      ["ac", "ac", "ac"],
     ] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "ident10", "a", expected);
+  });
+
+  test("Pass_Deconstruction2", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+main
+  var ab set to 0  
+  var aa,ac set to (0, "fred")
+  set aa to 0
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["aa", "aa", "aa"],
+      ["ab", "ab", "ab"],
+      ["ac", "ac", "ac"],
+    ] as [string, string, string][];
+
+    await assertAutocompletesWithString(fileImpl, "ident10", "a", expected);
+  });
+
+  test("Pass_Deconstruction3", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+main
+  var ab set to 0  
+  var aa,ac set to new Foo()
+  set aa to 0
+end main
+
+record Foo
+  property aa as Int
+  property ac as String
+end record`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["aa", "aa", "aa"],
+      ["ab", "ab", "ab"],
+      ["ac", "ac", "ac"],
+    ] as [string, string, string][];
+
+    await assertAutocompletesWithString(fileImpl, "ident10", "a", expected);
+  });
+
+  test("Pass_Parameter", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+main
+  var bubbles set to empty [CircleVG]  
+  call bubbles.putAt(0, new CircleVG())
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [["CircleVG", "CircleVG", "CircleVG"]] as [string, string, string][];
+
+    await assertAutocompletesWithString(fileImpl, "args8", "0, new C", expected);
   });
 });
