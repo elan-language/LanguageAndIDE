@@ -42,7 +42,7 @@ end main`;
     await assertAutocompletesWithString(fileImpl, "expr5", "no", expected);
   });
 
-  test("Pass_IgnoreOperator", async () => {
+  test("Pass_Keywords", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
 main
@@ -52,7 +52,14 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [] as [string, string][];
+    const expected = [
+      ["and", "*"],
+      ["div", "*"],
+      ["is", "*"],
+      ["isnt", "*"],
+      ["mod", "*"],
+      ["or", "*"],
+    ] as [string, string][];
 
     await assertAutocompletes(fileImpl, "expr5", " ", 1, expected);
   });
