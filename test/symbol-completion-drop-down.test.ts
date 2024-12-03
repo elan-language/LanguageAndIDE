@@ -1590,4 +1590,25 @@ end main`;
 
     await assertAutocompletesWithString(fileImpl, "expr5", "new ", expected);
   });
+
+  test("Pass_Deconstruction1", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+main
+  var ab set to 0  
+  var aa:ac set to [0]
+  set aa to 0
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["aa", "*", "*"],
+      ["ab", "*", "*"],
+      ["ac", "*", "*"],
+    ] as [string, string, string][];
+
+    await assertAutocompletesWithString(fileImpl, "ident10", "a", expected);
+  });
 });

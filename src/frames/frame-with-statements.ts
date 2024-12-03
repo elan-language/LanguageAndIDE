@@ -30,8 +30,9 @@ import {
   parentHelper_renderChildrenAsSource,
   parentHelper_selectFirstChild,
 } from "./parent-helpers";
+import { DefinitionAdapter } from "./statements/definition-adapter";
 import { StatementSelector } from "./statements/statement-selector";
-import { isSymbol, symbolMatches } from "./symbols/symbol-helpers";
+import { getDeconstructionIds, isSymbol, symbolMatches } from "./symbols/symbol-helpers";
 import { Transforms } from "./syntax-nodes/transforms";
 
 export abstract class FrameWithStatements extends AbstractFrame implements Parent, Collapsible {
@@ -253,6 +254,24 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     return this.getParent().resolveSymbol(id, transforms, this);
   }
 
+  handleDeconstruction(ss: ElanSymbol[]) {
+    const newSymbols: ElanSymbol[] = [];
+
+    for (const s of ss) {
+      const ids = getDeconstructionIds(s.symbolId);
+
+      if (ids.length === 1) {
+        newSymbols.push(s);
+      } else {
+        for (let i = 0; i < ids.length; i++) {
+          newSymbols.push(new DefinitionAdapter(s, i));
+        }
+      }
+    }
+
+    return newSymbols;
+  }
+
   symbolMatches(id: string, all: boolean, initialScope?: Frame): ElanSymbol[] {
     const matches = this.getParent().symbolMatches(id, all, this);
     let localMatches: ElanSymbol[] = [];
@@ -261,7 +280,7 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     let range = this.getChildRange(fst, initialScope!);
     if (range.length > 1) {
       range = range.slice(0, range.length - 1);
-      const symbols = range.filter((r) => isSymbol(r)) as ElanSymbol[];
+      const symbols = this.handleDeconstruction(range.filter((r) => isSymbol(r)));
       localMatches = symbolMatches(id, all, symbols);
     }
 

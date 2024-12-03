@@ -581,7 +581,7 @@ function symbolMatch(id: string, symbolId: string, all: boolean) {
   return usid.startsWith(uid) || usid.includes(uid);
 }
 
-function getIds(sid: string) {
+export function getDeconstructionIds(sid: string) {
   if (sid.includes(",")) {
     return sid.split(",").map((s) => s.trim());
   }
@@ -591,26 +591,27 @@ function getIds(sid: string) {
   return [sid];
 }
 
-function matchStart(id: string, s: ElanSymbol) {
-  let sids = getIds(s.symbolId);
+function fixCase(id: string, s: ElanSymbol): [string, string] {
+  let sid = s.symbolId;
   if (!hasAnyUpperCase(id)) {
     id = id.toUpperCase();
-    sids = sids.map((s) => s.toUpperCase());
+    sid = sid.toUpperCase();
   }
-  return sids.some((sid) => sid.startsWith(id));
+  return [id, sid];
+}
+
+function matchStart(i: string, s: ElanSymbol) {
+  const [id, sid] = fixCase(i, s);
+  return sid.startsWith(id);
 }
 
 function hasAnyUpperCase(id: string): boolean {
   return Array.from(id).filter((c) => c.toUpperCase() === c).length > 0;
 }
 
-function matchIncludes(id: string, s: ElanSymbol) {
-  let sids = getIds(s.symbolId);
-  if (!hasAnyUpperCase(id)) {
-    id = id.toUpperCase();
-    sids = sids.map((s) => s.toUpperCase());
-  }
-  return sids.some((sid) => sid.includes(id));
+function matchIncludes(i: string, s: ElanSymbol) {
+  const [id, sid] = fixCase(i, s);
+  return sid.includes(id);
 }
 
 export function symbolMatches(id: string, all: boolean, symbols: ElanSymbol[]) {

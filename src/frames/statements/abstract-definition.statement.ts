@@ -8,16 +8,17 @@ import {
 } from "../compile-rules";
 import { ExpressionField } from "../fields/expression-field";
 import { VarDefField } from "../fields/var-def-field";
-import { mapIds, mapSymbolType } from "../helpers";
+import { mapSymbolType } from "../helpers";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { Frame } from "../interfaces/frame";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
-import { symbolMatches } from "../symbols/symbol-helpers";
+import { getDeconstructionIds, symbolMatches } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { getIds, wrapDeconstructionLhs, wrapDeconstructionRhs } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
+import { DefinitionAdapter } from "./definition-adapter";
 
 export abstract class AbstractDefinitionStatement
   extends AbstractFrame
@@ -102,7 +103,12 @@ export abstract class AbstractDefinitionStatement
 
   symbolMatches(id: string, all: boolean, initialScope?: Frame): ElanSymbol[] {
     const matches = super.symbolMatches(id, all, initialScope);
-    const localMatches = symbolMatches(id, all, [this as ElanSymbol]);
+    const ids = getDeconstructionIds(this.symbolId);
+
+    const definitions =
+      ids.length > 1 ? ids.map((_, i) => new DefinitionAdapter(this, i)) : [this as ElanSymbol];
+
+    const localMatches = symbolMatches(id, all, definitions);
 
     return localMatches.concat(matches);
   }
