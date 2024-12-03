@@ -159,4 +159,8 @@ export class BinaryOperation extends AbstractParseNode {
     }
     return completion;
   }
+
+  override symbolCompletion_keywords(): Set<string> {
+    return new Set([andKeyword, divKeyword, isKeyword,isntKeyword, modKeyword, orKeyword]);
+  }
 }

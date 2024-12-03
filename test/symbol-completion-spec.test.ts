@@ -1,6 +1,8 @@
 import assert from "assert";
 import { Alternatives } from "../src/frames/parse-nodes/alternatives";
 import { AssignableNode } from "../src/frames/parse-nodes/assignable-node";
+import { BinaryExpression } from "../src/frames/parse-nodes/binary-expression";
+import { BinaryOperation } from "../src/frames/parse-nodes/binary-operation";
 import { ExprNode } from "../src/frames/parse-nodes/expr-node";
 import { IdentifierNode } from "../src/frames/parse-nodes/identifier-node";
 import { InstanceProcRef } from "../src/frames/parse-nodes/instanceProcRef";
@@ -9,12 +11,10 @@ import { LitValueNode } from "../src/frames/parse-nodes/lit-value";
 import { MethodCallNode } from "../src/frames/parse-nodes/method-call-node";
 import { ReferenceNode } from "../src/frames/parse-nodes/reference-node";
 import { TermSimple } from "../src/frames/parse-nodes/term-simple";
-import { TypeNode } from "../src/frames/parse-nodes/type-node";
 import { TypeSimpleNode } from "../src/frames/parse-nodes/type-simple-node";
 import { TypeSimpleOrGeneric } from "../src/frames/parse-nodes/type-simple-or-generic";
 import { ParseStatus } from "../src/frames/status-enums";
 import { TokenType } from "../src/frames/symbol-completion-helpers";
-import { ignore_test } from "./compiler/compiler-test-helpers";
 import { testSymbolCompletionSpec } from "./testHelpers";
 
 suite("Symbol Completion Spec", () => {
@@ -270,5 +270,17 @@ suite("Symbol Completion Spec", () => {
     assert.equal(rgx.test(test5), false);
     const test6 = "foo(bar)";
     assert.equal(rgx.test(test6), false);
+  });
+  test("BinaryExpression", () => {
+    testSymbolCompletionSpec(
+      new BinaryExpression(),
+      "a ",
+      ParseStatus.incomplete,
+      BinaryOperation.name,
+      " ",
+      [],
+      ["and", "div", "is", "isnt", "mod", "or"],
+      "",
+    );
   });
 });
