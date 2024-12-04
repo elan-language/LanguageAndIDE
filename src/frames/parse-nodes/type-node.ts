@@ -7,7 +7,6 @@ import {
   OPEN_SQ_BRACKET,
 } from "../symbols";
 import { AbstractAlternatives } from "./abstract-alternatives";
-import { AbstractParseNode } from "./abstract-parse-node";
 import { Alternatives } from "./alternatives";
 import { TypeArrayNode } from "./type-array-node";
 import { TypeDictionaryNode } from "./type-dictionary-node";
@@ -64,5 +63,9 @@ export class TypeNode extends AbstractAlternatives {
       }
       super.parseText(text.trimStart());
     }
+  }
+
+  override symbolCompletion_tokenTypes(): Set<TokenType> {
+    return this.tokenTypes;
   }
 }
