@@ -414,9 +414,7 @@ end main`;
     await assertAutocompletes(fileImpl, "ident36", ".", 3, expected);
   });
 
-  //RP: Failing because no auto-complete options are found. Yet all three expected show up when using the editor with same code?
-  //Note that the three have all changed from being instance methods, to extension methods
-  ignore_test("Pass_CallLibMembers", async () => {
+  test("Pass_CallLibMembers", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
 main
@@ -428,9 +426,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["clearGraphics", "*", "*"],
-      ["clearKeyBuffer", "*", "*"],
-      ["display", "*", "*"],
+      ["clearGraphics", "clearGraphics", "clearGraphics"],
+      ["clearKeyBuffer", "clearKeyBuffer", "clearKeyBuffer"],
+      ["display", "display", "display"],
     ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "ident7", ".", 3, expected);
@@ -1712,5 +1710,24 @@ end main`;
     ] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "expr5", "new CircleVG() with c", expected);
+  });
+
+  ignore_test("Pass_newConcreteType", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+main
+  let vg be new VectorGraphics()
+  let vg2 be vg.add(new CircleVG())
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["cx", "cx", "cx"],
+      ["cy", "cy", "cy"],
+    ] as [string, string, string][];
+
+    await assertAutocompletesWithString(fileImpl, "expr8", "vg.add(new ", expected);
   });
 });
