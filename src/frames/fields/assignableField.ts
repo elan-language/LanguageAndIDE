@@ -3,10 +3,10 @@ import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Frame } from "../interfaces/frame";
 import { propertyKeyword } from "../keywords";
 import { Alternatives } from "../parse-nodes/alternatives";
-import { AssignableNode } from "../parse-nodes/assignable-node";
 import { DeconstructedList } from "../parse-nodes/deconstructed-list";
 import { DeconstructedTuple } from "../parse-nodes/deconstructed-tuple";
 import { ParseNode } from "../parse-nodes/parse-node";
+import { VariableOrProperty } from "../parse-nodes/variable-or-property";
 import { SymbolCompletionSpec, TokenType } from "../symbol-completion-helpers";
 import {
   filteredSymbols,
@@ -30,7 +30,7 @@ export class AssignableField extends AbstractField {
   }
   initialiseRoot(): ParseNode {
     this.astNode = undefined;
-    const varRef = () => new AssignableNode();
+    const varRef = () => new VariableOrProperty();
     const deconTup = () => new DeconstructedTuple();
     const deconList = () => new DeconstructedList();
     this.rootNode = new Alternatives([varRef, deconTup, deconList]);

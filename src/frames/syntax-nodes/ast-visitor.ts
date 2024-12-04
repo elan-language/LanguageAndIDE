@@ -6,7 +6,6 @@ import { Scope } from "../interfaces/scope";
 import { libraryKeyword, propertyKeyword, thisKeyword } from "../keywords";
 import { AbstractAlternatives } from "../parse-nodes/abstract-alternatives";
 import { ArrayNode } from "../parse-nodes/array-list-node";
-import { AssignableNode } from "../parse-nodes/assignable-node";
 import { BinaryExpression } from "../parse-nodes/binary-expression";
 import { BracketedExpression } from "../parse-nodes/bracketed-expression";
 import { CommaNode } from "../parse-nodes/comma-node";
@@ -45,6 +44,7 @@ import { NewInstance } from "../parse-nodes/new-instance";
 import { OptionalNode } from "../parse-nodes/optional-node";
 import { ParamDefNode } from "../parse-nodes/param-def-node";
 import { ParseNode } from "../parse-nodes/parse-node";
+import { PropertyRef } from "../parse-nodes/property-ref";
 import { PunctuationNode } from "../parse-nodes/punctuation-node";
 import { RangeNode } from "../parse-nodes/range-node";
 import { RegExMatchNode } from "../parse-nodes/regex-match-node";
@@ -69,7 +69,7 @@ import { WithClause } from "../parse-nodes/with-clause";
 import { SetStatement } from "../statements/set-statement";
 import { EnumType } from "../symbols/enum-type";
 import { wrapScopeInScope } from "../symbols/symbol-helpers";
-import { isAstIdNode, isAstQualifierNode, mapOperation } from "./ast-helpers";
+import { isAstIdNode, mapOperation } from "./ast-helpers";
 import { BinaryExprAsn } from "./binary-expr-asn";
 import { BracketedAsn } from "./bracketed-asn";
 import { CompositeAsn } from "./composite-asn";
@@ -492,7 +492,12 @@ export function transform(
     return new LiteralStringAsn(node.matchedText, fieldId);
   }
 
-  if (node instanceof AssignableNode) {
+  if (node instanceof PropertyRef) {
+    const prop = transform(node.property, fieldId, scope)!;
+    return new VarAsn(prop.fieldId, true, undefined, undefined, fieldId, scope);
+  }
+
+  /*   if (node instanceof AssignableNode) {
     let q: AstQualifierNode | undefined;
     let id: string = "";
 
@@ -514,7 +519,7 @@ export function transform(
     }
 
     return new VarAsn(id, true, q, undefined, fieldId, scope);
-  }
+  } */
 
   if (node instanceof InstanceProcRef) {
     const q = transform(node.prefix, fieldId, scope) as AstQualifierNode | undefined;
