@@ -63,7 +63,6 @@ let previousFileIndex: number = -1;
 let currentFileIndex: number = -1;
 let nextFileIndex: number = -1;
 let undoRedoing: boolean = false;
-let refreshing: boolean = false;
 let currentFieldId: string = "";
 
 let file: File;
@@ -281,10 +280,7 @@ async function initialDisplay(reset: boolean) {
   const ps = file.readParseStatus();
   if (ps === ParseStatus.valid || ps === ParseStatus.default) {
     await refreshAndDisplay();
-    if (!refreshing) {
-      lastSavedHash = file.currentHash;
-    }
-    refreshing = false;
+    lastSavedHash = lastSavedHash || file.currentHash;
     updateNameAndSavedStatus();
   } else {
     const msg = file.parseError || "Failed load code";
@@ -297,7 +293,7 @@ async function displayCode(rawCode: string, fileName: string) {
   try {
     await file.parseFrom(code);
     file.fileName = fileName || file.defaultFileName;
-    await initialDisplay(true);
+    await refreshAndDisplay(true);
   } catch (e) {
     await showError(e as Error, fileName || file.defaultFileName, true);
   }
@@ -306,8 +302,8 @@ async function displayCode(rawCode: string, fileName: string) {
 async function displayFile() {
   const [previousCode, previousFileName] = getLastLocalSave();
   if (previousCode) {
-    refreshing = true;
     await displayCode(previousCode, previousFileName);
+    updateNameAndSavedStatus();
   } else {
     await initialDisplay(true);
   }
