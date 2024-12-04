@@ -713,14 +713,10 @@ export abstract class AbstractField implements Selectable, Field {
       this.autoCompSelected = undefined;
     }
 
-    if (count === 1) {
-      this.autoCompSelected = symbols[0];
-    }
-
     for (let i = startIndex; i < lastIndex; i++) {
       const symbol = symbols[i];
       const name = symbol.displayName;
-      const selected = count === 1 || this.markIfSelected(symbol) ? " selected" : "";
+      const selected = this.markIfSelected(symbol) ? " selected" : "";
 
       symbolAsHtml.push(
         // Can add back in ${isP}  and ${symbolType}
