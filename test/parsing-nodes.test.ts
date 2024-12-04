@@ -522,7 +522,7 @@ suite("Parsing Nodes", () => {
   test("CommaNode", () => {
     testNodeParse(new CommaNode(), ``, ParseStatus.empty, ``, "", "");
     testNodeParse(new CommaNode(), `,`, ParseStatus.valid, ``, "", ", ");
-    testNodeParse(new CommaNode(), ` ,`, ParseStatus.invalid, ``, " ,", "");
+    testNodeParse(new CommaNode(), ` ,`, ParseStatus.valid, `,`, "", ", ");
     testNodeParse(new CommaNode(), `,    `, ParseStatus.valid, ``, "", ", ");
     testNodeParse(new CommaNode(), `.`, ParseStatus.invalid, ``, ".", "");
     testNodeParse(new CommaNode(), `,,`, ParseStatus.valid, `,`, ",", "");

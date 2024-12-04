@@ -9,6 +9,7 @@ import { InstanceProcRef } from "../src/frames/parse-nodes/instanceProcRef";
 import { KeywordNode } from "../src/frames/parse-nodes/keyword-node";
 import { LitValueNode } from "../src/frames/parse-nodes/lit-value";
 import { MethodCallNode } from "../src/frames/parse-nodes/method-call-node";
+import { OptionalNode } from "../src/frames/parse-nodes/optional-node";
 import { ReferenceNode } from "../src/frames/parse-nodes/reference-node";
 import { TermSimple } from "../src/frames/parse-nodes/term-simple";
 import { TypeSimpleNode } from "../src/frames/parse-nodes/type-simple-node";
@@ -17,7 +18,6 @@ import { VariableOrProperty } from "../src/frames/parse-nodes/variable-or-proper
 import { ParseStatus } from "../src/frames/status-enums";
 import { TokenType } from "../src/frames/symbol-completion-helpers";
 import { testSymbolCompletionSpec } from "./testHelpers";
-import { OptionalNode } from "../src/frames/parse-nodes/optional-node";
 
 suite("Symbol Completion Spec", () => {
   test("MethodCallNode", () => {
@@ -360,6 +360,42 @@ suite("Symbol Completion Spec", () => {
       "",
       ParseStatus.valid,
       OptionalNode.name,
+      "",
+      [TokenType.id_let, TokenType.id_variable],
+      [],
+      "",
+    );
+  });
+  test("CSV in a valid entry", () => {
+    testSymbolCompletionSpec(
+      new CSV(() => new IdentifierNode(new Set([TokenType.id_let, TokenType.id_variable])), 0),
+      "foo",
+      ParseStatus.valid,
+      IdentifierNode.name,
+      "foo",
+      [TokenType.id_let, TokenType.id_variable],
+      [],
+      "",
+    );
+  });
+  test("CSV after a comma & space", () => {
+    testSymbolCompletionSpec(
+      new CSV(() => new IdentifierNode(new Set([TokenType.id_let, TokenType.id_variable])), 0),
+      "foo, ",
+      ParseStatus.incomplete,
+      IdentifierNode.name,
+      "",
+      [TokenType.id_let, TokenType.id_variable],
+      [],
+      "",
+    );
+  });
+  test("CSV after a comma only", () => {
+    testSymbolCompletionSpec(
+      new CSV(() => new IdentifierNode(new Set([TokenType.id_let, TokenType.id_variable])), 0),
+      "foo,",
+      ParseStatus.incomplete,
+      IdentifierNode.name,
       "",
       [TokenType.id_let, TokenType.id_variable],
       [],
