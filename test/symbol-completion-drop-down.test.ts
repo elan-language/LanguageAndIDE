@@ -1712,7 +1712,7 @@ end main`;
     await assertAutocompletesWithString(fileImpl, "expr5", "new CircleVG() with c", expected);
   });
 
-  ignore_test("Pass_newConcreteType", async () => {
+  ignore_test("Pass_newConcreteType #897", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
 main
@@ -1724,8 +1724,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["cx", "cx", "cx"],
-      ["cy", "cy", "cy"],
+      ["BlockGraphics", "*", "*"], //plus lots more
     ] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "expr8", "vg.add(new ", expected);
