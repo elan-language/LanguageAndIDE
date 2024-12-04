@@ -46,6 +46,10 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
     return searchScope.resolveSymbol(this.id, transforms(), this.scope);
   }
 
+  get symbolScope() {
+    return this.getSymbol().symbolScope;
+  }
+
   compile(): string {
     this.compileErrors = [];
 
