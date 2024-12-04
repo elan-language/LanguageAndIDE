@@ -42,7 +42,7 @@ export class CallStatement extends AbstractFrame implements Statement {
   constructor(parent: Parent) {
     super(parent);
     this.proc = new ProcRefField(this);
-    this.proc.setPlaceholder("procedureName");
+    this.proc.setPlaceholder("<i>procedureName</i>");
     this.args = new ArgListField(this);
   }
 

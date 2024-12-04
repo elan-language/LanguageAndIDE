@@ -22,9 +22,9 @@ export class Each extends FrameWithStatements implements Statement {
   constructor(parent: File | Parent) {
     super(parent);
     this.variable = new IdentifierField(this);
-    this.variable.setPlaceholder("variableName");
+    this.variable.setPlaceholder("<i>variableName</i>");
     this.iter = new ExpressionField(this);
-    this.iter.setPlaceholder("iterable value or expression");
+    this.iter.setPlaceholder("<i>iterable value or expression</i>");
   }
   initialKeywords(): string {
     return eachKeyword;

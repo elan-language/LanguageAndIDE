@@ -16,7 +16,7 @@ export class Repeat extends FrameWithStatements implements Statement {
   constructor(parent: Parent) {
     super(parent);
     this.condition = new ExpressionField(this);
-    this.condition.setPlaceholder("condition");
+    this.condition.setPlaceholder("<i>condition</i>");
   }
   initialKeywords(): string {
     return repeatKeyword;

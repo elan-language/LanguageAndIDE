@@ -15,7 +15,7 @@ export class While extends FrameWithStatements {
   constructor(parent: Parent) {
     super(parent);
     this.condition = new ExpressionField(this);
-    this.condition.setPlaceholder("condition");
+    this.condition.setPlaceholder("<i>condition</i>");
   }
   initialKeywords(): string {
     return whileKeyword;

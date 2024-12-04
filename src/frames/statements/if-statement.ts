@@ -18,7 +18,7 @@ export class IfStatement extends FrameWithStatements implements Statement {
   constructor(parent: Parent) {
     super(parent);
     this.condition = new ExpressionField(this);
-    this.condition.setPlaceholder("condition");
+    this.condition.setPlaceholder("<i>condition</i>");
     const selector = this.getChildren().pop()!; //added by superclass
     this.getChildren().push(new ThenStatement(this));
     this.getChildren().push(selector);

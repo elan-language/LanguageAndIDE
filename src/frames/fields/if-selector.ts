@@ -17,7 +17,7 @@ export class IfSelector extends AbstractField {
   constructor(holder: Else) {
     super(holder);
     this.else = holder;
-    this.setPlaceholder("if");
+    this.setPlaceholder("<i>if</i>");
     this.setOptional(true);
     this.setParseStatus(ParseStatus.valid);
     this.help = `Type 'i' to add an 'if condition' to this 'else clause'.`;

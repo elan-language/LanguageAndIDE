@@ -20,7 +20,7 @@ export class CatchingStatement extends FrameWithStatements implements Statement,
   constructor(parent: Parent) {
     super(parent);
     this.variable = new IdentifierField(this);
-    this.variable.setPlaceholder("variableName");
+    this.variable.setPlaceholder("<i>variableName</i>");
     this.variable.setFieldToKnownValidText("e");
     this.movable = false;
   }

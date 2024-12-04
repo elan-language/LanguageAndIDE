@@ -13,7 +13,7 @@ export class EnumValues extends AbstractField {
 
   constructor(holder: Frame) {
     super(holder);
-    this.setPlaceholder("values");
+    this.setPlaceholder("<i>values</i>");
     this.help = `Comma-separated list of names, each of which must start with a lower-case letter, with same possible other characters as a variable name.`;
   }
   getIdPrefix(): string {

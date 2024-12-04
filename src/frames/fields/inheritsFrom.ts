@@ -12,7 +12,7 @@ export class InheritsFrom extends AbstractField {
   constructor(holder: Frame) {
     super(holder);
     this.setOptional(true);
-    this.setPlaceholder("inherits ClassName(s)");
+    this.setPlaceholder("<i>inherits ClassName(s)</i>");
   }
   getIdPrefix(): string {
     return "text";
