@@ -12,6 +12,7 @@ import { MethodCallNode } from "../src/frames/parse-nodes/method-call-node";
 import { OptionalNode } from "../src/frames/parse-nodes/optional-node";
 import { ReferenceNode } from "../src/frames/parse-nodes/reference-node";
 import { TermSimple } from "../src/frames/parse-nodes/term-simple";
+import { TypeNode } from "../src/frames/parse-nodes/type-node";
 import { TypeSimpleNode } from "../src/frames/parse-nodes/type-simple-node";
 import { TypeSimpleOrGeneric } from "../src/frames/parse-nodes/type-simple-or-generic";
 import { VariableOrProperty } from "../src/frames/parse-nodes/variable-or-property";
@@ -398,6 +399,18 @@ suite("Symbol Completion Spec", () => {
       IdentifierNode.name,
       "",
       [TokenType.id_let, TokenType.id_variable],
+      [],
+      "",
+    );
+  });
+  test("new instance as a method argument #897", () => {
+    testSymbolCompletionSpec(
+      new ExprNode(),
+      "vg.add(new ",
+      ParseStatus.incomplete,
+      TypeSimpleOrGeneric.name,
+      "",
+      [TokenType.type_concrete],
       [],
       "",
     );
