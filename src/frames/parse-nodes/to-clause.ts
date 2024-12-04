@@ -45,4 +45,8 @@ export class ToClause extends AbstractSequence {
       return super.symbolCompletion_tokenTypes();
     }
   }
+
+  symbolCompletion_context(): string {
+    return this.context();
+  }
 }

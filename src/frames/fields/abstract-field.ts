@@ -683,11 +683,6 @@ export abstract class AbstractField implements Selectable, Field {
     return removeIfSingleFullMatch(symbols, spec.toMatch);
   }
 
-  extractContextFromText(): string {
-    const rgx = /(.*\.)*(([A-Za-z_]*)(\(.*\))*)\..*/;
-    return rgx.test(this.text) ? this.text.match(rgx)![3] : "";
-  }
-
   protected popupAsHtml() {
     const symbols = this.autocompleteSymbols;
     const symbolAsHtml: string[] = [];
@@ -778,11 +773,18 @@ export abstract class AbstractField implements Selectable, Field {
     return s1.name.localeCompare(s2.name);
   }
 
+  extractContextFromText(): string {
+    const rgx = /(.*\.)*(([A-Za-z_]*)(\(.*\))*)\..*/;
+    return rgx.test(this.text) ? this.text.match(rgx)![3] : "";
+  }
+
   protected symbolCompletionAsHtml(transforms: Transforms): string {
     let popupAsHtml = "";
     const spec = this.getSymbolCompletionSpec();
     if (spec.context === "") {
       spec.context = this.extractContextFromText();
+    } else if (spec.context === "none") {
+      spec.context = "";
     }
     if (this.showAutoComplete(spec)) {
       this.autocompleteMatch = spec.toMatch;

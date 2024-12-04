@@ -224,6 +224,7 @@ suite("Symbol Completion Spec", () => {
       "",
       [TokenType.type_concrete],
       [],
+      "none",
     );
   });
   test("Expression_functionDotCall", () => {
@@ -412,7 +413,7 @@ suite("Symbol Completion Spec", () => {
       "",
       [TokenType.type_concrete],
       [],
-      "",
+      "none",
     );
   });
 });
