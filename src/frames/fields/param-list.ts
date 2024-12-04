@@ -28,7 +28,7 @@ export class ParamList extends AbstractField implements Scope {
   isParseByNodes = true;
   constructor(holder: Frame) {
     super(holder);
-    this.setPlaceholder("parameter definitions");
+    this.setPlaceholder("<i>parameter definitions</i>");
     this.useHtmlTags = true;
     this.setOptional(true);
     this.help = `Zero or more parameter definitions comma-separated. Each parameter definition consists of a parameter name followed by the 'as' keyword and a Type. A parameter name follows the same rules as for a variable name - starting with a lower-case letter.`;

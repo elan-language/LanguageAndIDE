@@ -27,7 +27,7 @@ export class Constant extends AbstractFrame implements ElanSymbol, GlobalFrame, 
     this.file = parent;
     this.name = new IdentifierField(this);
     this.value = new ConstantValueField(this);
-    this.value.setPlaceholder("literal value or data structure");
+    this.value.setPlaceholder("<i>literal value or data structure</i>");
   }
   initialKeywords(): string {
     return constantKeyword;

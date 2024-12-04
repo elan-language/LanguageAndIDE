@@ -1,12 +1,12 @@
 import { CodeSource } from "../code-source";
-import { TokenType } from "../symbol-completion-helpers";
 import { Frame } from "../interfaces/frame";
 import { Alternatives } from "../parse-nodes/alternatives";
 import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { LitString as LitStringNonEmpty } from "../parse-nodes/lit-string";
 import { ParseNode } from "../parse-nodes/parse-node";
-import { AbstractField } from "./abstract-field";
+import { TokenType } from "../symbol-completion-helpers";
 import { transforms } from "../syntax-nodes/ast-helpers";
+import { AbstractField } from "./abstract-field";
 
 export class ExceptionMessage extends AbstractField {
   tokenTypes: Set<TokenType> = new Set<TokenType>([
@@ -17,7 +17,7 @@ export class ExceptionMessage extends AbstractField {
   isParseByNodes = true;
   constructor(holder: Frame) {
     super(holder);
-    this.setPlaceholder("message");
+    this.setPlaceholder("<i>message</i>");
     this.help = `message defined as a literal string (in quotes), or the name of a previously-defined variable or constant containing a string.`;
   }
   getIdPrefix(): string {

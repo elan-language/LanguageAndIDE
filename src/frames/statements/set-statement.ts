@@ -28,7 +28,7 @@ export class SetStatement extends AbstractFrame implements Statement {
   constructor(parent: Parent) {
     super(parent);
     this.assignable = new AssignableField(this);
-    this.assignable.setPlaceholder("variableName");
+    this.assignable.setPlaceholder("<i>variableName</i>");
     this.expr = new ExpressionField(this);
   }
   initialKeywords(): string {

@@ -24,7 +24,7 @@ export class For extends FrameWithStatements implements Statement {
   constructor(parent: Parent) {
     super(parent);
     this.variable = new IdentifierField(this);
-    this.variable.setPlaceholder("variableName");
+    this.variable.setPlaceholder("<i>variableName</i>");
     this.from = new ExpressionField(this, / to /);
     this.to = new ExpressionField(this, / step /);
     this.step = new ExpressionField(this);

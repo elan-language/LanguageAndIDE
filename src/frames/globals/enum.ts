@@ -29,7 +29,7 @@ export class Enum extends AbstractFrame implements ElanSymbol, GlobalFrame, Coll
     super(parent);
     this.file = parent;
     this.name = new TypeNameField(this);
-    this.name.setPlaceholder("Name");
+    this.name.setPlaceholder("<i>Name</i>");
     this.values = new EnumValues(this);
   }
 

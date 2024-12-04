@@ -20,7 +20,7 @@ export class Else extends FrameWithStatements implements Statement {
   constructor(parent: Parent) {
     super(parent);
     this.condition = new ExpressionField(this);
-    this.condition.setPlaceholder("condition");
+    this.condition.setPlaceholder("<i>condition</i>");
     this.selectIfClause = new IfSelector(this);
   }
 

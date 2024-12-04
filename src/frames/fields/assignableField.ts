@@ -18,7 +18,7 @@ import { AbstractField } from "./abstract-field";
 export class AssignableField extends AbstractField {
   constructor(holder: Frame) {
     super(holder);
-    this.setPlaceholder("variable");
+    this.setPlaceholder("<i>variable</i>");
     this.help = `A previously defined variable, but NOT a parameter. (For'tuple deconstruction' or 'list deconstruction' consult documentation.)`;
   }
 
