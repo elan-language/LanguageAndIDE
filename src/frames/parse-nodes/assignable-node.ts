@@ -3,7 +3,7 @@ import { AbstractAlternatives } from "./abstract-alternatives";
 import { IdentifierNode } from "./identifier-node";
 import { PropertyRef } from "./property-ref";
 
-export class VariableOrProperty extends AbstractAlternatives {
+export class AssignableNode extends AbstractAlternatives {
   tokenTypes = new Set<TokenType>([
     TokenType.id_parameter_out,
     TokenType.id_property,

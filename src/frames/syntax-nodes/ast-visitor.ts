@@ -1,5 +1,6 @@
 import { ElanCompilerError } from "../../elan-compiler-error";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
+import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstNode } from "../interfaces/ast-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { Scope } from "../interfaces/scope";
@@ -493,33 +494,10 @@ export function transform(
   }
 
   if (node instanceof PropertyRef) {
-    const prop = transform(node.property, fieldId, scope)!;
-    return new VarAsn(prop.fieldId, true, undefined, undefined, fieldId, scope);
+    const qualifier = transform(node.qualifier, fieldId, scope) as AstQualifierNode;
+    const name = transform(node.name, fieldId, scope) as AstIdNode;
+    return new VarAsn(name.id, true, qualifier, undefined, fieldId, scope);
   }
-
-  /*   if (node instanceof AssignableNode) {
-    let q: AstQualifierNode | undefined;
-    let id: string = "";
-
-    const sp = node.simpleOrProp;
-
-    if (sp.bestMatch instanceof IdentifierNode) {
-      const idNode = transform(sp.bestMatch, fieldId, scope);
-      if (isAstIdNode(idNode)) {
-        id = idNode.id;
-      }
-    } else if (sp.bestMatch instanceof Sequence) {
-      const [i0, i1] = transformMany(sp.bestMatch, fieldId, scope).items;
-      if (isAstQualifierNode(i0)) {
-        q = i0;
-      }
-      if (isAstIdNode(i1)) {
-        id = i1.id;
-      }
-    }
-
-    return new VarAsn(id, true, q, undefined, fieldId, scope);
-  } */
 
   if (node instanceof InstanceProcRef) {
     const q = transform(node.prefix, fieldId, scope) as AstQualifierNode | undefined;

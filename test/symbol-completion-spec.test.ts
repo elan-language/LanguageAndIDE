@@ -12,10 +12,10 @@ import { ReferenceNode } from "../src/frames/parse-nodes/reference-node";
 import { TermSimple } from "../src/frames/parse-nodes/term-simple";
 import { TypeSimpleNode } from "../src/frames/parse-nodes/type-simple-node";
 import { TypeSimpleOrGeneric } from "../src/frames/parse-nodes/type-simple-or-generic";
-import { VariableOrProperty } from "../src/frames/parse-nodes/variable-or-property";
 import { ParseStatus } from "../src/frames/status-enums";
 import { TokenType } from "../src/frames/symbol-completion-helpers";
 import { testSymbolCompletionSpec } from "./testHelpers";
+import { AssignableNode } from "../src/frames/parse-nodes/assignable-node";
 
 suite("Symbol Completion Spec", () => {
   test("MethodCallNode", () => {
@@ -190,13 +190,14 @@ suite("Symbol Completion Spec", () => {
   });
   test("Assignable", () => {
     testSymbolCompletionSpec(
-      new VariableOrProperty(),
+      new AssignableNode(),
       "property.f",
       ParseStatus.valid,
-      IdentifierNode.name, //Because can be a term, or a binary expression
+      IdentifierNode.name,
       "f",
       [TokenType.id_property],
       [],
+      "",
     );
   });
   test("InstanceProcRef", () => {

@@ -1,20 +1,21 @@
 import { propertyKeyword } from "../keywords";
 import { TokenType } from "../symbol-completion-helpers";
+import { DOT } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
-import { DotAfter } from "./dot-after";
 import { IdentifierNode } from "./identifier-node";
 import { KeywordNode } from "./keyword-node";
+import { PunctuationNode } from "./punctuation-node";
 
 export class PropertyRef extends AbstractSequence {
-  property: IdentifierNode;
+  qualifier: KeywordNode;
+  name: IdentifierNode;
 
   constructor() {
     super();
-    this.addElement(new DotAfter(new KeywordNode(propertyKeyword)));
-    this.property = new IdentifierNode(new Set([TokenType.id_property]));
-    this.addElement(this.property);
+    this.qualifier = new KeywordNode(propertyKeyword);
+    this.addElement(this.qualifier);
+    this.addElement(new PunctuationNode(DOT));
+    this.name = new IdentifierNode(new Set([TokenType.id_property]));
+    this.addElement(this.name);
   }
-  compile(): string {
-    return this.matchedText.toUpperCase();
-  } //For the exponent e -> E
 }
