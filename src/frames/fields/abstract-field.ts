@@ -538,7 +538,14 @@ export abstract class AbstractField implements Selectable, Field {
     this.selected = true;
     this.focus();
     if (selection) {
-      const [start, end] = selection;
+      let [start, end] = selection;
+
+      if (start === this.cursorPos && end === this.selectionEnd) {
+        // selecting same range so clear selection
+        // ie we select on first click but if you then click on the selected input we send same selection and clear it
+        start = end = this.cursorPos;
+      }
+
       this.setSelection(start, end);
     } else {
       this.setSelection(this.text.length);
