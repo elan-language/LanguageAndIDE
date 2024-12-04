@@ -2,6 +2,7 @@ import assert from "assert";
 import { Alternatives } from "../src/frames/parse-nodes/alternatives";
 import { BinaryExpression } from "../src/frames/parse-nodes/binary-expression";
 import { BinaryOperation } from "../src/frames/parse-nodes/binary-operation";
+import { CSV } from "../src/frames/parse-nodes/csv";
 import { ExprNode } from "../src/frames/parse-nodes/expr-node";
 import { IdentifierNode } from "../src/frames/parse-nodes/identifier-node";
 import { InstanceProcRef } from "../src/frames/parse-nodes/instanceProcRef";
@@ -16,6 +17,7 @@ import { VariableOrProperty } from "../src/frames/parse-nodes/variable-or-proper
 import { ParseStatus } from "../src/frames/status-enums";
 import { TokenType } from "../src/frames/symbol-completion-helpers";
 import { testSymbolCompletionSpec } from "./testHelpers";
+import { OptionalNode } from "../src/frames/parse-nodes/optional-node";
 
 suite("Symbol Completion Spec", () => {
   test("MethodCallNode", () => {
@@ -337,6 +339,30 @@ suite("Symbol Completion Spec", () => {
         TokenType.method_system,
       ],
       ["new,copy,if,lambda,empty,this,ref,not"],
+      "",
+    );
+  });
+  test("CSV minimum 1", () => {
+    testSymbolCompletionSpec(
+      new CSV(() => new IdentifierNode(new Set([TokenType.id_let, TokenType.id_variable])), 1),
+      "",
+      ParseStatus.empty,
+      IdentifierNode.name,
+      "",
+      [TokenType.id_let, TokenType.id_variable],
+      [],
+      "",
+    );
+  });
+  test("CSV minimum 0", () => {
+    testSymbolCompletionSpec(
+      new CSV(() => new IdentifierNode(new Set([TokenType.id_let, TokenType.id_variable])), 0),
+      "",
+      ParseStatus.valid,
+      OptionalNode.name,
+      "",
+      [TokenType.id_let, TokenType.id_variable],
+      [],
       "",
     );
   });
