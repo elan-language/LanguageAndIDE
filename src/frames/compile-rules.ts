@@ -884,7 +884,7 @@ export function mustBePropertyPrefixedOnAssignable(
     const s = assignable.symbolScope;
 
     if (s === SymbolScope.member) {
-      if (assignable instanceof IdAsn || (assignable instanceof VarAsn && !assignable.qualifier)) {
+      if (assignable instanceof IdAsn) {
         compileErrors.push(
           new SyntaxCompileError(`assigning to a property requires a prefix`, location),
         );
