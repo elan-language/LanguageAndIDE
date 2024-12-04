@@ -64,6 +64,7 @@ let currentFileIndex: number = -1;
 let nextFileIndex: number = -1;
 let undoRedoing: boolean = false;
 let refreshing: boolean = false;
+let currentFieldId: string = "";
 
 let file: File;
 let doOnce = true;
@@ -660,7 +661,7 @@ async function updateContent(text: string) {
     }
   }
 
-  await localAndAutoSave();
+  await localAndAutoSave(focused);
   await updateDisplayValues();
 
   const dbgFocused = document.querySelectorAll(".focused");
@@ -674,17 +675,14 @@ async function updateContent(text: string) {
   cursorDefault();
 }
 
-async function localAndAutoSave() {
+async function localAndAutoSave(field: HTMLElement | undefined) {
   let code = "";
+  const newFieldId = field?.id ?? currentFieldId;
 
   if (file.readParseStatus() === ParseStatus.valid) {
     // save to local store
 
     if (undoRedoHash !== file.currentHash && !undoRedoing) {
-      code = await file.renderAsSource();
-      const timestamp = Date.now();
-      const id = `${file.fileName}.${timestamp}`;
-
       if (previousFileIndex !== -1 && previousFileIndex !== undoRedoFiles.length - 2) {
         const trimedIds = undoRedoFiles.slice(previousFileIndex + 2);
         undoRedoFiles = undoRedoFiles.slice(0, previousFileIndex + 2);
@@ -693,8 +691,17 @@ async function localAndAutoSave() {
           localStorage.removeItem(id);
         }
       }
+      code = await file.renderAsSource();
+      const timestamp = Date.now();
+      const overWriteLastEntry = newFieldId === currentFieldId;
+      const id = overWriteLastEntry
+        ? undoRedoFiles[currentFileIndex]
+        : `${file.fileName}.${timestamp}`;
 
-      undoRedoFiles.push(id);
+      if (!overWriteLastEntry) {
+        undoRedoFiles.push(id);
+      }
+
       previousFileIndex = undoRedoFiles.length > 1 ? undoRedoFiles.length - 2 : -1;
       currentFileIndex = undoRedoFiles.length - 1;
       nextFileIndex = -1;
@@ -704,6 +711,7 @@ async function localAndAutoSave() {
       localStorage.setItem(lastFileName, file.fileName);
       saveButton.classList.add("unsaved");
       undoRedoHash = file.currentHash;
+      currentFieldId = field?.id ?? currentFieldId;
     }
   }
 
