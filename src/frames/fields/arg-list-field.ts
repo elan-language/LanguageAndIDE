@@ -3,6 +3,8 @@ import { Frame } from "../interfaces/frame";
 import { CSV } from "../parse-nodes/csv";
 import { ExprNode } from "../parse-nodes/expr-node";
 import { ParseNode } from "../parse-nodes/parse-node";
+import { CallStatement } from "../statements/call-statement";
+import { ProcedureType } from "../symbols/procedure-type";
 import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
 
@@ -39,5 +41,24 @@ export class ArgListField extends AbstractField {
 
   symbolCompletion(): string {
     return this.symbolCompletionAsHtml(transforms());
+  }
+
+  public textAsHtml(): string {
+    const holder = this.getHolder();
+    if (holder instanceof CallStatement) {
+      const proc = holder.proc.text;
+
+      const ps = holder.resolveSymbol(proc, transforms(), holder);
+      const procSymbolType = ps.symbolType(transforms());
+
+      if (procSymbolType instanceof ProcedureType) {
+        const parameterTypes = procSymbolType.parametersTypes;
+        const types = parameterTypes.map((pt) => pt.name).join(",");
+
+        this.setPlaceholder(types);
+      }
+    }
+
+    return super.textAsHtml();
   }
 }
