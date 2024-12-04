@@ -177,8 +177,8 @@ export abstract class AbstractField implements Selectable, Field {
       case "ArrowLeft": {
         if (e.modKey.control) {
           this.cursorWordLeft();
-        } else if (this.cursorPos > 0) {
-          this.setSelection(this.cursorPos - 1);
+        } else {
+          this.cursorLeft(e.modKey.shift);
         }
         break;
       }
@@ -186,7 +186,7 @@ export abstract class AbstractField implements Selectable, Field {
         if (e.modKey.control) {
           this.cursorWordRight();
         } else {
-          this.cursorRight();
+          this.cursorRight(e.modKey.shift);
         }
         break;
       }
@@ -221,6 +221,7 @@ export abstract class AbstractField implements Selectable, Field {
         if (e.selection || this.cursorPos < textLen) {
           const [start, end] = e.selection ?? [this.cursorPos, this.cursorPos + 1];
           this.text = this.text.slice(0, start) + this.text.slice(end);
+          this.setSelection(start);
           this.parseCurrentText();
           this.codeHasChanged = true;
           this.editingField();
@@ -289,7 +290,20 @@ export abstract class AbstractField implements Selectable, Field {
     }
   }
 
-  private cursorRight() {
+  private cursorSelectRight() {
+    const textLen = this.text.length;
+    if (this.selectionEnd < textLen) {
+      this.setSelection(this.cursorPos, this.selectionEnd + 1);
+    }
+  }
+
+  private cursorSelectLeft() {
+    if (this.cursorPos > 0) {
+      this.setSelection(this.cursorPos - 1, this.selectionEnd);
+    }
+  }
+
+  private cursorMoveRight() {
     const textLen = this.text.length;
     if (this.cursorPos < textLen) {
       this.setSelection(this.cursorPos + 1);
@@ -301,6 +315,28 @@ export abstract class AbstractField implements Selectable, Field {
         this.setSelection(this.text.length);
         this.codeHasChanged = true;
       }
+    }
+  }
+
+  private cursorMoveLeft() {
+    if (this.cursorPos > 0) {
+      this.setSelection(this.cursorPos - 1);
+    }
+  }
+
+  private cursorRight(shift: boolean) {
+    if (shift) {
+      this.cursorSelectRight();
+    } else {
+      this.cursorMoveRight();
+    }
+  }
+
+  private cursorLeft(shift: boolean) {
+    if (shift) {
+      this.cursorSelectLeft();
+    } else {
+      this.cursorMoveLeft();
     }
   }
 
@@ -378,7 +414,7 @@ export abstract class AbstractField implements Selectable, Field {
     } else {
       const completions = this.getPlainTextCompletion();
       if (completions.length > 0) {
-        this.cursorRight();
+        this.cursorRight(false);
       } else {
         this.holder.selectFieldAfter(this);
       }
@@ -391,7 +427,7 @@ export abstract class AbstractField implements Selectable, Field {
     } else {
       const completions = this.getPlainTextCompletion();
       if (completions.length > 0) {
-        this.cursorRight();
+        this.cursorRight(false);
       } else {
         const peerFields = this.holder.getFields();
         const last = peerFields.length - 1;
