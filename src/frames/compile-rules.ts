@@ -88,7 +88,9 @@ import {
   isAstIndexableNode,
   transforms,
 } from "./syntax-nodes/ast-helpers";
+import { IdAsn } from "./syntax-nodes/id-asn";
 import { Transforms } from "./syntax-nodes/transforms";
+import { VarAsn } from "./syntax-nodes/var-asn";
 
 export function mustBeOfSymbolType(
   exprType: SymbolType | undefined,
@@ -882,7 +884,7 @@ export function mustBePropertyPrefixedOnAssignable(
     const s = assignable.symbolScope;
 
     if (s === SymbolScope.member) {
-      if (isAstIndexableNode(assignable) && !assignable.qualifier) {
+      if (assignable instanceof IdAsn) {
         compileErrors.push(
           new SyntaxCompileError(`assigning to a property requires a prefix`, location),
         );

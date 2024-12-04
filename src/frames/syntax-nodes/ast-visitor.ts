@@ -1,12 +1,12 @@
 import { ElanCompilerError } from "../../elan-compiler-error";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
+import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstNode } from "../interfaces/ast-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { Scope } from "../interfaces/scope";
 import { libraryKeyword, propertyKeyword, thisKeyword } from "../keywords";
 import { AbstractAlternatives } from "../parse-nodes/abstract-alternatives";
 import { ArrayNode } from "../parse-nodes/array-list-node";
-import { AssignableNode } from "../parse-nodes/assignable-node";
 import { BinaryExpression } from "../parse-nodes/binary-expression";
 import { BracketedExpression } from "../parse-nodes/bracketed-expression";
 import { CommaNode } from "../parse-nodes/comma-node";
@@ -45,6 +45,7 @@ import { NewInstance } from "../parse-nodes/new-instance";
 import { OptionalNode } from "../parse-nodes/optional-node";
 import { ParamDefNode } from "../parse-nodes/param-def-node";
 import { ParseNode } from "../parse-nodes/parse-node";
+import { PropertyRef } from "../parse-nodes/property-ref";
 import { PunctuationNode } from "../parse-nodes/punctuation-node";
 import { RangeNode } from "../parse-nodes/range-node";
 import { RegExMatchNode } from "../parse-nodes/regex-match-node";
@@ -69,7 +70,7 @@ import { WithClause } from "../parse-nodes/with-clause";
 import { SetStatement } from "../statements/set-statement";
 import { EnumType } from "../symbols/enum-type";
 import { wrapScopeInScope } from "../symbols/symbol-helpers";
-import { isAstIdNode, isAstQualifierNode, mapOperation } from "./ast-helpers";
+import { isAstIdNode, mapOperation } from "./ast-helpers";
 import { BinaryExprAsn } from "./binary-expr-asn";
 import { BracketedAsn } from "./bracketed-asn";
 import { CompositeAsn } from "./composite-asn";
@@ -492,28 +493,10 @@ export function transform(
     return new LiteralStringAsn(node.matchedText, fieldId);
   }
 
-  if (node instanceof AssignableNode) {
-    let q: AstQualifierNode | undefined;
-    let id: string = "";
-
-    const sp = node.simpleOrProp;
-
-    if (sp.bestMatch instanceof IdentifierNode) {
-      const idNode = transform(sp.bestMatch, fieldId, scope);
-      if (isAstIdNode(idNode)) {
-        id = idNode.id;
-      }
-    } else if (sp.bestMatch instanceof Sequence) {
-      const [i0, i1] = transformMany(sp.bestMatch, fieldId, scope).items;
-      if (isAstQualifierNode(i0)) {
-        q = i0;
-      }
-      if (isAstIdNode(i1)) {
-        id = i1.id;
-      }
-    }
-
-    return new VarAsn(id, true, q, undefined, fieldId, scope);
+  if (node instanceof PropertyRef) {
+    const qualifier = transform(node.qualifier, fieldId, scope) as AstQualifierNode;
+    const name = transform(node.name, fieldId, scope) as AstIdNode;
+    return new VarAsn(name.id, true, qualifier, undefined, fieldId, scope);
   }
 
   if (node instanceof InstanceProcRef) {
