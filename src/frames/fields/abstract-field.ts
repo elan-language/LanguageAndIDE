@@ -176,7 +176,7 @@ export abstract class AbstractField implements Selectable, Field {
       }
       case "ArrowLeft": {
         if (e.modKey.control) {
-          this.cursorWordLeft();
+          this.cursorWordLeft(e.modKey.shift);
         } else {
           this.cursorLeft(e.modKey.shift);
         }
@@ -184,7 +184,7 @@ export abstract class AbstractField implements Selectable, Field {
       }
       case "ArrowRight": {
         if (e.modKey.control) {
-          this.cursorWordRight();
+          this.cursorWordRight(e.modKey.shift);
         } else {
           this.cursorRight(e.modKey.shift);
         }
@@ -348,7 +348,22 @@ export abstract class AbstractField implements Selectable, Field {
     return c === " " || c === "." || c === ")";
   }
 
-  private cursorWordRight() {
+  private cursorSelectWordRight() {
+    const textLen = this.text.length;
+    if (this.selectionEnd < textLen) {
+      for (let i = this.selectionEnd + 1; i < textLen; i++) {
+        const nextChar = this.text[i];
+
+        if (this.isWordBreakCharRight(nextChar)) {
+          this.setSelection(this.cursorPos, i);
+          return;
+        }
+      }
+      this.setSelection(this.cursorPos, textLen);
+    }
+  }
+
+  private cursorMoveWordRight() {
     const textLen = this.text.length;
     if (this.cursorPos < textLen) {
       for (let i = this.cursorPos + 1; i < textLen; i++) {
@@ -363,7 +378,34 @@ export abstract class AbstractField implements Selectable, Field {
     }
   }
 
-  private cursorWordLeft() {
+  private cursorWordRight(shift: boolean) {
+    if (shift) {
+      this.cursorSelectWordRight();
+    } else {
+      this.cursorMoveWordRight();
+    }
+  }
+
+  private cursorSelectWordLeft() {
+    if (this.cursorPos > 0) {
+      // if we start next to a break we should skip over it
+      const startIndex = this.isWordBreakCharLeft(this.text[this.cursorPos - 1])
+        ? this.cursorPos - 1
+        : this.cursorPos;
+
+      for (let i = startIndex; i > 0; i--) {
+        const nextChar = this.text[i - 1];
+
+        if (this.isWordBreakCharLeft(nextChar)) {
+          this.setSelection(i, this.selectionEnd);
+          return;
+        }
+      }
+      this.setSelection(0, this.selectionEnd);
+    }
+  }
+
+  private cursorMoveWordLeft() {
     if (this.cursorPos > 0) {
       // if we start next to a break we should skip over it
       const startIndex = this.isWordBreakCharLeft(this.text[this.cursorPos - 1])
@@ -379,6 +421,14 @@ export abstract class AbstractField implements Selectable, Field {
         }
       }
       this.setSelection(0);
+    }
+  }
+
+  private cursorWordLeft(shift: boolean) {
+    if (shift) {
+      this.cursorSelectWordLeft();
+    } else {
+      this.cursorMoveWordLeft();
     }
   }
 
