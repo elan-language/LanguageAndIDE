@@ -48,7 +48,8 @@ export class SymbolWrapper {
 
   get insertedText() {
     if (this.isKeyword) {
-      return this.name + " ";
+      const postfix = this.name === propertyKeyword ? "." : " ";
+      return `${this.name}${postfix}`;
     }
 
     const symbol = this.wrapped as ElanSymbol;

@@ -24,7 +24,7 @@ end main`;
     await assertAutocompletes(fileImpl, "ident10", "o", 1, expected);
   });
 
-  ignore_test("Pass_LocalVars1", async () => {
+  test("Pass_LocalVars1", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
 main
@@ -37,6 +37,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
+      ["property", "property", "property."],
       ["foo", "foo", "foo"],
       ["foobar", "foobar", "foobar"],
     ] as [string, string, string][];
