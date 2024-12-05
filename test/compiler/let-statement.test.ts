@@ -1,6 +1,7 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
+  assertDoesNotCompile,
   assertDoesNotCompileWithId,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
@@ -217,5 +218,25 @@ end function`;
     assertParses(fileImpl);
     assertDoesNotCompileWithId(fileImpl, "expr17", ["y is not defined"]);
     assertDoesNotCompileWithId(fileImpl, "func5", ["y is not defined"]);
+  });
+
+  test("Fail_Redefine", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+main
+  let a, length be foo()
+end main
+
+function foo() return (Int, Int)
+  return (0, 0)
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "The identifier 'length' is already used for a library symbol and cannot be re-defined here.",
+    ]);
   });
 });

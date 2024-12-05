@@ -179,7 +179,7 @@ end function`;
     ]);
   });
 
-  test("Pass_DisambiguateLocalVariableFromLibConstant", async () => {
+  test("Fail_DisambiguateLocalVariableFromLibConstant", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
 main
@@ -187,23 +187,16 @@ main
   print pi
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-async function main() {
-  var pi = _stdlib.pi;
-  system.printLine(_stdlib.asString(pi));
-}
-return [main, _tests];}`;
-
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "3.141592653589793");
+    assertDoesNotCompile(fileImpl, [
+      "The identifier 'pi' is already used for a library symbol and cannot be re-defined here.",
+    ]);
   });
 
-  test("Pass_DisambiguateLocalLetFromLibConstant", async () => {
+  test("Fail_DisambiguateLocalLetFromLibConstant", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
 main
@@ -211,20 +204,13 @@ main
   print pi
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-async function main() {
-  const pi = _stdlib.pi;
-  system.printLine(_stdlib.asString(pi));
-}
-return [main, _tests];}`;
-
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "3.141592653589793");
+    assertDoesNotCompile(fileImpl, [
+      "The identifier 'pi' is already used for a library symbol and cannot be re-defined here.",
+    ]);
   });
 
   test("Pass_DisambiguateLibFunctionFromLocalAndInstanceFunctions", async () => {

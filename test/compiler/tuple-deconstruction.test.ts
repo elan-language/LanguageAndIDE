@@ -44,6 +44,123 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "3Apple");
   });
 
+  test("Pass_DeconstructFromFunction", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+main
+  let a, b be foo()
+  print a
+  print b
+end main
+
+function foo() return (Float, Int)
+  return (0.0, 0)
+end function`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  const [a, b] = foo();
+  system.printLine(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(b));
+}
+
+function foo() {
+  return system.tuple([0, 0]);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "00");
+  });
+
+  test("Pass_DeconstructFromFunctionMethod", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+main
+  let foo be new Foo()
+  let a, b be foo.bar()
+  print a
+  print b
+end main
+
+class Foo
+  constructor()
+  end constructor
+
+  function bar() return (Float, Int)
+    return (0.0, 0)
+  end function
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  const foo = system.initialise(new Foo());
+  const [a, b] = foo.bar();
+  system.printLine(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(b));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, []);};
+  constructor() {
+
+  }
+
+  bar() {
+    return system.tuple([0, 0]);
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "00");
+  });
+
+  test("Pass_DeconstructFromComplexTupleFunction", async () => {
+    const code = `# FFFF Elan Beta 4 valid
+
+main
+  let a, b be foo()
+  print a
+  print b
+end main
+
+function foo() return ({Float}, Int)
+  return ({0.0}, 0)
+end function`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  const [a, b] = foo();
+  system.printLine(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(b));
+}
+
+function foo() {
+  return system.tuple([system.list([0]), 0]);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "{0}0");
+  });
+
   test("Pass_CreateAndDeconstructAFourTuple", async () => {
     const code = `# FFFF Elan Beta 4 valid
 
