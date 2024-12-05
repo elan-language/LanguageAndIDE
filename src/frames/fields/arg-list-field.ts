@@ -83,8 +83,7 @@ export class ArgListField extends AbstractField {
     if (this.text) {
       const count = this.currentParameterIndex();
       const remainingTypes = descriptions.slice(count).join(", ");
-
-      this.completionOverride = `<i>${remainingTypes}</i>`;
+      this.completionOverride = remainingTypes ? `<i>${remainingTypes}</i>` : "";
     } else {
       this.completionOverride = "";
       const allTypes = descriptions.join(", ");
