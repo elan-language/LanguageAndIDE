@@ -1,4 +1,4 @@
-# 2593063d3dd5324f48e36140b9584583f9b5e35c4dec793083ee4741fcb11b5e Elan Beta 4 valid
+# 9e92491c2f6e7c69082385235c49d7e00cfef699bd6f1fa122517f6d0f4dae98 Elan Beta 4 valid
 
 # Turing Machine that converts a Year from decimal to roman numerals
 # Run the program, enter the number to convert and watch the machine in action.
@@ -16,12 +16,12 @@ main
     call tm.singleStep()
     set steps to steps + 1
     call clearConsole()
-    print tm.tape
-    print "{spaces[0..tm.headPosition - 1]}^"
-    print "Step: {steps}\nState: {tm.currentState}\nRule applied: {rule}"
+    call printLine(tm.tape)
+    call printTab(tm.headPosition - 1, "^\n")
+    call printLine("Step: {steps}\nState: {tm.currentState}\nRule applied: {rule}")
     call pause(40)
   end while
-  print "\n\nThe roman numeral equivalent for {decimal} is {tm.getTrimmedTape()}"
+  print "\n\nThe roman numeral equivalent for {decimal} is {tm.tape.trim()}"
 end main
 
 class TuringMachine
@@ -49,17 +49,8 @@ class TuringMachine
     set property.tape to tape
   end procedure
 
-  procedure setRules(rules as {Rule})
-    set property.rules to rules
-  end procedure
-
   procedure append(rule as Rule)
     set property.rules to rules + rule
-  end procedure
-
-  procedure reset()
-    set property.currentState to initialState
-    set property.headPosition to 0
   end procedure
 
   procedure singleStep()
@@ -67,18 +58,8 @@ class TuringMachine
     call execute(rule)
   end procedure
 
-  procedure runToEnd()
-    while not isHalted()
-      call singleStep()
-    end while
-  end procedure
-
   function isHalted() return Boolean
     return currentState is haltState
-  end function
-
-  function getTrimmedTape() return String
-    return tape.trim()
   end function
 
   function findMatchingRule() return Rule
@@ -143,9 +124,6 @@ class Rule
 end class
 
 enum Dir left, right
-
-# Make this longer if you need to
-constant spaces set to "                                                  "
 
 # rename this method and define new transition rules to solve a different problem
 procedure addRulesForRomanNumeralsInto(out tm as TuringMachine)
