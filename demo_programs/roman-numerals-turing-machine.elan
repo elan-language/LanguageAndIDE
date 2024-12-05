@@ -1,4 +1,4 @@
-# 1f1753ee00d2b5da927fa37f2103311a2db3a9ae6335ae6c39f5fb17b6d3ba1a Elan Beta 4 valid
+# 2593063d3dd5324f48e36140b9584583f9b5e35c4dec793083ee4741fcb11b5e Elan Beta 4 valid
 
 # Turing Machine that converts a Year from decimal to roman numerals
 # Run the program, enter the number to convert and watch the machine in action.
@@ -8,7 +8,7 @@
 main
   var tm set to new TuringMachine("init", "halt")
   call addRulesForRomanNumeralsInto(tm)
-  let decimal be inputIntBetween("Enter a decimal number: ", 0, 2500)
+  let decimal be inputIntBetween("Enter a year:", 1, 3999)
   call tm.setTape(decimal.asString())
   var steps set to 0
   while not tm.isHalted()
@@ -23,13 +23,6 @@ main
   end while
   print "\n\nThe roman numeral equivalent for {decimal} is {tm.getTrimmedTape()}"
 end main
-
-# Currently used only by the tests, but could be called from main if you don't want to see TM in operation
-procedure runTM(out tm as TuringMachine, tape as String)
-  call tm.reset()
-  call tm.setTape(tape)
-  call tm.runToEnd()
-end procedure
 
 class TuringMachine
   constructor(initialState as String, haltState as String)
@@ -157,7 +150,7 @@ constant spaces set to "                                                  "
 # rename this method and define new transition rules to solve a different problem
 procedure addRulesForRomanNumeralsInto(out tm as TuringMachine)
   # name: Denary to Roman "Numerals", initial state = "init", accept state = "halt"
-  # Example tape input:  2024 (between 0 and 2499)
+  # Example tape input:  2024 (between 1 and 3999)
   call tm.append(new Rule("init", "0", "init", "0", Dir.right))
   call tm.append(new Rule("init", "1", "init", "1", Dir.right))
   call tm.append(new Rule("init", "2", "init", "2", Dir.right))
