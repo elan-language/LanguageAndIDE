@@ -797,8 +797,8 @@ end record`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types Int to String",
       "The identifier 'a' is already used for a variable and cannot be re-defined here.",
+      "Incompatible types Int to String",
     ]);
   });
 

@@ -61,16 +61,16 @@ export abstract class AbstractDefinitionStatement
       mustBeDeconstructableType(this.symbolType(transforms), this.compileErrors, this.htmlId);
     }
 
-    const lhs = this.name.getOrTransformAstNode(transforms);
-    const rhs = this.expr.getOrTransformAstNode(transforms);
-
-    mustBeCompatibleNode(lhs, rhs, this.getParent(), this.compileErrors, this.htmlId);
-
     for (const i of ids) {
       mustNotBeKeyword(i, this.compileErrors, this.htmlId);
       const symbol = this.getParent().resolveSymbol(i!, transforms, this);
       mustNotBeRedefined(symbol, this.compileErrors, this.htmlId);
     }
+
+    const lhs = this.name.getOrTransformAstNode(transforms);
+    const rhs = this.expr.getOrTransformAstNode(transforms);
+
+    mustBeCompatibleNode(lhs, rhs, this.getParent(), this.compileErrors, this.htmlId);
 
     const lhsCode = wrapDeconstructionLhs(lhs, rhs, false);
 

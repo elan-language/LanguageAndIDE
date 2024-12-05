@@ -12,7 +12,6 @@ import { MethodCallNode } from "../src/frames/parse-nodes/method-call-node";
 import { OptionalNode } from "../src/frames/parse-nodes/optional-node";
 import { ReferenceNode } from "../src/frames/parse-nodes/reference-node";
 import { TermSimple } from "../src/frames/parse-nodes/term-simple";
-import { TypeNode } from "../src/frames/parse-nodes/type-node";
 import { TypeSimpleNode } from "../src/frames/parse-nodes/type-simple-node";
 import { TypeSimpleOrGeneric } from "../src/frames/parse-nodes/type-simple-or-generic";
 import { VariableOrProperty } from "../src/frames/parse-nodes/variable-or-property";
@@ -40,7 +39,7 @@ suite("Symbol Completion Spec", () => {
       ReferenceNode.name,
       "r",
       [
-        TokenType.id_constant, //TODO: sort these into alphabetic order?
+        TokenType.id_constant,
         TokenType.id_let,
         TokenType.id_parameter_out,
         TokenType.id_parameter_regular,
@@ -121,7 +120,7 @@ suite("Symbol Completion Spec", () => {
       new TermSimple(),
       "t",
       ParseStatus.valid,
-      TermSimple.name, //coming back as Alternatives
+      TermSimple.name,
       "t",
       [
         TokenType.id_constant,
@@ -166,7 +165,7 @@ suite("Symbol Completion Spec", () => {
         TokenType.method_function,
         TokenType.method_system,
       ],
-      ["new,copy,if,lambda,empty,this,ref,not"], // Not showing 'this,ref' - which should be coming from Term
+      ["new,copy,if,lambda,empty,this,ref,not"],
     );
   });
   test("Expression3", () => {
@@ -414,6 +413,74 @@ suite("Symbol Completion Spec", () => {
       [TokenType.type_concrete],
       [],
       "none",
+    );
+  });
+  test("'to' clause #902 - 1", () => {
+    testSymbolCompletionSpec(
+      new ExprNode(),
+      "new CircleVG() with ",
+      ParseStatus.incomplete,
+      IdentifierNode.name,
+      "",
+      [TokenType.id_property],
+      [],
+      "CircleVG",
+    );
+  });
+  test("'to' clause #902 - 2", () => {
+    testSymbolCompletionSpec(
+      new ExprNode(),
+      "new CircleVG() with cx to ",
+      ParseStatus.incomplete,
+      ExprNode.name,
+      "",
+      [
+        TokenType.id_constant,
+        TokenType.id_let,
+        TokenType.id_parameter_out,
+        TokenType.id_parameter_regular,
+        TokenType.id_property,
+        TokenType.id_variable,
+        TokenType.id_enumValue,
+        TokenType.method_function,
+        TokenType.method_system,
+      ],
+      ["new,copy,if,lambda,empty,this,ref,not"],
+      "",
+    );
+  });
+  test("'to' clause #902 - 3", () => {
+    testSymbolCompletionSpec(
+      new ExprNode(),
+      "copy c with ",
+      ParseStatus.incomplete,
+      IdentifierNode.name,
+      "",
+      [TokenType.id_property],
+      [],
+      "c",
+    );
+  });
+  test("'to' clause #902 - 4", () => {
+    testSymbolCompletionSpec(
+      new ExprNode(),
+      "copy c with cx to ",
+      ParseStatus.incomplete,
+      ExprNode.name,
+      "",
+      [
+        TokenType.id_constant,
+        TokenType.id_let,
+        TokenType.id_parameter_out,
+        TokenType.id_parameter_regular,
+        TokenType.id_property,
+        TokenType.id_variable,
+        TokenType.id_enumValue,
+        TokenType.method_function,
+        TokenType.method_system,
+      ],
+      ["new,copy,if,lambda,empty,this,ref,not"],
+      "",
     );
   });
 });

@@ -1000,6 +1000,10 @@ function mapToPurpose(symbol: ElanSymbol) {
     return "parameter";
   }
 
+  if (symbol.symbolScope === SymbolScope.stdlib) {
+    return "library symbol";
+  }
+
   if (isConstant(symbol)) {
     return "constant";
   }
@@ -1024,14 +1028,13 @@ export function mustNotBeRedefined(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (
-    !(variable instanceof UnknownSymbol) &&
-    !(variable.symbolScope === SymbolScope.stdlib || variable.symbolScope === SymbolScope.member)
-  ) {
-    compileErrors.push(
-      new RedefinedCompileError(variable.symbolId, mapToPurpose(variable), location),
-    );
+  if (variable instanceof UnknownSymbol || variable.symbolScope === SymbolScope.member) {
+    // ok
+    return;
   }
+  compileErrors.push(
+    new RedefinedCompileError(variable.symbolId, mapToPurpose(variable), location),
+  );
 }
 
 export function mustNotBeOutParameter(
