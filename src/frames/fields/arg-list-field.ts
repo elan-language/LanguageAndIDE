@@ -43,7 +43,7 @@ export class ArgListField extends AbstractField {
     return this.symbolCompletionAsHtml(transforms());
   }
 
-  public textAsHtml(): string {
+  private argumentDescriptions() {
     const holder = this.getHolder();
     if (holder instanceof CallStatement) {
       const proc = holder.proc.text;
@@ -53,12 +53,48 @@ export class ArgListField extends AbstractField {
 
       if (procSymbolType instanceof ProcedureType) {
         const parameterTypes = procSymbolType.parametersTypes;
-        const types = parameterTypes.map((pt) => pt.name).join(",");
-
-        this.setPlaceholder(types);
+        return parameterTypes.map((pt) => `(${pt.name})`);
       }
     }
 
+    return ["arguments"];
+  }
+
+  private completionOverride = "";
+
+  private currentParameterIndex() {
+    if (this.text) {
+      if (this.text.includes(",")) {
+        const parameters = this.text.split(",");
+        const count = parameters.length - 1;
+        const startedInput = !!parameters[count].trim();
+        return startedInput ? count + 1 : count;
+      }
+
+      return 1;
+    }
+
+    return 0;
+  }
+
+  public textAsHtml(): string {
+    const descriptions = this.argumentDescriptions();
+
+    if (this.text) {
+      const count = this.currentParameterIndex();
+      const remainingTypes = descriptions.slice(count).join(", ");
+
+      this.completionOverride = `<i>${remainingTypes}</i>`;
+    } else {
+      this.completionOverride = "";
+      const allTypes = descriptions.join(", ");
+      this.setPlaceholder(`<i>${allTypes}</i>`);
+    }
+
     return super.textAsHtml();
+  }
+
+  override getCompletion() {
+    return this.completionOverride || super.getCompletion();
   }
 }
