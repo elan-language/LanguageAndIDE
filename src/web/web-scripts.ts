@@ -369,7 +369,7 @@ async function updateDisplayValues() {
     enable(appendButton, "Add code from a file onto the end of the existing code");
     enable(newButton, "Clear the current code and start afresh");
     enable(demosButton, "Load a demonstration program");
-    enable(trimButton, "Remove all 'newCode' selectors that can be removed");
+    enable(trimButton, "Remove all 'newCode' selectors that can be removed (shortcut: Alt-t)");
     enable(expandCollapseButton, "Expand / Collapse all code regions");
 
     for (const elem of demoFiles) {
