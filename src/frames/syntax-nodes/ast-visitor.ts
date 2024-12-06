@@ -6,7 +6,7 @@ import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { Scope } from "../interfaces/scope";
 import { libraryKeyword, propertyKeyword, thisKeyword } from "../keywords";
 import { AbstractAlternatives } from "../parse-nodes/abstract-alternatives";
-import { ArrayNode } from "../parse-nodes/array-list-node";
+import { ArrayNode } from "../parse-nodes/array-node";
 import { BinaryExpression } from "../parse-nodes/binary-expression";
 import { BracketedExpression } from "../parse-nodes/bracketed-expression";
 import { CommaNode } from "../parse-nodes/comma-node";

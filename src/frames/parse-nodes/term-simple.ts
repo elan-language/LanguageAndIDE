@@ -1,6 +1,6 @@
 import { TokenType } from "../symbol-completion-helpers";
 import { AbstractAlternatives } from "./abstract-alternatives";
-import { ArrayNode } from "./array-list-node";
+import { ArrayNode } from "./array-node";
 import { BracketedExpression } from "./bracketed-expression";
 import { DictionaryNode } from "./dictionary-node";
 import { ExprNode } from "./expr-node";

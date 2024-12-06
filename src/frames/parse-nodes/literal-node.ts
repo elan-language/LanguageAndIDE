@@ -1,5 +1,5 @@
 import { AbstractAlternatives } from "./abstract-alternatives";
-import { ArrayNode } from "./array-list-node";
+import { ArrayNode } from "./array-node";
 import { DictionaryNode } from "./dictionary-node";
 import { ImmutableDictionaryNode } from "./immutable-dictionary-node";
 import { ListNode } from "./list-node";
