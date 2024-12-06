@@ -2,14 +2,12 @@ import { TokenType } from "../symbol-completion-helpers";
 import { CLOSE_BRACKET, OPEN_BRACKET } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { ArgListNode } from "./arg-list-node";
-import { CSV } from "./csv";
-import { ExprNode } from "./expr-node";
 import { IdentifierNode } from "./identifier-node";
 import { PunctuationNode } from "./punctuation-node";
 
 export class MethodCallNode extends AbstractSequence {
   name: IdentifierNode | undefined;
-  args: CSV | undefined;
+  args: ArgListNode | undefined;
 
   parseText(text: string): void {
     if (text.trim().length > 0) {
@@ -18,7 +16,8 @@ export class MethodCallNode extends AbstractSequence {
       );
       this.addElement(this.name);
       this.addElement(new PunctuationNode(OPEN_BRACKET));
-      this.addElement(new ArgListNode()); 
+      this.args = new ArgListNode();
+      this.addElement(this.args); 
       this.addElement(new PunctuationNode(CLOSE_BRACKET));
       super.parseText(text);
     }
