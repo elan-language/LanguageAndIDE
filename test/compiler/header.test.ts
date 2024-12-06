@@ -11,7 +11,7 @@ import {
 
 suite("Header", () => {
   test("Pass_hash", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   # My first program

@@ -12,7 +12,7 @@ import {
 
 suite("Text Files", () => {
   test("Pass_Create", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var fr set to new TextFileReader()
@@ -35,7 +35,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_readWholeFile", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var tf set to openFileForReading()
@@ -61,7 +61,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_readWholeFile_ClosesFile", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var tf set to openFileForReading()
@@ -87,7 +87,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ReadLineInLoop", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var tf set to openFileForReading()
@@ -116,7 +116,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ReadLine_ErrorIfClosed", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var tf set to openFileForReading()
@@ -142,7 +142,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_write", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var tf set to createFileForWriting("data.txt")
@@ -167,7 +167,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "something");
   });
   test("Pass_writeWholeFile", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var tf set to createFileForWriting("data.txt")
@@ -190,7 +190,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "something else");
   });
   test("Pass_writeWholeFileErrorIfAlreadyWrittenTo", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var tf set to createFileForWriting("data.txt")
@@ -218,7 +218,7 @@ return [main, _tests];}`;
     );
   });
   test("Pass_writeWholeFileErrorIfAlreadyClosed", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var tf set to createFileForWriting("data.txt")

@@ -13,7 +13,7 @@ import {
 
 suite("For Loop", () => {
   test("Pass_minimal", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var tot set to 0
@@ -43,7 +43,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_reuseVariable", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var tot set to 0
@@ -75,7 +75,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_withStep", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
 var tot set to 0
@@ -105,7 +105,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_negativeStep", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var tot set to 0
@@ -135,7 +135,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_innerLoop", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var tot set to 0
@@ -168,7 +168,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_canUseExistingVariablesOfRightType", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var lower set to 1
@@ -201,7 +201,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_forInProcedure", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to createArray(11, 0)
@@ -240,7 +240,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_reuseVariableWrongType", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var tot set to 0
@@ -260,7 +260,7 @@ end main`;
   });
 
   test("Fail_useOfFloat", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var tot set to 0.0
@@ -283,7 +283,7 @@ end main
   });
 
   test("Fail_modifyingCounter", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var tot set to 0
@@ -301,7 +301,7 @@ end main
   });
 
   test("Fail_scopeOfCounter", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var tot set to 0
@@ -320,7 +320,7 @@ end main
   });
 
   test("Fail_missingEnd", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var tot set to 0
@@ -338,7 +338,7 @@ end main
   });
 
   test("Fail_nextVariable", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var tot set to 0
@@ -355,7 +355,7 @@ end main
   });
 
   test("Fail_break", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var tot set to 0
@@ -373,7 +373,7 @@ end main
   });
 
   test("Fail_continue", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var tot set to 0

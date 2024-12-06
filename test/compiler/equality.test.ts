@@ -12,7 +12,7 @@ import {
 
 suite("Equality", () => {
   test("Pass_DifferentInstancesWithSameValuesAreEqual", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var x set to new Foo(7, "Apple")
@@ -82,7 +82,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_EmptyDoesEqualDefault", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var x set to new Foo()
@@ -141,7 +141,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ActuallyTheSameReference", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var x set to new Foo(7, "Apple")
@@ -214,7 +214,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_CompareLambdas", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var x set to new Foo()

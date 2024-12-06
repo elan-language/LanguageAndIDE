@@ -13,7 +13,7 @@ import {
 
 suite("Stack", () => {
   test("Pass_Stack", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   let st be new Stack<of String>()
@@ -55,7 +55,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_Stack_adding_incompatible_type1", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   let st be new Stack<of String>()
@@ -72,7 +72,7 @@ end main`;
   });
 
   test("Fail_Stack_adding_incompatible_type2", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   let st be new Stack<of String>()
@@ -88,7 +88,7 @@ end main`;
   });
 
   test("Fail_Stack_peek_incompatible_type", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   let st be new Stack<of String>()
@@ -106,7 +106,7 @@ end main`;
   });
 
   test("Fail_Stack_peek_empty_stack", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   let st be new Stack<of String>()
@@ -130,7 +130,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_Stack_pop_empty_stack", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   let st be new Stack<of String>()
@@ -154,7 +154,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_StackWithoutGenericParm", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   let st be new Stack()

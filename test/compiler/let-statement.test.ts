@@ -13,7 +13,7 @@ import {
 
 suite("Let Statement", () => {
   test("Pass_normal", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   print add()
@@ -47,7 +47,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InLoop", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 constant list set to {1,2,3,4,5}
 
@@ -89,7 +89,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InLoop1", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   call foo()
@@ -131,7 +131,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_cannotRedefine ", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   print foo()
@@ -154,7 +154,7 @@ end function`;
   });
 
   test("Fail_cannotAssign", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   print foo()
@@ -175,7 +175,7 @@ end function`;
   });
 
   test("Fail_RecursiveDefinition", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var x set to foo()
@@ -200,7 +200,7 @@ end function`;
   });
 
   test("Fail_RecursiveDefinition1", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   print foo()
@@ -221,7 +221,7 @@ end function`;
   });
 
   test("Fail_Redefine", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   let a, length be foo()

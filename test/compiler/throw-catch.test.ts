@@ -13,7 +13,7 @@ import {
 
 suite("Throw Catch", () => {
   test("Pass_ThrowExceptionInMain", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
     throw exception "Foo"
@@ -35,7 +35,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ThrowExceptionInMainUsingVariableForMessage", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var msg set to "Foo"
@@ -59,7 +59,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ThrowExceptionUsingInterpolatedStringForMessage", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var bar set to 1
@@ -83,7 +83,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ThrowExceptionInProcedure", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   call foo()
@@ -113,7 +113,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_CatchException", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   try
@@ -155,7 +155,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_CatchSystemGeneratedException", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   try
@@ -211,7 +211,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_UseException", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   try
@@ -257,7 +257,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_ThrowExceptionInFunction", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var s set to foo("s")
@@ -276,7 +276,7 @@ end function
   });
 
   test("Fail_catchMissingVariable", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   try
@@ -299,7 +299,7 @@ end procedure
   });
 
   test("Fail_UseExpressionForMessage", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var msg set to "Foo"

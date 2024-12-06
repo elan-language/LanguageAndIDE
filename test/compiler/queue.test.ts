@@ -13,7 +13,7 @@ import {
 
 suite("Queue", () => {
   test("Pass_Queue", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   let st be new Queue<of String>()
@@ -55,7 +55,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_Queue_adding_incompatible_type1", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   let st be new Queue<of String>()
@@ -72,7 +72,7 @@ end main`;
   });
 
   test("Fail_Queue_adding_incompatible_type2", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   let st be new Queue<of String>()
@@ -88,7 +88,7 @@ end main`;
   });
 
   test("Fail_Queue_peek_empty_Queue", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   let st be new Queue<of String>()
@@ -112,7 +112,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_Queue_dequeue_empty_Queue", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   let st be new Queue<of String>()
@@ -139,7 +139,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_QueueWithoutGenericParm", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   let st be new Queue()

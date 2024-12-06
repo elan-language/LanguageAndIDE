@@ -11,7 +11,7 @@ import {
 
 suite("Printing", () => {
   test("Pass_PrintWithNoArgument", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   print 
@@ -32,7 +32,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "");
   });
   test("Pass_CommonSymbolsAccessibleFromUKKeyboard", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   print "¬!£$%^&*()@~#|<>'"

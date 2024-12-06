@@ -12,7 +12,7 @@ import {
 
 suite("Unique Identifiers", () => {
   test("Pass_CanUseKeywordWithDifferentCase", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var bReak set to 2
@@ -36,7 +36,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_CanHaveIdentiferSameAsTypeExceptCase", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var foo set to new Foo()
@@ -80,7 +80,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_KeywordWithCorrectCaseIfAlteredCaseAlreadyUsed", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var bReak set to 1
@@ -97,7 +97,7 @@ end main`;
   });
 
   test("Fail_SameVariableNameInScope", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var id set to 1

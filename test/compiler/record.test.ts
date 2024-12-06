@@ -13,7 +13,7 @@ import {
 
 suite("Record", () => {
   test("Pass_BasicRecord", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var f set to new Foo()
@@ -47,7 +47,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_NewWithParam", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var f set to new Foo(3)
@@ -66,7 +66,7 @@ end record`;
   });
 
   test("Pass_instantiateUsingWith", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var f set to new Foo() with p1 to 3, p2 to "hello"
@@ -105,7 +105,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_AbstractRecord", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var f set to new Foo(3)
@@ -124,7 +124,7 @@ end record`;
   });
 
   test("Fail_ProcedureOnRecord", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 record Foo
   procedure setP1(p1 as Int)
@@ -140,7 +140,7 @@ end record`;
   });
 
   test("Pass_RecordAsFunctionParameter", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var f set to new Foo()
@@ -183,7 +183,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_RecordAsProcedureParameter", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var f set to new Foo()
@@ -226,7 +226,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ImmutableProperties", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
  
@@ -296,7 +296,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_PrivateProperty", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 record Foo
   private property p1 as Int
@@ -310,7 +310,7 @@ end record`;
   });
 
   test("Fail_NotImmutableProperty", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 record Foo
   property p1 as [Int] 
