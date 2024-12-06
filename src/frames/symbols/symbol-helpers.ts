@@ -351,8 +351,8 @@ export function matchType(actualType: SymbolType, paramType: SymbolType): boolea
 }
 
 export function isPossibleExtensionForType(actualType: SymbolType, procType: ProcedureType) {
-  if (procType.parametersTypes.length > 0) {
-    const firstParmType = procType.parametersTypes[0];
+  if (procType.parameterTypes.length > 0) {
+    const firstParmType = procType.parameterTypes[0];
     return matchType(actualType, firstParmType);
   }
 

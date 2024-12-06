@@ -3,7 +3,7 @@ import { SymbolType } from "../interfaces/symbol-type";
 export class ProcedureType implements SymbolType {
   constructor(
     public readonly parameterNames: string[],
-    public readonly parametersTypes: SymbolType[],
+    public readonly parameterTypes: SymbolType[],
     public readonly isExtension: boolean,
     public readonly isAsync: boolean,
   ) {}
@@ -13,7 +13,7 @@ export class ProcedureType implements SymbolType {
   initialValue = "";
 
   get name() {
-    return `Procedure (${this.parametersTypes.map((p) => p.name).join(", ")})`;
+    return `Procedure (${this.parameterTypes.map((p) => p.name).join(", ")})`;
   }
 
   toString(): string {

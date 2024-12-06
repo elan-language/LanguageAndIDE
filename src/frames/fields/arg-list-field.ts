@@ -52,8 +52,10 @@ export class ArgListField extends AbstractField {
       const procSymbolType = ps.symbolType(transforms());
 
       if (procSymbolType instanceof ProcedureType) {
-        const parameterTypes = procSymbolType.parametersTypes;
-        return parameterTypes.map((pt) => `(${pt.name})`);
+        const parameterNames = procSymbolType.parameterNames;
+        const parameterTypes = procSymbolType.parameterTypes;
+        const descriptions = parameterNames.map((n, i) => `${n} (${parameterTypes[i].name})`);
+        return descriptions;
       }
     }
 

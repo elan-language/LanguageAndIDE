@@ -90,7 +90,6 @@ import {
 } from "./syntax-nodes/ast-helpers";
 import { IdAsn } from "./syntax-nodes/id-asn";
 import { Transforms } from "./syntax-nodes/transforms";
-import { VarAsn } from "./syntax-nodes/var-asn";
 
 export function mustBeOfSymbolType(
   exprType: SymbolType | undefined,
@@ -762,7 +761,7 @@ export function mustBeCompatibleType(
   }
 
   if (lhs instanceof FunctionType && rhs instanceof FunctionType) {
-    mustBeCompatibleSignatures(lhs.parametersTypes, rhs.parametersTypes, compileErrors, location);
+    mustBeCompatibleSignatures(lhs.parameterTypes, rhs.parameterTypes, compileErrors, location);
     mustBeCompatibleType(lhs.returnType, rhs.returnType, compileErrors, location);
     return;
   }

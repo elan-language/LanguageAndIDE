@@ -106,7 +106,7 @@ export function flatten(p: SymbolType): SymbolType {
 
   if (p instanceof FunctionType) {
     let flattened = [] as SymbolType[];
-    for (const t of p.parametersTypes) {
+    for (const t of p.parameterTypes) {
       flattened = flattened.concat(flatten(t));
     }
     flattened = flattened.concat(flatten(p.returnType));
@@ -181,7 +181,7 @@ export function generateType(type: SymbolType, matches: Map<string, SymbolType>)
   if (type instanceof FunctionType) {
     return new FunctionType(
       type.parameterNames,
-      type.parametersTypes.map((t) => generateType(t, matches)),
+      type.parameterTypes.map((t) => generateType(t, matches)),
       generateType(type.returnType, matches),
       type.isExtension,
       type.isPure,
@@ -229,7 +229,7 @@ export function matchGenericTypes(
     return cls.genericParamMatches ?? matches;
   }
 
-  const flattened = type.parametersTypes.map((n) => flatten(n));
+  const flattened = type.parameterTypes.map((n) => flatten(n));
 
   const pTypes = parameters.map((p) => flatten(p.symbolType()));
   match(flattened, pTypes, matches);
@@ -251,7 +251,7 @@ export function matchParametersAndTypes(
   compileErrors: CompileError[],
   location: string,
 ) {
-  let parameterTypes = funcSymbolType.parametersTypes;
+  let parameterTypes = funcSymbolType.parameterTypes;
 
   if (parameterTypes.some((pt) => containsGenericType(pt))) {
     const matches = matchGenericTypes(funcSymbolType, parameters, classTypeDef);

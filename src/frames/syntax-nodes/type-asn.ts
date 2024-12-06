@@ -58,7 +58,7 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
     }
 
     if (st instanceof FunctionType) {
-      return st.parametersTypes.length + 1;
+      return st.parameterTypes.length + 1;
     }
 
     return 0;
