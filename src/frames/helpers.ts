@@ -148,7 +148,7 @@ export function helper_deriveCompileStatusFromErrors(errors: CompileError[]): Co
   if (errors.length === 0) {
     result = CompileStatus.ok;
   } else {
-    result = errors.some((e) => !e.unknownType) ? CompileStatus.error : CompileStatus.unknownSymbol;
+    result = errors.some((e) => !e.isWarning) ? CompileStatus.error : CompileStatus.unknownSymbol;
   }
   return result;
 }

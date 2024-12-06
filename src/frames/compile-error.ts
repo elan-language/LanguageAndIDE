@@ -9,13 +9,13 @@ export abstract class CompileError {
     private readonly basePriority: Priority,
     public readonly message: string,
     public readonly locationId: string,
-    public readonly unknownType: boolean,
+    public readonly isWarning: boolean,
   ) {}
 
   //
   public get priority() {
     return this.basePriority === Priority.illegalOperation
-      ? this.unknownType
+      ? this.isWarning
         ? Priority.typeError
         : Priority.illegalOperation
       : this.basePriority;
