@@ -4,6 +4,7 @@ import { Alternatives } from "../parse-nodes/alternatives";
 import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { InstanceProcRef } from "../parse-nodes/instanceProcRef";
 import { ParseNode } from "../parse-nodes/parse-node";
+import { ProcRefNode } from "../parse-nodes/proc-ref-node";
 import { ParseStatus } from "../status-enums";
 import { TokenType } from "../symbol-completion-helpers";
 import { transforms } from "../syntax-nodes/ast-helpers";
@@ -18,8 +19,6 @@ export class ProcRefField extends AbstractField {
     TokenType.id_variable,
   ];
   isParseByNodes = true;
-  qualProc = () => new InstanceProcRef(); // These two are alternatives, not a combination!
-  proc = () => new IdentifierNode(new Set([TokenType.method_procedure])); // These two are alternatives, not a combination
 
   constructor(holder: Frame) {
     super(holder);
@@ -30,7 +29,7 @@ export class ProcRefField extends AbstractField {
     return "ident";
   }
   initialiseRoot(): ParseNode {
-    this.rootNode = new Alternatives([this.proc, this.qualProc]);
+    this.rootNode = new ProcRefNode();
     this.rootNode.setSyntaxCompletionWhenEmpty(this.placeholder); //Need to test proc first, otherwise valid proc would be treated as instance part of an incomplete qualProc
     return this.rootNode;
   }
