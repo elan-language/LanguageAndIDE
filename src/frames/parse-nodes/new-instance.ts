@@ -2,6 +2,7 @@ import { newKeyword } from "../keywords";
 import { TokenType } from "../symbol-completion-helpers";
 import { CLOSE_BRACKET, OPEN_BRACKET } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
+import { ArgListNode } from "./arg-list-node";
 import { CSV } from "./csv";
 import { ExprNode } from "./expr-node";
 import { KeywordNode } from "./keyword-node";
@@ -14,7 +15,7 @@ import { WithClause } from "./with-clause";
 
 export class NewInstance extends AbstractSequence {
   type: TypeSimpleOrGeneric | undefined;
-  args: CSV | undefined;
+  args: ArgListNode | undefined;
   withClause: OptionalNode | undefined;
 
   parseText(text: string): void {
@@ -24,8 +25,7 @@ export class NewInstance extends AbstractSequence {
       this.type = new TypeSimpleOrGeneric(new Set<TokenType>([TokenType.type_concrete]));
       this.addElement(this.type);
       this.addElement(new PunctuationNode(OPEN_BRACKET));
-      this.args = new CSV(() => new ExprNode(), 0);
-      this.args.setSyntaxCompletionWhenEmpty("<i>arguments</i>");
+      this.args = new ArgListNode();
       this.addElement(this.args);
       this.addElement(new PunctuationNode(CLOSE_BRACKET));
       this.withClause = new OptionalNode(new WithClause(() => this.type!.matchedText));
