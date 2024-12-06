@@ -6,6 +6,7 @@ import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { Scope } from "../interfaces/scope";
 import { libraryKeyword, propertyKeyword, thisKeyword } from "../keywords";
 import { AbstractAlternatives } from "../parse-nodes/abstract-alternatives";
+import { ArgListNode } from "../parse-nodes/arg-list-node";
 import { ArrayNode } from "../parse-nodes/array-node";
 import { BinaryExpression } from "../parse-nodes/binary-expression";
 import { BracketedExpression } from "../parse-nodes/bracketed-expression";
@@ -309,6 +310,10 @@ export function transform(
 
   if (node instanceof WithClause) {
     return transformMany(node.toClauses as CSV, fieldId, scope);
+  }
+
+  if (node instanceof ArgListNode) {
+    return transformMany(node as CSV, fieldId, scope);
   }
 
   if (node instanceof ToClause) {

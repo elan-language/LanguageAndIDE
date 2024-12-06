@@ -1,6 +1,7 @@
 import { TokenType } from "../symbol-completion-helpers";
 import { CLOSE_BRACKET, OPEN_BRACKET } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
+import { ArgListNode } from "./arg-list-node";
 import { CSV } from "./csv";
 import { ExprNode } from "./expr-node";
 import { IdentifierNode } from "./identifier-node";
@@ -15,10 +16,9 @@ export class MethodCallNode extends AbstractSequence {
       this.name = new IdentifierNode(
         new Set<TokenType>([TokenType.method_function, TokenType.method_system]),
       );
-      this.args = new CSV(() => new ExprNode(), 0);
       this.addElement(this.name);
       this.addElement(new PunctuationNode(OPEN_BRACKET));
-      this.addElement(this.args); //arg list
+      this.addElement(new ArgListNode()); 
       this.addElement(new PunctuationNode(CLOSE_BRACKET));
       super.parseText(text);
     }
