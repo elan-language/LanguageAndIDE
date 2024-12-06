@@ -2,6 +2,7 @@ import { SymbolType } from "../interfaces/symbol-type";
 
 export class FunctionType implements SymbolType {
   constructor(
+    public readonly parameterNames: string[],
     public readonly parametersTypes: SymbolType[],
     public readonly returnType: SymbolType,
     public readonly isExtension: boolean,

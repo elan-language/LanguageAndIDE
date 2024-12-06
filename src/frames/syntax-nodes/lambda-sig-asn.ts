@@ -2,6 +2,7 @@ import { CompileError } from "../compile-error";
 import { AstNode } from "../interfaces/ast-node";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Scope } from "../interfaces/scope";
+import { SymbolType } from "../interfaces/symbol-type";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
@@ -37,8 +38,10 @@ export class LambdaSigAsn extends AbstractAstNode implements Scope, AstNode {
     return UnknownType.Instance;
   }
 
-  parameterTypes() {
-    return this.parameters.map((p) => p.symbolType());
+  parameterNamesAndTypes(): [string[], SymbolType[]] {
+    const names = this.parameters.map((p) => p.id);
+    const types = this.parameters.map((p) => p.symbolType());
+    return [names, types];
   }
 
   compile(): string {

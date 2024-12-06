@@ -180,6 +180,7 @@ export function generateType(type: SymbolType, matches: Map<string, SymbolType>)
 
   if (type instanceof FunctionType) {
     return new FunctionType(
+      type.parameterNames,
       type.parametersTypes.map((t) => generateType(t, matches)),
       generateType(type.returnType, matches),
       type.isExtension,

@@ -27,7 +27,8 @@ export class LambdaAsn extends AbstractAstNode implements AstNode {
   }
 
   symbolType() {
-    return new FunctionType(this.signature.parameterTypes(), this.body.symbolType(), false);
+    const [pn, pt] = this.signature.parameterNamesAndTypes();
+    return new FunctionType(pn, pt, this.body.symbolType(), false);
   }
 
   toString() {

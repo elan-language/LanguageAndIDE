@@ -32,4 +32,8 @@ export class ExpressionField extends AbstractField {
   symbolCompletion(): string {
     return this.symbolCompletionAsHtml(transforms());
   }
+
+  public textAsHtml(): string {
+    return super.textAsHtml();
+  }
 }

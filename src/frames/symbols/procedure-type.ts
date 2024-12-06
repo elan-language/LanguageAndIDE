@@ -2,6 +2,7 @@ import { SymbolType } from "../interfaces/symbol-type";
 
 export class ProcedureType implements SymbolType {
   constructor(
+    public readonly parameterNames: string[],
     public readonly parametersTypes: SymbolType[],
     public readonly isExtension: boolean,
     public readonly isAsync: boolean,

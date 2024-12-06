@@ -38,22 +38,25 @@ export class ParamList extends AbstractField implements Scope {
     return this.getHolder();
   }
 
-  symbolMatches(id: string, all: boolean, initialScope?: Scope): ElanSymbol[] {
+  private getParamsAsSymbols(): ElanSymbol[] {
     const ast = this.getOrTransformAstNode(transforms());
 
     if (isAstCollectionNode(ast)) {
-      const symbols: ElanSymbol[] = ast.items
+      return ast.items
         .filter((n) => isAstIdNode(n))
         .map((n) => ({
           symbolId: n.id,
           symbolType: () => n.symbolType(),
           symbolScope: n.symbolScope,
         }));
-
-      return symbolMatches(id, all, symbols);
     }
 
     return [];
+  }
+
+  symbolMatches(id: string, all: boolean, initialScope?: Scope): ElanSymbol[] {
+    const symbols = this.getParamsAsSymbols();
+    return symbolMatches(id, all, symbols);
   }
 
   getIdPrefix(): string {
@@ -74,41 +77,25 @@ export class ParamList extends AbstractField implements Scope {
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>
     source.readToNonMatchingCloseBracket();
 
-  symbolTypes(transforms?: Transforms): SymbolType[] {
-    const ast = this.getOrTransformAstNode(transforms);
-
-    if (isAstCollectionNode(ast)) {
-      return ast.items.map((i) => i.symbolType());
-    }
-
-    return [];
+  symbolNamesAndTypes(transforms?: Transforms): [string[], SymbolType[]] {
+    const symbols = this.getParamsAsSymbols();
+    const names = symbols.map((s) => s.symbolId);
+    const types = symbols.map((s) => s.symbolType(transforms));
+    return [names, types];
   }
 
   resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
-    const ast = this.getOrTransformAstNode(transforms);
+    const allSymbols = this.getParamsAsSymbols();
+    const matches = allSymbols.filter((n) => n.symbolId === id);
 
-    if (isAstCollectionNode(ast)) {
-      const matches: ElanSymbol[] = [];
-      for (const n of ast.items) {
-        if (isAstIdNode(n)) {
-          if (n.id === id) {
-            matches.push({
-              symbolId: id,
-              symbolType: () => n.symbolType(),
-              symbolScope: n.symbolScope,
-            });
-          }
-        }
-      }
-
-      if (matches.length === 1) {
-        return matches[0];
-      }
-
-      if (matches.length > 1) {
-        return new DuplicateSymbol(matches);
-      }
+    if (matches.length === 1) {
+      return matches[0];
     }
+
+    if (matches.length > 1) {
+      return new DuplicateSymbol(matches);
+    }
+
     return new UnknownSymbol(id);
   }
 

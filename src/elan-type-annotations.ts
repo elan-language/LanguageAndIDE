@@ -49,6 +49,7 @@ export class ElanProcedureDescriptor implements ElanMethodDescriptor, IElanProce
     const parameterTypes = this.parameters;
 
     return new ProcedureType(
+      parameterTypes.map((t) => t.name),
       parameterTypes.map((t) => t.mapType()),
       this.isExtension,
       this.isAsync,
@@ -70,6 +71,7 @@ export class ElanClassDescriptor implements ElanDescriptor {
     const parameterTypes = this.parameters;
 
     return new ProcedureType(
+      parameterTypes.map((t) => t.name),
       parameterTypes.map((t) => t.mapType()),
       false,
       false,
@@ -94,6 +96,7 @@ export class ElanFunctionDescriptor implements ElanMethodDescriptor, IElanFuncti
     const parameterTypes = this.parameters;
 
     return new FunctionType(
+      parameterTypes.map((t) => t.name),
       parameterTypes.map((t) => t.mapType()),
       retType.mapType(),
       this.isExtension,
@@ -172,6 +175,7 @@ export class ElanFuncTypeDescriptor implements TypeDescriptor {
 
   mapType(): SymbolType {
     return new FunctionType(
+      this.parameters.map((t) => t.name),
       this.parameters.map((p) => p.mapType()),
       this.returnType.mapType(),
       false,

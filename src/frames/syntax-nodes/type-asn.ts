@@ -19,7 +19,7 @@ import { isClassTypeDef } from "../symbols/symbol-helpers";
 import { TupleType } from "../symbols/tuple-type";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { matchClassGenericTypes, transforms } from "./ast-helpers";
+import { isAstIdNode, matchClassGenericTypes, transforms } from "./ast-helpers";
 
 export class TypeAsn extends AbstractAstNode implements AstTypeNode {
   constructor(
@@ -125,10 +125,11 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
       case "Iterable":
         return new IterableType(this.safeGetGenericParameterSymbolType(0));
       case "Func":
+        const names = this.genericParameters.map((p) => (isAstIdNode(p) ? p.id : ""));
         const types = this.genericParameters.map((p) => p.symbolType());
         const pTypes = types.slice(0, -1);
         const rType = types[types.length - 1] ?? UnknownType.Instance;
-        return new FunctionType(pTypes, rType, false);
+        return new FunctionType(names, pTypes, rType, false);
       default: {
         const ct = this.scope.resolveSymbol(this.id, transforms(), this.scope);
         const cst = this.scope

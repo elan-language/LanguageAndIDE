@@ -769,7 +769,13 @@ export abstract class AbstractField implements Selectable, Field {
 
   protected getSymbolCompletionSpec(): SymbolCompletionSpec {
     const rn = this.rootNode ?? this.initialiseRoot();
-    return rn.symbolCompletion_getSpec();
+    const spec = rn.symbolCompletion_getSpec();
+    if (spec.context === "") {
+      spec.context = this.extractContextFromText();
+    } else if (spec.context === "none") {
+      spec.context = "";
+    }
+    return spec;
   }
 
   orderSymbol(s1: SymbolWrapper, s2: SymbolWrapper) {
@@ -784,11 +790,6 @@ export abstract class AbstractField implements Selectable, Field {
   protected symbolCompletionAsHtml(transforms: Transforms): string {
     let popupAsHtml = "";
     const spec = this.getSymbolCompletionSpec();
-    if (spec.context === "") {
-      spec.context = this.extractContextFromText();
-    } else if (spec.context === "none") {
-      spec.context = "";
-    }
     if (this.showAutoComplete(spec)) {
       this.autocompleteMatch = spec.toMatch;
       const scope = this.getHolder();
