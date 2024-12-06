@@ -179,11 +179,13 @@ export class ExtensionCompileError extends CompileError {
 
 export class ParametersCompileError extends CompileError {
   constructor(expected: number, actual: number, location: string, generic?: boolean) {
+    const priority = actual < expected ? Priority.unknownIdentifier : Priority.illegalOperation;
+    const unknown = priority === Priority.unknownIdentifier;
     super(
-      Priority.illegalOperation,
+      priority,
       `${generic ? "<of Type(s)>" : "Parameters"} expected: ${expected} got: ${actual}`,
       location,
-      false,
+      unknown,
     );
   }
 }
