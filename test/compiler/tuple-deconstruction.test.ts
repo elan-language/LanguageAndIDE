@@ -12,7 +12,7 @@ import {
 
 suite("Tuple Deconstruction", () => {
   test("Pass_DeconstructIntoExistingVariables", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var x set to (3, "Apple")
@@ -45,7 +45,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DeconstructFromFunction", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   let a, b be foo()
@@ -79,7 +79,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DeconstructFromFunctionMethod", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   let foo be new Foo()
@@ -128,7 +128,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DeconstructFromComplexTupleFunction", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   let a, b be foo()
@@ -162,7 +162,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_CreateAndDeconstructAFourTuple", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var x set to (3, "Apple", true, 1.1)
@@ -201,7 +201,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DeconstructIntoExistingVariablesWithDiscard1", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var x set to (3, "Apple")
@@ -230,7 +230,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DeconstructIntoExistingVariablesWithDiscard2", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var x set to (3, "Apple")
@@ -259,7 +259,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DeconstructIntoExistingVariablesWithDiscard3", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var x set to (3, "Apple", 4)
@@ -288,7 +288,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DeconstructIntoExistingVariablesWithDiscard4", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var x set to (3, "Apple", 4)
@@ -317,7 +317,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DeconstructIntoLetVariables", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var x set to (3, "Apple")
@@ -350,7 +350,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DeconstructIntoLetVariablesWithDiscard", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var x set to (3, "Apple")
@@ -379,7 +379,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DeconstructIntoNewVariables", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var x set to (3, "Apple")
@@ -408,7 +408,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DeconstructIntoNewVariablesWithDiscard1", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var x set to (3, "Apple")
@@ -435,7 +435,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DeconstructIntoNewVariablesWithDiscard2", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var t set to (3, 4, "Apple")
@@ -464,7 +464,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DeconstructIntoNewVariablesTypeCheck", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var x set to (3, "Apple")
@@ -501,7 +501,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DeconstructTupleWithListIntoNew", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to [1,2]
@@ -536,7 +536,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DeconstructTupleWithListIntoNewLet", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to [1,2]
@@ -571,7 +571,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DeconstructTupleWithListIntoExisting", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to [1,2]
@@ -610,7 +610,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DeconstructTupleWithTupleIntoNew", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to (1,2)
@@ -645,7 +645,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DeconstructTupleWithTupleIntoNewLet", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to (1,2)
@@ -680,7 +680,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DeconstructTupleWithTupleIntoExisting", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to (1, 2)
@@ -719,7 +719,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DeconstructTupleTypes", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to (1, "string")
@@ -748,7 +748,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_DeconstructIntoWrongType", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var x set to (3,"Apple")
@@ -772,7 +772,7 @@ end main
   });
 
   test("Fail_DeconstructIntoMixed1", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var x set to (3,"Apple")
@@ -792,7 +792,7 @@ end main
   });
 
   test("Fail_DeconstructIntoMixed2", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var x set to (3,"Apple")
@@ -814,7 +814,7 @@ end main
   });
 
   test("Fail_DeconstructIntoWrongTypeWithDiscard", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var x set to (3, "Apple")
@@ -833,7 +833,7 @@ end main
   });
 
   test("Fail_DeconstructIntoExistingLetVariables", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var x set to (3, "Apple")
@@ -857,7 +857,7 @@ end main
   });
 
   test("Fail_CannotDeconstruct", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to 1
@@ -874,7 +874,7 @@ end main
   });
 
   test("Fail_CannotDeconstructLet", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to 1

@@ -11,7 +11,7 @@ import {
 
 suite("Typeof Operator", () => {
   test("Pass_TypeOfStandardTypes", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   print typeof 1
@@ -69,7 +69,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_TypeOfComplexTypes", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   let a be 1
@@ -147,7 +147,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AssignType", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to ""
@@ -173,7 +173,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_UseType", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to ""

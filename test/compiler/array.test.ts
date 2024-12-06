@@ -14,7 +14,7 @@ import {
 
 suite("Array", () => {
   test("Pass_literalArray", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to [4,5,6,7,8]
@@ -38,7 +38,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DeclareAnEmptyArrayBySizeAndCheckLength", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to new Array<of String>()
@@ -62,7 +62,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ConfirmStringElementsInitializedToEmptyStringNotNull", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to createArray(3, "")
@@ -88,7 +88,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InitialiseToEnum", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to createArray(3, Fruit.apple)
@@ -119,7 +119,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_SetAndReadIndex", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to [1,2,3]
@@ -145,7 +145,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_CannotinitialiseToReferenceType1", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to createArray(3, empty Foo)
@@ -175,7 +175,7 @@ end class
   });
 
   test("Fail_CannotinitialiseToReferenceType2", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to createArray(3, empty [Int])
@@ -194,7 +194,7 @@ end main`;
   });
 
   test("Pass_SetAndReadElements", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to createArray(3, "")
@@ -224,7 +224,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Range1", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to ["foo", "bar", "yon"]
@@ -250,7 +250,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AddAndReadElements", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to createArray(3, "")
@@ -280,7 +280,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_SetFromIndex", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to createArray(3, "")
@@ -318,7 +318,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InsertElements", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to ["one", "two", "three"]
@@ -346,7 +346,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_removeAt", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to ["one", "two", "three"]
@@ -374,7 +374,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_removeFirst", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to ["one", "two", "three", "one", "two", "three"]
@@ -400,7 +400,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_removeAll", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to ["one", "two", "three", "one", "two", "three"]
@@ -426,7 +426,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InitializeAnArrayFromAList", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to {"foo","bar","yon"}.asArray()
@@ -450,7 +450,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_EmptyArray", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to empty [Int]
@@ -486,7 +486,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_EmptyArray", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to empty [Int]
@@ -502,7 +502,7 @@ end main`;
   });
 
   test("Fail_UseRoundBracketsForIndex", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to createArray(3, "")
@@ -518,7 +518,7 @@ end main
   });
 
   test("Fail_ApplyIndexToANonIndexable", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to 3
@@ -534,7 +534,7 @@ end main
   });
 
   test("Fail_2DArrayCreatedByDoubleIndex", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to new Array<of String>[3][4]
@@ -550,7 +550,7 @@ end main
   });
 
   test("Fail_OutOfRange", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to createArray(3, "")
@@ -567,7 +567,7 @@ end main
   });
 
   test("Fail_TypeIncompatibility", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to createArray(3, "")
@@ -583,7 +583,7 @@ end main
   });
 
   test("Fail_NoSet", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to createArray(3, "")
@@ -598,7 +598,7 @@ end main
   });
 
   test("Fail_IndexWrongType", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to new Array<of String>()
@@ -614,7 +614,7 @@ end main
   });
 
   test("Fail_SizeWrongType", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to createArray(3.1, 1)
@@ -629,7 +629,7 @@ end main
   });
 
   test("Fail_SizeSpecifiedInSquareBrackets", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to new Array<of String>[3]
@@ -644,7 +644,7 @@ end main
 
   // obsolete code
   test("Fail_SpecifySizeAndInitializer", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to new Array<of String>() {"foo","bar","yon"}
@@ -658,7 +658,7 @@ end main
   });
 
   test("Fail_get", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to ["one", "two", "three"]
@@ -674,7 +674,7 @@ end main
   });
 
   test("Fail_getRange", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to ["one", "two", "three"]
@@ -690,7 +690,7 @@ end main
   });
 
   test("Fail_put", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to ["one", "two", "three"]
@@ -707,7 +707,7 @@ end main
   });
 
   test("Fail_withInsert", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to ["one", "two", "three"]
@@ -724,7 +724,7 @@ end main
   });
 
   test("Fail_withRemove", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to ["one", "two", "three"]
@@ -741,7 +741,7 @@ end main
   });
 
   test("Fail_putAt_asFunction", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to ["one", "two", "three"]
@@ -758,7 +758,7 @@ end main
   });
 
   test("Fail_appendWithPlus", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to ["one", "two", "three"]
@@ -775,7 +775,7 @@ end main
   });
 
   test("Fail_prependWithPlus", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to ["one", "two", "three"]
@@ -792,7 +792,7 @@ end main
   });
 
   test("Fail_withRemoveFirst", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
     var a set to ["one", "two", "three", "one", "two", "three"]
@@ -808,7 +808,7 @@ end main`;
   });
 
   test("Fail_withRemoveAll", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
     var a set to ["one", "two", "three", "one", "two", "three"]
@@ -824,7 +824,7 @@ end main`;
   });
 
   test("Fail_assignRange", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
     var a set to [1,2,3,4]
@@ -839,7 +839,7 @@ end main`;
   });
 
   test("Fail_withoutGenericType", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
     var a set to new Array()
@@ -854,7 +854,7 @@ end main`;
   });
 
   test("Pass_listOfFunctionGenericType", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
     var body set to [ref head]
@@ -875,7 +875,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_listOfFunction", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var foo1 set to ref foo
@@ -911,7 +911,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_listOfGenericFunction", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var arr set to [ref typeAndProperties]

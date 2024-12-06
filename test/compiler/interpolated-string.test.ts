@@ -12,7 +12,7 @@ import {
 
 suite("Interpolated String", () => {
   test("Pass_String", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to 1
@@ -40,7 +40,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_missingBrace", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to 1
@@ -56,7 +56,7 @@ end main`;
   });
 
   test("Fail_extraBrace", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to 1

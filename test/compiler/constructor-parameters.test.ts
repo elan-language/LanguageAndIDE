@@ -10,7 +10,7 @@ import {
 
 suite("Constructor Parameters", () => {
   test("Fail_reassigningIntParam", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 class Foo
     constructor(p_1 as Int)
@@ -33,7 +33,7 @@ end class`;
   });
 
   test("Fail_MutatingArrayParam", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 class Foo
     constructor(a as Array<of Float>)
@@ -52,7 +52,7 @@ end class`;
   });
 
   test("Fail_SetPropertyWithoutPrefix", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 class Foo
     constructor()
@@ -71,7 +71,7 @@ end class`;
   });
 
   test("Fail_OutParameter", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 class Foo
     constructor(out a as Int)

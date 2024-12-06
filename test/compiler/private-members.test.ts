@@ -12,7 +12,7 @@ import {
 
 suite("Private Members", () => {
   test("Pass_PrivatePropertyCanBeDeclared", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var x set to new Foo()
@@ -69,7 +69,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_PrivateProcedureCanBeDeclared", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var x set to new Foo()
@@ -129,7 +129,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_PrivateFunctionCanBeDeclared", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var f set to new Foo()
@@ -183,7 +183,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_PrivatePropertyCannotBeAccessed", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var f set to new Foo()
@@ -214,7 +214,7 @@ end class`;
   });
 
   test("Fail_PrivatePropertyCannotBeAccessedViaAbstract", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var f set to new Foo()
@@ -241,7 +241,7 @@ end class`;
   });
 
   test("Fail_PrivateProcedureCannotBeAccessed", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var foo set to new Foo()
@@ -268,7 +268,7 @@ end class`;
   });
 
   test("Fail_PrivateFunctionCannotBeAccessed", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var foo set to new Foo()
@@ -295,7 +295,7 @@ end class`;
   });
 
   test("Fail_PrivatePropertyCannotBePrinted", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var f set to new Foo()
@@ -326,7 +326,7 @@ end class`;
   });
 
   test("Fail_PrivateFunctionCannotBePrinted", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var foo set to new Foo()

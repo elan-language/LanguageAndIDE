@@ -10,7 +10,7 @@ import {
 
 suite("Loop Variable", () => {
   test("Pass_Pattern1", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 procedure removeLetters(wordAsPlayed as String)
   each letter in wordAsPlayed
@@ -51,7 +51,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Pattern2", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 procedure removeLetters(wordAsPlayed as String)
   each letter in wordAsPlayed

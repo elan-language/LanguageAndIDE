@@ -1,11 +1,11 @@
 import { DefaultProfile } from "../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../src/frames/file-impl";
-import { ignore_test, testHash, transforms } from "./compiler/compiler-test-helpers";
+import { testHash, transforms } from "./compiler/compiler-test-helpers";
 import { assertAutocompletes, assertAutocompletesWithString } from "./testHelpers";
 
 suite("SymbolCompletionDropDown", () => {
   test("Pass_LocalVars", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var foo set to 1
@@ -25,7 +25,7 @@ end main`;
   });
 
   test("Pass_LocalVars1", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var foo set to 1
@@ -46,7 +46,7 @@ end main`;
   });
 
   test("Pass_Let", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   let foo be foo
@@ -65,7 +65,7 @@ end main`;
   });
 
   test("Pass_keyword", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var foo set to 1
@@ -83,7 +83,7 @@ end main`;
   });
 
   test("Pass_Keywords", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var foo set to 1
@@ -105,7 +105,7 @@ end main`;
   });
 
   test("Pass_emptyArrayType", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var foo set to 0
@@ -123,7 +123,7 @@ end main`;
   });
 
   test("Pass_emptyExpression", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var foo set to 0
@@ -136,7 +136,7 @@ end main`;
   });
 
   test("Pass_LocalVarsCaseInsensitive1", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var foo set to 1
@@ -153,7 +153,7 @@ end main`;
   });
 
   test("Pass_LocalVarsCaseInsensitive2", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var foo set to 1
@@ -170,7 +170,7 @@ end main`;
   });
 
   test("Pass_InClass", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
 
@@ -201,7 +201,7 @@ end class`;
   });
 
   test("Pass_InConstructor", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 class Foo
   constructor()
@@ -224,7 +224,7 @@ end class`;
   });
 
   test("Pass_InProcedure", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 class Foo
   constructor()
@@ -252,7 +252,7 @@ end class`;
   });
 
   test("Pass_InProcedureParameter", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 class Foo
   constructor()
@@ -280,7 +280,7 @@ end class`;
   });
 
   test("Pass_InProcedureOutParameter", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 class Foo
   constructor()
@@ -309,7 +309,7 @@ end class`;
   });
 
   test("Pass_FiltersByInput", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var foo set to 1
@@ -326,7 +326,7 @@ end main`;
   });
 
   test("Pass_NoConstant", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 constant fooyon set to 3
 
@@ -348,7 +348,7 @@ end main`;
   });
 
   test("Pass_CallLocalVars", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 procedure fooyon()
 
@@ -374,7 +374,7 @@ end main`;
   });
 
   test("Pass_CallMembers", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 class Foo
   constructor()
@@ -415,7 +415,7 @@ end main`;
   });
 
   test("Pass_CallLibMembers", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var foo set to new BlockGraphics()
@@ -435,7 +435,7 @@ end main`;
   });
 
   test("Pass_CallMembersFilter", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 class Foo
   constructor()
@@ -472,7 +472,7 @@ end main`;
   });
 
   test("Pass_CallExtensions", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var foo set to [1, 2]
@@ -498,7 +498,7 @@ end main`;
   });
 
   test("Pass_CallExtensionsFilter", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var foo set to [1, 2]
@@ -517,7 +517,7 @@ end main`;
   });
 
   test("Pass_ExpressionId", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var foo set to 1
@@ -537,7 +537,7 @@ end main`;
   });
 
   test("Pass_ExpressionLocalVar", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var foo set to 1
@@ -557,7 +557,7 @@ end main`;
   });
 
   test("Pass_ExpressionLocalFunction", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var foo set to 1
@@ -582,7 +582,7 @@ end function`;
   });
 
   test("Pass_ExpressionDictionaryExtension", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var foo set to {"a":1}
@@ -601,7 +601,7 @@ end main`;
   });
 
   test("Pass_ExpressionAbstractDictionaryExtension", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var foo set to {"a":1}
@@ -622,7 +622,7 @@ end main`;
   });
 
   test("Pass_CallImmutableDict", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var foo set to {"a":1}
@@ -638,7 +638,7 @@ end main`;
   });
 
   test("Pass_CallDict", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var foo set to ["a":1]
@@ -657,7 +657,7 @@ end main`;
   });
 
   test("Pass_ExprDict", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var foo set to ["a":1]
@@ -678,7 +678,7 @@ end main`;
   });
 
   test("Pass_ExprImmutableDict", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var foo set to {"a":1}
@@ -701,7 +701,7 @@ end main`;
   });
 
   test("Pass_properties1", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
 
@@ -735,7 +735,7 @@ end class`;
   });
 
   test("Pass_properties2", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
 
@@ -766,7 +766,7 @@ end class`;
   });
 
   test("Pass_properties3", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
 
@@ -802,7 +802,7 @@ end class`;
   });
 
   test("Pass_properties4", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
 
@@ -837,7 +837,7 @@ end class`;
   });
 
   test("Pass_properties5", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
 
@@ -867,7 +867,7 @@ end class`;
   });
 
   test("Pass_properties6", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
 
@@ -901,7 +901,7 @@ end class`;
   });
 
   test("Pass_properties6", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
 
@@ -932,7 +932,7 @@ end class`;
   });
 
   test("Pass_private1", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var foo set to new Foo()
@@ -960,7 +960,7 @@ end class`;
   });
 
   test("Pass_private2", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
  
@@ -991,7 +991,7 @@ end class`;
   });
 
   test("Pass_assert", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
  
@@ -1024,7 +1024,7 @@ end test`;
   });
 
   test("Pass_typeName1", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
  
@@ -1047,7 +1047,7 @@ end function`;
   });
 
   test("Pass_typeName2", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
  
@@ -1069,7 +1069,7 @@ end function`;
   });
 
   test("Pass_type_in_braces", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
  
@@ -1093,7 +1093,7 @@ end function`;
   });
 
   test("Pass_type_immutableDictionary", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
  
@@ -1117,7 +1117,7 @@ end function`;
   });
 
   test("Pass_typeName5", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
  
@@ -1141,7 +1141,7 @@ end function`;
   });
 
   test("Pass_typeName6", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
  
@@ -1163,7 +1163,7 @@ end function`;
   });
 
   test("Pass_typeName7", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
  
@@ -1320,7 +1320,7 @@ end main`;
   });
 
   test("Pass_with1", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
     main
       var a set to new Foo()
@@ -1340,7 +1340,7 @@ end main`;
   });
 
   test("Pass_withIgnoreKeyword1", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
     main
       var a set to new Foo()
@@ -1360,7 +1360,7 @@ end main`;
   });
 
   test("Pass_withIgnoreKeyword2", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
     main
       var a set to new Foo()
@@ -1380,7 +1380,7 @@ end main`;
   });
 
   test("Pass_withIgnoreKeyword3", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
     main
       var a set to new Foo()
@@ -1400,7 +1400,7 @@ end main`;
   });
 
   test("Pass_with2", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
     main
       var a set to new Foo()
@@ -1424,7 +1424,7 @@ end main`;
   });
 
   test("Pass_with3", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
     main
       var a set to new Foo()
@@ -1448,7 +1448,7 @@ end main`;
   });
 
   test("Pass_newWith1", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
     main
       var a set to new Foo() with a to 2
@@ -1467,7 +1467,7 @@ end main`;
   });
 
   test("Pass_newWith2", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
     main
       var a set to new Foo() with a to 2
@@ -1490,7 +1490,7 @@ end main`;
   });
 
   test("Pass_newWith3", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
     main
       var a set to new Foo() with a to 2
@@ -1513,7 +1513,7 @@ end main`;
   });
 
   test("Pass_libExtension1", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
     main
       var foo set to new BlockGraphics()
@@ -1533,7 +1533,7 @@ end main`;
   });
 
   test("Pass_libExtension2", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
     main
       var foo set to new BlockGraphics()
@@ -1559,7 +1559,7 @@ end main`;
   });
 
   test("Pass_newType1", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   let foo be new BlockGraphics()
@@ -1577,7 +1577,7 @@ end main`;
   });
 
   test("Pass_newType2", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   let foo be new BlockGraphics()
@@ -1611,7 +1611,7 @@ end main`;
   });
 
   test("Pass_Deconstruction1", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var ab set to 0  
@@ -1632,7 +1632,7 @@ end main`;
   });
 
   test("Pass_Deconstruction2", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var ab set to 0  
@@ -1653,7 +1653,7 @@ end main`;
   });
 
   test("Pass_Deconstruction3", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var ab set to 0  
@@ -1679,7 +1679,7 @@ end record`;
   });
 
   test("Pass_Parameter", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var bubbles set to empty [CircleVG]  
@@ -1695,7 +1695,7 @@ end main`;
   });
 
   test("Pass_withParameters", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   let c be new CircleVG() with cx to 1
@@ -1713,7 +1713,7 @@ end main`;
   });
 
   test("Pass_newConcreteType #897", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   let vg be new VectorGraphics()

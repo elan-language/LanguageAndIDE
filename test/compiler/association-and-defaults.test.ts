@@ -12,7 +12,7 @@ import {
 
 suite("Associations and Defaults", () => {
   test("Pass_CanHavePropertiesThatAreDataStructuresOrObjects", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var g set to new Game()
@@ -117,7 +117,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_PropertiesOfAllStandardTypesHaveDefaultValues", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var g set to new Game()
@@ -217,7 +217,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DefaultValuesOnEmptyClass", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var p set to new Player()
@@ -337,7 +337,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DefaultValuesNotPickedUpFromDefaultConstructor", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var g set to empty Game
@@ -388,7 +388,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_PropertiesOfClassTypesHaveDefaultValues", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var g set to new Game()
@@ -482,7 +482,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_defaultKeywordToTestValue", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var g set to new Game()
@@ -612,7 +612,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_defaultValueCanBeAssigned", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var g set to new Game()
@@ -738,7 +738,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_defaultForStandardDataStructures", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var f set to new Foo()
@@ -811,7 +811,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_PropertyOfAbstractType", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var g set to new Game()
@@ -900,7 +900,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_PropertyOfArrayType", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var g set to new Game()
@@ -955,7 +955,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_UseOfKeywordAsName", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
  
@@ -977,7 +977,7 @@ end class`;
   });
 
   test("Fail_UseOfReservedWordAsName", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
  

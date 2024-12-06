@@ -14,7 +14,7 @@ import {
 
 suite("Arithmetic Operators", () => {
   test("Pass_IntAddition", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   print 3 + 4
@@ -36,7 +36,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_IntSubtraction", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   print 3 - 4
@@ -58,7 +58,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_IntMultiplication", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   print 3 * 4
@@ -80,7 +80,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_IncludeVariable", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to 3
@@ -104,7 +104,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DivideIntegersToFloat", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   print 3 / 2
@@ -126,7 +126,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_IntegerDivision", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   print 7 div 2
@@ -148,7 +148,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Mod", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   print 11 mod 3
@@ -170,7 +170,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ModWithComparison", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   print if (25 mod 20) < 19 then 1 else 2
@@ -192,7 +192,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Power", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   print 3 ^ 3
@@ -214,7 +214,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_UseVariableBothSides", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to 3
@@ -240,7 +240,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_InvalidExpression", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a = 3 4
@@ -253,7 +253,7 @@ end main`;
   });
 
   test("Fail_PlusEquals", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to 3
@@ -267,7 +267,7 @@ end main`;
   });
 
   test("Fail_PlusPlus", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to 3
@@ -281,7 +281,7 @@ end main`;
   });
 
   test("Fail_AddWrongTypes", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   var a set to 3 + true
@@ -309,7 +309,7 @@ end class
   });
 
   test("Fail_IntegerDivisionOnFloats1", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   print 7.6 div 2
@@ -324,7 +324,7 @@ end main`;
   });
 
   test("Fail_IntegerDivisionOnFloats2", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   print 7 div 2.5
@@ -345,7 +345,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_ModWithFloats1", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   print 11 mod 3.2
@@ -360,7 +360,7 @@ end main`;
   });
 
   test("Fail_ModWithFloats2", async () => {
-    const code = `# FFFF Elan Beta 4 valid
+    const code = `# FFFF Elan v1.0.0 valid
 
 main
   print 11.7 mod 3
