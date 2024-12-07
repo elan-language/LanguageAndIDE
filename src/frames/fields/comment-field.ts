@@ -1,11 +1,10 @@
 import { CodeSource } from "../code-source";
 import { escapeHtmlChars } from "../helpers";
 import { Frame } from "../interfaces/frame";
+import { CommentNode } from "../parse-nodes/comment-node";
 import { ParseNode } from "../parse-nodes/parse-node";
-import { RegExMatchNode } from "../parse-nodes/regex-match-node";
 import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
-import { Regexes } from "./regexes";
 
 export class CommentField extends AbstractField {
   isParseByNodes = true;
@@ -18,7 +17,7 @@ export class CommentField extends AbstractField {
   }
   initialiseRoot(): ParseNode {
     this.astNode = undefined;
-    this.rootNode = new RegExMatchNode(Regexes.anythingToNewLineAsRegExp);
+    this.rootNode = new CommentNode();
     return this.rootNode;
   }
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>
