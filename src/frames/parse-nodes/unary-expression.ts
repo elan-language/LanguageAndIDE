@@ -22,7 +22,7 @@ export class UnaryExpression extends AbstractSequence {
     if (text.length > 0) {
       const minus = () => new PunctuationNode(MINUS);
       const not = () => new KeywordNode(notKeyword);
-      const sp = () => new SpaceNode(Space.required);
+      const sp = () => new SpaceNode(Space.added);
       const notSp = () => new Sequence([not, sp]);
       this.unaryOp = new Alternatives([minus, notSp]);
       this.addElement(this.unaryOp);

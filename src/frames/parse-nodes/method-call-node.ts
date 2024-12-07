@@ -17,7 +17,7 @@ export class MethodCallNode extends AbstractSequence {
       this.addElement(this.name);
       this.addElement(new PunctuationNode(OPEN_BRACKET));
       this.args = new ArgListNode(() => this.name!.matchedText);
-      this.addElement(this.args); 
+      this.addElement(this.args);
       this.addElement(new PunctuationNode(CLOSE_BRACKET));
       super.parseText(text);
     }

@@ -30,7 +30,7 @@ export class ProcCallField extends AbstractField {
   }
   initialiseRoot(): ParseNode {
     this.rootNode = new ProcCallNode();
-    
+
     return this.rootNode;
   }
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) => source.readUntil(/\(/);

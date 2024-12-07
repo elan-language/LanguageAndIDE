@@ -10,7 +10,7 @@ import { PunctuationNode } from "./punctuation-node";
 
 export class ProcCallNode extends AbstractSequence {
   procRef: ProcRefNode;
-  args:   ArgListNode;
+  args: ArgListNode;
   constructor() {
     super();
     this.procRef = new ProcRefNode();
@@ -19,10 +19,10 @@ export class ProcCallNode extends AbstractSequence {
     this.args = new ArgListNode(() => ""); //TODO
     this.addElement(this.args);
     this.addElement(new PunctuationNode(CLOSE_BRACKET));
- }
+  }
 
- //ProcRefNode - or possibly broken down here
- //Open brackets
- //ArgListNode
- //Close brackets
+  //ProcRefNode - or possibly broken down here
+  //Open brackets
+  //ArgListNode
+  //Close brackets
 }

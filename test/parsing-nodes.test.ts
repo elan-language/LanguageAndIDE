@@ -1703,6 +1703,17 @@ suite("Parsing Nodes", () => {
       `/<el-regex>abc+.*</el-regex>/`,
     );
   });
+  test("not(a+b)", () => {
+    testNodeParse(
+      new ExprNode(),
+      `not(a+b)`,
+      ParseStatus.valid,
+      `not(a+b)`,
+      "",
+      "not (a + b)",
+      `<el-kw>not</el-kw> (a + b)`,
+    );
+  });
 });
 
 class test_seq1 extends AbstractSequence {

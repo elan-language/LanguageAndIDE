@@ -10,7 +10,7 @@ import { AbstractField } from "./abstract-field";
 export class ArgListField extends AbstractField {
   isParseByNodes = true;
 
-  constructor(holder: Frame, ) {
+  constructor(holder: Frame) {
     super(holder);
     this.setPlaceholder("<i>arguments</i>");
     this.setOptional(true);
@@ -28,7 +28,7 @@ export class ArgListField extends AbstractField {
   }
   initialiseRoot(): ParseNode {
     this.astNode = undefined;
-    this.rootNode = new ArgListNode(() => "");//TODO - temp kludge pending rest of #838
+    this.rootNode = new ArgListNode(() => ""); //TODO - temp kludge pending rest of #838
     return this.rootNode;
   }
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>
