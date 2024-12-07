@@ -6,6 +6,7 @@ import { DeconstructedList } from "../parse-nodes/deconstructed-list";
 import { DeconstructedTuple } from "../parse-nodes/deconstructed-tuple";
 import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { ParseNode } from "../parse-nodes/parse-node";
+import { VarDefNode } from "../parse-nodes/var-def-node";
 import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
 
@@ -21,10 +22,7 @@ export class VarDefField extends AbstractField {
   }
   initialiseRoot(): ParseNode {
     this.astNode = undefined;
-    const varRef = () => new IdentifierNode();
-    const deconTup = () => new DeconstructedTuple();
-    const deconList = () => new DeconstructedList();
-    this.rootNode = new Alternatives([varRef, deconTup, deconList]);
+    this.rootNode = new VarDefNode();
     return this.rootNode;
   }
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>
