@@ -1,14 +1,7 @@
 import { AbstractFrame } from "../abstract-frame";
 import { CodeSource } from "../code-source";
-import {
-  cannotPassAsOutParameter,
-  mustBeKnownSymbol,
-  mustBeProcedure,
-  mustBePublicMember,
-  mustCallExtensionViaQualifier,
-} from "../compile-rules";
-import { ArgListField } from "../fields/arg-list-field";
-import { ProcRefField } from "../fields/proc-ref-field";
+import { cannotPassAsOutParameter } from "../compile-rules";
+import { ProcCallField } from "../fields/proc-call-field";
 import { ProcedureFrame } from "../globals/procedure-frame";
 import { AstNode } from "../interfaces/ast-node";
 import { ElanSymbol } from "../interfaces/elan-symbol";
@@ -16,19 +9,8 @@ import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
 import { callKeyword } from "../keywords";
-import { ProcedureType } from "../symbols/procedure-type";
-import {
-  isMemberOnFieldsClass,
-  scopePrefix,
-  updateScopeAndQualifier,
-} from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
-import {
-  isAstCollectionNode,
-  isAstIdNode,
-  matchParametersAndTypes,
-} from "../syntax-nodes/ast-helpers";
-import { QualifierAsn } from "../syntax-nodes/qualifier-asn";
+import { isAstIdNode } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 import { LetStatement } from "./let-statement";
 import { VarStatement } from "./var-statement";
@@ -36,14 +18,11 @@ import { VarStatement } from "./var-statement";
 export class CallStatement extends AbstractFrame implements Statement {
   isStatement = true;
   isCall = true;
-  proc: ProcRefField;
-  args: ArgListField;
+  procCall: ProcCallField;
 
   constructor(parent: Parent) {
     super(parent);
-    this.proc = new ProcRefField(this);
-    this.proc.setPlaceholder("<i>procedureName</i>");
-    this.args = new ArgListField(this);
+    this.procCall = new ProcCallField(this);
   }
 
   initialKeywords(): string {
@@ -53,14 +32,11 @@ export class CallStatement extends AbstractFrame implements Statement {
   parseFrom(source: CodeSource): void {
     source.removeIndent();
     source.remove("call ");
-    this.proc.parseFrom(source);
-    source.remove("(");
-    this.args.parseFrom(source);
-    source.remove(")");
+    this.procCall.parseFrom(source);
     source.removeNewLine();
   }
   getFields(): Field[] {
-    return [this.proc, this.args];
+    return [this.procCall];
   }
 
   getIdPrefix(): string {
@@ -68,11 +44,11 @@ export class CallStatement extends AbstractFrame implements Statement {
   }
 
   renderAsHtml(): string {
-    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><el-top><el-kw>call </el-kw>${this.proc.renderAsHtml()}(${this.args.renderAsHtml()})${this.compileMsgAsHtml()}${this.getFrNo()}</el-statement>`;
+    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><el-top><el-kw>call </el-kw>${this.procCall.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-statement>`;
   }
 
   renderAsSource(): string {
-    return `${this.indent()}call ${this.proc.renderAsSource()}(${this.args.renderAsSource()})`;
+    return `${this.indent()}call ${this.procCall.renderAsSource()}`;
   }
 
   wrapParameters(
@@ -121,7 +97,7 @@ export class CallStatement extends AbstractFrame implements Statement {
     return [wrappedInParameters, wrappedOutParameters, passedParameters];
   }
 
-  compile(transforms: Transforms): string {
+  /*   compile(transforms: Transforms): string {
     this.compileErrors = [];
 
     const astNode = this.proc.getOrTransformAstNode(transforms);
@@ -191,5 +167,5 @@ export class CallStatement extends AbstractFrame implements Statement {
       return `${wrappedInParms}${this.indent()}${async}${prefix}${id}(${parms});${wrappedOutParms}`;
     }
     return "";
-  }
+  } */
 }
