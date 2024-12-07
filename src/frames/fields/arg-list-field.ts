@@ -1,8 +1,6 @@
 import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
 import { ArgListNode } from "../parse-nodes/arg-list-node";
-import { CSV } from "../parse-nodes/csv";
-import { ExprNode } from "../parse-nodes/expr-node";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { CallStatement } from "../statements/call-statement";
 import { ProcedureType } from "../symbols/procedure-type";
@@ -12,7 +10,7 @@ import { AbstractField } from "./abstract-field";
 export class ArgListField extends AbstractField {
   isParseByNodes = true;
 
-  constructor(holder: Frame) {
+  constructor(holder: Frame, ) {
     super(holder);
     this.setPlaceholder("<i>arguments</i>");
     this.setOptional(true);
@@ -30,7 +28,7 @@ export class ArgListField extends AbstractField {
   }
   initialiseRoot(): ParseNode {
     this.astNode = undefined;
-    this.rootNode = new ArgListNode();
+    this.rootNode = new ArgListNode(() => "");//TODO - temp kludge pending rest of #838
     return this.rootNode;
   }
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>
