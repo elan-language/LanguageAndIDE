@@ -767,7 +767,7 @@ export abstract class AbstractField implements Selectable, Field {
     );
   }
 
-  protected getSymbolCompletionSpec(): SymbolCompletionSpec {
+  public getSymbolCompletionSpec(): SymbolCompletionSpec {
     const rn = this.rootNode ?? this.initialiseRoot();
     const spec = rn.symbolCompletion_getSpec();
     if (spec.context === "") {

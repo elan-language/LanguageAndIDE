@@ -13,6 +13,7 @@ import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { CSV } from "../parse-nodes/csv";
 import { ParamDefNode } from "../parse-nodes/param-def-node";
+import { ParamListNode } from "../parse-nodes/param-list-node";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { ParseStatus } from "../status-enums";
 import { DuplicateSymbol } from "../symbols/duplicate-symbol";
@@ -71,7 +72,7 @@ export class ParamList extends AbstractField implements Scope {
   }
   initialiseRoot(): ParseNode {
     this.astNode = undefined;
-    this.rootNode = new CSV(() => new ParamDefNode(), 0);
+    this.rootNode = new ParamListNode();
     return this.rootNode;
   }
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>

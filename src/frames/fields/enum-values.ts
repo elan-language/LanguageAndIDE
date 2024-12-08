@@ -2,6 +2,7 @@ import { CodeSource } from "../code-source";
 import { mustBeUniqueValueInScope, mustNotBeKeyword } from "../compile-rules";
 import { Frame } from "../interfaces/frame";
 import { CSV } from "../parse-nodes/csv";
+import { EnumValuesNode } from "../parse-nodes/enum-values-node";
 import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { isAstCollectionNode, transforms } from "../syntax-nodes/ast-helpers";
@@ -21,7 +22,7 @@ export class EnumValues extends AbstractField {
   }
   initialiseRoot(): ParseNode {
     this.astNode = undefined;
-    this.rootNode = new CSV(() => new IdentifierNode(), 1);
+    this.rootNode = new EnumValuesNode();
     return this.rootNode;
   }
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>

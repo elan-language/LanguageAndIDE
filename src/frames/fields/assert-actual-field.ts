@@ -1,9 +1,7 @@
 import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
-import { Alternatives } from "../parse-nodes/alternatives";
 import { ParseNode } from "../parse-nodes/parse-node";
-import { TermChained } from "../parse-nodes/term-chained";
-import { TermSimple } from "../parse-nodes/term-simple";
+import { Term } from "../parse-nodes/term";
 import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
 
@@ -14,9 +12,7 @@ export class AssertActualField extends AbstractField {
 
   initialiseRoot(): ParseNode {
     this.astNode = undefined;
-    const termSimple = () => new TermSimple();
-    const termChained = () => new TermChained();
-    this.rootNode = new Alternatives([termSimple, termChained]);
+    this.rootNode = new Term();
     return this.rootNode;
   }
 

@@ -151,4 +151,14 @@ suite("Field Parsing Tests", () => {
     assert.equal(expected.textAsSource(), `{4, 5, 6, 24, 26, 44, 45, 46}`);
     assert.equal(expected.textAsHtml(), `{4, 5, 6, 24, 26, 44, 45, 46}`);
   });
+  test("parse instance dot method", () => {
+    const test = new TestFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
+    const a = new LetStatement(test);
+    const expr = a.expr;
+    expr.setFieldToKnownValidText(`foo.`);
+    expr.parseCurrentText();
+    assert.equal(expr.readParseStatus(), ParseStatus.incomplete);
+    const spec = expr.getSymbolCompletionSpec();
+    assert.equal(spec.context, "foo");
+  });
 });
