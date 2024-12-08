@@ -21,8 +21,7 @@ export class TermChained extends AbstractSequence {
       this.head = new Alternatives([qualifier, termSimple]);
       const prop = () => new IdentifierNode(new Set([TokenType.id_property]));
       const method = () => new MethodCallNode();
-      const propOrMethod = () =>
-        new Alternatives([prop, method], this.tokenTypes);
+      const propOrMethod = () => new Alternatives([prop, method], this.tokenTypes);
       const dottedSymbol = () => new DotBefore(propOrMethod());
       const index = () => new IndexSingle();
       const dottedSymbolOrIndex = () => new Alternatives([dottedSymbol, index]);

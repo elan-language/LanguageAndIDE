@@ -12,7 +12,7 @@ export class ProcCallNode extends AbstractSequence {
     this.procRef = new ProcRefNode();
     this.addElement(this.procRef);
     this.addElement(new PunctuationNode(OPEN_BRACKET));
-    this.args = new ArgListNode(() => this.procRef.getProcName()); 
+    this.args = new ArgListNode(() => this.procRef.getProcName());
     this.addElement(this.args);
     this.addElement(new PunctuationNode(CLOSE_BRACKET));
   }

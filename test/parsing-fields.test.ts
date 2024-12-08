@@ -161,4 +161,13 @@ suite("Field Parsing Tests", () => {
     const spec = expr.getSymbolCompletionSpec();
     assert.equal(spec.context, "foo");
   });
+  test("parse paramDefs with closing bracket #855", () => {
+    const test = new TestFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
+    const fn = new GlobalFunction(test);
+    const params = fn.params;
+    params.setFieldToKnownValidText(`a as Int)`);
+    params.parseCurrentText();
+    assert.equal(params.readParseStatus(), ParseStatus.valid);
+    assert.equal(params.textAsSource(), `a as Int`);
+  });
 });
