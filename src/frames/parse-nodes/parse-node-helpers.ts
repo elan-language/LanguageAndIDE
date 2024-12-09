@@ -1,6 +1,6 @@
 import { copyKeyword, emptyKeyword, ifKeyword, lambdaKeyword, newKeyword } from "../keywords";
 import { ParseStatus } from "../status-enums";
-import { TokenType } from "../symbol-completion-helpers";
+import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { FixedTextNode } from "./fixed-text-node";
 import { ParseNode } from "./parse-node";
 import { SpaceNode } from "./space-node";
@@ -73,13 +73,11 @@ export const concreteAndAbstractTypes: TokenType[] = [
   TokenType.type_abstract,
   TokenType.type_concrete,
 ];
-export const allKeywordsThatCanStartAnExpression: Set<string> = new Set([
-  newKeyword,
-  copyKeyword,
-  ifKeyword,
-  lambdaKeyword,
-  emptyKeyword,
-]);
+export const allKeywordsThatCanStartAnExpression: Set<KeywordCompletion> = new Set(
+  [newKeyword, copyKeyword, ifKeyword, lambdaKeyword, emptyKeyword].map((kw) =>
+    KeywordCompletion.create(kw),
+  ),
+);
 export function removeUnmatchedClosingBracket(text: string): string {
   if (text.endsWith(")") && text.split("(").length - text.split(")").length !== 0) {
     text = text.slice(0, text.length - 1);

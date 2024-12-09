@@ -1,5 +1,5 @@
 import { ParseStatus } from "../status-enums";
-import { SymbolCompletionSpec, TokenType } from "../symbol-completion-helpers";
+import { KeywordCompletion, SymbolCompletionSpec, TokenType } from "../symbol-completion-helpers";
 import { ParseNode } from "./parse-node";
 
 export abstract class AbstractParseNode implements ParseNode {
@@ -75,9 +75,9 @@ export abstract class AbstractParseNode implements ParseNode {
     const active = this.getActiveNode();
     return active === this ? new Set<TokenType>() : active.symbolCompletion_tokenTypes();
   }
-  symbolCompletion_keywords(): Set<string> {
+  symbolCompletion_keywords(): Set<KeywordCompletion> {
     const active = this.getActiveNode();
-    return active === this ? new Set<string>() : active.symbolCompletion_keywords();
+    return active === this ? new Set<KeywordCompletion>() : active.symbolCompletion_keywords();
   }
   symbolCompletion_context(): string {
     const active = this.getActiveNode();

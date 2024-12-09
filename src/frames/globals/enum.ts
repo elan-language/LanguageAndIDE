@@ -102,15 +102,12 @@ ${singleIndent()}${this.values.compile(transforms)}\r
       .split(",")
       .map((s) => s.trim());
 
-    return names.map(n => (
-      {
-        symbolId: n,
-        symbolType: () => new EnumValueType(this.name.renderAsSource(), n),
-        symbolScope: SymbolScope.program,
-      }
-    ));
+    return names.map((n) => ({
+      symbolId: n,
+      symbolType: () => new EnumValueType(this.name.renderAsSource(), n),
+      symbolScope: SymbolScope.program,
+    }));
   }
-
 
   resolveSymbol(id: string, transforms: Transforms, initialScope: Frame): ElanSymbol {
     for (const n of this.enumValueSymbols()) {

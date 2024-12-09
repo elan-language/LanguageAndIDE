@@ -1,5 +1,5 @@
 import { copyKeyword } from "../keywords";
-import { TokenType } from "../symbol-completion-helpers";
+import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { IdentifierNode } from "./identifier-node";
 import { KeywordNode } from "./keyword-node";
@@ -35,9 +35,9 @@ export class CopyWith extends AbstractSequence {
     }
   }
 
-  symbolCompletion_keywords(): Set<string> {
+  symbolCompletion_keywords(): Set<KeywordCompletion> {
     return this.getElements().length === 0
-      ? new Set<string>([copyKeyword])
+      ? new Set<KeywordCompletion>([KeywordCompletion.create(copyKeyword)])
       : super.symbolCompletion_keywords();
   }
 }

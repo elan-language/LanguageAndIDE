@@ -2,6 +2,7 @@ import { AbstractAlternatives } from "./abstract-alternatives";
 import { KeywordNode } from "./keyword-node";
 
 import { falseKeyword, trueKeyword } from "../keywords";
+import { KeywordCompletion } from "../symbol-completion-helpers";
 
 export class LitBoolean extends AbstractAlternatives {
   constructor() {
@@ -17,13 +18,13 @@ export class LitBoolean extends AbstractAlternatives {
     }
   }
 
-  symbolCompletion_keywords(): Set<string> {
-    let set = new Set<string>();
+  symbolCompletion_keywords(): Set<KeywordCompletion> {
+    let set = new Set<KeywordCompletion>();
     if (trueKeyword.startsWith(this.matchedText)) {
-      set = set.add(trueKeyword);
+      set = set.add(KeywordCompletion.create(trueKeyword));
     }
     if (falseKeyword.startsWith(this.matchedText)) {
-      set = set.add(falseKeyword);
+      set = set.add(KeywordCompletion.create(falseKeyword));
     }
     return set;
   }

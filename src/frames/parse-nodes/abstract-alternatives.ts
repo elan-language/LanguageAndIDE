@@ -1,5 +1,5 @@
 import { ParseStatus } from "../status-enums";
-import { TokenType } from "../symbol-completion-helpers";
+import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { ParseNode } from "./parse-node";
 
@@ -89,10 +89,10 @@ export abstract class AbstractAlternatives extends AbstractParseNode {
     );
   }
 
-  override symbolCompletion_keywords(): Set<string> {
+  override symbolCompletion_keywords(): Set<KeywordCompletion> {
     return this.potentialMatches().reduce(
       (prev, m) => prev.union(m.symbolCompletion_keywords()),
-      new Set<string>(),
+      new Set<KeywordCompletion>(),
     );
   }
 }

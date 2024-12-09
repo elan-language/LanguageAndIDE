@@ -1,10 +1,8 @@
 import { newKeyword } from "../keywords";
-import { TokenType } from "../symbol-completion-helpers";
+import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { CLOSE_BRACKET, OPEN_BRACKET } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { ArgListNode } from "./arg-list-node";
-import { CSV } from "./csv";
-import { ExprNode } from "./expr-node";
 import { KeywordNode } from "./keyword-node";
 import { OptionalNode } from "./optional-node";
 import { Space } from "./parse-node-helpers";
@@ -34,9 +32,9 @@ export class NewInstance extends AbstractSequence {
     }
   }
 
-  symbolCompletion_keywords(): Set<string> {
+  symbolCompletion_keywords(): Set<KeywordCompletion> {
     return this.getElements().length === 0
-      ? new Set<string>([newKeyword])
+      ? new Set<KeywordCompletion>([KeywordCompletion.create(newKeyword)])
       : super.symbolCompletion_keywords();
   }
 }

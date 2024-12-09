@@ -4,7 +4,7 @@ import { Frame } from "../interfaces/frame";
 import { propertyKeyword } from "../keywords";
 import { AssignableNode } from "../parse-nodes/assignable-node";
 import { ParseNode } from "../parse-nodes/parse-node";
-import { SymbolCompletionSpec, TokenType } from "../symbol-completion-helpers";
+import { KeywordCompletion, SymbolCompletionSpec, TokenType } from "../symbol-completion-helpers";
 import {
   filteredSymbols,
   isInsideClass,
@@ -49,7 +49,7 @@ export class AssignableField extends AbstractField {
         const newSpec = new SymbolCompletionSpec(
           spec.toMatch,
           new Set<TokenType>([TokenType.id_property]),
-          new Set<string>(),
+          new Set<KeywordCompletion>(),
           "",
         );
         symbols = filteredSymbols(newSpec, transforms, scope);

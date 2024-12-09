@@ -2,6 +2,7 @@ import { isGenericClass } from "../helpers";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Scope } from "../interfaces/scope";
 import { propertyKeyword } from "../keywords";
+import { KeywordCompletion } from "../symbol-completion-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 import {
   isAbstractTypeName,
@@ -15,12 +16,12 @@ import {
 
 export class SymbolWrapper {
   constructor(
-    private readonly wrapped: ElanSymbol | string,
+    private readonly wrapped: ElanSymbol | KeywordCompletion,
     private readonly transforms: Transforms,
     private readonly scope: Scope,
   ) {
-    if (typeof wrapped === "string") {
-      this.name = wrapped;
+    if (wrapped instanceof KeywordCompletion) {
+      this.name = wrapped.keyword;
       this.isKeyword = true;
     } else {
       this.name = wrapped.symbolId;

@@ -1,4 +1,5 @@
 import { lambdaKeyword } from "../keywords";
+import { KeywordCompletion } from "../symbol-completion-helpers";
 import { ARROW } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { CSV } from "./csv";
@@ -33,9 +34,9 @@ export class Lambda extends AbstractSequence {
     }
   }
 
-  symbolCompletion_keywords(): Set<string> {
+  symbolCompletion_keywords(): Set<KeywordCompletion> {
     return this.getElements().length === 0
-      ? new Set<string>([lambdaKeyword])
+      ? new Set<KeywordCompletion>([KeywordCompletion.create(lambdaKeyword)])
       : super.symbolCompletion_keywords();
   }
 }

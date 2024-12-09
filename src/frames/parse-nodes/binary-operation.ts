@@ -1,5 +1,6 @@
 import { andKeyword, divKeyword, isKeyword, isntKeyword, modKeyword, orKeyword } from "../keywords";
 import { ParseStatus } from "../status-enums";
+import { KeywordCompletion } from "../symbol-completion-helpers";
 import { DIVIDE, GT, LT, MINUS, MULT, PLUS, POWER } from "../symbols";
 import { AbstractParseNode } from "./abstract-parse-node";
 
@@ -160,11 +161,13 @@ export class BinaryOperation extends AbstractParseNode {
     return completion;
   }
 
-  override symbolCompletion_keywords(): Set<string> {
-    let kws = [andKeyword, divKeyword, isKeyword, isntKeyword, modKeyword, orKeyword];
+  override symbolCompletion_keywords(): Set<KeywordCompletion> {
+    let kws = [andKeyword, divKeyword, isKeyword, isntKeyword, modKeyword, orKeyword].map((kw) =>
+      KeywordCompletion.create(kw),
+    );
     const trim = this.matchedText.trim();
     if (trim.length > 0) {
-      kws = kws.filter((kw) => kw.startsWith(trim));
+      kws = kws.filter((kw) => kw.keyword.startsWith(trim));
     }
     return new Set(kws);
   }

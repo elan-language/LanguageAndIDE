@@ -1,5 +1,5 @@
 import { refKeyword, thisKeyword } from "../keywords";
-import { TokenType } from "../symbol-completion-helpers";
+import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { ParseNode } from "./parse-node";
 import { allIdsAndMethods } from "./parse-node-helpers";
@@ -26,9 +26,12 @@ export class Term extends AbstractAlternatives {
     }
   }
 
-  symbolCompletion_keywords(): Set<string> {
+  symbolCompletion_keywords(): Set<KeywordCompletion> {
     if (this.alternatives.length === 0) {
-      return new Set<string>([thisKeyword, refKeyword]);
+      return new Set<KeywordCompletion>([
+        KeywordCompletion.create(thisKeyword),
+        KeywordCompletion.create(refKeyword),
+      ]);
     } else {
       return super.symbolCompletion_keywords();
     }

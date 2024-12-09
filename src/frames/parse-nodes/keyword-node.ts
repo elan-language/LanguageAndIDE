@@ -1,5 +1,6 @@
 import { andKeyword, isKeyword, notKeyword, orKeyword } from "../keywords";
 import { ParseStatus } from "../status-enums";
+import { KeywordCompletion } from "../symbol-completion-helpers";
 import { FixedTextNode } from "./fixed-text-node";
 
 export class KeywordNode extends FixedTextNode {
@@ -65,7 +66,7 @@ export class KeywordNode extends FixedTextNode {
     }
   }
 
-  symbolCompletion_keywords(): Set<string> {
-    return new Set<string>([this.fixedText]);
+  symbolCompletion_keywords(): Set<KeywordCompletion> {
+    return new Set<KeywordCompletion>([KeywordCompletion.create(this.fixedText)]);
   }
 }

@@ -390,7 +390,7 @@ export function testSymbolCompletionSpec(node: ParseNode, text: string, status: 
   assert.equal(cls, activeNode);
   assert.equal(spec.toMatch, toMatch);
   assert.equal(Array.from(spec.tokenTypes).join(","), tokenTypes.join(","));
-  assert.equal(Array.from(spec.keywords).join(","), keywords.join(","));
+  assert.equal(Array.from(spec.keywords).map(kc => kc.keyword).join(","), keywords.join(","));
   assert.equal(spec.context, constrainingId);
 }
 

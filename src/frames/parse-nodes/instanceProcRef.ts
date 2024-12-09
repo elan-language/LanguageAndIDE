@@ -1,5 +1,5 @@
 import { libraryKeyword, propertyKeyword } from "../keywords";
-import { TokenType } from "../symbol-completion-helpers";
+import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
 import { DotAfter } from "./dot-after";
@@ -43,9 +43,12 @@ export class InstanceProcRef extends AbstractSequence {
     }
   }
 
-  symbolCompletion_keywords(): Set<string> {
+  symbolCompletion_keywords(): Set<KeywordCompletion> {
     return this.getElements().length === 0
-      ? new Set<string>([libraryKeyword, propertyKeyword])
+      ? new Set<KeywordCompletion>([
+          KeywordCompletion.create(libraryKeyword),
+          KeywordCompletion.create(propertyKeyword),
+        ])
       : super.symbolCompletion_keywords();
   }
 }

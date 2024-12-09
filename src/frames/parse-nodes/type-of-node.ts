@@ -1,4 +1,5 @@
 import { typeofKeyword } from "../keywords";
+import { KeywordCompletion } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { KeywordNode } from "./keyword-node";
 import { Space } from "./parse-node-helpers";
@@ -16,9 +17,9 @@ export class TypeOfNode extends AbstractSequence {
     super.parseText(text);
   }
 
-  symbolCompletion_keywords(): Set<string> {
+  symbolCompletion_keywords(): Set<KeywordCompletion> {
     return this.getElements().length === 0
-      ? new Set<string>([typeofKeyword])
+      ? new Set<KeywordCompletion>([KeywordCompletion.create(typeofKeyword)])
       : super.symbolCompletion_keywords();
   }
 }

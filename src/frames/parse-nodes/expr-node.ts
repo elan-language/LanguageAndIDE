@@ -8,7 +8,7 @@ import {
   refKeyword,
   thisKeyword,
 } from "../keywords";
-import { TokenType } from "../symbol-completion-helpers";
+import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { BinaryExpression } from "./binary-expression";
 import { CopyWith } from "./copy-with";
@@ -68,7 +68,7 @@ export class ExprNode extends AbstractAlternatives {
     ]);
   }
 
-  override symbolCompletion_keywords(): Set<string> {
+  override symbolCompletion_keywords(): Set<KeywordCompletion> {
     let kws = [
       newKeyword,
       copyKeyword,
@@ -78,10 +78,10 @@ export class ExprNode extends AbstractAlternatives {
       thisKeyword,
       refKeyword,
       notKeyword,
-    ];
+    ].map((kw) => KeywordCompletion.create(kw));
     const trim = this.matchedText.trim();
     if (trim.length > 0) {
-      kws = kws.filter((kw) => kw.startsWith(trim));
+      kws = kws.filter((kw) => kw.keyword.startsWith(trim));
     }
     return new Set(kws);
   }

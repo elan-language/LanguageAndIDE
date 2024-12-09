@@ -1,4 +1,5 @@
 import { elseKeyword, ifKeyword, thenKeyword } from "../keywords";
+import { KeywordCompletion } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { ExprNode } from "./expr-node";
 import { KeywordNode } from "./keyword-node";
@@ -31,9 +32,9 @@ export class IfExpr extends AbstractSequence {
     }
   }
 
-  symbolCompletion_keywords(): Set<string> {
+  symbolCompletion_keywords(): Set<KeywordCompletion> {
     return this.getElements().length === 0
-      ? new Set<string>([ifKeyword])
+      ? new Set<KeywordCompletion>([KeywordCompletion.create(ifKeyword)])
       : super.symbolCompletion_keywords();
   }
 }
