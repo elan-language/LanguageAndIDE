@@ -63,7 +63,11 @@ export abstract class AbstractParseNode implements ParseNode {
       : active.symbolCompletion_tokenTypes();
     const keywords = isThis ? this.symbolCompletion_keywords() : active.symbolCompletion_keywords();
     const context = isThis ? this.symbolCompletion_context() : active.symbolCompletion_context();
-    return new SymbolCompletionSpec(toMatch, tokens, keywords, context);
+    const spec = new SymbolCompletionSpec(toMatch, tokens, keywords, context);
+    if (this.symbolCompletion_paramPromptsExpected()) {
+      spec.setParameterPromptsExpected(true);
+    }
+    return spec;
   }
 
   symbolCompletion_toMatch(): string {
@@ -81,6 +85,9 @@ export abstract class AbstractParseNode implements ParseNode {
   symbolCompletion_context(): string {
     const active = this.getActiveNode();
     return active === this ? "" : active.symbolCompletion_context();
+  }
+  symbolCompletion_paramPromptsExpected(): boolean {
+    return false;
   }
 
   getActiveNode(): ParseNode {

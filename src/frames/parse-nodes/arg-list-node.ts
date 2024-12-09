@@ -8,4 +8,7 @@ export class ArgListNode extends CSV {
     this.method = method;
     this.setSyntaxCompletionWhenEmpty("<i>arguments</i>");
   }
+  override symbolCompletion_paramPromptsExpected(): boolean {
+    return true;
+  }
 }
