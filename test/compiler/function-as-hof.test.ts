@@ -320,7 +320,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Function Signatures do not match expected: 1 parameter(s) got: 2",
+      "Argument types expected: i (Int), f (Func<of Int => Int>) Provided: Int, Func<of Int, Int => Int>",
     ]);
   });
 
@@ -343,7 +343,9 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types String to Int"]);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types expected: i (Int), f (Func<of Int => Int>) Provided: Int, Func<of Int => String>",
+    ]);
   });
 
   test("Fail_UsingReturnedFuncWithoutArgs", async () => {

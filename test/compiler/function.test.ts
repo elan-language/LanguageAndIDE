@@ -321,8 +321,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Missing argument(s). Expected: parameter1 (Generic Parameter T1), parameter2 (Generic Parameter T2)",
-      "Too many argument(s). Expected: parameter1 (Generic Parameter T1), parameter2 (Generic Parameter T2)",
+      "Missing argument(s). Expected: parameter1 (String), parameter2 (Int)",
+      "Too many argument(s). Expected: parameter1 (String), parameter2 (Int)",
     ]);
   });
 
@@ -365,8 +365,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types Boolean to Int",
-      "Incompatible types Float to Int",
+      "Argument types expected: p (Int) Provided: Boolean",
+      "Argument types expected: p (Int) Provided: Float",
     ]);
   });
 
@@ -692,7 +692,9 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types String to Int"]);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types expected: a (Int), b (Int) Provided: Int, String",
+    ]);
   });
 
   test("Fail_CannotSpecifyParamByRef", async () => {

@@ -609,7 +609,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types String to [String]"]);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types expected: parameter1 (Int), parameter2 ([String]) Provided: Int, String",
+    ]);
   });
 
   test("Fail_OutOfRange", async () => {
@@ -643,7 +645,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Boolean to [String]"]);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types expected: parameter1 (Int), parameter2 ([String]) Provided: Int, Boolean",
+    ]);
   });
 
   test("Fail_2DArrayAdd", async () => {
@@ -659,7 +663,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types String to [String]"]);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types expected: parameter1 ([String]) Provided: String",
+    ]);
   });
 
   test("Fail_IndexWrongType1", async () => {
@@ -691,6 +697,8 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types String to Int"]);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types expected: parameter1 (Int), parameter2 (Int) Provided: String, Int",
+    ]);
   });
 });

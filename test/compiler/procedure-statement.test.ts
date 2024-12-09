@@ -798,8 +798,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Missing argument(s). Expected: parameter1 (Generic Parameter T1)",
-      "Too many argument(s). Expected: parameter1 (Generic Parameter T1)",
+      "Missing argument(s). Expected: parameter1 (Int)",
+      "Too many argument(s). Expected: parameter1 (Int)",
     ]);
   });
 
@@ -820,7 +820,9 @@ end procedure
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types expected: a (Int), b (String) Provided: Int, Int",
+    ]);
   });
 
   test("Fail_UnterminatedRecursion", async () => {
@@ -896,8 +898,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types Boolean to Int",
-      "Incompatible types Float to Int",
+      "Argument types expected: p (Int) Provided: Boolean",
+      "Argument types expected: p (Int) Provided: Float",
     ]);
   });
 

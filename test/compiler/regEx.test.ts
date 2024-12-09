@@ -163,6 +163,8 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types String to Regex"]);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types expected: parameter1 (Regex) Provided: String",
+    ]);
   });
 });

@@ -609,7 +609,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
+    assertDoesNotCompile(fileImpl, ["Argument types expected: parameter1 (String) Provided: Int"]);
   });
 
   test("Fail_SetInvalidKeyType", async () => {
@@ -625,7 +625,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types expected: parameter1 (String), parameter2 (Int) Provided: Int, Int",
+    ]);
   });
 
   test("Fail_putAtKey", async () => {
@@ -658,7 +660,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Float to Int"]);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types expected: parameter1 (String), parameter2 (Int) Provided: String, Float",
+    ]);
   });
 
   test("Fail_withRemoveAtKey", async () => {
@@ -706,7 +710,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types expected: parameter1 (String), parameter2 (Int) Provided: Int, Int",
+    ]);
   });
 
   test("Fail_IndexWrongType2", async () => {
@@ -738,7 +744,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types expected: parameter1 (String), parameter2 (Int) Provided: Int, Int",
+    ]);
   });
 
   test("Fail_Range", async () => {

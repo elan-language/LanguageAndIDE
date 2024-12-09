@@ -76,7 +76,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types String to Int"]);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types expected: parameter1 (Int), parameter2 ([String:Int]) Provided: String, [String:Int]",
+    ]);
   });
 
   test("Fail_IndexWrongType2", async () => {
@@ -92,7 +94,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types expected: parameter1 (String), parameter2 (Int) Provided: Int, Int",
+    ]);
   });
 
   test("Fail_IndexWrongType3", async () => {
@@ -108,7 +112,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types expected: parameter1 (String), parameter2 ([Int]) Provided: Int, [Int]",
+    ]);
   });
 
   test("Fail_IndexWrongType4", async () => {
@@ -124,6 +130,8 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types String to Int"]);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types expected: parameter1 (Int), parameter2 (Int) Provided: String, Int",
+    ]);
   });
 });

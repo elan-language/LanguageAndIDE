@@ -194,6 +194,19 @@ export class ExtraParameterCompileError extends CompileError {
   }
 }
 
+export class ParameterTypesCompileError extends CompileError {
+  constructor(description: string, provided: string, location: string) {
+    const priority = Priority.typeError;
+    const unknown = false;
+    super(
+      priority,
+      `Argument types expected: ${description} Provided: ${provided}`,
+      location,
+      unknown,
+    );
+  }
+}
+
 export class ParametersCompileError extends CompileError {
   constructor(expected: number, actual: number, location: string, generic?: boolean) {
     const priority = actual < expected ? Priority.unknownIdentifier : Priority.illegalOperation;

@@ -24,6 +24,7 @@ import {
   NotUniqueNameCompileError,
   OutParameterCompileError,
   ParametersCompileError,
+  ParameterTypesCompileError,
   PrivateMemberCompileError,
   ReassignCompileError,
   RedefinedCompileError,
@@ -398,8 +399,14 @@ export function mustMatchParameters(
   compileErrors: CompileError[],
   location: string,
 ) {
-  const expected = isExtension ? ofType.length - 1 : ofType.length;
-  const actual = isExtension ? parms.length - 1 : parms.length;
+  const extensionOfType = isExtension ? ofType[0] : undefined;
+  const extensionParm = isExtension ? parms[0] : undefined;
+
+  ofType = isExtension ? ofType.slice(1) : ofType;
+  parms = isExtension ? parms.slice(1) : parms;
+
+  const expected = ofType.length;
+  const actual = parms.length;
 
   if (expected > actual) {
     compileErrors.push(new MissingParameterCompileError(description, location));
@@ -409,14 +416,25 @@ export function mustMatchParameters(
     compileErrors.push(new ExtraParameterCompileError(description, location));
   }
 
+  if (extensionParm && extensionOfType) {
+    mustBeCompatibleType(extensionOfType, extensionParm.symbolType(), compileErrors, location);
+  }
+
   const maxLen = parms.length > ofType.length ? parms.length : ofType.length;
+  const tempErrors: CompileError[] = [];
+  const parmTypes = parms.map((p) => p.symbolType());
 
   for (let i = 0; i < maxLen; i++) {
-    const p = parms[i];
+    const p = parmTypes[i];
     const t = ofType[i];
     if (p && t) {
-      mustBeCompatibleType(t, p.symbolType(), compileErrors, location);
+      mustBeCompatibleType(t, p, tempErrors, location);
     }
+  }
+
+  if (tempErrors.length > 0) {
+    const provided = parmTypes.map((pt) => pt.name).join(", ");
+    compileErrors.push(new ParameterTypesCompileError(description, provided, location));
   }
 }
 

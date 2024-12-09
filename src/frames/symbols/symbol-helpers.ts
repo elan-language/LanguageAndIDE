@@ -688,10 +688,11 @@ export function symbolScopeToFriendlyName(ss: SymbolScope) {
   }
 }
 
-export function parameterDescriptions(st: SymbolType) {
+export function parameterDescriptions(st: SymbolType, actualTypes?: SymbolType[]) {
   if (st instanceof ProcedureType || st instanceof FunctionType) {
     const parameterNames = st.isExtension ? st.parameterNames.slice(1) : st.parameterNames;
-    const parameterTypes = st.isExtension ? st.parameterTypes.slice(1) : st.parameterTypes;
+    let parameterTypes = actualTypes ? actualTypes : st.parameterTypes;
+    parameterTypes = st.isExtension ? parameterTypes.slice(1) : parameterTypes;
     const descriptions = parameterNames.map((n, i) => `${n} (${parameterTypes[i].name})`);
     return descriptions;
   }

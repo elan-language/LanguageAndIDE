@@ -621,6 +621,8 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types String to Float"]);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types expected: parameter1 (Func<of String => Float>) Provided: Func<of String => String>",
+    ]);
   });
 });

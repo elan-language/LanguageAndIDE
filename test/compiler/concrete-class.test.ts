@@ -607,7 +607,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Float to Int"]);
+    assertDoesNotCompile(fileImpl, ["Argument types expected: val (Int) Provided: Float"]);
   });
 
   test("Fail_SupplyingArgumentNotSpecified", async () => {
@@ -711,7 +711,7 @@ end procedure
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Foo to Bar"]);
+    assertDoesNotCompile(fileImpl, ["Argument types expected: bar (Bar) Provided: Foo"]);
   });
 
   test("Fail_IncompatibleClassAsFunctionParameter", async () => {
@@ -744,7 +744,7 @@ end function
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Foo to Bar"]);
+    assertDoesNotCompile(fileImpl, ["Argument types expected: bar (Bar) Provided: Foo"]);
   });
 
   test("Fail_UnknownPropertyType", async () => {

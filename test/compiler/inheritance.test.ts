@@ -1593,7 +1593,7 @@ end function
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Foo to Bar"]);
+    assertDoesNotCompile(fileImpl, ["Argument types expected: bar (Bar) Provided: Foo"]);
   });
 
   test("Fail_Invariance1", async () => {
@@ -1625,7 +1625,7 @@ end function
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types {Bar} to {Foo}"]);
+    assertDoesNotCompile(fileImpl, ["Argument types expected: l ({Foo}) Provided: {Bar}"]);
   });
 
   test("Fail_Invariance2", async () => {
@@ -1657,7 +1657,7 @@ end procedure
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types [Bar] to [Foo]"]);
+    assertDoesNotCompile(fileImpl, ["Argument types expected: l ([Foo]) Provided: [Bar]"]);
   });
 
   test("Fail_Invariance3", async () => {
@@ -1688,7 +1688,9 @@ end function
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types {String:Bar} to {String:Foo}"]);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types expected: l ({String:Foo}) Provided: {String:Bar}",
+    ]);
   });
 
   test("Fail_InheritFromNonexistentClass", async () => {

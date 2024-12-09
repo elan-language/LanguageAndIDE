@@ -579,7 +579,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Boolean to String"]);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types expected: parameter1 (Int), parameter2 (String) Provided: Int, Boolean",
+    ]);
   });
 
   test("Fail_NoSet", async () => {
@@ -610,7 +612,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types String to Int"]);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types expected: parameter1 (Int), parameter2 (String) Provided: String, String",
+    ]);
   });
 
   test("Fail_SizeWrongType", async () => {
@@ -625,7 +629,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Float to Int"]);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types expected: x (Int), value (Int) Provided: Float, Int",
+    ]);
   });
 
   test("Fail_SizeSpecifiedInSquareBrackets", async () => {

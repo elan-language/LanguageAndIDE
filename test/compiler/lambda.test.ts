@@ -306,7 +306,9 @@ end procedure`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types String to Int"]);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types expected: i (Int), f (Func<of Int => Int>) Provided: Int, Func<of Int => String>",
+    ]);
   });
 
   test("Fail_InvokeLambdaWithWrongType", async () => {
@@ -324,7 +326,7 @@ end procedure`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types String to Int"]);
+    assertDoesNotCompile(fileImpl, ["Argument types expected: parameter0 (Int) Provided: String"]);
   });
 
   test("Fail_PassLambdaWithWrongTypes1", async () => {
@@ -343,7 +345,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Function Signatures do not match expected: 0 parameter(s) got: 1",
+      "Argument types expected: i (Int), f (Func<of  => Int>) Provided: Int, Func<of Int => Int>",
     ]);
   });
 
@@ -363,7 +365,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Function Signatures do not match expected: 1 parameter(s) got: 0",
+      "Argument types expected: i (Int), f (Func<of Int => Int>) Provided: Int, Func<of  => Int>",
     ]);
   });
 

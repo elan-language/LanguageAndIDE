@@ -380,7 +380,9 @@ end procedure`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types {Int} to Iterable<of String>"]);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types expected: target (Iterable<of String>) Provided: {Int}",
+    ]);
   });
 
   test("Fail_Indexing1", async () => {

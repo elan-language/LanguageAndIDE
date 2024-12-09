@@ -265,7 +265,7 @@ export function matchParametersAndTypes(
   mustMatchParameters(
     parameters,
     parameterTypes,
-    parameterDescriptions(funcSymbolType).join(", "),
+    parameterDescriptions(funcSymbolType, parameterTypes).join(", "),
     funcSymbolType.isExtension,
     compileErrors,
     location,
