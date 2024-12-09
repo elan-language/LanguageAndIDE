@@ -687,3 +687,14 @@ export function symbolScopeToFriendlyName(ss: SymbolScope) {
       return "identifier";
   }
 }
+
+export function parameterDescriptions(st: SymbolType) {
+  if (st instanceof ProcedureType || st instanceof FunctionType) {
+    const parameterNames = st.isExtension ? st.parameterNames.slice(1) : st.parameterNames;
+    const parameterTypes = st.isExtension ? st.parameterTypes.slice(1) : st.parameterTypes;
+    const descriptions = parameterNames.map((n, i) => `${n} (${parameterTypes[i].name})`);
+    return descriptions;
+  }
+
+  return [];
+}

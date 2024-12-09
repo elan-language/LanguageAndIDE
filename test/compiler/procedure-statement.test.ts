@@ -760,7 +760,7 @@ end procedure
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Parameters expected: 0 got: 1"]);
+    assertDoesNotCompile(fileImpl, ["Too many argument(s). Expected: none"]);
   });
 
   test("Fail_PassingTooFewParams", async () => {
@@ -781,7 +781,7 @@ end procedure
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Parameters expected: 2 got: 1"]);
+    assertDoesNotCompile(fileImpl, ["Missing argument(s). Expected: a (Int), b (String)"]);
   });
 
   test("Fail_ExtensionParameterCount", async () => {
@@ -798,8 +798,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Parameters expected: 1 got: 0",
-      "Parameters expected: 1 got: 2",
+      "Missing argument(s). Expected: parameter1 (Generic Parameter T1)",
+      "Too many argument(s). Expected: parameter1 (Generic Parameter T1)",
     ]);
   });
 
@@ -874,8 +874,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Parameters expected: 1 got: 2",
-      "Parameters expected: 1 got: 0",
+      "Too many argument(s). Expected: p (Float)",
+      "Missing argument(s). Expected: p (Float)",
     ]);
   });
 

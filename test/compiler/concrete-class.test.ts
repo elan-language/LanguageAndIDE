@@ -580,7 +580,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Parameters expected: 1 got: 0"]);
+    assertDoesNotCompile(fileImpl, ["Missing argument(s). Expected: val (Int)"]);
   });
 
   test("Fail_InstantiateWithWrongArgType", async () => {
@@ -633,7 +633,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Parameters expected: 0 got: 1"]);
+    assertDoesNotCompile(fileImpl, ["Too many argument(s). Expected: none"]);
   });
 
   test("Fail_MissingNewOnInstantiation", async () => {

@@ -382,6 +382,6 @@ end procedure`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Parameters expected: 0 got: 1"]);
+    assertDoesNotCompile(fileImpl, ["Too many argument(s). Expected: none"]);
   });
 });
