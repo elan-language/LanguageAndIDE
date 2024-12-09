@@ -1,8 +1,13 @@
 import { CodeSource } from "../code-source";
+import { currentParameterIndex } from "../helpers";
 import { Frame } from "../interfaces/frame";
+import { Scope } from "../interfaces/scope";
 import { ExprNode } from "../parse-nodes/expr-node";
 import { ParseNode } from "../parse-nodes/parse-node";
+import { SymbolCompletionSpec } from "../symbol-completion-helpers";
+import { FunctionType } from "../symbols/function-type";
 import { transforms } from "../syntax-nodes/ast-helpers";
+import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractField } from "./abstract-field";
 
 export class ExpressionField extends AbstractField {
@@ -33,7 +38,37 @@ export class ExpressionField extends AbstractField {
     return this.symbolCompletionAsHtml(transforms());
   }
 
+  private completionOverride = "";
+
+  private argumentDescriptions(holder: Scope, transforms: Transforms, spec: SymbolCompletionSpec) {
+    const ps = holder.resolveSymbol(spec.context, transforms, holder);
+    const funcSymbolType = ps.symbolType(transforms);
+
+    if (funcSymbolType instanceof FunctionType) {
+      const parameterNames = funcSymbolType.parameterNames;
+      const parameterTypes = funcSymbolType.parameterTypes;
+      const descriptions = parameterNames.map((n, i) => `${n} (${parameterTypes[i].name})`);
+      return descriptions;
+    }
+
+    return ["arguments"];
+  }
+
+  override getCompletion() {
+    return this.completionOverride || super.getCompletion();
+  }
+
   public textAsHtml(): string {
+    const spec = this.getSymbolCompletionSpec();
+    if (spec.parameterPromptsExpected) {
+      const descriptions = this.argumentDescriptions(this.getHolder(), transforms(), spec);
+      const parameterText = this.text.slice(this.text.lastIndexOf("(") + 1);
+
+      const count = currentParameterIndex(parameterText);
+      const remainingTypes = descriptions.slice(count).join(", ");
+      this.completionOverride = remainingTypes ? `<i>${remainingTypes}</i>` : "";
+    }
+
     return super.textAsHtml();
   }
 }

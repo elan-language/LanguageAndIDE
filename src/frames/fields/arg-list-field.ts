@@ -1,11 +1,14 @@
 import { CodeSource } from "../code-source";
+import { currentParameterIndex } from "../helpers";
 import { Frame } from "../interfaces/frame";
+import { Scope } from "../interfaces/scope";
 import { ArgListNode } from "../parse-nodes/arg-list-node";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { removeUnmatchedClosingBracket } from "../parse-nodes/parse-node-helpers";
 import { CallStatement } from "../statements/call-statement";
 import { ProcedureType } from "../symbols/procedure-type";
 import { transforms } from "../syntax-nodes/ast-helpers";
+import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractField } from "./abstract-field";
 
 export class ArgListField extends AbstractField {
@@ -43,13 +46,14 @@ export class ArgListField extends AbstractField {
     return this.symbolCompletionAsHtml(transforms());
   }
 
-  private argumentDescriptions() {
-    const holder = this.getHolder();
+  private completionOverride = "";
+
+  private argumentDescriptions(holder: Scope, transforms: Transforms) {
     if (holder instanceof CallStatement) {
       const proc = holder.proc.text;
 
-      const ps = holder.resolveSymbol(proc, transforms(), holder);
-      const procSymbolType = ps.symbolType(transforms());
+      const ps = holder.resolveSymbol(proc, transforms, holder);
+      const procSymbolType = ps.symbolType(transforms);
 
       if (procSymbolType instanceof ProcedureType) {
         const parameterNames = procSymbolType.parameterNames;
@@ -62,28 +66,11 @@ export class ArgListField extends AbstractField {
     return ["arguments"];
   }
 
-  private completionOverride = "";
-
-  private currentParameterIndex() {
-    if (this.text) {
-      if (this.text.includes(",")) {
-        const parameters = this.text.split(",");
-        const count = parameters.length - 1;
-        const startedInput = !!parameters[count].trim();
-        return startedInput ? count + 1 : count;
-      }
-
-      return 1;
-    }
-
-    return 0;
-  }
-
   public textAsHtml(): string {
-    const descriptions = this.argumentDescriptions();
+    const descriptions = this.argumentDescriptions(this.getHolder(), transforms());
 
     if (this.text) {
-      const count = this.currentParameterIndex();
+      const count = currentParameterIndex(this.text);
       const remainingTypes = descriptions.slice(count).join(", ");
       this.completionOverride = remainingTypes ? `<i>${remainingTypes}</i>` : "";
     } else {

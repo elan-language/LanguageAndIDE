@@ -244,3 +244,18 @@ export function mapSymbolType(ids: string[], st: SymbolType) {
 export function mapIds(ids: string[]) {
   return ids.length > 1 ? `[${ids.join(", ")}]` : ids[0];
 }
+
+export function currentParameterIndex(text: string) {
+  if (text) {
+    if (text.includes(",")) {
+      const parameters = text.split(",");
+      const count = parameters.length - 1;
+      const startedInput = !!parameters[count].trim();
+      return startedInput ? count + 1 : count;
+    }
+
+    return 1;
+  }
+
+  return 0;
+}
