@@ -170,4 +170,13 @@ suite("Field Parsing Tests", () => {
     assert.equal(params.readParseStatus(), ParseStatus.valid);
     assert.equal(params.textAsSource(), `a as Int`);
   });
+  test("parse proc call args list with closing bracket #685", () => {
+    const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
+    const call = new CallStatement(main);
+    const args = call.args;
+    args.setFieldToKnownValidText(`a)`);
+    args.parseCurrentText();
+    assert.equal(args.readParseStatus(), ParseStatus.valid);
+    assert.equal(args.textAsSource(), `a`);
+  });
 });

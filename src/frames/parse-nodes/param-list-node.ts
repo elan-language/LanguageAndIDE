@@ -1,5 +1,6 @@
 import { CSV } from "./csv";
 import { ParamDefNode } from "./param-def-node";
+import { removeUnmatchedClosingBracket } from "./parse-node-helpers";
 
 export class ParamListNode extends CSV {
   constructor() {
@@ -7,9 +8,7 @@ export class ParamListNode extends CSV {
     this.setSyntaxCompletionWhenEmpty("<i>parameter definitions</i>");
   }
   parseText(text: string): void {
-    if (text.endsWith(")") && text.split("(").length - text.split(")").length !== 0) {
-      text = text.slice(0, text.length - 1);
-    }
+    text = removeUnmatchedClosingBracket(text);
     super.parseText(text);
   }
 }

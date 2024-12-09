@@ -80,3 +80,9 @@ export const allKeywordsThatCanStartAnExpression: Set<string> = new Set([
   lambdaKeyword,
   emptyKeyword,
 ]);
+export function removeUnmatchedClosingBracket(text: string): string {
+  if (text.endsWith(")") && text.split("(").length - text.split(")").length !== 0) {
+    text = text.slice(0, text.length - 1);
+  }
+  return text;
+}

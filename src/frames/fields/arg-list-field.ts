@@ -2,6 +2,7 @@ import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
 import { ArgListNode } from "../parse-nodes/arg-list-node";
 import { ParseNode } from "../parse-nodes/parse-node";
+import { removeUnmatchedClosingBracket } from "../parse-nodes/parse-node-helpers";
 import { CallStatement } from "../statements/call-statement";
 import { ProcedureType } from "../symbols/procedure-type";
 import { transforms } from "../syntax-nodes/ast-helpers";
@@ -28,7 +29,7 @@ export class ArgListField extends AbstractField {
   }
   initialiseRoot(): ParseNode {
     this.astNode = undefined;
-    this.rootNode = new ArgListNode(() => ""); //TODO - temp kludge pending rest of #838
+    this.rootNode = new ArgListNode(() => "");
     return this.rootNode;
   }
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>
@@ -96,5 +97,10 @@ export class ArgListField extends AbstractField {
 
   override getCompletion() {
     return this.completionOverride || super.getCompletion();
+  }
+
+  override parseCurrentText(): void {
+    this.text = removeUnmatchedClosingBracket(this.text);
+    super.parseCurrentText();
   }
 }
