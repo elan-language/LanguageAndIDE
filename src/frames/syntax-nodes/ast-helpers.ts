@@ -22,7 +22,11 @@ import { IterableType } from "../symbols/iterable-type";
 import { ListType } from "../symbols/list-type";
 import { ProcedureType } from "../symbols/procedure-type";
 import { StringType } from "../symbols/string-type";
-import { isAnyDictionaryType, isClassTypeDef } from "../symbols/symbol-helpers";
+import {
+  isAnyDictionaryType,
+  isClassTypeDef,
+  parameterDescriptions,
+} from "../symbols/symbol-helpers";
 import { TupleType } from "../symbols/tuple-type";
 import { UnknownType } from "../symbols/unknown-type";
 import { transform, transformMany } from "./ast-visitor";
@@ -261,6 +265,7 @@ export function matchParametersAndTypes(
   mustMatchParameters(
     parameters,
     parameterTypes,
+    parameterDescriptions(funcSymbolType).join(", "),
     funcSymbolType.isExtension,
     compileErrors,
     location,

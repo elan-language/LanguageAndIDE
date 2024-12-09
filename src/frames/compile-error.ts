@@ -177,6 +177,23 @@ export class ExtensionCompileError extends CompileError {
   }
 }
 
+export class MissingParameterCompileError extends CompileError {
+  constructor(description: string, location: string) {
+    const priority = Priority.unknownIdentifier;
+    const unknown = true;
+    super(priority, `Missing argument(s). Expected: ${description}`, location, unknown);
+  }
+}
+
+export class ExtraParameterCompileError extends CompileError {
+  constructor(description: string, location: string) {
+    const priority = Priority.illegalOperation;
+    const unknown = false;
+    description = description ? description : "none";
+    super(priority, `Too many argument(s). Expected: ${description}`, location, unknown);
+  }
+}
+
 export class ParametersCompileError extends CompileError {
   constructor(expected: number, actual: number, location: string, generic?: boolean) {
     const priority = actual < expected ? Priority.unknownIdentifier : Priority.illegalOperation;

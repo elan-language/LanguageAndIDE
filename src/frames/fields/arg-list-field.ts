@@ -7,6 +7,7 @@ import { ParseNode } from "../parse-nodes/parse-node";
 import { removeUnmatchedClosingBracket } from "../parse-nodes/parse-node-helpers";
 import { CallStatement } from "../statements/call-statement";
 import { ProcedureType } from "../symbols/procedure-type";
+import { parameterDescriptions } from "../symbols/symbol-helpers";
 import { transforms } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractField } from "./abstract-field";
@@ -53,14 +54,8 @@ export class ArgListField extends AbstractField {
       const proc = holder.proc.text;
 
       const ps = holder.resolveSymbol(proc, transforms, holder);
-      const procSymbolType = ps.symbolType(transforms);
-
-      if (procSymbolType instanceof ProcedureType) {
-        const parameterNames = procSymbolType.parameterNames;
-        const parameterTypes = procSymbolType.parameterTypes;
-        const descriptions = parameterNames.map((n, i) => `${n} (${parameterTypes[i].name})`);
-        return descriptions;
-      }
+      const descriptions = parameterDescriptions(ps.symbolType(transforms));
+      return descriptions.length > 0 ? descriptions : ["arguments"];
     }
 
     return ["arguments"];

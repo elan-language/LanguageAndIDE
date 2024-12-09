@@ -8,8 +8,10 @@ import {
   DuplicateIdsCompileError,
   DuplicateKeyCompileError,
   ExtensionCompileError,
+  ExtraParameterCompileError,
   FunctionRefCompileError,
   MemberTypeCompileError,
+  MissingParameterCompileError,
   MustBeAbstractCompileError,
   MustBeConcreteCompileError,
   MustBeRecordCompileError,
@@ -391,6 +393,7 @@ export function mustCallExtensionViaQualifier(
 export function mustMatchParameters(
   parms: AstNode[],
   ofType: SymbolType[],
+  description: string,
   isExtension: boolean,
   compileErrors: CompileError[],
   location: string,
@@ -398,8 +401,12 @@ export function mustMatchParameters(
   const expected = isExtension ? ofType.length - 1 : ofType.length;
   const actual = isExtension ? parms.length - 1 : parms.length;
 
-  if (expected !== actual) {
-    compileErrors.push(new ParametersCompileError(expected, actual, location));
+  if (expected > actual) {
+    compileErrors.push(new MissingParameterCompileError(description, location));
+  }
+
+  if (actual > expected) {
+    compileErrors.push(new ExtraParameterCompileError(description, location));
   }
 
   const maxLen = parms.length > ofType.length ? parms.length : ofType.length;

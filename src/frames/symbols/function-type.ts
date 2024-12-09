@@ -8,7 +8,11 @@ export class FunctionType implements SymbolType {
     public readonly isExtension: boolean,
     public readonly isPure: boolean = true,
     public readonly isAsync: boolean = false,
-  ) {}
+  ) {
+    if (parameterNames.length !== parameterTypes.length) {
+      const a = 0;
+    }
+  }
   get initialValue() {
     return `system.emptyFunc(${this.returnType.initialValue})`;
   }

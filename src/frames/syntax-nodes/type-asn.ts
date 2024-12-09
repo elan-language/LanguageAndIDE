@@ -125,11 +125,12 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
       case "Iterable":
         return new IterableType(this.safeGetGenericParameterSymbolType(0));
       case "Func":
-        const names = this.genericParameters.map((p) => (isAstIdNode(p) ? p.id : ""));
+        const names = this.genericParameters.map((p, i) => `parameter${i}`);
         const types = this.genericParameters.map((p) => p.symbolType());
+        const pNames = names.slice(0, -1);
         const pTypes = types.slice(0, -1);
         const rType = types[types.length - 1] ?? UnknownType.Instance;
-        return new FunctionType(names, pTypes, rType, false);
+        return new FunctionType(pNames, pTypes, rType, false);
       default: {
         const ct = this.scope.resolveSymbol(this.id, transforms(), this.scope);
         const cst = this.scope

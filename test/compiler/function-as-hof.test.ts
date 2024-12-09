@@ -366,7 +366,7 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Parameters expected: 1 got: 0"]);
+    assertDoesNotCompile(fileImpl, ["Missing argument(s). Expected: parameter0 (Int)"]);
   });
 
   test("Fail_PassAsParamWithoutRefKeyword", async () => {

@@ -100,7 +100,7 @@ export class ElanFunctionDescriptor implements ElanMethodDescriptor, IElanFuncti
     const parameterTypes = this.parameterTypes;
 
     return new FunctionType(
-      parameterTypes.map((t) => t.name),
+      this.parameterNames,
       parameterTypes.map((t) => t.mapType()),
       retType.mapType(),
       this.isExtension,
