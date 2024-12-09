@@ -363,12 +363,15 @@ export abstract class AbstractFrame implements Frame {
     return true;
   }
 
-  private selectSingleOrMulti(s: Frame, multiSelect: boolean) {
-    if (multiSelect) {
+  private selectSingleOrMulti(other: Frame, multiSelect: boolean) {
+    if (multiSelect && other.isSelected()) {
+      this.deselect();
+      other.select(true, true);
+    } else if (multiSelect) {
       this.select(false, true);
-      s.select(true, true);
+      other.select(true, true);
     } else {
-      s.select(true, false);
+      other.select(true, false);
     }
   }
 

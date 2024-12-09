@@ -36,6 +36,7 @@ import {
   loadFileAsModelNew,
   shift_down,
   shift_enter,
+  shift_up,
   up,
 } from "./testHelpers";
 
@@ -127,6 +128,37 @@ suite("Editing Frames", () => {
     assert.equal(each.isSelected(), false);
     if_st.processKey(down());
     assert.equal(each.isSelected(), true);
+  });
+  test("Multi-selection incl. reversal", () => {
+    const file = T03_mainWithAllStatements();
+    const print = file.getById("print14");
+    const whil = file.getById("while16");
+    const rep = file.getById("repeat19");
+    const fr = file.getById("for22");
+    whil.select(true, false);
+    whil.processKey(shift_down());
+    rep.processKey(shift_down());
+    assert.equal(whil.isSelected(), true);
+    assert.equal(rep.isSelected(), true);
+    assert.equal(fr.isSelected(), true);
+    fr.processKey(shift_up());
+    assert.equal(whil.isSelected(), true);
+    assert.equal(rep.isSelected(), true);
+    assert.equal(fr.isSelected(), false);
+    rep.processKey(shift_up());
+    assert.equal(whil.isSelected(), true);
+    assert.equal(rep.isSelected(), false);
+    assert.equal(fr.isSelected(), false);
+    whil.processKey(shift_up());
+    assert.equal(print.isSelected(), true);
+    assert.equal(whil.isSelected(), true);
+    assert.equal(rep.isSelected(), false);
+    assert.equal(fr.isSelected(), false);
+    print.processKey(shift_down());
+    assert.equal(print.isSelected(), false);
+    assert.equal(whil.isSelected(), true);
+    assert.equal(rep.isSelected(), false);
+    assert.equal(fr.isSelected(), false);
   });
   test("Move multi-selection", () => {
     const file = T03_mainWithAllStatements();
