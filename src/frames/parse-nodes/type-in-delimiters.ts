@@ -1,7 +1,7 @@
 import { TokenType } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
-import { conreteAndAbstractTypes } from "./parse-node-helpers";
+import { concreteAndAbstractTypes } from "./parse-node-helpers";
 import { PunctuationNode } from "./punctuation-node";
 
 export class TypeInDelimiters extends AbstractSequence {
@@ -35,7 +35,7 @@ export class TypeInDelimiters extends AbstractSequence {
 
   symbolCompletion_tokenTypes(): Set<TokenType> {
     if (this.getElements().length === 0) {
-      return new Set<TokenType>(conreteAndAbstractTypes);
+      return new Set<TokenType>(concreteAndAbstractTypes);
     } else {
       return super.symbolCompletion_tokenTypes();
     }

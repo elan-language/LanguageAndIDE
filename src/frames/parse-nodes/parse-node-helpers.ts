@@ -69,7 +69,7 @@ export const assignableIds: TokenType[] = [
   TokenType.id_variable,
   TokenType.id_property,
 ];
-export const conreteAndAbstractTypes: TokenType[] = [
+export const concreteAndAbstractTypes: TokenType[] = [
   TokenType.type_abstract,
   TokenType.type_concrete,
 ];

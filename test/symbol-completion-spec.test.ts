@@ -11,7 +11,6 @@ import { LitValueNode } from "../src/frames/parse-nodes/lit-value";
 import { MethodCallNode } from "../src/frames/parse-nodes/method-call-node";
 import { OptionalNode } from "../src/frames/parse-nodes/optional-node";
 import { ReferenceNode } from "../src/frames/parse-nodes/reference-node";
-import { TermChained } from "../src/frames/parse-nodes/term-chained";
 import { TermSimple } from "../src/frames/parse-nodes/term-simple";
 import { TypeSimpleNode } from "../src/frames/parse-nodes/type-simple-node";
 import { TypeSimpleOrGeneric } from "../src/frames/parse-nodes/type-simple-or-generic";
@@ -482,6 +481,18 @@ suite("Symbol Completion Spec", () => {
       ],
       ["new,copy,if,lambda,empty,this,ref,not"],
       "",
+    );
+  });
+  test("Enum values #924", () => {
+    testSymbolCompletionSpec(
+      new ExprNode(),
+      "Direction.",
+      ParseStatus.incomplete,
+      IdentifierNode.name,
+      "",
+      [TokenType.id_enumValue],
+      [""],
+      "Direction",
     );
   });
 });
