@@ -9,8 +9,8 @@ export abstract class AbstractParseNode implements ParseNode {
   remainingText: string = "";
   errorMessage: string = "";
   activeNodeForSymbolCompl: ParseNode = this;
-  //Complete means that parseNode is valid and that no more text may be taken
-  //By default, parse nodes are never complete. Only ones that can return true are:
+  //'done' means that parseNode is valid and that no more text may be taken
+  //Most parse nodes are never 'done'. Only ones that can return true are:
   //SpaceNode and sub-classes of FixedTextNode or of AbstractSequence
   _done: boolean = false;
 
@@ -64,9 +64,6 @@ export abstract class AbstractParseNode implements ParseNode {
     const keywords = isThis ? this.symbolCompletion_keywords() : active.symbolCompletion_keywords();
     const context = isThis ? this.symbolCompletion_context() : active.symbolCompletion_context();
     const spec = new SymbolCompletionSpec(toMatch, tokens, keywords, context);
-    if (this.symbolCompletion_paramPromptsExpected()) {
-      spec.setParameterPromptsExpected(true);
-    }
     return spec;
   }
 

@@ -266,10 +266,17 @@ export abstract class AbstractFrame implements Frame {
       }
       case "Delete": {
         if (e.modKey.control) {
-          this.deleteIfPermissible();
+          this.getParent().deleteSelectedChildren();
           codeHasChanged = true;
         }
         break;
+      }
+      case "d": {
+        if (e.modKey.control) {
+          this.getParent().deleteSelectedChildren();
+          codeHasChanged = true;
+          break;
+        }
       }
       case "Backspace": {
         if (this.isNew) {
@@ -278,13 +285,7 @@ export abstract class AbstractFrame implements Frame {
         }
         break;
       }
-      case "d": {
-        if (e.modKey.control) {
-          this.deleteIfPermissible();
-          codeHasChanged = true;
-          break;
-        }
-      }
+
       case "x": {
         if (e.modKey.control) {
           this.cut();
@@ -362,12 +363,15 @@ export abstract class AbstractFrame implements Frame {
     return true;
   }
 
-  private selectSingleOrMulti(s: Frame, multiSelect: boolean) {
-    if (multiSelect) {
+  private selectSingleOrMulti(other: Frame, multiSelect: boolean) {
+    if (multiSelect && other.isSelected()) {
+      this.deselect();
+      other.select(true, true);
+    } else if (multiSelect) {
       this.select(false, true);
-      s.select(true, true);
+      other.select(true, true);
     } else {
-      s.select(true, false);
+      other.select(true, false);
     }
   }
 

@@ -25,9 +25,4 @@ export class SymbolCompletionSpec {
   tokenTypes: Set<TokenType> = new Set<TokenType>();
   keywords: Set<string>;
   context: string;
-  parameterPromptsExpected: boolean = false;
-
-  setParameterPromptsExpected(val: boolean): void {
-    this.parameterPromptsExpected = val;
-  }
 }

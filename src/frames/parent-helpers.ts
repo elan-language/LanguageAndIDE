@@ -169,6 +169,14 @@ export function parentHelper_getAllSelectedChildren(parent: Parent): Frame[] {
   return parent.getChildren().filter((g) => g.isSelected());
 }
 
+export function parentHelper_deleteSelectedChildren(parent: Parent): void {
+  const toDelete = parentHelper_getAllSelectedChildren(parent);
+  //work in reverse order as selecting the next one
+  for (let i = toDelete.length - 1; i >= 0; i--) {
+    toDelete[i].deleteIfPermissible();
+  }
+}
+
 export function parentHelper_moveSelectedChildrenUpOne(parent: Parent): void {
   const toMove = parentHelper_getAllSelectedChildren(parent);
   let cont = true;
