@@ -26,7 +26,7 @@ export class Queue<T1> {
 
   private system?: System;
 
-  @elanFunction(FunctionOptions.pure, ElanT1)
+  @elanFunction([], FunctionOptions.pure, ElanT1)
   peek(): T1 {
     if (this.contents.length === 0) {
       throw new ElanRuntimeError(`Cannot peek an empty Queue - check using length()`);
@@ -34,12 +34,12 @@ export class Queue<T1> {
     return this.contents[0];
   }
 
-  @elanFunction(FunctionOptions.pure, ElanInt)
+  @elanFunction([], FunctionOptions.pure, ElanInt)
   length() {
     return this.contents.length;
   }
 
-  @elanProcedure()
+  @elanProcedure([])
   enqueue(@elanGenericParamT1Type() item: T1) {
     if (this.contents.length > 0) {
       const itemT = typeof item;
@@ -54,7 +54,7 @@ export class Queue<T1> {
     this.contents.push(item);
   }
 
-  @elanFunction(FunctionOptions.impure, ElanT1)
+  @elanFunction([], FunctionOptions.impure, ElanT1)
   dequeue(): T1 {
     if (this.contents.length === 0) {
       throw new ElanRuntimeError(`Cannot dequeue an empty Queue - check using length()`);

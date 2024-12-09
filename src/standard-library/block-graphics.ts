@@ -13,7 +13,7 @@ import {
 import { System } from "../system";
 import { GraphicsBase } from "./graphics-base";
 
-@elanClass(ClassOptions.record, [], [], [ElanClass(GraphicsBase)])
+@elanClass(ClassOptions.record, [], [], [], [ElanClass(GraphicsBase)])
 export class BlockGraphics extends GraphicsBase {
   // this must be implemented by hand on all stdlib classes
   static emptyInstance() {
@@ -93,7 +93,7 @@ export class BlockGraphics extends GraphicsBase {
     return this.safeIndex(this.internalRep, this.idx(x, y)) as [string, number, number];
   }
 
-  @elanFunction(FunctionOptions.pure, ElanClass(BlockGraphics))
+  @elanFunction([], FunctionOptions.pure, ElanClass(BlockGraphics))
   withBlock(@elanIntType() x: number, @elanIntType() y: number, @elanIntType() colour: number) {
     if (x < 0 || x >= this.xSize) {
       throw new ElanRuntimeError(`x value ${x} is outside range 0 to ${this.xSize - 1}`);
@@ -105,7 +105,7 @@ export class BlockGraphics extends GraphicsBase {
     return this.withDetails(x, y, "", f, colour);
   }
 
-  @elanFunction(FunctionOptions.pure, ElanClass(BlockGraphics))
+  @elanFunction([], FunctionOptions.pure, ElanClass(BlockGraphics))
   withUnicode(
     @elanIntType() x: number,
     @elanIntType() y: number,
@@ -123,7 +123,7 @@ export class BlockGraphics extends GraphicsBase {
     return this.withDetails(x, y, str, foreColour, backColour);
   }
 
-  @elanFunction(FunctionOptions.pure, ElanClass(BlockGraphics))
+  @elanFunction([], FunctionOptions.pure, ElanClass(BlockGraphics))
   withText(
     @elanIntType() x: number,
     @elanIntType() y: number,
@@ -152,7 +152,7 @@ export class BlockGraphics extends GraphicsBase {
     return this;
   }
 
-  @elanFunction(FunctionOptions.pure, ElanClass(BlockGraphics))
+  @elanFunction([], FunctionOptions.pure, ElanClass(BlockGraphics))
   withBackground(@elanIntType() colour: number): BlockGraphics {
     const copy = this.system!.initialise(new BlockGraphics());
     copy.internalRep = this.internalRep;
@@ -166,17 +166,17 @@ export class BlockGraphics extends GraphicsBase {
     return copy;
   }
 
-  @elanFunction(FunctionOptions.pure, ElanInt)
+  @elanFunction([], FunctionOptions.pure, ElanInt)
   getChar(@elanIntType() x: number, @elanIntType() y: number) {
     return this.safeIndex(this.getDetails(x, y), 0);
   }
 
-  @elanFunction(FunctionOptions.pure, ElanInt)
+  @elanFunction([], FunctionOptions.pure, ElanInt)
   getForeground(@elanIntType() x: number, @elanIntType() y: number): number {
     return this.safeIndex(this.getDetails(x, y), 1) as number;
   }
 
-  @elanFunction(FunctionOptions.pure, ElanInt)
+  @elanFunction([], FunctionOptions.pure, ElanInt)
   getBackground(@elanIntType() x: number, @elanIntType() y: number): number {
     return this.safeIndex(this.getDetails(x, y), 2) as number;
   }
@@ -187,7 +187,7 @@ export class BlockGraphics extends GraphicsBase {
     });
   }
 
-  @elanFunction(FunctionOptions.pure)
+  @elanFunction([], FunctionOptions.pure)
   asHtml(): string {
     let rendered = `<div id="block-graphics">`;
 
@@ -206,7 +206,7 @@ export class BlockGraphics extends GraphicsBase {
     return `#${h6}`;
   }
 
-  @elanProcedure(ProcedureOptions.async)
+  @elanProcedure([], ProcedureOptions.async)
   display(): Promise<void> {
     const html = this.asHtml();
     this.system!.elanInputOutput.drawGraphics(html);
