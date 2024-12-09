@@ -33,6 +33,8 @@ export interface Parent extends Scope {
 
   getFields(): Field[];
 
+  deleteSelectedChildren(): void;
+
   moveSelectedChildrenDownOne(): void;
   moveSelectedChildrenUpOne(): void;
 

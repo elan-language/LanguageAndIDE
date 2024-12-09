@@ -36,6 +36,7 @@ import {
   parentHelper_addChildAfter,
   parentHelper_addChildBefore,
   parentHelper_aggregateCompileErrorsOfChildren,
+  parentHelper_deleteSelectedChildren,
   parentHelper_getChildAfter,
   parentHelper_getChildBefore,
   parentHelper_getChildRange,
@@ -164,6 +165,10 @@ export class FileImpl implements File, Scope {
     }
     return result;
   }
+  deleteSelectedChildren(): void {
+    parentHelper_deleteSelectedChildren(this);
+  }
+
   moveSelectedChildrenUpOne(): void {
     const toMove = this.getChildren().filter((g) => g.isSelected());
     let cont = true;

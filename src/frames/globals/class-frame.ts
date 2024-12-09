@@ -36,6 +36,7 @@ import {
   parentHelper_addChildBefore,
   parentHelper_aggregateCompileErrorsOfChildren,
   parentHelper_compileChildren,
+  parentHelper_deleteSelectedChildren,
   parentHelper_getChildAfter,
   parentHelper_getChildBefore,
   parentHelper_getChildRange,
@@ -167,6 +168,9 @@ export class ClassFrame extends AbstractFrame implements Frame, Parent, Collapsi
   }
   insertOrGotoChildSelector(after: boolean, child: Frame) {
     parentHelper_insertOrGotoChildSelector(this, after, child);
+  }
+  deleteSelectedChildren(): void {
+    parentHelper_deleteSelectedChildren(this);
   }
   moveSelectedChildrenUpOne(): void {
     parentHelper_moveSelectedChildrenUpOne(this);

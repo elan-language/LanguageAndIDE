@@ -14,6 +14,7 @@ import {
   parentHelper_addChildBefore,
   parentHelper_aggregateCompileErrorsOfChildren,
   parentHelper_compileChildren,
+  parentHelper_deleteSelectedChildren,
   parentHelper_getChildAfter,
   parentHelper_getChildBefore,
   parentHelper_getChildRange,
@@ -175,6 +176,10 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
       result = true;
     }
     return result;
+  }
+
+  deleteSelectedChildren(): void {
+    parentHelper_deleteSelectedChildren(this);
   }
 
   moveSelectedChildrenUpOne(): void {

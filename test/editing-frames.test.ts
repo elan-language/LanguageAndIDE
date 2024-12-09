@@ -183,19 +183,59 @@ suite("Editing Frames", () => {
     const file = T05_classes();
     const cls = file.getById("class1") as ClassFrame;
     let last = cls.getChildren()[1];
+    last.select();
     assert.equal(last instanceof Property, true);
     last.processKey(ctrl_del());
     last = cls.getChildren()[1];
     assert.equal(last instanceof MemberSelector, true);
   });
+  test("Delete frame - Cannot delete constructor", () => {
+    const file = T05_classes();
+    const cls = file.getById("class1") as ClassFrame;
+    assert.equal(cls.getChildren().length, 3);
+    const first = cls.getChildren()[0];
+    first.select();
+    assert.equal(first instanceof Constructor, true);
+    first.processKey(ctrl_del());
+    assert.equal(cls.getChildren().length, 3);
+    assert.equal(cls.getChildren()[0] instanceof Constructor, true);
+  });
   test("Delete frame  - Ctrl-d", () => {
     const file = T05_classes();
     const cls = file.getById("class1") as ClassFrame;
     let last = cls.getChildren()[1];
+    last.select();
     assert.equal(last instanceof Property, true);
     last.processKey(ctrl_d());
     last = cls.getChildren()[1];
     assert.equal(last instanceof MemberSelector, true);
+  });
+  test("Delete multi-selection", () => {
+    const file = T03_mainWithAllStatements();
+    const main = file.getById("main1") as MainFrame;
+    assert.equal(main.getChildren().length, 15);
+    const whil = file.getById("while16");
+    const rep = file.getById("repeat19");
+    const fr = file.getById("for22");
+    whil.select(true, false);
+    whil.processKey(shift_down());
+    rep.processKey(shift_down());
+    assert.equal(whil.isSelected(), true);
+    assert.equal(rep.isSelected(), true);
+    assert.equal(fr.isSelected(), true);
+    whil.processKey(ctrl_del());
+    assert.equal(main.getChildren().length, 12);
+  });
+  test("Delete frame - Cannot delete constructor in multi-select", () => {
+    const file = T05_classes();
+    const cls = file.getById("class1") as ClassFrame;
+    const first = cls.getChildren()[0];
+    first.select();
+    first.processKey(shift_down());
+    assert.equal(cls.getAllSelected().length, 2);
+    first.processKey(ctrl_del());
+    assert.equal(cls.getChildren().length, 2);
+    assert.equal(cls.getChildren()[0] instanceof Constructor, true);
   });
   test("Cut", () => {
     const file = T03_mainWithAllStatements();

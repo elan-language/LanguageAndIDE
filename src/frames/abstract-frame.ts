@@ -266,10 +266,17 @@ export abstract class AbstractFrame implements Frame {
       }
       case "Delete": {
         if (e.modKey.control) {
-          this.deleteIfPermissible();
+          this.getParent().deleteSelectedChildren();
           codeHasChanged = true;
         }
         break;
+      }
+      case "d": {
+        if (e.modKey.control) {
+          this.getParent().deleteSelectedChildren();
+          codeHasChanged = true;
+          break;
+        }
       }
       case "Backspace": {
         if (this.isNew) {
@@ -278,13 +285,7 @@ export abstract class AbstractFrame implements Frame {
         }
         break;
       }
-      case "d": {
-        if (e.modKey.control) {
-          this.deleteIfPermissible();
-          codeHasChanged = true;
-          break;
-        }
-      }
+
       case "x": {
         if (e.modKey.control) {
           this.cut();
