@@ -10,6 +10,7 @@ import { KeywordNode } from "../src/frames/parse-nodes/keyword-node";
 import { LitValueNode } from "../src/frames/parse-nodes/lit-value";
 import { MethodCallNode } from "../src/frames/parse-nodes/method-call-node";
 import { OptionalNode } from "../src/frames/parse-nodes/optional-node";
+import { allIds } from "../src/frames/parse-nodes/parse-node-helpers";
 import { ReferenceNode } from "../src/frames/parse-nodes/reference-node";
 import { TermSimple } from "../src/frames/parse-nodes/term-simple";
 import { TypeSimpleNode } from "../src/frames/parse-nodes/type-simple-node";
@@ -493,6 +494,114 @@ suite("Symbol Completion Spec", () => {
       [TokenType.id_enumValue],
       [""],
       "Direction",
+    );
+  });
+  test(" #909 Tuple 1", () => {
+    testSymbolCompletionSpec(
+      new ExprNode(),
+      "(",
+      ParseStatus.incomplete,
+      TermSimple.name,
+      "",
+      allIds.concat([TokenType.method_function, TokenType.method_system]),
+      ["new,copy,if,lambda,empty,this,ref,not"],
+      "",
+    );
+  });
+  test("#909 Tuple 2", () => {
+    testSymbolCompletionSpec(
+      new ExprNode(),
+      "(a",
+      ParseStatus.incomplete,
+      TermSimple.name,
+      "a",
+      allIds.concat([TokenType.method_function, TokenType.method_system]),
+      [""],
+      "",
+    );
+  });
+  test("#909 Tuple 3", () => {
+    testSymbolCompletionSpec(
+      new ExprNode(),
+      "(a, a",
+      ParseStatus.incomplete,
+      ReferenceNode.name,
+      "a",
+      allIds.concat([TokenType.method_function, TokenType.method_system]),
+      [""],
+      "",
+    );
+  });
+  test(" #909 Array 1", () => {
+    testSymbolCompletionSpec(
+      new ExprNode(),
+      "[",
+      ParseStatus.incomplete,
+      TermSimple.name,
+      "",
+      allIds.concat([TokenType.method_function, TokenType.method_system]),
+      ["new,copy,if,lambda,empty,this,ref,not"],
+      "",
+    );
+  });
+  test("#909 Array 2", () => {
+    testSymbolCompletionSpec(
+      new ExprNode(),
+      "[a",
+      ParseStatus.incomplete,
+      TermSimple.name,
+      "a",
+      allIds.concat([TokenType.method_function, TokenType.method_system]),
+      [""],
+      "",
+    );
+  });
+  test("#909 Array 3", () => {
+    testSymbolCompletionSpec(
+      new ExprNode(),
+      "[a, a",
+      ParseStatus.incomplete,
+      ReferenceNode.name,
+      "a",
+      allIds.concat([TokenType.method_function, TokenType.method_system]),
+      [""],
+      "",
+    );
+  });
+  test(" #909 List 1", () => {
+    testSymbolCompletionSpec(
+      new ExprNode(),
+      "{",
+      ParseStatus.incomplete,
+      TermSimple.name,
+      "",
+      allIds.concat([TokenType.method_function, TokenType.method_system]),
+      ["new,copy,if,lambda,empty,this,ref,not"],
+      "",
+    );
+  });
+  test("#909 List 2", () => {
+    testSymbolCompletionSpec(
+      new ExprNode(),
+      "{a",
+      ParseStatus.incomplete,
+      TermSimple.name,
+      "a",
+      allIds.concat([TokenType.method_function, TokenType.method_system]),
+      [""],
+      "",
+    );
+  });
+  test("#909 List 3", () => {
+    testSymbolCompletionSpec(
+      new ExprNode(),
+      "{a, a",
+      ParseStatus.incomplete,
+      ReferenceNode.name,
+      "a",
+      allIds.concat([TokenType.method_function, TokenType.method_system]),
+      [""],
+      "",
     );
   });
 });

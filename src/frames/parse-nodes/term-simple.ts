@@ -57,9 +57,9 @@ export class TermSimple extends AbstractAlternatives {
   }
 
   override symbolCompletion_toMatch(): string {
-    const openers = ["(", "[", "{"]; //Ignore openers that could match > 1
-    if (openers.includes(this.matchedText)) {
-      return "";
+    const startsWithBracket = /[\[\(\{].*/;
+    if (startsWithBracket.test(this.matchedText)) {
+      return this.matchedText.slice(1);
     } else {
       return super.symbolCompletion_toMatch();
     }

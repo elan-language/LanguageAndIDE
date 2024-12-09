@@ -117,7 +117,7 @@ export function isEnumValue(s?: ElanSymbol): boolean {
   return !!s && s.symbolType() instanceof EnumValueType;
 }
 
-export function isEnum(s?: ElanSymbol):boolean {
+export function isEnum(s?: ElanSymbol): boolean {
   return !!s && s instanceof Enum;
 }
 
