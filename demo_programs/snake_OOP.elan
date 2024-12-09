@@ -1,4 +1,4 @@
-# fa77910927f61df49af16fca32f79990e8f21001e625c012b3954936f06b9630 Elan Beta 4 valid
+# a8e17ead0e70e77cc660044b8b587bf2884958f2259f31133e4be7807bf876d4 Elan Beta 4 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -148,7 +148,6 @@ end class
 
 enum Direction up, down, left, right
 
-# 92 frames (excluding tests)
 test snake
   let snake be new Snake()
   # bodyCovers

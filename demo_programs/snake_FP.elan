@@ -1,4 +1,4 @@
-# 20dc963376259d489aabe0fd1c77ac1fd04e7a99939bbf00a205e63c895a2306 Elan Beta 4 valid
+# d4d6c23d1758f39de3b6c47ec13f3c71ddbc46e73b30f5971a36c7a4a2874edd Elan Beta 4 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -108,7 +108,6 @@ record Square
 
 end record
 
-# 68 frames (excluding tests)
 test clockTick
   let g1 be newGame(new Random())
   let g2 be newApple(g1)
@@ -261,4 +260,4 @@ test newGame
   assert game.isOn is true
 end test
 
-# Test coverage: 92% (62/68 frames)
+# Test coverage: 94% (62/66 frames)
