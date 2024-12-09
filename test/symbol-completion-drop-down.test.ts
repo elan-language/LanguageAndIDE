@@ -132,7 +132,7 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    await assertAutocompletesWithString(fileImpl, "expr5", " ", 60);
+    await assertAutocompletesWithString(fileImpl, "expr5", " ", 69);
   });
 
   test("Pass_LocalVarsCaseInsensitive1", async () => {
@@ -345,6 +345,21 @@ end main`;
     ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "ident13", "o", 1, expected);
+  });
+
+  test("Pass_StdLibConstant", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  var foo set to w
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [["white", "white", "white"]] as [string, string, string][];
+
+    await assertAutocompletesWithString(fileImpl, "expr5", "wh", expected);
   });
 
   test("Pass_CallLocalVars", async () => {

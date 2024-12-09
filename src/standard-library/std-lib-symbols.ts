@@ -1,4 +1,4 @@
-import { getSymbol } from "../elan-type-annotations";
+import { getConstantSymbol, getSymbol } from "../elan-type-annotations";
 import {
   ElanDescriptor,
   elanMetadataKey,
@@ -55,7 +55,7 @@ export class StdLibSymbols implements Scope {
       }
 
       if (isConstantDescriptor(metadata)) {
-        this.symbols.set(name, getSymbol(name, metadata.mapType(), SymbolScope.stdlib));
+        this.symbols.set(name, getConstantSymbol(name, metadata.mapType(), SymbolScope.stdlib));
       }
 
       if (isClassDescriptor(metadata)) {

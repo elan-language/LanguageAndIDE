@@ -13,7 +13,10 @@ export class EnumVal extends AbstractSequence {
     this.type = new TypeSimpleNode(new Set([TokenType.type_enum]));
     this.addElement(this.type);
     this.addElement(new PunctuationNode(DOT));
-    this.val = new IdentifierNode(new Set<TokenType>([TokenType.id_enumValue]), () => this.type!.matchedText);
+    this.val = new IdentifierNode(
+      new Set<TokenType>([TokenType.id_enumValue]),
+      () => this.type!.matchedText,
+    );
     this.addElement(this.val);
     super.parseText(text.trimStart());
   }

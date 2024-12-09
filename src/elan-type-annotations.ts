@@ -666,3 +666,16 @@ export function getSymbol(
 
   return symbol;
 }
+
+export function getConstantSymbol(id: string, st: SymbolType, ss: SymbolScope): ElanSymbol {
+  const symbol = {
+    symbolId: id,
+    symbolType: () => st,
+    symbolScope: ss,
+  } as ElanSymbol;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (symbol as any)["isConstant"] = true;
+
+  return symbol;
+}
