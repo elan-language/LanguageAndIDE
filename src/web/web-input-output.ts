@@ -169,7 +169,7 @@ export class WebInputOutput implements ElanInputOutput {
   currentInterval?: any;
 
   printLine(text: string) {
-    this.print(`${text}<br>`);
+    this.print(`${text}\n`);
     const element = document.getElementById("console")!;
     element.scrollTop = element.scrollHeight;
   }
