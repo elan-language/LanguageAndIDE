@@ -25,7 +25,7 @@ export class NewInstance extends AbstractSequence {
       this.type = new TypeSimpleOrGeneric(new Set<TokenType>([TokenType.type_concrete]));
       this.addElement(this.type);
       this.addElement(new PunctuationNode(OPEN_BRACKET));
-      this.args = new ArgListNode(() => this.type!.matchedText);
+      this.args = new ArgListNode();
       this.addElement(this.args);
       this.addElement(new PunctuationNode(CLOSE_BRACKET));
       this.withClause = new OptionalNode(new WithClause(() => this.type!.matchedText));
