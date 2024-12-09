@@ -135,7 +135,7 @@ export class BlockGraphics extends GraphicsBase {
       throw new ElanRuntimeError(`x value ${x} is outside range 0 to ${this.xSize - 1}`);
     }
     if (y < 0 || y >= this.ySize) {
-      throw new ElanRuntimeError(`y value ${y} is outside of range 0 to ${this.ySize - 1}`);
+      throw new ElanRuntimeError(`y value ${y} is outside range 0 to ${this.ySize - 1}`);
     }
     for (let i = 0; i < text.length; i++) {
       if (x + i < this.xSize) {

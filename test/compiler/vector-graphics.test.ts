@@ -381,7 +381,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeDoesNotExecute(
       fileImpl,
-      `stroke colour cannot be negative (because a stroke cannot be transparent)`,
+      `stroke (colour) cannot be negative because a stroke cannot be transparent`,
     );
   });
   test("Pass_ColourCannotBeLargerThanFFFFFF", async () => {
