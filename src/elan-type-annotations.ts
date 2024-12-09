@@ -10,7 +10,6 @@ import {
   isProcedureDescriptor,
   TypeDescriptor,
 } from "./elan-type-interfaces";
-import { isMember } from "./frames/helpers";
 import { ElanSymbol } from "./frames/interfaces/elan-symbol";
 import { Scope } from "./frames/interfaces/scope";
 import { SymbolType } from "./frames/interfaces/symbol-type";
@@ -43,13 +42,15 @@ export class ElanProcedureDescriptor implements ElanMethodDescriptor, IElanProce
 
   isPure = false;
 
-  parameters: TypeDescriptor[] = [];
+  parameterTypes: TypeDescriptor[] = [];
+
+  parameterNames: string[] = [];
 
   mapType(): SymbolType {
-    const parameterTypes = this.parameters;
+    const parameterTypes = this.parameterTypes;
 
     return new ProcedureType(
-      parameterTypes.map((t) => t.name),
+      this.parameterNames,
       parameterTypes.map((t) => t.mapType()),
       this.isExtension,
       this.isAsync,
@@ -62,16 +63,17 @@ export class ElanClassDescriptor implements ElanDescriptor {
     public readonly isImmutable: boolean = false,
     public readonly isAbstract: boolean = false,
     public readonly ofTypes: TypeDescriptor[] = [],
-    public readonly parameters: TypeDescriptor[] = [],
+    public readonly parameterNames: string[] = [],
+    public readonly parameterTypes: TypeDescriptor[] = [],
     public readonly inherits: ElanClassTypeDescriptor[] = [],
     public readonly alias?: string,
   ) {}
 
   mapType(): SymbolType {
-    const parameterTypes = this.parameters;
+    const parameterTypes = this.parameterTypes;
 
     return new ProcedureType(
-      parameterTypes.map((t) => t.name),
+      this.parameterNames,
       parameterTypes.map((t) => t.mapType()),
       false,
       false,
@@ -89,11 +91,13 @@ export class ElanFunctionDescriptor implements ElanMethodDescriptor, IElanFuncti
 
   isFunction = true;
 
-  parameters: TypeDescriptor[] = [];
+  parameterTypes: TypeDescriptor[] = [];
+
+  parameterNames: string[] = [];
 
   mapType(): SymbolType {
     const retType = this.returnType!;
-    const parameterTypes = this.parameters;
+    const parameterTypes = this.parameterTypes;
 
     return new FunctionType(
       parameterTypes.map((t) => t.name),
@@ -106,12 +110,14 @@ export class ElanFunctionDescriptor implements ElanMethodDescriptor, IElanFuncti
   }
 }
 
-export class ElanParametersDescriptor implements ElanMethodDescriptor {
+export class ElanSignatureDescriptor implements ElanMethodDescriptor {
   isPure = false;
   isExtension = false;
   isAsync = false;
 
-  parameters: TypeDescriptor[] = [];
+  parameterNames: string[] = [];
+
+  parameterTypes: TypeDescriptor[] = [];
   returnType: TypeDescriptor | undefined;
 }
 
@@ -313,23 +319,27 @@ function mapTypescriptType(t: tsType): TypescriptTypeDescriptor {
   return new TypescriptTypeDescriptor(t.name);
 }
 
-export function elanFunction(options?: FunctionOptions, retType?: TypeDescriptor) {
+export function elanFunction(
+  parameterNames: string[],
+  options?: FunctionOptions,
+  retType?: TypeDescriptor,
+) {
   const flags = mapFunctionOptions(options ?? FunctionOptions.pure, retType);
-  return elanMethod(new ElanFunctionDescriptor(...flags));
+  return elanMethod(parameterNames, new ElanFunctionDescriptor(...flags));
 }
 
-export function elanProcedure(options?: ProcedureOptions) {
+export function elanProcedure(parameterNames: string[], options?: ProcedureOptions) {
   const flags = mapProcedureOptions(options ?? ProcedureOptions.default);
-  return elanMethod(new ElanProcedureDescriptor(...flags));
+  return elanMethod(parameterNames, new ElanProcedureDescriptor(...flags));
 }
 
-export function elanMethod(elanDesc: ElanMethodDescriptor) {
+export function elanMethod(parameterNames: string[], elanDesc: ElanMethodDescriptor) {
   return function (target: object, propertyKey: string, descriptor: PropertyDescriptor) {
     const paramTypesMetadata = Reflect.getMetadata("design:paramtypes", target, propertyKey);
     const retTypeMetadata = Reflect.getMetadata("design:returntype", target, propertyKey);
 
     if (Array.isArray(paramTypesMetadata)) {
-      elanDesc.parameters = paramTypesMetadata.map((t) => mapTypescriptType(t));
+      elanDesc.parameterTypes = paramTypesMetadata.map((t) => mapTypescriptType(t));
     }
 
     if (
@@ -342,13 +352,20 @@ export function elanMethod(elanDesc: ElanMethodDescriptor) {
     }
 
     const metaData: ElanMethodDescriptor =
-      Reflect.getOwnMetadata(elanMetadataKey, target, propertyKey) ??
-      new ElanParametersDescriptor();
+      Reflect.getOwnMetadata(elanMetadataKey, target, propertyKey) ?? new ElanSignatureDescriptor();
 
-    for (let i = 0; i <= elanDesc.parameters.length; i++) {
-      const updatedParam = metaData.parameters[i];
+    for (let i = 0; i < elanDesc.parameterTypes.length; i++) {
+      const updatedParam = metaData.parameterTypes[i];
       if (updatedParam) {
-        elanDesc.parameters[i] = updatedParam;
+        elanDesc.parameterTypes[i] = updatedParam;
+      }
+    }
+
+    for (let i = 0; i < elanDesc.parameterTypes.length; i++) {
+      if (i < parameterNames.length) {
+        elanDesc.parameterNames[i] = parameterNames[i];
+      } else {
+        elanDesc.parameterNames[i] = `parameter${i}`;
       }
     }
 
@@ -359,6 +376,7 @@ export function elanMethod(elanDesc: ElanMethodDescriptor) {
 export function elanClass(
   options?: ClassOptions,
   ofTypes?: TypeDescriptor[],
+  names?: string[],
   params?: TypeDescriptor[],
   inherits?: ElanClassTypeDescriptor[],
   alias?: string,
@@ -368,6 +386,7 @@ export function elanClass(
     isImmutable,
     isAbstract,
     ofTypes ?? [],
+    names ?? [],
     params ?? [],
     inherits ?? [],
     alias,
@@ -421,10 +440,9 @@ export function elanClassExport(cls: {
 export function elanType(eType: TypeDescriptor) {
   return function (target: object, propertyKey: string | symbol, parameterIndex: number) {
     const metaData: ElanMethodDescriptor =
-      Reflect.getOwnMetadata(elanMetadataKey, target, propertyKey) ??
-      new ElanParametersDescriptor();
+      Reflect.getOwnMetadata(elanMetadataKey, target, propertyKey) ?? new ElanSignatureDescriptor();
 
-    metaData.parameters[parameterIndex] = eType;
+    metaData.parameterTypes[parameterIndex] = eType;
     Reflect.defineMetadata(elanMetadataKey, metaData, target, propertyKey);
   };
 }

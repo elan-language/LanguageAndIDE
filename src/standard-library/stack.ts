@@ -26,7 +26,7 @@ export class Stack<T1> {
 
   private system?: System;
 
-  @elanFunction(FunctionOptions.pure, ElanT1)
+  @elanFunction([], FunctionOptions.pure, ElanT1)
   peek(): T1 {
     if (this.contents.length === 0) {
       throw new ElanRuntimeError(`Cannot peek an empty Stack - check using length()`);
@@ -34,17 +34,17 @@ export class Stack<T1> {
     return this.contents[0];
   }
 
-  @elanFunction(FunctionOptions.pure, ElanInt)
+  @elanFunction([], FunctionOptions.pure, ElanInt)
   length() {
     return this.contents.length;
   }
 
-  @elanProcedure()
+  @elanProcedure([])
   push(@elanGenericParamT1Type() item: T1) {
     this.contents.unshift(item);
   }
 
-  @elanFunction(FunctionOptions.impure, ElanT1)
+  @elanFunction([], FunctionOptions.impure, ElanT1)
   pop(): T1 {
     if (this.contents.length === 0) {
       throw new ElanRuntimeError(`Cannot pop an empty Stack - check using length()`);

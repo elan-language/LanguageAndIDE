@@ -8,7 +8,8 @@ export interface ElanDescriptor {}
 export interface ElanMethodDescriptor extends ElanDescriptor {
   isExtension: boolean;
   isAsync: boolean;
-  parameters: TypeDescriptor[];
+  parameterTypes: TypeDescriptor[];
+  parameterNames: string[];
 }
 
 export interface IElanFunctionDescriptor extends ElanMethodDescriptor {

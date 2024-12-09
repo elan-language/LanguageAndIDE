@@ -22,7 +22,7 @@ export class TextFileReader {
   content: string[] = [];
   currentLine = 0;
 
-  @elanFunction(FunctionOptions.impure, ElanString)
+  @elanFunction([], FunctionOptions.impure, ElanString)
   readLine(): string {
     if (this.status === 0) {
       throw new ElanRuntimeError("Cannot use any method on a closed file");
@@ -36,7 +36,7 @@ export class TextFileReader {
     return line;
   }
 
-  @elanFunction(FunctionOptions.impure, ElanString)
+  @elanFunction([], FunctionOptions.impure, ElanString)
   readWholeFile(): string {
     if (this.status === 0) {
       throw new ElanRuntimeError("Cannot use any method on a closed file");
@@ -45,7 +45,7 @@ export class TextFileReader {
     return this.content.join("\n");
   }
 
-  @elanProcedure()
+  @elanProcedure([])
   close() {
     if (this.status === 0) {
       throw new ElanRuntimeError("Cannot use any method on a closed file");
@@ -53,7 +53,7 @@ export class TextFileReader {
     this.status = 0;
   }
 
-  @elanFunction(FunctionOptions.pure, ElanBoolean)
+  @elanFunction([], FunctionOptions.pure, ElanBoolean)
   endOfFile(): boolean {
     if (this.status === 0) {
       throw new ElanRuntimeError("Cannot use any method on a closed file");
