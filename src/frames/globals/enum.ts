@@ -14,7 +14,7 @@ import { SymbolType } from "../interfaces/symbol-type";
 import { enumKeyword } from "../keywords";
 import { EnumType } from "../symbols/enum-type";
 import { EnumValueType } from "../symbols/enum-value-type";
-import { getGlobalScope } from "../symbols/symbol-helpers";
+import { getGlobalScope, symbolMatches } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { Transforms } from "../syntax-nodes/transforms";
 
@@ -96,22 +96,36 @@ ${singleIndent()}${this.values.compile(transforms)}\r
     this.values.parseFrom(source);
   }
 
-  resolveSymbol(id: string, transforms: Transforms, initialScope: Frame): ElanSymbol {
+  enumValueSymbols() {
     const names = this.values
       .renderAsSource()
       .split(",")
       .map((s) => s.trim());
 
-    for (const n of names) {
-      if (n === id) {
-        return {
-          symbolId: id,
-          symbolType: () => new EnumValueType(this.name.renderAsSource(), id),
-          symbolScope: SymbolScope.program,
-        };
+    return names.map(n => (
+      {
+        symbolId: n,
+        symbolType: () => new EnumValueType(this.name.renderAsSource(), n),
+        symbolScope: SymbolScope.program,
+      }
+    ));
+  }
+
+
+  resolveSymbol(id: string, transforms: Transforms, initialScope: Frame): ElanSymbol {
+    for (const n of this.enumValueSymbols()) {
+      if (n.symbolId === id) {
+        return n;
       }
     }
 
     return this.getParent().resolveSymbol(id, transforms, this);
+  }
+
+  symbolMatches(id: string, all: boolean, initialScope?: Frame | undefined): ElanSymbol[] {
+    const otherMatches = this.getParent().symbolMatches(id, all, this);
+    const symbols = this.enumValueSymbols();
+    const matches = symbolMatches(id, all, symbols);
+    return matches.concat(otherMatches);
   }
 }

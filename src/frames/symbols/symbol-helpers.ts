@@ -33,6 +33,7 @@ import { BooleanType } from "./boolean-type";
 import { ClassType } from "./class-type";
 import { DictionaryType } from "./dictionary-type";
 import { EnumType } from "./enum-type";
+import { EnumValueType } from "./enum-value-type";
 import { FloatType } from "./float-type";
 import { FunctionType } from "./function-type";
 import { GenericParameterType } from "./generic-parameter-type";
@@ -113,10 +114,14 @@ export function isClassTypeDef(s?: ElanSymbol | Scope): s is Class {
 }
 
 export function isEnumValue(s?: ElanSymbol): boolean {
-  return !!s && s.symbolType() instanceof EnumType;
+  return !!s && s.symbolType() instanceof EnumValueType;
 }
 
-export function isEnum(s?: ElanSymbol): boolean {
+export function isEnum(s?: ElanSymbol):boolean {
+  return !!s && s instanceof Enum;
+}
+
+export function isEnumDef(s?: ElanSymbol): s is Enum {
   return !!s && s instanceof Enum;
 }
 
@@ -432,13 +437,21 @@ function matchingSymbolsWithQualifier(
     qualSt = qualSt.returnType;
   }
 
-  let classSymbols: ElanSymbol[] = [];
+  let qualifiedSymbols: ElanSymbol[] = [];
 
   if (qualSt instanceof ClassType) {
     const cls = getGlobalScope(scope).resolveSymbol(qualSt.className, transforms, scope);
 
     if (isClassTypeDef(cls)) {
-      classSymbols = cls.symbolMatches(propId, !propId).filter((s) => isPublicMember(s));
+      qualifiedSymbols = cls.symbolMatches(propId, !propId).filter((s) => isPublicMember(s));
+    }
+  }
+
+  if (qualSt instanceof EnumType) {
+    const en = getGlobalScope(scope).resolveSymbol(qualSt.name, transforms, scope);
+
+    if (isEnumDef(en)) {
+      qualifiedSymbols = en.symbolMatches(propId, !propId);
     }
   }
 
@@ -453,7 +466,7 @@ function matchingSymbolsWithQualifier(
       );
     });
 
-  return classSymbols.concat(allExtensions);
+  return qualifiedSymbols.concat(allExtensions);
 }
 
 export function matchingSymbols(

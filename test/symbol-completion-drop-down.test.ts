@@ -1761,4 +1761,42 @@ end main`;
 
     await assertAutocompletesWithString(fileImpl, "expr8", "vg.add(new ", expected);
   });
+
+  test("Pass_EnumType", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  let vg be Fruit.apple
+end main
+
+enum Fruit apple, orange, pear`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [["Fruit", "Fruit", "Fruit"]] as [string, string, string][];
+
+    await assertAutocompletesWithString(fileImpl, "expr5", "Fr", expected);
+  });
+
+  test("Pass_enumValue", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  let vg be Fruit.apple
+end main
+
+enum Fruit apple, orange, pear`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["apple", "apple", "apple"],
+      ["orange", "orange", "orange"],
+      ["pear", "pear", "pear"],
+    ] as [string, string, string][];
+
+    await assertAutocompletesWithString(fileImpl, "expr5", "Fruit.", expected);
+  });
 });
