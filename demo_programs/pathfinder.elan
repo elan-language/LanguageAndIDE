@@ -1,4 +1,4 @@
-# bbf096d2f87c9ff7c15740fa415caf45218376e98bf61d7522bcd13cd18a852b Elan Beta 4 valid
+# a5e3b4e0f817666d894a730dfafd74c72f5edaceac08ada7c42e51a1941c2566 Elan Beta 5 valid
 
 main
   let start be new Point(5, 5)
@@ -28,10 +28,10 @@ procedure runSolver(gr as BlockGraphics, start as Point, destination as Point, r
   end while
   if solver.getLastVisited() is destination
     then
-      let route, len be solver.getRouteAndLength()
+      let route, length be solver.getRouteAndLength()
       set gr2 to addRoute(gr2, route)
       call gr2.display()
-      print "Length of route: {round(len, 2)}"
+      print "Length of route: {round(length, 2)}"
     else
       print "No route from start to destination found through these rocks."
   end if
