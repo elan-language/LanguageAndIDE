@@ -1713,7 +1713,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Foo is not defined"]);
+    assertDoesNotCompile(fileImpl, ["'Foo' is not defined"]);
   });
 
   test("Fail_DuplicateNames", async () => {

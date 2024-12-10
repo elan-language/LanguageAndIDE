@@ -675,7 +675,7 @@ end test
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["squareTest is not defined"]);
+    assertDoesNotCompile(fileImpl, ["'squareTest' is not defined"]);
   });
 
   test("Fail_useTestAsAReference", async () => {
@@ -697,6 +697,6 @@ end test
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["squareTest is not defined"]);
+    assertDoesNotCompile(fileImpl, ["'squareTest' is not defined"]);
   });
 });

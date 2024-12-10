@@ -702,7 +702,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["bar is not defined"]);
+    assertDoesNotCompile(fileImpl, ["'bar' is not defined"]);
   });
 
   test("Fail_TypeSpecifiedBeforeParamName", async () => {
@@ -739,7 +739,7 @@ end procedure
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["main is not defined"]);
+    assertDoesNotCompile(fileImpl, ["'main' is not defined"]);
   });
 
   test("Fail_PassingUnnecessaryParameter", async () => {
@@ -982,7 +982,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Bar is not defined"]);
+    assertDoesNotCompile(fileImpl, ["'Bar' is not defined"]);
   });
 
   test("Fail_UseOfKeywordAsName", async () => {

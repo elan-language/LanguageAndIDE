@@ -636,7 +636,7 @@ end record`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["b is not defined"]);
+    assertDoesNotCompile(fileImpl, ["'b' is not defined"]);
   });
 
   test("Fail_PrivateProperty", async () => {

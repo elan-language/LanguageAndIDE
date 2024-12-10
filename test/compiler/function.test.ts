@@ -756,7 +756,7 @@ end function`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Bar is not defined"]);
+    assertDoesNotCompile(fileImpl, ["'Bar' is not defined"]);
   });
 
   test("Fail_ReturnUnknownType", async () => {
@@ -775,7 +775,7 @@ end function`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Bar is not defined"]);
+    assertDoesNotCompile(fileImpl, ["'Bar' is not defined"]);
   });
 
   test("Fail_UseOfKeywordAsName", async () => {

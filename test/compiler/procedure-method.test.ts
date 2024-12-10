@@ -270,7 +270,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["show is not defined"]);
+    assertDoesNotCompile(fileImpl, ["'show' is not defined"]);
   });
 
   test("Fail_CallUnknownMethodOnInstance", async () => {
@@ -299,7 +299,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["calculate is not defined for type 'Foo'"]);
+    assertDoesNotCompile(fileImpl, ["'calculate' is not defined for type 'Foo'"]);
   });
 
   test("Fail_ParameterUnknownType", async () => {
@@ -323,7 +323,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Bar is not defined"]);
+    assertDoesNotCompile(fileImpl, ["'Bar' is not defined"]);
   });
 
   test("Fail_UseOfKeywordAsName", async () => {

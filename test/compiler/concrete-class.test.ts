@@ -678,7 +678,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Foo is not defined"]);
+    assertDoesNotCompile(fileImpl, ["'Foo' is not defined"]);
   });
 
   test("Fail_IncompatibleClassAsProcedureParameter", async () => {
@@ -765,7 +765,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Bar is not defined"]);
+    assertDoesNotCompile(fileImpl, ["'Bar' is not defined"]);
   });
 
   test("Fail_DuplicateNames", async () => {
@@ -1013,7 +1013,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["FooBar is not defined", "Cannot new FooBar"]);
+    assertDoesNotCompile(fileImpl, ["'FooBar' is not defined", "Cannot new FooBar"]);
   });
 
   test("Fail_CannotNewNonClassType", async () => {
@@ -1056,7 +1056,7 @@ end class`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "Incompatible types Unknown to VectorGraphics",
-      "noSuch is not defined for type 'VectorGraphics'",
+      "'noSuch' is not defined for type 'VectorGraphics'",
     ]);
   });
 });

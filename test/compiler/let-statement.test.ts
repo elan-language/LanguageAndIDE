@@ -1,7 +1,6 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
-  assertDoesNotCompile,
   assertDoesNotCompileWithId,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
@@ -193,7 +192,7 @@ end function`;
     assertParses(fileImpl);
     assertDoesNotCompileWithId(fileImpl, "expr17", [
       "Incompatible types Unknown to Float or Int",
-      "x is not defined",
+      "'x' is not defined",
     ]);
 
     assertDoesNotCompileWithId(fileImpl, "func8", ["Incompatible types Unknown to Float or Int"]);
@@ -216,8 +215,8 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "expr17", ["y is not defined"]);
-    assertDoesNotCompileWithId(fileImpl, "func5", ["y is not defined"]);
+    assertDoesNotCompileWithId(fileImpl, "expr17", ["'y' is not defined"]);
+    assertDoesNotCompileWithId(fileImpl, "func5", ["'y' is not defined"]);
   });
 
   test("Pass_Redefine", async () => {

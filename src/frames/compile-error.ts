@@ -68,7 +68,7 @@ export class SyntaxCompileError extends CompileError {
 export class UndefinedSymbolCompileError extends CompileError {
   constructor(id: string, type: string, location: string) {
     const postfix = type ? ` for type '${type}'` : "";
-    super(Priority.unknownIdentifier, `${id} is not defined${postfix}`, location, true);
+    super(Priority.unknownIdentifier, `'${id}' is not defined${postfix}`, location, true);
   }
 }
 

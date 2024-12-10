@@ -433,7 +433,7 @@ end main`;
     assertParses(fileImpl);
     assertDoesNotCompileWithId(fileImpl, "expr5", [
       "Incompatible types Unknown to Float or Int",
-      "x is not defined",
+      "'x' is not defined",
     ]);
   });
 
@@ -467,7 +467,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompileWithId(fileImpl, "expr11", [
-      "x is not defined",
+      "'x' is not defined",
       "Cannot invoke identifier 'x' as a method",
     ]);
   });

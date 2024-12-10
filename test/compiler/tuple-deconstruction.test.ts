@@ -788,7 +788,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String", "y is not defined"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String", "'y' is not defined"]);
   });
 
   test("Fail_DeconstructIntoMixed2", async () => {
