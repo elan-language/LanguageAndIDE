@@ -19,6 +19,7 @@ import { VariableOrProperty } from "../src/frames/parse-nodes/variable-or-proper
 import { ParseStatus } from "../src/frames/status-enums";
 import { TokenType } from "../src/frames/symbol-completion-helpers";
 import { testSymbolCompletionSpec } from "./testHelpers";
+import { VarDefNode } from "../src/frames/parse-nodes/var-def-node";
 
 suite("Symbol Completion Spec", () => {
   test("MethodCallNode", () => {
@@ -600,6 +601,18 @@ suite("Symbol Completion Spec", () => {
       ReferenceNode.name,
       "a",
       allIds.concat([TokenType.method_function, TokenType.method_system]),
+      [""],
+      "",
+    );
+  });
+  test("#930 var def node", () => {
+    testSymbolCompletionSpec(
+      new VarDefNode(),
+      "",
+      ParseStatus.empty,
+      VarDefNode.name,
+      "",
+      [],
       [""],
       "",
     );

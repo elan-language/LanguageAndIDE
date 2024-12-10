@@ -38,6 +38,8 @@ export enum Space {
   required, //Required for input and represented in output e.g. after keyword
 }
 
+export const noTokenTypes = new Set<TokenType>();
+
 export const allIds: TokenType[] = [
   TokenType.id_constant,
   TokenType.id_let,

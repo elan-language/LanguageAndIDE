@@ -5,11 +5,17 @@ import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
 import { CSV } from "./csv";
 import { IdentifierNode } from "./identifier-node";
-import { assignableIds } from "./parse-node-helpers";
+import { assignableIds, noTokenTypes } from "./parse-node-helpers";
 import { PunctuationNode } from "./punctuation-node";
 
 export class DeconstructedTuple extends AbstractSequence {
   csv: CSV | undefined;
+  readonly: boolean;
+
+  constructor(readOnly = false) {
+    super();
+    this.readonly = readOnly;
+  }
 
   parseText(text: string): void {
     if (text.length > 0) {
@@ -23,7 +29,9 @@ export class DeconstructedTuple extends AbstractSequence {
   }
 
   symbolCompletion_tokenTypes(): Set<TokenType> {
-    if (this.getElements().length === 0) {
+    if (this.readonly) {
+      return noTokenTypes;
+    } else if (this.getElements().length === 0) {
       return new Set<TokenType>(assignableIds);
     } else {
       return super.symbolCompletion_tokenTypes();
@@ -31,8 +39,14 @@ export class DeconstructedTuple extends AbstractSequence {
   }
 
   symbolCompletion_keywords(): Set<KeywordCompletion> {
-    return this.getElements().length === 0
-      ? new Set<KeywordCompletion>([KeywordCompletion.create(propertyKeyword)])
-      : super.symbolCompletion_keywords();
+    let kw = new Set<KeywordCompletion>();
+    if (!this.readonly) {
+      if (this.getElements().length === 0) {
+        kw = new Set<KeywordCompletion>([KeywordCompletion.create(propertyKeyword)]);
+      } else {
+        kw = super.symbolCompletion_keywords();
+      }
+    }
+    return kw;
   }
 }
