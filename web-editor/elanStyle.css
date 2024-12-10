@@ -240,6 +240,16 @@ el-field .autocomplete-popup, el-field .autocomplete-popup * {
     background-color: lightgray;
 }
 
+.autocomplete-item.keyword {
+    color: var(--keyword);
+}
+
+.autocomplete-item.method {
+    color: var(--method);
+}
+.autocomplete-item.type {
+    color: var(--type);
+}
 
 /*  el-msg */
 el-msg {
