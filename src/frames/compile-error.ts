@@ -233,13 +233,13 @@ export class SignatureCompileError extends CompileError {
 
 export class MutateCompileError extends CompileError {
   constructor(name: string, purpose: string, location: string) {
-    super(Priority.illegalOperation, `May not re-assign the ${purpose} ${name}`, location, false);
+    super(Priority.illegalOperation, `May not re-assign the ${purpose} '${name}'`, location, false);
   }
 }
 
 export class NotUniqueNameCompileError extends CompileError {
   constructor(name: string, location: string) {
-    super(Priority.illegalOperation, `Name ${name} not unique in scope`, location, false);
+    super(Priority.illegalOperation, `Name '${name}' not unique in scope`, location, false);
   }
 }
 

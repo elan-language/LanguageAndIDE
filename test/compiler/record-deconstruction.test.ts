@@ -825,8 +825,8 @@ end record`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "May not re-assign the 'let' a",
-      "May not re-assign the 'let' b",
+      "May not re-assign the 'let' 'a'",
+      "May not re-assign the 'let' 'b'",
     ]);
   });
 

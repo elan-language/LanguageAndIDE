@@ -423,7 +423,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "set6", ["May not re-assign the constant a"]);
+    assertDoesNotCompileWithId(fileImpl, "set6", ["May not re-assign the constant 'a'"]);
   });
 
   test("Fail_expression", async () => {

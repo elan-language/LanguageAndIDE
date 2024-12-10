@@ -297,7 +297,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not re-assign the loop counter i"]);
+    assertDoesNotCompile(fileImpl, ["May not re-assign the loop counter 'i'"]);
   });
 
   test("Fail_scopeOfCounter", async () => {

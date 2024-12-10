@@ -170,7 +170,7 @@ end function`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "set15", ["May not re-assign the 'let' x"]);
+    assertDoesNotCompileWithId(fileImpl, "set15", ["May not re-assign the 'let' 'x'"]);
   });
 
   test("Fail_RecursiveDefinition", async () => {
