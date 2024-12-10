@@ -36,7 +36,7 @@ suite("Misc Tests", () => {
     await assertElementHasClasses(file, "var3", "valid");
   });
 
-  //Regex
+  //RegExp
   test("Test Regexes", () => {
     assert.equal(Regexes.newLine.test(""), false);
     assert.equal(Regexes.newLine.test("\n"), true);

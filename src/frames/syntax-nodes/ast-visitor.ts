@@ -35,7 +35,7 @@ import { ListNode } from "../parse-nodes/list-node";
 import { LitBoolean } from "../parse-nodes/lit-boolean";
 import { LitFloat } from "../parse-nodes/lit-float";
 import { LitInt } from "../parse-nodes/lit-int";
-import { LitRegEx } from "../parse-nodes/lit-regex";
+import { LitRegExp } from "../parse-nodes/lit-regExp";
 import { LitStringEmpty } from "../parse-nodes/lit-string-empty";
 import { LitStringInterpolation } from "../parse-nodes/lit-string-interpolation";
 import { LitStringNonEmpty } from "../parse-nodes/lit-string-non-empty";
@@ -193,7 +193,7 @@ export function transform(
     return new LiteralStringAsn(node.matchedText, fieldId);
   }
 
-  if (node instanceof LitRegEx) {
+  if (node instanceof LitRegExp) {
     return new LiteralRegExAsn(node.matchedText, fieldId);
   }
 

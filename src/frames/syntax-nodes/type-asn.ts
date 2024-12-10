@@ -13,13 +13,13 @@ import { ImmutableDictionaryType } from "../symbols/immutable-dictionary-type";
 import { IntType } from "../symbols/int-type";
 import { IterableType } from "../symbols/iterable-type";
 import { ListType } from "../symbols/list-type";
-import { RegexType } from "../symbols/regex-type";
+import { RegExpType } from "../symbols/regexp-type";
 import { StringType } from "../symbols/string-type";
 import { isClassTypeDef } from "../symbols/symbol-helpers";
 import { TupleType } from "../symbols/tuple-type";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { isAstIdNode, matchClassGenericTypes, transforms } from "./ast-helpers";
+import { matchClassGenericTypes, transforms } from "./ast-helpers";
 
 export class TypeAsn extends AbstractAstNode implements AstTypeNode {
   constructor(
@@ -96,8 +96,8 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
 
   symbolType() {
     switch (this.id) {
-      case "Regex":
-        return RegexType.Instance;
+      case "RegExp":
+        return RegExpType.Instance;
       case "Int":
         return IntType.Instance;
       case "Float":

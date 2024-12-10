@@ -11,23 +11,23 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("Regex", () => {
+suite("RegExp", () => {
   test("Pass_LiteralRegex", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
   var r set to /a+/
   print r
-  print "aa".matchesRegex(r)
-  print "b".matchesRegex(r)
+  print "aa".matchesRegExp(r)
+  print "b".matchesRegExp(r)
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var r = /a+/;
   system.printLine(_stdlib.asString(r));
-  system.printLine(_stdlib.asString(_stdlib.matchesRegex("aa", r)));
-  system.printLine(_stdlib.asString(_stdlib.matchesRegex("b", r)));
+  system.printLine(_stdlib.asString(_stdlib.matchesRegExp("aa", r)));
+  system.printLine(_stdlib.asString(_stdlib.matchesRegExp("b", r)));
 }
 return [main, _tests];}`;
 
@@ -37,7 +37,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "A Regextruefalse");
+    await assertObjectCodeExecutes(fileImpl, "A RegExptruefalse");
   });
 
   test("Pass_RegexAsParameter", async () => {
@@ -48,8 +48,8 @@ main
   print testRegex(r)
 end main
 
-function testRegex(r as Regex) return Boolean
-  return "aa".matchesRegex(r)
+function testRegex(r as RegExp) return Boolean
+  return "aa".matchesRegExp(r)
 end function`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -59,7 +59,7 @@ async function main() {
 }
 
 function testRegex(r) {
-  return _stdlib.matchesRegex("aa", r);
+  return _stdlib.matchesRegExp("aa", r);
 }
 return [main, _tests];}`;
 
@@ -76,20 +76,20 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var r set to empty Regex
+  var r set to empty RegExp
   set r to testRegex()
-  print "aa".matchesRegex(r)
+  print "aa".matchesRegExp(r)
 end main
 
-function testRegex() return Regex
+function testRegex() return RegExp
   return /a+/
 end function`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var r = system.emptyRegex();
+  var r = system.emptyRegExp();
   r = testRegex();
-  system.printLine(_stdlib.asString(_stdlib.matchesRegex("aa", r)));
+  system.printLine(_stdlib.asString(_stdlib.matchesRegExp("aa", r)));
 }
 
 function testRegex() {
@@ -111,20 +111,20 @@ return [main, _tests];}`;
 
 main
   var r set to /a\\/b/
-  print "a/b".matchesRegex(r)
-  print "a\/b".matchesRegex(r)
-  print "a\b".matchesRegex(r)
-  print "a\\/b".matchesRegex(r)
+  print "a/b".matchesRegExp(r)
+  print "a\/b".matchesRegExp(r)
+  print "a\b".matchesRegExp(r)
+  print "a\\/b".matchesRegExp(r)
 
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var r = /a\\/b/;
-  system.printLine(_stdlib.asString(_stdlib.matchesRegex("a/b", r)));
-  system.printLine(_stdlib.asString(_stdlib.matchesRegex("a/b", r)));
-  system.printLine(_stdlib.asString(_stdlib.matchesRegex("a\b", r)));
-  system.printLine(_stdlib.asString(_stdlib.matchesRegex("a\\/b", r)));
+  system.printLine(_stdlib.asString(_stdlib.matchesRegExp("a/b", r)));
+  system.printLine(_stdlib.asString(_stdlib.matchesRegExp("a/b", r)));
+  system.printLine(_stdlib.asString(_stdlib.matchesRegExp("a\b", r)));
+  system.printLine(_stdlib.asString(_stdlib.matchesRegExp("a\\/b", r)));
 }
 return [main, _tests];}`;
 
@@ -155,14 +155,14 @@ end main`;
 
 main
   var r set to "/a+/"
-  print "aa".matchesRegex(r)
-  print "b".matchesRegex(r)
+  print "aa".matchesRegExp(r)
+  print "b".matchesRegExp(r)
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Argument types expected: regExp (Regex) Provided: String"]);
+    assertDoesNotCompile(fileImpl, ["Argument types expected: regExp (RegExp) Provided: String"]);
   });
 });

@@ -7,7 +7,7 @@ export class VarDefNode extends AbstractAlternatives {
   constructor() {
     super();
     this.alternatives.push(new IdentifierNode());
-    this.alternatives.push(new DeconstructedTuple());
-    this.alternatives.push(new DeconstructedList());
+    this.alternatives.push(new DeconstructedTuple(true));
+    this.alternatives.push(new DeconstructedList(true));
   }
 }

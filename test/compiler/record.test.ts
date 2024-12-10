@@ -237,7 +237,7 @@ record Foo
   property p2 as Float
   property p3 as String
   property p4 as Boolean
-  property p5 as Regex
+  property p5 as RegExp
   property p6 as {Int}
   property p7 as {String:Int}
   property p8 as Bar
@@ -254,7 +254,7 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", 0], ["p3", ""], ["p4", false], ["p5", system.emptyRegex()], ["p6", system.emptyImmutableList()], ["p7", system.emptyImmutableDictionary()]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", 0], ["p3", ""], ["p4", false], ["p5", system.emptyRegExp()], ["p6", system.emptyImmutableList()], ["p7", system.emptyImmutableDictionary()]]);};
   p1 = 0;
 
   p2 = 0;
@@ -263,7 +263,7 @@ class Foo {
 
   p4 = false;
 
-  p5 = system.emptyRegex();
+  p5 = system.emptyRegExp();
 
   p6 = system.emptyImmutableList();
 

@@ -27,10 +27,10 @@ export class System {
   emptyImmutableListSingleton = this.list([]);
   emptyIterableSingleton = this.iter([]);
   emptyImmutableDictionarySingleton = this.immutableDictionary({});
-  emptyRegexSingleton = /(?:)/;
+  emptyRegExpSingleton = /(?:)/;
 
-  emptyRegex() {
-    return this.emptyRegexSingleton;
+  emptyRegExp() {
+    return this.emptyRegExpSingleton;
   }
 
   emptyIter() {

@@ -24,7 +24,7 @@ import { ListNode } from "../src/frames/parse-nodes/list-node";
 import { LitBoolean } from "../src/frames/parse-nodes/lit-boolean";
 import { LitFloat } from "../src/frames/parse-nodes/lit-float";
 import { LitInt } from "../src/frames/parse-nodes/lit-int";
-import { LitRegEx } from "../src/frames/parse-nodes/lit-regex";
+import { LitRegExp } from "../src/frames/parse-nodes/lit-regExp";
 import { LitString } from "../src/frames/parse-nodes/lit-string";
 import { LitStringInterpolation } from "../src/frames/parse-nodes/lit-string-interpolation";
 import { LitStringNonEmpty } from "../src/frames/parse-nodes/lit-string-non-empty";
@@ -1692,9 +1692,9 @@ suite("Parsing Nodes", () => {
       false,
     );
   });
-  test("LitRegex", () => {
+  test("LitRegExp", () => {
     testNodeParse(
-      new LitRegEx(),
+      new LitRegExp(),
       `/abc+.*/`,
       ParseStatus.valid,
       `/abc+.*/`,
