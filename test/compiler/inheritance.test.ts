@@ -1736,7 +1736,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name Foo not unique in scope"]);
+    assertDoesNotCompile(fileImpl, ["Name 'Foo' not unique in scope"]);
   });
 
   test("Fail_DuplicatePropertyNames", async () => {
@@ -1756,7 +1756,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name p1 not unique in scope"]);
+    assertDoesNotCompile(fileImpl, ["Name 'p1' not unique in scope"]);
   });
 
   test("Fail_DuplicateFunctionNames", async () => {
@@ -1776,7 +1776,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name ff not unique in scope"]);
+    assertDoesNotCompile(fileImpl, ["Name 'ff' not unique in scope"]);
   });
 
   test("Fail_DuplicateProcedureNames", async () => {
@@ -1796,7 +1796,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name ff not unique in scope"]);
+    assertDoesNotCompile(fileImpl, ["Name 'ff' not unique in scope"]);
   });
 
   test("Fail_DuplicateMemberNames1", async () => {
@@ -1816,7 +1816,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name ff not unique in scope"]);
+    assertDoesNotCompile(fileImpl, ["Name 'ff' not unique in scope"]);
   });
 
   test("Fail_DuplicateMemberNames2", async () => {
@@ -1836,7 +1836,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name ff not unique in scope"]);
+    assertDoesNotCompile(fileImpl, ["Name 'ff' not unique in scope"]);
   });
 
   test("Fail_DuplicateMemberNames3", async () => {
@@ -1856,7 +1856,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name ff not unique in scope"]);
+    assertDoesNotCompile(fileImpl, ["Name 'ff' not unique in scope"]);
   });
 
   test("Fail_DuplicatePrivateMembers1", async () => {
@@ -1981,7 +1981,10 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name p1 not unique in scope", "Duplicate inherited ids: p1"]);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'p1' not unique in scope",
+      "Duplicate inherited ids: p1",
+    ]);
   });
 
   test("Fail_DuplicatePrivateMembers5", async () => {
@@ -2007,7 +2010,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name p1 not unique in scope"]);
+    assertDoesNotCompile(fileImpl, ["Name 'p1' not unique in scope"]);
   });
 
   test("Fail_DuplicatePrivateMembers6", async () => {
@@ -2034,6 +2037,6 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name p1 not unique in scope"]);
+    assertDoesNotCompile(fileImpl, ["Name 'p1' not unique in scope"]);
   });
 });

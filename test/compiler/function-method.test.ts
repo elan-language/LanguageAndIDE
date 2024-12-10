@@ -891,6 +891,6 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name a not unique in scope"]);
+    assertDoesNotCompile(fileImpl, ["Name 'a' not unique in scope"]);
   });
 });

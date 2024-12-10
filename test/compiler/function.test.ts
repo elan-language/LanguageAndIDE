@@ -870,7 +870,7 @@ end function
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name foo not unique in scope"]);
+    assertDoesNotCompile(fileImpl, ["Name 'foo' not unique in scope"]);
   });
 
   test("Fail_NotUniqueParameterName", async () => {
@@ -885,7 +885,7 @@ end function`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name a not unique in scope"]);
+    assertDoesNotCompile(fileImpl, ["Name 'a' not unique in scope"]);
   });
 
   test("Fail_OutOnParameter", async () => {

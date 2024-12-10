@@ -574,7 +574,7 @@ enum Fruit apple, orange, pear`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name Fruit not unique in scope"]);
+    assertDoesNotCompile(fileImpl, ["Name 'Fruit' not unique in scope"]);
   });
 
   test("Fail_DuplicateValues", async () => {
@@ -590,6 +590,6 @@ enum Fruit apple, orange, pear, orange`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name orange not unique in scope"]);
+    assertDoesNotCompile(fileImpl, ["Name 'orange' not unique in scope"]);
   });
 });

@@ -527,6 +527,6 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "const1", ["Name a not unique in scope"]);
+    assertDoesNotCompileWithId(fileImpl, "const1", ["Name 'a' not unique in scope"]);
   });
 });
