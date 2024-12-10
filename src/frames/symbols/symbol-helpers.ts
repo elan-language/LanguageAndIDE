@@ -642,6 +642,18 @@ export function symbolMatches(id: string, all: boolean, symbols: ElanSymbol[]) {
   return sw.concat(inc);
 }
 
+export function isId(f: ElanSymbol): f is ElanSymbol {
+  return (
+    isConstant(f) ||
+    isLetStatement(f) ||
+    isVarStatement(f) ||
+    isParameter(f) ||
+    isOutParameter(f) ||
+    isProperty(f) ||
+    isEnumValue(f)
+  );
+}
+
 export function filterForTokenType(
   tt: TokenType,
   transforms: Transforms,

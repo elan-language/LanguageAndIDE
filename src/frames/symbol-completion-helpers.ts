@@ -17,8 +17,8 @@ export enum TokenType {
 export class KeywordCompletion {
   private constructor(
     public readonly keyword: string,
-    public readonly spaceAfter = true,
-    public readonly dotAfter = false,
+    public readonly spaceAfter: boolean,
+    public readonly dotAfter: boolean,
   ) {}
 
   private static map = new Map<string, KeywordCompletion>();
@@ -30,22 +30,17 @@ export class KeywordCompletion {
 
     return this.map.get(keyword)!;
   }
+
+  static reset() {
+    this.map.clear();
+  }
 }
 
 export class SymbolCompletionSpec {
   constructor(
-    toMatch: string,
-    tokenTypes: Set<TokenType>,
-    keywords: Set<KeywordCompletion>,
-    context: string,
-  ) {
-    this.toMatch = toMatch;
-    this.tokenTypes = tokenTypes;
-    this.keywords = keywords;
-    this.context = context;
-  }
-  toMatch: string = "";
-  tokenTypes: Set<TokenType> = new Set<TokenType>();
-  keywords: Set<KeywordCompletion>;
-  context: string;
+    public readonly toMatch: string,
+    public readonly tokenTypes: Set<TokenType>,
+    public readonly keywords: Set<KeywordCompletion>,
+    public context: string,
+  ) {}
 }

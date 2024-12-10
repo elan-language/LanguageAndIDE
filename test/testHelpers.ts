@@ -9,7 +9,7 @@ import { FileImpl } from "../src/frames/file-impl";
 import { editorEvent } from "../src/frames/interfaces/editor-event";
 import { File } from "../src/frames/interfaces/file";
 import { ParseNode } from "../src/frames/parse-nodes/parse-node";
-import { ParseStatus } from "../src/frames/status-enums";
+import { CompileStatus, ParseStatus, TestStatus } from "../src/frames/status-enums";
 import { TokenType } from "../src/frames/symbol-completion-helpers";
 import { BooleanType } from "../src/frames/symbols/boolean-type";
 import { FloatType } from "../src/frames/symbols/float-type";
@@ -416,4 +416,16 @@ export async function createTestRunner() {
   const stdlib = new StdLib();
   stdlib.system = system;
   return await getTestRunner(system, stdlib);
+}
+
+export async function testDemoProgram(program : string) {
+  const f = await loadFileAsModelNew(`${__dirname}\\..\\..\\demo_programs\\${program}`);
+  const runner = await createTestRunner();
+  await f.refreshAllStatuses(runner);
+  assert.equal(f.readParseStatus(), ParseStatus.valid);
+  assert.equal(f.readCompileStatus(), CompileStatus.ok);
+  const ts = f.readTestStatus();
+  if (ts !== TestStatus.default) {
+    assert.equal(ts, TestStatus.pass);
+  }
 }

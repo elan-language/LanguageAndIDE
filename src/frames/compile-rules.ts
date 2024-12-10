@@ -850,6 +850,28 @@ function mustBeCompatibleDeconstruction(
   }
 }
 
+export function mustBeCompatibleDefinitionNode(
+  lhs: AstNode,
+  rhs: AstNode,
+  scope: Scope,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  const lst = lhs.symbolType();
+  const rst = rhs.symbolType();
+
+  if (lst instanceof DeconstructedTupleType) {
+    if (rst instanceof ClassType && rst.isImmutable) {
+      mustBeCompatibleDeconstruction(lhs, rhs, scope, compileErrors, location);
+    }
+    if (rst instanceof TupleType && lst.ofTypes.length !== rst.ofTypes.length) {
+      compileErrors.push(
+        new SyntaxCompileError(`Wrong number of deconstructed variables`, location),
+      );
+    }
+  }
+}
+
 export function mustBeCompatibleNode(
   lhs: AstNode,
   rhs: AstNode,
@@ -866,12 +888,6 @@ export function mustBeCompatibleNode(
       return;
     }
   }
-
-  // if (lst instanceof DeconstructedTupleType && rst instanceof TupleType) {
-  //   if (lst.ofTypes.length > rst.ofTypes.length) {
-  //     compileErrors.push(new SyntaxCompileError(`Too many deconstructed variables`, location));
-  //   }
-  // }
 
   mustBeCompatibleType(lst, rst, compileErrors, location);
 }
@@ -1024,10 +1040,6 @@ function mapToPurpose(symbol: ElanSymbol) {
     return "parameter";
   }
 
-  if (symbol.symbolScope === SymbolScope.stdlib) {
-    return "library symbol";
-  }
-
   if (isConstant(symbol)) {
     return "constant";
   }
@@ -1052,7 +1064,11 @@ export function mustNotBeRedefined(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (variable instanceof UnknownSymbol || variable.symbolScope === SymbolScope.member) {
+  if (
+    variable instanceof UnknownSymbol ||
+    variable.symbolScope === SymbolScope.member ||
+    variable.symbolScope === SymbolScope.stdlib
+  ) {
     // ok
     return;
   }
