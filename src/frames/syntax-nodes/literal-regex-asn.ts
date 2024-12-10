@@ -1,6 +1,6 @@
 import { CompileError } from "../compile-error";
 import { AstNode } from "../interfaces/ast-node";
-import { RegexType } from "../symbols/regex-type";
+import { RegExpType } from "../symbols/regexp-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 
 export class LiteralRegExAsn extends AbstractAstNode implements AstNode {
@@ -25,7 +25,7 @@ export class LiteralRegExAsn extends AbstractAstNode implements AstNode {
   }
 
   symbolType() {
-    return RegexType.Instance;
+    return RegExpType.Instance;
   }
 
   toString() {

@@ -2,8 +2,8 @@ import { ElanCompilerError } from "../../elan-compiler-error";
 import { Property } from "../class-members/property";
 import { CompileError } from "../compile-error";
 import {
-  cannotAccessAbstractMemberInAbstractClass,
-  cannotAccessPrivateMemberInAbstractClass,
+    cannotAccessAbstractMemberInAbstractClass,
+    cannotAccessPrivateMemberInAbstractClass,
 } from "../compile-rules";
 import { ClassFrame } from "../globals/class-frame";
 import { Enum } from "../globals/enum";
@@ -43,7 +43,7 @@ import { IterableType } from "./iterable-type";
 import { ListType } from "./list-type";
 import { NullScope } from "./null-scope";
 import { ProcedureType } from "./procedure-type";
-import { RegexType } from "./regex-type";
+import { RegExpType } from "./regexp-type";
 import { StringType } from "./string-type";
 import { SymbolScope } from "./symbol-scope";
 
@@ -285,7 +285,7 @@ export function isValueType(type: SymbolType) {
     type instanceof FloatType ||
     type instanceof BooleanType ||
     type instanceof StringType ||
-    type instanceof RegexType
+    type instanceof RegExpType
   );
 }
 

@@ -137,7 +137,7 @@ export class StdLib {
     }
 
     if (v instanceof RegExp) {
-      return "A Regex";
+      return "A RegExp";
     }
 
     if (Array.isArray(v)) {
@@ -1011,7 +1011,7 @@ export class StdLib {
   }
 
   @elanFunction(["", "regExp"], FunctionOptions.pureExtension)
-  matchesRegex(a: string, r: RegExp): boolean {
+  matchesRegExp(a: string, r: RegExp): boolean {
     return r.test(a);
   }
 

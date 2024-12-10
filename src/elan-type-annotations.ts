@@ -26,7 +26,7 @@ import { IntType } from "./frames/symbols/int-type";
 import { IterableType } from "./frames/symbols/iterable-type";
 import { ListType } from "./frames/symbols/list-type";
 import { ProcedureType } from "./frames/symbols/procedure-type";
-import { RegexType } from "./frames/symbols/regex-type";
+import { RegExpType } from "./frames/symbols/regexp-type";
 import { StdLibClass } from "./frames/symbols/stdlib-class";
 import { StringType } from "./frames/symbols/string-type";
 import { SymbolScope } from "./frames/symbols/symbol-scope";
@@ -140,8 +140,8 @@ export class ElanValueTypeDescriptor implements TypeDescriptor {
         return IntType.Instance;
       case "Boolean":
         return BooleanType.Instance;
-      case "Regex":
-        return RegexType.Instance;
+      case "RegExp":
+        return RegExpType.Instance;
       case "Iterable":
         return new IterableType(this.ofType!.mapType());
       case "Array":
@@ -303,7 +303,7 @@ export class TypescriptTypeDescriptor implements TypeDescriptor {
       case "Boolean":
         return BooleanType.Instance;
       case "RegExp":
-        return RegexType.Instance;
+        return RegExpType.Instance;
       case "Function":
         throw new ElanCompilerError("Typescript 'Function' must be mapped into Elan types");
       case "Array":
@@ -451,7 +451,7 @@ export const ElanInt: ElanValueTypeDescriptor = new ElanValueTypeDescriptor("Int
 export const ElanFloat: ElanValueTypeDescriptor = new ElanValueTypeDescriptor("Float");
 export const ElanString: ElanValueTypeDescriptor = new ElanValueTypeDescriptor("String");
 export const ElanBoolean: ElanValueTypeDescriptor = new ElanValueTypeDescriptor("Boolean");
-export const ElanRegex: ElanValueTypeDescriptor = new ElanValueTypeDescriptor("Regex");
+export const ElanRegExp: ElanValueTypeDescriptor = new ElanValueTypeDescriptor("RegExp");
 
 export const ElanT1: ElanValueTypeDescriptor = new ElanGenericTypeDescriptor("T1");
 export const ElanT2: ElanValueTypeDescriptor = new ElanGenericTypeDescriptor("T2");
@@ -509,7 +509,7 @@ export function elanBooleanType() {
 }
 
 export function elanRegexType() {
-  return elanType(ElanRegex);
+  return elanType(ElanRegExp);
 }
 
 export function elanGenericParamT1Type() {

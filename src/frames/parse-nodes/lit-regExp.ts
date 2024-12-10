@@ -4,7 +4,7 @@ import { AbstractSequence } from "./abstract-sequence";
 import { PunctuationNode } from "./punctuation-node";
 import { RegExMatchNode } from "./regex-match-node";
 
-export class LitRegEx extends AbstractSequence {
+export class LitRegExp extends AbstractSequence {
   open: PunctuationNode | undefined;
   content: RegExMatchNode | undefined;
   close: PunctuationNode | undefined;

@@ -1,47 +1,47 @@
 import { Property } from "./class-members/property";
 import {
-  CannotCallAFunction,
-  CannotCallAsAMethod,
-  CannotUseLikeAFunction,
-  CannotUseSystemMethodInAFunction,
-  CompileError,
-  DuplicateIdsCompileError,
-  DuplicateKeyCompileError,
-  ExtensionCompileError,
-  ExtraParameterCompileError,
-  FunctionRefCompileError,
-  MemberTypeCompileError,
-  MissingParameterCompileError,
-  MustBeAbstractCompileError,
-  MustBeConcreteCompileError,
-  MustBeRecordCompileError,
-  MustImplementCompileError,
-  MutateCompileError,
-  NotIndexableCompileError,
-  NotIterableCompileError,
-  NotNewableCompileError,
-  NotRangeableCompileError,
-  NotUniqueNameCompileError,
-  OutParameterCompileError,
-  ParametersCompileError,
-  ParameterTypesCompileError,
-  PrivateMemberCompileError,
-  ReassignCompileError,
-  RedefinedCompileError,
-  SignatureCompileError,
-  SyntaxCompileError,
-  TypeCompileError,
-  TypesCompileError,
-  UndefinedSymbolCompileError,
+    CannotCallAFunction,
+    CannotCallAsAMethod,
+    CannotUseLikeAFunction,
+    CannotUseSystemMethodInAFunction,
+    CompileError,
+    DuplicateIdsCompileError,
+    DuplicateKeyCompileError,
+    ExtensionCompileError,
+    ExtraParameterCompileError,
+    FunctionRefCompileError,
+    MemberTypeCompileError,
+    MissingParameterCompileError,
+    MustBeAbstractCompileError,
+    MustBeConcreteCompileError,
+    MustBeRecordCompileError,
+    MustImplementCompileError,
+    MutateCompileError,
+    NotIndexableCompileError,
+    NotIterableCompileError,
+    NotNewableCompileError,
+    NotRangeableCompileError,
+    NotUniqueNameCompileError,
+    OutParameterCompileError,
+    ParametersCompileError,
+    ParameterTypesCompileError,
+    PrivateMemberCompileError,
+    ReassignCompileError,
+    RedefinedCompileError,
+    SignatureCompileError,
+    SyntaxCompileError,
+    TypeCompileError,
+    TypesCompileError,
+    UndefinedSymbolCompileError,
 } from "./compile-error";
 import {
-  isClass,
-  isConstant,
-  isFunction,
-  isInsideFunctionOrConstructor,
-  isLet,
-  isMember,
-  isProcedure,
+    isClass,
+    isConstant,
+    isFunction,
+    isInsideFunctionOrConstructor,
+    isLet,
+    isMember,
+    isProcedure,
 } from "./helpers";
 import { AstNode } from "./interfaces/ast-node";
 import { ElanSymbol } from "./interfaces/elan-symbol";
@@ -67,29 +67,29 @@ import { IntType } from "./symbols/int-type";
 import { IterableType } from "./symbols/iterable-type";
 import { ListType } from "./symbols/list-type";
 import { ProcedureType } from "./symbols/procedure-type";
-import { RegexType } from "./symbols/regex-type";
+import { RegExpType } from "./symbols/regexp-type";
 import { StringType } from "./symbols/string-type";
 import {
-  isAnyDictionaryType,
-  isClassTypeDef,
-  isDeconstructedType,
-  isGenericSymbolType,
-  isIndexableType,
-  isIterableType,
-  isListType,
-  isProperty,
-  symbolScopeToFriendlyName,
+    isAnyDictionaryType,
+    isClassTypeDef,
+    isDeconstructedType,
+    isGenericSymbolType,
+    isIndexableType,
+    isIterableType,
+    isListType,
+    isProperty,
+    symbolScopeToFriendlyName,
 } from "./symbols/symbol-helpers";
 import { SymbolScope } from "./symbols/symbol-scope";
 import { TupleType } from "./symbols/tuple-type";
 import { UnknownSymbol } from "./symbols/unknown-symbol";
 import { UnknownType } from "./symbols/unknown-type";
 import {
-  getIds,
-  InFunctionScope,
-  isAstIdNode,
-  isAstIndexableNode,
-  transforms,
+    getIds,
+    InFunctionScope,
+    isAstIdNode,
+    isAstIndexableNode,
+    transforms,
 } from "./syntax-nodes/ast-helpers";
 import { IdAsn } from "./syntax-nodes/id-asn";
 import { Transforms } from "./syntax-nodes/transforms";
@@ -625,7 +625,7 @@ export function mustBeCompatibleType(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (lhs instanceof RegexType && !(rhs instanceof RegexType)) {
+  if (lhs instanceof RegExpType && !(rhs instanceof RegExpType)) {
     FailIncompatible(lhs, rhs, compileErrors, location);
     return;
   }
