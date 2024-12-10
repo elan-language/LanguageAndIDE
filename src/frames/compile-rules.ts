@@ -860,27 +860,14 @@ export function mustBeCompatibleDefinitionNode(
   const lst = lhs.symbolType();
   const rst = rhs.symbolType();
 
-  if (lst instanceof DeconstructedTupleType && rst instanceof ClassType) {
-    if (rst.isImmutable) {
+  if (lst instanceof DeconstructedTupleType) {
+    if (rst instanceof ClassType && rst.isImmutable) {
       mustBeCompatibleDeconstruction(lhs, rhs, scope, compileErrors, location);
-      return;
     }
-  }
-
-  if (
-    (lhs instanceof TupleType || lhs instanceof DeconstructedTupleType) &&
-    rhs instanceof TupleType
-  ) {
-    if (lhs.ofTypes.length === rhs.ofTypes.length) {
-      mustBeCompatibleTypes(lhs.ofTypes, rhs.ofTypes, compileErrors, location);
-    } else {
-      if (lhs instanceof DeconstructedTupleType) {
-        compileErrors.push(
-          new SyntaxCompileError(`Wrong number of deconstructed variables`, location),
-        );
-      } else {
-        FailIncompatible(lhs, rhs, compileErrors, location);
-      }
+    if (rst instanceof TupleType && lst.ofTypes.length !== rst.ofTypes.length) {
+      compileErrors.push(
+        new SyntaxCompileError(`Wrong number of deconstructed variables`, location),
+      );
     }
   }
 }

@@ -4,7 +4,7 @@ import {
   mustBeCompatibleDefinitionNode,
   mustBeDeconstructableType,
   mustNotBeKeyword,
-  mustNotBeRedefined
+  mustNotBeRedefined,
 } from "../compile-rules";
 import { ExpressionField } from "../fields/expression-field";
 import { VarDefField } from "../fields/var-def-field";
