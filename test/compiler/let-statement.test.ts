@@ -220,7 +220,7 @@ end function`;
     assertDoesNotCompileWithId(fileImpl, "func5", ["y is not defined"]);
   });
 
-  test("Fail_Redefine", async () => {
+  test("Pass_Redefine", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -231,12 +231,22 @@ function foo() return (Int, Int)
   return (0, 0)
 end function`;
 
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  const [a, length] = foo();
+}
+
+function foo() {
+  return system.tuple([0, 0]);
+}
+return [main, _tests];}`;
+
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "The identifier 'length' is already used for a library symbol and cannot be re-defined here.",
-    ]);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "");
   });
 });

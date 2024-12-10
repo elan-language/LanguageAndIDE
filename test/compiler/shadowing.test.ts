@@ -179,7 +179,7 @@ end function`;
     ]);
   });
 
-  test("Fail_DisambiguateLocalVariableFromLibConstant", async () => {
+  test("Pass_DisambiguateLocalVariableFromLibConstant", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -187,16 +187,23 @@ main
   print pi
 end main`;
 
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var pi = _stdlib.pi;
+  system.printLine(_stdlib.asString(pi));
+}
+return [main, _tests];}`;
+
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "The identifier 'pi' is already used for a library symbol and cannot be re-defined here.",
-    ]);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "3.141592653589793");
   });
 
-  test("Fail_DisambiguateLocalLetFromLibConstant", async () => {
+  test("Pass_DisambiguateLocalLetFromLibConstant", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -204,13 +211,20 @@ main
   print pi
 end main`;
 
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  const pi = _stdlib.pi;
+  system.printLine(_stdlib.asString(pi));
+}
+return [main, _tests];}`;
+
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "The identifier 'pi' is already used for a library symbol and cannot be re-defined here.",
-    ]);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "3.141592653589793");
   });
 
   test("Pass_DisambiguateLibFunctionFromLocalAndInstanceFunctions", async () => {

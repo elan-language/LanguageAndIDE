@@ -1,10 +1,10 @@
 import { AbstractFrame } from "../abstract-frame";
 import { CodeSource } from "../code-source";
 import {
-  mustBeCompatibleNode,
+  mustBeCompatibleDefinitionNode,
   mustBeDeconstructableType,
   mustNotBeKeyword,
-  mustNotBeRedefined,
+  mustNotBeRedefined
 } from "../compile-rules";
 import { ExpressionField } from "../fields/expression-field";
 import { VarDefField } from "../fields/var-def-field";
@@ -70,7 +70,7 @@ export abstract class AbstractDefinitionStatement
     const lhs = this.name.getOrTransformAstNode(transforms);
     const rhs = this.expr.getOrTransformAstNode(transforms);
 
-    mustBeCompatibleNode(lhs, rhs, this.getParent(), this.compileErrors, this.htmlId);
+    mustBeCompatibleDefinitionNode(lhs, rhs, this.getParent(), this.compileErrors, this.htmlId);
 
     const lhsCode = wrapDeconstructionLhs(lhs, rhs, false);
 

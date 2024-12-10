@@ -850,7 +850,7 @@ function mustBeCompatibleDeconstruction(
   }
 }
 
-export function mustBeCompatibleNode(
+export function mustBeCompatibleDefinitionNode(
   lhs: AstNode,
   rhs: AstNode,
   scope: Scope,
@@ -867,11 +867,40 @@ export function mustBeCompatibleNode(
     }
   }
 
-  // if (lst instanceof DeconstructedTupleType && rst instanceof TupleType) {
-  //   if (lst.ofTypes.length > rst.ofTypes.length) {
-  //     compileErrors.push(new SyntaxCompileError(`Too many deconstructed variables`, location));
-  //   }
-  // }
+  if (
+    (lhs instanceof TupleType || lhs instanceof DeconstructedTupleType) &&
+    rhs instanceof TupleType
+  ) {
+    if (lhs.ofTypes.length === rhs.ofTypes.length) {
+      mustBeCompatibleTypes(lhs.ofTypes, rhs.ofTypes, compileErrors, location);
+    } else {
+      if (lhs instanceof DeconstructedTupleType) {
+        compileErrors.push(
+          new SyntaxCompileError(`Wrong number of deconstructed variables`, location),
+        );
+      } else {
+        FailIncompatible(lhs, rhs, compileErrors, location);
+      }
+    }
+  }
+}
+
+export function mustBeCompatibleNode(
+  lhs: AstNode,
+  rhs: AstNode,
+  scope: Scope,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  const lst = lhs.symbolType();
+  const rst = rhs.symbolType();
+
+  if (lst instanceof DeconstructedTupleType && rst instanceof ClassType) {
+    if (rst.isImmutable) {
+      mustBeCompatibleDeconstruction(lhs, rhs, scope, compileErrors, location);
+      return;
+    }
+  }
 
   mustBeCompatibleType(lst, rst, compileErrors, location);
 }
@@ -1024,10 +1053,6 @@ function mapToPurpose(symbol: ElanSymbol) {
     return "parameter";
   }
 
-  if (symbol.symbolScope === SymbolScope.stdlib) {
-    return "library symbol";
-  }
-
   if (isConstant(symbol)) {
     return "constant";
   }
@@ -1052,7 +1077,11 @@ export function mustNotBeRedefined(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (variable instanceof UnknownSymbol || variable.symbolScope === SymbolScope.member) {
+  if (
+    variable instanceof UnknownSymbol ||
+    variable.symbolScope === SymbolScope.member ||
+    variable.symbolScope === SymbolScope.stdlib
+  ) {
     // ok
     return;
   }

@@ -496,7 +496,7 @@ suite("Symbol Completion Spec", () => {
       "Direction",
     );
   });
-  test(" #909 Tuple 1", () => {
+  test("#909 Tuple 1", () => {
     testSymbolCompletionSpec(
       new ExprNode(),
       "(",
@@ -532,7 +532,7 @@ suite("Symbol Completion Spec", () => {
       "",
     );
   });
-  test(" #909 Array 1", () => {
+  test("#909 Array 1", () => {
     testSymbolCompletionSpec(
       new ExprNode(),
       "[",
@@ -568,7 +568,7 @@ suite("Symbol Completion Spec", () => {
       "",
     );
   });
-  test(" #909 List 1", () => {
+  test("#909 List 1", () => {
     testSymbolCompletionSpec(
       new ExprNode(),
       "{",
