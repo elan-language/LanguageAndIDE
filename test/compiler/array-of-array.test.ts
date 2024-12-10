@@ -610,7 +610,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: parameter1 (Int), parameter2 ([String]) Provided: Int, String",
+      "Argument types expected: index (Int), value ([String]) Provided: Int, String",
     ]);
   });
 
@@ -646,7 +646,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: parameter1 (Int), parameter2 ([String]) Provided: Int, Boolean",
+      "Argument types expected: index (Int), value ([String]) Provided: Int, Boolean",
     ]);
   });
 
@@ -663,9 +663,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Argument types expected: parameter1 ([String]) Provided: String",
-    ]);
+    assertDoesNotCompile(fileImpl, ["Argument types expected: value ([String]) Provided: String"]);
   });
 
   test("Fail_IndexWrongType1", async () => {
@@ -698,7 +696,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: parameter1 (Int), parameter2 (Int) Provided: String, Int",
+      "Argument types expected: index (Int), value (Int) Provided: String, Int",
     ]);
   });
 });

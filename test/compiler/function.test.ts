@@ -321,8 +321,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Missing argument(s). Expected: parameter1 (String), parameter2 (Int)",
-      "Too many argument(s). Expected: parameter1 (String), parameter2 (Int)",
+      "Missing argument(s). Expected: key (String), value (Int)",
+      "Too many argument(s). Expected: key (String), value (Int)",
     ]);
   });
 

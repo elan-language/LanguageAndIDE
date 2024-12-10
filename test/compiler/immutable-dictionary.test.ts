@@ -507,7 +507,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: parameter1 (String), parameter2 (Int) Provided: Int, Int",
+      "Argument types expected: key (String), value (Int) Provided: Int, Int",
     ]);
   });
 
@@ -525,7 +525,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: parameter1 (String), parameter2 (Int) Provided: String, Float",
+      "Argument types expected: key (String), value (Int) Provided: String, Float",
     ]);
   });
 

@@ -77,7 +77,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: parameter1 (Int), parameter2 ([String:Int]) Provided: String, [String:Int]",
+      "Argument types expected: index (Int), value ([String:Int]) Provided: String, [String:Int]",
     ]);
   });
 
@@ -95,7 +95,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: parameter1 (String), parameter2 (Int) Provided: Int, Int",
+      "Argument types expected: key (String), value (Int) Provided: Int, Int",
     ]);
   });
 
@@ -113,7 +113,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: parameter1 (String), parameter2 ([Int]) Provided: Int, [Int]",
+      "Argument types expected: key (String), value ([Int]) Provided: Int, [Int]",
     ]);
   });
 
@@ -131,7 +131,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: parameter1 (Int), parameter2 (Int) Provided: String, Int",
+      "Argument types expected: index (Int), value (Int) Provided: String, Int",
     ]);
   });
 });

@@ -580,7 +580,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: parameter1 (Int), parameter2 (String) Provided: Int, Boolean",
+      "Argument types expected: index (Int), value (String) Provided: Int, Boolean",
     ]);
   });
 
@@ -613,7 +613,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: parameter1 (Int), parameter2 (String) Provided: String, String",
+      "Argument types expected: index (Int), value (String) Provided: String, String",
     ]);
   });
 
@@ -630,7 +630,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: x (Int), value (Int) Provided: Float, Int",
+      "Argument types expected: size (Int), initialValue (Int) Provided: Float, Int",
     ]);
   });
 

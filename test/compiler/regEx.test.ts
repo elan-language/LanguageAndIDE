@@ -163,8 +163,6 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Argument types expected: parameter1 (Regex) Provided: String",
-    ]);
+    assertDoesNotCompile(fileImpl, ["Argument types expected: regExp (Regex) Provided: String"]);
   });
 });

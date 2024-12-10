@@ -181,12 +181,12 @@ export class StdLib {
     throw new ElanCompilerError("Not implemented: " + typeof v);
   }
 
-  @elanFunction([])
+  @elanFunction(["value"])
   unicode(@elanIntType() n: number): string {
     return String.fromCharCode(n);
   }
 
-  @elanFunction([], FunctionOptions.pureExtension)
+  @elanFunction(["character"], FunctionOptions.pureExtension)
   asUnicode(s: string): number {
     return s.charCodeAt(0);
   }
@@ -211,7 +211,7 @@ export class StdLib {
     return set.addFromArray(arr);
   }
 
-  @elanFunction([], FunctionOptions.pure, ElanIterable(ElanInt))
+  @elanFunction(["start", "end"], FunctionOptions.pure, ElanIterable(ElanInt))
   range(@elanIntType() start: number, @elanIntType() end: number): number[] {
     const seq = [];
     for (let i = start; i <= end; i++) {
@@ -257,7 +257,7 @@ export class StdLib {
     return lst;
   }
 
-  @elanFunction([], FunctionOptions.pureExtension, ElanBoolean)
+  @elanFunction(["key"], FunctionOptions.pureExtension, ElanBoolean)
   hasKey<T1>(
     @elanAbstractDictionaryType(ElanT1, ElanT2)
     dict: { [key: string]: T1 },
@@ -266,7 +266,7 @@ export class StdLib {
     return this.keys(dict).includes(key);
   }
 
-  @elanFunction([], FunctionOptions.pureExtension, ElanImmutableDictionary(ElanT1, ElanT2))
+  @elanFunction(["key"], FunctionOptions.pureExtension, ElanImmutableDictionary(ElanT1, ElanT2))
   withRemoveAtKey<T1>(
     @elanImmutableDictionaryType(ElanT1, ElanT2)
     dict: { [key: string]: T1 },
@@ -278,7 +278,7 @@ export class StdLib {
     return newDict;
   }
 
-  @elanProcedure([], ProcedureOptions.extension)
+  @elanProcedure(["key"], ProcedureOptions.extension)
   removeAtKey<T1>(
     @elanDictionaryType(ElanT1, ElanT2)
     dict: { [key: string]: T1 },
@@ -287,7 +287,7 @@ export class StdLib {
     delete dict[key];
   }
 
-  @elanFunction([], FunctionOptions.pureExtension)
+  @elanFunction(["match", "replacement"], FunctionOptions.pureExtension)
   replace(s1: string, match: string, replacement: string): string {
     return s1.replaceAll(match, replacement);
   }
@@ -316,27 +316,27 @@ export class StdLib {
     return s1.toLowerCase();
   }
 
-  @elanFunction([], FunctionOptions.pureExtension)
+  @elanFunction(["other"], FunctionOptions.pureExtension)
   isBefore(s1: string, s2: string): boolean {
     return s1 < s2;
   }
 
-  @elanFunction([], FunctionOptions.pureExtension)
+  @elanFunction(["other"], FunctionOptions.pureExtension)
   isAfter(s1: string, s2: string): boolean {
     return s1 > s2;
   }
 
-  @elanFunction([], FunctionOptions.pureExtension)
+  @elanFunction(["other"], FunctionOptions.pureExtension)
   isAfterOrSameAs(s1: string, s2: string): boolean {
     return s1 > s2 || s1 === s2;
   }
 
-  @elanFunction([], FunctionOptions.pureExtension)
+  @elanFunction(["","other"], FunctionOptions.pureExtension)
   isBeforeOrSameAs(s1: string, s2: string): boolean {
     return s1 < s2 || s1 === s2;
   }
 
-  @elanFunction([], FunctionOptions.pureExtension, ElanList(ElanT1))
+  @elanFunction(["", "index", "value"], FunctionOptions.pureExtension, ElanList(ElanT1))
   withPutAt<T1>(
     @elanListType(ElanT1) list: T1[],
     @elanIntType() index: number,
@@ -348,7 +348,7 @@ export class StdLib {
     return newList;
   }
 
-  @elanProcedure([], ProcedureOptions.extension)
+  @elanProcedure(["", "index", "value"], ProcedureOptions.extension)
   putAt<T1>(
     @elanArrayType(ElanT1) list: T1[],
     @elanIntType() index: number,
@@ -357,7 +357,7 @@ export class StdLib {
     this.system.safeArraySet(list, index, value);
   }
 
-  @elanProcedure([], ProcedureOptions.extension)
+  @elanProcedure(["", "column", "row"], ProcedureOptions.extension)
   putAt2D<T1>(
     @elanArrayType(ElanArray(ElanT1))
     list: T1[][],
@@ -368,7 +368,7 @@ export class StdLib {
     this.system.safeArraySet(list[col], row, value);
   }
 
-  @elanProcedure([], ProcedureOptions.extension)
+  @elanProcedure(["","key", "value"], ProcedureOptions.extension)
   putAtKey<T1>(
     @elanDictionaryType(ElanT1, ElanT2)
     dict: { [key: string]: T1 },
@@ -378,7 +378,7 @@ export class StdLib {
     this.system.safeDictionarySet(dict, key, value);
   }
 
-  @elanFunction([], FunctionOptions.pureExtension, ElanList(ElanT1))
+  @elanFunction(["","index", "value"], FunctionOptions.pureExtension, ElanList(ElanT1))
   withInsert<T1>(
     @elanListType(ElanT1) list: T1[],
     @elanIntType() index: number,
@@ -390,7 +390,7 @@ export class StdLib {
     return newList;
   }
 
-  @elanProcedure([], ProcedureOptions.extension)
+  @elanProcedure(["","index", "value"], ProcedureOptions.extension)
   insertAt<T1>(
     @elanArrayType(ElanT1) list: T1[],
     @elanIntType() index: number,
@@ -410,7 +410,7 @@ export class StdLib {
     return -1;
   }
 
-  @elanFunction([], FunctionOptions.pureExtension, ElanList(ElanT1))
+  @elanFunction(["","index"], FunctionOptions.pureExtension, ElanList(ElanT1))
   withRemoveAt<T1>(@elanListType(ElanT1) list: T1[], @elanIntType() index: number) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const newList = (list as any).toSpliced(index, 1);
@@ -418,7 +418,7 @@ export class StdLib {
     return newList;
   }
 
-  @elanFunction([], FunctionOptions.pureExtension, ElanList(ElanT1))
+  @elanFunction(["","value"], FunctionOptions.pureExtension, ElanList(ElanT1))
   withRemoveFirst<T1>(@elanListType(ElanT1) list: T1[], @elanGenericParamT1Type() value: T1) {
     let newList = [...list];
     const index = this.elanIndexOf(newList, value);
@@ -430,7 +430,7 @@ export class StdLib {
     return newList;
   }
 
-  @elanFunction([], FunctionOptions.pureExtension, ElanList(ElanT1))
+  @elanFunction(["","value"], FunctionOptions.pureExtension, ElanList(ElanT1))
   withRemoveAll<T1>(@elanListType(ElanT1) list: T1[], @elanGenericParamT1Type() value: T1) {
     let newList = [...list];
     let index = this.elanIndexOf(newList, value);
@@ -443,12 +443,12 @@ export class StdLib {
     return newList;
   }
 
-  @elanProcedure([], ProcedureOptions.extension)
+  @elanProcedure(["","index"], ProcedureOptions.extension)
   removeAt<T1>(@elanArrayType(ElanT1) list: T1[], @elanIntType() index: number) {
     list.splice(index, 1);
   }
 
-  @elanProcedure([], ProcedureOptions.extension)
+  @elanProcedure(["","value"], ProcedureOptions.extension)
   removeFirst<T1>(@elanArrayType(ElanT1) list: T1[], @elanGenericParamT1Type() value: T1) {
     const index = this.elanIndexOf(list, value);
     if (index > -1) {
@@ -456,7 +456,7 @@ export class StdLib {
     }
   }
 
-  @elanProcedure([], ProcedureOptions.extension)
+  @elanProcedure(["","value"], ProcedureOptions.extension)
   removeAll<T1>(@elanArrayType(ElanT1) list: T1[], @elanGenericParamT1Type() value: T1) {
     let index = this.elanIndexOf(list, value);
     while (index > -1) {
@@ -465,27 +465,31 @@ export class StdLib {
     }
   }
 
-  @elanProcedure([], ProcedureOptions.extension)
+  @elanProcedure(["","value"], ProcedureOptions.extension)
   append<T1>(@elanArrayType(ElanT1) list: T1[], @elanGenericParamT1Type() value: T1) {
     list.push(value);
   }
 
-  @elanProcedure([], ProcedureOptions.extension)
+  @elanProcedure(["","other"], ProcedureOptions.extension)
   appendList<T1>(@elanArrayType(ElanT1) list: T1[], @elanArrayType(ElanT1) listB: T1[]) {
     list.push(...listB);
   }
 
-  @elanProcedure([], ProcedureOptions.extension)
+  @elanProcedure(["","other"], ProcedureOptions.extension)
   prepend<T1>(@elanArrayType(ElanT1) list: T1[], @elanGenericParamT1Type() value: T1) {
     list.unshift(value);
   }
 
-  @elanProcedure([], ProcedureOptions.extension)
+  @elanProcedure(["","other"], ProcedureOptions.extension)
   prependList<T1>(@elanArrayType(ElanT1) list: T1[], @elanArrayType(ElanT1) listB: T1[]) {
     list.unshift(...listB);
   }
 
-  @elanFunction([], FunctionOptions.pureExtension, ElanImmutableDictionary(ElanT1, ElanT2))
+  @elanFunction(
+    ["", "key", "value"],
+    FunctionOptions.pureExtension,
+    ElanImmutableDictionary(ElanT1, ElanT2),
+  )
   withPutAtKey<T1>(
     @elanImmutableDictionaryType(ElanT1, ElanT2)
     dict: { [key: string]: T1 },
@@ -498,7 +502,7 @@ export class StdLib {
     return newDict;
   }
 
-  @elanFunction([], FunctionOptions.pureExtension, ElanInt)
+  @elanFunction(["","targetString"], FunctionOptions.pureExtension, ElanInt)
   indexOf(s1: string, s2: string): number {
     return s1.indexOf(s2);
   }
@@ -508,33 +512,33 @@ export class StdLib {
     return s.trim();
   }
 
-  @elanFunction([], FunctionOptions.pureExtension, ElanList(ElanString))
+  @elanFunction(["","separator"], FunctionOptions.pureExtension, ElanList(ElanString))
   split(s: string, separator: string): string[] {
     return this.asList(s.split(separator));
   }
 
-  @elanFunction([], FunctionOptions.pureExtension)
+  @elanFunction(["","separator"], FunctionOptions.pureExtension)
   joinArrayElements(@elanArrayType(ElanString) list: string[], separator: string): string {
     return list.join(separator);
   }
 
-  @elanFunction([], FunctionOptions.pureExtension)
+  @elanFunction(["","separator"], FunctionOptions.pureExtension)
   joinListElements(@elanListType(ElanString) list: string[], separator: string): string {
     return list.join(separator);
   }
 
-  @elanFunction([], FunctionOptions.pure, ElanInt)
+  @elanFunction(["number"], FunctionOptions.pure, ElanInt)
   floor(n: number) {
     return Math.floor(n);
   }
 
-  @elanFunction([])
+  @elanFunction(["number", "decimalPlaces"])
   round(n: number, @elanIntType() places: number): number {
     const shift = 10 ** places;
     return Math.floor(n * shift + 0.5) / shift;
   }
 
-  @elanFunction([], FunctionOptions.pure, ElanInt)
+  @elanFunction(["number"], FunctionOptions.pure, ElanInt)
   ceiling(n: number): number {
     const fl = this.floor(n);
     return n > fl ? fl + 1 : fl;
@@ -547,7 +551,7 @@ export class StdLib {
     return `${type} [${items.map((n) => `"${n}":${o[n]}`).join(", ")}]`;
   }
 
-  @elanFunction([], FunctionOptions.pureExtension, ElanIterable(ElanT1))
+  @elanFunction(["","lambdaOrFunctionRef"], FunctionOptions.pureExtension, ElanIterable(ElanT1))
   filter<T1>(
     @elanIterableType(ElanT1)
     source: T1[] | string,
@@ -558,7 +562,7 @@ export class StdLib {
     return this.asIter(list.filter(predicate));
   }
 
-  @elanFunction([], FunctionOptions.pureExtension, ElanIterable(ElanT2))
+  @elanFunction(["","lambdaOrFunctionRef"], FunctionOptions.pureExtension, ElanIterable(ElanT2))
   map<T1, T2>(
     @elanIterableType(ElanT1)
     source: T1[] | string,
@@ -569,7 +573,7 @@ export class StdLib {
     return this.asIter(list.map(predicate));
   }
 
-  @elanFunction([], FunctionOptions.pureExtension, ElanT2)
+  @elanFunction(["","initialValue", "lambdaOrFunctionRef"], FunctionOptions.pureExtension, ElanT2)
   reduce<T1, T2>(
     @elanIterableType(ElanT1)
     source: T1[] | string,
@@ -586,7 +590,7 @@ export class StdLib {
     return Math.max(...source);
   }
 
-  @elanFunction([], FunctionOptions.pureExtension, ElanT1)
+  @elanFunction(["","lambdaOrFunctionRef"], FunctionOptions.pureExtension, ElanT1)
   maxBy<T1>(
     @elanIterableType(ElanT1) source: T1[],
     @elanFuncType([ElanT1], ElanFloat)
@@ -603,7 +607,7 @@ export class StdLib {
     return Math.min(...source);
   }
 
-  @elanFunction([], FunctionOptions.pureExtension, ElanT1)
+  @elanFunction(["","lambdaOrFunctionRef"], FunctionOptions.pureExtension, ElanT1)
   minBy<T1>(
     @elanIterableType(ElanT1) source: T1[],
     @elanFuncType([ElanT1], ElanFloat)
@@ -615,7 +619,7 @@ export class StdLib {
     return source[i];
   }
 
-  @elanFunction([], FunctionOptions.pureExtension, ElanIterable(ElanT1))
+  @elanFunction(["","lambdaOrFunctionRef"], FunctionOptions.pureExtension, ElanIterable(ElanT1))
   sortBy<T1>(
     @elanIterableType(ElanT1) source: T1[],
     @elanFuncType([ElanT1, ElanT1], ElanInt)
@@ -625,7 +629,7 @@ export class StdLib {
     return this.asIter(clone.sort(predicate));
   }
 
-  @elanFunction([], FunctionOptions.pureExtension)
+  @elanFunction(["","lambdaOrFunctionRef"], FunctionOptions.pureExtension)
   any<T1>(
     @elanIterableType(ElanT1) source: T1[],
     @elanFuncType([ElanT1], ElanBoolean)
@@ -634,7 +638,7 @@ export class StdLib {
     return source.some(predicate);
   }
 
-  @elanFunction([], FunctionOptions.pureExtension)
+  @elanFunction(["","item"], FunctionOptions.pureExtension)
   contains<T1>(
     @elanIterableType(ElanT1) source: T1[],
     @elanGenericParamT1Type() item: T1,
@@ -642,7 +646,7 @@ export class StdLib {
     return source.includes(item);
   }
 
-  @elanProcedure(["ms"], ProcedureOptions.async)
+  @elanProcedure(["milliseconds"], ProcedureOptions.async)
   pause(@elanIntType() ms: number): Promise<void> {
     return new Promise((resolve) => {
       setTimeout(() => resolve(), ms);
@@ -664,7 +668,7 @@ export class StdLib {
     return Math.floor(Math.random() * (high - low + 1)) + low;
   }
 
-  @elanFunction(["s"], FunctionOptions.pure, ElanTuple([ElanBoolean, ElanFloat]))
+  @elanFunction(["string"], FunctionOptions.pure, ElanTuple([ElanBoolean, ElanFloat]))
   parseAsFloat(s: string): [boolean, number] {
     const f = parseFloat(s);
     if (Number.isFinite(f)) {
@@ -673,18 +677,18 @@ export class StdLib {
     return [false, 0];
   }
 
-  @elanFunction(["s"], FunctionOptions.pure, ElanTuple([ElanBoolean, ElanInt]))
+  @elanFunction(["string"], FunctionOptions.pure, ElanTuple([ElanBoolean, ElanInt]))
   parseAsInt(s: string): [boolean, number] {
     const [b, f] = this.parseAsFloat(s);
     return [b, Math.floor(f)];
   }
 
-  @elanProcedure(["s"])
+  @elanProcedure(["string"])
   printLine(s: string) {
     this.system.elanInputOutput.print(`${s}\n`);
   }
 
-  @elanProcedure(["s"])
+  @elanProcedure(["string"])
   printNoLine(s: string) {
     this.system.elanInputOutput.print(s);
   }
@@ -699,7 +703,7 @@ export class StdLib {
     this.system.elanInputOutput.clearConsole();
   }
 
-  @elanFunction(["x", "value"], FunctionOptions.pure, ElanArray(ElanT1))
+  @elanFunction(["size", "initialValue"], FunctionOptions.pure, ElanArray(ElanT1))
   createArray<T1>(@elanIntType() x: number, @elanGenericParamT1Type() value: T1) {
     if (!this.isValueType(value)) {
       throw new ElanRuntimeError(
@@ -717,7 +721,11 @@ export class StdLib {
     return toInit;
   }
 
-  @elanFunction([], FunctionOptions.pure, ElanArray(ElanArray(ElanT1)))
+  @elanFunction(
+    ["columns", "rows", "initialValue"],
+    FunctionOptions.pure,
+    ElanArray(ElanArray(ElanT1)),
+  )
   create2DArray<T1>(
     @elanIntType() x: number,
     @elanIntType() y: number,
@@ -748,13 +756,13 @@ export class StdLib {
     this.printLine(prompt);
   }
 
-  @elanFunction([], FunctionOptions.impureAsync, ElanString)
+  @elanFunction(["prompt"], FunctionOptions.impureAsync, ElanString)
   inputString(prompt: string): Promise<string> {
     this.prompt(prompt);
     return this.system.input();
   }
 
-  @elanFunction([], FunctionOptions.impureAsync, ElanString)
+  @elanFunction(["prompt", "minLength", "maxLength"], FunctionOptions.impureAsync, ElanString)
   inputStringWithLimits(
     prompt: string,
     @elanIntType() minLength: number,
@@ -773,7 +781,7 @@ export class StdLib {
     });
   }
 
-  @elanFunction([], FunctionOptions.impureAsync, ElanString)
+  @elanFunction(["prompt", "options"], FunctionOptions.impureAsync, ElanString)
   inputStringFromOptions(
     prompt: string,
     @elanArrayType(ElanString) options: string[],
@@ -789,7 +797,7 @@ export class StdLib {
     });
   }
 
-  @elanFunction([], FunctionOptions.impureAsync, ElanInt)
+  @elanFunction(["prompt"], FunctionOptions.impureAsync, ElanInt)
   inputInt(prompt: string): Promise<number> {
     this.prompt(prompt);
     return this.system.input().then((s) => {
@@ -805,7 +813,7 @@ export class StdLib {
     });
   }
 
-  @elanFunction([], FunctionOptions.impureAsync, ElanInt)
+  @elanFunction(["prompt", "minValue", "maxValue"], FunctionOptions.impureAsync, ElanInt)
   inputIntBetween(
     prompt: string,
     @elanIntType() min: number,
@@ -823,7 +831,7 @@ export class StdLib {
     });
   }
 
-  @elanFunction([], FunctionOptions.impureAsync, ElanFloat)
+  @elanFunction(["prompt"], FunctionOptions.impureAsync, ElanFloat)
   inputFloat(prompt: string): Promise<number> {
     this.prompt(prompt);
     return this.system.input().then((s) => {
@@ -839,7 +847,7 @@ export class StdLib {
     });
   }
 
-  @elanFunction([], FunctionOptions.impureAsync, ElanFloat)
+  @elanFunction(["prompt", "minValue", "maxValue"], FunctionOptions.impureAsync, ElanFloat)
   inputFloatBetween(prompt: string, min: number, max: number): Promise<number> {
     this.prompt(prompt);
     return this.system.input().then((s) => {
@@ -854,69 +862,69 @@ export class StdLib {
   }
   //Math
 
-  @elanFunction([])
+  @elanFunction(["number"])
   abs(x: number): number {
     return Math.abs(x);
   }
 
   // Returns the absolute value of the input.
 
-  @elanFunction([])
+  @elanFunction(["value"])
   acos(x: number): number {
     return Math.acos(x);
   }
   // Returns the arccosine of the input.
 
-  @elanFunction([])
+  @elanFunction(["value"])
   acosDeg(n: number): number {
     return this.radToDeg(this.acos(n));
   }
 
-  @elanFunction([])
+  @elanFunction(["value"])
   asin(x: number): number {
     return Math.asin(x);
   }
   // Returns the arcsine of the input.
 
-  @elanFunction([])
+  @elanFunction(["value"])
   asinDeg(n: number): number {
     return this.radToDeg(this.asin(n));
   }
 
-  @elanFunction([])
+  @elanFunction(["value"])
   atan(x: number): number {
     return Math.atan(x);
   }
   // Returns the arctangent of the input.
 
-  @elanFunction([])
+  @elanFunction(["value"])
   atanDeg(n: number): number {
     return this.radToDeg(this.atan(n));
   }
 
-  @elanFunction([])
+  @elanFunction(["radians"])
   cos(x: number): number {
     return Math.cos(x);
   }
 
-  @elanFunction([])
+  @elanFunction(["degrees"])
   cosDeg(n: number): number {
     return this.cos(this.degToRad(n));
   }
 
-  @elanFunction([])
+  @elanFunction(["x"])
   exp(x: number): number {
     return Math.exp(x);
   }
   // Returns ex, where x is the argument, and e is Euler's number (2.718…, the base of the natural logarithm).
 
-  @elanFunction([])
+  @elanFunction(["number"])
   logE(x: number): number {
     return Math.log(x);
   }
   // Returns the natural logarithm (㏒e; also, ㏑) of the input.
 
-  @elanFunction([])
+  @elanFunction(["number"])
   log10(x: number): number {
     return Math.log10(x);
   }
@@ -924,75 +932,75 @@ export class StdLib {
 
   // Returns the base-2 logarithm of the input.
 
-  @elanFunction([])
+  @elanFunction(["number"])
   log2(x: number): number {
     return Math.log2(x);
   }
 
-  @elanFunction([])
+  @elanFunction(["radians"])
   sin(x: number): number {
     return Math.sin(x);
   }
   // Returns the sine of the input.
 
-  @elanFunction([])
+  @elanFunction(["degrees"])
   sinDeg(n: number): number {
     return this.sin(this.degToRad(n));
   }
 
-  @elanFunction([])
+  @elanFunction(["number"])
   sqrt(x: number): number {
     return Math.sqrt(x);
   }
   // Returns the positive square root of the input.
 
-  @elanFunction([])
+  @elanFunction(["radians"])
   tan(x: number): number {
     return Math.tan(x);
   }
   // Returns the tangent of the input.
 
-  @elanFunction([])
+  @elanFunction(["degrees"])
   tanDeg(n: number): number {
     return this.tan(this.degToRad(n));
   }
 
-  @elanFunction([])
+  @elanFunction(["degrees"])
   degToRad(d: number): number {
     return (d * this.pi) / 180;
   }
 
-  @elanFunction([])
+  @elanFunction(["radians"])
   radToDeg(r: number): number {
     return (r / this.pi) * 180;
   }
 
-  @elanFunction([], FunctionOptions.pure, ElanInt)
+  @elanFunction(["a", "b"], FunctionOptions.pure, ElanInt)
   bitAnd(@elanIntType() a: number, @elanIntType() b: number): number {
     return a & b;
   }
 
-  @elanFunction([], FunctionOptions.pure, ElanInt)
+  @elanFunction(["a", "b"], FunctionOptions.pure, ElanInt)
   bitOr(@elanIntType() a: number, @elanIntType() b: number): number {
     return a | b;
   }
 
-  @elanFunction([], FunctionOptions.pure, ElanInt)
+  @elanFunction(["a", "b"], FunctionOptions.pure, ElanInt)
   bitXor(@elanIntType() a: number, @elanIntType() b: number): number {
     return a ^ b;
   }
 
-  @elanFunction([], FunctionOptions.pure, ElanInt)
+  @elanFunction(["a"], FunctionOptions.pure, ElanInt)
   bitNot(@elanIntType() a: number): number {
     return ~a;
   }
 
-  @elanFunction([], FunctionOptions.pure, ElanInt)
+  @elanFunction(["a"], FunctionOptions.pure, ElanInt)
   bitShiftL(@elanIntType() a: number, @elanIntType() shift: number): number {
     return a << shift;
   }
 
-  @elanFunction([], FunctionOptions.pure, ElanInt)
+  @elanFunction(["a"], FunctionOptions.pure, ElanInt)
   bitShiftR(@elanIntType() a: number, @elanIntType() shift: number): number {
     return a >>> shift; // >>> is unsigned version of >>
   }
@@ -1002,7 +1010,7 @@ export class StdLib {
     return a.toString(2);
   }
 
-  @elanFunction([], FunctionOptions.pureExtension)
+  @elanFunction(["","regExp"], FunctionOptions.pureExtension)
   matchesRegex(a: string, r: RegExp): boolean {
     return r.test(a);
   }
@@ -1023,7 +1031,7 @@ export class StdLib {
     );
   }
 
-  @elanFunction([], FunctionOptions.pure, ElanClass(TextFileWriter))
+  @elanFunction(["fileName"], FunctionOptions.pure, ElanClass(TextFileWriter))
   createFileForWriting(fileName: string): TextFileWriter {
     const tf = this.system.initialise(new TextFileWriter());
     tf.fileName = fileName;
