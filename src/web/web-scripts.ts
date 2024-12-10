@@ -15,6 +15,7 @@ import {
   WebWorkerMessage,
   WebWorkerReadMessage,
   WebWorkerStatusMessage,
+  WebWorkerTestMessage,
   WebWorkerWriteMessage,
 } from "./web-worker-messages";
 
@@ -67,7 +68,8 @@ let doOnce = true;
 let profile: Profile;
 let lastSavedHash = "";
 let undoRedoHash = "";
-let programWorker: Worker;
+let runWorker: Worker;
+let testWorker: Worker;
 let inactivityTimer: any | undefined = undefined;
 let autoSaveFileHandle: FileSystemFileHandle | undefined = undefined;
 
@@ -100,9 +102,9 @@ runButton?.addEventListener("click", async () => {
     const jsCode = file.compileAsWorker(path);
     const asUrl = "data:text/javascript;base64," + btoa(jsCode);
 
-    programWorker = new Worker(asUrl, { type: "module" });
+    runWorker = new Worker(asUrl, { type: "module" });
 
-    programWorker.onmessage = async (e: MessageEvent<WebWorkerMessage>) => {
+    runWorker.onmessage = async (e: MessageEvent<WebWorkerMessage>) => {
       const data = e.data;
 
       switch (data.type) {
@@ -121,14 +123,14 @@ runButton?.addEventListener("click", async () => {
       }
     };
 
-    programWorker.onerror = async (ev: ErrorEvent) => {
+    runWorker.onerror = async (ev: ErrorEvent) => {
       const err = new ElanRuntimeError(ev.message);
       await showError(err, file.fileName, false);
       file.setRunStatus(RunStatus.error);
       await updateDisplayValues();
     };
 
-    programWorker.postMessage({ type: "start" } as WebWorkerMessage);
+    runWorker.postMessage({ type: "start" } as WebWorkerMessage);
   } catch (e) {
     console.warn(e);
     file.setRunStatus(RunStatus.error);
@@ -137,7 +139,7 @@ runButton?.addEventListener("click", async () => {
 });
 
 stopButton?.addEventListener("click", async () => {
-  programWorker?.terminate();
+  runWorker?.terminate();
   file.setRunStatus(RunStatus.default);
   await updateDisplayValues();
 });
@@ -263,8 +265,10 @@ async function showError(err: Error, fileName: string, reset: boolean) {
 }
 
 async function refreshAndDisplay(compileIfParsed?: boolean) {
-  const testRunner = await getTestRunner(system, stdlib);
-  await file.refreshAllStatuses(testRunner, compileIfParsed);
+  file.refreshAllStatuses(compileIfParsed);
+  if (file.readCompileStatus() === CompileStatus.ok) {
+    await runTests();
+  }
   try {
     await renderAsHtml();
   } catch (e) {
@@ -821,34 +825,34 @@ async function handleWorkerIO(data: WebWorkerWriteMessage) {
   switch (data.function) {
     case "readLine":
       const line = await elanInputOutput.readLine();
-      programWorker.postMessage(readMsg(line));
+      runWorker.postMessage(readMsg(line));
       break;
     case "waitForAnyKey":
       await elanInputOutput.waitForAnyKey();
-      programWorker.postMessage(readMsg(""));
+      runWorker.postMessage(readMsg(""));
       break;
     case "getKey":
       const key = await elanInputOutput.getKey();
-      programWorker.postMessage(readMsg(key));
+      runWorker.postMessage(readMsg(key));
       break;
     case "getKeyWithModifier":
       const keyWithMod = await elanInputOutput.getKeyWithModifier();
-      programWorker.postMessage(readMsg(keyWithMod));
+      runWorker.postMessage(readMsg(keyWithMod));
       break;
     case "readFile":
       try {
         const file = await elanInputOutput.readFile();
-        programWorker.postMessage(readMsg(file));
+        runWorker.postMessage(readMsg(file));
       } catch (e) {
-        programWorker.postMessage(errorMsg(e));
+        runWorker.postMessage(errorMsg(e));
       }
       break;
     case "writeFile":
       try {
         await elanInputOutput.writeFile(data.parameters[0] as string, data.parameters[1] as string);
-        programWorker.postMessage(readMsg(""));
+        runWorker.postMessage(readMsg(""));
       } catch (e) {
-        programWorker.postMessage(errorMsg(e));
+        runWorker.postMessage(errorMsg(e));
       }
       break;
     default:
@@ -857,14 +861,14 @@ async function handleWorkerIO(data: WebWorkerWriteMessage) {
 }
 
 async function handleWorkerFinished() {
-  programWorker.terminate();
+  runWorker.terminate();
   console.info("elan program completed OK");
   file.setRunStatus(RunStatus.default);
   await updateDisplayValues();
 }
 
 async function handleWorkerError(data: WebWorkerStatusMessage) {
-  programWorker.terminate();
+  runWorker.terminate();
   const e = data.error;
   const err = e instanceof ElanRuntimeError ? e : new ElanRuntimeError(e as any);
   await showError(err, file.fileName, false);
@@ -1100,5 +1104,93 @@ async function autoSave(code: string) {
     } catch (e) {
       console.warn("autosave failed");
     }
+  }
+}
+
+async function handleTestWorkerFinished(data: WebWorkerTestMessage) {
+  testWorker.terminate();
+  testsComplete = true;
+  file.refreshTestStatuses(data.value);
+  // console.info("elan program completed OK");
+  // file.setRunStatus(RunStatus.default);
+  // await updateDisplayValues();
+}
+
+async function handleTestWorkerError(data: WebWorkerStatusMessage) {
+  testWorker.terminate();
+  testsComplete = true;
+  // const e = data.error;
+  // const err = e instanceof ElanRuntimeError ? e : new ElanRuntimeError(e as any);
+  // await showError(err, file.fileName, false);
+  // file.setRunStatus(RunStatus.error);
+  // await updateDisplayValues();
+}
+
+let testsComplete = false;
+
+async function runTests(): Promise<void> {
+  testsComplete = false;
+  await runTestsInner();
+  return new Promise((rs, rj) => {
+    let timeout = 0;
+
+    const i = setInterval(() => {
+      timeout++;
+
+      if (testsComplete) {
+        rs();
+        return;
+      }
+
+      if (timeout === 30) {
+        clearInterval(i);
+        rj();
+      }
+    }, 1000);
+  });
+}
+
+async function runTestsInner() {
+  try {
+    // clearDisplays();
+    // file.setRunStatus(RunStatus.running);
+    // await updateDisplayValues();
+    const path = `${document.location.origin}${document.location.pathname}`.replace(
+      "/index.html",
+      "",
+    );
+    const jsCode = file.compileAsTestWorker(path);
+    const asUrl = "data:text/javascript;base64," + btoa(jsCode);
+
+    testWorker = new Worker(asUrl, { type: "module" });
+
+    testWorker.onmessage = async (e: MessageEvent<WebWorkerMessage>) => {
+      const data = e.data;
+
+      switch (data.type) {
+        case "status":
+          switch (data.status) {
+            case "finished":
+              await handleTestWorkerError(data);
+              break;
+          }
+          break;
+        case "test":
+          await handleTestWorkerFinished(data);
+      }
+    };
+
+    testWorker.onerror = async (ev: ErrorEvent) => {
+      // const err = new ElanRuntimeError(ev.message);
+      // await showError(err, file.fileName, false);
+      // file.setRunStatus(RunStatus.error);
+      // await updateDisplayValues();
+    };
+
+    testWorker.postMessage({ type: "start" } as WebWorkerMessage);
+  } catch (e) {
+    // console.warn(e);
+    // file.setRunStatus(RunStatus.error);
+    // await updateDisplayValues();
   }
 }

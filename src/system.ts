@@ -252,4 +252,25 @@ export class System {
     (tl as unknown as hasHiddenType)._type = type;
     return [hd, tl];
   }
+
+  async runTests(tests: [string, (_outcomes: AssertOutcome[]) => Promise<void>][]) {
+    const allOutcomes: [string, AssertOutcome[]][] = [];
+
+    for (const t of tests) {
+      const outcomes: AssertOutcome[] = [];
+      const testId = t[0];
+      try {
+        await t[1](outcomes);
+      } catch (e) {
+        const msg = (e as Error).message || "Test threw error";
+        outcomes.push(new AssertOutcome(TestStatus.error, msg, "", "", e as Error));
+      }
+      allOutcomes.push([testId, outcomes]);
+    }
+
+    // clear tests each time or the tests array in the program gets duplicates
+    tests.length = 0;
+
+    return allOutcomes;
+  }
 }

@@ -1,3 +1,5 @@
+import { AssertOutcome } from "../system";
+
 export type WebWorkerStatusMessage = {
   type: "status";
   status: "finished" | "error";
@@ -15,6 +17,11 @@ export type WebWorkerReadMessage = {
   value: string | [string, string];
 };
 
+export type WebWorkerTestMessage = {
+  type: "test";
+  value: [string, AssertOutcome[]][];
+};
+
 export type WebWorkerMessage = {
-  type: "start" | "read" | "write" | "status";
-} & (WebWorkerStatusMessage | WebWorkerWriteMessage | WebWorkerReadMessage);
+  type: "start" | "read" | "write" | "status" | "test";
+} & (WebWorkerStatusMessage | WebWorkerWriteMessage | WebWorkerReadMessage | WebWorkerTestMessage);

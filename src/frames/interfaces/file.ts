@@ -20,6 +20,8 @@ export interface File extends Parent {
 
   compileAsWorker(base: string): string;
 
+  compileAsTestWorker(base: string): string;
+
   fileName: string;
   readonly defaultFileName: string;
 
@@ -78,10 +80,9 @@ export interface File extends Parent {
 
   libraryScope: Scope;
 
-  refreshAllStatuses(
-    testRunner: (jsCode: string) => Promise<[string, AssertOutcome[]][]>,
-    compileIfParsed?: boolean,
-  ): Promise<void>;
+  refreshAllStatuses(compileIfParsed?: boolean): void;
+
+  refreshTestStatuses(outcomes: [string, AssertOutcome[]][]): void;
 
   setFieldBeingEdited(value: boolean): void;
   getFieldBeingEdited(): boolean;
