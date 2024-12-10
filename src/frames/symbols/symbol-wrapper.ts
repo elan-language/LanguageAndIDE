@@ -48,8 +48,8 @@ export class SymbolWrapper {
   }
 
   get insertedText() {
-    if (this.isKeyword) {
-      const postfix = this.name === propertyKeyword ? "." : " ";
+    if (this.wrapped instanceof KeywordCompletion) {
+      const postfix = this.wrapped.dotAfter ? "." : this.wrapped.spaceAfter ? " " : "";
       return `${this.name}${postfix}`;
     }
 
