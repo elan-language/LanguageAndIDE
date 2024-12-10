@@ -19,7 +19,7 @@ import { Overtyper } from "../overtyper";
 import { CSV } from "../parse-nodes/csv";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { CompileStatus, DisplayStatus, ParseStatus } from "../status-enums";
-import { SymbolCompletionSpec } from "../symbol-completion-helpers";
+import { KeywordCompletion, SymbolCompletionSpec } from "../symbol-completion-helpers";
 import { filteredSymbols, removeIfSingleFullMatch } from "../symbols/symbol-helpers";
 import { SymbolWrapper } from "../symbols/symbol-wrapper";
 import { UnknownType } from "../symbols/unknown-type";
@@ -716,11 +716,11 @@ export abstract class AbstractField implements Selectable, Field {
     for (let i = startIndex; i < lastIndex; i++) {
       const symbol = symbols[i];
       const name = symbol.displayName;
+      const cls = symbol.class;
       const selected = this.markIfSelected(symbol) ? " selected" : "";
 
       symbolAsHtml.push(
-        // Can add back in ${isP}  and ${symbolType}
-        `<div class="autocomplete-item${selected}" data-id="${this.htmlId}">${name}</div>`,
+        `<div class="autocomplete-item${selected}${cls}" data-id="${this.htmlId}">${name}</div>`,
       );
     }
 
@@ -768,6 +768,7 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   public getSymbolCompletionSpec(): SymbolCompletionSpec {
+    KeywordCompletion.reset(); // to clear static map 
     const rn = this.rootNode ?? this.initialiseRoot();
     const spec = rn.symbolCompletion_getSpec();
     if (spec.context === "") {

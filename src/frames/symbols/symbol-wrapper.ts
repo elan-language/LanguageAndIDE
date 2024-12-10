@@ -9,6 +9,7 @@ import {
   isCallStatement,
   isConcreteTypeName,
   isFunction,
+  isId,
   isMemberOnFieldsClass,
   isProcedure,
   isProperty,
@@ -45,6 +46,28 @@ export class SymbolWrapper {
     }
 
     return isGenericClass(symbol) ? `${this.name}&lt;of` : this.name;
+  }
+
+  get class() {
+    if (this.isKeyword) {
+      return " keyword";
+    }
+
+    const symbol = this.wrapped as ElanSymbol;
+
+    if (isFunction(symbol, this.transforms) || isProcedure(symbol, this.transforms)) {
+      return " method";
+    }
+
+    if (isConcreteTypeName(symbol) || isAbstractTypeName(symbol)) {
+      return " type";
+    }
+
+    if (isId(symbol)) {
+      return " id";
+    }
+
+    return "";
   }
 
   get insertedText() {

@@ -30,6 +30,10 @@ export class KeywordCompletion {
 
     return this.map.get(keyword)!;
   }
+
+  static reset() {
+    this.map.clear();
+  }
 }
 
 export class SymbolCompletionSpec {
