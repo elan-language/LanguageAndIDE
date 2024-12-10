@@ -53,9 +53,6 @@ system.stdlib = stdlib; // to allow injection
 
 // well known ids
 const lastDirId = "elan-files";
-const lastCodeId = "last-code-id";
-const lastFileName = "last-file-name";
-const lastSavedStatus = "last-saved-status";
 
 const elanInputOutput = new WebInputOutput(consoleDiv, graphicsDiv);
 let undoRedoFiles: string[] = [];
@@ -203,6 +200,7 @@ function checkForUnsavedChanges(): boolean {
 }
 
 async function setup(p: Profile) {
+  clearUndoRedoAndAutoSave();
   profile = p;
   file = new FileImpl(hash, profile, transforms());
   await displayFile();
@@ -300,13 +298,7 @@ async function displayCode(rawCode: string, fileName: string) {
 }
 
 async function displayFile() {
-  const [previousCode, previousFileName] = getLastLocalSave();
-  if (previousCode) {
-    await displayCode(previousCode, previousFileName);
-    updateNameAndSavedStatus();
-  } else {
-    await initialDisplay(true);
-  }
+  await initialDisplay(true);
 }
 
 function getModKey(e: KeyboardEvent | MouseEvent) {
@@ -702,9 +694,7 @@ async function localAndAutoSave(field: HTMLElement | undefined) {
       currentFileIndex = undoRedoFiles.length - 1;
       nextFileIndex = -1;
 
-      localStorage.setItem(lastCodeId, id);
       localStorage.setItem(id, code);
-      localStorage.setItem(lastFileName, file.fileName);
       saveButton.classList.add("unsaved");
       undoRedoHash = file.currentHash;
       currentFieldId = field?.id ?? currentFieldId;
@@ -718,15 +708,6 @@ async function localAndAutoSave(field: HTMLElement | undefined) {
 
   // autosave if setup
   autoSave(code);
-}
-
-function getLastLocalSave(): [string, string] {
-  const id = localStorage.getItem(lastCodeId) ?? "";
-  const previousCode = localStorage.getItem(id);
-  const previousFileName = localStorage.getItem(lastFileName) ?? "";
-  lastSavedHash = localStorage.getItem(lastSavedStatus) ?? "";
-
-  return [previousCode ?? "", previousFileName];
 }
 
 function updateIndexes(indexJustUsed: number) {
@@ -933,6 +914,7 @@ function getAppender() {
 }
 
 async function readAndParse(rawCode: string, fileName: string, reset: boolean, append?: boolean) {
+  lastDirId;
   const code = new CodeSourceFromString(rawCode);
   file.fileName = fileName;
   try {
@@ -1027,7 +1009,6 @@ function updateFileName() {
   }
 
   file.fileName = fileName;
-  localStorage.setItem(lastFileName, file.fileName);
 }
 
 async function handleDownload(event: Event) {
@@ -1046,7 +1027,6 @@ async function handleDownload(event: Event) {
   URL.revokeObjectURL(href);
   saveButton.classList.remove("unsaved");
   lastSavedHash = file.currentHash;
-  localStorage.setItem(lastSavedStatus, lastSavedHash);
   event.preventDefault();
   await renderAsHtml();
 }
@@ -1060,7 +1040,6 @@ async function chromeSave(code: string) {
   });
 
   file.fileName = fh.name;
-  localStorage.setItem(lastFileName, file.fileName);
 
   const writeable = await fh.createWritable();
   await writeable.write(code);
@@ -1076,7 +1055,6 @@ async function handleChromeDownload(event: Event) {
 
     saveButton.classList.remove("unsaved");
     lastSavedHash = file.currentHash;
-    localStorage.setItem(lastSavedStatus, lastSavedHash);
 
     await renderAsHtml();
   } catch (e) {
@@ -1100,7 +1078,6 @@ async function handleChromeAutoSave(event: Event) {
   try {
     autoSaveFileHandle = await chromeSave(code);
     lastSavedHash = file.currentHash;
-    localStorage.setItem(lastSavedStatus, lastSavedHash);
     await renderAsHtml();
     autoSaveButton.innerText = "Auto-off";
     autoSaveButton.setAttribute("title", "Click to turn auto-save off and resume manual saving.");
@@ -1119,7 +1096,6 @@ async function autoSave(code: string) {
       await writeable.write(code);
       await writeable.close();
       lastSavedHash = file.currentHash;
-      localStorage.setItem(lastSavedStatus, lastSavedHash);
       updateNameAndSavedStatus();
     } catch (e) {
       console.warn("autosave failed");

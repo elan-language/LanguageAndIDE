@@ -768,7 +768,7 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   public getSymbolCompletionSpec(): SymbolCompletionSpec {
-    KeywordCompletion.reset(); // to clear static map 
+    KeywordCompletion.reset(); // to clear static map
     const rn = this.rootNode ?? this.initialiseRoot();
     const spec = rn.symbolCompletion_getSpec();
     if (spec.context === "") {
