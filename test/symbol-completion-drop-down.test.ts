@@ -905,14 +905,14 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["b", "*", "*"],
       ["bar", "*", "*"],
+      ["b", "*", "*"],
     ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "ident24", "b", 0, expected, true);
   });
 
-  test("Pass_properties6", async () => {
+  test("Pass_properties7", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -1119,9 +1119,9 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["BaseVG", "*", "*"],
       ["BlockGraphics", "*", "*"],
       ["Boolean", "*", "*"],
+      ["BaseVG", "*", "*"],
       ["GraphicsBase", "*", "*"],
     ] as [string, string, string][];
 
@@ -1143,9 +1143,9 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["BaseVG", "*", "*"],
       ["BlockGraphics", "*", "*"],
       ["Boolean", "*", "*"],
+      ["BaseVG", "*", "*"],
       ["GraphicsBase", "*", "*"],
     ] as [string, string, string][];
 
@@ -1266,10 +1266,10 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
+      ["f3", "*", "*"],
       ["asString", "*", "*"],
       ["f1", "*", "*"],
       ["f2", "*", "*"],
-      ["f3", "*", "*"],
     ] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "expr5", "foo().", expected);
@@ -1306,10 +1306,10 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
+      ["f3", "*", "*"],
       ["asString", "*", "*"],
       ["f1", "*", "*"],
       ["f2", "*", "*"],
-      ["f3", "*", "*"],
     ] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "expr5", "foo(1).", expected);
