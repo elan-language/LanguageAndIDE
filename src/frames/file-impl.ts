@@ -303,6 +303,24 @@ export class FileImpl implements File, Scope {
     return `${stdlib}\n${this.compileGlobals()}return [main, _tests];}\n${onmsg}`;
   }
 
+  compileAsTestWorker(base: string): string {
+    const onmsg = `onmessage = async (e) => {
+  if (e.data.type === "start") {
+    try {
+      const [main, tests] = await program();
+      const outcomes = await system.runTests(tests);
+      postMessage({type : "test", value : outcomes});
+    }
+    catch (e) {
+      postMessage({type : "status", status : "error", error : e});
+    }
+  }
+};`;
+
+    const stdlib = `import { StdLib } from "${base}/elan-api.js"; var system; var _stdlib; var _tests = []; async function program() { _stdlib = new StdLib(); system = _stdlib.system; system.stdlib = _stdlib  `;
+    return `${stdlib}\n${this.compileGlobals()}return [main, _tests];}\n${onmsg}`;
+  }
+
   renderHashableContent(): string {
     const globals = parentHelper_renderChildrenAsSource(this);
     let html = `${this.getVersion()}${this.getProfileName()} ${this.parseStatusAsString()}\r\n\r\n${globals}`;
@@ -384,6 +402,10 @@ export class FileImpl implements File, Scope {
     return DisplayStatus[helper_parseStatusAsDisplayStatus(this._parseStatus)];
   }
 
+  setTestStatus(s: TestStatus) {
+    this._testStatus = s;
+  }
+
   updateAllParseStatus(): void {
     this.getChildren().forEach((c) => c.updateParseStatus());
     this._parseStatus = worstParseStatus(
@@ -392,10 +414,7 @@ export class FileImpl implements File, Scope {
     );
   }
 
-  async refreshAllStatuses(
-    testRunner: (jsCode: string) => Promise<[string, AssertOutcome[]][]>,
-    compileIfParsed?: boolean,
-  ) {
+  refreshParseAndCompileStatuses(compileIfParsed?: boolean) {
     let code = "";
     this._parseStatus = ParseStatus.default as ParseStatus;
     this.parseError = undefined;
@@ -406,8 +425,10 @@ export class FileImpl implements File, Scope {
       code = this.compile();
       this.updateAllCompileStatus();
     }
+  }
+
+  refreshTestStatuses(outcomes: [string, AssertOutcome[]][]) {
     if (this._compileStatus === CompileStatus.ok) {
-      const outcomes = await testRunner(code);
       let errors: Error[] = [];
       for (const outcome of outcomes) {
         const [tid, asserts] = outcome;

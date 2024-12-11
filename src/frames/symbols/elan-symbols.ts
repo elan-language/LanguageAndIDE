@@ -51,6 +51,7 @@ const iterableSymbol: ClassSymbol = {
   },
   symbolScope: SymbolScope.program,
   isClass: true,
+  abstract: true,
   ofTypes: [new GenericParameterType("T")],
 };
 
@@ -68,6 +69,7 @@ const funcSymbol: ClassSymbol = {
   },
   symbolScope: SymbolScope.program,
   isClass: true,
+  abstract: true,
   ofTypes: [new GenericParameterType("T")],
 };
 

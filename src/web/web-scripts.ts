@@ -6,8 +6,7 @@ import { CodeSourceFromString, FileImpl, cannotLoadFile } from "../frames/file-i
 import { editorEvent } from "../frames/interfaces/editor-event";
 import { File } from "../frames/interfaces/file";
 import { Profile } from "../frames/interfaces/profile";
-import { CompileStatus, ParseStatus, RunStatus } from "../frames/status-enums";
-import { getTestRunner } from "../runner";
+import { CompileStatus, ParseStatus, RunStatus, TestStatus } from "../frames/status-enums";
 import { StdLib } from "../standard-library/std-lib";
 import { fetchProfile, hash, transforms } from "./web-helpers";
 import { WebInputOutput } from "./web-input-output";
@@ -15,6 +14,7 @@ import {
   WebWorkerMessage,
   WebWorkerReadMessage,
   WebWorkerStatusMessage,
+  WebWorkerTestMessage,
   WebWorkerWriteMessage,
 } from "./web-worker-messages";
 
@@ -67,7 +67,8 @@ let doOnce = true;
 let profile: Profile;
 let lastSavedHash = "";
 let undoRedoHash = "";
-let programWorker: Worker;
+let runWorker: Worker | undefined;
+let testWorker: Worker | undefined;
 let inactivityTimer: any | undefined = undefined;
 let autoSaveFileHandle: FileSystemFileHandle | undefined = undefined;
 
@@ -88,11 +89,11 @@ trimButton.addEventListener("click", async () => {
   await renderAsHtml();
 });
 
-runButton?.addEventListener("click", async () => {
+runButton?.addEventListener("click", () => {
   try {
     clearDisplays();
     file.setRunStatus(RunStatus.running);
-    await updateDisplayValues();
+    updateDisplayValues();
     const path = `${document.location.origin}${document.location.pathname}`.replace(
       "/index.html",
       "",
@@ -100,9 +101,9 @@ runButton?.addEventListener("click", async () => {
     const jsCode = file.compileAsWorker(path);
     const asUrl = "data:text/javascript;base64," + btoa(jsCode);
 
-    programWorker = new Worker(asUrl, { type: "module" });
+    runWorker = new Worker(asUrl, { type: "module" });
 
-    programWorker.onmessage = async (e: MessageEvent<WebWorkerMessage>) => {
+    runWorker.onmessage = async (e: MessageEvent<WebWorkerMessage>) => {
       const data = e.data;
 
       switch (data.type) {
@@ -112,34 +113,41 @@ runButton?.addEventListener("click", async () => {
         case "status":
           switch (data.status) {
             case "finished":
-              await handleWorkerFinished();
+              handleRunWorkerFinished();
               break;
             case "error":
-              await handleWorkerError(data);
+              await handleRunWorkerError(data);
               break;
           }
       }
     };
 
-    programWorker.onerror = async (ev: ErrorEvent) => {
+    runWorker.onerror = async (ev: ErrorEvent) => {
       const err = new ElanRuntimeError(ev.message);
       await showError(err, file.fileName, false);
       file.setRunStatus(RunStatus.error);
-      await updateDisplayValues();
+      updateDisplayValues();
     };
 
-    programWorker.postMessage({ type: "start" } as WebWorkerMessage);
+    runWorker.postMessage({ type: "start" } as WebWorkerMessage);
   } catch (e) {
     console.warn(e);
     file.setRunStatus(RunStatus.error);
-    await updateDisplayValues();
+    updateDisplayValues();
   }
 });
 
-stopButton?.addEventListener("click", async () => {
-  programWorker?.terminate();
-  file.setRunStatus(RunStatus.default);
-  await updateDisplayValues();
+stopButton?.addEventListener("click", () => {
+  if (runWorker) {
+    runWorker.terminate();
+    runWorker = undefined;
+    file.setRunStatus(RunStatus.default);
+  }
+  if (testWorker) {
+    endTests();
+    file.setTestStatus(TestStatus.default);
+  }
+  updateDisplayValues();
 });
 
 clearConsoleButton?.addEventListener("click", () => {
@@ -263,8 +271,10 @@ async function showError(err: Error, fileName: string, reset: boolean) {
 }
 
 async function refreshAndDisplay(compileIfParsed?: boolean) {
-  const testRunner = await getTestRunner(system, stdlib);
-  await file.refreshAllStatuses(testRunner, compileIfParsed);
+  file.refreshParseAndCompileStatuses(compileIfParsed);
+  if (file.readCompileStatus() === CompileStatus.ok) {
+    runTests();
+  }
   try {
     await renderAsHtml();
   } catch (e) {
@@ -319,7 +329,7 @@ function canUndo() {
   return (isParsing && previousFileIndex > -1) || (!isParsing && currentFileIndex > -1);
 }
 
-async function updateDisplayValues() {
+function updateDisplayValues() {
   updateNameAndSavedStatus();
   parse.setAttribute("class", file.readParseStatusForDashboard());
   compile.setAttribute("class", file.readCompileStatusForDashboard());
@@ -332,13 +342,14 @@ async function updateDisplayValues() {
   const isParsing = file.readParseStatus() === ParseStatus.valid;
   const isCompiling = file.readCompileStatus() === CompileStatus.ok;
   const isRunning = file.readRunStatus() === RunStatus.running;
+  const isTestRunning = file.readTestStatus() === TestStatus.pending;
 
   saveButton.hidden = !!autoSaveFileHandle;
 
-  if (isRunning) {
-    disable(runButton, "Program is already running");
-    enable(stopButton, "Stop the program");
-    const msg = "Program is running";
+  if (isRunning || isTestRunning) {
+    disable(runButton, isRunning ? "Program is already running" : "Tests are running");
+    enable(stopButton, isRunning ? "Stop the program" : "Stop the Tests");
+    const msg = isRunning ? "Program is running" : "Tests are running";
     disable(loadButton, msg);
     disable(appendButton, msg);
     disable(saveButton, msg);
@@ -409,12 +420,6 @@ async function updateDisplayValues() {
     } else {
       enable(redoButton, "Redo last change");
     }
-  }
-
-  const testErr = file.getTestError();
-  if (testErr) {
-    const err = testErr instanceof ElanRuntimeError ? testErr : new ElanRuntimeError(testErr);
-    await showError(err, file.fileName, false);
   }
 }
 
@@ -650,7 +655,7 @@ async function updateContent(text: string) {
   }
 
   await localAndAutoSave(focused);
-  await updateDisplayValues();
+  updateDisplayValues();
 
   const dbgFocused = document.querySelectorAll(".focused");
 
@@ -821,34 +826,34 @@ async function handleWorkerIO(data: WebWorkerWriteMessage) {
   switch (data.function) {
     case "readLine":
       const line = await elanInputOutput.readLine();
-      programWorker.postMessage(readMsg(line));
+      runWorker?.postMessage(readMsg(line));
       break;
     case "waitForAnyKey":
       await elanInputOutput.waitForAnyKey();
-      programWorker.postMessage(readMsg(""));
+      runWorker?.postMessage(readMsg(""));
       break;
     case "getKey":
       const key = await elanInputOutput.getKey();
-      programWorker.postMessage(readMsg(key));
+      runWorker?.postMessage(readMsg(key));
       break;
     case "getKeyWithModifier":
       const keyWithMod = await elanInputOutput.getKeyWithModifier();
-      programWorker.postMessage(readMsg(keyWithMod));
+      runWorker?.postMessage(readMsg(keyWithMod));
       break;
     case "readFile":
       try {
         const file = await elanInputOutput.readFile();
-        programWorker.postMessage(readMsg(file));
+        runWorker?.postMessage(readMsg(file));
       } catch (e) {
-        programWorker.postMessage(errorMsg(e));
+        runWorker?.postMessage(errorMsg(e));
       }
       break;
     case "writeFile":
       try {
         await elanInputOutput.writeFile(data.parameters[0] as string, data.parameters[1] as string);
-        programWorker.postMessage(readMsg(""));
+        runWorker?.postMessage(readMsg(""));
       } catch (e) {
-        programWorker.postMessage(errorMsg(e));
+        runWorker?.postMessage(errorMsg(e));
       }
       break;
     default:
@@ -856,20 +861,22 @@ async function handleWorkerIO(data: WebWorkerWriteMessage) {
   }
 }
 
-async function handleWorkerFinished() {
-  programWorker.terminate();
+function handleRunWorkerFinished() {
+  runWorker?.terminate();
+  runWorker = undefined;
   console.info("elan program completed OK");
   file.setRunStatus(RunStatus.default);
-  await updateDisplayValues();
+  updateDisplayValues();
 }
 
-async function handleWorkerError(data: WebWorkerStatusMessage) {
-  programWorker.terminate();
+async function handleRunWorkerError(data: WebWorkerStatusMessage) {
+  runWorker?.terminate();
+  runWorker = undefined;
   const e = data.error;
   const err = e instanceof ElanRuntimeError ? e : new ElanRuntimeError(e as any);
   await showError(err, file.fileName, false);
   file.setRunStatus(RunStatus.error);
-  await updateDisplayValues();
+  updateDisplayValues();
 }
 
 function chooser(uploader: (event: Event) => void) {
@@ -1069,7 +1076,7 @@ async function handleChromeAutoSave(event: Event) {
   if (autoSaveFileHandle) {
     autoSaveFileHandle = undefined;
     autoSaveButton.innerText = "Auto";
-    await updateDisplayValues();
+    updateDisplayValues();
     return;
   }
 
@@ -1100,5 +1107,118 @@ async function autoSave(code: string) {
     } catch (e) {
       console.warn("autosave failed");
     }
+  }
+}
+
+function endTests() {
+  cancelTestTimeout();
+  testWorker?.terminate();
+  testWorker = undefined;
+}
+
+async function handleTestWorkerFinished(data: WebWorkerTestMessage) {
+  endTests();
+  file.refreshTestStatuses(data.value);
+  console.info("elan tests completed");
+
+  const testErr = file.getTestError();
+  if (testErr) {
+    const err = testErr instanceof ElanRuntimeError ? testErr : new ElanRuntimeError(testErr);
+    await showError(err, file.fileName, false);
+  }
+
+  await renderAsHtml();
+  updateDisplayValues();
+}
+
+async function handleTestWorkerError(data: WebWorkerStatusMessage) {
+  endTests();
+  const e = data.error;
+  const err = e instanceof ElanRuntimeError ? e : new ElanRuntimeError(e as any);
+  await showError(err, file.fileName, false);
+  file.setTestStatus(TestStatus.error);
+  updateDisplayValues();
+}
+
+function handleTestAbort() {
+  endTests();
+  file.setTestStatus(TestStatus.error);
+  elanInputOutput.printLine("Tests timed out and were aborted");
+  updateDisplayValues();
+}
+
+let testTimer: any = undefined;
+
+function cancelTestTimeout() {
+  clearInterval(testTimer);
+  testTimer = undefined;
+}
+
+function runTests() {
+  // if already running cancel and restart
+  endTests();
+  runTestsInner();
+
+  let timeoutCount = 0;
+  const testTimeout = 10; // seconds
+
+  testTimer = setInterval(async () => {
+    timeoutCount++;
+
+    if (!testWorker) {
+      cancelTestTimeout();
+    }
+
+    if (timeoutCount === testTimeout && testWorker) {
+      cancelTestTimeout();
+      handleTestAbort();
+    }
+  }, 1000);
+}
+
+function runTestsInner() {
+  try {
+    clearDisplays();
+    file.setTestStatus(TestStatus.pending);
+    updateDisplayValues();
+    const path = `${document.location.origin}${document.location.pathname}`.replace(
+      "/index.html",
+      "",
+    );
+    const jsCode = file.compileAsTestWorker(path);
+    const asUrl = "data:text/javascript;base64," + btoa(jsCode);
+
+    testWorker = new Worker(asUrl, { type: "module" });
+
+    testWorker.onmessage = async (e: MessageEvent<WebWorkerMessage>) => {
+      const data = e.data;
+
+      switch (data.type) {
+        case "status":
+          switch (data.status) {
+            case "finished":
+              await handleTestWorkerError(data);
+              break;
+          }
+          break;
+        case "test":
+          await handleTestWorkerFinished(data);
+      }
+    };
+
+    testWorker.onerror = async (ev: ErrorEvent) => {
+      endTests();
+      const err = new ElanRuntimeError(ev.message);
+      await showError(err, file.fileName, false);
+      file.setTestStatus(TestStatus.error);
+      updateDisplayValues();
+    };
+
+    testWorker.postMessage({ type: "start" } as WebWorkerMessage);
+  } catch (e) {
+    endTests();
+    console.warn(e);
+    file.setTestStatus(TestStatus.error);
+    updateDisplayValues();
   }
 }
