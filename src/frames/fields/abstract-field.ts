@@ -523,6 +523,7 @@ export abstract class AbstractField implements Selectable, Field {
     return this._parseStatus!;
   }
   resetCompileStatusAndErrors(): void {
+    this.astNode = undefined;
     this._compileStatus = CompileStatus.default;
     this.compileErrors = [];
   }
