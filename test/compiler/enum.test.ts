@@ -491,7 +491,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Fruit is not defined"]);
+    assertDoesNotCompile(fileImpl, ["'Fruit' is not defined"]);
   });
 
   test("Fail_undefinedEnumValue", async () => {
@@ -507,7 +507,7 @@ enum Fruit apple, orange, pear`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["kiwi is not defined"]);
+    assertDoesNotCompile(fileImpl, ["'kiwi' is not defined"]);
   });
 
   test("Fail_UseOfKeywordAsName", async () => {
@@ -574,7 +574,7 @@ enum Fruit apple, orange, pear`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name Fruit not unique in scope"]);
+    assertDoesNotCompile(fileImpl, ["Name 'Fruit' not unique in scope"]);
   });
 
   test("Fail_DuplicateValues", async () => {
@@ -590,6 +590,6 @@ enum Fruit apple, orange, pear, orange`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name orange not unique in scope"]);
+    assertDoesNotCompile(fileImpl, ["Name 'orange' not unique in scope"]);
   });
 });

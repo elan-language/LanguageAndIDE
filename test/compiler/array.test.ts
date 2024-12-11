@@ -676,7 +676,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["get is not defined"]);
+    assertDoesNotCompile(fileImpl, ["'get' is not defined"]);
   });
 
   test("Fail_getRange", async () => {
@@ -692,7 +692,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["getRange is not defined"]);
+    assertDoesNotCompile(fileImpl, ["'getRange' is not defined"]);
   });
 
   test("Fail_put", async () => {

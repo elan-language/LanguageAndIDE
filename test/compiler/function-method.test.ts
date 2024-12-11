@@ -682,7 +682,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["times is not defined"]);
+    assertDoesNotCompile(fileImpl, ["'times' is not defined"]);
   });
 
   test("Fail_FunctionisNotDefined", async () => {
@@ -711,7 +711,7 @@ end class`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "Incompatible types Unknown to Int",
-      "noSuch is not defined for type 'Foo'",
+      "'noSuch' is not defined for type 'Foo'",
     ]);
   });
 
@@ -795,7 +795,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Bar is not defined"]);
+    assertDoesNotCompile(fileImpl, ["'Bar' is not defined"]);
   });
 
   test("Fail_ReturnUnknownType", async () => {
@@ -819,7 +819,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Bar is not defined"]);
+    assertDoesNotCompile(fileImpl, ["'Bar' is not defined"]);
   });
 
   test("Fail_UseOfKeywordAsName", async () => {
@@ -891,6 +891,6 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name a not unique in scope"]);
+    assertDoesNotCompile(fileImpl, ["Name 'a' not unique in scope"]);
   });
 });

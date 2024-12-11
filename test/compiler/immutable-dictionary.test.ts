@@ -589,7 +589,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["a is not defined"]);
+    assertDoesNotCompile(fileImpl, ["'a' is not defined"]);
   });
 
   test("Fail_withoutGenericType", async () => {

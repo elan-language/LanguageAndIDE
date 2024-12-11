@@ -117,7 +117,7 @@ end main
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "Incompatible types Unknown to Float or Int",
-      "x is not defined",
+      "'x' is not defined",
     ]);
   });
 

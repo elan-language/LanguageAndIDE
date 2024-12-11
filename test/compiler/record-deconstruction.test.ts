@@ -772,7 +772,7 @@ end record`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String", "b is not defined"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String", "'b' is not defined"]);
   });
 
   test("Fail_DeconstructIntoMixed2", async () => {
@@ -825,8 +825,8 @@ end record`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "May not re-assign the 'let' a",
-      "May not re-assign the 'let' b",
+      "May not re-assign the 'let' 'a'",
+      "May not re-assign the 'let' 'b'",
     ]);
   });
 

@@ -702,7 +702,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["bar is not defined"]);
+    assertDoesNotCompile(fileImpl, ["'bar' is not defined"]);
   });
 
   test("Fail_TypeSpecifiedBeforeParamName", async () => {
@@ -739,7 +739,7 @@ end procedure
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["main is not defined"]);
+    assertDoesNotCompile(fileImpl, ["'main' is not defined"]);
   });
 
   test("Fail_PassingUnnecessaryParameter", async () => {
@@ -921,7 +921,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not re-assign the parameter a"]);
+    assertDoesNotCompile(fileImpl, ["May not re-assign the parameter 'a'"]);
   });
 
   test("Fail_ArrayParamMayNotBeReassigned", async () => {
@@ -942,7 +942,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not re-assign the parameter a"]);
+    assertDoesNotCompile(fileImpl, ["May not re-assign the parameter 'a'"]);
   });
 
   test("Fail_ValueTypeParamMayNotBeReassigned", async () => {
@@ -963,7 +963,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not re-assign the parameter a"]);
+    assertDoesNotCompile(fileImpl, ["May not re-assign the parameter 'a'"]);
   });
 
   test("Fail_ParameterUnknownType", async () => {
@@ -982,7 +982,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Bar is not defined"]);
+    assertDoesNotCompile(fileImpl, ["'Bar' is not defined"]);
   });
 
   test("Fail_UseOfKeywordAsName", async () => {
@@ -1077,7 +1077,7 @@ end procedure
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name foo not unique in scope"]);
+    assertDoesNotCompile(fileImpl, ["Name 'foo' not unique in scope"]);
   });
 
   test("Fail_NotUniqueParameterName", async () => {
@@ -1092,7 +1092,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name a not unique in scope"]);
+    assertDoesNotCompile(fileImpl, ["Name 'a' not unique in scope"]);
   });
 
   test("Fail_OperatorsAndProcedures", async () => {

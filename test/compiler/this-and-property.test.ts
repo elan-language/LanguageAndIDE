@@ -234,7 +234,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["p is not defined"]);
+    assertDoesNotCompile(fileImpl, ["'p' is not defined"]);
   });
 
   test("Fail_MissingSelfCausesCompileErrorDueToAssigningToParam", async () => {
@@ -262,6 +262,6 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not re-assign the parameter p1"]);
+    assertDoesNotCompile(fileImpl, ["May not re-assign the parameter 'p1'"]);
   });
 });

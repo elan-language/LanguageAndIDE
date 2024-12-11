@@ -114,7 +114,7 @@ main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["x is not defined"]);
+    assertDoesNotCompile(fileImpl, ["'x' is not defined"]);
   });
 
   test("Fail_variableDefinedInWhile", async () => {

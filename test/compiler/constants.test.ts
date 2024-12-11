@@ -423,7 +423,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "set6", ["May not re-assign the constant a"]);
+    assertDoesNotCompileWithId(fileImpl, "set6", ["May not re-assign the constant 'a'"]);
   });
 
   test("Fail_expression", async () => {
@@ -527,6 +527,6 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "const1", ["Name a not unique in scope"]);
+    assertDoesNotCompileWithId(fileImpl, "const1", ["Name 'a' not unique in scope"]);
   });
 });

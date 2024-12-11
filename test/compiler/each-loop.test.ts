@@ -206,7 +206,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["x is not defined"]);
+    assertDoesNotCompile(fileImpl, ["'x' is not defined"]);
   });
 
   test("Fail_NoEndeach", async () => {
@@ -260,6 +260,6 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not re-assign the loop counter a"]);
+    assertDoesNotCompile(fileImpl, ["May not re-assign the loop counter 'a'"]);
   });
 });

@@ -678,7 +678,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Foo is not defined"]);
+    assertDoesNotCompile(fileImpl, ["'Foo' is not defined"]);
   });
 
   test("Fail_IncompatibleClassAsProcedureParameter", async () => {
@@ -765,7 +765,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Bar is not defined"]);
+    assertDoesNotCompile(fileImpl, ["'Bar' is not defined"]);
   });
 
   test("Fail_DuplicateNames", async () => {
@@ -792,7 +792,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name Foo not unique in scope"]);
+    assertDoesNotCompile(fileImpl, ["Name 'Foo' not unique in scope"]);
   });
 
   test("Fail_DuplicatePropertyNames", async () => {
@@ -814,7 +814,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name p1 not unique in scope"]);
+    assertDoesNotCompile(fileImpl, ["Name 'p1' not unique in scope"]);
   });
 
   test("Fail_DuplicateFunctionNames", async () => {
@@ -840,7 +840,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name ff not unique in scope"]);
+    assertDoesNotCompile(fileImpl, ["Name 'ff' not unique in scope"]);
   });
 
   test("Fail_DuplicateProcedureNames", async () => {
@@ -864,7 +864,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name ff not unique in scope"]);
+    assertDoesNotCompile(fileImpl, ["Name 'ff' not unique in scope"]);
   });
 
   test("Fail_DuplicateMemberNames1", async () => {
@@ -887,7 +887,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name ff not unique in scope"]);
+    assertDoesNotCompile(fileImpl, ["Name 'ff' not unique in scope"]);
   });
 
   test("Fail_DuplicateMemberNames2", async () => {
@@ -911,7 +911,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name ff not unique in scope"]);
+    assertDoesNotCompile(fileImpl, ["Name 'ff' not unique in scope"]);
   });
 
   test("Fail_DuplicateMemberNames3", async () => {
@@ -936,7 +936,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name ff not unique in scope"]);
+    assertDoesNotCompile(fileImpl, ["Name 'ff' not unique in scope"]);
   });
 
   test("Fail_ConstructorWithCall", async () => {
@@ -1013,7 +1013,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["FooBar is not defined", "Cannot new FooBar"]);
+    assertDoesNotCompile(fileImpl, ["'FooBar' is not defined", "Cannot new FooBar"]);
   });
 
   test("Fail_CannotNewNonClassType", async () => {
@@ -1056,7 +1056,7 @@ end class`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "Incompatible types Unknown to VectorGraphics",
-      "noSuch is not defined for type 'VectorGraphics'",
+      "'noSuch' is not defined for type 'VectorGraphics'",
     ]);
   });
 });
