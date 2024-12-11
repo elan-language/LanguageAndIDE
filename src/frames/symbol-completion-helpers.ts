@@ -11,7 +11,7 @@ export enum TokenType {
   type_enum,
   method_procedure,
   method_function,
-  method_system
+  method_system,
 }
 
 export class KeywordCompletion {
