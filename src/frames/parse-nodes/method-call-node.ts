@@ -10,7 +10,12 @@ export class MethodCallNode extends AbstractSequence {
   args: ArgListNode | undefined;
   tokenTypes: Set<TokenType>;
 
-  constructor(tokenTypes: Set<TokenType> = new Set<TokenType>([TokenType.method_function, TokenType.method_system])) {
+  constructor(
+    tokenTypes: Set<TokenType> = new Set<TokenType>([
+      TokenType.method_function,
+      TokenType.method_system,
+    ]),
+  ) {
     super();
     this.tokenTypes = tokenTypes;
   }

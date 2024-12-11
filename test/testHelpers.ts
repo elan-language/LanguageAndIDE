@@ -421,7 +421,7 @@ export async function createTestRunner() {
 export async function testDemoProgram(program : string) {
   const f = await loadFileAsModelNew(`${__dirname}\\..\\..\\demo_programs\\${program}`);
   const runner = await createTestRunner();
-  await f.refreshAllStatuses(runner);
+  f.refreshAllStatuses();
   assert.equal(f.readParseStatus(), ParseStatus.valid);
   assert.equal(f.readCompileStatus(), CompileStatus.ok);
   const ts = f.readTestStatus();
