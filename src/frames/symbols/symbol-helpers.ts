@@ -2,8 +2,8 @@ import { ElanCompilerError } from "../../elan-compiler-error";
 import { Property } from "../class-members/property";
 import { CompileError } from "../compile-error";
 import {
-    cannotAccessAbstractMemberInAbstractClass,
-    cannotAccessPrivateMemberInAbstractClass,
+  cannotAccessAbstractMemberInAbstractClass,
+  cannotAccessPrivateMemberInAbstractClass,
 } from "../compile-rules";
 import { ClassFrame } from "../globals/class-frame";
 import { Enum } from "../globals/enum";

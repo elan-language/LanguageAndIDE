@@ -6,8 +6,7 @@ import { CodeSourceFromString, FileImpl, cannotLoadFile } from "../frames/file-i
 import { editorEvent } from "../frames/interfaces/editor-event";
 import { File } from "../frames/interfaces/file";
 import { Profile } from "../frames/interfaces/profile";
-import { CompileStatus, ParseStatus, RunStatus } from "../frames/status-enums";
-import { getTestRunner } from "../runner";
+import { CompileStatus, ParseStatus, RunStatus, TestStatus } from "../frames/status-enums";
 import { StdLib } from "../standard-library/std-lib";
 import { fetchProfile, hash, transforms } from "./web-helpers";
 import { WebInputOutput } from "./web-input-output";
@@ -68,8 +67,8 @@ let doOnce = true;
 let profile: Profile;
 let lastSavedHash = "";
 let undoRedoHash = "";
-let runWorker: Worker;
-let testWorker: Worker;
+let runWorker: Worker | undefined;
+let testWorker: Worker | undefined;
 let inactivityTimer: any | undefined = undefined;
 let autoSaveFileHandle: FileSystemFileHandle | undefined = undefined;
 
@@ -139,8 +138,15 @@ runButton?.addEventListener("click", async () => {
 });
 
 stopButton?.addEventListener("click", async () => {
-  runWorker?.terminate();
-  file.setRunStatus(RunStatus.default);
+  if (runWorker) {
+    runWorker.terminate();
+    runWorker = undefined;
+    file.setRunStatus(RunStatus.default);
+  }
+  if (testWorker) {
+    endTests();
+    file.setTestStatus(TestStatus.default);
+  }
   await updateDisplayValues();
 });
 
@@ -267,7 +273,12 @@ async function showError(err: Error, fileName: string, reset: boolean) {
 async function refreshAndDisplay(compileIfParsed?: boolean) {
   file.refreshAllStatuses(compileIfParsed);
   if (file.readCompileStatus() === CompileStatus.ok) {
-    await runTests();
+    try {
+      runTests();
+    } catch (e) {
+      file.setTestStatus(TestStatus.error);
+      elanInputOutput.printLine("Tests timed out and were aborted");
+    }
   }
   try {
     await renderAsHtml();
@@ -336,13 +347,14 @@ async function updateDisplayValues() {
   const isParsing = file.readParseStatus() === ParseStatus.valid;
   const isCompiling = file.readCompileStatus() === CompileStatus.ok;
   const isRunning = file.readRunStatus() === RunStatus.running;
+  const isTestRunning = file.readTestStatus() === TestStatus.pending;
 
   saveButton.hidden = !!autoSaveFileHandle;
 
-  if (isRunning) {
-    disable(runButton, "Program is already running");
-    enable(stopButton, "Stop the program");
-    const msg = "Program is running";
+  if (isRunning || isTestRunning) {
+    disable(runButton, isRunning ? "Program is already running" : "Tests are running");
+    enable(stopButton, isRunning ? "Stop the program" : "Stop the Tests");
+    const msg = isRunning ? "Program is running" : "Tests are running";
     disable(loadButton, msg);
     disable(appendButton, msg);
     disable(saveButton, msg);
@@ -825,34 +837,34 @@ async function handleWorkerIO(data: WebWorkerWriteMessage) {
   switch (data.function) {
     case "readLine":
       const line = await elanInputOutput.readLine();
-      runWorker.postMessage(readMsg(line));
+      runWorker?.postMessage(readMsg(line));
       break;
     case "waitForAnyKey":
       await elanInputOutput.waitForAnyKey();
-      runWorker.postMessage(readMsg(""));
+      runWorker?.postMessage(readMsg(""));
       break;
     case "getKey":
       const key = await elanInputOutput.getKey();
-      runWorker.postMessage(readMsg(key));
+      runWorker?.postMessage(readMsg(key));
       break;
     case "getKeyWithModifier":
       const keyWithMod = await elanInputOutput.getKeyWithModifier();
-      runWorker.postMessage(readMsg(keyWithMod));
+      runWorker?.postMessage(readMsg(keyWithMod));
       break;
     case "readFile":
       try {
         const file = await elanInputOutput.readFile();
-        runWorker.postMessage(readMsg(file));
+        runWorker?.postMessage(readMsg(file));
       } catch (e) {
-        runWorker.postMessage(errorMsg(e));
+        runWorker?.postMessage(errorMsg(e));
       }
       break;
     case "writeFile":
       try {
         await elanInputOutput.writeFile(data.parameters[0] as string, data.parameters[1] as string);
-        runWorker.postMessage(readMsg(""));
+        runWorker?.postMessage(readMsg(""));
       } catch (e) {
-        runWorker.postMessage(errorMsg(e));
+        runWorker?.postMessage(errorMsg(e));
       }
       break;
     default:
@@ -861,14 +873,16 @@ async function handleWorkerIO(data: WebWorkerWriteMessage) {
 }
 
 async function handleWorkerFinished() {
-  runWorker.terminate();
+  runWorker?.terminate();
+  runWorker = undefined;
   console.info("elan program completed OK");
   file.setRunStatus(RunStatus.default);
   await updateDisplayValues();
 }
 
 async function handleWorkerError(data: WebWorkerStatusMessage) {
-  runWorker.terminate();
+  runWorker?.terminate();
+  runWorker = undefined;
   const e = data.error;
   const err = e instanceof ElanRuntimeError ? e : new ElanRuntimeError(e as any);
   await showError(err, file.fileName, false);
@@ -1107,54 +1121,59 @@ async function autoSave(code: string) {
   }
 }
 
+function endTests() {
+  testWorker?.terminate();
+  testWorker = undefined;
+}
+
 async function handleTestWorkerFinished(data: WebWorkerTestMessage) {
-  testWorker.terminate();
-  testsComplete = true;
+  endTests();
   file.refreshTestStatuses(data.value);
-  // console.info("elan program completed OK");
-  // file.setRunStatus(RunStatus.default);
-  // await updateDisplayValues();
+  console.info("elan tests completed OK");
+  await renderAsHtml();
+  await updateDisplayValues();
 }
 
 async function handleTestWorkerError(data: WebWorkerStatusMessage) {
-  testWorker.terminate();
-  testsComplete = true;
-  // const e = data.error;
-  // const err = e instanceof ElanRuntimeError ? e : new ElanRuntimeError(e as any);
-  // await showError(err, file.fileName, false);
-  // file.setRunStatus(RunStatus.error);
-  // await updateDisplayValues();
+  endTests();
+  const e = data.error;
+  const err = e instanceof ElanRuntimeError ? e : new ElanRuntimeError(e as any);
+  await showError(err, file.fileName, false);
+  file.setTestStatus(TestStatus.error);
+  await updateDisplayValues();
 }
 
-let testsComplete = false;
+async function handleTestAbort() {
+  endTests();
+  file.setTestStatus(TestStatus.error);
+  elanInputOutput.printLine("Tests timed out and were aborted");
+  await updateDisplayValues();
+}
 
-async function runTests(): Promise<void> {
-  testsComplete = false;
+async function runTests() {
   await runTestsInner();
-  return new Promise((rs, rj) => {
-    let timeout = 0;
 
-    const i = setInterval(() => {
-      timeout++;
+  let timeout = 0;
 
-      if (testsComplete) {
-        rs();
-        return;
-      }
+  const i = setInterval(async () => {
+    timeout++;
 
-      if (timeout === 30) {
-        clearInterval(i);
-        rj();
-      }
-    }, 1000);
-  });
+    if (!testWorker) {
+      clearInterval(i);
+    }
+
+    if (timeout === 10 && testWorker) {
+      clearInterval(i);
+      await handleTestAbort();
+    }
+  }, 1000);
 }
 
 async function runTestsInner() {
   try {
-    // clearDisplays();
-    // file.setRunStatus(RunStatus.running);
-    // await updateDisplayValues();
+    clearDisplays();
+    file.setTestStatus(TestStatus.pending);
+    await updateDisplayValues();
     const path = `${document.location.origin}${document.location.pathname}`.replace(
       "/index.html",
       "",
@@ -1181,16 +1200,18 @@ async function runTestsInner() {
     };
 
     testWorker.onerror = async (ev: ErrorEvent) => {
-      // const err = new ElanRuntimeError(ev.message);
-      // await showError(err, file.fileName, false);
-      // file.setRunStatus(RunStatus.error);
-      // await updateDisplayValues();
+      endTests();
+      const err = new ElanRuntimeError(ev.message);
+      await showError(err, file.fileName, false);
+      file.setTestStatus(TestStatus.error);
+      await updateDisplayValues();
     };
 
     testWorker.postMessage({ type: "start" } as WebWorkerMessage);
   } catch (e) {
-    // console.warn(e);
-    // file.setRunStatus(RunStatus.error);
-    // await updateDisplayValues();
+    endTests();
+    console.warn(e);
+    file.setTestStatus(TestStatus.error);
+    await updateDisplayValues();
   }
 }

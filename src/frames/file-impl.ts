@@ -402,6 +402,10 @@ export class FileImpl implements File, Scope {
     return DisplayStatus[helper_parseStatusAsDisplayStatus(this._parseStatus)];
   }
 
+  setTestStatus(s: TestStatus) {
+    this._testStatus = s;
+  }
+
   updateAllParseStatus(): void {
     this.getChildren().forEach((c) => c.updateParseStatus());
     this._parseStatus = worstParseStatus(

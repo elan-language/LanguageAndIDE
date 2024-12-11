@@ -78,6 +78,8 @@ export interface File extends Parent {
 
   setRunStatus(s: RunStatus): void;
 
+  setTestStatus(s: TestStatus): void;
+
   libraryScope: Scope;
 
   refreshAllStatuses(compileIfParsed?: boolean): void;
