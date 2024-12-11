@@ -414,7 +414,7 @@ export class FileImpl implements File, Scope {
     );
   }
 
-  refreshAllStatuses(compileIfParsed?: boolean) {
+  refreshParseAndCompileStatuses(compileIfParsed?: boolean) {
     let code = "";
     this._parseStatus = ParseStatus.default as ParseStatus;
     this.parseError = undefined;
