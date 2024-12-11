@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { truncateSync } from "fs";
 import { handleClick, handleDblClick, handleKey } from "../editorHandlers";
 import { ElanRuntimeError } from "../elan-runtime-error";
 import { DefaultProfile } from "../frames/default-profile";
@@ -410,7 +411,7 @@ function updateDisplayValues() {
     }
 
     if (canUndo()) {
-      enable(undoButton, "Undo last change");
+      enable(undoButton, "Undo last change (Ctrl + z)");
     } else {
       disable(undoButton, "Nothing to undo");
     }
@@ -418,7 +419,7 @@ function updateDisplayValues() {
     if (nextFileIndex === -1) {
       disable(redoButton, "Nothing to redo");
     } else {
-      enable(redoButton, "Redo last change");
+      enable(redoButton, "Redo last change (Ctrl + y");
     }
   }
 }
@@ -505,6 +506,23 @@ function handleCutAndPaste(event: Event, msg: editorEvent) {
   return false;
 }
 
+async function handleUndoAndRedo(event: Event, msg: editorEvent) {
+  if (msg.modKey.control) {
+    switch (msg.key) {
+      case "z":
+        event.stopPropagation();
+        await undo();
+        return true;
+      case "y":
+        event.stopPropagation();
+        await redo();
+        return true;
+    }
+  }
+
+  return false;
+}
+
 function isSupportedKey(evt: editorEvent) {
   if (evt.type === "paste") {
     return true;
@@ -545,6 +563,10 @@ async function handleEditorEvent(
   }
 
   if (handleCutAndPaste(event, msg)) {
+    return;
+  }
+
+  if (await handleUndoAndRedo(event, msg)) {
     return;
   }
 
