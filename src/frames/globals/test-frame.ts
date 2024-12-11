@@ -54,6 +54,9 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
 
   resetTestStatus(): void {
     this._testStatus = TestStatus.default;
+    for (const assert of this.getAsserts()) {
+      assert.outcome = undefined;
+    }
   }
   initialKeywords(): string {
     return testKeyword;

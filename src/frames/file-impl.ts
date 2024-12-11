@@ -420,6 +420,7 @@ export class FileImpl implements File, Scope {
     this.parseError = undefined;
     this.updateAllParseStatus();
     this.resetAllCompileStatusAndErrors();
+    this.resetAllTestStatus();
 
     if (this._parseStatus === ParseStatus.valid && (!this._fieldBeingEdited || compileIfParsed)) {
       code = this.compile();
