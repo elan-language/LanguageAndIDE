@@ -652,6 +652,28 @@ async function updateContent(text: string) {
         );
       });
     }
+
+    const ellipsis = document.querySelectorAll(".autocomplete-ellipsis");
+
+    if (ellipsis.length === 1) {
+      ellipsis[0].addEventListener("click", (event) => {
+        const ke = event as PointerEvent;
+        const tgt = ke.target as HTMLDivElement;
+        const id = tgt.dataset.id;
+        const selected = tgt.dataset.selected;
+
+        handleEditorEvent(
+          event,
+          "key",
+          "frame",
+          getModKey(ke),
+          id,
+          "ArrowDown",
+          undefined,
+          selected,
+        );
+      });
+    }
   }
 
   await localAndAutoSave(focused);

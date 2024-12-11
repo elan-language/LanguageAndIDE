@@ -702,6 +702,7 @@ export abstract class AbstractField implements Selectable, Field {
     let popupAsHtml = "";
     let startIndex = 0;
     let lastIndex = count > 10 ? 10 : count;
+    let lastName = "";
 
     if (count > 10 && selectedIndex > 5) {
       startIndex = selectedIndex - 5;
@@ -718,6 +719,7 @@ export abstract class AbstractField implements Selectable, Field {
       const name = symbol.displayName;
       const cls = symbol.class;
       const selected = this.markIfSelected(symbol) ? " selected" : "";
+      lastName = name;
 
       symbolAsHtml.push(
         `<div class="autocomplete-item${selected}${cls}" data-id="${this.htmlId}">${name}</div>`,
@@ -725,7 +727,9 @@ export abstract class AbstractField implements Selectable, Field {
     }
 
     if (count > 10 && selectedIndex + 5 < count) {
-      symbolAsHtml.push(`<div>...</div>`);
+      symbolAsHtml.push(
+        `<div class="autocomplete-ellipsis" data-id="${this.htmlId}" data-selected="${lastName}" >...</div>`,
+      );
     }
 
     if (symbolAsHtml.length > 0) {
