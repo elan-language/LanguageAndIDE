@@ -1111,6 +1111,7 @@ async function autoSave(code: string) {
 }
 
 function endTests() {
+  cancelTestTimeout();
   testWorker?.terminate();
   testWorker = undefined;
 }
@@ -1139,28 +1140,38 @@ async function handleTestWorkerError(data: WebWorkerStatusMessage) {
   updateDisplayValues();
 }
 
-async function handleTestAbort() {
+function handleTestAbort() {
   endTests();
   file.setTestStatus(TestStatus.error);
   elanInputOutput.printLine("Tests timed out and were aborted");
   updateDisplayValues();
 }
 
-async function runTests() {
-  await runTestsInner();
+let testTimer: any = undefined;
 
-  let timeout = 0;
+function cancelTestTimeout() {
+  clearInterval(testTimer);
+  testTimer = undefined;
+}
 
-  const i = setInterval(async () => {
-    timeout++;
+function runTests() {
+  // if already running cancel and restart
+  endTests();
+  runTestsInner();
+
+  let timeoutCount = 0;
+  const testTimeout = 10; // seconds
+
+  testTimer = setInterval(async () => {
+    timeoutCount++;
 
     if (!testWorker) {
-      clearInterval(i);
+      cancelTestTimeout();
     }
 
-    if (timeout === 10 && testWorker) {
-      clearInterval(i);
-      await handleTestAbort();
+    if (timeoutCount === testTimeout && testWorker) {
+      cancelTestTimeout();
+      handleTestAbort();
     }
   }, 1000);
 }
