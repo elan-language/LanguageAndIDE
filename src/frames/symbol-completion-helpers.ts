@@ -1,17 +1,17 @@
 export enum TokenType {
-  method_function,
-  method_procedure,
-  method_system,
+  id_let,
+  id_variable,
+  id_property,
+  id_parameter_regular,
+  id_parameter_out,
+  id_constant,
+  id_enumValue,
   type_concrete,
   type_abstract,
   type_enum,
-  id_constant,
-  id_let,
-  id_variable,
-  id_parameter_regular,
-  id_parameter_out,
-  id_property,
-  id_enumValue,
+  method_procedure,
+  method_function,
+  method_system
 }
 
 export class KeywordCompletion {
