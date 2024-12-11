@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { truncateSync } from "fs";
 import { handleClick, handleDblClick, handleKey } from "../editorHandlers";
 import { ElanRuntimeError } from "../elan-runtime-error";
 import { DefaultProfile } from "../frames/default-profile";
@@ -235,7 +234,10 @@ function checkIsChrome() {
 }
 
 function confirmContinueOnNonChromeBrowser() {
-  return confirm("Not running chrome - ok to continue");
+  return confirm(`We recommend that you access Elan via Chrome,
+which runs on all platforms.
+If you click OK you may continue to use Elan but, currently,
+it is not guaranteed to run correctly on this browser.`);
 }
 
 const isChrome = checkIsChrome();
