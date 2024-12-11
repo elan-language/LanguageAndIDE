@@ -114,10 +114,7 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [
-      ["Int", "Int", "Int"],
-      ["Iterable", "Iterable&lt;of", "Iterable<of "],
-    ] as [string, string, string][];
+    const expected = [["Int", "Int", "Int"]] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "expr5", "empty [I", expected);
   });
@@ -1606,9 +1603,7 @@ end main`;
       ["Boolean", "*", "*"],
       ["CircleVG", "*", "*"],
       ["Float", "*", "*"],
-      ["Func", "*", "*"],
       ["Int", "*", "*"],
-      ["Iterable", "*", "*"],
       ["LineVG", "*", "*"],
       ["Queue", "*", "*"],
       ["Random", "*", "*"],
@@ -1743,9 +1738,7 @@ end main`;
       ["Boolean", "*", "*"],
       ["CircleVG", "*", "*"],
       ["Float", "*", "*"],
-      ["Func", "*", "*"],
       ["Int", "*", "*"],
-      ["Iterable", "*", "*"],
       ["LineVG", "*", "*"],
       ["Queue", "*", "*"],
       ["Random", "*", "*"],
