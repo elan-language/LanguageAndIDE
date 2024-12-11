@@ -20,6 +20,7 @@ import { ParseStatus } from "../src/frames/status-enums";
 import { TokenType } from "../src/frames/symbol-completion-helpers";
 import { testSymbolCompletionSpec } from "./testHelpers";
 import { VarDefNode } from "../src/frames/parse-nodes/var-def-node";
+import { AssertActualNode } from "../src/frames/parse-nodes/assert-actual-node";
 
 suite("Symbol Completion Spec", () => {
   test("MethodCallNode", () => {
@@ -613,6 +614,18 @@ suite("Symbol Completion Spec", () => {
       VarDefNode.name,
       "",
       [],
+      [""],
+      "",
+    );
+  });
+  test("#932 assert actual node", () => {
+    testSymbolCompletionSpec(
+      new AssertActualNode(),
+      "",
+      ParseStatus.empty,
+      AssertActualNode.name,
+      "",
+      [TokenType.id_let, TokenType.id_variable, TokenType.method_function, TokenType.method_system],
       [""],
       "",
     );

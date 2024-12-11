@@ -8,12 +8,16 @@ import { PunctuationNode } from "./punctuation-node";
 export class MethodCallNode extends AbstractSequence {
   name: IdentifierNode | undefined;
   args: ArgListNode | undefined;
+  tokenTypes: Set<TokenType>;
+
+  constructor(tokenTypes: Set<TokenType> = new Set<TokenType>([TokenType.method_function, TokenType.method_system])) {
+    super();
+    this.tokenTypes = tokenTypes;
+  }
 
   parseText(text: string): void {
     if (text.trim().length > 0) {
-      this.name = new IdentifierNode(
-        new Set<TokenType>([TokenType.method_function, TokenType.method_system]),
-      );
+      this.name = new IdentifierNode(this.tokenTypes);
       this.addElement(this.name);
       this.addElement(new PunctuationNode(OPEN_BRACKET));
       this.args = new ArgListNode();

@@ -20,7 +20,6 @@ export class AssertStatement extends AbstractFrame implements Statement {
   constructor(parent: Parent) {
     super(parent);
     this.actual = new AssertActualField(this);
-    this.actual.setPlaceholder("<i>computed value</i>");
     this.expected = new ExpressionField(this, /\r|\n/);
     this.expected.setPlaceholder("<i>expected value</i>");
   }
