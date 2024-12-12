@@ -12,7 +12,14 @@ import { Qualifier } from "./qualifier";
 export class InstanceProcRef extends AbstractSequence {
   prefix: OptionalNode | undefined;
   procName: IdentifierNode | undefined;
-  tokenTypes = new Set([TokenType.method_procedure]);
+  tokenTypes = new Set([
+    TokenType.id_let,
+    TokenType.id_parameter_out,
+    TokenType.id_parameter_regular,
+    TokenType.id_property,
+    TokenType.id_variable,
+    TokenType.method_procedure,
+  ]);
 
   constructor() {
     super();
@@ -37,7 +44,7 @@ export class InstanceProcRef extends AbstractSequence {
 
   symbolCompletion_tokenTypes(): Set<TokenType> {
     if (this.getElements().length === 0) {
-      return new Set<TokenType>(allIds);
+      return new Set<TokenType>(this.tokenTypes);
     } else {
       return super.symbolCompletion_tokenTypes();
     }
@@ -46,8 +53,8 @@ export class InstanceProcRef extends AbstractSequence {
   symbolCompletion_keywords(): Set<KeywordCompletion> {
     return this.getElements().length === 0
       ? new Set<KeywordCompletion>([
-          KeywordCompletion.create(libraryKeyword),
-          KeywordCompletion.create(propertyKeyword),
+          KeywordCompletion.create(libraryKeyword, false, true),
+          KeywordCompletion.create(propertyKeyword, false, true),
         ])
       : super.symbolCompletion_keywords();
   }

@@ -1,5 +1,6 @@
 import assert from "assert";
 import { Alternatives } from "../src/frames/parse-nodes/alternatives";
+import { AssertActualNode } from "../src/frames/parse-nodes/assert-actual-node";
 import { BinaryExpression } from "../src/frames/parse-nodes/binary-expression";
 import { BinaryOperation } from "../src/frames/parse-nodes/binary-operation";
 import { CSV } from "../src/frames/parse-nodes/csv";
@@ -11,16 +12,16 @@ import { LitValueNode } from "../src/frames/parse-nodes/lit-value";
 import { MethodCallNode } from "../src/frames/parse-nodes/method-call-node";
 import { OptionalNode } from "../src/frames/parse-nodes/optional-node";
 import { allIds } from "../src/frames/parse-nodes/parse-node-helpers";
+import { ProcRefNode } from "../src/frames/parse-nodes/proc-ref-node";
 import { ReferenceNode } from "../src/frames/parse-nodes/reference-node";
 import { TermSimple } from "../src/frames/parse-nodes/term-simple";
 import { TypeSimpleNode } from "../src/frames/parse-nodes/type-simple-node";
 import { TypeSimpleOrGeneric } from "../src/frames/parse-nodes/type-simple-or-generic";
+import { VarDefNode } from "../src/frames/parse-nodes/var-def-node";
 import { VariableOrProperty } from "../src/frames/parse-nodes/variable-or-property";
 import { ParseStatus } from "../src/frames/status-enums";
 import { TokenType } from "../src/frames/symbol-completion-helpers";
 import { testSymbolCompletionSpec } from "./testHelpers";
-import { VarDefNode } from "../src/frames/parse-nodes/var-def-node";
-import { AssertActualNode } from "../src/frames/parse-nodes/assert-actual-node";
 
 suite("Symbol Completion Spec", () => {
   test("MethodCallNode", () => {
@@ -212,7 +213,14 @@ suite("Symbol Completion Spec", () => {
       ParseStatus.incomplete,
       IdentifierNode.name,
       "",
-      [TokenType.method_procedure],
+      [
+        TokenType.id_let,
+        TokenType.id_parameter_out,
+        TokenType.id_parameter_regular,
+        TokenType.id_property,
+        TokenType.id_variable,
+        TokenType.method_procedure,
+      ],
       [],
       "foo",
     );
@@ -258,7 +266,14 @@ suite("Symbol Completion Spec", () => {
       ParseStatus.valid,
       IdentifierNode.name,
       "wi",
-      [TokenType.method_procedure],
+      [
+        TokenType.id_let,
+        TokenType.id_parameter_out,
+        TokenType.id_parameter_regular,
+        TokenType.id_property,
+        TokenType.id_variable,
+        TokenType.method_procedure,
+      ],
       [],
       "foo",
     );
@@ -627,6 +642,25 @@ suite("Symbol Completion Spec", () => {
       "",
       [TokenType.id_let, TokenType.id_variable, TokenType.method_function, TokenType.method_system],
       [""],
+      "",
+    );
+  });
+  test("Proc Ref", () => {
+    testSymbolCompletionSpec(
+      new ProcRefNode(),
+      "",
+      ParseStatus.empty,
+      ProcRefNode.name,
+      "",
+      [
+        TokenType.id_let,
+        TokenType.id_parameter_out,
+        TokenType.id_parameter_regular,
+        TokenType.id_property,
+        TokenType.id_variable,
+        TokenType.method_procedure,
+      ],
+      ["library,property"],
       "",
     );
   });

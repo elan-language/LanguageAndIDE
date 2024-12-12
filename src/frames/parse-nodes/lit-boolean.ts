@@ -21,10 +21,10 @@ export class LitBoolean extends AbstractAlternatives {
   symbolCompletion_keywords(): Set<KeywordCompletion> {
     let set = new Set<KeywordCompletion>();
     if (trueKeyword.startsWith(this.matchedText)) {
-      set = set.add(KeywordCompletion.create(trueKeyword));
+      set = set.add(KeywordCompletion.create(trueKeyword, false));
     }
     if (falseKeyword.startsWith(this.matchedText)) {
-      set = set.add(KeywordCompletion.create(falseKeyword));
+      set = set.add(KeywordCompletion.create(falseKeyword, false));
     }
     return set;
   }

@@ -11,13 +11,6 @@ import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
 
 export class ProcRefField extends AbstractField {
-  tokenTypes = [
-    TokenType.id_let,
-    TokenType.id_parameter_out,
-    TokenType.id_parameter_regular,
-    TokenType.id_property,
-    TokenType.id_variable,
-  ];
   isParseByNodes = true;
 
   constructor(holder: Frame) {

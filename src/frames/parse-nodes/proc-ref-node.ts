@@ -10,7 +10,6 @@ export class ProcRefNode extends AbstractAlternatives {
     this.alternatives.push(new IdentifierNode(new Set([TokenType.method_procedure])));
   }
 
-  //Temporary solution - pending (possible) refactoring of ProcRefNode into a Sequence
   getProcName(): string {
     let procName = "";
     if (this.bestMatch instanceof InstanceProcRef) {

@@ -37,7 +37,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["property", "property", "property "],
+      ["property", "property", "property."],
       ["foo", "foo", "foo"],
       ["foobar", "foobar", "foobar"],
     ] as [string, string, string][];
@@ -418,6 +418,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
+      ["prop1", "*", "*"],
       ["pproc3", "*", "*"],
       ["proc1", "*", "*"],
       ["proc2", "*", "*"],

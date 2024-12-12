@@ -45,7 +45,7 @@ export class DeconstructedList extends AbstractSequence {
     let kw = new Set<KeywordCompletion>();
     if (!this.readonly) {
       if (this.getElements().length === 0) {
-        kw = new Set<KeywordCompletion>([KeywordCompletion.create(propertyKeyword)]);
+        kw = new Set<KeywordCompletion>([KeywordCompletion.create(propertyKeyword, false, true)]);
       } else {
         kw = super.symbolCompletion_keywords();
       }
