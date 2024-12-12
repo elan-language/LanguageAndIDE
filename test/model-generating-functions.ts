@@ -167,7 +167,7 @@ export function T04_allGlobalsExceptClass(): FileImpl {
   enu.values.setFieldToKnownValidText("apple, orange, pear");
   f.addChildBefore(enu, gs);
   const test = new TestFrame(f);
-  test.testName.setFieldToKnownValidText("test1");
+  test.testDescription.setFieldToKnownValidText("test1");
   f.addChildBefore(test, gs);
   f.updateAllParseStatus();
   return f;

@@ -57,6 +57,10 @@ el-str {
 el-regex {
     color: var(--string);
 }
+/* Test description */
+el-test el-top el-field el-txt{
+    color: var(--comment);
+}
 
 /* Header & comments */
 el-comment *, el-comment el-field.ok el-txt  {

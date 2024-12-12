@@ -1,6 +1,6 @@
 import { AssertOutcome } from "../../system";
 import { CodeSource } from "../code-source";
-import { IdentifierField } from "../fields/identifier-field";
+import { TestDescriptionField } from "../fields/test-description-field";
 import { FrameWithStatements } from "../frame-with-statements";
 import { helper_CompileOrParseAsDisplayStatus, helper_testStatusAsDisplayStatus } from "../helpers";
 import { editorEvent } from "../interfaces/editor-event";
@@ -15,7 +15,7 @@ import { Transforms } from "../syntax-nodes/transforms";
 export class TestFrame extends FrameWithStatements implements GlobalFrame {
   isTest = true;
   isGlobal = true;
-  public testName: IdentifierField;
+  public testDescription: TestDescriptionField;
   file: File;
   private _testStatus: TestStatus;
   public ignored = false;
@@ -23,8 +23,8 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
   constructor(parent: File) {
     super(parent);
     this.file = parent;
-    this.testName = new IdentifierField(this);
-    this.testName.setOptional(true);
+    this.testDescription = new TestDescriptionField(this);
+    this.testDescription.setOptional(true);
     const selector = this.getChildren().pop()!;
     this.getChildren().push(selector);
     this._testStatus = TestStatus.default;
@@ -64,7 +64,7 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
     return testKeyword;
   }
   getFields(): Field[] {
-    return [this.testName];
+    return [this.testDescription];
   }
 
   getIdPrefix(): string {
@@ -72,7 +72,7 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
   }
   public renderAsHtml(): string {
     return `<el-test class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.ignoreHelp()}>
-<el-top><el-expand>+</el-expand><el-kw>${this.ignoreKw()}test </el-kw>${this.testName.renderAsHtml()}${this.compileOrTestMsgAsHtml()}${this.getFrNo()}</el-top>
+<el-top><el-expand>+</el-expand><el-kw>${this.ignoreKw()}test </el-kw>${this.testDescription.renderAsHtml()}${this.compileOrTestMsgAsHtml()}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
 <el-kw>end test</el-kw>
 </el-test>`;
@@ -81,14 +81,14 @@ ${this.renderChildrenAsHtml()}
     return "";
   }
   public renderAsSource(): string {
-    return `${this.ignoreKw()}test ${this.testName.renderAsSource()}\r
+    return `${this.ignoreKw()}test ${this.testDescription.renderAsSource()}\r
 ${this.renderChildrenAsSource()}\r
 end test\r
 `;
   }
   parseTop(source: CodeSource): void {
     source.remove("test ");
-    this.testName.parseFrom(source);
+    this.testDescription.parseFrom(source);
   }
   parseBottom(source: CodeSource): boolean {
     return this.parseStandardEnding(source, "end test");
