@@ -446,4 +446,51 @@ abstract class Card
     await await fl.parseFrom(source);
     assert.equal(fl.parseError!.includes(`0 matches found at constructor()`), true);
   });
+  test("#927 parse test and ignored test", async () => {
+    const code = `# 3cf3cf48ab09c8a74be872717db2313b5817e16a42ef39d0405cd9651cd9a4e5 Elan Beta 5 valid
+
+ignore test bar
+
+end test
+`;
+    const source = new CodeSourceFromString(code);
+    const fl = new FileImpl(hash, new DefaultProfile(), transforms());
+    await await fl.parseFrom(source);
+    const elan = await fl.renderAsSource();
+    assert.equal(elan, code.replaceAll("\n", "\r\n"));
+  });
+  test("#927 - 2", async () => {
+    const code = `# 53edc7ae405e55cad7120d41f5e9dbfa0622c079b5ee2cba4672e707a5b0c7f4 Elan Beta 5 valid
+
+ignore test foo
+
+end test
+
+test bar
+
+end test
+`;
+    const source = new CodeSourceFromString(code);
+    const fl = new FileImpl(hash, new DefaultProfile(), transforms());
+    await await fl.parseFrom(source);
+    const elan = await fl.renderAsSource();
+    assert.equal(elan, code.replaceAll("\n", "\r\n"));
+  });
+  test("#927 - 3", async () => {
+    const code = `# 3964c15e1d4607bd35da6acc4aa3ee33a7cf391194cb73bb67b0811075d31880 Elan Beta 5 valid
+
+test foo
+
+end test
+
+ignore test bar
+
+end test
+`;
+    const source = new CodeSourceFromString(code);
+    const fl = new FileImpl(hash, new DefaultProfile(), transforms());
+    await await fl.parseFrom(source);
+    const elan = await fl.renderAsSource();
+    assert.equal(elan, code.replaceAll("\n", "\r\n"));
+  });
 });

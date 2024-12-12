@@ -87,6 +87,10 @@ end test\r
 `;
   }
   parseTop(source: CodeSource): void {
+    if (source.isMatch("ignore ")) {
+      source.remove("ignore ");
+      this.ignored = true;
+    }
     source.remove("test ");
     this.testDescription.parseFrom(source);
   }

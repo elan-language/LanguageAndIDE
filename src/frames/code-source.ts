@@ -60,8 +60,7 @@ export class CodeSourceFromString implements CodeSource {
     return this.remainingCode.startsWith(code);
   }
   isMatchRegEx(regEx: RegExp): boolean {
-    const matches = this.remainingCode.match(regEx);
-    return matches !== null && matches.length > 0;
+    return regEx.test(this.remainingCode);
   }
   hasMoreCode(): boolean {
     return this.remainingCode.length > 0;
