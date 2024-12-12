@@ -9,6 +9,7 @@ import { ClassFrame } from "../src/frames/globals/class-frame";
 import { GlobalFunction } from "../src/frames/globals/global-function";
 import { GlobalSelector } from "../src/frames/globals/global-selector";
 import { MainFrame } from "../src/frames/globals/main-frame";
+import { TestFrame } from "../src/frames/globals/test-frame";
 import { Else } from "../src/frames/statements/else";
 import { IfStatement } from "../src/frames/statements/if-statement";
 import { StatementSelector } from "../src/frames/statements/statement-selector";
@@ -490,5 +491,19 @@ suite("Editing Frames", () => {
     sel4.processKey(key("v"));
     f4.processKey(key("Backspace"));
     assert.equal(file.getChildren().length, 3);
+  });
+  test("Create and ignore test #927", async () => {
+    const file = T00_emptyFile();
+    const sel0 = file.getById("select0");
+    sel0.processKey(key("t"));
+    const test = file.getById("test1") as TestFrame;
+    assert.equal(false, test.ignored);
+    assert.equal(true, test.renderAsHtml().includes(`<el-kw>test </el-kw>`));
+    test.processKey(key("i", false, true, false));
+    assert.equal(true, test.ignored);
+    assert.equal(true, test.renderAsHtml().includes(`<el-kw>ignore test </el-kw>`));
+    test.processKey(key("i", false, true, false));
+    assert.equal(false, test.ignored);
+    assert.equal(true, test.renderAsHtml().includes(`<el-kw>test </el-kw>`));
   });
 });

@@ -1274,7 +1274,7 @@ function runTests() {
   runTestsInner();
 
   let timeoutCount = 0;
-  const testTimeout = 10; // seconds
+  const testTimeout = 2; // seconds
 
   testTimer = setInterval(async () => {
     timeoutCount++;

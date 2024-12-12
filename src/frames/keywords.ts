@@ -24,6 +24,7 @@ export const forKeyword = "for";
 export const fromKeyword = "from";
 export const functionKeyword = "function";
 export const ifKeyword = "if";
+export const ignoreKeyword = "ignore";
 export const importKeyword = "import";
 export const inKeyword = "in";
 export const inheritsKeyword = "inherits";
@@ -99,6 +100,7 @@ export const allKeywords = [
   fromKeyword,
   functionKeyword,
   ifKeyword,
+  ignoreKeyword,
   importKeyword,
   inKeyword,
   inheritsKeyword,
