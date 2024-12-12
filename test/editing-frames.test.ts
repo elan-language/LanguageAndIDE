@@ -2,6 +2,7 @@ import assert from "assert";
 import { Constructor } from "../src/frames/class-members/constructor";
 import { MemberSelector } from "../src/frames/class-members/member-selector";
 import { Property } from "../src/frames/class-members/property";
+import { CommentField } from "../src/frames/fields/comment-field";
 import { ExpressionField } from "../src/frames/fields/expression-field";
 import { IdentifierField } from "../src/frames/fields/identifier-field";
 import { FileImpl } from "../src/frames/file-impl";
@@ -505,5 +506,18 @@ suite("Editing Frames", () => {
     test.processKey(key("i", false, true, false));
     assert.equal(false, test.ignored);
     assert.equal(true, test.renderAsHtml().includes(`<el-kw>test </el-kw>`));
+  });
+  test("Test description #936", async () => {
+    const file = T00_emptyFile();
+    const sel0 = file.getById("select0");
+    sel0.processKey(key("t"));
+    const test = file.getById("test1") as TestFrame;
+    const desc = file.getById("comment3") as CommentField;
+    assert.equal(true, desc.isOptional());
+    desc.processKey(key("x"));
+    desc.processKey(key(" "));
+    desc.processKey(key("y"));
+    assert.equal(desc.readParseStatus(), ParseStatus.valid);
+    assert.equal(desc.renderAsSource(), "x y");
   });
 });

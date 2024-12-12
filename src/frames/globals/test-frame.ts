@@ -1,6 +1,6 @@
 import { AssertOutcome } from "../../system";
 import { CodeSource } from "../code-source";
-import { TestDescriptionField } from "../fields/test-description-field";
+import { CommentField } from "../fields/comment-field";
 import { FrameWithStatements } from "../frame-with-statements";
 import { helper_CompileOrParseAsDisplayStatus, helper_testStatusAsDisplayStatus } from "../helpers";
 import { editorEvent } from "../interfaces/editor-event";
@@ -15,7 +15,7 @@ import { Transforms } from "../syntax-nodes/transforms";
 export class TestFrame extends FrameWithStatements implements GlobalFrame {
   isTest = true;
   isGlobal = true;
-  public testDescription: TestDescriptionField;
+  public testDescription: CommentField;
   file: File;
   private _testStatus: TestStatus;
   public ignored = false;
@@ -23,8 +23,8 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
   constructor(parent: File) {
     super(parent);
     this.file = parent;
-    this.testDescription = new TestDescriptionField(this);
-    this.testDescription.setOptional(true);
+    this.testDescription = new CommentField(this);
+    this.testDescription.setPlaceholder("<i>optional name or description (may contain spaces)</i>");
     const selector = this.getChildren().pop()!;
     this.getChildren().push(selector);
     this._testStatus = TestStatus.default;
