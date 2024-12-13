@@ -10,8 +10,8 @@ export class Qualifier extends AbstractAlternatives {
 
   parseText(text: string): void {
     if (text.trim().length > 0) {
-      const lib = new KeywordNode(libraryKeyword);
-      const prop = new KeywordNode(propertyKeyword);
+      const lib = new KeywordNode(libraryKeyword, false, true);
+      const prop = new KeywordNode(propertyKeyword, false, true);
       this.alternatives.push(lib);
       this.alternatives.push(prop);
       super.parseText(text);

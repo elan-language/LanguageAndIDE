@@ -75,7 +75,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["not", "not", "not "],
+      ["not", "not", "not"],
       ["bitNot", "bitNot", "bitNot("],
     ] as [string, string, string][];
 

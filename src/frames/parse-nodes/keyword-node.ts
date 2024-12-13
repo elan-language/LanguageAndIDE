@@ -4,8 +4,13 @@ import { KeywordCompletion } from "../symbol-completion-helpers";
 import { FixedTextNode } from "./fixed-text-node";
 
 export class KeywordNode extends FixedTextNode {
-  constructor(keyword: string) {
+  spaceAfter: boolean;
+  dotAfter: boolean;
+
+  constructor(keyword: string, spaceAfter = false, dotAfter = false) {
     super(keyword);
+    this.spaceAfter = spaceAfter;
+    this.dotAfter = dotAfter;
     this.completionWhenEmpty = keyword;
   }
 
@@ -67,6 +72,8 @@ export class KeywordNode extends FixedTextNode {
   }
 
   symbolCompletion_keywords(): Set<KeywordCompletion> {
-    return new Set<KeywordCompletion>([KeywordCompletion.create(this.fixedText)]);
+    return new Set<KeywordCompletion>([
+      KeywordCompletion.create(this.fixedText, this.spaceAfter, this.dotAfter),
+    ]);
   }
 }
