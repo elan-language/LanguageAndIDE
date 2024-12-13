@@ -151,7 +151,7 @@ record Foo
   property p1 as Int
 end record
 
-function fun(foo as Foo) return Int
+function fun(foo as Foo) returns Int
     return foo.p1
 end function
 `;

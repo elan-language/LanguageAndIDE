@@ -49,7 +49,7 @@ suite("Selector tests", () => {
     const file = T09_emptyMainAndClassWithGlobalSelector();
     file.getById("select9").processKey(key("f"));
     const v = file.getById("func10").renderAsSource();
-    assert.equal(v, "  function () return \r\n" + "    return \r\n" + "  end function\r\n");
+    assert.equal(v, "  function () returns \r\n" + "    return \r\n" + "  end function\r\n");
   });
 
   test("Member Select - procedure", () => {

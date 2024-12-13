@@ -46,7 +46,7 @@ class Snake
     end if
   end procedure
 
-  function updateGraphics(gr as BlockGraphics) return BlockGraphics
+  function updateGraphics(gr as BlockGraphics) returns BlockGraphics
     var gr2 set to head.updateGraphics(gr, green)
     if body[0] isnt priorTail
       then
@@ -55,11 +55,11 @@ class Snake
     return gr2
   end function
 
-  function score() return Int
+  function score() returns Int
     return body.length() - 1
   end function
 
-  function bodyCovers(sq as Square) return Boolean
+  function bodyCovers(sq as Square) returns Boolean
     var result set to false
     each seg in body
       if (seg is sq)
@@ -70,7 +70,7 @@ class Snake
     return result
   end function
 
-  function gameOver() return Boolean
+  function gameOver() returns Boolean
     return bodyCovers(head) or head.hasHitEdge()
   end function
 
@@ -104,7 +104,7 @@ class Apple
     end repeat when not snake.bodyCovers(location)
   end procedure
 
-  function updateGraphics(gr as BlockGraphics) return BlockGraphics
+  function updateGraphics(gr as BlockGraphics) returns BlockGraphics
     return location.updateGraphics(gr, red)
   end function
 
@@ -120,7 +120,7 @@ class Square
 
   private property y as Int
 
-  function getAdjacentSquare(d as Direction) return Square
+  function getAdjacentSquare(d as Direction) returns Square
     var newX set to x
     var newY set to y
     switch d
@@ -136,11 +136,11 @@ class Square
     return new Square(newX, newY)
   end function
 
-  function hasHitEdge() return Boolean
+  function hasHitEdge() returns Boolean
     return (x is -1) or (y is -1) or (x is 40) or (y is 30)
   end function
 
-  function updateGraphics(gr as BlockGraphics, colour as Int) return BlockGraphics
+  function updateGraphics(gr as BlockGraphics, colour as Int) returns BlockGraphics
     return gr.withBlock(x, y, colour)
   end function
 

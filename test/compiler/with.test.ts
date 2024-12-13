@@ -95,7 +95,7 @@ main
   print a.a
 end main
 
-function foo() return Foo
+function foo() returns Foo
   var a set to new Foo()
   let b be copy a with a to 2
   return b
@@ -141,7 +141,7 @@ main
   print a.a
 end main
 
-function foo() return Foo
+function foo() returns Foo
   let a be new Foo()
   let b be copy a with a to 2
   return b
@@ -187,7 +187,7 @@ main
   print a.a
 end main
 
-function foo() return Foo
+function foo() returns Foo
   var a set to new Foo()
   return copy a with a to 2
 end function

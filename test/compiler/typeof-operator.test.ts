@@ -98,7 +98,7 @@ procedure hh(a as Int)
   var b set to a
 end procedure
 
-function ii(a as Int) return Int
+function ii(a as Int) returns Int
   return a
 end function`;
 

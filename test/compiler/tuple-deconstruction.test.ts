@@ -53,7 +53,7 @@ main
   print b
 end main
 
-function foo() return (Float, Int)
+function foo() returns (Float, Int)
   return (0.0, 0)
 end function`;
 
@@ -92,7 +92,7 @@ class Foo
   constructor()
   end constructor
 
-  function bar() return (Float, Int)
+  function bar() returns (Float, Int)
     return (0.0, 0)
   end function
 end class`;
@@ -136,7 +136,7 @@ main
   print b
 end main
 
-function foo() return ({Float}, Int)
+function foo() returns ({Float}, Int)
   return ({0.0}, 0)
 end function`;
 

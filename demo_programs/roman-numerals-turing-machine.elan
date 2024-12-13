@@ -58,11 +58,11 @@ class TuringMachine
     call execute(rule)
   end procedure
 
-  function isHalted() return Boolean
+  function isHalted() returns Boolean
     return currentState is haltState
   end function
 
-  function findMatchingRule() return Rule
+  function findMatchingRule() returns Rule
     let matches be rules.filter(lambda r as Rule => (r.currentState is currentState) and (r.currentSymbol is tape[headPosition]))
     if matches.length() is 0
       then
@@ -117,7 +117,7 @@ class Rule
 
   property move as Dir
 
-  function asString() return String
+  function asString() returns String
     return "{currentState},{currentSymbol},{nextState},{writeSymbol},{move}"
   end function
 

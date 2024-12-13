@@ -29,7 +29,7 @@ class Foo
     procedure setP1(value as Float)
         set property.p1 to value
     end procedure
-    function asString() return String
+    function asString() returns String
          return ""
     end function
 end class`;
@@ -89,7 +89,7 @@ class Foo
       print p1
   end procedure
 
-  function asString() return String
+  function asString() returns String
     return ""
   end function
 
@@ -156,7 +156,7 @@ class Foo
         set property.p1 to p1 + 1
     end procedure
 
-    function asString() return String
+    function asString() returns String
          return ""
     end function
 
@@ -173,7 +173,7 @@ class Bar
         set property.p1 to p1 + 1
     end procedure
 
-    function asString() return String
+    function asString() returns String
          return ""
     end function
 
@@ -260,7 +260,7 @@ class Foo
     print p1
   end procedure
 
-  function asString() return String
+  function asString() returns String
     return ""
   end function
 
@@ -289,7 +289,7 @@ class Foo
 
   property p2 as String
 
-  function asString() return String
+  function asString() returns String
     return ""
   end function
 

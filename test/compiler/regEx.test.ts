@@ -48,7 +48,7 @@ main
   print testRegex(r)
 end main
 
-function testRegex(r as RegExp) return Boolean
+function testRegex(r as RegExp) returns Boolean
   return "aa".matchesRegExp(r)
 end function`;
 
@@ -81,7 +81,7 @@ main
   print "aa".matchesRegExp(r)
 end main
 
-function testRegex() return RegExp
+function testRegex() returns RegExp
   return /a+/
 end function`;
 

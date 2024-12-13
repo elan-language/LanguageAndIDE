@@ -345,7 +345,7 @@ main
   print foo
 end main
 
-function foo() return Int
+function foo() returns Int
   return 0
 end function
 `;
@@ -367,7 +367,7 @@ main
   print [foo]
 end main
 
-function foo() return Int
+function foo() returns Int
   return 0
 end function
 `;

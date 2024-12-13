@@ -20,7 +20,7 @@ suite("Test and Assert", () => {
 main
 end main
 
-function square(x as Float) return Float
+function square(x as Float) returns Float
   return x ^ 2
 end function
 
@@ -284,7 +284,7 @@ return [main, _tests];}`;
 main
 end main
 
-function square(x as Float) return Float
+function square(x as Float) returns Float
   return x ^ 2
 end function
 
@@ -604,7 +604,7 @@ end test
 main
 end main
 
-function square(x as Float) return Float
+function square(x as Float) returns Float
   return x ^ 2
 end function
 
@@ -645,7 +645,7 @@ main
   assert square(3) is 3 * 3
 end main
 
-function square(x as Float) return Float
+function square(x as Float) returns Float
   return x ^ 2
 end function
 `;
@@ -663,7 +663,7 @@ main
   call squareTest()
 end main
 
-function square(x as Float) return Float
+function square(x as Float) returns Float
   return x ^ 2
 end function
 
@@ -685,7 +685,7 @@ main
   var a set to squareTest
 end main
 
-function square(x as Float) return Float
+function square(x as Float) returns Float
   return x ^ 2
 end function
 

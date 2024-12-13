@@ -29,7 +29,7 @@ class Foo
 
     private property p2 as String
 
-    function asString() return String
+    function asString() returns String
          return p2
     end function
 
@@ -140,11 +140,11 @@ class Foo
   constructor()  
   end constructor
   
-  private function ff(f as String) return String
+  private function ff(f as String) returns String
     return f
   end function
   
-  function testFf(f as String) return String
+  function testFf(f as String) returns String
     return ff(f)
   end function
   
@@ -200,7 +200,7 @@ class Foo
 
     private property p2 as String
 
-    function asString() return String
+    function asString() returns String
          return ""
     end function
 
@@ -281,7 +281,7 @@ class Foo
 
   property p1 as Int
 
-  private function ff() return Int
+  private function ff() returns Int
     return p1
   end function
 
@@ -312,7 +312,7 @@ class Foo
 
     private property p2 as String
 
-    function asString() return String
+    function asString() returns String
          return ""
     end function
 
@@ -339,7 +339,7 @@ class Foo
 
   property p1 as Int
 
-  private function ff() return Int
+  private function ff() returns Int
     return p1
   end function
 

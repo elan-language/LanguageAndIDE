@@ -19,7 +19,7 @@ main
   print foo(3,4)
 end main
 
-function foo(a as Float, b as Float) return Float
+function foo(a as Float, b as Float) returns Float
   return a * b
 end function`;
 
@@ -50,7 +50,7 @@ main
   print a
 end main
 
-function foo(a as Int, b as Int) return [Int]
+function foo(a as Int, b as Int) returns [Int]
   return [a, b]
 end function`;
 
@@ -82,7 +82,7 @@ main
   print a
 end main
 
-function foo(a as Int, b as Int) return [Int]
+function foo(a as Int, b as Int) returns [Int]
   return [a, b]
 end function`;
 
@@ -113,7 +113,7 @@ main
   print foo(3,4)
 end main
 
-function foo(a as Int, b as Int) return Int
+function foo(a as Int, b as Int) returns Int
     return empty Int
 end function`;
 
@@ -143,7 +143,7 @@ main
   print foo(3,4)
 end main
 
-function foo(a as Int, b as Int) return Foo
+function foo(a as Int, b as Int) returns Foo
   return empty Foo
 end function
 
@@ -186,7 +186,7 @@ main
     print foo(3,4)
 end main
 
-function foo(a as Int, b as Int) return Array<of Int>
+function foo(a as Int, b as Int) returns Array<of Int>
     return empty Array<of Int>
 end function`;
 
@@ -216,7 +216,7 @@ main
   print factorial(5)
 end main
 
-function factorial(a as Int) return Int
+function factorial(a as Int) returns Int
     var result set to 0
     if a > 2
       then
@@ -260,7 +260,7 @@ main
   print foo(b)
 end main
 
-function foo(bar as Bar) return String
+function foo(bar as Bar) returns String
     return bar.asString()
 end function
 
@@ -268,7 +268,7 @@ class Bar
     constructor()
     end constructor
 
-    function asString() return String
+    function asString() returns String
         return "bar"
     end function
 
@@ -329,7 +329,7 @@ end main`;
   test("Fail_ParameterCount", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
-function f(p as Float) return Float
+function f(p as Float) returns Float
   return 0
 end function
 
@@ -351,7 +351,7 @@ end main`;
   test("Fail_ParameterType", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
-function f(p as Int) return Float
+function f(p as Int) returns Float
   return 0.0
 end function
 
@@ -373,7 +373,7 @@ end main`;
   test("Fail_ReturnType", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
-function f(p as Boolean) return Int
+function f(p as Boolean) returns Int
   return p
 end function
 
@@ -408,7 +408,7 @@ end main`;
   test("Fail_noAs", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
-function f(p Int) return Int 
+function f(p Int) returns Int 
   return p
 end function
 
@@ -425,7 +425,7 @@ end main`;
   test("Fail_noReturn", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
-function f(p Int) return Int 
+function f(p Int) returns Int 
   var c set to p
 end function
 
@@ -447,7 +447,7 @@ main
   set a to foo(3,4)
 end main
 
-function foo(a as Int, b as Int) return Int
+function foo(a as Int, b as Int) returns Int
   var c set to a * b
   return c
 end function`;
@@ -465,7 +465,7 @@ end function`;
 main
 end main
 
-function foo(a as Int, b as Int) return Int
+function foo(a as Int, b as Int) returns Int
   var c set to a * b
   return
 end function`;
@@ -482,7 +482,7 @@ end function`;
 main
 end main
 
-function foo(a as Int, b as Int) return Boolean
+function foo(a as Int, b as Int) returns Boolean
     if 2 > 1
         return true
     else
@@ -502,7 +502,7 @@ end function`;
 main
 end main
     
-function foo(a as Int, b as Int) return Int
+function foo(a as Int, b as Int) returns Int
   return a / b
 end function`;
 
@@ -519,7 +519,7 @@ end function`;
 main
 end main
     
-function foo(a as Int, b as Int) return Int
+function foo(a as Int, b as Int) returns Int
   return a * b
   var c set to a + b
 end function`;
@@ -536,7 +536,7 @@ end function`;
 main
 end main
 
-function foo(a as Int, b as Int) return Int
+function foo(a as Int, b as Int) returns Int
   print a
   return a * b
 end function`;
@@ -553,7 +553,7 @@ end function`;
 main
 end main
 
-function foo(a as Int, b as Int) return Int
+function foo(a as Int, b as Int) returns Int
   input x
   return a * b
 end function`;
@@ -572,7 +572,7 @@ main
   print result
 end main
 
-function foo(a as Int, b as Int) return Int
+function foo(a as Int, b as Int) returns Int
   set a to 1
   return a * b
 end function`;
@@ -592,7 +592,7 @@ main
   print result
 end main
 
-function foo(a as Int, b as Int) return Int
+function foo(a as Int, b as Int) returns Int
   set a to a + 1
   return a * b
 end function`;
@@ -610,7 +610,7 @@ end function`;
 main
 end main
 
-function foo(a as Array<of Int>) return Int
+function foo(a as Array<of Int>) returns Int
     call a.putAt(0, 1)
     return a[0]
 end function`;
@@ -627,7 +627,7 @@ end function`;
 main
 end main
 
-function foo(b as Int, a as Array<of Int>) return Int
+function foo(b as Int, a as Array<of Int>) returns Int
     call a.setAt(0, 0)
     return a[0]
 end function`;
@@ -646,7 +646,7 @@ main
   print result
 end main
 
-function foo(a as Int, b as Int) return Int
+function foo(a as Int, b as Int) returns Int
     return a * b
 end function`;
 
@@ -665,7 +665,7 @@ main
   print result
 end main
 
-function foo(a as Int, b as Int) return Int
+function foo(a as Int, b as Int) returns Int
     return a * b
 end function`;
 
@@ -684,7 +684,7 @@ main
   print result
 end main
 
-function foo(a as Int, b as Int) return Int
+function foo(a as Int, b as Int) returns Int
     return a * b
 end function`;
 
@@ -705,7 +705,7 @@ main
   print result
 end main
 
-function foo(ref a as Int, b as Int) return Int
+function foo(ref a as Int, b as Int) returns Int
     return a * b
 end function`;
 
@@ -722,7 +722,7 @@ main
  
 end main
 
-function foo(a as Array<of Int>, b as Dictionary<of String, Int>, c as Foo) return Int
+function foo(a as Array<of Int>, b as Dictionary<of String, Int>, c as Foo) returns Int
   call b.setAtKey("key", 1)
   return 1
 end function
@@ -747,7 +747,7 @@ main
  
 end main
 
-function changeValue(a as Bar) return Int
+function changeValue(a as Bar) returns Int
   return 0
 end function`;
 
@@ -766,7 +766,7 @@ main
  
 end main
 
-function changeValue(a as Int) return Bar
+function changeValue(a as Int) returns Bar
   return 0
 end function`;
 
@@ -785,7 +785,7 @@ main
   
 end main
 
-function if(a as Int) return Int
+function if(a as Int) returns Int
   return 0
 end function`;
 
@@ -803,7 +803,7 @@ main
   
 end main
 
-function break(a as Int) return Int
+function break(a as Int) returns Int
   return 0
 end function`;
 
@@ -823,7 +823,7 @@ main
   
 end main
 
-function fun(if as Int) return Int
+function fun(if as Int) returns Int
   return 0
 end function`;
 
@@ -840,7 +840,7 @@ main
   
 end main
 
-function fun(break as Int) return Int
+function fun(break as Int) returns Int
   return 0
 end function`;
 
@@ -856,11 +856,11 @@ end function`;
   test("Fail_NotUniqueName", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
-function foo() return Int
+function foo() returns Int
   return 0
 end function
 
-function foo() return Int
+function foo() returns Int
   return 1
 end function
 `;
@@ -876,7 +876,7 @@ end function
   test("Fail_NotUniqueParameterName", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
-function foo(a as Int, b as String, a as Int) return Int
+function foo(a as Int, b as String, a as Int) returns Int
   return 0
 end function`;
 
@@ -891,7 +891,7 @@ end function`;
   test("Fail_OutOnParameter", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
-function foo(out a as Int) return Int
+function foo(out a as Int) returns Int
   return 0
 end function`;
 
@@ -912,10 +912,10 @@ main
   var c set to - ref p1
 end main
 
-function p1() return Int
+function p1() returns Int
   return 0
 end function
-function p2() return Int
+function p2() returns Int
   return 0
 end function`;
 
@@ -939,10 +939,10 @@ main
   var c set to -p1
 end main
 
-function p1() return Int
+function p1() returns Int
   return 0
 end function
-function p2() return Int
+function p2() returns Int
   return 0
 end function`;
 
@@ -969,7 +969,7 @@ main
   print a.b
 end main
 
-function a() return Int
+function a() returns Int
   return 0
 end function`;
 
@@ -1043,7 +1043,7 @@ main
   var b set to p2()
 end main
 
-function p1() return Int
+function p1() returns Int
   var a set to [1, 2]
   set a[0] to 2
   return a[0]

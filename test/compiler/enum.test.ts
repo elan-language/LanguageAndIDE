@@ -242,7 +242,7 @@ end main
    
 enum Fruit apple, orange, pear
 
-function isFavourite(f as Fruit) return Boolean
+function isFavourite(f as Fruit) returns Boolean
   return f is Fruit.pear
 end function
 `;
@@ -280,7 +280,7 @@ end main
    
 enum Fruit apple, orange, pear
 
-function firstFruit() return Fruit
+function firstFruit() returns Fruit
   return Fruit.apple
 end function
 `;

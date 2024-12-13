@@ -35,7 +35,7 @@ class Foo
         set property.p1 to v
     end procedure
 
-    function asString() return String
+    function asString() returns String
       return "{p1} {p2}"
     end function
 end class`;
@@ -99,7 +99,7 @@ class Foo
         set property.p1 to v
     end procedure
 
-    function asString() return String
+    function asString() returns String
       return "{p1} {p2}"
     end function
 end class`;
@@ -166,7 +166,7 @@ class Foo
     set property.p1 to v
   end procedure
 
-  function asString() return String
+  function asString() returns String
     return "{p1} {p2}"
   end function
 end class`;

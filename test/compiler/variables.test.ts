@@ -371,7 +371,7 @@ end main`;
   test("Fail_TypeCheck1", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
-function f() return Int
+function f() returns Int
   return 0
 end function
 main
@@ -479,7 +479,7 @@ main
   var a, length set to foo()
 end main
 
-function foo() return (Int, Int)
+function foo() returns (Int, Int)
   return (0, 0)
 end function`;
 

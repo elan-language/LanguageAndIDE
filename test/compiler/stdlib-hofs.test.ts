@@ -77,7 +77,7 @@ main
   print filterIt(source)
 end main
 
-function filterIt(tofilter as List<of Int>) return List<of Int>
+function filterIt(tofilter as List<of Int>) returns List<of Int>
     return tofilter.filter(lambda x as Int => x > 20).asList()
 end function
 `;

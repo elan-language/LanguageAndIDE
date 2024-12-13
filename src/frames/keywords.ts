@@ -48,6 +48,7 @@ export const recordKeyword = "record";
 export const refKeyword = "ref";
 export const repeatKeyword = "repeat";
 export const returnKeyword = "return";
+export const returnsKeyword = "returns";
 export const setKeyword = "set";
 export const stepKeyword = "step";
 export const switchKeyword = "switch";
@@ -124,6 +125,7 @@ export const allKeywords = [
   recordKeyword,
   repeatKeyword,
   returnKeyword,
+  returnsKeyword,
   setKeyword,
   stepKeyword,
   switchKeyword,

@@ -31,7 +31,7 @@ class Foo
 
   property p2 as String
 
-  function asString() return String
+  function asString() returns String
         return ""
   end function
 
@@ -88,7 +88,7 @@ class Foo
 
     property p1 as Float
     property p2 as String
-    function asString() return String
+    function asString() returns String
         return ""
     end function
 
@@ -227,7 +227,7 @@ class Foo
 
   property bar as Bar
 
-  function asString() return String
+  function asString() returns String
         return ""
   end function
 
@@ -243,7 +243,7 @@ class Bar
 
   property foo as Foo
 
-  function asString() return String
+  function asString() returns String
         return ""
   end function
 
@@ -427,7 +427,7 @@ class Foo
   end procedure
 end class
 
-function fun(foo as Foo) return Int
+function fun(foo as Foo) returns Int
     return foo.p1
 end function
 `;
@@ -474,7 +474,7 @@ class Foo
   property p1 as Int
   property p2 as String
   
-  function asString() return String
+  function asString() returns String
       return ""
   end function
 
@@ -494,7 +494,7 @@ class Foo
     property p1 as Int set to 3
     property p2 as String
    
-    function asString() return String
+    function asString() returns String
         return ""
     end function
 
@@ -520,7 +520,7 @@ class Foo
 
   property p1 as Int
 
-  function asString() return String
+  function asString() returns String
       return ""
   end function
 end class`;
@@ -544,7 +544,7 @@ class Foo
 
   property p1 as Int
 
-  function asString() return String
+  function asString() returns String
       return ""
   end function
 
@@ -570,7 +570,7 @@ class Foo
 
   property p1 as Int
 
-  function asString() return String
+  function asString() returns String
       return ""
   end function
 
@@ -597,7 +597,7 @@ class Foo
 
   property p1 as Int
 
-  function asString() return String
+  function asString() returns String
       return ""
   end function
 
@@ -623,7 +623,7 @@ class Foo
 
   property p1 as Int
 
-  function asString() return String
+  function asString() returns String
       return ""
   end function
 
@@ -655,7 +655,7 @@ class Foo
 
   property p2 as String
 
-  function asString() return String
+  function asString() returns String
       return ""
   end function
 
@@ -734,7 +734,7 @@ class Bar
   property p1 as Int
 end class
 
-function fun(bar as Bar) return Int
+function fun(bar as Bar) returns Int
     return bar.p1
 end function
 `;
@@ -827,10 +827,10 @@ end main
 class Foo
   constructor()
   end constructor
-  function ff() return Int
+  function ff() returns Int
     return 0
   end function
-  function ff() return Int
+  function ff() returns Int
     return 0
   end function
 end class`;
@@ -900,7 +900,7 @@ end main
 class Foo
   constructor()
   end constructor
-  function ff() return Int
+  function ff() returns Int
     return 0
   end function
   property ff as Int
@@ -924,7 +924,7 @@ end main
 class Foo
   constructor()
   end constructor
-  function ff() return Int
+  function ff() returns Int
     return 0
   end function
   procedure ff()

@@ -1,7 +1,7 @@
 import { Parent } from "../interfaces/parent";
 import { GlobalFrame } from "../interfaces/global-frame";
 import { FunctionFrame } from "./function-frame";
-import { functionKeyword, returnKeyword, endKeyword } from "../keywords";
+import { functionKeyword, returnKeyword, endKeyword, returnsKeyword } from "../keywords";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { Transforms } from "../syntax-nodes/transforms";
 import {
@@ -23,7 +23,7 @@ export class GlobalFunction extends FunctionFrame implements GlobalFrame {
   }
 
   public renderAsSource(): string {
-    return `${functionKeyword} ${this.name.renderAsSource()}(${this.params.renderAsSource()}) ${returnKeyword} ${this.returnType.renderAsSource()}\r
+    return `${functionKeyword} ${this.name.renderAsSource()}(${this.params.renderAsSource()}) ${returnsKeyword} ${this.returnType.renderAsSource()}\r
 ${this.renderChildrenAsSource()}\r
 ${endKeyword} ${functionKeyword}\r
 `;

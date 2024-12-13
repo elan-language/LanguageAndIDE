@@ -74,7 +74,7 @@ class Foo
   constructor()
   end constructor
 
-  function asString() return String
+  function asString() returns String
     return "foo"
   end function
 
@@ -134,7 +134,7 @@ class Foo
   constructor()
   end constructor
 
-  function asString() return String
+  function asString() returns String
     return "foo"
   end function
 
@@ -656,7 +656,7 @@ class Foo
   
   property it as List<of Int>
   
-  function asString() return String
+  function asString() returns String
     return "A Foo"
   end function
 end class`;

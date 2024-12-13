@@ -18,7 +18,7 @@ main
   print add()
 end main
 
-function add() return Int
+function add() returns Int
   let x be 3
   let y be x + 3
   return x + y
@@ -136,7 +136,7 @@ main
   print foo()
 end main
 
-function foo() return Int
+function foo() returns Int
   let x be 3
   let x be 4
   return x
@@ -159,7 +159,7 @@ main
   print foo()
 end main
 
-function foo() return Int
+function foo() returns Int
   let x be 3
   set x to 4
   return x
@@ -181,7 +181,7 @@ main
   print x
 end main
 
-function foo() return Int
+function foo() returns Int
   let x be x + 1
   return x
 end function`;
@@ -205,7 +205,7 @@ main
   print foo()
 end main
 
-function foo() return Int
+function foo() returns Int
   var x set to 1
   let y be x.y
   return y
@@ -226,7 +226,7 @@ main
   let a, length be foo()
 end main
 
-function foo() return (Int, Int)
+function foo() returns (Int, Int)
   return (0, 0)
 end function`;
 

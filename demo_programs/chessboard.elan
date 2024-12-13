@@ -8,7 +8,7 @@ main
   call gr.display()
 end main
 
-function addBoard(gr as BlockGraphics) return BlockGraphics
+function addBoard(gr as BlockGraphics) returns BlockGraphics
   var gr2 set to gr
   for x from 0 to 7 step 1
     for y from 0 to 7 step 1
@@ -19,7 +19,7 @@ function addBoard(gr as BlockGraphics) return BlockGraphics
   return gr2
 end function
 
-function addSquare(gr as BlockGraphics, x as Int, y as Int, colour as Int) return BlockGraphics
+function addSquare(gr as BlockGraphics, x as Int, y as Int, colour as Int) returns BlockGraphics
   var gr2 set to gr
   for col from x to x + 2 step 1
     for row from y to y + 2 step 1

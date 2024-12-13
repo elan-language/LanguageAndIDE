@@ -143,7 +143,7 @@ main
   end each
 end main
 
-function fruit() return List<of String>
+function fruit() returns List<of String>
   return {"apple","orange", "pear"}
 end function`;
 

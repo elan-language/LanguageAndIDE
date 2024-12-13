@@ -46,7 +46,7 @@ end main
 class Foo
   constructor()
   end constructor
-  function asString() return String
+  function asString() returns String
     return "Hello World!"
   end function
 end class`;

@@ -57,7 +57,7 @@ export class AbstractFunction extends AbstractFrame implements Member, ElanSymbo
   }
 
   public override renderAsSource(): string {
-    return `${this.indent()}abstract function ${this.name.renderAsSource()}(${this.params.renderAsSource()}) return ${this.returnType.renderAsSource()}\r
+    return `${this.indent()}abstract function ${this.name.renderAsSource()}(${this.params.renderAsSource()}) returns ${this.returnType.renderAsSource()}\r
 `;
   }
 
@@ -81,7 +81,7 @@ ${this.indent()}}\r
     this.name.parseFrom(source);
     source.remove("(");
     this.params.parseFrom(source);
-    source.remove(") return ");
+    source.remove(") returns ");
     this.returnType.parseFrom(source);
   }
 

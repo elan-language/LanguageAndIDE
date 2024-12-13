@@ -33,7 +33,7 @@ class Game
 
     property previousScores as List<of Int>
 
-    function asString() return String
+    function asString() returns String
         return "A game"
     end function
 
@@ -46,7 +46,7 @@ class Player
 
     property name as String
 
-    function asString() return String
+    function asString() returns String
         return name
     end function
 
@@ -150,7 +150,7 @@ class Game
     property ff as Func<of String, String => Int>
     property r as RegExp
 
-    function asString() return String
+    function asString() returns String
         return "A game"
     end function
 
@@ -256,7 +256,7 @@ class Game
     property t as Tuple<of Int, String, List<of Int>>
     property r as RegExp
 
-    function asString() return String
+    function asString() returns String
         return "A game"
     end function
 
@@ -351,7 +351,7 @@ class Game
 
     property i as Float
 
-    function asString() return String
+    function asString() returns String
         return "A game"
     end function
 
@@ -403,7 +403,7 @@ class Game
   property p1 as Player
   property previousGame as Game
 
-  function asString() return String
+  function asString() returns String
     return "A game"
   end function
 
@@ -416,7 +416,7 @@ class Player
 
   property name as String
 
-  function asString() return String
+  function asString() returns String
     return name
   end function
 
@@ -512,7 +512,7 @@ class Game
 
   property r as RegExp
 
-  function asString() return String
+  function asString() returns String
     return "A game"
   end function
 
@@ -525,7 +525,7 @@ class Player
 
   property name as String
 
-  function asString() return String
+  function asString() returns String
     return name
   end function
 
@@ -640,7 +640,7 @@ class Game
 
   property previousScores as List<of Int>
 
-  function asString() return String
+  function asString() returns String
     return "A game"
   end function
 
@@ -653,7 +653,7 @@ class Player
 
     property name as String
 
-    function asString() return String
+    function asString() returns String
       return name
     end function
 
@@ -761,7 +761,7 @@ class Foo
   property c as Dictionary<of String, Int>
   property d as Array<of Int>
 
-  function asString() return String
+  function asString() returns String
     return "A Foo"
   end function
 
@@ -826,7 +826,7 @@ class Game
   property p1 as Player
   property p2 as Player
 
-  function asString() return String
+  function asString() returns String
     return "A game"
   end function
 
@@ -834,7 +834,7 @@ end class
 
 abstract class Player
     abstract property name as String
-    abstract function ucName() return String
+    abstract function ucName() returns String
 end class`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {

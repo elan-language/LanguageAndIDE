@@ -38,7 +38,7 @@ procedure saveAsFile(name as String, gr as BlockGraphics)
   call file.saveAndClose()
 end procedure
 
-function createStart(g as BlockGraphics) return BlockGraphics
+function createStart(g as BlockGraphics) returns BlockGraphics
   var g2 set to g
   for i from 0 to 15 step 2
     set g2 to addRectangle(g2, i, i, 39 - 2*i, 29 - 2*i)
@@ -46,7 +46,7 @@ function createStart(g as BlockGraphics) return BlockGraphics
   return g2
 end function
 
-function addRectangle(g as BlockGraphics, startX as Int, startY as Int, width as Int, depth as Int) return BlockGraphics
+function addRectangle(g as BlockGraphics, startX as Int, startY as Int, width as Int, depth as Int) returns BlockGraphics
   let paint be white
   var g2 set to g
   for x from startX to startX + width step 1
@@ -61,7 +61,7 @@ function addRectangle(g as BlockGraphics, startX as Int, startY as Int, width as
 end function
 
 # colour: 0 for black, 1 for white
-function okToSet(p as Point, colour as Int, g as BlockGraphics) return Boolean
+function okToSet(p as Point, colour as Int, g as BlockGraphics) returns Boolean
   let n be p.neighbouringPoints().map(lambda p as Point => getValue(p, g)).asList()
   let q1 be isValidQuadrant(n[0] + n[1]*2 + colour*4 + n[3]*8)
   let q2 be isValidQuadrant(n[1] + n[2]*2 + n[4]*4 + colour*8)
@@ -70,7 +70,7 @@ function okToSet(p as Point, colour as Int, g as BlockGraphics) return Boolean
   return q1 and q2 and q3 and q4
 end function
 
-function getValue(p as Point, g as BlockGraphics) return Int
+function getValue(p as Point, g as BlockGraphics) returns Int
   var result set to 0
   if (p.x > -1) and (p.x < 40) and (p.y > -1) and (p.y < 30)
     then
@@ -80,7 +80,7 @@ function getValue(p as Point, g as BlockGraphics) return Int
   return result
 end function
 
-function flip01(v as Int) return Int
+function flip01(v as Int) returns Int
   return if v is 0 then 1 else 0
 end function
 
@@ -89,7 +89,7 @@ test flip01
   assert flip01(1) is 0
 end test
 
-function isValidQuadrant(q as Int) return Boolean
+function isValidQuadrant(q as Int) returns Boolean
   return (q mod 5) isnt 0
 end function
 
@@ -127,7 +127,7 @@ class Point
   property isNotEmpty as Boolean
 
   # Returns the 8 theoretically-neighbouring points, whether or not within bounds
-  function neighbouringPoints() return {Point}
+  function neighbouringPoints() returns {Point}
     return {new Point(x - 1, y - 1), new Point(x, y - 1), new Point(x + 1, y - 1), new Point(x - 1, y), new Point(x + 1, y), new Point(x - 1, y + 1), new Point(x, y + 1), new Point(x + 1, y + 1)}
   end function
 

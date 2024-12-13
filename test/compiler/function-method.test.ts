@@ -27,11 +27,11 @@ class Foo
 
     property p1 as Float
 
-    function times(value as Float) return Float
+    function times(value as Float) returns Float
         return p1 * value
     end function
 
-    function asString() return String
+    function asString() returns String
          return ""
     end function
 
@@ -88,11 +88,11 @@ class Foo
 
     property p1 as Float
 
-    function times(value as Float) return Float
+    function times(value as Float) returns Float
         return p1 * value
     end function
 
-    function asString() return String
+    function asString() returns String
          return ""
     end function
 
@@ -151,11 +151,11 @@ class Foo
 
     property p1 as Float
 
-    function times(value as Float) return {Float}
+    function times(value as Float) returns {Float}
         return {p1 * value}
     end function
 
-    function asString() return String
+    function asString() returns String
          return ""
     end function
 
@@ -213,7 +213,7 @@ class Bar
 
   property p1 as Foo
 
-  function getTimes() return {Float}
+  function getTimes() returns {Float}
     var x set to empty {Float}
     set x to p1.times(2)
     return x
@@ -228,7 +228,7 @@ class Foo
 
     property p1 as Float
 
-    function times(value as Float) return {Float}
+    function times(value as Float) returns {Float}
         return {p1 * value}
     end function
 
@@ -303,7 +303,7 @@ class Bar
 
   property p1 as Foo
 
-  function getTimes() return {Qux}
+  function getTimes() returns {Qux}
     var x set to empty {Qux}
     set x to p1.times(2)
     return x
@@ -318,7 +318,7 @@ class Foo
 
     property p1 as Float
 
-    function times(value as Float) return {Qux}
+    function times(value as Float) returns {Qux}
         return {new Qux()}
     end function
 
@@ -405,11 +405,11 @@ class Foo
 
     property p1 as Bar
 
-    function length() return Float
+    function length() returns Float
         return p1.length() + 2
     end function
 
-    function asString() return String
+    function asString() returns String
          return ""
     end function
 
@@ -422,11 +422,11 @@ class Bar
 
     property p1 as Float
 
-    function length() return Float
+    function length() returns Float
         return p1
     end function
 
-    function asString() return String
+    function asString() returns String
          return ""
     end function
 
@@ -506,15 +506,15 @@ class Foo
 
     property p1 as Float
 
-    function times(b as Bar) return Float
+    function times(b as Bar) returns Float
         return p1PlusOne() * b.p1PlusOne()
     end function
 
-    function p1PlusOne() return Float
+    function p1PlusOne() returns Float
         return p1 + 1
     end function
 
-    function asString() return String
+    function asString() returns String
          return ""
     end function
 
@@ -527,11 +527,11 @@ class Bar
 
     property p1 as Float
 
-    function p1PlusOne() return Float
+    function p1PlusOne() returns Float
         return p1 + 1
     end function
 
-    function asString() return String
+    function asString() returns String
          return ""
     end function
 
@@ -613,7 +613,7 @@ class Foo
     print asString()
   end procedure
 
-  function asString() return String
+  function asString() returns String
     return p1.asString()
   end function
 
@@ -668,11 +668,11 @@ class Foo
 
     property p1 as Float
 
-    function times(value as Float) return Float
+    function times(value as Float) returns Float
         return p1 * value
     end function
 
-    function asString() return String
+    function asString() returns String
          return ""
     end function
 
@@ -699,7 +699,7 @@ class Foo
       
     end constructor
 
-    function such() return Int
+    function such() returns Int
         return 0
     end function
 
@@ -725,12 +725,12 @@ class Foo
 
   property p1 as Float
 
-  function times(value as Float) return Float
+  function times(value as Float) returns Float
     set p1 to p1 * value
     return p1
   end function
 
-  function asString() return String
+  function asString() returns String
     return ""
   end function
 
@@ -753,7 +753,7 @@ class Foo
 
     property p1 as Float
 
-    function times(value as Float) return Float
+    function times(value as Float) returns Float
         call setP1(p1 * value)
         return p1
     end function
@@ -762,7 +762,7 @@ class Foo
         set property.p1 to value
     end procedure
 
-    function asString() return String
+    function asString() returns String
          return ""
     end function
 
@@ -785,7 +785,7 @@ class Foo
   constructor()
   end constructor
 
-  function changeValue(a as Bar) return Int
+  function changeValue(a as Bar) returns Int
     return 0
   end function
 end class`;
@@ -809,7 +809,7 @@ class Foo
   constructor()
   end constructor
 
-  function changeValue(a as Int) return Bar
+  function changeValue(a as Int) returns Bar
     return 0
   end function
 end class`;
@@ -833,7 +833,7 @@ class Foo
   constructor()
   end constructor
 
-  function if(a as Int) return Int
+  function if(a as Int) returns Int
     return 0
   end function
 end class`;
@@ -856,7 +856,7 @@ class Foo
   constructor()
   end constructor
 
-  function break(a as Int) return Int
+  function break(a as Int) returns Int
     return 0
   end function
 end class`;
@@ -881,7 +881,7 @@ class Foo
   constructor()
   end constructor
 
-  function foo(a as Int, b as String, a as Int) return Int
+  function foo(a as Int, b as String, a as Int) returns Int
     return 0
   end function
 end class`;

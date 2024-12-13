@@ -53,7 +53,7 @@ main
   print sec
 end main
 
-function f() return (String, String)
+function f() returns (String, String)
    return ("1", "2")
 end function`;
 
@@ -89,7 +89,7 @@ main
   print fst
 end main
 
-function f() return (String, String)
+function f() returns (String, String)
    return ("1", "2")
 end function`;
 
@@ -154,7 +154,7 @@ main
   print f((x,y))
 end main
 
-function f(t as (String, String)) return String
+function f(t as (String, String)) returns String
    let first, _ be t
    return first
 end function`;

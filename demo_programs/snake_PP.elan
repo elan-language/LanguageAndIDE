@@ -40,7 +40,7 @@ procedure eatAppleIfPoss(head as [Int], out body as [[Int]], apple as [Int])
   end if
 end procedure
 
-function updateGraphics(gr as BlockGraphics, head as [Int], tail as [Int], body as [[Int]], apple as [Int]) return BlockGraphics
+function updateGraphics(gr as BlockGraphics, head as [Int], tail as [Int], body as [[Int]], apple as [Int]) returns BlockGraphics
   var gr2 set to gr.withBlock(head[0], head[1], green)
   if body[0] is tail
     then
@@ -52,11 +52,11 @@ function updateGraphics(gr as BlockGraphics, head as [Int], tail as [Int], body 
   return gr2
 end function
 
-function hasHitEdge(head as [Int]) return Boolean
+function hasHitEdge(head as [Int]) returns Boolean
   return (head[0] < 0) or (head[1] < 0) or (head[0] > 39) or (head[1] > 29)
 end function
 
-function getAdjacentSquare(sq as [Int], dir as String) return [Int]
+function getAdjacentSquare(sq as [Int], dir as String) returns [Int]
   var newX set to sq[0]
   var newY set to sq[1]
   switch dir
@@ -72,7 +72,7 @@ function getAdjacentSquare(sq as [Int], dir as String) return [Int]
   return [newX, newY]
 end function
 
-function overlaps(body as [[Int]], sq as [Int]) return Boolean
+function overlaps(body as [[Int]], sq as [Int]) returns Boolean
   var result set to false
   each seg in body
     if (seg is sq)
@@ -83,7 +83,7 @@ function overlaps(body as [[Int]], sq as [Int]) return Boolean
   return result
 end function
 
-function directionByKey(current as String, key as String) return String
+function directionByKey(current as String, key as String) returns String
   var dir set to current
   switch key
     case "w"

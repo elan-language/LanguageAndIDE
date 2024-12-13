@@ -49,7 +49,7 @@ main
   call printModified((4, 5), lambda t as (Int, Int) => first(t))
 end main
 
-function first(t as (Int, Int)) return Int
+function first(t as (Int, Int)) returns Int
     let a, _ be t
     return a
 end function
@@ -191,7 +191,7 @@ main
   print l(5)
 end main
     
-function getFunc() return Func<of Int => Int>
+function getFunc() returns Func<of Int => Int>
   return lambda x as Int => x * 5
 end function`;
 
@@ -249,7 +249,7 @@ main
   print l()
 end main
     
-function getFunc(x as Int) return Func<of => Int>
+function getFunc(x as Int) returns Func<of => Int>
   return lambda => x * 5
 end function`;
 
@@ -281,7 +281,7 @@ main
   print l
 end main
     
-function getFunc() return Func<of Int => Int>
+function getFunc() returns Func<of Int => Int>
   return lambda x as Int => x * 5
 end function`;
 

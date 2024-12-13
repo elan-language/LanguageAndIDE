@@ -22,7 +22,7 @@ procedure printModified(i as Float, f as Func<of Float => Float>)
   print f(i)
 end procedure
   
-function twice(x as Float) return Float
+function twice(x as Float) returns Float
   return x * 2
 end function`;
 
@@ -60,7 +60,7 @@ procedure printModified(i as Float, f as Func<of => Float>)
   print f()
 end procedure
   
-function twice() return Float
+function twice() returns Float
   return 2
 end function`;
 
@@ -98,7 +98,7 @@ procedure printIt(s as String, c as String, f as Func<of String, String => Int>)
   print f(s,c)
 end procedure
   
-function find(x as String, y as String) return Int
+function find(x as String, y as String) returns Int
   return x.indexOf(y)
 end function`;
 
@@ -133,11 +133,11 @@ main
   print f(5)
 end main
   
-function getFunc() return Func<of Float => Float>
+function getFunc() returns Func<of Float => Float>
   return ref twice
 end function
   
-function twice(x as Float) return Float
+function twice(x as Float) returns Float
   return x * 2
 end function`;
 
@@ -173,7 +173,7 @@ main
   print f(5)
 end main
   
-function twice(x as Float) return Float
+function twice(x as Float) returns Float
   return x * 2
 end function`;
 
@@ -205,7 +205,7 @@ main
   print f.pf(5)
 end main
 
-function ff(a as Int) return Int
+function ff(a as Int) returns Int
   return a
 end function
   
@@ -255,7 +255,7 @@ main
   print ref ff
 end main
 
-function ff(a as Int) return Int
+function ff(a as Int) returns Int
   return a
 end function`;
 
@@ -286,7 +286,7 @@ main
   print f(5)
 end main
   
-function twice(x as Float) return Float
+function twice(x as Float) returns Float
   return x * 2
 end function`;
 
@@ -311,7 +311,7 @@ procedure printModified(i as Int, f as Func<of Int => Int>)
   print f(i)
 end procedure
   
-function power(x as Int, y as Int) return Int
+function power(x as Int, y as Int) returns Int
   return 0
 end function`;
 
@@ -335,7 +335,7 @@ procedure printModified(i as Int, f as Func<of Int => Int>)
   print f(i)
 end procedure
   
-function power(x as Int) return String
+function power(x as Int) returns String
   return "one"
 end function`;
 
@@ -356,11 +356,11 @@ main
   print a()
 end main
 
-function getFunc() return Func<of Int => Int>
+function getFunc() returns Func<of Int => Int>
   return ref twice
 end function
 
-function twice(x as Int) return Int
+function twice(x as Int) returns Int
   return x * 2
 end function`;
 
@@ -382,7 +382,7 @@ procedure printModified(i as Float, f as Func<of Float => Float>)
   print f(i)
 end procedure
   
-function twice(x as Float) return Float
+function twice(x as Float) returns Float
   return x * 2
 end function`;
 
@@ -404,11 +404,11 @@ main
   print f(5)
 end main
   
-function getFunc() return Func<of Float => Float>
+function getFunc() returns Func<of Float => Float>
   return twice
 end function
   
-function twice(x as Float) return Float
+function twice(x as Float) returns Float
   return x * 2
 end function`;
 
@@ -430,7 +430,7 @@ main
   print f.pf(5)
 end main
 
-function ff(a as Int) return Int
+function ff(a as Int) returns Int
   return a
 end function
   
@@ -460,7 +460,7 @@ main
   var f set to 1 + ff
 end main
 
-function ff(a as Int) return Int
+function ff(a as Int) returns Int
   return a
 end function`;
 
@@ -482,7 +482,7 @@ main
   var f set to 1 + ref ff
 end main
 
-function ff(a as Int) return Int
+function ff(a as Int) returns Int
   return a
 end function`;
 

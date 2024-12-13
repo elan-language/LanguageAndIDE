@@ -14,7 +14,7 @@ main
   end while
 end main
 
-function updateCoordinates(x as Int, y as Int, dir as Int) return (Int, Int)
+function updateCoordinates(x as Int, y as Int, dir as Int) returns (Int, Int)
   var newX set to x
   var newY set to y
   switch dir
@@ -30,7 +30,7 @@ function updateCoordinates(x as Int, y as Int, dir as Int) return (Int, Int)
   return (newX, newY)
 end function
 
-function lesserOf(value1 as Int, value2 as Int) return Int
+function lesserOf(value1 as Int, value2 as Int) returns Int
   var result set to 0
   if value1 < value2
     then
@@ -41,7 +41,7 @@ function lesserOf(value1 as Int, value2 as Int) return Int
   return result
 end function
 
-function greaterOf(value1 as Int, value2 as Int) return Int
+function greaterOf(value1 as Int, value2 as Int) returns Int
   var result set to 0
   if value1 > value2
     then

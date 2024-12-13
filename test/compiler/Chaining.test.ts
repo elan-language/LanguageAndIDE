@@ -220,7 +220,7 @@ class Bar
   constructor()
   end constructor
 
-  function ff() return Int
+  function ff() returns Int
     return 4
   end function
 end class`;
@@ -292,7 +292,7 @@ class Bar
   constructor()
   end constructor
 
-  function ff() return Int
+  function ff() returns Int
     return 4
   end function
 end class`;
@@ -454,7 +454,7 @@ class Foo
   constructor()
   end constructor
 
-  function createArr(n as Int) return [Int]
+  function createArr(n as Int) returns [Int]
     return createArray(n, 7)
   end function
 
@@ -513,7 +513,7 @@ class Foo
   constructor()
   end constructor
 
-  function create2DArr() return [[Int]]
+  function create2DArr() returns [[Int]]
     return create2DArray(3, 4, 8)
   end function
 
@@ -643,7 +643,7 @@ class Foo
   constructor()
   end constructor
 
-  function ff() return Bar
+  function ff() returns Bar
     return new Bar()
   end function
 end class
@@ -652,7 +652,7 @@ class Bar
    constructor()
    end constructor
 
-  function ff() return Int
+  function ff() returns Int
     return 0
   end function
 end class`;

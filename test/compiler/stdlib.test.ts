@@ -515,7 +515,7 @@ main
   end for
 end main
 
-function rollDice(rnd as Random) return (Int, Random)
+function rollDice(rnd as Random) returns (Int, Random)
   return rnd.nextInt(1, 6)
 end function`;
 

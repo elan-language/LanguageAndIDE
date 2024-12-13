@@ -9,7 +9,7 @@ import { File } from "../interfaces/file";
 import { Frame } from "../interfaces/frame";
 import { Parent } from "../interfaces/parent";
 import { Profile } from "../interfaces/profile";
-import { endKeyword, functionKeyword, returnKeyword } from "../keywords";
+import { endKeyword, functionKeyword, returnKeyword, returnsKeyword } from "../keywords";
 import { ReturnStatement } from "../statements/return-statement";
 import { FunctionType } from "../symbols/function-type";
 import { SymbolScope } from "../symbols/symbol-scope";
@@ -65,7 +65,7 @@ export abstract class FunctionFrame extends FrameWithStatements implements Paren
   }
   public renderAsHtml(): string {
     return `<el-func class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>${functionKeyword} </el-kw><el-method>${this.name.renderAsHtml()}</el-method>(${this.params.renderAsHtml()})<el-kw> ${returnKeyword} </el-kw>${this.returnType.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
+<el-top><el-expand>+</el-expand><el-kw>${functionKeyword} </el-kw><el-method>${this.name.renderAsHtml()}</el-method>(${this.params.renderAsHtml()})<el-kw> ${returnsKeyword} </el-kw>${this.returnType.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
 <el-kw>${endKeyword} ${functionKeyword}</el-kw>
 </el-func>`;
@@ -76,7 +76,7 @@ ${this.renderChildrenAsHtml()}
     this.name.parseFrom(source);
     source.remove("(");
     this.params.parseFrom(source);
-    source.remove(`) ${returnKeyword} `);
+    source.remove(`) ${returnsKeyword} `);
     this.returnType.parseFrom(source);
   }
   parseBottom(source: CodeSource): boolean {

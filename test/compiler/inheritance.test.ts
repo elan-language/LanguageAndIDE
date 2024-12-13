@@ -28,7 +28,7 @@ abstract class Foo
   abstract property p1 as Float
   abstract property p2 as Float 
   abstract procedure setP1(v as Float)
-  abstract function product() return Float
+  abstract function product() returns Float
 end class
 
 class Bar inherits Foo
@@ -43,11 +43,11 @@ class Bar inherits Foo
         set property.p1 to p1
     end procedure
 
-    function product() return Float
+    function product() returns Float
         return p1 * p2
     end function
 
-    function asString() return String 
+    function asString() returns String 
         return ""
     end function
 end class`;
@@ -149,11 +149,11 @@ class Yon inherits Foo, Bar
     property p2 as String
 end class
 
-function b(bar as Bar) return String
+function b(bar as Bar) returns String
     return bar.p2
 end function
 
-function f(foo as Foo) return Float
+function f(foo as Foo) returns Float
     return foo.p1
 end function`;
 
@@ -240,7 +240,7 @@ end class
 
 abstract class Yon
   abstract procedure setP1(v as Float)
-  abstract function product() return Float
+  abstract function product() returns Float
 end class
 
 class Bar inherits Foo, Yon
@@ -255,11 +255,11 @@ class Bar inherits Foo, Yon
         set property.p1 to p1
     end procedure
 
-    function product() return Float
+    function product() returns Float
         return p1 * p2
     end function
 
-    function asString() return String 
+    function asString() returns String 
         return ""
     end function
 end class`;
@@ -362,7 +362,7 @@ end class
 abstract class Yon
   abstract property p1 as Float 
   abstract procedure setP1(v as Float)
-  abstract function product() return Float
+  abstract function product() returns Float
 end class
 
 class Bar inherits Foo, Yon
@@ -377,11 +377,11 @@ class Bar inherits Foo, Yon
         set property.p1 to p1
     end procedure
 
-    function product() return Float
+    function product() returns Float
         return p1 * p2
     end function
 
-    function asString() return String 
+    function asString() returns String 
         return ""
     end function
 end class`;
@@ -555,7 +555,7 @@ class Bar inherits Foo
   property p1 as Int
 end class
 
-function fun(l as List<of Bar>) return Bar
+function fun(l as List<of Bar>) returns Bar
     return l[0]
 end function
 `;
@@ -622,7 +622,7 @@ class Bar inherits Foo
   property p1 as Int
 end class
 
-function fun(foo as Foo) return Int
+function fun(foo as Foo) returns Int
   return foo.p1
 end function
 `;
@@ -685,7 +685,7 @@ abstract class Foo
     set property.p1 to a
   end procedure
 
-  private function ff() return Int
+  private function ff() returns Int
     return p1
   end function
 end class
@@ -765,7 +765,7 @@ abstract class Foo
     set property.p1 to a
   end procedure
 
-  private function ff() return Int
+  private function ff() returns Int
     return p1
   end function
 end class
@@ -777,7 +777,7 @@ abstract class Yon
     set property.p2 to a
   end procedure
 
-  private function ff2() return Int
+  private function ff2() returns Int
     return p2
   end function
 end class
@@ -879,7 +879,7 @@ abstract class Foo
     set property.p1 to a
   end procedure
 
-  private function ff() return Int
+  private function ff() returns Int
     return p1
   end function
 end class
@@ -891,7 +891,7 @@ abstract class Yon inherits Foo
     set property.p2 to a
   end procedure
 
-  private function ff2() return Int
+  private function ff2() returns Int
     return p2
   end function
 end class
@@ -1127,7 +1127,7 @@ main
 end main
 
 abstract class Foo
-  abstract function ff(a as Int) return Int
+  abstract function ff(a as Int) returns Int
 
   private procedure setP1(a as Int)
     print ff(a)
@@ -1241,14 +1241,14 @@ main
 end main
 
 abstract class Yon
-  private function ff() return Int
+  private function ff() returns Int
     return 0
   end function
 end class
 
 abstract class Foo inherits Yon
 
-  private function fff() return Int
+  private function fff() returns Int
     return ff()
   end function
 
@@ -1258,7 +1258,7 @@ class Bar inherits Foo
   constructor()
   end constructor
 
-  function testPrivate(a as Int) return Int
+  function testPrivate(a as Int) returns Int
     return fff()
   end function
 end class`;
@@ -1285,7 +1285,7 @@ class Foo
   
     property p2 as Int
 
-    function asString() return String 
+    function asString() returns String 
         return ""
     end function
 end class
@@ -1315,7 +1315,7 @@ abstract class Foo
 
     abstract procedure setP1(v as Float)
 
-    abstract function product() return Float
+    abstract function product() returns Float
 end class
 
 class Bar inherits Foo
@@ -1325,7 +1325,7 @@ class Bar inherits Foo
 
     property p1 as Float
 
-    function asString() return String 
+    function asString() returns String 
         return ""
     end function
 end class`;
@@ -1388,7 +1388,7 @@ abstract class Foo
 
     abstract procedure setP1(v as Int)
 
-    abstract function product() return Int
+    abstract function product() returns Int
 end class
 
 class Bar inherits Foo
@@ -1402,11 +1402,11 @@ class Bar inherits Foo
     procedure setP1(v as String)
     end procedure
 
-    function product() return String
+    function product() returns String
       return ""
     end function
 
-    function asString() return String 
+    function asString() returns String 
         return ""
     end function
 end class`;
@@ -1435,7 +1435,7 @@ abstract class Foo
 
     abstract procedure setP1(v as Float)
 
-    abstract function product() return Int
+    abstract function product() returns Int
 end class
 
 class Bar inherits Foo
@@ -1450,11 +1450,11 @@ class Bar inherits Foo
         set property.p1 to p1
     end procedure
 
-    function product() return Float
+    function product() returns Float
         return p1 * p2
     end function
 
-    function asString() return String 
+    function asString() returns String 
         return ""
     end function
 end class`;
@@ -1481,7 +1481,7 @@ abstract class Foo
         set property.p1 to p1
     end procedure
 
-    abstract function product() return Int
+    abstract function product() returns Int
 end class`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -1515,7 +1515,7 @@ main
 end main
 
 abstract class Foo
-    function product() return Int
+    function product() returns Int
 end class`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -1579,11 +1579,11 @@ class Bar inherits Foo
   property p1 as Int
 end class
 
-function upcast(bar as Bar) return Foo
+function upcast(bar as Bar) returns Foo
     return foo
 end function
 
-function fun(bar as Bar) return Int
+function fun(bar as Bar) returns Int
     return foo.p1
 end function
 `;
@@ -1615,7 +1615,7 @@ class Bar inherits Foo
   property p1 as Int
 end class
 
-function fun(l as List<of Foo>) return Foo
+function fun(l as List<of Foo>) returns Foo
     return l.get(0)
 end function
 `;
@@ -1678,7 +1678,7 @@ class Bar inherits Foo
   property p1 as Int
 end class
 
-function fun(l as ImmutableDictionary<of String, Foo>) return Foo
+function fun(l as ImmutableDictionary<of String, Foo>) returns Foo
     return l["id"]
 end function
 `;
@@ -1767,8 +1767,8 @@ main
 end main
 
 abstract class Foo
-  abstract function ff() return Int
-  abstract function ff() return Int
+  abstract function ff() returns Int
+  abstract function ff() returns Int
 end class`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -1827,7 +1827,7 @@ main
 end main
 
 abstract class Foo
-  abstract function ff() return Int
+  abstract function ff() returns Int
   abstract property ff as Int
 end class`;
 
@@ -1847,7 +1847,7 @@ main
 end main
 
 abstract class Foo
-  abstract function ff() return Int
+  abstract function ff() returns Int
   abstract procedure ff()
 end class`;
 
@@ -1928,7 +1928,7 @@ main
 end main
 
 abstract class Foo
-  private function p1() return Int
+  private function p1() returns Int
     return 0
   end function
 end class
@@ -1960,7 +1960,7 @@ main
 end main
 
 abstract class Foo
-  private function p1() return Int
+  private function p1() returns Int
     return 0
   end function
 end class

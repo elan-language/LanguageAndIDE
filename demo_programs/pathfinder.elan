@@ -55,7 +55,7 @@ procedure createRocksAndNodes(percentRocks as Int, out rocks as [Point], out nod
   end for
 end procedure
 
-function initialiseGraphics(start as Point, dest as Point, rocks as [Point]) return BlockGraphics
+function initialiseGraphics(start as Point, dest as Point, rocks as [Point]) returns BlockGraphics
   var gr set to new BlockGraphics()
   each rock in rocks
     set gr to gr.withBlock(rock.x, rock.y, black)
@@ -65,11 +65,11 @@ function initialiseGraphics(start as Point, dest as Point, rocks as [Point]) ret
   return gr
 end function
 
-function addVisited(gr as BlockGraphics, visited as Point) return BlockGraphics
+function addVisited(gr as BlockGraphics, visited as Point) returns BlockGraphics
   return gr.withBlock(visited.x, visited.y, lightBlue)
 end function
 
-function addRoute(gr as BlockGraphics, route as {Point}) return BlockGraphics
+function addRoute(gr as BlockGraphics, route as {Point}) returns BlockGraphics
   var gr2 set to gr
   each p in route
     set gr2 to gr2.withBlock(p.x, p.y, orange)
@@ -135,7 +135,7 @@ class Solver
     end each
   end procedure
 
-  function currentNeighbours() return [Node]
+  function currentNeighbours() returns [Node]
     var neighbours set to empty {Node}
     let currentPoint be current.point
     each p in currentPoint.neighbouringPoints()
@@ -149,16 +149,16 @@ class Solver
     return neighbours.asArray()
   end function
 
-  function getNodeFor(p as Point) return Node
+  function getNodeFor(p as Point) returns Node
     let matches be nodes.filter(lambda n as Node => n.point is p)
     return if matches.length() is 1 then matches.head() else empty Node
   end function
 
-  function getLastVisited() return Point
+  function getLastVisited() returns Point
     return current.point
   end function
 
-  function nextNodeToVisit() return Node
+  function nextNodeToVisit() returns Node
     var lowestCostSoFar set to infinity
     var lowestCostNode set to empty Node
     let possibilities be nodes.filter(lambda nd as Node => (not nd.visited) and (nd.distFromStart < infinity))
@@ -173,7 +173,7 @@ class Solver
     return lowestCostNode
   end function
 
-  function calculateCost(node as Node) return Float
+  function calculateCost(node as Node) returns Float
     var cost set to 0.0
     let fromStart be node.distFromStart
     let estToDest be node.estDistToDest
@@ -188,7 +188,7 @@ class Solver
     return cost
   end function
 
-  function getRouteAndLength() return ({Point}, Float)
+  function getRouteAndLength() returns ({Point}, Float)
     var route set to {destination}
     var length set to 0.0
     var node set to getNodeFor(destination)
@@ -251,16 +251,16 @@ class Point
 
   property isNotEmpty as Boolean
 
-  function minDistTo(p as Point) return Float
+  function minDistTo(p as Point) returns Float
     return sqrt((p.x - x)^2 + (p.y - y)^2)
   end function
 
-  function isAdjacentTo(p as Point) return Boolean
+  function isAdjacentTo(p as Point) returns Boolean
     return (minDistTo(p) is 1) or round(minDistTo(p), 4) is round(sqrt(2), 4)
   end function
 
   # Returns the 8 theoretically-neighbouring points, whether or not within bounds
-  function neighbouringPoints() return {Point}
+  function neighbouringPoints() returns {Point}
     return {new Point(x - 1, y - 1), new Point(x, y - 1), new Point(x + 1, y - 1), new Point(x - 1, y), new Point(x + 1, y), new Point(x - 1, y + 1), new Point(x, y + 1), new Point(x + 1, y + 1)}
   end function
 

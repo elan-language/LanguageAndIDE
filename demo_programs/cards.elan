@@ -11,7 +11,7 @@ main
   call gr.display()
 end main
 
-function placeCard(gr as BlockGraphics, c as Card, x as Int, y as Int) return BlockGraphics
+function placeCard(gr as BlockGraphics, c as Card, x as Int, y as Int) returns BlockGraphics
   var gr2 set to gr
   for row from y to y + 8 step 1
     for col from x to x + 5 step 1

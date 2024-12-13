@@ -18,7 +18,7 @@ procedure fillRandom(out starter as [Boolean])
   end for
 end procedure
 
-function updateGraphics(grid as [Boolean], gr as BlockGraphics) return BlockGraphics
+function updateGraphics(grid as [Boolean], gr as BlockGraphics) returns BlockGraphics
   var gr2 set to gr
   for row from 0 to 29 step 1
     for col from 0 to 39 step 1
@@ -30,41 +30,41 @@ function updateGraphics(grid as [Boolean], gr as BlockGraphics) return BlockGrap
   return gr2
 end function
 
-function n(c as Int) return Int
+function n(c as Int) returns Int
   return if c > 39 then c - 40 else c + 1160
 end function
 
-function s(c as Int) return Int
+function s(c as Int) returns Int
   return if c < 1160 then c + 40 else c - 1160
 end function
 
-function e(c as Int) return Int
+function e(c as Int) returns Int
   return if (c mod 40) < 39 then c + 1 else c - 39
 end function
 
-function w(c as Int) return Int
+function w(c as Int) returns Int
   return if (c mod 40) > 0 then c - 1 else c + 39
 end function
 
-function neighbourCells(c as Int) return [Int]
+function neighbourCells(c as Int) returns [Int]
   return [n(w(c)), n(c), n(e(c)), w(c), e(c), s(w(c)), s(c), s(e(c))]
 end function
 
-function liveNeighbours(cells as [Boolean], c as Int) return Int
+function liveNeighbours(cells as [Boolean], c as Int) returns Int
   let neighbours be neighbourCells(c)
   let live be neighbours.filter(lambda i as Int => cells[i])
   return live.length()
 end function
 
-function willLive(currentlyAlive as Boolean, live as Int) return Boolean
+function willLive(currentlyAlive as Boolean, live as Int) returns Boolean
   return if currentlyAlive then (live > 1) and (live < 4) else live is 3
 end function
 
-function nextCellValue(cells as [Boolean], c as Int) return Boolean
+function nextCellValue(cells as [Boolean], c as Int) returns Boolean
   return willLive(cells[c], liveNeighbours(cells, c))
 end function
 
-function nextGeneration(cells as [Boolean]) return [Boolean]
+function nextGeneration(cells as [Boolean]) returns [Boolean]
   let cellRange be range(0, cells.length() - 1)
   let next be cellRange.map(lambda n as Int => nextCellValue(cells, n))
   return next.asArray()

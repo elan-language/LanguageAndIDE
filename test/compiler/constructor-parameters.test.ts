@@ -19,7 +19,7 @@ class Foo
 
     property p1 as Int
 
-    function asString() return String
+    function asString() returns String
         return ""
     end function
 
@@ -40,7 +40,7 @@ class Foo
         call a.putAt(0, 4)
     end constructor
 
-    function asString() return String
+    function asString() returns String
         return ""
     end function
 end class`;

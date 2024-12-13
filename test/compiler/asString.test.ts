@@ -149,7 +149,7 @@ class Foo
 
   property p1 as Foo
 
-  function asString() return String
+  function asString() returns String
      return "Custom asString"
 end function 
 end class`;
@@ -213,7 +213,7 @@ class Foo
 
     property p2 as String
 
-    function asString() return String
+    function asString() returns String
          return p2
     end function
 
@@ -271,7 +271,7 @@ class Foo
 
     property p2 as String
 
-    function asString() return String
+    function asString() returns String
          return p2
     end function
 
@@ -328,7 +328,7 @@ class Foo
 
     property p2 as String
 
-    function asString() return String
+    function asString() returns String
       return typeAndProperties(this)
     end function
 

@@ -12,7 +12,13 @@ import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Frame } from "../interfaces/frame";
 import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
-import { endKeyword, functionKeyword, privateKeyword, returnKeyword } from "../keywords";
+import {
+  endKeyword,
+  functionKeyword,
+  privateKeyword,
+  returnKeyword,
+  returnsKeyword,
+} from "../keywords";
 import { getClassScope } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { Transforms } from "../syntax-nodes/transforms";
@@ -44,14 +50,14 @@ export class FunctionMethod extends FunctionFrame implements Member {
   }
 
   public override renderAsSource(): string {
-    return `${this.indent()}${this.modifierAsSource()}${functionKeyword} ${this.name.renderAsSource()}(${this.params.renderAsSource()}) ${returnKeyword} ${this.returnType.renderAsSource()}\r
+    return `${this.indent()}${this.modifierAsSource()}${functionKeyword} ${this.name.renderAsSource()}(${this.params.renderAsSource()}) ${returnsKeyword} ${this.returnType.renderAsSource()}\r
 ${this.renderChildrenAsSource()}\r
 ${this.indent()}${endKeyword} ${functionKeyword}\r
 `;
   }
   public renderAsHtml(): string {
     return `<el-func class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.privateHelp()}>
-<el-top><el-expand>+</el-expand>${this.modifierAsHtml()}<el-kw>${functionKeyword} </el-kw><el-method>${this.name.renderAsHtml()}</el-method>(${this.params.renderAsHtml()})<el-kw> ${returnKeyword} </el-kw>${this.returnType.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
+<el-top><el-expand>+</el-expand>${this.modifierAsHtml()}<el-kw>${functionKeyword} </el-kw><el-method>${this.name.renderAsHtml()}</el-method>(${this.params.renderAsHtml()})<el-kw> ${returnsKeyword} </el-kw>${this.returnType.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
 <el-kw>${endKeyword} ${functionKeyword}</el-kw>
 </el-func>`;

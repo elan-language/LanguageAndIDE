@@ -5,7 +5,7 @@ class Foo
 
   end constructor
 
-  function bar() return Int
+  function bar() returns Int
     return 0
   end function
 

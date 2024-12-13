@@ -241,7 +241,7 @@ end main
   });
 
   test("parse Frames - all globals except class", async () => {
-    const code = `# ff38c4271c1309faad88e14566c077d60eabaf044668a53fcd33d22e820ecec3 Elan Beta 5 valid
+    const code = `# 0b7965805eb1965d375b8ba3b64984fd3bff53d266477bf1e9648e1850c63952 Elan Beta 5 valid
 
 constant phi set to 1.618
 
@@ -253,7 +253,7 @@ procedure signIn(password as String)
 
 end procedure
 
-function hypotenuse(sideB as Float, sideC as Float) return Float
+function hypotenuse(sideB as Float, sideC as Float) returns Float
   return 0.0
 end function
 
@@ -267,7 +267,7 @@ enum Fruit apple, orange, pear
   });
 
   test("parse Frames - class", async () => {
-    const code = `# a4935f7f52acf736c8f9bca459b026d12b81d42320a40fe1ab12f8e7fafb34dc Elan Beta 5 valid
+    const code = `# 76f94f7d5ac4367b1ba8433fde505e6b9241cd80b4a0f23f6c0300959386239d Elan Beta 5 valid
 
 class Player inherits Foo, Bar
   constructor()
@@ -280,7 +280,7 @@ class Player inherits Foo, Bar
     print 1
   end procedure
 
-  function bar() return Int
+  function bar() returns Int
     return 1
   end function
 
@@ -309,7 +309,7 @@ end record
   });
 
   test("parse Frames - abstract class", async () => {
-    const code = `# 852a5393849cd631a717912809d5d54c8274e4449a3c3581dc54afd337584305 Elan Beta 5 valid
+    const code = `# 0f552abfa86342899a4dc965c9df463a5e01613dffa397825df356bc46feae94 Elan Beta 5 valid
 
 abstract class Foo
   abstract property p1 as Int
@@ -318,7 +318,7 @@ abstract class Foo
 
   abstract procedure setP1(v as Int)
 
-  abstract function product() return Int
+  abstract function product() returns Int
 
 end class
 `;
@@ -405,7 +405,7 @@ end class
     const code = `# FFFF Elan Beta 5 valid
 
 abstract class Card
-  function bar() return Int
+  function bar() returns Int
     return 0
   end function
 
@@ -414,13 +414,13 @@ end class
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(hash, new DefaultProfile(), transforms(), true);
     await await fl.parseFrom(source);
-    assert.equal(fl.parseError!.includes(`0 matches found at function bar() return Int`), true);
+    assert.equal(fl.parseError!.includes(`0 matches found at function bar() returns Int`), true);
   });
   test("record cannot contain any method", async () => {
     const code = `# FFFF Elan Beta 5 valid
 
 record Card
-  function foo() return Int
+  function foo() returns Int
     return 0
   end procedure
 end record

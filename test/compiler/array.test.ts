@@ -890,7 +890,7 @@ main
   print foo2(1)
 end main
 
-function foo(i as Int) return Int
+function foo(i as Int) returns Int
   return i
 end function`;
 

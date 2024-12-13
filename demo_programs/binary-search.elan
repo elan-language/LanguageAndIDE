@@ -20,7 +20,7 @@ main
   end while
 end main
 
-function binarySearch(list as [String], item as String) return Boolean
+function binarySearch(list as [String], item as String) returns Boolean
   var result set to false
   if list.length() > 0
     then

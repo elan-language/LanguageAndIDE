@@ -403,7 +403,7 @@ class Foo
 
   property prop1 as Int
 
-  function func1() return Int
+  function func1() returns Int
     return 0
   end function
 
@@ -465,7 +465,7 @@ class Foo
 
   property prop1 as Int
 
-  function func1() return Int
+  function func1() returns Int
     return 0
   end function
 
@@ -577,7 +577,7 @@ main
   var bar set to 1 + f
 end main
 
-function foobar() return Int
+function foobar() returns Int
   return 0
 end function`;
 
@@ -1014,7 +1014,7 @@ class Foo
   constructor()
   end constructor
 
-  function ff() return Int
+  function ff() returns Int
     return 0
   end function
 
@@ -1043,7 +1043,7 @@ main
  
 end main
 
-function foo(a as String) return String
+function foo(a as String) returns String
   return a
 end function`;
 
@@ -1066,7 +1066,7 @@ main
  
 end main
 
-function foo(a as String) return String
+function foo(a as String) returns String
   return a
 end function`;
 
@@ -1088,7 +1088,7 @@ main
  
 end main
 
-function foo(a as String) return String
+function foo(a as String) returns String
   return a
 end function`;
 
@@ -1112,7 +1112,7 @@ main
  
 end main
 
-function foo(a as String) return String
+function foo(a as String) returns String
   return a
 end function`;
 
@@ -1136,7 +1136,7 @@ main
  
 end main
 
-function foo(a as String) return String
+function foo(a as String) returns String
   return a
 end function`;
 
@@ -1160,7 +1160,7 @@ main
  
 end main
 
-function foo(a as String) return String
+function foo(a as String) returns String
   return a
 end function`;
 
@@ -1182,7 +1182,7 @@ main
  
 end main
 
-function foo(a as String) return String
+function foo(a as String) returns String
   return a
 end function`;
 
@@ -1201,7 +1201,7 @@ end function`;
   test("Pass_returnType1", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
-function foo(a as String) return String
+function foo(a as String) returns String
   return a
 end function`;
 
@@ -1220,7 +1220,7 @@ end function`;
   test("Pass_returnType2", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
-function foo(a as String) return String
+function foo(a as String) returns String
   return a
 end function`;
 
@@ -1243,7 +1243,7 @@ main
   var a set to foo().f1()
 end main
 
-function foo() return Bar
+function foo() returns Bar
   return new Bar()
 end function
 
@@ -1251,11 +1251,11 @@ class Bar
   constructor()
   end constructor
 
-  function f1() return Int
+  function f1() returns Int
     return 0
   end function
 
-  function f2() return String
+  function f2() returns String
     return ""
   end function
 
@@ -1283,7 +1283,7 @@ main
   var a set to foo(1).f1()
 end main
 
-function foo(a as Int) return Bar
+function foo(a as Int) returns Bar
   return new Bar()
 end function
 
@@ -1291,11 +1291,11 @@ class Bar
   constructor()
   end constructor
 
-  function f1() return Int
+  function f1() returns Int
     return 0
   end function
 
-  function f2() return String
+  function f2() returns String
     return ""
   end function
 

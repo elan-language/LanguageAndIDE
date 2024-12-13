@@ -55,7 +55,7 @@ main
   print printEach(it)
 end main
   
-function printEach(target as Iterable<of String>) return Iterable<of String>
+function printEach(target as Iterable<of String>) returns Iterable<of String>
   return target
 end function`;
 
@@ -89,7 +89,7 @@ main
   print lst
 end main
 
-function printEach(target as Iterable<of String>) return Iterable<of String>
+function printEach(target as Iterable<of String>) returns Iterable<of String>
   return target
 end function`;
 
@@ -245,7 +245,7 @@ class Foo
   
   property it as Iterable<of Int>
   
-  function asString() return String
+  function asString() returns String
     return "A Foo"
   end function
 end class`;

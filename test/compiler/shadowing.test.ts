@@ -38,11 +38,11 @@ end main`;
 main
   print foo()
 end main
-function foo() return Int
+function foo() returns Int
   return 1
 end function
 
-function bar() return Int
+function bar() returns Int
   var foo set to foo()
   return foo
 end function`;
@@ -67,7 +67,7 @@ procedure foo()
 
 end procedure
 
-function bar() return Int
+function bar() returns Int
   var foo set to 1
   return foo
 end function`;
@@ -165,7 +165,7 @@ main
   
 end main
 
-function foo(x as Int) return Int
+function foo(x as Int) returns Int
   return x
 end function`;
 
@@ -237,7 +237,7 @@ main
     print library.sin(1)
 end main
 
-function sin(x as Float) return Float
+function sin(x as Float) returns Float
     return 111
 end function
 
@@ -245,7 +245,7 @@ class Foo
     constructor()
     end constructor
 
-    function sin(x as Float) return Float
+    function sin(x as Float) returns Float
       return 222
     end function
 end class`;
@@ -308,7 +308,7 @@ main
   print result
 end main
 
-function foo(a as Int, b as Int) return Int
+function foo(a as Int, b as Int) returns Int
   var a set to 1
   return a * b
 end function`;
@@ -330,7 +330,7 @@ main
   print result
 end main
 
-function foo(a as Int, b as Int) return Int
+function foo(a as Int, b as Int) returns Int
   let a be 1
   return a * b
 end function`;

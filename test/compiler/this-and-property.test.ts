@@ -27,7 +27,7 @@ class Foo
 
   property p1 as Float
 
-  function asString() return String
+  function asString() returns String
     return ""
   end function
 
@@ -71,7 +71,7 @@ main
   print f.bar()
 end main
 
-function doubled(f as Foo) return Float
+function doubled(f as Foo) returns Float
     return 2 * f.p1
 end function
 
@@ -82,11 +82,11 @@ class Foo
 
     property p1 as Float
 
-    function bar() return Float
+    function bar() returns Float
         return doubled(this)
     end function
 
-    function asString() return String
+    function asString() returns String
         return ""
     end function
 
@@ -145,7 +145,7 @@ class Foo
 
   property p1 as Int
 
-  function bar() return Int
+  function bar() returns Int
     var lst set to [1, 2]
     return lst[p1]
   end function
@@ -196,7 +196,7 @@ class Foo
 
   property p1 as Int
 
-  function bar() return Int
+  function bar() returns Int
     var lst set to [1, 2]
     call lst.setAt(p1, 3)
     return lst[0]
@@ -224,7 +224,7 @@ class Foo
 
     property p1 as Float
 
-    function asString() return String
+    function asString() returns String
         return ""
     end function
 
@@ -252,7 +252,7 @@ class Foo
 
     property p1 as Float
 
-    function asString() return String
+    function asString() returns String
         return ""
     end function
 

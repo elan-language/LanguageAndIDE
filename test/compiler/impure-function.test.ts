@@ -87,7 +87,7 @@ main
   call square(3)
 end main
 
-function square(x as Int) return Int
+function square(x as Int) returns Int
   return x * x
 end function`;
 
@@ -109,7 +109,7 @@ end main
 procedure foo(x as Int)
 end procedure
 
-function square(x as Int) return Int
+function square(x as Int) returns Int
   call foo(x)
   return x * x
 end function
@@ -127,7 +127,7 @@ end function
 main
 end main
 
-function square(z as Int) return Int
+function square(z as Int) returns Int
   var x set to randomInt(1,6)
   return x * x
 end function

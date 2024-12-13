@@ -352,7 +352,7 @@ class Foo
         call p1.length(2)
     end procedure
 
-    function asString() return String
+    function asString() returns String
          return ""
     end function
 
@@ -369,7 +369,7 @@ class Bar
         print p1 + plus
     end procedure
 
-    function asString() return String
+    function asString() returns String
          return ""
     end function
 
@@ -1208,7 +1208,7 @@ procedure foo(out a as Int)
   set a to 1
 end procedure
 
-function bar() return Int
+function bar() returns Int
   return 0
 end function`;
 
