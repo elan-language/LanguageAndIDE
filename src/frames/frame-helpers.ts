@@ -259,3 +259,13 @@ export function currentParameterIndex(text: string) {
 
   return 0;
 }
+
+export function privateHelp(member: Member, memberType: string): string {
+  let result = "";
+  if (!member.getClass().abstract) {
+    result = member.private
+      ? `title="To make ${memberType} public, select '${memberType}' frame then Ctrl-p."`
+      : `title="To make ${memberType} private, select '${memberType}' frame then Ctrl-p."`;
+  }
+  return result;
+}

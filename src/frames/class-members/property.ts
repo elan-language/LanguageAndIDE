@@ -3,7 +3,9 @@ import { CodeSource } from "../code-source";
 import { mustBeKnownSymbolType, mustBeUniqueNameInScope } from "../compile-rules";
 import { IdentifierField } from "../fields/identifier-field";
 import { TypeField } from "../fields/type-field";
+import { privateHelp } from "../frame-helpers";
 import { ClassFrame } from "../globals/class-frame";
+import { editorEvent } from "../interfaces/editor-event";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { Member } from "../interfaces/member";
@@ -53,7 +55,7 @@ export class Property extends AbstractFrame implements Member, ElanSymbol {
   }
 
   renderAsHtml(): string {
-    return `<el-prop class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.modifierAsHtml()}<el-kw>${propertyKeyword} </el-kw>${this.name.renderAsHtml()}<el-kw> ${asKeyword} </el-kw>${this.type.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-prop>`;
+    return `<el-prop class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.privateHelp()}>${this.modifierAsHtml()}<el-kw>${propertyKeyword} </el-kw>${this.name.renderAsHtml()}<el-kw> ${asKeyword} </el-kw>${this.type.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-prop>`;
   }
 
   renderAsSource(): string {
@@ -117,5 +119,17 @@ ${this.indent()}}\r\n`;
       return `["${this.name.text}", ${tst.initialValue}]`;
     }
     return "";
+  }
+
+  processKey(e: editorEvent): boolean {
+    if (!this.getClass().abstract && e.key === "p" && e.modKey.control) {
+      this.private = !this.private;
+      return true;
+    } else {
+      return super.processKey(e);
+    }
+  }
+  privateHelp(): string {
+    return privateHelp(this, propertyKeyword);
   }
 }

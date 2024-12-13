@@ -1,13 +1,8 @@
 import { CodeSource } from "../code-source";
-import { currentParameterIndex } from "../helpers";
 import { Frame } from "../interfaces/frame";
-import { Scope } from "../interfaces/scope";
 import { ExprNode } from "../parse-nodes/expr-node";
 import { ParseNode } from "../parse-nodes/parse-node";
-import { SymbolCompletionSpec } from "../symbol-completion-helpers";
-import { FunctionType } from "../symbols/function-type";
 import { transforms } from "../syntax-nodes/ast-helpers";
-import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractField } from "./abstract-field";
 
 export class ExpressionField extends AbstractField {

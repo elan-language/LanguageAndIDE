@@ -1,13 +1,14 @@
 import { CodeSource } from "../code-source";
 import { mustBeUniqueNameInScope } from "../compile-rules";
+import { privateHelp, singleIndent } from "../frame-helpers";
 import { ClassFrame } from "../globals/class-frame";
 import { ProcedureFrame } from "../globals/procedure-frame";
-import { singleIndent } from "../helpers";
+import { editorEvent } from "../interfaces/editor-event";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Frame } from "../interfaces/frame";
 import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
-import { privateKeyword } from "../keywords";
+import { privateKeyword, procedureKeyword } from "../keywords";
 import { getClassScope } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { Transforms } from "../syntax-nodes/transforms";
@@ -46,7 +47,7 @@ ${this.indent()}end procedure\r
   }
 
   public renderAsHtml(): string {
-    return `<el-proc class="${this.cls()}" id='${this.htmlId}' tabindex="0">
+    return `<el-proc class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.privateHelp()}>
 <el-top><el-expand>+</el-expand>${this.modifierAsHtml()}<el-kw>procedure </el-kw><el-method>${this.name.renderAsHtml()}</el-method>(${this.params.renderAsHtml()})${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
 <el-kw>end procedure</el-kw>
@@ -90,4 +91,16 @@ ${this.indent()}}\r
   }
 
   symbolScope = SymbolScope.member;
+
+  processKey(e: editorEvent): boolean {
+    if (!this.getClass().abstract && e.key === "p" && e.modKey.control) {
+      this.private = !this.private;
+      return true;
+    } else {
+      return super.processKey(e);
+    }
+  }
+  privateHelp(): string {
+    return privateHelp(this, procedureKeyword);
+  }
 }

@@ -493,4 +493,22 @@ end test
     const elan = await fl.renderAsSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
+  test("#942 private members", async () => {
+    const code = `# 735a6d2165309a5ae36fd7bbc8cda438d52176493ed20b0e3f675a860f6ba588 Elan Beta 5 valid
+
+class Foo
+  constructor()
+
+  end constructor
+
+  private property bar as Int
+
+end class
+`;
+    const source = new CodeSourceFromString(code);
+    const fl = new FileImpl(hash, new DefaultProfile(), transforms());
+    await await fl.parseFrom(source);
+    const elan = await fl.renderAsSource();
+    assert.equal(elan, code.replaceAll("\n", "\r\n"));
+  });
 });

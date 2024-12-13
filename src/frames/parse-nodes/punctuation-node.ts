@@ -1,4 +1,4 @@
-import { escapeHtmlChars } from "../helpers";
+import { escapeHtmlChars } from "../frame-helpers";
 import { ParseStatus } from "../status-enums";
 import { FixedTextNode } from "./fixed-text-node";
 

@@ -8,7 +8,7 @@ import {
 } from "../compile-rules";
 import { ExpressionField } from "../fields/expression-field";
 import { VarDefField } from "../fields/var-def-field";
-import { mapSymbolType } from "../helpers";
+import { mapSymbolType } from "../frame-helpers";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { Frame } from "../interfaces/frame";

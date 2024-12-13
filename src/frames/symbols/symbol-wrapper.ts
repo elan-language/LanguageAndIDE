@@ -1,4 +1,4 @@
-import { isGenericClass } from "../helpers";
+import { isGenericClass } from "../frame-helpers";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Scope } from "../interfaces/scope";
 import { propertyKeyword } from "../keywords";
@@ -12,7 +12,6 @@ import {
   isId,
   isMemberOnFieldsClass,
   isProcedure,
-  isProperty,
 } from "./symbol-helpers";
 
 export class SymbolWrapper {

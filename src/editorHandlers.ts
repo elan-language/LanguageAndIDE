@@ -1,4 +1,4 @@
-import { isCollapsible, isFrame } from "./frames/helpers";
+import { isCollapsible, isFrame } from "./frames/frame-helpers";
 import { editorEvent } from "./frames/interfaces/editor-event";
 import { File } from "./frames/interfaces/file";
 import { Frame } from "./frames/interfaces/frame";

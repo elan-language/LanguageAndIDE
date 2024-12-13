@@ -1,6 +1,6 @@
 import { AbstractFrame } from "./abstract-frame";
 import { CodeSource } from "./code-source";
-import { isFrameWithStatements } from "./helpers";
+import { isFrameWithStatements } from "./frame-helpers";
 import { editorEvent } from "./interfaces/editor-event";
 import { Field } from "./interfaces/field";
 import { Frame } from "./interfaces/frame";

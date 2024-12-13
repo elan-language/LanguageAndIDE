@@ -6,7 +6,7 @@ import {
   mustBeRecord,
   mustBeRecordType,
 } from "../compile-rules";
-import { isClass } from "../helpers";
+import { isClass } from "../frame-helpers";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstNode } from "../interfaces/ast-node";
 import { Scope } from "../interfaces/scope";

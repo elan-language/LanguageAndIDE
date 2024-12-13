@@ -1,8 +1,11 @@
 import { AssertOutcome } from "../../system";
 import { CodeSource } from "../code-source";
 import { CommentField } from "../fields/comment-field";
+import {
+  helper_CompileOrParseAsDisplayStatus,
+  helper_testStatusAsDisplayStatus,
+} from "../frame-helpers";
 import { FrameWithStatements } from "../frame-with-statements";
-import { helper_CompileOrParseAsDisplayStatus, helper_testStatusAsDisplayStatus } from "../helpers";
 import { editorEvent } from "../interfaces/editor-event";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";

@@ -1,6 +1,6 @@
 import { CompileError } from "../compile-error";
 import { mustBeKnownSymbol } from "../compile-rules";
-import { isScope } from "../helpers";
+import { isScope } from "../frame-helpers";
 import { AstNode } from "../interfaces/ast-node";
 import { Scope } from "../interfaces/scope";
 import { EnumType } from "../symbols/enum-type";

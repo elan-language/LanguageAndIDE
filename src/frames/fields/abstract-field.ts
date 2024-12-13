@@ -6,7 +6,7 @@ import {
   helper_compileMsgAsHtml,
   helper_deriveCompileStatusFromErrors,
   isCollapsible,
-} from "../helpers";
+} from "../frame-helpers";
 import { AstNode } from "../interfaces/ast-node";
 import { editorEvent } from "../interfaces/editor-event";
 import { ElanSymbol } from "../interfaces/elan-symbol";

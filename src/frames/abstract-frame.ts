@@ -9,7 +9,7 @@ import {
   isFrame,
   isParent,
   singleIndent,
-} from "./helpers";
+} from "./frame-helpers";
 import { editorEvent } from "./interfaces/editor-event";
 import { ElanSymbol } from "./interfaces/elan-symbol";
 import { Field } from "./interfaces/field";

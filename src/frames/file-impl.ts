@@ -4,6 +4,14 @@ import { AbstractSelector } from "./abstract-selector";
 import { CodeSource, CodeSourceFromString } from "./code-source";
 import { CompileError } from "./compile-error";
 import { Regexes } from "./fields/regexes";
+import {
+  expandCollapseAll,
+  helper_compileStatusAsDisplayStatus,
+  helper_parseStatusAsDisplayStatus,
+  helper_runStatusAsDisplayStatus,
+  helper_testStatusAsDisplayStatus,
+  isSelector,
+} from "./frame-helpers";
 import { ClassFrame } from "./globals/class-frame";
 import { Constant } from "./globals/constant";
 import { Enum } from "./globals/enum";
@@ -14,14 +22,6 @@ import { GlobalSelector } from "./globals/global-selector";
 import { MainFrame } from "./globals/main-frame";
 import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
-import {
-  expandCollapseAll,
-  helper_compileStatusAsDisplayStatus,
-  helper_parseStatusAsDisplayStatus,
-  helper_runStatusAsDisplayStatus,
-  helper_testStatusAsDisplayStatus,
-  isSelector,
-} from "./helpers";
 import { editorEvent } from "./interfaces/editor-event";
 import { ElanSymbol } from "./interfaces/elan-symbol";
 import { Field } from "./interfaces/field";

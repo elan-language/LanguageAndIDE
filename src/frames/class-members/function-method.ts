@@ -4,9 +4,10 @@ import {
   mustBeKnownSymbolType,
   mustBeUniqueNameInScope,
 } from "../compile-rules";
+import { privateHelp, singleIndent } from "../frame-helpers";
 import { ClassFrame } from "../globals/class-frame";
 import { FunctionFrame } from "../globals/function-frame";
-import { singleIndent } from "../helpers";
+import { editorEvent } from "../interfaces/editor-event";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Frame } from "../interfaces/frame";
 import { Member } from "../interfaces/member";
@@ -49,7 +50,7 @@ ${this.indent()}${endKeyword} ${functionKeyword}\r
 `;
   }
   public renderAsHtml(): string {
-    return `<el-func class="${this.cls()}" id='${this.htmlId}' tabindex="0">
+    return `<el-func class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.privateHelp()}>
 <el-top><el-expand>+</el-expand>${this.modifierAsHtml()}<el-kw>${functionKeyword} </el-kw><el-method>${this.name.renderAsHtml()}</el-method>(${this.params.renderAsHtml()})<el-kw> ${returnKeyword} </el-kw>${this.returnType.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
 <el-kw>${endKeyword} ${functionKeyword}</el-kw>
@@ -96,5 +97,17 @@ ${this.indent()}}\r
 
   get symbolScope() {
     return SymbolScope.member;
+  }
+
+  processKey(e: editorEvent): boolean {
+    if (!this.getClass().abstract && e.key === "p" && e.modKey.control) {
+      this.private = !this.private;
+      return true;
+    } else {
+      return super.processKey(e);
+    }
+  }
+  privateHelp(): string {
+    return privateHelp(this, functionKeyword);
   }
 }

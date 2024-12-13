@@ -4,15 +4,13 @@ import {
   mustNotBeOutParameter,
   mustNotBeRedefined,
 } from "../compile-rules";
-import { isConstructor, isFunction } from "../helpers";
+import { isConstructor, isFunction } from "../frame-helpers";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstNode } from "../interfaces/ast-node";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Frame } from "../interfaces/frame";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
-import { CSV } from "../parse-nodes/csv";
-import { ParamDefNode } from "../parse-nodes/param-def-node";
 import { ParamListNode } from "../parse-nodes/param-list-node";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { ParseStatus } from "../status-enums";

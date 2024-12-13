@@ -3,7 +3,7 @@ import { CodeSource } from "../code-source";
 import { mustBeUniqueNameInScope } from "../compile-rules";
 import { EnumValues } from "../fields/enum-values";
 import { TypeNameField } from "../fields/type-name-field";
-import { singleIndent } from "../helpers";
+import { singleIndent } from "../frame-helpers";
 import { Collapsible } from "../interfaces/collapsible";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";

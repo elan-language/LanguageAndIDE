@@ -1,5 +1,5 @@
 import { Regexes } from "../fields/regexes";
-import { escapeHtmlChars } from "../helpers";
+import { escapeHtmlChars } from "../frame-helpers";
 import { RegExMatchNode } from "./regex-match-node";
 
 export class LitStringOrdinaryContents extends RegExMatchNode {

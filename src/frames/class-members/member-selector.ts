@@ -1,6 +1,6 @@
 import { AbstractSelector } from "../abstract-selector";
+import { singleIndent } from "../frame-helpers";
 import { ClassFrame } from "../globals/class-frame";
-import { singleIndent } from "../helpers";
 import { Frame } from "../interfaces/frame";
 import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
@@ -64,7 +64,8 @@ export class MemberSelector extends AbstractSelector implements Member {
     } else if (this.class.isImmutable()) {
       result = keyword === propertyKeyword;
     } else {
-      result = !keyword.startsWith(abstractKeyword);
+      result =
+        !keyword.startsWith(abstractKeyword) && !(userEntry && keyword.startsWith(privateKeyword));
     }
     return result;
   }

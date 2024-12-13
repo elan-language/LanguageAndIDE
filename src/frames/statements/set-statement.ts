@@ -12,7 +12,7 @@ import {
 } from "../compile-rules";
 import { AssignableField } from "../fields/assignableField";
 import { ExpressionField } from "../fields/expression-field";
-import { mapSymbolType } from "../helpers";
+import { mapSymbolType } from "../frame-helpers";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";

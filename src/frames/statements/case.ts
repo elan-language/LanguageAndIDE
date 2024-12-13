@@ -1,8 +1,8 @@
 import { CodeSource } from "../code-source";
 import { mustBeCompatibleType } from "../compile-rules";
 import { CaseValueField } from "../fields/case-value-field";
+import { singleIndent } from "../frame-helpers";
 import { FrameWithStatements } from "../frame-with-statements";
-import { singleIndent } from "../helpers";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";

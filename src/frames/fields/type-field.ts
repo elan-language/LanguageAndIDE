@@ -1,6 +1,5 @@
 import { CodeSource } from "../code-source";
-import { isAstType, isGenericClass } from "../helpers";
-import { ElanSymbol } from "../interfaces/elan-symbol";
+import { isAstType } from "../frame-helpers";
 import { Frame } from "../interfaces/frame";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { TypeNode } from "../parse-nodes/type-node";

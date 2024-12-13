@@ -5,9 +5,9 @@ import {
   cannotAccessAbstractMemberInAbstractClass,
   cannotAccessPrivateMemberInAbstractClass,
 } from "../compile-rules";
+import { isClass, isConstant, isFile, isMember, isScope } from "../frame-helpers";
 import { ClassFrame } from "../globals/class-frame";
 import { Enum } from "../globals/enum";
-import { isClass, isConstant, isFile, isMember, isScope } from "../helpers";
 import { AstNode } from "../interfaces/ast-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { Class } from "../interfaces/class";

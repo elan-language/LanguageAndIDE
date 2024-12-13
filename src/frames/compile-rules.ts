@@ -42,7 +42,7 @@ import {
   isLet,
   isMember,
   isProcedure,
-} from "./helpers";
+} from "./frame-helpers";
 import { AstNode } from "./interfaces/ast-node";
 import { ElanSymbol } from "./interfaces/elan-symbol";
 import { Parent } from "./interfaces/parent";

@@ -1,7 +1,7 @@
 import { ElanCompilerError } from "../../elan-compiler-error";
 import { CompileError } from "../compile-error";
 import { mustMatchParameters } from "../compile-rules";
-import { isFile, isFrame, isFunction } from "../helpers";
+import { isFile, isFrame, isFunction } from "../frame-helpers";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstIndexableNode } from "../interfaces/ast-indexable-node";
