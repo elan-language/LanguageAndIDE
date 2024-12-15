@@ -6,7 +6,7 @@ export class Overtyper {
 
   private consuming(k: string | undefined) {
     if (k) {
-      if (this.toConsume.length > 0 && k === this.toConsume[0]) {
+      if (this.toConsume.length > 0 && k.toUpperCase() === this.toConsume[0].toUpperCase()) {
         this.toConsume = this.toConsume.slice(1);
         clearTimeout(this.timer);
         this.timer = setTimeout(

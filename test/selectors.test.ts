@@ -45,6 +45,13 @@ suite("Selector tests", () => {
     assert.equal(v, "  variable  set to ");
   });
 
+  test("Statement Select - case insensitive", () => {
+    const file = T09_emptyMainAndClassWithGlobalSelector();
+    file.getById("select2").processKey(key("V"));
+    const v = file.getById("var10").renderAsSource();
+    assert.equal(v, "  variable  set to ");
+  });
+
   test("Member Select - function", () => {
     const file = T09_emptyMainAndClassWithGlobalSelector();
     file.getById("select9").processKey(key("f"));
