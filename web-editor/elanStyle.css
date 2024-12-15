@@ -201,7 +201,8 @@ el-field.empty.optional.selected el-place, el-field.empty.optional.selected el-p
     display:inline;
     color: var(--warning);
 }
-.selected > el-top el-field.empty.optional el-place, .selected > el-field.empty.optional el-place {
+.selected > el-top el-field.empty.optional el-place, .selected > el-field.empty.optional el-place,
+.selected > el-top el-field.empty.optional el-place *, .selected > el-field.empty.optional el-place *{
     display:inline;
     color: var(--reverseText);
 }
