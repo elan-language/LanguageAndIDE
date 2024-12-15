@@ -15,7 +15,7 @@ suite("Unique Identifiers", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var bReak set to 2
+  variable bReak set to 2
   print bReak
 end main`;
 
@@ -39,7 +39,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var foo set to new Foo()
+  variable foo set to new Foo()
   print foo
 end main
 
@@ -83,8 +83,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var bReak set to 1
-  var break set to 1
+  variable bReak set to 1
+  variable break set to 1
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -100,8 +100,8 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var id set to 1
-  var id set to 1
+  variable id set to 1
+  variable id set to 1
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);

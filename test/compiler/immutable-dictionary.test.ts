@@ -76,7 +76,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to {"a":1, "b":3, "z":10}
+  variable a set to {"a":1, "b":3, "z":10}
   print a
 end main`;
 
@@ -128,7 +128,7 @@ return [main, _tests];}`;
 
 constant a set to {"a":1, "b":3, "z":10}
 main
-  var b set to empty {String}
+  variable b set to empty {String}
   set b to a.keys()
   print b
 end main`;
@@ -215,8 +215,8 @@ return [main, _tests];}`;
 
 constant a set to {"a":1, "b":3, "z":10}
 main
-  var b set to a.withPutAtKey("b", 4)
-  var c set to b.withPutAtKey("d", 2)
+  variable b set to a.withPutAtKey("b", 4)
+  variable c set to b.withPutAtKey("d", 2)
   print a
   print c
 end main`;
@@ -248,7 +248,7 @@ return [main, _tests];}`;
 
 constant a set to {"a":1, "b":3, "z":10}
 main
-  var b set to a.withRemoveAtKey("b")
+  variable b set to a.withRemoveAtKey("b")
   print a
   print b
 end main`;
@@ -279,7 +279,7 @@ return [main, _tests];}`;
 
 constant a set to {"a":1, "b":3, "z":10}
 main
-  var b set to a.withRemoveAtKey("c")
+  variable b set to a.withRemoveAtKey("c")
   print b
 end main`;
 
@@ -307,10 +307,10 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to new ImmutableDictionary<of String, Int>()
-  var b set to a.withPutAtKey("Foo", 1)
+  variable a set to new ImmutableDictionary<of String, Int>()
+  variable b set to a.withPutAtKey("Foo", 1)
   set b to b.withPutAtKey("Bar", 3)
-  var k set to b.keys()
+  variable k set to b.keys()
   print k.length()
   print b["Foo"]
   print b["Bar"]
@@ -343,10 +343,10 @@ return [main, _tests];}`;
 enum Fruit apple, orange, pear  
 
 main
-  var a set to new ImmutableDictionary<of Fruit, Int>()
-  var b set to a.withPutAtKey(Fruit.apple, 1)
+  variable a set to new ImmutableDictionary<of Fruit, Int>()
+  variable b set to a.withPutAtKey(Fruit.apple, 1)
   set b to b.withPutAtKey(Fruit.orange, 3)
-  var k set to b.keys()
+  variable k set to b.keys()
   print k.length()
   print b[Fruit.apple]
   print b[Fruit.orange]
@@ -381,8 +381,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to empty {String:Int}
-  var b set to empty {String:Int}
+  variable a set to empty {String:Int}
+  variable b set to empty {String:Int}
   set b to a.withPutAtKey("a", 1)
   print a
   print b
@@ -482,7 +482,7 @@ end main
 
 constant a set to {"a":1, "b":3, "z":10}
 main
-  var b set to a.withRemoveAtKey(10)
+  variable b set to a.withRemoveAtKey(10)
 end main
 `;
 
@@ -498,7 +498,7 @@ end main
 
 constant a set to {"a":1, "b":3, "z":10}
 main
-  var b set to a.withPutAtKey(10, 4)
+  variable b set to a.withPutAtKey(10, 4)
 end main
 `;
 
@@ -516,7 +516,7 @@ end main
 
 constant a set to {"a":1, "b":3, "z":10}
 main
-  var b set to a.withPutAtKey("b", 3.1)
+  variable b set to a.withPutAtKey("b", 3.1)
 end main
 `;
 
@@ -533,7 +533,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to {"a":4, "b":5, "c":6, "d":7, "e":8}
+  variable a set to {"a":4, "b":5, "c":6, "d":7, "e":8}
   set a["a"] to 0
 end main
 `;
@@ -548,7 +548,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to {"a":4, "b":5, "c":6, "d":7, "e":8}
+  variable a set to {"a":4, "b":5, "c":6, "d":7, "e":8}
   call a.putAtKey("a", 0)
 end main
 `;
@@ -565,7 +565,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to {"a":1, "b":3, "z":10}
+  variable a set to {"a":1, "b":3, "z":10}
   call a.removeAtKey("b")
   print a
 end main`;
@@ -582,7 +582,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to a.withPutAtKey("a", 1)
+  variable a set to a.withPutAtKey("a", 1)
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -596,7 +596,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-    var a set to new ImmutableDictionary()
+    variable a set to new ImmutableDictionary()
     print a
 end main`;
 

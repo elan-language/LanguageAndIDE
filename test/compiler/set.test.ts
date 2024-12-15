@@ -15,7 +15,7 @@ suite("Set", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var st set to new Set<of Int>()
+  variable st set to new Set<of Int>()
   set st to st.add(3).add(7).add(5)
   print st.length()
   set st to st.add(7)
@@ -55,11 +55,11 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var st1 set to new Set<of Int>()
-  var st2 set to new Set<of Int>()
+  variable st1 set to new Set<of Int>()
+  variable st2 set to new Set<of Int>()
   set st1 to st1.add(2).add(4).add(6)
   set st2 to st2.add(1).add(4).add(9)
-  var st3 set to st1.union(st2)
+  variable st3 set to st1.union(st2)
   print st3
 end main`;
 
@@ -86,11 +86,11 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var st1 set to new Set<of Int>()
-  var st2 set to new Set<of Int>()
+  variable st1 set to new Set<of Int>()
+  variable st2 set to new Set<of Int>()
   set st1 to st1.add(2).add(4).add(6).add(3)
   set st2 to st2.add(3).add(1).add(4).add(9)
-  var st3 set to st1.intersection(st2)
+  variable st3 set to st1.intersection(st2)
   print st3
 end main`;
 
@@ -117,11 +117,11 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var st1 set to new Set<of Int>()
-  var st2 set to new Set<of Int>()
+  variable st1 set to new Set<of Int>()
+  variable st2 set to new Set<of Int>()
   set st1 to st1.add(2).add(4).add(6).add(3)
   set st2 to st2.add(3).add(1).add(4).add(9)
-  var st3 set to st1.difference(st2)
+  variable st3 set to st1.difference(st2)
   print st3
 end main`;
 

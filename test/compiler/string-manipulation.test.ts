@@ -16,8 +16,8 @@ suite("String Manipulation", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to "Hello"
-  var b set to "World!"
+  variable a set to "Hello"
+  variable b set to "World!"
   print a + " " + b
 end main`;
 
@@ -86,7 +86,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to "abcde"
+  variable a set to "abcde"
   print a[2]
 end main`;
 
@@ -110,8 +110,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to "abcde"
-  var b set to "z"
+  variable a set to "abcde"
+  variable b set to "z"
   set b to b + a[0]
   print b
 end main`;
@@ -138,8 +138,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to "abcde"
-  var b set to "z"
+  variable a set to "abcde"
+  variable b set to "z"
   set b to a[0]
   print b
 end main`;
@@ -166,7 +166,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to "abcde"
+  variable a set to "abcde"
   print a[1..3]
   print a[2..]
   print a[..2]
@@ -260,8 +260,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to "abcde"
-  var b set to 2.1 + 3.4
+  variable a set to "abcde"
+  variable b set to 2.1 + 3.4
   set a to b.asString()
   print a
 end main`;
@@ -288,9 +288,9 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to 3
-  var b set to 4
-  var c set to "{a} x {b} = {a * b}"
+  variable a set to 3
+  variable b set to 4
+  variable c set to "{a} x {b} = {a * b}"
   print c
 end main`;
 
@@ -316,7 +316,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to 3.1 + "Hello"
+  variable a set to 3.1 + "Hello"
   print a
 end main`;
 
@@ -340,7 +340,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to "abcde"
+  variable a set to "abcde"
   print a[5]
 end main
 `;
@@ -357,7 +357,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to "abcde"
+  variable a set to "abcde"
   call a.putAt(0, "b")
   print a
 end main
@@ -402,7 +402,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to "abcde"
+  variable a set to "abcde"
   set a to 2.1 + 3.4
   print a
 end main

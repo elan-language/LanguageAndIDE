@@ -46,7 +46,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to foo(1,2)[0]
+  variable a set to foo(1,2)[0]
   print a
 end main
 
@@ -78,7 +78,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to foo(1,2)[0..1]
+  variable a set to foo(1,2)[0..1]
   print a
 end main
 
@@ -217,7 +217,7 @@ main
 end main
 
 function factorial(a as Int) returns Int
-    var result set to 0
+    variable result set to 0
     if a > 2
       then
         set result to a * factorial(a - 1)
@@ -256,7 +256,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var b set to new Bar()
+  variable b set to new Bar()
   print foo(b)
 end main
 
@@ -312,8 +312,8 @@ return [main, _tests];}`;
 constant a set to {"a":1}
 
 main
-  var b set to a.withPutAtKey()
-  var c set to a.withPutAtKey("a", 1, 2)
+  variable b set to a.withPutAtKey()
+  variable c set to a.withPutAtKey("a", 1, 2)
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -334,8 +334,8 @@ function f(p as Float) returns Float
 end function
 
 main
-  var a set to f(1, 2)
-  var b set to f()
+  variable a set to f(1, 2)
+  variable b set to f()
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -356,8 +356,8 @@ function f(p as Int) returns Float
 end function
 
 main
-  var a set to f(true)
-  var b set to f(1.0)
+  variable a set to f(true)
+  variable b set to f(1.0)
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -378,7 +378,7 @@ function f(p as Boolean) returns Int
 end function
 
 main
-  var a set to f(true)
+  variable a set to f(true)
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -396,7 +396,7 @@ function f(p as Int)
 end function
 
 main
-  var a set to f(0)
+  variable a set to f(0)
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -413,7 +413,7 @@ function f(p Int) returns Int
 end function
 
 main
-  var a set to f(0)
+  variable a set to f(0)
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -426,11 +426,11 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 function f(p Int) returns Int 
-  var c set to p
+  variable c set to p
 end function
 
 main
-  var a set to f(0)
+  variable a set to f(0)
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -443,12 +443,12 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to ""
+  variable a set to ""
   set a to foo(3,4)
 end main
 
 function foo(a as Int, b as Int) returns Int
-  var c set to a * b
+  variable c set to a * b
   return c
 end function`;
 
@@ -466,7 +466,7 @@ main
 end main
 
 function foo(a as Int, b as Int) returns Int
-  var c set to a * b
+  variable c set to a * b
   return
 end function`;
 
@@ -521,7 +521,7 @@ end main
     
 function foo(a as Int, b as Int) returns Int
   return a * b
-  var c set to a + b
+  variable c set to a + b
 end function`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -568,7 +568,7 @@ end function`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var result set to foo(3,4)
+  variable result set to foo(3,4)
   print result
 end main
 
@@ -588,7 +588,7 @@ end function`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var result set to foo(3,4)
+  variable result set to foo(3,4)
   print result
 end main
 
@@ -642,7 +642,7 @@ end function`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var result set to foo(3, 4, 5)
+  variable result set to foo(3, 4, 5)
   print result
 end main
 
@@ -661,7 +661,7 @@ end function`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var result set to foo(3)
+  variable result set to foo(3)
   print result
 end main
 
@@ -680,7 +680,7 @@ end function`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var result set to foo(3, "b")
+  variable result set to foo(3, "b")
   print result
 end main
 
@@ -701,7 +701,7 @@ end function`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var result set to foo(3, "b")
+  variable result set to foo(3, "b")
   print result
 end main
 
@@ -907,9 +907,9 @@ end function`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to ref p1 is ref p2
-  var b set to ref p1 + ref p2
-  var c set to - ref p1
+  variable a set to ref p1 is ref p2
+  variable b set to ref p1 + ref p2
+  variable c set to - ref p1
 end main
 
 function p1() returns Int
@@ -934,9 +934,9 @@ end function`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to p1 is p2
-  var b set to p1 + p2
-  var c set to -p1
+  variable a set to p1 is p2
+  variable b set to p1 + p2
+  variable c set to -p1
 end main
 
 function p1() returns Int
@@ -1039,12 +1039,12 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to p1()
-  var b set to p2()
+  variable a set to p1()
+  variable b set to p2()
 end main
 
 function p1() returns Int
-  var a set to [1, 2]
+  variable a set to [1, 2]
   set a[0] to 2
   return a[0]
 end function`;

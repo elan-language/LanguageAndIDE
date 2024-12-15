@@ -8,8 +8,8 @@ suite("SymbolCompletionDropDown", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var foo set to 1
-  var foobar set to 2
+  variable foo set to 1
+  variable foobar set to 2
   set f to 1
 end main`;
 
@@ -28,8 +28,8 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var foo set to 1
-  var foobar set to 2
+  variable foo set to 1
+  variable foobar set to 2
   set f to 1
 end main`;
 
@@ -68,7 +68,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var foo set to 1
+  variable foo set to 1
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -86,7 +86,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var foo set to 1
+  variable foo set to 1
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -108,7 +108,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var foo set to 0
+  variable foo set to 0
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -123,7 +123,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var foo set to 0
+  variable foo set to 0
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -136,8 +136,8 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var foo set to 1
-  var fooBar set to 2
+  variable foo set to 1
+  variable fooBar set to 2
   set foo to 1
 end main`;
 
@@ -153,8 +153,8 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var foo set to 1
-  var foobar set to 2
+  variable foo set to 1
+  variable foobar set to 2
   set f to 1
 end main`;
 
@@ -228,7 +228,7 @@ class Foo
   end constructor
 
   procedure pp()
-    var a set to 0
+    variable a set to 0
     set a to 0
   end procedure
 
@@ -256,7 +256,7 @@ class Foo
   end constructor
 
   procedure pp(aa4 as Int)
-    var a set to 0
+    variable a set to 0
     set a to 0
   end procedure
 
@@ -284,7 +284,7 @@ class Foo
   end constructor
 
   procedure pp(out aa4 as Int)
-    var a set to 0
+    variable a set to 0
     set a to 0
   end procedure
 
@@ -309,8 +309,8 @@ end class`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var foo set to 1
-  var foobar set to 2
+  variable foo set to 1
+  variable foobar set to 2
   set foo to 1
 end main`;
 
@@ -328,8 +328,8 @@ end main`;
 constant fooyon set to 3
 
 main
-  var foo set to 1
-  var foobar set to 2
+  variable foo set to 1
+  variable foobar set to 2
   set f to 1
 end main`;
 
@@ -348,7 +348,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var foo set to w
+  variable foo set to w
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -367,8 +367,8 @@ procedure fooyon()
 end procedure
 
 main
-  var foo set to 1
-  var foobar set to 2
+  variable foo set to 1
+  variable foobar set to 2
   call f()
 end main`;
 
@@ -410,7 +410,7 @@ class Foo
 end class
 
 main
-  var foo set to new Foo()
+  variable foo set to new Foo()
   call foo()
 end main`;
 
@@ -431,7 +431,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var foo set to new BlockGraphics()
+  variable foo set to new BlockGraphics()
   call foo()
 end main`;
 
@@ -472,7 +472,7 @@ class Foo
 end class
 
 main
-  var foo set to new Foo()
+  variable foo set to new Foo()
   call foo.p()
 end main`;
 
@@ -488,7 +488,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var foo set to [1, 2]
+  variable foo set to [1, 2]
   call foo()
 end main`;
 
@@ -514,7 +514,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var foo set to [1, 2]
+  variable foo set to [1, 2]
   call foo.a()
 end main`;
 
@@ -533,8 +533,8 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var foo set to 1
-  var bar set to f
+  variable foo set to 1
+  variable bar set to f
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -553,8 +553,8 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var foo set to 1
-  var bar set to 1 + f
+  variable foo set to 1
+  variable bar set to 1 + f
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -573,8 +573,8 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var foo set to 1
-  var bar set to 1 + f
+  variable foo set to 1
+  variable bar set to 1 + f
 end main
 
 function foobar() returns Int
@@ -598,8 +598,8 @@ end function`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var foo set to {"a":1}
-  var bar set to foo.w
+  variable foo set to {"a":1}
+  variable bar set to foo.w
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -617,8 +617,8 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var foo set to {"a":1}
-  var bar set to foo.k
+  variable foo set to {"a":1}
+  variable bar set to foo.k
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -638,7 +638,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var foo set to {"a":1}
+  variable foo set to {"a":1}
   call foo()
 end main`;
 
@@ -654,7 +654,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var foo set to ["a":1]
+  variable foo set to ["a":1]
   call foo()
 end main`;
 
@@ -673,8 +673,8 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var foo set to ["a":1]
-  var bar set to foo
+  variable foo set to ["a":1]
+  variable bar set to foo
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -694,8 +694,8 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var foo set to {"a":1}
-  var bar set to foo
+  variable foo set to {"a":1}
+  variable bar set to foo
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -726,9 +726,9 @@ class Foo
   end constructor
 
   procedure pp1()
-    var f set to 0
-    var p set to 0
-    var bar set to 0
+    variable f set to 0
+    variable p set to 0
+    variable bar set to 0
     set f to 0
   end procedure
 
@@ -760,9 +760,9 @@ class Foo
   end constructor
 
   procedure pp1()
-    var f set to 0
-    var p set to 0
-    var bar set to 0
+    variable f set to 0
+    variable p set to 0
+    variable bar set to 0
     set f to 0
   end procedure
 
@@ -791,9 +791,9 @@ class Foo
   end constructor
 
   procedure pp1()
-    var f set to 0
-    var p set to 0
-    var bar set to 0
+    variable f set to 0
+    variable p set to 0
+    variable bar set to 0
     set f to 0
   end procedure
 
@@ -827,9 +827,9 @@ class Foo
   end constructor
 
   procedure pp1()
-    var f set to 0
-    var p set to 0
-    var bar set to 0
+    variable f set to 0
+    variable p set to 0
+    variable bar set to 0
     set p to 0
   end procedure
 
@@ -862,9 +862,9 @@ class Foo
   end constructor
 
   procedure pp1()
-    var f set to 0
-    var p set to 0
-    var bar set to 0
+    variable f set to 0
+    variable p set to 0
+    variable bar set to 0
     set f to 0
   end procedure
 
@@ -892,9 +892,9 @@ class Foo
   end constructor
 
   procedure pp1()
-    var f set to 0
-    var p set to 0
-    var bar set to 0
+    variable f set to 0
+    variable p set to 0
+    variable bar set to 0
     set f to 0
   end procedure
 
@@ -926,9 +926,9 @@ class Foo
   end constructor
 
   procedure pp1()
-    var f set to 0
-    var p set to 0
-    var bar set to 0
+    variable f set to 0
+    variable p set to 0
+    variable bar set to 0
     set b to 0
   end procedure
 
@@ -948,7 +948,7 @@ end class`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var foo set to new Foo()
+  variable foo set to new Foo()
   call foo.p()
 end main
 
@@ -1021,7 +1021,7 @@ class Foo
 end class
 
 test tt
-  var gr set to new Foo()
+  variable gr set to new Foo()
   assert gr.ff() is 0
 end test`;
 
@@ -1240,7 +1240,7 @@ end function`;
     const code = `# FFFF Elan Beta 3 valid
 
 main
-  var a set to foo().f1()
+  variable a set to foo().f1()
 end main
 
 function foo() returns Bar
@@ -1280,7 +1280,7 @@ end class`;
     const code = `# FFFF Elan Beta 3 valid
 
 main
-  var a set to foo(1).f1()
+  variable a set to foo(1).f1()
 end main
 
 function foo(a as Int) returns Bar
@@ -1320,8 +1320,8 @@ end class`;
     const code = `# FFFF Elan Beta 3 valid
 
 main
-  var alpha set to 0
-  var beta set to abs(alpha)
+  variable alpha set to 0
+  variable beta set to abs(alpha)
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -1336,8 +1336,8 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
     main
-      var a set to new Foo()
-      var b set to copy a with a to 2
+      variable a set to new Foo()
+      variable b set to copy a with a to 2
     end main
     
     record Foo
@@ -1356,8 +1356,8 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
     main
-      var a set to new Foo()
-      var b set to copy a with a to 2
+      variable a set to new Foo()
+      variable b set to copy a with a to 2
     end main
     
     record Foo
@@ -1376,8 +1376,8 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
     main
-      var a set to new Foo()
-      var b set to copy a with a to 2
+      variable a set to new Foo()
+      variable b set to copy a with a to 2
     end main
     
     record Foo
@@ -1396,8 +1396,8 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
     main
-      var a set to new Foo()
-      var b set to copy a with a to 2
+      variable a set to new Foo()
+      variable b set to copy a with a to 2
     end main
     
     record Foo
@@ -1416,8 +1416,8 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
     main
-      var a set to new Foo()
-      var b set to copy a with a to 2
+      variable a set to new Foo()
+      variable b set to copy a with a to 2
     end main
     
     record Foo
@@ -1440,8 +1440,8 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
     main
-      var a set to new Foo()
-      var b set to copy a with a to 2
+      variable a set to new Foo()
+      variable b set to copy a with a to 2
     end main
     
     record Foo
@@ -1464,7 +1464,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
     main
-      var a set to new Foo() with a to 2
+      variable a set to new Foo() with a to 2
     end main
     
     record Foo
@@ -1483,7 +1483,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
     main
-      var a set to new Foo() with a to 2
+      variable a set to new Foo() with a to 2
     end main
     
     record Foo
@@ -1506,7 +1506,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
     main
-      var a set to new Foo() with a to 2
+      variable a set to new Foo() with a to 2
     end main
     
     record Foo
@@ -1529,7 +1529,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
     main
-      var foo set to new BlockGraphics()
+      variable foo set to new BlockGraphics()
       call foo()
     end main`;
 
@@ -1549,8 +1549,8 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
     main
-      var foo set to new BlockGraphics()
-      var a set to foo
+      variable foo set to new BlockGraphics()
+      variable a set to foo
     end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -1625,8 +1625,8 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var ab set to 0  
-  var aa:ac set to [0]
+  variable ab set to 0  
+  variable aa:ac set to [0]
   set aa to 0
 end main`;
 
@@ -1646,8 +1646,8 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var ab set to 0  
-  var aa,ac set to (0, "fred")
+  variable ab set to 0  
+  variable aa,ac set to (0, "fred")
   set aa to 0
 end main`;
 
@@ -1667,8 +1667,8 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var ab set to 0  
-  var aa,ac set to new Foo()
+  variable ab set to 0  
+  variable aa,ac set to new Foo()
   set aa to 0
 end main
 
@@ -1693,7 +1693,7 @@ end record`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var bubbles set to empty [CircleVG]  
+  variable bubbles set to empty [CircleVG]  
   call bubbles.putAt(0, new CircleVG())
 end main`;
 

@@ -86,7 +86,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var l set to lambda x as Int => x * 5
+  variable l set to lambda x as Int => x * 5
   print l(5)
 end main`;
 
@@ -110,9 +110,9 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var foo set to new Foo()
+  variable foo set to new Foo()
   call foo.setP1(lambda x as Int => x)
-  var v set to foo.p1(5)
+  variable v set to foo.p1(5)
   print v
 end main
 
@@ -163,7 +163,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var l set to lambda x as Int => x * 5
+  variable l set to lambda x as Int => x * 5
   print l(5) + 5
 end main`;
 
@@ -187,7 +187,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var l set to getFunc()
+  variable l set to getFunc()
   print l(5)
 end main
     
@@ -219,8 +219,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to 3
-  var l set to lambda => x * 5
+  variable x set to 3
+  variable l set to lambda => x * 5
   print l()
 end main`;
 
@@ -245,7 +245,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var l set to getFunc(5)
+  variable l set to getFunc(5)
   print l()
 end main
     
@@ -277,7 +277,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var l set to getFunc()(5)
+  variable l set to getFunc()(5)
   print l
 end main
     

@@ -60,7 +60,7 @@ export const toKeyword = "to";
 export const trueKeyword = "true";
 export const tryKeyword = "try";
 export const typeofKeyword = "typeof";
-export const varKeyword = "var";
+export const variableKeyword = "variable";
 export const whileKeyword = "while";
 export const withKeyword = "with";
 
@@ -136,7 +136,7 @@ export const allKeywords = [
   trueKeyword,
   tryKeyword,
   typeofKeyword,
-  varKeyword,
+  variableKeyword,
   withKeyword,
   whileKeyword,
   withKeyword,

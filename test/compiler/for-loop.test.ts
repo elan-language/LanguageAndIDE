@@ -16,7 +16,7 @@ suite("For Loop", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var tot set to 0
+  variable tot set to 0
   for i from 1 to 10 step 1
     set tot to tot + i
   end for
@@ -46,8 +46,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var tot set to 0
-  var i set to 0
+  variable tot set to 0
+  variable i set to 0
   for i from 1 to 10 step 1
     set tot to tot + i
   end for
@@ -78,7 +78,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-var tot set to 0
+variable tot set to 0
 for i from 1 to 10 step 2
   set tot to tot + i
 end for
@@ -108,7 +108,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var tot set to 0
+  variable tot set to 0
   for i from 10 to 3 step -1
     set tot to tot + i
   end for
@@ -138,7 +138,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var tot set to 0
+  variable tot set to 0
   for i from 1 to 3 step 1
     for j from 1 to 4 step 1
       set tot to tot + 1
@@ -171,9 +171,9 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var lower set to 1
-  var upper set to 10
-  var tot set to 0
+  variable lower set to 1
+  variable upper set to 10
+  variable tot set to 0
   for i from lower to upper step 2
       set tot to tot + i
   end for
@@ -204,7 +204,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to createArray(11, 0)
+  variable a set to createArray(11, 0)
   call foo(a)
 end main
 
@@ -243,8 +243,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var tot set to 0
-  var i set to ""
+  variable tot set to 0
+  variable i set to ""
   for i from 1 to 10 step 1
     set tot to tot + i
   end for
@@ -263,7 +263,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var tot set to 0.0
+  variable tot set to 0.0
   for i from 1.5 to 10.1 step 1.0
     set tot to tot + i
   end for
@@ -286,7 +286,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var tot set to 0
+  variable tot set to 0
   for i from 1 to 10 step 1
     set i to 10
   end for
@@ -304,7 +304,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var tot set to 0
+  variable tot set to 0
   for i from 1 to 10 step 1
     set tot to 10
   end for
@@ -323,7 +323,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var tot set to 0
+  variable tot set to 0
   for i from 1 to 3 step 1
     for j from 1 to 4 step 1
       set tot to tot + 1
@@ -341,7 +341,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var tot set to 0
+  variable tot set to 0
   for i from 1 to 10
     set tot to tot + i
   next i
@@ -358,7 +358,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var tot set to 0
+  variable tot set to 0
   for i from 1 to 10 step 1
     set tot to tot + i
     break
@@ -376,7 +376,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var tot set to 0
+  variable tot set to 0
   for i from 1 to 10 step 1
     set tot to tot + i
     continue

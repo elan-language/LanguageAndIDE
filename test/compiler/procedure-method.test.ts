@@ -15,7 +15,7 @@ suite("Procedure Method", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var f set to new Foo()
+  variable f set to new Foo()
   print f.p1
   call f.setP1(7)
   print f.p1
@@ -74,7 +74,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var f set to new Foo()
+  variable f set to new Foo()
   call f.display()
 end main
 
@@ -133,8 +133,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var f set to new Foo()
-  var b set to new Bar()
+  variable f set to new Foo()
+  variable b set to new Bar()
   call f.times(b)
 end main
 
@@ -245,7 +245,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var f set to new Foo()
+  variable f set to new Foo()
   call show(f)
 end main
 
@@ -277,7 +277,7 @@ end class`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to new Foo()
+  variable x set to new Foo()
   call x.calculate()
 end main
 

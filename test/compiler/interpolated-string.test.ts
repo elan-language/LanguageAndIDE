@@ -15,9 +15,9 @@ suite("Interpolated String", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to 1
-  var b set to "Apple"
-  var c set to {1,2,3}
+  variable a set to 1
+  variable b set to "Apple"
+  variable c set to {1,2,3}
   print "{a} {b} {c}"
 end main`;
 
@@ -43,9 +43,9 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to 1
-  var b set to "Apple"
-  var c set to {1,2,3}
+  variable a set to 1
+  variable b set to "Apple"
+  variable c set to {1,2,3}
   print "{a {b} {c}"
 end main`;
 
@@ -59,9 +59,9 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to 1
-  var b set to "Apple"
-  var c set to {1,2,3}
+  variable a set to 1
+  variable b set to "Apple"
+  variable c set to {1,2,3}
   print "{a} {b} {{c}"
 end main`;
 

@@ -17,8 +17,8 @@ suite("With", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to new Foo()
-  var b set to copy a with a to 2
+  variable a set to new Foo()
+  variable b set to copy a with a to 2
   print a.a
   print b.a
 end main
@@ -55,7 +55,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to new Foo()
+  variable a set to new Foo()
   set a to copy a with a to 2
   print a.a
 end main
@@ -91,12 +91,12 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to foo()
+  variable a set to foo()
   print a.a
 end main
 
 function foo() returns Foo
-  var a set to new Foo()
+  variable a set to new Foo()
   let b be copy a with a to 2
   return b
 end function
@@ -137,7 +137,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to foo()
+  variable a set to foo()
   print a.a
 end main
 
@@ -183,12 +183,12 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to foo()
+  variable a set to foo()
   print a.a
 end main
 
 function foo() returns Foo
-  var a set to new Foo()
+  variable a set to new Foo()
   return copy a with a to 2
 end function
 
@@ -227,8 +227,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to new Foo()
-  var b set to copy a with a to 2, b to "fred"
+  variable a set to new Foo()
+  variable b set to copy a with a to 2, b to "fred"
   print a.a
   print a.b
   print b.a
@@ -273,8 +273,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to new Foo()
-  var b set to copy a with a to 2
+  variable a set to new Foo()
+  variable b set to copy a with a to 2
   print a.a
   print b.a
 end main
@@ -316,8 +316,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to new Foo()
-  var b set to copy a with a to 2 + 2
+  variable a set to new Foo()
+  variable b set to copy a with a to 2 + 2
   print a.a
   print b.a
 end main
@@ -354,9 +354,9 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to new Foo()
-  var a1 set to copy a with b to 1
-  var b set to copy a with a to a1
+  variable a set to new Foo()
+  variable a1 set to copy a with b to 1
+  variable b set to copy a with a to a1
   print a.a.b
   print b.a.b
 end main
@@ -403,9 +403,9 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to [0,2]
-  var b set to new Foo()
-  var c set to copy b with b to a[1]
+  variable a set to [0,2]
+  variable b set to new Foo()
+  variable c set to copy b with b to a[1]
   print b.b
   print c.b
 end main
@@ -443,9 +443,9 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to [0,2]
-  var b set to new Foo()
-  var c set to copy b with b to a[0], c to a[1], d to a.length()
+  variable a set to [0,2]
+  variable b set to new Foo()
+  variable c set to copy b with b to a[0], c to a[1], d to a.length()
   print c.b
   print c.c
   print c.d
@@ -491,9 +491,9 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to {0,2}
-  var b set to new Foo()
-  var c set to copy b with b to a[1]
+  variable a set to {0,2}
+  variable b set to new Foo()
+  variable c set to copy b with b to a[1]
   print b.b
   print c.b
 end main
@@ -531,9 +531,9 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to {0,2,3}
-  var b set to new Foo()
-  var c set to copy b with b to a.length()
+  variable a set to {0,2,3}
+  variable b set to new Foo()
+  variable c set to copy b with b to a.length()
   print b.b
   print c.b
 end main
@@ -571,8 +571,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var b set to new Foo()
-  var c set to copy b with b to [0]
+  variable b set to new Foo()
+  variable c set to copy b with b to [0]
   print c.b
 end main
 
@@ -591,8 +591,8 @@ end record`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to {1, 2}
-  var b set to copy a with a to 0
+  variable a set to {1, 2}
+  variable b set to copy a with a to 0
   print b
 end main`;
 
@@ -607,8 +607,8 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to {3}
-  var b set to copy a with a to 0
+  variable a set to {3}
+  variable b set to copy a with a to 0
   print b
 end main`;
 
@@ -623,8 +623,8 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var b set to new Foo()
-  var c set to copy b with b to 0
+  variable b set to new Foo()
+  variable c set to copy b with b to 0
   print c.d
 end main
 
@@ -656,8 +656,8 @@ end record`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var b set to new Foo()
-  var c set to copy b with b to 0
+  variable b set to new Foo()
+  variable c set to copy b with b to 0
   print c.b
 end main
 

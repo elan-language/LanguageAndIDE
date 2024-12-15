@@ -38,7 +38,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to sin(pi / 180 * 30)
+  variable x set to sin(pi / 180 * 30)
   print x
 end main`;
 
@@ -62,8 +62,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to  pi/180*30
-  var y set to sin(x)
+  variable x set to  pi/180*30
+  variable y set to sin(x)
   print y
 end main`;
 
@@ -88,8 +88,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to pi/180*30
-  var y set to sin(x) + cos(x)
+  variable x set to pi/180*30
+  variable y set to sin(x) + cos(x)
   print y
 end main`;
 
@@ -114,8 +114,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to 0.7
-  var y set to sin(x) ^ 2 + cos(x) ^ 2
+  variable x set to 0.7
+  variable y set to sin(x) ^ 2 + cos(x) ^ 2
   print y
 end main`;
 
@@ -140,7 +140,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to {3.1, 3}.min()
+  variable x set to {3.1, 3}.min()
   print x
 end main`;
 
@@ -164,8 +164,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var i set to ["a", "b"]
-  var x set to i.contains("b")
+  variable i set to ["a", "b"]
+  variable x set to i.contains("b")
   print x
 end main`;
 
@@ -190,7 +190,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to "hello".max()
+  variable x set to "hello".max()
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -231,7 +231,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to [1,2]
+  variable a set to [1,2]
   call a.max()
 end main`;
 

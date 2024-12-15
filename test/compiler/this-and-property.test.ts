@@ -16,7 +16,7 @@ suite("This and Property", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to new Foo(7)
+  variable x set to new Foo(7)
   print x.p1
 end main
 
@@ -67,7 +67,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var f set to new Foo()
+  variable f set to new Foo()
   print f.bar()
 end main
 
@@ -134,7 +134,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var f set to new Foo()
+  variable f set to new Foo()
   print f.bar()
 end main
 
@@ -146,7 +146,7 @@ class Foo
   property p1 as Int
 
   function bar() returns Int
-    var lst set to [1, 2]
+    variable lst set to [1, 2]
     return lst[p1]
   end function
 end class`;
@@ -186,7 +186,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var f set to new Foo()
+  variable f set to new Foo()
   print f.bar()
 end main
 
@@ -197,7 +197,7 @@ class Foo
   property p1 as Int
 
   function bar() returns Int
-    var lst set to [1, 2]
+    variable lst set to [1, 2]
     call lst.setAt(p1, 3)
     return lst[0]
   end function
@@ -213,7 +213,7 @@ end class`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-    var x set to new Foo(7)
+    variable x set to new Foo(7)
     print x.p1
 end main
 
@@ -241,7 +241,7 @@ end class`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-    var x set to new Foo(7)
+    variable x set to new Foo(7)
     print x.p1
 end main
 

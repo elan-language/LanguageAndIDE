@@ -1,7 +1,7 @@
 # 20c2d949173c2b7998f8c286c73578a543349bc6b5ca729d046accea9f8a8b95 Elan Beta 4 valid
 
 main
-  var g set to new BlockGraphics()
+  variable g set to new BlockGraphics()
   set g to g.withBackground(black)
   set g to createStart(g)
   for i from 0 to 150 step 1
@@ -25,9 +25,9 @@ main
 end main
 
 procedure saveAsFile(name as String, gr as BlockGraphics)
-  var file set to createFileForWriting(name)
+  variable file set to createFileForWriting(name)
   for row from 0 to 29 step 1
-    var line set to ""
+    variable line set to ""
     for col from 0 to 39 step 1
       let colour be gr.getBackground(col, row)
       let symbol be if colour is white then " " else "X"
@@ -39,7 +39,7 @@ procedure saveAsFile(name as String, gr as BlockGraphics)
 end procedure
 
 function createStart(g as BlockGraphics) returns BlockGraphics
-  var g2 set to g
+  variable g2 set to g
   for i from 0 to 15 step 2
     set g2 to addRectangle(g2, i, i, 39 - 2*i, 29 - 2*i)
   end for
@@ -48,7 +48,7 @@ end function
 
 function addRectangle(g as BlockGraphics, startX as Int, startY as Int, width as Int, depth as Int) returns BlockGraphics
   let paint be white
-  var g2 set to g
+  variable g2 set to g
   for x from startX to startX + width step 1
     set g2 to g2.withBlock(x, startY, paint)
     set g2 to g2.withBlock(x, startY + depth, paint)
@@ -71,7 +71,7 @@ function okToSet(p as Point, colour as Int, g as BlockGraphics) returns Boolean
 end function
 
 function getValue(p as Point, g as BlockGraphics) returns Int
-  var result set to 0
+  variable result set to 0
   if (p.x > -1) and (p.x < 40) and (p.y > -1) and (p.y < 30)
     then
       let colour be g.getBackground(p.x, p.y)

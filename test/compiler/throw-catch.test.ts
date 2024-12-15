@@ -38,7 +38,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var msg set to "Foo"
+  variable msg set to "Foo"
   throw exception msg
 end main`;
 
@@ -62,7 +62,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var bar set to 1
+  variable bar set to 1
   throw exception "{bar}"
 end main`;
 
@@ -160,9 +160,9 @@ return [main, _tests];}`;
 main
   try
     doing
-      var x set to empty [Foo]
-      var y set to x[1]
-      var z set to y.p1
+      variable x set to empty [Foo]
+      variable y set to x[1]
+      variable z set to y.p1
       print "not caught"
     catching exception in e
       print e
@@ -219,7 +219,7 @@ main
       call foo()
       print "not caught"
     catching exception in e
-      var s set to ""
+      variable s set to ""
       set s to e
       print s
   end try
@@ -260,7 +260,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var s set to foo("s")
+  variable s set to foo("s")
 end main
  
 function foo(x String) as String
@@ -302,7 +302,7 @@ end procedure
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var msg set to "Foo"
+  variable msg set to "Foo"
   throw exception msg + bar
 end main
 `;

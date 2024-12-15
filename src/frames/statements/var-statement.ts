@@ -2,7 +2,7 @@ import { CodeSource } from "../code-source";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
-import { setKeyword, toKeyword, varKeyword } from "../keywords";
+import { setKeyword, toKeyword, variableKeyword } from "../keywords";
 import { AbstractDefinitionStatement } from "./abstract-definition.statement";
 
 export class VarStatement extends AbstractDefinitionStatement implements Statement, ElanSymbol {
@@ -13,12 +13,12 @@ export class VarStatement extends AbstractDefinitionStatement implements Stateme
   }
 
   initialKeywords(): string {
-    return varKeyword;
+    return variableKeyword;
   }
 
   parseFrom(source: CodeSource): void {
     source.removeIndent();
-    source.remove("var ");
+    source.remove(`${variableKeyword} `);
     this.name.parseFrom(source);
     source.remove(" set to ");
     this.expr.parseFrom(source);
@@ -34,10 +34,10 @@ export class VarStatement extends AbstractDefinitionStatement implements Stateme
   }
 
   renderAsHtml(): string {
-    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><el-kw>${varKeyword} </el-kw>${this.name.renderAsHtml()}<el-kw> ${setKeyword} ${toKeyword} </el-kw>${this.expr.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-statement>`;
+    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><el-kw>${variableKeyword} </el-kw>${this.name.renderAsHtml()}<el-kw> ${setKeyword} ${toKeyword} </el-kw>${this.expr.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-statement>`;
   }
 
   renderAsSource(): string {
-    return `${this.indent()}${varKeyword} ${this.name.renderAsSource()} ${setKeyword} ${toKeyword} ${this.expr.renderAsSource()}`;
+    return `${this.indent()}${variableKeyword} ${this.name.renderAsSource()} ${setKeyword} ${toKeyword} ${this.expr.renderAsSource()}`;
   }
 }

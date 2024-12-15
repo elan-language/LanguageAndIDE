@@ -16,7 +16,7 @@ suite("While Loop", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to 0
+  variable x set to 0
   while x < 10
     set x to x + 1
   end while
@@ -46,10 +46,10 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var t set to 0
-  var x set to 0
+  variable t set to 0
+  variable x set to 0
   while x < 3
-    var y set to 0
+    variable y set to 0
       while y < 4
         set y to y + 1
         set t to t + 1
@@ -137,7 +137,7 @@ main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to 0
+  variable x set to 0
   while
     set x to x + 1
   end while
@@ -154,7 +154,7 @@ main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to 0
+  variable x set to 0
   while x < 10
     set x to x + 1
   do
@@ -171,7 +171,7 @@ main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to 3
+  variable a set to 3
   while a
     print a
   end while

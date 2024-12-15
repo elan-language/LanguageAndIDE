@@ -1,14 +1,14 @@
 # 4a05f420a7bda74255906e32ec2713dfd90a0cf06d68ad670667aff7f43bc9de Elan Beta 4 valid
 
 main
-  var li set to [3, 6, 1, 0, 99, 4, 67]
+  variable li set to [3, 6, 1, 0, 99, 4, 67]
   call inPlaceRippleSort(li)
   print li
 end main
 
 procedure inPlaceRippleSort(out arr as [Int])
-  var changes set to true
-  var lastComp set to arr.length() - 2
+  variable changes set to true
+  variable lastComp set to arr.length() - 2
   repeat
     set changes to false
     for i from 0 to lastComp step 1

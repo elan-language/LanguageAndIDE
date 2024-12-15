@@ -16,7 +16,7 @@ suite("Tuple", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-    var x set to (3, "Apple")
+    variable x set to (3, "Apple")
     print x
     let f, s be x
     print f
@@ -46,7 +46,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to f()
+  variable x set to f()
   print x
   let fst, sec be x
   print fst
@@ -84,7 +84,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var t set to f()
+  variable t set to f()
   let fst, _ be t
   print fst
 end main
@@ -118,7 +118,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var t set to a.reduce((1, 1), lambda i as (Int, Int), j as (Int, Int) => j)
+  variable t set to a.reduce((1, 1), lambda i as (Int, Int), j as (Int, Int) => j)
   let fst, _ be t
   print fst
 end main
@@ -149,8 +149,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to "one"
-  var y set to "two"
+  variable x set to "one"
+  variable y set to "two"
   print f((x,y))
 end main
 
@@ -185,7 +185,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to (3,"Apple")
+  variable x set to (3,"Apple")
   set x to (4,"Pear")
   print x
 end main
@@ -212,8 +212,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to (3,"Apple")
-  var a, b, c set to x
+  variable x set to (3,"Apple")
+  variable a, b, c set to x
   print c
 end main
 `;
@@ -230,8 +230,8 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to (3,"Apple")
-  var y set to 4
+  variable x set to (3,"Apple")
+  variable y set to 4
   set _, y to x
   print y
 end main
@@ -249,7 +249,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to (3, "Apple")
+  variable x set to (3, "Apple")
   set x.first() to 4
 end main
 `;
@@ -264,7 +264,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to (3, "Apple")
+  variable x set to (3, "Apple")
   set x to ("4", "Pear")
 end main
 `;
@@ -281,7 +281,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to (3, "Apple", 4)
+  variable x set to (3, "Apple", 4)
   set x to (4, "Pear")
 end main
 `;
@@ -298,7 +298,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to (3, "Apple")
+  variable x set to (3, "Apple")
   set x to (4, "Pear", 3)
 end main
 `;

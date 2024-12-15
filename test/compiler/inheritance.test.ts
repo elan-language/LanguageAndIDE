@@ -16,7 +16,7 @@ suite("Inheritance", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to new Bar()
+  variable x set to new Bar()
   print x.p1
   print x.p2
   print x.product()
@@ -127,7 +127,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to new Yon()
+  variable x set to new Yon()
   print f(x)
   print b(x)
 end main
@@ -225,7 +225,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to new Bar()
+  variable x set to new Bar()
   print x.p1
   print x.p2
   print x.product()
@@ -346,7 +346,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to new Bar()
+  variable x set to new Bar()
   print x.p1
   print x.p2
   print x.product()
@@ -474,7 +474,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var f set to new Bar()
+  variable f set to new Bar()
   call proc(f)
 end main
 
@@ -540,8 +540,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var b set to new Bar()
-  var lst set to {b}
+  variable b set to new Bar()
+  variable lst set to {b}
   print fun(lst)
 end main
 
@@ -608,7 +608,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var f set to new Bar()
+  variable f set to new Bar()
   print fun(f)
 end main
 
@@ -674,7 +674,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to new Bar()
+  variable x set to new Bar()
   call x.testPrivate(3)
 end main
 
@@ -754,7 +754,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to new Bar()
+  variable x set to new Bar()
   call x.testPrivate(3)
 end main
 
@@ -868,7 +868,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to new Bar()
+  variable x set to new Bar()
   call x.testPrivate(3)
 end main
 
@@ -982,7 +982,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to new Bar()
+  variable x set to new Bar()
   call x.testPrivate(3)
 end main
 
@@ -1046,7 +1046,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to new Bar()
+  variable x set to new Bar()
   call x.testPrivate(3)
 end main
 
@@ -1084,7 +1084,7 @@ end class`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to new Bar()
+  variable x set to new Bar()
   call x.testPrivate(3)
 end main
 
@@ -1122,7 +1122,7 @@ end class`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to new Bar()
+  variable x set to new Bar()
   call x.testPrivate(3)
 end main
 
@@ -1160,7 +1160,7 @@ end class`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to new Bar()
+  variable x set to new Bar()
   call x.testPrivate(3)
 end main
 
@@ -1198,7 +1198,7 @@ end class`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to new Bar()
+  variable x set to new Bar()
   call x.testPrivate(3)
 end main
 
@@ -1236,7 +1236,7 @@ end class`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to new Bar()
+  variable x set to new Bar()
   print x.testPrivate(3)
 end main
 
@@ -1306,7 +1306,7 @@ end class`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to new Bar()
+  variable x set to new Bar()
 end main
 
 abstract class Foo
@@ -1345,7 +1345,7 @@ end class`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to new Bar()
+  variable x set to new Bar()
 end main
 
 class Foo
@@ -1379,7 +1379,7 @@ end class`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to new Bar()
+  variable x set to new Bar()
 end main
 
 abstract class Foo
@@ -1426,7 +1426,7 @@ end class`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to new Bar()
+  variable x set to new Bar()
 end main
 
 abstract class Foo
@@ -1470,7 +1470,7 @@ end class`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to new Bar()
+  variable x set to new Bar()
 end main
 
 abstract class Foo
@@ -1511,7 +1511,7 @@ end class`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to new Bar()
+  variable x set to new Bar()
 end main
 
 abstract class Foo
@@ -1528,7 +1528,7 @@ end class`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to new Bar()
+  variable x set to new Bar()
 end main
 
 abstract class Foo
@@ -1545,7 +1545,7 @@ end class`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-    var a set to new Bar()
+    variable a set to new Bar()
 end main
 
 abstract class Bar
@@ -1564,8 +1564,8 @@ end class`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var b set to new Bar()
-  var f set to upcast(b)
+  variable b set to new Bar()
+  variable f set to upcast(b)
   print fun(f)
 end main
 
@@ -1600,8 +1600,8 @@ end function
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var b set to new Bar()
-  var lst set to {b}
+  variable b set to new Bar()
+  variable lst set to {b}
   print fun(lst)
 end main
 
@@ -1632,8 +1632,8 @@ end function
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var b set to new Bar()
-  var lst set to [b]
+  variable b set to new Bar()
+  variable lst set to [b]
   call fun(lst)
 end main
 
@@ -1664,7 +1664,7 @@ end procedure
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var lst set to new ImmutableDictionary<of String, Bar>()
+  variable lst set to new ImmutableDictionary<of String, Bar>()
   print fun(lst)
 end main
 
@@ -1697,7 +1697,7 @@ end function
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to new Bar()
+  variable x set to new Bar()
   print x.p1
 end main
 

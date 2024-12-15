@@ -17,7 +17,7 @@ suite("If Statement", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to true
+  variable a set to true
   if a
     then
       print "yes"
@@ -51,7 +51,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to false
+  variable a set to false
   if a
     then
       print "yes"
@@ -84,7 +84,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to 2
+  variable a set to 2
   if a is 1
     then
       print "one"
@@ -121,7 +121,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to 3
+  variable a set to 3
   if a is 1
     then
       print "one"
@@ -158,7 +158,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to true
+  variable a set to true
   if a
     then
       print "yes"
@@ -187,7 +187,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to 3
+  variable a set to 3
   if a is 1
     then
       print "one"
@@ -228,7 +228,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to 3
+  variable a set to 3
   if a is 1
     then
       print "one"
@@ -265,7 +265,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to true
+  variable a set to true
   if a
     print "yes"
 end main`;
@@ -280,7 +280,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to 3
+  variable a set to 3
   if a is 1
     then
       print "one"
@@ -302,7 +302,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to 3
+  variable a set to 3
   if a is 1
     then
       print "one"
@@ -324,7 +324,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to 3
+  variable a set to 3
   if a
     then
       print "yes"
@@ -344,7 +344,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
   main
-    var a set to 2
+    variable a set to 2
     if a is 1
       then
         print "one"

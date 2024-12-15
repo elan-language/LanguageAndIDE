@@ -1,7 +1,7 @@
 # c24b44035c69924292ddc2354f521b7ec40821d2953239b4339a2b5757d58fb8 Elan Beta 4 valid
 
 main
-  var vg set to new VectorGraphics()
+  variable vg set to new VectorGraphics()
   let bubbles be empty [CircleVG]
   for i from 0 to 19 step 1
     let b be new CircleVG() with cx to i*5 + 2, cy to 75, r to 1, fill to -1, stroke to white
@@ -17,7 +17,7 @@ end main
 procedure refresh(bubbles as [CircleVG], out vg as VectorGraphics)
   for i from 0 to 19 step 1
     let b be bubbles[i]
-    var b2 set to copy b with cy to b.cy - 1, r to b.r + 0.2
+    variable b2 set to copy b with cy to b.cy - 1, r to b.r + 0.2
     if random() < 0.05
       then
         set b2 to copy b2 with cx to randomInt(0, 99), r to 1, cy to 75, stroke to randomInt(0, 0xffffff)

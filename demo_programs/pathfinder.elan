@@ -4,12 +4,12 @@ main
   let start be new Point(5, 5)
   let destination be new Point(34, 24)
   let percentRocks be inputIntBetween("Enter % rocks (0-100): ", 0, 100)
-  var rocks set to empty [Point]
-  var nodes set to empty [Node]
+  variable rocks set to empty [Point]
+  variable nodes set to empty [Node]
   call createRocksAndNodes(percentRocks, rocks, nodes, start, destination)
-  var gr set to initialiseGraphics(start, destination, rocks)
+  variable gr set to initialiseGraphics(start, destination, rocks)
   call gr.display()
-  var solver set to new Solver(nodes, start, destination)
+  variable solver set to new Solver(nodes, start, destination)
   while true
     let option be inputString(algPrompt)
     let alg be algFromLetter[option]
@@ -19,7 +19,7 @@ end main
 
 procedure runSolver(gr as BlockGraphics, start as Point, destination as Point, rocks as [Point], out solver as Solver, alg as Algorithm)
   call solver.initialise(alg)
-  var gr2 set to initialiseGraphics(start, destination, rocks)
+  variable gr2 set to initialiseGraphics(start, destination, rocks)
   while solver.running
     call solver.visitNextPoint()
     set gr2 to addVisited(gr2, solver.getLastVisited())
@@ -56,7 +56,7 @@ procedure createRocksAndNodes(percentRocks as Int, out rocks as [Point], out nod
 end procedure
 
 function initialiseGraphics(start as Point, dest as Point, rocks as [Point]) returns BlockGraphics
-  var gr set to new BlockGraphics()
+  variable gr set to new BlockGraphics()
   each rock in rocks
     set gr to gr.withBlock(rock.x, rock.y, black)
   end each
@@ -70,7 +70,7 @@ function addVisited(gr as BlockGraphics, visited as Point) returns BlockGraphics
 end function
 
 function addRoute(gr as BlockGraphics, route as {Point}) returns BlockGraphics
-  var gr2 set to gr
+  variable gr2 set to gr
   each p in route
     set gr2 to gr2.withBlock(p.x, p.y, orange)
   end each
@@ -136,7 +136,7 @@ class Solver
   end procedure
 
   function currentNeighbours() returns [Node]
-    var neighbours set to empty {Node}
+    variable neighbours set to empty {Node}
     let currentPoint be current.point
     each p in currentPoint.neighbouringPoints()
       let node be getNodeFor(p)
@@ -159,8 +159,8 @@ class Solver
   end function
 
   function nextNodeToVisit() returns Node
-    var lowestCostSoFar set to infinity
-    var lowestCostNode set to empty Node
+    variable lowestCostSoFar set to infinity
+    variable lowestCostNode set to empty Node
     let possibilities be nodes.filter(lambda nd as Node => (not nd.visited) and (nd.distFromStart < infinity))
     each nd in possibilities
       let cost be calculateCost(nd)
@@ -174,7 +174,7 @@ class Solver
   end function
 
   function calculateCost(node as Node) returns Float
-    var cost set to 0.0
+    variable cost set to 0.0
     let fromStart be node.distFromStart
     let estToDest be node.estDistToDest
     switch alg
@@ -189,9 +189,9 @@ class Solver
   end function
 
   function getRouteAndLength() returns ({Point}, Float)
-    var route set to {destination}
-    var length set to 0.0
-    var node set to getNodeFor(destination)
+    variable route set to {destination}
+    variable length set to 0.0
+    variable node set to getNodeFor(destination)
     repeat
       let previous be node.via
       let p be node.point

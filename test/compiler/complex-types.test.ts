@@ -15,7 +15,7 @@ suite("Complex Types", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main 
-  var a set to [["a":1], ["b":3, "z":10]]
+  variable a set to [["a":1], ["b":3, "z":10]]
   call a[0].putAtKey("b", 2)
   print a[0]["b"]
 end main`;
@@ -41,7 +41,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main 
-  var a set to ["a":[1,2], "b":[3,4,5]]
+  variable a set to ["a":[1,2], "b":[3,4,5]]
   call a["b"].putAt(0, 2)
   print a["b"][0]
 end main`;
@@ -67,7 +67,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main 
-  var a set to [["a":1], ["b":3, "z":10]]
+  variable a set to [["a":1], ["b":3, "z":10]]
   call a.putAt("b", ["b":2])
 end main`;
 
@@ -85,7 +85,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main 
-  var a set to [["a":1], ["b":3, "z":10]]
+  variable a set to [["a":1], ["b":3, "z":10]]
   call a[0].putAtKey(0, 2)
 end main`;
 
@@ -103,7 +103,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main 
-  var a set to ["a":[1,2], "b":[3,4,5]]
+  variable a set to ["a":[1,2], "b":[3,4,5]]
   call a.putAtKey(0, [2,2])
 end main`;
 
@@ -121,7 +121,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main 
-  var a set to ["a":[1,2], "b":[3,4,5]]
+  variable a set to ["a":[1,2], "b":[3,4,5]]
   call a["b"].putAt("b", 2)
 end main`;
 

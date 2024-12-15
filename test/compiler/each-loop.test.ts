@@ -16,8 +16,8 @@ suite("Each Loop", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to {7,8,9}
-  var n set to 0
+  variable a set to {7,8,9}
+  variable n set to 0
   each x in a
       set n to n + x
   end each
@@ -48,8 +48,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to {7,8,9}.asArray()
-  var n set to 0
+  variable a set to {7,8,9}.asArray()
+  variable n set to 0
   each x in a
       set n to n + x
   end each
@@ -80,7 +80,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to "hello"
+  variable a set to "hello"
   each x in a
     print x
   end each
@@ -172,8 +172,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to {7, 8, 9}
-  var x set to "hello"
+  variable a set to {7, 8, 9}
+  variable x set to "hello"
   each x in a
     print x
   end each
@@ -194,7 +194,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to {7, 8, 9}
+  variable a set to {7, 8, 9}
   each x in a
     print x
   end each
@@ -213,7 +213,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to [7, 8, 9]
+  variable a set to [7, 8, 9]
   each x in a
     print x
   end for
@@ -231,7 +231,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var y set to 10
+  variable y set to 10
   each x in y
     print x
   end each
@@ -249,7 +249,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to {1, 2, 3, 4, 5}
+  variable a set to {1, 2, 3, 4, 5}
   each x in a
     set a to a + x
   end each

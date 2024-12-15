@@ -22,7 +22,7 @@ main
   print typeof [1,2,3]
   print typeof {"a":1,"b":2,"c":3}
   print typeof ["a":1,"b":2,"c":3]
-  var foo set to new Foo()
+  variable foo set to new Foo()
   print typeof foo
 end main
 
@@ -73,13 +73,13 @@ return [main, _tests];}`;
 
 main
   let a be 1
-  var b set to lambda x as Int => x * 5
-  var c set to empty [Int]
-  var d set to [c]
-  var e set to {c, c}
-  var f set to [c:d]
-  var g set to {e:d}
-  var h set to (e,d)
+  variable b set to lambda x as Int => x * 5
+  variable c set to empty [Int]
+  variable d set to [c]
+  variable e set to {c, c}
+  variable f set to [c:d]
+  variable g set to {e:d}
+  variable h set to (e,d)
   
   print typeof a
   print typeof b
@@ -95,7 +95,7 @@ main
 end main
 
 procedure hh(a as Int)
-  var b set to a
+  variable b set to a
 end procedure
 
 function ii(a as Int) returns Int
@@ -150,7 +150,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to ""
+  variable a set to ""
   set a to typeof a
   print a
 end main`;
@@ -176,8 +176,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to ""
-  var b set to typeof a
+  variable a set to ""
+  variable b set to typeof a
   if typeof a is typeof b
     then
       print "Pass"

@@ -1,8 +1,8 @@
 # 4b6b95278377f344ab05288e0621b7645ad52bad4f75cc4cb4ca001a063a1191 Elan Beta 4 valid
 
 main
-  var gr set to new BlockGraphics()
-  var grid set to empty [Boolean]
+  variable gr set to new BlockGraphics()
+  variable grid set to empty [Boolean]
   call fillRandom(grid)
   while true
     set gr to updateGraphics(grid, gr)
@@ -19,7 +19,7 @@ procedure fillRandom(out starter as [Boolean])
 end procedure
 
 function updateGraphics(grid as [Boolean], gr as BlockGraphics) returns BlockGraphics
-  var gr2 set to gr
+  variable gr2 set to gr
   for row from 0 to 29 step 1
     for col from 0 to 39 step 1
       let cell be grid[row*40 + col]

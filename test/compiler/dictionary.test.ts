@@ -16,7 +16,7 @@ suite("Dictionary", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to ["a":1, "b":3, "z":10]
+  variable a set to ["a":1, "b":3, "z":10]
   print a
 end main`;
 
@@ -40,7 +40,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to ["a":["a":1], "b":["b":3, "z":10]]
+  variable a set to ["a":["a":1], "b":["b":3, "z":10]]
   print a
 end main`;
 
@@ -66,7 +66,7 @@ return [main, _tests];}`;
 enum Fruit apple, orange, pear
 
 main
-  var a set to [Fruit.apple:1, Fruit.orange:3, Fruit.pear:10]
+  variable a set to [Fruit.apple:1, Fruit.orange:3, Fruit.pear:10]
   print a
 end main`;
 
@@ -94,7 +94,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to ["a":1, "b":3, "z":10]
+  variable a set to ["a":1, "b":3, "z":10]
   print a["z"]
 end main`;
 
@@ -118,7 +118,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to ["a":["a":1], "b":["b":3, "z":10]]
+  variable a set to ["a":["a":1], "b":["b":3, "z":10]]
   print a["b"]["z"]
 end main`;
 
@@ -142,8 +142,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to ["a":1, "b":3, "z":10]
-  var b set to empty {String}
+  variable a set to ["a":1, "b":3, "z":10]
+  variable b set to empty {String}
   set b to a.keys()
   print b
 end main`;
@@ -170,7 +170,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to ["a":1, "b":3, "z":10]
+  variable a set to ["a":1, "b":3, "z":10]
   print a.hasKey("b")
   print a.hasKey("d")
 end main`;
@@ -196,7 +196,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to ["a":1, "b":3, "z":10]
+  variable a set to ["a":1, "b":3, "z":10]
   print a.values()
 end main`;
 
@@ -220,7 +220,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to ["a":1, "b":3, "z":10]
+  variable a set to ["a":1, "b":3, "z":10]
   call a.putAtKey("b", 4)
   call a.putAtKey("d", 2)
   print a
@@ -248,7 +248,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to ["a":["a":1], "b":["b":3, "z":10]]
+  variable a set to ["a":["a":1], "b":["b":3, "z":10]]
   call a.putAtKey("b", ["c":4])
   call a["a"].putAtKey("x", 2)
   print a
@@ -276,7 +276,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to ["a":1, "b":3, "z":10]
+  variable a set to ["a":1, "b":3, "z":10]
   call a.removeAtKey("b")
   print a
 end main`;
@@ -302,7 +302,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to ["a":["a":1], "b":["b":3, "z":10]]
+  variable a set to ["a":["a":1], "b":["b":3, "z":10]]
   call a["b"].removeAtKey("b")
   print a
 end main`;
@@ -328,7 +328,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to ["a":1, "b":3, "z":10]
+  variable a set to ["a":1, "b":3, "z":10]
   call a.removeAtKey("c")
   print a
 end main`;
@@ -354,10 +354,10 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to new Dictionary<of String, Int>()
+  variable a set to new Dictionary<of String, Int>()
   call a.putAtKey("Foo", 1)
   call a.putAtKey("Bar", 3)
-  var k set to a.keys()
+  variable k set to a.keys()
   print k.length()
   print a["Foo"]
   print a["Bar"]
@@ -388,11 +388,11 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to new Dictionary<of String, Dictionary<of String, Int>>()
+  variable a set to new Dictionary<of String, Dictionary<of String, Int>>()
   call a.putAtKey("Foo", ["ff":1])
   call a.putAtKey("Bar", new Dictionary<of String, Int>())
   call a["Bar"].putAtKey("bb", 3)
-  var k set to a.keys()
+  variable k set to a.keys()
   print k.length()
   print a["Foo"]
   print a["Bar"]
@@ -426,10 +426,10 @@ return [main, _tests];}`;
     enum Fruit apple, orange, pear  
 
 main
-  var a set to new Dictionary<of Fruit, Int>()
+  variable a set to new Dictionary<of Fruit, Int>()
   call a.putAtKey(Fruit.apple, 1)
   call a.putAtKey(Fruit.orange, 3)
-  var k set to a.keys()
+  variable k set to a.keys()
   print k.length()
   print a[Fruit.apple]
   print a[Fruit.orange]
@@ -464,8 +464,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to empty [String:Int]
-  var b set to empty [String:Int]
+  variable a set to empty [String:Int]
+  variable b set to empty [String:Int]
   call a.putAtKey("a", 3)
   print a
   print b
@@ -500,8 +500,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to empty [String:[String:Int]]
-  var b set to empty [String:[String:Int]]
+  variable a set to empty [String:[String:Int]]
+  variable b set to empty [String:[String:Int]]
   call a.putAtKey("a", ["a":1])
   print a
   print b
@@ -536,7 +536,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to ["a":1, "b":3, "a":10]
+  variable a set to ["a":1, "b":3, "a":10]
   print a
 end main
 `;
@@ -552,7 +552,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to ["a":1, "b":3.1, "c":10]
+  variable a set to ["a":1, "b":3.1, "c":10]
   print a
 end main
 `;
@@ -568,7 +568,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to ["a":1, "b":3, 10:10]
+  variable a set to ["a":1, "b":3, 10:10]
   print a
 end main
 `;
@@ -584,7 +584,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to ["a":1, "b":3, "z":10]
+  variable a set to ["a":1, "b":3, "z":10]
   print a["c"]
 end main
 `;
@@ -600,7 +600,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to ["a":1, "b":3, "z":10]
+  variable a set to ["a":1, "b":3, "z":10]
   call a.removeAtKey(10)
 end main
 `;
@@ -616,7 +616,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to ["a":1, "b":3, "z":10]
+  variable a set to ["a":1, "b":3, "z":10]
   call a.putAtKey(10, 4)
 end main
 `;
@@ -634,7 +634,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to ["a":1, "b":3, "z":10]
+  variable a set to ["a":1, "b":3, "z":10]
   set a to a.withPutAtKey("a", 2)
   print a
 end main
@@ -651,7 +651,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to ["a":1, "b":3, "z":10]
+  variable a set to ["a":1, "b":3, "z":10]
   call a.putAtKey("b", 3.1)
 end main
 `;
@@ -669,8 +669,8 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to ["a":1, "b":3, "z":10]
-  var b set to a.withRemoveAtKey("b")
+  variable a set to ["a":1, "b":3, "z":10]
+  variable b set to a.withRemoveAtKey("b")
   print a
   print b
 end main`;
@@ -686,7 +686,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-    var a set to new Dictionary()
+    variable a set to new Dictionary()
     print a
 end main`;
 
@@ -701,7 +701,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to ["a":1, "d":2]
+  variable a set to ["a":1, "d":2]
   call a.putAtKey(1, 1)
 end main
 `;
@@ -719,7 +719,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to ["a":["a":1, "d":2]]
+  variable a set to ["a":["a":1, "d":2]]
   call a[0].putAtKey("a", 1)
 end main
 `;
@@ -735,7 +735,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to ["a":["a":1, "d":2]]
+  variable a set to ["a":["a":1, "d":2]]
   call a["a"].putAtKey(1, 1)
 end main
 `;
@@ -753,7 +753,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to [1:1, 2:2]
+  variable a set to [1:1, 2:2]
   set a to a[1..]
 end main
 `;

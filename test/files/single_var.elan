@@ -1,5 +1,5 @@
 # FFFF Elan Beta 4 valid
 
 main
-  var a set to 1
+  variable a set to 1
 end main

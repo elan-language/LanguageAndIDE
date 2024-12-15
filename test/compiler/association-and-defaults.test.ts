@@ -15,7 +15,7 @@ suite("Associations and Defaults", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var g set to new Game()
+  variable g set to new Game()
   print g.p2
   print g.p1
   print g.previousScores
@@ -120,7 +120,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var g set to new Game()
+  variable g set to new Game()
   print g.i
   print g.f
   print g.b
@@ -220,8 +220,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var p set to new Player()
-  var g set to p.g
+  variable p set to new Player()
+  variable g set to p.g
   print g.i
   print g.f
   print g.b
@@ -340,7 +340,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var g set to empty Game
+  variable g set to empty Game
   print g.i
 end main
 
@@ -391,7 +391,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var g set to new Game()
+  variable g set to new Game()
   print g.p1
   print g.previousGame
 end main
@@ -485,7 +485,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var g set to new Game()
+  variable g set to new Game()
   print g.p1 is empty Player
   print g.p2 is empty Player
   print g.previousGame is empty Game
@@ -615,7 +615,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var g set to new Game()
+  variable g set to new Game()
   print g.score
   call g.setScore(empty Int)
   print g.score
@@ -741,7 +741,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var f set to new Foo()
+  variable f set to new Foo()
   print f.a
   print f.b
   print f.c
@@ -814,8 +814,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var g set to new Game()
-  var p set to g.p1
+  variable g set to new Game()
+  variable p set to g.p1
   print p.ucName()
 end main
 
@@ -903,7 +903,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var g set to new Game()
+  variable g set to new Game()
   call g.something()
 end main
 
@@ -915,7 +915,7 @@ class Game
   property p1 as [Int]
 
   procedure something()
-    var a set to 1
+    variable a set to 1
     set a to p1[0]
     print a
   end procedure

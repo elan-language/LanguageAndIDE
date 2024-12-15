@@ -2,7 +2,7 @@
 
 main
   let fruit be ["apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"]
-  var exit set to false
+  variable exit set to false
   while not exit
     let wanted be inputString("What type of fruit do you want ('x' to exit)? ")
     if wanted isnt "x"
@@ -21,7 +21,7 @@ main
 end main
 
 function binarySearch(list as [String], item as String) returns Boolean
-  var result set to false
+  variable result set to false
   if list.length() > 0
     then
       let mid be list.length() div 2

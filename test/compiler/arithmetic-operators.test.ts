@@ -83,7 +83,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to 3
+  variable a set to 3
   print a + 4
 end main`;
 
@@ -217,7 +217,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to 3
+  variable a set to 3
   set a to a + 1
   print a
 end main`;
@@ -256,7 +256,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to 3
+  variable a set to 3
   a += 1
 end main`;
 
@@ -270,7 +270,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to 3
+  variable a set to 3
   a++
 end main`;
 
@@ -284,9 +284,9 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to 3 + true
-  var b set to true + 3
-  var c set to 3 + new Foo()
+  variable a set to 3 + true
+  variable b set to true + 3
+  variable c set to 3 + new Foo()
 end main
 
 class Foo

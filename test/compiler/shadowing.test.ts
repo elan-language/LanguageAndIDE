@@ -18,7 +18,7 @@ suite("Shadowing", () => {
 constant a set to 4
 
 main
-  var a set to 3
+  variable a set to 3
   print a
 end main`;
 
@@ -43,7 +43,7 @@ function foo() returns Int
 end function
 
 function bar() returns Int
-  var foo set to foo()
+  variable foo set to foo()
   return foo
 end function`;
 
@@ -68,7 +68,7 @@ procedure foo()
 end procedure
 
 function bar() returns Int
-  var foo set to 1
+  variable foo set to 1
   return foo
 end function`;
 
@@ -89,7 +89,7 @@ main
   call foo(1)
 end main
 procedure foo(a as Int)
-  var a set to a
+  variable a set to a
 end procedure`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -106,8 +106,8 @@ end procedure`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to 1
-  var a set to 2
+  variable a set to 1
+  variable a set to 2
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -125,7 +125,7 @@ end main`;
 
 main
   let a be 1
-  var a set to 2
+  variable a set to 2
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -183,7 +183,7 @@ end function`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var pi set to library.pi
+  variable pi set to library.pi
   print pi
 end main`;
 
@@ -231,7 +231,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-    var f set to new Foo()
+    variable f set to new Foo()
     print f.sin(1)
     print sin(1)
     print library.sin(1)
@@ -304,12 +304,12 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var result set to foo(3,4)
+  variable result set to foo(3,4)
   print result
 end main
 
 function foo(a as Int, b as Int) returns Int
-  var a set to 1
+  variable a set to 1
   return a * b
 end function`;
 
@@ -326,7 +326,7 @@ end function`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var result set to foo(3,4)
+  variable result set to foo(3,4)
   print result
 end main
 

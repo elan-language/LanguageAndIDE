@@ -16,10 +16,10 @@ suite("Logical Operators", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to false and false
-  var b set to false and true
-  var c set to true and false
-  var d set to true and true
+  variable a set to false and false
+  variable b set to false and true
+  variable c set to true and false
+  variable d set to true and true
   print a
   print b
   print c
@@ -52,10 +52,10 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to false or false
-  var b set to false or true
-  var c set to true or false
-  var d set to true or true
+  variable a set to false or false
+  variable b set to false or true
+  variable c set to true or false
+  variable d set to true or true
   print a
   print b
   print c
@@ -88,10 +88,10 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to not false
-  var b set to not true
-  var c set to not not true
-  var d set to not not false
+  variable a set to not false
+  variable b set to not true
+  variable c set to not not true
+  variable d set to not not false
   print a
   print b
   print c
@@ -124,8 +124,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to not false and true
-  var b set to not (false and true)
+  variable a set to not false and true
+  variable b set to not (false and true)
   print a
   print b
 end main`;
@@ -151,9 +151,9 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main 
-  var a set to (4 > 3) and (6 > 5)
-  var b set to (3 > 4) or (6 is 6)
-  var c set to not (4 > 3)
+  variable a set to (4 > 3) and (6 > 5)
+  variable b set to (3 > 4) or (6 is 6)
+  variable c set to not (4 > 3)
   print a
   print b
   print c
@@ -182,7 +182,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main 
-  var a set to (true and false) is (true or false)
+  variable a set to (true and false) is (true or false)
   print a
 end main`;
 
@@ -206,12 +206,12 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to false and 1
-  var b set to 1 and true
-  var c set to 1 and 1
-  var d set to true or 0
-  var e set to 0 or true
-  var f set to 0 or 0
+  variable a set to false and 1
+  variable b set to 1 and true
+  variable c set to 1 and 1
+  variable d set to true or 0
+  variable e set to 0 or true
+  variable f set to 0 or 0
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -235,7 +235,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main 
-  var a set to 4 > 3 and 6 > 5
+  variable a set to 4 > 3 and 6 > 5
   print a
 end main`;
 
@@ -251,7 +251,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main 
-  var a set to not 4 > 3
+  variable a set to not 4 > 3
   print a
 end main`;
 
@@ -267,7 +267,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main 
-  var a set to true and false is true or false
+  variable a set to true and false is true or false
   print a
 end main`;
 
@@ -291,7 +291,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to true not false
+  variable a set to true not false
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -304,7 +304,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to false xor false
+  variable a set to false xor false
   print a
 end main`;
 

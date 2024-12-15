@@ -16,7 +16,7 @@ suite("RegExp", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var r set to /a+/
+  variable r set to /a+/
   print r
   print "aa".matchesRegExp(r)
   print "b".matchesRegExp(r)
@@ -44,7 +44,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var r set to /a+/
+  variable r set to /a+/
   print testRegex(r)
 end main
 
@@ -76,7 +76,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var r set to empty RegExp
+  variable r set to empty RegExp
   set r to testRegex()
   print "aa".matchesRegExp(r)
 end main
@@ -110,7 +110,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var r set to /a\\/b/
+  variable r set to /a\\/b/
   print "a/b".matchesRegExp(r)
   print "a\/b".matchesRegExp(r)
   print "a\b".matchesRegExp(r)
@@ -141,7 +141,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var r set to /a+
+  variable r set to /a+
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -154,7 +154,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var r set to "/a+/"
+  variable r set to "/a+/"
   print "aa".matchesRegExp(r)
   print "b".matchesRegExp(r)
 end main`;

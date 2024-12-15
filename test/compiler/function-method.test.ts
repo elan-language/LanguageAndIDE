@@ -16,7 +16,7 @@ suite("Function Method", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var f set to new Foo()
+  variable f set to new Foo()
   print f.times(2)
 end main
 
@@ -75,8 +75,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var f set to new Foo()
-  var x set to 1.1
+  variable f set to new Foo()
+  variable x set to 1.1
   set x to f.times(x)
   print x
 end main
@@ -138,8 +138,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var f set to new Foo()
-  var x set to empty {Float}
+  variable f set to new Foo()
+  variable x set to empty {Float}
   set x to f.times(2)
   print x
 end main
@@ -201,8 +201,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var b set to new Bar()
-  var x set to b.getTimes()
+  variable b set to new Bar()
+  variable x set to b.getTimes()
   print x
 end main
 
@@ -214,7 +214,7 @@ class Bar
   property p1 as Foo
 
   function getTimes() returns {Float}
-    var x set to empty {Float}
+    variable x set to empty {Float}
     set x to p1.times(2)
     return x
   end function
@@ -291,8 +291,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var b set to new Bar()
-  var x set to b.getTimes()
+  variable b set to new Bar()
+  variable x set to b.getTimes()
   print x
 end main
 
@@ -304,7 +304,7 @@ class Bar
   property p1 as Foo
 
   function getTimes() returns {Qux}
-    var x set to empty {Qux}
+    variable x set to empty {Qux}
     set x to p1.times(2)
     return x
   end function
@@ -394,7 +394,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var f set to new Foo()
+  variable f set to new Foo()
   print f.length()
 end main
 
@@ -494,8 +494,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var f set to new Foo()
-  var b set to new Bar()
+  variable f set to new Foo()
+  variable b set to new Bar()
   print f.times(b)
 end main
 
@@ -598,7 +598,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var f set to new Foo()
+  variable f set to new Foo()
   call f.prt()
 end main
 
@@ -657,7 +657,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var f set to new Foo()
+  variable f set to new Foo()
   print times(f, 2)
 end main
 
@@ -689,8 +689,8 @@ end class`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var f set to new Foo()
-  var v set to 0
+  variable f set to new Foo()
+  variable v set to 0
   set v to f.noSuch()
 end main
 

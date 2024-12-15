@@ -16,7 +16,7 @@ suite("Char Mapped Display", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var g set to new BlockGraphics()
+  variable g set to new BlockGraphics()
   call g.display()
 end main`;
 
@@ -44,7 +44,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var g set to new BlockGraphics()
+  variable g set to new BlockGraphics()
   set g to g.withUnicode(0, 0, 90, black, white)
   call g.display()
 end main`;
@@ -74,7 +74,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var g set to new BlockGraphics()
+  variable g set to new BlockGraphics()
   set g to g.withText(10, 20, "a", 1, 2)
   print g.getChar(10, 20)
 end main`;
@@ -100,7 +100,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var g set to new BlockGraphics()
+  variable g set to new BlockGraphics()
   set g to g.withText(10, 20, "a", 1, 2)
   print g.getForeground(10, 20)
 end main`;
@@ -126,7 +126,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var g set to new BlockGraphics()
+  variable g set to new BlockGraphics()
   set g to g.withBlock(1, 0, 4)
   call g.display()
 end main`;
@@ -156,7 +156,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var g set to new BlockGraphics()
+  variable g set to new BlockGraphics()
   set g to g.withText(10, 20, "a", 1, 2)
   print g.getBackground(10, 20)
 end main`;
@@ -182,7 +182,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var g set to new BlockGraphics()
+  variable g set to new BlockGraphics()
   call g.display()
   call g.clearGraphics()
 end main`;
@@ -208,8 +208,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var gr set to new BlockGraphics()
-  var a set to getKey()
+  variable gr set to new BlockGraphics()
+  variable a set to getKey()
   print a
 end main`;
 
@@ -234,8 +234,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var gr set to new BlockGraphics()
-  var a set to getKeyWithModifier()
+  variable gr set to new BlockGraphics()
+  variable a set to getKeyWithModifier()
   print a
 end main`;
 
@@ -260,7 +260,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var gr set to new BlockGraphics()
+  variable gr set to new BlockGraphics()
   call gr.clearKeyBuffer()
 end main`;
 
@@ -284,7 +284,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to new BlockGraphics()
+  variable a set to new BlockGraphics()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -306,8 +306,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var foo set to new Foo()
-  var a set to foo.p
+  variable foo set to new Foo()
+  variable a set to foo.p
   print a
 end main
 
@@ -355,7 +355,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to empty BlockGraphics()
+  variable a set to empty BlockGraphics()
   set a to initialisedGraphics()
 end main`;
 
@@ -369,7 +369,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var g set to new BlockGraphics()
+  variable g set to new BlockGraphics()
   set g to g.withText(0, 0, "Hello", 1, 2)
   call g.display()
 end main`;
@@ -404,7 +404,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var g set to new BlockGraphics()
+  variable g set to new BlockGraphics()
   set g to g.withText(39, 29, "Hello", 1, 2)
   call g.display()
 end main`;

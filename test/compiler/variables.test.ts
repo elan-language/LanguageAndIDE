@@ -16,7 +16,7 @@ suite("Variables", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to 3
+  variable a set to 3
   print a
 end main`;
 
@@ -40,8 +40,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to 3
-  var b set to a
+  variable a set to 3
+  variable b set to a
   print b
 end main`;
 
@@ -66,7 +66,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to 3 + 4
+  variable a set to 3 + 4
   print a
 end main`;
 
@@ -90,7 +90,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to 3
+  variable a set to 3
   set a to 4
   print a
 end main`;
@@ -116,7 +116,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to 3.1
+  variable a set to 3.1
   set a to 4
   print a
 end main`;
@@ -142,15 +142,15 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to 3 - 4
-  var b set to 3 < 4
-  var c set to 3 <= 4
-  var d set to 3 > 4
-  var e set to 3 >= 4
-  var f set to 3 is 4
-  var g set to 3 isnt 4
-  var h set to not false
-  var k set to 4 / 3
+  variable a set to 3 - 4
+  variable b set to 3 < 4
+  variable c set to 3 <= 4
+  variable d set to 3 > 4
+  variable e set to 3 >= 4
+  variable f set to 3 is 4
+  variable g set to 3 isnt 4
+  variable h set to not false
+  variable k set to 4 / 3
   print a
   print b
   print c
@@ -197,7 +197,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to Fruit.apple
+  variable a set to Fruit.apple
   print a
 end main
 enum Fruit apple, orange, pear`;
@@ -228,7 +228,7 @@ return [main, _tests];}`;
 constant a set to {1, 2}
 
 main
-  var b set to a.map(lambda x as Int => x)
+  variable b set to a.map(lambda x as Int => x)
   set b to {1, 2}
   print b
 end main`;
@@ -258,7 +258,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to 3
+  var a set to 3
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -270,7 +270,7 @@ end main`;
   test("Fail_GlobalVariable", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
-var a set to 4
+variable a set to 4
 main
  
 end main`;
@@ -285,7 +285,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to "astring"
+  variable a set to "astring"
   set a to 4.1
 end main`;
 
@@ -327,7 +327,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a@b set to 4.1
+  variable a@b set to 4.1
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -340,7 +340,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var if set to 4.1
+  variable if set to 4.1
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -356,7 +356,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var break set to 4.1
+  variable break set to 4.1
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -375,10 +375,10 @@ function f() returns Int
   return 0
 end function
 main
-  var a set to true
-  var b set to 1
-  var c set to ""
-  var d set to f()
+  variable a set to true
+  variable b set to 1
+  variable c set to ""
+  variable d set to f()
   set a to 1.0
   set b to false
   set c to {1.0, 2}
@@ -399,9 +399,9 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to createArray(3, "")
-  var b set to {1.0, 2}
-  var c set to ["a":1.0, "b":3, "z":10]
+  variable a set to createArray(3, "")
+  variable b set to {1.0, 2}
+  variable c set to ["a":1.0, "b":3, "z":10]
   set a to {1.0, 2}
   set b to a
   set c to b
@@ -424,7 +424,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to x + 1
+  variable x set to x + 1
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -441,9 +441,9 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var i set to [1,2]
-  var x set to head
-  var y set to x(i)
+  variable i set to [1,2]
+  variable x set to head
+  variable y set to x(i)
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -457,9 +457,9 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var i set to [1,2]
-  var x set to head
-  var y set to i.x()
+  variable i set to [1,2]
+  variable x set to head
+  variable y set to i.x()
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -476,7 +476,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a, length set to foo()
+  variable a, length set to foo()
 end main
 
 function foo() returns (Int, Int)

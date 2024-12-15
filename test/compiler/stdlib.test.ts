@@ -18,7 +18,7 @@ suite("StdLib", () => {
 
 constant lst set to {1, 2}
 main
-  var arr set to ["three", "four"]
+  variable arr set to ["three", "four"]
   print lst.contains(1)
   print lst.contains(3)
   print arr.contains("four")
@@ -82,9 +82,9 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to clock()
+  variable a set to clock()
   call pause(100)
-  var b set to clock()
+  variable b set to clock()
   print b > a
 end main`;
 
@@ -110,8 +110,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to random()
-  var b set to random()
+  variable a set to random()
+  variable b set to random()
   print a < 1
   print a isnt b
 end main`;
@@ -138,7 +138,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to  parseAsFloat("10.1")
+  variable a set to  parseAsFloat("10.1")
   print a
 end main`;
 
@@ -162,7 +162,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to parseAsFloat("x12")
+  variable a set to parseAsFloat("x12")
   print a
 end main`;
 
@@ -186,7 +186,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to parseAsInt("10.1")
+  variable a set to parseAsInt("10.1")
   print a
 end main`;
 
@@ -210,7 +210,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to parseAsInt("")
+  variable a set to parseAsInt("")
   print a
 end main`;
 
@@ -373,13 +373,13 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var results set to [0, 0, 0, 0, 0, 0, 0]
+  variable results set to [0, 0, 0, 0, 0, 0, 0]
   for i from 1 to 10000 step 1
-    var r set to randomInt(3, 5)
+    variable r set to randomInt(3, 5)
     call results.putAt(r, results[r] + 1)
   end for
   for i from 0 to 6 step 1
-    var r set to round(results[i]/10000, 1)
+    variable r set to round(results[i]/10000, 1)
     print r
     print ", "
   end for
@@ -413,16 +413,16 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var results set to [0, 0, 0, 0, 0, 0, 0]
-  var rnd set to new Random()
-  var val set to 0
+  variable results set to [0, 0, 0, 0, 0, 0, 0]
+  variable rnd set to new Random()
+  variable val set to 0
   call rnd.initialiseFromClock()
   for i from 1 to 10000 step 1
     set val, rnd to rnd.nextInt(3, 5)
     call results.putAt(val, results[val] + 1)
   end for
   for i from 0 to 6 step 1
-    var r set to round(results[i]/10000, 1)
+    variable r set to round(results[i]/10000, 1)
     print r
     print ", "
   end for
@@ -458,15 +458,15 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var results set to [0, 0, 0, 0, 0, 0, 0]
-  var rnd set to new Random()
-  var val set to 0
+  variable results set to [0, 0, 0, 0, 0, 0, 0]
+  variable rnd set to new Random()
+  variable val set to 0
   for i from 1 to 10000 step 1
     set val, rnd to rnd.nextInt(3, 5)
     call results.putAt(val, results[val] + 1)
   end for
   for i from 0 to 6 step 1
-    var r set to results[i]
+    variable r set to results[i]
     print r
     print ", "
   end for
@@ -501,15 +501,15 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var results set to [0, 0, 0, 0, 0, 0, 0]
-  var rnd set to new Random()
-  var dice set to 0
+  variable results set to [0, 0, 0, 0, 0, 0, 0]
+  variable rnd set to new Random()
+  variable dice set to 0
   for i from 1 to 10000 step 1
     set dice, rnd to rollDice(rnd)
     call results.putAt(dice, results[dice] + 1)
   end for
   for i from 0 to 6 step 1
-    var r set to results[i]
+    variable r set to results[i]
     print r
     print ", "
   end for
@@ -553,14 +553,14 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to 13
-  var b set to 30
-  var anb set to bitAnd(a, b)
-  var aob set to bitOr(a, b)
-  var axb set to bitXor(a, b)
-  var nota set to bitNot(a)
-  var aL set to bitShiftL(a, 2)
-  var aR set to bitShiftR(a, 2)
+  variable a set to 13
+  variable b set to 30
+  variable anb set to bitAnd(a, b)
+  variable aob set to bitOr(a, b)
+  variable axb set to bitXor(a, b)
+  variable nota set to bitNot(a)
+  variable aL set to bitShiftL(a, 2)
+  variable aR set to bitShiftR(a, 2)
   print a.asBinary() + " " + b.asBinary() + " " + anb.asBinary() + " " + aob.asBinary() + " " + axb.asBinary() + " " + nota.asBinary() + " " + aL.asBinary() + " " + aR.asBinary()
 end main`;
 
@@ -590,7 +590,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var oxoBoard set to create2DArray(3,3,"")
+  variable oxoBoard set to create2DArray(3,3,"")
   call oxoBoard.putAt2D(0, 0, "o")
   call oxoBoard.putAt2D(2, 2, "o")
   call oxoBoard.putAt2D(1, 1, "x")
@@ -664,8 +664,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to [1,2]
-  var b set to [3,4]
+  variable a set to [1,2]
+  variable b set to [3,4]
   call a.appendList(b)
   print a
   print b
@@ -694,8 +694,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to [1,2]
-  var b set to [3,4]
+  variable a set to [1,2]
+  variable b set to [3,4]
   call a.prependList(b)
   print a
   print b
@@ -724,8 +724,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to [1,2]
-  var b set to 3
+  variable a set to [1,2]
+  variable b set to 3
   call a.prepend(b)
   print a
 end main`;

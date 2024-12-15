@@ -7,11 +7,11 @@ suite("Main", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to 3
+  variable a set to 3
 end main
 
 main
-  var a set to 3
+  variable a set to 3
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);

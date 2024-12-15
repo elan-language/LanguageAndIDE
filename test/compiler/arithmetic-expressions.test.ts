@@ -15,9 +15,9 @@ suite("Arithmetic Expressions", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to 2 + 3 * 5 + 1
-  var y set to (2 + 3) * 5 + 1
-  var z set to (2 + 3) * (5 + 1)
+  variable x set to 2 + 3 * 5 + 1
+  variable y set to (2 + 3) * 5 + 1
+  variable z set to (2 + 3) * (5 + 1)
   print x
   print y
   print z
@@ -47,9 +47,9 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
     main
-    var x set to 2 + (3 * 5) + 1
-    var y set to ((2 + 3)) * 5 + (1)
-    var z set to ((2 + 3) * (5 + 1))
+    variable x set to 2 + (3 * 5) + 1
+    variable y set to ((2 + 3)) * 5 + (1)
+    variable z set to ((2 + 3) * (5 + 1))
     print x
     print y
     print z
@@ -79,8 +79,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to 2 + 3 ^ 2
-  var y set to (2 + 3) ^ 2
+  variable x set to 2 + 3 ^ 2
+  variable y set to (2 + 3) ^ 2
   print x
   print y
 end main`;
@@ -107,8 +107,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to 16.0 / 2 ^ 3
-  var y set to (16.0 / 2) ^ 3
+  variable x set to 16.0 / 2 ^ 3
+  variable y set to (16.0 / 2) ^ 3
   print x
   print y
 end main`;
@@ -135,8 +135,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to 16 / 2 ^ 3
-  var y set to (16 / 2) ^ 3
+  variable x set to 16 / 2 ^ 3
+  variable y set to (16 / 2) ^ 3
   print x
   print y
 end main`;
@@ -163,8 +163,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to 0.0
-  var y set to 0
+  variable x set to 0.0
+  variable y set to 0
   set x to - 4.7
   set y to 5 * -3
   print x
@@ -195,8 +195,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to 11 mod 3
-  var y set to (5 + 6) mod 3
+  variable x set to 11 mod 3
+  variable y set to (5 + 6) mod 3
   print x
   print y
 end main`;
@@ -223,8 +223,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to 11 div 3
-  var y set to (5 + 6) div 3
+  variable x set to 11 div 3
+  variable y set to (5 + 6) div 3
   print x
   print y
 end main`;
@@ -251,7 +251,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to 3 * + 4
+  variable a set to 3 * + 4
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -264,7 +264,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to 3 - * 4
+  variable a set to 3 - * 4
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);

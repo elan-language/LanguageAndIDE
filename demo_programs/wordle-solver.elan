@@ -8,9 +8,9 @@
 # RAISE
 # _*_+_
 main
-  var possible set to allPossibleAnswers
-  var mark set to ""
-  var attempt set to "RAISE"
+  variable possible set to allPossibleAnswers
+  variable mark set to ""
+  variable attempt set to "RAISE"
   while mark isnt "*****"
     set mark to inputString(attempt)
     set possible to possibleAnswersAfterAttempt(possible, attempt, mark)

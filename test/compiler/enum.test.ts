@@ -48,7 +48,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var e set to empty Fruit
+  variable e set to empty Fruit
   print e
 end main
    
@@ -78,7 +78,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var foo set to new Foo()
+  variable foo set to new Foo()
   print foo.fruit
 end main
 
@@ -125,7 +125,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var foo set to empty Foo
+  variable foo set to empty Foo
   print foo.fruit
 end main
 
@@ -172,7 +172,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to Fruit.apple
+  variable x set to Fruit.apple
   set x to Fruit.pear
   print x
 end main
@@ -204,8 +204,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to Fruit.apple
-  var y set to x
+  variable x set to Fruit.apple
+  variable y set to x
   print y
 end main
    
@@ -312,7 +312,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to Fruit.apple
+  variable x set to Fruit.apple
   print x is Fruit.apple
   print x is Fruit.pear
 end main
@@ -344,7 +344,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var f set to Fruit.orange
+  variable f set to Fruit.orange
   switch f
     case Fruit.apple
       print "a"
@@ -395,7 +395,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to "Eat more " + Fruit.apple + "s!"
+  variable a set to "Eat more " + Fruit.apple + "s!"
   print a
 end main
    
@@ -467,7 +467,7 @@ enum Fruit apple = 1, orange = 2, pear = 3`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to 1
+  variable a set to 1
   set a to Fruit.apple
 end main
 

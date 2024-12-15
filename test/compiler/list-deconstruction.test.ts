@@ -17,9 +17,9 @@ suite("List Deconstruction", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to [1,2,3]
-  var x set to 1
-  var y set to empty [Int]
+  variable a set to [1,2,3]
+  variable x set to 1
+  variable y set to empty [Int]
   set x:y to a
   print x
   print y
@@ -50,8 +50,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to [1,2,3]
-  var y set to empty [Int]
+  variable a set to [1,2,3]
+  variable y set to empty [Int]
   set _:y to a
   print y
 end main
@@ -79,8 +79,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to [1,2,3]
-  var x set to 1
+  variable a set to [1,2,3]
+  variable x set to 1
   set x:_ to a
   print x
 end main
@@ -108,8 +108,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to [1,2,3]
-  var x:y set to a
+  variable a set to [1,2,3]
+  variable x:y set to a
   print x
   print typeof x
   print y
@@ -141,9 +141,9 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to [[1,2,3], [4,5,6], [7,8,9]]
-  var x set to empty [Int]
-  var y set to empty [[Int]]
+  variable a set to [[1,2,3], [4,5,6], [7,8,9]]
+  variable x set to empty [Int]
+  variable y set to empty [[Int]]
   set x:y to a
   print x
   print y
@@ -174,8 +174,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to [[1,2,3], [4,5,6], [7,8,9]]
-  var x:y set to a
+  variable a set to [[1,2,3], [4,5,6], [7,8,9]]
+  variable x:y set to a
   print x
   print typeof x
   print y
@@ -207,7 +207,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to [[1,2,3], [4,5,6], [7,8,9]]
+  variable a set to [[1,2,3], [4,5,6], [7,8,9]]
   let x:y be a
   print x
   print typeof x
@@ -240,9 +240,9 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to [1]
-  var x set to 1
-  var y set to empty [Int]
+  variable a set to [1]
+  variable x set to 1
+  variable y set to empty [Int]
   set x:y to a
   print x
   print y
@@ -273,7 +273,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to {1,2,3}
+  variable a set to {1,2,3}
   let x:y be a
   print x
   print typeof x
@@ -306,7 +306,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to {1,2,3}
+  variable a set to {1,2,3}
   let x:_ be a
   print x
   print typeof x
@@ -335,7 +335,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to {1,2,3}
+  variable a set to {1,2,3}
   let _:y be a
   print y
   print typeof y
@@ -364,8 +364,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to [1]
-  var x:y set to a
+  variable a set to [1]
+  variable x:y set to a
   print x
   print typeof x
   print y
@@ -397,7 +397,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to [1]
+  variable a set to [1]
   let x:y be a
   print x
   print typeof x
@@ -430,8 +430,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to {1,2,3}
-  var x:y set to a
+  variable a set to {1,2,3}
+  variable x:y set to a
   print x
   print typeof x
   print y
@@ -463,9 +463,9 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to {1,2,3}
-  var x set to 1
-  var y set to empty {Int}
+  variable a set to {1,2,3}
+  variable x set to 1
+  variable y set to empty {Int}
   set x:y to a
   print x
   print typeof x
@@ -500,8 +500,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to {1,2,3}
-  var x:y set to a
+  variable a set to {1,2,3}
+  variable x:y set to a
   set x to x
   set y to y
 end main
@@ -529,9 +529,9 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to [1,2]
-  var x set to ""
-  var y set to empty [Int]
+  variable a set to [1,2]
+  variable x set to ""
+  variable y set to empty [Int]
   set x:y to a
 end main
 `;
@@ -548,9 +548,9 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to [1,2]
-  var x set to 0
-  var y set to empty [String]
+  variable a set to [1,2]
+  variable x set to 0
+  variable y set to empty [String]
   set x:y to a
 end main
 `;
@@ -567,9 +567,9 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to [1,2]
-  var x set to ""
-  var y set to empty [String]
+  variable a set to [1,2]
+  variable x set to ""
+  variable y set to empty [String]
   set x:y to a
 end main
 `;
@@ -586,9 +586,9 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to [1,2]
-  var x set to 0
-  var y set to 0
+  variable a set to [1,2]
+  variable x set to 0
+  variable y set to 0
   set x:y to a
 end main
 `;
@@ -605,9 +605,9 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to [1,2]
-  var x set to empty [Int]
-  var y set to empty [Int]
+  variable a set to [1,2]
+  variable x set to empty [Int]
+  variable y set to empty [Int]
   set x:y to a
 end main
 `;
@@ -624,9 +624,9 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to [1,2]
-  var x set to 0
-  var y set to empty {Int}
+  variable a set to [1,2]
+  variable x set to 0
+  variable y set to empty {Int}
   set x:y to a
 end main
 `;
@@ -645,8 +645,8 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to [1,2]
-  var x set to ""
+  variable a set to [1,2]
+  variable x set to ""
   set x:_ to a
 end main
 `;
@@ -663,8 +663,8 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to [1,2]
-  var y set to empty [String]
+  variable a set to [1,2]
+  variable y set to empty [String]
   set _:y to a
 end main
 `;
@@ -681,8 +681,8 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to 1
-  var x:y set to a
+  variable a set to 1
+  variable x:y set to a
 end main
 `;
 
@@ -698,7 +698,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to 1
+  variable a set to 1
   let x:y be a
 end main
 `;
@@ -715,8 +715,8 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to "fred"
-  var x:y set to a
+  variable a set to "fred"
+  variable x:y set to a
 end main
 `;
 
@@ -732,8 +732,8 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to {"fred":1}
-  var x:y set to a
+  variable a set to {"fred":1}
+  variable x:y set to a
 end main
 `;
 
@@ -749,9 +749,9 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to {1:1}
-  var x set to 0
-  var y set to empty [Int]
+  variable a set to {1:1}
+  variable x set to 0
+  variable y set to empty [Int]
   set x:y to a
 end main
 `;
@@ -768,9 +768,9 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to 1
-  var x set to 0
-  var y set to empty [Int]
+  variable a set to 1
+  variable x set to 0
+  variable y set to empty [Int]
   set x:y to a
 end main
 `;
@@ -787,8 +787,8 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to empty [Int]
-  var x:y set to a
+  variable a set to empty [Int]
+  variable x:y set to a
   print x
   print y
 end main
@@ -806,9 +806,9 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to empty [Int]
-  var x set to 0
-  var y set to empty [Int]
+  variable a set to empty [Int]
+  variable x set to 0
+  variable y set to empty [Int]
   set x:y to a
   print x
   print y
@@ -827,7 +827,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to [1,2,3]
+  variable a set to [1,2,3]
   let x be 1
   let y be empty [Int]
   set x:y to a

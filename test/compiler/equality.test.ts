@@ -15,9 +15,9 @@ suite("Equality", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to new Foo(7, "Apple")
-  var y set to new Foo(7, "Orange")
-  var z set to new Foo(7, "Orange")
+  variable x set to new Foo(7, "Apple")
+  variable y set to new Foo(7, "Orange")
+  variable z set to new Foo(7, "Orange")
   print x is x
   print x is y
   print y is z
@@ -85,7 +85,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to new Foo()
+  variable x set to new Foo()
   print x is empty Foo
 end main
 
@@ -144,10 +144,10 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to new Foo(7, "Apple")
-  var y set to x
+  variable x set to new Foo(7, "Apple")
+  variable y set to x
   call y.setP1(3)
-  var z set to new Foo(8, "Orange")
+  variable z set to new Foo(8, "Orange")
   print x is x
   print x is y
   print x is z
@@ -217,7 +217,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to new Foo()
+  variable x set to new Foo()
   print x.p1 is x.p1
   print x.p1 is x.p2
   print x.p1 is x.p3

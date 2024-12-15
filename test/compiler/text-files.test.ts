@@ -15,8 +15,8 @@ suite("Text Files", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var fr set to new TextFileReader()
-  var fw set to new TextFileWriter()
+  variable fr set to new TextFileReader()
+  variable fw set to new TextFileWriter()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -38,8 +38,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var tf set to openFileForReading()
-  var txt set to tf.readWholeFile()
+  variable tf set to openFileForReading()
+  variable txt set to tf.readWholeFile()
   print txt
 end main`;
 
@@ -64,8 +64,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var tf set to openFileForReading()
-  var txt set to tf.readWholeFile()
+  variable tf set to openFileForReading()
+  variable txt set to tf.readWholeFile()
   let line be tf.readLine()
 end main`;
 
@@ -90,7 +90,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var tf set to openFileForReading()
+  variable tf set to openFileForReading()
 
   while not tf.endOfFile()
     print tf.readLine()
@@ -119,7 +119,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var tf set to openFileForReading()
+  variable tf set to openFileForReading()
   call tf.close()
   let line be tf.readLine()
 end main`;
@@ -145,7 +145,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var tf set to createFileForWriting("data.txt")
+  variable tf set to createFileForWriting("data.txt")
   call tf.writeLine("something")
   call tf.saveAndClose()
 end main`;
@@ -170,7 +170,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var tf set to createFileForWriting("data.txt")
+  variable tf set to createFileForWriting("data.txt")
   call tf.writeWholeFile("something else")
 end main`;
 
@@ -193,7 +193,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var tf set to createFileForWriting("data.txt")
+  variable tf set to createFileForWriting("data.txt")
   call tf.writeLine("something")
   call tf.writeWholeFile("something else")
 end main`;
@@ -221,7 +221,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var tf set to createFileForWriting("data.txt")
+  variable tf set to createFileForWriting("data.txt")
   call tf.writeWholeFile("something else")
   call tf.saveAndClose()
 end main`;

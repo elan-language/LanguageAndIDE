@@ -14,7 +14,7 @@ suite("asString", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var f set to 1
+  variable f set to 1
   print f.asString()
 end main`;
 
@@ -38,8 +38,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var f set to new Foo()
-  var s set to f.asString()
+  variable f set to new Foo()
+  variable s set to f.asString()
   print s
 end main
 
@@ -83,9 +83,9 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var f set to new Foo()
-  var p set to f.p1
-  var s set to p.asString()
+  variable f set to new Foo()
+  variable p set to f.p1
+  variable s set to p.asString()
   print s
 end main
 
@@ -135,10 +135,10 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var f set to new Foo()
-  var s1 set to f.asString()
-  var p set to f.p1
-  var s2 set to p.asString()
+  variable f set to new Foo()
+  variable s1 set to f.asString()
+  variable p set to f.p1
+  variable s2 set to p.asString()
   print s1
   print s2
 end main
@@ -198,8 +198,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-    var f set to new Foo()
-    var s set to f.asString()
+    variable f set to new Foo()
+    variable s set to f.asString()
     print s
 end main
 
@@ -257,7 +257,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-    var f set to new Foo()
+    variable f set to new Foo()
     print f
 end main
 
@@ -314,7 +314,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-    var f set to new Foo()
+    variable f set to new Foo()
     print f
 end main
 
@@ -371,14 +371,14 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-    var l set to {1,2,3}
-    var sl set to l.asString()
+    variable l set to {1,2,3}
+    variable sl set to l.asString()
     print sl
-    var a set to {1,2,3}.asArray()
-    var sa set to a.asString()
+    variable a set to {1,2,3}.asArray()
+    variable sa set to a.asString()
     print sa
-    var d set to ["a":1, "b":3, "z":10]
-    var sd set to d.asString()
+    variable d set to ["a":1, "b":3, "z":10]
+    variable sd set to d.asString()
     print sd
 end main`;
 

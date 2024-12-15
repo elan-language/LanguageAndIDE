@@ -22,7 +22,7 @@ main
   call st.push("pear")
   print st.length()
   print st.peek()
-  var fruit set to st.pop()
+  variable fruit set to st.pop()
   print fruit
   set fruit to st.pop()
   print fruit
@@ -93,7 +93,7 @@ end main`;
 main
   let st be new Stack<of String>()
   call st.push("apple")
-  var a set to 1
+  variable a set to 1
   set a to st.peek()
 end main`;
 

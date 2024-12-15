@@ -16,7 +16,7 @@ suite("Concrete Class", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to new Foo()
+  variable x set to new Foo()
   print x.p1
   print x.p2
   print x.asString()
@@ -75,7 +75,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to new Foo(7, "Apple")
+  variable x set to new Foo(7, "Apple")
   print x.p1
   print x.p2
 end main
@@ -132,14 +132,14 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to new Foo()
-  var y set to x.b
+  variable x set to new Foo()
+  variable y set to x.b
   call y.printP1()
 end main
 
 class Foo
     constructor()
-      var bar set to new Bar()
+      variable bar set to new Bar()
       set property.b to bar
     end constructor
 
@@ -211,12 +211,12 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var foo set to new Foo()
-  var bar set to foo.bar
+  variable foo set to new Foo()
+  variable bar set to foo.bar
   print bar.p1
   print bar.p2
-  var foo2 set to bar.foo
-  var bar2 set to foo2.bar
+  variable foo2 set to bar.foo
+  variable bar2 set to foo2.bar
   print bar2.p1
   print bar2.p2
 end main
@@ -319,8 +319,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var foo set to new Foo()
-  var b set to foo.strArr[0]
+  variable foo set to new Foo()
+  variable b set to foo.strArr[0]
   print b
 end main
 
@@ -364,7 +364,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var f set to new Foo()
+  variable f set to new Foo()
   call proc(f)
 end main
 
@@ -413,7 +413,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var f set to new Foo()
+  variable f set to new Foo()
   print fun(f)
 end main
 
@@ -510,7 +510,7 @@ end class`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to new Foo()
+  variable x set to new Foo()
   set x.p1 to 3
 end main
 
@@ -560,7 +560,7 @@ end class`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to new Foo()
+  variable x set to new Foo()
 end main
 
 class Foo
@@ -587,7 +587,7 @@ end class`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to new Foo(7.1)
+  variable x set to new Foo(7.1)
 end main
 
 class Foo
@@ -614,7 +614,7 @@ end class`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to new Foo(7)
+  variable x set to new Foo(7)
 end main
 
 class Foo
@@ -640,7 +640,7 @@ end class`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to Foo()
+  variable x set to Foo()
   print x.p1
   print x.p2
   print x.asString()
@@ -671,7 +671,7 @@ end class`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to new Foo()
+  variable x set to new Foo()
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -685,7 +685,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var f set to new Foo()
+  variable f set to new Foo()
   call proc(f)
 end main
 
@@ -718,7 +718,7 @@ end procedure
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var f set to new Foo()
+  variable f set to new Foo()
   print fun(f)
 end main
 
@@ -943,7 +943,7 @@ end class`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to new Foo()
+  variable x set to new Foo()
   print x.b
 end main
 
@@ -970,7 +970,7 @@ end class`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to new Foo<of String>()
+  variable x set to new Foo<of String>()
 end main
 
 class Foo
@@ -990,7 +990,7 @@ end class`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to new BlockGraphics<of String>()
+  variable x set to new BlockGraphics<of String>()
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -1005,7 +1005,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to new FooBar()
+  variable x set to new FooBar()
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -1020,7 +1020,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to new Int()
+  variable x set to new Int()
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);

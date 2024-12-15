@@ -4,7 +4,7 @@
 main
   let rnd be new Random()
   call rnd.initialiseFromClock()
-  var game set to newGame(rnd)
+  variable game set to newGame(rnd)
   set game to newApple(game)
   while game.isOn
     set game to updateGraphics(game)

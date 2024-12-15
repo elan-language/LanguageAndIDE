@@ -303,7 +303,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to 2
+  variable a set to 2
   for i from 1 to 3 step 1
       switch i
         case 1

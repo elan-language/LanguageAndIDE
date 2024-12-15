@@ -15,8 +15,8 @@ suite("Chaining", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main 
-  var a set to {{1,2}, {3,4}}
-  var b set to a[1][1]
+  variable a set to {{1,2}, {3,4}}
+  variable b set to a[1][1]
   print b
 end main`;
 
@@ -41,8 +41,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main 
-  var a set to {[1,2], [3,4]}
-  var b set to a[1][1]
+  variable a set to {[1,2], [3,4]}
+  variable b set to a[1][1]
   print b
 end main`;
 
@@ -67,8 +67,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main 
-  var a set to new Foo()
-  var b set to a.a[0]
+  variable a set to new Foo()
+  variable b set to a.a[0]
   print b
 end main
 
@@ -111,8 +111,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main 
-  var f set to new Foo()
-  var b set to 0
+  variable f set to new Foo()
+  variable b set to 0
   set b to f.b.y.z
   print b
 end main
@@ -203,8 +203,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main 
-  var f set to [new Foo()]
-  var b set to 0
+  variable f set to [new Foo()]
+  variable b set to 0
   set b to f[0].b.ff()
   print b
 end main
@@ -275,8 +275,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main 
-  var f set to {new Foo()}
-  var b set to 0
+  variable f set to {new Foo()}
+  variable b set to 0
   set b to f[0].b.ff()
   print b
 end main
@@ -347,7 +347,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main 
-  var s set to ""
+  variable s set to ""
   set s to "Hello World!".lowerCase()[0..1].upperCase()
   print s
 end main`;
@@ -373,8 +373,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main 
-  var aStringVar set to "abcdexefg"
-  var s set to ""
+  variable aStringVar set to "abcdexefg"
+  variable s set to ""
   set s to aStringVar.upperCase()[1..7][2..6].indexOf("X").asString()
   print s
 end main`;
@@ -400,7 +400,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main 
-  var a set to ""
+  variable a set to ""
   set a to (new Bar()).strArr[0].upperCase()[0]
   print a
 end main
@@ -444,8 +444,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main 
-  var aFoo set to new Foo()
-  var b set to 0
+  variable aFoo set to new Foo()
+  variable b set to 0
   set b to aFoo.createArr(10)[1..5].length() + 3
   print b
 end main
@@ -494,8 +494,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main 
-  var aBar set to new Bar()
-  var b set to 0
+  variable aBar set to new Bar()
+  variable b set to 0
   set b to 5 + aBar.foo.create2DArr()[2][1] - 2
   print b
 end main
@@ -569,7 +569,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main 
-  var a set to {1,2,3,4,5,6}
+  variable a set to {1,2,3,4,5,6}
   print a.filter(lambda x as Int => x > 2).map(lambda x as Int => x * x).reduce(0, lambda s as Int, x as Int => s + x)
 end main`;
 
@@ -593,7 +593,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main 
-  var a set to [1,2,3,4,5,6]
+  variable a set to [1,2,3,4,5,6]
   print a[..5].map(lambda x as Int => x * x).asArray()[2..].reduce(0, lambda s as Int, x as Int => s + x)
 end main`;
 
@@ -617,8 +617,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main 
-  var a set to {[1,2], [3,4]}
-  var b set to ""
+  variable a set to {[1,2], [3,4]}
+  variable b set to ""
   set b to a[1][1]
   print b
 end main`;
@@ -634,8 +634,8 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main 
-  var a set to new Foo()
-  var b set to a.ff().fd()
+  variable a set to new Foo()
+  variable b set to a.ff().fd()
   print b
 end main
 

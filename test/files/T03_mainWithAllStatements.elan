@@ -1,7 +1,7 @@
-# 504234c1b613d8f88a116965aca9ad2ead4bd9dff238219de2c87dbb2def0a86 Elan Beta 5 valid
+# ed59e8749e73a06f66b539f6436d63a82b42176416586107b11e2e6362759bec Elan Beta 5 valid
 
 main
-  var a set to 3
+  variable a set to 3
   set a to 3 + 4
   throw exception "error"
   call signIn(rwp, password)

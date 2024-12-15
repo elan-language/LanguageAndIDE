@@ -14,7 +14,7 @@ suite("Loop Variable", () => {
 
 procedure removeLetters(wordAsPlayed as String)
   each letter in wordAsPlayed
-    var x set to letter
+    variable x set to letter
     call removeLetter(x)
   end each
 end procedure

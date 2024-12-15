@@ -16,16 +16,16 @@ suite("Impure Function", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var gr set to new BlockGraphics()
-  var k set to getKey()
-  var r set to randomInt(1, 6)
+  variable gr set to new BlockGraphics()
+  variable k set to getKey()
+  variable r set to randomInt(1, 6)
   set r to randomInt(1, 6) * 10
   call bar(randomInt(1,6))
 end main
 
 procedure foo(gr as BlockGraphics)
-  var k set to getKey()
-  var r set to randomInt(1, 6)
+  variable k set to getKey()
+  variable r set to randomInt(1, 6)
   set r to randomInt(1, 6) * 10
 end procedure
 
@@ -66,7 +66,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var k set to foo()
+  variable k set to foo()
 end main
 
 procedure foo()
@@ -103,7 +103,7 @@ end function`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var k set to foo()
+  variable k set to foo()
 end main
 
 procedure foo(x as Int)
@@ -128,7 +128,7 @@ main
 end main
 
 function square(z as Int) returns Int
-  var x set to randomInt(1,6)
+  variable x set to randomInt(1,6)
   return x * x
 end function
 `;

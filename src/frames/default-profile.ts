@@ -27,7 +27,7 @@ import {
   testKeyword,
   throwKeyword,
   tryKeyword,
-  varKeyword,
+  variableKeyword,
   whileKeyword,
 } from "./keywords";
 
@@ -62,7 +62,7 @@ export class DefaultProfile implements Profile {
     switchKeyword,
     throwKeyword,
     tryKeyword,
-    varKeyword,
+    variableKeyword,
     whileKeyword,
     commentMarker,
   ];

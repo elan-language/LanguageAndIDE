@@ -1,13 +1,13 @@
 # FFFF Elan Beta 4 valid
 
 main
-  var a set to 13
-  var b set to 30
-  var anb set to bitAnd(a, b)
-  var aob set to bitOr(a, b)
-  var axb set to bitXor(a, b)
-  var nota set to bitNot(a)
-  var aL set to bitShiftL(a, 2)
-  var aR set to bitShiftR(a, 2)
+  variable a set to 13
+  variable b set to 30
+  variable anb set to bitAnd(a, b)
+  variable aob set to bitOr(a, b)
+  variable axb set to bitXor(a, b)
+  variable nota set to bitNot(a)
+  variable aL set to bitShiftL(a, 2)
+  variable aR set to bitShiftR(a, 2)
   print "{a.asBinary()} {b.asBinary()} {anb.asBinary()} {aob.asBinary()} {axb.asBinary()} {nota.asBinary()} {aL.asBinary()} {aR.asBinary()}"
 end main

@@ -82,7 +82,7 @@ suite("Parsing Frame Tests", async () => {
   });
 
   test("parse Frames - variable", () => {
-    const code = "  var fooBar set to 3.141";
+    const code = "  variable fooBar set to 3.141";
     const source = new CodeSourceFromString(code + "\n");
     const fl = new FileImpl(hash, new DefaultProfile(), transforms());
     const m = new MainFrame(fl);
@@ -223,10 +223,10 @@ end main
   });
 
   test("parse Frames - main with all single-line statements", async () => {
-    const code = `# a9686ed015064c428f8d8308d5fd3eccc09a86f7895e5212cc21c2d4096f601b Elan Beta 5 valid
+    const code = `# aa325304f06e9c5cdab7108f075dbe304637665c83426b16261d812cb8f8ee21 Elan Beta 5 valid
 
 main
-  var name set to value or expression
+  variable name set to value or expression
   set a to 3 + 4
   throw exception "message"
   call signIn(rwp, password)

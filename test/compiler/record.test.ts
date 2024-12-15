@@ -16,7 +16,7 @@ suite("Record", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var f set to new Foo()
+  variable f set to new Foo()
   print f.p1
 end main
 
@@ -50,7 +50,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var f set to new Foo(3)
+  variable f set to new Foo(3)
 end main
 
 record Foo
@@ -69,7 +69,7 @@ end record`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var f set to new Foo() with p1 to 3, p2 to "hello"
+  variable f set to new Foo() with p1 to 3, p2 to "hello"
   print f.p1
   print f.p2
 end main
@@ -108,7 +108,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var f set to new Foo(3)
+  variable f set to new Foo(3)
   print f.p1
   print f.square()
 end main
@@ -143,7 +143,7 @@ end record`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var f set to new Foo()
+  variable f set to new Foo()
   print fun(f)
 end main
 
@@ -186,7 +186,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var f set to new Foo()
+  variable f set to new Foo()
   call proc(f)
 end main
 

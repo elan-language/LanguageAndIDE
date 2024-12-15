@@ -129,7 +129,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var f set to getFunc()
+  variable f set to getFunc()
   print f(5)
 end main
   
@@ -169,7 +169,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var f set to ref twice
+  variable f set to ref twice
   print f(5)
 end main
   
@@ -201,7 +201,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var f set to new Foo(ref ff)
+  variable f set to new Foo(ref ff)
   print f.pf(5)
 end main
 
@@ -282,7 +282,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var f set to twice
+  variable f set to twice
   print f(5)
 end main
   
@@ -352,7 +352,7 @@ end function`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to getFunc()
+  variable a set to getFunc()
   print a()
 end main
 
@@ -400,7 +400,7 @@ end function`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var f set to getFunc()
+  variable f set to getFunc()
   print f(5)
 end main
   
@@ -426,7 +426,7 @@ end function`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var f set to new Foo(ff)
+  variable f set to new Foo(ff)
   print f.pf(5)
 end main
 
@@ -457,7 +457,7 @@ end class`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var f set to 1 + ff
+  variable f set to 1 + ff
 end main
 
 function ff(a as Int) returns Int
@@ -479,7 +479,7 @@ end function`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var f set to 1 + ref ff
+  variable f set to 1 + ref ff
 end main
 
 function ff(a as Int) returns Int

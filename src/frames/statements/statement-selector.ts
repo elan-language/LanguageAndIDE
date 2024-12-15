@@ -20,7 +20,7 @@ import {
   switchKeyword,
   throwKeyword,
   tryKeyword,
-  varKeyword,
+  variableKeyword,
   whileKeyword,
 } from "../keywords";
 
@@ -50,7 +50,7 @@ export class StatementSelector extends AbstractSelector {
       [switchKeyword, (parent: Parent) => this.factory.newSwitch(parent)],
       [throwKeyword, (parent: Parent) => this.factory.newThrow(parent)],
       [tryKeyword, (parent: Parent) => this.factory.newTryCatch(parent)],
-      [varKeyword, (parent: Parent) => this.factory.newVar(parent)],
+      [variableKeyword, (parent: Parent) => this.factory.newVar(parent)],
       [whileKeyword, (parent: Parent) => this.factory.newWhile(parent)],
       [commentMarker, (parent: Parent) => this.factory.newComment(parent)],
     ];

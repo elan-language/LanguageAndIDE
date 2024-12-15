@@ -17,7 +17,7 @@ suite("List", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to {4,5,6,7,8}
+  variable a set to {4,5,6,7,8}
   print a
 end main`;
 
@@ -41,7 +41,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to {{4, 5}, {6, 7, 8}}
+  variable a set to {{4, 5}, {6, 7, 8}}
   print a
 end main`;
 
@@ -65,8 +65,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to new Foo()
-  var b set to {a}
+  variable a set to new Foo()
+  variable b set to {a}
   print b
 end main
 
@@ -113,16 +113,16 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to 1
-  var b set to 1.1
-  var c set to "c"
-  var d set to "d"
-  var e set to true
-  var v set to {a}
-  var w set to {b}
-  var x set to {c}
-  var y set to {d}
-  var z set to {e}
+  variable a set to 1
+  variable b set to 1.1
+  variable c set to "c"
+  variable d set to "d"
+  variable e set to true
+  variable v set to {a}
+  variable w set to {b}
+  variable x set to {c}
+  variable y set to {d}
+  variable z set to {e}
   print v
   print w
   print x
@@ -185,7 +185,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to {"Foo", "Bar"}
+  variable a set to {"Foo", "Bar"}
   print a
 end main`;
 
@@ -209,7 +209,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to {4.1,5,6,7,8}
+  variable a set to {4.1,5,6,7,8}
   print a
 end main`;
 
@@ -233,7 +233,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-    var a set to {4,5,6,7,8}
+    variable a set to {4,5,6,7,8}
     print a.length()
 end main`;
 
@@ -257,7 +257,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-    var a set to new List<of Int>()
+    variable a set to new List<of Int>()
     print a.length()
 end main`;
 
@@ -281,7 +281,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-    var a set to {4,5,6,7,8}
+    variable a set to {4,5,6,7,8}
     print a[2]
 end main`;
 
@@ -305,9 +305,9 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-    var a set to {"one", "two", "three"}
+    variable a set to {"one", "two", "three"}
     set a to a.withPutAt(1, "TWO")
-    var b set to a.withPutAt(0, "ONE")
+    variable b set to a.withPutAt(0, "ONE")
     print a
     print b
 end main`;
@@ -335,9 +335,9 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-    var a set to {"one", "two", "three"}
+    variable a set to {"one", "two", "three"}
     set a to a.withInsert(1, "TWO")
-    var b set to a.withInsert(0, "ONE")
+    variable b set to a.withInsert(0, "ONE")
     print a
     print b
 end main`;
@@ -365,9 +365,9 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-    var a set to {"one", "two", "three"}
+    variable a set to {"one", "two", "three"}
     set a to a.withRemoveAt(1)
-    var b set to a.withRemoveAt(0)
+    variable b set to a.withRemoveAt(0)
     print a
     print b
 end main`;
@@ -395,7 +395,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-    var a set to {"one", "two", "three", "one", "two", "three"}
+    variable a set to {"one", "two", "three", "one", "two", "three"}
     set a to a.withRemoveFirst("two")
     print a
 end main`;
@@ -421,7 +421,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-    var a set to {"one", "two", "three", "one", "two", "three"}
+    variable a set to {"one", "two", "three", "one", "two", "three"}
     set a to a.withRemoveAll("two")
     print a
 end main`;
@@ -447,7 +447,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to {4,5,6,7,8}
+  variable a set to {4,5,6,7,8}
   print a[2..5]
   print a[1..3]
   print a[0..2]
@@ -475,8 +475,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to {4,5,6,7,8}
-  var b set to a + 9
+  variable a set to {4,5,6,7,8}
+  variable b set to a + 9
   print a
   print b
 end main`;
@@ -503,8 +503,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to {4,5,6,7,8}
-  var b set to 9 + a
+  variable a set to {4,5,6,7,8}
+  variable b set to 9 + a
   print a
   print b
 end main`;
@@ -531,9 +531,9 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-    var a set to {4,5,6,7,8}
-    var b set to {1,2,3}
-    var c set to a + b
+    variable a set to {4,5,6,7,8}
+    variable b set to {1,2,3}
+    variable c set to a + b
     print a
     print b
     print c
@@ -563,9 +563,9 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-    var a set to {"a", "b"}
-    var b set to "cd"
-    var c set to a + b[0]
+    variable a set to {"a", "b"}
+    variable b set to "cd"
+    variable c set to a + b[0]
     print a
     print b
     print c
@@ -622,7 +622,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to new List<of Int>()
+  variable a set to new List<of Int>()
   print a
 end main`;
 
@@ -646,7 +646,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var f set to new Foo()
+  variable f set to new Foo()
   print f.it
 end main
   
@@ -695,8 +695,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to empty {Int}
-  var b set to empty {Int}
+  variable a set to empty {Int}
+  variable b set to empty {Int}
   set b to a + 3
   print a
   print b
@@ -731,7 +731,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to []
+  variable a set to []
 end main
 `;
 
@@ -745,7 +745,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to {3, "apples"}
+  variable a set to {3, "apples"}
 end main
 `;
 
@@ -760,7 +760,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to {3, 3.1}
+  variable a set to {3, 3.1}
 end main
 `;
 
@@ -775,8 +775,8 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to {4, 5, 6, 7, 8}
-  var b set to a[5]
+  variable a set to {4, 5, 6, 7, 8}
+  variable b set to a[5]
 end main
 `;
 
@@ -792,7 +792,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to {4, 5, 6, 7, 8}
+  variable a set to {4, 5, 6, 7, 8}
   call a.putAt(0, 0)
 end main
 `;
@@ -809,7 +809,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to {4, 5, 6, 7, 8}
+  variable a set to {4, 5, 6, 7, 8}
   set a[0] to 0
 end main
 `;
@@ -824,7 +824,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to {"one", "two", "three"}
+  variable a set to {"one", "two", "three"}
   set a to a.withPutAtKey(1, "TWO")
   print a
 end main
@@ -841,7 +841,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to {"one", "two", "three"}
+  variable a set to {"one", "two", "three"}
   call a.append("four")
   print a
 end main
@@ -858,7 +858,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to {"one", "two", "three"}
+  variable a set to {"one", "two", "three"}
   call a.insertAt(1, "four")
   print a
 end main
@@ -875,7 +875,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to {"one", "two", "three"}
+  variable a set to {"one", "two", "three"}
   call a.removeAt(1)
   print a
 end main
@@ -892,7 +892,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to {"one", "two", "three", "one", "two", "three"}
+  variable a set to {"one", "two", "three", "one", "two", "three"}
   call a.removeFirst("two")
   print a
 end main`;
@@ -908,7 +908,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to {"one", "two", "three", "one", "two", "three"}
+  variable a set to {"one", "two", "three", "one", "two", "three"}
   call a.removeAll("two")
   print a
 end main`;
@@ -924,7 +924,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-    var a set to new List()
+    variable a set to new List()
     print a
 end main`;
 
@@ -939,8 +939,8 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-    var a set to empty [Int]
-    var b set to empty {Int}
+    variable a set to empty [Int]
+    variable b set to empty {Int}
     set b to a
 end main`;
 

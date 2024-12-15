@@ -2,9 +2,9 @@
 
 # Use the W,A,S,D keys to change Snake direction
 main
-  var gr set to new BlockGraphics()
-  var snake set to new Snake()
-  var apple set to new Apple()
+  variable gr set to new BlockGraphics()
+  variable snake set to new Snake()
+  variable apple set to new Apple()
   call apple.newRandomPosition(snake)
   while not snake.gameOver()
     set gr to snake.updateGraphics(gr)
@@ -47,7 +47,7 @@ class Snake
   end procedure
 
   function updateGraphics(gr as BlockGraphics) returns BlockGraphics
-    var gr2 set to head.updateGraphics(gr, green)
+    variable gr2 set to head.updateGraphics(gr, green)
     if body[0] isnt priorTail
       then
         set gr2 to priorTail.updateGraphics(gr, white)
@@ -60,7 +60,7 @@ class Snake
   end function
 
   function bodyCovers(sq as Square) returns Boolean
-    var result set to false
+    variable result set to false
     each seg in body
       if (seg is sq)
         then
@@ -121,8 +121,8 @@ class Square
   private property y as Int
 
   function getAdjacentSquare(d as Direction) returns Square
-    var newX set to x
-    var newY set to y
+    variable newX set to x
+    variable newY set to y
     switch d
       case Direction.left
         set newX to x - 1
@@ -157,7 +157,7 @@ test snake
   assert snake.gameOver() is false
   assert snake.score() is 0
   # updateGraphics - can test only on new Snake - not a thorough test
-  var gr set to new BlockGraphics()
+  variable gr set to new BlockGraphics()
   set gr to gr.withBlock(20, 15, green)
   set gr to snake.updateGraphics(gr)
   assert gr.getBackground(20, 15) is green
@@ -168,7 +168,7 @@ test apple
   # constructor has no user code to test
   # newRandomPosition is a procedure
   # updateGraphics can only be tested minimally, with default location (0,0)
-  var gr set to new BlockGraphics()
+  variable gr set to new BlockGraphics()
   let apple be new Apple()
   set gr to apple.updateGraphics(gr)
   assert gr.getBackground(0, 0) is red
@@ -193,7 +193,7 @@ test square
   assert (new Square(40, 3)).hasHitEdge() is true
   assert (new Square(3, 30)).hasHitEdge() is true
   # updateGraphics
-  var gr set to new BlockGraphics()
+  variable gr set to new BlockGraphics()
   set gr to sq1.updateGraphics(gr, blue)
   assert gr.getBackground(3, 4) is blue
 end test

@@ -50,10 +50,10 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to [1, 2]
-  var b set to {3, 4}
-  var c set to ["a":true, "b":false]
-  var d set to {"a":true, "b":false}
+  variable a set to [1, 2]
+  variable b set to {3, 4}
+  variable c set to ["a":true, "b":false]
+  variable d set to {"a":true, "b":false}
   call foo(a, b, c, d)
 end main
 
@@ -118,8 +118,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to 2
-  var b set to "hello"
+  variable a set to 2
+  variable b set to "hello"
   call foo(a, b)
 end main
 
@@ -154,7 +154,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to [2, 3]
+  variable a set to [2, 3]
   call changeFirst(a)
   print a
 end main
@@ -190,7 +190,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to 1
+  variable a set to 1
   call foo(a + 1, "hello")
 end main
 
@@ -305,7 +305,7 @@ procedure foo(a as Int)
   if a > 0
     then
       print a
-      var b set to a - 1
+      variable b set to a - 1
       call foo(b)
   end if
 end procedure`;
@@ -337,7 +337,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var f set to new Foo()
+  variable f set to new Foo()
   call f.length()
 end main
 
@@ -437,8 +437,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to 2
-  var b set to "hello"
+  variable a set to 2
+  variable b set to "hello"
   call foo(a, b)
   print a
   print b
@@ -479,15 +479,15 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to 2
-  var b set to 3
+  variable a set to 2
+  variable b set to 3
   call foo(a, b)
   print a
   print b
 end main
 
 procedure foo(out x as Float, out y as Float)
-  var c set to x
+  variable c set to x
   set x to y
   set y to c
 end procedure`;
@@ -523,8 +523,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to 2
-  var b set to 3
+  variable a set to 2
+  variable b set to 3
   call foo(a, b)
   print a
   print b
@@ -535,7 +535,7 @@ procedure foo(out a as Float, out b as Float)
 end procedure
 
 procedure bar(out a as Float, out b as Float)
-  var c set to a
+  variable c set to a
   set a to b
   set b to c
 end procedure`;
@@ -577,8 +577,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to new Foo()
-  var b set to 0
+  variable a set to new Foo()
+  variable b set to 0
   call foo(a, b)
   print b
 end main
@@ -638,8 +638,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to new Foo()
-  var b set to 100
+  variable a set to new Foo()
+  variable b set to 100
   call foo(a, b)
   print b
 end main
@@ -767,7 +767,7 @@ end procedure
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to 1
+  variable a set to 1
   call foo(a + 1)
 end main
 
@@ -788,7 +788,7 @@ end procedure
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to [1]
+  variable a set to [1]
   call a.append()
   call a.append(1, 2)
 end main`;
@@ -907,7 +907,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to {2, 3}
+  variable a set to {2, 3}
   call changeAll(a)
   print a
 end main
@@ -928,7 +928,7 @@ end procedure`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to [2, 3]
+  variable a set to [2, 3]
   call changeAll(a)
   print a
 end main
@@ -949,7 +949,7 @@ end procedure`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to 4
+  variable a set to 4
   call changeValue(a)
   print a
 end main
@@ -1099,9 +1099,9 @@ end procedure`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to p1 is p2
-  var b set to p1 + p2
-  var c set to -p1
+  variable a set to p1 is p2
+  variable b set to p1 + p2
+  variable c set to -p1
 end main
 
 procedure p1()
@@ -1126,7 +1126,7 @@ end procedure`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to [1,2]
+  variable a set to [1,2]
   set a to a.append(3)
 end main`;
 
@@ -1162,8 +1162,8 @@ end procedure`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to 1
-  var b set to 2
+  variable a set to 1
+  variable b set to 2
   call foo(a + b)
 end main
 
@@ -1223,7 +1223,7 @@ end function`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var f set to new Foo()
+  variable f set to new Foo()
   call foo(f.ff)
 end main
 
@@ -1250,7 +1250,7 @@ end class`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var f set to [1,2]
+  variable f set to [1,2]
   call foo(f[0])
 end main
 

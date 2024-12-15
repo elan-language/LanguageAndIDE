@@ -95,7 +95,7 @@ main
 end main
 
 procedure foo()
-  var list set to {1,2,3,4,5}
+  variable list set to {1,2,3,4,5}
   for i from 0 to 3 step 1
     let temp be list[i]
     set list to list.withPutAt(i, list[i + 1])
@@ -177,7 +177,7 @@ end function`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to foo()
+  variable x set to foo()
   print x
 end main
 
@@ -206,7 +206,7 @@ main
 end main
 
 function foo() returns Int
-  var x set to 1
+  variable x set to 1
   let y be x.y
   return y
 end function`;

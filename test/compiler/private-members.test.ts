@@ -15,7 +15,7 @@ suite("Private Members", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to new Foo()
+  variable x set to new Foo()
   print x
 end main
 
@@ -72,7 +72,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to new Foo()
+  variable x set to new Foo()
   call x.testSetP1(5)
   print x.p1
 end main
@@ -132,7 +132,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var f set to new Foo()
+  variable f set to new Foo()
   print f.testFf("test")
 end main
   
@@ -186,8 +186,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var f set to new Foo()
-  var s set to f.p2
+  variable f set to new Foo()
+  variable s set to f.p2
 end main
 
 class Foo
@@ -217,8 +217,8 @@ end class`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var f set to new Foo()
-  var s set to f.p2
+  variable f set to new Foo()
+  variable s set to f.p2
 end main
 
 abstract class Bar
@@ -244,7 +244,7 @@ end class`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var foo set to new Foo()
+  variable foo set to new Foo()
   call foo.setP1(5)
 end main
 
@@ -271,8 +271,8 @@ end class`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var foo set to new Foo()
-  var a set to foo.ff()
+  variable foo set to new Foo()
+  variable a set to foo.ff()
 end main
 
 class Foo
@@ -298,7 +298,7 @@ end class`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var f set to new Foo()
+  variable f set to new Foo()
   print f.p2
 end main
 
@@ -329,7 +329,7 @@ end class`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var foo set to new Foo()
+  variable foo set to new Foo()
   print foo.ff()
 end main
 

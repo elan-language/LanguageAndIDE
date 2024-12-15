@@ -1,9 +1,9 @@
 # b69f22ef0a2a48eeacd8d5962c5ca9093ba171725bd48148e6e20b540a6f7d55 Elan Beta 4 valid
 
 main
-  var g set to new BlockGraphics()
-  var x set to 20
-  var y set to 15
+  variable g set to new BlockGraphics()
+  variable x set to 20
+  variable y set to 15
   while true
     set g to g.withText(x, y, "*", red, black)
     call g.display()
@@ -15,8 +15,8 @@ main
 end main
 
 function updateCoordinates(x as Int, y as Int, dir as Int) returns (Int, Int)
-  var newX set to x
-  var newY set to y
+  variable newX set to x
+  variable newY set to y
   switch dir
     case 0
       set newX to lesserOf(x + 1, 39)
@@ -31,7 +31,7 @@ function updateCoordinates(x as Int, y as Int, dir as Int) returns (Int, Int)
 end function
 
 function lesserOf(value1 as Int, value2 as Int) returns Int
-  var result set to 0
+  variable result set to 0
   if value1 < value2
     then
       set result to value1
@@ -42,7 +42,7 @@ function lesserOf(value1 as Int, value2 as Int) returns Int
 end function
 
 function greaterOf(value1 as Int, value2 as Int) returns Int
-  var result set to 0
+  variable result set to 0
   if value1 > value2
     then
       set result to value1

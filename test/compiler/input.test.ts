@@ -15,7 +15,7 @@ suite("Input", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to inputString("")
+  variable a set to inputString("")
   print a
 end main`;
 
@@ -39,7 +39,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to inputString("Your name")
+  variable a set to inputString("Your name")
   print a
 end main`;
 
@@ -63,7 +63,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to 0
+  variable a set to 0
   set a to inputInt("")
   print a
 end main`;
@@ -89,7 +89,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to 0.0
+  variable a set to 0.0
   set a to inputFloat("")
   print a
 end main`;
@@ -115,8 +115,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to "value"
-  var b set to "value1"
+  variable a set to "value"
+  variable b set to "value1"
   set a to inputString("")
   set b to a
   print b
@@ -145,7 +145,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to inputStringWithLimits("aprompt", 3, 7)
+  variable a set to inputStringWithLimits("aprompt", 3, 7)
   print a
 end main`;
 
@@ -169,7 +169,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to inputStringFromOptions("aprompt", ["y", "n"])
+  variable a set to inputStringFromOptions("aprompt", ["y", "n"])
   print a
 end main`;
 
@@ -193,7 +193,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to 0
+  variable a set to 0
   set a to inputInt("aprompt")
   print a
 end main`;
@@ -219,7 +219,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to 0
+  variable a set to 0
   set a to inputIntBetween("aprompt", 3, 7)
   print a
 end main`;
@@ -245,7 +245,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to 0.0
+  variable a set to 0.0
   set a to inputFloat("aprompt")
   print a
 end main`;
@@ -271,7 +271,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to 0.0
+  variable a set to 0.0
   set a to inputFloatBetween("aprompt", 0, 1)
   print a
 end main`;
@@ -297,7 +297,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to ""
+  variable a set to ""
   set a to inputInt("")
   print a
 end main`;
@@ -314,7 +314,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to "Hello " + inputString("")
+  variable a set to "Hello " + inputString("")
   print a
 end main`;
 

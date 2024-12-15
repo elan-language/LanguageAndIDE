@@ -2,13 +2,13 @@
 
 # Use the W,A,S,D keys to change Snake direction
 main
-  var gr set to new BlockGraphics()
-  var head set to [20, 15]
-  var tail set to head
-  var body set to [head]
-  var currentDir set to "right"
-  var gameOn set to true
-  var apple set to [0, 0]
+  variable gr set to new BlockGraphics()
+  variable head set to [20, 15]
+  variable tail set to head
+  variable body set to [head]
+  variable currentDir set to "right"
+  variable gameOn set to true
+  variable apple set to [0, 0]
   call setAppleToRandomPosition(apple, body)
   while gameOn
     set gr to updateGraphics(gr, head, tail, body, apple)
@@ -41,7 +41,7 @@ procedure eatAppleIfPoss(head as [Int], out body as [[Int]], apple as [Int])
 end procedure
 
 function updateGraphics(gr as BlockGraphics, head as [Int], tail as [Int], body as [[Int]], apple as [Int]) returns BlockGraphics
-  var gr2 set to gr.withBlock(head[0], head[1], green)
+  variable gr2 set to gr.withBlock(head[0], head[1], green)
   if body[0] is tail
     then
       set gr2 to gr2.withBlock(tail[0], tail[1], green)
@@ -57,8 +57,8 @@ function hasHitEdge(head as [Int]) returns Boolean
 end function
 
 function getAdjacentSquare(sq as [Int], dir as String) returns [Int]
-  var newX set to sq[0]
-  var newY set to sq[1]
+  variable newX set to sq[0]
+  variable newY set to sq[1]
   switch dir
     case "left"
       set newX to newX - 1
@@ -73,7 +73,7 @@ function getAdjacentSquare(sq as [Int], dir as String) returns [Int]
 end function
 
 function overlaps(body as [[Int]], sq as [Int]) returns Boolean
-  var result set to false
+  variable result set to false
   each seg in body
     if (seg is sq)
       then
@@ -84,7 +84,7 @@ function overlaps(body as [[Int]], sq as [Int]) returns Boolean
 end function
 
 function directionByKey(current as String, key as String) returns String
-  var dir set to current
+  variable dir set to current
   switch key
     case "w"
       set dir to "up"
@@ -100,7 +100,7 @@ end function
 
 # 73 frames (excluding tests)
 test updateGraphicsOneSegmentBody
-  var gr set to new BlockGraphics()
+  variable gr set to new BlockGraphics()
   let head be [20, 15]
   let tail be [20, 15]
   let body be [head]
@@ -119,7 +119,7 @@ test updateGraphicsOneSegmentBody
 end test
 
 test updateGraphicsLongerBody3SegmentBody
-  var gr set to new BlockGraphics()
+  variable gr set to new BlockGraphics()
   # draw existing 2-seg snake
   set gr to gr.withBlock(30, 20, green).withBlock(30, 21, green).withBlock(30, 22, green)
   # define snake's new position

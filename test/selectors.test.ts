@@ -35,14 +35,14 @@ suite("Selector tests", () => {
     const file = T09_emptyMainAndClassWithGlobalSelector();
     file.getById("select2").processKey(key("v"));
     const v = file.getById("var10").renderAsSource();
-    assert.equal(v, "  var  set to ");
+    assert.equal(v, "  variable  set to ");
   });
 
   test("Statement Select - case insensitive", () => {
     const file = T09_emptyMainAndClassWithGlobalSelector();
     file.getById("select2").processKey(key("V"));
     const v = file.getById("var10").renderAsSource();
-    assert.equal(v, "  var  set to ");
+    assert.equal(v, "  variable  set to ");
   });
 
   test("Member Select - function", () => {
@@ -127,7 +127,7 @@ suite("Selector tests", () => {
     const m = new MainFrame(f);
     const s = new StatementSelector(m);
     let help = s.getCompletion();
-    assert.equal(help, " call each for if let print repeat set switch throw try var while #");
+    assert.equal(help, " call each for if let print repeat set switch throw try variable while #");
     s.processKey(key("s"));
     help = s.getCompletion();
     assert.equal(help, " set switch");
@@ -142,7 +142,7 @@ suite("Selector tests", () => {
     const func = new GlobalFunction(fl);
     const s = new StatementSelector(func);
     const help = s.getCompletion();
-    assert.equal(help, " each for if let repeat set switch throw try var while #");
+    assert.equal(help, " each for if let repeat set switch throw try variable while #");
   });
 
   test("Selection Context - in a Procedure", () => {
@@ -150,7 +150,7 @@ suite("Selector tests", () => {
     const proc = new GlobalProcedure(fl);
     const s = new StatementSelector(proc);
     const help = s.getCompletion();
-    assert.equal(help, " call each for if let print repeat set switch throw try var while #");
+    assert.equal(help, " call each for if let print repeat set switch throw try variable while #");
   });
 
   test("Selection Context - in a Test", () => {
@@ -158,7 +158,7 @@ suite("Selector tests", () => {
     const test = new TestFrame(fl);
     const s = new StatementSelector(test);
     const help = s.getCompletion();
-    assert.equal(help, " assert each for if let repeat set switch throw try var while #");
+    assert.equal(help, " assert each for if let repeat set switch throw try variable while #");
   });
 
   test("Selection Context - deeper nesting 1", () => {
@@ -168,7 +168,7 @@ suite("Selector tests", () => {
     const wh = new While(if1);
     const s = new StatementSelector(wh);
     const help = s.getCompletion();
-    assert.equal(help, " each for if let repeat set switch throw try var while #"); //no else, print, call
+    assert.equal(help, " each for if let repeat set switch throw try variable while #"); //no else, print, call
   });
 
   test("Selection Context - deeper nesting 2", () => {

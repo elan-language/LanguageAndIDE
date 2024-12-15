@@ -26,8 +26,8 @@ end function
 
 test square
   assert square(3) is 9
-  var actual set to square(4)
-  var expected set to 16
+  variable actual set to square(4)
+  variable expected set to 16
   assert actual is expected
 end test
 `;
@@ -73,7 +73,7 @@ main
 end main
 
 test square
-  var t set to ("one", "two")
+  variable t set to ("one", "two")
   assert t is ("one", "two")
 end test
 `;
@@ -333,8 +333,8 @@ main
 end main
 
 test square
-  var arr set to empty [Int]
-  var b set to arr[1]
+  variable arr set to empty [Int]
+  variable b set to arr[1]
   assert b is 0
 end test
 `;
@@ -369,33 +369,33 @@ main
 end main
 
 test list_
-  var a set to {3, 2, 4, 0}
-  var b set to {3, 2, 4, 0}
+  variable a set to {3, 2, 4, 0}
+  variable b set to {3, 2, 4, 0}
   assert a is b
 end test
 
 test dictionary_
-  var a set to [3:"a", 2:"b", 4:"c"]
-  var b set to [3:"a", 2:"b", 4:"c"]
+  variable a set to [3:"a", 2:"b", 4:"c"]
+  variable b set to [3:"a", 2:"b", 4:"c"]
   assert a is b
 end test
 
 test string_
-  var a set to "Hello World"
-  var b set to "Hello" + " " + "World"
+  variable a set to "Hello World"
+  variable b set to "Hello" + " " + "World"
   assert a is b
 end test
 
 test default_
-  var a set to 0
-  var b set to empty Int
+  variable a set to 0
+  variable b set to empty Int
   assert a is b
 end test
 
 constant hello set to "Hello"
 
 test constant_
-  var b set to "Hello"
+  variable b set to "Hello"
   assert hello is b
 end test
 
@@ -408,14 +408,14 @@ class Foo
 end class
 
 test class1
-  var a set to new Foo(3)
-  var b set to new Foo(3)
+  variable a set to new Foo(3)
+  variable b set to new Foo(3)
   assert a is b
 end test
 
 test class2
-  var a set to empty Foo
-  var b set to empty Foo
+  variable a set to empty Foo
+  variable b set to empty Foo
   assert a is b
 end test`;
 
@@ -507,26 +507,26 @@ main
 end main
 
 test round1
-  var a set to 1/3
-  var b set to round(a, 4)
+  variable a set to 1/3
+  variable b set to round(a, 4)
   assert b is 0.3333
 end test
 
 test round2
-  var a set to 0.9999
-  var b set to round(a, 2)
+  variable a set to 0.9999
+  variable b set to round(a, 2)
   assert b is 1
 end test
 
 test round3
-  var a set to 1.25
-  var b set to round(a, 1)
+  variable a set to 1.25
+  variable b set to round(a, 1)
   assert b is 1.3
 end test
 
 test round4
-  var a set to 44.444
-  var b set to round(a, 2)
+  variable a set to 44.444
+  variable b set to round(a, 2)
   assert b is 44.44
 end test
 
@@ -587,7 +587,7 @@ procedure square(x as Int, out y as [Int])
 end procedure
 
 test square
-  var arr set to createArray(1, 0)
+  variable arr set to createArray(1, 0)
   call square(3, arr)
   assert arr[0] is 9
 end test
@@ -682,7 +682,7 @@ end test
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to squareTest
+  variable a set to squareTest
 end main
 
 function square(x as Float) returns Float

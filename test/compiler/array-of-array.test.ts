@@ -16,9 +16,9 @@ suite("Array of Array", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to [1,2]
-  var b set to [3,4]
-  var c set to [a,b]
+  variable a set to [1,2]
+  variable b set to [3,4]
+  variable c set to [a,b]
   print c
 end main`;
 
@@ -44,7 +44,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to create2DArray(3, 0, "")
+  variable a set to create2DArray(3, 0, "")
   print a.length()
 end main`;
 
@@ -68,7 +68,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to create2DArray(3, 0, "")
+  variable a set to create2DArray(3, 0, "")
   print a[0].length()
   print a
 end main`;
@@ -94,7 +94,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to create2DArray(3, 0, "")
+  variable a set to create2DArray(3, 0, "")
   call a.putAt(0, ["bar", "foo"])
   call a.putAt(2, ["yon", "xan"])
   print a[0][1]
@@ -124,7 +124,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to create2DArray(3, 0, "")
+  variable a set to create2DArray(3, 0, "")
   call a.putAt(0, ["bar", "foo"])
   call a[0].putAt(1, "yon")
   print a[0][1]
@@ -152,7 +152,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to create2DArray(3, 0, "")
+  variable a set to create2DArray(3, 0, "")
   call a.append(["foo"])
   call a.append(["yon"])
   print a[3]
@@ -182,7 +182,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to create2DArray(3, 0, "")
+  variable a set to create2DArray(3, 0, "")
   call a[1].append("foo")
   call a[2].append("yon")
   print a
@@ -210,7 +210,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to [["one"], ["two"], ["three"]]
+  variable a set to [["one"], ["two"], ["three"]]
   call a.insertAt(1, ["foo"])
   call a.insertAt(3, ["yon"])
   print a
@@ -238,7 +238,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to [["one"], ["two"], ["three"]]
+  variable a set to [["one"], ["two"], ["three"]]
   call a[0].insertAt(0, "foo")
   call a[2].insertAt(1, "yon")
   print a
@@ -266,7 +266,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to [["one"], ["two"], ["three"]]
+  variable a set to [["one"], ["two"], ["three"]]
   call a.removeAt(0)
   call a.removeAt(1)
   print a
@@ -294,7 +294,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to [["one"], ["two"], ["three"]]
+  variable a set to [["one"], ["two"], ["three"]]
   call a[0].removeAt(0)
   call a[2].removeAt(0)
   print a
@@ -322,7 +322,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to [["one"], ["two"], ["three"], ["one"], ["two"], ["three"]]
+  variable a set to [["one"], ["two"], ["three"], ["one"], ["two"], ["three"]]
   call a.removeFirst(["two"])
   print a
 end main`;
@@ -348,7 +348,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to [["one"], ["two"], ["three"], ["one"], ["two"], ["three"]]
+  variable a set to [["one"], ["two"], ["three"], ["one"], ["two"], ["three"]]
   call a[1].removeFirst("two")
   print a
 end main`;
@@ -374,7 +374,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to [["one"], ["two"], ["three"], ["one"], ["two"], ["three"]]
+  variable a set to [["one"], ["two"], ["three"], ["one"], ["two"], ["three"]]
   call a.removeAll(["two"])
   print a
 end main`;
@@ -400,7 +400,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to [["one"], ["two", "two"], ["three"], ["one"], ["two"], ["three"]]
+  variable a set to [["one"], ["two", "two"], ["three"], ["one"], ["two"], ["three"]]
   call a[1].removeAll("two")
   print a
 end main`;
@@ -426,7 +426,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to {{"foo"},{"bar","yon"}}.asArray()
+  variable a set to {{"foo"},{"bar","yon"}}.asArray()
   print a.length()
   print a
 end main`;
@@ -452,8 +452,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to empty [[Int]]
-  var b set to empty [[Int]]
+  variable a set to empty [[Int]]
+  variable b set to empty [[Int]]
   call a.append([3])
   print a
   print b
@@ -488,7 +488,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to create2DArray(2, 2, 0)
+  variable a set to create2DArray(2, 2, 0)
   print a
 end main`;
 
@@ -512,7 +512,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to create2DArray(2, 2, 1)
+  variable a set to create2DArray(2, 2, 1)
   print a
 end main`;
 
@@ -536,7 +536,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to empty [[Int]]
+  variable a set to empty [[Int]]
   call a[0].putAt(0, 3)
 end main`;
 
@@ -552,8 +552,8 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to [1, 2]
-  var b set to a[0][0]
+  variable a set to [1, 2]
+  variable b set to a[0][0]
 end main
 `;
 
@@ -568,7 +568,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to createArray(3, "")
+  variable a set to createArray(3, "")
   call a[0].putAt(0, "foo")
 end main
 `;
@@ -584,7 +584,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to createArray(3, 0)
+  variable a set to createArray(3, 0)
   call a[0].putAt(0, 1)
 end main
 `;
@@ -600,7 +600,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to createArray(3, empty [String])
+  variable a set to createArray(3, empty [String])
   call a.putAt(0, "foo")
 end main
 `;
@@ -618,9 +618,9 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to create2DArray(3, 0, "")
+  variable a set to create2DArray(3, 0, "")
   call a.putAt(0, empty [String])
-  var b set to a[0][0]
+  variable b set to a[0][0]
 end main
 `;
 
@@ -636,7 +636,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to createArray(3, empty [String])
+  variable a set to createArray(3, empty [String])
   call a.putAt(0, true)
 end main
 `;
@@ -654,7 +654,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to new Array<of Array<of String>>()
+  variable a set to new Array<of Array<of String>>()
   call a.append("foo")
 end main
 `;
@@ -670,7 +670,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to [[1,2],[3,4]]
+  variable a set to [[1,2],[3,4]]
   call a["b"].putAt(0, 5)
 end main
 `;
@@ -686,7 +686,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a set to [[1,2],[3,4]]
+  variable a set to [[1,2],[3,4]]
   call a[0].putAt("b", 5)
 end main
 `;

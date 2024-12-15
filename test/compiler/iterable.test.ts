@@ -15,7 +15,7 @@ suite("Iterable", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var it set to {1.0, 5, 6}
+  variable it set to {1.0, 5, 6}
   call printEach(it)
 end main
   
@@ -51,7 +51,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var it set to {"one", "two"}
+  variable it set to {"one", "two"}
   print printEach(it)
 end main
   
@@ -83,8 +83,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var lst set to {"one", "two"}
-  var it set to printEach(lst)
+  variable lst set to {"one", "two"}
+  variable it set to printEach(lst)
   set lst to it.asList()
   print lst
 end main
@@ -119,7 +119,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var arr set to [1, 3, 6]
+  variable arr set to [1, 3, 6]
   call printEach(arr)
 end main
   
@@ -155,7 +155,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var s set to "Foo"
+  variable s set to "Foo"
   call printEach(s)
 end main
   
@@ -191,7 +191,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var it set to {1.0, 2, 3, 4, 5, 6, 7}
+  variable it set to {1.0, 2, 3, 4, 5, 6, 7}
   call printAsIter(it)
   call printasList(it)
 end main
@@ -201,7 +201,7 @@ procedure printAsIter(target as Iterable<of Float>)
 end procedure
   
 procedure printasList(target as Iterable<of Float>)
-  var some set to target.asList()
+  variable some set to target.asList()
   print some[3..7]
 end procedure`;
 
@@ -235,7 +235,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var f set to new Foo()
+  variable f set to new Foo()
   print f.it
 end main
   
@@ -284,8 +284,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var foo set to new Foo()
-  var foo1 set to new Foo()
+  variable foo set to new Foo()
+  variable foo1 set to new Foo()
   call foo.update()
   print foo.i
   print foo1.i
@@ -366,7 +366,7 @@ end procedure`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var it set to {1,2,3,4,5,6,7}
+  variable it set to {1,2,3,4,5,6,7}
   call printEach(it)
 end main
 
@@ -389,7 +389,7 @@ end procedure`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var it set to {1,2,3,4,5,6,7}
+  variable it set to {1,2,3,4,5,6,7}
   call printEach(it)
 end main
 
@@ -408,7 +408,7 @@ end procedure`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var it set to {1,2,3,4,5,6,7}
+  variable it set to {1,2,3,4,5,6,7}
   call printEach(it)
 end main
 
@@ -427,7 +427,7 @@ end procedure`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var it set to {1,2,3,4,5,6,7}
+  variable it set to {1,2,3,4,5,6,7}
   set it to it.map(lambda x as Int => x)
   print it
 end main`;

@@ -22,7 +22,7 @@ main
   call st.enqueue("pear")
   print st.length()
   print st.peek()
-  var fruit set to st.dequeue()
+  variable fruit set to st.dequeue()
   print fruit
   set fruit to st.dequeue()
   print fruit

@@ -168,7 +168,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}.asIter()
+  variable source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}.asIter()
   set source to source.map(lambda x as Int => x + 1)
   print source.asArray()
 end main`;
@@ -253,7 +253,7 @@ return [main, _tests];}`;
 
 constant source set to {"three", "four"}
 main
-  var ed set to {"one":1, "two":2}
+  variable ed set to {"one":1, "two":2}
   set ed to source.reduce(ed, lambda d as ImmutableDictionary<of String, Int>, x as String => d.withPutAtKey(x, 1))
   print ed
 end main`;

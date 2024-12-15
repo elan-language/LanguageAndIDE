@@ -1,7 +1,7 @@
 # 47b931c436eeb629865c07bae5e448cca3cd163576a7f7269f607f636a4173f9 Elan Beta 4 valid
 
 main
-  var t set to new Turtle()
+  variable t set to new Turtle()
   call t.placeAt(20, 20)
   call t.turn(90)
   call t.show()

@@ -16,7 +16,7 @@ suite("Repeat Loop", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to 0
+  variable x set to 0
   repeat
     set x to x + 1
   end repeat when x >= 10
@@ -46,10 +46,10 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var t set to 0
-  var x set to 0
+  variable t set to 0
+  variable x set to 0
   repeat
-    var y set to 0
+    variable y set to 0
       repeat
         set y to y + 1
         set t to t + 1
@@ -88,7 +88,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to 0
+  variable x set to 0
   repeat
     set x to x + 1
   end repeat when var x >= 10
@@ -106,7 +106,7 @@ end main
 
 main
   repeat
-    var x set to  1
+    variable x set to  1
   end repeat when  x >= 10
 end main
 `;
@@ -125,7 +125,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to 0
+  variable x set to 0
   repeat x >= 10
     set x to x + 1
   end repeat 
@@ -142,7 +142,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to 0
+  variable x set to 0
   repeat
     set x to x + 1
   end repeat when 
@@ -159,7 +159,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to 0
+  variable x set to 0
   repeat
     set x to x + 1
   end repeat when >= 10
@@ -176,7 +176,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x set to 0
+  variable x set to 0
   repeat
     set x to x + 1
   end repeat when x
