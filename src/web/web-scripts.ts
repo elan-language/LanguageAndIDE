@@ -453,13 +453,14 @@ function canUndo() {
   return (isParsing && previousFileIndex > -1) || (!isParsing && currentFileIndex > -1);
 }
 
-function setStatus(html: HTMLDivElement, status: string): void {
+function setStatus(html: HTMLDivElement, status: string, showTooltip = true): void {
   html.setAttribute("class", status);
   const tooltip =
-    status === "error" || status === "warning"
+    showTooltip && (status === "error" || status === "warning")
       ? "Click to navigate to first issue in (expanded) code"
       : "";
   html.setAttribute("title", tooltip);
+  html.innerText = status === "default" ? "" : status;
 }
 
 function updateDisplayValues() {
@@ -467,9 +468,7 @@ function updateDisplayValues() {
   setStatus(parseStatus, file.readParseStatusForDashboard());
   setStatus(compileStatus, file.readCompileStatusForDashboard());
   setStatus(testStatus, file.readTestStatusForDashboard());
-  //Display run status
-  runStatus.setAttribute("class", file.readRunStatusForDashboard());
-
+  setStatus(runStatus, file.readRunStatusForDashboard(), false);
   // Button control
   const isEmpty = file.readParseStatus() === ParseStatus.default;
   const isParsing = file.readParseStatus() === ParseStatus.valid;
