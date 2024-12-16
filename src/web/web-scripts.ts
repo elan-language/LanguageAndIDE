@@ -453,11 +453,20 @@ function canUndo() {
   return (isParsing && previousFileIndex > -1) || (!isParsing && currentFileIndex > -1);
 }
 
+function setStatus(html: HTMLDivElement, status: string): void {
+  html.setAttribute("class", status);
+  const tooltip =
+    status === "error" || status === "warning"
+      ? "Click to navigate to first issue in (expanded) code"
+      : "";
+  html.setAttribute("title", tooltip);
+}
+
 function updateDisplayValues() {
   updateNameAndSavedStatus();
-  parseStatus.setAttribute("class", file.readParseStatusForDashboard());
-  compileStatus.setAttribute("class", file.readCompileStatusForDashboard());
-  testStatus.setAttribute("class", file.readTestStatusForDashboard());
+  setStatus(parseStatus, file.readParseStatusForDashboard());
+  setStatus(compileStatus, file.readCompileStatusForDashboard());
+  setStatus(testStatus, file.readTestStatusForDashboard());
   //Display run status
   runStatus.setAttribute("class", file.readRunStatusForDashboard());
 

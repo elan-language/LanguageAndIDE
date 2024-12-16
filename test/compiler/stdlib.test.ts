@@ -885,13 +885,13 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  let r be "[a-c]*".asRegExp("")
+  let r be "[a-c]*".asRegExp()
   print r
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  const r = _stdlib.asRegExp("[a-c]*", "");
+  const r = _stdlib.asRegExp("[a-c]*");
   system.printLine(_stdlib.asString(r));
 }
 return [main, _tests];}`;

@@ -1015,11 +1015,15 @@ export class StdLib {
     return r.test(a);
   }
 
-  @elanFunction(["", "flags"], FunctionOptions.pureExtension)
-  asRegExp(pattern: string, flags: string): RegExp {
-    return new RegExp(pattern, flags);
+  @elanFunction([], FunctionOptions.pureExtension)
+  asRegExp(pattern: string): RegExp {
+    return new RegExp(pattern, "");
   }
-  
+  /*   @elanFunction(["", "flags"], FunctionOptions.pureExtension)
+  asRegExpWithFlags(pattern: string, flags: string): RegExp {
+    return new RegExp(pattern, flags);
+  } */
+
   //File operations
   @elanFunction([], FunctionOptions.impureAsync, ElanClass(TextFileReader))
   openFileForReading(): Promise<TextFileReader> {
