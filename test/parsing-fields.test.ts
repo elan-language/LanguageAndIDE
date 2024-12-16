@@ -179,4 +179,13 @@ suite("Field Parsing Tests", () => {
     assert.equal(args.readParseStatus(), ParseStatus.valid);
     assert.equal(args.textAsSource(), `a`);
   });
+  test("#950 space at start of var-def-field is ignored", () => {
+    const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
+    const v = new VarStatement(main);
+    const name = v.name;
+    name.setFieldToKnownValidText(" ");
+    name.parseCurrentText();
+    assert.equal(name.readParseStatus(), ParseStatus.incomplete);
+    assert.equal(name.textAsSource(), ``);
+  });
 });

@@ -1,10 +1,6 @@
 import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
 
-import { Alternatives } from "../parse-nodes/alternatives";
-import { DeconstructedList } from "../parse-nodes/deconstructed-list";
-import { DeconstructedTuple } from "../parse-nodes/deconstructed-tuple";
-import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { VarDefNode } from "../parse-nodes/var-def-node";
 import { transforms } from "../syntax-nodes/ast-helpers";
@@ -29,7 +25,7 @@ export class VarDefField extends AbstractField {
     source.readUntil(/(\s+((set to)|(be))\s+)|\r|\n/);
 
   isEndMarker(key: string) {
-    return key === " ";
+    return this.text.length === 0 ? false : key === " ";
   }
 
   symbolCompletion(): string {
