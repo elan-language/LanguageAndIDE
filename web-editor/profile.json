@@ -3,7 +3,7 @@
 
 "globals":["main", "procedure", "function",  "constant", "test", "enum", "class", "abstract","record","#"],
 "statements":["assert", "call", "case", "default", "each", "else", "for", "if", "let", "print",
-               "repeat", "set", "switch", "throw", "try", "var", "while", "#"],
+               "repeat", "set", "switch", "throw", "try", "variable", "while", "#"],
 "class_members": ["function", "procedure", "property","private function", "private procedure", "private property",
                   "abstract function", "abstract procedure", "abstract property","#"],
 
