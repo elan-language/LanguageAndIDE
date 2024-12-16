@@ -1,5 +1,6 @@
 import { CompileError } from "../compile-error";
 import {
+  getId,
   mustBeCompatibleType,
   mustBeIndexableSymbol,
   mustBeRangeableSymbol,
@@ -82,8 +83,8 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
     return [UnknownType.Instance, UnknownType.Instance];
   }
 
-  compileIndex(rootType: SymbolType, index: IndexAsn, q: string, idx: string) {
-    mustBeIndexableSymbol(rootType, true, this.compileErrors, this.fieldId);
+  compileIndex(id : string, rootType: SymbolType, index: IndexAsn, q: string, idx: string) {
+    mustBeIndexableSymbol(id, rootType, true, this.compileErrors, this.fieldId);
     const [indexType] = this.getIndexType(rootType);
     mustBeCompatibleType(indexType, index.index1.symbolType(), this.compileErrors, this.fieldId);
 
@@ -109,7 +110,7 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
       const rootType = this.precedingNode!.symbolType();
 
       if (this.isIndex()) {
-        code = this.compileIndex(rootType, this, code, idx);
+        code = this.compileIndex(getId(this.precedingNode), rootType, this, code, idx);
       }
       if (this.isRange()) {
         mustBeRangeableSymbol(rootType, true, this.compileErrors, this.fieldId);
