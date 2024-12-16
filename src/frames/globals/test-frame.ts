@@ -11,6 +11,7 @@ import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { GlobalFrame } from "../interfaces/global-frame";
 import { ignoreKeyword, testKeyword } from "../keywords";
+import { parentHelper_compileFrames } from "../parent-helpers";
 import { AssertStatement } from "../statements/assert-statement";
 import { DisplayStatus, TestStatus } from "../status-enums";
 import { Transforms } from "../syntax-nodes/transforms";
@@ -101,11 +102,21 @@ end test\r
     return this.parseStandardEnding(source, "end test");
   }
 
+  private compileTestBody(transforms: Transforms) {
+    const body = this.compileChildren(transforms);
+
+    if (!this.ignored || this.aggregateCompileErrors().length > 0) {
+      return body;
+    }
+
+    // just return the asserts
+    return parentHelper_compileFrames(this.getAsserts(), transforms);
+  }
+
   public compile(transforms: Transforms): string {
     this.compileErrors = [];
-
     return `_tests.push(["${this.htmlId}", async (_outcomes) => {\r
-${this.compileChildren(transforms)}\r
+${this.compileTestBody(transforms)}\r
 }]);\r\n`;
   }
 

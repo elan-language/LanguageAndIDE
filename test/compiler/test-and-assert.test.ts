@@ -678,7 +678,7 @@ return [main, _tests];}`;
     ]);
   });
 
-  test("Pass_IgnoreInfiniteTest", async () => {
+  test("Pass_IgnoreInfiniteTest1", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -723,6 +723,48 @@ return [main, _tests];}`;
     ]);
   });
 
+  test("Pass_IgnoreInfiniteTest2", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+end main
+
+function square(x as Float) returns Float
+  return x ^ 2
+end function
+
+ignore test square
+  while true
+  end while
+  assert square(3) is 3 * 3
+end test
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+
+}
+
+function square(x) {
+  return x ** 2;
+}
+
+_tests.push(["test10", async (_outcomes) => {
+  _outcomes.push(system.assert("", "", "assert16", _stdlib, true));
+}]);
+return [main, _tests];}`;
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertTestObjectCodeExecutes(fileImpl, [
+      ["test10", [new AssertOutcome(TestStatus.ignored, "", "", "assert16")]],
+    ]);
+  });
+
   test("Fail_AssertOutsideAtest", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
@@ -761,6 +803,28 @@ end test
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["'squareTest' is not defined"]);
+  });
+
+  test("Fail_ignoredFailCompile", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+
+end main
+
+function square(x as Float) returns Float
+  return x ^ 2
+end function
+
+ignore test fred
+  assert square(3, 2) is 93
+end test
+`;
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Too many argument(s). Expected: x (Float)"]);
   });
 
   test("Fail_useTestAsAReference", async () => {

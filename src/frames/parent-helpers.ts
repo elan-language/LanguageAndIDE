@@ -117,16 +117,20 @@ export function parentHelper_renderChildrenAsSource(parent: Parent): string {
   return result;
 }
 
-export function parentHelper_compileChildren(parent: Parent, transforms: Transforms): string {
+export function parentHelper_compileFrames(frames: Frame[], transforms: Transforms): string {
   let result = "";
-  if (parent.getChildren().length > 0) {
+  if (frames.length > 0) {
     const ss: Array<string> = [];
-    for (const frame of parent.getChildren().filter((s) => !("isSelector" in s))) {
+    for (const frame of frames.filter((s) => !("isSelector" in s))) {
       ss.push(frame.compile(transforms));
     }
     result = ss.join("\r\n");
   }
   return result;
+}
+
+export function parentHelper_compileChildren(parent: Parent, transforms: Transforms): string {
+  return parentHelper_compileFrames(parent.getChildren(), transforms);
 }
 
 export function parentHelper_insertOrGotoChildSelector(
