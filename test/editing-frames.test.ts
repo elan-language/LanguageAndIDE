@@ -41,6 +41,7 @@ import {
   shift_up,
   up,
 } from "./testHelpers";
+import { ElanPasteError } from "../src/elan-paste-error";
 
 suite("Editing Frames", () => {
   test("Enter on a frame to Insert new code - creating a selector", () => {
@@ -382,7 +383,11 @@ suite("Editing Frames", () => {
     main.processKey(shift_enter());
     const globalSelect = file.getChildren()[0];
     assert.equal(globalSelect.getHtmlId(), "select7");
-    globalSelect.processKey(ctrl_v());
+    try {
+      globalSelect.processKey(ctrl_v());
+    } catch (e) {
+      assert.equal("Paste Failed: Cannot paste frame into location", (e as ElanPasteError).message);
+    }
     const newFirst = file.getChildren()[0];
     assert.equal(newFirst.renderAsHtml(), globalSelect.renderAsHtml());
   });
@@ -405,7 +410,11 @@ suite("Editing Frames", () => {
     const globalSelect = file.getChildren()[0];
     assert.equal(globalSelect.getHtmlId(), "select7");
     globalSelect.select(true, false);
-    globalSelect.processKey(ctrl_v());
+    try {
+      globalSelect.processKey(ctrl_v());
+    } catch (e) {
+      assert.equal("Paste Failed: Cannot paste frame into location", (e as ElanPasteError).message);
+    }
     const newFirst = file.getChildren()[0];
     assert.equal(newFirst.renderAsSource(), globalSelect.renderAsSource());
     //Now paste back into main
@@ -429,7 +438,11 @@ suite("Editing Frames", () => {
     class1.processKey(enter());
     const sel18 = file.getById("select18") as GlobalSelector;
     sel18.select(true, false);
-    sel18.processKey(ctrl_v());
+    try {
+      sel18.processKey(ctrl_v());
+    } catch (e) {
+      assert.equal("Paste Failed: Cannot paste frame into location", (e as ElanPasteError).message);
+    }
     assert.equal(scratchpad.readFrames()?.length, 1);
   });
   test("#644 cutting statement when there is already a selector following", async () => {
