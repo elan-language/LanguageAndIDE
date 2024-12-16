@@ -10,6 +10,7 @@ import { Parent } from "./interfaces/parent";
 import { Profile } from "./interfaces/profile";
 import { StatementFactory } from "./interfaces/statement-factory";
 import {
+  isNotSelectorFrame,
   parentHelper_addChildAfter,
   parentHelper_addChildBefore,
   parentHelper_aggregateCompileErrorsOfChildren,
@@ -218,7 +219,7 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     let result = "";
     if (this._children.length > 0) {
       const ss: Array<string> = [];
-      for (const frame of this._children.filter((s) => !("isSelector" in s))) {
+      for (const frame of this._children.filter(isNotSelectorFrame)) {
         ss.push(frame.compile(transforms));
       }
       result = ss.join("\r\n");

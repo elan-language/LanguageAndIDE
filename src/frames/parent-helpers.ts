@@ -1,5 +1,6 @@
 import { AbstractSelector } from "./abstract-selector";
 import { CompileError } from "./compile-error";
+import { isSelector } from "./frame-helpers";
 import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
 import { CompileStatus, ParseStatus } from "./status-enums";
@@ -105,11 +106,15 @@ export function parentHelper_renderChildrenAsHtml(parent: Parent): string {
   return ss.join("\n");
 }
 
+export function isNotSelectorFrame(f: Frame) {
+  return !!f && !("isSelector" in f);
+}
+
 export function parentHelper_renderChildrenAsSource(parent: Parent): string {
   let result = "";
   if (parent.getChildren().length > 0) {
     const ss: Array<string> = [];
-    for (const frame of parent.getChildren().filter((s) => !("isSelector" in s))) {
+    for (const frame of parent.getChildren().filter(isNotSelectorFrame)) {
       ss.push(frame.renderAsSource());
     }
     result = ss.join("\r\n");
@@ -121,7 +126,7 @@ export function parentHelper_compileFrames(frames: Frame[], transforms: Transfor
   let result = "";
   if (frames.length > 0) {
     const ss: Array<string> = [];
-    for (const frame of frames.filter((s) => !("isSelector" in s))) {
+    for (const frame of frames.filter(isNotSelectorFrame)) {
       ss.push(frame.compile(transforms));
     }
     result = ss.join("\r\n");
