@@ -418,6 +418,7 @@ function updateDisplayValues() {
   saveButton.hidden = !!autoSaveFileHandle;
 
   if (isRunning || isTestRunning) {
+    codeContainer?.classList.add("running");
     disable(runButton, isRunning ? "Program is already running" : "Tests are running");
     enable(stopButton, isRunning ? "Stop the program" : "Stop the Tests");
     const msg = isRunning ? "Program is running" : "Tests are running";
@@ -435,6 +436,7 @@ function updateDisplayValues() {
       elem.setAttribute("hidden", "");
     }
   } else {
+    codeContainer?.classList.remove("running");
     const msg = "Program is not running";
     disable(stopButton, msg);
     //disable(pauseButton, msg);
