@@ -9,7 +9,7 @@ export class LitRegExp extends AbstractSequence {
   open: PunctuationNode | undefined;
   content: RegExMatchNode | undefined;
   flags: OptionalNode | undefined;
-  close: PunctuationNode| undefined;
+  close: PunctuationNode | undefined;
 
   constructor() {
     super();
@@ -37,8 +37,11 @@ export class LitRegExp extends AbstractSequence {
   renderAsHtml(): string {
     let flags = ``;
     if (this.flags) {
-      flags = this.flags!.matchedText.length > 0 ? `<el-regex>${this.flags?.renderAsHtml()}</el-regex>` : ``;
-    } 
+      flags =
+        this.flags!.matchedText.length > 0
+          ? `<el-regex>${this.flags?.renderAsHtml()}</el-regex>`
+          : ``;
+    }
     return `/<el-regex>${this.content?.renderAsHtml()}</el-regex>/${flags}`;
   }
 }
