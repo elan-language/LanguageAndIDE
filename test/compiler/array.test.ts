@@ -533,6 +533,21 @@ end main
     assertDoesNotCompile(fileImpl, ["Cannot index Int"]);
   });
 
+  test("Fail_ApplyIndexToUnknown", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable b set to a[0]
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Cannot index Unknown"]);
+  });
+
   test("Fail_2DArrayCreatedByDoubleIndex", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
