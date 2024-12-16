@@ -1,3 +1,4 @@
+import { ElanPasteError } from "../elan-paste-error";
 import { AbstractFrame } from "./abstract-frame";
 import { CodeSource } from "./code-source";
 import { isFrameWithStatements } from "./frame-helpers";
@@ -196,20 +197,24 @@ export abstract class AbstractSelector extends AbstractFrame {
     const parent = this.getParent();
     const sp = this.getScratchPad();
     const frames = sp.readFrames();
-    let ok = true;
-    if (frames && frames.length > 0) {
-      for (const fr of frames) {
+    let ok = frames && frames.length > 0;
+    if (ok) {
+      for (const fr of frames!) {
         ok = ok && this.canBePastedIn(fr);
       }
       if (ok) {
-        for (const fr of frames) {
+        for (const fr of frames!) {
           parent.addChildBefore(fr, this);
           fr.setParent(parent);
           fr.select(true, false);
         }
-        sp.remove(frames);
+        sp.remove(frames!);
         this.deleteIfPermissible();
+      } else {
+        throw new ElanPasteError("Paste Failed: Cannot paste frame into location");
       }
+    } else {
+      throw new ElanPasteError("Paste Failed: Nothing to paste");
     }
   }
 
