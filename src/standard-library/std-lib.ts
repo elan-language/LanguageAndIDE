@@ -1019,7 +1019,7 @@ export class StdLib {
   asRegExp(pattern: string): RegExp {
     return new RegExp(pattern, "");
   }
-/*   @elanFunction(["", "flags"], FunctionOptions.pureExtension)
+  /*   @elanFunction(["", "flags"], FunctionOptions.pureExtension)
   asRegExpWithFlags(pattern: string, flags: string): RegExp {
     return new RegExp(pattern, flags);
   } */
