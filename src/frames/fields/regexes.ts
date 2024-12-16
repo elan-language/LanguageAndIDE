@@ -13,4 +13,5 @@ export class Regexes {
   static readonly nonEmptyStringContent = /^[^{"]+/;
   static readonly leadingSpaceNotNL = /^[^\S\r\n]+/;
   static readonly anythingExceptUnescapedForwardSlash = /^([^\/\\]|\\.)+/;
+  static readonly flags = /^[dgimsuvy]*/;
 }

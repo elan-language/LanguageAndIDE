@@ -1703,6 +1703,28 @@ suite("Parsing Nodes", () => {
       `/<el-regex>abc+.*</el-regex>/`,
     );
   });
+  test("LitRegExp with flags", () => {
+    testNodeParse(
+      new LitRegExp(),
+      `/abc+.*/gm`,
+      ParseStatus.valid,
+      `/abc+.*/gm`,
+      "",
+      "/abc+.*/gm",
+      `/<el-regex>abc+.*</el-regex>/<el-regex>gm</el-regex>`,
+    );
+  });
+  test("LitRegExp with invalid flags", () => {
+    testNodeParse(
+      new LitRegExp(),
+      `/abc+.*/x`,
+      ParseStatus.valid,
+      `/abc+.*/`,
+      "x",
+      "/abc+.*/",
+      `/<el-regex>abc+.*</el-regex>/`,
+    );
+  });
   test("not(a+b)", () => {
     testNodeParse(
       new ExprNode(),
