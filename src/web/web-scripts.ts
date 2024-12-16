@@ -39,9 +39,9 @@ const undoButton = document.getElementById("undo") as HTMLButtonElement;
 const redoButton = document.getElementById("redo") as HTMLButtonElement;
 
 const codeTitle = document.getElementById("code-title") as HTMLDivElement;
-const parse = document.getElementById("parse") as HTMLDivElement;
-const compile = document.getElementById("compile") as HTMLDivElement;
-const test = document.getElementById("test") as HTMLDivElement;
+const parseStatus = document.getElementById("parse") as HTMLDivElement;
+const compileStatus = document.getElementById("compile") as HTMLDivElement;
+const testStatus = document.getElementById("test") as HTMLDivElement;
 const runStatus = document.getElementById("run-status") as HTMLDivElement;
 const codeControls = document.getElementById("code-controls") as HTMLDivElement;
 const demoFiles = document.getElementsByClassName("demo-file");
@@ -203,19 +203,46 @@ function warningOrError(tgt: HTMLDivElement): [boolean, string] {
   return [false, ""];
 }
 
-parse.addEventListener("click", async (event) => {
+function parentId(e: Element): string {
+  if (e.parentElement) {
+    if (e.parentElement.id) {
+      return e.parentElement.id;
+    }
+    return parentId(e.parentElement);
+  }
+
+  return "";
+}
+
+async function handleStatusClick(event: Event, tag: string, useParent: boolean) {
   const pe = event as PointerEvent;
   const [goto, cls] = warningOrError(pe.target as HTMLDivElement);
   if (goto) {
-    const fields = document.getElementsByTagName("el-field");
-    for (const field of fields) {
-      if (field.classList.contains(cls)) {
+    const elements = document.getElementsByTagName(tag);
+    for (const element of elements) {
+      // if we're using the parent id we expect text in el-msg
+      if (element.classList.contains(cls) && (!useParent || element.textContent)) {
         const mk = { control: false, shift: false, alt: false };
-        await handleEditorEvent(event, "click", "frame", mk, field.id);
+        const id = useParent ? parentId(element) : element.id;
+        await handleEditorEvent(event, "click", "frame", mk, id);
         return;
       }
     }
   }
+  event.preventDefault();
+  event.stopPropagation();
+}
+
+parseStatus.addEventListener("click", async (event) => {
+  await handleStatusClick(event, "el-field", false);
+});
+
+compileStatus.addEventListener("click", async (event) => {
+  await handleStatusClick(event, "el-msg", true);
+});
+
+testStatus.addEventListener("click", async (event) => {
+  await handleStatusClick(event, "el-msg", true);
 });
 
 // from https://stackoverflow.com/questions/4565112/how-to-find-out-if-the-user-browser-is-chrome
@@ -427,9 +454,9 @@ function canUndo() {
 
 function updateDisplayValues() {
   updateNameAndSavedStatus();
-  parse.setAttribute("class", file.readParseStatusForDashboard());
-  compile.setAttribute("class", file.readCompileStatusForDashboard());
-  test.setAttribute("class", file.readTestStatusForDashboard());
+  parseStatus.setAttribute("class", file.readParseStatusForDashboard());
+  compileStatus.setAttribute("class", file.readCompileStatusForDashboard());
+  testStatus.setAttribute("class", file.readTestStatusForDashboard());
   //Display run status
   runStatus.setAttribute("class", file.readRunStatusForDashboard());
 
