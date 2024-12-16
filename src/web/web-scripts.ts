@@ -193,6 +193,31 @@ for (const elem of demoFiles) {
   });
 }
 
+function warningOrError(tgt: HTMLDivElement): [boolean, string] {
+  if (tgt.classList.contains("warning")) {
+    return [true, "warning"];
+  }
+  if (tgt.classList.contains("error")) {
+    return [true, "error"];
+  }
+  return [false, ""];
+}
+
+parse.addEventListener("click", async (event) => {
+  const pe = event as PointerEvent;
+  const [goto, cls] = warningOrError(pe.target as HTMLDivElement);
+  if (goto) {
+    const fields = document.getElementsByTagName("el-field");
+    for (const field of fields) {
+      if (field.classList.contains(cls)) {
+        const mk = { control: false, shift: false, alt: false };
+        await handleEditorEvent(event, "click", "frame", mk, field.id);
+        return;
+      }
+    }
+  }
+});
+
 // from https://stackoverflow.com/questions/4565112/how-to-find-out-if-the-user-browser-is-chrome
 function checkIsChrome() {
   // please note,
