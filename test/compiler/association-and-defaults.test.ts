@@ -131,7 +131,7 @@ main
   print g.ai
   print g.t
   print g.ff("a", "b")
-  print "aa".matchesRegExp(g.r)
+  print "aa".testRegExp(g.r)
 end main
 
 class Game
@@ -169,7 +169,7 @@ async function main() {
   system.printLine(_stdlib.asString(g.ai));
   system.printLine(_stdlib.asString(g.t));
   system.printLine(_stdlib.asString(g.ff("a", "b")));
-  system.printLine(_stdlib.asString(_stdlib.matchesRegExp("aa", g.r)));
+  system.printLine(_stdlib.asString(_stdlib.testRegExp("aa", g.r)));
 }
 
 class Game {

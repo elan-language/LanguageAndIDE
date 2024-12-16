@@ -18,16 +18,16 @@ suite("RegExp", () => {
 main
   variable r set to /a+/
   print r
-  print "aa".matchesRegExp(r)
-  print "b".matchesRegExp(r)
+  print "aa".testRegExp(r)
+  print "b".testRegExp(r)
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var r = /a+/;
   system.printLine(_stdlib.asString(r));
-  system.printLine(_stdlib.asString(_stdlib.matchesRegExp("aa", r)));
-  system.printLine(_stdlib.asString(_stdlib.matchesRegExp("b", r)));
+  system.printLine(_stdlib.asString(_stdlib.testRegExp("aa", r)));
+  system.printLine(_stdlib.asString(_stdlib.testRegExp("b", r)));
 }
 return [main, _tests];}`;
 
@@ -49,7 +49,7 @@ main
 end main
 
 function testRegex(r as RegExp) returns Boolean
-  return "aa".matchesRegExp(r)
+  return "aa".testRegExp(r)
 end function`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -59,7 +59,7 @@ async function main() {
 }
 
 function testRegex(r) {
-  return _stdlib.matchesRegExp("aa", r);
+  return _stdlib.testRegExp("aa", r);
 }
 return [main, _tests];}`;
 
@@ -78,7 +78,7 @@ return [main, _tests];}`;
 main
   variable r set to empty RegExp
   set r to testRegex()
-  print "aa".matchesRegExp(r)
+  print "aa".testRegExp(r)
 end main
 
 function testRegex() returns RegExp
@@ -89,7 +89,7 @@ end function`;
 async function main() {
   var r = system.emptyRegExp();
   r = testRegex();
-  system.printLine(_stdlib.asString(_stdlib.matchesRegExp("aa", r)));
+  system.printLine(_stdlib.asString(_stdlib.testRegExp("aa", r)));
 }
 
 function testRegex() {
@@ -111,20 +111,20 @@ return [main, _tests];}`;
 
 main
   variable r set to /a\\/b/
-  print "a/b".matchesRegExp(r)
-  print "a\/b".matchesRegExp(r)
-  print "a\b".matchesRegExp(r)
-  print "a\\/b".matchesRegExp(r)
+  print "a/b".testRegExp(r)
+  print "a\/b".testRegExp(r)
+  print "a\b".testRegExp(r)
+  print "a\\/b".testRegExp(r)
 
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var r = /a\\/b/;
-  system.printLine(_stdlib.asString(_stdlib.matchesRegExp("a/b", r)));
-  system.printLine(_stdlib.asString(_stdlib.matchesRegExp("a/b", r)));
-  system.printLine(_stdlib.asString(_stdlib.matchesRegExp("a\b", r)));
-  system.printLine(_stdlib.asString(_stdlib.matchesRegExp("a\\/b", r)));
+  system.printLine(_stdlib.asString(_stdlib.testRegExp("a/b", r)));
+  system.printLine(_stdlib.asString(_stdlib.testRegExp("a/b", r)));
+  system.printLine(_stdlib.asString(_stdlib.testRegExp("a\b", r)));
+  system.printLine(_stdlib.asString(_stdlib.testRegExp("a\\/b", r)));
 }
 return [main, _tests];}`;
 
@@ -155,8 +155,8 @@ end main`;
 
 main
   variable r set to "/a+/"
-  print "aa".matchesRegExp(r)
-  print "b".matchesRegExp(r)
+  print "aa".testRegExp(r)
+  print "b".testRegExp(r)
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
