@@ -850,4 +850,58 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "[a] [b]{a} {b}");
   });
+  test("Pass_testRegExp", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  let s1 be "cbababbc"
+  let s2 be "cbabdabbc"
+  let result1 be s1.testRegExp(/[a-c]*/)
+  let result2 be s2.testRegExp(/^[a-c]*$/)
+  print result1
+  print result2
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  const s1 = "cbababbc";
+  const s2 = "cbabdabbc";
+  const result1 = _stdlib.testRegExp(s1, /[a-c]*/);
+  const result2 = _stdlib.testRegExp(s2, /^[a-c]*$/);
+  system.printLine(_stdlib.asString(result1));
+  system.printLine(_stdlib.asString(result2));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "truefalse");
+  });
+  test("Pass_asRegExp", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  let r be "[a-c]*".asRegExp("")
+  print r
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  const r = _stdlib.asRegExp("[a-c]*", "");
+  system.printLine(_stdlib.asString(r));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "A RegExp");
+  });
 });

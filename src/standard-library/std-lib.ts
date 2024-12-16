@@ -1011,10 +1011,15 @@ export class StdLib {
   }
 
   @elanFunction(["", "regExp"], FunctionOptions.pureExtension)
-  matchesRegExp(a: string, r: RegExp): boolean {
+  testRegExp(a: string, r: RegExp): boolean {
     return r.test(a);
   }
 
+  @elanFunction(["", "flags"], FunctionOptions.pureExtension)
+  asRegExp(pattern: string, flags: string): RegExp {
+    return new RegExp(pattern, flags);
+  }
+  
   //File operations
   @elanFunction([], FunctionOptions.impureAsync, ElanClass(TextFileReader))
   openFileForReading(): Promise<TextFileReader> {
