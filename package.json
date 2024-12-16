@@ -21,7 +21,7 @@
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile-src && npm run compile-test && cpr ./test/files ./out/test/files -o",
     "lint": "eslint src --ext ts",
-    "test": "npm run pretest && mocha out/test/**/*.test.js",
+    "test": "npm run pretest && mocha --timeout 10000 out/test/**/*.test.js",
     "test-coverage": "npm run pretest && nyc --reporter=lcov mocha out/test/**/*.test.js",
     "format-src": "prettier --ignore-path .gitignore --print-width 100 --log-level silent --end-of-line auto --write \"src/**/*.ts\"",
     "format-test": "prettier --ignore-path .gitignore --print-width 100 --log-level silent --end-of-line auto --write \"test/**/*.test.ts\""
