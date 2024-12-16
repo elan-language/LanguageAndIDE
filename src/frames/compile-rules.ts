@@ -269,14 +269,20 @@ export function mustBePureFunctionSymbol(
 }
 
 export function mustBeIndexableSymbol(
+  symbolId: string,
   symbolType: SymbolType,
   read: boolean,
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (!(read && (isIndexableType(symbolType) || isAnyDictionaryType(symbolType)))) {
+  if (symbolType instanceof UnknownType) {
     compileErrors.push(
-      new NotIndexableCompileError(symbolType.name, location, symbolType instanceof UnknownType),
+      new UndefinedSymbolCompileError(symbolId, "", location),
+    );
+  }
+  else if (!(read && (isIndexableType(symbolType) || isAnyDictionaryType(symbolType)))) {
+    compileErrors.push(
+      new NotIndexableCompileError(symbolType.name, location, false),
     );
   }
 }
@@ -892,7 +898,7 @@ export function mustBeCompatibleNode(
   mustBeCompatibleType(lst, rst, compileErrors, location);
 }
 
-function getId(astNode: AstNode) {
+export function getId(astNode: AstNode) {
   if (isAstIdNode(astNode)) {
     return astNode.id;
   }

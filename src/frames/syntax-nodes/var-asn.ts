@@ -7,6 +7,7 @@ import {
 } from "../compile-rules";
 import { AstIndexableNode } from "../interfaces/ast-indexable-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
+import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { IntType } from "../symbols/int-type";
@@ -60,8 +61,8 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
     return [UnknownType.Instance, UnknownType.Instance];
   }
 
-  compileIndex(rootType: SymbolType, index: IndexAsn, prefix: string, postfix: string) {
-    mustBeIndexableSymbol(rootType, true, this.compileErrors, this.fieldId);
+  compileIndex(id : string, rootType: SymbolType, index: IndexAsn, prefix: string, postfix: string) {
+    mustBeIndexableSymbol(id, rootType, true, this.compileErrors, this.fieldId);
     const [indexType] = this.getIndexAndOfType(rootType);
     mustBeCompatibleType(indexType, index.index1.symbolType(), this.compileErrors, this.fieldId);
 
@@ -93,7 +94,7 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
         : "";
 
     return this.isIndex()
-      ? this.compileIndex(this.rootSymbolType(), this.index!, prefix, postfix)
+      ? this.compileIndex(symbol.symbolId, this.rootSymbolType(), this.index!, prefix, postfix)
       : `${prefix}${this.id}${postfix}`;
   }
 
