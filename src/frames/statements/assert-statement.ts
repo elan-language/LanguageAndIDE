@@ -4,6 +4,7 @@ import { CodeSource } from "../code-source";
 import { AssertActualField } from "../fields/assert-actual-field";
 import { ExpressionField } from "../fields/expression-field";
 import { helper_compileMsgAsHtml } from "../frame-helpers";
+import { TestFrame } from "../globals/test-frame";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
@@ -54,9 +55,11 @@ export class AssertStatement extends AbstractFrame implements Statement {
 
   compile(transforms: Transforms): string {
     this.compileErrors = [];
+    const test = this.getParent() as TestFrame;
+    const ignored = test.ignored;
     const expected = this.expected.compile(transforms);
     const actual = this.actual.compile(transforms);
-    return `${this.indent()}_outcomes.push(system.assert(${actual}, ${expected}, "${this.htmlId}", _stdlib));`;
+    return `${this.indent()}_outcomes.push(system.assert(${ignored ? `""` : actual}, ${ignored ? `""` : expected}, "${this.htmlId}", _stdlib, ${ignored}));`;
   }
 
   setOutcome(outcome: AssertOutcome) {
@@ -64,7 +67,7 @@ export class AssertStatement extends AbstractFrame implements Statement {
   }
 
   getTestStatus(): TestStatus {
-    return this.outcome ? this.outcome.status : TestStatus.pending;
+    return this.outcome ? this.outcome.status : TestStatus.running;
   }
 
   compileOrTestMsgAsHtml(): string {
@@ -80,7 +83,7 @@ export class AssertStatement extends AbstractFrame implements Statement {
   testMsgAsHtml(): string {
     let cls = "";
     let msg = "";
-    if (!this.outcome) {
+    if (!this.outcome || this.outcome.status === TestStatus.ignored) {
       cls = DisplayStatus[DisplayStatus.warning];
       msg = `not run`;
     } else if (this.outcome.status === TestStatus.fail) {

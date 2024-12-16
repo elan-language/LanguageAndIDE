@@ -193,7 +193,7 @@ export function helper_testStatusAsDisplayStatus(ts: TestStatus): DisplayStatus 
   let overall = DisplayStatus.default;
   if (ts === TestStatus.pass) {
     overall = DisplayStatus.ok;
-  } else if (ts === TestStatus.pending) {
+  } else if (ts === TestStatus.running || ts === TestStatus.ignored) {
     overall = DisplayStatus.warning;
   } else if (ts === TestStatus.fail || ts === TestStatus.error) {
     overall = DisplayStatus.error;

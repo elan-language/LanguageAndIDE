@@ -42,10 +42,10 @@ function square(x) {
 }
 
 _tests.push(["test10", async (_outcomes) => {
-  _outcomes.push(system.assert(square(3), 9, "assert13", _stdlib));
+  _outcomes.push(system.assert(square(3), 9, "assert13", _stdlib, false));
   var actual = square(4);
   var expected = 16;
-  _outcomes.push(system.assert(actual, expected, "assert22", _stdlib));
+  _outcomes.push(system.assert(actual, expected, "assert22", _stdlib, false));
 }]);
 return [main, _tests];}`;
 
@@ -85,7 +85,7 @@ async function main() {
 
 _tests.push(["test3", async (_outcomes) => {
   var t = system.tuple(["one", "two"]);
-  _outcomes.push(system.assert(t, system.tuple(["one", "two"]), "assert9", _stdlib));
+  _outcomes.push(system.assert(t, system.tuple(["one", "two"]), "assert9", _stdlib, false));
 }]);
 return [main, _tests];}`;
 
@@ -119,7 +119,7 @@ async function main() {
 
 _tests.push(["test3", async (_outcomes) => {
   const t = system.tuple(["one", "two"]);
-  _outcomes.push(system.assert(t, system.tuple(["one", "two"]), "assert9", _stdlib));
+  _outcomes.push(system.assert(t, system.tuple(["one", "two"]), "assert9", _stdlib, false));
 }]);
 return [main, _tests];}`;
 
@@ -155,7 +155,7 @@ async function main() {
 _tests.push(["test3", async (_outcomes) => {
   const t1 = system.tuple(["one", "two"]);
   const t2 = system.tuple(["one", "two"]);
-  _outcomes.push(system.assert(t1, t2, "assert12", _stdlib));
+  _outcomes.push(system.assert(t1, t2, "assert12", _stdlib, false));
 }]);
 return [main, _tests];}`;
 
@@ -199,7 +199,7 @@ async function main() {
 _tests.push(["test3", async (_outcomes) => {
   const f = system.initialise(new Foo());
   const t2 = 10;
-  _outcomes.push(system.assert(f.p1, t2, "assert12", _stdlib));
+  _outcomes.push(system.assert(f.p1, t2, "assert12", _stdlib, false));
 }]);
 
 class Foo {
@@ -253,7 +253,7 @@ async function main() {
 _tests.push(["test3", async (_outcomes) => {
   const f = system.initialise(new Foo());
   const t2 = 10;
-  _outcomes.push(system.assert(t2, f.p1, "assert12", _stdlib));
+  _outcomes.push(system.assert(t2, f.p1, "assert12", _stdlib, false));
 }]);
 
 class Foo {
@@ -304,8 +304,8 @@ function square(x) {
 }
 
 _tests.push(["test10", async (_outcomes) => {
-  _outcomes.push(system.assert(square(3), 10, "assert13", _stdlib));
-  _outcomes.push(system.assert(square(4), 16, "assert16", _stdlib));
+  _outcomes.push(system.assert(square(3), 10, "assert13", _stdlib, false));
+  _outcomes.push(system.assert(square(4), 16, "assert16", _stdlib, false));
 }]);
 return [main, _tests];}`;
 
@@ -347,7 +347,7 @@ async function main() {
 _tests.push(["test3", async (_outcomes) => {
   var arr = system.emptyArray();
   var b = system.safeIndex(arr, 1);
-  _outcomes.push(system.assert(b, 0, "assert12", _stdlib));
+  _outcomes.push(system.assert(b, 0, "assert12", _stdlib, false));
 }]);
 return [main, _tests];}`;
 
@@ -431,30 +431,30 @@ async function main() {
 _tests.push(["test3", async (_outcomes) => {
   var a = system.list([3, 2, 4, 0]);
   var b = system.list([3, 2, 4, 0]);
-  _outcomes.push(system.assert(a, b, "assert12", _stdlib));
+  _outcomes.push(system.assert(a, b, "assert12", _stdlib, false));
 }]);
 
 _tests.push(["test15", async (_outcomes) => {
   var a = system.dictionary({[3] : "a", [2] : "b", [4] : "c"});
   var b = system.dictionary({[3] : "a", [2] : "b", [4] : "c"});
-  _outcomes.push(system.assert(a, b, "assert24", _stdlib));
+  _outcomes.push(system.assert(a, b, "assert24", _stdlib, false));
 }]);
 
 _tests.push(["test27", async (_outcomes) => {
   var a = "Hello World";
   var b = "Hello" + " " + "World";
-  _outcomes.push(system.assert(a, b, "assert36", _stdlib));
+  _outcomes.push(system.assert(a, b, "assert36", _stdlib, false));
 }]);
 
 _tests.push(["test39", async (_outcomes) => {
   var a = 0;
   var b = 0;
-  _outcomes.push(system.assert(a, b, "assert48", _stdlib));
+  _outcomes.push(system.assert(a, b, "assert48", _stdlib, false));
 }]);
 
 _tests.push(["test54", async (_outcomes) => {
   var b = "Hello";
-  _outcomes.push(system.assert(global.hello, b, "assert60", _stdlib));
+  _outcomes.push(system.assert(global.hello, b, "assert60", _stdlib, false));
 }]);
 
 class Foo {
@@ -470,13 +470,13 @@ class Foo {
 _tests.push(["test76", async (_outcomes) => {
   var a = system.initialise(new Foo(3));
   var b = system.initialise(new Foo(3));
-  _outcomes.push(system.assert(a, b, "assert85", _stdlib));
+  _outcomes.push(system.assert(a, b, "assert85", _stdlib, false));
 }]);
 
 _tests.push(["test88", async (_outcomes) => {
   var a = Foo.emptyInstance();
   var b = Foo.emptyInstance();
-  _outcomes.push(system.assert(a, b, "assert97", _stdlib));
+  _outcomes.push(system.assert(a, b, "assert97", _stdlib, false));
 }]);
 return [main, _tests];}`;
 
@@ -540,25 +540,25 @@ async function main() {
 _tests.push(["test3", async (_outcomes) => {
   var a = 1 / 3;
   var b = _stdlib.round(a, 4);
-  _outcomes.push(system.assert(b, 0.3333, "assert12", _stdlib));
+  _outcomes.push(system.assert(b, 0.3333, "assert12", _stdlib, false));
 }]);
 
 _tests.push(["test15", async (_outcomes) => {
   var a = 0.9999;
   var b = _stdlib.round(a, 2);
-  _outcomes.push(system.assert(b, 1, "assert24", _stdlib));
+  _outcomes.push(system.assert(b, 1, "assert24", _stdlib, false));
 }]);
 
 _tests.push(["test27", async (_outcomes) => {
   var a = 1.25;
   var b = _stdlib.round(a, 1);
-  _outcomes.push(system.assert(b, 1.3, "assert36", _stdlib));
+  _outcomes.push(system.assert(b, 1.3, "assert36", _stdlib, false));
 }]);
 
 _tests.push(["test39", async (_outcomes) => {
   var a = 44.444;
   var b = _stdlib.round(a, 2);
-  _outcomes.push(system.assert(b, 44.44, "assert48", _stdlib));
+  _outcomes.push(system.assert(b, 44.44, "assert48", _stdlib, false));
 }]);
 return [main, _tests];}`;
 
@@ -626,7 +626,7 @@ function square(x) {
 }
 
 _tests.push(["test10", async (_outcomes) => {
-  _outcomes.push(system.assert(square(3), 3 * 3, "assert13", _stdlib));
+  _outcomes.push(system.assert(square(3), 3 * 3, "assert13", _stdlib, false));
 }]);
 return [main, _tests];}`;
 
@@ -635,6 +635,91 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertTestObjectCodeExecutes(fileImpl, [
       ["test10", [new AssertOutcome(TestStatus.pass, "9", "9", "assert13")]],
+    ]);
+  });
+
+  test("Pass_IgnoreTest", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+end main
+
+function square(x as Float) returns Float
+  return x ^ 2
+end function
+
+ignore test square
+  assert square(3) is 3 * 3
+end test
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+
+}
+
+function square(x) {
+  return x ** 2;
+}
+
+_tests.push(["test10", async (_outcomes) => {
+  _outcomes.push(system.assert("", "", "assert13", _stdlib, true));
+}]);
+return [main, _tests];}`;
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertTestObjectCodeExecutes(fileImpl, [
+      ["test10", [new AssertOutcome(TestStatus.ignored, "", "", "assert13")]],
+    ]);
+  });
+
+  test("Pass_IgnoreInfiniteTest", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+end main
+
+function square(x as Float) returns Float
+  while true
+  end while
+  return x ^ 2
+end function
+
+ignore test square
+  assert square(3) is 3 * 3
+end test
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+
+}
+
+function square(x) {
+  while (true) {
+
+  }
+  return x ** 2;
+}
+
+_tests.push(["test13", async (_outcomes) => {
+  _outcomes.push(system.assert("", "", "assert16", _stdlib, true));
+}]);
+return [main, _tests];}`;
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertTestObjectCodeExecutes(fileImpl, [
+      ["test13", [new AssertOutcome(TestStatus.ignored, "", "", "assert16")]],
     ]);
   });
 

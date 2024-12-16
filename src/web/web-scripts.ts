@@ -413,7 +413,7 @@ function updateDisplayValues() {
   const isParsing = file.readParseStatus() === ParseStatus.valid;
   const isCompiling = file.readCompileStatus() === CompileStatus.ok;
   const isRunning = file.readRunStatus() === RunStatus.running;
-  const isTestRunning = file.readTestStatus() === TestStatus.pending;
+  const isTestRunning = file.readTestStatus() === TestStatus.running;
 
   saveButton.hidden = !!autoSaveFileHandle;
 
@@ -1293,7 +1293,7 @@ function runTests() {
 function runTestsInner() {
   try {
     clearDisplays();
-    file.setTestStatus(TestStatus.pending);
+    file.setTestStatus(TestStatus.running);
     updateDisplayValues();
     const path = `${document.location.origin}${document.location.pathname}`.replace(
       "/index.html",
