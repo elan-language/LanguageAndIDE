@@ -83,10 +83,6 @@ export abstract class AbstractParseNode implements ParseNode {
     const active = this.getActiveNode();
     return active === this ? "" : active.symbolCompletion_context();
   }
-  symbolCompletion_paramPromptsExpected(): boolean {
-    return false;
-  }
-
   getActiveNode(): ParseNode {
     const active = this.activeNodeForSymbolCompl;
     return active === this ? active : active.getActiveNode();

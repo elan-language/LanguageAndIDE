@@ -22,6 +22,7 @@ import { VariableOrProperty } from "../src/frames/parse-nodes/variable-or-proper
 import { ParseStatus } from "../src/frames/status-enums";
 import { TokenType } from "../src/frames/symbol-completion-helpers";
 import { testSymbolCompletionSpec } from "./testHelpers";
+import { ArgListNode } from "../src/frames/parse-nodes/arg-list-node";
 
 suite("Symbol Completion Spec", () => {
   test("MethodCallNode", () => {
@@ -661,6 +662,18 @@ suite("Symbol Completion Spec", () => {
         TokenType.method_procedure,
       ],
       ["library,property"],
+      "",
+    );
+  });
+  test("ArgList", () => {
+    testSymbolCompletionSpec(
+      new ArgListNode(() => ""),
+      "",
+      ParseStatus.valid,
+      ArgListNode.name,
+      "",
+      [],
+      [""],
       "",
     );
   });
