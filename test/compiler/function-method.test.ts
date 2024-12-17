@@ -709,10 +709,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Incompatible types Unknown to Int",
-      "'noSuch' is not defined for type 'Foo'",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'noSuch' is not defined for type 'Foo'"]);
   });
 
   test("Fail_FunctionMethodCannotMutateProperty", async () => {

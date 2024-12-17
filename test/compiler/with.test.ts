@@ -692,10 +692,6 @@ end record`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Incompatible types Unknown to Int",
-      "Incompatible types Unknown to Float or Int",
-      "'aa' is not defined",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'aa' is not defined"]);
   });
 });

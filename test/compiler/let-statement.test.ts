@@ -190,12 +190,9 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "expr17", [
-      "Incompatible types Unknown to Float or Int",
-      "'x' is not defined",
-    ]);
+    assertDoesNotCompileWithId(fileImpl, "expr17", ["'x' is not defined"]);
 
-    assertDoesNotCompileWithId(fileImpl, "func8", ["Incompatible types Unknown to Float or Int"]);
+    assertDoesNotCompileWithId(fileImpl, "func8", ["'x' is not defined"]);
   });
 
   test("Fail_RecursiveDefinition1", async () => {

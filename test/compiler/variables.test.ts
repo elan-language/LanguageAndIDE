@@ -431,10 +431,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "expr5", [
-      "Incompatible types Unknown to Float or Int",
-      "'x' is not defined",
-    ]);
+    assertDoesNotCompileWithId(fileImpl, "expr5", ["'x' is not defined"]);
   });
 
   test("Fail_referenceToExtensionFunction", async () => {

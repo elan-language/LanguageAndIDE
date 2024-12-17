@@ -467,12 +467,16 @@ function FailIncompatible(
   }
 
   const unknown = lhs === UnknownType.Instance || rhs === UnknownType.Instance;
-  compileErrors.push(new TypesCompileError(rhs.name, lhs.name, addInfo, location, unknown));
+  if (!unknown) {
+    compileErrors.push(new TypesCompileError(rhs.name, lhs.name, addInfo, location, false));
+  }
 }
 
 function FailNotNumber(lhs: SymbolType, compileErrors: CompileError[], location: string) {
   const unknown = lhs === UnknownType.Instance;
-  compileErrors.push(new TypesCompileError(lhs.name, "Float or Int", "", location, unknown));
+  if (!unknown) {
+    compileErrors.push(new TypesCompileError(lhs.name, "Float or Int", "", location, false));
+  }
 }
 
 function FailCannotCompareProcFunc(compileErrors: CompileError[], location: string) {

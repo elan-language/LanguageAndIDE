@@ -758,7 +758,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Unknown to [String]"]);
+    assertDoesNotCompile(fileImpl, ["'withRemove' is not defined"]);
   });
 
   test("Fail_putAt_asFunction", async () => {

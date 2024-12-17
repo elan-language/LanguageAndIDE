@@ -1054,9 +1054,6 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Incompatible types Unknown to VectorGraphics",
-      "'noSuch' is not defined for type 'VectorGraphics'",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'noSuch' is not defined for type 'VectorGraphics'"]);
   });
 });
