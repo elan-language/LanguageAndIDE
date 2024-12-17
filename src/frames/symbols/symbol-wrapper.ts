@@ -54,12 +54,14 @@ export class SymbolWrapper {
 
     const symbol = this.wrapped as ElanSymbol;
 
-    if (isFunction(symbol, this.transforms) || isProcedure(symbol, this.transforms)) {
-      return " method";
-    }
+    // order is important 
 
     if (isConcreteTypeName(symbol) || isAbstractTypeName(symbol)) {
       return " type";
+    }
+
+    if (isFunction(symbol, this.transforms) || isProcedure(symbol, this.transforms)) {
+      return " method";
     }
 
     if (isId(symbol)) {
