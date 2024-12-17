@@ -1,8 +1,12 @@
 import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
+import { Scope } from "../interfaces/scope";
+import { ArgListNode } from "../parse-nodes/arg-list-node";
 import { ExprNode } from "../parse-nodes/expr-node";
 import { ParseNode } from "../parse-nodes/parse-node";
+import { parameterDescriptions } from "../symbols/symbol-helpers";
 import { transforms } from "../syntax-nodes/ast-helpers";
+import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractField } from "./abstract-field";
 
 export class ExpressionField extends AbstractField {
@@ -31,5 +35,29 @@ export class ExpressionField extends AbstractField {
 
   symbolCompletion(): string {
     return this.symbolCompletionAsHtml(transforms());
+  }
+
+  private completionOverride = "";
+
+  private argumentDescriptions(holder: Scope, transforms: Transforms) {
+    const an = this.rootNode?.getActiveNode();
+    if (an instanceof ArgListNode) {
+      const proc = an.context();
+
+      const ps = holder.resolveSymbol(proc, transforms, holder);
+      const descriptions = parameterDescriptions(ps.symbolType(transforms));
+      return descriptions.length > 0 ? descriptions.join(", ") : "";
+    }
+    return "";
+  }
+
+  public textAsHtml(): string {
+    const descriptions = this.argumentDescriptions(this.getHolder(), transforms());
+    this.completionOverride = descriptions ? `<i>${descriptions}</i>` : "";
+    return super.textAsHtml();
+  }
+
+  override getCompletion() {
+    return this.completionOverride || super.getCompletion();
   }
 }
