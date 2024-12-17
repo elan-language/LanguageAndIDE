@@ -74,7 +74,6 @@ export class BlockGraphics extends GraphicsBase {
     throw new ElanRuntimeError(`No such key: ${index}`);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   safeIndex(indexable: [string, number, number][] | [string, number, number], index: number) {
     if (indexable === undefined) {
       throw new ElanRuntimeError(`Out of range index`);

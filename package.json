@@ -20,7 +20,7 @@
     "compile": "npm run compile-src && npm run compile-api && npm run format-src && npm run lint",
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile-src && npm run compile-test && cpr ./test/files ./out/test/files -o",
-    "lint": "eslint src --ext ts",
+    "lint": "eslint src",
     "test": "npm run pretest && mocha --timeout 10000 out/test/**/*.test.js",
     "test-coverage": "npm run pretest && nyc --reporter=lcov mocha out/test/**/*.test.js",
     "format-src": "prettier --ignore-path .gitignore --print-width 100 --log-level silent --end-of-line auto --write \"src/**/*.ts\"",
@@ -32,19 +32,21 @@
     "reflect-metadata": "^0.2.2"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.2.0",
+    "@eslint/js": "^9.17.0",
     "@types/jsdom": "^21.1.7",
     "@types/mocha": "^10.0.6",
     "@types/node": "22.x",
-    "@typescript-eslint/eslint-plugin": "^7.16.0",
-    "@typescript-eslint/parser": "^7.16.0",
+    "@typescript-eslint/eslint-plugin": "^8.18.0",
+    "@typescript-eslint/parser": "^8.18.0",
     "cpr": "~3.0.1",
-    "esbuild": "^0.23.0",
-    "eslint": "^8.56.0",
-    "jsdom": "^24.1.0",
-    "mocha": "^10.6.0",
+    "esbuild": "^0.24.0",
+    "eslint": "^9.17.0",
+    "jsdom": "^25.0.0",
+    "mocha": "^11.0.0",
     "nyc": "^17.0.0",
-    "prettier": "^3.3.2",
+    "prettier": "^3.4.2",
     "source-map-support": "^0.5.21",
-    "typescript": "^5.5.3"
+    "typescript": "^5.7.2"
   }
 }

@@ -165,7 +165,6 @@ export class WebInputOutput implements ElanInputOutput {
   }
 
   previousContent: string = "";
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   currentInterval?: any;
 
   printLine(text: string) {
