@@ -44,7 +44,7 @@ export class SymbolWrapper {
       return `${propertyKeyword}.${symbol.symbolId}`;
     }
 
-    return isGenericClass(symbol) ? `${this.name}&lt;of` : this.name;
+    return this.name;
   }
 
   get class() {

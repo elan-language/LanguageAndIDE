@@ -2,6 +2,7 @@ import { ClassSymbol } from "../interfaces/class-symbol";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../syntax-nodes/transforms";
+import { ArrayType } from "./array-list-type";
 import { BooleanType } from "./boolean-type";
 import { FloatType } from "./float-type";
 import { FunctionType } from "./function-type";
@@ -55,6 +56,28 @@ const iterableSymbol: ClassSymbol = {
   ofTypes: [new GenericParameterType("T")],
 };
 
+const arraySymbol: ClassSymbol = {
+  symbolId: "Array",
+  symbolType: function (transforms?: Transforms): SymbolType {
+    return new ArrayType(new GenericParameterType("T"));
+  },
+  symbolScope: SymbolScope.program,
+  isClass: true,
+  abstract: false,
+  ofTypes: [new GenericParameterType("T")],
+};
+
+const listSymbol: ClassSymbol = {
+  symbolId: "List",
+  symbolType: function (transforms?: Transforms): SymbolType {
+    return new ListType(new GenericParameterType("T"));
+  },
+  symbolScope: SymbolScope.program,
+  isClass: true,
+  abstract: false,
+  ofTypes: [new GenericParameterType("T")],
+};
+
 const funcSymbol: ClassSymbol = {
   symbolId: "Func",
   symbolType: function (transforms?: Transforms): SymbolType {
@@ -79,5 +102,7 @@ export const elanSymbols = [
   stringSymbol,
   booleanSymbol,
   iterableSymbol,
+  arraySymbol,
+  listSymbol,
   funcSymbol,
 ];

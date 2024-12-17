@@ -1600,12 +1600,14 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
+      ["Array", "*", "Array<of "],
       ["BlockGraphics", "*", "*"],
       ["Boolean", "*", "*"],
       ["CircleVG", "*", "*"],
       ["Float", "*", "*"],
       ["Int", "*", "*"],
       ["LineVG", "*", "*"],
+      ["List", "*", "List<of "],
       ["Queue", "*", "*"],
       ["Random", "*", "*"],
       ["RectangleVG", "*", "*"],
@@ -1735,12 +1737,14 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
+      ["Array", "*", "*"],
       ["BlockGraphics", "*", "*"],
       ["Boolean", "*", "*"],
       ["CircleVG", "*", "*"],
       ["Float", "*", "*"],
       ["Int", "*", "*"],
       ["LineVG", "*", "*"],
+      ["List", "*", "*"],
       ["Queue", "*", "*"],
       ["Random", "*", "*"],
       ["RectangleVG", "*", "*"],
