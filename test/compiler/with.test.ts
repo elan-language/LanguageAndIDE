@@ -674,4 +674,28 @@ end class`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Foo must be a record to use 'with'"]);
   });
+
+  test("Fail_UnknownProperty", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable b set to new Foo()
+  variable c set to copy b with aa to aa -1
+  print c.aa
+end main
+
+record Foo
+  property aa as Int
+end record`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types Unknown to Int",
+      "Incompatible types Unknown to Float or Int",
+      "'aa' is not defined",
+    ]);
+  });
 });

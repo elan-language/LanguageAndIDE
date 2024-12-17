@@ -27,7 +27,9 @@ export class CopyWithAsn extends AbstractAstNode implements AstNode {
   }
 
   aggregateCompileErrors(): CompileError[] {
-    return this.compileErrors.concat(this.obj.aggregateCompileErrors());
+    return this.compileErrors
+      .concat(this.obj.aggregateCompileErrors())
+      .concat(this.withClause.aggregateCompileErrors());
   }
 
   compile(): string {

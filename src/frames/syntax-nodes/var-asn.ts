@@ -61,7 +61,7 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
     return [UnknownType.Instance, UnknownType.Instance];
   }
 
-  compileIndex(id : string, rootType: SymbolType, index: IndexAsn, prefix: string, postfix: string) {
+  compileIndex(id: string, rootType: SymbolType, index: IndexAsn, prefix: string, postfix: string) {
     mustBeIndexableSymbol(id, rootType, true, this.compileErrors, this.fieldId);
     const [indexType] = this.getIndexAndOfType(rootType);
     mustBeCompatibleType(indexType, index.index1.symbolType(), this.compileErrors, this.fieldId);

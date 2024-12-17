@@ -83,7 +83,7 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
     return [UnknownType.Instance, UnknownType.Instance];
   }
 
-  compileIndex(id : string, rootType: SymbolType, index: IndexAsn, q: string, idx: string) {
+  compileIndex(id: string, rootType: SymbolType, index: IndexAsn, q: string, idx: string) {
     mustBeIndexableSymbol(id, rootType, true, this.compileErrors, this.fieldId);
     const [indexType] = this.getIndexType(rootType);
     mustBeCompatibleType(indexType, index.index1.symbolType(), this.compileErrors, this.fieldId);

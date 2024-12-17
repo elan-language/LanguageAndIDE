@@ -141,6 +141,9 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
   compile(): string {
     this.compileErrors = [];
 
+    const lhsCode = this.lhs.compile();
+    const rhsCode = this.rhs.compile();
+
     const lst = this.lhs.symbolType();
     const rst = this.rhs.symbolType();
 
@@ -152,7 +155,7 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
       } else if (rst instanceof ListType) {
         mustBeCompatibleType(lst, rst.ofType, this.compileErrors, this.fieldId);
       }
-      return `system.concat(${this.lhs.compile()}, ${this.rhs.compile()})`;
+      return `system.concat(${lhsCode}, ${rhsCode})`;
     }
 
     if (
@@ -160,7 +163,7 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
       this.isAppendPrependable(lst) &&
       this.isAppendPrependable(rst)
     ) {
-      return `${this.lhs.compile()} + ${this.rhs.compile()}`;
+      return `${lhsCode} + ${rhsCode}`;
     }
 
     if (this.isEqualityOp()) {
@@ -180,14 +183,14 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
     }
 
     if (this.op === OperationSymbol.Equals && (isValueType(lst) || isValueType(rst))) {
-      return `${this.lhs.compile()} ${this.opToJs()} ${this.rhs.compile()}`;
+      return `${lhsCode} ${this.opToJs()} ${rhsCode}`;
     }
 
     if (this.op === OperationSymbol.Equals) {
-      return `system.objectEquals(${this.lhs.compile()}, ${this.rhs.compile()})`;
+      return `system.objectEquals(${lhsCode}, ${rhsCode})`;
     }
 
-    const code = `${this.lhs.compile()} ${this.opToJs()} ${this.rhs.compile()}`;
+    const code = `${lhsCode} ${this.opToJs()} ${rhsCode}`;
 
     if (this.op === OperationSymbol.Div) {
       return `Math.floor(${code})`;

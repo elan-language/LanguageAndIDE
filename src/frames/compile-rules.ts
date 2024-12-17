@@ -276,14 +276,9 @@ export function mustBeIndexableSymbol(
   location: string,
 ) {
   if (symbolType instanceof UnknownType) {
-    compileErrors.push(
-      new UndefinedSymbolCompileError(symbolId, "", location),
-    );
-  }
-  else if (!(read && (isIndexableType(symbolType) || isAnyDictionaryType(symbolType)))) {
-    compileErrors.push(
-      new NotIndexableCompileError(symbolType.name, location, false),
-    );
+    compileErrors.push(new UndefinedSymbolCompileError(symbolId, "", location));
+  } else if (!(read && (isIndexableType(symbolType) || isAnyDictionaryType(symbolType)))) {
+    compileErrors.push(new NotIndexableCompileError(symbolType.name, location, false));
   }
 }
 
