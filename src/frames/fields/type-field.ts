@@ -23,7 +23,11 @@ export class TypeField extends AbstractField {
   initialiseRoot(): ParseNode {
     this.astNode = undefined;
     this.rootNode = new TypeNode(
-      new Set<TokenType>([TokenType.type_concrete, TokenType.type_abstract]),
+      new Set<TokenType>([
+        TokenType.type_concrete,
+        TokenType.type_abstract,
+        TokenType.type_notInheritable,
+      ]),
     );
     return this.rootNode;
   }

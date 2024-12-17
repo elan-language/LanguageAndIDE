@@ -19,7 +19,11 @@ export class TypeDictionaryNode extends AbstractSequence {
     this.remainingText = text;
     if (text.length > 0) {
       this.simpleType = new TypeSimpleNode(
-        new Set<TokenType>([TokenType.type_abstract, TokenType.type_concrete]),
+        new Set<TokenType>([
+          TokenType.type_abstract,
+          TokenType.type_notInheritable,
+          TokenType.type_concrete,
+        ]),
       ); //Not added to elements, as not present in the text
       this.simpleType.parseText("Dictionary");
       this.keyType = new TypeNode(this.tokenTypes);

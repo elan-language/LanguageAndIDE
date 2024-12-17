@@ -9,6 +9,7 @@ export enum TokenType {
   type_concrete,
   type_abstract,
   type_enum,
+  type_notInheritable,
   method_procedure,
   method_function,
   method_system,

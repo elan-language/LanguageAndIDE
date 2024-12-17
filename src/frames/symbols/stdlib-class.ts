@@ -14,6 +14,7 @@ export class StdLibClass implements Class {
   constructor(
     private readonly name: string,
     public readonly abstract: boolean,
+    public readonly notInheritable: boolean,
     public readonly immutable: boolean,
     public readonly children: ElanSymbol[],
     public readonly ofTypes: SymbolType[],
@@ -21,6 +22,9 @@ export class StdLibClass implements Class {
     private readonly scope: Scope,
   ) {
     this.symbolId = this.name;
+  }
+  getSuperClassesTypeAndName(): [SymbolType, string][] {
+    return [];
   }
 
   genericParamMatches: Map<string, SymbolType> = new Map<string, SymbolType>();
@@ -34,7 +38,14 @@ export class StdLibClass implements Class {
   }
 
   symbolType(transforms?: Transforms): SymbolType {
-    return new ClassType(this.name, this.abstract, this.immutable, this.inheritTypes, this);
+    return new ClassType(
+      this.name,
+      this.abstract,
+      this.notInheritable,
+      this.immutable,
+      this.inheritTypes,
+      this,
+    );
   }
 
   symbolScope: SymbolScope = SymbolScope.stdlib;

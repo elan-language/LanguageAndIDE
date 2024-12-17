@@ -12,4 +12,5 @@ export interface Class extends Scope, ClassSymbol {
   abstract: boolean;
   isImmutable: () => boolean;
   isClass: boolean;
+  getSuperClassesTypeAndName(transforms: Transforms): [SymbolType, string][];
 }

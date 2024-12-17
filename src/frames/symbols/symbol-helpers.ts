@@ -6,7 +6,6 @@ import {
   cannotAccessPrivateMemberInAbstractClass,
 } from "../compile-rules";
 import { isClass, isConstant, isFile, isMember, isScope } from "../frame-helpers";
-import { ClassFrame } from "../globals/class-frame";
 import { Enum } from "../globals/enum";
 import { AstNode } from "../interfaces/ast-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
@@ -409,12 +408,20 @@ export function isAbstractClass(s?: ElanSymbol) {
   return isClass(s) && s.abstract;
 }
 
+export function isNotInheritableClass(s?: ElanSymbol) {
+  return isClass(s) && s.notInheritable;
+}
+
 export function isConcreteTypeName(s?: ElanSymbol) {
   return isTypeName(s) && !isAbstractClass(s);
 }
 
 export function isAbstractTypeName(s?: ElanSymbol) {
-  return isTypeName(s) && isAbstractClass(s);
+  return isTypeName(s) && isAbstractClass(s) && !isNotInheritableClass(s);
+}
+
+export function isNotInheritableTypeName(s?: ElanSymbol) {
+  return isTypeName(s) && isAbstractClass(s) && isNotInheritableClass(s);
 }
 
 function upToParams(id: string) {
@@ -536,7 +543,7 @@ export function hasPrivateMembers(ct: ClassType) {
   return children.length > 0;
 }
 
-export function getMixins(start: ClassFrame, transforms: Transforms) {
+export function getMixins(start: Class, transforms: Transforms) {
   const superClasses = start.getSuperClassesTypeAndName(transforms);
   let mixins: string[] = [];
 
@@ -546,13 +553,13 @@ export function getMixins(start: ClassFrame, transforms: Transforms) {
       mixins.push(`_${name} = new ${name}()`);
     }
     // todo fix cast
-    mixins = mixins.concat(getMixins(ct.scope as ClassFrame, transforms));
+    mixins = mixins.concat(getMixins(ct.scope as Class, transforms));
   }
 
   return mixins;
 }
 
-export function getAllPrivateIds(start: ClassFrame, transforms: Transforms) {
+export function getAllPrivateIds(start: Class, transforms: Transforms) {
   const superClasses = start.getSuperClassesTypeAndName(transforms);
   let allNames: string[] = [];
 
@@ -560,7 +567,7 @@ export function getAllPrivateIds(start: ClassFrame, transforms: Transforms) {
     const children = ct.childSymbols().filter((s) => isMember(s) && s.private);
     allNames = allNames.concat(children.map((c) => c.symbolId));
     // todo fix cast
-    allNames = allNames.concat(getAllPrivateIds(ct.scope as ClassFrame, transforms));
+    allNames = allNames.concat(getAllPrivateIds(ct.scope as Class, transforms));
   }
 
   return allNames;
@@ -671,6 +678,8 @@ export function filterForTokenType(
       return isAbstractTypeName;
     case TokenType.type_enum:
       return isEnum;
+    case TokenType.type_notInheritable:
+      return isNotInheritableTypeName;
     case TokenType.id_constant:
       return isConstant;
     case TokenType.id_let:

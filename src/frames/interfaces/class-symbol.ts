@@ -5,4 +5,5 @@ export interface ClassSymbol extends ElanSymbol {
   isClass?: boolean;
   ofTypes: SymbolType[];
   abstract: boolean;
+  notInheritable: boolean;
 }

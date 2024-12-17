@@ -55,6 +55,7 @@ export class RecordFrame extends AbstractFrame implements Frame, Parent, Collaps
   isClass: boolean = true;
   public name: TypeNameField;
   public abstract: boolean = false;
+  public notInheritable: boolean = false;
   private _children: Array<Frame> = new Array<Frame>();
 
   constructor(parent: File) {
@@ -77,7 +78,7 @@ export class RecordFrame extends AbstractFrame implements Frame, Parent, Collaps
     return this.name.text;
   }
   symbolType(transforms?: Transforms) {
-    return new ClassType(this.symbolId, this.isAbstract(), this.isImmutable(), [], this);
+    return new ClassType(this.symbolId, this.isAbstract(), false, this.isImmutable(), [], this);
   }
   get symbolScope() {
     return SymbolScope.program;

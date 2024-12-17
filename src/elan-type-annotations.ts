@@ -232,7 +232,7 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
 
     const children: [string, SymbolType, MemberType][] = [];
 
-    tempMap.set(className, new ClassType(className, false, false, [], undefined!));
+    tempMap.set(className, new ClassType(className, false, false, false, [], undefined!));
 
     for (let i = 0; i < names.length; i++) {
       const name = names[i];
@@ -263,6 +263,7 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
 
     const classTypeDef = new StdLibClass(
       className,
+      classMetadata.isAbstract,
       classMetadata.isAbstract,
       classMetadata.isImmutable,
       [],

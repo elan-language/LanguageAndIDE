@@ -8,6 +8,7 @@ export class TypeSimpleNode extends RegExMatchNode {
     tokenTypes: Set<TokenType> = new Set<TokenType>([
       TokenType.type_abstract,
       TokenType.type_concrete,
+      TokenType.type_notInheritable,
       TokenType.type_enum,
     ]),
   ) {

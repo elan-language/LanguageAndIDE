@@ -702,7 +702,9 @@ export class FileImpl implements File, Scope {
 
   resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
     // unknown because of typescript quirk
-    const globalSymbols = this.getChildren().filter((c) => isSymbol(c)) as ElanSymbol[];
+    const globalSymbols = (this.getChildren().filter((c) => isSymbol(c)) as ElanSymbol[]).concat(
+      elanSymbols,
+    );
     const matches = globalSymbols.filter((s) => s.symbolId === id);
 
     if (matches.length === 1) {

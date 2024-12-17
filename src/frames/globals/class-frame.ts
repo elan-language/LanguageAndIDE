@@ -68,6 +68,7 @@ export class ClassFrame extends AbstractFrame implements Frame, Parent, Collapsi
   isClass: boolean = true;
   public name: TypeNameField;
   public abstract: boolean;
+  public notInheritable = false;
   public inheritance: InheritsFrom;
   private _children: Array<Frame> = new Array<Frame>();
 
@@ -99,6 +100,7 @@ export class ClassFrame extends AbstractFrame implements Frame, Parent, Collapsi
     return new ClassType(
       this.symbolId,
       this.isAbstract(),
+      false,
       this.isImmutable(),
       this.inheritance.symbolTypes(transforms),
       this,
@@ -269,9 +271,9 @@ end class\r\n`;
 
       if (isAstCollectionNode(superClasses)) {
         const nodes = superClasses.items.filter((i) => isAstIdNode(i));
-        const typeAndName: [ClassType | UnknownType, string][] = nodes
+        const typeAndName: [SymbolType, string][] = nodes
           .map((n) => getGlobalScope(this).resolveSymbol(n.id, transforms, this))
-          .map((c) => [c.symbolType(transforms) as ClassType | UnknownType, c.symbolId]);
+          .map((c) => [c.symbolType(transforms), c.symbolId]);
 
         return typeAndName;
       }
@@ -293,12 +295,9 @@ end class\r\n`;
 
     const typeAndName = this.getSuperClassesTypeAndName(transforms);
 
-    for (const st of typeAndName) {
-      mustBeKnownSymbolType(st[0], st[1], this.compileErrors, this.htmlId);
-    }
-
-    for (const st of typeAndName) {
-      mustBeAbstractClass(st[0], this.compileErrors, this.htmlId);
+    for (const [st, name] of typeAndName) {
+      mustBeKnownSymbolType(st, name, this.compileErrors, this.htmlId);
+      mustBeAbstractClass(st, name, this.compileErrors, this.htmlId);
     }
 
     mustImplementSuperClasses(

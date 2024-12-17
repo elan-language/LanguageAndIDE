@@ -54,7 +54,7 @@ export class SymbolWrapper {
 
     const symbol = this.wrapped as ElanSymbol;
 
-    // order is important 
+    // order is important
 
     if (isConcreteTypeName(symbol) || isAbstractTypeName(symbol)) {
       return " type";

@@ -15,7 +15,11 @@ export class TypeFuncNode extends AbstractSequence {
   inputTypes: OptionalNode | undefined;
   returnType: TypeNode | undefined;
 
-  tokenTypes = new Set<TokenType>([TokenType.type_concrete, TokenType.type_abstract]);
+  tokenTypes = new Set<TokenType>([
+    TokenType.type_concrete,
+    TokenType.type_abstract,
+    TokenType.type_notInheritable,
+  ]);
 
   constructor() {
     super();

@@ -1299,7 +1299,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Superclass Foo must be abstract"]);
+    assertDoesNotCompile(fileImpl, ["Superclass 'Foo' must be inheritable class"]);
   });
 
   test("Fail_MustImplementAllInheritedMethods", async () => {
@@ -1372,7 +1372,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Superclass Foo must be abstract"]);
+    assertDoesNotCompile(fileImpl, ["Superclass 'Foo' must be inheritable class"]);
   });
 
   test("Fail_MustCorrectlyImplementAllInheritedMethods", async () => {
@@ -2038,5 +2038,62 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["Name 'p1' not unique in scope"]);
+  });
+
+  test("Fail_IterableSuperclass", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+class Bar inherits Iterable<of Int>
+  constructor()
+  end constructor
+
+  property p2 as Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Superclass 'Iterable' must be inheritable class"]);
+  });
+
+  test("Fail_StdLibSuperClass", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+class Bar inherits BaseVG
+  constructor()
+  end constructor
+
+  property p2 as Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Superclass 'BaseVG' must be inheritable class"]);
+  });
+
+  test("Fail_UnknownSuperClass", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+class Bar inherits BaseVg
+  constructor()
+  end constructor
+
+  property p2 as Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "'BaseVg' is not defined",
+      "Superclass 'BaseVg' must be inheritable class",
+    ]);
   });
 });

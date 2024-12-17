@@ -73,6 +73,7 @@ export const assignableIds: TokenType[] = [
 ];
 export const concreteAndAbstractTypes: TokenType[] = [
   TokenType.type_abstract,
+  TokenType.type_notInheritable,
   TokenType.type_concrete,
 ];
 export const allKeywordsThatCanStartAnExpression: Set<KeywordCompletion> = new Set(

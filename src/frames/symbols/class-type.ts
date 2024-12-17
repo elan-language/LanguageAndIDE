@@ -11,6 +11,7 @@ export class ClassType implements SymbolType, Scope {
   constructor(
     public readonly className: string,
     public readonly isAbstract: boolean,
+    public readonly isNotInheritable: boolean,
     public readonly isImmutable: boolean,
     public readonly inheritsFrom: SymbolType[],
     public scope: Class | undefined,

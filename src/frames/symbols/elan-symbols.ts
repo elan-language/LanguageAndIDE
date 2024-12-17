@@ -53,6 +53,7 @@ const iterableSymbol: ClassSymbol = {
   symbolScope: SymbolScope.program,
   isClass: true,
   abstract: true,
+  notInheritable: true,
   ofTypes: [new GenericParameterType("T")],
 };
 
@@ -64,6 +65,7 @@ const arraySymbol: ClassSymbol = {
   symbolScope: SymbolScope.program,
   isClass: true,
   abstract: false,
+  notInheritable: false,
   ofTypes: [new GenericParameterType("T")],
 };
 
@@ -75,6 +77,7 @@ const listSymbol: ClassSymbol = {
   symbolScope: SymbolScope.program,
   isClass: true,
   abstract: false,
+  notInheritable: false,
   ofTypes: [new GenericParameterType("T")],
 };
 
@@ -93,6 +96,7 @@ const funcSymbol: ClassSymbol = {
   symbolScope: SymbolScope.program,
   isClass: true,
   abstract: true,
+  notInheritable: true,
   ofTypes: [new GenericParameterType("T")],
 };
 

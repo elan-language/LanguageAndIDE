@@ -33,7 +33,11 @@ export class ParamDefNode extends AbstractSequence {
       this.addElement(new KeywordNode(asKeyword));
       this.addElement(new SpaceNode(Space.required));
       this.type = new TypeNode(
-        new Set<TokenType>([TokenType.type_concrete, TokenType.type_abstract]),
+        new Set<TokenType>([
+          TokenType.type_concrete,
+          TokenType.type_abstract,
+          TokenType.type_notInheritable,
+        ]),
       );
       this.addElement(this.type);
       super.parseText(text);

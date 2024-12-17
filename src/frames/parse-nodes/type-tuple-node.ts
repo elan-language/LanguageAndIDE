@@ -11,7 +11,14 @@ export class TypeTupleNode extends AbstractSequence {
   parseText(text: string): void {
     if (text.length > 0) {
       this.types = new CSV(
-        () => new TypeNode(new Set<TokenType>([TokenType.type_concrete, TokenType.type_abstract])),
+        () =>
+          new TypeNode(
+            new Set<TokenType>([
+              TokenType.type_concrete,
+              TokenType.type_abstract,
+              TokenType.type_notInheritable,
+            ]),
+          ),
         2,
       );
       this.addElement(new PunctuationNode(OPEN_BRACKET));

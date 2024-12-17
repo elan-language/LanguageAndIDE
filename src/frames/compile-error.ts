@@ -132,7 +132,12 @@ export class NotIterableCompileError extends CompileError {
 
 export class MustBeAbstractCompileError extends CompileError {
   constructor(type: string, location: string) {
-    super(Priority.illegalOperation, `Superclass ${type} must be abstract`, location, false);
+    super(
+      Priority.illegalOperation,
+      `Superclass '${type}' must be inheritable class`,
+      location,
+      false,
+    );
   }
 }
 

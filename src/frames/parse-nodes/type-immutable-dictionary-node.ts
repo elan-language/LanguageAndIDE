@@ -1,5 +1,5 @@
 import { TokenType } from "../symbol-completion-helpers";
-import { CLOSE_BRACE, COLON, OPEN_BRACE } from "../symbols";
+import { COLON } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { PunctuationNode } from "./punctuation-node";
 import { TypeNode } from "./type-node";
@@ -19,7 +19,11 @@ export class TypeImmutableDictionaryNode extends AbstractSequence {
     this.remainingText = text;
     if (text.length > 0) {
       this.simpleType = new TypeSimpleNode(
-        new Set<TokenType>([TokenType.type_abstract, TokenType.type_concrete]),
+        new Set<TokenType>([
+          TokenType.type_abstract,
+          TokenType.type_notInheritable,
+          TokenType.type_concrete,
+        ]),
       ); //Not added to elements, as not present in the text
       this.simpleType.parseText("ImmutableDictionary");
       this.keyType = new TypeNode(this.tokenTypes);

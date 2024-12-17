@@ -296,12 +296,13 @@ export function mustBeRangeableSymbol(
 }
 
 export function mustBeAbstractClass(
-  type: ClassType | UnknownType,
+  type: SymbolType,
+  name: string,
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (type instanceof ClassType && !type.isAbstract) {
-    compileErrors.push(new MustBeAbstractCompileError(type.name, location));
+  if (!(type instanceof ClassType) || !type.isAbstract || type.isNotInheritable) {
+    compileErrors.push(new MustBeAbstractCompileError(name, location));
   }
 }
 
