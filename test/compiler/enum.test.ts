@@ -352,7 +352,7 @@ main
       print "o"
     case Fruit.pear
       print "p"
-    default
+    otherwise
   end switch
 end main
    

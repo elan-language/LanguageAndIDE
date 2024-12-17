@@ -4,7 +4,7 @@ import { FrameWithStatements } from "../frame-with-statements";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
-import { switchKeyword } from "../keywords";
+import { endKeyword, switchKeyword } from "../keywords";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { Transforms } from "../syntax-nodes/transforms";
 
@@ -33,7 +33,7 @@ export class Switch extends FrameWithStatements implements ElanSymbol {
     return switchKeyword;
   }
   minimumNumberOfChildrenExceeded(): boolean {
-    return this.getChildren().length > 2; //default +
+    return this.getChildren().length > 2; //otherwise +
   }
 
   getFields(): Field[] {
@@ -45,30 +45,32 @@ export class Switch extends FrameWithStatements implements ElanSymbol {
   }
   renderAsHtml(): string {
     return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>switch </el-kw>${this.expr.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
+<el-top><el-expand>+</el-expand><el-kw>${switchKeyword} </el-kw>${this.expr.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
-<el-kw>end switch</el-kw>
+<el-kw>${this.endSwitch}<el-kw>
 </el-statement>`;
   }
   renderAsSource(): string {
-    return `${this.indent()}switch ${this.expr.renderAsSource()}\r
+    return `${this.indent()}${switchKeyword} ${this.expr.renderAsSource()}\r
 ${this.renderChildrenAsSource()}\r
-${this.indent()}end switch`;
+${this.indent()}${this.endSwitch}`;
   }
 
   compile(transforms: Transforms): string {
     this.compileErrors = [];
-    return `${this.indent()}switch (${this.expr.compile(transforms)}) {\r
+    return `${this.indent()}${switchKeyword} (${this.expr.compile(transforms)}) {\r
 ${this.compileStatements(transforms)}\r
 ${this.indent()}}`;
   }
 
   parseTop(source: CodeSource): void {
-    source.remove("switch ");
+    source.remove(`${switchKeyword} `);
     this.expr.parseFrom(source);
   }
   parseBottom(source: CodeSource): boolean {
     source.removeIndent();
-    return this.parseStandardEnding(source, "end switch");
+    return this.parseStandardEnding(source, this.endSwitch);
   }
+
+  endSwitch =  `${endKeyword} ${switchKeyword}`;
 }

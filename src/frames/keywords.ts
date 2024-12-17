@@ -10,7 +10,6 @@ export const classKeyword = "class";
 export const constantKeyword = "constant";
 export const constructorKeyword = "constructor";
 export const copyKeyword = "copy";
-export const defaultKeyword = "default";
 export const divKeyword = "div";
 export const doingKeyword = "doing";
 export const eachKeyword = "each";
@@ -39,6 +38,7 @@ export const newKeyword = "new";
 export const notKeyword = "not";
 export const ofKeyword = "of";
 export const orKeyword = "or";
+export const otherwiseKeyword = "otherwise";
 export const outKeyword = "out";
 export const printKeyword = "print";
 export const privateKeyword = "private";
@@ -88,7 +88,6 @@ export const allKeywords = [
   constantKeyword,
   constructorKeyword,
   copyKeyword,
-  defaultKeyword,
   divKeyword,
   eachKeyword,
   elseKeyword,
@@ -117,6 +116,7 @@ export const allKeywords = [
   ofKeyword,
   isKeyword,
   orKeyword,
+  otherwiseKeyword,
   outKeyword,
   printKeyword,
   privateKeyword,
@@ -155,6 +155,7 @@ export const reservedWords = [
   "continue",
   "curry",
   "debugger",
+  "default",
   "delete",
   "do",
   "double",

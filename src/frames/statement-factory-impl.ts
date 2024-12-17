@@ -4,21 +4,17 @@ import { StatementFactory } from "./interfaces/statement-factory";
 import { AssertStatement } from "./statements/assert-statement";
 import { CallStatement } from "./statements/call-statement";
 import { Case } from "./statements/case";
-import { CatchingStatement } from "./statements/catching-statement";
 import { CommentStatement } from "./statements/comment-statement";
-import { DefaultStatement } from "./statements/default-statement";
-import { DoingStatement } from "./statements/doing-statement";
 import { Each } from "./statements/each";
 import { Else } from "./statements/else";
 import { For } from "./statements/for";
 import { IfStatement } from "./statements/if-statement";
 import { LetStatement } from "./statements/let-statement";
+import { OtherwiseStatement } from "./statements/otherwise-statement";
 import { Print } from "./statements/print";
 import { Repeat } from "./statements/repeat";
-import { ReturnStatement } from "./statements/return-statement";
 import { SetStatement } from "./statements/set-statement";
 import { Switch } from "./statements/switch";
-import { ThenStatement } from "./statements/then-statement";
 import { Throw } from "./statements/throw";
 import { TryCatch } from "./statements/try-catch";
 import { VarStatement } from "./statements/var-statement";
@@ -34,8 +30,8 @@ export class StatementFactoryImpl implements StatementFactory {
   public newCase(parent: Parent): Frame {
     return new Case(parent);
   }
-  public newDefault(parent: Parent): Frame {
-    return new DefaultStatement(parent);
+  public newOtherwise(parent: Parent): Frame {
+    return new OtherwiseStatement(parent);
   }
   public newEach(parent: Parent): Frame {
     return new Each(parent);

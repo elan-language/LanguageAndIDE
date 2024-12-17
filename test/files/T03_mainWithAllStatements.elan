@@ -1,4 +1,4 @@
-# ed59e8749e73a06f66b539f6436d63a82b42176416586107b11e2e6362759bec Elan Beta 5 valid
+# b57dd23e2287a10284c75313c6fcde53130f03eaf6efbfaacce07a61fc1ad1da Elan Beta 5 valid
 
 main
   variable a set to 3
@@ -43,7 +43,7 @@ main
 
   end try
   switch result
-    default
+    otherwise
 
   end switch
 end main

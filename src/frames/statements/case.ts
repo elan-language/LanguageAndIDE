@@ -6,7 +6,7 @@ import { FrameWithStatements } from "../frame-with-statements";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
-import { caseKeyword } from "../keywords";
+import { caseKeyword, otherwiseKeyword } from "../keywords";
 import { isSymbol } from "../symbols/symbol-helpers";
 import { UnknownType } from "../symbols/unknown-type";
 import { Transforms } from "../syntax-nodes/transforms";
@@ -60,11 +60,11 @@ ${this.indent()}${singleIndent()}break;`;
   }
 
   parseTop(source: CodeSource): void {
-    source.remove("case ");
+    source.remove(`${caseKeyword} `);
     this.value.parseFrom(source);
   }
   parseBottom(source: CodeSource): boolean {
     source.removeIndent();
-    return source.isMatch("case ") || source.isMatch("default") || source.isMatch("end switch");
+    return source.isMatch(`${caseKeyword} `) || source.isMatch(otherwiseKeyword) || source.isMatch(`end switch`);
   }
 }

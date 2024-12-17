@@ -11,8 +11,8 @@ import { MainFrame } from "../src/frames/globals/main-frame";
 import { TestFrame } from "../src/frames/globals/test-frame";
 import { Profile } from "../src/frames/interfaces/profile";
 import { assertKeyword, functionKeyword, letKeyword, testKeyword } from "../src/frames/keywords";
-import { DefaultStatement } from "../src/frames/statements/default-statement";
 import { IfStatement } from "../src/frames/statements/if-statement";
+import { OtherwiseStatement } from "../src/frames/statements/otherwise-statement";
 import { StatementSelector } from "../src/frames/statements/statement-selector";
 import { Switch } from "../src/frames/statements/switch";
 import { While } from "../src/frames/statements/while";
@@ -194,13 +194,13 @@ suite("Selector tests", () => {
     const sw = new Switch(m);
     const s = new StatementSelector(sw);
     const help = s.getCompletion();
-    assert.equal(help, " case default");
+    assert.equal(help, " case otherwise");
   });
   test("Selection Context - in a Switch with a default", () => {
     const fl = new FileImpl(hash, new DefaultProfile(), transforms());
     const m = new MainFrame(fl);
     const sw = new Switch(m);
-    const def = new DefaultStatement(sw);
+    const def = new OtherwiseStatement(sw);
     sw.getChildren().push(def);
     const s = new StatementSelector(sw);
     const help = s.getCompletion();

@@ -24,7 +24,7 @@ main
         print "b"
       case 3
         print "c"
-      default
+      otherwise
     end switch
   end for
 end main`;
@@ -71,7 +71,7 @@ main
         print "b"
       case 3
         print "c"
-      default
+      otherwise
     end switch
   end for
 end main`;
@@ -114,7 +114,7 @@ main
     switch i
       case 1
           print "a"
-      default
+      otherwise
           print "b"
     end switch
   end for
@@ -154,7 +154,7 @@ main
         print "a"
       case 2
         print "b"
-      default
+      otherwise
         print "c"
         
     end switch
@@ -199,7 +199,7 @@ main
       print "b"
     case 3.1
       print "c"
-    default
+    otherwise
   end switch
 end main
 `;
@@ -261,7 +261,7 @@ end main
 main
   for i from 1 to 4 step 1
       switch i
-        default
+        otherwise
           print "a" 
       end switch
   end for
@@ -286,7 +286,7 @@ main
         print "b"
       case 3.1
         print "c"
-      default
+      otherwise
     end switch
   end for
 end main
@@ -354,7 +354,7 @@ main
     switch i
       case 1
         print "a"
-      default
+      otherwise
         print "b"
       case 3
         print "c"
