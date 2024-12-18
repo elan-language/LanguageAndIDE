@@ -1,11 +1,10 @@
 import { CompileError } from "../compile-error";
 import { AstNode } from "../interfaces/ast-node";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { ExprAsn } from "./expr-asn";
 
 export class InterpolatedAsn extends AbstractAstNode implements AstNode {
   constructor(
-    private readonly body: ExprAsn,
+    private readonly body: AstNode,
     public readonly fieldId: string,
   ) {
     super();

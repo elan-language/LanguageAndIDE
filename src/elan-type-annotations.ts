@@ -32,7 +32,7 @@ import { StringType } from "./frames/symbols/string-type";
 import { SymbolScope } from "./frames/symbols/symbol-scope";
 import { TupleType } from "./frames/symbols/tuple-type";
 
-export class ElanProcedureDescriptor implements ElanMethodDescriptor, IElanProcedureDescriptor {
+export class ElanProcedureDescriptor implements IElanProcedureDescriptor {
   constructor(
     public readonly isExtension: boolean = false,
     public readonly isAsync: boolean = false,
@@ -81,7 +81,7 @@ export class ElanClassDescriptor implements ElanDescriptor {
   }
 }
 
-export class ElanFunctionDescriptor implements ElanMethodDescriptor, IElanFunctionDescriptor {
+export class ElanFunctionDescriptor implements IElanFunctionDescriptor {
   constructor(
     public readonly isExtension: boolean = false,
     public readonly isPure: boolean = true,

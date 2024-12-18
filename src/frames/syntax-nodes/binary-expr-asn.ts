@@ -17,14 +17,13 @@ import { StringType } from "../symbols/string-type";
 import { isValueType } from "../symbols/symbol-helpers";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { mapOperationSymbol } from "./ast-helpers";
-import { ExprAsn } from "./expr-asn";
 import { OperationSymbol } from "./operation-symbol";
 
 export class BinaryExprAsn extends AbstractAstNode implements AstNode {
   constructor(
     private readonly op: OperationSymbol,
-    private readonly lhs: ExprAsn,
-    private readonly rhs: ExprAsn,
+    private readonly lhs: AstNode,
+    private readonly rhs: AstNode,
     public readonly fieldId: string,
   ) {
     super();

@@ -84,7 +84,7 @@ const listSymbol: ClassSymbol = {
 
 const dictionarySymbol: ClassSymbol = {
   symbolId: "Dictionary",
-  symbolType: function (transforms?: Transforms): SymbolType {
+  symbolType: function (_transforms?: Transforms): SymbolType {
     return new DictionaryType(new GenericParameterType("T1"), new GenericParameterType("T2"));
   },
   symbolScope: SymbolScope.program,
@@ -96,7 +96,7 @@ const dictionarySymbol: ClassSymbol = {
 
 const dictionaryImmutableSymbol: ClassSymbol = {
   symbolId: "DictionaryImmutable",
-  symbolType: function (transforms?: Transforms): SymbolType {
+  symbolType: function (_transforms?: Transforms): SymbolType {
     return new DictionaryType(new GenericParameterType("T1"), new GenericParameterType("T2"));
   },
   symbolScope: SymbolScope.program,
