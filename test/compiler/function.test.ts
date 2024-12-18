@@ -50,7 +50,7 @@ main
   print a
 end main
 
-function foo(a as Int, b as Int) returns [Int]
+function foo(a as Int, b as Int) returns Array<of Int>
   return [a, b]
 end function`;
 
@@ -82,7 +82,7 @@ main
   print a
 end main
 
-function foo(a as Int, b as Int) returns [Int]
+function foo(a as Int, b as Int) returns Array<of Int>
   return [a, b]
 end function`;
 

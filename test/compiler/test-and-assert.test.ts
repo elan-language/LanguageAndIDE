@@ -333,7 +333,7 @@ main
 end main
 
 test square
-  variable arr set to empty [Int]
+  variable arr set to empty Array<of Int>
   variable b set to arr[1]
   assert b is 0
 end test
@@ -582,7 +582,7 @@ return [main, _tests];}`;
 main
 end main
 
-procedure square(x as Int, out y as [Int])
+procedure square(x as Int, out y as Array<of Int>)
   call y.putAt(0,  x ^ 2)
 end procedure
 

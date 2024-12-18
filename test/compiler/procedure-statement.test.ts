@@ -57,7 +57,7 @@ main
   call foo(a, b, c, d)
 end main
 
-procedure foo(x as [Int], y as {Int}, z as [String:Boolean], t as {String:Boolean})
+procedure foo(x as Array<of Int>, y as {Int}, z as [String:Boolean], t as {String:Boolean})
   print x
   print y
   print z
@@ -1135,7 +1135,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types Procedure ([Generic Parameter T1], Generic Parameter T1) to [Int]",
+      "Incompatible types Procedure (Array<of Generic Parameter T1>, Generic Parameter T1) to Array<of Int>",
       "Cannot call procedure 'append' within an expression",
     ]);
   });

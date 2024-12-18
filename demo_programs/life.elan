@@ -46,7 +46,7 @@ function w(c as Int) returns Int
   return if (c mod 40) > 0 then c - 1 else c + 39
 end function
 
-function neighbourCells(c as Int) returns [Int]
+function neighbourCells(c as Int) returns Array<of Int>
   return [n(w(c)), n(c), n(e(c)), w(c), e(c), s(w(c)), s(c), s(e(c))]
 end function
 

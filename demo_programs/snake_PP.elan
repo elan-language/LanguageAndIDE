@@ -24,14 +24,14 @@ main
   print "Game Over! Score: {body.length() - 1}"
 end main
 
-procedure setAppleToRandomPosition(out apple as [Int], body as [[Int]])
+procedure setAppleToRandomPosition(out apple as Array<of Int>, body as [Array<of Int>])
   repeat
     call apple.putAt(0, randomInt(0, 39))
     call apple.putAt(1, randomInt(0, 29))
   end repeat when not overlaps(body, apple)
 end procedure
 
-procedure eatAppleIfPoss(head as [Int], out body as [[Int]], apple as [Int])
+procedure eatAppleIfPoss(head as Array<of Int>, out body as [Array<of Int>], apple as Array<of Int>)
   if head is apple
     then
       call setAppleToRandomPosition(apple, body)
@@ -40,7 +40,7 @@ procedure eatAppleIfPoss(head as [Int], out body as [[Int]], apple as [Int])
   end if
 end procedure
 
-function updateGraphics(gr as BlockGraphics, head as [Int], tail as [Int], body as [[Int]], apple as [Int]) returns BlockGraphics
+function updateGraphics(gr as BlockGraphics, head as Array<of Int>, tail as Array<of Int>, body as [Array<of Int>], apple as Array<of Int>) returns BlockGraphics
   variable gr2 set to gr.withBlock(head[0], head[1], green)
   if body[0] is tail
     then
@@ -52,11 +52,11 @@ function updateGraphics(gr as BlockGraphics, head as [Int], tail as [Int], body 
   return gr2
 end function
 
-function hasHitEdge(head as [Int]) returns Boolean
+function hasHitEdge(head as Array<of Int>) returns Boolean
   return (head[0] < 0) or (head[1] < 0) or (head[0] > 39) or (head[1] > 29)
 end function
 
-function getAdjacentSquare(sq as [Int], dir as String) returns [Int]
+function getAdjacentSquare(sq as Array<of Int>, dir as String) returns Array<of Int>
   variable newX set to sq[0]
   variable newY set to sq[1]
   switch dir
@@ -74,7 +74,7 @@ function getAdjacentSquare(sq as [Int], dir as String) returns [Int]
   return [newX, newY]
 end function
 
-function overlaps(body as [[Int]], sq as [Int]) returns Boolean
+function overlaps(body as [Array<of Int>], sq as Array<of Int>) returns Boolean
   variable result set to false
   each seg in body
     if (seg is sq)

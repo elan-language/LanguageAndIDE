@@ -802,7 +802,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types {Int} to [Int]"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types {Int} to Array<of Int>"]);
   });
 
   test("Fail_CannotSetIndex", async () => {
@@ -851,7 +851,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types {String} to [String]"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types {String} to Array<of String>"]);
   });
 
   test("Fail_insertAt", async () => {
@@ -868,7 +868,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types {String} to [String]"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types {String} to Array<of String>"]);
   });
 
   test("Fail_removeAt", async () => {
@@ -885,7 +885,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types {String} to [String]"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types {String} to Array<of String>"]);
   });
 
   test("Fail_removeFirst", async () => {
@@ -901,7 +901,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types {String} to [String]"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types {String} to Array<of String>"]);
   });
 
   test("Fail_removeAll", async () => {
@@ -917,7 +917,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types {String} to [String]"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types {String} to Array<of String>"]);
   });
 
   test("Fail_withoutGenericType", async () => {
@@ -939,7 +939,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-    variable a set to empty [Int]
+    variable a set to empty Array<of Int>
     variable b set to empty {Int}
     set b to a
 end main`;
@@ -949,7 +949,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types [Int] to {Int} try converting with '.asList()'",
+      "Incompatible types Array<of Int> to {Int} try converting with '.asList()'",
     ]);
   });
 });

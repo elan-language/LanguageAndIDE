@@ -313,7 +313,7 @@ end record`;
     const code = `# FFFF Elan v1.0.0 valid
 
 record Foo
-  property p1 as [Int] 
+  property p1 as Array<of Int> 
   property p2 as [String:Int] 
   property p3 as Bar
 end record

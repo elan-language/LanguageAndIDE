@@ -912,7 +912,7 @@ class Game
     set property.p1 to [1,2,3]
   end constructor
 
-  property p1 as [Int]
+  property p1 as Array<of Int>
 
   procedure something()
     variable a set to 1

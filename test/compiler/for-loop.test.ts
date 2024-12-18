@@ -208,7 +208,7 @@ main
   call foo(a)
 end main
 
-procedure foo(out arr as [Int])
+procedure foo(out arr as Array<of Int>)
   for i from 0 to 10 step 1
     call arr.putAt(i, 1)
   end for

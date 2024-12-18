@@ -20,7 +20,7 @@ main
   end while
 end main
 
-function binarySearch(list as [String], item as String) returns Boolean
+function binarySearch(list as Array<of String>, item as String) returns Boolean
   variable result set to false
   if list.length() > 0
     then
@@ -51,6 +51,6 @@ test
   let li3 be ["lemon"]
   assert binarySearch(li3, "lemon") is true
   assert binarySearch(li3, "lime") is false
-  let li4 be empty [String]
+  let li4 be empty Array<of String>
   assert binarySearch(li4, "pear") is false
 end test

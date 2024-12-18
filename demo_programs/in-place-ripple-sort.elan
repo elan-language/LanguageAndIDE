@@ -6,7 +6,7 @@ main
   print li
 end main
 
-procedure inPlaceRippleSort(out arr as [Int])
+procedure inPlaceRippleSort(out arr as Array<of Int>)
   variable changes set to true
   variable lastComp set to arr.length() - 2
   repeat

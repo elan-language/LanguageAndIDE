@@ -40,7 +40,7 @@ async function main() {
   system.printLine(_stdlib.asString("Boolean"));
   system.printLine(_stdlib.asString("String"));
   system.printLine(_stdlib.asString("{Int}"));
-  system.printLine(_stdlib.asString("[Int]"));
+  system.printLine(_stdlib.asString("Array<of Int>"));
   system.printLine(_stdlib.asString("{String:Int}"));
   system.printLine(_stdlib.asString("[String:Int]"));
   var foo = system.initialise(new Foo());
@@ -64,7 +64,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "IntFloatBooleanString{Int}[Int]{String:Int}[String:Int]Foo",
+      "IntFloatBooleanString{Int}Array<of Int>{String:Int}[String:Int]Foo",
     );
   });
 
@@ -74,7 +74,7 @@ return [main, _tests];}`;
 main
   let a be 1
   variable b set to lambda x as Int => x * 5
-  variable c set to empty [Int]
+  variable c set to empty Array<of Int>
   variable d set to [c]
   variable e set to {c, c}
   variable f set to [c:d]
@@ -114,12 +114,12 @@ async function main() {
   var h = system.tuple([e, d]);
   system.printLine(_stdlib.asString("Int"));
   system.printLine(_stdlib.asString("Func<of Int => Int>"));
-  system.printLine(_stdlib.asString("[Int]"));
-  system.printLine(_stdlib.asString("[[Int]]"));
-  system.printLine(_stdlib.asString("{[Int]}"));
-  system.printLine(_stdlib.asString("[[Int]:[[Int]]]"));
-  system.printLine(_stdlib.asString("{{[Int]}:[[Int]]}"));
-  system.printLine(_stdlib.asString("({[Int]}, [[Int]])"));
+  system.printLine(_stdlib.asString("Array<of Int>"));
+  system.printLine(_stdlib.asString("Array<of Array<of Int>>"));
+  system.printLine(_stdlib.asString("{Array<of Int>}"));
+  system.printLine(_stdlib.asString("[Array<of Int>:Array<of Array<of Int>>]"));
+  system.printLine(_stdlib.asString("{{Array<of Int>}:Array<of Array<of Int>>}"));
+  system.printLine(_stdlib.asString("({Array<of Int>}, Array<of Array<of Int>>)"));
   system.printLine(_stdlib.asString("Procedure (Int)"));
   system.printLine(_stdlib.asString("Func<of Int => Int>"));
   system.printLine(_stdlib.asString("Unknown"));
@@ -142,7 +142,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "IntFunc<of Int => Int>[Int][[Int]]{[Int]}[[Int]:[[Int]]]{{[Int]}:[[Int]]}({[Int]}, [[Int]])Procedure (Int)Func<of Int => Int>Unknown",
+      "IntFunc<of Int => Int>Array<of Int>Array<of Array<of Int>>{Array<of Int>}[Array<of Int>:Array<of Array<of Int>>]{{Array<of Int>}:Array<of Array<of Int>>}({Array<of Int>}, Array<of Array<of Int>>)Procedure (Int)Func<of Int => Int>Unknown",
     );
   });
 

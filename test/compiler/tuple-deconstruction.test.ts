@@ -522,7 +522,7 @@ async function main() {
   system.printLine(_stdlib.asString(y));
   system.printLine(_stdlib.asString("Int"));
   system.printLine(_stdlib.asString(z));
-  system.printLine(_stdlib.asString("[Int]"));
+  system.printLine(_stdlib.asString("Array<of Int>"));
 }
 return [main, _tests];}`;
 
@@ -532,7 +532,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "3Int[1, 2][Int]");
+    await assertObjectCodeExecutes(fileImpl, "3Int[1, 2]Array<of Int>");
   });
 
   test("Pass_DeconstructTupleWithListIntoNewLet", async () => {
@@ -557,7 +557,7 @@ async function main() {
   system.printLine(_stdlib.asString(y));
   system.printLine(_stdlib.asString("Int"));
   system.printLine(_stdlib.asString(z));
-  system.printLine(_stdlib.asString("[Int]"));
+  system.printLine(_stdlib.asString("Array<of Int>"));
 }
 return [main, _tests];}`;
 
@@ -567,7 +567,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "3Int[1, 2][Int]");
+    await assertObjectCodeExecutes(fileImpl, "3Int[1, 2]Array<of Int>");
   });
 
   test("Pass_DeconstructTupleWithListIntoExisting", async () => {
@@ -577,7 +577,7 @@ main
   variable a set to [1,2]
   variable x set to (3, a)
   variable y set to 0
-  variable z set to empty [Int]
+  variable z set to empty Array<of Int>
   set y, z to x
   print y
   print typeof y
@@ -596,7 +596,7 @@ async function main() {
   system.printLine(_stdlib.asString(y));
   system.printLine(_stdlib.asString("Int"));
   system.printLine(_stdlib.asString(z));
-  system.printLine(_stdlib.asString("[Int]"));
+  system.printLine(_stdlib.asString("Array<of Int>"));
 }
 return [main, _tests];}`;
 
@@ -606,7 +606,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "3Int[1, 2][Int]");
+    await assertObjectCodeExecutes(fileImpl, "3Int[1, 2]Array<of Int>");
   });
 
   test("Pass_DeconstructTupleWithTupleIntoNew", async () => {
