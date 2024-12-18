@@ -5,7 +5,7 @@ import { PunctuationNode } from "./punctuation-node";
 import { TypeNode } from "./type-node";
 import { TypeSimpleNode } from "./type-simple-node";
 
-export class TypeImmutableDictionaryNode extends AbstractSequence {
+export class TypeDictionaryImmutableNode extends AbstractSequence {
   simpleType: TypeSimpleNode | undefined;
   keyType: TypeNode | undefined;
   valueType: TypeNode | undefined;
@@ -25,7 +25,7 @@ export class TypeImmutableDictionaryNode extends AbstractSequence {
           TokenType.type_concrete,
         ]),
       ); //Not added to elements, as not present in the text
-      this.simpleType.parseText("ImmutableDictionary");
+      this.simpleType.parseText("DictionaryImmutable");
       this.keyType = new TypeNode(this.tokenTypes);
       this.addElement(this.keyType);
       this.addElement(new PunctuationNode(COLON));

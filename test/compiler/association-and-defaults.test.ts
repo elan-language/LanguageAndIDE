@@ -144,7 +144,7 @@ class Game
     property s as String
     property li as List<of Int>
     property ds as Dictionary<of String, Int>
-    property dsi as ImmutableDictionary<of String, Int>
+    property dsi as DictionaryImmutable<of String, Int>
     property ai as Array<of Int>
     property t as Tuple<of Int, String, List<of Int>>
     property ff as Func<of String, String => Int>
@@ -173,7 +173,7 @@ async function main() {
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.emptyImmutableList()], ["ds", system.emptyDictionary()], ["dsi", system.emptyImmutableDictionary()], ["ai", system.emptyArray()], ["t", system.emptyTuple([0, "", system.emptyImmutableList()])], ["ff", system.emptyFunc(0)], ["r", system.emptyRegExp()]]);};
+  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.emptyImmutableList()], ["ds", system.emptyDictionary()], ["dsi", system.emptyDictionaryImmutable()], ["ai", system.emptyArray()], ["t", system.emptyTuple([0, "", system.emptyImmutableList()])], ["ff", system.emptyFunc(0)], ["r", system.emptyRegExp()]]);};
   constructor() {
 
   }
@@ -190,7 +190,7 @@ class Game {
 
   ds = system.emptyDictionary();
 
-  dsi = system.emptyImmutableDictionary();
+  dsi = system.emptyDictionaryImmutable();
 
   ai = system.emptyArray();
 
@@ -251,7 +251,7 @@ class Game
     property s as String
     property li as List<of Int>
     property ds as Dictionary<of String, Int>
-    property dsi as ImmutableDictionary<of String, Int>
+    property dsi as DictionaryImmutable<of String, Int>
     property ai as Array<of Int>
     property t as Tuple<of Int, String, List<of Int>>
     property r as RegExp
@@ -295,7 +295,7 @@ class Player {
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.emptyImmutableList()], ["ds", system.emptyDictionary()], ["dsi", system.emptyImmutableDictionary()], ["ai", system.emptyArray()], ["t", system.emptyTuple([0, "", system.emptyImmutableList()])], ["r", system.emptyRegExp()]]);};
+  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.emptyImmutableList()], ["ds", system.emptyDictionary()], ["dsi", system.emptyDictionaryImmutable()], ["ai", system.emptyArray()], ["t", system.emptyTuple([0, "", system.emptyImmutableList()])], ["r", system.emptyRegExp()]]);};
   constructor() {
 
   }
@@ -312,7 +312,7 @@ class Game {
 
   ds = system.emptyDictionary();
 
-  dsi = system.emptyImmutableDictionary();
+  dsi = system.emptyDictionaryImmutable();
 
   ai = system.emptyArray();
 

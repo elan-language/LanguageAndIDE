@@ -254,7 +254,7 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", 0], ["p3", ""], ["p4", false], ["p5", system.emptyRegExp()], ["p6", system.emptyImmutableList()], ["p7", system.emptyImmutableDictionary()]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", 0], ["p3", ""], ["p4", false], ["p5", system.emptyRegExp()], ["p6", system.emptyImmutableList()], ["p7", system.emptyDictionaryImmutable()]]);};
   p1 = 0;
 
   p2 = 0;
@@ -267,7 +267,7 @@ class Foo {
 
   p6 = system.emptyImmutableList();
 
-  p7 = system.emptyImmutableDictionary();
+  p7 = system.emptyDictionaryImmutable();
 
   _p8;
   get p8() {

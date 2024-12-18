@@ -17,11 +17,11 @@ import { AbstractDictionaryType } from "./frames/symbols/abstract-dictionary-typ
 import { ArrayType } from "./frames/symbols/array-list-type";
 import { BooleanType } from "./frames/symbols/boolean-type";
 import { ClassType } from "./frames/symbols/class-type";
+import { DictionaryImmutableType } from "./frames/symbols/dictionary-immutable-type";
 import { DictionaryType } from "./frames/symbols/dictionary-type";
 import { FloatType } from "./frames/symbols/float-type";
 import { FunctionType } from "./frames/symbols/function-type";
 import { GenericParameterType } from "./frames/symbols/generic-parameter-type";
-import { ImmutableDictionaryType } from "./frames/symbols/immutable-dictionary-type";
 import { IntType } from "./frames/symbols/int-type";
 import { IterableType } from "./frames/symbols/iterable-type";
 import { ListType } from "./frames/symbols/list-type";
@@ -150,8 +150,8 @@ export class ElanValueTypeDescriptor implements TypeDescriptor {
         return new ListType(this.ofType!.mapType());
       case "AbstractDictionary":
         return new AbstractDictionaryType(this.ofType!.mapType(), this.valueType!.mapType());
-      case "ImmutableDictionary":
-        return new ImmutableDictionaryType(this.ofType!.mapType(), this.valueType!.mapType());
+      case "DictionaryImmutable":
+        return new DictionaryImmutableType(this.ofType!.mapType(), this.valueType!.mapType());
       case "Dictionary":
         return new DictionaryType(this.ofType!.mapType(), this.valueType!.mapType());
     }
@@ -477,8 +477,8 @@ export function ElanClass(cls: { name: string; prototype: object; emptyInstance:
   return new ElanClassTypeDescriptor(cls);
 }
 
-export function ElanImmutableDictionary(keyType: TypeDescriptor, valueType: TypeDescriptor) {
-  return new ElanValueTypeDescriptor("ImmutableDictionary", keyType, valueType);
+export function ElanDictionaryImmutable(keyType: TypeDescriptor, valueType: TypeDescriptor) {
+  return new ElanValueTypeDescriptor("DictionaryImmutable", keyType, valueType);
 }
 
 export function ElanDictionary(keyType: TypeDescriptor, valueType: TypeDescriptor) {
@@ -537,8 +537,8 @@ export function elanAbstractDictionaryType(keyType: TypeDescriptor, valueType: T
   return elanType(ElanAbstractDictionary(keyType, valueType));
 }
 
-export function elanImmutableDictionaryType(keyType: TypeDescriptor, valueType: TypeDescriptor) {
-  return elanType(ElanImmutableDictionary(keyType, valueType));
+export function elanDictionaryImmutableType(keyType: TypeDescriptor, valueType: TypeDescriptor) {
+  return elanType(ElanDictionaryImmutable(keyType, valueType));
 }
 
 export function elanDictionaryType(keyType: TypeDescriptor, valueType: TypeDescriptor) {

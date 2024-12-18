@@ -23,7 +23,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
-  a = system.immutableDictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
+  a = system.dictionaryImmutable({["a"] : 1, ["b"] : 3, ["z"] : 10});
 
 };
 async function main() {
@@ -55,7 +55,7 @@ var Fruit = {
 };
 
 const global = new class {
-  a = system.immutableDictionary({[Fruit.apple] : 1, [Fruit.orange] : 3, [Fruit.pear] : 10});
+  a = system.dictionaryImmutable({[Fruit.apple] : 1, [Fruit.orange] : 3, [Fruit.pear] : 10});
 
 };
 async function main() {
@@ -82,7 +82,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.immutableDictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
+  var a = system.dictionaryImmutable({["a"] : 1, ["b"] : 3, ["z"] : 10});
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -106,7 +106,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
-  a = system.immutableDictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
+  a = system.dictionaryImmutable({["a"] : 1, ["b"] : 3, ["z"] : 10});
 
 };
 async function main() {
@@ -135,7 +135,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
-  a = system.immutableDictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
+  a = system.dictionaryImmutable({["a"] : 1, ["b"] : 3, ["z"] : 10});
 
 };
 async function main() {
@@ -165,7 +165,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
-  a = system.immutableDictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
+  a = system.dictionaryImmutable({["a"] : 1, ["b"] : 3, ["z"] : 10});
 
 };
 async function main() {
@@ -193,7 +193,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
-  a = system.immutableDictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
+  a = system.dictionaryImmutable({["a"] : 1, ["b"] : 3, ["z"] : 10});
 
 };
 async function main() {
@@ -223,7 +223,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
-  a = system.immutableDictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
+  a = system.dictionaryImmutable({["a"] : 1, ["b"] : 3, ["z"] : 10});
 
 };
 async function main() {
@@ -255,7 +255,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
-  a = system.immutableDictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
+  a = system.dictionaryImmutable({["a"] : 1, ["b"] : 3, ["z"] : 10});
 
 };
 async function main() {
@@ -285,7 +285,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
-  a = system.immutableDictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
+  a = system.dictionaryImmutable({["a"] : 1, ["b"] : 3, ["z"] : 10});
 
 };
 async function main() {
@@ -307,7 +307,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to new ImmutableDictionary<of String, Int>()
+  variable a set to new DictionaryImmutable<of String, Int>()
   variable b set to a.withPutAtKey("Foo", 1)
   set b to b.withPutAtKey("Bar", 3)
   variable k set to b.keys()
@@ -318,7 +318,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.initialise(system.immutableDictionary(new Object()));
+  var a = system.initialise(system.dictionaryImmutable(new Object()));
   var b = _stdlib.withPutAtKey(a, "Foo", 1);
   b = _stdlib.withPutAtKey(b, "Bar", 3);
   var k = _stdlib.keys(b);
@@ -343,7 +343,7 @@ return [main, _tests];}`;
 enum Fruit apple, orange, pear  
 
 main
-  variable a set to new ImmutableDictionary<of Fruit, Int>()
+  variable a set to new DictionaryImmutable<of Fruit, Int>()
   variable b set to a.withPutAtKey(Fruit.apple, 1)
   set b to b.withPutAtKey(Fruit.orange, 3)
   variable k set to b.keys()
@@ -358,7 +358,7 @@ var Fruit = {
 };
 
 async function main() {
-  var a = system.initialise(system.immutableDictionary(new Object()));
+  var a = system.initialise(system.dictionaryImmutable(new Object()));
   var b = _stdlib.withPutAtKey(a, Fruit.apple, 1);
   b = _stdlib.withPutAtKey(b, Fruit.orange, 3);
   var k = _stdlib.keys(b);
@@ -377,7 +377,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "213");
   });
 
-  test("Pass_EmptyImmutableDictionary", async () => {
+  test("Pass_EmptyDictionaryImmutable", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -393,14 +393,14 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.emptyImmutableDictionary();
-  var b = system.emptyImmutableDictionary();
+  var a = system.emptyDictionaryImmutable();
+  var b = system.emptyDictionaryImmutable();
   b = _stdlib.withPutAtKey(a, "a", 1);
   system.printLine(_stdlib.asString(a));
   system.printLine(_stdlib.asString(b));
   system.printLine(_stdlib.asString(system.objectEquals(a, b)));
-  system.printLine(_stdlib.asString(system.objectEquals(a, system.emptyImmutableDictionary())));
-  system.printLine(_stdlib.asString(system.objectEquals(b, system.emptyImmutableDictionary())));
+  system.printLine(_stdlib.asString(system.objectEquals(a, system.emptyDictionaryImmutable())));
+  system.printLine(_stdlib.asString(system.objectEquals(b, system.emptyDictionaryImmutable())));
 }
 return [main, _tests];}`;
 
@@ -596,7 +596,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-    variable a set to new ImmutableDictionary()
+    variable a set to new DictionaryImmutable()
     print a
 end main`;
 

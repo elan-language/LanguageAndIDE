@@ -14,10 +14,10 @@ import { SymbolType } from "../interfaces/symbol-type";
 import { AbstractDictionaryType } from "../symbols/abstract-dictionary-type";
 import { ArrayType } from "../symbols/array-list-type";
 import { ClassType } from "../symbols/class-type";
+import { DictionaryImmutableType } from "../symbols/dictionary-immutable-type";
 import { DictionaryType } from "../symbols/dictionary-type";
 import { FunctionType } from "../symbols/function-type";
 import { GenericParameterType } from "../symbols/generic-parameter-type";
-import { ImmutableDictionaryType } from "../symbols/immutable-dictionary-type";
 import { IterableType } from "../symbols/iterable-type";
 import { ListType } from "../symbols/list-type";
 import { ProcedureType } from "../symbols/procedure-type";
@@ -166,8 +166,8 @@ export function generateType(type: SymbolType, matches: Map<string, SymbolType>)
       generateType(type.valueType, matches),
     );
   }
-  if (type instanceof ImmutableDictionaryType) {
-    return new ImmutableDictionaryType(
+  if (type instanceof DictionaryImmutableType) {
+    return new DictionaryImmutableType(
       generateType(type.keyType, matches),
       generateType(type.valueType, matches),
     );

@@ -30,13 +30,13 @@ import { AbstractListType } from "./abstract-list-type";
 import { ArrayType } from "./array-list-type";
 import { BooleanType } from "./boolean-type";
 import { ClassType } from "./class-type";
+import { DictionaryImmutableType } from "./dictionary-immutable-type";
 import { DictionaryType } from "./dictionary-type";
 import { EnumType } from "./enum-type";
 import { EnumValueType } from "./enum-value-type";
 import { FloatType } from "./float-type";
 import { FunctionType } from "./function-type";
 import { GenericParameterType } from "./generic-parameter-type";
-import { ImmutableDictionaryType } from "./immutable-dictionary-type";
 import { IntType } from "./int-type";
 import { IterableType } from "./iterable-type";
 import { ListType } from "./list-type";
@@ -60,8 +60,8 @@ export function isAnyDictionaryType(s?: SymbolType): s is DictionarySymbolType {
 
 export function isConcreteDictionaryType(
   s?: SymbolType,
-): s is DictionaryType | ImmutableDictionaryType {
-  return s instanceof DictionaryType || s instanceof ImmutableDictionaryType;
+): s is DictionaryType | DictionaryImmutableType {
+  return s instanceof DictionaryType || s instanceof DictionaryImmutableType;
 }
 
 export function isListType(s?: SymbolType): s is AbstractListType {
@@ -310,7 +310,7 @@ function matchDictionaryTypes(actualType: SymbolType, paramType: SymbolType) {
 
   if (
     paramType instanceof AbstractDictionaryType &&
-    (actualType instanceof DictionaryType || actualType instanceof ImmutableDictionaryType)
+    (actualType instanceof DictionaryType || actualType instanceof DictionaryImmutableType)
   ) {
     return true;
   }

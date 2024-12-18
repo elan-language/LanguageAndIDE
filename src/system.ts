@@ -26,7 +26,7 @@ export class System {
   // constant immutables
   emptyImmutableListSingleton = this.list([]);
   emptyIterableSingleton = this.iter([]);
-  emptyImmutableDictionarySingleton = this.immutableDictionary({});
+  emptyDictionaryImmutableSingleton = this.dictionaryImmutable({});
   emptyRegExpSingleton = /(?:)/;
 
   emptyRegExp() {
@@ -45,8 +45,8 @@ export class System {
     return this.dictionary({});
   }
 
-  emptyImmutableDictionary() {
-    return this.emptyImmutableDictionarySingleton;
+  emptyDictionaryImmutable() {
+    return this.emptyDictionaryImmutableSingleton;
   }
 
   emptyImmutableList() {
@@ -77,8 +77,8 @@ export class System {
     return t;
   }
 
-  immutableDictionary(t: object) {
-    (t as unknown as hasHiddenType)._type = "ImmutableDictionary";
+  dictionaryImmutable(t: object) {
+    (t as unknown as hasHiddenType)._type = "DictionaryImmutable";
     return t;
   }
 

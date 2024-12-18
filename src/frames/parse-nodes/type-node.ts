@@ -12,7 +12,7 @@ import { TypeArrayNode } from "./type-array-node";
 import { TypeDictionaryNode } from "./type-dictionary-node";
 import { TypeFuncNode } from "./type-func-node";
 import { TypeGenericNode } from "./type-generic-node";
-import { TypeImmutableDictionaryNode } from "./type-immutable-dictionary-node";
+import { TypeDictionaryImmutableNode } from "./type-immutable-dictionary-node";
 import { TypeImmutableListNode } from "./type-immutable-list-node";
 import { TypeInDelimiters } from "./type-in-delimiters";
 import { TypeSimpleNode } from "./type-simple-node";
@@ -48,7 +48,7 @@ export class TypeNode extends AbstractAlternatives {
         this.alternatives.push(typeInSqBrackets);
       } else if (text.trimStart().startsWith(OPEN_BRACE)) {
         const list = () => new TypeImmutableListNode(this.tokenTypes);
-        const immDict = () => new TypeImmutableDictionaryNode(this.tokenTypes);
+        const immDict = () => new TypeDictionaryImmutableNode(this.tokenTypes);
         const listOrImmDict = new Alternatives([list, immDict]);
         const typeInBraces = new TypeInDelimiters(
           OPEN_BRACE,

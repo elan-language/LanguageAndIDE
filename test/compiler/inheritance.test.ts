@@ -1664,7 +1664,7 @@ end procedure
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable lst set to new ImmutableDictionary<of String, Bar>()
+  variable lst set to new DictionaryImmutable<of String, Bar>()
   print fun(lst)
 end main
 
@@ -1678,7 +1678,7 @@ class Bar inherits Foo
   property p1 as Int
 end class
 
-function fun(l as ImmutableDictionary<of String, Foo>) returns Foo
+function fun(l as DictionaryImmutable<of String, Foo>) returns Foo
     return l["id"]
 end function
 `;

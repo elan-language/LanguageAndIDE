@@ -4,7 +4,7 @@ import { ArrayNode } from "./array-node";
 import { BracketedExpression } from "./bracketed-expression";
 import { DictionaryNode } from "./dictionary-node";
 import { ExprNode } from "./expr-node";
-import { ImmutableDictionaryNode } from "./immutable-dictionary-node";
+import { DictionaryImmutableNode } from "./immutable-dictionary-node";
 import { ListNode } from "./list-node";
 import { LitValueNode } from "./lit-value";
 import { ReferenceNode } from "./reference-node";
@@ -44,7 +44,7 @@ export class TermSimple extends AbstractAlternatives {
         ),
       );
       this.alternatives.push(
-        new ImmutableDictionaryNode(
+        new DictionaryImmutableNode(
           () => new ExprNode(),
           () => new ExprNode(),
         ),

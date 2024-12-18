@@ -1,7 +1,7 @@
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { ArrayNode } from "./array-node";
 import { DictionaryNode } from "./dictionary-node";
-import { ImmutableDictionaryNode } from "./immutable-dictionary-node";
+import { DictionaryImmutableNode } from "./immutable-dictionary-node";
 import { ListNode } from "./list-node";
 import { LitValueNode } from "./lit-value";
 
@@ -22,7 +22,7 @@ export class LiteralNode extends AbstractAlternatives {
       ),
     );
     this.alternatives.push(
-      new ImmutableDictionaryNode(
+      new DictionaryImmutableNode(
         () => new LitValueNode(),
         () => new LiteralNode(),
       ),

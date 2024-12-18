@@ -10,14 +10,14 @@ import {
   elanClassExport,
   elanClassType,
   elanConstant,
+  ElanDictionaryImmutable,
+  elanDictionaryImmutableType,
   elanDictionaryType,
   ElanFloat,
   elanFunction,
   elanFuncType,
   elanGenericParamT1Type,
   elanGenericParamT2Type,
-  ElanImmutableDictionary,
-  elanImmutableDictionaryType,
   ElanInt,
   elanIntType,
   ElanIterable,
@@ -266,9 +266,9 @@ export class StdLib {
     return this.keys(dict).includes(key);
   }
 
-  @elanFunction(["key"], FunctionOptions.pureExtension, ElanImmutableDictionary(ElanT1, ElanT2))
+  @elanFunction(["key"], FunctionOptions.pureExtension, ElanDictionaryImmutable(ElanT1, ElanT2))
   withRemoveAtKey<T1>(
-    @elanImmutableDictionaryType(ElanT1, ElanT2)
+    @elanDictionaryImmutableType(ElanT1, ElanT2)
     dict: { [key: string]: T1 },
     @elanGenericParamT1Type() key: string,
   ) {
@@ -488,17 +488,17 @@ export class StdLib {
   @elanFunction(
     ["", "key", "value"],
     FunctionOptions.pureExtension,
-    ElanImmutableDictionary(ElanT1, ElanT2),
+    ElanDictionaryImmutable(ElanT1, ElanT2),
   )
   withPutAtKey<T1>(
-    @elanImmutableDictionaryType(ElanT1, ElanT2)
+    @elanDictionaryImmutableType(ElanT1, ElanT2)
     dict: { [key: string]: T1 },
     @elanGenericParamT1Type() key: string,
     @elanGenericParamT2Type() value: T1,
   ) {
     const newDict = { ...dict };
     newDict[key] = value;
-    (newDict as unknown as hasHiddenType)._type = "ImmutableDictionary";
+    (newDict as unknown as hasHiddenType)._type = "DictionaryImmutable";
     return newDict;
   }
 
