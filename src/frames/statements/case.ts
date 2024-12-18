@@ -65,6 +65,10 @@ ${this.indent()}${singleIndent()}break;`;
   }
   parseBottom(source: CodeSource): boolean {
     source.removeIndent();
-    return source.isMatch(`${caseKeyword} `) || source.isMatch(otherwiseKeyword) || source.isMatch(`end switch`);
+    return (
+      source.isMatch(`${caseKeyword} `) ||
+      source.isMatch(otherwiseKeyword) ||
+      source.isMatch(`end switch`)
+    );
   }
 }

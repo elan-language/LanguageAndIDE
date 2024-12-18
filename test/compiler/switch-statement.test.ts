@@ -3,6 +3,7 @@ import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
   assertDoesNotCompile,
   assertDoesNotParse,
+  assertObjectCodeDoesNotExecute,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
@@ -232,7 +233,53 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "c");
   });
 
-  test("Pass_NoDefault", async () => {
+  test("Pass_generatedOtherwise", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  for i from 1 to 3 step 1
+    switch i
+      case 1
+        print "a"
+      case 2
+        print "b"
+      case 3
+        print "c"
+    end switch
+  end for
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  for (var i = 1; i <= 3; i = i + 1) {
+    switch (i) {
+      case 1:
+        system.printLine(_stdlib.asString("a"));
+        break;
+      case 2:
+        system.printLine(_stdlib.asString("b"));
+        break;
+      case 3:
+        system.printLine(_stdlib.asString("c"));
+        break;
+      default:
+        system.unhandledExpression(i);
+        break;
+    }
+  }
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "abc");
+  });
+
+  test("Fail_generatedOtherwiseThrows", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -246,13 +293,36 @@ main
         print "c"
     end switch
   end for
-end main
-`;
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  for (var i = 1; i <= 4; i = i + 1) {
+    switch (i) {
+      case 1:
+        system.printLine(_stdlib.asString("a"));
+        break;
+      case 2:
+        system.printLine(_stdlib.asString("b"));
+        break;
+      case 3:
+        system.printLine(_stdlib.asString("c"));
+        break;
+      default:
+        system.unhandledExpression(i);
+        break;
+    }
+  }
+}
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeDoesNotExecute(fileImpl, "'4' not covered in switch statement");
   });
 
   test("Fail_NoCase", async () => {

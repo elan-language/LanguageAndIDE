@@ -263,6 +263,11 @@ export class System {
     return [hd, tl];
   }
 
+  unhandledExpression(v: any) {
+    const s = this._stdlib.asString(v);
+    throw new ElanRuntimeError(`'${s}' not covered in switch statement`);
+  }
+
   async runTests(tests: [string, (_outcomes: AssertOutcome[]) => Promise<void>][]) {
     const allOutcomes: [string, AssertOutcome[]][] = [];
 
