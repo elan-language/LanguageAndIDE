@@ -695,14 +695,14 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to empty {Int}
-  variable b set to empty {Int}
+  variable a set to empty List<of Int>
+  variable b set to empty List<of Int>
   set b to a + 3
   print a
   print b
   print a is b
-  print a is empty {Int}
-  print b is empty {Int}
+  print a is empty List<of Int>
+  print b is empty List<of Int>
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -802,7 +802,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types {Int} to Array<of Int>"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types List<of Int> to Array<of Int>"]);
   });
 
   test("Fail_CannotSetIndex", async () => {
@@ -834,7 +834,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types {String:String} to {String}"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types {String:String} to List<of String>"]);
   });
 
   test("Fail_add", async () => {
@@ -851,7 +851,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types {String} to Array<of String>"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types List<of String> to Array<of String>"]);
   });
 
   test("Fail_insertAt", async () => {
@@ -868,7 +868,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types {String} to Array<of String>"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types List<of String> to Array<of String>"]);
   });
 
   test("Fail_removeAt", async () => {
@@ -885,7 +885,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types {String} to Array<of String>"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types List<of String> to Array<of String>"]);
   });
 
   test("Fail_removeFirst", async () => {
@@ -901,7 +901,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types {String} to Array<of String>"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types List<of String> to Array<of String>"]);
   });
 
   test("Fail_removeAll", async () => {
@@ -917,7 +917,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types {String} to Array<of String>"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types List<of String> to Array<of String>"]);
   });
 
   test("Fail_withoutGenericType", async () => {
@@ -940,7 +940,7 @@ end main`;
 
 main
     variable a set to empty Array<of Int>
-    variable b set to empty {Int}
+    variable b set to empty List<of Int>
     set b to a
 end main`;
 
@@ -949,7 +949,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types Array<of Int> to {Int} try converting with '.asList()'",
+      "Incompatible types Array<of Int> to List<of Int> try converting with '.asList()'",
     ]);
   });
 });

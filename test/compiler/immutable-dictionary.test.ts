@@ -128,7 +128,7 @@ return [main, _tests];}`;
 
 constant a set to {"a":1, "b":3, "z":10}
 main
-  variable b set to empty {String}
+  variable b set to empty List<of String>
   set b to a.keys()
   print b
 end main`;

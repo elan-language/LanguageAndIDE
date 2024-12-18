@@ -272,7 +272,7 @@ return [main, _tests];}`;
 main
   variable x set to new Foo() with a to {1,2}, b to "fred"
   variable a, b set to x
-  variable y set to empty {Int}
+  variable y set to empty List<of Int>
   variable z set to ""
   set y to a
   set z to b
@@ -281,7 +281,7 @@ main
 end main
 
 record Foo
-  property a as {Int}
+  property a as List<of Int>
   property b as String
 end record`;
 
@@ -328,7 +328,7 @@ main
 end main
 
 record Foo
-  property a as {Int}
+  property a as List<of Int>
   property b as String
 end record`;
 
@@ -337,7 +337,7 @@ async function main() {
   const x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = system.list([1, 2]); _a.b = "fred"; return _a;})();
   const {a, b} = x;
   system.printLine(_stdlib.asString(a));
-  system.printLine(_stdlib.asString("{Int}"));
+  system.printLine(_stdlib.asString("List<of Int>"));
   system.printLine(_stdlib.asString(b));
   system.printLine(_stdlib.asString("String"));
 }
@@ -357,7 +357,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{1, 2}{Int}fredString");
+    await assertObjectCodeExecutes(fileImpl, "{1, 2}List<of Int>fredString");
   });
 
   test("Pass_DeconstructVarRecordWithListIntoNewLet", async () => {
@@ -373,7 +373,7 @@ main
 end main
 
 record Foo
-  property a as {Int}
+  property a as List<of Int>
   property b as String
 end record`;
 
@@ -382,7 +382,7 @@ async function main() {
   var x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = system.list([1, 2]); _a.b = "fred"; return _a;})();
   const {a, b} = x;
   system.printLine(_stdlib.asString(a));
-  system.printLine(_stdlib.asString("{Int}"));
+  system.printLine(_stdlib.asString("List<of Int>"));
   system.printLine(_stdlib.asString(b));
   system.printLine(_stdlib.asString("String"));
 }
@@ -402,7 +402,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{1, 2}{Int}fredString");
+    await assertObjectCodeExecutes(fileImpl, "{1, 2}List<of Int>fredString");
   });
 
   test("Pass_DeconstructVarRecordWithRecordIntoNewVar", async () => {
@@ -419,7 +419,7 @@ main
 end main
 
 record Foo
-  property a as {Int}
+  property a as List<of Int>
   property b as String
 end record
 
@@ -485,7 +485,7 @@ main
 end main
 
 record Foo
-  property a as {Int}
+  property a as List<of Int>
   property b as String
 end record
 
@@ -543,7 +543,7 @@ return [main, _tests];}`;
 
 main
   variable x set to new Foo() with a to {1,2}, b to "fred"
-  variable a set to empty {Int}
+  variable a set to empty List<of Int>
   variable b set to ""
   set a, b to x
   print a
@@ -551,7 +551,7 @@ main
 end main
 
 record Foo
-  property a as {Int}
+  property a as List<of Int>
   property b as String
 end record`;
 
@@ -599,7 +599,7 @@ main
 end main
 
 record Foo
-  property a as {Int}
+  property a as List<of Int>
   property b as String
 end record
 
@@ -669,7 +669,7 @@ main
 end main
 
 record Foo
-  property a as {Int}
+  property a as List<of Int>
   property b as String
 end record
 

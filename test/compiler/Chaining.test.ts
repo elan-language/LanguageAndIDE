@@ -77,7 +77,7 @@ class Foo
     set property.a to {1}
   end constructor
   
-  property a as {Int}
+  property a as List<of Int>
 end class`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {

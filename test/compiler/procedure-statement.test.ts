@@ -57,7 +57,7 @@ main
   call foo(a, b, c, d)
 end main
 
-procedure foo(x as Array<of Int>, y as {Int}, z as [String:Boolean], t as {String:Boolean})
+procedure foo(x as Array<of Int>, y as List<of Int>, z as [String:Boolean], t as {String:Boolean})
   print x
   print y
   print z

@@ -136,7 +136,7 @@ main
   print b
 end main
 
-function foo() returns ({Float}, Int)
+function foo() returns (List<of Float>, Int)
   return ({0.0}, 0)
 end function`;
 

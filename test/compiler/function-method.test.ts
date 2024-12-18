@@ -139,7 +139,7 @@ return [main, _tests];}`;
 
 main
   variable f set to new Foo()
-  variable x set to empty {Float}
+  variable x set to empty List<of Float>
   set x to f.times(2)
   print x
 end main
@@ -151,7 +151,7 @@ class Foo
 
     property p1 as Float
 
-    function times(value as Float) returns {Float}
+    function times(value as Float) returns List<of Float>
         return {p1 * value}
     end function
 
@@ -213,8 +213,8 @@ class Bar
 
   property p1 as Foo
 
-  function getTimes() returns {Float}
-    variable x set to empty {Float}
+  function getTimes() returns List<of Float>
+    variable x set to empty List<of Float>
     set x to p1.times(2)
     return x
   end function
@@ -228,7 +228,7 @@ class Foo
 
     property p1 as Float
 
-    function times(value as Float) returns {Float}
+    function times(value as Float) returns List<of Float>
         return {p1 * value}
     end function
 
