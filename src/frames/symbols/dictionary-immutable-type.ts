@@ -14,7 +14,7 @@ export class DictionaryImmutableType implements DictionarySymbolType {
   factoryName = "system.dictionaryImmutable";
 
   get name() {
-    return `{${this.keyType.name}:${this.valueType.name}}`;
+    return `DictionaryImmutable<of ${this.keyType.name}, ${this.valueType.name}>`;
   }
 
   toString(): string {

@@ -77,7 +77,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: index (Int), value ([String:Int]) Provided: String, [String:Int]",
+      "Argument types expected: index (Int), value (Dictionary<of String, Int>) Provided: String, Dictionary<of String, Int>",
     ]);
   });
 

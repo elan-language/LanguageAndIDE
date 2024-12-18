@@ -381,14 +381,14 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to empty {String:Int}
-  variable b set to empty {String:Int}
+  variable a set to empty DictionaryImmutable<of String, Int>
+  variable b set to empty DictionaryImmutable<of String, Int>
   set b to a.withPutAtKey("a", 1)
   print a
   print b
   print a is b
-  print a is empty {String:Int}
-  print b is empty {String:Int}
+  print a is empty DictionaryImmutable<of String, Int>
+  print b is empty DictionaryImmutable<of String, Int>
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -558,7 +558,9 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types {String:Int} to [String:Int]"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types DictionaryImmutable<of String, Int> to Dictionary<of String, Int>",
+    ]);
   });
 
   test("Fail_removeKey", async () => {
@@ -575,7 +577,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types {String:Int} to [String:Int]"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types DictionaryImmutable<of String, Int> to Dictionary<of String, Int>",
+    ]);
   });
 
   test("Fail_undefined", async () => {

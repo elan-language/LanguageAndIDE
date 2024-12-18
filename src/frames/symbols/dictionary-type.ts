@@ -13,7 +13,7 @@ export class DictionaryType implements DictionarySymbolType {
   factoryName = "system.dictionary";
 
   get name() {
-    return `[${this.keyType.name}:${this.valueType.name}]`;
+    return `Dictionary<of ${this.keyType.name}, ${this.valueType.name}>`;
   }
 
   toString(): string {

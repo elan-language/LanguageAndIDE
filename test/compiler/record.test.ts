@@ -239,7 +239,7 @@ record Foo
   property p4 as Boolean
   property p5 as RegExp
   property p6 as List<of Int>
-  property p7 as {String:Int}
+  property p7 as DictionaryImmutable<of String, Int>
   property p8 as Bar
 end record
 
@@ -314,7 +314,7 @@ end record`;
 
 record Foo
   property p1 as Array<of Int> 
-  property p2 as [String:Int] 
+  property p2 as Dictionary<of String, Int> 
   property p3 as Bar
 end record
 

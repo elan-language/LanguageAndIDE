@@ -224,7 +224,7 @@ end main`;
   test("Fail_Dictionary3", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
-constant k set to empty [String:Int]
+constant k set to empty Dictionary<of String, Int>
 
 main 
   print k
