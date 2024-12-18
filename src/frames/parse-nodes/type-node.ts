@@ -8,12 +8,8 @@ import {
 } from "../symbols";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { Alternatives } from "./alternatives";
-import { TypeArrayNode } from "./type-array-node";
-import { TypeDictionaryNode } from "./type-dictionary-node";
 import { TypeFuncNode } from "./type-func-node";
 import { TypeGenericNode } from "./type-generic-node";
-import { TypeDictionaryImmutableNode } from "./type-immutable-dictionary-node";
-import { TypeImmutableListNode } from "./type-immutable-list-node";
 import { TypeInDelimiters } from "./type-in-delimiters";
 import { TypeSimpleNode } from "./type-simple-node";
 import { TypeTupleNode } from "./type-tuple-node";
@@ -35,28 +31,6 @@ export class TypeNode extends AbstractAlternatives {
         this.alternatives.push(new TypeFuncNode());
       } else if (text.trimStart().startsWith(OPEN_BRACKET)) {
         this.alternatives.push(new TypeTupleNode());
-      } else if (text.trimStart().startsWith(OPEN_SQ_BRACKET)) {
-        const array = () => new TypeArrayNode(this.tokenTypes);
-        const dict = () => new TypeDictionaryNode(this.tokenTypes);
-        const arrayOrDict = new Alternatives([array, dict]);
-        const typeInSqBrackets = new TypeInDelimiters(
-          OPEN_SQ_BRACKET,
-          arrayOrDict,
-          CLOSE_SQ_BRACKET,
-          this.tokenTypes,
-        );
-        this.alternatives.push(typeInSqBrackets);
-      } else if (text.trimStart().startsWith(OPEN_BRACE)) {
-        const list = () => new TypeImmutableListNode(this.tokenTypes);
-        const immDict = () => new TypeDictionaryImmutableNode(this.tokenTypes);
-        const listOrImmDict = new Alternatives([list, immDict]);
-        const typeInBraces = new TypeInDelimiters(
-          OPEN_BRACE,
-          listOrImmDict,
-          CLOSE_BRACE,
-          this.tokenTypes,
-        );
-        this.alternatives.push(typeInBraces);
       } else {
         this.alternatives.push(new TypeSimpleNode(this.tokenTypes));
         this.alternatives.push(new TypeGenericNode(this.tokenTypes));

@@ -1,4 +1,4 @@
-# 20c2d949173c2b7998f8c286c73578a543349bc6b5ca729d046accea9f8a8b95 Elan Beta 4 valid
+# FFFF Elan Beta 4 valid
 
 main
   variable g set to new BlockGraphics()
@@ -127,7 +127,7 @@ class Point
   property isNotEmpty as Boolean
 
   # Returns the 8 theoretically-neighbouring points, whether or not within bounds
-  function neighbouringPoints() returns {Point}
+  function neighbouringPoints() returns List<of Point>
     return {new Point(x - 1, y - 1), new Point(x, y - 1), new Point(x + 1, y - 1), new Point(x - 1, y), new Point(x + 1, y), new Point(x - 1, y + 1), new Point(x, y + 1), new Point(x + 1, y + 1)}
   end function
 

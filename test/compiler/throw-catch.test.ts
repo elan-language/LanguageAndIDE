@@ -160,7 +160,7 @@ return [main, _tests];}`;
 main
   try
     doing
-      variable x set to empty [Foo]
+      variable x set to empty Array<of Foo>
       variable y set to x[1]
       variable z set to y.p1
       print "not caught"

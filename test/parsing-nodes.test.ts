@@ -157,24 +157,6 @@ suite("Parsing Nodes", () => {
     );
     testNodeParse(
       new ExprNode(),
-      "empty [Int:String]",
-      ParseStatus.valid,
-      "empty [Int:String]",
-      "",
-      "",
-      "<el-kw>empty</el-kw> [<el-type>Int</el-type>:<el-type>String</el-type>]",
-    );
-    testNodeParse(
-      new ExprNode(),
-      "empty {Int:Boolean}",
-      ParseStatus.valid,
-      "empty {Int:Boolean}",
-      "",
-      "",
-      "<el-kw>empty</el-kw> {<el-type>Int</el-type>:<el-type>Boolean</el-type>}",
-    );
-    testNodeParse(
-      new ExprNode(),
       "empty String",
       ParseStatus.valid,
       "empty String",
@@ -859,27 +841,6 @@ suite("Parsing Nodes", () => {
     );
   });
   test("TypeNode", () => {
-    //List (mutable) type shortform
-    testNodeParse(new TypeNode(), `[Foo]`, ParseStatus.valid, "[Foo]", "", "");
-    testNodeParse(new TypeNode(), `[Foo`, ParseStatus.incomplete, "[Foo", "", "");
-    testNodeParse(new TypeNode(), `[foo`, ParseStatus.invalid, "", "[foo", "");
-    testNodeParse(new TypeNode(), `[Foo, Bar]`, ParseStatus.invalid, "", "[Foo, Bar]", "");
-    //Immutable list type short form
-    testNodeParse(new TypeNode(), `{Foo}`, ParseStatus.valid, "{Foo}", "", "");
-    testNodeParse(new TypeNode(), `{Foo`, ParseStatus.incomplete, "{Foo", "", "");
-    testNodeParse(new TypeNode(), `{foo`, ParseStatus.invalid, "", "{foo", "");
-    testNodeParse(new TypeNode(), `{Foo, Bar}`, ParseStatus.invalid, "", "{Foo, Bar}", "");
-    //Dictionary
-    testNodeParse(new TypeNode(), `[Foo:Bar]`, ParseStatus.valid, "[Foo:Bar]", "", "");
-    testNodeParse(new TypeNode(), `[Foo: Bar]`, ParseStatus.valid, "[Foo: Bar]", "", "[Foo:Bar]");
-    testNodeParse(new TypeNode(), `[Foo:Bar`, ParseStatus.incomplete, "[Foo:Bar", "", "");
-    testNodeParse(new TypeNode(), `[Foo`, ParseStatus.incomplete, "[Foo", "", "");
-    //ImmtableDictionary
-    testNodeParse(new TypeNode(), `{Foo:Bar}`, ParseStatus.valid, "{Foo:Bar}", "", "");
-    testNodeParse(new TypeNode(), `{Foo: Bar}`, ParseStatus.valid, "{Foo: Bar}", "", "{Foo:Bar}");
-    testNodeParse(new TypeNode(), `{Foo:Bar`, ParseStatus.incomplete, "{Foo:Bar", "", "");
-    testNodeParse(new TypeNode(), `[Foo`, ParseStatus.incomplete, "[Foo", "", "");
-    testNodeParse(new TypeNode(), `[Foo, Bar}`, ParseStatus.invalid, "", "[Foo, Bar}", "");
     testNodeParse(
       new TypeNode(),
       `Foo<of List<of Bar>>`,

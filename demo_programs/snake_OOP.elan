@@ -1,4 +1,4 @@
-# a8e17ead0e70e77cc660044b8b587bf2884958f2259f31133e4be7807bf876d4 Elan Beta 4 valid
+# FFFF Elan Beta 4 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -29,7 +29,7 @@ class Snake
 
   private property head as Square
 
-  private property body as [Square]
+  private property body as Array<of Square>
 
   private property priorTail as Square
 

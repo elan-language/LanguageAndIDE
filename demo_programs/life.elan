@@ -1,8 +1,8 @@
-# 4b6b95278377f344ab05288e0621b7645ad52bad4f75cc4cb4ca001a063a1191 Elan Beta 4 valid
+# FFFF Elan Beta 4 valid
 
 main
   variable gr set to new BlockGraphics()
-  variable grid set to empty [Boolean]
+  variable grid set to empty Array<of Boolean>
   call fillRandom(grid)
   while true
     set gr to updateGraphics(grid, gr)
@@ -12,13 +12,13 @@ main
   end while
 end main
 
-procedure fillRandom(out starter as [Boolean])
+procedure fillRandom(out starter as Array<of Boolean>)
   for i from 0 to 1199 step 1
     call starter.append(random() > 0.5)
   end for
 end procedure
 
-function updateGraphics(grid as [Boolean], gr as BlockGraphics) returns BlockGraphics
+function updateGraphics(grid as Array<of Boolean>, gr as BlockGraphics) returns BlockGraphics
   variable gr2 set to gr
   for row from 0 to 29 step 1
     for col from 0 to 39 step 1
@@ -50,7 +50,7 @@ function neighbourCells(c as Int) returns Array<of Int>
   return [n(w(c)), n(c), n(e(c)), w(c), e(c), s(w(c)), s(c), s(e(c))]
 end function
 
-function liveNeighbours(cells as [Boolean], c as Int) returns Int
+function liveNeighbours(cells as Array<of Boolean>, c as Int) returns Int
   let neighbours be neighbourCells(c)
   let live be neighbours.filter(lambda i as Int => cells[i])
   return live.length()
@@ -60,11 +60,11 @@ function willLive(currentlyAlive as Boolean, live as Int) returns Boolean
   return if currentlyAlive then (live > 1) and (live < 4) else live is 3
 end function
 
-function nextCellValue(cells as [Boolean], c as Int) returns Boolean
+function nextCellValue(cells as Array<of Boolean>, c as Int) returns Boolean
   return willLive(cells[c], liveNeighbours(cells, c))
 end function
 
-function nextGeneration(cells as [Boolean]) returns [Boolean]
+function nextGeneration(cells as Array<of Boolean>) returns Array<of Boolean>
   let cellRange be range(0, cells.length() - 1)
   let next be cellRange.map(lambda n as Int => nextCellValue(cells, n))
   return next.asArray()

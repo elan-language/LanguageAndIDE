@@ -56,12 +56,8 @@ import { TermChained } from "../parse-nodes/term-chained";
 import { TermSimpleWithOptIndex } from "../parse-nodes/term-simple-with-opt-index";
 import { ToClause } from "../parse-nodes/to-clause";
 import { TupleNode } from "../parse-nodes/tuple-node";
-import { TypeArrayNode } from "../parse-nodes/type-array-node";
-import { TypeDictionaryNode } from "../parse-nodes/type-dictionary-node";
 import { TypeFuncNode } from "../parse-nodes/type-func-node";
 import { TypeGenericNode } from "../parse-nodes/type-generic-node";
-import { TypeDictionaryImmutableNode } from "../parse-nodes/type-immutable-dictionary-node";
-import { TypeImmutableListNode } from "../parse-nodes/type-immutable-list-node";
 import { TypeInDelimiters } from "../parse-nodes/type-in-delimiters";
 import { TypeOfNode } from "../parse-nodes/type-of-node";
 import { TypeSimpleNode } from "../parse-nodes/type-simple-node";
@@ -254,19 +250,6 @@ export function transform(
     let gp = new Array<AstNode>();
     gp = transformMany(generic as Sequence, fieldId, scope).items;
     return new TypeAsn(type, gp, fieldId, scope);
-  }
-
-  if (node instanceof TypeArrayNode || node instanceof TypeImmutableListNode) {
-    const type = node.simpleType!.matchedText;
-    const gp = transform(node.generic, fieldId, scope)!;
-    return new TypeAsn(type, [gp], fieldId, scope);
-  }
-
-  if (node instanceof TypeDictionaryNode || node instanceof TypeDictionaryImmutableNode) {
-    const type = node.simpleType!.matchedText;
-    const key = transform(node.keyType, fieldId, scope)!;
-    const value = transform(node.valueType, fieldId, scope)!;
-    return new TypeAsn(type, [key, value], fieldId, scope);
   }
 
   if (node instanceof TypeFuncNode) {

@@ -1,4 +1,4 @@
-# 74108aea2cbff2e3d609271e828bbca511e2a90d5e21d89d0425e1e1d195effa Elan Beta 5 valid
+# FFFF Elan Beta 5 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -24,14 +24,14 @@ main
   print "Game Over! Score: {body.length() - 1}"
 end main
 
-procedure setAppleToRandomPosition(out apple as Array<of Int>, body as [Array<of Int>])
+procedure setAppleToRandomPosition(out apple as Array<of Int>, body as Array<of Array<of Int>>)
   repeat
     call apple.putAt(0, randomInt(0, 39))
     call apple.putAt(1, randomInt(0, 29))
   end repeat when not overlaps(body, apple)
 end procedure
 
-procedure eatAppleIfPoss(head as Array<of Int>, out body as [Array<of Int>], apple as Array<of Int>)
+procedure eatAppleIfPoss(head as Array<of Int>, out body as Array<of Array<of Int>>, apple as Array<of Int>)
   if head is apple
     then
       call setAppleToRandomPosition(apple, body)
@@ -40,7 +40,7 @@ procedure eatAppleIfPoss(head as Array<of Int>, out body as [Array<of Int>], app
   end if
 end procedure
 
-function updateGraphics(gr as BlockGraphics, head as Array<of Int>, tail as Array<of Int>, body as [Array<of Int>], apple as Array<of Int>) returns BlockGraphics
+function updateGraphics(gr as BlockGraphics, head as Array<of Int>, tail as Array<of Int>, body as Array<of Array<of Int>>, apple as Array<of Int>) returns BlockGraphics
   variable gr2 set to gr.withBlock(head[0], head[1], green)
   if body[0] is tail
     then
@@ -74,7 +74,7 @@ function getAdjacentSquare(sq as Array<of Int>, dir as String) returns Array<of 
   return [newX, newY]
 end function
 
-function overlaps(body as [Array<of Int>], sq as Array<of Int>) returns Boolean
+function overlaps(body as Array<of Array<of Int>>, sq as Array<of Int>) returns Boolean
   variable result set to false
   each seg in body
     if (seg is sq)

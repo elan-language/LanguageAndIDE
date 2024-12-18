@@ -23,6 +23,7 @@ import { ParseStatus } from "../src/frames/status-enums";
 import { TokenType } from "../src/frames/symbol-completion-helpers";
 import { testSymbolCompletionSpec } from "./testHelpers";
 import { ArgListNode } from "../src/frames/parse-nodes/arg-list-node";
+import { TypeNode } from "../src/frames/parse-nodes/type-node";
 
 suite("Symbol Completion Spec", () => {
   test("MethodCallNode", () => {
@@ -187,9 +188,9 @@ suite("Symbol Completion Spec", () => {
   test("Expression4", () => {
     testSymbolCompletionSpec(
       new ExprNode(),
-      "empty [I",
+      "empty Array<of I",
       ParseStatus.incomplete,
-      Alternatives.name,
+      TypeNode.name,
       "I",
       [TokenType.type_concrete],
       [],

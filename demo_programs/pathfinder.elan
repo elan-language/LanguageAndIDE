@@ -1,11 +1,11 @@
-# a5e3b4e0f817666d894a730dfafd74c72f5edaceac08ada7c42e51a1941c2566 Elan Beta 5 valid
+# FFFF Elan Beta 5 valid
 
 main
   let start be new Point(5, 5)
   let destination be new Point(34, 24)
   let percentRocks be inputIntBetween("Enter % rocks (0-100): ", 0, 100)
-  variable rocks set to empty [Point]
-  variable nodes set to empty [Node]
+  variable rocks set to empty Array<of Point>
+  variable nodes set to empty Array<of Node>
   call createRocksAndNodes(percentRocks, rocks, nodes, start, destination)
   variable gr set to initialiseGraphics(start, destination, rocks)
   call gr.display()
@@ -17,7 +17,7 @@ main
   end while
 end main
 
-procedure runSolver(gr as BlockGraphics, start as Point, destination as Point, rocks as [Point], out solver as Solver, alg as Algorithm)
+procedure runSolver(gr as BlockGraphics, start as Point, destination as Point, rocks as Array<of Point>, out solver as Solver, alg as Algorithm)
   call solver.initialise(alg)
   variable gr2 set to initialiseGraphics(start, destination, rocks)
   while solver.running
@@ -37,7 +37,7 @@ procedure runSolver(gr as BlockGraphics, start as Point, destination as Point, r
   end if
 end procedure
 
-procedure createRocksAndNodes(percentRocks as Int, out rocks as [Point], out nodes as [Node], start as Point, dest as Point)
+procedure createRocksAndNodes(percentRocks as Int, out rocks as Array<of Point>, out nodes as Array<of Node>, start as Point, dest as Point)
   for x from 0 to 39 step 1
     for y from 0 to 29 step 1
       let p be new Point(x, y)
@@ -55,7 +55,7 @@ procedure createRocksAndNodes(percentRocks as Int, out rocks as [Point], out nod
   end for
 end procedure
 
-function initialiseGraphics(start as Point, dest as Point, rocks as [Point]) returns BlockGraphics
+function initialiseGraphics(start as Point, dest as Point, rocks as Array<of Point>) returns BlockGraphics
   variable gr set to new BlockGraphics()
   each rock in rocks
     set gr to gr.withBlock(rock.x, rock.y, black)
@@ -69,7 +69,7 @@ function addVisited(gr as BlockGraphics, visited as Point) returns BlockGraphics
   return gr.withBlock(visited.x, visited.y, lightBlue)
 end function
 
-function addRoute(gr as BlockGraphics, route as {Point}) returns BlockGraphics
+function addRoute(gr as BlockGraphics, route as List<of Point>) returns BlockGraphics
   variable gr2 set to gr
   each p in route
     set gr2 to gr2.withBlock(p.x, p.y, orange)
@@ -82,13 +82,13 @@ function addRoute(gr as BlockGraphics, route as {Point}) returns BlockGraphics
 end function
 
 class Solver
-  constructor(nodes as [Node], start as Point, destination as Point)
+  constructor(nodes as Array<of Node>, start as Point, destination as Point)
     set property.nodes to nodes
     set property.start to start
     set property.destination to destination
   end constructor
 
-  property nodes as [Node]
+  property nodes as Array<of Node>
 
   property start as Point
 
@@ -135,8 +135,8 @@ class Solver
     end each
   end procedure
 
-  function currentNeighbours() returns [Node]
-    variable neighbours set to empty {Node}
+  function currentNeighbours() returns Array<of Node>
+    variable neighbours set to empty List<of Node>
     let currentPoint be current.point
     each p in currentPoint.neighbouringPoints()
       let node be getNodeFor(p)
@@ -188,7 +188,7 @@ class Solver
     return cost
   end function
 
-  function getRouteAndLength() returns ({Point}, Float)
+  function getRouteAndLength() returns (List<of Point>, Float)
     variable route set to {destination}
     variable length set to 0.0
     variable node set to getNodeFor(destination)
@@ -260,7 +260,7 @@ class Point
   end function
 
   # Returns the 8 theoretically-neighbouring points, whether or not within bounds
-  function neighbouringPoints() returns {Point}
+  function neighbouringPoints() returns List<of Point>
     return {new Point(x - 1, y - 1), new Point(x, y - 1), new Point(x + 1, y - 1), new Point(x - 1, y), new Point(x + 1, y), new Point(x - 1, y + 1), new Point(x, y + 1), new Point(x + 1, y + 1)}
   end function
 

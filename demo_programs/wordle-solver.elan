@@ -185,7 +185,7 @@ test maxWordCountRemainingAfterAttempt
   assert maxWordCountRemainingAfterAttempt(prior, "XXXXX") is 5
 end test
 
-function allRemainingWordCounts(possAnswers as List<of String>) returns {WordCount}
+function allRemainingWordCounts(possAnswers as List<of String>) returns List<of WordCount>
   let parallel be possAnswers
   return parallel.map(lambda w as String => new WordCount(w, maxWordCountRemainingAfterAttempt(possAnswers, w))).asList()
 end function

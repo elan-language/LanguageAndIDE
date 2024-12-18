@@ -500,14 +500,14 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to empty [String:Dictionary<of String, Int>]
-  variable b set to empty [String:Dictionary<of String, Int>]
+  variable a set to empty Dictionary<of String, Dictionary<of String, Int>>
+  variable b set to empty Dictionary<of String, Dictionary<of String, Int>>
   call a.putAtKey("a", ["a":1])
   print a
   print b
   print a is b
-  print a is empty [String:Dictionary<of String, Int>]
-  print b is empty [String:Dictionary<of String, Int>]
+  print a is empty Dictionary<of String, Dictionary<of String, Int>>
+  print b is empty Dictionary<of String, Dictionary<of String, Int>>
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {

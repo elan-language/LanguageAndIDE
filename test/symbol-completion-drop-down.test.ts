@@ -104,24 +104,6 @@ end main`;
     await assertAutocompletes(fileImpl, "expr5", " ", 1, expected);
   });
 
-  test("Pass_emptyArrayType", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-  variable foo set to 0
-end main`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["Int", "Int", "Int"],
-      ["DictionaryImmutable", "DictionaryImmutable", "DictionaryImmutable<of "],
-    ] as [string, string, string][];
-
-    await assertAutocompletesWithString(fileImpl, "expr5", "empty [I", expected);
-  });
-
   test("Pass_emptyExpression", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
@@ -1082,31 +1064,7 @@ end function`;
       ["DictionaryImmutable", "*", "*"],
     ] as [string, string, string][];
 
-    await assertAutocompletesWithString(fileImpl, "params6", "a as [I", expected);
-  });
-
-  test("Pass_type_in_braces", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
- 
-end main
-
-function foo(a as String) returns String
-  return a
-end function`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["Float", "*", "*"],
-      ["Func", "*", "*"],
-      ["TextFileReader", "*", "*"],
-      ["TextFileWriter", "*", "*"],
-    ] as [string, string, string][];
-
-    await assertAutocompletesWithString(fileImpl, "params6", "a as {F", expected);
+    await assertAutocompletesWithString(fileImpl, "params6", "a as I", expected);
   });
 
   test("Pass_type_dictionaryImmutable", async () => {
@@ -1130,7 +1088,12 @@ end function`;
       ["GraphicsBase", "*", "*"],
     ] as [string, string, string][];
 
-    await assertAutocompletesWithString(fileImpl, "params6", "a as {Float:B", expected);
+    await assertAutocompletesWithString(
+      fileImpl,
+      "params6",
+      "a as Dictionary<of Float, B",
+      expected,
+    );
   });
 
   test("Pass_typeName5", async () => {
@@ -1702,7 +1665,7 @@ end record`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable bubbles set to empty [CircleVG]  
+  variable bubbles set to empty Array<of CircleVG>
   call bubbles.putAt(0, new CircleVG())
 end main`;
 
