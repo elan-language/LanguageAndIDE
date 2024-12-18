@@ -381,7 +381,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: target (Iterable<of String>) Provided: {Int}",
+      "Argument types expected: target (Iterable<of String>) Provided: List<of Int>",
     ]);
   });
 
@@ -437,7 +437,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types Iterable<of Int> to {Int} try converting Iterable to a concrete type with e.g. '.asList()'",
+      "Incompatible types Iterable<of Int> to List<of Int> try converting Iterable to a concrete type with e.g. '.asList()'",
     ]);
   });
 });

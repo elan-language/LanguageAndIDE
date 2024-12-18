@@ -8,7 +8,7 @@ main
   print mergeSort(fruit)
 end main
 
-function mergeSort(li as {String}) returns {String}
+function mergeSort(li as List<of String>) returns List<of String>
   variable result set to li
   let len be li.length()
   if len > 1
@@ -21,8 +21,8 @@ function mergeSort(li as {String}) returns {String}
   return result
 end function
 
-function merge(a as {String}, b as {String}) returns {String}
-  variable result set to empty {String}
+function merge(a as List<of String>, b as List<of String>) returns List<of String>
+  variable result set to empty List<of String>
   let aLen be a.length()
   let bLen be b.length()
   if a.length() is 0
@@ -39,7 +39,7 @@ function merge(a as {String}, b as {String}) returns {String}
 end function
 
 test mergeSort
-  let li1 be empty {String}
+  let li1 be empty List<of String>
   assert mergeSort(li1) is li1
   let li2 be {"plum"}
   assert mergeSort(li2) is li2

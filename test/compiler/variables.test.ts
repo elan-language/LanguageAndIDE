@@ -391,7 +391,7 @@ end main`;
     assertParses(fileImpl);
     assertDoesNotCompileWithId(fileImpl, "set22", ["Incompatible types Float to Boolean"]);
     assertDoesNotCompileWithId(fileImpl, "set25", ["Incompatible types Boolean to Int"]);
-    assertDoesNotCompileWithId(fileImpl, "set28", ["Incompatible types {Float} to String"]);
+    assertDoesNotCompileWithId(fileImpl, "set28", ["Incompatible types List<of Float> to String"]);
     assertDoesNotCompileWithId(fileImpl, "set31", ["Incompatible types Float to Int"]);
   });
 
@@ -412,14 +412,16 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompileWithId(fileImpl, "set12", [
-      "Incompatible types {Float} to Array<of String>",
+      "Incompatible types List<of Float> to Array<of String>",
     ]);
 
     assertDoesNotCompileWithId(fileImpl, "set15", [
-      "Incompatible types Array<of String> to {Float} try converting with '.asList()'",
+      "Incompatible types Array<of String> to List<of Float> try converting with '.asList()'",
     ]);
 
-    assertDoesNotCompileWithId(fileImpl, "set18", ["Incompatible types {Float} to [String:Float]"]);
+    assertDoesNotCompileWithId(fileImpl, "set18", [
+      "Incompatible types List<of Float> to [String:Float]",
+    ]);
   });
 
   test("Fail_RecursiveDefinition", async () => {

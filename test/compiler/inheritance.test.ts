@@ -1625,7 +1625,9 @@ end function
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Argument types expected: l ({Foo}) Provided: {Bar}"]);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types expected: l (List<of Foo>) Provided: List<of Bar>",
+    ]);
   });
 
   test("Fail_Invariance2", async () => {

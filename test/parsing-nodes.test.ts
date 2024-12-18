@@ -148,12 +148,12 @@ suite("Parsing Nodes", () => {
     );
     testNodeParse(
       new ExprNode(),
-      "empty {Int}",
+      "empty List<of Int>",
       ParseStatus.valid,
-      "empty {Int}",
+      "empty List<of Int>",
       "",
       "",
-      "<el-kw>empty</el-kw> {<el-type>Int</el-type>}",
+      "<el-kw>empty</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;",
     );
     testNodeParse(
       new ExprNode(),
