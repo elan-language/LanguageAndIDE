@@ -558,7 +558,9 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types {String:Int} to [String:Int]"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types {String:Int} to Dictionary<of String, Int>",
+    ]);
   });
 
   test("Fail_removeKey", async () => {
@@ -575,7 +577,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types {String:Int} to [String:Int]"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types {String:Int} to Dictionary<of String, Int>",
+    ]);
   });
 
   test("Fail_undefined", async () => {

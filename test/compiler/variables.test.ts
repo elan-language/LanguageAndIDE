@@ -420,7 +420,7 @@ end main`;
     ]);
 
     assertDoesNotCompileWithId(fileImpl, "set18", [
-      "Incompatible types List<of Float> to [String:Float]",
+      "Incompatible types List<of Float> to Dictionary<of String, Float>",
     ]);
   });
 

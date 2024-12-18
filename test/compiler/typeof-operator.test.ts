@@ -42,7 +42,7 @@ async function main() {
   system.printLine(_stdlib.asString("List<of Int>"));
   system.printLine(_stdlib.asString("Array<of Int>"));
   system.printLine(_stdlib.asString("{String:Int}"));
-  system.printLine(_stdlib.asString("[String:Int]"));
+  system.printLine(_stdlib.asString("Dictionary<of String, Int>"));
   var foo = system.initialise(new Foo());
   system.printLine(_stdlib.asString("Foo"));
 }
@@ -64,7 +64,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "IntFloatBooleanStringList<of Int>Array<of Int>{String:Int}[String:Int]Foo",
+      "IntFloatBooleanStringList<of Int>Array<of Int>{String:Int}Dictionary<of String, Int>Foo",
     );
   });
 
@@ -117,7 +117,7 @@ async function main() {
   system.printLine(_stdlib.asString("Array<of Int>"));
   system.printLine(_stdlib.asString("Array<of Array<of Int>>"));
   system.printLine(_stdlib.asString("List<of Array<of Int>>"));
-  system.printLine(_stdlib.asString("[Array<of Int>:Array<of Array<of Int>>]"));
+  system.printLine(_stdlib.asString("Dictionary<of Array<of Int>, Array<of Array<of Int>>>"));
   system.printLine(_stdlib.asString("{List<of Array<of Int>>:Array<of Array<of Int>>}"));
   system.printLine(_stdlib.asString("(List<of Array<of Int>>, Array<of Array<of Int>>)"));
   system.printLine(_stdlib.asString("Procedure (Int)"));
@@ -142,7 +142,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "IntFunc<of Int => Int>Array<of Int>Array<of Array<of Int>>List<of Array<of Int>>[Array<of Int>:Array<of Array<of Int>>]{List<of Array<of Int>>:Array<of Array<of Int>>}(List<of Array<of Int>>, Array<of Array<of Int>>)Procedure (Int)Func<of Int => Int>Unknown",
+      "IntFunc<of Int => Int>Array<of Int>Array<of Array<of Int>>List<of Array<of Int>>Dictionary<of Array<of Int>, Array<of Array<of Int>>>{List<of Array<of Int>>:Array<of Array<of Int>>}(List<of Array<of Int>>, Array<of Array<of Int>>)Procedure (Int)Func<of Int => Int>Unknown",
     );
   });
 

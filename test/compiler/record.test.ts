@@ -314,7 +314,7 @@ end record`;
 
 record Foo
   property p1 as Array<of Int> 
-  property p2 as [String:Int] 
+  property p2 as Dictionary<of String, Int> 
   property p3 as Bar
 end record
 
