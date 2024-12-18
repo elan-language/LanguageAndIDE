@@ -645,7 +645,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types {String:Int} to Dictionary<of String, Int>",
+      "Incompatible types DictionaryImmutable<of String, Int> to Dictionary<of String, Int>",
     ]);
   });
 
@@ -682,7 +682,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types Dictionary<of String, Int> to {String:Int}",
+      "Incompatible types Dictionary<of String, Int> to DictionaryImmutable<of String, Int>",
     ]);
   });
 

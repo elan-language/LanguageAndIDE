@@ -834,7 +834,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types {String:String} to List<of String>"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types DictionaryImmutable<of String, String> to List<of String>",
+    ]);
   });
 
   test("Fail_add", async () => {

@@ -1693,7 +1693,7 @@ end function
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: l ({String:Foo}) Provided: {String:Bar}",
+      "Argument types expected: l (DictionaryImmutable<of String, Foo>) Provided: DictionaryImmutable<of String, Bar>",
     ]);
   });
 
