@@ -113,7 +113,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: key (String), value ([Int]) Provided: Int, [Int]",
+      "Argument types expected: key (String), value (Array<of Int>) Provided: Int, Array<of Int>",
     ]);
   });
 

@@ -410,7 +410,7 @@ class Bar
     set property.strArr to ["apple", "orange", "pair"]
   end constructor
 
-  property strArr as [String]
+  property strArr as Array<of String>
 
 end class`;
 
@@ -454,7 +454,7 @@ class Foo
   constructor()
   end constructor
 
-  function createArr(n as Int) returns [Int]
+  function createArr(n as Int) returns Array<of Int>
     return createArray(n, 7)
   end function
 
@@ -513,7 +513,7 @@ class Foo
   constructor()
   end constructor
 
-  function create2DArr() returns [[Int]]
+  function create2DArr() returns [Array<of Int>]
     return create2DArray(3, 4, 8)
   end function
 

@@ -329,7 +329,7 @@ class Foo
     set property.strArr to ["apple", "orange", "pair"]
   end constructor
 
-  property strArr as [String]
+  property strArr as Array<of String>
 
 end class`;
 

@@ -178,7 +178,7 @@ end class
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to createArray(3, empty [Int])
+  variable a set to createArray(3, empty Array<of Int>)
   print a
 end main`;
 
@@ -453,14 +453,14 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to empty [Int]
-  variable b set to empty [Int]
+  variable a set to empty Array<of Int>
+  variable b set to empty Array<of Int>
   call a.append(3)
   print a
   print b
   print a is b
-  print a is empty [Int]
-  print b is empty [Int]
+  print a is empty Array<of Int>
+  print b is empty Array<of Int>
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -489,7 +489,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to empty [Int]
+  variable a set to empty Array<of Int>
   call a.putAt(0, 3)
 end main`;
 
@@ -724,7 +724,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types {String} to [String]"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types {String} to Array<of String>"]);
   });
 
   test("Fail_withInsert", async () => {
@@ -741,7 +741,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types {String} to [String]"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types {String} to Array<of String>"]);
   });
 
   test("Fail_withRemove", async () => {
@@ -775,7 +775,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types {String} to [String]"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types {String} to Array<of String>"]);
   });
 
   test("Fail_appendWithPlus", async () => {
@@ -792,7 +792,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types [String] to Float or Int"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Array<of String> to Float or Int"]);
   });
 
   test("Fail_prependWithPlus", async () => {
@@ -809,7 +809,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types String to [String]"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types String to Array<of String>"]);
   });
 
   test("Fail_withRemoveFirst", async () => {
@@ -825,7 +825,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types {String} to [String]"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types {String} to Array<of String>"]);
   });
 
   test("Fail_withRemoveAll", async () => {
@@ -841,7 +841,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types {String} to [String]"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types {String} to Array<of String>"]);
   });
 
   test("Fail_assignRange", async () => {

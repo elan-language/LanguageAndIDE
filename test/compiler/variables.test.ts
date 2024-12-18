@@ -411,10 +411,12 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "set12", ["Incompatible types {Float} to [String]"]);
+    assertDoesNotCompileWithId(fileImpl, "set12", [
+      "Incompatible types {Float} to Array<of String>",
+    ]);
 
     assertDoesNotCompileWithId(fileImpl, "set15", [
-      "Incompatible types [String] to {Float} try converting with '.asList()'",
+      "Incompatible types Array<of String> to {Float} try converting with '.asList()'",
     ]);
 
     assertDoesNotCompileWithId(fileImpl, "set18", ["Incompatible types {Float} to [String:Float]"]);

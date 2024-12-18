@@ -452,14 +452,14 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to empty [[Int]]
-  variable b set to empty [[Int]]
+  variable a set to empty [Array<of Int>]
+  variable b set to empty [Array<of Int>]
   call a.append([3])
   print a
   print b
   print a is b
-  print a is empty [[Int]]
-  print b is empty [[Int]]
+  print a is empty [Array<of Int>]
+  print b is empty [Array<of Int>]
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -536,7 +536,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to empty [[Int]]
+  variable a set to empty [Array<of Int>]
   call a[0].putAt(0, 3)
 end main`;
 
@@ -577,7 +577,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types String to [String]"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types String to Array<of String>"]);
   });
 
   test("Fail_1DArrayAccessedAs2D2", async () => {
@@ -593,14 +593,14 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Int to [Int]"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Int to Array<of Int>"]);
   });
 
   test("Fail_2DArrayAccessedAs1D", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to createArray(3, empty [String])
+  variable a set to createArray(3, empty Array<of String>)
   call a.putAt(0, "foo")
 end main
 `;
@@ -610,7 +610,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: index (Int), value ([String]) Provided: Int, String",
+      "Argument types expected: index (Int), value (Array<of String>) Provided: Int, String",
     ]);
   });
 
@@ -619,7 +619,7 @@ end main
 
 main
   variable a set to create2DArray(3, 0, "")
-  call a.putAt(0, empty [String])
+  call a.putAt(0, empty Array<of String>)
   variable b set to a[0][0]
 end main
 `;
@@ -636,7 +636,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to createArray(3, empty [String])
+  variable a set to createArray(3, empty Array<of String>)
   call a.putAt(0, true)
 end main
 `;
@@ -646,7 +646,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: index (Int), value ([String]) Provided: Int, Boolean",
+      "Argument types expected: index (Int), value (Array<of String>) Provided: Int, Boolean",
     ]);
   });
 
@@ -663,7 +663,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Argument types expected: value ([String]) Provided: String"]);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types expected: value (Array<of String>) Provided: String",
+    ]);
   });
 
   test("Fail_IndexWrongType1", async () => {

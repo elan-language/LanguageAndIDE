@@ -19,7 +19,7 @@ suite("List Deconstruction", () => {
 main
   variable a set to [1,2,3]
   variable x set to 1
-  variable y set to empty [Int]
+  variable y set to empty Array<of Int>
   set x:y to a
   print x
   print y
@@ -51,7 +51,7 @@ return [main, _tests];}`;
 
 main
   variable a set to [1,2,3]
-  variable y set to empty [Int]
+  variable y set to empty Array<of Int>
   set _:y to a
   print y
 end main
@@ -124,7 +124,7 @@ async function main() {
   system.printLine(_stdlib.asString(x));
   system.printLine(_stdlib.asString("Int"));
   system.printLine(_stdlib.asString(y));
-  system.printLine(_stdlib.asString("[Int]"));
+  system.printLine(_stdlib.asString("Array<of Int>"));
 }
 return [main, _tests];}`;
 
@@ -134,7 +134,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "1Int[2, 3][Int]");
+    await assertObjectCodeExecutes(fileImpl, "1Int[2, 3]Array<of Int>");
   });
 
   test("Pass_DeconstructArrayOfArrayIntoExistingVariables", async () => {
@@ -142,8 +142,8 @@ return [main, _tests];}`;
 
 main
   variable a set to [[1,2,3], [4,5,6], [7,8,9]]
-  variable x set to empty [Int]
-  variable y set to empty [[Int]]
+  variable x set to empty Array<of Int>
+  variable y set to empty [Array<of Int>]
   set x:y to a
   print x
   print y
@@ -188,9 +188,9 @@ async function main() {
   var a = system.literalArray([system.literalArray([1, 2, 3]), system.literalArray([4, 5, 6]), system.literalArray([7, 8, 9])]);
   var [x, y] = system.deconstructList(a);
   system.printLine(_stdlib.asString(x));
-  system.printLine(_stdlib.asString("[Int]"));
+  system.printLine(_stdlib.asString("Array<of Int>"));
   system.printLine(_stdlib.asString(y));
-  system.printLine(_stdlib.asString("[[Int]]"));
+  system.printLine(_stdlib.asString("Array<of Array<of Int>>"));
 }
 return [main, _tests];}`;
 
@@ -200,7 +200,10 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "[1, 2, 3][Int][[4, 5, 6], [7, 8, 9]][[Int]]");
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "[1, 2, 3]Array<of Int>[[4, 5, 6], [7, 8, 9]]Array<of Array<of Int>>",
+    );
   });
 
   test("Pass_DeconstructArrayOfArrayIntoNewLetVariables", async () => {
@@ -221,9 +224,9 @@ async function main() {
   var a = system.literalArray([system.literalArray([1, 2, 3]), system.literalArray([4, 5, 6]), system.literalArray([7, 8, 9])]);
   const [x, y] = system.deconstructList(a);
   system.printLine(_stdlib.asString(x));
-  system.printLine(_stdlib.asString("[Int]"));
+  system.printLine(_stdlib.asString("Array<of Int>"));
   system.printLine(_stdlib.asString(y));
-  system.printLine(_stdlib.asString("[[Int]]"));
+  system.printLine(_stdlib.asString("Array<of Array<of Int>>"));
 }
 return [main, _tests];}`;
 
@@ -233,7 +236,10 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "[1, 2, 3][Int][[4, 5, 6], [7, 8, 9]][[Int]]");
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "[1, 2, 3]Array<of Int>[[4, 5, 6], [7, 8, 9]]Array<of Array<of Int>>",
+    );
   });
 
   test("Pass_DeconstructExistingOneElement", async () => {
@@ -242,7 +248,7 @@ return [main, _tests];}`;
 main
   variable a set to [1]
   variable x set to 1
-  variable y set to empty [Int]
+  variable y set to empty Array<of Int>
   set x:y to a
   print x
   print y
@@ -380,7 +386,7 @@ async function main() {
   system.printLine(_stdlib.asString(x));
   system.printLine(_stdlib.asString("Int"));
   system.printLine(_stdlib.asString(y));
-  system.printLine(_stdlib.asString("[Int]"));
+  system.printLine(_stdlib.asString("Array<of Int>"));
 }
 return [main, _tests];}`;
 
@@ -390,7 +396,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "1Int[][Int]");
+    await assertObjectCodeExecutes(fileImpl, "1Int[]Array<of Int>");
   });
 
   test("Pass_DeconstructNewLetOneElement", async () => {
@@ -413,7 +419,7 @@ async function main() {
   system.printLine(_stdlib.asString(x));
   system.printLine(_stdlib.asString("Int"));
   system.printLine(_stdlib.asString(y));
-  system.printLine(_stdlib.asString("[Int]"));
+  system.printLine(_stdlib.asString("Array<of Int>"));
 }
 return [main, _tests];}`;
 
@@ -423,7 +429,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "1Int[][Int]");
+    await assertObjectCodeExecutes(fileImpl, "1Int[]Array<of Int>");
   });
 
   test("Pass_DeconstructListIntoNewVariables", async () => {
@@ -531,7 +537,7 @@ return [main, _tests];}`;
 main
   variable a set to [1,2]
   variable x set to ""
-  variable y set to empty [Int]
+  variable y set to empty Array<of Int>
   set x:y to a
 end main
 `;
@@ -550,7 +556,7 @@ end main
 main
   variable a set to [1,2]
   variable x set to 0
-  variable y set to empty [String]
+  variable y set to empty Array<of String>
   set x:y to a
 end main
 `;
@@ -569,7 +575,7 @@ end main
 main
   variable a set to [1,2]
   variable x set to ""
-  variable y set to empty [String]
+  variable y set to empty Array<of String>
   set x:y to a
 end main
 `;
@@ -579,7 +585,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types [Int] to [String]"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Array<of Int> to Array<of String>"]);
   });
 
   test("Fail_DeconstructIntoWrongType4", async () => {
@@ -598,7 +604,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types [Int] to Int"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Array<of Int> to Int"]);
   });
 
   test("Fail_DeconstructIntoWrongType5", async () => {
@@ -606,8 +612,8 @@ end main
 
 main
   variable a set to [1,2]
-  variable x set to empty [Int]
-  variable y set to empty [Int]
+  variable x set to empty Array<of Int>
+  variable y set to empty Array<of Int>
   set x:y to a
 end main
 `;
@@ -617,7 +623,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Int to [Int]"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Int to Array<of Int>"]);
   });
 
   test("Fail_DeconstructIntoWrongType6", async () => {
@@ -637,7 +643,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types [Int] to {Int} try converting with '.asList()'",
+      "Incompatible types Array<of Int> to {Int} try converting with '.asList()'",
     ]);
   });
 
@@ -664,7 +670,7 @@ end main
 
 main
   variable a set to [1,2]
-  variable y set to empty [String]
+  variable y set to empty Array<of String>
   set _:y to a
 end main
 `;
@@ -674,7 +680,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types [Int] to [String]"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Array<of Int> to Array<of String>"]);
   });
 
   test("Fail_CannotDeconstruct1", async () => {
@@ -751,7 +757,7 @@ end main
 main
   variable a set to {1:1}
   variable x set to 0
-  variable y set to empty [Int]
+  variable y set to empty Array<of Int>
   set x:y to a
 end main
 `;
@@ -770,7 +776,7 @@ end main
 main
   variable a set to 1
   variable x set to 0
-  variable y set to empty [Int]
+  variable y set to empty Array<of Int>
   set x:y to a
 end main
 `;
@@ -787,7 +793,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to empty [Int]
+  variable a set to empty Array<of Int>
   variable x:y set to a
   print x
   print y
@@ -806,9 +812,9 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to empty [Int]
+  variable a set to empty Array<of Int>
   variable x set to 0
-  variable y set to empty [Int]
+  variable y set to empty Array<of Int>
   set x:y to a
   print x
   print y
@@ -829,7 +835,7 @@ end main
 main
   variable a set to [1,2,3]
   let x be 1
-  let y be empty [Int]
+  let y be empty Array<of Int>
   set x:y to a
   print x
   print y
