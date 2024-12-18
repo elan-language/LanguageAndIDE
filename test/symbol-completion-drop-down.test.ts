@@ -114,7 +114,10 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [["Int", "Int", "Int"]] as [string, string, string][];
+    const expected = [
+      ["Int", "Int", "Int"],
+      ["DictionaryImmutable", "DictionaryImmutable", "DictionaryImmutable<of "],
+    ] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "expr5", "empty [I", expected);
   });
@@ -1076,6 +1079,7 @@ end function`;
     const expected = [
       ["Int", "*", "*"],
       ["Iterable", "*", "*"],
+      ["DictionaryImmutable", "*", "*"],
     ] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "params6", "a as [I", expected);
@@ -1105,7 +1109,7 @@ end function`;
     await assertAutocompletesWithString(fileImpl, "params6", "a as {F", expected);
   });
 
-  test("Pass_type_immutableDictionary", async () => {
+  test("Pass_type_dictionaryImmutable", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -1170,6 +1174,7 @@ end function`;
     const expected = [
       ["Int", "*", "*"],
       ["Iterable", "*", "*"],
+      ["DictionaryImmutable", "*", "*"],
     ] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "params6", "a as Set<of I", expected);
@@ -1604,6 +1609,8 @@ end main`;
       ["BlockGraphics", "*", "*"],
       ["Boolean", "*", "*"],
       ["CircleVG", "*", "*"],
+      ["Dictionary", "*", "*"],
+      ["DictionaryImmutable", "*", "*"],
       ["Float", "*", "*"],
       ["Int", "*", "*"],
       ["LineVG", "*", "*"],
@@ -1741,6 +1748,8 @@ end main`;
       ["BlockGraphics", "*", "*"],
       ["Boolean", "*", "*"],
       ["CircleVG", "*", "*"],
+      ["Dictionary", "*", "*"],
+      ["DictionaryImmutable", "*", "*"],
       ["Float", "*", "*"],
       ["Int", "*", "*"],
       ["LineVG", "*", "*"],

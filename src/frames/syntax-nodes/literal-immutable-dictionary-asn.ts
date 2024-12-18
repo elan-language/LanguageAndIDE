@@ -2,13 +2,12 @@ import { CompileError } from "../compile-error";
 import { mustBeCompatibleType, mustHaveUniqueKeys } from "../compile-rules";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstNode } from "../interfaces/ast-node";
-import { Scope } from "../interfaces/scope";
-import { ImmutableDictionaryType } from "../symbols/immutable-dictionary-type";
+import { DictionaryImmutableType } from "../symbols/dictionary-immutable-type";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { KvpAsn } from "./kvp-asn";
 
-export class LiteralImmutableDictionaryAsn extends AbstractAstNode implements AstNode {
+export class LiteralDictionaryImmutableAsn extends AbstractAstNode implements AstNode {
   constructor(
     private readonly list: AstCollectionNode,
     public readonly fieldId: string,
@@ -38,15 +37,15 @@ export class LiteralImmutableDictionaryAsn extends AbstractAstNode implements As
     }
 
     const itemList = this.list.items.map((p) => `${p.compile()}`).join(", ");
-    return `system.immutableDictionary({${itemList}})`;
+    return `system.dictionaryImmutable({${itemList}})`;
   }
 
   symbolType() {
     const first = this.list.items[0] as KvpAsn | undefined;
     if (first) {
-      return new ImmutableDictionaryType(first.keySymbolType(), first.symbolType());
+      return new DictionaryImmutableType(first.keySymbolType(), first.symbolType());
     }
-    return new ImmutableDictionaryType(UnknownType.Instance, UnknownType.Instance);
+    return new DictionaryImmutableType(UnknownType.Instance, UnknownType.Instance);
   }
 
   toString() {

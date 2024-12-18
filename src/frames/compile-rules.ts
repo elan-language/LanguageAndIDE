@@ -56,13 +56,13 @@ import { BooleanType } from "./symbols/boolean-type";
 import { ClassType } from "./symbols/class-type";
 import { DeconstructedListType } from "./symbols/deconstructed-list-type";
 import { DeconstructedTupleType } from "./symbols/deconstructed-tuple-type";
+import { DictionaryImmutableType } from "./symbols/dictionary-immutable-type";
 import { DictionaryType } from "./symbols/dictionary-type";
 import { DuplicateSymbol } from "./symbols/duplicate-symbol";
 import { EnumType } from "./symbols/enum-type";
 import { FloatType } from "./symbols/float-type";
 import { FunctionType } from "./symbols/function-type";
 import { GenericParameterType } from "./symbols/generic-parameter-type";
-import { ImmutableDictionaryType } from "./symbols/immutable-dictionary-type";
 import { IntType } from "./symbols/int-type";
 import { IterableType } from "./symbols/iterable-type";
 import { ListType } from "./symbols/list-type";
@@ -691,7 +691,7 @@ export function mustBeCompatibleType(
     return;
   }
 
-  if (lhs instanceof ImmutableDictionaryType && rhs instanceof ImmutableDictionaryType) {
+  if (lhs instanceof DictionaryImmutableType && rhs instanceof DictionaryImmutableType) {
     if (!isInvariantType(lhs.keyType, rhs.keyType, true)) {
       FailIncompatible(lhs, rhs, compileErrors, location);
     }
@@ -701,7 +701,7 @@ export function mustBeCompatibleType(
     return;
   }
 
-  if (lhs instanceof ImmutableDictionaryType && !(rhs instanceof ImmutableDictionaryType)) {
+  if (lhs instanceof DictionaryImmutableType && !(rhs instanceof DictionaryImmutableType)) {
     FailIncompatible(lhs, rhs, compileErrors, location);
     return;
   }

@@ -5,7 +5,7 @@ import { KVPnode } from "./kvp-node";
 import { ParseNode } from "./parse-node";
 import { PunctuationNode } from "./punctuation-node";
 
-export class ImmutableDictionaryNode extends AbstractSequence {
+export class DictionaryImmutableNode extends AbstractSequence {
   csv: CSV | undefined;
   elementConstructor: () => ParseNode;
 

@@ -23,7 +23,7 @@ import { EnumVal } from "../parse-nodes/enum-val";
 import { FunctionRefNode } from "../parse-nodes/function-ref-node";
 import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { IfExpr } from "../parse-nodes/if-expr";
-import { ImmutableDictionaryNode } from "../parse-nodes/immutable-dictionary-node";
+import { DictionaryImmutableNode } from "../parse-nodes/immutable-dictionary-node";
 import { IndexSingle } from "../parse-nodes/index-single";
 import { InheritanceNode } from "../parse-nodes/inheritanceNode";
 import { InstanceNode } from "../parse-nodes/instanceNode";
@@ -60,7 +60,7 @@ import { TypeArrayNode } from "../parse-nodes/type-array-node";
 import { TypeDictionaryNode } from "../parse-nodes/type-dictionary-node";
 import { TypeFuncNode } from "../parse-nodes/type-func-node";
 import { TypeGenericNode } from "../parse-nodes/type-generic-node";
-import { TypeImmutableDictionaryNode } from "../parse-nodes/type-immutable-dictionary-node";
+import { TypeDictionaryImmutableNode } from "../parse-nodes/type-immutable-dictionary-node";
 import { TypeImmutableListNode } from "../parse-nodes/type-immutable-list-node";
 import { TypeInDelimiters } from "../parse-nodes/type-in-delimiters";
 import { TypeOfNode } from "../parse-nodes/type-of-node";
@@ -98,7 +98,7 @@ import { LiteralBoolAsn } from "./literal-bool-asn";
 import { LiteralDictionaryAsn } from "./literal-dictionary-asn";
 import { LiteralEnumAsn } from "./literal-enum-asn";
 import { LiteralFloatAsn } from "./literal-float-asn";
-import { LiteralImmutableDictionaryAsn } from "./literal-immutable-dictionary-asn";
+import { LiteralDictionaryImmutableAsn } from "./literal-immutable-dictionary-asn";
 import { LiteralIntAsn } from "./literal-int-asn";
 import { LiteralListAsn } from "./literal-list-asn";
 import { LiteralRegExAsn } from "./literal-regex-asn";
@@ -262,7 +262,7 @@ export function transform(
     return new TypeAsn(type, [gp], fieldId, scope);
   }
 
-  if (node instanceof TypeDictionaryNode || node instanceof TypeImmutableDictionaryNode) {
+  if (node instanceof TypeDictionaryNode || node instanceof TypeDictionaryImmutableNode) {
     const type = node.simpleType!.matchedText;
     const key = transform(node.keyType, fieldId, scope)!;
     const value = transform(node.valueType, fieldId, scope)!;
@@ -372,9 +372,9 @@ export function transform(
     return new LiteralDictionaryAsn(items, fieldId);
   }
 
-  if (node instanceof ImmutableDictionaryNode) {
+  if (node instanceof DictionaryImmutableNode) {
     const items = transformMany(node.csv!, fieldId, scope);
-    return new LiteralImmutableDictionaryAsn(items, fieldId);
+    return new LiteralDictionaryImmutableAsn(items, fieldId);
   }
 
   if (node instanceof TupleNode) {

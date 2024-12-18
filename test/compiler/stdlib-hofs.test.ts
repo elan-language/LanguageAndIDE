@@ -248,13 +248,13 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Concat:*o*n*e*t*w*o");
   });
 
-  test("Pass_reduceToImmutableDictionary", async () => {
+  test("Pass_reduceToDictionaryImmutable", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 constant source set to {"three", "four"}
 main
   variable ed set to {"one":1, "two":2}
-  set ed to source.reduce(ed, lambda d as ImmutableDictionary<of String, Int>, x as String => d.withPutAtKey(x, 1))
+  set ed to source.reduce(ed, lambda d as DictionaryImmutable<of String, Int>, x as String => d.withPutAtKey(x, 1))
   print ed
 end main`;
 
@@ -264,7 +264,7 @@ const global = new class {
 
 };
 async function main() {
-  var ed = system.immutableDictionary({["one"] : 1, ["two"] : 2});
+  var ed = system.dictionaryImmutable({["one"] : 1, ["two"] : 2});
   ed = _stdlib.reduce(global.source, ed, (d, x) => _stdlib.withPutAtKey(d, x, 1));
   system.printLine(_stdlib.asString(ed));
 }

@@ -69,7 +69,7 @@ async function main() {
   var a = system.literalArray([1, 2]);
   var b = system.list([3, 4]);
   var c = system.dictionary({["a"] : true, ["b"] : false});
-  var d = system.immutableDictionary({["a"] : true, ["b"] : false});
+  var d = system.dictionaryImmutable({["a"] : true, ["b"] : false});
   await foo(a, b, c, d);
 }
 

@@ -110,7 +110,7 @@ async function main() {
   var d = system.literalArray([c]);
   var e = system.list([c, c]);
   var f = system.dictionary({[c] : d});
-  var g = system.immutableDictionary({[e] : d});
+  var g = system.dictionaryImmutable({[e] : d});
   var h = system.tuple([e, d]);
   system.printLine(_stdlib.asString("Int"));
   system.printLine(_stdlib.asString("Func<of Int => Int>"));

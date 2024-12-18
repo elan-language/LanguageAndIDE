@@ -6,10 +6,10 @@ import { Scope } from "../interfaces/scope";
 import { ArrayType } from "../symbols/array-list-type";
 import { BooleanType } from "../symbols/boolean-type";
 import { ClassType } from "../symbols/class-type";
+import { DictionaryImmutableType } from "../symbols/dictionary-immutable-type";
 import { DictionaryType } from "../symbols/dictionary-type";
 import { FloatType } from "../symbols/float-type";
 import { FunctionType } from "../symbols/function-type";
-import { ImmutableDictionaryType } from "../symbols/immutable-dictionary-type";
 import { IntType } from "../symbols/int-type";
 import { IterableType } from "../symbols/iterable-type";
 import { ListType } from "../symbols/list-type";
@@ -46,7 +46,7 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
       case "Iterable":
         return 1;
       case "Dictionary":
-      case "ImmutableDictionary":
+      case "DictionaryImmutable":
       case "Tuple":
         return 2;
     }
@@ -74,7 +74,7 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
       this.fieldId,
     );
 
-    if (this.id === "Dictionary" || this.id === "ImmutableDictionary") {
+    if (this.id === "Dictionary" || this.id === "DictionaryImmutable") {
       return "Object";
     }
 
@@ -115,8 +115,8 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
           this.safeGetGenericParameterSymbolType(0),
           this.safeGetGenericParameterSymbolType(1),
         );
-      case "ImmutableDictionary":
-        return new ImmutableDictionaryType(
+      case "DictionaryImmutable":
+        return new DictionaryImmutableType(
           this.safeGetGenericParameterSymbolType(0),
           this.safeGetGenericParameterSymbolType(1),
         );
