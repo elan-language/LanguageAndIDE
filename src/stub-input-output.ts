@@ -63,7 +63,7 @@ export class StubInputOutput implements ElanInputOutput {
   }
 
   readLine() {
-    return new Promise<string>((rs, rj) => {
+    return new Promise<string>((rs) => {
       onmessage = (e) => {
         const data = e.data as WebWorkerMessage;
 
@@ -76,8 +76,8 @@ export class StubInputOutput implements ElanInputOutput {
   }
 
   waitForAnyKey(): Promise<void> {
-    return new Promise<void>((rs, rj) => {
-      onmessage = (e) => {
+    return new Promise<void>((rs) => {
+      onmessage = (_e) => {
         rs();
       };
       postMessage(this.writeMsg("waitForAnyKey"));
@@ -85,7 +85,7 @@ export class StubInputOutput implements ElanInputOutput {
   }
 
   getKey() {
-    return new Promise<string>((rs, rj) => {
+    return new Promise<string>((rs) => {
       onmessage = (e) => {
         const data = e.data as WebWorkerMessage;
 
@@ -102,7 +102,7 @@ export class StubInputOutput implements ElanInputOutput {
   }
 
   getKeyWithModifier(): Promise<[string, string]> {
-    return new Promise<[string, string]>((rs, rj) => {
+    return new Promise<[string, string]>((rs) => {
       onmessage = (e) => {
         const data = e.data as WebWorkerMessage;
 

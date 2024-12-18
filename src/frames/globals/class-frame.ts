@@ -58,7 +58,6 @@ import { DuplicateSymbol } from "../symbols/duplicate-symbol";
 import { getGlobalScope, isSymbol, symbolMatches } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
-import { UnknownType } from "../symbols/unknown-type";
 import { isAstCollectionNode, isAstIdNode } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 
@@ -181,7 +180,7 @@ export class ClassFrame extends AbstractFrame implements Frame, Parent, Collapsi
     parentHelper_moveSelectedChildrenDownOne(this);
   }
 
-  fieldUpdated(field: Field): void {}
+  fieldUpdated(_field: Field): void {}
 
   minimumNumberOfChildrenExceeded(): boolean {
     const children = this.getChildren().length;
@@ -420,7 +419,7 @@ ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
     return new UnknownSymbol(id);
   }
 
-  resolveSymbol(id: string, transforms: Transforms, initialScope: Frame): ElanSymbol {
+  resolveSymbol(id: string, transforms: Transforms, _initialScope: Frame): ElanSymbol {
     const symbol = this.resolveOwnSymbol(id, transforms);
 
     if (symbol instanceof UnknownSymbol) {
@@ -430,7 +429,7 @@ ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
     return symbol;
   }
 
-  symbolMatches(id: string, all: boolean, initialScope?: Frame | undefined): ElanSymbol[] {
+  symbolMatches(id: string, all: boolean, _initialScope?: Frame | undefined): ElanSymbol[] {
     const otherMatches = this.getParent().symbolMatches(id, all, this);
 
     const symbols = this.getChildren().filter(

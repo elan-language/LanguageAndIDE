@@ -6,7 +6,6 @@ import { InstanceProcRef } from "../parse-nodes/instanceProcRef";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { ProcRefNode } from "../parse-nodes/proc-ref-node";
 import { ParseStatus } from "../status-enums";
-import { TokenType } from "../symbol-completion-helpers";
 import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
 

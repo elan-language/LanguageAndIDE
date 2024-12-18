@@ -37,7 +37,7 @@ export class StdLibClass implements Class {
     return this.immutable;
   }
 
-  symbolType(transforms?: Transforms): SymbolType {
+  symbolType(_transforms?: Transforms): SymbolType {
     return new ClassType(
       this.name,
       this.abstract,
@@ -54,7 +54,7 @@ export class StdLibClass implements Class {
     return this.children;
   }
 
-  resolveOwnSymbol(id: string, transforms: Transforms): ElanSymbol {
+  resolveOwnSymbol(id: string, _transforms: Transforms): ElanSymbol {
     if (id === thisKeyword) {
       return this;
     }
@@ -79,7 +79,7 @@ export class StdLibClass implements Class {
     return new UnknownSymbol(id);
   }
 
-  resolveSymbol(id: string | undefined, transforms: Transforms, scope: Scope): ElanSymbol {
+  resolveSymbol(id: string | undefined, transforms: Transforms, _scope: Scope): ElanSymbol {
     const symbol = this.resolveOwnSymbol(id!, transforms);
 
     if (symbol instanceof UnknownSymbol) {
@@ -93,7 +93,7 @@ export class StdLibClass implements Class {
     return this.scope;
   }
 
-  symbolMatches(id: string, all: boolean, initialScope?: Scope): ElanSymbol[] {
+  symbolMatches(id: string, all: boolean, _initialScope?: Scope): ElanSymbol[] {
     const otherMatches = this.getParentScope().symbolMatches(id, all, this);
 
     const symbols = this.getChildren().filter(

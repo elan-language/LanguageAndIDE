@@ -124,12 +124,12 @@ export class ElanSet<T1> {
   }
 
   @elanFunction([], FunctionOptions.pure, ElanArray(ElanT1))
-  asArray(@elanClassType(ElanSet) other: ElanSet<T1>): T1[] {
+  asArray(@elanClassType(ElanSet) _other: ElanSet<T1>): T1[] {
     return Array.from(this.contents);
   }
 
   @elanFunction([], FunctionOptions.pure, ElanList(ElanT1))
-  asList(@elanClassType(ElanSet) other: ElanSet<T1>): T1[] {
+  asList(@elanClassType(ElanSet) _other: ElanSet<T1>): T1[] {
     return Array.from(this.contents);
   }
 

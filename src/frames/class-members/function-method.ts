@@ -12,13 +12,7 @@ import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Frame } from "../interfaces/frame";
 import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
-import {
-  endKeyword,
-  functionKeyword,
-  privateKeyword,
-  returnKeyword,
-  returnsKeyword,
-} from "../keywords";
+import { endKeyword, functionKeyword, privateKeyword, returnsKeyword } from "../keywords";
 import { getClassScope } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { Transforms } from "../syntax-nodes/transforms";

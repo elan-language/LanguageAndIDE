@@ -28,7 +28,7 @@ export class IfSelector extends AbstractField {
     this.rootNode = new OptionalNode(new KeywordNode(ifKeyword));
     return this.rootNode;
   }
-  readToDelimiter: (source: CodeSource) => string = (source: CodeSource) => "";
+  readToDelimiter: (source: CodeSource) => string = (_source: CodeSource) => "";
 
   parseFrom(source: CodeSource): void {
     if (source.isMatchRegEx(Regexes.ifClause)) {

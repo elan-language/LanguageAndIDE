@@ -7,7 +7,6 @@ import {
 } from "../compile-rules";
 import { AstIndexableNode } from "../interfaces/ast-indexable-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
-import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { IntType } from "../symbols/int-type";

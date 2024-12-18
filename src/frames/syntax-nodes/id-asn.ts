@@ -26,7 +26,7 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
 
   private updatedScope?: Scope;
 
-  updateScopeAndChain(s: Scope, ast: AstNode) {
+  updateScopeAndChain(s: Scope, _ast: AstNode) {
     this.updatedScope = s;
   }
 

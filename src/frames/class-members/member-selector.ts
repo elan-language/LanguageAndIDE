@@ -36,16 +36,16 @@ export class MemberSelector extends AbstractSelector implements Member {
 
   defaultOptions(): [string, (parent: Parent) => Frame][] {
     const options: [string, (parent: Parent) => Frame][] = [
-      [functionKeyword, (parent: Parent) => this.class.createFunction()],
-      [procedureKeyword, (parent: Parent) => this.class.createProcedure()],
-      [propertyKeyword, (parent: Parent) => this.class.createProperty()],
-      [abstractFunctionKeywords, (parent: Parent) => this.class.createAbstractFunction()],
-      [abstractProcedureKeywords, (parent: Parent) => this.class.createAbstractProcedure()],
-      [abstractPropertyKeywords, (parent: Parent) => this.class.createAbstractProperty()],
-      [privateFunctionKeywords, (parent: Parent) => this.class.createFunction(true)],
-      [privateProcedureKeywords, (parent: Parent) => this.class.createProcedure(true)],
-      [privatePropertyKeywords, (parent: Parent) => this.class.createProperty(true)],
-      [commentMarker, (parent: Parent) => this.class.createComment()],
+      [functionKeyword, (_parent: Parent) => this.class.createFunction()],
+      [procedureKeyword, (_parent: Parent) => this.class.createProcedure()],
+      [propertyKeyword, (_parent: Parent) => this.class.createProperty()],
+      [abstractFunctionKeywords, (_parent: Parent) => this.class.createAbstractFunction()],
+      [abstractProcedureKeywords, (_parent: Parent) => this.class.createAbstractProcedure()],
+      [abstractPropertyKeywords, (_parent: Parent) => this.class.createAbstractProperty()],
+      [privateFunctionKeywords, (_parent: Parent) => this.class.createFunction(true)],
+      [privateProcedureKeywords, (_parent: Parent) => this.class.createProcedure(true)],
+      [privatePropertyKeywords, (_parent: Parent) => this.class.createProperty(true)],
+      [commentMarker, (_parent: Parent) => this.class.createComment()],
     ];
     return options;
   }

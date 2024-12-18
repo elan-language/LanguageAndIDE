@@ -415,7 +415,6 @@ export class FileImpl implements File, Scope {
   }
 
   refreshParseAndCompileStatuses(compileIfParsed?: boolean) {
-    let code = "";
     this._parseStatus = ParseStatus.default as ParseStatus;
     this.parseError = undefined;
     this.updateAllParseStatus();
@@ -423,7 +422,7 @@ export class FileImpl implements File, Scope {
     this.resetAllTestStatus();
 
     if (this._parseStatus === ParseStatus.valid && (!this._fieldBeingEdited || compileIfParsed)) {
-      code = this.compile();
+      this.compile();
       this.updateAllCompileStatus();
     }
   }
@@ -700,7 +699,7 @@ export class FileImpl implements File, Scope {
     }
   }
 
-  resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
+  resolveSymbol(id: string | undefined, transforms: Transforms, _initialScope: Frame): ElanSymbol {
     // unknown because of typescript quirk
     const globalSymbols = (this.getChildren().filter((c) => isSymbol(c)) as ElanSymbol[]).concat(
       elanSymbols,

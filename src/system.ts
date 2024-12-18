@@ -143,7 +143,7 @@ export class System {
     return r;
   }
 
-  safeDictionarySet<T>(toIndex: any, index: any, value: any) {
+  safeDictionarySet(toIndex: any, index: any, value: any) {
     const d = this.dictionary(toIndex ?? {}) as any;
     d[index] = value;
   }

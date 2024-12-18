@@ -6,7 +6,6 @@ import { DotAfter } from "./dot-after";
 import { IdentifierNode } from "./identifier-node";
 import { InstanceNode } from "./instanceNode";
 import { OptionalNode } from "./optional-node";
-import { allIds } from "./parse-node-helpers";
 import { Qualifier } from "./qualifier";
 
 export class InstanceProcRef extends AbstractSequence {

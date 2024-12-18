@@ -77,7 +77,7 @@ export class RecordFrame extends AbstractFrame implements Frame, Parent, Collaps
   get symbolId() {
     return this.name.text;
   }
-  symbolType(transforms?: Transforms) {
+  symbolType(_transforms?: Transforms) {
     return new ClassType(this.symbolId, this.isAbstract(), false, this.isImmutable(), [], this);
   }
   get symbolScope() {
@@ -155,7 +155,7 @@ export class RecordFrame extends AbstractFrame implements Frame, Parent, Collaps
     parentHelper_moveSelectedChildrenDownOne(this);
   }
 
-  fieldUpdated(field: Field): void {}
+  fieldUpdated(_field: Field): void {}
 
   minimumNumberOfChildrenExceeded(): boolean {
     const children = this.getChildren().length;
@@ -212,7 +212,7 @@ end record\r\n`;
     return `[${ps}]`;
   }
 
-  public getSuperClassesTypeAndName(transforms: Transforms) {
+  public getSuperClassesTypeAndName(_transforms: Transforms) {
     return [];
   }
 
@@ -279,7 +279,7 @@ ${body}\r${asString}\r
     return new MemberSelector(this);
   }
 
-  resolveOwnSymbol(id: string, transforms: Transforms): ElanSymbol {
+  resolveOwnSymbol(id: string, _transforms: Transforms): ElanSymbol {
     if (id === thisKeyword) {
       return this;
     }
@@ -302,7 +302,7 @@ ${body}\r${asString}\r
     return new UnknownSymbol(id);
   }
 
-  resolveSymbol(id: string, transforms: Transforms, initialScope: Frame): ElanSymbol {
+  resolveSymbol(id: string, transforms: Transforms, _initialScope: Frame): ElanSymbol {
     const symbol = this.resolveOwnSymbol(id, transforms);
 
     if (symbol instanceof UnknownSymbol) {
@@ -312,7 +312,7 @@ ${body}\r${asString}\r
     return symbol;
   }
 
-  symbolMatches(id: string, all: boolean, initialScope?: Frame | undefined): ElanSymbol[] {
+  symbolMatches(id: string, all: boolean, _initialScope?: Frame | undefined): ElanSymbol[] {
     const otherMatches = this.getParent().symbolMatches(id, all, this);
 
     const symbols = this.getChildren().filter(

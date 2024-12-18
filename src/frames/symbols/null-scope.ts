@@ -4,7 +4,7 @@ import { Transforms } from "../syntax-nodes/transforms";
 import { UnknownSymbol } from "./unknown-symbol";
 
 export class NullScope implements Scope {
-  resolveSymbol(id: string | undefined, transforms: Transforms, scope: Scope): ElanSymbol {
+  resolveSymbol(_id: string | undefined, _transforms: Transforms, _scope: Scope): ElanSymbol {
     return new UnknownSymbol();
   }
 
@@ -12,7 +12,7 @@ export class NullScope implements Scope {
     return NullScope.Instance;
   }
 
-  symbolMatches(id: string, all: boolean, initialScope?: Scope): ElanSymbol[] {
+  symbolMatches(_id: string, _all: boolean, _initialScope?: Scope): ElanSymbol[] {
     return [];
   }
 

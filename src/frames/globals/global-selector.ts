@@ -30,17 +30,17 @@ export class GlobalSelector extends AbstractSelector implements GlobalFrame {
 
   defaultOptions(): [string, (parent: Parent) => Frame][] {
     return [
-      [mainKeyword, (parent: Parent) => this.file.createMain()],
-      [procedureKeyword, (parent: Parent) => this.file.createProcedure()],
-      [functionKeyword, (parent: Parent) => this.file.createFunction()],
-      [constantKeyword, (parent: Parent) => this.file.createConstant()],
-      [testKeyword, (parent: Parent) => this.file.createTest()],
-      [ignoreKeyword, (parent: Parent) => this.file.createTest()],
-      [enumKeyword, (parent: Parent) => this.file.createEnum()],
-      [classKeyword, (parent: Parent) => this.file.createClass(false)],
-      [abstractKeyword, (parent: Parent) => this.file.createClass(true)],
-      [recordKeyword, (parent: Parent) => this.file.createRecord()],
-      [commentMarker, (parent: Parent) => this.file.createGlobalComment()],
+      [mainKeyword, (_parent: Parent) => this.file.createMain()],
+      [procedureKeyword, (_parent: Parent) => this.file.createProcedure()],
+      [functionKeyword, (_parent: Parent) => this.file.createFunction()],
+      [constantKeyword, (_parent: Parent) => this.file.createConstant()],
+      [testKeyword, (_parent: Parent) => this.file.createTest()],
+      [ignoreKeyword, (_parent: Parent) => this.file.createTest()],
+      [enumKeyword, (_parent: Parent) => this.file.createEnum()],
+      [classKeyword, (_parent: Parent) => this.file.createClass(false)],
+      [abstractKeyword, (_parent: Parent) => this.file.createClass(true)],
+      [recordKeyword, (_parent: Parent) => this.file.createRecord()],
+      [commentMarker, (_parent: Parent) => this.file.createGlobalComment()],
     ];
   }
 

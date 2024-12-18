@@ -424,11 +424,6 @@ export function isNotInheritableTypeName(s?: ElanSymbol) {
   return isTypeName(s) && isAbstractClass(s) && isNotInheritableClass(s);
 }
 
-function upToParams(id: string) {
-  const openParamsIndex = id.indexOf("(");
-  return openParamsIndex >= 0 ? id.slice(0, openParamsIndex) : id;
-}
-
 function matchingSymbolsWithQualifier(
   propId: string,
   qualId: string,
@@ -589,16 +584,6 @@ export function updateScope(qualifier: AstQualifierNode | undefined, originalSco
   }
 
   return currentScope;
-}
-
-function symbolMatch(id: string, symbolId: string, all: boolean) {
-  if (all) {
-    return true;
-  }
-
-  const uid = id.toUpperCase();
-  const usid = symbolId.toUpperCase();
-  return usid.startsWith(uid) || usid.includes(uid);
 }
 
 export function getDeconstructionIds(sid: string) {

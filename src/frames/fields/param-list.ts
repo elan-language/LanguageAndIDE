@@ -53,7 +53,7 @@ export class ParamList extends AbstractField implements Scope {
     return [];
   }
 
-  symbolMatches(id: string, all: boolean, initialScope?: Scope): ElanSymbol[] {
+  symbolMatches(id: string, all: boolean, _initialScope?: Scope): ElanSymbol[] {
     const symbols = this.getParamsAsSymbols();
     return symbolMatches(id, all, symbols);
   }
@@ -83,7 +83,7 @@ export class ParamList extends AbstractField implements Scope {
     return [names, types];
   }
 
-  resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
+  resolveSymbol(id: string | undefined, _transforms: Transforms, _initialScope: Frame): ElanSymbol {
     const allSymbols = this.getParamsAsSymbols();
     const matches = allSymbols.filter((n) => n.symbolId === id);
 
@@ -115,7 +115,7 @@ export class ParamList extends AbstractField implements Scope {
     if (isFunction(parentScope) || isConstructor(parentScope)) {
       const symbol = parentScope.resolveSymbol(id, transforms, this);
       if (symbol.symbolScope === SymbolScope.outParameter) {
-        mustNotBeOutParameter(symbol, this.compileErrors, this.htmlId);
+        mustNotBeOutParameter(this.compileErrors, this.htmlId);
       }
     }
   }

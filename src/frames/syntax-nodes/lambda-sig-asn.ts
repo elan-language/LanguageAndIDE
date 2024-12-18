@@ -18,7 +18,7 @@ export class LambdaSigAsn extends AbstractAstNode implements Scope, AstNode {
     super();
   }
 
-  symbolMatches(id: string, all: boolean): ElanSymbol[] {
+  symbolMatches(_id: string, _all: boolean): ElanSymbol[] {
     return [];
   }
 
@@ -49,7 +49,7 @@ export class LambdaSigAsn extends AbstractAstNode implements Scope, AstNode {
     return this.parameters.map((p) => p.compile()).join(", ");
   }
 
-  resolveSymbol(id: string | undefined, transforms: Transforms, scope: Scope): ElanSymbol {
+  resolveSymbol(id: string | undefined, transforms: Transforms, _scope: Scope): ElanSymbol {
     for (const p of this.parameters) {
       if (p.id.trim() === id) {
         return {

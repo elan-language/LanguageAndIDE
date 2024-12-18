@@ -65,7 +65,7 @@ export class StatementSelector extends AbstractSelector {
     return peers.filter((p) => "isOtherwise" in p).length === 0;
   }
 
-  validWithinCurrentContext(keyword: string, userEntry: boolean): boolean {
+  validWithinCurrentContext(keyword: string, _userEntry: boolean): boolean {
     const parent = this.getParent();
     let result = false;
     if (parent.getIdPrefix() === switchKeyword) {

@@ -335,7 +335,7 @@ export function elanProcedure(parameterNames: string[], options?: ProcedureOptio
 }
 
 export function elanMethod(parameterNames: string[], elanDesc: ElanMethodDescriptor) {
-  return function (target: object, propertyKey: string, descriptor: PropertyDescriptor) {
+  return function (target: object, propertyKey: string, _descriptor: PropertyDescriptor) {
     const paramTypesMetadata = Reflect.getMetadata("design:paramtypes", target, propertyKey);
     const retTypeMetadata = Reflect.getMetadata("design:returntype", target, propertyKey);
 

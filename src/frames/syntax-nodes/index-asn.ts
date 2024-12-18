@@ -29,7 +29,7 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
 
   private precedingNode?: AstNode = undefined;
 
-  updateScopeAndChain(scope: Scope, ast: AstNode) {
+  updateScopeAndChain(_scope: Scope, ast: AstNode) {
     this.precedingNode = ast;
   }
 
