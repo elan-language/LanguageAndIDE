@@ -1,4 +1,4 @@
-# f11d1c9ed9a9f53d4622dad6bfb84f53ec6f5ada51103c5a9654146b879a1d38 Elan Beta 4 valid
+# 516309fc3292b96ad8dde94326d050607d700d1acb795db9396087b9748e35f9 Elan Beta 5 valid
 
 # Wordle Solver: in 'hard' mode (every attempt must be a valid possible answer)
 # Mark each letter of program's attempt word with:
@@ -186,8 +186,7 @@ test maxWordCountRemainingAfterAttempt
 end test
 
 function allRemainingWordCounts(possAnswers as List<of String>) returns List<of WordCount>
-  let parallel be possAnswers
-  return parallel.map(lambda w as String => new WordCount(w, maxWordCountRemainingAfterAttempt(possAnswers, w))).asList()
+  return possAnswers.map(lambda w as String => new WordCount(w, maxWordCountRemainingAfterAttempt(possAnswers, w))).asList()
 end function
 
 function betterOf(wc1 as WordCount, wc2 as WordCount, possAnswers as List<of String>) returns WordCount

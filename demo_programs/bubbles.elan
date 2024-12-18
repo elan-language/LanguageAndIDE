@@ -1,4 +1,4 @@
-# FFFF Elan Beta 4 valid
+# 4d1cb6ccad274055cae72fb0d96c144fe7d169333a5488f546d91d20dd46a847 Elan Beta 5 valid
 
 main
   variable vg set to new VectorGraphics()

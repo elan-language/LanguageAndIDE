@@ -1,4 +1,4 @@
-# FFFF Elan Beta 4 valid
+# f58ec7a168bac3a8c0f148b45667d1151c4bc780462d0df83b34c6ad65ca594f Elan Beta 5 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -84,6 +84,8 @@ class Snake
         set property.currentDir to Direction.left
       case "d"
         set property.currentDir to Direction.right
+      otherwise
+        # do nothing
     end switch
   end procedure
 

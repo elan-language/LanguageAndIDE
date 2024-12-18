@@ -192,7 +192,7 @@ suite("Symbol Completion Spec", () => {
       ParseStatus.incomplete,
       TypeNode.name,
       "I",
-      [TokenType.type_concrete],
+      [TokenType.type_concrete, TokenType.type_abstract],
       [],
     );
   });

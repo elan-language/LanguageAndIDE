@@ -1,16 +1,10 @@
 import { TokenType } from "../symbol-completion-helpers";
 import {
-  CLOSE_BRACE,
-  CLOSE_SQ_BRACKET,
-  OPEN_BRACE,
-  OPEN_BRACKET,
-  OPEN_SQ_BRACKET,
+  OPEN_BRACKET
 } from "../symbols";
 import { AbstractAlternatives } from "./abstract-alternatives";
-import { Alternatives } from "./alternatives";
 import { TypeFuncNode } from "./type-func-node";
 import { TypeGenericNode } from "./type-generic-node";
-import { TypeInDelimiters } from "./type-in-delimiters";
 import { TypeSimpleNode } from "./type-simple-node";
 import { TypeTupleNode } from "./type-tuple-node";
 
@@ -37,9 +31,5 @@ export class TypeNode extends AbstractAlternatives {
       }
       super.parseText(text.trimStart());
     }
-  }
-
-  override symbolCompletion_tokenTypes(): Set<TokenType> {
-    return this.tokenTypes;
   }
 }
