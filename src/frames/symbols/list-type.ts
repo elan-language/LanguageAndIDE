@@ -16,7 +16,7 @@ export class ListType extends AbstractListType implements IterableSymbolType {
   get name() {
     return `List<of ${this.ofType.name}>`;
   }
-  
+
   toString(): string {
     return `List`;
   }
