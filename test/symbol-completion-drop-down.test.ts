@@ -418,10 +418,10 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["prop1", "*", "*"],
       ["pproc3", "*", "*"],
       ["proc1", "*", "*"],
       ["proc2", "*", "*"],
+      ["prop1", "*", "*"],
     ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "ident36", ".", 3, expected);
@@ -906,8 +906,8 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["bar", "*", "*"],
       ["b", "*", "*"],
+      ["bar", "*", "*"],
     ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "ident24", "b", 0, expected, true);
@@ -1120,9 +1120,9 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
+      ["BaseVG", "*", "*"],
       ["BlockGraphics", "*", "*"],
       ["Boolean", "*", "*"],
-      ["BaseVG", "*", "*"],
       ["GraphicsBase", "*", "*"],
     ] as [string, string, string][];
 
@@ -1144,9 +1144,9 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
+      ["BaseVG", "*", "*"],
       ["BlockGraphics", "*", "*"],
       ["Boolean", "*", "*"],
-      ["BaseVG", "*", "*"],
       ["GraphicsBase", "*", "*"],
     ] as [string, string, string][];
 
@@ -1267,10 +1267,10 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["f3", "*", "*"],
       ["asString", "*", "*"],
       ["f1", "*", "*"],
       ["f2", "*", "*"],
+      ["f3", "*", "*"],
     ] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "expr5", "foo().", expected);
@@ -1307,10 +1307,10 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["f3", "*", "*"],
       ["asString", "*", "*"],
       ["f1", "*", "*"],
       ["f2", "*", "*"],
+      ["f3", "*", "*"],
     ] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "expr5", "foo(1).", expected);

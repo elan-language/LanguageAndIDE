@@ -516,7 +516,7 @@ function filterSymbols(matches: ElanSymbol[], filters: ((s: ElanSymbol) => boole
   let filtered: ElanSymbol[] = [];
 
   for (const f of filters) {
-    filtered = filtered.concat(matches.filter(f).sort(orderSymbol));
+    filtered = filtered.concat(matches.filter(f));
   }
 
   return filtered.filter((e) => !e.symbolId.startsWith("_"));
@@ -531,10 +531,10 @@ export function filteredSymbols(
   const filters = filtersForTokenType(spec.tokenTypes, transforms);
   const filtered = filterSymbols(matches, filters);
 
-  const startsWith = filtered.filter((s) =>
-    s.symbolId.toUpperCase().startsWith(spec.toMatch.toUpperCase()),
-  );
-  const includes = filtered.filter((s) => !startsWith.includes(s));
+  const startsWith = filtered
+    .filter((s) => s.symbolId.toUpperCase().startsWith(spec.toMatch.toUpperCase()))
+    .sort(orderSymbol);
+  const includes = filtered.filter((s) => !startsWith.includes(s)).sort(orderSymbol);
   return startsWith.concat(includes);
 }
 
@@ -703,9 +703,7 @@ export function filtersForTokenType(
 ): ((s?: ElanSymbol) => boolean)[] {
   const filters: ((s?: ElanSymbol) => boolean)[] = [];
 
-  const orderedTokens = Array.from(tokenTypes).sort((a, b) => a - b);
-
-  for (const f of orderedTokens) {
+  for (const f of tokenTypes) {
     filters.push(filterForTokenType(f, transforms));
   }
 
