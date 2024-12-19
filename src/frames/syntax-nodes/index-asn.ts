@@ -15,13 +15,12 @@ import { isAnyDictionaryType, isGenericSymbolType } from "../symbols/symbol-help
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { ChainedAsn } from "./chained-asn";
-import { ExprAsn } from "./expr-asn";
 import { RangeAsn } from "./range-asn";
 
 export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
   constructor(
-    public readonly index1: ExprAsn,
-    public readonly index2: ExprAsn | undefined,
+    public readonly index1: AstNode,
+    public readonly index2: AstNode | undefined,
     public readonly fieldId: string,
   ) {
     super();
@@ -29,7 +28,7 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
 
   private precedingNode?: AstNode = undefined;
 
-  updateScopeAndChain(scope: Scope, ast: AstNode) {
+  updateScopeAndChain(_scope: Scope, ast: AstNode) {
     this.precedingNode = ast;
   }
 

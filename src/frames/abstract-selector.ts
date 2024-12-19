@@ -238,7 +238,7 @@ export abstract class AbstractSelector extends AbstractFrame {
     }
   }
 
-  insertPeerSelector(after: boolean): void {
+  insertPeerSelector(_after: boolean): void {
     throw new Error("Should never be called on a Selector");
   }
 

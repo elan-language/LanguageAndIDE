@@ -66,7 +66,7 @@ export class WebInputOutput implements ElanInputOutput {
             const contents = await file.text();
             rs(contents);
           }
-        } catch (e) {
+        } catch (_e) {
           rj("read cancelled");
         }
       });
@@ -123,7 +123,7 @@ export class WebInputOutput implements ElanInputOutput {
       const writeable = await fh.createWritable();
       await writeable.write(data);
       return await writeable.close();
-    } catch (e) {
+    } catch (_e) {
       throw new Error("write cancelled");
     }
   }
@@ -153,7 +153,7 @@ export class WebInputOutput implements ElanInputOutput {
         URL.revokeObjectURL(href);
 
         rs();
-      } catch (e) {
+      } catch (_e) {
         rj("write cancelled");
       }
     });
@@ -180,7 +180,6 @@ export class WebInputOutput implements ElanInputOutput {
 
   printTab(position: number, text: string) {
     const lastNl = this.previousContent.lastIndexOf("\n");
-    const afterLastNl = lastNl === -1 ? 0 : lastNl + 1;
     const spaces =
       "                                                                                ";
     const charsSinceNl = this.previousContent.length - lastNl;
@@ -202,7 +201,7 @@ export class WebInputOutput implements ElanInputOutput {
     const inp = document.getElementById("inp") as HTMLInputElement;
     inp.focus();
 
-    return new Promise<string>((rs, rj) => {
+    return new Promise<string>((rs) => {
       let entered = false;
       inp.addEventListener("keydown", (k: KeyboardEvent) => {
         entered = k.key === "Enter";
@@ -218,7 +217,7 @@ export class WebInputOutput implements ElanInputOutput {
   }
 
   waitForAnyKey(): Promise<void> {
-    return new Promise<void>((rs, rj) => {
+    return new Promise<void>((rs) => {
       const timeOut = setInterval(async () => {
         if ((await this.getKey()) !== "") {
           clearInterval(timeOut);

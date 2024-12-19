@@ -234,7 +234,7 @@ export class StdLib {
   }
 
   @elanFunction([], FunctionOptions.pureExtension, ElanList(ElanT1))
-  keys<T1, T2>(
+  keys<T1>(
     @elanAbstractDictionaryType(ElanT1, ElanT2)
     dict: {
       [key: string]: T1;
@@ -1050,7 +1050,7 @@ export class StdLib {
 
   // Graphics
   @elanProcedure([], ProcedureOptions.extension)
-  clearGraphics(@elanClassType(GraphicsBase) g: GraphicsBase) {
+  clearGraphics(@elanClassType(GraphicsBase) _g: GraphicsBase) {
     this.system!.elanInputOutput.clearGraphics();
   }
 
@@ -1070,7 +1070,7 @@ export class StdLib {
   }
 
   @elanProcedure([], ProcedureOptions.extension)
-  clearKeyBuffer(@elanClassType(GraphicsBase) g: GraphicsBase) {
+  clearKeyBuffer(@elanClassType(GraphicsBase) _g: GraphicsBase) {
     this.system!.elanInputOutput.clearKeyBuffer();
   }
 }

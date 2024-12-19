@@ -16,7 +16,7 @@ import { SymbolScope } from "./symbol-scope";
 
 const intSymbol: ElanSymbol = {
   symbolId: IntType.Instance.name,
-  symbolType: function (transforms?: Transforms): SymbolType {
+  symbolType: function (_transforms?: Transforms): SymbolType {
     return IntType.Instance;
   },
   symbolScope: SymbolScope.program,
@@ -24,7 +24,7 @@ const intSymbol: ElanSymbol = {
 
 const floatSymbol: ElanSymbol = {
   symbolId: FloatType.Instance.name,
-  symbolType: function (transforms?: Transforms): SymbolType {
+  symbolType: function (_transforms?: Transforms): SymbolType {
     return FloatType.Instance;
   },
   symbolScope: SymbolScope.program,
@@ -32,7 +32,7 @@ const floatSymbol: ElanSymbol = {
 
 const stringSymbol: ElanSymbol = {
   symbolId: StringType.Instance.name,
-  symbolType: function (transforms?: Transforms): SymbolType {
+  symbolType: function (_transforms?: Transforms): SymbolType {
     return StringType.Instance;
   },
   symbolScope: SymbolScope.program,
@@ -40,7 +40,7 @@ const stringSymbol: ElanSymbol = {
 
 const booleanSymbol: ElanSymbol = {
   symbolId: BooleanType.Instance.name,
-  symbolType: function (transforms?: Transforms): SymbolType {
+  symbolType: function (_transforms?: Transforms): SymbolType {
     return BooleanType.Instance;
   },
   symbolScope: SymbolScope.program,
@@ -48,7 +48,7 @@ const booleanSymbol: ElanSymbol = {
 
 const iterableSymbol: ClassSymbol = {
   symbolId: "Iterable",
-  symbolType: function (transforms?: Transforms): SymbolType {
+  symbolType: function (_transforms?: Transforms): SymbolType {
     return new IterableType(new GenericParameterType("T"));
   },
   symbolScope: SymbolScope.program,
@@ -60,7 +60,7 @@ const iterableSymbol: ClassSymbol = {
 
 const arraySymbol: ClassSymbol = {
   symbolId: "Array",
-  symbolType: function (transforms?: Transforms): SymbolType {
+  symbolType: function (_transforms?: Transforms): SymbolType {
     return new ArrayType(new GenericParameterType("T"));
   },
   symbolScope: SymbolScope.program,
@@ -72,7 +72,7 @@ const arraySymbol: ClassSymbol = {
 
 const listSymbol: ClassSymbol = {
   symbolId: "List",
-  symbolType: function (transforms?: Transforms): SymbolType {
+  symbolType: function (_transforms?: Transforms): SymbolType {
     return new ListType(new GenericParameterType("T"));
   },
   symbolScope: SymbolScope.program,
@@ -84,7 +84,7 @@ const listSymbol: ClassSymbol = {
 
 const dictionarySymbol: ClassSymbol = {
   symbolId: "Dictionary",
-  symbolType: function (transforms?: Transforms): SymbolType {
+  symbolType: function (_transforms?: Transforms): SymbolType {
     return new DictionaryType(new GenericParameterType("T1"), new GenericParameterType("T2"));
   },
   symbolScope: SymbolScope.program,
@@ -96,7 +96,7 @@ const dictionarySymbol: ClassSymbol = {
 
 const dictionaryImmutableSymbol: ClassSymbol = {
   symbolId: "DictionaryImmutable",
-  symbolType: function (transforms?: Transforms): SymbolType {
+  symbolType: function (_transforms?: Transforms): SymbolType {
     return new DictionaryType(new GenericParameterType("T1"), new GenericParameterType("T2"));
   },
   symbolScope: SymbolScope.program,
@@ -108,7 +108,7 @@ const dictionaryImmutableSymbol: ClassSymbol = {
 
 const funcSymbol: ClassSymbol = {
   symbolId: "Func",
-  symbolType: function (transforms?: Transforms): SymbolType {
+  symbolType: function (_transforms?: Transforms): SymbolType {
     return new FunctionType(
       ["T"],
       [new GenericParameterType("T")],

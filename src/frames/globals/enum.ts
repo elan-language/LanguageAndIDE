@@ -42,7 +42,7 @@ export class Enum extends AbstractFrame implements ElanSymbol, GlobalFrame, Coll
     return this.name.text;
   }
 
-  symbolType(transforms?: Transforms): SymbolType {
+  symbolType(_transforms?: Transforms): SymbolType {
     return new EnumType(this.symbolId);
   }
   get symbolScope() {
@@ -109,7 +109,7 @@ ${singleIndent()}${this.values.compile(transforms)}\r
     }));
   }
 
-  resolveSymbol(id: string, transforms: Transforms, initialScope: Frame): ElanSymbol {
+  resolveSymbol(id: string, transforms: Transforms, _initialScope: Frame): ElanSymbol {
     for (const n of this.enumValueSymbols()) {
       if (n.symbolId === id) {
         return n;
@@ -119,7 +119,7 @@ ${singleIndent()}${this.values.compile(transforms)}\r
     return this.getParent().resolveSymbol(id, transforms, this);
   }
 
-  symbolMatches(id: string, all: boolean, initialScope?: Frame | undefined): ElanSymbol[] {
+  symbolMatches(id: string, all: boolean, _initialScope?: Frame | undefined): ElanSymbol[] {
     const otherMatches = this.getParent().symbolMatches(id, all, this);
     const symbols = this.enumValueSymbols();
     const matches = symbolMatches(id, all, symbols);

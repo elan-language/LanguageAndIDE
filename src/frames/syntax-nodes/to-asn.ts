@@ -1,12 +1,12 @@
 import { CompileError } from "../compile-error";
 import { AstIdNode } from "../interfaces/ast-id-node";
+import { AstNode } from "../interfaces/ast-node";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { ExprAsn } from "./expr-asn";
 
 export class ToAsn extends AbstractAstNode implements AstIdNode {
   constructor(
     public readonly id: string,
-    private readonly to: ExprAsn,
+    private readonly to: AstNode,
     public readonly fieldId: string,
   ) {
     super();

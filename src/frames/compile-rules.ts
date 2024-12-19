@@ -201,9 +201,7 @@ export function mustBeProcedure(
   location: string,
 ) {
   if (!(symbolType instanceof ProcedureType)) {
-    compileErrors.push(
-      new CannotCallAFunction(symbolType.name, location, symbolType instanceof UnknownType),
-    );
+    compileErrors.push(new CannotCallAFunction(location, symbolType instanceof UnknownType));
   }
 }
 
@@ -240,21 +238,12 @@ export function mustBePureFunctionSymbol(
   if (InFunctionScope(scope)) {
     if (!(symbolType instanceof FunctionType) || !symbolType.isPure) {
       compileErrors.push(
-        new CannotUseSystemMethodInAFunction(
-          symbolType.name,
-          location,
-          symbolType instanceof UnknownType,
-        ),
+        new CannotUseSystemMethodInAFunction(location, symbolType instanceof UnknownType),
       );
     }
   } else if (symbolType instanceof ProcedureType) {
     compileErrors.push(
-      new CannotUseLikeAFunction(
-        symbolId,
-        symbolType.name,
-        location,
-        symbolType instanceof UnknownType,
-      ),
+      new CannotUseLikeAFunction(symbolId, location, symbolType instanceof UnknownType),
     );
   } else if (!(symbolType instanceof FunctionType)) {
     compileErrors.push(
@@ -1083,11 +1072,7 @@ export function mustNotBeRedefined(
   );
 }
 
-export function mustNotBeOutParameter(
-  variable: ElanSymbol,
-  compileErrors: CompileError[],
-  location: string,
-) {
+export function mustNotBeOutParameter(compileErrors: CompileError[], location: string) {
   compileErrors.push(
     new SyntaxCompileError("'out' parameters are only supported on procedures.", location),
   );

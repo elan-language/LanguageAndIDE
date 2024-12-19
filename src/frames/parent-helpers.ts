@@ -1,6 +1,5 @@
 import { AbstractSelector } from "./abstract-selector";
 import { CompileError } from "./compile-error";
-import { isSelector } from "./frame-helpers";
 import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
 import { CompileStatus, ParseStatus } from "./status-enums";

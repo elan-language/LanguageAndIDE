@@ -3,13 +3,12 @@ import { mustBeOfType } from "../compile-rules";
 import { AstNode } from "../interfaces/ast-node";
 import { BooleanType } from "../symbols/boolean-type";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { ExprAsn } from "./expr-asn";
 
 export class IfExprAsn extends AbstractAstNode implements AstNode {
   constructor(
-    private readonly condition: ExprAsn,
-    private readonly expr1: ExprAsn,
-    private readonly expr2: ExprAsn,
+    private readonly condition: AstNode,
+    private readonly expr1: AstNode,
+    private readonly expr2: AstNode,
     public readonly fieldId: string,
   ) {
     super();

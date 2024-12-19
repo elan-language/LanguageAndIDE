@@ -3,13 +3,12 @@ import { AstNode } from "../interfaces/ast-node";
 import { BooleanType } from "../symbols/boolean-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { mapOperationSymbol } from "./ast-helpers";
-import { ExprAsn } from "./expr-asn";
 import { OperationSymbol } from "./operation-symbol";
 
-export class UnaryExprAsn extends AbstractAstNode implements AstNode {
+export class UnaryExprASn extends AbstractAstNode implements AstNode {
   constructor(
     private readonly op: OperationSymbol,
-    private readonly operand: ExprAsn,
+    private readonly operand: AstNode,
     public readonly fieldId: string,
   ) {
     super();

@@ -1,5 +1,5 @@
 export class Overtyper {
-  hasNotConsumed: (s: string | undefined) => boolean = (s) => true;
+  hasNotConsumed: (s: string | undefined) => boolean = (_s) => true;
   toConsume: string = "";
   timer?: number;
   timeOut?: number;
@@ -10,13 +10,13 @@ export class Overtyper {
         this.toConsume = this.toConsume.slice(1);
         clearTimeout(this.timer);
         this.timer = setTimeout(
-          () => (this.hasNotConsumed = (s) => true),
+          () => (this.hasNotConsumed = (_s) => true),
           this.timeOut,
         ) as unknown as number;
         return false;
       }
       this.toConsume = "";
-      this.hasNotConsumed = (s) => true;
+      this.hasNotConsumed = (_s) => true;
       clearTimeout(this.timer);
     }
     return true;
@@ -28,7 +28,7 @@ export class Overtyper {
       this.toConsume = toConsume;
       this.hasNotConsumed = this.consuming;
       this.timer = setTimeout(
-        () => (this.hasNotConsumed = (s) => true),
+        () => (this.hasNotConsumed = (_s) => true),
         timeOut,
       ) as unknown as number;
     }

@@ -23,7 +23,7 @@ import {
 const codeContainer = document.querySelector(".elan-code");
 const runButton = document.getElementById("run-button") as HTMLButtonElement;
 const stopButton = document.getElementById("stop") as HTMLButtonElement;
-const pauseButton = document.getElementById("pause") as HTMLButtonElement;
+const _pauseButton = document.getElementById("pause") as HTMLButtonElement;
 const clearConsoleButton = document.getElementById("clear-console") as HTMLButtonElement;
 const clearGraphicsButton = document.getElementById("clear-graphics") as HTMLButtonElement;
 const expandCollapseButton = document.getElementById("expand-collapse") as HTMLButtonElement;
@@ -259,7 +259,7 @@ function checkIsChrome() {
   const winNav = window.navigator;
   const vendorName = (winNav as any).vendor;
   const isOpera = typeof (window as any).opr !== "undefined";
-  const isFirefox = winNav.userAgent.indexOf("Firefox") > -1;
+  const _isFirefox = winNav.userAgent.indexOf("Firefox") > -1;
   const isIEedge = winNav.userAgent.indexOf("Edg") > -1;
   const isIOSChrome = winNav.userAgent.match("CriOS");
   const isGoogleChrome =
@@ -300,7 +300,7 @@ if (okToContinue) {
   // fetch profile triggers page display
   fetchProfile()
     .then(async (p) => await setup(p))
-    .catch(async (e) => {
+    .catch(async (_e) => {
       console.warn("profile not found - using default");
       await setup(new DefaultProfile());
     });
@@ -1104,7 +1104,6 @@ function getAppender() {
 }
 
 async function readAndParse(rawCode: string, fileName: string, reset: boolean, append?: boolean) {
-  lastDirId;
   const code = new CodeSourceFromString(rawCode);
   file.fileName = fileName;
   try {
@@ -1130,7 +1129,7 @@ async function handleChromeUploadOrAppend(upload: boolean) {
       clearUndoRedoAndAutoSave();
     }
     await readAndParse(rawCode, fileName, upload, !upload);
-  } catch (e) {
+  } catch (_e) {
     // user cancelled
     return;
   }
@@ -1247,7 +1246,7 @@ async function handleChromeDownload(event: Event) {
     lastSavedHash = file.currentHash;
 
     await renderAsHtml();
-  } catch (e) {
+  } catch (_e) {
     // user cancelled
     return;
   } finally {
@@ -1271,7 +1270,7 @@ async function handleChromeAutoSave(event: Event) {
     await renderAsHtml();
     autoSaveButton.innerText = "Auto-off";
     autoSaveButton.setAttribute("title", "Click to turn auto-save off and resume manual saving.");
-  } catch (e) {
+  } catch (_e) {
     // user cancelled
     return;
   } finally {
@@ -1287,7 +1286,7 @@ async function autoSave(code: string) {
       await writeable.close();
       lastSavedHash = file.currentHash;
       updateNameAndSavedStatus();
-    } catch (e) {
+    } catch (_e) {
       console.warn("autosave failed");
     }
   }

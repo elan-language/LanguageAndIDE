@@ -13,12 +13,11 @@ import { Scope } from "../interfaces/scope";
 import { ClassType } from "../symbols/class-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { transforms } from "./ast-helpers";
-import { ExprAsn } from "./expr-asn";
 import { ToAsn } from "./to-asn";
 
 export class CopyWithAsn extends AbstractAstNode implements AstNode {
   constructor(
-    private readonly obj: ExprAsn,
+    private readonly obj: AstNode,
     private readonly withClause: AstCollectionNode,
     public readonly fieldId: string,
     private readonly scope: Scope,

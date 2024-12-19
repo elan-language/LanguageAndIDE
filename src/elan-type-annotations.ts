@@ -32,7 +32,7 @@ import { StringType } from "./frames/symbols/string-type";
 import { SymbolScope } from "./frames/symbols/symbol-scope";
 import { TupleType } from "./frames/symbols/tuple-type";
 
-export class ElanProcedureDescriptor implements ElanMethodDescriptor, IElanProcedureDescriptor {
+export class ElanProcedureDescriptor implements IElanProcedureDescriptor {
   constructor(
     public readonly isExtension: boolean = false,
     public readonly isAsync: boolean = false,
@@ -81,7 +81,7 @@ export class ElanClassDescriptor implements ElanDescriptor {
   }
 }
 
-export class ElanFunctionDescriptor implements ElanMethodDescriptor, IElanFunctionDescriptor {
+export class ElanFunctionDescriptor implements IElanFunctionDescriptor {
   constructor(
     public readonly isExtension: boolean = false,
     public readonly isPure: boolean = true,
@@ -335,7 +335,7 @@ export function elanProcedure(parameterNames: string[], options?: ProcedureOptio
 }
 
 export function elanMethod(parameterNames: string[], elanDesc: ElanMethodDescriptor) {
-  return function (target: object, propertyKey: string, descriptor: PropertyDescriptor) {
+  return function (target: object, propertyKey: string, _descriptor: PropertyDescriptor) {
     const paramTypesMetadata = Reflect.getMetadata("design:paramtypes", target, propertyKey);
     const retTypeMetadata = Reflect.getMetadata("design:returntype", target, propertyKey);
 

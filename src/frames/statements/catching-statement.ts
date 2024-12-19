@@ -29,7 +29,7 @@ export class CatchingStatement extends FrameWithStatements implements Statement,
     return this.variable.text;
   }
 
-  symbolType(transforms?: Transforms): SymbolType {
+  symbolType(_transforms?: Transforms): SymbolType {
     return StringType.Instance;
   }
 

@@ -59,7 +59,7 @@ export abstract class AbstractFrame implements Frame {
     return "__";
   }
 
-  symbolType(transforms?: Transforms) {
+  symbolType(_transforms?: Transforms) {
     return UnknownType.Instance;
   }
 
@@ -89,19 +89,19 @@ export abstract class AbstractFrame implements Frame {
     return this.getFile().getFrNo();
   }
 
-  resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
+  resolveSymbol(id: string | undefined, transforms: Transforms, _initialScope: Frame): ElanSymbol {
     return this.getParent().resolveSymbol(id, transforms, this);
   }
 
-  symbolMatches(id: string, all: boolean, initialScope?: Scope): ElanSymbol[] {
+  symbolMatches(id: string, all: boolean, _initialScope?: Scope): ElanSymbol[] {
     return this.getParent().symbolMatches(id, all, this);
   }
 
-  compile(transforms: Transforms): string {
+  compile(_transforms: Transforms): string {
     throw new Error("Method not implemented.");
   }
 
-  fieldUpdated(field: Field): void {
+  fieldUpdated(_field: Field): void {
     //Does nothing - for sub-classes to override as needed
   }
 

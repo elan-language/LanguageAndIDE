@@ -128,7 +128,7 @@ export abstract class AbstractField implements Selectable, Field {
     if (this.text === "" && optional) {
       this._parseStatus = ParseStatus.valid;
     } else if (this.text === "" && !optional) {
-      this._parseStatus === ParseStatus.incomplete;
+      this._parseStatus = ParseStatus.incomplete;
     }
   }
 
@@ -272,7 +272,7 @@ export abstract class AbstractField implements Selectable, Field {
     this.codeHasChanged = true;
   }
 
-  isEndMarker(key: string) {
+  isEndMarker(_key: string) {
     return false;
   }
 
@@ -534,7 +534,7 @@ export abstract class AbstractField implements Selectable, Field {
     this.compileErrors = this.aggregateCompileErrors(); //Needed in this case because the compile errors will be on the ASTNodes
     this._compileStatus = helper_deriveCompileStatusFromErrors(this.compileErrors);
   }
-  select(withFocus?: boolean, multiSelect?: boolean, selection?: [number, number]): void {
+  select(_withFocus?: boolean, _multiSelect?: boolean, selection?: [number, number]): void {
     this.deselectAll();
     this.selected = true;
     this.focus();

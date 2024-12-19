@@ -2,13 +2,12 @@ import { CompileError } from "../compile-error";
 import { AstNode } from "../interfaces/ast-node";
 import { FunctionType } from "../symbols/function-type";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { ExprAsn } from "./expr-asn";
 import { LambdaSigAsn } from "./lambda-sig-asn";
 
 export class LambdaAsn extends AbstractAstNode implements AstNode {
   constructor(
     private readonly signature: LambdaSigAsn,
-    private readonly body: ExprAsn,
+    private readonly body: AstNode,
     public readonly fieldId: string,
   ) {
     super();

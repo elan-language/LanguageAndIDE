@@ -1,7 +1,6 @@
 import { CompileError } from "../compile-error";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { DeconstructedTupleType } from "../symbols/deconstructed-tuple-type";
-import { TupleType } from "../symbols/tuple-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 
 export class DeconstructedTupleAsn extends AbstractAstNode implements AstIdNode {

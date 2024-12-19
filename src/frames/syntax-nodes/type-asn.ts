@@ -125,7 +125,7 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
       case "Iterable":
         return new IterableType(this.safeGetGenericParameterSymbolType(0));
       case "Func":
-        const names = this.genericParameters.map((p, i) => `parameter${i}`);
+        const names = this.genericParameters.map((_p, i) => `parameter${i}`);
         const types = this.genericParameters.map((p) => p.symbolType());
         const pNames = names.slice(0, -1);
         const pTypes = types.slice(0, -1);

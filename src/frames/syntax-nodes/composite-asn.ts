@@ -7,12 +7,11 @@ import { AbstractAstNode } from "./abstract-ast-node";
 import { transforms } from "./ast-helpers";
 import { ChainedAsn } from "./chained-asn";
 import { CsvAsn } from "./csv-asn";
-import { ExprAsn } from "./expr-asn";
 
 export class CompositeAsn extends AbstractAstNode implements AstNode {
   constructor(
-    private readonly expr1: ExprAsn,
-    private readonly expr2: ExprAsn,
+    private readonly expr1: AstNode,
+    private readonly expr2: AstNode,
     public readonly fieldId: string,
     private readonly scope: Scope,
   ) {

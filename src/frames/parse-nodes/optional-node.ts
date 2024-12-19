@@ -1,5 +1,5 @@
 import { ParseStatus } from "../status-enums";
-import { KeywordCompletion, SymbolCompletionSpec, TokenType } from "../symbol-completion-helpers";
+import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { ParseNode } from "./parse-node";
 

@@ -78,7 +78,6 @@ import { DeconstructedTupleAsn } from "./deconstructed-tuple-asn";
 import { DiscardAsn } from "./discard-asn";
 import { EmptyAsn } from "./empty-asn";
 import { EmptyTypeAsn } from "./empty-type-asn";
-import { ExprAsn } from "./expr-asn";
 import { FixedIdAsn } from "./fixed-id-asn";
 import { FuncCallAsn } from "./func-call-asn";
 import { IdAsn } from "./id-asn";
@@ -109,7 +108,7 @@ import { ThisAsn } from "./this-asn";
 import { ToAsn } from "./to-asn";
 import { TypeAsn } from "./type-asn";
 import { TypeOfAsn } from "./typeof-asn";
-import { UnaryExprAsn } from "./unary-expr-asn";
+import { UnaryExprASn } from "./unary-expr-asn";
 import { VarAsn } from "./var-asn";
 
 export function transformMany(
@@ -150,14 +149,14 @@ export function transform(
 
   if (node instanceof UnaryExpression) {
     const op = mapOperation(node.unaryOp!.matchedText);
-    const operand = transform(node.term, fieldId, scope) as ExprAsn;
+    const operand = transform(node.term, fieldId, scope) as AstNode;
 
-    return new UnaryExprAsn(op, operand, fieldId);
+    return new UnaryExprASn(op, operand, fieldId);
   }
 
   if (node instanceof BinaryExpression) {
-    const lhs = transform(node.lhs, fieldId, scope) as ExprAsn;
-    const rhs = transform(node.rhs, fieldId, scope) as ExprAsn;
+    const lhs = transform(node.lhs, fieldId, scope) as AstNode;
+    const rhs = transform(node.rhs, fieldId, scope) as AstNode;
     const op = mapOperation(node.op!.matchedText);
 
     return new BinaryExprAsn(op, lhs, rhs, fieldId);
@@ -209,7 +208,7 @@ export function transform(
 
   if (node instanceof MethodCallNode) {
     const id = node.name!.matchedText;
-    const parameters = transformMany(node.args as CSV, fieldId, scope).items as Array<ExprAsn>;
+    const parameters = transformMany(node.args as CSV, fieldId, scope).items as Array<AstNode>;
 
     return new FuncCallAsn(id, parameters, fieldId, scope);
   }
@@ -227,7 +226,7 @@ export function transform(
 
     const sig = new LambdaSigAsn(parameters, fieldId, scope);
     // wrap sig scope in another scope to prevent looking up a symbol in current scope.
-    const body = transform(node.expr, fieldId, wrapScopeInScope(sig)) as ExprAsn;
+    const body = transform(node.expr, fieldId, wrapScopeInScope(sig)) as AstNode;
 
     return new LambdaAsn(sig, body, fieldId);
   }
@@ -301,7 +300,7 @@ export function transform(
 
   if (node instanceof ToClause) {
     const id = node.property!.matchedText;
-    const to = transform(node.expr, fieldId, scope) as ExprAsn;
+    const to = transform(node.expr, fieldId, scope) as AstNode;
 
     return new ToAsn(id, to, fieldId);
   }
@@ -396,7 +395,7 @@ export function transform(
   }
 
   if (node instanceof TermSimpleWithOptIndex) {
-    const termSimple = transform(node.termSimple, fieldId, scope) as ExprAsn;
+    const termSimple = transform(node.termSimple, fieldId, scope) as AstNode;
     const index = transform(node.optIndex, fieldId, scope) as IndexAsn | undefined;
     if (index) {
       index.updateScopeAndChain(scope, termSimple);
@@ -406,8 +405,8 @@ export function transform(
   }
 
   if (node instanceof TermChained) {
-    const expr1 = transform(node.head, fieldId, scope) as ExprAsn;
-    const expr2 = transformMany(node.tail!, fieldId, scope) as ExprAsn;
+    const expr1 = transform(node.head, fieldId, scope) as AstNode;
+    const expr2 = transformMany(node.tail!, fieldId, scope) as AstNode;
     return new CompositeAsn(expr1, expr2, fieldId, scope);
   }
 
@@ -416,7 +415,7 @@ export function transform(
   }
 
   if (node instanceof CopyWith) {
-    const obj = transform(node.original, fieldId, scope) as ExprAsn;
+    const obj = transform(node.original, fieldId, scope) as AstNode;
     const withClause = transform(node.withClause!, fieldId, scope) as AstCollectionNode;
     return new CopyWithAsn(obj, withClause, fieldId, scope);
   }
@@ -435,7 +434,7 @@ export function transform(
   }
 
   if (node instanceof IndexSingle) {
-    const index = transform(node.contents, fieldId, scope) as ExprAsn;
+    const index = transform(node.contents, fieldId, scope) as AstNode;
     return new IndexAsn(index, undefined, fieldId);
   }
 
@@ -451,9 +450,9 @@ export function transform(
   }
 
   if (node instanceof IfExpr) {
-    const condition = transform(node.condition, fieldId, scope) as ExprAsn;
-    const trueExpression = transform(node.whenTrue, fieldId, scope) as ExprAsn;
-    const falseExpression = transform(node.whenFalse, fieldId, scope) as ExprAsn;
+    const condition = transform(node.condition, fieldId, scope) as AstNode;
+    const trueExpression = transform(node.whenTrue, fieldId, scope) as AstNode;
+    const falseExpression = transform(node.whenFalse, fieldId, scope) as AstNode;
     return new IfExprAsn(condition, trueExpression, falseExpression, fieldId);
   }
 

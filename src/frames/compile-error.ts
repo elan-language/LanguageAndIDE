@@ -73,19 +73,19 @@ export class UndefinedSymbolCompileError extends CompileError {
 }
 
 export class CannotCallAFunction extends CompileError {
-  constructor(id: string, location: string, unknown: boolean) {
+  constructor(location: string, unknown: boolean) {
     super(Priority.illegalOperation, `Cannot call a function as a procedure`, location, unknown);
   }
 }
 
 export class CannotUseSystemMethodInAFunction extends CompileError {
-  constructor(id: string, location: string, unknown: boolean) {
+  constructor(location: string, unknown: boolean) {
     super(Priority.illegalOperation, `Cannot use a system method in a function`, location, unknown);
   }
 }
 
 export class CannotUseLikeAFunction extends CompileError {
-  constructor(id: string, type: string, location: string, unknown: boolean) {
+  constructor(id: string, location: string, unknown: boolean) {
     super(
       Priority.illegalOperation,
       `Cannot call procedure '${id}' within an expression`,
@@ -226,7 +226,7 @@ export class ParametersCompileError extends CompileError {
 }
 
 export class SignatureCompileError extends CompileError {
-  constructor(expected: number, actual: number, location: string, generic?: boolean) {
+  constructor(expected: number, actual: number, location: string) {
     super(
       Priority.illegalOperation,
       `Function Signatures do not match expected: ${expected} parameter(s) got: ${actual}`,
