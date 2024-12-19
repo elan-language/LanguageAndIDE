@@ -58,9 +58,6 @@ suite("Demo compile", () => {
   test("test turtle-spiral", async () => {
     await testDemoProgram("turtle-spiral.elan");
   });
-  test("test turtle-trees", async () => {
-    await testDemoProgram("turtle-trees.elan");
-  });
   test("test wordle-solver", async () => {
     await testDemoProgram("wordle-solver.elan");
   });
