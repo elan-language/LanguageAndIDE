@@ -6,7 +6,7 @@ import { ArgListNode } from "../parse-nodes/arg-list-node";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { removeUnmatchedClosingBracket } from "../parse-nodes/parse-node-helpers";
 import { CallStatement } from "../statements/call-statement";
-import { parameterDescriptions } from "../symbols/symbol-helpers";
+import { parameterNames, parameterNamesWithTypes } from "../symbols/symbol-helpers";
 import { transforms } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractField } from "./abstract-field";
@@ -53,7 +53,7 @@ export class ArgListField extends AbstractField {
       const proc = holder.proc.text;
 
       const ps = holder.resolveSymbol(proc, transforms, holder);
-      const descriptions = parameterDescriptions(ps.symbolType(transforms));
+      const descriptions = parameterNames(ps.symbolType(transforms));
       return descriptions.length > 0 ? descriptions : ["arguments"];
     }
 

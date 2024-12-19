@@ -25,7 +25,7 @@ import { StringType } from "../symbols/string-type";
 import {
   isAnyDictionaryType,
   isClassTypeDef,
-  parameterDescriptions,
+  parameterNamesWithTypes,
 } from "../symbols/symbol-helpers";
 import { TupleType } from "../symbols/tuple-type";
 import { UnknownType } from "../symbols/unknown-type";
@@ -265,7 +265,7 @@ export function matchParametersAndTypes(
   mustMatchParameters(
     parameters,
     parameterTypes,
-    parameterDescriptions(funcSymbolType, parameterTypes).join(", "),
+    parameterNamesWithTypes(funcSymbolType, parameterTypes).join(", "),
     funcSymbolType.isExtension,
     compileErrors,
     location,

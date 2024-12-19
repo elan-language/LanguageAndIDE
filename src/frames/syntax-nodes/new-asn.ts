@@ -13,7 +13,7 @@ import { ProcedureType } from "../symbols/procedure-type";
 import {
   isConcreteDictionaryType,
   isListType,
-  parameterDescriptions,
+  parameterNamesWithTypes,
 } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { AbstractAstNode } from "./abstract-ast-node";
@@ -77,7 +77,7 @@ export class NewAsn extends AbstractAstNode implements AstNode {
         mustMatchParameters(
           this.parameters,
           parameterTypes,
-          parameterDescriptions(constructorType).join(", "),
+          parameterNamesWithTypes(constructorType).join(", "),
           false,
           this.compileErrors,
           this.fieldId,

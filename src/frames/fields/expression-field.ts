@@ -4,7 +4,7 @@ import { Scope } from "../interfaces/scope";
 import { ArgListNode } from "../parse-nodes/arg-list-node";
 import { ExprNode } from "../parse-nodes/expr-node";
 import { ParseNode } from "../parse-nodes/parse-node";
-import { parameterDescriptions } from "../symbols/symbol-helpers";
+import { parameterNames, parameterNamesWithTypes } from "../symbols/symbol-helpers";
 import { transforms } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractField } from "./abstract-field";
@@ -45,7 +45,7 @@ export class ExpressionField extends AbstractField {
       const proc = an.context();
 
       const ps = holder.resolveSymbol(proc, transforms, holder);
-      const descriptions = parameterDescriptions(ps.symbolType(transforms));
+      const descriptions = parameterNames(ps.symbolType(transforms));
       return descriptions.length > 0 ? descriptions.join(", ") : "";
     }
     return "";

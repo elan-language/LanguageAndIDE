@@ -683,17 +683,17 @@ export class StdLib {
     return [b, Math.floor(f)];
   }
 
-  @elanProcedure(["string"])
+  @elanProcedure(["text"])
   printLine(s: string) {
     this.system.elanInputOutput.print(`${s}\n`);
   }
 
-  @elanProcedure(["string"])
+  @elanProcedure(["text"])
   printNoLine(s: string) {
     this.system.elanInputOutput.print(s);
   }
 
-  @elanProcedure(["position", "s"])
+  @elanProcedure(["position", "text"])
   printTab(@elanIntType() position: number, s: string) {
     this.system.elanInputOutput.printTab(position, s);
   }

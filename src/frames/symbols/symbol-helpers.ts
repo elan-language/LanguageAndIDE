@@ -707,7 +707,7 @@ export function symbolScopeToFriendlyName(ss: SymbolScope) {
   }
 }
 
-export function parameterDescriptions(st: SymbolType, actualTypes?: SymbolType[]) {
+export function parameterNamesWithTypes(st: SymbolType, actualTypes?: SymbolType[]) {
   if (st instanceof ProcedureType || st instanceof FunctionType) {
     const parameterNames = st.isExtension ? st.parameterNames.slice(1) : st.parameterNames;
     let parameterTypes = actualTypes ? actualTypes : st.parameterTypes;
@@ -715,6 +715,14 @@ export function parameterDescriptions(st: SymbolType, actualTypes?: SymbolType[]
     const descriptions = parameterNames.map((n, i) => `${n} (${parameterTypes[i].name})`);
     return descriptions;
   }
+  return [];
+}
 
+export function parameterNames(st: SymbolType, actualTypes?: SymbolType[]) {
+  if (st instanceof ProcedureType || st instanceof FunctionType) {
+    const parameterNames = st.isExtension ? st.parameterNames.slice(1) : st.parameterNames;
+    const descriptions = parameterNames.map((n, i) => `${n}`);
+    return descriptions;
+  }
   return [];
 }
