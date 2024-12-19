@@ -303,8 +303,8 @@ class Bar
 
   property p1 as Foo
 
-  function getTimes() returns {Qux}
-    variable x set to empty {Qux}
+  function getTimes() returns List<of Qux>
+    variable x set to empty List<of Qux>
     set x to p1.times(2)
     return x
   end function
@@ -318,7 +318,7 @@ class Foo
 
     property p1 as Float
 
-    function times(value as Float) returns {Qux}
+    function times(value as Float) returns List<of Qux>
         return {new Qux()}
     end function
 

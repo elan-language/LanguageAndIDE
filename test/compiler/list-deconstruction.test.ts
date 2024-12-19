@@ -143,7 +143,7 @@ return [main, _tests];}`;
 main
   variable a set to [[1,2,3], [4,5,6], [7,8,9]]
   variable x set to empty Array<of Int>
-  variable y set to empty [Array<of Int>]
+  variable y set to empty Array<of Array<of Int>>
   set x:y to a
   print x
   print y

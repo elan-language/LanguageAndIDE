@@ -452,14 +452,14 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to empty [Array<of Int>]
-  variable b set to empty [Array<of Int>]
+  variable a set to empty Array<of Array<of Int>>
+  variable b set to empty Array<of Array<of Int>>
   call a.append([3])
   print a
   print b
   print a is b
-  print a is empty [Array<of Int>]
-  print b is empty [Array<of Int>]
+  print a is empty Array<of Array<of Int>>
+  print b is empty Array<of Array<of Int>>
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -536,7 +536,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to empty [Array<of Int>]
+  variable a set to empty Array<of Array<of Int>>
   call a[0].putAt(0, 3)
 end main`;
 

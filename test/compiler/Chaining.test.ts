@@ -513,7 +513,7 @@ class Foo
   constructor()
   end constructor
 
-  function create2DArr() returns [Array<of Int>]
+  function create2DArr() returns Array<of Array<of Int>>
     return create2DArray(3, 4, 8)
   end function
 
