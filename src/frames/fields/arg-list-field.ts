@@ -6,7 +6,7 @@ import { ArgListNode } from "../parse-nodes/arg-list-node";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { removeUnmatchedClosingBracket } from "../parse-nodes/parse-node-helpers";
 import { CallStatement } from "../statements/call-statement";
-import { parameterNames, parameterNamesWithTypes } from "../symbols/symbol-helpers";
+import { parameterNames } from "../symbols/symbol-helpers";
 import { transforms } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractField } from "./abstract-field";

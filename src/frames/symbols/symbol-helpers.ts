@@ -718,10 +718,10 @@ export function parameterNamesWithTypes(st: SymbolType, actualTypes?: SymbolType
   return [];
 }
 
-export function parameterNames(st: SymbolType, actualTypes?: SymbolType[]) {
+export function parameterNames(st: SymbolType) {
   if (st instanceof ProcedureType || st instanceof FunctionType) {
     const parameterNames = st.isExtension ? st.parameterNames.slice(1) : st.parameterNames;
-    const descriptions = parameterNames.map((n, i) => `${n}`);
+    const descriptions = parameterNames.map((n) => `${n}`);
     return descriptions;
   }
   return [];
