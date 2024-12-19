@@ -53,7 +53,7 @@ export class ExpressionField extends AbstractField {
 
   public textAsHtml(): string {
     const descriptions = this.argumentDescriptions(this.getHolder(), transforms());
-    this.completionOverride = descriptions ? `<i>${descriptions}</i>` : "";
+    this.completionOverride = descriptions ? `<i>${descriptions}</i>)` : "";
     return super.textAsHtml();
   }
 
