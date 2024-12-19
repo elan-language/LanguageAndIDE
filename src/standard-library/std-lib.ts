@@ -726,7 +726,7 @@ export class StdLib {
     FunctionOptions.pure,
     ElanArray(ElanArray(ElanT1)),
   )
-  create2DArray<T1>(
+  createArray2D<T1>(
     @elanIntType() x: number,
     @elanIntType() y: number,
     @elanGenericParamT1Type() value: T1,

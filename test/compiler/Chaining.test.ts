@@ -514,7 +514,7 @@ class Foo
   end constructor
 
   function create2DArr() returns Array<of Array<of Int>>
-    return create2DArray(3, 4, 8)
+    return createArray2D(3, 4, 8)
   end function
 
 end class`;
@@ -550,7 +550,7 @@ class Foo {
   }
 
   create2DArr() {
-    return _stdlib.create2DArray(3, 4, 8);
+    return _stdlib.createArray2D(3, 4, 8);
   }
 
 }

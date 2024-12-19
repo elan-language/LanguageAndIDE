@@ -590,7 +590,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable oxoBoard set to create2DArray(3,3,"")
+  variable oxoBoard set to createArray2D(3,3,"")
   call oxoBoard.putAt2D(0, 0, "o")
   call oxoBoard.putAt2D(2, 2, "o")
   call oxoBoard.putAt2D(1, 1, "x")
@@ -599,7 +599,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var oxoBoard = _stdlib.create2DArray(3, 3, "");
+  var oxoBoard = _stdlib.createArray2D(3, 3, "");
   _stdlib.putAt2D(oxoBoard, 0, 0, "o");
   _stdlib.putAt2D(oxoBoard, 2, 2, "o");
   _stdlib.putAt2D(oxoBoard, 1, 1, "x");

@@ -44,13 +44,13 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to create2DArray(3, 0, "")
+  variable a set to createArray2D(3, 0, "")
   print a.length()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = _stdlib.create2DArray(3, 0, "");
+  var a = _stdlib.createArray2D(3, 0, "");
   system.printLine(_stdlib.asString(_stdlib.length(a)));
 }
 return [main, _tests];}`;
@@ -68,14 +68,14 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to create2DArray(3, 0, "")
+  variable a set to createArray2D(3, 0, "")
   print a[0].length()
   print a
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = _stdlib.create2DArray(3, 0, "");
+  var a = _stdlib.createArray2D(3, 0, "");
   system.printLine(_stdlib.asString(_stdlib.length(system.safeIndex(a, 0))));
   system.printLine(_stdlib.asString(a));
 }
@@ -94,7 +94,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to create2DArray(3, 0, "")
+  variable a set to createArray2D(3, 0, "")
   call a.putAt(0, ["bar", "foo"])
   call a.putAt(2, ["yon", "xan"])
   print a[0][1]
@@ -103,7 +103,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = _stdlib.create2DArray(3, 0, "");
+  var a = _stdlib.createArray2D(3, 0, "");
   _stdlib.putAt(a, 0, system.literalArray(["bar", "foo"]));
   _stdlib.putAt(a, 2, system.literalArray(["yon", "xan"]));
   system.printLine(_stdlib.asString(system.safeIndex(system.safeIndex(a, 0), 1)));
@@ -124,7 +124,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to create2DArray(3, 0, "")
+  variable a set to createArray2D(3, 0, "")
   call a.putAt(0, ["bar", "foo"])
   call a[0].putAt(1, "yon")
   print a[0][1]
@@ -132,7 +132,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = _stdlib.create2DArray(3, 0, "");
+  var a = _stdlib.createArray2D(3, 0, "");
   _stdlib.putAt(a, 0, system.literalArray(["bar", "foo"]));
   _stdlib.putAt(system.safeIndex(a, 0), 1, "yon");
   system.printLine(_stdlib.asString(system.safeIndex(system.safeIndex(a, 0), 1)));
@@ -152,7 +152,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to create2DArray(3, 0, "")
+  variable a set to createArray2D(3, 0, "")
   call a.append(["foo"])
   call a.append(["yon"])
   print a[3]
@@ -161,7 +161,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = _stdlib.create2DArray(3, 0, "");
+  var a = _stdlib.createArray2D(3, 0, "");
   _stdlib.append(a, system.literalArray(["foo"]));
   _stdlib.append(a, system.literalArray(["yon"]));
   system.printLine(_stdlib.asString(system.safeIndex(a, 3)));
@@ -182,7 +182,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to create2DArray(3, 0, "")
+  variable a set to createArray2D(3, 0, "")
   call a[1].append("foo")
   call a[2].append("yon")
   print a
@@ -190,7 +190,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = _stdlib.create2DArray(3, 0, "");
+  var a = _stdlib.createArray2D(3, 0, "");
   _stdlib.append(system.safeIndex(a, 1), "foo");
   _stdlib.append(system.safeIndex(a, 2), "yon");
   system.printLine(_stdlib.asString(a));
@@ -488,13 +488,13 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to create2DArray(2, 2, 0)
+  variable a set to createArray2D(2, 2, 0)
   print a
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = _stdlib.create2DArray(2, 2, 0);
+  var a = _stdlib.createArray2D(2, 2, 0);
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -512,13 +512,13 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to create2DArray(2, 2, 1)
+  variable a set to createArray2D(2, 2, 1)
   print a
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = _stdlib.create2DArray(2, 2, 1);
+  var a = _stdlib.createArray2D(2, 2, 1);
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -618,7 +618,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to create2DArray(3, 0, "")
+  variable a set to createArray2D(3, 0, "")
   call a.putAt(0, empty Array<of String>)
   variable b set to a[0][0]
 end main
