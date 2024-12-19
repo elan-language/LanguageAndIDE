@@ -1,7 +1,5 @@
 import { TokenType } from "../symbol-completion-helpers";
-import {
-  OPEN_BRACKET
-} from "../symbols";
+import { OPEN_BRACKET } from "../symbols";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { TypeFuncNode } from "./type-func-node";
 import { TypeGenericNode } from "./type-generic-node";
