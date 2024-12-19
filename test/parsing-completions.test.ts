@@ -85,12 +85,7 @@ suite("Parsing - Completions", () => {
   });
 
   test("NewInstance", () => {
-    testCompletion(
-      new NewInstance(),
-      "new ",
-      ParseStatus.incomplete,
-      "<i>Type</i>(<i>arguments</i>)",
-    );
+    testCompletion(new NewInstance(), "new ", ParseStatus.incomplete, "<i>Type</i>()");
   });
   test("Func", () => {
     testCompletion(new TypeNode(), "Fu", ParseStatus.valid, "");

@@ -7,6 +7,7 @@ import { ParseNode } from "../parse-nodes/parse-node";
 import { removeUnmatchedClosingBracket } from "../parse-nodes/parse-node-helpers";
 import { CallStatement } from "../statements/call-statement";
 import { parameterNames } from "../symbols/symbol-helpers";
+import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { transforms } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractField } from "./abstract-field";
@@ -49,15 +50,13 @@ export class ArgListField extends AbstractField {
   private completionOverride = "";
 
   private argumentDescriptions(holder: Scope, transforms: Transforms) {
-    if (holder instanceof CallStatement) {
-      const proc = holder.proc.text;
-
-      const ps = holder.resolveSymbol(proc, transforms, holder);
-      const descriptions = parameterNames(ps.symbolType(transforms));
-      return descriptions.length > 0 ? descriptions : ["arguments"];
+    const proc = (holder as CallStatement).proc.text;
+    const ps = holder.resolveSymbol(proc, transforms, holder);
+    let descriptions = ["<i>arguments</i>"];
+    if (!(ps instanceof UnknownSymbol)) {
+      descriptions = parameterNames(ps.symbolType(transforms));
     }
-
-    return ["arguments"];
+    return descriptions;
   }
 
   public textAsHtml(): string {
