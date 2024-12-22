@@ -322,13 +322,15 @@ el-fr {
     text-indent: 0;
 }
 
-el-const el-fr, el-const.multiline.collapsed el-fr {
+el-const el-fr, el-const.multiline.collapsed el-fr,
+el-enum el-fr, el-enum.multiline.collapsed el-fr {
     display: inline-block;
 }
 
 el-statement.selected:not(.multiline) el-fr, 
 .multiline.selected > el-top el-fr, 
 el-const.selected el-fr, 
+el-enum.selected el-fr, 
 .selected ~ el-fr, 
 el-method:has(el-field.selected) ~ el-fr,
 el-fr:has(~ el-field.selected), /* this and next clause specifically for 'repeat expression' el-field */
