@@ -329,6 +329,7 @@ el-enum el-fr, el-enum.multiline.collapsed el-fr {
 
 el-statement.selected:not(.multiline) el-fr, 
 .multiline.selected > el-top el-fr, 
+el-prop.selected el-fr,
 el-const.selected el-fr, 
 el-enum.selected el-fr, 
 .selected ~ el-fr, 
