@@ -5,11 +5,10 @@ import { FrameWithStatements } from "../frame-with-statements";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
-import { ifKeyword } from "../keywords";
+import { endKeyword, ifKeyword, thenKeyword } from "../keywords";
 import { BooleanType } from "../symbols/boolean-type";
 import { Transforms } from "../syntax-nodes/transforms";
 import { Else } from "./else";
-import { ThenStatement } from "./then-statement";
 
 export class IfStatement extends FrameWithStatements implements Statement {
   isStatement = true;
@@ -20,7 +19,6 @@ export class IfStatement extends FrameWithStatements implements Statement {
     this.condition = new ExpressionField(this);
     this.condition.setPlaceholder("<i>condition</i>");
     const selector = this.getChildren().pop()!; //added by superclass
-    this.getChildren().push(new ThenStatement(this));
     this.getChildren().push(selector);
   }
 
@@ -37,15 +35,15 @@ export class IfStatement extends FrameWithStatements implements Statement {
 
   renderAsHtml(): string {
     return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>if </el-kw>${this.condition.renderAsHtml()}${this.getFrNo()}</el-top>${this.compileMsgAsHtml()}
+<el-top><el-expand>+</el-expand><el-kw>${ifKeyword} </el-kw>${this.condition.renderAsHtml()}<el-kw> ${thenKeyword}</el-kw>${this.getFrNo()}</el-top>${this.compileMsgAsHtml()}
 ${this.renderChildrenAsHtml()}
-<el-kw>end if</el-kw>
+<el-kw>${endKeyword} ${ifKeyword}</el-kw>
 </el-statement>`;
   }
   renderAsSource(): string {
-    return `${this.indent()}if ${this.condition.renderAsSource()}\r
+    return `${this.indent()}${ifKeyword} ${this.condition.renderAsSource()} ${thenKeyword}\r
 ${this.renderChildrenAsSource()}\r
-${this.indent()}end if`;
+${this.indent()}${endKeyword} ${ifKeyword}`;
   }
 
   compile(transforms: Transforms): string {
@@ -67,16 +65,12 @@ ${this.compileStatements(transforms)}\r
 ${this.indent()}}`;
   }
 
-  public getThenStatement(): ThenStatement {
-    return this.getChildren().filter((m) => "isThen" in m)[0] as ThenStatement;
-  }
-
   parseTop(source: CodeSource): void {
     source.remove("if ");
     this.condition.parseFrom(source);
     source.removeNewLine();
-    this.getThenStatement().parseFrom(source);
   }
+
   parseBottom(source: CodeSource): boolean {
     source.removeIndent();
     return this.parseStandardEnding(source, "end if");

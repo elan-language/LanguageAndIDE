@@ -14,7 +14,6 @@ import { TestFrame } from "../src/frames/globals/test-frame";
 import { Else } from "../src/frames/statements/else";
 import { IfStatement } from "../src/frames/statements/if-statement";
 import { StatementSelector } from "../src/frames/statements/statement-selector";
-import { ThenStatement } from "../src/frames/statements/then-statement";
 import { ParseStatus } from "../src/frames/status-enums";
 import { ignore_test } from "./compiler/compiler-test-helpers";
 import {
@@ -362,12 +361,12 @@ suite("Editing Frames", () => {
     else42.processKey(ctrl_x());
     assert.equal(if37.getChildren().length, 3);
   });
-  test("#617 - Enter on condition field in if statement should select the then clause", () => {
+  test("#617 - Enter on condition field in if statement should select the next clause", () => {
     const file = T03_mainWithAllStatements();
     const condition = file.getById("expr34") as ExpressionField;
     condition.select(true, false);
     condition.processKey(enter());
-    const then = file.getById("then35") as ThenStatement;
+    const then = file.getById("select35");
     assert.equal(then.isSelected(), true);
   });
 

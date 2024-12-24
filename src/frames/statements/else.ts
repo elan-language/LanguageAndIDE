@@ -1,17 +1,17 @@
+import { AbstractFrame } from "../abstract-frame";
 import { CodeSource } from "../code-source";
 import { mustBeOfType } from "../compile-rules";
 import { ExpressionField } from "../fields/expression-field";
 import { IfSelector } from "../fields/if-selector";
 import { singleIndent } from "../frame-helpers";
-import { FrameWithStatements } from "../frame-with-statements";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
-import { elseKeyword } from "../keywords";
+import { elseKeyword, thenKeyword } from "../keywords";
 import { BooleanType } from "../symbols/boolean-type";
 import { Transforms } from "../syntax-nodes/transforms";
 
-export class Else extends FrameWithStatements implements Statement {
+export class Else extends AbstractFrame implements Statement {
   isStatement: boolean = true;
   selectIfClause: IfSelector;
   hasIf: boolean = false;
@@ -22,6 +22,11 @@ export class Else extends FrameWithStatements implements Statement {
     this.condition = new ExpressionField(this);
     this.condition.setPlaceholder("<i>condition</i>");
     this.selectIfClause = new IfSelector(this);
+  }
+
+  protected setClasses() {
+    super.setClasses();
+    this.pushClass(true, "outdent");
   }
 
   initialKeywords(): string {
@@ -63,10 +68,8 @@ export class Else extends FrameWithStatements implements Statement {
   }
 
   renderAsHtml(): string {
-    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-    <el-top><el-expand>+</el-expand><el-kw>else </el-kw>${this.ifClauseAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
-${this.renderChildrenAsHtml()}
-</el-statement>`;
+    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><el-top>
+    <el-kw>${elseKeyword} </el-kw>${this.ifClauseAsHtml()}${this.hasIf ? "<el-kw> " + thenKeyword + "</el-kw>" : ""}</el-top>${this.compileMsgAsHtml()}${this.getFrNo()}</el-statement>`;
   }
 
   indent(): string {
@@ -74,32 +77,20 @@ ${this.renderChildrenAsHtml()}
   }
 
   renderAsSource(): string {
-    return `${this.indent()}else${this.ifClauseAsSource()}\r
-${this.renderChildrenAsSource()}`;
+    return `${this.indent()}${elseKeyword}${this.ifClauseAsSource()} ${this.hasIf ? thenKeyword : ""}\r`;
   }
 
   compile(transforms: Transforms): string {
     this.compileErrors = [];
-    return `${this.indent()}} else ${this.compileIfClause(transforms)}\r
-${this.compileStatements(transforms)}\r`;
+    return `${this.indent()}} else ${this.compileIfClause(transforms)}\r`;
   }
 
-  parseTop(source: CodeSource): void {
+  parseFrom(source: CodeSource): void {
     source.remove("else");
     if (source.isMatch(" if ")) {
       this.hasIf = true;
       source.remove(" if ");
       this.condition.parseFrom(source);
     }
-  }
-  parseBottom(source: CodeSource): boolean {
-    let result = false;
-    source.removeIndent();
-    if (source.isMatch("else")) {
-      result = true;
-    } else if (source.isMatch("end if")) {
-      result = true;
-    }
-    return result;
   }
 }

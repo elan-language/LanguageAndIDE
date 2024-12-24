@@ -71,8 +71,8 @@ export class StatementSelector extends AbstractSelector {
     if (parent.getIdPrefix() === switchKeyword) {
       result =
         keyword === caseKeyword || (keyword === otherwiseKeyword && this.noPeerLevelOtherwise());
-    } else if (parent.getIdPrefix() === ifKeyword) {
-      result = keyword === elseKeyword;
+    } else if ((result = keyword === elseKeyword)) {
+      result = parent.getIdPrefix() === ifKeyword;
     } else if (keyword === caseKeyword || keyword === otherwiseKeyword || keyword === elseKeyword) {
       result = false;
     } else if (keyword === assertKeyword) {
