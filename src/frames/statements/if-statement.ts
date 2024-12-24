@@ -1,4 +1,4 @@
-import { CodeSource } from "../code-source";
+import { CodeSource, CodeSourceFromString } from "../code-source";
 import { mustBeOfType, mustNotHaveConditionalAfterUnconditionalElse } from "../compile-rules";
 import { ExpressionField } from "../fields/expression-field";
 import { FrameWithStatements } from "../frame-with-statements";
@@ -18,8 +18,6 @@ export class IfStatement extends FrameWithStatements implements Statement {
     super(parent);
     this.condition = new ExpressionField(this);
     this.condition.setPlaceholder("<i>condition</i>");
-    const selector = this.getChildren().pop()!; //added by superclass
-    this.getChildren().push(selector);
   }
 
   initialKeywords(): string {
@@ -67,7 +65,9 @@ ${this.indent()}}`;
 
   parseTop(source: CodeSource): void {
     source.remove("if ");
-    this.condition.parseFrom(source);
+    const condition= source.readUntil(/\sthen/);
+    this.condition.parseFrom(new CodeSourceFromString(condition));
+    source.remove(" then");
     source.removeNewLine();
   }
 

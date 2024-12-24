@@ -1,5 +1,5 @@
 import { AbstractFrame } from "../abstract-frame";
-import { CodeSource } from "../code-source";
+import { CodeSource, CodeSourceFromString } from "../code-source";
 import { mustBeOfType } from "../compile-rules";
 import { ExpressionField } from "../fields/expression-field";
 import { IfSelector } from "../fields/if-selector";
@@ -90,7 +90,9 @@ export class Else extends AbstractFrame implements Statement {
     if (source.isMatch(" if ")) {
       this.hasIf = true;
       source.remove(" if ");
-      this.condition.parseFrom(source);
+      const condition= source.readUntil(/\sthen/);
+      this.condition.parseFrom(new CodeSourceFromString(condition));
+      source.remove(" then");
     }
   }
 }
