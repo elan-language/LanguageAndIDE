@@ -32,20 +32,18 @@ procedure setAppleToRandomPosition(out apple as Array<of Int>, body as Array<of 
 end procedure
 
 procedure eatAppleIfPoss(head as Array<of Int>, out body as Array<of Array<of Int>>, apple as Array<of Int>)
-  if head is apple
-    then
+  if head is apple then
       call setAppleToRandomPosition(apple, body)
-    else
+  else
       call body.removeAt(0)
   end if
 end procedure
 
 function updateGraphics(gr as BlockGraphics, head as Array<of Int>, tail as Array<of Int>, body as Array<of Array<of Int>>, apple as Array<of Int>) returns BlockGraphics
   variable gr2 set to gr.withBlock(head[0], head[1], green)
-  if body[0] is tail
-    then
+  if body[0] is tail then
       set gr2 to gr2.withBlock(tail[0], tail[1], green)
-    else
+  else
       set gr2 to gr2.withBlock(tail[0], tail[1], white)
   end if
   set gr2 to gr2.withBlock(apple[0], apple[1], red)
@@ -77,8 +75,7 @@ end function
 function overlaps(body as Array<of Array<of Int>>, sq as Array<of Int>) returns Boolean
   variable result set to false
   each seg in body
-    if (seg is sq)
-      then
+    if (seg is sq) then
         set result to true
     end if
   end each

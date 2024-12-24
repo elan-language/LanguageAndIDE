@@ -26,13 +26,12 @@ procedure runSolver(gr as BlockGraphics, start as Point, destination as Point, r
     call gr2.display()
     call pause(0)
   end while
-  if solver.getLastVisited() is destination
-    then
+  if solver.getLastVisited() is destination then
       let route, length be solver.getRouteAndLength()
       set gr2 to addRoute(gr2, route)
       call gr2.display()
       print "Length of route: {round(length, 2)}"
-    else
+  else
       print "No route from start to destination found through these rocks."
   end if
 end procedure
@@ -41,14 +40,13 @@ procedure createRocksAndNodes(percentRocks as Int, out rocks as Array<of Point>,
   for x from 0 to 39 step 1
     for y from 0 to 29 step 1
       let p be new Point(x, y)
-      if p is start
-        then
+      if p is start then
           call nodes.append(new Node(p, 0, p.minDistTo(dest)))
-        else if p is dest
+      else if p is dest then
           call nodes.append(new Node(p, infinity, 0))
-        else if random() < percentRocks/100
+      else if random() < percentRocks/100 then
           call rocks.append(p)
-        else
+      else
           call nodes.append(new Node(p, infinity, p.minDistTo(dest)))
       end if
     end for
@@ -114,10 +112,9 @@ class Solver
   procedure visitNextPoint()
     call updateNeighbours()
     set property.current to nextNodeToVisit()
-    if (current is empty Node) or (current.point is destination)
-      then
+    if (current is empty Node) or (current.point is destination) then
         set running to false
-      else
+    else
         call current.setVisited(true)
     end if
   end procedure
@@ -127,8 +124,7 @@ class Solver
     each neighbour in currentNeighbours()
       let currentPoint be current.point
       let distViaCurrent be distToCurrent + currentPoint.minDistTo(neighbour.point)
-      if distViaCurrent < neighbour.distFromStart
-        then
+      if distViaCurrent < neighbour.distFromStart then
           call neighbour.setVia(current.point)
           call neighbour.setDistanceFromStart(distViaCurrent)
       end if
@@ -141,8 +137,7 @@ class Solver
     each p in currentPoint.neighbouringPoints()
       let node be getNodeFor(p)
       let point be node.point
-      if point.isNotEmpty
-        then
+      if point.isNotEmpty then
           set neighbours to neighbours + node
       end if
     end each
@@ -164,8 +159,7 @@ class Solver
     let possibilities be nodes.filter(lambda nd as Node => (not nd.visited) and (nd.distFromStart < infinity))
     each nd in possibilities
       let cost be calculateCost(nd)
-      if cost < lowestCostSoFar
-        then
+      if cost < lowestCostSoFar then
           set lowestCostSoFar to cost
           set lowestCostNode to nd
       end if

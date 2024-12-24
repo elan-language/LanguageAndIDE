@@ -1,4 +1,4 @@
-# b57dd23e2287a10284c75313c6fcde53130f03eaf6efbfaacce07a61fc1ad1da Elan Beta 5 valid
+# 6ad7e9eca1a3cbe26f2cc0bf8e07619303331ea7771ca192d24f6be239523cea Elan Beta 5 valid
 
 main
   variable a set to 3
@@ -18,23 +18,15 @@ main
   each letter in "Charlie Duke"
 
   end each
-  if y > 4
-    then
+  if y > 4 then
 
   end if
-  if y > 4
-    then
-
-    else
-
+  if y > 4 then
+    else 
   end if
-  if y > 4
-    then
-
-    else if y > 10
-
-    else
-
+  if y > 4 then
+    else if y > 10 then
+    else 
   end if
   try
     doing

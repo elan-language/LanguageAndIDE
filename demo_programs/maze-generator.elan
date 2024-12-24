@@ -10,16 +10,14 @@ main
     let p be new Point(x, y)
     let existing be getValue(p, g)
     let setTo be floor(random() + 0.7)
-    if okToSet(p, setTo, g)
-      then
+    if okToSet(p, setTo, g) then
         let colour be if setTo is 1 then white else black
         set g to g.withBlock(p.x, p.y, colour)
     end if
   end for
   call g.display()
   let name be inputString("File name to save: ")
-  if name isnt "x"
-    then
+  if name isnt "x" then
       call saveAsFile(name, g)
   end if
 end main
@@ -72,8 +70,7 @@ end function
 
 function getValue(p as Point, g as BlockGraphics) returns Int
   variable result set to 0
-  if (p.x > -1) and (p.x < 40) and (p.y > -1) and (p.y < 30)
-    then
+  if (p.x > -1) and (p.x < 40) and (p.y > -1) and (p.y < 30) then
       let colour be g.getBackground(p.x, p.y)
       set result to if colour is black then 0 else 1
   end if

@@ -64,8 +64,7 @@ class TuringMachine
 
   function findMatchingRule() returns Rule
     let matches be rules.filter(lambda r as Rule => (r.currentState is currentState) and (r.currentSymbol is tape[headPosition]))
-    if matches.length() is 0
-      then
+    if matches.length() is 0 then
         throw exception "No rule matching state {currentState} and symbol {tape[headPosition]}"
     end if
     return matches.head()
@@ -79,17 +78,14 @@ class TuringMachine
   procedure execute(rule as Rule)
     set property.currentState to rule.nextState
     call write(rule.writeSymbol)
-    if rule.move is Dir.right
-      then
+    if rule.move is Dir.right then
         set headPosition to headPosition + 1
-        if headPosition >= tape.length()
-          then
+        if headPosition >= tape.length() then
             set tape to tape + " "
         end if
-      else
+    else
         set headPosition to headPosition - 1
-        if headPosition < 0
-          then
+        if headPosition < 0 then
             set tape to " " + tape
             set headPosition to 0
         end if

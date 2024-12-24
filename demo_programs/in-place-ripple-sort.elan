@@ -12,8 +12,7 @@ procedure inPlaceRippleSort(out arr as Array<of Int>)
   repeat
     set changes to false
     for i from 0 to lastComp step 1
-      if arr[i] > arr[i + 1]
-        then
+      if arr[i] > arr[i + 1] then
           let temp be arr[i]
           call arr.putAt(i, arr[i + 1])
           call arr.putAt(i + 1, temp)

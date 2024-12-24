@@ -18,11 +18,10 @@ suite("If Statement", () => {
 
 main
   variable a set to true
-  if a
-    then
-      print "yes"
-    else
-      print "no"
+  if a then
+    print "yes"
+  else
+    print "no"
   end if
 end main`;
 
@@ -52,11 +51,10 @@ return [main, _tests];}`;
 
 main
   variable a set to false
-  if a
-    then
-      print "yes"
-    else
-      print "no"
+  if a then
+    print "yes"
+  else
+    print "no"
   end if
 end main`;
 
@@ -85,13 +83,12 @@ return [main, _tests];}`;
 
 main
   variable a set to 2
-  if a is 1
-    then
-      print "one"
-    else if a is 2
-      print "two"
-    else
-      print "neither"
+  if a is 1 then
+    print "one"
+  else if a is 2 then
+    print "two"
+  else
+    print "neither"
   end if
 end main`;
 
@@ -122,13 +119,12 @@ return [main, _tests];}`;
 
 main
   variable a set to 3
-  if a is 1
-    then
-      print "one"
-    else if a is 2
-      print "two"
-    else
-      print "neither"
+  if a is 1 then
+    print "one"
+  else if a is 2 then
+    print "two"
+  else
+    print "neither"
   end if
 end main`;
 
@@ -159,9 +155,8 @@ return [main, _tests];}`;
 
 main
   variable a set to true
-  if a
-    then
-      print "yes"
+  if a then
+    print "yes"
   end if
 end main`;
 
@@ -188,15 +183,14 @@ return [main, _tests];}`;
 
 main
   variable a set to 3
-  if a is 1
-    then
-      print "one"
-    else if a is 2
-      print "two"
-    else if a is 3
-      print "three"
-    else
-      print "neither"
+  if a is 1 then
+    print "one"
+  else if a is 2 then
+    print "two"
+  else if a is 3 then
+    print "three"
+  else
+    print "neither"
   end if
 end main`;
 
@@ -229,13 +223,12 @@ return [main, _tests];}`;
 
 main
   variable a set to 3
-  if a is 1
-    then
-      print "one"
-    else if a is 2
-      print "two"
-    else if a is 3
-      print "three"
+  if a is 1 then
+    print "one"
+  else if a is 2 then
+    print "two"
+  else if a is 3 then
+    print "three"
   end if
 end main`;
 
@@ -281,13 +274,12 @@ end main`;
 
 main
   variable a set to 3
-  if a is 1
-    then
-      print "one"
-    else
-      print "not one"
-    else
-      print "two"
+  if a is 1 then
+    print "one"
+  else
+    print "not one"
+  else
+    print "two"
   end if
 end main`;
 
@@ -303,13 +295,12 @@ end main`;
 
 main
   variable a set to 3
-  if a is 1
-    then
-      print "one"
-    else
-      print "not one"
-    else if a is 2
-      print "two"
+  if a is 1 then
+    print "one"
+  else
+    print "not one"
+  else if a is 2 then
+    print "two"
   end if
 end main`;
 
@@ -325,11 +316,10 @@ end main`;
 
 main
   variable a set to 3
-  if a
-    then
-      print "yes"
-    else
-      print "no"
+  if a then
+    print "yes"
+  else
+    print "no"
   end if
 end main`;
 
@@ -345,13 +335,12 @@ end main`;
 
   main
     variable a set to 2
-    if a is 1
-      then
-        print "one"
-      else if a
-        print "two"
-      else
-        print "neither"
+    if a is 1 then
+      print "one"
+    else if a then
+      print "two"
+    else
+      print "neither"
     end if
   end main`;
 

@@ -18,8 +18,7 @@ procedure refresh(bubbles as Array<of CircleVG>, out vg as VectorGraphics)
   for i from 0 to 19 step 1
     let b be bubbles[i]
     variable b2 set to copy b with cy to b.cy - 1, r to b.r + 0.2
-    if random() < 0.05
-      then
+    if random() < 0.05 then
         set b2 to copy b2 with cx to randomInt(0, 99), r to 1, cy to 75, stroke to randomInt(0, 0xffffff)
     end if
     set vg to vg.replace(b, b2)

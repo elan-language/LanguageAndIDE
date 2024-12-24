@@ -178,11 +178,10 @@ return [main, _tests];}`;
 main
   variable a set to ""
   variable b set to typeof a
-  if typeof a is typeof b
-    then
-      print "Pass"
-    else 
-      print "Fail"
+  if typeof a is typeof b then
+    print "Pass"
+  else 
+    print "Fail"
   end if
 end main`;
 
@@ -191,9 +190,9 @@ async function main() {
   var a = "";
   var b = "String";
   if ("String" === "String") {
-      system.printLine(_stdlib.asString("Pass"));
+    system.printLine(_stdlib.asString("Pass"));
     } else {
-      system.printLine(_stdlib.asString("Fail"));
+    system.printLine(_stdlib.asString("Fail"));
   }
 }
 return [main, _tests];}`;

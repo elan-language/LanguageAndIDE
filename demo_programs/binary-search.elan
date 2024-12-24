@@ -9,10 +9,10 @@ main
       let result be binarySearch(fruit, wanted)
       if result then
         print "We can supply a {wanted}"
-      else
+    else
         print "Sorry, we cannot supply a {wanted}"
       end if
-    else
+  else
       set exit to true
     end if
   end while
@@ -25,9 +25,9 @@ function binarySearch(list as Array<of String>, item as String) returns Boolean
     let value be list[mid]
     if item is value then
       set result to true
-    else if item.isBefore(value) then
+  else if item.isBefore(value) then
       set result to binarySearch(list[..mid], item)
-    else
+  else
       set result to binarySearch(list[mid + 1..], item)
     end if
   end if

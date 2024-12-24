@@ -34,10 +34,9 @@ end function
 
 function lesserOf(value1 as Int, value2 as Int) returns Int
   variable result set to 0
-  if value1 < value2
-    then
+  if value1 < value2 then
       set result to value1
-    else
+  else
       set result to value2
   end if
   return result
@@ -45,10 +44,9 @@ end function
 
 function greaterOf(value1 as Int, value2 as Int) returns Int
   variable result set to 0
-  if value1 > value2
-    then
+  if value1 > value2 then
       set result to value1
-    else
+  else
       set result to value2
   end if
   return result

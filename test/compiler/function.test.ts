@@ -218,8 +218,7 @@ end main
 
 function factorial(a as Int) returns Int
     variable result set to 0
-    if a > 2
-      then
+    if a > 2 then
         set result to a * factorial(a - 1)
       else 
         set result to a
@@ -485,7 +484,7 @@ end main
 function foo(a as Int, b as Int) returns Boolean
     if 2 > 1
         return true
-    else
+  else
         return false
     end if
 end function`;

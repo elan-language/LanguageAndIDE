@@ -302,8 +302,7 @@ main
 end main
 
 procedure foo(a as Int)
-  if a > 0
-    then
+  if a > 0 then
       print a
       variable b set to a - 1
       call foo(b)

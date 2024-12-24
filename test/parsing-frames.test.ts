@@ -367,15 +367,12 @@ end main
   });
 
   test("parse Frames - else with and without if", async () => {
-    const code = `# FFFF Elan Beta 5 valid
+    const code = `# 50b853a470b6faf5d2de0f1fa201b6950e10f8574dd1a5e20590ec9331aef384 Elan Beta 5 valid
 
 main
   if true then
-
   else if true then
-
   else
-
   end if
 end main
 `;

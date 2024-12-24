@@ -11,8 +11,7 @@ end main
 function mergeSort(li as List<of String>) returns List<of String>
   variable result set to li
   let len be li.length()
-  if len > 1
-    then
+  if len > 1 then
       let mid be floor(len/2)
       let frontHalf be mergeSort(li[..mid])
       let backHalf be mergeSort(li[mid..])
@@ -25,14 +24,13 @@ function merge(a as List<of String>, b as List<of String>) returns List<of Strin
   variable result set to empty List<of String>
   let aLen be a.length()
   let bLen be b.length()
-  if a.length() is 0
-    then
+  if a.length() is 0 then
       set result to b
-    else if bLen is 0
+  else if bLen is 0 then
       set result to a
-    else if a[0].isBefore(b[0])
+  else if a[0].isBefore(b[0]) then
       set result to {a[0]} + merge(a[1..], b)
-    else
+  else
       set result to {b[0]} + merge(a, b[1..])
   end if
   return result

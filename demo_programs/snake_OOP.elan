@@ -38,18 +38,16 @@ class Snake
     set property.priorTail to body[0]
     call body.append(head)
     set property.head to head.getAdjacentSquare(currentDir)
-    if head is apple.location
-      then
+    if head is apple.location then
         call apple.newRandomPosition(this)
-      else
+    else
         set body to body[1..]
     end if
   end procedure
 
   function updateGraphics(gr as BlockGraphics) returns BlockGraphics
     variable gr2 set to head.updateGraphics(gr, green)
-    if body[0] isnt priorTail
-      then
+    if body[0] isnt priorTail then
         set gr2 to priorTail.updateGraphics(gr, white)
     end if
     return gr2
@@ -62,8 +60,7 @@ class Snake
   function bodyCovers(sq as Square) returns Boolean
     variable result set to false
     each seg in body
-      if (seg is sq)
-        then
+      if (seg is sq) then
           set result to true
       end if
     end each
