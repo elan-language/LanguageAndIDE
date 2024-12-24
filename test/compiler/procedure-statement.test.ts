@@ -316,9 +316,9 @@ async function main() {
 
 async function foo(a) {
   if (a > 0) {
-      system.printLine(_stdlib.asString(a));
-      var b = a - 1;
-      await foo(b);
+    system.printLine(_stdlib.asString(a));
+    var b = a - 1;
+    await foo(b);
   }
 }
 return [main, _tests];}`;
