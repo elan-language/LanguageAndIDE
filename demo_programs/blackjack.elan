@@ -1,14 +1,16 @@
-# afcafc09050f1fd9412f7f60eda0954dbf8b3082a5ac461419471c108d5f86bc Elan Beta 5 valid
+# 96d25f1aeddb9384e5153ae970887352619ba0076d56f3cb2135650cc84504ea Elan Beta 5 valid
 
 main
   let outcomes be [HandStatus.bust:0, HandStatus.standing:0, HandStatus.blackjack:0]
   let dealer be new Dealer()
+  let playerA be new UserDefinedPlayer("Player A", ref strategyA)
+  let playerB be new UserDefinedPlayer("Player B", ref strategyB)
   # TODO separate: newHand, deal first 2 cards, and playOutHand capabilities 
   # Then we can simulate with e.g. pre-defined faceup card
   # Run this once fo a given card
   # Then loop through all cards and capture in 2D array
   # Save the result as a CSV
-  for j from 1 to 1000000 step 1
+  for i from 1 to 1000000 step 1
     call dealer.playHand()
     let status be dealer.getStatus()
     call outcomes.putAtKey(status, outcomes[status] + 1)
@@ -16,7 +18,7 @@ main
   print outcomes
 end main
 
-function determinePlayerOutcome(dealer as Hand, player as Hand) returns Float
+function calculateOutcome(dealer as Hand, player as Hand) returns Float
   variable result set to 0.0
   let d be dealer.status
   let p be player.status
@@ -53,15 +55,13 @@ abstract class AutomatedPlayer
 
   private property hand as Hand
 
-  private property decision as Func<of Card => Action>
-
   private procedure playHandImpl()
     while property.hand.status is HandStatus.playing
       let decision be Action.doubleDown
-      # TODO - get decision from function
+      # TODO - get decision from function - currently a bug
       switch decision
         case Action.draw
-          call hand.addCard(dealCard(random()))
+          call hand.draw(dealCard(random()))
         case Action.stand
           call hand.stand()
         otherwise
@@ -71,15 +71,16 @@ abstract class AutomatedPlayer
     end while
   end procedure
 
+  abstract function getDecision() returns Action
+
 end class
 
 class Dealer inherits AutomatedPlayer
   constructor()
     set property.name to "Dealer"
-    set property.decision to ref decisionDefinition
   end constructor
 
-  function decisionDefinition(faceCard as Card) returns Action
+  function getDecision() returns Action
     # dealerFaceCard is unused, in this case, but included for compatibility
     return if hand.totalValue < 17 then Action.draw else Action.stand
   end function
@@ -90,6 +91,22 @@ class Dealer inherits AutomatedPlayer
 
   function getStatus() returns HandStatus
     return property.hand.status
+  end function
+
+end class
+
+class UserDefinedPlayer inherits AutomatedPlayer
+  constructor(name as String, decisionFunc as Func<of Hand, Card => Action>)
+    set property.name to name
+    set property.decisionFunc to ref decisionFunc
+  end constructor
+
+  private property dealerFaceCard as Card
+
+  property decisionFunc as Func<of Hand, Card => Action>
+
+  function getDecision() returns Action
+    return decisionFunc(property.hand, property.dealerFaceCard)
   end function
 
 end class
@@ -117,18 +134,12 @@ class Hand
     set property.status to HandStatus.standing
   end procedure
 
-  procedure addCard(card as Card)
+  procedure draw(card as Card)
     set property.cards to cards + {card}
     set property.count to count + 1
     if card.isAce()
       then
-        if property.softAce
-          then
-            set property.totalValue to property.totalValue + 1
-          else
-            set property.totalValue to property.totalValue + 11
-            set property.softAce to true
-        end if
+        call addAce()
       else
         set property.totalValue to totalValue + card.value()
     end if
@@ -143,6 +154,16 @@ class Hand
         set property.status to HandStatus.blackjack
       else if property.totalValue > 21
         set property.status to HandStatus.bust
+    end if
+  end procedure
+
+  procedure addAce()
+    if property.softAce
+      then
+        set property.totalValue to property.totalValue + 1
+      else
+        set property.totalValue to property.totalValue + 11
+        set property.softAce to true
     end if
   end procedure
 
@@ -200,3 +221,11 @@ enum HandStatus playing, standing, blackjack, bust
 constant rankValue set to {"2":2, "3":3, "4":4, "5":5, "6":6, "7":7, "8":8, "9":9, "10":10, "J":10, "Q":10, "K":10, "A":11}
 
 constant htmlEscChars set to {"&clubs;", "&diams;", "&hearts;", "&spades;"}
+
+function strategyA(hand as Hand, dealerFaceUp as Card) returns Action
+  return Action.stand
+end function
+
+function strategyB(hand as Hand, dealerFaceUp as Card) returns Action
+  return Action.draw
+end function
