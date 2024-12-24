@@ -191,7 +191,7 @@ async function main() {
   var b = "String";
   if ("String" === "String") {
     system.printLine(_stdlib.asString("Pass"));
-    } else {
+  } else {
     system.printLine(_stdlib.asString("Fail"));
   }
 }

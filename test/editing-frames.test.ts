@@ -45,16 +45,16 @@ import { ElanPasteError } from "../src/elan-paste-error";
 suite("Editing Frames", () => {
   test("Enter on a frame to Insert new code - creating a selector", () => {
     const file = T03_mainWithAllStatements();
-    const if_st = file.getById("if37");
+    const if_st = file.getById("if35");
     if_st.processKey(shift_enter()); //Insert above
-    const newSel = file.getById("select70");
+    const newSel = file.getById("select62");
     assert.equal(if_st.isSelected(), false);
     assert.equal(newSel.isSelected(), true);
     newSel.processKey(down());
     assert.equal(if_st.isSelected(), true);
     assert.equal(newSel.isSelected(), false);
     if_st.processKey(enter()); //Insert below
-    const newSel2 = file.getById("select71");
+    const newSel2 = file.getById("select63");
     assert.equal(if_st.isSelected(), false);
     newSel2.processKey(up());
     assert.equal(if_st.isSelected(), true);

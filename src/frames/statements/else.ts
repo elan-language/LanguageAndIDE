@@ -3,7 +3,6 @@ import { CodeSource, CodeSourceFromString } from "../code-source";
 import { mustBeOfType } from "../compile-rules";
 import { ExpressionField } from "../fields/expression-field";
 import { IfSelector } from "../fields/if-selector";
-import { singleIndent } from "../frame-helpers";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
@@ -73,16 +72,16 @@ export class Else extends AbstractFrame implements Statement {
   }
 
   indent(): string {
-    return this.getParent()?.indent() + singleIndent();
+    return this.getParent()?.indent();
   }
 
   renderAsSource(): string {
-    return `${this.indent()}${elseKeyword}${this.ifClauseAsSource()} ${this.hasIf ? thenKeyword : ""}\r`;
+    return `${this.indent()}${elseKeyword}${this.ifClauseAsSource()}${this.hasIf ? " "+thenKeyword : ""}`;
   }
 
   compile(transforms: Transforms): string {
     this.compileErrors = [];
-    return `${this.indent()}} else ${this.compileIfClause(transforms)}\r`;
+    return `${this.indent()}} else ${this.compileIfClause(transforms)}`;
   }
 
   parseFrom(source: CodeSource): void {

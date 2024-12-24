@@ -1,4 +1,4 @@
-# 6ad7e9eca1a3cbe26f2cc0bf8e07619303331ea7771ca192d24f6be239523cea Elan Beta 5 valid
+# ef02813c80d33dec39498fa76589d8efcce5b80ba949c047c810cef35c856abe Elan Beta 5 valid
 
 main
   variable a set to 3
@@ -22,11 +22,11 @@ main
 
   end if
   if y > 4 then
-    else 
+  else
   end if
   if y > 4 then
-    else if y > 10 then
-    else 
+  else if y > 10 then
+  else
   end if
   try
     doing
