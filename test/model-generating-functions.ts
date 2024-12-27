@@ -5,6 +5,7 @@ import { FileImpl } from "../src/frames/file-impl";
 import { ClassFrame } from "../src/frames/globals/class-frame";
 import { Constant } from "../src/frames/globals/constant";
 import { Enum } from "../src/frames/globals/enum";
+import { FunctionFrame } from "../src/frames/globals/function-frame";
 import { GlobalComment } from "../src/frames/globals/global-comment";
 import { GlobalFunction } from "../src/frames/globals/global-function";
 import { GlobalProcedure } from "../src/frames/globals/global-procedure";
@@ -16,6 +17,7 @@ import { Each } from "../src/frames/statements/each";
 import { Else } from "../src/frames/statements/else";
 import { For } from "../src/frames/statements/for";
 import { IfStatement } from "../src/frames/statements/if-statement";
+import { LetStatement } from "../src/frames/statements/let-statement";
 import { Print } from "../src/frames/statements/print";
 import { Repeat } from "../src/frames/statements/repeat";
 import { SetStatement } from "../src/frames/statements/set-statement";
@@ -219,4 +221,39 @@ export function getTestFrame(fn: string): FileImpl {
   } catch (e) {
     return new FileImpl(hash, new DefaultProfile(), transforms());
   }
+}
+
+export function oneConstant(): FileImpl {
+  const file = new FileImpl(hash, new DefaultProfile(), transforms());
+  const globSel = file.getFirstChild();
+  const con = new Constant(file);
+  file.addChildBefore(con, globSel);
+  con.name.setFieldToKnownValidText("phi");
+  con.value.setFieldToKnownValidText("1.618");
+  file.updateAllParseStatus();
+  return file;
+}
+
+export function emptyFunctionOnly(): FileImpl {
+  const file = new FileImpl(hash, new DefaultProfile(), transforms());
+  const globSel = file.getFirstChild();
+  const fun = new GlobalFunction(file);
+  file.addChildBefore(fun, globSel);
+  file.updateAllParseStatus();
+  return file;
+}
+
+export function twoConstants(): FileImpl {
+  const file = new FileImpl(hash, new DefaultProfile(), transforms());
+  const globSel = file.getFirstChild();
+  const con1 = new Constant(file);
+  file.addChildBefore(con1, globSel);
+  con1.name.setFieldToKnownValidText("phi");
+  con1.value.setFieldToKnownValidText("1.618");
+  const con2 = new Constant(file);
+  file.addChildAfter(con2, con1);
+  con2.name.setFieldToKnownValidText("c");
+  con2.value.setFieldToKnownValidText("299792458");
+  file.updateAllParseStatus();
+  return file;
 }

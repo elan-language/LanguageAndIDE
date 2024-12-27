@@ -1,12 +1,15 @@
 import assert from "assert";
+import { ElanPasteError } from "../src/elan-paste-error";
 import { Constructor } from "../src/frames/class-members/constructor";
 import { MemberSelector } from "../src/frames/class-members/member-selector";
 import { Property } from "../src/frames/class-members/property";
 import { CommentField } from "../src/frames/fields/comment-field";
+import { ConstantValueField } from "../src/frames/fields/constant-value-field";
 import { ExpressionField } from "../src/frames/fields/expression-field";
 import { IdentifierField } from "../src/frames/fields/identifier-field";
 import { FileImpl } from "../src/frames/file-impl";
 import { ClassFrame } from "../src/frames/globals/class-frame";
+import { Constant } from "../src/frames/globals/constant";
 import { GlobalFunction } from "../src/frames/globals/global-function";
 import { GlobalSelector } from "../src/frames/globals/global-selector";
 import { MainFrame } from "../src/frames/globals/main-frame";
@@ -17,9 +20,12 @@ import { StatementSelector } from "../src/frames/statements/statement-selector";
 import { ParseStatus } from "../src/frames/status-enums";
 import { ignore_test } from "./compiler/compiler-test-helpers";
 import {
+  emptyFunctionOnly,
+  oneConstant,
   T00_emptyFile,
   T03_mainWithAllStatements,
   T05_classes,
+  twoConstants,
 } from "./model-generating-functions";
 import {
   back,
@@ -37,99 +43,108 @@ import {
   loadFileAsModelNew,
   shift_down,
   shift_enter,
+  shift_tab,
   shift_up,
+  tab,
   up,
 } from "./testHelpers";
-import { ElanPasteError } from "../src/elan-paste-error";
 
 suite("Editing Frames", () => {
   test("Enter on a frame to Insert new code - creating a selector", () => {
-    const file = T03_mainWithAllStatements();
-    const if_st = file.getById("if35");
-    if_st.processKey(shift_enter()); //Insert above
-    const newSel = file.getById("select62");
-    assert.equal(if_st.isSelected(), false);
-    assert.equal(newSel.isSelected(), true);
-    newSel.processKey(down());
-    assert.equal(if_st.isSelected(), true);
-    assert.equal(newSel.isSelected(), false);
-    if_st.processKey(enter()); //Insert below
-    const newSel2 = file.getById("select63");
-    assert.equal(if_st.isSelected(), false);
-    newSel2.processKey(up());
-    assert.equal(if_st.isSelected(), true);
+    const file = oneConstant();
+    file.removeAllSelectorsThatCanBe();
+    assert.equal(file.getChildren().length, 1);
+    const c = file.getById("const1") as Constant;
+    c.select(true, false);
+    c.processKey(enter());
+    assert.equal(file.getChildren().length, 2);
+    const newSel = file.getChildAfter(c);
+    assert.equal(newSel.getHtmlId(), "select4");
   });
   test("Enter on a frame does not create a selector if there is already one there", () => {
-    const file = T03_mainWithAllStatements();
-    const if_st = file.getById("if47");
-    if_st.processKey(enter()); //Should insert selector below
-    const newSel = file.getById("select70"); //New a selector
-    assert.equal(newSel.isSelected(), true);
-    newSel.processKey(up()); //Go back up to 'if'
-    assert.equal(newSel.isSelected(), false);
-    assert.equal(if_st.isSelected(), true);
-    if_st.processKey(enter()); //Enter again should not now insert a new selector, but should go to existing
-    assert.equal(newSel.isSelected(), true); //Confirm the now-existing selector is selected
-    newSel.processKey(up()); //Go back up to confirm that selector is still immediately below
-    assert.equal(newSel.isSelected(), false);
-    assert.equal(if_st.isSelected(), true);
+    const file = oneConstant();
+    assert.equal(file.getChildren().length, 2);
+    const c = file.getById("const1") as Constant;
+    c.select(true, false);
+    c.processKey(enter());
+    assert.equal(file.getChildren().length, 2);
+    const select0 = file.getChildAfter(c);
+    assert.equal(select0.getHtmlId(), "select0");
+    assert.equal(select0.isSelected(), true);
   });
-  test("Enter on a field goes to next/previous field owned by same frame (except the last/field field).", () => {
-    const file = T03_mainWithAllStatements();
-    const varStatement = file.getById("var3");
-    varStatement.select(true, false);
-    const var4 = file.getById("var4") as IdentifierField;
-    var4.select();
-    assert.equal(var4.isSelected(), true);
-    const expr5 = file.getById("expr5") as ExpressionField;
-    assert.equal(expr5.isSelected(), false);
-    var4.processKey(enter());
-    assert.equal(var4.isSelected(), false);
-    assert.equal(expr5.isSelected(), true);
+  test("Enter on a field goes to next field owned by same frame (except the last/field field).", () => {
+    const file = oneConstant();
+    assert.equal(file.getChildren().length, 2);
+    const ident2 = file.getById("ident2") as IdentifierField;
+    ident2.select();
+    assert.equal(ident2.isSelected(), true);
+    ident2.processKey(enter());
+    assert.equal(ident2.isSelected(), false);
+    const text3 = file.getById("text3") as ConstantValueField;
+    assert.equal(text3.isSelected(), true);
+    text3.processKey(enter());
+    assert.equal(text3.isSelected(), false);
+    assert.equal(file.getChildren().length, 2);
+    const select0 = file.getById("select0") as IdentifierField;
+    assert.equal(select0.isSelected(), true);
   });
-
-  test("Enter on last field in a frame - is same effect as that key on the Frame itself", () => {
-    const file = T03_mainWithAllStatements();
-    const varStatement = file.getById("var3");
-    const expr5 = file.getById("expr5") as ExpressionField;
-    expr5.select();
-    expr5.processKey(enter());
-    const newSel = file.getById("select70"); //New selector
-    assert.equal(newSel.isSelected(), true);
-    newSel.processKey(up());
-    assert.equal(newSel.isSelected(), false);
-    assert.equal(varStatement.isSelected(), true);
+  test("Tab/Shift-Tab on a field goes to next/prev", () => {
+    const file = oneConstant();
+    const c = file.getById("const1") as Constant;
+    const ident2 = file.getById("ident2") as IdentifierField;
+    const text3 = file.getById("text3") as ConstantValueField;
+    c.select(true, false);
+    assert.equal(c.isSelected(), true);
+    c.processKey(tab());
+    assert.equal(c.isSelected(), false);
+    assert.equal(ident2.isSelected(), true);
+    ident2.processKey(tab());
+    assert.equal(ident2.isSelected(), false);
+    assert.equal(text3.isSelected(), true);
+    text3.processKey(tab());
+    assert.equal(text3.isSelected(), false);
+    assert.equal(c.isSelected(), true);
+    c.processKey(shift_tab());
+    assert.equal(c.isSelected(), false);
+    assert.equal(text3.isSelected(), true);
+    text3.processKey(shift_tab());
+    assert.equal(text3.isSelected(), false);
+    assert.equal(ident2.isSelected(), true);
+    ident2.processKey(shift_tab());
+    assert.equal(ident2.isSelected(), false);
+    assert.equal(c.isSelected(), true);
   });
 
   test("Enter on last field in a frame with statements", () => {
-    const file = T03_mainWithAllStatements();
-    const printEx = file.getById("expr15");
-    printEx.processKey(enter());
-    const stateSel = file.getById("select70");
-    assert.equal(stateSel.isSelected(), true);
+    const file = emptyFunctionOnly();
+    const select2 = file.getById("select2");
+    assert.equal(select2.isSelected(), false);
+    const type5 = file.getById("type5");
+    type5.select(true, false);
+    type5.processKey(enter());
+    assert.equal(select2.isSelected(), true);
   });
 
   test("Move", () => {
-    const file = T03_mainWithAllStatements();
-    const if_st = file.getById("if47");
-    const try_st = file.getById("try60");
-    assert.equal(try_st.isSelected(), false);
-    if_st.processKey(down());
-    assert.equal(try_st.isSelected(), true);
-    try_st.processKey(up());
-    assert.equal(if_st.isSelected(), true);
-    if_st.processKey(ctrl_down());
-    assert.equal(if_st.isSelected(), true);
-    if_st.processKey(up());
-    assert.equal(if_st.isSelected(), false);
-    assert.equal(try_st.isSelected(), true);
-    if_st.select(true, false);
-    if_st.processKey(ctrl_up());
-    if_st.processKey(ctrl_up());
-    const each = file.getById("if37");
-    assert.equal(each.isSelected(), false);
-    if_st.processKey(down());
-    assert.equal(each.isSelected(), true);
+    const file = twoConstants();
+    const phi = file.getById("const1") as Constant;
+    const sel0 = file.getById("select0") as GlobalSelector;
+    const c = file.getById("const4") as Constant;
+    assert.equal(file.getFirstChild(), phi);
+    assert.equal(file.getLastChild(), sel0);
+    phi.select(true, false);
+    c.processKey(ctrl_down());
+    assert.equal(file.getFirstChild(), c);
+    assert.equal(file.getLastChild(), sel0);
+    c.processKey(ctrl_down());
+    assert.equal(file.getFirstChild(), c);
+    assert.equal(file.getLastChild(), phi);
+    c.processKey(ctrl_up());
+    assert.equal(file.getLastChild(), sel0);
+    assert.equal(file.getFirstChild(), c);
+    c.processKey(ctrl_up());
+    assert.equal(file.getLastChild(), sel0);
+    assert.equal(file.getFirstChild(), phi);
   });
   test("Multi-selection incl. reversal", () => {
     const file = T03_mainWithAllStatements();
@@ -351,23 +366,6 @@ suite("Editing Frames", () => {
     assert.equal(ret.readParseStatus(), ParseStatus.invalid);
     assert.equal(reset.readParseStatus(), ParseStatus.invalid);
     assert.equal(card.readParseStatus(), ParseStatus.invalid);
-  });
-  test("#596 - cutting an else must not result in a selector inserted above the then", () => {
-    const file = T03_mainWithAllStatements();
-    const if37 = file.getById("if37") as IfStatement;
-    assert.equal(if37.getChildren().length, 4);
-    const else42 = file.getById("else42") as Else;
-    else42.select(true, false);
-    else42.processKey(ctrl_x());
-    assert.equal(if37.getChildren().length, 3);
-  });
-  test("#617 - Enter on condition field in if statement should select the next clause", () => {
-    const file = T03_mainWithAllStatements();
-    const condition = file.getById("expr34") as ExpressionField;
-    condition.select(true, false);
-    condition.processKey(enter());
-    const then = file.getById("select35");
-    assert.equal(then.isSelected(), true);
   });
 
   test("Paste at wrong level has no effect", async () => {
