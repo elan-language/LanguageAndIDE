@@ -65,7 +65,7 @@ ${this.indent()}}`;
 
   parseTop(source: CodeSource): void {
     source.remove("if ");
-    const condition= source.readUntil(/\sthen/);
+    const condition = source.readUntil(/\sthen/);
     this.condition.parseFrom(new CodeSourceFromString(condition));
     source.remove(" then");
     source.removeNewLine();

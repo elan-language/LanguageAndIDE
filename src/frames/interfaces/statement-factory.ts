@@ -4,12 +4,12 @@ import { Parent } from "./parent";
 export interface StatementFactory {
   newAssert(parent: Parent): Frame;
   newCall(parent: Parent): Frame;
-  newCase(parent: Parent): Frame;
   newEach(parent: Parent): Frame;
   newElse(parent: Parent): Frame;
   newFor(parent: Parent): Frame;
   newIf(parent: Parent): Frame;
   newLet(parent: Parent): Frame;
+  newMatch(parent: Parent): Frame;
   newOtherwise(parent: Parent): Frame;
   newPrint(parent: Parent): Frame;
   newRepeat(parent: Parent): Frame;

@@ -5,9 +5,10 @@ import { FrameWithStatements } from "../frame-with-statements";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
-import { endKeyword, switchKeyword } from "../keywords";
+import { endKeyword, onKeyword, switchKeyword } from "../keywords";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { Transforms } from "../syntax-nodes/transforms";
+import { MatchStatement } from "./match-statement";
 import { OtherwiseStatement } from "./otherwise-statement";
 
 export class Switch extends FrameWithStatements implements ElanSymbol {
@@ -17,6 +18,10 @@ export class Switch extends FrameWithStatements implements ElanSymbol {
   constructor(parent: Parent) {
     super(parent);
     this.expr = new ExpressionField(this);
+    const select = this.getChildren()[0];
+    const match1 = new MatchStatement(this);
+    this.addChildBefore(match1, select);
+    match1.makeImmovable();
   }
 
   get symbolId() {
@@ -47,13 +52,13 @@ export class Switch extends FrameWithStatements implements ElanSymbol {
   }
   renderAsHtml(): string {
     return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>${switchKeyword} </el-kw>${this.expr.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
+<el-top><el-expand>+</el-expand><el-kw>${switchKeyword} ${onKeyword} </el-kw>${this.expr.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
 <el-kw>${this.endSwitch}<el-kw>
 </el-statement>`;
   }
   renderAsSource(): string {
-    return `${this.indent()}${switchKeyword} ${this.expr.renderAsSource()}\r
+    return `${this.indent()}${switchKeyword} ${onKeyword}${this.expr.renderAsSource()}\r
 ${this.renderChildrenAsSource()}\r
 ${this.indent()}${this.endSwitch}`;
   }
@@ -85,7 +90,7 @@ ${this.indent()}}`;
   }
 
   parseTop(source: CodeSource): void {
-    source.remove(`${switchKeyword} `);
+    source.remove(`${switchKeyword} ${onKeyword} `);
     this.expr.parseFrom(source);
   }
   parseBottom(source: CodeSource): boolean {

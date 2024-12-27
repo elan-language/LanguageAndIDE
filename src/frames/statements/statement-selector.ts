@@ -6,13 +6,13 @@ import { StatementFactory } from "../interfaces/statement-factory";
 import {
   assertKeyword,
   callKeyword,
-  caseKeyword,
   commentMarker,
   eachKeyword,
   elseKeyword,
   forKeyword,
   ifKeyword,
   letKeyword,
+  matchKeyword,
   otherwiseKeyword,
   printKeyword,
   repeatKeyword,
@@ -37,12 +37,12 @@ export class StatementSelector extends AbstractSelector {
     return [
       [assertKeyword, (parent: Parent) => this.factory.newAssert(parent)],
       [callKeyword, (parent: Parent) => this.factory.newCall(parent)],
-      [caseKeyword, (parent: Parent) => this.factory.newCase(parent)],
       [eachKeyword, (parent: Parent) => this.factory.newEach(parent)],
       [elseKeyword, (parent: Parent) => this.factory.newElse(parent)],
       [forKeyword, (parent: Parent) => this.factory.newFor(parent)],
       [ifKeyword, (parent: Parent) => this.factory.newIf(parent)],
       [letKeyword, (parent: Parent) => this.factory.newLet(parent)],
+      [matchKeyword, (parent: Parent) => this.factory.newMatch(parent)],
       [otherwiseKeyword, (parent: Parent) => this.factory.newOtherwise(parent)],
       [printKeyword, (parent: Parent) => this.factory.newPrint(parent)],
       [repeatKeyword, (parent: Parent) => this.factory.newRepeat(parent)],
@@ -60,21 +60,30 @@ export class StatementSelector extends AbstractSelector {
     return this.profile.statements.includes(keyword);
   }
 
-  noPeerLevelOtherwise(): boolean {
+  otherwiseMaybeAdded(): boolean {
     const peers = this.getParent().getChildren();
-    return peers.filter((p) => "isOtherwise" in p).length === 0;
+    const noExistingOtherwise = peers.filter((p) => "isOtherwise" in p).length === 0;
+    const isLastInSwitch = this.getParent().getLastChild() === this;
+    return noExistingOtherwise && isLastInSwitch;
+  }
+
+  isAboveOtherwiseIfPresent(): boolean {
+    const peers = this.getParent().getChildren();
+    const existingOtherwise = peers.filter((p) => "isOtherwise" in p)[0];
+    return !existingOtherwise || peers.indexOf(this) < peers.indexOf(existingOtherwise);
   }
 
   validWithinCurrentContext(keyword: string, _userEntry: boolean): boolean {
     const parent = this.getParent();
     let result = false;
-    if (parent.getIdPrefix() === switchKeyword) {
-      result =
-        keyword === caseKeyword || (keyword === otherwiseKeyword && this.noPeerLevelOtherwise());
-    } else if ((result = keyword === elseKeyword)) {
-      result = parent.getIdPrefix() === ifKeyword;
-    } else if (keyword === caseKeyword || keyword === otherwiseKeyword || keyword === elseKeyword) {
+    if (keyword === matchKeyword && parent.getIdPrefix() === switchKeyword) {
+      return this.isAboveOtherwiseIfPresent();
+    } else if (keyword === otherwiseKeyword && this.otherwiseMaybeAdded()) {
+      result = parent.getIdPrefix() === switchKeyword;
+    } else if (keyword === matchKeyword || keyword === otherwiseKeyword) {
       result = false;
+    } else if (keyword === elseKeyword) {
+      result = parent.getIdPrefix() === ifKeyword;
     } else if (keyword === assertKeyword) {
       return this.isWithinATest();
     } else if (keyword === printKeyword || keyword === callKeyword) {
