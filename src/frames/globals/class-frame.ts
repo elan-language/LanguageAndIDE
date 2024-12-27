@@ -76,9 +76,6 @@ export class ClassFrame extends AbstractFrame implements Frame, Parent, Collapsi
     this.name = new TypeNameField(this);
     this.inheritance = new InheritsFrom(this);
     this.abstract = abstract;
-    if (!abstract) {
-      this.getChildren().push(new Constructor(this));
-    }
     this.getChildren().push(new MemberSelector(this));
   }
 
@@ -183,8 +180,7 @@ export class ClassFrame extends AbstractFrame implements Frame, Parent, Collapsi
   fieldUpdated(_field: Field): void {}
 
   minimumNumberOfChildrenExceeded(): boolean {
-    const children = this.getChildren().length;
-    return this.isAbstract() ? children > 1 : children > 2; // Concrete class must include constructor
+    return this.getChildren().length > 1;
   }
 
   isAbstract(): boolean {
@@ -319,7 +315,9 @@ end class\r\n`;
 ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
 }\r\n`;
   }
-
+  createConstructor(): Frame {
+    return new Constructor(this);
+  }
   createFunction(priv: boolean = false): Frame {
     return new FunctionMethod(this, priv);
   }
@@ -364,10 +362,6 @@ ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
     source.remove(`${classKeyword} `);
     this.name.parseFrom(source);
     this.inheritance.parseFrom(source);
-    source.removeNewLine();
-    if (!this.isAbstract()) {
-      this.getConstructor().parseFrom(source);
-    }
     return true;
   }
 

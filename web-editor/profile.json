@@ -4,7 +4,7 @@
 "globals":["main", "procedure", "function",  "constant", "test", "enum", "class", "abstract","record","#"],
 "statements":["assert", "call", "case", "each", "else", "for", "if", "let", "otherwise", "print",
                "repeat", "set", "switch", "throw", "try", "variable", "while", "#"],
-"class_members": ["function", "procedure", "property","private function", "private procedure", "private property",
+"class_members": ["constructor", "function", "procedure", "property",
                   "abstract function", "abstract procedure", "abstract property","#"],
 
 "include_profile_name_in_header": false,

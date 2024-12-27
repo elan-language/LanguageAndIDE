@@ -10,11 +10,8 @@ import {
   abstractProcedureKeywords,
   abstractPropertyKeywords,
   commentMarker,
+  constructorKeyword,
   functionKeyword,
-  privateFunctionKeywords,
-  privateKeyword,
-  privateProcedureKeywords,
-  privatePropertyKeywords,
   procedureKeyword,
   propertyKeyword,
 } from "../keywords";
@@ -36,15 +33,13 @@ export class MemberSelector extends AbstractSelector implements Member {
 
   defaultOptions(): [string, (parent: Parent) => Frame][] {
     const options: [string, (parent: Parent) => Frame][] = [
+      [constructorKeyword, (_parent: Parent) => this.class.createConstructor()],
       [functionKeyword, (_parent: Parent) => this.class.createFunction()],
       [procedureKeyword, (_parent: Parent) => this.class.createProcedure()],
       [propertyKeyword, (_parent: Parent) => this.class.createProperty()],
       [abstractFunctionKeywords, (_parent: Parent) => this.class.createAbstractFunction()],
       [abstractProcedureKeywords, (_parent: Parent) => this.class.createAbstractProcedure()],
       [abstractPropertyKeywords, (_parent: Parent) => this.class.createAbstractProperty()],
-      [privateFunctionKeywords, (_parent: Parent) => this.class.createFunction(true)],
-      [privateProcedureKeywords, (_parent: Parent) => this.class.createProcedure(true)],
-      [privatePropertyKeywords, (_parent: Parent) => this.class.createProperty(true)],
       [commentMarker, (_parent: Parent) => this.class.createComment()],
     ];
     return options;
@@ -54,18 +49,16 @@ export class MemberSelector extends AbstractSelector implements Member {
     return this.profile.class_members.includes(keyword);
   }
 
-  validWithinCurrentContext(keyword: string, userEntry: boolean): boolean {
+  validWithinCurrentContext(keyword: string, _userEntry: boolean): boolean {
     let result = false;
-    if (this.class.isAbstract()) {
-      result =
-        keyword.startsWith(abstractKeyword) ||
-        keyword.startsWith(privateKeyword) ||
-        keyword === commentMarker;
+    if (keyword.startsWith(abstractKeyword)) {
+      result = this.class.isAbstract();
     } else if (this.class.isImmutable()) {
       result = keyword === propertyKeyword;
+    } else if (keyword === constructorKeyword) {
+      result = !this.class.isAbstract() && !this.getClass().getConstructor();
     } else {
-      result =
-        !keyword.startsWith(abstractKeyword) && !(userEntry && keyword.startsWith(privateKeyword));
+      result = true;
     }
     return result;
   }

@@ -24,7 +24,6 @@ export class Constructor extends FrameWithStatements implements ElanSymbol, Memb
 
   constructor(parent: Parent) {
     super(parent);
-    this.movable = false;
     this.params = new ParamList(this);
   }
 
@@ -89,9 +88,6 @@ ${this.indent()}}\r
   }
   parseBottom(source: CodeSource): boolean {
     return this.parseStandardEnding(source, "end constructor");
-  }
-  canInsertBefore(): boolean {
-    return false;
   }
 
   resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {

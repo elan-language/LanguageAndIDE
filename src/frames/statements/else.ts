@@ -76,7 +76,7 @@ export class Else extends AbstractFrame implements Statement {
   }
 
   renderAsSource(): string {
-    return `${this.indent()}${elseKeyword}${this.ifClauseAsSource()}${this.hasIf ? " "+thenKeyword : ""}`;
+    return `${this.indent()}${elseKeyword}${this.ifClauseAsSource()}${this.hasIf ? " " + thenKeyword : ""}`;
   }
 
   compile(transforms: Transforms): string {
@@ -89,7 +89,7 @@ export class Else extends AbstractFrame implements Statement {
     if (source.isMatch(" if ")) {
       this.hasIf = true;
       source.remove(" if ");
-      const condition= source.readUntil(/\sthen/);
+      const condition = source.readUntil(/\sthen/);
       this.condition.parseFrom(new CodeSourceFromString(condition));
       source.remove(" then");
     }

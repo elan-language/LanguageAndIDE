@@ -7,6 +7,7 @@ import {
   classKeyword,
   commentMarker,
   constantKeyword,
+  constructorKeyword,
   doingKeyword,
   eachKeyword,
   elseKeyword,
@@ -67,6 +68,7 @@ export class DefaultProfile implements Profile {
     commentMarker,
   ];
   class_members: string[] = [
+    constructorKeyword,
     functionKeyword,
     procedureKeyword,
     propertyKeyword,
