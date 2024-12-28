@@ -345,14 +345,14 @@ return [main, _tests];}`;
 
 main
   variable f set to Fruit.orange
-  switch f
-    case Fruit.apple
-      print "a"
-    case Fruit.orange
-      print "o"
-    case Fruit.pear
-      print "p"
-    otherwise
+  switch on f
+  match Fruit.apple with
+    print "a"
+  match Fruit.orange with
+    print "o"
+  match Fruit.pear with
+    print "p"
+  otherwise
   end switch
 end main
    
@@ -366,18 +366,17 @@ var Fruit = {
 async function main() {
   var f = Fruit.orange;
   switch (f) {
-    case Fruit.apple:
-      system.printLine(_stdlib.asString("a"));
-      break;
-    case Fruit.orange:
-      system.printLine(_stdlib.asString("o"));
-      break;
-    case Fruit.pear:
-      system.printLine(_stdlib.asString("p"));
-      break;
-    default:
-
-      break;
+  case Fruit.apple:
+    system.printLine(_stdlib.asString("a"));
+    break;
+  case Fruit.orange:
+    system.printLine(_stdlib.asString("o"));
+    break;
+  case Fruit.pear:
+    system.printLine(_stdlib.asString("p"));
+    break;
+  default:
+    break;
   }
 }
 return [main, _tests];}`;

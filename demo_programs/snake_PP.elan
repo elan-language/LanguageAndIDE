@@ -1,4 +1,4 @@
-# 3282b207a9149f403b5e438b4c3794201c058fc65de6728aed7150475db7740d Elan Beta 5 valid
+# be77681b8c2668308e4f616873b3027ee6240b8250955e6f7f05c9e078a221f7 Elan Beta 5 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -58,13 +58,13 @@ function getAdjacentSquare(sq as Array<of Int>, dir as String) returns Array<of 
   variable newX set to sq[0]
   variable newY set to sq[1]
   switch on dir
-    match "left" with
+  match "left" with
     set newX to newX - 1
-    match "right" with
+  match "right" with
     set newX to newX + 1
-    match "up" with
+  match "up" with
     set newY to newY - 1
-    match "down" with
+  match "down" with
     set newY to newY + 1
   end switch
   return [newX, newY]
@@ -83,13 +83,13 @@ end function
 function directionByKey(current as String, key as String) returns String
   variable dir set to current
   switch on key
-    match "w" with
+  match "w" with
     set dir to "up"
-    match "s" with
+  match "s" with
     set dir to "down"
-    match "a" with
+  match "a" with
     set dir to "left"
-    match "d" with
+  match "d" with
     set dir to "right"
     otherwise
   end switch

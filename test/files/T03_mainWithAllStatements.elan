@@ -1,4 +1,4 @@
-# FFFF Elan Beta 5 valid
+# 1376777f92b03c2da4d395e0f67ecd691714298a9cc17e8c18b1b081de9ad406 Elan Beta 5 valid
 
 main
   variable a set to 3
@@ -35,7 +35,6 @@ main
 
   end try
   switch on result
-  otherwise
-
+  match 1 with
   end switch
 end main

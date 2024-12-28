@@ -44,7 +44,7 @@ export class MatchStatement extends AbstractFrame implements Statement {
 </el-statement>`;
   }
   renderAsSource(): string {
-    return `${this.indent()}${matchKeyword} ${this.value.renderAsSource()} ${withKeyword}\r`;
+    return `${this.getParent().indent()}${matchKeyword} ${this.value.renderAsSource()} ${withKeyword}`;
   }
 
   compile(transforms: Transforms): string {

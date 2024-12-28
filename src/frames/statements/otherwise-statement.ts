@@ -32,7 +32,7 @@ export class OtherwiseStatement extends AbstractFrame implements Statement {
   }
 
   renderAsSource(): string {
-    return `${this.indent()}${otherwiseKeyword}`;
+    return `${this.getParent().indent()}${otherwiseKeyword}`;
   }
 
   compile(): string {

@@ -1,4 +1,4 @@
-# 01f19a4ffdbe247865177a18b73a6dab4928870798f67e5bf9650134d1043795 Elan Beta 5 valid
+# cb39c16da3cc761c6b0beea11c1fbf1a59dac88f09b7e3ae5d24b0e8116f0782 Elan Beta 5 valid
 
 main
   variable g set to new BlockGraphics()
@@ -18,13 +18,13 @@ function updateCoordinates(x as Int, y as Int, dir as Int) returns (Int, Int)
   variable newX set to x
   variable newY set to y
   switch on dir
-    match 0 with
+  match 0 with
     set newX to lesserOf(x + 1, 39)
-    match 1 with
+  match 1 with
     set newX to greaterOf(x - 1, 0)
-    match 2 with
+  match 2 with
     set newY to lesserOf(y + 1, 29)
-    match 3 with
+  match 3 with
     set newY to greaterOf(y - 1, 0)
   end switch
   return (newX, newY)

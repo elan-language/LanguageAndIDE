@@ -330,7 +330,7 @@ end class
   });
 
   test("parse Frames - switch 1", async () => {
-    const code = `# 42435925874f86b2edbdf79c2ebecc6fb79eccc6db17356293b71e006929ac95 Elan Beta 5 valid
+    const code = `# 5ba908f3efe4bc46f932878659544626b6bdf0632a62e786c7bf4af4fd7d0b5c Elan Beta 5 valid
 
 main
   switch on i
@@ -346,14 +346,14 @@ end main
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
   test("parse Frames - switch 2", async () => {
-    const code = `# c30e31a6f768155305e7e8633e58df99f8d4e42d562f5cddc7fca9777188695d Elan Beta 5 valid
+    const code = `# 41a740592b70b84b74797622295accd4f43200f7ee56b9d9523ef39484128e78 Elan Beta 5 valid
 
 main
-  switch i
-    case 1
-      print "a"
-    otherwise
-      print "b"
+  switch on i
+  match 1 with
+    print "a"
+  otherwise
+    print "b"
   end switch
 end main
 `;
@@ -365,7 +365,7 @@ end main
   });
 
   test("parse Frames - else with and without if", async () => {
-    const code = `# 42435925874f86b2edbdf79c2ebecc6fb79eccc6db17356293b71e006929ac95 Elan Beta 5 valid
+    const code = `# 8897a517f23ae6cf48f6e538eae89e1b7869d7a602d6044ddf40b890db2a7090 Elan Beta 5 valid
 
 main
   if true then
