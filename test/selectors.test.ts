@@ -194,7 +194,10 @@ suite("Selector tests", () => {
     const sw = new Switch(m);
     const s = new StatementSelector(sw);
     const help = s.getCompletion();
-    assert.equal(help, " case otherwise");
+    assert.equal(
+      help,
+      " call each for if let match print repeat set switch throw try variable while #",
+    );
   });
   test("Selection Context - in a Switch with a default", () => {
     const fl = new FileImpl(hash, new DefaultProfile(), transforms());
@@ -204,7 +207,10 @@ suite("Selector tests", () => {
     sw.getChildren().push(def);
     const s = new StatementSelector(sw);
     const help = s.getCompletion();
-    assert.equal(help, " case");
+    assert.equal(
+      help,
+      " call each for if let match print repeat set switch throw try variable while #",
+    );
   });
   test("Selection Context - in an IfThen", () => {
     const fl = new FileImpl(hash, new DefaultProfile(), transforms());

@@ -1,8 +1,7 @@
 import { AbstractFrame } from "../abstract-frame";
 import { CodeSource } from "../code-source";
 import { mustBeCompatibleType } from "../compile-rules";
-import { CaseValueField } from "../fields/case-value-field";
-import { singleIndent } from "../frame-helpers";
+import { MatchValueField } from "../fields/match-value-field";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
@@ -13,11 +12,11 @@ import { Transforms } from "../syntax-nodes/transforms";
 
 export class MatchStatement extends AbstractFrame implements Statement {
   isStatement = true;
-  value: CaseValueField;
+  value: MatchValueField;
 
   constructor(parent: Parent) {
     super(parent);
-    this.value = new CaseValueField(this);
+    this.value = new MatchValueField(this);
   }
   makeImmovable() {
     this.movable = false;
@@ -61,14 +60,15 @@ export class MatchStatement extends AbstractFrame implements Statement {
     }
 
     const isFirstCase = parent.getChildren().filter((c) => c instanceof MatchStatement)[0] === this;
-    const brk = isFirstCase ? `` : `${this.indent()}${singleIndent()}break;\r`;
-    return `${brk}${this.indent()}case ${this.value.compile(transforms)}:`;
+    const brk = isFirstCase ? `` : `${this.indent()}break;\r\n`;
+    return `${brk}${this.getParent().indent()}case ${this.value.compile(transforms)}:`;
   }
 
   parseFrom(source: CodeSource): void {
     source.remove(`${matchKeyword} `);
     this.value.parseFrom(source);
     source.remove(` ${withKeyword}`);
+    source.removeNewLine();
   }
 
   canInsertBefore(): boolean {

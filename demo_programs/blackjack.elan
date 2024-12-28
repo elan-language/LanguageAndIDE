@@ -1,4 +1,4 @@
-# 96d25f1aeddb9384e5153ae970887352619ba0076d56f3cb2135650cc84504ea Elan Beta 5 valid
+# FFFF Elan Beta 5 valid
 
 main
   let outcomes be [HandStatus.bust:0, HandStatus.standing:0, HandStatus.blackjack:0]
@@ -58,14 +58,14 @@ abstract class AutomatedPlayer
     while property.hand.status is HandStatus.playing
       let decision be Action.doubleDown
       # TODO - get decision from function - currently a bug
-      switch decision
-        case Action.draw
-          call hand.draw(dealCard(random()))
-        case Action.stand
-          call hand.stand()
-        otherwise
-          throw exception "Action {decision} not covered"
-          # TODO: cover other cases, which must check that they are valid given hand 
+      switch on decision
+      match Action.draw with
+        call hand.draw(dealCard(random()))
+      match Action.stand with
+        call hand.stand()
+      otherwise
+        throw exception "Action {decision} not covered"
+        # TODO: cover other cases, which must check that they are valid given hand 
       end switch
     end while
   end procedure

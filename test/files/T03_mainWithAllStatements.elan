@@ -1,4 +1,4 @@
-# ef02813c80d33dec39498fa76589d8efcce5b80ba949c047c810cef35c856abe Elan Beta 5 valid
+# FFFF Elan Beta 5 valid
 
 main
   variable a set to 3
@@ -34,8 +34,8 @@ main
     catching exception in e
 
   end try
-  switch result
-    otherwise
+  switch on result
+  otherwise
 
   end switch
 end main

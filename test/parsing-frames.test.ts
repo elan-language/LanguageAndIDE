@@ -330,14 +330,12 @@ end class
   });
 
   test("parse Frames - switch 1", async () => {
-    const code = `# 4998d39d882e662778e5b0b6fff45f1c900aa20c60f1f405e39d9e3361006ed8 Elan Beta 5 valid
+    const code = `# 42435925874f86b2edbdf79c2ebecc6fb79eccc6db17356293b71e006929ac95 Elan Beta 5 valid
 
 main
-  switch i
-    case 1
-      print "a"
-    otherwise
-
+  switch on i
+  match 1 with
+    print "a"
   end switch
 end main
 `;
@@ -367,7 +365,7 @@ end main
   });
 
   test("parse Frames - else with and without if", async () => {
-    const code = `# b876e257b29e9d49ab7a202b442fc8f9d293c0fe8b3b28bbbd1b9fb4b84f8c35 Elan Beta 5 valid
+    const code = `# 42435925874f86b2edbdf79c2ebecc6fb79eccc6db17356293b71e006929ac95 Elan Beta 5 valid
 
 main
   if true then

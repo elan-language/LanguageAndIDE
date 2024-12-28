@@ -58,7 +58,7 @@ ${this.renderChildrenAsHtml()}
 </el-statement>`;
   }
   renderAsSource(): string {
-    return `${this.indent()}${switchKeyword} ${onKeyword}${this.expr.renderAsSource()}\r
+    return `${this.indent()}${switchKeyword} ${onKeyword} ${this.expr.renderAsSource()}\r
 ${this.renderChildrenAsSource()}\r
 ${this.indent()}${this.endSwitch}`;
   }
@@ -80,18 +80,21 @@ ${this.indent()}${this.endSwitch}`;
 
     const generatedOtherwise = hasOtherwise
       ? ""
-      : `\n${this.customIndent(1)}default:\r
-${this.customIndent(2)}system.unhandledExpression(${expr});\r
-${this.customIndent(2)}break;\r`;
+      : `\n${this.customIndent(1)}break;\r\n${this.indent()}default:\r
+${this.customIndent(1)}system.unhandledExpression(${expr});\r`;
 
     return `${this.indent()}${switchKeyword} (${expr}) {\r
 ${this.compileStatements(transforms)}\r${generatedOtherwise}
+${this.customIndent(1)}break;\r
 ${this.indent()}}`;
   }
 
   parseTop(source: CodeSource): void {
     source.remove(`${switchKeyword} ${onKeyword} `);
     this.expr.parseFrom(source);
+    source.removeNewLine();
+    source.removeIndent();
+    this.getFirstChild().parseFrom(source);
   }
   parseBottom(source: CodeSource): boolean {
     source.removeIndent();

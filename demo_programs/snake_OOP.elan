@@ -1,4 +1,4 @@
-# f58ec7a168bac3a8c0f148b45667d1151c4bc780462d0df83b34c6ad65ca594f Elan Beta 5 valid
+# FFFF Elan Beta 5 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -72,17 +72,15 @@ class Snake
   end function
 
   private procedure setDirection(key as String)
-    switch key
-      case "w"
-        set property.currentDir to Direction.up
-      case "s"
-        set property.currentDir to Direction.down
-      case "a"
-        set property.currentDir to Direction.left
-      case "d"
-        set property.currentDir to Direction.right
-      otherwise
-        # do nothing
+    switch on key
+    match "w" with
+      set property.currentDir to Direction.up
+    match "s" with
+      set property.currentDir to Direction.down
+    match "a" with
+      set property.currentDir to Direction.left
+    match "d" with
+      set property.currentDir to Direction.right
     end switch
   end procedure
 
@@ -122,15 +120,15 @@ class Square
   function getAdjacentSquare(d as Direction) returns Square
     variable newX set to x
     variable newY set to y
-    switch d
-      case Direction.left
-        set newX to x - 1
-      case Direction.right
-        set newX to x + 1
-      case Direction.up
-        set newY to y - 1
-      case Direction.down
-        set newY to y + 1
+    switch on d
+    match Direction.left with
+      set newX to x - 1
+    match Direction.right with
+      set newX to x + 1
+    match Direction.up with
+      set newY to y - 1
+    match Direction.down with
+      set newY to y + 1
     end switch
     return new Square(newX, newY)
   end function

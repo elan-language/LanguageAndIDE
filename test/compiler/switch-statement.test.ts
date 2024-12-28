@@ -13,19 +13,35 @@ import {
 } from "./compiler-test-helpers";
 
 suite("Switch Statement", () => {
+  test("Pass_more_minimal", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  switch on i
+  match 1 with
+    print "a"
+  end switch
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+  });
   test("Pass_minimal", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
   for i from 1 to 3 step 1
-    switch i
-      case 1
-        print "a"
-      case 2
-        print "b"
-      case 3
-        print "c"
-      otherwise
+    switch on i
+    match 1 with
+      print "a"
+    match 2 with
+      print "b"
+    match 3 with
+      print "c"
+    otherwise
     end switch
   end for
 end main`;
@@ -34,18 +50,17 @@ end main`;
 async function main() {
   for (var i = 1; i <= 3; i = i + 1) {
     switch (i) {
-      case 1:
-        system.printLine(_stdlib.asString("a"));
-        break;
-      case 2:
-        system.printLine(_stdlib.asString("b"));
-        break;
-      case 3:
-        system.printLine(_stdlib.asString("c"));
-        break;
-      default:
-
-        break;
+    case 1:
+      system.printLine(_stdlib.asString("a"));
+      break;
+    case 2:
+      system.printLine(_stdlib.asString("b"));
+      break;
+    case 3:
+      system.printLine(_stdlib.asString("c"));
+      break;
+    default:
+      break;
     }
   }
 }
@@ -65,14 +80,14 @@ return [main, _tests];}`;
 
 main
   for i from 1 to 3 step 1
-    switch (i)
-      case 1
-        print "a"
-      case 2
-        print "b"
-      case 3
-        print "c"
-      otherwise
+    switch on (i)
+    match 1 with
+      print "a"
+    match 2 with
+      print "b"
+    match 3 with
+      print "c"
+    otherwise
     end switch
   end for
 end main`;
@@ -81,18 +96,17 @@ end main`;
 async function main() {
   for (var i = 1; i <= 3; i = i + 1) {
     switch ((i)) {
-      case 1:
-        system.printLine(_stdlib.asString("a"));
-        break;
-      case 2:
-        system.printLine(_stdlib.asString("b"));
-        break;
-      case 3:
-        system.printLine(_stdlib.asString("c"));
-        break;
-      default:
-
-        break;
+    case 1:
+      system.printLine(_stdlib.asString("a"));
+      break;
+    case 2:
+      system.printLine(_stdlib.asString("b"));
+      break;
+    case 3:
+      system.printLine(_stdlib.asString("c"));
+      break;
+    default:
+      break;
     }
   }
 }
@@ -112,11 +126,11 @@ return [main, _tests];}`;
 
 main
   for i from 1 to 3 step 1
-    switch i
-      case 1
-          print "a"
-      otherwise
-          print "b"
+    switch on i
+    match 1 with
+      print "a"
+    otherwise
+      print "b"
     end switch
   end for
 end main`;
@@ -125,12 +139,12 @@ end main`;
 async function main() {
   for (var i = 1; i <= 3; i = i + 1) {
     switch (i) {
-      case 1:
-        system.printLine(_stdlib.asString("a"));
-        break;
-      default:
-        system.printLine(_stdlib.asString("b"));
-        break;
+    case 1:
+      system.printLine(_stdlib.asString("a"));
+      break;
+    default:
+      system.printLine(_stdlib.asString("b"));
+      break;
     }
   }
 }
@@ -150,14 +164,13 @@ return [main, _tests];}`;
 
 main
   for i from 1 to 3 step 1
-    switch i + 1
-      case 1
-        print "a"
-      case 2
-        print "b"
-      otherwise
-        print "c"
-        
+    switch on i + 1
+    match 1 with
+      print "a"
+    match 2 with
+      print "b"
+    otherwise
+      print "c"
     end switch
   end for
 end main`;
@@ -166,15 +179,15 @@ end main`;
 async function main() {
   for (var i = 1; i <= 3; i = i + 1) {
     switch (i + 1) {
-      case 1:
-        system.printLine(_stdlib.asString("a"));
-        break;
-      case 2:
-        system.printLine(_stdlib.asString("b"));
-        break;
-      default:
-        system.printLine(_stdlib.asString("c"));
-        break;
+    case 1:
+      system.printLine(_stdlib.asString("a"));
+      break;
+    case 2:
+      system.printLine(_stdlib.asString("b"));
+      break;
+    default:
+      system.printLine(_stdlib.asString("c"));
+      break;
     }
   }
 }
@@ -193,14 +206,14 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  switch 3.1
-    case 1
-      print "a"
-    case 2
-      print "b"
-    case 3.1
-      print "c"
-    otherwise
+  switch on 3.1
+  match 1 with
+    print "a"
+  match 2 with
+    print "b"
+  match 3.1 with
+    print "c"
+  otherwise
   end switch
 end main
 `;
@@ -208,18 +221,17 @@ end main
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   switch (3.1) {
-    case 1:
-      system.printLine(_stdlib.asString("a"));
-      break;
-    case 2:
-      system.printLine(_stdlib.asString("b"));
-      break;
-    case 3.1:
-      system.printLine(_stdlib.asString("c"));
-      break;
-    default:
-
-      break;
+  case 1:
+    system.printLine(_stdlib.asString("a"));
+    break;
+  case 2:
+    system.printLine(_stdlib.asString("b"));
+    break;
+  case 3.1:
+    system.printLine(_stdlib.asString("c"));
+    break;
+  default:
+    break;
   }
 }
 return [main, _tests];}`;
@@ -233,18 +245,18 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "c");
   });
 
-  test("Pass_generatedOtherwise", async () => {
+  test("Pass_generatedDefault", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
   for i from 1 to 3 step 1
-    switch i
-      case 1
-        print "a"
-      case 2
-        print "b"
-      case 3
-        print "c"
+    switch on i
+    match 1 with
+      print "a"
+    match 2 with
+      print "b"
+    match 3 with
+      print "c"
     end switch
   end for
 end main`;
@@ -253,18 +265,18 @@ end main`;
 async function main() {
   for (var i = 1; i <= 3; i = i + 1) {
     switch (i) {
-      case 1:
-        system.printLine(_stdlib.asString("a"));
-        break;
-      case 2:
-        system.printLine(_stdlib.asString("b"));
-        break;
-      case 3:
-        system.printLine(_stdlib.asString("c"));
-        break;
-      default:
-        system.unhandledExpression(i);
-        break;
+    case 1:
+      system.printLine(_stdlib.asString("a"));
+      break;
+    case 2:
+      system.printLine(_stdlib.asString("b"));
+      break;
+    case 3:
+      system.printLine(_stdlib.asString("c"));
+      break;
+    default:
+      system.unhandledExpression(i);
+      break;
     }
   }
 }
@@ -279,18 +291,18 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "abc");
   });
 
-  test("Fail_generatedOtherwiseThrows", async () => {
+  test("Fail_generatedDefaultThrows", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
   for i from 1 to 4 step 1
-    switch i
-      case 1
-        print "a"
-      case 2
-        print "b"
-      case 3
-        print "c"
+    switch on i
+    match 1 with
+      print "a"
+    match 2 with
+      print "b"
+    match 3 with
+      print "c"
     end switch
   end for
 end main`;
@@ -299,18 +311,18 @@ end main`;
 async function main() {
   for (var i = 1; i <= 4; i = i + 1) {
     switch (i) {
-      case 1:
-        system.printLine(_stdlib.asString("a"));
-        break;
-      case 2:
-        system.printLine(_stdlib.asString("b"));
-        break;
-      case 3:
-        system.printLine(_stdlib.asString("c"));
-        break;
-      default:
-        system.unhandledExpression(i);
-        break;
+    case 1:
+      system.printLine(_stdlib.asString("a"));
+      break;
+    case 2:
+      system.printLine(_stdlib.asString("b"));
+      break;
+    case 3:
+      system.printLine(_stdlib.asString("c"));
+      break;
+    default:
+      system.unhandledExpression(i);
+      break;
     }
   }
 }
@@ -325,12 +337,12 @@ return [main, _tests];}`;
     await assertObjectCodeDoesNotExecute(fileImpl, "'4' not covered in switch statement");
   });
 
-  test("Fail_NoCase", async () => {
+  test("Fail_NoMatchClause", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
   for i from 1 to 4 step 1
-      switch i
+      switch on i
         otherwise
           print "a" 
       end switch
@@ -349,14 +361,14 @@ end main
 
 main
   for i from 1 to 3 step 1
-    switch i
-      case 1
-        print "a"
-      case 2
-        print "b"
-      case 3.1
-        print "c"
-      otherwise
+    switch on i
+    match 1 with
+      print "a"
+    match 2 with
+      print "b"
+    match 3.1 with
+      print "c"
+    otherwise
     end switch
   end for
 end main
@@ -375,13 +387,13 @@ end main
 main
   variable a set to 2
   for i from 1 to 3 step 1
-      switch i
-        case 1
-          print "a"
-        case a
-          print "b"
-        case 3
-          print "c"
+      switch on i
+      match 1 with
+        print "a"
+      match a with
+        print "b"
+      match 3 with
+        print "c"
       end switch
   end for
 end main
@@ -398,13 +410,13 @@ end main
 
 main
   for i from 1 to 3 step 1
-    switch i
-      case 1
-        print "a"
-      case 1 + 1
-        print "b"
-      case 3
-        print "c"
+    switch on i
+    match 1 with
+      print "a"
+    match 1 + 1 with
+      print "b"
+    match 3 with
+      print "c"
     end switch
   end for
 end main
@@ -421,12 +433,12 @@ end main
 
 main
   for i from 1 to 3 step 1
-    switch i
-      case 1
+    switch on i
+      match 1 with
         print "a"
       otherwise
         print "b"
-      case 3
+      match 3 with
         print "c"
     end switch
   end for
@@ -435,7 +447,7 @@ end main
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
-    assertParses(fileImpl);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_WithColons", async () => {
@@ -443,12 +455,12 @@ end main
 
 main
   for i from 1 to 4 step 1
-    switch i
-      case 1:
+    switch on i
+      match 1 with:
         print "a"
-      case 2:
+      match 2 with:
         print "b"
-      case 3:
+      match 3 with:
         print "c"
   end for
 end main
@@ -465,9 +477,9 @@ end main
 
 main
   for i from 1 to 3 step 1
-    switch i
-      case 1 print "a"
-      case 2 print "b"
+    switch on i
+      match 1 with print "a"
+      match 2 with print "b"
     end switch
   end for
 end main
@@ -484,10 +496,10 @@ end main
 
 main
   for i from 1 to 3 step 1
-    switch
-      case 1 
-        print "a"
-      case 2 
+    switch on 
+      match 1 with 
+        2rint "a"
+      match 1 with 
         print "b"
     end switch
   end for
@@ -505,10 +517,10 @@ end main
 
 main
   for i from 1 to 3 step 1
-    switch
-      case
+    switch on i
+      match 1 with
           print "a"
-      case 2 
+      match with 
           print "b"
     end switch
   end for

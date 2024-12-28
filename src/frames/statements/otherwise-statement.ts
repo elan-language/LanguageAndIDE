@@ -1,6 +1,5 @@
 import { AbstractFrame } from "../abstract-frame";
 import { CodeSource } from "../code-source";
-import { singleIndent } from "../frame-helpers";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
@@ -38,11 +37,12 @@ export class OtherwiseStatement extends AbstractFrame implements Statement {
 
   compile(): string {
     this.compileErrors = [];
-    return `${this.indent()}${singleIndent()}break;\r${this.indent()}default:`;
+    return `${this.indent()}break;\r\n${this.getParent().indent()}default:`;
   }
 
   parseFrom(source: CodeSource): void {
     source.remove(otherwiseKeyword);
+    source.removeNewLine();
   }
 
   canInsertAfter(): boolean {
