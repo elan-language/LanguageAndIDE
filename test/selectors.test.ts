@@ -18,7 +18,12 @@ import { Switch } from "../src/frames/statements/switch";
 import { While } from "../src/frames/statements/while";
 import { hash } from "../src/util";
 import { transforms } from "./compiler/compiler-test-helpers";
-import { T09_emptyMainAndClassWithGlobalSelector } from "./model-generating-functions";
+import {
+  classWithConstructor,
+  emptyMainOnly,
+  T00_emptyFile,
+  T09_emptyMainAndClassWithGlobalSelector,
+} from "./model-generating-functions";
 import { key } from "./testHelpers";
 
 export class TestProfileSPJ implements Profile {
@@ -32,47 +37,42 @@ export class TestProfileSPJ implements Profile {
 
 suite("Selector tests", () => {
   test("Statement Select - variable", () => {
-    const file = T09_emptyMainAndClassWithGlobalSelector();
+    const file = emptyMainOnly();
     file.getById("select2").processKey(key("v"));
-    const v = file.getById("var10").renderAsSource();
+    const v = file.getById("var3").renderAsSource();
     assert.equal(v, "  variable  set to ");
   });
 
   test("Statement Select - case insensitive", () => {
-    const file = T09_emptyMainAndClassWithGlobalSelector();
+    const file = emptyMainOnly();
     file.getById("select2").processKey(key("V"));
-    const v = file.getById("var10").renderAsSource();
-    assert.equal(v, "  variable  set to ");
-  });
-
-  test("Statement Select - case insensitive", () => {
-    const file = T09_emptyMainAndClassWithGlobalSelector();
-    file.getById("select2").processKey(key("V"));
-    const v = file.getById("var10").renderAsSource();
+    const v = file.getById("var3").renderAsSource();
     assert.equal(v, "  variable  set to ");
   });
 
   test("Member Select - function", () => {
-    const file = T09_emptyMainAndClassWithGlobalSelector();
-    file.getById("select9").processKey(key("f"));
-    const v = file.getById("func10").renderAsSource();
+    const file = classWithConstructor();
+    file.getById("select4").processKey(key("f"));
+    const v = file.getById("func8").renderAsSource();
     assert.equal(v, "  function () returns \r\n" + "    return \r\n" + "  end function\r\n");
   });
 
   test("Member Select - procedure", () => {
-    const file = T09_emptyMainAndClassWithGlobalSelector();
-    file.getById("select9").processKey(key("p"));
-    file.getById("select9").processKey(key("o"));
-    file.getById("select9").processKey(key("c"));
-    const v = file.getById("proc10").renderAsSource();
+    const file = classWithConstructor();
+    const sel = file.getById("select4");
+    sel.processKey(key("p"));
+    sel.processKey(key("o"));
+    sel.processKey(key("c"));
+    const v = file.getById("proc8").renderAsSource();
     assert.equal(v, "  procedure ()\r\n\r\n  end procedure\r\n");
   });
 
   test("Global Select - Constant", () => {
-    const file = T09_emptyMainAndClassWithGlobalSelector();
-    file.getById("select0").processKey(key("c"));
-    file.getById("select0").processKey(key("o"));
-    const v = file.getById("const10").renderAsSource();
+    const file = T00_emptyFile();
+    const sel = file.getById("select0");
+    sel.processKey(key("c"));
+    sel.processKey(key("o"));
+    const v = file.getById("const1").renderAsSource();
     assert.equal(v, "constant  set to \r\n");
   });
 
@@ -95,14 +95,14 @@ suite("Selector tests", () => {
     const c = new ClassFrame(f);
     const s = new MemberSelector(c);
     let help = s.getCompletion();
-    assert.equal(help, " function procedure property #");
+    assert.equal(help, " constructor function procedure property #");
     s.processKey(key("p"));
     assert.equal(s.text, "pro");
     help = s.getCompletion();
     assert.equal(help, " procedure property");
     assert.equal(
       s.renderAsHtml(),
-      `<el-member class="ok" id='select8' tabindex="0"><el-select><el-txt>pro</el-txt><el-place>new code</el-place><el-help class="selector"> procedure property</el-help></el-select></el-member>`,
+      `<el-member class="ok" id='select5' tabindex="0"><el-select><el-txt>pro</el-txt><el-place>new code</el-place><el-help class="selector"> procedure property</el-help></el-select></el-member>`,
     );
   });
 
@@ -111,7 +111,7 @@ suite("Selector tests", () => {
     const c = new ClassFrame(f);
     c.makeAbstract();
     const s = new MemberSelector(c);
-    assert.equal(s.getCompletion(), " abstract...   #");
+    assert.equal(s.getCompletion(), " abstract...   function procedure property #");
     s.processKey(key("a"));
     assert.equal(s.text, "abstract ");
     assert.equal(s.getCompletion(), " function procedure property");
@@ -125,7 +125,7 @@ suite("Selector tests", () => {
     assert.equal(s.getCompletion(), " procedure property");
     assert.equal(
       s.renderAsHtml(),
-      `<el-member class="ok" id='select8' tabindex="0"><el-select><el-txt>abstract pro</el-txt><el-place>new code</el-place><el-help class="selector"> procedure property</el-help></el-select></el-member>`,
+      `<el-member class="ok" id='select5' tabindex="0"><el-select><el-txt>abstract pro</el-txt><el-place>new code</el-place><el-help class="selector"> procedure property</el-help></el-select></el-member>`,
     );
   });
 

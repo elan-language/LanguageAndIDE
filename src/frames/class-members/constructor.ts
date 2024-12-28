@@ -35,8 +35,6 @@ export class Constructor extends FrameWithStatements implements ElanSymbol, Memb
     return constructorKeyword;
   }
 
-  delete(): void {} //Does nothing as constructor cannot be deleted
-
   getFields(): Field[] {
     return [this.params];
   }

@@ -1,11 +1,12 @@
+import { Constructor } from "../src/frames/class-members/constructor";
 import { FunctionMethod } from "../src/frames/class-members/function-method";
+import { MemberSelector } from "../src/frames/class-members/member-selector";
 import { Property } from "../src/frames/class-members/property";
 import { DefaultProfile } from "../src/frames/default-profile";
 import { FileImpl } from "../src/frames/file-impl";
 import { ClassFrame } from "../src/frames/globals/class-frame";
 import { Constant } from "../src/frames/globals/constant";
 import { Enum } from "../src/frames/globals/enum";
-import { FunctionFrame } from "../src/frames/globals/function-frame";
 import { GlobalComment } from "../src/frames/globals/global-comment";
 import { GlobalFunction } from "../src/frames/globals/global-function";
 import { GlobalProcedure } from "../src/frames/globals/global-procedure";
@@ -17,7 +18,6 @@ import { Each } from "../src/frames/statements/each";
 import { Else } from "../src/frames/statements/else";
 import { For } from "../src/frames/statements/for";
 import { IfStatement } from "../src/frames/statements/if-statement";
-import { LetStatement } from "../src/frames/statements/let-statement";
 import { Print } from "../src/frames/statements/print";
 import { Repeat } from "../src/frames/statements/repeat";
 import { SetStatement } from "../src/frames/statements/set-statement";
@@ -234,6 +234,15 @@ export function oneConstant(): FileImpl {
   return file;
 }
 
+export function emptyMainOnly(): FileImpl {
+  const file = new FileImpl(hash, new DefaultProfile(), transforms());
+  const globSel = file.getFirstChild();
+  const main = new MainFrame(file);
+  file.addChildBefore(main, globSel);
+  file.updateAllParseStatus();
+  return file;
+}
+
 export function emptyFunctionOnly(): FileImpl {
   const file = new FileImpl(hash, new DefaultProfile(), transforms());
   const globSel = file.getFirstChild();
@@ -254,6 +263,18 @@ export function twoConstants(): FileImpl {
   file.addChildAfter(con2, con1);
   con2.name.setFieldToKnownValidText("c");
   con2.value.setFieldToKnownValidText("299792458");
+  file.updateAllParseStatus();
+  return file;
+}
+
+export function classWithConstructor(): FileImpl {
+  const file = new FileImpl(hash, new DefaultProfile(), transforms());
+  const globSel = file.getFirstChild();
+  const cls = new ClassFrame(file);
+  file.addChildBefore(cls, globSel);
+  const memberSel = cls.getFirstChild() as MemberSelector;
+  const con = new Constructor(cls);
+  cls.addChildBefore(con, memberSel);
   file.updateAllParseStatus();
   return file;
 }

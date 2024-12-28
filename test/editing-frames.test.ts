@@ -2,10 +2,8 @@ import assert from "assert";
 import { ElanPasteError } from "../src/elan-paste-error";
 import { Constructor } from "../src/frames/class-members/constructor";
 import { MemberSelector } from "../src/frames/class-members/member-selector";
-import { Property } from "../src/frames/class-members/property";
 import { CommentField } from "../src/frames/fields/comment-field";
 import { ConstantValueField } from "../src/frames/fields/constant-value-field";
-import { ExpressionField } from "../src/frames/fields/expression-field";
 import { IdentifierField } from "../src/frames/fields/identifier-field";
 import { FileImpl } from "../src/frames/file-impl";
 import { ClassFrame } from "../src/frames/globals/class-frame";
@@ -14,13 +12,14 @@ import { GlobalFunction } from "../src/frames/globals/global-function";
 import { GlobalSelector } from "../src/frames/globals/global-selector";
 import { MainFrame } from "../src/frames/globals/main-frame";
 import { TestFrame } from "../src/frames/globals/test-frame";
-import { Else } from "../src/frames/statements/else";
-import { IfStatement } from "../src/frames/statements/if-statement";
+import { ReturnStatement } from "../src/frames/statements/return-statement";
 import { StatementSelector } from "../src/frames/statements/statement-selector";
 import { ParseStatus } from "../src/frames/status-enums";
 import { ignore_test } from "./compiler/compiler-test-helpers";
 import {
+  classWithConstructor,
   emptyFunctionOnly,
+  emptyMainOnly,
   oneConstant,
   T00_emptyFile,
   T03_mainWithAllStatements,
@@ -37,7 +36,6 @@ import {
   ctrl_v,
   ctrl_x,
   del,
-  down,
   enter,
   key,
   loadFileAsModelNew,
@@ -201,63 +199,52 @@ suite("Editing Frames", () => {
     assert.equal(each.isSelected(), true);
   });
   test("Remove selector frame", () => {
-    const file = T05_classes();
-    const fun = file.getById("func21") as GlobalFunction;
-    let child1 = fun.getFirstChild();
-    const sel = file.getById("select22");
-    assert.equal(child1, sel);
-    const ret = file.getById("return26");
-    ret.select(true, false);
-    ret.processKey(up());
-    assert.equal(ret.isSelected(), false);
-    assert.equal(sel.isSelected(), true);
+    const file = emptyFunctionOnly();
+    const fun = file.getById("func1") as GlobalFunction;
+    const sel = file.getById("select2") as StatementSelector;
+    const ret = file.getById("return6") as ReturnStatement;
+    assert.equal(fun.getFirstChild(), sel);
+    sel.select(true, false);
     sel.processKey(del());
-    ret.select(true, false);
-    ret.processKey(up());
-    assert.equal(ret.isSelected(), true);
-    child1 = fun.getFirstChild();
-    assert.equal(child1, ret);
+    assert.equal(fun.getChildren().length, 1);
+    assert.equal(fun.getFirstChild(), ret);
   });
   test("Cannot remove selector that is only statement", () => {
-    const file = T05_classes();
-    const cons = file.getById("constructor4") as Constructor;
-    let child1 = cons.getFirstChild();
-    const sel = file.getById("select5");
-    assert.equal(child1, sel);
+    const file = emptyMainOnly();
+    const main = file.getById("main1") as MainFrame;
+    const sel = file.getById("select2") as StatementSelector;
     sel.processKey(del());
-    child1 = cons.getFirstChild();
-    assert.equal(child1, sel);
+    assert.equal(main.getFirstChild(), sel);
   });
   test("Delete frame - Ctrl-Delete", () => {
-    const file = T05_classes();
-    const cls = file.getById("class1") as ClassFrame;
-    let last = cls.getChildren()[1];
-    last.select();
-    assert.equal(last instanceof Property, true);
-    last.processKey(ctrl_del());
-    last = cls.getChildren()[1];
-    assert.equal(last instanceof MemberSelector, true);
+    const file = emptyFunctionOnly();
+    const func = file.getById("func1") as GlobalFunction;
+    const sel = file.getById("select0") as GlobalFunction;
+    assert.equal(file.getFirstChild(), func);
+    func.select(true, false);
+    func.processKey(ctrl_del());
+    assert.equal(file.getChildren().length, 1);
+    assert.equal(file.getFirstChild(), sel);
   });
-  test("Delete frame - Cannot delete constructor", () => {
-    const file = T05_classes();
-    const cls = file.getById("class1") as ClassFrame;
-    assert.equal(cls.getChildren().length, 3);
-    const first = cls.getChildren()[0];
-    first.select();
-    assert.equal(first instanceof Constructor, true);
-    first.processKey(ctrl_del());
-    assert.equal(cls.getChildren().length, 3);
-    assert.equal(cls.getChildren()[0] instanceof Constructor, true);
+  test("Delete frame - Ctrl-d", () => {
+    const file = emptyFunctionOnly();
+    const func = file.getById("func1") as GlobalFunction;
+    const sel = file.getById("select0") as GlobalFunction;
+    assert.equal(file.getFirstChild(), func);
+    func.select(true, false);
+    func.processKey(ctrl_d());
+    assert.equal(file.getChildren().length, 1);
+    assert.equal(file.getFirstChild(), sel);
   });
-  test("Delete frame  - Ctrl-d", () => {
-    const file = T05_classes();
+  test("Delete frame - Can delete constructor", () => {
+    const file = classWithConstructor();
     const cls = file.getById("class1") as ClassFrame;
-    let last = cls.getChildren()[1];
-    last.select();
-    assert.equal(last instanceof Property, true);
-    last.processKey(ctrl_d());
-    last = cls.getChildren()[1];
-    assert.equal(last instanceof MemberSelector, true);
+    assert.equal(cls.getChildren().length, 2);
+    const con = file.getById("constructor5") as Constructor;
+    con.select(true, false);
+    con.processKey(ctrl_del());
+    assert.equal(cls.getChildren().length, 1);
+    assert.equal(cls.getChildren()[0] instanceof MemberSelector, true);
   });
   test("Delete multi-selection", () => {
     const file = T03_mainWithAllStatements();
@@ -274,17 +261,6 @@ suite("Editing Frames", () => {
     assert.equal(fr.isSelected(), true);
     whil.processKey(ctrl_del());
     assert.equal(main.getChildren().length, 12);
-  });
-  test("Delete frame - Cannot delete constructor in multi-select", () => {
-    const file = T05_classes();
-    const cls = file.getById("class1") as ClassFrame;
-    const first = cls.getChildren()[0];
-    first.select();
-    first.processKey(shift_down());
-    assert.equal(cls.getAllSelected().length, 2);
-    first.processKey(ctrl_del());
-    assert.equal(cls.getChildren().length, 2);
-    assert.equal(cls.getChildren()[0] instanceof Constructor, true);
   });
   test("Cut", () => {
     const file = T03_mainWithAllStatements();

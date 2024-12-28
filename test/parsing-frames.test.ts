@@ -383,7 +383,7 @@ end main
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
-  test("#367 abstract class cannot contain concrete property", async () => {
+  test("abstract class can contain concrete property", async () => {
     const code = `# FFFF Elan Beta 5 valid
 
 abstract class Card
@@ -393,11 +393,11 @@ end class
 `;
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(hash, new DefaultProfile(), transforms(), true);
-    await fl.parseFrom(source);
-    assert.equal(fl.parseError!.includes(`0 matches found at property value as Int`), true);
+    fl.parseFrom(source);
+    assert.equal(source.getRemainingCode(), "");
   });
 
-  test("#367 abstract class cannot contain concrete method", async () => {
+  test("abstract class can contain concrete method", async () => {
     const code = `# FFFF Elan Beta 5 valid
 
 abstract class Card
@@ -409,8 +409,8 @@ end class
 `;
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(hash, new DefaultProfile(), transforms(), true);
-    await await fl.parseFrom(source);
-    assert.equal(fl.parseError!.includes(`0 matches found at function bar() returns Int`), true);
+    fl.parseFrom(source);
+    assert.equal(source.getRemainingCode(), "");
   });
   test("record cannot contain any method", async () => {
     const code = `# FFFF Elan Beta 5 valid

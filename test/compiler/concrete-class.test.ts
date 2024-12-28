@@ -466,7 +466,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "0");
   });
 
-  test("Fail_NoConstructor", async () => {
+  test("Pass_NoConstructor", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 class Foo
@@ -483,7 +483,7 @@ end class`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
+    assertParses(fileImpl);
   });
 
   test("Fail_InitialisePropertyInLine", async () => {

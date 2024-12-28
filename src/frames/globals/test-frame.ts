@@ -28,7 +28,7 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
     super(parent);
     this.file = parent;
     this.testDescription = new CommentField(this);
-    this.testDescription.setPlaceholder("<i>optional name or description (may contain spaces)</i>");
+    this.testDescription.setPlaceholder("<i>optional description</i>");
     const selector = this.getChildren().pop()!;
     this.getChildren().push(selector);
     this._testStatus = TestStatus.default;
