@@ -1490,7 +1490,7 @@ end class`;
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_MissingAbstractProperty", async () => {
+  test("Pass_ConcretePropertyInAbstractClass", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -1501,10 +1501,27 @@ abstract class Foo
   property p1 as Int
 end class`;
 
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
+  p1 = 0;
+
+  asString() {
+    return "empty Abstract Class Foo";
+  }
+}
+return [main, _tests];}`;
+
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
   });
 
   test("Fail_MissingAbstractFunction", async () => {

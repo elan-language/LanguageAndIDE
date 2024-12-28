@@ -91,6 +91,7 @@ ${this.indent()}}\r\n`;
   }
 
   parseFrom(source: CodeSource): void {
+    source.removeIndent();
     const priv = `${privateKeyword} `;
     if (source.isMatch(priv)) {
       source.remove(priv);
