@@ -1,4 +1,4 @@
-# f12a87826dba4cb861d186ba52640b4cb544dedfb83774b186f7c803759e0d62 Elan Beta 5 valid
+# FFFF Elan Beta 6 valid
 
 # Demo shows one way to implement a mergeSort function - using recursion
 # Since merge sort is always an 'out of place' sort, we have chosen to use immutable lists

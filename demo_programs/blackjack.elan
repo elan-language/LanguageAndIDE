@@ -1,4 +1,4 @@
-# FFFF Elan Beta 5 valid
+# FFFF Elan Beta 6 valid
 
 main
   let outcomes be [HandStatus.bust:0, HandStatus.standing:0, HandStatus.blackjack:0]
