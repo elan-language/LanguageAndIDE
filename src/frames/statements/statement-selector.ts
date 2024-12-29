@@ -6,6 +6,7 @@ import { StatementFactory } from "../interfaces/statement-factory";
 import {
   assertKeyword,
   callKeyword,
+  catchKeyword,
   commentMarker,
   eachKeyword,
   elseKeyword,
@@ -37,6 +38,7 @@ export class StatementSelector extends AbstractSelector {
     return [
       [assertKeyword, (parent: Parent) => this.factory.newAssert(parent)],
       [callKeyword, (parent: Parent) => this.factory.newCall(parent)],
+      [catchKeyword, (parent: Parent) => this.factory.newCatch(parent)],
       [eachKeyword, (parent: Parent) => this.factory.newEach(parent)],
       [elseKeyword, (parent: Parent) => this.factory.newElse(parent)],
       [forKeyword, (parent: Parent) => this.factory.newFor(parent)],
@@ -73,6 +75,12 @@ export class StatementSelector extends AbstractSelector {
     return !existingOtherwise || peers.indexOf(this) < peers.indexOf(existingOtherwise);
   }
 
+  canAddCatch(): boolean {
+    const isInTry = this.getParent().getIdPrefix() === tryKeyword;
+    const noExistingCatch = this.getParent().getChildren().filter((p) => "isCatch" in p).length === 0;
+    return isInTry && noExistingCatch;
+  }
+
   validWithinCurrentContext(keyword: string, _userEntry: boolean): boolean {
     const parent = this.getParent();
     let result = false;
@@ -88,6 +96,8 @@ export class StatementSelector extends AbstractSelector {
       return this.isWithinATest();
     } else if (keyword === printKeyword || keyword === callKeyword) {
       result = !(this.isWithinAFunction() || this.isWithinATest() || this.isWithinAConstructor());
+    } else if (keyword === catchKeyword ) {
+      result = this.canAddCatch();
     } else {
       result = true;
     }

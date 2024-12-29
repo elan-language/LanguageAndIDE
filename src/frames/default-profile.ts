@@ -2,7 +2,7 @@ import { Profile } from "./interfaces/profile";
 import {
   assertKeyword,
   callKeyword,
-  catchingKeyword,
+  catchKeyword,
   classKeyword,
   commentMarker,
   constantKeyword,
@@ -47,7 +47,7 @@ export class DefaultProfile implements Profile {
   statements: string[] = [
     assertKeyword,
     callKeyword,
-    catchingKeyword,
+    catchKeyword,
     doingKeyword,
     eachKeyword,
     elseKeyword,

@@ -1,41 +1,23 @@
 import { CodeSource } from "../code-source";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Field } from "../interfaces/field";
-import { Parent } from "../interfaces/parent";
-import { catchingKeyword, endKeyword, tryKeyword } from "../keywords";
+import { endKeyword, tryKeyword } from "../keywords";
 import { Transforms } from "../syntax-nodes/transforms";
-import { CatchingStatement } from "./catching-statement";
-import { DoingStatement } from "./doing-statement";
 
-export class TryCatch extends FrameWithStatements {
-  private doing: DoingStatement;
-  private catch: CatchingStatement;
-
-  constructor(parent: Parent) {
-    super(parent);
-    this.getChildren().pop()!; //remove the selector added as first child by superclass
-    this.doing = new DoingStatement(this);
-    this.getChildren().push(this.doing);
-    this.catch = new CatchingStatement(this);
-    this.getChildren().push(this.catch);
-  }
+export class TryStatement extends FrameWithStatements {
   initialKeywords(): string {
     return tryKeyword;
   }
   minimumNumberOfChildrenExceeded(): boolean {
-    return this.getChildren().length > 2; //doing + catching
+    return this.getChildren().length > 3;
   }
 
   getFields(): Field[] {
-    return []; //TODO: Issue here is that Try Catch has no DirectFields.
+    return []; //Try has no direct Fields.
   }
 
   getIdPrefix(): string {
     return "try";
-  }
-
-  public getDoingStatement(): DoingStatement {
-    return this.getChildren().filter((m) => "isDoing" in m)[0] as DoingStatement;
   }
 
   renderAsHtml(): string {
@@ -53,15 +35,9 @@ ${this.indent()}${endKeyword} ${tryKeyword}`;
   parseTop(source: CodeSource): void {
     source.remove(tryKeyword);
     source.removeNewLine();
-    this.getDoingStatement().parseFrom(source);
   }
   parseBottom(source: CodeSource): boolean {
-    let result = false;
-    if (source.isMatch(`${catchingKeyword} `)) {
-      result = true;
-      this.catch.parseFrom(source);
-    }
-    return result;
+    return this.parseStandardEnding(source, `${endKeyword} ${tryKeyword}`);
   }
 
   compile(transforms: Transforms): string {

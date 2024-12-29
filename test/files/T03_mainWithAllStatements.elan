@@ -1,4 +1,4 @@
-# 98973c132deb320113d4ca95f3dccb382d9ff701b33f2cb0a7703228fa03f4a6 Elan Beta 6 valid
+# a25f805f49268eb2d1125601b1fa8b150d1e73214d89542fee2d95464e895df5 Elan Beta 6 valid
 
 main
   variable a set to 3
@@ -29,10 +29,7 @@ main
   else
   end if
   try
-    doing
-
-    catching exception in e
-
+    catch exception in e
   end try
   switch on result
   match 1 with

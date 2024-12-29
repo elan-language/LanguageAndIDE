@@ -4,7 +4,7 @@ import { ExpressionField } from "../fields/expression-field";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
-import { whileKeyword } from "../keywords";
+import { endKeyword, whileKeyword } from "../keywords";
 import { BooleanType } from "../symbols/boolean-type";
 import { Transforms } from "../syntax-nodes/transforms";
 
@@ -55,10 +55,10 @@ ${this.indent()}}`;
   }
 
   parseTop(source: CodeSource): void {
-    source.remove("while ");
+    source.remove(`${whileKeyword} `);
     this.condition.parseFrom(source);
   }
   parseBottom(source: CodeSource): boolean {
-    return this.parseStandardEnding(source, "end while");
+    return this.parseStandardEnding(source, `${endKeyword} ${whileKeyword}`);
   }
 }

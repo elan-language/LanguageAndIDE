@@ -4,6 +4,7 @@ import { Parent } from "./parent";
 export interface StatementFactory {
   newAssert(parent: Parent): Frame;
   newCall(parent: Parent): Frame;
+  newCatch(parent: Parent): Frame;
   newEach(parent: Parent): Frame;
   newElse(parent: Parent): Frame;
   newFor(parent: Parent): Frame;

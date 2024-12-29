@@ -4,7 +4,7 @@ export const asKeyword = "as";
 export const assertKeyword = "assert";
 export const beKeyword = "be";
 export const callKeyword = "call";
-export const catchingKeyword = "catching";
+export const catchKeyword = "catch";
 export const classKeyword = "class";
 export const constantKeyword = "constant";
 export const constructorKeyword = "constructor";
@@ -83,7 +83,7 @@ export const allKeywords = [
   assertKeyword,
   beKeyword,
   callKeyword,
-  catchingKeyword,
+  catchKeyword,
   classKeyword,
   constantKeyword,
   constructorKeyword,

@@ -24,7 +24,7 @@ import { SetStatement } from "../src/frames/statements/set-statement";
 import { StatementSelector } from "../src/frames/statements/statement-selector";
 import { Switch } from "../src/frames/statements/switch";
 import { Throw } from "../src/frames/statements/throw";
-import { TryCatch } from "../src/frames/statements/try-catch";
+import { TryStatement } from "../src/frames/statements/try";
 import { VarStatement } from "../src/frames/statements/var-statement";
 import { While } from "../src/frames/statements/while";
 import { hash } from "../src/util";
@@ -123,7 +123,7 @@ export function T03_mainWithAllStatements(): FileImpl {
   el2.condition.setFieldToKnownValidText("y > 10");
   if3.addChildBefore(el2, ss_if3);
   if3.addChildBefore(new Else(if3), ss_if3);
-  const tr = new TryCatch(m);
+  const tr = new TryStatement(m);
   m.addChildBefore(tr, ssm);
   const sw = new Switch(m);
   m.addChildBefore(sw, ssm);

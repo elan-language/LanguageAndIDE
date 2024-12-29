@@ -117,11 +117,10 @@ return [main, _tests];}`;
 
 main
   try
-    doing
-      call foo()
-      print "not caught"
-    catching exception in e
-      print e
+    call foo()
+    print "not caught"
+  catch exception in e
+    print e
   end try
 end main
 
@@ -132,11 +131,11 @@ end procedure`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   try {
-      await foo();
-      system.printLine(_stdlib.asString("not caught"));
+    await foo();
+    system.printLine(_stdlib.asString("not caught"));
   } catch (_e) {
-      var e = _e.message;
-      system.printLine(_stdlib.asString(e));
+    var e = _e.message;
+    system.printLine(_stdlib.asString(e));
   }
 }
 
@@ -159,13 +158,12 @@ return [main, _tests];}`;
 
 main
   try
-    doing
-      variable x set to empty Array<of Foo>
-      variable y set to x[1]
-      variable z set to y.p1
-      print "not caught"
-    catching exception in e
-      print e
+    variable x set to empty Array<of Foo>
+    variable y set to x[1]
+    variable z set to y.p1
+    print "not caught"
+  catch exception in e
+    print e
   end try
 end main
 
@@ -180,13 +178,13 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   try {
-      var x = system.emptyArray();
-      var y = system.safeIndex(x, 1);
-      var z = y.p1;
-      system.printLine(_stdlib.asString("not caught"));
+    var x = system.emptyArray();
+    var y = system.safeIndex(x, 1);
+    var z = y.p1;
+    system.printLine(_stdlib.asString("not caught"));
   } catch (_e) {
-      var e = _e.message;
-      system.printLine(_stdlib.asString(e));
+    var e = _e.message;
+    system.printLine(_stdlib.asString(e));
   }
 }
 
@@ -215,13 +213,12 @@ return [main, _tests];}`;
 
 main
   try
-    doing
-      call foo()
-      print "not caught"
-    catching exception in e
-      variable s set to ""
-      set s to e
-      print s
+    call foo()
+    print "not caught"
+  catch exception in e
+    variable s set to ""
+    set s to e
+    print s
   end try
 end main
   
@@ -232,13 +229,13 @@ end procedure`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   try {
-      await foo();
-      system.printLine(_stdlib.asString("not caught"));
+    await foo();
+    system.printLine(_stdlib.asString("not caught"));
   } catch (_e) {
-      var e = _e.message;
-      var s = "";
-      s = e;
-      system.printLine(_stdlib.asString(s));
+    var e = _e.message;
+    var s = "";
+    s = e;
+    system.printLine(_stdlib.asString(s));
   }
 }
 

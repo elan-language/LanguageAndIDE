@@ -291,7 +291,7 @@ suite("Editing Frames", () => {
     const set6 = file.getById("set6");
     set6.processKey(enter());
     const selector = main.getChildren()[1];
-    assert.equal(selector.getHtmlId(), "select63");
+    assert.equal(selector.getHtmlId(), "select58");
     selector.processKey(ctrl_v());
     const pasted = main.getChildren()[1];
     assert.equal(pasted.getHtmlId(), "var3");
@@ -310,7 +310,7 @@ suite("Editing Frames", () => {
     assert.equal(firstStatement.getHtmlId(), "throw9");
     firstStatement.select(true, false);
     firstStatement.processKey(enter());
-    const newSel = file.getById("select63");
+    const newSel = file.getById("select58");
     newSel.select();
     newSel.processKey(ctrl_v());
     const second = main.getChildren()[1];

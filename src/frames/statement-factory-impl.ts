@@ -3,6 +3,7 @@ import { Parent } from "./interfaces/parent";
 import { StatementFactory } from "./interfaces/statement-factory";
 import { AssertStatement } from "./statements/assert-statement";
 import { CallStatement } from "./statements/call-statement";
+import { CatchStatement } from "./statements/catch-statement";
 import { CommentStatement } from "./statements/comment-statement";
 import { Each } from "./statements/each";
 import { Else } from "./statements/else";
@@ -16,7 +17,7 @@ import { Repeat } from "./statements/repeat";
 import { SetStatement } from "./statements/set-statement";
 import { Switch } from "./statements/switch";
 import { Throw } from "./statements/throw";
-import { TryCatch } from "./statements/try-catch";
+import { TryStatement } from "./statements/try";
 import { VarStatement } from "./statements/var-statement";
 import { While } from "./statements/while";
 
@@ -26,6 +27,9 @@ export class StatementFactoryImpl implements StatementFactory {
   }
   public newCall(parent: Parent): Frame {
     return new CallStatement(parent);
+  }
+  public newCatch(parent: Parent): Frame {
+    return new CatchStatement(parent);
   }
   public newMatch(parent: Parent): Frame {
     return new MatchStatement(parent);
@@ -64,7 +68,7 @@ export class StatementFactoryImpl implements StatementFactory {
     return new Throw(parent);
   }
   public newTryCatch(parent: Parent): Frame {
-    return new TryCatch(parent);
+    return new TryStatement(parent);
   }
   public newVar(parent: Parent): Frame {
     return new VarStatement(parent);
