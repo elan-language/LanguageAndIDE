@@ -1,4 +1,4 @@
-# f8d7a94b7f59e96b99c6ba6ead46383f75e932e084b3efbdb7a335e9af90822d Elan Beta 5 valid
+# cb39c16da3cc761c6b0beea11c1fbf1a59dac88f09b7e3ae5d24b0e8116f0782 Elan Beta 5 valid
 
 main
   variable g set to new BlockGraphics()
@@ -17,17 +17,15 @@ end main
 function updateCoordinates(x as Int, y as Int, dir as Int) returns (Int, Int)
   variable newX set to x
   variable newY set to y
-  switch dir
-    case 0
-      set newX to lesserOf(x + 1, 39)
-    case 1
-      set newX to greaterOf(x - 1, 0)
-    case 2
-      set newY to lesserOf(y + 1, 29)
-    case 3
-      set newY to greaterOf(y - 1, 0)
-    otherwise
-
+  switch on dir
+  match 0 with
+    set newX to lesserOf(x + 1, 39)
+  match 1 with
+    set newX to greaterOf(x - 1, 0)
+  match 2 with
+    set newY to lesserOf(y + 1, 29)
+  match 3 with
+    set newY to greaterOf(y - 1, 0)
   end switch
   return (newX, newY)
 end function
@@ -35,9 +33,9 @@ end function
 function lesserOf(value1 as Int, value2 as Int) returns Int
   variable result set to 0
   if value1 < value2 then
-      set result to value1
+    set result to value1
   else
-      set result to value2
+    set result to value2
   end if
   return result
 end function
@@ -45,9 +43,9 @@ end function
 function greaterOf(value1 as Int, value2 as Int) returns Int
   variable result set to 0
   if value1 > value2 then
-      set result to value1
+    set result to value1
   else
-      set result to value2
+    set result to value2
   end if
   return result
 end function
@@ -77,6 +75,4 @@ test updateCoordinates
   assert updateCoordinates(39, 7, 0) is (39, 7)
   assert updateCoordinates(3, 0, 3) is (3, 0)
   assert updateCoordinates(3, 29, 2) is (3, 29)
-  # error - invalid direction makes no change
-  assert updateCoordinates(3, 7, 4) is (3, 7)
 end test

@@ -5,7 +5,7 @@ import { ParseNode } from "../parse-nodes/parse-node";
 import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
 
-export class CaseValueField extends AbstractField {
+export class MatchValueField extends AbstractField {
   isParseByNodes = true;
 
   constructor(holder: Frame) {
@@ -19,7 +19,7 @@ export class CaseValueField extends AbstractField {
     return this.rootNode;
   }
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>
-    source.readToEndOfLine();
+    source.readUntil(/\swith/);
 
   symbolCompletion(): string {
     return this.symbolCompletionAsHtml(transforms());

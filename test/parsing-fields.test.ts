@@ -6,9 +6,9 @@ import { MainFrame } from "../src/frames/globals/main-frame";
 import { TestFrame } from "../src/frames/globals/test-frame";
 import { AssertStatement } from "../src/frames/statements/assert-statement";
 import { CallStatement } from "../src/frames/statements/call-statement";
-import { Case } from "../src/frames/statements/case";
 import { CommentStatement } from "../src/frames/statements/comment-statement";
 import { LetStatement } from "../src/frames/statements/let-statement";
+import { MatchStatement } from "../src/frames/statements/match-statement";
 import { Switch } from "../src/frames/statements/switch";
 import { VarStatement } from "../src/frames/statements/var-statement";
 import { ParseStatus } from "../src/frames/status-enums";
@@ -75,7 +75,7 @@ suite("Field Parsing Tests", () => {
   test("parse CaseValueField", () => {
     const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
     const sw = new Switch(main);
-    const c = new Case(sw);
+    const c = new MatchStatement(sw);
     const f = c.value;
     assert.equal(f.textAsSource(), "");
     assert.equal(f.readParseStatus(), ParseStatus.incomplete);

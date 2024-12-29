@@ -3,13 +3,13 @@ import { Parent } from "./interfaces/parent";
 import { StatementFactory } from "./interfaces/statement-factory";
 import { AssertStatement } from "./statements/assert-statement";
 import { CallStatement } from "./statements/call-statement";
-import { Case } from "./statements/case";
 import { CommentStatement } from "./statements/comment-statement";
 import { Each } from "./statements/each";
 import { Else } from "./statements/else";
 import { For } from "./statements/for";
 import { IfStatement } from "./statements/if-statement";
 import { LetStatement } from "./statements/let-statement";
+import { MatchStatement } from "./statements/match-statement";
 import { OtherwiseStatement } from "./statements/otherwise-statement";
 import { Print } from "./statements/print";
 import { Repeat } from "./statements/repeat";
@@ -27,8 +27,8 @@ export class StatementFactoryImpl implements StatementFactory {
   public newCall(parent: Parent): Frame {
     return new CallStatement(parent);
   }
-  public newCase(parent: Parent): Frame {
-    return new Case(parent);
+  public newMatch(parent: Parent): Frame {
+    return new MatchStatement(parent);
   }
   public newOtherwise(parent: Parent): Frame {
     return new OtherwiseStatement(parent);

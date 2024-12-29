@@ -1,4 +1,4 @@
-# 332a6d5f2170466fd0e50a37d06931bdafa8a3af2016f73c82c312bc7509a054 Elan Beta 5 valid
+# be77681b8c2668308e4f616873b3027ee6240b8250955e6f7f05c9e078a221f7 Elan Beta 5 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -33,18 +33,18 @@ end procedure
 
 procedure eatAppleIfPoss(head as Array<of Int>, out body as Array<of Array<of Int>>, apple as Array<of Int>)
   if head is apple then
-      call setAppleToRandomPosition(apple, body)
+    call setAppleToRandomPosition(apple, body)
   else
-      call body.removeAt(0)
+    call body.removeAt(0)
   end if
 end procedure
 
 function updateGraphics(gr as BlockGraphics, head as Array<of Int>, tail as Array<of Int>, body as Array<of Array<of Int>>, apple as Array<of Int>) returns BlockGraphics
   variable gr2 set to gr.withBlock(head[0], head[1], green)
   if body[0] is tail then
-      set gr2 to gr2.withBlock(tail[0], tail[1], green)
+    set gr2 to gr2.withBlock(tail[0], tail[1], green)
   else
-      set gr2 to gr2.withBlock(tail[0], tail[1], white)
+    set gr2 to gr2.withBlock(tail[0], tail[1], white)
   end if
   set gr2 to gr2.withBlock(apple[0], apple[1], red)
   return gr2
@@ -57,17 +57,15 @@ end function
 function getAdjacentSquare(sq as Array<of Int>, dir as String) returns Array<of Int>
   variable newX set to sq[0]
   variable newY set to sq[1]
-  switch dir
-    case "left"
-      set newX to newX - 1
-    case "right"
-      set newX to newX + 1
-    case "up"
-      set newY to newY - 1
-    case "down"
-      set newY to newY + 1
-    otherwise
-
+  switch on dir
+  match "left" with
+    set newX to newX - 1
+  match "right" with
+    set newX to newX + 1
+  match "up" with
+    set newY to newY - 1
+  match "down" with
+    set newY to newY + 1
   end switch
   return [newX, newY]
 end function
@@ -76,7 +74,7 @@ function overlaps(body as Array<of Array<of Int>>, sq as Array<of Int>) returns 
   variable result set to false
   each seg in body
     if (seg is sq) then
-        set result to true
+      set result to true
     end if
   end each
   return result
@@ -84,17 +82,16 @@ end function
 
 function directionByKey(current as String, key as String) returns String
   variable dir set to current
-  switch key
-    case "w"
-      set dir to "up"
-    case "s"
-      set dir to "down"
-    case "a"
-      set dir to "left"
-    case "d"
-      set dir to "right"
+  switch on key
+  match "w" with
+    set dir to "up"
+  match "s" with
+    set dir to "down"
+  match "a" with
+    set dir to "left"
+  match "d" with
+    set dir to "right"
     otherwise
-
   end switch
   return dir
 end function
@@ -153,8 +150,6 @@ test getAdjacentSquare
   assert getAdjacentSquare(sq, "down") is [20, 16]
   assert getAdjacentSquare(sq, "left") is [19, 15]
   assert getAdjacentSquare(sq, "right") is [21, 15]
-  # unexpected input:
-  assert getAdjacentSquare(sq, "x") is sq
   # boundary
   assert getAdjacentSquare([0, 15], "left") is [-1, 15]
 end test

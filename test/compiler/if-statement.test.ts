@@ -1,6 +1,5 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
-import { MainFrame } from "../../src/frames/globals/main-frame";
 import {
   assertDoesNotCompile,
   assertDoesNotParse,
@@ -39,7 +38,6 @@ return [main, _tests];}`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const varDef = (fileImpl.getChildNumber(0) as MainFrame).getChildren()[0];
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);

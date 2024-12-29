@@ -4,7 +4,6 @@ export const asKeyword = "as";
 export const assertKeyword = "assert";
 export const beKeyword = "be";
 export const callKeyword = "call";
-export const caseKeyword = "case";
 export const catchingKeyword = "catching";
 export const classKeyword = "class";
 export const constantKeyword = "constant";
@@ -33,10 +32,12 @@ export const lambdaKeyword = "lambda";
 export const letKeyword = "let";
 export const libraryKeyword = "library";
 export const mainKeyword = "main";
+export const matchKeyword = "match";
 export const modKeyword = "mod";
 export const newKeyword = "new";
 export const notKeyword = "not";
 export const ofKeyword = "of";
+export const onKeyword = "on";
 export const orKeyword = "or";
 export const otherwiseKeyword = "otherwise";
 export const outKeyword = "out";
@@ -82,7 +83,6 @@ export const allKeywords = [
   assertKeyword,
   beKeyword,
   callKeyword,
-  caseKeyword,
   catchingKeyword,
   classKeyword,
   constantKeyword,
@@ -110,11 +110,13 @@ export const allKeywords = [
   letKeyword,
   libraryKeyword,
   mainKeyword,
+  matchKeyword,
   modKeyword,
   newKeyword,
   notKeyword,
   ofKeyword,
   isKeyword,
+  onKeyword,
   orKeyword,
   otherwiseKeyword,
   outKeyword,
