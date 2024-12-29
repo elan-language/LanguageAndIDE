@@ -346,7 +346,7 @@ end main
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
   test("parse Frames - switch 2", async () => {
-    const code = `# 41a740592b70b84b74797622295accd4f43200f7ee56b9d9523ef39484128e78 Elan Beta 5 valid
+    const code = `# 8897a517f23ae6cf48f6e538eae89e1b7869d7a602d6044ddf40b890db2a7090 Elan Beta 5 valid
 
 main
   switch on i
@@ -365,7 +365,7 @@ end main
   });
 
   test("parse Frames - else with and without if", async () => {
-    const code = `# 8897a517f23ae6cf48f6e538eae89e1b7869d7a602d6044ddf40b890db2a7090 Elan Beta 5 valid
+    const code = `# b876e257b29e9d49ab7a202b442fc8f9d293c0fe8b3b28bbbd1b9fb4b84f8c35 Elan Beta 5 valid
 
 main
   if true then
