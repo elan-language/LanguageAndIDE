@@ -77,7 +77,10 @@ export class StatementSelector extends AbstractSelector {
 
   canAddCatch(): boolean {
     const isInTry = this.getParent().getIdPrefix() === tryKeyword;
-    const noExistingCatch = this.getParent().getChildren().filter((p) => "isCatch" in p).length === 0;
+    const noExistingCatch =
+      this.getParent()
+        .getChildren()
+        .filter((p) => "isCatch" in p).length === 0;
     return isInTry && noExistingCatch;
   }
 
@@ -96,7 +99,7 @@ export class StatementSelector extends AbstractSelector {
       return this.isWithinATest();
     } else if (keyword === printKeyword || keyword === callKeyword) {
       result = !(this.isWithinAFunction() || this.isWithinATest() || this.isWithinAConstructor());
-    } else if (keyword === catchKeyword ) {
+    } else if (keyword === catchKeyword) {
       result = this.canAddCatch();
     } else {
       result = true;

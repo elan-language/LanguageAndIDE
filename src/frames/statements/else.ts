@@ -66,13 +66,13 @@ export class Else extends AbstractFrame implements Statement {
     return `{`;
   }
 
+  indent() {
+    return this.getParent()!.indent(); //overrides the additional indent added for most child statements
+  }
+
   renderAsHtml(): string {
     return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><el-top>
     <el-kw>${elseKeyword} </el-kw>${this.ifClauseAsHtml()}${this.hasIf ? "<el-kw> " + thenKeyword + "</el-kw>" : ""}</el-top>${this.compileMsgAsHtml()}${this.getFrNo()}</el-statement>`;
-  }
-
-  indent(): string {
-    return this.getParent()?.indent();
   }
 
   renderAsSource(): string {
