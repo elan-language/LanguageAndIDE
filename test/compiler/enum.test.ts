@@ -339,57 +339,6 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "truefalse");
   });
-
-  test("Pass_SwitchCaseOnEnum", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-  variable f set to Fruit.orange
-  switch on f
-  match Fruit.apple with
-    print "a"
-  match Fruit.orange with
-    print "o"
-  match Fruit.pear with
-    print "p"
-  otherwise
-  end switch
-end main
-   
-enum Fruit apple, orange, pear`;
-
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-var Fruit = {
-  _default : "apple", apple : "apple", orange : "orange", pear : "pear"
-};
-
-async function main() {
-  var f = Fruit.orange;
-  switch (f) {
-  case Fruit.apple:
-    system.printLine(_stdlib.asString("a"));
-    break;
-  case Fruit.orange:
-    system.printLine(_stdlib.asString("o"));
-    break;
-  case Fruit.pear:
-    system.printLine(_stdlib.asString("p"));
-    break;
-  default:
-    break;
-  }
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "o");
-  });
-
   test("Pass_coercionToString", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 

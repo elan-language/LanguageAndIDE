@@ -249,7 +249,7 @@ suite("Editing Frames", () => {
   test("Delete multi-selection", () => {
     const file = T03_mainWithAllStatements();
     const main = file.getById("main1") as MainFrame;
-    assert.equal(main.getChildren().length, 15);
+    assert.equal(main.getChildren().length, 14);
     const whil = file.getById("while16");
     const rep = file.getById("repeat19");
     const fr = file.getById("for22");
@@ -260,7 +260,7 @@ suite("Editing Frames", () => {
     assert.equal(rep.isSelected(), true);
     assert.equal(fr.isSelected(), true);
     whil.processKey(ctrl_del());
-    assert.equal(main.getChildren().length, 12);
+    assert.equal(main.getChildren().length, 11);
   });
   test("Cut", () => {
     const file = T03_mainWithAllStatements();
@@ -291,7 +291,7 @@ suite("Editing Frames", () => {
     const set6 = file.getById("set6");
     set6.processKey(enter());
     const selector = main.getChildren()[1];
-    assert.equal(selector.getHtmlId(), "select58");
+    assert.equal(selector.getHtmlId(), "select53");
     selector.processKey(ctrl_v());
     const pasted = main.getChildren()[1];
     assert.equal(pasted.getHtmlId(), "var3");
@@ -310,7 +310,7 @@ suite("Editing Frames", () => {
     assert.equal(firstStatement.getHtmlId(), "throw9");
     firstStatement.select(true, false);
     firstStatement.processKey(enter());
-    const newSel = file.getById("select58");
+    const newSel = file.getById("select53");
     newSel.select();
     newSel.processKey(ctrl_v());
     const second = main.getChildren()[1];

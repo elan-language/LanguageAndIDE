@@ -329,41 +329,6 @@ end class
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
-  test("parse Frames - switch 1", async () => {
-    const code = `# d28899fe9dd66efadf3eb1ba597092828f19b5a46bf13d7b185ae4883be1b7d0 Elan Beta 6 valid
-
-main
-  switch on i
-  match 1 with
-    print "a"
-  end switch
-end main
-`;
-    const source = new CodeSourceFromString(code);
-    const fl = new FileImpl(hash, new DefaultProfile(), transforms());
-    await await fl.parseFrom(source);
-    const elan = await fl.renderAsSource();
-    assert.equal(elan, code.replaceAll("\n", "\r\n"));
-  });
-  test("parse Frames - switch 2", async () => {
-    const code = `# c38691f680cdb82aba8215855f47def898710f9cf84941546b33b86056cf01e8 Elan Beta 6 valid
-
-main
-  switch on i
-  match 1 with
-    print "a"
-  otherwise
-    print "b"
-  end switch
-end main
-`;
-    const source = new CodeSourceFromString(code);
-    const fl = new FileImpl(hash, new DefaultProfile(), transforms());
-    await await fl.parseFrom(source);
-    const elan = await fl.renderAsSource();
-    assert.equal(elan, code.replaceAll("\n", "\r\n"));
-  });
-
   test("parse Frames - else with and without if", async () => {
     const code = `# dd739090ebd707416cc579ad4e91e33a6b88db029257a0fce2039fb7cffcb632 Elan Beta 6 valid
 

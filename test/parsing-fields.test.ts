@@ -8,8 +8,6 @@ import { AssertStatement } from "../src/frames/statements/assert-statement";
 import { CallStatement } from "../src/frames/statements/call-statement";
 import { CommentStatement } from "../src/frames/statements/comment-statement";
 import { LetStatement } from "../src/frames/statements/let-statement";
-import { MatchStatement } from "../src/frames/statements/match-statement";
-import { Switch } from "../src/frames/statements/switch";
 import { VarStatement } from "../src/frames/statements/var-statement";
 import { ParseStatus } from "../src/frames/status-enums";
 import { hash } from "../src/util";
@@ -72,24 +70,6 @@ suite("Field Parsing Tests", () => {
     id.parseCurrentText();
     assert.equal(id.readParseStatus(), ParseStatus.valid); //Because use of a keyword should now be picked up as a compile error
   });
-  test("parse CaseValueField", () => {
-    const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
-    const sw = new Switch(main);
-    const c = new MatchStatement(sw);
-    const f = c.value;
-    assert.equal(f.textAsSource(), "");
-    assert.equal(f.readParseStatus(), ParseStatus.incomplete);
-    f.setFieldToKnownValidText("3");
-    f.parseCurrentText();
-    assert.equal(f.readParseStatus(), ParseStatus.valid);
-    f.setFieldToKnownValidText(`"hello"`);
-    f.parseCurrentText();
-    assert.equal(f.readParseStatus(), ParseStatus.valid);
-    f.setFieldToKnownValidText(`ab`);
-    f.parseCurrentText();
-    assert.equal(f.readParseStatus(), ParseStatus.invalid);
-  });
-
   test("parse  ArgListField", () => {
     const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
     const call = new CallStatement(main);

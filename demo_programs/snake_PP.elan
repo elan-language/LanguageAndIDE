@@ -57,16 +57,15 @@ end function
 function getAdjacentSquare(sq as Array<of Int>, dir as String) returns Array<of Int>
   variable newX set to sq[0]
   variable newY set to sq[1]
-  switch on dir
-  match "left" with
+  if dir is "left" then
     set newX to newX - 1
-  match "right" with
+  else if dir is "right" then
     set newX to newX + 1
-  match "up" with
+  else if dir is "up" then
     set newY to newY - 1
-  match "down" with
+  else if dir is "down" then
     set newY to newY + 1
-  end switch
+  end if
   return [newX, newY]
 end function
 
@@ -82,17 +81,15 @@ end function
 
 function directionByKey(current as String, key as String) returns String
   variable dir set to current
-  switch on key
-  match "w" with
+  if key is "w" then
     set dir to "up"
-  match "s" with
+  else if key is "s" then
     set dir to "down"
-  match "a" with
+  else if key is "a" then
     set dir to "left"
-  match "d" with
+  else if key is "d" then
     set dir to "right"
-    otherwise
-  end switch
+  end if
   return dir
 end function
 

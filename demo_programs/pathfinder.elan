@@ -171,14 +171,13 @@ class Solver
     variable cost set to 0.0
     let fromStart be node.distFromStart
     let estToDest be node.estDistToDest
-    switch on alg
-    match Algorithm.dijkstra with
+    if alg is Algorithm.dijkstra then
       set cost to fromStart
-    match Algorithm.aStar with
+    else if alg is Algorithm.aStar then
       set cost to fromStart + estToDest
-    match Algorithm.heuristic with
+    else if alg is Algorithm.heuristic then
       set cost to estToDest
-    end switch
+    end if
     return cost
   end function
 

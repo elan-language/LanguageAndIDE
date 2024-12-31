@@ -17,16 +17,15 @@ end main
 function updateCoordinates(x as Int, y as Int, dir as Int) returns (Int, Int)
   variable newX set to x
   variable newY set to y
-  switch on dir
-  match 0 with
+  if dir is 0 then
     set newX to lesserOf(x + 1, 39)
-  match 1 with
+  else if dir is 1 then
     set newX to greaterOf(x - 1, 0)
-  match 2 with
+  else if dir is 2 then
     set newY to lesserOf(y + 1, 29)
-  match 3 with
+  else if dir is 3 then
     set newY to greaterOf(y - 1, 0)
-  end switch
+  end if
   return (newX, newY)
 end function
 

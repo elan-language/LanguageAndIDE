@@ -10,12 +10,9 @@ import { Else } from "./statements/else";
 import { For } from "./statements/for";
 import { IfStatement } from "./statements/if-statement";
 import { LetStatement } from "./statements/let-statement";
-import { MatchStatement } from "./statements/match-statement";
-import { OtherwiseStatement } from "./statements/otherwise-statement";
 import { Print } from "./statements/print";
 import { Repeat } from "./statements/repeat";
 import { SetStatement } from "./statements/set-statement";
-import { Switch } from "./statements/switch";
 import { Throw } from "./statements/throw";
 import { TryStatement } from "./statements/try";
 import { VarStatement } from "./statements/var-statement";
@@ -30,12 +27,6 @@ export class StatementFactoryImpl implements StatementFactory {
   }
   public newCatch(parent: Parent): Frame {
     return new CatchStatement(parent);
-  }
-  public newMatch(parent: Parent): Frame {
-    return new MatchStatement(parent);
-  }
-  public newOtherwise(parent: Parent): Frame {
-    return new OtherwiseStatement(parent);
   }
   public newEach(parent: Parent): Frame {
     return new Each(parent);
@@ -60,9 +51,6 @@ export class StatementFactoryImpl implements StatementFactory {
   }
   public newSet(parent: Parent): Frame {
     return new SetStatement(parent);
-  }
-  public newSwitch(parent: Parent): Frame {
-    return new Switch(parent);
   }
   public newThrow(parent: Parent): Frame {
     return new Throw(parent);

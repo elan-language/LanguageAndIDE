@@ -12,18 +12,11 @@ import { TestFrame } from "../src/frames/globals/test-frame";
 import { Profile } from "../src/frames/interfaces/profile";
 import { assertKeyword, functionKeyword, letKeyword, testKeyword } from "../src/frames/keywords";
 import { IfStatement } from "../src/frames/statements/if-statement";
-import { OtherwiseStatement } from "../src/frames/statements/otherwise-statement";
 import { StatementSelector } from "../src/frames/statements/statement-selector";
-import { Switch } from "../src/frames/statements/switch";
 import { While } from "../src/frames/statements/while";
 import { hash } from "../src/util";
 import { transforms } from "./compiler/compiler-test-helpers";
-import {
-  classWithConstructor,
-  emptyMainOnly,
-  T00_emptyFile,
-  T09_emptyMainAndClassWithGlobalSelector,
-} from "./model-generating-functions";
+import { classWithConstructor, emptyMainOnly, T00_emptyFile } from "./model-generating-functions";
 import { key } from "./testHelpers";
 
 export class TestProfileSPJ implements Profile {
@@ -134,13 +127,13 @@ suite("Selector tests", () => {
     const m = new MainFrame(f);
     const s = new StatementSelector(m);
     let help = s.getCompletion();
-    assert.equal(help, " call each for if let print repeat set switch throw try variable while #");
-    s.processKey(key("s"));
+    assert.equal(help, " call each for if let print repeat set throw try variable while #");
+    s.processKey(key("t"));
     help = s.getCompletion();
-    assert.equal(help, " set switch");
+    assert.equal(help, " throw try");
     assert.equal(
       s.renderAsHtml(),
-      `<el-statement class="ok" id='select3' tabindex="0"><el-select><el-txt>s</el-txt><el-place>new code</el-place><el-help class="selector"> set switch</el-help></el-select></el-statement>`,
+      `<el-statement class="ok" id='select3' tabindex="0"><el-select><el-txt>t</el-txt><el-place>new code</el-place><el-help class="selector"> throw try</el-help></el-select></el-statement>`,
     );
   });
 
@@ -149,7 +142,7 @@ suite("Selector tests", () => {
     const func = new GlobalFunction(fl);
     const s = new StatementSelector(func);
     const help = s.getCompletion();
-    assert.equal(help, " each for if let repeat set switch throw try variable while #");
+    assert.equal(help, " each for if let repeat set throw try variable while #");
   });
 
   test("Selection Context - in a Procedure", () => {
@@ -157,7 +150,7 @@ suite("Selector tests", () => {
     const proc = new GlobalProcedure(fl);
     const s = new StatementSelector(proc);
     const help = s.getCompletion();
-    assert.equal(help, " call each for if let print repeat set switch throw try variable while #");
+    assert.equal(help, " call each for if let print repeat set throw try variable while #");
   });
 
   test("Selection Context - in a Test", () => {
@@ -165,7 +158,7 @@ suite("Selector tests", () => {
     const test = new TestFrame(fl);
     const s = new StatementSelector(test);
     const help = s.getCompletion();
-    assert.equal(help, " assert each for if let repeat set switch throw try variable while #");
+    assert.equal(help, " assert each for if let repeat set throw try variable while #");
   });
 
   test("Selection Context - deeper nesting 1", () => {
@@ -175,7 +168,7 @@ suite("Selector tests", () => {
     const wh = new While(if1);
     const s = new StatementSelector(wh);
     const help = s.getCompletion();
-    assert.equal(help, " each for if let repeat set switch throw try variable while #"); //no else, print, call
+    assert.equal(help, " each for if let repeat set throw try variable while #"); //no else, print, call
   });
 
   test("Selection Context - deeper nesting 2", () => {
@@ -185,32 +178,7 @@ suite("Selector tests", () => {
     const if1 = new IfStatement(fm);
     const s = new StatementSelector(if1);
     const help = s.getCompletion();
-    assert.equal(help, " each else for if let repeat set switch throw try variable while #"); //else, but no print, call
-  });
-
-  test("Selection Context - in a Switch", () => {
-    const fl = new FileImpl(hash, new DefaultProfile(), transforms());
-    const m = new MainFrame(fl);
-    const sw = new Switch(m);
-    const s = new StatementSelector(sw);
-    const help = s.getCompletion();
-    assert.equal(
-      help,
-      " call each for if let match print repeat set switch throw try variable while #",
-    );
-  });
-  test("Selection Context - in a Switch with a default", () => {
-    const fl = new FileImpl(hash, new DefaultProfile(), transforms());
-    const m = new MainFrame(fl);
-    const sw = new Switch(m);
-    const def = new OtherwiseStatement(sw);
-    sw.getChildren().push(def);
-    const s = new StatementSelector(sw);
-    const help = s.getCompletion();
-    assert.equal(
-      help,
-      " call each for if let match print repeat set switch throw try variable while #",
-    );
+    assert.equal(help, " each else for if let repeat set throw try variable while #"); //else, but no print, call
   });
   test("Selection Context - in an IfThen", () => {
     const fl = new FileImpl(hash, new DefaultProfile(), transforms());
@@ -218,10 +186,7 @@ suite("Selector tests", () => {
     const ifThen = new IfStatement(m);
     const s = new StatementSelector(ifThen);
     const help = s.getCompletion();
-    assert.equal(
-      help,
-      " call each else for if let print repeat set switch throw try variable while #",
-    );
+    assert.equal(help, " call each else for if let print repeat set throw try variable while #");
   });
   test("Selection Context - selector prevents more than one main", () => {
     const fl = new FileImpl(hash, new DefaultProfile(), transforms());

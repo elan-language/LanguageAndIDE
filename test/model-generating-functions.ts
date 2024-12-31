@@ -22,7 +22,6 @@ import { Print } from "../src/frames/statements/print";
 import { Repeat } from "../src/frames/statements/repeat";
 import { SetStatement } from "../src/frames/statements/set-statement";
 import { StatementSelector } from "../src/frames/statements/statement-selector";
-import { Switch } from "../src/frames/statements/switch";
 import { Throw } from "../src/frames/statements/throw";
 import { TryStatement } from "../src/frames/statements/try";
 import { VarStatement } from "../src/frames/statements/var-statement";
@@ -125,8 +124,6 @@ export function T03_mainWithAllStatements(): FileImpl {
   if3.addChildBefore(new Else(if3), ss_if3);
   const tr = new TryStatement(m);
   m.addChildBefore(tr, ssm);
-  const sw = new Switch(m);
-  m.addChildBefore(sw, ssm);
   f.updateAllParseStatus();
   return f;
 }

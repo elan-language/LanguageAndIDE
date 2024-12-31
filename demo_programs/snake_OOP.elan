@@ -72,16 +72,15 @@ class Snake
   end function
 
   private procedure setDirection(key as String)
-    switch on key
-    match "w" with
+    if key is "w" then
       set property.currentDir to Direction.up
-    match "s" with
+    else if key is "s" then
       set property.currentDir to Direction.down
-    match "a" with
+    else if key is "a" then
       set property.currentDir to Direction.left
-    match "d" with
+    else if key is "d" then
       set property.currentDir to Direction.right
-    end switch
+    end if
   end procedure
 
 end class
@@ -120,16 +119,15 @@ class Square
   function getAdjacentSquare(d as Direction) returns Square
     variable newX set to x
     variable newY set to y
-    switch on d
-    match Direction.left with
+    if d is Direction.left then
       set newX to x - 1
-    match Direction.right with
+    else if d is Direction.right then
       set newX to x + 1
-    match Direction.up with
+    else if d is Direction.up then
       set newY to y - 1
-    match Direction.down with
+    else if d is Direction.down then
       set newY to y + 1
-    end switch
+    end if
     return new Square(newX, newY)
   end function
 
