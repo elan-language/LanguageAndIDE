@@ -5,7 +5,8 @@
 "statements":["assert", "call", "catching", "each", "else", "for", "if", "let", "match", "otherwise", "print",
                "repeat", "set", "switch", "throw", "try", "variable", "while", "#"],
 "class_members": ["constructor", "function", "procedure", "property",
-                  "abstract function", "abstract procedure", "abstract property","#"],
+                  "abstract function", "abstract procedure", "abstract property",
+                  "private function", "private procedure", "private property","#"],
 
 "include_profile_name_in_header": false,
 "can_load_only_own_files": false

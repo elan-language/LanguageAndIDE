@@ -1,5 +1,8 @@
 import { Profile } from "./interfaces/profile";
 import {
+  abstractFunctionKeywords,
+  abstractProcedureKeywords,
+  abstractPropertyKeywords,
   assertKeyword,
   callKeyword,
   catchKeyword,
@@ -19,6 +22,9 @@ import {
   matchKeyword,
   otherwiseKeyword,
   printKeyword,
+  privateFunctionKeywords,
+  privateProcedureKeywords,
+  privatePropertyKeywords,
   procedureKeyword,
   propertyKeyword,
   repeatKeyword,
@@ -72,9 +78,12 @@ export class DefaultProfile implements Profile {
     functionKeyword,
     procedureKeyword,
     propertyKeyword,
-    "abstract function",
-    "abstract procedure",
-    "abstract property",
+    abstractFunctionKeywords,
+    abstractProcedureKeywords,
+    abstractPropertyKeywords,
+    privateFunctionKeywords,
+    privateProcedureKeywords,
+    privatePropertyKeywords,
     commentMarker,
   ];
   include_profile_name_in_header: boolean = false;

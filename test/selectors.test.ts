@@ -88,14 +88,26 @@ suite("Selector tests", () => {
     const c = new ClassFrame(f);
     const s = new MemberSelector(c);
     let help = s.getCompletion();
-    assert.equal(help, " constructor function procedure property #");
+    assert.equal(help, " constructor function procedure property private...   #");
     s.processKey(key("p"));
-    assert.equal(s.text, "pro");
+    assert.equal(s.text, "pr");
+    help = s.getCompletion();
+    assert.equal(help, " procedure property private...  ");
+    s.processKey(key("r"));
+    assert.equal(s.text, "pr");
+    help = s.getCompletion();
+    assert.equal(help, " procedure property private...  ");
+    s.processKey(key("i"));
+    assert.equal(s.text, "private ");
+    help = s.getCompletion();
+    assert.equal(help, " function procedure property");
+    s.processKey(key("p"));
+    assert.equal(s.text, "private pro");
     help = s.getCompletion();
     assert.equal(help, " procedure property");
     assert.equal(
       s.renderAsHtml(),
-      `<el-member class="ok" id='select5' tabindex="0"><el-select><el-txt>pro</el-txt><el-place>new code</el-place><el-help class="selector"> procedure property</el-help></el-select></el-member>`,
+      `<el-member class="ok" id='select5' tabindex="0"><el-select><el-txt>private pro</el-txt><el-place>new code</el-place><el-help class="selector"> procedure property</el-help></el-select></el-member>`,
     );
   });
 
@@ -104,7 +116,7 @@ suite("Selector tests", () => {
     const c = new ClassFrame(f);
     c.makeAbstract();
     const s = new MemberSelector(c);
-    assert.equal(s.getCompletion(), " abstract...   function procedure property #");
+    assert.equal(s.getCompletion(), " function procedure property abstract...   private...   #");
     s.processKey(key("a"));
     assert.equal(s.text, "abstract ");
     assert.equal(s.getCompletion(), " function procedure property");

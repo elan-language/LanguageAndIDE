@@ -37,12 +37,12 @@ export class MemberSelector extends AbstractSelector implements Member {
   defaultOptions(): [string, (parent: Parent) => Frame][] {
     const options: [string, (parent: Parent) => Frame][] = [
       [constructorKeyword, (_parent: Parent) => this.class.createConstructor()],
-      [abstractFunctionKeywords, (_parent: Parent) => this.class.createAbstractFunction()],
-      [abstractProcedureKeywords, (_parent: Parent) => this.class.createAbstractProcedure()],
-      [abstractPropertyKeywords, (_parent: Parent) => this.class.createAbstractProperty()],
       [functionKeyword, (_parent: Parent) => this.class.createFunction()],
       [procedureKeyword, (_parent: Parent) => this.class.createProcedure()],
       [propertyKeyword, (_parent: Parent) => this.class.createProperty()],
+      [abstractFunctionKeywords, (_parent: Parent) => this.class.createAbstractFunction()],
+      [abstractProcedureKeywords, (_parent: Parent) => this.class.createAbstractProcedure()],
+      [abstractPropertyKeywords, (_parent: Parent) => this.class.createAbstractProperty()],
       [privateFunctionKeywords, (_parent: Parent) => this.class.createFunction(true)],
       [privateProcedureKeywords, (_parent: Parent) => this.class.createProcedure(true)],
       [privatePropertyKeywords, (_parent: Parent) => this.class.createProperty(true)],
