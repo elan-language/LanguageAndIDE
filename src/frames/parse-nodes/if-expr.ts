@@ -37,4 +37,8 @@ export class IfExpr extends AbstractSequence {
       ? new Set<KeywordCompletion>([KeywordCompletion.create(ifKeyword)])
       : super.symbolCompletion_keywords();
   }
+
+  override renderAsHtml(): string {
+    return `<el-kw>${ifKeyword} </el-kw>${this.condition?.renderAsHtml()}<el-kw> ${thenKeyword} </el-kw>${this.whenTrue?.renderAsHtml()}<el-kw><br>${elseKeyword} </el-kw>${this.whenFalse?.renderAsHtml()}`;
+  }
 }
