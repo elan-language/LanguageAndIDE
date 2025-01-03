@@ -1,4 +1,4 @@
-# fd3345e78088ff9db3541f8f76334169f97aed848168b0be99cd2c7290ad6b2c Elan Beta 6 valid
+# 93eaa9c6c8f3bfc43248b15e9eaa3cac41cc6fee1a44198965f976fa1dc84200 Elan Beta 6 valid
 
 main
   variable dealer set to new Dealer()
@@ -10,11 +10,36 @@ main
     call player.newHand()
     call dealer.newHand()
     call displayHands(dealer, player)
+    call playersTurn(dealer, player)
+    call dealersTurn(dealer, player)
+    let outcome be determineOutcome(dealer, player)
+    print outcome
+    call updateScores(dealer, player, outcome)
+    print "Game: {gameNo} Dealer score: {dealer.score} Player score: {player.score}"
     let prompt be "Enter p for play again, x for exit:"
     let inp be inputStringFromOptions(prompt, ["p", "x"])
     set cont to inp isnt "x"
   end while
 end main
+
+procedure dealersTurn(dealer as Dealer, player as Player)
+  call dealer.startPlaying()
+  call displayHands(dealer, player)
+  call pause(2000)
+  while dealer.isPlaying()
+    call dealer.nextMove()
+    call displayHands(dealer, player)
+    call pause(2000)
+  end while
+end procedure
+
+procedure playersTurn(dealer as Dealer, player as Player)
+  while player.isPlaying()
+    call player.nextMove()
+    call displayHands(dealer, player)
+    call pause(2000)
+  end while
+end procedure
 
 procedure displayHands(dealer as Dealer, player as Player)
   call clearConsole()
@@ -32,15 +57,17 @@ procedure updateScores(dealer as Dealer, player as Player, outcome as Outcome)
   end if
 end procedure
 
-function determineOutcome(dealer as Hand, player as Hand) returns Outcome
-  let d be dealer.status
-  let p be player.status
+function determineOutcome(dealer as Dealer, player as Player) returns Outcome
+  let d be dealer.hand.status
+  let dTot be dealer.hand.total
+  let p be player.hand.status
+  let pTot be player.hand.total
   let bust be Status.bust
-  let blackJack be Status.blackjack
+  let bj be Status.blackjack
   let win be Outcome.win
   let lose be Outcome.lose
   let draw be Outcome.draw
-  return if p is bust then lose else if d is bust then win else if (d is blackJack) and (p is blackJack) then draw else if p is blackJack then win else if d is blackJack then draw else if player.total > dealer.total then win else if player.total < dealer.total then lose else draw
+  return if p is bust then lose else if d is bust then win else if (d is bj) and (p is bj) then draw else if p is bj then win else if d is bj then draw else if pTot > dTot then win else if pTot < dTot then lose else draw
 end function
 
 function dealCard(random as Float) returns Card
@@ -51,9 +78,9 @@ function dealCard(random as Float) returns Card
 end function
 
 class Dealer
-  private property score as Int
+  property score as Int
 
-  private property hand as Hand
+  property hand as Hand
 
   property faceCard as Card
 
@@ -78,6 +105,14 @@ class Dealer
     end if
   end procedure
 
+  function isPlaying() returns Boolean
+    return hand.status is Status.playing
+  end function
+
+  procedure startPlaying()
+    call hand.setStatus(Status.playing)
+  end procedure
+
   function getDecision() returns Action
     return if hand.total < 17 then Action.draw else Action.stand
   end function
@@ -89,9 +124,9 @@ class Dealer
 end class
 
 class Player
-  private property score as Int
+  property score as Int
 
-  private property hand as Hand
+  property hand as Hand
 
   procedure newHand()
     set property.hand to new Hand()
@@ -99,6 +134,10 @@ class Player
     call hand.draw()
     call hand.setStatus(Status.playing)
   end procedure
+
+  function isPlaying() returns Boolean
+    return hand.status is Status.playing
+  end function
 
   procedure nextMove()
     let inp be inputStringFromOptions("Enter s to stand, d to draw card:", ["s", "d"])
