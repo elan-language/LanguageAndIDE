@@ -4,6 +4,7 @@ import { AstNode } from "./interfaces/ast-node";
 import { AstTypeNode } from "./interfaces/ast-type-node";
 import { Class } from "./interfaces/class";
 import { Collapsible } from "./interfaces/collapsible";
+import { editorEvent } from "./interfaces/editor-event";
 import { ElanSymbol } from "./interfaces/elan-symbol";
 import { Field } from "./interfaces/field";
 import { File } from "./interfaces/file";
@@ -262,10 +263,19 @@ export function currentParameterIndex(text: string) {
 
 export function privateHelp(member: Member, memberType: string): string {
   let result = "";
-  if (!member.getClass().abstract) {
+  if (!member.isAbstract) {
     result = member.private
       ? `title="To make ${memberType} public, select '${memberType}' frame then Ctrl-p."`
       : `title="To make ${memberType} private, select '${memberType}' frame then Ctrl-p."`;
+  }
+  return result;
+}
+
+export function processTogglePrivate(member: Member, e: editorEvent): boolean {
+  let result = false;
+  if (e.key === "p" && e.modKey.control) {
+    member.private = !member.private;
+    result = true;
   }
   return result;
 }

@@ -4,7 +4,7 @@ import {
   mustBeKnownSymbolType,
   mustBeUniqueNameInScope,
 } from "../compile-rules";
-import { privateHelp, singleIndent } from "../frame-helpers";
+import { privateHelp, processTogglePrivate, singleIndent } from "../frame-helpers";
 import { ClassFrame } from "../globals/class-frame";
 import { FunctionFrame } from "../globals/function-frame";
 import { editorEvent } from "../interfaces/editor-event";
@@ -100,13 +100,15 @@ ${this.indent()}}\r
   }
 
   processKey(e: editorEvent): boolean {
-    if (!this.getClass().abstract && e.key === "p" && e.modKey.control) {
-      this.private = !this.private;
-      return true;
+    let result = false;
+    if (processTogglePrivate(this, e)) {
+      result = true;
     } else {
-      return super.processKey(e);
+      result = super.processKey(e);
     }
+    return result;
   }
+
   privateHelp(): string {
     return privateHelp(this, functionKeyword);
   }

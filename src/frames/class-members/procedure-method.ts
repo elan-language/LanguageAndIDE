@@ -1,6 +1,6 @@
 import { CodeSource } from "../code-source";
 import { mustBeUniqueNameInScope } from "../compile-rules";
-import { privateHelp, singleIndent } from "../frame-helpers";
+import { privateHelp, processTogglePrivate, singleIndent } from "../frame-helpers";
 import { ClassFrame } from "../globals/class-frame";
 import { ProcedureFrame } from "../globals/procedure-frame";
 import { editorEvent } from "../interfaces/editor-event";
@@ -93,13 +93,15 @@ ${this.indent()}}\r
   symbolScope = SymbolScope.member;
 
   processKey(e: editorEvent): boolean {
-    if (!this.getClass().abstract && e.key === "p" && e.modKey.control) {
-      this.private = !this.private;
-      return true;
+    let result = false;
+    if (processTogglePrivate(this, e)) {
+      result = true;
     } else {
-      return super.processKey(e);
+      result = super.processKey(e);
     }
+    return result;
   }
+
   privateHelp(): string {
     return privateHelp(this, procedureKeyword);
   }
