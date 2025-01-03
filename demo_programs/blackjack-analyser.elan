@@ -1,0 +1,251 @@
+# 3cbaeb3d53fe1b8ce40fb2295881a6c6e48921c088ccb2736e72e67bef4c3590 Elan Beta 6 valid
+
+main
+  let outcomes be [HandStatus.bust:0, HandStatus.standing:0, HandStatus.blackjack:0]
+  let dealer be new Dealer()
+  let playerA be new UserDefinedPlayer("Player A", ref strategyA)
+  for i from 1 to 10 step 1
+    call dealer.dealNewHand()
+    print dealer
+    call dealer.playHand()
+    print dealer
+    let status be dealer.getStatus()
+    call outcomes.putAtKey(status, outcomes[status] + 1)
+  end for
+  print outcomes
+end main
+
+function calculatePlayerOutcome(dealer as Hand, player as Hand) returns Float
+  variable result set to 0.0
+  let d be dealer.status
+  let p be player.status
+  let bust be HandStatus.bust
+  let blackJack be HandStatus.blackjack
+  if p is bust then
+    set result to -1
+  else if d is bust then
+    set result to 1
+  else if (d is blackJack) and (p isnt blackJack) then
+    set result to -1
+  else if p is blackJack then
+    set result to 1
+  else if player.totalValue > dealer.totalValue then
+    set result to 1
+  else
+    set result to -1
+  end if
+  return result
+end function
+
+function dealCard(random as Float) returns Card
+  let number be floor(random*52)
+  let rank be rankValue.keys()[number div 4]
+  let suit be number mod 4
+  return new Card(rank, suit)
+end function
+
+class Dealer
+  property hand as Hand
+
+  property faceCard as Card
+
+  function getDecision() returns Action
+    # dealerFaceCard is unused, in this case, but included for compatibility
+    return if hand.totalValue < 17 then Action.draw else Action.stand
+  end function
+
+  function getStatus() returns HandStatus
+    return hand.status
+  end function
+
+  # playHand should be on AutomatedPlayer - pending bug fix #983
+  procedure playHand()
+    call hand.play()
+    while hand.status is HandStatus.playing
+      let decision be getDecision()
+      if decision is Action.draw then
+        call hand.draw(dealCard(random()))
+      else if decision is Action.stand then
+        call hand.stand()
+      else
+        throw exception "Action {decision} not covered"
+      end if
+    end while
+  end procedure
+
+  procedure dealNewHand()
+    set property.hand to new Hand()
+    set property.faceCard to dealCard(random())
+    call hand.draw(faceCard)
+    call hand.draw(dealCard(random()))
+  end procedure
+
+  function asString() returns String
+    let playing be "Dealer: {hand}"
+    let initial be "Dealer: {faceCard} ??"
+    return if hand.status is HandStatus.pending then initial else playing
+  end function
+
+end class
+
+class UserDefinedPlayer
+  constructor(name as String, decisionFunc as Func<of Hand, Card => Action>)
+    set property.name to name
+    set property.decisionFunc to ref decisionFunc
+  end constructor
+
+  property hand as Hand
+
+  private property name as String
+
+  private property dealerFaceCard as Card
+
+  property decisionFunc as Func<of Hand, Card => Action>
+
+  function getDecision() returns Action
+    return decisionFunc(property.hand, property.dealerFaceCard)
+  end function
+
+  # playHand should be on AutomatedPlayer - pending bug fix #983
+  procedure playHand()
+    while property.hand.status is HandStatus.playing
+      let decision be getDecision()
+      # TODO - get decision from function - currently a bug
+      if decision is Action.draw then
+        call hand.draw(dealCard(random()))
+      else if decision is Action.stand then
+        call hand.stand()
+      else
+        throw exception "Action {decision} not covered"
+        # TODO: cover other cases, which must check that they are valid given hand 
+      end if
+    end while
+  end procedure
+
+  procedure dealNewHand()
+    # scope for delegating 
+    set property.hand to new Hand()
+    call hand.draw(dealCard(random()))
+    call hand.draw(dealCard(random()))
+  end procedure
+
+  # TODO If dealer is pending rather than playing, then show only face card + 'hidden card' (or correct term)
+  function asString() returns String
+    return "{name}: {hand}"
+  end function
+
+end class
+
+class Hand
+  property softAce as Boolean
+
+  property cards as List<of Card>
+
+  property count as Int
+
+  property totalValue as Int
+
+  property status as HandStatus
+
+  function isPairOf8s() returns Boolean
+    return (count is 2) and (cards[0].value() is 8) and (cards[1].value() is 8)
+  end function
+
+  procedure play()
+    set property.status to HandStatus.playing
+  end procedure
+
+  procedure stand()
+    set property.status to HandStatus.standing
+  end procedure
+
+  procedure draw(card as Card)
+    set property.cards to cards + {card}
+    set property.count to count + 1
+    if card.isAce() then
+      call addAce()
+    else
+      set property.totalValue to totalValue + card.value()
+    end if
+    if totalValue > 21 then
+      call useUpSoftAceIfPossible()
+    else if card.isAce() then
+      set property.softAce to true
+    end if
+    if (count is 2) and (totalValue is 21) and softAce then
+      set property.status to HandStatus.blackjack
+    else if property.totalValue > 21 then
+      set property.status to HandStatus.bust
+    end if
+  end procedure
+
+  procedure addAce()
+    if property.softAce then
+      set property.totalValue to property.totalValue + 1
+    else
+      set property.totalValue to property.totalValue + 11
+      set property.softAce to true
+    end if
+  end procedure
+
+  private procedure useUpSoftAceIfPossible()
+    if softAce then
+      set property.totalValue to totalValue - 10
+      set property.softAce to false
+    else
+      set property.status to HandStatus.bust
+    end if
+  end procedure
+
+  function asString() returns String
+    variable str set to ""
+    each card in property.cards
+      set str to str + card.asString() + " "
+    end each
+    set str to "{str}({property.totalValue}) {property.status}"
+    return str
+  end function
+
+end class
+
+class Card
+  constructor(rank as String, suit as Int)
+    set property.rank to rank
+    set property.suit to suit
+  end constructor
+
+  property suit as Int
+
+  property rank as String
+
+  function value() returns Int
+    return rankValue[rank]
+  end function
+
+  function isAce() returns Boolean
+    return rank is "A"
+  end function
+
+  function asString() returns String
+    let colourName be if (suit is 0) or (suit is 3) then "black" else "red"
+    let tag be htmlEscChars[suit]
+    return "{property.rank}<span style='color: {colourName}'>{tag}</span>"
+  end function
+
+end class
+
+enum Action stand, draw, split, doubleDown, insure
+
+enum HandStatus pending, playing, standing, blackjack, bust
+
+constant rankValue set to {"2":2, "3":3, "4":4, "5":5, "6":6, "7":7, "8":8, "9":9, "10":10, "J":10, "Q":10, "K":10, "A":11}
+
+constant htmlEscChars set to {"&clubs;", "&diams;", "&hearts;", "&spades;"}
+
+function strategyA(hand as Hand, dealerFaceUp as Card) returns Action
+  return Action.stand
+end function
+
+function strategyB(hand as Hand, dealerFaceUp as Card) returns Action
+  return Action.draw
+end function
