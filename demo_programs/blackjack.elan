@@ -1,8 +1,8 @@
-# c014e78bb1a877ce409572805155fcaa6072acdb1f1b1d39a47a2d68203777d3 Elan Beta 6 valid
+# 04943a1099b2c19e942e793260acc14d306c5d850e779d956248f0882b569c28 Elan Beta 6 valid
 
 main
   variable dealer set to new Dealer()
-  variable player set to new Player()
+  variable player set to new HumanPlayer()
   variable gameNo set to 0
   variable cont set to true
   while cont
@@ -22,7 +22,7 @@ main
   end while
 end main
 
-procedure dealersTurn(dealer as Dealer, player as Player)
+procedure dealersTurn(dealer as Dealer, player as HumanPlayer)
   call dealer.startPlaying()
   call displayHands(dealer, player)
   call pause(2000)
@@ -33,7 +33,7 @@ procedure dealersTurn(dealer as Dealer, player as Player)
   end while
 end procedure
 
-procedure playersTurn(dealer as Dealer, player as Player)
+procedure playersTurn(dealer as Dealer, player as HumanPlayer)
   while player.isPlaying()
     call player.nextMove()
     call displayHands(dealer, player)
@@ -41,7 +41,7 @@ procedure playersTurn(dealer as Dealer, player as Player)
   end while
 end procedure
 
-procedure displayHands(dealer as Dealer, player as Player)
+procedure displayHands(dealer as Dealer, player as HumanPlayer)
   call clearConsole()
   print dealer
   print player
@@ -76,6 +76,48 @@ function dealCard(random as Float) returns Card
   let suit be number mod 4
   return new Card(rank, suit)
 end function
+
+class HumanPlayer inherits Player
+  property score as Int
+
+  property hand as Hand
+
+  procedure newHand()
+    set property.hand to new Hand()
+    call hand.draw()
+    call hand.draw()
+    call hand.setStatus(Status.playing)
+  end procedure
+
+  function isPlaying() returns Boolean
+    return hand.status is Status.playing
+  end function
+
+  procedure nextMove()
+    let inp be inputStringFromOptions("Enter s to stand, d to draw card:", ["s", "d"])
+    if inp is "d" then
+      call hand.draw()
+    else
+      call hand.stand()
+    end if
+  end procedure
+
+  procedure changeScoreBy(amount as Int)
+    set property.score to score + amount
+  end procedure
+
+  function asString() returns String
+    return "You: {hand}"
+  end function
+
+end class
+
+abstract class Player
+  abstract property hand as Hand
+
+  abstract procedure changeScoreBy(amount as Int)
+
+end class
 
 class Dealer
   property score as Int
@@ -119,41 +161,6 @@ class Dealer
 
   function asString() returns String
     return if hand.status is Status.pending then "Dealer: {faceCard} {unicode(9633)}" else "Dealer: {hand}"
-  end function
-
-end class
-
-class Player
-  property score as Int
-
-  property hand as Hand
-
-  procedure newHand()
-    set property.hand to new Hand()
-    call hand.draw()
-    call hand.draw()
-    call hand.setStatus(Status.playing)
-  end procedure
-
-  function isPlaying() returns Boolean
-    return hand.status is Status.playing
-  end function
-
-  procedure nextMove()
-    let inp be inputStringFromOptions("Enter s to stand, d to draw card:", ["s", "d"])
-    if inp is "d" then
-      call hand.draw()
-    else
-      call hand.stand()
-    end if
-  end procedure
-
-  procedure changeScoreBy(amount as Int)
-    set property.score to score + amount
-  end procedure
-
-  function asString() returns String
-    return "You: {hand}"
   end function
 
 end class
