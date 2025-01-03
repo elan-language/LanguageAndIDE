@@ -1,4 +1,4 @@
-# 93eaa9c6c8f3bfc43248b15e9eaa3cac41cc6fee1a44198965f976fa1dc84200 Elan Beta 6 valid
+# c014e78bb1a877ce409572805155fcaa6072acdb1f1b1d39a47a2d68203777d3 Elan Beta 6 valid
 
 main
   variable dealer set to new Dealer()
@@ -13,7 +13,7 @@ main
     call playersTurn(dealer, player)
     call dealersTurn(dealer, player)
     let outcome be determineOutcome(dealer, player)
-    print outcome
+    print "You {outcome}"
     call updateScores(dealer, player, outcome)
     print "Game: {gameNo} Dealer score: {dealer.score} Player score: {player.score}"
     let prompt be "Enter p for play again, x for exit:"
