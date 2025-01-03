@@ -1,43 +1,20 @@
-# FFFF Elan Beta 6 valid
+# d05bad2e0a2b714c20b41333a5767c1a89bebe490b6364f86f44a33fb756a830 Elan Beta 6 valid
 
-main
-  let outcomes be [HandStatus.bust:0, HandStatus.standing:0, HandStatus.blackjack:0]
-  let dealer be new Dealer()
-  let playerA be new UserDefinedPlayer("Player A", ref strategyA)
-  let playerB be new UserDefinedPlayer("Player B", ref strategyB)
-  # TODO separate: newHand, deal first 2 cards, and playOutHand capabilities 
-  # Then we can simulate with e.g. pre-defined faceup card
-  # Run this once fo a given card
-  # Then loop through all cards and capture in 2D array
-  # Save the result as a CSV
-  for i from 1 to 1000000 step 1
-    call dealer.playHand()
-    let status be dealer.getStatus()
-    call outcomes.putAtKey(status, outcomes[status] + 1)
-  end for
-  print outcomes
-end main
+procedure updateScores(dealer as Hand, player as Hand, outcome as Outcome)
+  if outcome is Outcome.win then
 
-function calculateOutcome(dealer as Hand, player as Hand) returns Float
-  variable result set to 0.0
+  end if
+end procedure
+
+function determineOutcome(dealer as Hand, player as Hand) returns Outcome
   let d be dealer.status
   let p be player.status
   let bust be HandStatus.bust
   let blackJack be HandStatus.blackjack
-  if p is bust then
-      set result to -1
-  else if d is bust then
-      set result to 1
-  else if (d is blackJack) and (p isnt blackJack) then
-      set result to -1
-  else if p is blackJack then
-      set result to 1
-  else if player.totalValue > dealer.totalValue then
-      set result to 1
-  else
-      set result to -1
-  end if
-  return result
+  let win be Outcome.win
+  let lose be Outcome.lose
+  let draw be Outcome.draw
+  return if p is bust then lose else if d is bust then win else if (d is blackJack) and (p is blackJack) then draw else if p is blackJack then win else if d is blackJack then draw else if player.total > dealer.total then win else if player.total < dealer.total then lose else draw
 end function
 
 function dealCard(random as Float) returns Card
@@ -47,80 +24,48 @@ function dealCard(random as Float) returns Card
   return new Card(rank, suit)
 end function
 
-abstract class AutomatedPlayer
-  private property name as String
-
-  private property tokens as Int
+class Dealer
+  private property score as Int
 
   private property hand as Hand
 
-  private procedure playHandImpl()
-    while property.hand.status is HandStatus.playing
-      let decision be Action.doubleDown
-      # TODO - get decision from function - currently a bug
-      if decision is Action.draw then
-        call hand.draw(dealCard(random()))
-      else if decsion is Action.stand then
-        call hand.stand()
-      else
-        throw exception "Action {decision} not covered"
-        # TODO: cover other cases, which must check that they are valid given hand 
-      end if
-    end while
+  procedure changeScoreBy(amount as Int)
+    set property.score to score + amount
   end procedure
-
-  abstract function getDecision() returns Action
-
-end class
-
-class Dealer inherits AutomatedPlayer
-  constructor()
-    set property.name to "Dealer"
-  end constructor
 
   function getDecision() returns Action
-    # dealerFaceCard is unused, in this case, but included for compatibility
-    return if hand.totalValue < 17 then Action.draw else Action.stand
+    return if hand.total < 17 then Action.draw else Action.stand
   end function
 
-  procedure playHand()
-    call playHandImpl()
-  end procedure
-
-  function getStatus() returns HandStatus
-    return property.hand.status
+  function asString() returns String
+    return "Dealer: {hand}"
   end function
 
 end class
 
-class UserDefinedPlayer inherits AutomatedPlayer
-  constructor(name as String, decisionFunc as Func<of Hand, Card => Action>)
-    set property.name to name
-    set property.decisionFunc to ref decisionFunc
-  end constructor
+class Player
+  private property score as Int
 
-  private property dealerFaceCard as Card
+  private property hand as Hand
 
-  property decisionFunc as Func<of Hand, Card => Action>
+  procedure changeScoreBy(amount as Int)
+    set property.score to score + amount
+  end procedure
 
-  function getDecision() returns Action
-    return decisionFunc(property.hand, property.dealerFaceCard)
+  function asString() returns String
+    return "You: {hand}"
   end function
 
 end class
 
 class Hand
-  constructor()
-
-  end constructor
-
   property softAce as Boolean
 
   property cards as List<of Card>
 
   property count as Int
 
-  property totalValue as Int
+  property total as Int
 
   property status as HandStatus
 
@@ -136,37 +81,37 @@ class Hand
     set property.cards to cards + {card}
     set property.count to count + 1
     if card.isAce() then
-        call addAce()
+      call addAce()
     else
-        set property.totalValue to totalValue + card.value()
+      set property.total to total + card.value()
     end if
-    if totalValue > 21 then
-        call useUpSoftAceIfPossible()
+    if total > 21 then
+      call useUpSoftAceIfPossible()
     else if card.isAce() then
-        set property.softAce to true
+      set property.softAce to true
     end if
-    if (count is 2) and (totalValue is 21) and softAce then
-        set property.status to HandStatus.blackjack
-    else if property.totalValue > 21 then
-        set property.status to HandStatus.bust
+    if (count is 2) and (total is 21) and softAce then
+      set property.status to HandStatus.blackjack
+    else if property.total > 21 then
+      set property.status to HandStatus.bust
     end if
   end procedure
 
   procedure addAce()
     if property.softAce then
-        set property.totalValue to property.totalValue + 1
+      set property.total to property.total + 1
     else
-        set property.totalValue to property.totalValue + 11
-        set property.softAce to true
+      set property.total to property.total + 11
+      set property.softAce to true
     end if
   end procedure
 
   private procedure useUpSoftAceIfPossible()
     if softAce then
-        set property.totalValue to totalValue - 10
-        set property.softAce to false
+      set property.total to total - 10
+      set property.softAce to false
     else
-        set property.status to HandStatus.bust
+      set property.status to HandStatus.bust
     end if
   end procedure
 
@@ -175,7 +120,7 @@ class Hand
     each card in property.cards
       set str to str + card.asString() + " "
     end each
-    set str to "{str}({property.totalValue}) {property.status}"
+    set str to "{str}({property.total}) {property.status}"
     return str
   end function
 
@@ -207,18 +152,12 @@ class Card
 
 end class
 
-enum Action stand, draw, split, doubleDown, insure
+enum Action stand, draw
 
-enum HandStatus playing, standing, blackjack, bust
+enum Outcome undecided, win, lose, draw
+
+enum HandStatus pending, playing, standing, blackjack, bust
 
 constant rankValue set to {"2":2, "3":3, "4":4, "5":5, "6":6, "7":7, "8":8, "9":9, "10":10, "J":10, "Q":10, "K":10, "A":11}
 
 constant htmlEscChars set to {"&clubs;", "&diams;", "&hearts;", "&spades;"}
-
-function strategyA(hand as Hand, dealerFaceUp as Card) returns Action
-  return Action.stand
-end function
-
-function strategyB(hand as Hand, dealerFaceUp as Card) returns Action
-  return Action.draw
-end function
