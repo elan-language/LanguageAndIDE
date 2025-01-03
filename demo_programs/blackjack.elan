@@ -1,4 +1,4 @@
-# 61d8fa2a9ca3cc7f8a2cf6195c19c9cfd80d99be719b7ea00f993ec350c926f6 Elan Beta 6 valid
+# 68a66f04ccddade98bcac71896d120463301d36994a2d3c1ed8d50bb0e9f7276 Elan Beta 6 valid
 
 main
   variable dealer set to new Dealer()
@@ -6,6 +6,10 @@ main
   variable gameNo set to 0
   variable cont set to true
   while cont
+    call clearConsole()
+    call player.newHand()
+    call dealer.newHand()
+    call displayHands()
     let inp be inputStringFromOptions("Enter p for play again, x for exit", ["p", "x"])
     if inp is "x" then
       set cont to false
@@ -48,9 +52,21 @@ function dealCard(random as Float) returns Card
 end function
 
 class Dealer
+  private property status as Status
+
   private property score as Int
 
   private property hand as Hand
+
+  property faceCard as Card
+
+  procedure newHand()
+    set property.hand to new Hand()
+    set property.faceCard to dealCard(random())
+    call hand.draw(faceCard)
+    call hand.draw(dealCard(random()))
+    set property.status to Status.pending
+  end procedure
 
   procedure changeScoreBy(amount as Int)
     set property.score to score + amount
@@ -70,6 +86,13 @@ class Player
   private property score as Int
 
   private property hand as Hand
+
+  procedure newHand()
+    set property.hand to new Hand()
+    call hand.draw(dealCard(random()))
+    call hand.draw(dealCard(random()))
+    set property.status to Status.playing
+  end procedure
 
   procedure changeScoreBy(amount as Int)
     set property.score to score + amount
