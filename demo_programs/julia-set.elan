@@ -1,0 +1,130 @@
+# b9b124e60533c6710b2cda42132f03402372ec0cf20cef87b5c60b2bd6b9c328 Elan Beta 6 valid
+
+# Acknowledgements:
+# https://mathworld.wolfram.com/JuliaSet.html
+# Implemented in Elan by Charles Wicksteed
+main
+  variable vg set to new VectorGraphics()
+  print "Press z to zoom in, x to zoom out"
+  print "Arrow keys to pan"
+  print "g, j and y, h to change shape"
+  # Julia Set parameters
+  variable p set to new Coords()
+  while true
+    set vg to allpoints(new VectorGraphics(), p)
+    call vg.display()
+    call p.checkkeys()
+    print "x = {p.jx} y = {p.jy}"
+  end while
+end main
+
+function allpoints(vg as VectorGraphics, p as Coords) returns VectorGraphics
+  variable vg2 set to vg
+  for xp from 0 to width step 1
+    for yp from 0 to height step 1
+      # scale and centre
+      let n be onepoint((xp - width/2)/p.scale - p.xoff, (yp - height/2)/p.scale - p.yoff, nmax, p)
+      # colour depends on how many iterations were done for that point
+      let col be if n is nmax then 0xffffff else ((n*0x010201) mod 0xffffff)
+      set vg2 to vg2.add(new RectangleVG() with x to xp/2, y to yp/2, height to 0.5, width to 0.5, fill to col, stroke to col, strokeWidth to 0.25)
+    end for
+  end for
+  return vg2
+end function
+
+function onepoint(x as Float, y as Float, maxnum as Int, p as Coords) returns Int
+  variable done set to false
+  variable a set to x
+  variable b set to y
+  variable i set to 0
+  while not done
+    variable c set to 2*a*b
+    set a to (a*a - b*b) + p.jx
+    set b to c + p.jy
+    set i to i + 1
+    if (i >= maxnum) or ((a*a + b*b) > 4) then
+      set done to true
+    end if
+  end while
+  return i
+end function
+
+class Coords
+  constructor()
+    # number of cells per unit distance on complex plane
+    set property.scale to 100
+    # centered on the screen to start
+    set property.xoff to 0
+    set property.yoff to 0
+    # Julia set parameters
+    set property.jx to -0.512
+    set property.jy to 0.521
+  end constructor
+
+  property scale as Float
+
+  property xoff as Float
+
+  property yoff as Float
+
+  property jx as Float
+
+  property jy as Float
+
+  # Arrow keys move the virtual camera
+  # eg Arrow Up moves the image down
+  procedure checkkeys()
+    let panstep be 10/property.scale
+    let jstep be 0.001
+    # save some CPU by not recalculating until a parameter has been changed
+    variable changed set to false
+    while not changed
+      variable k set to getKey()
+      # loop because more than one key may have been pressed
+      while k isnt ""
+        if k is "z" then
+          set property.scale to property.scale*1.2
+        else if k is "x" then
+          set property.scale to property.scale/1.2
+        else if k is "ArrowUp" then
+          set property.yoff to property.yoff + panstep
+        else if k is "ArrowDown" then
+          set property.yoff to property.yoff - panstep
+        else if k is "ArrowLeft" then
+          set property.xoff to property.xoff + panstep
+        else if k is "ArrowRight" then
+          set property.xoff to property.xoff - panstep
+        else if k is "g" then
+          set property.jx to property.jx + jstep
+        else if k is "j" then
+          set property.jx to property.jx - jstep
+        else if k is "y" then
+          set property.jy to property.jy + jstep
+        else if k is "h" then
+          set property.jy to property.jy - jstep
+          # for autocomplete in the RHS expression, don't type "property"
+        else
+          # ignore erroneous key presses
+        end if
+        # there is no harm in recalculating even if an invalid key was pressed
+        set changed to true
+        # another key may have been pressed
+        set k to getKey()
+      end while
+      call pause(10)
+    end while
+  end procedure
+
+end class
+
+test one
+  variable p set to new Coords()
+  assert onepoint(0, 0, 100, p) is 100
+  assert onepoint(0.5, 0.5, 100, p) is 3
+end test
+
+constant width set to 200
+
+constant height set to 150
+
+constant nmax set to 360
