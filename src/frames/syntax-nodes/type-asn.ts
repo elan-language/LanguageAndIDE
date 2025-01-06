@@ -4,18 +4,20 @@ import { AstNode } from "../interfaces/ast-node";
 import { AstTypeNode } from "../interfaces/ast-type-node";
 import { Scope } from "../interfaces/scope";
 import { ArrayType } from "../symbols/array-list-type";
-import { BooleanType } from "../symbols/boolean-type";
 import { ClassType } from "../symbols/class-type";
 import { DictionaryImmutableType } from "../symbols/dictionary-immutable-type";
 import { DictionaryType } from "../symbols/dictionary-type";
-import { FloatType } from "../symbols/float-type";
 import { FunctionType } from "../symbols/function-type";
-import { IntType } from "../symbols/int-type";
 import { IterableType } from "../symbols/iterable-type";
 import { ListType } from "../symbols/list-type";
-import { RegExpType } from "../symbols/regexp-type";
 import { StringType } from "../symbols/string-type";
-import { isClassTypeDef } from "../symbols/symbol-helpers";
+import {
+  getGlobalScope,
+  isAnyDictionaryType,
+  isClassTypeDef,
+  isIterableType,
+  isListType,
+} from "../symbols/symbol-helpers";
 import { TupleType } from "../symbols/tuple-type";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
@@ -40,18 +42,23 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
   }
 
   expectedMinimumGenericParameters() {
-    switch (this.id) {
-      case "List":
-      case "Array":
-      case "Iterable":
-        return 1;
-      case "Dictionary":
-      case "DictionaryImmutable":
-      case "Tuple":
-        return 2;
+    const st = this.symbolType();
+
+    if (st instanceof StringType) {
+      return 0;
     }
 
-    const st = this.symbolType();
+    if (isListType(st) || isIterableType(st)) {
+      return 1;
+    }
+
+    if (isAnyDictionaryType(st)) {
+      return 2;
+    }
+
+    if (st instanceof TupleType) {
+      return st.ofTypes.length;
+    }
 
     if (st instanceof ClassType) {
       return st.scope?.ofTypes.length ?? 0;
@@ -95,55 +102,58 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
   }
 
   symbolType() {
-    switch (this.id) {
-      case "RegExp":
-        return RegExpType.Instance;
-      case "Int":
-        return IntType.Instance;
-      case "Float":
-        return FloatType.Instance;
-      case "Boolean":
-        return BooleanType.Instance;
-      case "String":
-        return StringType.Instance;
-      case "List":
-        return new ListType(this.safeGetGenericParameterSymbolType(0));
-      case "Array":
-        return new ArrayType(this.safeGetGenericParameterSymbolType(0));
-      case "Dictionary":
-        return new DictionaryType(
-          this.safeGetGenericParameterSymbolType(0),
-          this.safeGetGenericParameterSymbolType(1),
-        );
-      case "DictionaryImmutable":
-        return new DictionaryImmutableType(
-          this.safeGetGenericParameterSymbolType(0),
-          this.safeGetGenericParameterSymbolType(1),
-        );
-      case "Tuple":
-        return new TupleType(this.genericParameters.map((p) => p.symbolType()));
-      case "Iterable":
-        return new IterableType(this.safeGetGenericParameterSymbolType(0));
-      case "Func":
-        const names = this.genericParameters.map((_p, i) => `parameter${i}`);
-        const types = this.genericParameters.map((p) => p.symbolType());
-        const pNames = names.slice(0, -1);
-        const pTypes = types.slice(0, -1);
-        const rType = types[types.length - 1] ?? UnknownType.Instance;
-        return new FunctionType(pNames, pTypes, rType, false);
-      default: {
-        const ct = this.scope.resolveSymbol(this.id, transforms(), this.scope);
-        const cst = this.scope
-          .resolveSymbol(this.id, transforms(), this.scope)
-          .symbolType(transforms());
+    const globalScope = getGlobalScope(this.scope);
+    const symbol = globalScope.resolveSymbol(this.id, transforms(), this.scope);
+    const st = symbol.symbolType(transforms());
 
-        if (isClassTypeDef(ct) && this.genericParameters.length > 0) {
-          ct.genericParamMatches = matchClassGenericTypes(ct, this.genericParameters);
-        }
-
-        return cst;
-      }
+    if (st instanceof ArrayType) {
+      return new ArrayType(this.safeGetGenericParameterSymbolType(0));
     }
+
+    if (st instanceof ListType) {
+      return new ListType(this.safeGetGenericParameterSymbolType(0));
+    }
+
+    if (st instanceof DictionaryType) {
+      return new DictionaryType(
+        this.safeGetGenericParameterSymbolType(0),
+        this.safeGetGenericParameterSymbolType(1),
+      );
+    }
+
+    if (st instanceof DictionaryImmutableType) {
+      return new DictionaryImmutableType(
+        this.safeGetGenericParameterSymbolType(0),
+        this.safeGetGenericParameterSymbolType(1),
+      );
+    }
+
+    if (st instanceof TupleType) {
+      return new TupleType(this.genericParameters.map((p) => p.symbolType()));
+    }
+
+    if (st instanceof IterableType) {
+      return new IterableType(this.safeGetGenericParameterSymbolType(0));
+    }
+
+    if (st instanceof FunctionType) {
+      const names = this.genericParameters.map((_p, i) => `parameter${i}`);
+      const types = this.genericParameters.map((p) => p.symbolType());
+      const pNames = names.slice(0, -1);
+      const pTypes = types.slice(0, -1);
+      const rType = types[types.length - 1] ?? UnknownType.Instance;
+      return new FunctionType(pNames, pTypes, rType, false);
+    }
+
+    if (st instanceof ClassType) {
+      if (isClassTypeDef(symbol) && this.genericParameters.length > 0) {
+        symbol.genericParamMatches = matchClassGenericTypes(symbol, this.genericParameters);
+      }
+
+      return st;
+    }
+
+    return st;
   }
 
   toString() {
