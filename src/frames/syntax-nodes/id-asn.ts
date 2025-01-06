@@ -2,6 +2,7 @@ import { CompileError } from "../compile-error";
 import {
   mustBeFunctionRefIfFunction,
   mustBeKnownSymbol,
+  mustBePropertyPrefixedOnMember,
   mustBePublicMember,
   mustNotBeKeyword,
 } from "../compile-rules";
@@ -59,6 +60,10 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
 
     if (!isMemberOnFieldsClass(symbol, transforms(), this.scope)) {
       mustBePublicMember(symbol, this.compileErrors, this.fieldId);
+    }
+
+    if (symbol.symbolScope === SymbolScope.member && !this.updatedScope) {
+      mustBePropertyPrefixedOnMember(this.compileErrors, this.fieldId);
     }
 
     if (!this.isFuncRef) {

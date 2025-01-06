@@ -920,12 +920,14 @@ export function mustBePropertyPrefixedOnAssignable(
 
     if (s === SymbolScope.member) {
       if (assignable instanceof IdAsn) {
-        compileErrors.push(
-          new SyntaxCompileError(`assigning to a property requires a prefix`, location),
-        );
+        mustBePropertyPrefixedOnMember(compileErrors, location);
       }
     }
   }
+}
+
+export function mustBePropertyPrefixedOnMember(compileErrors: CompileError[], location: string) {
+  compileErrors.push(new SyntaxCompileError(`referencing a property requires a prefix`, location));
 }
 
 function isIndexed(assignable: AstNode) {

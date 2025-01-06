@@ -86,7 +86,7 @@ class Foo
   property p1 as Float
 
   procedure display()
-      print p1
+      print property.p1
   end procedure
 
   function asString() returns String
@@ -148,12 +148,12 @@ class Foo
     procedure times(out b as Bar)
         call b.p1PlusOne()
         call p1PlusOne()
-        set property.p1 to p1 + b.p1
-        print p1
+        set property.p1 to property.p1 + b.p1
+        print property.p1
     end procedure
 
     procedure p1PlusOne()
-        set property.p1 to p1 + 1
+        set property.p1 to property.p1 + 1
     end procedure
 
     function asString() returns String
@@ -170,7 +170,7 @@ class Bar
     property p1 as Float
 
     procedure p1PlusOne()
-        set property.p1 to p1 + 1
+        set property.p1 to property.p1 + 1
     end procedure
 
     function asString() returns String
@@ -421,6 +421,6 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["assigning to a property requires a prefix"]);
+    assertDoesNotCompile(fileImpl, ["referencing a property requires a prefix"]);
   });
 });

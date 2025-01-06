@@ -1,4 +1,4 @@
-# FFFF Elan Beta 6 valid
+# 7d98a15ff3715c1f03a3db1872ec481a87907241effcd863f01765f02ee97cbb Elan Beta 6 valid
 
 main
   let start be new Point(5, 5)
@@ -27,12 +27,12 @@ procedure runSolver(gr as BlockGraphics, start as Point, destination as Point, r
     call pause(0)
   end while
   if solver.getLastVisited() is destination then
-      let route, length be solver.getRouteAndLength()
-      set gr2 to addRoute(gr2, route)
-      call gr2.display()
-      print "Length of route: {round(length, 2)}"
+    let route, length be solver.getRouteAndLength()
+    set gr2 to addRoute(gr2, route)
+    call gr2.display()
+    print "Length of route: {round(length, 2)}"
   else
-      print "No route from start to destination found through these rocks."
+    print "No route from start to destination found through these rocks."
   end if
 end procedure
 
@@ -41,13 +41,13 @@ procedure createRocksAndNodes(percentRocks as Int, out rocks as Array<of Point>,
     for y from 0 to 29 step 1
       let p be new Point(x, y)
       if p is start then
-          call nodes.append(new Node(p, 0, p.minDistTo(dest)))
+        call nodes.append(new Node(p, 0, p.minDistTo(dest)))
       else if p is dest then
-          call nodes.append(new Node(p, infinity, 0))
+        call nodes.append(new Node(p, infinity, 0))
       else if random() < percentRocks/100 then
-          call rocks.append(p)
+        call rocks.append(p)
       else
-          call nodes.append(new Node(p, infinity, p.minDistTo(dest)))
+        call nodes.append(new Node(p, infinity, p.minDistTo(dest)))
       end if
     end for
   end for
@@ -100,9 +100,9 @@ class Solver
 
   procedure initialise(alg as Algorithm)
     set property.alg to alg
-    set property.current to new Node(start, 0, infinity)
+    set property.current to new Node(property.start, 0, infinity)
     set property.running to true
-    each node in nodes
+    each node in property.nodes
       call node.setDistanceFromStart(infinity)
       call node.setVia(empty Point)
       call node.setVisited(false)
@@ -112,56 +112,56 @@ class Solver
   procedure visitNextPoint()
     call updateNeighbours()
     set property.current to nextNodeToVisit()
-    if (current is empty Node) or (current.point is destination) then
-        set running to false
+    if (property.current is empty Node) or (property.current.point is property.destination) then
+      set property.running to false
     else
-        call current.setVisited(true)
+      call current.setVisited(true)
     end if
   end procedure
 
   procedure updateNeighbours()
-    let distToCurrent be current.distFromStart
+    let distToCurrent be property.current.distFromStart
     each neighbour in currentNeighbours()
-      let currentPoint be current.point
+      let currentPoint be property.current.point
       let distViaCurrent be distToCurrent + currentPoint.minDistTo(neighbour.point)
       if distViaCurrent < neighbour.distFromStart then
-          call neighbour.setVia(current.point)
-          call neighbour.setDistanceFromStart(distViaCurrent)
+        call neighbour.setVia(property.current.point)
+        call neighbour.setDistanceFromStart(distViaCurrent)
       end if
     end each
   end procedure
 
   function currentNeighbours() returns Array<of Node>
     variable neighbours set to empty List<of Node>
-    let currentPoint be current.point
+    let currentPoint be property.current.point
     each p in currentPoint.neighbouringPoints()
       let node be getNodeFor(p)
       let point be node.point
       if point.isNotEmpty then
-          set neighbours to neighbours + node
+        set neighbours to neighbours + node
       end if
     end each
     return neighbours.asArray()
   end function
 
   function getNodeFor(p as Point) returns Node
-    let matches be nodes.filter(lambda n as Node => n.point is p)
+    let matches be property.nodes.filter(lambda n as Node => n.point is p)
     return if matches.length() is 1 then matches.head() else empty Node
   end function
 
   function getLastVisited() returns Point
-    return current.point
+    return property.current.point
   end function
 
   function nextNodeToVisit() returns Node
     variable lowestCostSoFar set to infinity
     variable lowestCostNode set to empty Node
-    let possibilities be nodes.filter(lambda nd as Node => (not nd.visited) and (nd.distFromStart < infinity))
+    let possibilities be property.nodes.filter(lambda nd as Node => (not nd.visited) and (nd.distFromStart < infinity))
     each nd in possibilities
       let cost be calculateCost(nd)
       if cost < lowestCostSoFar then
-          set lowestCostSoFar to cost
-          set lowestCostNode to nd
+        set lowestCostSoFar to cost
+        set lowestCostNode to nd
       end if
     end each
     return lowestCostNode
@@ -171,27 +171,27 @@ class Solver
     variable cost set to 0.0
     let fromStart be node.distFromStart
     let estToDest be node.estDistToDest
-    if alg is Algorithm.dijkstra then
+    if property.alg is Algorithm.dijkstra then
       set cost to fromStart
-    else if alg is Algorithm.aStar then
+    else if property.alg is Algorithm.aStar then
       set cost to fromStart + estToDest
-    else if alg is Algorithm.heuristic then
+    else if property.alg is Algorithm.heuristic then
       set cost to estToDest
     end if
     return cost
   end function
 
   function getRouteAndLength() returns (List<of Point>, Float)
-    variable route set to {destination}
+    variable route set to {property.destination}
     variable length set to 0.0
-    variable node set to getNodeFor(destination)
+    variable node set to getNodeFor(property.destination)
     repeat
       let previous be node.via
       let p be node.point
       set length to length + p.minDistTo(previous)
       set route to route.withInsert(0, previous)
       set node to getNodeFor(previous)
-    end repeat when node.point is start
+    end repeat when node.point is property.start
     return (route, length)
   end function
 
@@ -245,7 +245,7 @@ class Point
   property isNotEmpty as Boolean
 
   function minDistTo(p as Point) returns Float
-    return sqrt((p.x - x)^2 + (p.y - y)^2)
+    return sqrt((p.x - property.x)^2 + (p.y - property.y)^2)
   end function
 
   function isAdjacentTo(p as Point) returns Boolean
@@ -254,7 +254,7 @@ class Point
 
   # Returns the 8 theoretically-neighbouring points, whether or not within bounds
   function neighbouringPoints() returns List<of Point>
-    return {new Point(x - 1, y - 1), new Point(x, y - 1), new Point(x + 1, y - 1), new Point(x - 1, y), new Point(x + 1, y), new Point(x - 1, y + 1), new Point(x, y + 1), new Point(x + 1, y + 1)}
+    return {new Point(property.x - 1, property.y - 1), new Point(property.x, property.y - 1), new Point(property.x + 1, property.y - 1), new Point(property.x - 1, property.y), new Point(property.x + 1, property.y), new Point(property.x - 1, property.y + 1), new Point(property.x, property.y + 1), new Point(property.x + 1, property.y + 1)}
   end function
 
 end class

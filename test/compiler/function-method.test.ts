@@ -28,7 +28,7 @@ class Foo
     property p1 as Float
 
     function times(value as Float) returns Float
-        return p1 * value
+        return property.p1 * value
     end function
 
     function asString() returns String
@@ -89,7 +89,7 @@ class Foo
     property p1 as Float
 
     function times(value as Float) returns Float
-        return p1 * value
+        return property.p1 * value
     end function
 
     function asString() returns String
@@ -152,7 +152,7 @@ class Foo
     property p1 as Float
 
     function times(value as Float) returns List<of Float>
-        return {p1 * value}
+        return {property.p1 * value}
     end function
 
     function asString() returns String
@@ -215,7 +215,7 @@ class Bar
 
   function getTimes() returns List<of Float>
     variable x set to empty List<of Float>
-    set x to p1.times(2)
+    set x to property.p1.times(2)
     return x
   end function
 
@@ -229,7 +229,7 @@ class Foo
     property p1 as Float
 
     function times(value as Float) returns List<of Float>
-        return {p1 * value}
+        return {property.p1 * value}
     end function
 
 end class`;
@@ -305,7 +305,7 @@ class Bar
 
   function getTimes() returns List<of Qux>
     variable x set to empty List<of Qux>
-    set x to p1.times(2)
+    set x to property.p1.times(2)
     return x
   end function
 
@@ -406,7 +406,7 @@ class Foo
     property p1 as Bar
 
     function length() returns Float
-        return p1.length() + 2
+        return property.p1.length() + 2
     end function
 
     function asString() returns String
@@ -423,7 +423,7 @@ class Bar
     property p1 as Float
 
     function length() returns Float
-        return p1
+        return property.p1
     end function
 
     function asString() returns String
@@ -511,7 +511,7 @@ class Foo
     end function
 
     function p1PlusOne() returns Float
-        return p1 + 1
+        return property.p1 + 1
     end function
 
     function asString() returns String
@@ -528,7 +528,7 @@ class Bar
     property p1 as Float
 
     function p1PlusOne() returns Float
-        return p1 + 1
+        return property.p1 + 1
     end function
 
     function asString() returns String
@@ -614,7 +614,7 @@ class Foo
   end procedure
 
   function asString() returns String
-    return p1.asString()
+    return property.p1.asString()
   end function
 
 end class`;

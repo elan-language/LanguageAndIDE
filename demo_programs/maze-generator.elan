@@ -1,4 +1,4 @@
-# FFFF Elan Beta 6 valid
+# 09ce718f035575137d4e9bf7823fdc413c46646f7606a2ad70ab950c429ed4a0 Elan Beta 6 valid
 
 main
   variable g set to new BlockGraphics()
@@ -11,14 +11,14 @@ main
     let existing be getValue(p, g)
     let setTo be floor(random() + 0.7)
     if okToSet(p, setTo, g) then
-        let colour be if setTo is 1 then white else black
-        set g to g.withBlock(p.x, p.y, colour)
+      let colour be if setTo is 1 then white else black
+      set g to g.withBlock(p.x, p.y, colour)
     end if
   end for
   call g.display()
   let name be inputString("File name to save: ")
   if name isnt "x" then
-      call saveAsFile(name, g)
+    call saveAsFile(name, g)
   end if
 end main
 
@@ -71,8 +71,8 @@ end function
 function getValue(p as Point, g as BlockGraphics) returns Int
   variable result set to 0
   if (p.x > -1) and (p.x < 40) and (p.y > -1) and (p.y < 30) then
-      let colour be g.getBackground(p.x, p.y)
-      set result to if colour is black then 0 else 1
+    let colour be g.getBackground(p.x, p.y)
+    set result to if colour is black then 0 else 1
   end if
   return result
 end function
@@ -125,7 +125,7 @@ class Point
 
   # Returns the 8 theoretically-neighbouring points, whether or not within bounds
   function neighbouringPoints() returns List<of Point>
-    return {new Point(x - 1, y - 1), new Point(x, y - 1), new Point(x + 1, y - 1), new Point(x - 1, y), new Point(x + 1, y), new Point(x - 1, y + 1), new Point(x, y + 1), new Point(x + 1, y + 1)}
+    return {new Point(property.x - 1, property.y - 1), new Point(property.x, property.y - 1), new Point(property.x + 1, property.y - 1), new Point(property.x - 1, property.y), new Point(property.x + 1, property.y), new Point(property.x - 1, property.y + 1), new Point(property.x, property.y + 1), new Point(property.x + 1, property.y + 1)}
   end function
 
 end class

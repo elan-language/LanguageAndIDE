@@ -342,34 +342,34 @@ end main
 
 class Foo
     constructor()
-        set property.p1 to new Bar()
+      set property.p1 to new Bar()
     end constructor
 
     property p1 as Bar
 
     procedure length()
-        call p1.length(2)
+      call p1.length(2)
     end procedure
 
     function asString() returns String
-         return ""
+      return ""
     end function
 
 end class
 
 class Bar
     constructor()
-        set property.p1 to 5
+      set property.p1 to 5
     end constructor
 
     property p1 as Float
 
     procedure length(plus as Float)
-        print p1 + plus
+      print property.p1 + plus
     end procedure
 
     function asString() returns String
-         return ""
+      return ""
     end function
 
 end class`;

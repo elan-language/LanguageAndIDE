@@ -47,7 +47,7 @@ class Player
     property name as String
 
     function asString() returns String
-        return name
+        return property.name
     end function
 
 end class`;
@@ -114,6 +114,55 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "ChloeJoe{5, 2, 4}");
+  });
+
+  test("Pass_AssignProperty", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable g set to new Foo()
+  print g.p1
+  print g.p2
+end main
+
+class Foo
+    constructor()
+      set property.p2 to 1
+      set property.p1 to property.p2
+    end constructor
+
+    property p1 as Int
+    property p2 as Int
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var g = system.initialise(new Foo());
+  system.printLine(_stdlib.asString(g.p1));
+  system.printLine(_stdlib.asString(g.p2));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", 0]]);};
+  constructor() {
+    this.p2 = 1;
+    this.p1 = this.p2;
+  }
+
+  p1 = 0;
+
+  p2 = 0;
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "11");
   });
 
   test("Pass_PropertiesOfAllStandardTypesHaveDefaultValues", async () => {
@@ -417,7 +466,7 @@ class Player
   property name as String
 
   function asString() returns String
-    return name
+    return property.name
   end function
 
 end class`;
@@ -526,7 +575,7 @@ class Player
   property name as String
 
   function asString() returns String
-    return name
+    return property.name
   end function
 
 end class`;
@@ -654,7 +703,7 @@ class Player
     property name as String
 
     function asString() returns String
-      return name
+      return property.name
     end function
 
 end class`;
@@ -998,5 +1047,29 @@ end class`;
     assertDoesNotCompile(fileImpl, [
       "'break' is a reserved word, and may not be used as an identifier",
     ]);
+  });
+
+  test("Fail_MissingPropertyKeyword1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+ 
+end main
+
+class Foo
+  constructor()
+    set property.p1 to p2
+  end constructor
+
+  property p1 as Int
+  property p2 as Int
+
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["referencing a property requires a prefix"]);
   });
 });

@@ -67,7 +67,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["assigning to a property requires a prefix"]);
+    assertDoesNotCompile(fileImpl, ["referencing a property requires a prefix"]);
   });
 
   test("Fail_OutParameter", async () => {

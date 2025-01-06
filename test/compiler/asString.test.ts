@@ -214,7 +214,7 @@ class Foo
     property p2 as String
 
     function asString() returns String
-         return p2
+         return property.p2
     end function
 
 end class`;
@@ -272,7 +272,7 @@ class Foo
     property p2 as String
 
     function asString() returns String
-         return p2
+         return property.p2
     end function
 
 end class`;

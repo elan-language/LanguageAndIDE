@@ -1,4 +1,4 @@
-# FFFF Elan Beta 6 valid
+# e4086877894a3d7560f887843ab6c237d5566d12a5f9260e9f3b55b0ae7f3d7c Elan Beta 6 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -21,7 +21,7 @@ class Snake
     let tail be new Square(20, 15)
     set property.currentDir to Direction.right
     set property.body to [tail]
-    set property.head to tail.getAdjacentSquare(currentDir)
+    set property.head to tail.getAdjacentSquare(property.currentDir)
     set property.priorTail to tail
   end constructor
 
@@ -36,39 +36,39 @@ class Snake
   procedure clockTick(key as String, out apple as Apple)
     call setDirection(key)
     set property.priorTail to body[0]
-    call body.append(head)
-    set property.head to head.getAdjacentSquare(currentDir)
-    if head is apple.location then
-        call apple.newRandomPosition(this)
+    call body.append(property.head)
+    set property.head to property.head.getAdjacentSquare(property.currentDir)
+    if property.head is apple.location then
+      call apple.newRandomPosition(this)
     else
-        set body to body[1..]
+      set property.body to body[1..]
     end if
   end procedure
 
   function updateGraphics(gr as BlockGraphics) returns BlockGraphics
-    variable gr2 set to head.updateGraphics(gr, green)
-    if body[0] isnt priorTail then
-        set gr2 to priorTail.updateGraphics(gr, white)
+    variable gr2 set to property.head.updateGraphics(gr, green)
+    if body[0] isnt property.priorTail then
+      set gr2 to property.priorTail.updateGraphics(gr, white)
     end if
     return gr2
   end function
 
   function score() returns Int
-    return body.length() - 1
+    return property.body.length() - 1
   end function
 
   function bodyCovers(sq as Square) returns Boolean
     variable result set to false
-    each seg in body
+    each seg in property.body
       if (seg is sq) then
-          set result to true
+        set result to true
       end if
     end each
     return result
   end function
 
   function gameOver() returns Boolean
-    return bodyCovers(head) or head.hasHitEdge()
+    return bodyCovers(property.head) or property.head.hasHitEdge()
   end function
 
   private procedure setDirection(key as String)
@@ -96,12 +96,12 @@ class Apple
     repeat
       let ranX be randomInt(0, 39)
       let ranY be randomInt(0, 29)
-      set location to new Square(ranX, ranY)
-    end repeat when not snake.bodyCovers(location)
+      set property.location to new Square(ranX, ranY)
+    end repeat when not snake.bodyCovers(property.location)
   end procedure
 
   function updateGraphics(gr as BlockGraphics) returns BlockGraphics
-    return location.updateGraphics(gr, red)
+    return property.location.updateGraphics(gr, red)
   end function
 
 end class
@@ -117,26 +117,26 @@ class Square
   private property y as Int
 
   function getAdjacentSquare(d as Direction) returns Square
-    variable newX set to x
-    variable newY set to y
+    variable newX set to property.x
+    variable newY set to property.y
     if d is Direction.left then
-      set newX to x - 1
+      set newX to property.x - 1
     else if d is Direction.right then
-      set newX to x + 1
+      set newX to property.x + 1
     else if d is Direction.up then
-      set newY to y - 1
+      set newY to property.y - 1
     else if d is Direction.down then
-      set newY to y + 1
+      set newY to property.y + 1
     end if
     return new Square(newX, newY)
   end function
 
   function hasHitEdge() returns Boolean
-    return (x is -1) or (y is -1) or (x is 40) or (y is 30)
+    return (property.x is -1) or (property.y is -1) or (property.x is 40) or (property.y is 30)
   end function
 
   function updateGraphics(gr as BlockGraphics, colour as Int) returns BlockGraphics
-    return gr.withBlock(x, y, colour)
+    return gr.withBlock(property.x, property.y, colour)
   end function
 
 end class

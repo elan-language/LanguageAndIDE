@@ -36,7 +36,7 @@ class Foo
     end procedure
 
     function asString() returns String
-      return "{p1} {p2}"
+      return "{property.p1} {property.p2}"
     end function
 end class`;
 
@@ -100,7 +100,7 @@ class Foo
     end procedure
 
     function asString() returns String
-      return "{p1} {p2}"
+      return "{property.p1} {property.p2}"
     end function
 end class`;
 
@@ -167,7 +167,7 @@ class Foo
   end procedure
 
   function asString() returns String
-    return "{p1} {p2}"
+    return "{property.p1} {property.p2}"
   end function
 end class`;
 

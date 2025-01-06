@@ -155,7 +155,7 @@ class Bar
     property p1 as Int
 
     procedure printP1()
-      print p1
+      print property.p1
     end procedure
 end class`;
 
@@ -1045,7 +1045,7 @@ class Foo
     property vg as VectorGraphics
 
     procedure bar()
-      set property.vg to vg.noSuch  
+      set property.vg to property.vg.noSuch  
     end procedure
 
 end class`;

@@ -147,7 +147,7 @@ class Foo
 
   function bar() returns Int
     variable lst set to [1, 2]
-    return lst[p1]
+    return lst[property.p1]
   end function
 end class`;
 

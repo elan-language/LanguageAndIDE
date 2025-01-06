@@ -1,4 +1,4 @@
-# FFFF Elan Beta 6 valid
+# 4563c312826d9fe32defe55738d3c337c912c58741f5702393c6f6552ec43ffa Elan Beta 6 valid
 
 # Turing Machine that converts a Year from decimal to roman numerals
 # Run the program, enter the number to convert and watch the machine in action.
@@ -50,7 +50,7 @@ class TuringMachine
   end procedure
 
   procedure append(rule as Rule)
-    set property.rules to rules + rule
+    set property.rules to property.rules + rule
   end procedure
 
   procedure singleStep()
@@ -59,19 +59,19 @@ class TuringMachine
   end procedure
 
   function isHalted() returns Boolean
-    return currentState is haltState
+    return property.currentState is property.haltState
   end function
 
   function findMatchingRule() returns Rule
-    let matches be rules.filter(lambda r as Rule => (r.currentState is currentState) and (r.currentSymbol is tape[headPosition]))
+    let matches be property.rules.filter(lambda r as Rule => (r.currentState is property.currentState) and (r.currentSymbol is property.tape[property.headPosition]))
     if matches.length() is 0 then
-        throw exception "No rule matching state {currentState} and symbol {tape[headPosition]}"
+      throw exception "No rule matching state {property.currentState} and symbol {property.tape[property.headPosition]}"
     end if
     return matches.head()
   end function
 
   procedure write(newSymbol as String)
-    let hp be headPosition
+    let hp be property.headPosition
     set property.tape to tape[..hp] + newSymbol + tape[hp + 1..]
   end procedure
 
@@ -79,16 +79,16 @@ class TuringMachine
     set property.currentState to rule.nextState
     call write(rule.writeSymbol)
     if rule.move is Dir.right then
-        set headPosition to headPosition + 1
-        if headPosition >= tape.length() then
-            set tape to tape + " "
-        end if
+      set property.headPosition to property.headPosition + 1
+      if property.headPosition >= property.tape.length() then
+        set property.tape to property.tape + " "
+      end if
     else
-        set headPosition to headPosition - 1
-        if headPosition < 0 then
-            set tape to " " + tape
-            set headPosition to 0
-        end if
+      set property.headPosition to property.headPosition - 1
+      if property.headPosition < 0 then
+        set property.tape to " " + property.tape
+        set property.headPosition to 0
+      end if
     end if
   end procedure
 
@@ -114,7 +114,7 @@ class Rule
   property move as Dir
 
   function asString() returns String
-    return "{currentState},{currentSymbol},{nextState},{writeSymbol},{move}"
+    return "{property.currentState},{property.currentSymbol},{property.nextState},{property.writeSymbol},{property.move}"
   end function
 
 end class
