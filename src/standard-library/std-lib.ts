@@ -222,7 +222,7 @@ export class StdLib {
   }
 
   @elanFunction([], FunctionOptions.pureExtension, ElanIterable(ElanT1))
-  asIter<T1>(@elanIterableType(ElanT1) arr: T1[]): T1[] {
+  asIterable<T1>(@elanIterableType(ElanT1) arr: T1[]): T1[] {
     const list = [...arr];
     (list as unknown as hasHiddenType)._type = "Iterable";
     return list as T1[];
@@ -559,7 +559,7 @@ export class StdLib {
     predicate: (value: T1 | string) => boolean,
   ): (T1 | string)[] {
     const list = typeof source === "string" ? source.split("") : [...source];
-    return this.asIter(list.filter(predicate));
+    return this.asIterable(list.filter(predicate));
   }
 
   @elanFunction(["", "lambdaOrFunctionRef"], FunctionOptions.pureExtension, ElanIterable(ElanT2))
@@ -570,7 +570,7 @@ export class StdLib {
     predicate: (value: T1 | string) => T2,
   ) {
     const list = typeof source === "string" ? source.split("") : [...source];
-    return this.asIter(list.map(predicate));
+    return this.asIterable(list.map(predicate));
   }
 
   @elanFunction(["", "initialValue", "lambdaOrFunctionRef"], FunctionOptions.pureExtension, ElanT2)
@@ -626,7 +626,7 @@ export class StdLib {
     predicate: (a: T1, b: T1) => number,
   ): T1[] {
     const clone = [...source];
-    return this.asIter(clone.sort(predicate));
+    return this.asIterable(clone.sort(predicate));
   }
 
   @elanFunction(["", "lambdaOrFunctionRef"], FunctionOptions.pureExtension)

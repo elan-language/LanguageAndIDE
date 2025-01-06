@@ -192,11 +192,11 @@ return [main, _tests];}`;
 
 main
   variable it set to {1.0, 2, 3, 4, 5, 6, 7}
-  call printAsIter(it)
+  call printAsIterable(it)
   call printasList(it)
 end main
   
-procedure printAsIter(target as Iterable<of Float>)
+procedure printAsIterable(target as Iterable<of Float>)
   print target
 end procedure
   
@@ -208,11 +208,11 @@ end procedure`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var it = system.list([1, 2, 3, 4, 5, 6, 7]);
-  await printAsIter(it);
+  await printAsIterable(it);
   await printasList(it);
 }
 
-async function printAsIter(target) {
+async function printAsIterable(target) {
   system.printLine(_stdlib.asString(target));
 }
 
