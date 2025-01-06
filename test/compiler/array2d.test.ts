@@ -42,6 +42,47 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[[1, 2], [3, 4]]");
   });
 
+  test("Pass_Array2DAsParameter", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to new Array2D<of Int>()
+  print foo(a)
+end main
+
+function foo(arr as Array<of Array<of Int>>) returns Array<of Array<of Int>>
+  return bar(arr)
+end function
+
+function bar(arr as Array2D<of Int>) returns Array2D<of Int>
+  return arr
+end function
+`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.initialise(system.array(new Array()));
+  system.printLine(_stdlib.asString(foo(a)));
+}
+
+function foo(arr) {
+  return bar(arr);
+}
+
+function bar(arr) {
+  return arr;
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[]");
+  });
+
   test("Pass_DeclareAnEmptyArrayBySizeAndCheckLength", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
