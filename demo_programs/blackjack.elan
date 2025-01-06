@@ -1,8 +1,12 @@
-# f5107c73d9edeb491fe2563e59e310cc0a449a76af315ef17b1f2efcc7d29497 Elan Beta 6 valid
+# 5e16038b4f8c9c4c48e5e70aff9cab20aa04cd925c6308e479fce8c66e71b00e Elan Beta 6 valid
 
 main
-  variable dealer set to new Dealer()
-  variable player set to new HumanPlayer()
+  call simulation()
+end main
+
+procedure game()
+  variable dealer set to new Dealer(1000)
+  variable player set to new HumanPlayer(1000)
   variable gameNo set to 0
   variable cont set to true
   while cont
@@ -21,7 +25,45 @@ main
     let inp be inputStringFromOptions(prompt, ["p", "x"])
     set cont to inp isnt "x"
   end while
-end main
+end procedure
+
+procedure analyser()
+  let outcomes be [Status.bust:0, Status.standing:0, Status.blackjack:0]
+  let dealer be new Dealer(1000)
+  for i from 1 to 10000 step 1
+    call dealer.newHand()
+    call dealer.start()
+    call dealer.playHandOut()
+    let status be dealer.hand.status
+    call outcomes.putAtKey(status, outcomes[status] + 1)
+  end for
+  print outcomes
+end procedure
+
+procedure simulation()
+  variable dealer set to new Dealer(1000)
+  variable playerA set to new AutomatedPlayer("PlayerA", ref strategyA, 1000)
+  variable playerB set to new AutomatedPlayer("PlayerB", ref strategyB, 1000)
+  for i from 1 to 1000 step 1
+    call dealer.newHand()
+    let face be dealer.faceCard
+    call playerA.newHand()
+    call playerA.playHandOut(face)
+    call playerB.newHand()
+    call playerB.playHandOut(face)
+    call dealer.playHandOut()
+    let outcomeA be determineOutcome(dealer, playerA)
+    call updateScores(dealer, playerA, outcomeA)
+    let outcomeB be determineOutcome(dealer, playerB)
+    call updateScores(dealer, playerB, outcomeB)
+    if outcomeB isnt Outcome.lose then
+      print playerB
+    end if
+  end for
+  print "Dealer score: {dealer.score}"
+  print "{playerA.name} score: {playerA.score}"
+  print "{playerB.name} score: {playerB.score}"
+end procedure
 
 procedure dealersTurn(dealer as Dealer, player as HumanPlayer)
   call dealer.start()
@@ -57,6 +99,8 @@ procedure updateScores(dealer as Dealer, player as Player, outcome as Outcome)
   end if
 end procedure
 
+# TODO This is not correct. It is not giving extra payout for BJ. 
+# Get rid out outcome & revert to returing a + or -integer.
 function determineOutcome(dealer as Dealer, player as Player) returns Outcome
   let d be dealer.hand.status
   let dTot be dealer.hand.total
@@ -77,49 +121,11 @@ function dealCard(random as Float) returns Card
   return new Card(rank, suit)
 end function
 
-class HumanPlayer inherits Player
-  property score as Int
-
-  property hand as Hand
-
-  procedure newHand()
-    set property.hand to new Hand()
-    call hand.draw()
-    call hand.draw()
-    call hand.setStatus(Status.playing)
-  end procedure
-
-  function isPlaying() returns Boolean
-    return hand.status is Status.playing
-  end function
-
-  procedure nextMove()
-    let inp be inputStringFromOptions("Enter s to stand, d to draw card:", ["s", "d"])
-    if inp is "d" then
-      call hand.draw()
-    else
-      call hand.stand()
-    end if
-  end procedure
-
-  procedure changeScoreBy(amount as Int)
-    set property.score to score + amount
-  end procedure
-
-  function asString() returns String
-    return "You: {hand}"
-  end function
-
-end class
-
-abstract class Player
-  abstract property hand as Hand
-
-  abstract procedure changeScoreBy(amount as Int)
-
-end class
-
 class Dealer
+  constructor(startingPoints as Int)
+    set property.score to startingPoints
+  end constructor
+
   property score as Int
 
   property hand as Hand
@@ -129,6 +135,7 @@ class Dealer
   private property active as Boolean
 
   procedure playHandOut()
+    call start()
     while hand.status is Status.playing
       call nextMove()
     end while
@@ -165,6 +172,107 @@ class Dealer
 
   function asString() returns String
     return if active then "Dealer: {hand}" else "Dealer: {faceCard} {unicode(9633)}"
+  end function
+
+end class
+
+abstract class Player
+  abstract property hand as Hand
+
+  abstract procedure changeScoreBy(amount as Int)
+
+end class
+
+class HumanPlayer inherits Player
+  constructor(startingPoints as Int)
+    set property.score to startingPoints
+  end constructor
+
+  property score as Int
+
+  property hand as Hand
+
+  procedure newHand()
+    set property.hand to new Hand()
+    call hand.draw()
+    call hand.draw()
+    call hand.setStatus(Status.playing)
+  end procedure
+
+  function isPlaying() returns Boolean
+    return hand.status is Status.playing
+  end function
+
+  procedure nextMove()
+    let inp be inputStringFromOptions("Enter s to stand, d to draw card:", ["s", "d"])
+    if inp is "d" then
+      call hand.draw()
+    else
+      call hand.stand()
+    end if
+  end procedure
+
+  procedure changeScoreBy(amount as Int)
+    set property.score to score + amount
+  end procedure
+
+  function asString() returns String
+    return "You: {hand}"
+  end function
+
+end class
+
+class AutomatedPlayer inherits Player
+  constructor(name as String, decisionFunc as Func<of Hand, Card => Action>, startingPoints as Int)
+    set property.name to name
+    set property.decisionFunc to ref decisionFunc
+    set property.score to startingPoints
+  end constructor
+
+  property hand as Hand
+
+  property score as Int
+
+  property name as String
+
+  private property dealerFaceCard as Card
+
+  property decisionFunc as Func<of Hand, Card => Action>
+
+  procedure changeScoreBy(amount as Int)
+    set property.score to score + amount
+  end procedure
+
+  function getDecision() returns Action
+    return decisionFunc(property.hand, property.dealerFaceCard)
+  end function
+
+  # 
+  procedure playHandOut(dealerFaceCard as Card)
+    set property.dealerFaceCard to dealerFaceCard
+    while property.hand.status is Status.playing
+      let decision be getDecision()
+      if decision is Action.draw then
+        call hand.draw()
+      else if decision is Action.stand then
+        call hand.stand()
+      else
+        throw exception "Action {decision} not covered"
+        # TODO: cover other cases, which must check that they are valid given hand 
+      end if
+    end while
+  end procedure
+
+  procedure newHand()
+    # scope for delegating 
+    set property.hand to new Hand()
+    call hand.draw()
+    call hand.draw()
+  end procedure
+
+  # TODO If dealer is pending rather than playing, then show only face card + 'hidden card' (or correct term)
+  function asString() returns String
+    return "{name}: {hand}"
   end function
 
 end class
@@ -211,6 +319,8 @@ class Hand
       set property.status to Status.blackjack
     else if property.total > 21 then
       set property.status to Status.bust
+    else if property.total is 21 then
+      set property.status to Status.standing
     end if
   end procedure
 
@@ -278,3 +388,11 @@ enum Status pending, playing, standing, blackjack, bust
 constant rankValue set to {"2":2, "3":3, "4":4, "5":5, "6":6, "7":7, "8":8, "9":9, "10":10, "J":10, "Q":10, "K":10, "A":11}
 
 constant htmlEscChars set to {"&clubs;", "&diams;", "&hearts;", "&spades;"}
+
+function strategyA(hand as Hand, dealerFaceUp as Card) returns Action
+  return if hand.total > 16 then Action.stand else Action.draw
+end function
+
+function strategyB(hand as Hand, dealerFaceUp as Card) returns Action
+  return Action.draw
+end function
