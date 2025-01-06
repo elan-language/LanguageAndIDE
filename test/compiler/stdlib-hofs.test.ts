@@ -168,14 +168,14 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}.asIter()
+  variable source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}.asIterable()
   set source to source.map(lambda x as Int => x + 1)
   print source.asArray()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var source = _stdlib.asIter(system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]));
+  var source = _stdlib.asIterable(system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]));
   source = _stdlib.map(source, (x) => x + 1);
   system.printLine(_stdlib.asString(_stdlib.asArray(source)));
 }
@@ -566,7 +566,7 @@ return [main, _tests];}`;
 constant source set to {"apple", "orange", "pair", "apple"}
 main
   print source.asSet()
-  print source.asIter().asSet()
+  print source.asIterable().asSet()
   print source.asArray().asSet()
 end main`;
 
@@ -577,7 +577,7 @@ const global = new class {
 };
 async function main() {
   system.printLine(_stdlib.asString(_stdlib.asSet(global.source)));
-  system.printLine(_stdlib.asString(_stdlib.asSet(_stdlib.asIter(global.source))));
+  system.printLine(_stdlib.asString(_stdlib.asSet(_stdlib.asIterable(global.source))));
   system.printLine(_stdlib.asString(_stdlib.asSet(_stdlib.asArray(global.source))));
 }
 return [main, _tests];}`;
