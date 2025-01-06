@@ -81,6 +81,18 @@ const arraySymbol: ClassSymbol = {
   ofTypes: [new GenericParameterType("T")],
 };
 
+const array2DSymbol: ClassSymbol = {
+  symbolId: "Array2D",
+  symbolType: function (_transforms?: Transforms): SymbolType {
+    return new ArrayType(new ArrayType(new GenericParameterType("T")));
+  },
+  symbolScope: SymbolScope.program,
+  isClass: true,
+  abstract: false,
+  notInheritable: false,
+  ofTypes: [new GenericParameterType("T")],
+};
+
 const tupleSymbol: ClassSymbol = {
   symbolId: "Tuple",
   symbolType: function (_transforms?: Transforms): SymbolType {
@@ -160,6 +172,7 @@ export const elanSymbols = [
   iterableSymbol,
   tupleSymbol,
   arraySymbol,
+  array2DSymbol,
   listSymbol,
   funcSymbol,
   dictionarySymbol,

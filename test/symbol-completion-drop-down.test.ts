@@ -1569,6 +1569,7 @@ end main`;
 
     const expected = [
       ["Array", "*", "Array<of "],
+      ["Array2D", "*", "Array2D<of "],
       ["BlockGraphics", "*", "*"],
       ["Boolean", "*", "*"],
       ["CircleVG", "*", "*"],
@@ -1709,6 +1710,7 @@ end main`;
 
     const expected = [
       ["Array", "*", "*"],
+      ["Array2D", "*", "Array2D<of "],
       ["BlockGraphics", "*", "*"],
       ["Boolean", "*", "*"],
       ["CircleVG", "*", "*"],

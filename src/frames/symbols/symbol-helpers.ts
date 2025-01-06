@@ -19,6 +19,7 @@ import { GenericSymbolType } from "../interfaces/generic-symbol-type";
 import { IterableSymbolType } from "../interfaces/iterable-symbol-type";
 import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
+import { ReifyableSymbolType } from "../interfaces/reifyable-symbol-type";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { libraryKeyword } from "../keywords";
@@ -78,6 +79,12 @@ export function isSymbol(s?: Parent | Frame | ElanSymbol): s is ElanSymbol {
 
 export function isGenericSymbolType(s?: SymbolType | GenericSymbolType): s is GenericSymbolType {
   return !!s && "ofType" in s;
+}
+
+export function isReifyableSymbolType(
+  s?: SymbolType | ReifyableSymbolType,
+): s is ReifyableSymbolType {
+  return !!s && "reify" in s;
 }
 
 export function isVarStatement(s?: ElanSymbol): boolean {

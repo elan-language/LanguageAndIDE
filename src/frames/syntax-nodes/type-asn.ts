@@ -107,7 +107,7 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
     const st = symbol.symbolType(transforms());
 
     if (st instanceof ArrayType) {
-      return new ArrayType(this.safeGetGenericParameterSymbolType(0));
+      return st.reify([this.safeGetGenericParameterSymbolType(0)]);
     }
 
     if (st instanceof ListType) {
