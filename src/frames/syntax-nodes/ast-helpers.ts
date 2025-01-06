@@ -12,7 +12,7 @@ import { Class } from "../interfaces/class";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { AbstractDictionaryType } from "../symbols/abstract-dictionary-type";
-import { ArrayType } from "../symbols/array-list-type";
+import { ArrayType } from "../symbols/array-type";
 import { ClassType } from "../symbols/class-type";
 import { DictionaryImmutableType } from "../symbols/dictionary-immutable-type";
 import { DictionaryType } from "../symbols/dictionary-type";

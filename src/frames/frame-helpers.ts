@@ -17,7 +17,7 @@ import { Selectable } from "./interfaces/selectable";
 import { Statement } from "./interfaces/statement";
 import { SymbolType } from "./interfaces/symbol-type";
 import { CompileStatus, DisplayStatus, ParseStatus, RunStatus, TestStatus } from "./status-enums";
-import { ArrayType } from "./symbols/array-list-type";
+import { ArrayType } from "./symbols/array-type";
 import { ClassType } from "./symbols/class-type";
 import { DeconstructedListType } from "./symbols/deconstructed-list-type";
 import { DeconstructedRecordType } from "./symbols/deconstructed-record-type";

@@ -8,7 +8,7 @@ import {
 import { AstNode } from "../interfaces/ast-node";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
-import { ArrayType } from "../symbols/array-list-type";
+import { ArrayType } from "../symbols/array-type";
 import { IntType } from "../symbols/int-type";
 import { ListType } from "../symbols/list-type";
 import { isAnyDictionaryType, isGenericSymbolType } from "../symbols/symbol-helpers";

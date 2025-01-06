@@ -3,6 +3,7 @@ import { ReifyableSymbolType } from "../interfaces/reifyable-symbol-type";
 import { SymbolType } from "../interfaces/symbol-type";
 import { AbstractListType } from "./abstract-list-type";
 import { isReifyableSymbolType } from "./symbol-helpers";
+import { UnknownType } from "./unknown-type";
 
 export class ArrayType extends AbstractListType implements IterableSymbolType, ReifyableSymbolType {
   constructor(ofType: SymbolType) {
@@ -23,11 +24,13 @@ export class ArrayType extends AbstractListType implements IterableSymbolType, R
     return `Array`;
   }
 
-  reify(gt: SymbolType[]): ReifyableSymbolType {
+  reify(gts: SymbolType[]): ReifyableSymbolType {
     if (isReifyableSymbolType(this.ofType)) {
-      return new ArrayType(this.ofType.reify(gt));
+      return new ArrayType(this.ofType.reify(gts));
     }
 
-    return new ArrayType(gt[0]);
+    const gt = gts && gts.length >= 1 ? gts[0] : UnknownType.Instance;
+
+    return new ArrayType(gt);
   }
 }

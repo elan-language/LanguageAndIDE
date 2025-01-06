@@ -2,7 +2,7 @@ import { CompileError } from "../compile-error";
 import { mustBeCompatibleType } from "../compile-rules";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstNode } from "../interfaces/ast-node";
-import { ArrayType } from "../symbols/array-list-type";
+import { ArrayType } from "../symbols/array-type";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 

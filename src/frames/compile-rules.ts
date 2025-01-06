@@ -51,7 +51,7 @@ import { SymbolType } from "./interfaces/symbol-type";
 import { allKeywords, reservedWords } from "./keywords";
 import { LetStatement } from "./statements/let-statement";
 import { AbstractDictionaryType } from "./symbols/abstract-dictionary-type";
-import { ArrayType } from "./symbols/array-list-type";
+import { ArrayType } from "./symbols/array-type";
 import { BooleanType } from "./symbols/boolean-type";
 import { ClassType } from "./symbols/class-type";
 import { DeconstructedListType } from "./symbols/deconstructed-list-type";

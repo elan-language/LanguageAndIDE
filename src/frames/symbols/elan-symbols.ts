@@ -2,7 +2,7 @@ import { ClassSymbol } from "../interfaces/class-symbol";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../syntax-nodes/transforms";
-import { ArrayType } from "./array-list-type";
+import { ArrayType } from "./array-type";
 import { BooleanType } from "./boolean-type";
 import { DictionaryImmutableType } from "./dictionary-immutable-type";
 import { DictionaryType } from "./dictionary-type";

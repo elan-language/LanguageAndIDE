@@ -14,7 +14,7 @@ import { ElanSymbol } from "./frames/interfaces/elan-symbol";
 import { Scope } from "./frames/interfaces/scope";
 import { SymbolType } from "./frames/interfaces/symbol-type";
 import { AbstractDictionaryType } from "./frames/symbols/abstract-dictionary-type";
-import { ArrayType } from "./frames/symbols/array-list-type";
+import { ArrayType } from "./frames/symbols/array-type";
 import { BooleanType } from "./frames/symbols/boolean-type";
 import { ClassType } from "./frames/symbols/class-type";
 import { DictionaryImmutableType } from "./frames/symbols/dictionary-immutable-type";

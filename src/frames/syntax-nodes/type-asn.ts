@@ -3,13 +3,10 @@ import { mustMatchGenericParameters } from "../compile-rules";
 import { AstNode } from "../interfaces/ast-node";
 import { AstTypeNode } from "../interfaces/ast-type-node";
 import { Scope } from "../interfaces/scope";
-import { ArrayType } from "../symbols/array-list-type";
 import { ClassType } from "../symbols/class-type";
 import { DictionaryImmutableType } from "../symbols/dictionary-immutable-type";
 import { DictionaryType } from "../symbols/dictionary-type";
 import { FunctionType } from "../symbols/function-type";
-import { IterableType } from "../symbols/iterable-type";
-import { ListType } from "../symbols/list-type";
 import { StringType } from "../symbols/string-type";
 import {
   getGlobalScope,
@@ -17,6 +14,7 @@ import {
   isClassTypeDef,
   isIterableType,
   isListType,
+  isReifyableSymbolType,
 } from "../symbols/symbol-helpers";
 import { TupleType } from "../symbols/tuple-type";
 import { UnknownType } from "../symbols/unknown-type";
@@ -106,12 +104,8 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
     const symbol = globalScope.resolveSymbol(this.id, transforms(), this.scope);
     const st = symbol.symbolType(transforms());
 
-    if (st instanceof ArrayType) {
+    if (isReifyableSymbolType(st)) {
       return st.reify([this.safeGetGenericParameterSymbolType(0)]);
-    }
-
-    if (st instanceof ListType) {
-      return new ListType(this.safeGetGenericParameterSymbolType(0));
     }
 
     if (st instanceof DictionaryType) {
@@ -130,10 +124,6 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
 
     if (st instanceof TupleType) {
       return new TupleType(this.genericParameters.map((p) => p.symbolType()));
-    }
-
-    if (st instanceof IterableType) {
-      return new IterableType(this.safeGetGenericParameterSymbolType(0));
     }
 
     if (st instanceof FunctionType) {

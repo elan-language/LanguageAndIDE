@@ -28,7 +28,7 @@ import { isAstIdNode, isAstQualifiedNode, transforms } from "../syntax-nodes/ast
 import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractDictionaryType } from "./abstract-dictionary-type";
 import { AbstractListType } from "./abstract-list-type";
-import { ArrayType } from "./array-list-type";
+import { ArrayType } from "./array-type";
 import { BooleanType } from "./boolean-type";
 import { ClassType } from "./class-type";
 import { DictionaryImmutableType } from "./dictionary-immutable-type";
