@@ -111,6 +111,9 @@ export class StdLib {
   @elanConstant(ElanInt) yellow = 0xffff00;
   @elanConstant(ElanInt) brown = 0xa52a2a;
 
+  @elanConstant(ElanBoolean) true = true;
+  @elanConstant(ElanBoolean) false = false;
+
   @elanConstant()
   pi: number = Math.PI;
 

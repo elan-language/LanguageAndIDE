@@ -114,7 +114,7 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    await assertAutocompletesWithString(fileImpl, "expr5", " ", 69);
+    await assertAutocompletesWithString(fileImpl, "expr5", " ", 71);
   });
 
   test("Pass_LocalVarsCaseInsensitive1", async () => {
@@ -1295,7 +1295,10 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [["alpha", "*", "*"]] as [string, string, string][];
+    const expected = [
+      ["alpha", "*", "*"],
+      ["false", "*", "*"],
+    ] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "expr8", "abs(al", expected);
   });
