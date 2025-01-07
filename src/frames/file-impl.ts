@@ -58,6 +58,7 @@ import { DuplicateSymbol } from "./symbols/duplicate-symbol";
 import { elanSymbols } from "./symbols/elan-symbols";
 import { isSymbol, symbolMatches } from "./symbols/symbol-helpers";
 import { Transforms } from "./syntax-nodes/transforms";
+import { InterfaceFrame } from "./globals/interface-frame";
 
 // for web editor bundle
 export { CodeSourceFromString };
@@ -545,6 +546,9 @@ export class FileImpl implements File, Scope {
   }
   createAbstractClass(): Frame {
     return new AbstractClass(this);
+  }
+  createInterface(): Frame {
+    return new InterfaceFrame(this);
   }
   createRecord(): Frame {
     return new RecordFrame(this);

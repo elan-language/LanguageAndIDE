@@ -1,6 +1,7 @@
 import { Profile } from "./interfaces/profile";
 import {
   abstractFunctionKeywords,
+  abstractKeyword,
   abstractProcedureKeywords,
   abstractPropertyKeywords,
   assertKeyword,
@@ -17,6 +18,7 @@ import {
   forKeyword,
   functionKeyword,
   ifKeyword,
+  interfaceKeyword,
   letKeyword,
   mainKeyword,
   matchKeyword,
@@ -27,6 +29,7 @@ import {
   privatePropertyKeywords,
   procedureKeyword,
   propertyKeyword,
+  recordKeyword,
   repeatKeyword,
   returnKeyword,
   setKeyword,
@@ -35,7 +38,7 @@ import {
   throwKeyword,
   tryKeyword,
   variableKeyword,
-  whileKeyword,
+  whileKeyword
 } from "./keywords";
 
 export class DefaultProfile implements Profile {
@@ -45,6 +48,9 @@ export class DefaultProfile implements Profile {
     procedureKeyword,
     functionKeyword,
     classKeyword,
+    abstractKeyword,
+    interfaceKeyword,
+    recordKeyword,
     constantKeyword,
     enumKeyword,
     testKeyword,

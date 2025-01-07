@@ -12,6 +12,7 @@ import {
   commentMarker,
   constructorKeyword,
   functionKeyword,
+  interfaceKeyword,
   privateFunctionKeywords,
   privateProcedureKeywords,
   privatePropertyKeywords,
@@ -59,9 +60,11 @@ export class MemberSelector extends AbstractSelector implements Member {
     // Reminder: need to use is... methods rather than instanceof because latter creates circular dependencies
     let result = false;
     if (keyword.startsWith(abstractKeyword)) {
-      result = this.class.isAbstract;
+      result = this.class.isAbstract || this.class.isInterface;
+    } else if (this.class.isInterface) {
+      result = keyword === commentMarker;
     } else if (this.class.isRecord) {
-      result = keyword === propertyKeyword;
+      result = keyword === propertyKeyword || keyword === commentMarker;
     } else if (keyword === constructorKeyword) {
       result = this.class.isConcrete && !this.getClass().getConstructor();
     } else {
