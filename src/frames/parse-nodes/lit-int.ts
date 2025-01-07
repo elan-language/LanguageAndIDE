@@ -21,4 +21,8 @@ export class LitInt extends AbstractParseNode {
       }
     }
   }
+
+  renderAsHtml(): string {
+    return `<el-lit>${super.renderAsHtml()}</el-lit>`;
+  }
 }

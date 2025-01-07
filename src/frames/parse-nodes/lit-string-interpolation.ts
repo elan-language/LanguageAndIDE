@@ -17,6 +17,6 @@ export class LitStringInterpolation extends AbstractSequence {
     }
   }
   renderAsHtml(): string {
-    return `</el-str>{${this.expr!.renderAsHtml()}}<el-str>`; //Tags appear wrong way around - because field is breaking out of the string.
+    return `</el-lit>{${this.expr!.renderAsHtml()}}<el-lit>`; //Tags appear wrong way around - because field is breaking out of the string.
   }
 }

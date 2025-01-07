@@ -117,7 +117,7 @@ suite("Field Parsing Tests", () => {
     assert.equal(expr.textAsSource(), `"{op} times {op2} equals {op1*op2}"`);
     assert.equal(
       expr.textAsHtml(),
-      `"<el-str></el-str>{op}<el-str> times </el-str>{op2}<el-str> equals </el-str>{op1*op2}<el-str></el-str>"`,
+      `"<el-lit></el-lit>{op}<el-lit> times </el-lit>{op2}<el-lit> equals </el-lit>{op1*op2}<el-lit></el-lit>"`,
     );
   });
 
@@ -129,7 +129,10 @@ suite("Field Parsing Tests", () => {
     expected.parseCurrentText();
     assert.equal(expected.readParseStatus(), ParseStatus.valid);
     assert.equal(expected.textAsSource(), `{4, 5, 6, 24, 26, 44, 45, 46}`);
-    assert.equal(expected.textAsHtml(), `{4, 5, 6, 24, 26, 44, 45, 46}`);
+    assert.equal(
+      expected.textAsHtml(),
+      `{<el-lit>4</el-lit>, <el-lit>5</el-lit>, <el-lit>6</el-lit>, <el-lit>24</el-lit>, <el-lit>26</el-lit>, <el-lit>44</el-lit>, <el-lit>45</el-lit>, <el-lit>46</el-lit>}`,
+    );
   });
   test("parse instance dot method", () => {
     const test = new TestFrame(new FileImpl(hash, new DefaultProfile(), transforms()));

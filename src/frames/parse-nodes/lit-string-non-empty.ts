@@ -27,6 +27,6 @@ export class LitStringNonEmpty extends AbstractSequence {
     }
   }
   renderAsHtml(): string {
-    return `"<el-str>${this.segments!.renderAsHtml()}</el-str>"`;
+    return `"<el-lit>${this.segments!.renderAsHtml()}</el-lit>"`;
   }
 }

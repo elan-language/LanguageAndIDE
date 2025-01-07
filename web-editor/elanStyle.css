@@ -53,7 +53,7 @@ el-method, el-method el-field.ok el-txt {
 el-type {
     color: var(--type);
 }
-el-str {
+el-lit {
     color: var(--string);
     white-space: pre;
 }
@@ -152,10 +152,10 @@ el-expand {
 }
 
 /* Fields */
-el-field.warning, el-field.warning el-kw, el-field.warning el-type, el-field.warning el-str, el-field.warning el-method {
+el-field.warning, el-field.warning el-kw, el-field.warning el-type, el-field.warning el-lit, el-field.warning el-method {
     background-color: var(--warning);
 }
-.error el-field, el-field.error el-kw, el-field.error  el-type, el-field.error  el-str, el-field.error el-method {
+.error el-field, el-field.error el-kw, el-field.error  el-type, el-field.error  el-lit, el-field.error el-method {
     color: var(--defaultText);
 }
 

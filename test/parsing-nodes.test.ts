@@ -246,9 +246,25 @@ suite("Parsing Nodes", () => {
     testNodeParse(new LitInt(), "1.23", ParseStatus.valid, "1", ".23", "1", "");
     testNodeParse(new LitInt(), "a", ParseStatus.invalid, "", "a", "", "");
     //Hex & binary
-    testNodeParse(new LitInt(), "0xfa3c", ParseStatus.valid, "0xfa3c", "", "", "0xfa3c");
+    testNodeParse(
+      new LitInt(),
+      "0xfa3c",
+      ParseStatus.valid,
+      "0xfa3c",
+      "",
+      "",
+      "<el-lit>0xfa3c</el-lit>",
+    );
     testNodeParse(new LitInt(), "0xfa3g", ParseStatus.valid, "0xfa3", "g", "", "");
-    testNodeParse(new LitInt(), "0b01101", ParseStatus.valid, "0b01101", "", "", "0b01101");
+    testNodeParse(
+      new LitInt(),
+      "0b01101",
+      ParseStatus.valid,
+      "0b01101",
+      "",
+      "",
+      "<el-lit>0b01101</el-lit>",
+    );
     testNodeParse(new LitInt(), "0b01102", ParseStatus.valid, "0b0110", "2", "", "");
   });
   test("LitFloat", () => {
@@ -726,7 +742,7 @@ suite("Parsing Nodes", () => {
       "",
       "",
       "",
-      `{"<el-str>apple</el-str>", "<el-str>pear</el-str>"}`,
+      `{"<el-lit>apple</el-lit>", "<el-lit>pear</el-lit>"}`,
     );
     testNodeParse(
       new ListNode(() => new LiteralNode()),
@@ -735,7 +751,7 @@ suite("Parsing Nodes", () => {
       "",
       "",
       "",
-      `{"<el-str>apple</el-str>", "<el-str>pear</el-str>"}`,
+      `{"<el-lit>apple</el-lit>", "<el-lit>pear</el-lit>"}`,
     );
   });
   test("List of expressions", () => {
@@ -1248,9 +1264,17 @@ suite("Parsing Nodes", () => {
       "",
       "",
       "",
-      `{"<el-str>apple</el-str>", "<el-str>pear</el-str>"}`,
+      `{"<el-lit>apple</el-lit>", "<el-lit>pear</el-lit>"}`,
     );
-    testNodeParse(new LiteralNode(), `{4, 5, 2, 3}`, ParseStatus.valid, "", "", "", `{4, 5, 2, 3}`);
+    testNodeParse(
+      new LiteralNode(),
+      `{4, 5, 2, 3}`,
+      ParseStatus.valid,
+      "",
+      "",
+      "",
+      `{<el-lit>4</el-lit>, <el-lit>5</el-lit>, <el-lit>2</el-lit>, <el-lit>3</el-lit>}`,
+    );
   });
   test("DeconstructedList", () => {
     testNodeParse(new DeconstructedList(), `a:b`, ParseStatus.valid, "", "", "");
@@ -1305,7 +1329,7 @@ suite("Parsing Nodes", () => {
       `"abc"`,
       "",
       "",
-      `"<el-str>abc</el-str>"`,
+      `"<el-lit>abc</el-lit>"`,
     );
     testNodeParse(
       new LitString(),
@@ -1314,7 +1338,7 @@ suite("Parsing Nodes", () => {
       `"abc def"`,
       "",
       "",
-      `"<el-str>abc def</el-str>"`,
+      `"<el-lit>abc def</el-lit>"`,
     );
     testNodeParse(new LitString(), `"abc`, ParseStatus.incomplete, `"abc`, "", "", "");
     testNodeParse(new LitString(), `"`, ParseStatus.incomplete, `"`, "", "", "");
@@ -1328,7 +1352,7 @@ suite("Parsing Nodes", () => {
       `"<p>abc</p>"`,
       "",
       `"<p>abc</p>"`,
-      `"<el-str>&lt;p&gt;abc&lt;/p&gt;</el-str>"`,
+      `"<el-lit>&lt;p&gt;abc&lt;/p&gt;</el-lit>"`,
     );
     testNodeParse(
       new LitStringNonEmpty(),
@@ -1337,7 +1361,7 @@ suite("Parsing Nodes", () => {
       `"&#123;curly braces&#125;"`,
       "",
       `"&#123;curly braces&#125;"`,
-      `"<el-str>&amp;#123;curly braces&amp;#125;</el-str>"`,
+      `"<el-lit>&amp;#123;curly braces&amp;#125;</el-lit>"`,
     );
   });
   test("Interpolated strings", () => {
@@ -1530,40 +1554,41 @@ suite("Parsing Nodes", () => {
     testNodeParse(new BinaryOperation(), `not`, ParseStatus.invalid, "", "not", "", "");
 
     //test expressions
-    testNodeParse(new BinaryExpression(), `3+`, ParseStatus.incomplete, "3+", "", "3 + ", "3 + ");
-    testNodeParse(new BinaryExpression(), `3 +`, ParseStatus.incomplete, "3 +", "", "3 + ", "3 + ");
-    testNodeParse(new BinaryExpression(), `3 `, ParseStatus.incomplete, "3 ", "", "3 ", "3 ");
-    testNodeParse(new BinaryExpression(), `3+4`, ParseStatus.valid, "3+4", "", "3 + 4", "3 + 4");
     testNodeParse(
       new BinaryExpression(),
-      `3>=4`,
-      ParseStatus.valid,
-      "3>=4",
-      "",
-      "3 >= 4",
-      "3 >= 4",
-    );
-    testNodeParse(new BinaryExpression(), `3>`, ParseStatus.incomplete, "3>", "", "3>", "3>");
-    testNodeParse(new BinaryExpression(), `3> `, ParseStatus.incomplete, "3> ", "", "3 > ", "3 > ");
-    testNodeParse(new BinaryExpression(), `3> 4`, ParseStatus.valid, "3> 4", "", "3 > 4", "3 > 4");
-    testNodeParse(new BinaryExpression(), `3>4`, ParseStatus.valid, "3>4", "", "3 > 4", "3 > 4");
-    testNodeParse(
-      new BinaryExpression(),
-      `3 > 4`,
-      ParseStatus.valid,
-      "3 > 4",
-      "",
-      "3 > 4",
-      "3 > 4",
-    );
-    testNodeParse(
-      new BinaryExpression(),
-      `3>=`,
+      `3+`,
       ParseStatus.incomplete,
-      "3>=",
+      "3+",
       "",
-      "3 >= ",
-      "3 >= ",
+      "3 + ",
+      "<el-lit>3</el-lit> + ",
+    );
+    testNodeParse(
+      new BinaryExpression(),
+      `3 +`,
+      ParseStatus.incomplete,
+      "3 +",
+      "",
+      "3 + ",
+      "<el-lit>3</el-lit> + ",
+    );
+    testNodeParse(
+      new BinaryExpression(),
+      `3 `,
+      ParseStatus.incomplete,
+      "3 ",
+      "",
+      "3 ",
+      "<el-lit>3</el-lit> ",
+    );
+    testNodeParse(
+      new BinaryExpression(),
+      `3+4`,
+      ParseStatus.valid,
+      "3+4",
+      "",
+      "3 + 4",
+      "<el-lit>3</el-lit> + <el-lit>4</el-lit>",
     );
     testNodeParse(
       new BinaryExpression(),
@@ -1572,8 +1597,15 @@ suite("Parsing Nodes", () => {
       "3>=4",
       "",
       "3 >= 4",
-      "3 >= 4",
+      "<el-lit>3</el-lit> >= <el-lit>4</el-lit>",
     );
+    testNodeParse(new BinaryExpression(), `3>`, ParseStatus.incomplete, "3>", "", "3>");
+    testNodeParse(new BinaryExpression(), `3> `, ParseStatus.incomplete, "3> ", "", "3 > ");
+    testNodeParse(new BinaryExpression(), `3> 4`, ParseStatus.valid, "3> 4", "", "3 > 4");
+    testNodeParse(new BinaryExpression(), `3>4`, ParseStatus.valid, "3>4", "", "3 > 4");
+    testNodeParse(new BinaryExpression(), `3 > 4`, ParseStatus.valid, "3 > 4", "", "3 > 4");
+    testNodeParse(new BinaryExpression(), `3>=`, ParseStatus.incomplete, "3>=", "", "3 >= ");
+    testNodeParse(new BinaryExpression(), `3>=4`, ParseStatus.valid, "3>=4", "", "3 >= 4");
     testNodeParse(
       new BinaryExpression(),
       `3 is 4`,
@@ -1581,7 +1613,7 @@ suite("Parsing Nodes", () => {
       "3 is 4",
       "",
       "3 is 4",
-      "3<el-kw> is </el-kw>4",
+      "<el-lit>3</el-lit><el-kw> is </el-kw><el-lit>4</el-lit>",
     );
     testNodeParse(
       new BinaryExpression(),
@@ -1590,7 +1622,6 @@ suite("Parsing Nodes", () => {
       "11 div 3",
       "",
       "11 div 3",
-      "11<el-kw> div </el-kw>3",
     );
   });
   ignore_test("RevisedParseMethodForAbstractSequence#857", () => {

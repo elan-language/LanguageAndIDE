@@ -28,6 +28,9 @@ export class LitFloat extends AbstractSequence {
       super.parseText(text);
     }
   }
+  renderAsHtml(): string {
+    return `<el-lit>${super.renderAsHtml()}</el-lit>`;
+  }
   compile(): string {
     return this.matchedText.toUpperCase();
   } //For the exponent e -> E
