@@ -3,6 +3,7 @@ import { CodeSource } from "../code-source";
 import { mustBeImmutableType, mustBeUniqueNameInScope } from "../compile-rules";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
+import { File } from "../interfaces/file";
 import { Frame } from "../interfaces/frame";
 import { SymbolType } from "../interfaces/symbol-type";
 import { constructorKeyword, recordKeyword, thisKeyword } from "../keywords";
@@ -20,9 +21,11 @@ import { Transforms } from "../syntax-nodes/transforms";
 import { ClassFrame } from "./class-frame";
 
 export class RecordFrame extends ClassFrame {
-  isInheritable: boolean = false;
-
-  public abstract: boolean = false;
+  constructor(parent: File) {
+    super(parent);
+    this.isNotInheritable = true;
+    this.isRecord = true;
+  }
 
   ofTypes: SymbolType[] = [];
   genericParamMatches: Map<string, SymbolType> = new Map<string, SymbolType>();
@@ -31,9 +34,6 @@ export class RecordFrame extends ClassFrame {
     return recordKeyword;
   }
 
-  override isRecord(): boolean {
-    return true;
-  }
   get symbolId() {
     return this.name.text;
   }

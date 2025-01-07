@@ -26,19 +26,9 @@ import { Transforms } from "../syntax-nodes/transforms";
 import { ClassFrame } from "./class-frame";
 
 export class ConcreteClass extends ClassFrame {
-  isCollapsible: boolean = true;
-  isParent: boolean = true;
-  isClass: boolean = true;
-  abstract: boolean = false;
-  isImmutable: () => boolean = () => false;
-  public notInheritable = false;
-
   constructor(parent: File) {
     super(parent);
-  }
-
-  override isConcrete(): boolean {
-    return true;
+    this.isConcrete = true;
   }
 
   ofTypes: SymbolType[] = [];

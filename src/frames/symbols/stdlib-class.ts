@@ -13,8 +13,8 @@ import { UnknownSymbol } from "./unknown-symbol";
 export class StdLibClass implements Class {
   constructor(
     private readonly name: string,
-    public readonly abstract: boolean,
-    public readonly notInheritable: boolean,
+    public readonly isAbstract: boolean,
+    public readonly isNotInheritable: boolean,
     public readonly immutable: boolean,
     public readonly children: ElanSymbol[],
     public readonly ofTypes: SymbolType[],
@@ -40,8 +40,8 @@ export class StdLibClass implements Class {
   symbolType(_transforms?: Transforms): SymbolType {
     return new ClassType(
       this.name,
-      this.abstract,
-      this.notInheritable,
+      this.isAbstract,
+      this.isNotInheritable,
       this.immutable,
       this.inheritTypes,
       this,

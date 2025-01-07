@@ -33,21 +33,10 @@ import { Transforms } from "../syntax-nodes/transforms";
 import { ClassFrame } from "./class-frame";
 
 export class AbstractClass extends ClassFrame {
-  isCollapsible: boolean = true;
-  isParent: boolean = true;
-  isClass: boolean = true;
-  isImmutable: () => boolean = () => false;
-  abstract: boolean = true;
-  public name: TypeNameField;
-  public notInheritable = false;
-
   constructor(parent: File) {
     super(parent);
     this.name = new TypeNameField(this);
-  }
-
-  override isAbstract(): boolean {
-    return true;
+    this.isAbstract = true;
   }
 
   ofTypes: SymbolType[] = [];

@@ -55,9 +55,11 @@ export abstract class ClassFrame
   isCollapsible: boolean = true;
   isParent: boolean = true;
   isClass: boolean = true;
-  abstract: boolean = false;
+  isAbstract: boolean = false;
+  isConcrete: boolean = false;
+  isRecord: boolean = false;
   public name: TypeNameField;
-  public notInheritable = false;
+  public isNotInheritable = false;
   public inheritance: InheritsFrom;
   private _children: Array<Frame> = new Array<Frame>();
 
@@ -66,18 +68,6 @@ export abstract class ClassFrame
     this.name = new TypeNameField(this);
     this.inheritance = new InheritsFrom(this);
     this.getChildren().push(new MemberSelector(this));
-  }
-
-  isConcrete(): boolean {
-    return false;
-  }
-
-  isAbstract(): boolean {
-    return false;
-  }
-
-  isRecord(): boolean {
-    return false;
   }
 
   ofTypes: SymbolType[] = [];

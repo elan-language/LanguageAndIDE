@@ -123,7 +123,7 @@ ${this.indent()}}\r\n`;
   }
 
   processKey(e: editorEvent): boolean {
-    if (!this.getClass().abstract && e.key === "p" && e.modKey.control) {
+    if (!this.getClass().isAbstract && e.key === "p" && e.modKey.control) {
       this.private = !this.private;
       return true;
     } else {
