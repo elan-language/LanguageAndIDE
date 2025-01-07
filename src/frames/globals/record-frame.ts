@@ -30,6 +30,10 @@ export class RecordFrame extends ClassFrame {
   initialKeywords(): string {
     return recordKeyword;
   }
+
+  override isRecord(): boolean {
+    return true;
+  }
   get symbolId() {
     return this.name.text;
   }
@@ -45,7 +49,7 @@ export class RecordFrame extends ClassFrame {
   }
 
   getIdPrefix(): string {
-    return "class"; //TODO should be record
+    return "class";
   }
 
   public renderAsHtml(): string {

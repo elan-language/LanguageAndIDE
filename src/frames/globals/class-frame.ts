@@ -68,6 +68,18 @@ export abstract class ClassFrame
     this.getChildren().push(new MemberSelector(this));
   }
 
+  isConcrete(): boolean {
+    return false;
+  }
+
+  isAbstract(): boolean {
+    return false;
+  }
+
+  isRecord(): boolean {
+    return false;
+  }
+
   ofTypes: SymbolType[] = [];
   genericParamMatches: Map<string, SymbolType> = new Map<string, SymbolType>();
 

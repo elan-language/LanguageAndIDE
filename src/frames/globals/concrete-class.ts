@@ -37,6 +37,10 @@ export class ConcreteClass extends ClassFrame {
     super(parent);
   }
 
+  override isConcrete(): boolean {
+    return true;
+  }
+
   ofTypes: SymbolType[] = [];
   genericParamMatches: Map<string, SymbolType> = new Map<string, SymbolType>();
 

@@ -1,8 +1,6 @@
 import { AbstractSelector } from "../abstract-selector";
 import { singleIndent } from "../frame-helpers";
-import { AbstractClass } from "../globals/abstract-class";
 import { ClassFrame } from "../globals/class-frame";
-import { RecordFrame } from "../globals/record-frame";
 import { Frame } from "../interfaces/frame";
 import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
@@ -60,11 +58,11 @@ export class MemberSelector extends AbstractSelector implements Member {
   validWithinCurrentContext(keyword: string, _userEntry: boolean): boolean {
     let result = false;
     if (keyword.startsWith(abstractKeyword)) {
-      result = this.class instanceof ClassFrame;
-    } else if (this.class instanceof RecordFrame) {
+      result = this.class.isAbstract();
+    } else if (this.class.isRecord()) {
       result = keyword === propertyKeyword;
     } else if (keyword === constructorKeyword) {
-      result = !(this.class instanceof AbstractClass) && !this.getClass().getConstructor();
+      result = this.class.isConcrete() && !this.getClass().getConstructor();
     } else {
       result = true;
     }

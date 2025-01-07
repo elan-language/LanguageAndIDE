@@ -46,6 +46,10 @@ export class AbstractClass extends ClassFrame {
     this.name = new TypeNameField(this);
   }
 
+  override isAbstract(): boolean {
+    return true;
+  }
+
   ofTypes: SymbolType[] = [];
   genericParamMatches: Map<string, SymbolType> = new Map<string, SymbolType>();
 
