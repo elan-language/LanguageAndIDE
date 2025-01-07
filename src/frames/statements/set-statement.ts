@@ -3,7 +3,6 @@ import { CodeSource } from "../code-source";
 import {
   mustBeCompatibleNode,
   mustBeDeconstructableType,
-  mustBePropertyPrefixedOnAssignable,
   mustNotBeConstant,
   mustNotBeCounter,
   mustNotBeLet,
@@ -94,13 +93,6 @@ export class SetStatement extends AbstractFrame implements Statement {
     mustNotBeParameter(assignableAstNode, this.getParent(), this.compileErrors, this.htmlId);
     mustNotBeConstant(assignableAstNode, this.compileErrors, this.htmlId);
     mustNotBeCounter(assignableAstNode, this.compileErrors, this.htmlId);
-
-    mustBePropertyPrefixedOnAssignable(
-      assignableAstNode,
-      this.getParent(),
-      this.compileErrors,
-      this.htmlId,
-    );
 
     for (const id of ids) {
       const symbol = this.getParent().resolveSymbol(id, transforms, this);
