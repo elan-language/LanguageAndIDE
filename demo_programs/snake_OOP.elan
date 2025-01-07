@@ -1,4 +1,4 @@
-# e4086877894a3d7560f887843ab6c237d5566d12a5f9260e9f3b55b0ae7f3d7c Elan Beta 6 valid
+# 557747f5884df42a0653bcf87de718158dea26bfb6aafa09c461d590f612a417 Elan Beta 6 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -35,19 +35,19 @@ class Snake
 
   procedure clockTick(key as String, out apple as Apple)
     call setDirection(key)
-    set property.priorTail to body[0]
+    set property.priorTail to property.body[0]
     call body.append(property.head)
     set property.head to property.head.getAdjacentSquare(property.currentDir)
     if property.head is apple.location then
       call apple.newRandomPosition(this)
     else
-      set property.body to body[1..]
+      set property.body to property.body[1..]
     end if
   end procedure
 
   function updateGraphics(gr as BlockGraphics) returns BlockGraphics
     variable gr2 set to property.head.updateGraphics(gr, green)
-    if body[0] isnt property.priorTail then
+    if property.body[0] isnt property.priorTail then
       set gr2 to property.priorTail.updateGraphics(gr, white)
     end if
     return gr2

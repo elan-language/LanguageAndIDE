@@ -1,4 +1,4 @@
-# 4563c312826d9fe32defe55738d3c337c912c58741f5702393c6f6552ec43ffa Elan Beta 6 valid
+# abce1bd3e9bffec8493640182c68f6f9b97fc2d94bb9112ea676af9a3d8e8ec6 Elan Beta 6 valid
 
 # Turing Machine that converts a Year from decimal to roman numerals
 # Run the program, enter the number to convert and watch the machine in action.
@@ -72,7 +72,7 @@ class TuringMachine
 
   procedure write(newSymbol as String)
     let hp be property.headPosition
-    set property.tape to tape[..hp] + newSymbol + tape[hp + 1..]
+    set property.tape to property.tape[..hp] + newSymbol + property.tape[hp + 1..]
   end procedure
 
   procedure execute(rule as Rule)
