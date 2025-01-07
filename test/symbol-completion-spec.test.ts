@@ -662,7 +662,7 @@ suite("Symbol Completion Spec", () => {
         TokenType.id_variable,
         TokenType.method_procedure,
       ],
-      ["library,property"],
+      ["global,library,property"],
       "",
     );
   });

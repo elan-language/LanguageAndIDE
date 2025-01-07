@@ -7,11 +7,140 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("Shadowing", () => {
+  test("Pass_DisambiguateLocalVariableFromLibConstant", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable pi set to library.pi
+  print pi
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var pi = _stdlib.pi;
+  system.printLine(_stdlib.asString(pi));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "3.141592653589793");
+  });
+
+  ignore_test("Pass_DisambiguateLocalVariableFromGlobalConstant", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+constant f set to 1
+
+main
+  variable f set to 2
+  print f
+  print global.f
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "3.141592653589793");
+  });
+
+  test("Pass_DisambiguateLocalLetFromLibConstant", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  let pi be library.pi
+  print pi
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  const pi = _stdlib.pi;
+  system.printLine(_stdlib.asString(pi));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "3.141592653589793");
+  });
+
+  test("Pass_DisambiguateLibFunctionFromLocalAndInstanceFunctions", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+    variable f set to new Foo()
+    print f.sin(1)
+    print sin(1)
+    print library.sin(1)
+end main
+
+function sin(x as Float) returns Float
+    return 111
+end function
+
+class Foo
+    constructor()
+    end constructor
+
+    function sin(x as Float) returns Float
+      return 222
+    end function
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var f = system.initialise(new Foo());
+  system.printLine(_stdlib.asString(f.sin(1)));
+  system.printLine(_stdlib.asString(sin(1)));
+  system.printLine(_stdlib.asString(_stdlib.sin(1)));
+}
+
+function sin(x) {
+  return 111;
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, []);};
+  constructor() {
+
+  }
+
+  sin(x) {
+    return 222;
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "2221110.8414709848078965");
+  });
+
   test("Fail_LocalShadowsConstant", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
@@ -177,111 +306,6 @@ end function`;
     assertDoesNotCompile(fileImpl, [
       "The identifier 'x' is already used for a constant and cannot be re-defined here.",
     ]);
-  });
-
-  test("Pass_DisambiguateLocalVariableFromLibConstant", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-  variable pi set to library.pi
-  print pi
-end main`;
-
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-async function main() {
-  var pi = _stdlib.pi;
-  system.printLine(_stdlib.asString(pi));
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "3.141592653589793");
-  });
-
-  test("Pass_DisambiguateLocalLetFromLibConstant", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-  let pi be library.pi
-  print pi
-end main`;
-
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-async function main() {
-  const pi = _stdlib.pi;
-  system.printLine(_stdlib.asString(pi));
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "3.141592653589793");
-  });
-
-  test("Pass_DisambiguateLibFunctionFromLocalAndInstanceFunctions", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-    variable f set to new Foo()
-    print f.sin(1)
-    print sin(1)
-    print library.sin(1)
-end main
-
-function sin(x as Float) returns Float
-    return 111
-end function
-
-class Foo
-    constructor()
-    end constructor
-
-    function sin(x as Float) returns Float
-      return 222
-    end function
-end class`;
-
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-async function main() {
-  var f = system.initialise(new Foo());
-  system.printLine(_stdlib.asString(f.sin(1)));
-  system.printLine(_stdlib.asString(sin(1)));
-  system.printLine(_stdlib.asString(_stdlib.sin(1)));
-}
-
-function sin(x) {
-  return 111;
-}
-
-class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, []);};
-  constructor() {
-
-  }
-
-  sin(x) {
-    return 222;
-  }
-
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "2221110.8414709848078965");
   });
 
   test("Fail_global", async () => {
