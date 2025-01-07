@@ -24,6 +24,7 @@ import { VariableOrProperty } from "../src/frames/parse-nodes/variable-or-proper
 import { ParseStatus } from "../src/frames/status-enums";
 import { TokenType } from "../src/frames/symbol-completion-helpers";
 import { testSymbolCompletionSpec } from "./testHelpers";
+import { MethodNameMode } from "../src/frames/parse-nodes/method-name-node";
 
 suite("Symbol Completion Spec", () => {
   test("MethodCallNode", () => {
@@ -31,7 +32,7 @@ suite("Symbol Completion Spec", () => {
       new MethodCallNode(),
       "x",
       ParseStatus.incomplete,
-      IdentifierNode.name,
+      MethodNameMode.name,
       "x",
       [TokenType.method_function, TokenType.method_system],
       [],

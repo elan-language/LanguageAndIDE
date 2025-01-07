@@ -5,7 +5,7 @@ import { TokenType } from "../symbol-completion-helpers";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { matchRegEx } from "./parse-node-helpers";
 
-export class IdentifierNode extends AbstractParseNode {
+export class MethodNameMode extends AbstractParseNode {
   private tokenTypes: Set<TokenType>;
   private contextGenerator: () => string;
 
@@ -43,9 +43,5 @@ export class IdentifierNode extends AbstractParseNode {
 
   symbolCompletion_context(): string {
     return this.contextGenerator();
-  }
-
-  override renderAsHtml(): string {
-    return `<el-id>${super.renderAsHtml()}</el-id>`;
   }
 }

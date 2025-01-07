@@ -57,6 +57,10 @@ el-lit {
     color: var(--string);
     white-space: pre;
 }
+el-id {
+    color: var(--namedValue);
+    white-space: pre;
+}
 
 el-regex {
     color: var(--string);
