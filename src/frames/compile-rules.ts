@@ -1046,6 +1046,7 @@ export function mustNotBeRedefined(
   if (
     variable instanceof UnknownSymbol ||
     variable.symbolScope === SymbolScope.member ||
+    variable.symbolScope === SymbolScope.program ||
     variable.symbolScope === SymbolScope.stdlib
   ) {
     // ok

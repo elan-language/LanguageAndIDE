@@ -22,7 +22,7 @@ import { Parent } from "../interfaces/parent";
 import { ReifyableSymbolType } from "../interfaces/reifyable-symbol-type";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
-import { libraryKeyword } from "../keywords";
+import { globalKeyword, libraryKeyword } from "../keywords";
 import { SymbolCompletionSpec, TokenType } from "../symbol-completion-helpers";
 import { isAstIdNode, isAstQualifiedNode, transforms } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
@@ -204,6 +204,9 @@ function internalUpdateScopeAndQualifier(
     currentScope = isScope(classSymbol) ? classSymbol : currentScope;
   } else if (isAstIdNode(value) && value.id === libraryKeyword) {
     currentScope = getGlobalScope(currentScope).libraryScope;
+    qualifier = undefined;
+  } else if (isAstIdNode(value) && value.id === globalKeyword) {
+    currentScope = getGlobalScope(currentScope);
     qualifier = undefined;
   } else if (qualifier) {
     currentScope = getGlobalScope(currentScope).libraryScope;

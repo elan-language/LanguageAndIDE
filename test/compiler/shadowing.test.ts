@@ -37,7 +37,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "3.141592653589793");
   });
 
-  ignore_test("Pass_DisambiguateLocalVariableFromGlobalConstant", async () => {
+  test("Pass_DisambiguateLocalVariableFromGlobalConstant", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 constant f set to 1
@@ -49,6 +49,15 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {
+  f = 1;
+
+};
+async function main() {
+  var f = 2;
+  system.printLine(_stdlib.asString(f));
+  system.printLine(_stdlib.asString(global.f));
+}
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -57,7 +66,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "3.141592653589793");
+    await assertObjectCodeExecutes(fileImpl, "21");
   });
 
   test("Pass_DisambiguateLocalLetFromLibConstant", async () => {
@@ -141,7 +150,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "2221110.8414709848078965");
   });
 
-  test("Fail_LocalShadowsConstant", async () => {
+  ignore_test("Fail_LocalShadowsConstant", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 constant a set to 4
@@ -161,7 +170,7 @@ end main`;
     ]);
   });
 
-  test("Fail_IdShadowsFunction", async () => {
+  ignore_test("Fail_IdShadowsFunction", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -186,7 +195,7 @@ end function`;
     ]);
   });
 
-  test("Fail_IdShadowsProcedure", async () => {
+  ignore_test("Fail_IdShadowsProcedure", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -285,7 +294,7 @@ end main`;
     ]);
   });
 
-  test("Fail_ParameterShadowsConst", async () => {
+  ignore_test("Fail_ParameterShadowsConst", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 constant x set to 1
