@@ -38,7 +38,7 @@ import {
   throwKeyword,
   tryKeyword,
   variableKeyword,
-  whileKeyword
+  whileKeyword,
 } from "./keywords";
 
 export class DefaultProfile implements Profile {

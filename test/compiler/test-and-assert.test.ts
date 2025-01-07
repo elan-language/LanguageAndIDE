@@ -708,7 +708,7 @@ async function main() {
 }
 
 function square(x) {
-  while (true) {
+  while (_stdlib.true) {
 
   }
   return x ** 2;

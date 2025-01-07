@@ -21,7 +21,6 @@ import { KeywordNode } from "../src/frames/parse-nodes/keyword-node";
 import { KVPnode } from "../src/frames/parse-nodes/kvp-node";
 import { Lambda } from "../src/frames/parse-nodes/lambda";
 import { ListNode } from "../src/frames/parse-nodes/list-node";
-import { LitBoolean } from "../src/frames/parse-nodes/lit-boolean";
 import { LitFloat } from "../src/frames/parse-nodes/lit-float";
 import { LitInt } from "../src/frames/parse-nodes/lit-int";
 import { LitRegExp } from "../src/frames/parse-nodes/lit-regExp";
@@ -224,24 +223,6 @@ suite("Parsing Nodes", () => {
     testNodeParse(new IdentifierNode(), `new`, ParseStatus.valid, `new`, "", "");
     testNodeParse(new IdentifierNode(), `global`, ParseStatus.valid, `global`, "", "");
     testNodeParse(new IdentifierNode(), `x as`, ParseStatus.valid, `x`, " as", "x");
-  });
-  test("LitBool", () => {
-    testNodeParse(new LitBoolean(), "", ParseStatus.empty, "", "", "", "");
-    testNodeParse(
-      new LitBoolean(),
-      " true",
-      ParseStatus.valid,
-      "true",
-      "",
-      "true",
-      "<el-kw>true</el-kw>",
-    );
-    testNodeParse(new LitBoolean(), " trueX", ParseStatus.valid, "true", "X", "true", "");
-    testNodeParse(new LitBoolean(), " false", ParseStatus.valid, "false", "", "false", "");
-    testNodeParse(new LitBoolean(), " True", ParseStatus.invalid, "", "True", "", "");
-    testNodeParse(new LitBoolean(), "is True", ParseStatus.invalid, "", "is True", "", "");
-    testNodeParse(new LitBoolean(), " tr", ParseStatus.incomplete, "tr", "", "tr", "");
-    testNodeParse(new LitBoolean(), " tr ", ParseStatus.invalid, "", "tr ", "", "");
   });
   test("LitString - single chars", () => {
     testNodeParse(new LitString(), "", ParseStatus.empty, "", "", "", "");
@@ -1226,9 +1207,9 @@ suite("Parsing Nodes", () => {
   });
   test("LitTuple", () => {
     testNodeParse(new LitTuple(), `(3,4)`, ParseStatus.valid, "", "", "");
-    testNodeParse(new LitTuple(), `(3,"a", "hello", 4.1, true)`, ParseStatus.valid, "", "", "");
-    testNodeParse(new LitTuple(), `((3,4), ("a", true))`, ParseStatus.valid, "", "", "");
-    testNodeParse(new LitTuple(), `(3,"a", "hello", 4.1, true`, ParseStatus.incomplete, "", "", "");
+    testNodeParse(new LitTuple(), `(3,"a", "hello", 4.1)`, ParseStatus.valid, "", "", "");
+    testNodeParse(new LitTuple(), `((3,4), ("a", "b"))`, ParseStatus.valid, "", "", "");
+    testNodeParse(new LitTuple(), `(3,"a", "hello", 4.1`, ParseStatus.incomplete, "", "", "");
     testNodeParse(new LitTuple(), `(3,"a", "hello", 4.1,`, ParseStatus.incomplete, "", "", "");
     testNodeParse(new LitTuple(), `[3,4]`, ParseStatus.invalid, "", "[3,4]", "");
     testNodeParse(new LitTuple(), `(a,b)`, ParseStatus.invalid, "", "(a,b)", "");

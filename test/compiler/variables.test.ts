@@ -171,7 +171,7 @@ async function main() {
   var e = 3 >= 4;
   var f = 3 === 4;
   var g = 3 !== 4;
-  var h = !false;
+  var h = !_stdlib.false;
   var k = 4 / 3;
   system.printLine(_stdlib.asString(a));
   system.printLine(_stdlib.asString(b));
