@@ -22,6 +22,9 @@ suite("Demo compile", () => {
   test("test in-place-ripple-sort", async () => {
     await testDemoProgram("in-place-ripple-sort.elan");
   });
+  test("test julia-set", async () => {
+    await testDemoProgram("julia-set.elan");
+  });
   test("test kaleidoscope", async () => {
     await testDemoProgram("kaleidoscope.elan");
   });
