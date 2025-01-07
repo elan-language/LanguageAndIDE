@@ -168,14 +168,14 @@ export function scopePrefix(
     const thisClass = getClassScope(scope);
 
     if (symbol.private && symbolClass !== thisClass) {
-      if (isClassTypeDef(thisClass) && thisClass.abstract) {
+      if (isClassTypeDef(thisClass) && thisClass.isAbstract) {
         cannotAccessPrivateMemberInAbstractClass(symbol.symbolId, compileErors, location);
       }
 
       return `this._${symbolClass.symbolId}.`;
     }
 
-    if (symbol.isAbstract && isClassTypeDef(thisClass) && thisClass.abstract) {
+    if (symbol.isAbstract && isClassTypeDef(thisClass) && thisClass.isAbstract) {
       cannotAccessAbstractMemberInAbstractClass(symbol.symbolId, compileErors, location);
     }
   }
@@ -415,11 +415,11 @@ export function isTypeName(s?: ElanSymbol) {
 }
 
 export function isAbstractClass(s?: ElanSymbol) {
-  return isClass(s) && s.abstract;
+  return isClass(s) && s.isAbstract;
 }
 
 export function isNotInheritableClass(s?: ElanSymbol) {
-  return isClass(s) && s.notInheritable;
+  return isClass(s) && s.isNotInheritable;
 }
 
 export function isConcreteTypeName(s?: ElanSymbol) {

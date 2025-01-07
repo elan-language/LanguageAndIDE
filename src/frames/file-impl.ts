@@ -12,7 +12,8 @@ import {
   helper_testStatusAsDisplayStatus,
   isSelector,
 } from "./frame-helpers";
-import { ClassFrame } from "./globals/class-frame";
+import { AbstractClass } from "./globals/abstract-class";
+import { ConcreteClass } from "./globals/concrete-class";
 import { Constant } from "./globals/constant";
 import { Enum } from "./globals/enum";
 import { GlobalComment } from "./globals/global-comment";
@@ -57,6 +58,7 @@ import { DuplicateSymbol } from "./symbols/duplicate-symbol";
 import { elanSymbols } from "./symbols/elan-symbols";
 import { isSymbol, symbolMatches } from "./symbols/symbol-helpers";
 import { Transforms } from "./syntax-nodes/transforms";
+import { InterfaceFrame } from "./globals/interface-frame";
 
 // for web editor bundle
 export { CodeSourceFromString };
@@ -539,8 +541,14 @@ export class FileImpl implements File, Scope {
   createEnum(): Frame {
     return new Enum(this);
   }
-  createClass(abstract: boolean): Frame {
-    return new ClassFrame(this, abstract);
+  createConcreteClass(): Frame {
+    return new ConcreteClass(this);
+  }
+  createAbstractClass(): Frame {
+    return new AbstractClass(this);
+  }
+  createInterface(): Frame {
+    return new InterfaceFrame(this);
   }
   createRecord(): Frame {
     return new RecordFrame(this);

@@ -5,7 +5,7 @@ import { IdentifierField } from "../fields/identifier-field";
 import { ParamList } from "../fields/param-list";
 import { TypeField } from "../fields/type-field";
 import { singleIndent } from "../frame-helpers";
-import { ClassFrame } from "../globals/class-frame";
+import { ConcreteClass } from "../globals/concrete-class";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { Member } from "../interfaces/member";
@@ -31,8 +31,8 @@ export class AbstractFunction extends AbstractFrame implements Member, ElanSymbo
     this.returnType = new TypeField(this);
   }
 
-  getClass(): ClassFrame {
-    return this.getParent() as ClassFrame;
+  getClass(): ConcreteClass {
+    return this.getParent() as ConcreteClass;
   }
 
   initialKeywords(): string {

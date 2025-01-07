@@ -1,11 +1,17 @@
 import { Constructor } from "../class-members/constructor";
-import { mustBeImmutableType, mustBeUniqueNameInScope } from "../compile-rules";
+import {
+  mustBeAbstractClass,
+  mustBeKnownSymbolType,
+  mustBeUniqueNameInScope,
+  mustImplementSuperClasses,
+} from "../compile-rules";
+import { isMember } from "../frame-helpers";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { Frame } from "../interfaces/frame";
 import { SymbolType } from "../interfaces/symbol-type";
-import { constructorKeyword, endKeyword, recordKeyword, thisKeyword } from "../keywords";
+import { classKeyword, constructorKeyword, endKeyword, thisKeyword } from "../keywords";
 import {
   parentHelper_compileChildren,
   parentHelper_renderChildrenAsHtml,
@@ -14,37 +20,42 @@ import {
 import { ClassType } from "../symbols/class-type";
 import { DuplicateSymbol } from "../symbols/duplicate-symbol";
 import { getGlobalScope, isSymbol, symbolMatches } from "../symbols/symbol-helpers";
-import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { Transforms } from "../syntax-nodes/transforms";
 import { ClassFrame } from "./class-frame";
 
-export class RecordFrame extends ClassFrame {
+export class ConcreteClass extends ClassFrame {
   constructor(parent: File) {
     super(parent);
-    this.isNotInheritable = true;
-    this.isRecord = true;
+    this.isConcrete = true;
   }
 
   ofTypes: SymbolType[] = [];
   genericParamMatches: Map<string, SymbolType> = new Map<string, SymbolType>();
 
   initialKeywords(): string {
-    return recordKeyword;
+    return classKeyword;
   }
-
   get symbolId() {
     return this.name.text;
   }
-  symbolType(_transforms?: Transforms) {
-    return new ClassType(this.symbolId, false, false, true, [], this);
+  symbolType(transforms?: Transforms) {
+    return new ClassType(
+      this.symbolId,
+      false,
+      false,
+      false,
+      this.inheritance.symbolTypes(transforms),
+      this,
+    );
   }
-  get symbolScope() {
-    return SymbolScope.program;
+
+  doesInherit(): boolean {
+    return this.inheritance.text !== "";
   }
 
   getFields(): Field[] {
-    return [this.name];
+    return [this.name, this.inheritance];
   }
 
   getIdPrefix(): string {
@@ -53,20 +64,16 @@ export class RecordFrame extends ClassFrame {
 
   public renderAsHtml(): string {
     return `<el-class class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>record </el-kw>${this.name.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
+<el-top><el-expand>+</el-expand><el-kw>class </el-kw>${this.name.renderAsHtml()}${this.inheritanceAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
 ${parentHelper_renderChildrenAsHtml(this)}
-<el-kw>end record</el-kw>
+<el-kw>end class</el-kw>
 </el-class>`;
   }
 
   public renderAsSource(): string {
-    return `record ${this.name.renderAsSource()}\r
+    return `class ${this.name.renderAsSource()}${this.inheritanceAsSource()}\r
 ${parentHelper_renderChildrenAsSource(this)}\r
-end record\r\n`;
-  }
-
-  public getSuperClassesTypeAndName(_transforms: Transforms) {
-    return [];
+end class\r\n`;
   }
 
   public compile(transforms: Transforms): string {
@@ -81,28 +88,42 @@ end record\r\n`;
       this.htmlId,
     );
 
-    const asString = "";
-    const body = parentHelper_compileChildren(this, transforms);
+    const typeAndName = this.getSuperClassesTypeAndName(transforms);
 
-    for (const p of this.properties()) {
-      mustBeImmutableType(p.name.text, p.symbolType(), this.compileErrors, this.htmlId);
+    for (const [st, name] of typeAndName) {
+      mustBeKnownSymbolType(st, name, this.compileErrors, this.htmlId);
+      mustBeAbstractClass(st, name, this.compileErrors, this.htmlId);
     }
 
-    return `class ${name} {\r
+    mustImplementSuperClasses(
+      transforms,
+      this.symbolType(transforms),
+      typeAndName.map((tn) => tn[0]).filter((st) => st instanceof ClassType) as ClassType[],
+      this.compileErrors,
+      this.htmlId,
+    );
+
+    const asString = "";
+
+    return `class ${name}${this.inheritanceAsObjectCode()} {\r
   static emptyInstance() { return system.emptyClass(${name}, ${this.propertiesToInit()});};\r
-${body}\r${asString}\r
+${parentHelper_compileChildren(this, transforms)}\r${asString}\r
 }\r\n`;
   }
 
+  public getConstructor(): Constructor {
+    return this.getChildren().filter((m) => "isConstructor" in m)[0] as Constructor;
+  }
+
   topKeywords(): string {
-    return `${recordKeyword} `;
+    return `${classKeyword} `;
   }
 
   bottomKeywords(): string {
-    return `${endKeyword} ${recordKeyword}`;
+    return `${endKeyword} ${classKeyword}`;
   }
 
-  resolveOwnSymbol(id: string, _transforms: Transforms): ElanSymbol {
+  resolveOwnSymbol(id: string, transforms: Transforms): ElanSymbol {
     if (id === thisKeyword) {
       return this;
     }
@@ -114,6 +135,17 @@ ${body}\r${asString}\r
     const matches = this.getChildren().filter(
       (f) => isSymbol(f) && f.symbolId === id,
     ) as ElanSymbol[];
+
+    const types = this.getSuperClassesTypeAndName(transforms)
+      .map((tn) => tn[0])
+      .filter((t) => t instanceof ClassType);
+
+    for (const ct of types) {
+      const s = ct.scope!.resolveOwnSymbol(id, transforms);
+      if (isMember(s) && s.private) {
+        matches.push(s);
+      }
+    }
 
     if (matches.length === 1) {
       return matches[0];

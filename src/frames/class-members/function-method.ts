@@ -5,7 +5,7 @@ import {
   mustBeUniqueNameInScope,
 } from "../compile-rules";
 import { privateHelp, processTogglePrivate, singleIndent } from "../frame-helpers";
-import { ClassFrame } from "../globals/class-frame";
+import { ConcreteClass } from "../globals/concrete-class";
 import { FunctionFrame } from "../globals/function-frame";
 import { editorEvent } from "../interfaces/editor-event";
 import { ElanSymbol } from "../interfaces/elan-symbol";
@@ -27,8 +27,8 @@ export class FunctionMethod extends FunctionFrame implements Member {
     this.private = priv;
   }
 
-  getClass(): ClassFrame {
-    return this.getParent() as ClassFrame;
+  getClass(): ConcreteClass {
+    return this.getParent() as ConcreteClass;
   }
 
   private modifierAsHtml(): string {

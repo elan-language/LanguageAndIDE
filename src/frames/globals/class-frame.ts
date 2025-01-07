@@ -10,16 +10,9 @@ import { ProcedureMethod } from "../class-members/procedure-method";
 import { Property } from "../class-members/property";
 import { CodeSource } from "../code-source";
 import { CompileError } from "../compile-error";
-import {
-  mustBeAbstractClass,
-  mustBeKnownSymbolType,
-  mustBeUniqueNameInScope,
-  mustImplementSuperClasses,
-} from "../compile-rules";
 import { InheritsFrom } from "../fields/inheritsFrom";
 import { Regexes } from "../fields/regexes";
 import { TypeNameField } from "../fields/type-name-field";
-import { isMember } from "../frame-helpers";
 import { Class } from "../interfaces/class";
 import { Collapsible } from "../interfaces/collapsible";
 import { ElanSymbol } from "../interfaces/elan-symbol";
@@ -30,12 +23,11 @@ import { Parent } from "../interfaces/parent";
 import { Profile } from "../interfaces/profile";
 import { StatementFactory } from "../interfaces/statement-factory";
 import { SymbolType } from "../interfaces/symbol-type";
-import { abstractKeyword, classKeyword, constructorKeyword, thisKeyword } from "../keywords";
+import { classKeyword } from "../keywords";
 import {
   parentHelper_addChildAfter,
   parentHelper_addChildBefore,
   parentHelper_aggregateCompileErrorsOfChildren,
-  parentHelper_compileChildren,
   parentHelper_deleteSelectedChildren,
   parentHelper_getChildAfter,
   parentHelper_getChildBefore,
@@ -49,33 +41,33 @@ import {
   parentHelper_readWorstCompileStatusOfChildren,
   parentHelper_readWorstParseStatusOfChildren,
   parentHelper_removeChild,
-  parentHelper_renderChildrenAsHtml,
-  parentHelper_renderChildrenAsSource,
 } from "../parent-helpers";
 import { CommentStatement } from "../statements/comment-statement";
-import { ClassType } from "../symbols/class-type";
-import { DuplicateSymbol } from "../symbols/duplicate-symbol";
-import { getGlobalScope, isSymbol, symbolMatches } from "../symbols/symbol-helpers";
+import { getGlobalScope } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
-import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { isAstCollectionNode, isAstIdNode } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 
-export class ClassFrame extends AbstractFrame implements Frame, Parent, Collapsible, Class {
+export abstract class ClassFrame
+  extends AbstractFrame
+  implements Frame, Parent, Collapsible, Class
+{
   isCollapsible: boolean = true;
   isParent: boolean = true;
   isClass: boolean = true;
+  isAbstract: boolean = false;
+  isConcrete: boolean = false;
+  isRecord: boolean = false;
+  isInterface: boolean = false;
   public name: TypeNameField;
-  public abstract: boolean;
-  public notInheritable = false;
+  public isNotInheritable = false;
   public inheritance: InheritsFrom;
   private _children: Array<Frame> = new Array<Frame>();
 
-  constructor(parent: File, abstract = false) {
+  constructor(parent: File) {
     super(parent);
     this.name = new TypeNameField(this);
     this.inheritance = new InheritsFrom(this);
-    this.abstract = abstract;
     this.getChildren().push(new MemberSelector(this));
   }
 
@@ -89,19 +81,7 @@ export class ClassFrame extends AbstractFrame implements Frame, Parent, Collapsi
   initialKeywords(): string {
     return classKeyword;
   }
-  get symbolId() {
-    return this.name.text;
-  }
-  symbolType(transforms?: Transforms) {
-    return new ClassType(
-      this.symbolId,
-      this.isAbstract(),
-      false,
-      this.isImmutable(),
-      this.inheritance.symbolTypes(transforms),
-      this,
-    );
-  }
+
   get symbolScope() {
     return SymbolScope.program;
   }
@@ -183,16 +163,6 @@ export class ClassFrame extends AbstractFrame implements Frame, Parent, Collapsi
     return this.getChildren().length > 1;
   }
 
-  isAbstract(): boolean {
-    return this.abstract;
-  }
-  makeAbstract(): void {
-    this.abstract = true;
-    this.getChildren().splice(0, 1); //remove constructor
-  }
-  isImmutable(): boolean {
-    return false;
-  }
   doesInherit(): boolean {
     return this.inheritance.text !== "";
   }
@@ -204,55 +174,30 @@ export class ClassFrame extends AbstractFrame implements Frame, Parent, Collapsi
   getIdPrefix(): string {
     return "class";
   }
-  private modifiersAsHtml(): string {
-    let result = "";
-    result += this.isAbstract() ? `<el-kw>abstract </el-kw>` : ``;
-    result += this.isImmutable() ? `<el-kw>immutable </el-kw>` : ``;
-    return result;
-  }
-  private modifiersAsSource(): string {
-    let result = "";
-    if (this.isAbstract()) {
-      result += `abstract `;
-    }
-    if (this.isImmutable()) {
-      result += `immutable `;
-    }
-    return result;
-  }
-  private inheritanceAsHtml(): string {
+
+  protected inheritanceAsHtml(): string {
     return ` ${this.inheritance.renderAsHtml()}`;
   }
-  private inheritanceAsSource(): string {
+  protected inheritanceAsSource(): string {
     return this.doesInherit() ? ` ${this.inheritance.renderAsSource()}` : ``;
   }
 
-  private inheritanceAsObjectCode(): string {
+  protected inheritanceAsObjectCode(): string {
     return ``;
-  }
-
-  public renderAsHtml(): string {
-    return `<el-class class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<el-top><el-expand>+</el-expand>${this.modifiersAsHtml()}<el-kw>class </el-kw>${this.name.renderAsHtml()}${this.inheritanceAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
-${parentHelper_renderChildrenAsHtml(this)}
-<el-kw>end class</el-kw>
-</el-class>`;
   }
 
   indent(): string {
     return "";
   }
 
-  public renderAsSource(): string {
-    return `${this.modifiersAsSource()}class ${this.name.renderAsSource()}${this.inheritanceAsSource()}\r
-${parentHelper_renderChildrenAsSource(this)}\r
-end class\r\n`;
-  }
-
-  private propertiesToInit() {
-    const pp = this.getChildren().filter(
+  properties(): (AbstractProperty | Property)[] {
+    return this.getChildren().filter(
       (c) => c instanceof Property || c instanceof AbstractProperty,
     ) as (AbstractProperty | Property)[];
+  }
+
+  protected propertiesToInit() {
+    const pp = this.properties();
     const ps = pp
       .map((p) => p.initCode())
       .filter((s) => s)
@@ -276,48 +221,10 @@ end class\r\n`;
     return [];
   }
 
-  public compile(transforms: Transforms): string {
-    this.compileErrors = [];
-
-    const name = this.name.compile(transforms);
-    mustBeUniqueNameInScope(
-      name,
-      getGlobalScope(this),
-      transforms,
-      this.compileErrors,
-      this.htmlId,
-    );
-
-    const typeAndName = this.getSuperClassesTypeAndName(transforms);
-
-    for (const [st, name] of typeAndName) {
-      mustBeKnownSymbolType(st, name, this.compileErrors, this.htmlId);
-      mustBeAbstractClass(st, name, this.compileErrors, this.htmlId);
-    }
-
-    mustImplementSuperClasses(
-      transforms,
-      this.symbolType(transforms),
-      typeAndName.map((tn) => tn[0]).filter((st) => st instanceof ClassType) as ClassType[],
-      this.compileErrors,
-      this.htmlId,
-    );
-
-    const asString = this.isAbstract()
-      ? `
-  asString() {
-    return "empty Abstract Class ${name}";
-  }`
-      : "";
-
-    return `class ${name}${this.inheritanceAsObjectCode()} {\r
-  static emptyInstance() { return system.emptyClass(${name}, ${this.propertiesToInit()});};\r
-${parentHelper_compileChildren(this, transforms)}\r${asString}\r
-}\r\n`;
-  }
   createConstructor(): Frame {
     return new Constructor(this);
   }
+
   createFunction(priv: boolean = false): Frame {
     return new FunctionMethod(this, priv);
   }
@@ -330,14 +237,14 @@ ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
   createAbstractFunction(): Frame {
     return new AbstractFunction(this);
   }
-  createComment(): Frame {
-    return new CommentStatement(this);
-  }
   createAbstractProperty(): Frame {
     return new AbstractProperty(this);
   }
   createAbstractProcedure(): Frame {
     return new AbstractProcedure(this);
+  }
+  createComment(): Frame {
+    return new CommentStatement(this);
   }
 
   public getConstructor(): Constructor {
@@ -354,85 +261,29 @@ ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
       }
     }
   }
+  abstract topKeywords(): string;
+
   parseTop(source: CodeSource): boolean {
-    const abs = `${abstractKeyword} `;
-    if (source.isMatch(abs)) {
-      source.remove(abs);
-    }
-    source.remove(`${classKeyword} `);
+    source.remove(this.topKeywords());
     this.name.parseFrom(source);
     this.inheritance.parseFrom(source);
     return true;
   }
 
+  abstract bottomKeywords(): string;
+
   parseBottom(source: CodeSource): boolean {
     let result = false;
     source.removeIndent();
-    const keyword = "end class";
-    if (source.isMatch(keyword)) {
-      source.remove(keyword);
+    if (source.isMatch(this.bottomKeywords())) {
+      source.remove(this.bottomKeywords());
       result = true;
     }
     return result;
   }
+
   newChildSelector(): AbstractSelector {
     return new MemberSelector(this);
-  }
-
-  resolveOwnSymbol(id: string, transforms: Transforms): ElanSymbol {
-    if (id === thisKeyword) {
-      return this;
-    }
-
-    if (id === constructorKeyword) {
-      return this.getChildren().find((c) => c instanceof Constructor) ?? new UnknownSymbol(id);
-    }
-
-    const matches = this.getChildren().filter(
-      (f) => isSymbol(f) && f.symbolId === id,
-    ) as ElanSymbol[];
-
-    const types = this.getSuperClassesTypeAndName(transforms)
-      .map((tn) => tn[0])
-      .filter((t) => t instanceof ClassType);
-
-    for (const ct of types) {
-      const s = ct.scope!.resolveOwnSymbol(id, transforms);
-      if (isMember(s) && s.private) {
-        matches.push(s);
-      }
-    }
-
-    if (matches.length === 1) {
-      return matches[0];
-    }
-    if (matches.length > 1) {
-      return new DuplicateSymbol(matches);
-    }
-
-    return new UnknownSymbol(id);
-  }
-
-  resolveSymbol(id: string, transforms: Transforms, _initialScope: Frame): ElanSymbol {
-    const symbol = this.resolveOwnSymbol(id, transforms);
-
-    if (symbol instanceof UnknownSymbol) {
-      return this.getParent().resolveSymbol(id, transforms, this);
-    }
-
-    return symbol;
-  }
-
-  symbolMatches(id: string, all: boolean, _initialScope?: Frame | undefined): ElanSymbol[] {
-    const otherMatches = this.getParent().symbolMatches(id, all, this);
-
-    const symbols = this.getChildren().filter(
-      (f) => !(f instanceof Constructor) && isSymbol(f),
-    ) as ElanSymbol[];
-
-    const matches = symbolMatches(id, all, symbols);
-
-    return matches.concat(otherMatches);
   }
 
   aggregateCompileErrors(): CompileError[] {
@@ -444,4 +295,10 @@ ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
     this.getChildren().forEach((f) => f.resetCompileStatusAndErrors());
     super.resetCompileStatusAndErrors();
   }
+
+  get symbolId() {
+    return this.name.text;
+  }
+
+  abstract resolveOwnSymbol(id: string, transforms: Transforms): ElanSymbol;
 }

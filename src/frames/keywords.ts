@@ -27,6 +27,7 @@ export const ignoreKeyword = "ignore";
 export const importKeyword = "import";
 export const inKeyword = "in";
 export const inheritsKeyword = "inherits";
+export const interfaceKeyword = "interface";
 export const isKeyword = "is";
 export const isntKeyword = "isnt";
 export const lambdaKeyword = "lambda";
@@ -106,6 +107,7 @@ export const allKeywords = [
   inheritsKeyword,
   isKeyword,
   isntKeyword,
+  interfaceKeyword,
   lambdaKeyword,
   letKeyword,
   libraryKeyword,

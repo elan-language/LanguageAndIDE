@@ -3,10 +3,12 @@ import { FunctionMethod } from "../src/frames/class-members/function-method";
 import { MemberSelector } from "../src/frames/class-members/member-selector";
 import { DefaultProfile } from "../src/frames/default-profile";
 import { FileImpl } from "../src/frames/file-impl";
-import { ClassFrame } from "../src/frames/globals/class-frame";
+import { AbstractClass } from "../src/frames/globals/abstract-class";
+import { ConcreteClass } from "../src/frames/globals/concrete-class";
 import { GlobalFunction } from "../src/frames/globals/global-function";
 import { GlobalProcedure } from "../src/frames/globals/global-procedure";
 import { GlobalSelector } from "../src/frames/globals/global-selector";
+import { InterfaceFrame } from "../src/frames/globals/interface-frame";
 import { MainFrame } from "../src/frames/globals/main-frame";
 import { TestFrame } from "../src/frames/globals/test-frame";
 import { Profile } from "../src/frames/interfaces/profile";
@@ -73,7 +75,10 @@ suite("Selector tests", () => {
     const f = new FileImpl(hash, new DefaultProfile(), transforms());
     const g = new GlobalSelector(f);
     let help = g.getCompletion();
-    assert.equal(help, " main procedure function constant test enum class #");
+    assert.equal(
+      help,
+      " main procedure function constant test interface enum class abstract record #",
+    );
     g.processKey(key("c"));
     help = g.getCompletion();
     assert.equal(help, " constant class");
@@ -85,7 +90,7 @@ suite("Selector tests", () => {
 
   test("Selection Filtering - members", () => {
     const f = new FileImpl(hash, new DefaultProfile(), transforms());
-    const c = new ClassFrame(f);
+    const c = new ConcreteClass(f);
     const s = new MemberSelector(c);
     let help = s.getCompletion();
     assert.equal(help, " constructor function procedure property private...   #");
@@ -113,8 +118,7 @@ suite("Selector tests", () => {
 
   test("Selection Filtering - abstract class", () => {
     const f = new FileImpl(hash, new DefaultProfile(), transforms());
-    const c = new ClassFrame(f);
-    c.makeAbstract();
+    const c = new AbstractClass(f);
     const s = new MemberSelector(c);
     assert.equal(s.getCompletion(), " function procedure property abstract...   private...   #");
     s.processKey(key("a"));
@@ -132,6 +136,16 @@ suite("Selector tests", () => {
       s.renderAsHtml(),
       `<el-member class="ok" id='select5' tabindex="0"><el-select><el-txt>abstract pro</el-txt><el-place>new code</el-place><el-help class="selector"> procedure property</el-help></el-select></el-member>`,
     );
+  });
+
+  test("Selection Filtering - interface", () => {
+    const f = new FileImpl(hash, new DefaultProfile(), transforms());
+    const c = new InterfaceFrame(f);
+    const s = new MemberSelector(c);
+    assert.equal(s.getCompletion(), " abstract...   #");
+    s.processKey(key("a"));
+    assert.equal(s.text, "abstract ");
+    assert.equal(s.getCompletion(), " function procedure property");
   });
 
   test("Selection Filtering - statements", () => {
@@ -185,7 +199,7 @@ suite("Selector tests", () => {
 
   test("Selection Context - deeper nesting 2", () => {
     const fl = new FileImpl(hash, new DefaultProfile(), transforms());
-    const c = new ClassFrame(fl);
+    const c = new ConcreteClass(fl);
     const fm = new FunctionMethod(c);
     const if1 = new IfStatement(fm);
     const s = new StatementSelector(if1);
@@ -204,12 +218,15 @@ suite("Selector tests", () => {
     const fl = new FileImpl(hash, new DefaultProfile(), transforms());
     let gs = new GlobalSelector(fl);
     let help = gs.getCompletion();
-    assert.equal(help, " main procedure function constant test enum class #");
+    assert.equal(
+      help,
+      " main procedure function constant test interface enum class abstract record #",
+    );
     const m = new MainFrame(fl);
     fl.getChildren().push(m);
     gs = new GlobalSelector(fl);
     help = gs.getCompletion();
-    assert.equal(help, " procedure function constant test enum class #");
+    assert.equal(help, " procedure function constant test interface enum class abstract record #");
   });
 
   test("#377 - Global select filtered by profile", () => {

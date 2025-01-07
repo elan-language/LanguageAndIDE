@@ -4,7 +4,7 @@ import { MemberSelector } from "../src/frames/class-members/member-selector";
 import { Property } from "../src/frames/class-members/property";
 import { DefaultProfile } from "../src/frames/default-profile";
 import { FileImpl } from "../src/frames/file-impl";
-import { ClassFrame } from "../src/frames/globals/class-frame";
+import { ConcreteClass } from "../src/frames/globals/concrete-class";
 import { Constant } from "../src/frames/globals/constant";
 import { Enum } from "../src/frames/globals/enum";
 import { GlobalComment } from "../src/frames/globals/global-comment";
@@ -175,7 +175,7 @@ export function T04_allGlobalsExceptClass(): FileImpl {
 export function T05_classes() {
   const f = new FileImpl(hash, new DefaultProfile(), transforms());
   const gs = f.getFirstSelectorAsDirectChild();
-  const cl1 = new ClassFrame(f);
+  const cl1 = new ConcreteClass(f);
   const ms = cl1.getFirstSelectorAsDirectChild();
   f.addChildBefore(cl1, gs);
   cl1.name.setFieldToKnownValidText("Player");
@@ -184,7 +184,7 @@ export function T05_classes() {
   p1.name.setFieldToKnownValidText("score");
   p1.type.setFieldToKnownValidText("Int");
 
-  const cl2 = new ClassFrame(f);
+  const cl2 = new ConcreteClass(f);
   const ms2 = cl2.getFirstSelectorAsDirectChild();
   cl2.inheritance.setFieldToKnownValidText("inherits Foo, Bar");
   f.addChildBefore(cl2, gs);
@@ -207,7 +207,7 @@ export function T09_emptyMainAndClassWithGlobalSelector() {
   const f = new FileImpl(hash, new DefaultProfile(), transforms());
   const gs = f.getFirstSelectorAsDirectChild();
   f.addChildBefore(new MainFrame(f), gs);
-  f.addChildBefore(new ClassFrame(f), gs);
+  f.addChildBefore(new ConcreteClass(f), gs);
   f.updateAllParseStatus();
   return f;
 }
@@ -267,7 +267,7 @@ export function twoConstants(): FileImpl {
 export function classWithConstructor(): FileImpl {
   const file = new FileImpl(hash, new DefaultProfile(), transforms());
   const globSel = file.getFirstChild();
-  const cls = new ClassFrame(file);
+  const cls = new ConcreteClass(file);
   file.addChildBefore(cls, globSel);
   const memberSel = cls.getFirstChild() as MemberSelector;
   const con = new Constructor(cls);

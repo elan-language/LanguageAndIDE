@@ -4,7 +4,7 @@ import { mustBeKnownSymbolType, mustBeUniqueNameInScope } from "../compile-rules
 import { IdentifierField } from "../fields/identifier-field";
 import { TypeField } from "../fields/type-field";
 import { privateHelp } from "../frame-helpers";
-import { ClassFrame } from "../globals/class-frame";
+import { ConcreteClass } from "../globals/concrete-class";
 import { editorEvent } from "../interfaces/editor-event";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
@@ -32,8 +32,8 @@ export class Property extends AbstractFrame implements Member, ElanSymbol {
     this.private = priv;
   }
 
-  getClass(): ClassFrame {
-    return this.getParent() as ClassFrame;
+  getClass(): ConcreteClass {
+    return this.getParent() as ConcreteClass;
   }
 
   initialKeywords(): string {
@@ -123,7 +123,7 @@ ${this.indent()}}\r\n`;
   }
 
   processKey(e: editorEvent): boolean {
-    if (!this.getClass().abstract && e.key === "p" && e.modKey.control) {
+    if (!this.getClass().isAbstract && e.key === "p" && e.modKey.control) {
       this.private = !this.private;
       return true;
     } else {

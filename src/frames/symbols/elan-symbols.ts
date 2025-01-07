@@ -64,8 +64,8 @@ const iterableSymbol: ClassSymbol = {
   },
   symbolScope: SymbolScope.program,
   isClass: true,
-  abstract: true,
-  notInheritable: true,
+  isAbstract: true,
+  isNotInheritable: true,
   ofTypes: [new GenericParameterType("T")],
 };
 
@@ -76,8 +76,8 @@ const arraySymbol: ClassSymbol = {
   },
   symbolScope: SymbolScope.program,
   isClass: true,
-  abstract: false,
-  notInheritable: false,
+  isAbstract: false,
+  isNotInheritable: false,
   ofTypes: [new GenericParameterType("T")],
 };
 
@@ -88,8 +88,8 @@ const array2DSymbol: ClassSymbol = {
   },
   symbolScope: SymbolScope.program,
   isClass: true,
-  abstract: false,
-  notInheritable: false,
+  isAbstract: false,
+  isNotInheritable: false,
   ofTypes: [new GenericParameterType("T")],
 };
 
@@ -100,8 +100,8 @@ const tupleSymbol: ClassSymbol = {
   },
   symbolScope: SymbolScope.program,
   isClass: true,
-  abstract: true,
-  notInheritable: false,
+  isAbstract: true,
+  isNotInheritable: false,
   ofTypes: [new GenericParameterType("T1"), new GenericParameterType("T2")],
 };
 
@@ -112,8 +112,8 @@ const listSymbol: ClassSymbol = {
   },
   symbolScope: SymbolScope.program,
   isClass: true,
-  abstract: false,
-  notInheritable: false,
+  isAbstract: false,
+  isNotInheritable: false,
   ofTypes: [new GenericParameterType("T")],
 };
 
@@ -124,8 +124,8 @@ const dictionarySymbol: ClassSymbol = {
   },
   symbolScope: SymbolScope.program,
   isClass: true,
-  abstract: false,
-  notInheritable: false,
+  isAbstract: false,
+  isNotInheritable: false,
   ofTypes: [new GenericParameterType("T1"), new GenericParameterType("T2")],
 };
 
@@ -139,8 +139,8 @@ const dictionaryImmutableSymbol: ClassSymbol = {
   },
   symbolScope: SymbolScope.program,
   isClass: true,
-  abstract: false,
-  notInheritable: false,
+  isAbstract: false,
+  isNotInheritable: false,
   ofTypes: [new GenericParameterType("T1"), new GenericParameterType("T2")],
 };
 
@@ -158,8 +158,8 @@ const funcSymbol: ClassSymbol = {
   },
   symbolScope: SymbolScope.program,
   isClass: true,
-  abstract: true,
-  notInheritable: true,
+  isAbstract: true,
+  isNotInheritable: true,
   ofTypes: [new GenericParameterType("T")],
 };
 
