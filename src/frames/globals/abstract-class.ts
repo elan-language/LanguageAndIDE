@@ -1,12 +1,10 @@
 import { Constructor } from "../class-members/constructor";
-import { CodeSource } from "../code-source";
 import {
   mustBeAbstractClass,
   mustBeKnownSymbolType,
   mustBeUniqueNameInScope,
   mustImplementSuperClasses,
 } from "../compile-rules";
-import { TypeNameField } from "../fields/type-name-field";
 import { isMember } from "../frame-helpers";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
@@ -15,9 +13,9 @@ import { Frame } from "../interfaces/frame";
 import { SymbolType } from "../interfaces/symbol-type";
 import {
   abstractClassKeywords,
-  abstractKeyword,
   classKeyword,
   constructorKeyword,
+  endKeyword,
   thisKeyword,
 } from "../keywords";
 import {
@@ -35,7 +33,6 @@ import { ClassFrame } from "./class-frame";
 export class AbstractClass extends ClassFrame {
   constructor(parent: File) {
     super(parent);
-    this.name = new TypeNameField(this);
     this.isAbstract = true;
   }
 
@@ -123,26 +120,12 @@ ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
 }\r\n`;
   }
 
-  parseTop(source: CodeSource): boolean {
-    const abs = `${abstractKeyword} `;
-    if (source.isMatch(abs)) {
-      source.remove(abs);
-    }
-    source.remove(`${classKeyword} `);
-    this.name.parseFrom(source);
-    this.inheritance.parseFrom(source);
-    return true;
+  topKeywords(): string {
+    return `${abstractClassKeywords} `;
   }
 
-  parseBottom(source: CodeSource): boolean {
-    let result = false;
-    source.removeIndent();
-    const keyword = "end class";
-    if (source.isMatch(keyword)) {
-      source.remove(keyword);
-      result = true;
-    }
-    return result;
+  bottomKeywords(): string {
+    return `${endKeyword} ${classKeyword}`;
   }
 
   resolveOwnSymbol(id: string, transforms: Transforms): ElanSymbol {

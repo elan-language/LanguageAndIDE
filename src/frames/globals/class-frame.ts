@@ -58,6 +58,7 @@ export abstract class ClassFrame
   isAbstract: boolean = false;
   isConcrete: boolean = false;
   isRecord: boolean = false;
+  isInterface: boolean = false;
   public name: TypeNameField;
   public isNotInheritable = false;
   public inheritance: InheritsFrom;
@@ -260,9 +261,26 @@ export abstract class ClassFrame
       }
     }
   }
-  abstract parseTop(source: CodeSource): boolean;
+  abstract topKeywords(): string;
 
-  abstract parseBottom(source: CodeSource): boolean;
+  parseTop(source: CodeSource): boolean {
+    source.remove(this.topKeywords());
+    this.name.parseFrom(source);
+    this.inheritance.parseFrom(source);
+    return true;
+  }
+
+  abstract bottomKeywords(): string;
+
+  parseBottom(source: CodeSource): boolean {
+    let result = false;
+    source.removeIndent();
+    if (source.isMatch(this.bottomKeywords())) {
+      source.remove(this.bottomKeywords());
+      result = true;
+    }
+    return result;
+  }
 
   newChildSelector(): AbstractSelector {
     return new MemberSelector(this);

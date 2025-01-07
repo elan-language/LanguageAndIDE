@@ -1,5 +1,4 @@
 import { Constructor } from "../class-members/constructor";
-import { CodeSource } from "../code-source";
 import {
   mustBeAbstractClass,
   mustBeKnownSymbolType,
@@ -12,7 +11,7 @@ import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { Frame } from "../interfaces/frame";
 import { SymbolType } from "../interfaces/symbol-type";
-import { classKeyword, constructorKeyword, thisKeyword } from "../keywords";
+import { classKeyword, constructorKeyword, endKeyword, thisKeyword } from "../keywords";
 import {
   parentHelper_compileChildren,
   parentHelper_renderChildrenAsHtml,
@@ -116,22 +115,12 @@ ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
     return this.getChildren().filter((m) => "isConstructor" in m)[0] as Constructor;
   }
 
-  parseTop(source: CodeSource): boolean {
-    source.remove(`${classKeyword} `);
-    this.name.parseFrom(source);
-    this.inheritance.parseFrom(source);
-    return true;
+  topKeywords(): string {
+    return `${classKeyword} `;
   }
 
-  parseBottom(source: CodeSource): boolean {
-    let result = false;
-    source.removeIndent();
-    const keyword = "end class";
-    if (source.isMatch(keyword)) {
-      source.remove(keyword);
-      result = true;
-    }
-    return result;
+  bottomKeywords(): string {
+    return `${endKeyword} ${classKeyword}`;
   }
 
   resolveOwnSymbol(id: string, transforms: Transforms): ElanSymbol {

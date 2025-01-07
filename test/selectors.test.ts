@@ -130,7 +130,7 @@ suite("Selector tests", () => {
     assert.equal(s.getCompletion(), " procedure property");
     assert.equal(
       s.renderAsHtml(),
-      `<el-member class="ok" id='select6' tabindex="0"><el-select><el-txt>abstract pro</el-txt><el-place>new code</el-place><el-help class="selector"> procedure property</el-help></el-select></el-member>`,
+      `<el-member class="ok" id='select5' tabindex="0"><el-select><el-txt>abstract pro</el-txt><el-place>new code</el-place><el-help class="selector"> procedure property</el-help></el-select></el-member>`,
     );
   });
 
