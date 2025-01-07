@@ -1,4 +1,4 @@
-# 5e16038b4f8c9c4c48e5e70aff9cab20aa04cd925c6308e479fce8c66e71b00e Elan Beta 6 valid
+# 992a5a86d18a41f00bdb9415d9a07d35c1e8b8d8f4d907a5812c13907981f5af Elan Beta 6 valid
 
 main
   call simulation()
@@ -136,7 +136,7 @@ class Dealer
 
   procedure playHandOut()
     call start()
-    while hand.status is Status.playing
+    while property.hand.status is Status.playing
       call nextMove()
     end while
   end procedure
@@ -145,12 +145,12 @@ class Dealer
     set property.active to false
     set property.hand to new Hand()
     call hand.draw()
-    set property.faceCard to hand.cards[0]
+    set property.faceCard to property.hand.cards[0]
     call hand.draw()
   end procedure
 
   procedure changeScoreBy(amount as Int)
-    set property.score to score + amount
+    set property.score to property.score + amount
   end procedure
 
   procedure nextMove()
@@ -167,11 +167,11 @@ class Dealer
   end procedure
 
   function getDecision() returns Action
-    return if hand.total < 17 then Action.draw else Action.stand
+    return if property.hand.total < 17 then Action.draw else Action.stand
   end function
 
   function asString() returns String
-    return if active then "Dealer: {hand}" else "Dealer: {faceCard} {unicode(9633)}"
+    return if property.active then "Dealer: {property.hand}" else "Dealer: {property.faceCard} {unicode(9633)}"
   end function
 
 end class
@@ -200,7 +200,7 @@ class HumanPlayer inherits Player
   end procedure
 
   function isPlaying() returns Boolean
-    return hand.status is Status.playing
+    return property.hand.status is Status.playing
   end function
 
   procedure nextMove()
@@ -213,11 +213,11 @@ class HumanPlayer inherits Player
   end procedure
 
   procedure changeScoreBy(amount as Int)
-    set property.score to score + amount
+    set property.score to property.score + amount
   end procedure
 
   function asString() returns String
-    return "You: {hand}"
+    return "You: {property.hand}"
   end function
 
 end class
@@ -240,7 +240,7 @@ class AutomatedPlayer inherits Player
   property decisionFunc as Func<of Hand, Card => Action>
 
   procedure changeScoreBy(amount as Int)
-    set property.score to score + amount
+    set property.score to property.score + amount
   end procedure
 
   function getDecision() returns Action
@@ -272,7 +272,7 @@ class AutomatedPlayer inherits Player
 
   # TODO If dealer is pending rather than playing, then show only face card + 'hidden card' (or correct term)
   function asString() returns String
-    return "{name}: {hand}"
+    return "{property.name}: {property.hand}"
   end function
 
 end class
@@ -289,7 +289,7 @@ class Hand
   property status as Status
 
   function isPairOf8s() returns Boolean
-    return (count is 2) and (cards[0].value() is 8) and (cards[1].value() is 8)
+    return (property.count is 2) and (property.cards[0].value() is 8) and (property.cards[1].value() is 8)
   end function
 
   procedure setStatus(status as Status)
@@ -303,19 +303,19 @@ class Hand
   procedure draw()
     set property.status to Status.playing
     let card be dealCard(random())
-    set property.cards to cards + {card}
-    set property.count to count + 1
+    set property.cards to property.cards + {card}
+    set property.count to property.count + 1
     if card.isAce() then
       call addAce()
     else
-      set property.total to total + card.value()
+      set property.total to property.total + card.value()
     end if
-    if total > 21 then
+    if property.total > 21 then
       call useUpSoftAceIfPossible()
     else if card.isAce() then
       set property.softAce to true
     end if
-    if (count is 2) and (total is 21) and softAce then
+    if (property.count is 2) and (property.total is 21) and property.softAce then
       set property.status to Status.blackjack
     else if property.total > 21 then
       set property.status to Status.bust
@@ -334,8 +334,8 @@ class Hand
   end procedure
 
   private procedure useUpSoftAceIfPossible()
-    if softAce then
-      set property.total to total - 10
+    if property.softAce then
+      set property.total to property.total - 10
       set property.softAce to false
     else
       set property.status to Status.bust
@@ -364,16 +364,16 @@ class Card
   property rank as String
 
   function value() returns Int
-    return rankValue[rank]
+    return rankValue[property.rank]
   end function
 
   function isAce() returns Boolean
-    return rank is "A"
+    return property.rank is "A"
   end function
 
   function asString() returns String
-    let colourName be if (suit is 0) or (suit is 3) then "black" else "red"
-    let tag be htmlEscChars[suit]
+    let colourName be if (property.suit is 0) or (property.suit is 3) then "black" else "red"
+    let tag be htmlEscChars[property.suit]
     return "{property.rank}<span style='color: {colourName}'>{tag}</span>"
   end function
 

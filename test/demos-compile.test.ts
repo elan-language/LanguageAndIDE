@@ -7,6 +7,9 @@ suite("Demo compile", () => {
   test("test binary-search", async () => {
     await testDemoProgram("binary-search.elan");
   });
+  test("test blackjack", async () => {
+    await testDemoProgram("blackjack.elan");
+  });
   test("test bubbles", async () => {
     await testDemoProgram("bubbles.elan");
   });
