@@ -1,6 +1,6 @@
 import { CompileError } from "../compile-error";
 import { AstIdNode } from "../interfaces/ast-id-node";
-import { libraryKeyword } from "../keywords";
+import { globalKeyword, libraryKeyword } from "../keywords";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 
@@ -18,7 +18,7 @@ export class FixedIdAsn extends AbstractAstNode implements AstIdNode {
 
   compile(): string {
     this.compileErrors = [];
-    return this.id === libraryKeyword ? "_stdlib" : this.id;
+    return this.id === libraryKeyword ? "_stdlib" : this.id === globalKeyword ? "global" : this.id;
   }
 
   symbolType() {

@@ -4,7 +4,7 @@ import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstNode } from "../interfaces/ast-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { Scope } from "../interfaces/scope";
-import { libraryKeyword, propertyKeyword, thisKeyword } from "../keywords";
+import { globalKeyword, libraryKeyword, propertyKeyword, thisKeyword } from "../keywords";
 import { AbstractAlternatives } from "../parse-nodes/abstract-alternatives";
 import { ArgListNode } from "../parse-nodes/arg-list-node";
 import { ArrayNode } from "../parse-nodes/array-node";
@@ -324,6 +324,9 @@ export function transform(
     // todo decouple this from js
     if (node.fixedText === libraryKeyword) {
       return new FixedIdAsn(libraryKeyword, fieldId);
+    }
+    if (node.fixedText === globalKeyword) {
+      return new FixedIdAsn(globalKeyword, fieldId);
     }
     if (node.fixedText === propertyKeyword || node.fixedText === thisKeyword) {
       return new ThisAsn(node.fixedText, fieldId, scope);

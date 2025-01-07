@@ -21,6 +21,7 @@ export const falseKeyword = "false";
 export const forKeyword = "for";
 export const fromKeyword = "from";
 export const functionKeyword = "function";
+export const globalKeyword = "global";
 export const ifKeyword = "if";
 export const ignoreKeyword = "ignore";
 export const importKeyword = "import";
