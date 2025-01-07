@@ -179,7 +179,7 @@ end main
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var x = system.tuple([3, "Apple", true, 1.1]);
+  var x = system.tuple([3, "Apple", _stdlib.true, 1.1]);
   system.printLine(_stdlib.asString(x));
   const [a, b, c, d] = x;
   system.printLine(_stdlib.asString(a));

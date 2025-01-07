@@ -32,7 +32,6 @@ import { KeywordNode } from "../parse-nodes/keyword-node";
 import { KVPnode } from "../parse-nodes/kvp-node";
 import { Lambda } from "../parse-nodes/lambda";
 import { ListNode } from "../parse-nodes/list-node";
-import { LitBoolean } from "../parse-nodes/lit-boolean";
 import { LitFloat } from "../parse-nodes/lit-float";
 import { LitInt } from "../parse-nodes/lit-int";
 import { LitRegExp } from "../parse-nodes/lit-regExp";
@@ -89,7 +88,6 @@ import { KvpAsn } from "./kvp-asn";
 import { LambdaAsn } from "./lambda-asn";
 import { LambdaSigAsn } from "./lambda-sig-asn";
 import { LiteralArrayAsn } from "./literal-array-list-asn";
-import { LiteralBoolAsn } from "./literal-bool-asn";
 import { LiteralDictionaryAsn } from "./literal-dictionary-asn";
 import { LiteralEnumAsn } from "./literal-enum-asn";
 import { LiteralFloatAsn } from "./literal-float-asn";
@@ -164,10 +162,6 @@ export function transform(
 
   if (node instanceof LitInt) {
     return new LiteralIntAsn(node.matchedText, fieldId);
-  }
-
-  if (node instanceof LitBoolean) {
-    return new LiteralBoolAsn(node.matchedText, fieldId);
   }
 
   if (node instanceof LitFloat) {

@@ -146,7 +146,7 @@ async function main() {
   var b = 1.1;
   var c = "c";
   var d = "d";
-  var e = true;
+  var e = _stdlib.true;
   var v = system.list([a]);
   var w = system.list([b]);
   var x = system.list([c]);

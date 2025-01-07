@@ -26,7 +26,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = true;
+  var a = _stdlib.true;
   if (a) {
     system.printLine(_stdlib.asString("yes"));
   } else {
@@ -58,7 +58,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = false;
+  var a = _stdlib.false;
   if (a) {
     system.printLine(_stdlib.asString("yes"));
   } else {
@@ -160,7 +160,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = true;
+  var a = _stdlib.true;
   if (a) {
     system.printLine(_stdlib.asString("yes"));
   }

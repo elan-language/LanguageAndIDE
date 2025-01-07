@@ -12,7 +12,6 @@ import {
   commentMarker,
   constructorKeyword,
   functionKeyword,
-  interfaceKeyword,
   privateFunctionKeywords,
   privateProcedureKeywords,
   privatePropertyKeywords,

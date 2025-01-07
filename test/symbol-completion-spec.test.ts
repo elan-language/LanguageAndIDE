@@ -97,7 +97,7 @@ suite("Symbol Completion Spec", () => {
         TokenType.method_function,
         TokenType.method_system,
       ],
-      ["true", "this", "typeof"],
+      ["this", "typeof"],
     );
   });
   test("Expression2", () => {
@@ -139,18 +139,7 @@ suite("Symbol Completion Spec", () => {
         TokenType.method_function,
         TokenType.method_system,
       ],
-      ["true", "this", "typeof"],
-    );
-  });
-  test("LitValueNode", () => {
-    testSymbolCompletionSpec(
-      new LitValueNode(),
-      "t",
-      ParseStatus.incomplete,
-      KeywordNode.name,
-      "t",
-      [],
-      ["true"],
+      ["this", "typeof"],
     );
   });
   test("Expression_Empty", () => {

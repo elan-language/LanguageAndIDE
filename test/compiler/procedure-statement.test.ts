@@ -68,8 +68,8 @@ end procedure`;
 async function main() {
   var a = system.literalArray([1, 2]);
   var b = system.list([3, 4]);
-  var c = system.dictionary({["a"] : true, ["b"] : false});
-  var d = system.dictionaryImmutable({["a"] : true, ["b"] : false});
+  var c = system.dictionary({["a"] : _stdlib.true, ["b"] : _stdlib.false});
+  var d = system.dictionaryImmutable({["a"] : _stdlib.true, ["b"] : _stdlib.false});
   await foo(a, b, c, d);
 }
 
