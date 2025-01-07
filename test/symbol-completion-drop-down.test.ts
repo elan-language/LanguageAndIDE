@@ -114,7 +114,7 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    await assertAutocompletesWithString(fileImpl, "expr5", " ", 69);
+    await assertAutocompletesWithString(fileImpl, "expr5", " ", 71);
   });
 
   test("Pass_LocalVarsCaseInsensitive1", async () => {
@@ -1295,7 +1295,10 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [["alpha", "*", "*"]] as [string, string, string][];
+    const expected = [
+      ["alpha", "*", "*"],
+      ["false", "*", "*"],
+    ] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "expr8", "abs(al", expected);
   });
@@ -1772,5 +1775,38 @@ enum Fruit apple, orange, pear`;
     ] as [string, string, string][];
 
     await assertAutocompletesWithString(fileImpl, "expr5", "Fruit.", expected);
+  });
+
+  test("Pass_propProc", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+
+end main
+
+class Foo
+  constructor()
+  end constructor
+
+  property bar1 as Int
+
+  procedure bar2()
+  end procedure
+
+  procedure bb()
+    call bar2()
+  end procedure
+
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["bar1", "property.bar1", "property.bar1"],
+      ["bar2", "bar2", "bar2"],
+    ] as [string, string, string][];
+
+    await assertAutocompletesWithString(fileImpl, "ident22", "ba", expected);
   });
 });

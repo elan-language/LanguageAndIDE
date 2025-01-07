@@ -39,7 +39,8 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
   isAsync: boolean = false;
 
   aggregateCompileErrors(): CompileError[] {
-    return this.compileErrors.concat(this.index1.aggregateCompileErrors());
+    const cc = this.precedingNode?.aggregateCompileErrors() ?? [];
+    return cc.concat(this.compileErrors).concat(this.index1.aggregateCompileErrors());
   }
 
   isRange() {

@@ -91,7 +91,6 @@ import {
   isAstIndexableNode,
   transforms,
 } from "./syntax-nodes/ast-helpers";
-import { IdAsn } from "./syntax-nodes/id-asn";
 import { Transforms } from "./syntax-nodes/transforms";
 
 export function mustBeOfSymbolType(
@@ -905,23 +904,6 @@ export function mustNotBePropertyOnFunctionMethod(
 
     if (s === SymbolScope.member) {
       compileErrors.push(new ReassignCompileError(`property: ${getId(assignable)}`, location));
-    }
-  }
-}
-
-export function mustBePropertyPrefixedOnAssignable(
-  assignable: AstNode,
-  parent: Parent,
-  compileErrors: CompileError[],
-  location: string,
-) {
-  if (isMember(parent)) {
-    const s = assignable.symbolScope;
-
-    if (s === SymbolScope.member) {
-      if (assignable instanceof IdAsn) {
-        mustBePropertyPrefixedOnMember(compileErrors, location);
-      }
     }
   }
 }

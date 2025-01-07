@@ -965,7 +965,7 @@ class Game
 
   procedure something()
     variable a set to 1
-    set a to p1[0]
+    set a to property.p1[0]
     print a
   end procedure
 
@@ -1063,6 +1063,88 @@ class Foo
 
   property p1 as Int
   property p2 as Int
+
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["referencing a property requires a prefix"]);
+  });
+
+  test("Fail_MissingPropertyKeyword2", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+ 
+end main
+
+class Foo
+  constructor()
+    set property.p2 to [0]
+    set property.p1 to p2[0]
+  end constructor
+
+  property p1 as Int
+  property p2 as Array<of Int>
+
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["referencing a property requires a prefix"]);
+  });
+
+  test("Fail_MissingPropertyKeyword3", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+ 
+end main
+
+class Foo
+  constructor()
+  end constructor
+
+  property p1 as Int
+  property p2 as Array<of Int>
+
+  procedure foo()
+    if property.p1 is 0 then
+      set p2 to [0]
+    end if
+  end procedure
+
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["referencing a property requires a prefix"]);
+  });
+
+  test("Fail_MissingPropertyKeyword3", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+ 
+end main
+
+class Foo
+  constructor()
+  end constructor
+
+  property p1 as Int
+  property p2 as Array<of Int>
+
+  procedure foo()
+    set property.p2 to [0]
+    set p1 to property.p2[0]
+  end procedure
 
 end class`;
 

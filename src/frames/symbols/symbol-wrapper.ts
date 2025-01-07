@@ -12,6 +12,7 @@ import {
   isId,
   isMemberOnFieldsClass,
   isProcedure,
+  isProperty,
 } from "./symbol-helpers";
 
 export class SymbolWrapper {
@@ -40,7 +41,7 @@ export class SymbolWrapper {
 
     const symbol = this.wrapped as ElanSymbol;
 
-    if (isMemberOnFieldsClass(symbol, this.transforms, this.scope)) {
+    if (isProperty(symbol) && isMemberOnFieldsClass(symbol, this.transforms, this.scope)) {
       return `${propertyKeyword}.${symbol.symbolId}`;
     }
 

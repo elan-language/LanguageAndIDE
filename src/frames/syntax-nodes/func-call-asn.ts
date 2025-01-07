@@ -50,13 +50,14 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
   private isExtensionMethod: boolean = false;
 
   aggregateCompileErrors(): CompileError[] {
-    let cc: CompileError[] = [];
+    const cc = this.precedingNode?.aggregateCompileErrors() ?? [];
+    let pc: CompileError[] = [];
 
     for (const i of this.parameters) {
-      cc = cc.concat(i.aggregateCompileErrors());
+      pc = pc.concat(i.aggregateCompileErrors());
     }
 
-    return this.compileErrors.concat(cc);
+    return cc.concat(this.compileErrors).concat(pc);
   }
 
   getSymbolAndType(): [ElanSymbol, SymbolType] {
