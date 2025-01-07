@@ -38,7 +38,6 @@ import { LitRegExp } from "../parse-nodes/lit-regExp";
 import { LitStringEmpty } from "../parse-nodes/lit-string-empty";
 import { LitStringInterpolation } from "../parse-nodes/lit-string-interpolation";
 import { LitStringNonEmpty } from "../parse-nodes/lit-string-non-empty";
-import { LitTuple } from "../parse-nodes/lit-tuple";
 import { MethodCallNode } from "../parse-nodes/method-call-node";
 import { Multiple } from "../parse-nodes/multiple";
 import { NewInstance } from "../parse-nodes/new-instance";
@@ -357,11 +356,6 @@ export function transform(
   }
 
   if (node instanceof TupleNode) {
-    const items = transformMany(node.csv as CSV, fieldId, scope).items;
-    return new LiteralTupleAsn(items, fieldId);
-  }
-
-  if (node instanceof LitTuple) {
     const items = transformMany(node.csv as CSV, fieldId, scope).items;
     return new LiteralTupleAsn(items, fieldId);
   }
