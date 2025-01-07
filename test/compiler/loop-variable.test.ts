@@ -32,10 +32,12 @@ async function removeLetters(wordAsPlayed) {
     await removeLetter(x);
   }
 }
+global["removeLetters"] = removeLetters;
 
 async function removeLetter(l) {
 
 }
+global["removeLetter"] = removeLetter;
 
 async function main() {
 
@@ -71,10 +73,12 @@ async function removeLetters(wordAsPlayed) {
     await removeLetter(letter);
   }
 }
+global["removeLetters"] = removeLetters;
 
 async function removeLetter(l) {
 
 }
+global["removeLetter"] = removeLetter;
 
 async function main() {
 

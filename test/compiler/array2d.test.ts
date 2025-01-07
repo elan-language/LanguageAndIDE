@@ -68,10 +68,12 @@ async function main() {
 function foo(arr) {
   return bar(arr);
 }
+global["foo"] = foo;
 
 function bar(arr) {
   return arr;
 }
+global["bar"] = bar;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);

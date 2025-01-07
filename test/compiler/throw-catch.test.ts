@@ -101,6 +101,7 @@ async function main() {
 async function foo() {
   throw new Error("Foo");
 }
+global["foo"] = foo;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -142,6 +143,7 @@ async function main() {
 async function foo() {
   throw new Error("Foo");
 }
+global["foo"] = foo;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -242,6 +244,7 @@ async function main() {
 async function foo() {
   throw new Error("Foo");
 }
+global["foo"] = foo;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);

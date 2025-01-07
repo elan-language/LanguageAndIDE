@@ -36,6 +36,7 @@ async function main() {
 function grade(score) {
   return score > 80 ? "Distinction" : score > 60 ? "Merit" : score > 40 ? "Pass" : "Fail";
 }
+global["grade"] = grade;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);

@@ -31,6 +31,7 @@ async function main() {
 async function printModified(i, f) {
   system.printLine(_stdlib.asString(f(i)));
 }
+global["printModified"] = printModified;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -67,10 +68,12 @@ function first(t) {
   const [a, ] = t;
   return a;
 }
+global["first"] = first;
 
 async function printModified(i, f) {
   system.printLine(_stdlib.asString(f(i)));
 }
+global["printModified"] = printModified;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -204,6 +207,7 @@ async function main() {
 function getFunc() {
   return (x) => x * 5;
 }
+global["getFunc"] = getFunc;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -262,6 +266,7 @@ async function main() {
 function getFunc(x) {
   return () => x * 5;
 }
+global["getFunc"] = getFunc;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);

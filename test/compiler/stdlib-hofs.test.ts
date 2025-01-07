@@ -94,6 +94,7 @@ async function main() {
 function filterIt(tofilter) {
   return _stdlib.asList(_stdlib.filter(tofilter, (x) => x > 20));
 }
+global["filterIt"] = filterIt;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);

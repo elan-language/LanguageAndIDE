@@ -24,8 +24,10 @@ end procedure\r
 
   public compile(transforms: Transforms): string {
     this.compileErrors = [];
+    const name = this.name.compile(transforms);
     return `async function ${super.compile(transforms)}\r
 }
+global["${name}"] = ${name};
 `;
   }
 

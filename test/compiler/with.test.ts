@@ -116,6 +116,7 @@ function foo() {
   const b = (() => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = 2; return _a;})();
   return b;
 }
+global["foo"] = foo;
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["a", 0]]);};
@@ -162,6 +163,7 @@ function foo() {
   const b = (() => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = 2; return _a;})();
   return b;
 }
+global["foo"] = foo;
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["a", 0]]);};
@@ -206,6 +208,7 @@ function foo() {
   var a = system.initialise(new Foo());
   return (() => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = 2; return _a;})();
 }
+global["foo"] = foo;
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["a", 0]]);};

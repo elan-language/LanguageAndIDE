@@ -34,10 +34,12 @@ async function main() {
 async function printModified(i, f) {
   system.printLine(_stdlib.asString(f(i)));
 }
+global["printModified"] = printModified;
 
 function twice(x) {
   return x * 2;
 }
+global["twice"] = twice;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -72,10 +74,12 @@ async function main() {
 async function printModified(i, f) {
   system.printLine(_stdlib.asString(f()));
 }
+global["printModified"] = printModified;
 
 function twice() {
   return 2;
 }
+global["twice"] = twice;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -110,10 +114,12 @@ async function main() {
 async function printIt(s, c, f) {
   system.printLine(_stdlib.asString(f(s, c)));
 }
+global["printIt"] = printIt;
 
 function find(x, y) {
   return _stdlib.indexOf(x, y);
 }
+global["find"] = find;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -150,10 +156,12 @@ async function main() {
 function getFunc() {
   return twice;
 }
+global["getFunc"] = getFunc;
 
 function twice(x) {
   return x * 2;
 }
+global["twice"] = twice;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -186,6 +194,7 @@ async function main() {
 function twice(x) {
   return x * 2;
 }
+global["twice"] = twice;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -227,6 +236,7 @@ async function main() {
 function ff(a) {
   return a;
 }
+global["ff"] = ff;
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["pf", system.emptyFunc(0)]]);};
@@ -267,6 +277,7 @@ async function main() {
 function ff(a) {
   return a;
 }
+global["ff"] = ff;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);

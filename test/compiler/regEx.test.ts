@@ -61,6 +61,7 @@ async function main() {
 function testRegex(r) {
   return _stdlib.testRegExp("aa", r);
 }
+global["testRegex"] = testRegex;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -95,6 +96,7 @@ async function main() {
 function testRegex() {
   return /a+/;
 }
+global["testRegex"] = testRegex;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);

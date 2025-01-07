@@ -40,6 +40,7 @@ async function main() {
 function square(x) {
   return x ** 2;
 }
+global["square"] = square;
 
 _tests.push(["test10", async (_outcomes) => {
   _outcomes.push(system.assert(square(3), 9, "assert13", _stdlib, false));
@@ -302,6 +303,7 @@ async function main() {
 function square(x) {
   return x ** 2;
 }
+global["square"] = square;
 
 _tests.push(["test10", async (_outcomes) => {
   _outcomes.push(system.assert(square(3), 10, "assert13", _stdlib, false));
@@ -624,6 +626,7 @@ async function main() {
 function square(x) {
   return x ** 2;
 }
+global["square"] = square;
 
 _tests.push(["test10", async (_outcomes) => {
   _outcomes.push(system.assert(square(3), 3 * 3, "assert13", _stdlib, false));
@@ -664,6 +667,7 @@ async function main() {
 function square(x) {
   return x ** 2;
 }
+global["square"] = square;
 
 _tests.push(["test10", async (_outcomes) => {
   _outcomes.push(system.assert("", "", "assert13", _stdlib, true));
@@ -709,6 +713,7 @@ function square(x) {
   }
   return x ** 2;
 }
+global["square"] = square;
 
 _tests.push(["test13", async (_outcomes) => {
   _outcomes.push(system.assert("", "", "assert16", _stdlib, true));
@@ -751,6 +756,7 @@ async function main() {
 function square(x) {
   return x ** 2;
 }
+global["square"] = square;
 
 _tests.push(["test10", async (_outcomes) => {
   _outcomes.push(system.assert("", "", "assert16", _stdlib, true));

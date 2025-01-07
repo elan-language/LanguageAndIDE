@@ -207,7 +207,6 @@ function internalUpdateScopeAndQualifier(
     qualifier = undefined;
   } else if (isAstIdNode(value) && value.id === globalKeyword) {
     currentScope = getGlobalScope(currentScope);
-    qualifier = undefined;
   } else if (qualifier) {
     currentScope = getGlobalScope(currentScope).libraryScope;
   } else {

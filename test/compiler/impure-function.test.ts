@@ -47,10 +47,12 @@ async function foo(gr) {
   var r = _stdlib.randomInt(1, 6);
   r = _stdlib.randomInt(1, 6) * 10;
 }
+global["foo"] = foo;
 
 async function bar(x) {
 
 }
+global["bar"] = bar;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);

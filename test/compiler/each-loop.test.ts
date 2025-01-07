@@ -157,6 +157,7 @@ async function main() {
 function fruit() {
   return system.list(["apple", "orange", "pear"]);
 }
+global["fruit"] = fruit;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);

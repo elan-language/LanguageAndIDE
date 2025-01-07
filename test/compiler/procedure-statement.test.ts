@@ -36,6 +36,7 @@ async function main() {
 async function foo() {
   system.printLine(_stdlib.asString(2));
 }
+global["foo"] = foo;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -79,6 +80,7 @@ async function foo(x, y, z, t) {
   system.printLine(_stdlib.asString(z));
   system.printLine(_stdlib.asString(t));
 }
+global["foo"] = foo;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -139,6 +141,7 @@ async function foo(a, b) {
   system.printLine(_stdlib.asString(a));
   system.printLine(_stdlib.asString(b));
 }
+global["foo"] = foo;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -175,6 +178,7 @@ async function main() {
 async function changeFirst(a) {
   _stdlib.putAt(a[0], 0, 5);
 }
+global["changeFirst"] = changeFirst;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -209,6 +213,7 @@ async function foo(a, b) {
   system.printLine(_stdlib.asString(a));
   system.printLine(_stdlib.asString(b));
 }
+global["foo"] = foo;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -247,10 +252,12 @@ async function foo() {
   system.printLine(_stdlib.asString(1));
   await bar();
 }
+global["foo"] = foo;
 
 async function bar() {
   system.printLine(_stdlib.asString(2));
 }
+global["bar"] = bar;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -283,6 +290,7 @@ async function main() {
 async function square(x) {
   system.printLine(_stdlib.asString(x * x));
 }
+global["square"] = square;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -321,6 +329,7 @@ async function foo(a) {
     await foo(b);
   }
 }
+global["foo"] = foo;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -463,6 +472,7 @@ async function foo(x, y) {
   x[0] = 3;
   y[0] = "goodbye";
 }
+global["foo"] = foo;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -507,6 +517,7 @@ async function foo(x, y) {
   x[0] = y[0];
   y[0] = c;
 }
+global["foo"] = foo;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -555,12 +566,14 @@ async function foo(a, b) {
   await bar(_a, _b);
   a[0] = _a[0]; b[0] = _b[0];
 }
+global["foo"] = foo;
 
 async function bar(a, b) {
   var c = a[0];
   a[0] = b[0];
   b[0] = c;
 }
+global["bar"] = bar;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -610,6 +623,7 @@ async function foo(f, y) {
   await f[0].bar(_y);
   y[0] = _y[0];
 }
+global["foo"] = foo;
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
@@ -668,6 +682,7 @@ async function main() {
 async function foo(f, y) {
   y[0] = f[0].ff + y[0];
 }
+global["foo"] = foo;
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["ff", 0]]);};

@@ -50,6 +50,7 @@ ${endKeyword} ${functionKeyword}\r
 
     return `function ${super.compile(transforms)}\r
 }
+global["${name}"] = ${name};
 `;
   }
 }

@@ -398,6 +398,7 @@ class Foo {
 async function proc(foo) {
   system.printLine(_stdlib.asString(foo.p1));
 }
+global["proc"] = proc;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -455,6 +456,7 @@ class Foo {
 function fun(foo) {
   return foo.p1;
 }
+global["fun"] = fun;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);

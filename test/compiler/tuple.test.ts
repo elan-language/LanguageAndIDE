@@ -69,6 +69,7 @@ async function main() {
 function f() {
   return system.tuple(["1", "2"]);
 }
+global["f"] = f;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -103,6 +104,7 @@ async function main() {
 function f() {
   return system.tuple(["1", "2"]);
 }
+global["f"] = f;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -170,6 +172,7 @@ function f(t) {
   const [first, ] = t;
   return first;
 }
+global["f"] = f;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
