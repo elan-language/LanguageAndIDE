@@ -3,10 +3,11 @@ import { CodeSource } from "../code-source";
 import { mustBeUniqueNameInScope } from "../compile-rules";
 import { IdentifierField } from "../fields/identifier-field";
 import { TypeField } from "../fields/type-field";
-import { ClassFrame } from "../globals/class-frame";
+import { ConcreteClass } from "../globals/concrete-class";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { Member } from "../interfaces/member";
+import { Parent } from "../interfaces/parent";
 import { abstractKeyword, abstractPropertyKeywords, asKeyword, propertyKeyword } from "../keywords";
 import { ClassType } from "../symbols/class-type";
 import { getClassScope } from "../symbols/symbol-helpers";
@@ -21,14 +22,14 @@ export class AbstractProperty extends AbstractFrame implements Member, ElanSymbo
   type: TypeField;
   public private: boolean = false;
 
-  constructor(parent: ClassFrame) {
+  constructor(parent: Parent) {
     super(parent);
     this.name = new IdentifierField(this);
     this.type = new TypeField(this);
   }
 
-  getClass(): ClassFrame {
-    return this.getParent() as ClassFrame;
+  getClass(): ConcreteClass {
+    return this.getParent() as ConcreteClass;
   }
 
   initialKeywords(): string {

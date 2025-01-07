@@ -3,7 +3,7 @@ import { FunctionMethod } from "../src/frames/class-members/function-method";
 import { MemberSelector } from "../src/frames/class-members/member-selector";
 import { DefaultProfile } from "../src/frames/default-profile";
 import { FileImpl } from "../src/frames/file-impl";
-import { ClassFrame } from "../src/frames/globals/class-frame";
+import { ConcreteClass } from "../src/frames/globals/concrete-class";
 import { GlobalFunction } from "../src/frames/globals/global-function";
 import { GlobalProcedure } from "../src/frames/globals/global-procedure";
 import { GlobalSelector } from "../src/frames/globals/global-selector";
@@ -18,6 +18,7 @@ import { hash } from "../src/util";
 import { transforms } from "./compiler/compiler-test-helpers";
 import { classWithConstructor, emptyMainOnly, T00_emptyFile } from "./model-generating-functions";
 import { key } from "./testHelpers";
+import { AbstractClass } from "../src/frames/globals/abstract-class";
 
 export class TestProfileSPJ implements Profile {
   name: string = "SPJ";
@@ -85,7 +86,7 @@ suite("Selector tests", () => {
 
   test("Selection Filtering - members", () => {
     const f = new FileImpl(hash, new DefaultProfile(), transforms());
-    const c = new ClassFrame(f);
+    const c = new ConcreteClass(f);
     const s = new MemberSelector(c);
     let help = s.getCompletion();
     assert.equal(help, " constructor function procedure property private...   #");
@@ -113,8 +114,7 @@ suite("Selector tests", () => {
 
   test("Selection Filtering - abstract class", () => {
     const f = new FileImpl(hash, new DefaultProfile(), transforms());
-    const c = new ClassFrame(f);
-    c.makeAbstract();
+    const c = new AbstractClass(f);
     const s = new MemberSelector(c);
     assert.equal(s.getCompletion(), " function procedure property abstract...   private...   #");
     s.processKey(key("a"));
@@ -185,7 +185,7 @@ suite("Selector tests", () => {
 
   test("Selection Context - deeper nesting 2", () => {
     const fl = new FileImpl(hash, new DefaultProfile(), transforms());
-    const c = new ClassFrame(fl);
+    const c = new ConcreteClass(fl);
     const fm = new FunctionMethod(c);
     const if1 = new IfStatement(fm);
     const s = new StatementSelector(if1);

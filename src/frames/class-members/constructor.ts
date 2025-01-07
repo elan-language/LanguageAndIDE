@@ -2,7 +2,7 @@ import { CodeSource } from "../code-source";
 import { cannotHaveDuplicatePrivateIds } from "../compile-rules";
 import { ParamList } from "../fields/param-list";
 import { FrameWithStatements } from "../frame-with-statements";
-import { ClassFrame } from "../globals/class-frame";
+import { ConcreteClass } from "../globals/concrete-class";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { Frame } from "../interfaces/frame";
@@ -27,8 +27,8 @@ export class Constructor extends FrameWithStatements implements ElanSymbol, Memb
     this.params = new ParamList(this);
   }
 
-  getClass(): ClassFrame {
-    return this.getParent() as ClassFrame;
+  getClass(): ConcreteClass {
+    return this.getParent() as ConcreteClass;
   }
 
   initialKeywords(): string {
@@ -60,7 +60,7 @@ ${this.indent()}end constructor\r
 
   public compile(transforms: Transforms): string {
     this.compileErrors = [];
-    const parentClass = this.getParent() as ClassFrame;
+    const parentClass = this.getParent() as ConcreteClass;
 
     const allPrivateIds = getAllPrivateIds(parentClass, transforms);
     const duplicates = allPrivateIds.filter((n, i, a) => a.indexOf(n) !== i);

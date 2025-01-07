@@ -6,7 +6,7 @@ import { CommentField } from "../src/frames/fields/comment-field";
 import { ConstantValueField } from "../src/frames/fields/constant-value-field";
 import { IdentifierField } from "../src/frames/fields/identifier-field";
 import { FileImpl } from "../src/frames/file-impl";
-import { ClassFrame } from "../src/frames/globals/class-frame";
+import { ConcreteClass } from "../src/frames/globals/concrete-class";
 import { Constant } from "../src/frames/globals/constant";
 import { GlobalFunction } from "../src/frames/globals/global-function";
 import { GlobalSelector } from "../src/frames/globals/global-selector";
@@ -238,7 +238,7 @@ suite("Editing Frames", () => {
   });
   test("Delete frame - Can delete constructor", () => {
     const file = classWithConstructor();
-    const cls = file.getById("class1") as ClassFrame;
+    const cls = file.getById("class1") as ConcreteClass;
     assert.equal(cls.getChildren().length, 2);
     const con = file.getById("constructor5") as Constructor;
     con.select(true, false);

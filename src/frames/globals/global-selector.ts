@@ -37,8 +37,8 @@ export class GlobalSelector extends AbstractSelector implements GlobalFrame {
       [testKeyword, (_parent: Parent) => this.file.createTest()],
       [ignoreKeyword, (_parent: Parent) => this.file.createTest()],
       [enumKeyword, (_parent: Parent) => this.file.createEnum()],
-      [classKeyword, (_parent: Parent) => this.file.createClass(false)],
-      [abstractKeyword, (_parent: Parent) => this.file.createClass(true)],
+      [classKeyword, (_parent: Parent) => this.file.createConcreteClass()],
+      [abstractKeyword, (_parent: Parent) => this.file.createAbstractClass()],
       [recordKeyword, (_parent: Parent) => this.file.createRecord()],
       [commentMarker, (_parent: Parent) => this.file.createGlobalComment()],
     ];

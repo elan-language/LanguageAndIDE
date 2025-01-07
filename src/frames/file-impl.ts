@@ -12,7 +12,8 @@ import {
   helper_testStatusAsDisplayStatus,
   isSelector,
 } from "./frame-helpers";
-import { ClassFrame } from "./globals/class-frame";
+import { AbstractClass } from "./globals/abstract-class";
+import { ConcreteClass } from "./globals/concrete-class";
 import { Constant } from "./globals/constant";
 import { Enum } from "./globals/enum";
 import { GlobalComment } from "./globals/global-comment";
@@ -539,8 +540,11 @@ export class FileImpl implements File, Scope {
   createEnum(): Frame {
     return new Enum(this);
   }
-  createClass(abstract: boolean): Frame {
-    return new ClassFrame(this, abstract);
+  createConcreteClass(): Frame {
+    return new ConcreteClass(this);
+  }
+  createAbstractClass(): Frame {
+    return new AbstractClass(this);
   }
   createRecord(): Frame {
     return new RecordFrame(this);

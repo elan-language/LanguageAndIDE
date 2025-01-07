@@ -4,7 +4,7 @@ import { mustBeUniqueNameInScope } from "../compile-rules";
 import { IdentifierField } from "../fields/identifier-field";
 import { ParamList } from "../fields/param-list";
 import { singleIndent } from "../frame-helpers";
-import { ClassFrame } from "../globals/class-frame";
+import { ConcreteClass } from "../globals/concrete-class";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { Member } from "../interfaces/member";
@@ -28,8 +28,8 @@ export class AbstractProcedure extends AbstractFrame implements Member, ElanSymb
     this.params = new ParamList(this);
   }
 
-  getClass(): ClassFrame {
-    return this.getParent() as ClassFrame;
+  getClass(): ConcreteClass {
+    return this.getParent() as ConcreteClass;
   }
 
   initialKeywords(): string {
