@@ -1,10 +1,10 @@
-# 09ce718f035575137d4e9bf7823fdc413c46646f7606a2ad70ab950c429ed4a0 Elan Beta 6 valid
+# 5cac3f3585d8e89ee82042ec3a7241cfcdbc933867c03795b58139cd055d53bb Elan Beta 6 valid
 
 main
   variable g set to new BlockGraphics()
   set g to g.withBackground(black)
   set g to createStart(g)
-  for i from 0 to 150 step 1
+  for i from 0 to displayWidth step 1
     let x be randomInt(0, 39)
     let y be randomInt(0, 29)
     let p be new Point(x, y)
@@ -21,6 +21,8 @@ main
     call saveAsFile(name, g)
   end if
 end main
+
+constant displayWidth set to 150
 
 procedure saveAsFile(name as String, gr as BlockGraphics)
   variable file set to createFileForWriting(name)
