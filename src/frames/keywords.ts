@@ -165,7 +165,6 @@ export const reservedWords = [
   "final",
   "finally",
   "float",
-  "global",
   "goto",
   "immutable",
   "implements",
