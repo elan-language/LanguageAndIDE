@@ -132,6 +132,7 @@ main
     variable f set to new Foo()
     print f.sin(1)
     print sin(1)
+    print global.sin(1)
     print library.sin(1)
 end main
 
@@ -153,6 +154,7 @@ async function main() {
   var f = system.initialise(new Foo());
   system.printLine(_stdlib.asString(f.sin(1)));
   system.printLine(_stdlib.asString(sin(1)));
+  system.printLine(_stdlib.asString(global.sin(1)));
   system.printLine(_stdlib.asString(_stdlib.sin(1)));
 }
 
@@ -180,7 +182,67 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "2221110.8414709848078965");
+    await assertObjectCodeExecutes(fileImpl, "2221111110.8414709848078965");
+  });
+
+  test("Pass_DisambiguateLibProcedureFromLocalAndInstanceProcedures", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable f set to new Foo()
+  call f.pause(1)
+  call pause(1)
+  call global.pause(1)
+  call library.pause(1)
+end main
+
+procedure pause(x as Float)
+    print 111
+end procedure
+
+class Foo
+    constructor()
+    end constructor
+
+    procedure pause(x as Float)
+      print 222
+    end procedure
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var f = system.initialise(new Foo());
+  await f.pause(1);
+  await pause(1);
+  await global.pause(1);
+  await _stdlib.pause(1);
+}
+
+async function pause(x) {
+  system.printLine(_stdlib.asString(111));
+}
+global["pause"] = pause;
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, []);};
+  constructor() {
+
+  }
+
+  async pause(x) {
+    system.printLine(_stdlib.asString(222));
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "222111111");
   });
 
   test("Pass_DisambiguateGlobalFunctionFromLocalVar", async () => {
@@ -205,6 +267,41 @@ async function main() {
 
 function sin(x) {
   return 111;
+}
+global["sin"] = sin;
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "2111");
+  });
+
+  test("Pass_DisambiguateGlobalProcedureFromLocalVar", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable sin set to 2
+  print sin
+  call global.sin(1)
+end main
+
+procedure sin(x as Float)
+  print 111
+end procedure`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var sin = 2;
+  system.printLine(_stdlib.asString(sin));
+  await global.sin(1);
+}
+
+async function sin(x) {
+  system.printLine(_stdlib.asString(111));
 }
 global["sin"] = sin;
 return [main, _tests];}`;
