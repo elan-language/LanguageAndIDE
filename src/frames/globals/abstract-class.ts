@@ -2,8 +2,8 @@ import { Constructor } from "../class-members/constructor";
 import {
   mustBeAbstractClass,
   mustBeKnownSymbolType,
+  mustBeSingleAbstractSuperClass,
   mustBeUniqueNameInScope,
-  mustImplementSuperClasses,
 } from "../compile-rules";
 import { isMember } from "../frame-helpers";
 import { ElanSymbol } from "../interfaces/elan-symbol";
@@ -23,7 +23,7 @@ import {
   parentHelper_renderChildrenAsHtml,
   parentHelper_renderChildrenAsSource,
 } from "../parent-helpers";
-import { ClassType } from "../symbols/class-type";
+import { ClassSubType, ClassType } from "../symbols/class-type";
 import { DuplicateSymbol } from "../symbols/duplicate-symbol";
 import { getGlobalScope, isSymbol, symbolMatches } from "../symbols/symbol-helpers";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
@@ -48,7 +48,7 @@ export class AbstractClass extends ClassFrame {
   symbolType(transforms?: Transforms) {
     return new ClassType(
       this.symbolId,
-      true,
+      ClassSubType.abstract,
       false,
       false,
       this.inheritance.symbolTypes(transforms),
@@ -101,13 +101,7 @@ end class\r\n`;
       mustBeAbstractClass(st, name, this.compileErrors, this.htmlId);
     }
 
-    mustImplementSuperClasses(
-      transforms,
-      this.symbolType(transforms),
-      typeAndName.map((tn) => tn[0]).filter((st) => st instanceof ClassType) as ClassType[],
-      this.compileErrors,
-      this.htmlId,
-    );
+    mustBeSingleAbstractSuperClass(typeAndName, this.compileErrors, this.htmlId);
 
     const asString = `
   asString() {

@@ -141,6 +141,17 @@ export class MustBeAbstractCompileError extends CompileError {
   }
 }
 
+export class MustBeSingleAbstractCompileError extends CompileError {
+  constructor(types: string[], location: string) {
+    super(
+      Priority.illegalOperation,
+      `There must be only one abstract superclass, ${types.join(", ")} are abstract classes`,
+      location,
+      false,
+    );
+  }
+}
+
 export class PrivateMemberCompileError extends CompileError {
   constructor(id: string, location: string) {
     super(Priority.illegalOperation, `Cannot reference private member '${id}'`, location, false);

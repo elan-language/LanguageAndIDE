@@ -2,6 +2,7 @@ import { Constructor } from "../class-members/constructor";
 import {
   mustBeAbstractClass,
   mustBeKnownSymbolType,
+  mustBeSingleAbstractSuperClass,
   mustBeUniqueNameInScope,
   mustImplementSuperClasses,
 } from "../compile-rules";
@@ -17,7 +18,7 @@ import {
   parentHelper_renderChildrenAsHtml,
   parentHelper_renderChildrenAsSource,
 } from "../parent-helpers";
-import { ClassType } from "../symbols/class-type";
+import { ClassSubType, ClassType } from "../symbols/class-type";
 import { DuplicateSymbol } from "../symbols/duplicate-symbol";
 import { getGlobalScope, isSymbol, symbolMatches } from "../symbols/symbol-helpers";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
@@ -42,7 +43,7 @@ export class ConcreteClass extends ClassFrame {
   symbolType(transforms?: Transforms) {
     return new ClassType(
       this.symbolId,
-      false,
+      ClassSubType.concrete,
       false,
       false,
       this.inheritance.symbolTypes(transforms),
@@ -94,6 +95,8 @@ end class\r\n`;
       mustBeKnownSymbolType(st, name, this.compileErrors, this.htmlId);
       mustBeAbstractClass(st, name, this.compileErrors, this.htmlId);
     }
+
+    mustBeSingleAbstractSuperClass(typeAndName, this.compileErrors, this.htmlId);
 
     mustImplementSuperClasses(
       transforms,

@@ -1,9 +1,8 @@
 import { Constructor } from "../class-members/constructor";
 import {
-  mustBeAbstractClass,
+  mustBeInterfaceClass,
   mustBeKnownSymbolType,
   mustBeUniqueNameInScope,
-  mustImplementSuperClasses,
 } from "../compile-rules";
 import { isMember } from "../frame-helpers";
 import { ElanSymbol } from "../interfaces/elan-symbol";
@@ -23,7 +22,7 @@ import {
   parentHelper_renderChildrenAsHtml,
   parentHelper_renderChildrenAsSource,
 } from "../parent-helpers";
-import { ClassType } from "../symbols/class-type";
+import { ClassSubType, ClassType } from "../symbols/class-type";
 import { DuplicateSymbol } from "../symbols/duplicate-symbol";
 import { getGlobalScope, isSymbol, symbolMatches } from "../symbols/symbol-helpers";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
@@ -49,7 +48,7 @@ export class InterfaceFrame extends ClassFrame {
   symbolType(transforms?: Transforms) {
     return new ClassType(
       this.symbolId,
-      true,
+      ClassSubType.interface,
       false,
       false,
       this.inheritance.symbolTypes(transforms),
@@ -99,16 +98,8 @@ ${endKeyword} ${interfaceKeyword}\r\n`;
 
     for (const [st, name] of typeAndName) {
       mustBeKnownSymbolType(st, name, this.compileErrors, this.htmlId);
-      mustBeAbstractClass(st, name, this.compileErrors, this.htmlId);
+      mustBeInterfaceClass(st, name, this.compileErrors, this.htmlId);
     }
-
-    mustImplementSuperClasses(
-      transforms,
-      this.symbolType(transforms),
-      typeAndName.map((tn) => tn[0]).filter((st) => st instanceof ClassType) as ClassType[],
-      this.compileErrors,
-      this.htmlId,
-    );
 
     const asString = `
   asString() {
