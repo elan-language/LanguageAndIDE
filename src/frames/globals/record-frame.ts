@@ -11,7 +11,7 @@ import {
   parentHelper_renderChildrenAsHtml,
   parentHelper_renderChildrenAsSource,
 } from "../parent-helpers";
-import { ClassType } from "../symbols/class-type";
+import { ClassSubType, ClassType } from "../symbols/class-type";
 import { DuplicateSymbol } from "../symbols/duplicate-symbol";
 import { getGlobalScope, isSymbol, symbolMatches } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
@@ -37,7 +37,7 @@ export class RecordFrame extends ClassFrame {
     return this.name.text;
   }
   symbolType(_transforms?: Transforms) {
-    return new ClassType(this.symbolId, false, false, true, [], this);
+    return new ClassType(this.symbolId, ClassSubType.concrete, false, true, [], this);
   }
   get symbolScope() {
     return SymbolScope.program;

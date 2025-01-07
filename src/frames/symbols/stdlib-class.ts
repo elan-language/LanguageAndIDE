@@ -4,7 +4,7 @@ import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { constructorKeyword, thisKeyword } from "../keywords";
 import { Transforms } from "../syntax-nodes/transforms";
-import { ClassType } from "./class-type";
+import { ClassSubType, ClassType } from "./class-type";
 import { DuplicateSymbol } from "./duplicate-symbol";
 import { isSymbol, symbolMatches } from "./symbol-helpers";
 import { SymbolScope } from "./symbol-scope";
@@ -40,7 +40,7 @@ export class StdLibClass implements Class {
   symbolType(_transforms?: Transforms): SymbolType {
     return new ClassType(
       this.name,
-      this.isAbstract,
+      this.isAbstract ? ClassSubType.abstract : ClassSubType.concrete,
       this.isNotInheritable,
       this.immutable,
       this.inheritTypes,

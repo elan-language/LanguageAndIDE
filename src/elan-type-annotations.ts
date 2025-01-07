@@ -16,7 +16,7 @@ import { SymbolType } from "./frames/interfaces/symbol-type";
 import { AbstractDictionaryType } from "./frames/symbols/abstract-dictionary-type";
 import { ArrayType } from "./frames/symbols/array-type";
 import { BooleanType } from "./frames/symbols/boolean-type";
-import { ClassType } from "./frames/symbols/class-type";
+import { ClassSubType, ClassType } from "./frames/symbols/class-type";
 import { DictionaryImmutableType } from "./frames/symbols/dictionary-immutable-type";
 import { DictionaryType } from "./frames/symbols/dictionary-type";
 import { FloatType } from "./frames/symbols/float-type";
@@ -232,7 +232,10 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
 
     const children: [string, SymbolType, MemberType][] = [];
 
-    tempMap.set(className, new ClassType(className, false, false, false, [], undefined!));
+    tempMap.set(
+      className,
+      new ClassType(className, ClassSubType.concrete, false, false, [], undefined!),
+    );
 
     for (let i = 0; i < names.length; i++) {
       const name = names[i];

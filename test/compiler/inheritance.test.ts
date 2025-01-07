@@ -137,11 +137,11 @@ abstract class Foo
   abstract property p1 as Float
 end class
 
-abstract class Bar
+abstract class Bar inherits Foo
   abstract property p2 as String
 end class
 
-class Yon inherits Foo, Bar
+class Yon inherits Bar
     constructor()
         set property.p1 to 3
         set property.p2 to "apple"
@@ -224,127 +224,6 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "3apple");
   });
 
-  test("Pass_InheritFromMoreThanOneAbstractClass", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-  variable x set to new Bar()
-  print x.p1
-  print x.p2
-  print x.product()
-  call x.setP1(4)
-  print x.product()
-end main
-
-abstract class Foo
-  abstract property p1 as Float
-  abstract property p2 as Float 
-end class
-
-abstract class Yon
-  abstract procedure setP1(v as Float)
-  abstract function product() returns Float
-end class
-
-class Bar inherits Foo, Yon
-    constructor()
-        set property.p1 to 3
-        set property.p2 to 4
-    end constructor
-    property p1 as Float
-    property p2 as Float
-
-    procedure setP1(p1 as Float)
-        set property.p1 to p1
-    end procedure
-
-    function product() returns Float
-        return property.p1 * property.p2
-    end function
-
-    function asString() returns String 
-        return ""
-    end function
-end class`;
-
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-async function main() {
-  var x = system.initialise(new Bar());
-  system.printLine(_stdlib.asString(x.p1));
-  system.printLine(_stdlib.asString(x.p2));
-  system.printLine(_stdlib.asString(x.product()));
-  await x.setP1(4);
-  system.printLine(_stdlib.asString(x.product()));
-}
-
-class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", 0]]);};
-  get p1() {
-    return 0;
-  }
-  set p1(p1) {
-  }
-
-  get p2() {
-    return 0;
-  }
-  set p2(p2) {
-  }
-
-  asString() {
-    return "empty Abstract Class Foo";
-  }
-}
-
-class Yon {
-  static emptyInstance() { return system.emptyClass(Yon, []);};
-  setP1(v) {
-  }
-
-  product() {
-    return 0;
-  }
-
-  asString() {
-    return "empty Abstract Class Yon";
-  }
-}
-
-class Bar {
-  static emptyInstance() { return system.emptyClass(Bar, [["p1", 0], ["p2", 0]]);};
-  constructor() {
-    this.p1 = 3;
-    this.p2 = 4;
-  }
-
-  p1 = 0;
-
-  p2 = 0;
-
-  async setP1(p1) {
-    this.p1 = p1;
-  }
-
-  product() {
-    return this.p1 * this.p2;
-  }
-
-  asString() {
-    return "";
-  }
-
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "341216");
-  });
-
   test("Pass_SuperclassesCanDefineSameMember", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
@@ -362,13 +241,13 @@ abstract class Foo
   abstract property p2 as Float 
 end class
 
-abstract class Yon
+abstract class Yon inherits Foo
   abstract property p1 as Float 
   abstract procedure setP1(v as Float)
   abstract function product() returns Float
 end class
 
-class Bar inherits Foo, Yon
+class Bar inherits Yon
     constructor()
         set property.p1 to 3
         set property.p2 to 4
@@ -2121,6 +2000,40 @@ end class`;
     assertDoesNotCompile(fileImpl, [
       "'BaseVg' is not defined",
       "Superclass 'BaseVg' must be inheritable class",
+    ]);
+  });
+
+  test("Fail_OnlyOneAbstract Class", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable x set to new Yon()
+end main
+
+abstract class Foo
+  abstract property p1 as Float
+end class
+
+abstract class Bar
+  abstract property p2 as String
+end class
+
+class Yon inherits Foo, Bar
+    constructor()
+        set property.p1 to 3
+        set property.p2 to "apple"
+    end constructor
+    property p1 as Float
+    property p2 as String
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "There must be only one abstract superclass, Foo, Bar are abstract classes",
     ]);
   });
 });

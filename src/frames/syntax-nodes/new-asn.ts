@@ -8,7 +8,7 @@ import {
 import { AstNode } from "../interfaces/ast-node";
 import { Scope } from "../interfaces/scope";
 import { constructorKeyword } from "../keywords";
-import { ClassType } from "../symbols/class-type";
+import { ClassSubType, ClassType } from "../symbols/class-type";
 import { ProcedureType } from "../symbols/procedure-type";
 import {
   isConcreteDictionaryType,
@@ -61,7 +61,7 @@ export class NewAsn extends AbstractAstNode implements AstNode {
     if (type instanceof ClassType) {
       mustBeConcreteClass(type, this.compileErrors, this.fieldId);
 
-      if (!type.isAbstract) {
+      if (type.subType === ClassSubType.concrete) {
         const tf = transforms();
         const classSymbol = this.scope.resolveSymbol(type.className, tf, this.scope);
 

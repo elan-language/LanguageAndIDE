@@ -15,6 +15,7 @@ import {
   MustBeAbstractCompileError,
   MustBeConcreteCompileError,
   MustBeRecordCompileError,
+  MustBeSingleAbstractCompileError,
   MustImplementCompileError,
   MutateCompileError,
   NotIndexableCompileError,
@@ -53,7 +54,7 @@ import { LetStatement } from "./statements/let-statement";
 import { AbstractDictionaryType } from "./symbols/abstract-dictionary-type";
 import { ArrayType } from "./symbols/array-type";
 import { BooleanType } from "./symbols/boolean-type";
-import { ClassType } from "./symbols/class-type";
+import { ClassSubType, ClassType } from "./symbols/class-type";
 import { DeconstructedListType } from "./symbols/deconstructed-list-type";
 import { DeconstructedTupleType } from "./symbols/deconstructed-tuple-type";
 import { DictionaryImmutableType } from "./symbols/dictionary-immutable-type";
@@ -289,8 +290,47 @@ export function mustBeAbstractClass(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (!(type instanceof ClassType) || !type.isAbstract || type.isNotInheritable) {
+  if (
+    !(type instanceof ClassType) ||
+    type.subType === ClassSubType.concrete ||
+    type.isNotInheritable
+  ) {
     compileErrors.push(new MustBeAbstractCompileError(name, location));
+  }
+}
+
+export function mustBeInterfaceClass(
+  type: SymbolType,
+  name: string,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  if (
+    !(type instanceof ClassType) ||
+    type.subType !== ClassSubType.interface ||
+    type.isNotInheritable
+  ) {
+    compileErrors.push(new MustBeAbstractCompileError(name, location));
+  }
+}
+
+export function mustBeSingleAbstractSuperClass(
+  typeAndName: [SymbolType, string][],
+  compileErrors: CompileError[],
+  location: string,
+) {
+  const names = [];
+
+  for (const [st, name] of typeAndName) {
+    if (st instanceof ClassType) {
+      if (st.subType === ClassSubType.abstract) {
+        names.push(name);
+      }
+    }
+  }
+
+  if (names.length > 1) {
+    compileErrors.push(new MustBeSingleAbstractCompileError(names, location));
   }
 }
 
@@ -357,7 +397,7 @@ export function mustBeConcreteClass(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (classType.isAbstract) {
+  if (classType.subType !== ClassSubType.concrete) {
     compileErrors.push(new MustBeConcreteCompileError(classType.name, location));
   }
 }
