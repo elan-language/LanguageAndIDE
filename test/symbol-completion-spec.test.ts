@@ -8,9 +8,8 @@ import { CSV } from "../src/frames/parse-nodes/csv";
 import { ExprNode } from "../src/frames/parse-nodes/expr-node";
 import { IdentifierNode } from "../src/frames/parse-nodes/identifier-node";
 import { InstanceProcRef } from "../src/frames/parse-nodes/instanceProcRef";
-import { KeywordNode } from "../src/frames/parse-nodes/keyword-node";
-import { LitValueNode } from "../src/frames/parse-nodes/lit-value";
 import { MethodCallNode } from "../src/frames/parse-nodes/method-call-node";
+import { MethodNameNode } from "../src/frames/parse-nodes/method-name-node";
 import { OptionalNode } from "../src/frames/parse-nodes/optional-node";
 import { allIds } from "../src/frames/parse-nodes/parse-node-helpers";
 import { ProcRefNode } from "../src/frames/parse-nodes/proc-ref-node";
@@ -24,7 +23,6 @@ import { VariableOrProperty } from "../src/frames/parse-nodes/variable-or-proper
 import { ParseStatus } from "../src/frames/status-enums";
 import { TokenType } from "../src/frames/symbol-completion-helpers";
 import { testSymbolCompletionSpec } from "./testHelpers";
-import { MethodNameMode } from "../src/frames/parse-nodes/method-name-node";
 
 suite("Symbol Completion Spec", () => {
   test("MethodCallNode", () => {
@@ -32,7 +30,7 @@ suite("Symbol Completion Spec", () => {
       new MethodCallNode(),
       "x",
       ParseStatus.incomplete,
-      MethodNameMode.name,
+      MethodNameNode.name,
       "x",
       [TokenType.method_function, TokenType.method_system],
       [],

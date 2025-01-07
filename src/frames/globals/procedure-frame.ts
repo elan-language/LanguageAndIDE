@@ -1,6 +1,6 @@
 import { CodeSource } from "../code-source";
 import { mustBeUniqueNameInScope } from "../compile-rules";
-import { IdentifierField } from "../fields/identifier-field";
+import { MethodNameField } from "../fields/method-name-field";
 import { ParamList } from "../fields/param-list";
 import { FrameWithStatements } from "../frame-with-statements";
 import { ElanSymbol } from "../interfaces/elan-symbol";
@@ -17,14 +17,14 @@ import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { Transforms } from "../syntax-nodes/transforms";
 
 export abstract class ProcedureFrame extends FrameWithStatements implements ElanSymbol, Scope {
-  public name: IdentifierField;
+  public name: MethodNameField;
   public params: ParamList;
   file: File;
 
   constructor(parent: Parent) {
     super(parent);
     this.file = parent as File;
-    this.name = new IdentifierField(this);
+    this.name = new MethodNameField(this);
     this.params = new ParamList(this);
   }
 

@@ -1,5 +1,5 @@
 import { CodeSource } from "../code-source";
-import { IdentifierField } from "../fields/identifier-field";
+import { MethodNameField } from "../fields/method-name-field";
 import { ParamList } from "../fields/param-list";
 import { TypeField } from "../fields/type-field";
 import { FrameWithStatements } from "../frame-with-statements";
@@ -17,7 +17,7 @@ import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { Transforms } from "../syntax-nodes/transforms";
 
 export abstract class FunctionFrame extends FrameWithStatements implements Parent, ElanSymbol {
-  public name: IdentifierField;
+  public name: MethodNameField;
   public params: ParamList;
   public returnType: TypeField;
   file: File;
@@ -26,7 +26,7 @@ export abstract class FunctionFrame extends FrameWithStatements implements Paren
   constructor(parent: Parent) {
     super(parent);
     this.file = parent as File;
-    this.name = new IdentifierField(this);
+    this.name = new MethodNameField(this);
     this.params = new ParamList(this);
     this.returnType = new TypeField(this);
     this.getChildren().push(new ReturnStatement(this));

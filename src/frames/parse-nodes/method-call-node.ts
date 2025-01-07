@@ -2,11 +2,11 @@ import { TokenType } from "../symbol-completion-helpers";
 import { CLOSE_BRACKET, OPEN_BRACKET } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { ArgListNode } from "./arg-list-node";
-import { MethodNameMode } from "./method-name-node";
+import { MethodNameNode } from "./method-name-node";
 import { PunctuationNode } from "./punctuation-node";
 
 export class MethodCallNode extends AbstractSequence {
-  name: MethodNameMode | undefined;
+  name: MethodNameNode | undefined;
   args: ArgListNode | undefined;
   tokenTypes: Set<TokenType>;
 
@@ -22,7 +22,7 @@ export class MethodCallNode extends AbstractSequence {
 
   parseText(text: string): void {
     if (text.trim().length > 0) {
-      this.name = new MethodNameMode(this.tokenTypes);
+      this.name = new MethodNameNode(this.tokenTypes);
       this.addElement(this.name);
       this.addElement(new PunctuationNode(OPEN_BRACKET));
       this.args = new ArgListNode(() => this.name!.matchedText);
