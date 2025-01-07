@@ -93,6 +93,38 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "3.141592653589793");
   });
 
+  test("Pass_DisambiguateLocalLetFromGlobalConstant", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+constant f set to 1
+
+main
+  let f be 2
+  print f
+  print global.f
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {
+  f = 1;
+
+};
+async function main() {
+  const f = 2;
+  system.printLine(_stdlib.asString(f));
+  system.printLine(_stdlib.asString(global.f));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "21");
+  });
+
   test("Pass_DisambiguateLibFunctionFromLocalAndInstanceFunctions", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
@@ -127,6 +159,7 @@ async function main() {
 function sin(x) {
   return 111;
 }
+global["sin"] = sin;
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
@@ -148,6 +181,41 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "2221110.8414709848078965");
+  });
+
+  test("Pass_DisambiguateGlobalFunctionFromLocalVar", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+    variable sin set to 2
+    print sin
+    print global.sin(1)
+end main
+
+function sin(x as Float) returns Float
+    return 111
+end function`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var sin = 2;
+  system.printLine(_stdlib.asString(sin));
+  system.printLine(_stdlib.asString(global.sin(1)));
+}
+
+function sin(x) {
+  return 111;
+}
+global["sin"] = sin;
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "2111");
   });
 
   ignore_test("Fail_LocalShadowsConstant", async () => {

@@ -128,10 +128,12 @@ async function main() {
 async function hh(a) {
   var b = a;
 }
+global["hh"] = hh;
 
 function ii(a) {
   return a;
 }
+global["ii"] = ii;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);

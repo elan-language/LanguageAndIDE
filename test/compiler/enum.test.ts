@@ -260,6 +260,7 @@ async function main() {
 function isFavourite(f) {
   return system.objectEquals(f, Fruit.pear);
 }
+global["isFavourite"] = isFavourite;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -297,6 +298,7 @@ async function main() {
 function firstFruit() {
   return Fruit.apple;
 }
+global["firstFruit"] = firstFruit;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);

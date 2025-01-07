@@ -229,6 +229,7 @@ async function foo(arr) {
   }
   system.printLine(_stdlib.asString(system.safeIndex(arr[0], 0)));
 }
+global["foo"] = foo;
 return [main, _tests];}`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));

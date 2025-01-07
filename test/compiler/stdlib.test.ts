@@ -538,6 +538,7 @@ async function main() {
 function rollDice(rnd) {
   return rnd.nextInt(1, 6);
 }
+global["rollDice"] = rollDice;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);

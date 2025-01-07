@@ -492,6 +492,7 @@ async function main() {
 function foo() {
   return system.tuple([0, 0]);
 }
+global["foo"] = foo;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);

@@ -207,10 +207,12 @@ class Yon {
 function b(bar) {
   return bar.p2;
 }
+global["b"] = b;
 
 function f(foo) {
   return foo.p1;
 }
+global["f"] = f;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -526,6 +528,7 @@ class Bar {
 async function proc(foo) {
   system.printLine(_stdlib.asString(foo.p1));
 }
+global["proc"] = proc;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -594,6 +597,7 @@ class Bar {
 function fun(l) {
   return system.safeIndex(l, 0);
 }
+global["fun"] = fun;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -660,6 +664,7 @@ class Bar {
 function fun(foo) {
   return foo.p1;
 }
+global["fun"] = fun;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);

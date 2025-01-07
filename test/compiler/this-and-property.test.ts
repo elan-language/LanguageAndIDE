@@ -101,6 +101,7 @@ async function main() {
 function doubled(f) {
   return 2 * f.p1;
 }
+global["doubled"] = doubled;
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};

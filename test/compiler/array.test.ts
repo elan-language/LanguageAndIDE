@@ -920,6 +920,7 @@ async function main() {
 function foo(i) {
   return i;
 }
+global["foo"] = foo;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);

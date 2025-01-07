@@ -36,6 +36,7 @@ async function printEach(target) {
     system.printLine(_stdlib.asString(x));
   }
 }
+global["printEach"] = printEach;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -68,6 +69,7 @@ async function main() {
 function printEach(target) {
   return target;
 }
+global["printEach"] = printEach;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -104,6 +106,7 @@ async function main() {
 function printEach(target) {
   return target;
 }
+global["printEach"] = printEach;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -140,6 +143,7 @@ async function printEach(target) {
     system.printLine(_stdlib.asString(x));
   }
 }
+global["printEach"] = printEach;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -176,6 +180,7 @@ async function printEach(target) {
     system.printLine(_stdlib.asString(x));
   }
 }
+global["printEach"] = printEach;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -215,11 +220,13 @@ async function main() {
 async function printAsIterable(target) {
   system.printLine(_stdlib.asString(target));
 }
+global["printAsIterable"] = printAsIterable;
 
 async function printasList(target) {
   var some = _stdlib.asList(target);
   system.printLine(_stdlib.asString(system.list(some.slice(3, 7))));
 }
+global["printasList"] = printasList;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
