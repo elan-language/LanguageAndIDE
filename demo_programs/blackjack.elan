@@ -1,4 +1,4 @@
-# e37af52ea8e7e7623160a66b8fa5a951a18486ec3c3089162e5a3a73c871dbce Elan Beta 6 valid
+# 1d4d74993ee40d11bccc36330d042c04528043f4063a8d646dce79c3b073abe8 Elan Beta 6 valid
 
 main
   call game()
@@ -164,7 +164,7 @@ class Dealer inherits Player
     set property.faceCard to faceCard
     set property.active to false
     set property.hand to new Hand()
-    call hand.draw()
+    call property.hand.draw()
   end procedure
 
   procedure changeScoreBy(amount as Int)
@@ -174,9 +174,9 @@ class Dealer inherits Player
   procedure nextMove()
     let decision be getDecision()
     if getDecision() is Action.draw then
-      call hand.draw()
+      call property.hand.draw()
     else
-      call hand.stand()
+      call property.hand.stand()
     end if
   end procedure
 
@@ -205,9 +205,9 @@ class HumanPlayer inherits Player
 
   procedure newHand()
     set property.hand to new Hand()
-    call hand.draw()
-    call hand.draw()
-    call hand.setStatus(Status.playing)
+    call property.hand.draw()
+    call property.hand.draw()
+    call property.hand.setStatus(Status.playing)
   end procedure
 
   function isPlaying() returns Boolean
@@ -217,9 +217,9 @@ class HumanPlayer inherits Player
   procedure nextMove()
     let inp be inputStringFromOptions("Enter s to stand, d to draw card:", ["s", "d"])
     if inp is "d" then
-      call hand.draw()
+      call property.hand.draw()
     else
-      call hand.stand()
+      call property.hand.stand()
     end if
   end procedure
 
@@ -263,9 +263,9 @@ class AutomatedPlayer inherits Player
     while property.hand.status is Status.playing
       let decision be getDecision()
       if decision is Action.draw then
-        call hand.draw()
+        call property.hand.draw()
       else if decision is Action.stand then
-        call hand.stand()
+        call property.hand.stand()
       else
         throw exception "Action {decision} not covered"
         # TODO: cover other cases, which must check that they are valid given hand 
@@ -276,8 +276,8 @@ class AutomatedPlayer inherits Player
   procedure newHand(dealerFaceCard as Card)
     set property.dealerFaceCard to dealerFaceCard
     set property.hand to new Hand()
-    call hand.draw()
-    call hand.draw()
+    call property.hand.draw()
+    call property.hand.draw()
   end procedure
 
   function asString() returns String
