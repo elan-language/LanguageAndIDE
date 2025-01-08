@@ -1,4 +1,4 @@
-# 557747f5884df42a0653bcf87de718158dea26bfb6aafa09c461d590f612a417 Elan Beta 6 valid
+# 93a25fc6d7a03c44e1567ca932d86698365d0e72982efd02ea80e49b4e126fd7 Elan Beta 6 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -36,7 +36,7 @@ class Snake
   procedure clockTick(key as String, out apple as Apple)
     call setDirection(key)
     set property.priorTail to property.body[0]
-    call body.append(property.head)
+    call property.body.append(property.head)
     set property.head to property.head.getAdjacentSquare(property.currentDir)
     if property.head is apple.location then
       call apple.newRandomPosition(this)
