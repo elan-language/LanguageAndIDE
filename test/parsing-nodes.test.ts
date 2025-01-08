@@ -132,7 +132,7 @@ suite("Parsing Nodes", () => {
       "thisWidget",
       "",
       "thisWidget",
-      "thisWidget",
+      "<el-id>thisWidget</el-id>",
     );
     // empty data structures
     testNodeParse(
@@ -666,7 +666,7 @@ suite("Parsing Nodes", () => {
       ``,
       "",
       "foo(a)",
-      "<el-method>foo</el-method>(a)",
+      "<el-method>foo</el-method>(<el-id>a</el-id>)",
     );
     testNodeParse(new MethodCallNode(), `isBefore(b[0])`, ParseStatus.valid, ``, "", "");
   });
@@ -1022,7 +1022,7 @@ suite("Parsing Nodes", () => {
       "x as String",
       "",
       "x as String",
-      "x <el-kw>as</el-kw> <el-type>String</el-type>",
+      "<el-id>x</el-id> <el-kw>as</el-kw> <el-type>String</el-type>",
     );
     testNodeParse(
       new ParamDefNode(),
@@ -1031,7 +1031,7 @@ suite("Parsing Nodes", () => {
       "out x as String",
       "",
       "out x as String",
-      "<el-kw>out</el-kw> x <el-kw>as</el-kw> <el-type>String</el-type>",
+      "<el-kw>out</el-kw> <el-id>x</el-id> <el-kw>as</el-kw> <el-type>String</el-type>",
     );
     testNodeParse(
       new ParamDefNode(),
@@ -1466,7 +1466,7 @@ suite("Parsing Nodes", () => {
       `this.a.b()`,
       "",
       "this.a.b()",
-      "<el-kw>this</el-kw>.a.<el-method>b</el-method>()",
+      "<el-kw>this</el-kw>.<el-id>a</el-id>.<el-method>b</el-method>()",
     );
     testNodeParse(
       new ExprNode(),
@@ -1709,7 +1709,7 @@ suite("Parsing Nodes", () => {
       `not(a+b)`,
       "",
       "not (a + b)",
-      `<el-kw>not</el-kw> (a + b)`,
+      `<el-kw>not</el-kw> (<el-id>a</el-id> + <el-id>b</el-id>)`,
     );
   });
 });

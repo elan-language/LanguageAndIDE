@@ -13,5 +13,6 @@
     --method: rgb(152, 118, 49);
     --type:  rgb(38,127,153);
     --string:  rgb(165, 2, 2);
-    --comment: green;
+    --comment: rgb(1, 106, 1);
+    --namedValue: rgb(139, 3, 173);
 }

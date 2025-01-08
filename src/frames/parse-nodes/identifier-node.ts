@@ -44,4 +44,8 @@ export class IdentifierNode extends AbstractParseNode {
   symbolCompletion_context(): string {
     return this.contextGenerator();
   }
+
+  override renderAsHtml(): string {
+    return `<el-id>${super.renderAsHtml()}</el-id>`;
+  }
 }

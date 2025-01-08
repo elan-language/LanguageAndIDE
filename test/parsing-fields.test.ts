@@ -39,7 +39,7 @@ suite("Field Parsing Tests", () => {
     assert.equal(id.readParseStatus(), ParseStatus.valid);
     assert.equal(
       id.renderAsHtml(),
-      `<el-field id="var4" class="ok" tabindex=0><el-txt>ab_1</el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="A variable name must start with a lower-case letter, optionally followed by any letters (lower or upper case), and/or numeric digits, and/or underscores - nothing else. (For'tuple deconstruction' or 'list deconstruction' consult documentation.)">?</el-help></el-field>`,
+      `<el-field id=\"var4\" class=\"ok\" tabindex=0><el-txt><el-id>ab_1</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title=\"A variable name must start with a lower-case letter, optionally followed by any letters (lower or upper case), and/or numeric digits, and/or underscores - nothing else. (For'tuple deconstruction' or 'list deconstruction' consult documentation.)\">?</el-help></el-field>`,
     );
     id.setFieldToKnownValidText("Ab_1");
     id.parseCurrentText();
@@ -61,7 +61,7 @@ suite("Field Parsing Tests", () => {
     assert.equal(id.readParseStatus(), ParseStatus.valid);
     assert.equal(
       id.renderAsHtml(),
-      `<el-field id="var4" class="ok" tabindex=0><el-txt>ab_1</el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="A variable name must start with a lower-case letter, optionally followed by any letters (lower or upper case), and/or numeric digits, and/or underscores - nothing else. (For'tuple deconstruction' or 'list deconstruction' consult documentation.)">?</el-help></el-field>`,
+      `<el-field id=\"var4\" class=\"ok\" tabindex=0><el-txt><el-id>ab_1</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title=\"A variable name must start with a lower-case letter, optionally followed by any letters (lower or upper case), and/or numeric digits, and/or underscores - nothing else. (For'tuple deconstruction' or 'list deconstruction' consult documentation.)\">?</el-help></el-field>`,
     );
     id.setFieldToKnownValidText("Ab_1");
     id.parseCurrentText();
@@ -117,7 +117,7 @@ suite("Field Parsing Tests", () => {
     assert.equal(expr.textAsSource(), `"{op} times {op2} equals {op1*op2}"`);
     assert.equal(
       expr.textAsHtml(),
-      `"<el-lit></el-lit>{op}<el-lit> times </el-lit>{op2}<el-lit> equals </el-lit>{op1*op2}<el-lit></el-lit>"`,
+      `"<el-lit></el-lit>{<el-id>op</el-id>}<el-lit> times </el-lit>{<el-id>op2</el-id>}<el-lit> equals </el-lit>{<el-id>op1</el-id>*<el-id>op2</el-id>}<el-lit></el-lit>"`,
     );
   });
 
