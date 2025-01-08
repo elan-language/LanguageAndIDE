@@ -101,14 +101,9 @@ ${endKeyword} ${interfaceKeyword}\r\n`;
       mustBeInterfaceClass(st, name, this.compileErrors, this.htmlId);
     }
 
-    const asString = `
-  asString() {
-    return "empty Interface ${name}";
-  }`;
-
     return `class ${name}${this.inheritanceAsObjectCode()} {\r
   static emptyInstance() { return system.emptyClass(${name}, ${this.propertiesToInit()});};\r
-${parentHelper_compileChildren(this, transforms)}\r${asString}\r
+${parentHelper_compileChildren(this, transforms)}\r
 }\r\n`;
   }
 

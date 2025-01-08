@@ -410,7 +410,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "0");
   });
 
-  test("Fail_MutableClassAsFunctionParameter", async () => {
+  test("Pass_MutableClassAsFunctionParameter", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
