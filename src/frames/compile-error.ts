@@ -141,6 +141,17 @@ export class MustBeAbstractCompileError extends CompileError {
   }
 }
 
+export class MustNotBeCircularDependencyCompileError extends CompileError {
+  constructor(type: string, location: string) {
+    super(
+      Priority.illegalOperation,
+      `Class/interface '${type}' cannot inherit from itself`,
+      location,
+      false,
+    );
+  }
+}
+
 export class MustBeSingleAbstractCompileError extends CompileError {
   constructor(types: string[], location: string) {
     super(

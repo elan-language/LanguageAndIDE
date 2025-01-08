@@ -3,6 +3,7 @@ import {
   mustBeInterfaceClass,
   mustBeKnownSymbolType,
   mustBeUniqueNameInScope,
+  mustNotBeCircularDependency,
 } from "../compile-rules";
 import { isMember } from "../frame-helpers";
 import { ElanSymbol } from "../interfaces/elan-symbol";
@@ -85,7 +86,7 @@ ${endKeyword} ${interfaceKeyword}\r\n`;
   public compile(transforms: Transforms): string {
     this.compileErrors = [];
 
-    const name = this.name.compile(transforms);
+    const name = this.name.text;
     mustBeUniqueNameInScope(
       name,
       getGlobalScope(this),
@@ -101,7 +102,14 @@ ${endKeyword} ${interfaceKeyword}\r\n`;
       mustBeInterfaceClass(st, name, this.compileErrors, this.htmlId);
     }
 
-    return `class ${name}${this.inheritanceAsObjectCode()} {\r
+    const interfaces = this.getAllInterfaces(this, [], transforms);
+
+    if (interfaces.map((i) => i.symbolId).includes(name)) {
+      // circular interface
+      mustNotBeCircularDependency(name, this.compileErrors, this.htmlId);
+    }
+
+    return `class ${name} {\r
   static emptyInstance() { return system.emptyClass(${name}, ${this.propertiesToInit()});};\r
 ${parentHelper_compileChildren(this, transforms)}\r
 }\r\n`;
@@ -129,6 +137,7 @@ ${parentHelper_compileChildren(this, transforms)}\r
     ) as ElanSymbol[];
 
     const types = this.getSuperClassesTypeAndName(transforms)
+      .filter((tn) => tn[1] !== this.symbolId) // if inherits from self remove
       .map((tn) => tn[0])
       .filter((t) => t instanceof ClassType);
 

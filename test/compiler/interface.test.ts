@@ -476,4 +476,22 @@ end class`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Bar must implement Foo1.prop"]);
   });
+
+  test("Fail_InheritSelf", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  
+end main
+
+interface Foo inherits Foo
+  abstract property prop as Int
+end interface`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Class/interface 'Foo' cannot inherit from itself"]);
+  });
 });
