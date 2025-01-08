@@ -43,6 +43,7 @@ import {
   parentHelper_removeChild,
 } from "../parent-helpers";
 import { CommentStatement } from "../statements/comment-statement";
+import { ClassSubType, ClassType } from "../symbols/class-type";
 import { getGlobalScope } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { isAstCollectionNode, isAstIdNode } from "../syntax-nodes/ast-helpers";
@@ -73,6 +74,16 @@ export abstract class ClassFrame
 
   ofTypes: SymbolType[] = [];
   genericParamMatches: Map<string, SymbolType> = new Map<string, SymbolType>();
+
+  get subType(): ClassSubType {
+    if (this.isInterface) {
+      return ClassSubType.interface;
+    }
+    if (this.isAbstract) {
+      return ClassSubType.abstract;
+    }
+    return ClassSubType.concrete;
+  }
 
   getFile(): File {
     return this.getParent() as File;
@@ -182,10 +193,6 @@ export abstract class ClassFrame
     return this.doesInherit() ? ` ${this.inheritance.renderAsSource()}` : ``;
   }
 
-  protected inheritanceAsObjectCode(): string {
-    return ``;
-  }
-
   indent(): string {
     return "";
   }
@@ -205,6 +212,16 @@ export abstract class ClassFrame
     return `[${ps}]`;
   }
 
+  private mapSymbol(c: ElanSymbol, transforms: Transforms): [SymbolType, string] {
+    const id = c.symbolId;
+
+    // this is to handle a class inheriting itself
+    if (c.symbolId === this.name.text) {
+      return [new ClassType(this.symbolId, this.subType, false, false, [], this), id];
+    }
+    return [c.symbolType(transforms), id];
+  }
+
   public getSuperClassesTypeAndName(transforms: Transforms) {
     if (this.doesInherit()) {
       const superClasses = this.inheritance.getOrTransformAstNode(transforms);
@@ -213,7 +230,7 @@ export abstract class ClassFrame
         const nodes = superClasses.items.filter((i) => isAstIdNode(i));
         const typeAndName: [SymbolType, string][] = nodes
           .map((n) => getGlobalScope(this).resolveSymbol(n.id, transforms, this))
-          .map((c) => [c.symbolType(transforms), c.symbolId]);
+          .map((c) => this.mapSymbol(c, transforms));
 
         return typeAndName;
       }
@@ -238,12 +255,12 @@ export abstract class ClassFrame
             (n) => n instanceof ClassFrame && !seenNames.includes(n.symbolId),
           ) as ClassFrame[];
         let allSymbols = symbols;
+        seenNames.push(cf.symbolId);
 
         for (const s of symbols) {
           allSymbols = allSymbols.concat(this.getAllInterfaces(s, seenNames, transforms));
         }
 
-        seenNames.push(cf.symbolId);
         return allSymbols.filter(filter);
       }
     }
@@ -255,7 +272,12 @@ export abstract class ClassFrame
   }
 
   public getAllAbstractClasses(cf: ClassFrame, seenNames: string[], transforms: Transforms) {
-    return this.getAllClasses(cf, seenNames, (s: ClassFrame) => s.isAbstract && !s.isInterface, transforms);
+    return this.getAllClasses(
+      cf,
+      seenNames,
+      (s: ClassFrame) => s.isAbstract && !s.isInterface,
+      transforms,
+    );
   }
 
   createConstructor(): Frame {

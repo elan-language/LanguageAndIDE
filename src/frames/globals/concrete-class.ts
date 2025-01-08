@@ -116,7 +116,7 @@ end class\r\n`;
 
     const asString = "";
 
-    return `class ${name}${this.inheritanceAsObjectCode()} ${implement}{\r
+    return `class ${name} ${implement}{\r
   static emptyInstance() { return system.emptyClass(${name}, ${this.propertiesToInit()});};\r
 ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
 }\r\n`;

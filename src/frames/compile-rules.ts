@@ -17,6 +17,7 @@ import {
   MustBeRecordCompileError,
   MustBeSingleAbstractCompileError,
   MustImplementCompileError,
+  MustNotBeCircularDependencyCompileError,
   MutateCompileError,
   NotIndexableCompileError,
   NotIterableCompileError,
@@ -312,6 +313,14 @@ export function mustBeInterfaceClass(
   ) {
     compileErrors.push(new MustBeAbstractCompileError(name, location));
   }
+}
+
+export function mustNotBeCircularDependency(
+  name: string,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  compileErrors.push(new MustNotBeCircularDependencyCompileError(name, location));
 }
 
 export function mustBeSingleAbstractSuperClass(
