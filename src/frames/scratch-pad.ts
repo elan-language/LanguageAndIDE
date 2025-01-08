@@ -4,7 +4,7 @@ export class ScratchPad {
   private frames: Frame[] | undefined;
 
   addSnippet(frames: Frame[]): void {
-    this.frames = frames;
+    this.frames = frames.filter((fr) => !(fr.initialKeywords() === "selector"));
   }
   readFrames(): Frame[] | undefined {
     const toPaste = this.frames;

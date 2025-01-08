@@ -1,3 +1,4 @@
+import { ElanCutCopyPasteError } from "../elan-cut-copy-paste-error";
 import { CodeSource } from "./code-source";
 import { CompileError } from "./compile-error";
 import {
@@ -298,17 +299,22 @@ export abstract class AbstractFrame implements Frame {
   }
   cut(): void {
     const selected = parentHelper_getAllSelectedChildren(this.getParent());
-    const movable = selected.filter((s) => s.isMovable());
+    const nonSelectors = selected.filter((s) => !(s.initialKeywords() === "selector"));
+    if (nonSelectors.length === 0) {
+      throw new ElanCutCopyPasteError("Cut Failed: No code to cut");
+    }
+    const movable = nonSelectors.filter((s) => s.isMovable());
     const last = selected[selected.length - 1];
-    if (movable.length === selected.length) {
-      parentHelper_removeAllSelectedChildren(this.getParent());
-      const newFocus = parentHelper_getChildAfter(this.getParent(), last);
-      newFocus.select(true, false);
-      const sp = this.getScratchPad();
-      sp.addSnippet(selected);
-      if (!("isSelector" in newFocus) && !newFocus.getParent().minimumNumberOfChildrenExceeded()) {
-        newFocus.insertPeerSelector(false);
-      }
+    if (movable.length !== selected.length) {
+      throw new ElanCutCopyPasteError("Cut Failed: At least one selected frame is not moveable");
+    }
+    parentHelper_removeAllSelectedChildren(this.getParent());
+    const newFocus = parentHelper_getChildAfter(this.getParent(), last);
+    newFocus.select(true, false);
+    const sp = this.getScratchPad();
+    sp.addSnippet(selected);
+    if (!("isSelector" in newFocus) && !newFocus.getParent().minimumNumberOfChildrenExceeded()) {
+      newFocus.insertPeerSelector(false);
     }
   }
 
