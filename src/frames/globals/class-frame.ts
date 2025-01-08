@@ -255,7 +255,12 @@ export abstract class ClassFrame
   }
 
   public getAllAbstractClasses(cf: ClassFrame, seenNames: string[], transforms: Transforms) {
-    return this.getAllClasses(cf, seenNames, (s: ClassFrame) => s.isAbstract && !s.isInterface, transforms);
+    return this.getAllClasses(
+      cf,
+      seenNames,
+      (s: ClassFrame) => s.isAbstract && !s.isInterface,
+      transforms,
+    );
   }
 
   createConstructor(): Frame {

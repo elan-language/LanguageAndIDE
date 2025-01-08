@@ -62,7 +62,6 @@ export const throwKeyword = "throw";
 export const toKeyword = "to";
 export const trueKeyword = "true";
 export const tryKeyword = "try";
-export const typeofKeyword = "typeof";
 export const variableKeyword = "variable";
 export const whileKeyword = "while";
 export const withKeyword = "with";
@@ -134,7 +133,6 @@ export const allKeywords = [
   throwKeyword,
   toKeyword,
   tryKeyword,
-  typeofKeyword,
   variableKeyword,
   withKeyword,
   whileKeyword,
@@ -193,6 +191,7 @@ export const reservedWords = [
   "synchronized",
   "throws",
   "transient",
+  "typeof",
   "void",
   "volatile",
   "when",

@@ -322,9 +322,7 @@ main
   let x be new Foo() with a to {1,2}, b to "fred"
   let a, b be x
   print a
-  print typeof a
   print b
-  print typeof b
 end main
 
 record Foo
@@ -337,9 +335,7 @@ async function main() {
   const x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = system.list([1, 2]); _a.b = "fred"; return _a;})();
   const {a, b} = x;
   system.printLine(_stdlib.asString(a));
-  system.printLine(_stdlib.asString("List<of Int>"));
   system.printLine(_stdlib.asString(b));
-  system.printLine(_stdlib.asString("String"));
 }
 
 class Foo {
@@ -357,7 +353,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{1, 2}List<of Int>fredString");
+    await assertObjectCodeExecutes(fileImpl, "{1, 2}fred");
   });
 
   test("Pass_DeconstructVarRecordWithListIntoNewLet", async () => {
@@ -367,9 +363,7 @@ main
   variable x set to new Foo() with a to {1,2}, b to "fred"
   let a, b be x
   print a
-  print typeof a
   print b
-  print typeof b
 end main
 
 record Foo
@@ -382,9 +376,7 @@ async function main() {
   var x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = system.list([1, 2]); _a.b = "fred"; return _a;})();
   const {a, b} = x;
   system.printLine(_stdlib.asString(a));
-  system.printLine(_stdlib.asString("List<of Int>"));
   system.printLine(_stdlib.asString(b));
-  system.printLine(_stdlib.asString("String"));
 }
 
 class Foo {
@@ -402,7 +394,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{1, 2}List<of Int>fredString");
+    await assertObjectCodeExecutes(fileImpl, "{1, 2}fred");
   });
 
   test("Pass_DeconstructVarRecordWithRecordIntoNewVar", async () => {
@@ -413,9 +405,7 @@ main
   variable y set to new Bar() with c to x
   variable c, d set to y
   print c
-  print typeof c
   print d
-  print typeof d
 end main
 
 record Foo
@@ -434,9 +424,7 @@ async function main() {
   var y = (() => {const _a = {...system.initialise(new Bar())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Bar()))); _a.c = x; return _a;})();
   var {c, d} = y;
   system.printLine(_stdlib.asString(c));
-  system.printLine(_stdlib.asString("Foo"));
   system.printLine(_stdlib.asString(d));
-  system.printLine(_stdlib.asString("String"));
 }
 
 class Foo {
@@ -468,7 +456,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "a FooFooString");
+    await assertObjectCodeExecutes(fileImpl, "a Foo");
   });
 
   test("Pass_DeconstructLetRecordWithRecordIntoNewVar", async () => {
@@ -479,9 +467,7 @@ main
   let y be new Bar() with c to x
   variable c, d set to y
   print c
-  print typeof c
   print d
-  print typeof d
 end main
 
 record Foo
@@ -500,9 +486,7 @@ async function main() {
   const y = (() => {const _a = {...system.initialise(new Bar())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Bar()))); _a.c = x; return _a;})();
   var {c, d} = y;
   system.printLine(_stdlib.asString(c));
-  system.printLine(_stdlib.asString("Foo"));
   system.printLine(_stdlib.asString(d));
-  system.printLine(_stdlib.asString("String"));
 }
 
 class Foo {
@@ -534,7 +518,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "a FooFooString");
+    await assertObjectCodeExecutes(fileImpl, "a Foo");
   });
 
   //
@@ -593,9 +577,7 @@ main
   variable d set to ""
   set c, d to y
   print c
-  print typeof c
   print d
-  print typeof d
 end main
 
 record Foo
@@ -616,9 +598,7 @@ async function main() {
   var d = "";
   ({c, d} = y);
   system.printLine(_stdlib.asString(c));
-  system.printLine(_stdlib.asString("Foo"));
   system.printLine(_stdlib.asString(d));
-  system.printLine(_stdlib.asString("String"));
 }
 
 class Foo {
@@ -650,7 +630,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "a FooFooString");
+    await assertObjectCodeExecutes(fileImpl, "a Foo");
   });
 
   test("Pass_DeconstructLetRecordWithRecordIntoExistingVar", async () => {
@@ -663,9 +643,7 @@ main
   variable d set to ""
   set c, d to y
   print c
-  print typeof c
   print d
-  print typeof d
 end main
 
 record Foo
@@ -686,9 +664,7 @@ async function main() {
   var d = "";
   ({c, d} = y);
   system.printLine(_stdlib.asString(c));
-  system.printLine(_stdlib.asString("Foo"));
   system.printLine(_stdlib.asString(d));
-  system.printLine(_stdlib.asString("String"));
 }
 
 class Foo {
@@ -720,7 +696,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "a FooFooString");
+    await assertObjectCodeExecutes(fileImpl, "a Foo");
   });
 
   test("Fail_DeconstructIntoWrongType", async () => {

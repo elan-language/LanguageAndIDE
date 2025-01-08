@@ -325,9 +325,7 @@ main
   variable x set to (3, "Apple")
   let y, z be x
   print y
-  print typeof y
   print z
-  print typeof z
 end main
 `;
 
@@ -336,9 +334,7 @@ async function main() {
   var x = system.tuple([3, "Apple"]);
   const [y, z] = x;
   system.printLine(_stdlib.asString(y));
-  system.printLine(_stdlib.asString("Int"));
   system.printLine(_stdlib.asString(z));
-  system.printLine(_stdlib.asString("String"));
 }
 return [main, _tests];}`;
 
@@ -348,7 +344,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "3IntAppleString");
+    await assertObjectCodeExecutes(fileImpl, "3Apple");
   });
 
   test("Pass_DeconstructIntoLetVariablesWithDiscard", async () => {
@@ -358,7 +354,6 @@ main
   variable x set to (3, "Apple")
   let _, z be x
   print z
-  print typeof z
 end main
 `;
 
@@ -367,7 +362,6 @@ async function main() {
   var x = system.tuple([3, "Apple"]);
   const [, z] = x;
   system.printLine(_stdlib.asString(z));
-  system.printLine(_stdlib.asString("String"));
 }
 return [main, _tests];}`;
 
@@ -377,7 +371,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "AppleString");
+    await assertObjectCodeExecutes(fileImpl, "Apple");
   });
 
   test("Pass_DeconstructIntoNewVariables", async () => {
@@ -510,9 +504,7 @@ main
   variable x set to (3, a)
   variable y, z set to x
   print y
-  print typeof y
   print z
-  print typeof z
 end main
 `;
 
@@ -522,9 +514,7 @@ async function main() {
   var x = system.tuple([3, a]);
   var [y, z] = x;
   system.printLine(_stdlib.asString(y));
-  system.printLine(_stdlib.asString("Int"));
   system.printLine(_stdlib.asString(z));
-  system.printLine(_stdlib.asString("Array<of Int>"));
 }
 return [main, _tests];}`;
 
@@ -534,7 +524,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "3Int[1, 2]Array<of Int>");
+    await assertObjectCodeExecutes(fileImpl, "3[1, 2]");
   });
 
   test("Pass_DeconstructTupleWithListIntoNewLet", async () => {
@@ -545,9 +535,7 @@ main
   variable x set to (3, a)
   let y, z be x
   print y
-  print typeof y
   print z
-  print typeof z
 end main
 `;
 
@@ -557,9 +545,7 @@ async function main() {
   var x = system.tuple([3, a]);
   const [y, z] = x;
   system.printLine(_stdlib.asString(y));
-  system.printLine(_stdlib.asString("Int"));
   system.printLine(_stdlib.asString(z));
-  system.printLine(_stdlib.asString("Array<of Int>"));
 }
 return [main, _tests];}`;
 
@@ -569,7 +555,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "3Int[1, 2]Array<of Int>");
+    await assertObjectCodeExecutes(fileImpl, "3[1, 2]");
   });
 
   test("Pass_DeconstructTupleWithListIntoExisting", async () => {
@@ -582,9 +568,7 @@ main
   variable z set to empty Array<of Int>
   set y, z to x
   print y
-  print typeof y
   print z
-  print typeof z
 end main
 `;
 
@@ -596,9 +580,7 @@ async function main() {
   var z = system.emptyArray();
   [y, z] = x;
   system.printLine(_stdlib.asString(y));
-  system.printLine(_stdlib.asString("Int"));
   system.printLine(_stdlib.asString(z));
-  system.printLine(_stdlib.asString("Array<of Int>"));
 }
 return [main, _tests];}`;
 
@@ -608,7 +590,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "3Int[1, 2]Array<of Int>");
+    await assertObjectCodeExecutes(fileImpl, "3[1, 2]");
   });
 
   test("Pass_DeconstructTupleWithTupleIntoNew", async () => {
@@ -619,9 +601,7 @@ main
   variable x set to (3, a)
   variable y, z set to x
   print y
-  print typeof y
   print z
-  print typeof z
 end main
 `;
 
@@ -631,9 +611,7 @@ async function main() {
   var x = system.tuple([3, a]);
   var [y, z] = x;
   system.printLine(_stdlib.asString(y));
-  system.printLine(_stdlib.asString("Int"));
   system.printLine(_stdlib.asString(z));
-  system.printLine(_stdlib.asString("(Int, Int)"));
 }
 return [main, _tests];}`;
 
@@ -643,7 +621,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "3Int(1, 2)(Int, Int)");
+    await assertObjectCodeExecutes(fileImpl, "3(1, 2)");
   });
 
   test("Pass_DeconstructTupleWithTupleIntoNewLet", async () => {
@@ -654,9 +632,7 @@ main
   variable x set to (3, a)
   let y, z be x
   print y
-  print typeof y
   print z
-  print typeof z
 end main
 `;
 
@@ -666,9 +642,7 @@ async function main() {
   var x = system.tuple([3, a]);
   const [y, z] = x;
   system.printLine(_stdlib.asString(y));
-  system.printLine(_stdlib.asString("Int"));
   system.printLine(_stdlib.asString(z));
-  system.printLine(_stdlib.asString("(Int, Int)"));
 }
 return [main, _tests];}`;
 
@@ -678,7 +652,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "3Int(1, 2)(Int, Int)");
+    await assertObjectCodeExecutes(fileImpl, "3(1, 2)");
   });
 
   test("Pass_DeconstructTupleWithTupleIntoExisting", async () => {
@@ -691,9 +665,7 @@ main
   variable z set to (0, 0)
   set y, z to x
   print y
-  print typeof y
   print z
-  print typeof z
 end main
 `;
 
@@ -705,9 +677,7 @@ async function main() {
   var z = system.tuple([0, 0]);
   [y, z] = x;
   system.printLine(_stdlib.asString(y));
-  system.printLine(_stdlib.asString("Int"));
   system.printLine(_stdlib.asString(z));
-  system.printLine(_stdlib.asString("(Int, Int)"));
 }
 return [main, _tests];}`;
 
@@ -717,7 +687,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "3Int(1, 2)(Int, Int)");
+    await assertObjectCodeExecutes(fileImpl, "3(1, 2)");
   });
 
   test("Pass_DeconstructTupleTypes", async () => {
