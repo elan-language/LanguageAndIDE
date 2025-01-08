@@ -221,6 +221,43 @@ export abstract class ClassFrame
     return [];
   }
 
+  public getAllClasses(
+    cf: ClassFrame,
+    seenNames: string[],
+    filter: (d: ClassFrame) => boolean,
+    transforms: Transforms,
+  ) {
+    if (cf.doesInherit()) {
+      const superClasses = cf.inheritance.getOrTransformAstNode(transforms);
+
+      if (isAstCollectionNode(superClasses)) {
+        const nodes = superClasses.items.filter((i) => isAstIdNode(i));
+        const symbols = nodes
+          .map((n) => getGlobalScope(this).resolveSymbol(n.id, transforms, this))
+          .filter(
+            (n) => n instanceof ClassFrame && !seenNames.includes(n.symbolId),
+          ) as ClassFrame[];
+        let allSymbols = symbols;
+
+        for (const s of symbols) {
+          allSymbols = allSymbols.concat(this.getAllInterfaces(s, seenNames, transforms));
+        }
+
+        seenNames.push(cf.symbolId);
+        return allSymbols.filter(filter);
+      }
+    }
+    return [];
+  }
+
+  public getAllInterfaces(cf: ClassFrame, seenNames: string[], transforms: Transforms) {
+    return this.getAllClasses(cf, seenNames, (s: ClassFrame) => s.isInterface, transforms);
+  }
+
+  public getAllAbstractClasses(cf: ClassFrame, seenNames: string[], transforms: Transforms) {
+    return this.getAllClasses(cf, seenNames, (s: ClassFrame) => s.isAbstract && !s.isInterface, transforms);
+  }
+
   createConstructor(): Frame {
     return new Constructor(this);
   }

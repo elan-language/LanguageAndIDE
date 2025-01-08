@@ -1,6 +1,6 @@
 import { Constructor } from "../class-members/constructor";
 import {
-  mustBeAbstractClass,
+  mustBeInheritableClassOrInterface,
   mustBeKnownSymbolType,
   mustBeSingleAbstractSuperClass,
   mustBeUniqueNameInScope,
@@ -99,7 +99,7 @@ end class\r\n`;
 
     for (const [st, name] of typeAndName) {
       mustBeKnownSymbolType(st, name, this.compileErrors, this.htmlId);
-      mustBeAbstractClass(st, name, this.compileErrors, this.htmlId);
+      mustBeInheritableClassOrInterface(st, name, this.compileErrors, this.htmlId);
 
       if (st instanceof ClassType && st.subType === ClassSubType.abstract) {
         implement = `extends ${name} `;
