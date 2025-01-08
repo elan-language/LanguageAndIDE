@@ -95,18 +95,24 @@ ${endKeyword} ${interfaceKeyword}\r\n`;
       this.htmlId,
     );
 
+    const interfaces = this.getAllInterfaces(this, [], transforms);
+    const names = interfaces.map((i) => i.symbolId);
+
+    if (names.includes(name)) {
+      // circular interface
+      mustNotBeCircularDependency(name, this.compileErrors, this.htmlId);
+      // any other compiling is not safe
+
+      return `class ${name} {\r
+    }\r\n`;
+    }
+
+    // this is not safe if there is a circular dependency
     const typeAndName = this.getSuperClassesTypeAndName(transforms);
 
     for (const [st, name] of typeAndName) {
       mustBeKnownSymbolType(st, name, this.compileErrors, this.htmlId);
       mustBeInterfaceClass(st, name, this.compileErrors, this.htmlId);
-    }
-
-    const interfaces = this.getAllInterfaces(this, [], transforms);
-
-    if (interfaces.map((i) => i.symbolId).includes(name)) {
-      // circular interface
-      mustNotBeCircularDependency(name, this.compileErrors, this.htmlId);
     }
 
     return `class ${name} {\r

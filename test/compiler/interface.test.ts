@@ -494,4 +494,30 @@ end interface`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Class/interface 'Foo' cannot inherit from itself"]);
   });
+
+  test("Fail_InheritSelfIndirect", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  
+end main
+
+interface Yon inherits Foo
+  abstract property prop as Int
+end interface
+
+interface Bar inherits Yon
+  abstract property prop as Int
+end interface
+
+interface Foo inherits Bar
+  abstract property prop as Int
+end interface`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Class/interface 'Yon' cannot inherit from itself"]);
+  });
 });

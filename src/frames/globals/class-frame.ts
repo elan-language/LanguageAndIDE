@@ -238,6 +238,10 @@ export abstract class ClassFrame
     return [];
   }
 
+  private seenTwice(name: string, seenNames: string[]) {
+    return seenNames.filter((s) => s === name).length > 1;
+  }
+
   public getAllClasses(
     cf: ClassFrame,
     seenNames: string[],
@@ -252,7 +256,7 @@ export abstract class ClassFrame
         const symbols = nodes
           .map((n) => getGlobalScope(this).resolveSymbol(n.id, transforms, this))
           .filter(
-            (n) => n instanceof ClassFrame && !seenNames.includes(n.symbolId),
+            (n) => n instanceof ClassFrame && !this.seenTwice(n.symbolId, seenNames),
           ) as ClassFrame[];
         let allSymbols = symbols;
         seenNames.push(cf.symbolId);
