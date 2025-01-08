@@ -3,6 +3,7 @@ import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { IdentifierNode } from "./identifier-node";
 import { KeywordNode } from "./keyword-node";
+import { MethodNameNode } from "./method-name-node";
 import { Space } from "./parse-node-helpers";
 import { SpaceNode } from "./space-node";
 
@@ -13,7 +14,7 @@ export class FunctionRefNode extends AbstractSequence {
     if (text.trim().length > 0) {
       this.addElement(new KeywordNode(refKeyword));
       this.addElement(new SpaceNode(Space.required));
-      this.name = new IdentifierNode(new Set<TokenType>([TokenType.method_function]));
+      this.name = new MethodNameNode(new Set<TokenType>([TokenType.method_function]));
       this.addElement(this.name);
       super.parseText(text);
     }

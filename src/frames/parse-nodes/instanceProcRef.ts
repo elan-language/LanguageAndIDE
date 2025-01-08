@@ -5,6 +5,7 @@ import { Alternatives } from "./alternatives";
 import { DotAfter } from "./dot-after";
 import { IdentifierNode } from "./identifier-node";
 import { InstanceNode } from "./instanceNode";
+import { MethodNameNode } from "./method-name-node";
 import { OptionalNode } from "./optional-node";
 import { Qualifier } from "./qualifier";
 
@@ -20,17 +21,13 @@ export class InstanceProcRef extends AbstractSequence {
     TokenType.method_procedure,
   ]);
 
-  constructor() {
-    super();
-  }
-
   parseText(text: string): void {
     if (text.length > 0) {
       const qualifier = () => new DotAfter(new Qualifier());
       const instance = new InstanceNode();
       const instanceDot = () => new DotAfter(instance);
       this.prefix = new OptionalNode(new Alternatives([qualifier, instanceDot]));
-      this.procName = new IdentifierNode(this.tokenTypes, () => instance.matchedText);
+      this.procName = new MethodNameNode(this.tokenTypes, () => instance.matchedText);
       this.addElement(this.prefix);
       this.addElement(this.procName!);
       super.parseText(text);

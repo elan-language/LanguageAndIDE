@@ -93,25 +93,20 @@ suite("Parsing - Completions", () => {
       new TypeNode(),
       "Func",
       ParseStatus.incomplete,
-      "<of <i>input Type(s)</i>=> <i>return Type</i>>",
+      "<of <i>InputType(s) </i>=> <i>ReturnType</i>>",
     );
     testCompletion(
       new TypeNode(),
       "Func<",
       ParseStatus.incomplete,
-      "of <i>input Type(s)</i>=> <i>return Type</i>>",
+      "of <i>InputType(s) </i>=> <i>ReturnType</i>>",
     );
-    testCompletion(
-      new TypeNode(),
-      "Func<of Foo",
-      ParseStatus.incomplete,
-      " => <i>return Type</i>>",
-    );
+    testCompletion(new TypeNode(), "Func<of Foo", ParseStatus.incomplete, " => <i>ReturnType</i>>");
     testCompletion(
       new TypeNode(),
       "Func<of Foo,",
       ParseStatus.incomplete,
-      "<i>Type</i> => <i>return Type</i>>",
+      "<i>Type</i> => <i>ReturnType</i>>",
     );
   });
   test("Func 2", () => {
@@ -119,7 +114,7 @@ suite("Parsing - Completions", () => {
       new ParamDefNode(),
       "f as Func",
       ParseStatus.incomplete,
-      "<of <i>input Type(s)</i>=> <i>return Type</i>>",
+      "<of <i>InputType(s) </i>=> <i>ReturnType</i>>",
     );
   });
   test("Func 3", () => {
@@ -127,7 +122,7 @@ suite("Parsing - Completions", () => {
       new CSV(() => new ParamDefNode(), 0),
       "f as Func",
       ParseStatus.incomplete,
-      "<of <i>input Type(s)</i>=> <i>return Type</i>>",
+      "<of <i>InputType(s) </i>=> <i>ReturnType</i>>",
     );
   });
   test("Lambda", () => {
