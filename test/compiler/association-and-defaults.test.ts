@@ -933,9 +933,6 @@ class Player {
     return "";
   }
 
-  asString() {
-    return "empty Abstract Class Player";
-  }
 }
 return [main, _tests];}`;
 
