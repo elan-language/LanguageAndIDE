@@ -83,7 +83,7 @@ suite("Symbol Completion Spec", () => {
       new ExprNode(),
       "t",
       ParseStatus.valid,
-      TermSimple.name, //because t could be start of literal boolean, or typeof  also
+      ReferenceNode.name,
       "t",
       [
         TokenType.id_constant,
@@ -96,7 +96,7 @@ suite("Symbol Completion Spec", () => {
         TokenType.method_function,
         TokenType.method_system,
       ],
-      ["this", "typeof"],
+      ["this"],
     );
   });
   test("Expression2", () => {
@@ -125,7 +125,7 @@ suite("Symbol Completion Spec", () => {
       new TermSimple(),
       "t",
       ParseStatus.valid,
-      TermSimple.name,
+      ReferenceNode.name,
       "t",
       [
         TokenType.id_constant,
@@ -138,7 +138,7 @@ suite("Symbol Completion Spec", () => {
         TokenType.method_function,
         TokenType.method_system,
       ],
-      ["this", "typeof"],
+      ["this"],
     );
   });
   test("Expression_Empty", () => {

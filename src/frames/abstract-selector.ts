@@ -1,4 +1,4 @@
-import { ElanPasteError } from "../elan-paste-error";
+import { ElanCutCopyPasteError } from "../elan-cut-copy-paste-error";
 import { AbstractFrame } from "./abstract-frame";
 import { CodeSource } from "./code-source";
 import { isFrameWithStatements } from "./frame-helpers";
@@ -25,7 +25,7 @@ export abstract class AbstractSelector extends AbstractFrame {
   }
 
   initialKeywords(): string {
-    throw new Error("Should not be called on a selector");
+    return "selector";
   }
 
   abstract defaultOptions(): [string, (parent: Parent) => Frame][];
@@ -211,10 +211,10 @@ export abstract class AbstractSelector extends AbstractFrame {
         sp.remove(frames!);
         this.deleteIfPermissible();
       } else {
-        throw new ElanPasteError("Paste Failed: Cannot paste frame into location");
+        throw new ElanCutCopyPasteError("Paste Failed: Cannot paste frame into location");
       }
     } else {
-      throw new ElanPasteError("Paste Failed: Nothing to paste");
+      throw new ElanCutCopyPasteError("Paste Failed: Nothing to paste");
     }
   }
 

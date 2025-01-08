@@ -57,7 +57,6 @@ import { TupleNode } from "../parse-nodes/tuple-node";
 import { TypeFuncNode } from "../parse-nodes/type-func-node";
 import { TypeGenericNode } from "../parse-nodes/type-generic-node";
 import { TypeInDelimiters } from "../parse-nodes/type-in-delimiters";
-import { TypeOfNode } from "../parse-nodes/type-of-node";
 import { TypeSimpleNode } from "../parse-nodes/type-simple-node";
 import { TypeTupleNode } from "../parse-nodes/type-tuple-node";
 import { UnaryExpression } from "../parse-nodes/unary-expression";
@@ -104,7 +103,6 @@ import { SegmentedStringAsn } from "./segmented-string-asn";
 import { ThisAsn } from "./this-asn";
 import { ToAsn } from "./to-asn";
 import { TypeAsn } from "./type-asn";
-import { TypeOfAsn } from "./typeof-asn";
 import { UnaryExprASn } from "./unary-expr-asn";
 import { VarAsn } from "./var-asn";
 
@@ -481,11 +479,6 @@ export function transform(
     const q = transform(node.prefix, fieldId, scope) as AstQualifierNode | undefined;
     const id = node.procName!.matchedText;
     return new VarAsn(id, false, q, undefined, fieldId, scope);
-  }
-
-  if (node instanceof TypeOfNode) {
-    const term = transform(node.argument, fieldId, scope);
-    return new TypeOfAsn(term!, fieldId);
   }
 
   if (node instanceof FunctionRefNode) {

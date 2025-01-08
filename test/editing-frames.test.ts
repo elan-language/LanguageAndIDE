@@ -1,5 +1,5 @@
 import assert from "assert";
-import { ElanPasteError } from "../src/elan-paste-error";
+import { ElanCutCopyPasteError } from "../src/elan-cut-copy-paste-error";
 import { Constructor } from "../src/frames/class-members/constructor";
 import { MemberSelector } from "../src/frames/class-members/member-selector";
 import { CommentField } from "../src/frames/fields/comment-field";
@@ -359,7 +359,10 @@ suite("Editing Frames", () => {
     try {
       globalSelect.processKey(ctrl_v());
     } catch (e) {
-      assert.equal("Paste Failed: Cannot paste frame into location", (e as ElanPasteError).message);
+      assert.equal(
+        "Paste Failed: Cannot paste frame into location",
+        (e as ElanCutCopyPasteError).message,
+      );
     }
     const newFirst = file.getChildren()[0];
     assert.equal(newFirst.renderAsHtml(), globalSelect.renderAsHtml());
@@ -386,7 +389,10 @@ suite("Editing Frames", () => {
     try {
       globalSelect.processKey(ctrl_v());
     } catch (e) {
-      assert.equal("Paste Failed: Cannot paste frame into location", (e as ElanPasteError).message);
+      assert.equal(
+        "Paste Failed: Cannot paste frame into location",
+        (e as ElanCutCopyPasteError).message,
+      );
     }
     const newFirst = file.getChildren()[0];
     assert.equal(newFirst.renderAsSource(), globalSelect.renderAsSource());
@@ -414,7 +420,10 @@ suite("Editing Frames", () => {
     try {
       sel18.processKey(ctrl_v());
     } catch (e) {
-      assert.equal("Paste Failed: Cannot paste frame into location", (e as ElanPasteError).message);
+      assert.equal(
+        "Paste Failed: Cannot paste frame into location",
+        (e as ElanCutCopyPasteError).message,
+      );
     }
     assert.equal(scratchpad.readFrames()?.length, 1);
   });

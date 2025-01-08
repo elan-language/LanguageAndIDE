@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { handleClick, handleDblClick, handleKey } from "../editorHandlers";
-import { ElanPasteError } from "../elan-paste-error";
+import { ElanCutCopyPasteError } from "../elan-cut-copy-paste-error";
 import { ElanRuntimeError } from "../elan-runtime-error";
 import { DefaultProfile } from "../frames/default-profile";
 import { CodeSourceFromString, FileImpl, cannotLoadFile } from "../frames/file-impl";
@@ -987,7 +987,7 @@ async function handleKeyAndRender(e: editorEvent) {
         return;
     }
   } catch (e) {
-    if (e instanceof ElanPasteError) {
+    if (e instanceof ElanCutCopyPasteError) {
       elanInputOutput.printLine(e.message);
       await renderAsHtml();
       return;

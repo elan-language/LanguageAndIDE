@@ -111,9 +111,7 @@ main
   variable a set to [1,2,3]
   variable x:y set to a
   print x
-  print typeof x
   print y
-  print typeof y
 end main
 `;
 
@@ -122,9 +120,7 @@ async function main() {
   var a = system.literalArray([1, 2, 3]);
   var [x, y] = system.deconstructList(a);
   system.printLine(_stdlib.asString(x));
-  system.printLine(_stdlib.asString("Int"));
   system.printLine(_stdlib.asString(y));
-  system.printLine(_stdlib.asString("Array<of Int>"));
 }
 return [main, _tests];}`;
 
@@ -134,7 +130,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "1Int[2, 3]Array<of Int>");
+    await assertObjectCodeExecutes(fileImpl, "1[2, 3]");
   });
 
   test("Pass_DeconstructArrayOfArrayIntoExistingVariables", async () => {
@@ -177,9 +173,7 @@ main
   variable a set to [[1,2,3], [4,5,6], [7,8,9]]
   variable x:y set to a
   print x
-  print typeof x
   print y
-  print typeof y
 end main
 `;
 
@@ -188,9 +182,7 @@ async function main() {
   var a = system.literalArray([system.literalArray([1, 2, 3]), system.literalArray([4, 5, 6]), system.literalArray([7, 8, 9])]);
   var [x, y] = system.deconstructList(a);
   system.printLine(_stdlib.asString(x));
-  system.printLine(_stdlib.asString("Array<of Int>"));
   system.printLine(_stdlib.asString(y));
-  system.printLine(_stdlib.asString("Array<of Array<of Int>>"));
 }
 return [main, _tests];}`;
 
@@ -200,10 +192,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      "[1, 2, 3]Array<of Int>[[4, 5, 6], [7, 8, 9]]Array<of Array<of Int>>",
-    );
+    await assertObjectCodeExecutes(fileImpl, "[1, 2, 3][[4, 5, 6], [7, 8, 9]]");
   });
 
   test("Pass_DeconstructArrayOfArrayIntoNewLetVariables", async () => {
@@ -213,9 +202,7 @@ main
   variable a set to [[1,2,3], [4,5,6], [7,8,9]]
   let x:y be a
   print x
-  print typeof x
   print y
-  print typeof y
 end main
 `;
 
@@ -224,9 +211,7 @@ async function main() {
   var a = system.literalArray([system.literalArray([1, 2, 3]), system.literalArray([4, 5, 6]), system.literalArray([7, 8, 9])]);
   const [x, y] = system.deconstructList(a);
   system.printLine(_stdlib.asString(x));
-  system.printLine(_stdlib.asString("Array<of Int>"));
   system.printLine(_stdlib.asString(y));
-  system.printLine(_stdlib.asString("Array<of Array<of Int>>"));
 }
 return [main, _tests];}`;
 
@@ -236,10 +221,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      "[1, 2, 3]Array<of Int>[[4, 5, 6], [7, 8, 9]]Array<of Array<of Int>>",
-    );
+    await assertObjectCodeExecutes(fileImpl, "[1, 2, 3][[4, 5, 6], [7, 8, 9]]");
   });
 
   test("Pass_DeconstructExistingOneElement", async () => {
@@ -282,9 +264,7 @@ main
   variable a set to {1,2,3}
   let x:y be a
   print x
-  print typeof x
   print y
-  print typeof y
 end main
 `;
 
@@ -293,9 +273,7 @@ async function main() {
   var a = system.list([1, 2, 3]);
   const [x, y] = system.deconstructList(a);
   system.printLine(_stdlib.asString(x));
-  system.printLine(_stdlib.asString("Int"));
   system.printLine(_stdlib.asString(y));
-  system.printLine(_stdlib.asString("List<of Int>"));
 }
 return [main, _tests];}`;
 
@@ -305,7 +283,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "1Int{2, 3}List<of Int>");
+    await assertObjectCodeExecutes(fileImpl, "1{2, 3}");
   });
 
   test("Pass_DeconstructIntoLetVariablesWithDiscard1", async () => {
@@ -315,7 +293,6 @@ main
   variable a set to {1,2,3}
   let x:_ be a
   print x
-  print typeof x
 end main
 `;
 
@@ -324,7 +301,6 @@ async function main() {
   var a = system.list([1, 2, 3]);
   const [x, ] = system.deconstructList(a);
   system.printLine(_stdlib.asString(x));
-  system.printLine(_stdlib.asString("Int"));
 }
 return [main, _tests];}`;
 
@@ -334,7 +310,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "1Int");
+    await assertObjectCodeExecutes(fileImpl, "1");
   });
 
   test("Pass_DeconstructIntoLetVariablesWithDiscard2", async () => {
@@ -344,7 +320,6 @@ main
   variable a set to {1,2,3}
   let _:y be a
   print y
-  print typeof y
 end main
 `;
 
@@ -353,7 +328,6 @@ async function main() {
   var a = system.list([1, 2, 3]);
   const [, y] = system.deconstructList(a);
   system.printLine(_stdlib.asString(y));
-  system.printLine(_stdlib.asString("List<of Int>"));
 }
 return [main, _tests];}`;
 
@@ -363,7 +337,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{2, 3}List<of Int>");
+    await assertObjectCodeExecutes(fileImpl, "{2, 3}");
   });
 
   test("Pass_DeconstructNewOneElement", async () => {
@@ -373,9 +347,7 @@ main
   variable a set to [1]
   variable x:y set to a
   print x
-  print typeof x
   print y
-  print typeof y
 end main
 `;
 
@@ -384,9 +356,7 @@ async function main() {
   var a = system.literalArray([1]);
   var [x, y] = system.deconstructList(a);
   system.printLine(_stdlib.asString(x));
-  system.printLine(_stdlib.asString("Int"));
   system.printLine(_stdlib.asString(y));
-  system.printLine(_stdlib.asString("Array<of Int>"));
 }
 return [main, _tests];}`;
 
@@ -396,7 +366,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "1Int[]Array<of Int>");
+    await assertObjectCodeExecutes(fileImpl, "1[]");
   });
 
   test("Pass_DeconstructNewLetOneElement", async () => {
@@ -406,9 +376,7 @@ main
   variable a set to [1]
   let x:y be a
   print x
-  print typeof x
   print y
-  print typeof y
 end main
 `;
 
@@ -417,9 +385,7 @@ async function main() {
   var a = system.literalArray([1]);
   const [x, y] = system.deconstructList(a);
   system.printLine(_stdlib.asString(x));
-  system.printLine(_stdlib.asString("Int"));
   system.printLine(_stdlib.asString(y));
-  system.printLine(_stdlib.asString("Array<of Int>"));
 }
 return [main, _tests];}`;
 
@@ -429,7 +395,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "1Int[]Array<of Int>");
+    await assertObjectCodeExecutes(fileImpl, "1[]");
   });
 
   test("Pass_DeconstructListIntoNewVariables", async () => {
@@ -439,9 +405,7 @@ main
   variable a set to {1,2,3}
   variable x:y set to a
   print x
-  print typeof x
   print y
-  print typeof y
 end main
 `;
 
@@ -450,9 +414,7 @@ async function main() {
   var a = system.list([1, 2, 3]);
   var [x, y] = system.deconstructList(a);
   system.printLine(_stdlib.asString(x));
-  system.printLine(_stdlib.asString("Int"));
   system.printLine(_stdlib.asString(y));
-  system.printLine(_stdlib.asString("List<of Int>"));
 }
 return [main, _tests];}`;
 
@@ -462,7 +424,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "1Int{2, 3}List<of Int>");
+    await assertObjectCodeExecutes(fileImpl, "1{2, 3}");
   });
 
   test("Pass_DeconstructListIntoExistingVariables", async () => {
@@ -474,9 +436,7 @@ main
   variable y set to empty List<of Int>
   set x:y to a
   print x
-  print typeof x
   print y
-  print typeof y
 end main
 `;
 
@@ -487,9 +447,7 @@ async function main() {
   var y = system.emptyImmutableList();
   [x, y] = system.deconstructList(a);
   system.printLine(_stdlib.asString(x));
-  system.printLine(_stdlib.asString("Int"));
   system.printLine(_stdlib.asString(y));
-  system.printLine(_stdlib.asString("List<of Int>"));
 }
 return [main, _tests];}`;
 
@@ -499,7 +457,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "1Int{2, 3}List<of Int>");
+    await assertObjectCodeExecutes(fileImpl, "1{2, 3}");
   });
 
   test("Pass_DeconstructListTypes", async () => {
