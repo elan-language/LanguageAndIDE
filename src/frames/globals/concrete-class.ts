@@ -90,10 +90,15 @@ end class\r\n`;
     );
 
     const typeAndName = this.getSuperClassesTypeAndName(transforms);
+    let implement = "";
 
     for (const [st, name] of typeAndName) {
       mustBeKnownSymbolType(st, name, this.compileErrors, this.htmlId);
       mustBeAbstractClass(st, name, this.compileErrors, this.htmlId);
+
+      if (st instanceof ClassType && st.subType === ClassSubType.abstract) {
+        implement = `extends ${name} `;
+      }
     }
 
     mustBeSingleAbstractSuperClass(typeAndName, this.compileErrors, this.htmlId);
@@ -108,7 +113,7 @@ end class\r\n`;
 
     const asString = "";
 
-    return `class ${name}${this.inheritanceAsObjectCode()} {\r
+    return `class ${name}${this.inheritanceAsObjectCode()} ${implement}{\r
   static emptyInstance() { return system.emptyClass(${name}, ${this.propertiesToInit()});};\r
 ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
 }\r\n`;

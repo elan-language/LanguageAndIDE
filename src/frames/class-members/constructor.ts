@@ -9,8 +9,9 @@ import { Frame } from "../interfaces/frame";
 import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
 import { constructorKeyword } from "../keywords";
+import { ClassSubType, ClassType } from "../symbols/class-type";
 import { ProcedureType } from "../symbols/procedure-type";
-import { getAllPrivateIds, getMixins } from "../symbols/symbol-helpers";
+import { getAllPrivateIds } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { Transforms } from "../syntax-nodes/transforms";
@@ -62,6 +63,15 @@ ${this.indent()}end constructor\r
     this.compileErrors = [];
     const parentClass = this.getParent() as ConcreteClass;
 
+    const typeAndName = parentClass.getSuperClassesTypeAndName(transforms);
+    let superConstructor = "";
+
+    for (const [st] of typeAndName) {
+      if (st instanceof ClassType && st.subType === ClassSubType.abstract) {
+        superConstructor = `${this.indent()}${this.indent()}super();\n`;
+      }
+    }
+
     const allPrivateIds = getAllPrivateIds(parentClass, transforms);
     const duplicates = allPrivateIds.filter((n, i, a) => a.indexOf(n) !== i);
 
@@ -69,11 +79,8 @@ ${this.indent()}end constructor\r
       cannotHaveDuplicatePrivateIds(duplicates, this.compileErrors, this.htmlId);
     }
 
-    const mixins: string[] = getMixins(parentClass, transforms);
-    const mixinVars = mixins.length === 0 ? "" : `${this.indent()}${mixins.join("; ")};\n`;
-
-    return `${mixinVars}${this.indent()}constructor(${this.params.compile(transforms)}) {\r
-${this.compileStatements(transforms)}\r
+    return `${this.indent()}constructor(${this.params.compile(transforms)}) {\r
+${superConstructor}${this.compileStatements(transforms)}\r
 ${this.indent()}}\r
 `;
   }

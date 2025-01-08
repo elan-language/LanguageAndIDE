@@ -84,14 +84,12 @@ class Foo {
     return 0;
   }
 
-  asString() {
-    return "empty Abstract Class Foo";
-  }
 }
 
-class Bar {
+class Bar extends Foo {
   static emptyInstance() { return system.emptyClass(Bar, [["p1", 0], ["p2", 0]]);};
   constructor() {
+    super();
     this.p1 = 3;
     this.p2 = 4;
   }
@@ -173,12 +171,9 @@ class Foo {
   set p1(p1) {
   }
 
-  asString() {
-    return "empty Abstract Class Foo";
-  }
 }
 
-class Bar {
+class Bar extends Foo {
   static emptyInstance() { return system.emptyClass(Bar, [["p2", ""]]);};
   get p2() {
     return "";
@@ -186,14 +181,12 @@ class Bar {
   set p2(p2) {
   }
 
-  asString() {
-    return "empty Abstract Class Bar";
-  }
 }
 
-class Yon {
+class Yon extends Bar {
   static emptyInstance() { return system.emptyClass(Yon, [["p1", 0], ["p2", ""]]);};
   constructor() {
+    super();
     this.p1 = 3;
     this.p2 = "apple";
   }
@@ -292,12 +285,9 @@ class Foo {
   set p2(p2) {
   }
 
-  asString() {
-    return "empty Abstract Class Foo";
-  }
 }
 
-class Yon {
+class Yon extends Foo {
   static emptyInstance() { return system.emptyClass(Yon, [["p1", 0]]);};
   get p1() {
     return 0;
@@ -312,14 +302,12 @@ class Yon {
     return 0;
   }
 
-  asString() {
-    return "empty Abstract Class Yon";
-  }
 }
 
-class Bar {
+class Bar extends Yon {
   static emptyInstance() { return system.emptyClass(Bar, [["p1", 0], ["p2", 0]]);};
   constructor() {
+    super();
     this.p1 = 3;
     this.p2 = 4;
   }
@@ -389,14 +377,12 @@ class Foo {
   set p1(p1) {
   }
 
-  asString() {
-    return "empty Abstract Class Foo";
-  }
 }
 
-class Bar {
+class Bar extends Foo {
   static emptyInstance() { return system.emptyClass(Bar, [["p1", 0]]);};
   constructor() {
+    super();
 
   }
 
@@ -439,7 +425,7 @@ class Bar inherits Foo
 end class
 
 function fun(l as List<of Bar>) returns Bar
-    return l[0]
+  return l[0]
 end function
 `;
 
@@ -458,14 +444,12 @@ class Foo {
   set p1(p1) {
   }
 
-  asString() {
-    return "empty Abstract Class Foo";
-  }
 }
 
-class Bar {
+class Bar extends Foo {
   static emptyInstance() { return system.emptyClass(Bar, [["p1", 0]]);};
   constructor() {
+    super();
 
   }
 
@@ -525,14 +509,12 @@ class Foo {
   set p1(p1) {
   }
 
-  asString() {
-    return "empty Abstract Class Foo";
-  }
 }
 
-class Bar {
+class Bar extends Foo {
   static emptyInstance() { return system.emptyClass(Bar, [["p1", 0]]);};
   constructor() {
+    super();
 
   }
 
@@ -1395,9 +1377,6 @@ class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
   p1 = 0;
 
-  asString() {
-    return "empty Abstract Class Foo";
-  }
 }
 return [main, _tests];}`;
 

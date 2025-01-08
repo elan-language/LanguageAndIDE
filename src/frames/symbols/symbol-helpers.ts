@@ -547,22 +547,6 @@ export function hasPrivateMembers(ct: ClassType) {
   return children.length > 0;
 }
 
-export function getMixins(start: Class, transforms: Transforms) {
-  const superClasses = start.getSuperClassesTypeAndName(transforms);
-  let mixins: string[] = [];
-
-  for (const ct of superClasses.map((t) => t[0]).filter((t) => t instanceof ClassType)) {
-    if (hasPrivateMembers(ct)) {
-      const name = ct.className;
-      mixins.push(`_${name} = new ${name}()`);
-    }
-    // todo fix cast
-    mixins = mixins.concat(getMixins(ct.scope as Class, transforms));
-  }
-
-  return mixins;
-}
-
 export function getAllPrivateIds(start: Class, transforms: Transforms) {
   const superClasses = start.getSuperClassesTypeAndName(transforms);
   let allNames: string[] = [];
