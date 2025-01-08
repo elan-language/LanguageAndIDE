@@ -201,7 +201,7 @@ suite("Symbol Completion Spec", () => {
       new InstanceProcRef(),
       "foo.",
       ParseStatus.incomplete,
-      IdentifierNode.name,
+      MethodNameNode.name,
       "",
       [
         TokenType.id_let,
@@ -254,7 +254,7 @@ suite("Symbol Completion Spec", () => {
       new InstanceProcRef(),
       "foo.wi",
       ParseStatus.valid,
-      IdentifierNode.name,
+      MethodNameNode.name,
       "wi",
       [
         TokenType.id_let,
