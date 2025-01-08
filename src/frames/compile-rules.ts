@@ -14,6 +14,7 @@ import {
   MissingParameterCompileError,
   MustBeAbstractCompileError,
   MustBeConcreteCompileError,
+  MustBeInterfaceCompileError,
   MustBeRecordCompileError,
   MustBeSingleAbstractCompileError,
   MustImplementCompileError,
@@ -311,7 +312,7 @@ export function mustBeInterfaceClass(
     type.subType !== ClassSubType.interface ||
     type.isNotInheritable
   ) {
-    compileErrors.push(new MustBeAbstractCompileError(name, location));
+    compileErrors.push(new MustBeInterfaceCompileError(name, location));
   }
 }
 

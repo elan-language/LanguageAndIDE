@@ -141,6 +141,17 @@ export class MustBeAbstractCompileError extends CompileError {
   }
 }
 
+export class MustBeInterfaceCompileError extends CompileError {
+  constructor(type: string, location: string) {
+    super(
+      Priority.illegalOperation,
+      `Superclass '${type}' must be an interface`,
+      location,
+      false,
+    );
+  }
+}
+
 export class MustNotBeCircularDependencyCompileError extends CompileError {
   constructor(type: string, location: string) {
     super(
