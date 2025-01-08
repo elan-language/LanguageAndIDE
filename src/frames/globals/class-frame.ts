@@ -43,7 +43,7 @@ import {
   parentHelper_removeChild,
 } from "../parent-helpers";
 import { CommentStatement } from "../statements/comment-statement";
-import { ClassSubType, ClassType } from "../symbols/class-type";
+import { ClassSubType } from "../symbols/class-type";
 import { getGlobalScope } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { isAstCollectionNode, isAstIdNode } from "../syntax-nodes/ast-helpers";
@@ -213,13 +213,7 @@ export abstract class ClassFrame
   }
 
   private mapSymbol(c: ElanSymbol, transforms: Transforms): [SymbolType, string] {
-    const id = c.symbolId;
-
-    // this is to handle a class inheriting itself
-    if (c.symbolId === this.name.text) {
-      return [new ClassType(this.symbolId, this.subType, false, false, [], this), id];
-    }
-    return [c.symbolType(transforms), id];
+    return [c.symbolType(transforms), c.symbolId];
   }
 
   public getSuperClassesTypeAndName(transforms: Transforms) {
@@ -238,6 +232,10 @@ export abstract class ClassFrame
     return [];
   }
 
+  private seenTwice(name: string, seenNames: string[]) {
+    return seenNames.filter((s) => s === name).length > 1;
+  }
+
   public getAllClasses(
     cf: ClassFrame,
     seenNames: string[],
@@ -252,7 +250,7 @@ export abstract class ClassFrame
         const symbols = nodes
           .map((n) => getGlobalScope(this).resolveSymbol(n.id, transforms, this))
           .filter(
-            (n) => n instanceof ClassFrame && !seenNames.includes(n.symbolId),
+            (n) => n instanceof ClassFrame && !this.seenTwice(n.symbolId, seenNames),
           ) as ClassFrame[];
         let allSymbols = symbols;
         seenNames.push(cf.symbolId);

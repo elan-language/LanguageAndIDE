@@ -12,6 +12,11 @@ import {
 } from "./compiler-test-helpers";
 
 suite("Interface", () => {
+  // more tests ? multiple interface inheritance
+  // passing as different interfaces into function
+  // interface as default
+  // access inherited member after passing into function
+
   test("Pass_SimpleInterface", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
@@ -493,5 +498,92 @@ end interface`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Class/interface 'Foo' cannot inherit from itself"]);
+  });
+
+  test("Fail_InheritSelfIndirect", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  
+end main
+
+interface Yon inherits Foo
+  abstract property prop as Int
+end interface
+
+interface Bar inherits Yon
+  abstract property prop as Int
+end interface
+
+interface Foo inherits Bar
+  abstract property prop as Int
+end interface`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Class/interface 'Yon' cannot inherit from itself"]);
+  });
+
+  test("Fail_InheritAbstractClass", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  
+end main
+
+abstract class Foo
+  abstract property prop as Int
+end class
+
+interface Bar inherits Foo
+  abstract property prop as Int
+end interface`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Superclass 'Foo' must be an interface"]);
+  });
+
+  test("Fail_InheritConcreteClass", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  
+end main
+
+class Foo
+  property prop as Int
+end class
+
+interface Bar inherits Foo
+  abstract property prop as Int
+end interface`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Superclass 'Foo' must be an interface"]);
+  });
+
+  test("Fail_MustBeAbstract", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  
+end main
+
+interface Bar
+  property prop as Int
+end interface`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
   });
 });
