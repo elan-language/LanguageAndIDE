@@ -43,7 +43,7 @@ import {
   parentHelper_removeChild,
 } from "../parent-helpers";
 import { CommentStatement } from "../statements/comment-statement";
-import { ClassSubType, ClassType } from "../symbols/class-type";
+import { ClassSubType } from "../symbols/class-type";
 import { getGlobalScope } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { isAstCollectionNode, isAstIdNode } from "../syntax-nodes/ast-helpers";
@@ -213,13 +213,7 @@ export abstract class ClassFrame
   }
 
   private mapSymbol(c: ElanSymbol, transforms: Transforms): [SymbolType, string] {
-    const id = c.symbolId;
-
-    // this is to handle a class inheriting itself
-    if (c.symbolId === this.name.text) {
-      return [new ClassType(this.symbolId, this.subType, false, false, [], this), id];
-    }
-    return [c.symbolType(transforms), id];
+    return [c.symbolType(transforms), c.symbolId];
   }
 
   public getSuperClassesTypeAndName(transforms: Transforms) {

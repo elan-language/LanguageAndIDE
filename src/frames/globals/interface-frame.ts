@@ -143,7 +143,6 @@ ${parentHelper_compileChildren(this, transforms)}\r
     ) as ElanSymbol[];
 
     const types = this.getSuperClassesTypeAndName(transforms)
-      .filter((tn) => tn[1] !== this.symbolId) // if inherits from self remove
       .map((tn) => tn[0])
       .filter((t) => t instanceof ClassType);
 
