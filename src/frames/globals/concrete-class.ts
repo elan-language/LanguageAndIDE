@@ -1,6 +1,6 @@
 import { Constructor } from "../class-members/constructor";
 import {
-  mustBeAbstractClass,
+  mustBeInheritableClassOrInterface,
   mustBeKnownSymbolType,
   mustBeSingleAbstractSuperClass,
   mustBeUniqueNameInScope,
@@ -94,7 +94,7 @@ end class\r\n`;
 
     for (const [st, name] of typeAndName) {
       mustBeKnownSymbolType(st, name, this.compileErrors, this.htmlId);
-      mustBeAbstractClass(st, name, this.compileErrors, this.htmlId);
+      mustBeInheritableClassOrInterface(st, name, this.compileErrors, this.htmlId);
 
       if (st instanceof ClassType && st.subType === ClassSubType.abstract) {
         implement = `extends ${name} `;
@@ -103,10 +103,13 @@ end class\r\n`;
 
     mustBeSingleAbstractSuperClass(typeAndName, this.compileErrors, this.htmlId);
 
+    const interfaces = this.getAllInterfaces(this, [this.symbolId], transforms);
+    const abstractClasses = this.getAllAbstractClasses(this, [this.symbolId], transforms);
+
     mustImplementSuperClasses(
       transforms,
       this.symbolType(transforms),
-      typeAndName.map((tn) => tn[0]).filter((st) => st instanceof ClassType) as ClassType[],
+      interfaces.concat(abstractClasses).map((tn) => tn.symbolType(transforms)) as ClassType[],
       this.compileErrors,
       this.htmlId,
     );

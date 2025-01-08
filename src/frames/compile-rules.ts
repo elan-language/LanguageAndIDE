@@ -284,7 +284,7 @@ export function mustBeRangeableSymbol(
   }
 }
 
-export function mustBeAbstractClass(
+export function mustBeInheritableClassOrInterface(
   type: SymbolType,
   name: string,
   compileErrors: CompileError[],
