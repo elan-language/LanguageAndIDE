@@ -1,7 +1,7 @@
-# 992a5a86d18a41f00bdb9415d9a07d35c1e8b8d8f4d907a5812c13907981f5af Elan Beta 6 valid
+# e37af52ea8e7e7623160a66b8fa5a951a18486ec3c3089162e5a3a73c871dbce Elan Beta 6 valid
 
 main
-  call simulation()
+  call game()
 end main
 
 procedure game()
@@ -11,15 +11,10 @@ procedure game()
   variable cont set to true
   while cont
     call clearConsole()
-    call player.newHand()
-    call dealer.newHand()
-    call displayHands(dealer, player)
-    call playersTurn(dealer, player)
-    call pause(2000)
-    call dealersTurn(dealer, player)
+    call playOneRound(dealer, player)
     let outcome be determineOutcome(dealer, player)
-    print "You {outcome}"
     call updateScores(dealer, player, outcome)
+    print "You {outcome}"
     print "Game: {gameNo} Dealer score: {dealer.score} Player score: {player.score}"
     let prompt be "Enter p for play again, x for exit:"
     let inp be inputStringFromOptions(prompt, ["p", "x"])
@@ -27,42 +22,48 @@ procedure game()
   end while
 end procedure
 
-procedure analyser()
-  let outcomes be [Status.bust:0, Status.standing:0, Status.blackjack:0]
-  let dealer be new Dealer(1000)
-  for i from 1 to 10000 step 1
-    call dealer.newHand()
-    call dealer.start()
-    call dealer.playHandOut()
-    let status be dealer.hand.status
-    call outcomes.putAtKey(status, outcomes[status] + 1)
-  end for
-  print outcomes
-end procedure
-
 procedure simulation()
   variable dealer set to new Dealer(1000)
+  let statusCountD be [Status.bust:0, Status.standing:0, Status.blackjack:0]
   variable playerA set to new AutomatedPlayer("PlayerA", ref strategyA, 1000)
+  let statusCountA be [Status.bust:0, Status.standing:0, Status.blackjack:0]
   variable playerB set to new AutomatedPlayer("PlayerB", ref strategyB, 1000)
+  let statusCountB be [Status.bust:0, Status.standing:0, Status.blackjack:0]
   for i from 1 to 1000 step 1
-    call dealer.newHand()
-    let face be dealer.faceCard
-    call playerA.newHand()
-    call playerA.playHandOut(face)
-    call playerB.newHand()
-    call playerB.playHandOut(face)
+    # factor this out into a proc that words for any Player
+    let dfc be dealCard(random())
+    call playerA.newHand(dfc)
+    call playerA.playHandOut()
+    let statusA be playerA.hand.status
+    call statusCountA.putAtKey(statusA, statusCountA[statusA] + 1)
+    call playerB.newHand(dfc)
+    call playerB.playHandOut()
+    let statusB be playerB.hand.status
+    call statusCountB.putAtKey(statusB, statusCountB[statusB] + 1)
+    call dealer.newHand(dfc)
     call dealer.playHandOut()
+    let statusD be dealer.hand.status
+    call statusCountD.putAtKey(statusD, statusCountD[statusD] + 1)
     let outcomeA be determineOutcome(dealer, playerA)
     call updateScores(dealer, playerA, outcomeA)
     let outcomeB be determineOutcome(dealer, playerB)
     call updateScores(dealer, playerB, outcomeB)
-    if outcomeB isnt Outcome.lose then
-      print playerB
-    end if
   end for
   print "Dealer score: {dealer.score}"
+  print statusCountD
   print "{playerA.name} score: {playerA.score}"
+  print statusCountA
   print "{playerB.name} score: {playerB.score}"
+  print statusCountB
+end procedure
+
+procedure playOneRound(dealer as Dealer, player as HumanPlayer)
+  call player.newHand()
+  call dealer.newHand(dealCard(random()))
+  call displayHands(dealer, player)
+  call playersTurn(dealer, player)
+  call pause(2000)
+  call dealersTurn(dealer, player)
 end procedure
 
 procedure dealersTurn(dealer as Dealer, player as HumanPlayer)
@@ -90,7 +91,10 @@ procedure displayHands(dealer as Dealer, player as HumanPlayer)
 end procedure
 
 procedure updateScores(dealer as Dealer, player as Player, outcome as Outcome)
-  if outcome is Outcome.win then
+  if outcome is Outcome.winDouble then
+    call player.changeScoreBy(2)
+    call dealer.changeScoreBy(-2)
+  else if outcome is Outcome.win then
     call player.changeScoreBy(1)
     call dealer.changeScoreBy(-1)
   else if outcome is Outcome.lose then
@@ -99,8 +103,6 @@ procedure updateScores(dealer as Dealer, player as Player, outcome as Outcome)
   end if
 end procedure
 
-# TODO This is not correct. It is not giving extra payout for BJ. 
-# Get rid out outcome & revert to returing a + or -integer.
 function determineOutcome(dealer as Dealer, player as Player) returns Outcome
   let d be dealer.hand.status
   let dTot be dealer.hand.total
@@ -109,9 +111,10 @@ function determineOutcome(dealer as Dealer, player as Player) returns Outcome
   let bust be Status.bust
   let bj be Status.blackjack
   let win be Outcome.win
+  let winDouble be Outcome.winDouble
   let lose be Outcome.lose
   let draw be Outcome.draw
-  return if p is bust then lose else if d is bust then win else if (d is bj) and (p is bj) then draw else if p is bj then win else if d is bj then draw else if pTot > dTot then win else if pTot < dTot then lose else draw
+  return if p is bust then lose else if d is bust then win else if (d is bj) and (p is bj) then draw else if p is bj then winDouble else if d is bj then lose else if pTot > dTot then win else if pTot < dTot then lose else draw
 end function
 
 function dealCard(random as Float) returns Card
@@ -121,7 +124,23 @@ function dealCard(random as Float) returns Card
   return new Card(rank, suit)
 end function
 
-class Dealer
+interface Player
+  abstract property hand as Hand
+
+  abstract procedure changeScoreBy(amount as Int)
+
+end interface
+
+# To be implemented by Dealer and by Automated player
+interface Automated
+  abstract procedure newHand(dealerFaceCard as Card)
+
+end interface
+
+# TODO:  interface Player inherited by HumanPlayer and AutomatedPlayer
+# TODO: interface Automated inherited by Dealer and AutomatedPlayer defines playOutHand
+# TODO: set up newHand on Player with dealerFaceCard
+class Dealer inherits Player
   constructor(startingPoints as Int)
     set property.score to startingPoints
   end constructor
@@ -141,11 +160,10 @@ class Dealer
     end while
   end procedure
 
-  procedure newHand()
+  procedure newHand(faceCard as Card)
+    set property.faceCard to faceCard
     set property.active to false
     set property.hand to new Hand()
-    call hand.draw()
-    set property.faceCard to property.hand.cards[0]
     call hand.draw()
   end procedure
 
@@ -173,13 +191,6 @@ class Dealer
   function asString() returns String
     return if property.active then "Dealer: {property.hand}" else "Dealer: {property.faceCard} {unicode(9633)}"
   end function
-
-end class
-
-abstract class Player
-  abstract property hand as Hand
-
-  abstract procedure changeScoreBy(amount as Int)
 
 end class
 
@@ -248,8 +259,7 @@ class AutomatedPlayer inherits Player
   end function
 
   # 
-  procedure playHandOut(dealerFaceCard as Card)
-    set property.dealerFaceCard to dealerFaceCard
+  procedure playHandOut()
     while property.hand.status is Status.playing
       let decision be getDecision()
       if decision is Action.draw then
@@ -263,14 +273,13 @@ class AutomatedPlayer inherits Player
     end while
   end procedure
 
-  procedure newHand()
-    # scope for delegating 
+  procedure newHand(dealerFaceCard as Card)
+    set property.dealerFaceCard to dealerFaceCard
     set property.hand to new Hand()
     call hand.draw()
     call hand.draw()
   end procedure
 
-  # TODO If dealer is pending rather than playing, then show only face card + 'hidden card' (or correct term)
   function asString() returns String
     return "{property.name}: {property.hand}"
   end function
@@ -381,7 +390,7 @@ end class
 
 enum Action stand, draw
 
-enum Outcome undecided, win, lose, draw
+enum Outcome undecided, lose, draw, win, winDouble
 
 enum Status pending, playing, standing, blackjack, bust
 
