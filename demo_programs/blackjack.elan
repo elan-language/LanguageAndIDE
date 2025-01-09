@@ -1,10 +1,10 @@
-# 1d4d74993ee40d11bccc36330d042c04528043f4063a8d646dce79c3b073abe8 Elan Beta 6 valid
+# 669b1aa7e742ed110de842d5665d64f233b25a5ea4171476b7dec54c334e737b Elan Beta 6 valid
 
 main
-  call game()
+  call simulateManyGames()
 end main
 
-procedure game()
+procedure playGame()
   variable dealer set to new Dealer(1000)
   variable player set to new HumanPlayer(1000)
   variable gameNo set to 0
@@ -22,39 +22,35 @@ procedure game()
   end while
 end procedure
 
-procedure simulation()
-  variable dealer set to new Dealer(1000)
-  let statusCountD be [Status.bust:0, Status.standing:0, Status.blackjack:0]
-  variable playerA set to new AutomatedPlayer("PlayerA", ref strategyA, 1000)
-  let statusCountA be [Status.bust:0, Status.standing:0, Status.blackjack:0]
-  variable playerB set to new AutomatedPlayer("PlayerB", ref strategyB, 1000)
-  let statusCountB be [Status.bust:0, Status.standing:0, Status.blackjack:0]
-  for i from 1 to 1000 step 1
-    # factor this out into a proc that words for any Player
-    let dfc be dealCard(random())
-    call playerA.newHand(dfc)
-    call playerA.playHandOut()
-    let statusA be playerA.hand.status
-    call statusCountA.putAtKey(statusA, statusCountA[statusA] + 1)
-    call playerB.newHand(dfc)
-    call playerB.playHandOut()
-    let statusB be playerB.hand.status
-    call statusCountB.putAtKey(statusB, statusCountB[statusB] + 1)
-    call dealer.newHand(dfc)
-    call dealer.playHandOut()
-    let statusD be dealer.hand.status
-    call statusCountD.putAtKey(statusD, statusCountD[statusD] + 1)
-    let outcomeA be determineOutcome(dealer, playerA)
-    call updateScores(dealer, playerA, outcomeA)
-    let outcomeB be determineOutcome(dealer, playerB)
-    call updateScores(dealer, playerB, outcomeB)
+procedure simulateManyGames()
+  let numGames be 100000
+  variable dealer set to new Dealer(numGames)
+  variable playerA set to new AutomatedPlayer("PlayerA", ref getActionA, numGames)
+  variable playerB set to new AutomatedPlayer("PlayerB", ref getActionB, numGames)
+  for i from 1 to numGames step 1
+    call simulateOneGame(dealer, playerA, playerB)
   end for
-  print "Dealer score: {dealer.score}"
-  print statusCountD
-  print "{playerA.name} score: {playerA.score}"
-  print statusCountA
-  print "{playerB.name} score: {playerB.score}"
-  print statusCountB
+  print "All players start with {numGames} points"
+  print "After playing {numGames} games they have..."
+  print 
+  print "Dealer: {dealer.score}"
+  print "PlayerA: {playerA.score}"
+  print "PlayerB: {playerB.score}"
+end procedure
+
+procedure simulateOneGame(dealer as Dealer, playerA as AutomatedPlayer, playerB as AutomatedPlayer)
+  let dfc be dealCard(random())
+  call playerA.newHand(dfc)
+  call playerA.playHandOut()
+  call playerB.newHand(dfc)
+  call playerB.playHandOut()
+  let statusB be playerB.hand.status
+  call dealer.newHand(dfc)
+  call dealer.playHandOut()
+  let outcomeA be determineOutcome(dealer, playerA)
+  call updateScores(dealer, playerA, outcomeA)
+  let outcomeB be determineOutcome(dealer, playerB)
+  call updateScores(dealer, playerB, outcomeB)
 end procedure
 
 procedure playOneRound(dealer as Dealer, player as HumanPlayer)
@@ -124,6 +120,11 @@ function dealCard(random as Float) returns Card
   return new Card(rank, suit)
 end function
 
+interface Automated
+  abstract procedure newHand(dealerFaceCard as Card)
+
+end interface
+
 interface Player
   abstract property hand as Hand
 
@@ -131,16 +132,7 @@ interface Player
 
 end interface
 
-# To be implemented by Dealer and by Automated player
-interface Automated
-  abstract procedure newHand(dealerFaceCard as Card)
-
-end interface
-
-# TODO:  interface Player inherited by HumanPlayer and AutomatedPlayer
-# TODO: interface Automated inherited by Dealer and AutomatedPlayer defines playOutHand
-# TODO: set up newHand on Player with dealerFaceCard
-class Dealer inherits Player
+class Dealer inherits Player, Automated
   constructor(startingPoints as Int)
     set property.score to startingPoints
   end constructor
@@ -172,8 +164,7 @@ class Dealer inherits Player
   end procedure
 
   procedure nextMove()
-    let decision be getDecision()
-    if getDecision() is Action.draw then
+    if getAction() is Action.draw then
       call property.hand.draw()
     else
       call property.hand.stand()
@@ -184,7 +175,7 @@ class Dealer inherits Player
     set property.active to true
   end procedure
 
-  function getDecision() returns Action
+  function getAction() returns Action
     return if property.hand.total < 17 then Action.draw else Action.stand
   end function
 
@@ -233,7 +224,7 @@ class HumanPlayer inherits Player
 
 end class
 
-class AutomatedPlayer inherits Player
+class AutomatedPlayer inherits Player, Automated
   constructor(name as String, decisionFunc as Func<of Hand, Card => Action>, startingPoints as Int)
     set property.name to name
     set property.decisionFunc to ref decisionFunc
@@ -254,21 +245,17 @@ class AutomatedPlayer inherits Player
     set property.score to property.score + amount
   end procedure
 
-  function getDecision() returns Action
+  function getAction() returns Action
     return decisionFunc(property.hand, property.dealerFaceCard)
   end function
 
-  # 
   procedure playHandOut()
     while property.hand.status is Status.playing
-      let decision be getDecision()
+      let decision be getAction()
       if decision is Action.draw then
         call property.hand.draw()
       else if decision is Action.stand then
         call property.hand.stand()
-      else
-        throw exception "Action {decision} not covered"
-        # TODO: cover other cases, which must check that they are valid given hand 
       end if
     end while
   end procedure
@@ -381,9 +368,10 @@ class Card
   end function
 
   function asString() returns String
-    let colourName be if (property.suit is 0) or (property.suit is 3) then "black" else "red"
+    let blackSuit be (property.suit is 0) or (property.suit is 3)
+    let colour be if blackSuit then "black" else "red"
     let tag be htmlEscChars[property.suit]
-    return "{property.rank}<span style='color: {colourName}'>{tag}</span>"
+    return "{property.rank}<span style='color: {colour}'>{tag}</span>"
   end function
 
 end class
@@ -398,10 +386,10 @@ constant rankValue set to {"2":2, "3":3, "4":4, "5":5, "6":6, "7":7, "8":8, "9":
 
 constant htmlEscChars set to {"&clubs;", "&diams;", "&hearts;", "&spades;"}
 
-function strategyA(hand as Hand, dealerFaceUp as Card) returns Action
-  return if hand.total > 16 then Action.stand else Action.draw
+function getActionA(hand as Hand, dealerFaceUp as Card) returns Action
+  return Action.draw
 end function
 
-function strategyB(hand as Hand, dealerFaceUp as Card) returns Action
-  return Action.draw
+function getActionB(hand as Hand, dealerFaceUp as Card) returns Action
+  return Action.stand
 end function
