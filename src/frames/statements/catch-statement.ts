@@ -1,7 +1,6 @@
 import { AbstractFrame } from "../abstract-frame";
 import { CodeSource } from "../code-source";
 import { IdentifierField } from "../fields/identifier-field";
-import { singleIndent } from "../frame-helpers";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { Frame } from "../interfaces/frame";
@@ -23,6 +22,10 @@ export class CatchStatement extends AbstractFrame implements Statement, ElanSymb
     this.variable = new IdentifierField(this);
     this.variable.setPlaceholder("<i>variableName</i>");
     this.variable.setFieldToKnownValidText("e");
+  }
+
+  override deleteIfPermissible(): void {
+    // does nothing - catch can't be deleted
   }
 
   protected setClasses() {
@@ -54,8 +57,8 @@ export class CatchStatement extends AbstractFrame implements Statement, ElanSymb
     return "catch";
   }
 
-  indent(): string {
-    return this.parentIndent() + singleIndent();
+  indent() {
+    return this.getParent()!.indent(); //overrides the additional indent added for most child statements
   }
 
   parentIndent(): string {
@@ -69,7 +72,7 @@ export class CatchStatement extends AbstractFrame implements Statement, ElanSymb
   }
 
   renderAsSource(): string {
-    return `${this.indent()}${this.keywords}${this.variable.renderAsSource()}\r`;
+    return `${this.indent()}${this.keywords}${this.variable.renderAsSource()}`;
   }
 
   parseFrom(source: CodeSource): void {
@@ -83,7 +86,7 @@ export class CatchStatement extends AbstractFrame implements Statement, ElanSymb
     this.compileErrors = [];
     const vid = this.variable.compile(transforms);
     return `${this.parentIndent()}} catch (_${vid}) {\r
-${this.indent()}var ${vid} = _${vid}.message;\r`;
+${this.indent()}  var ${vid} = _${vid}.message;\r`;
   }
 
   resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
