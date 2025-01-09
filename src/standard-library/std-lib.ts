@@ -547,13 +547,6 @@ export class StdLib {
     return n > fl ? fl + 1 : fl;
   }
 
-  @elanFunction([])
-  typeAndProperties(@elanGenericParamT1Type() o: { [key: string]: object }): string {
-    const type = o.constructor.name;
-    const items = Object.getOwnPropertyNames(o);
-    return `${type} [${items.map((n) => `"${n}":${o[n]}`).join(", ")}]`;
-  }
-
   @elanFunction(["", "lambdaOrFunctionRef"], FunctionOptions.pureExtension, ElanIterable(ElanT1))
   filter<T1>(
     @elanIterableType(ElanT1)

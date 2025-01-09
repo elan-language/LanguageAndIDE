@@ -936,16 +936,16 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable arr set to [ref typeAndProperties]
-  variable tp1 set to arr[0]
-  print tp1("")
+  variable arr set to [ref sqrt]
+  variable s0 set to arr[0]
+  print s0(4)
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var arr = system.literalArray([_stdlib.typeAndProperties]);
-  var tp1 = system.safeIndex(arr, 0);
-  system.printLine(_stdlib.asString(tp1("")));
+  var arr = system.literalArray([_stdlib.sqrt]);
+  var s0 = system.safeIndex(arr, 0);
+  system.printLine(_stdlib.asString(s0(4)));
 }
 return [main, _tests];}`;
 
@@ -955,6 +955,6 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, `String ["length":0]`);
+    await assertObjectCodeExecutes(fileImpl, `2`);
   });
 });

@@ -310,63 +310,6 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Apple");
   });
 
-  test("Pass_AsStringUsingDefaultHelper", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-    variable f set to new Foo()
-    print f
-end main
-
-class Foo
-    constructor()
-        set property.p1 to 5
-        set property.p2 to "Apple"
-    end constructor
-
-    property p1 as Float
-
-    property p2 as String
-
-    function asString() returns String
-      return typeAndProperties(this)
-    end function
-
-end class`;
-
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-async function main() {
-  var f = system.initialise(new Foo());
-  system.printLine(_stdlib.asString(f));
-}
-
-class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", ""]]);};
-  constructor() {
-    this.p1 = 5;
-    this.p2 = "Apple";
-  }
-
-  p1 = 0;
-
-  p2 = "";
-
-  asString() {
-    return _stdlib.typeAndProperties(this);
-  }
-
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, 'Foo ["p1":5, "p2":Apple]');
-  });
-
   test("Pass_AsStringOnVariousDataTypes", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
