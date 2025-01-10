@@ -1047,7 +1047,7 @@ class Foo
     property vg as VectorGraphics
 
     procedure bar()
-      set property.vg to property.vg.noSuch  
+      set property.vg to property.vg.noSuch
     end procedure
 
 end class`;

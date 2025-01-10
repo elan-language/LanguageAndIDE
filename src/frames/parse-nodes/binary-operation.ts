@@ -17,7 +17,7 @@ export class BinaryOperation extends AbstractParseNode {
   parseText(text: string): void {
     this.remainingText = text;
     if (this.remainingText.length > 0) {
-      if (this.nextChar() === " ") {
+      while (this.nextChar() === " ") {
         this.moveCharsToMatched(1, ParseStatus.incomplete);
       }
       if (this.nextChar() === GT || this.nextChar() === LT) {
@@ -37,7 +37,7 @@ export class BinaryOperation extends AbstractParseNode {
       } else {
         this.processKeywords();
       }
-      if (this.status === ParseStatus.valid && this.nextChar() === " ") {
+      while (this.status === ParseStatus.valid && this.nextChar() === " ") {
         this.moveCharsToMatched(1, ParseStatus.valid);
       }
       if (

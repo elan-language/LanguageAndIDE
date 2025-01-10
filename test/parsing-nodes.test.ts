@@ -1552,6 +1552,14 @@ suite("Parsing Nodes", () => {
     //test expressions
     testNodeParse(
       new BinaryExpression(),
+      `"a"+  "b"`,
+      ParseStatus.valid,
+      `"a"+  "b"`,
+      "",
+      `"a" + "b"`,
+    );
+    testNodeParse(
+      new BinaryExpression(),
       `3+`,
       ParseStatus.incomplete,
       "3+",

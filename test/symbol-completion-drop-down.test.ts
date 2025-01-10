@@ -1602,7 +1602,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable ab set to 0  
+  variable ab set to 0
   variable aa:ac set to [0]
   set aa to 0
 end main`;
@@ -1623,7 +1623,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable ab set to 0  
+  variable ab set to 0
   variable aa,ac set to (0, "fred")
   set aa to 0
 end main`;
@@ -1644,7 +1644,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable ab set to 0  
+  variable ab set to 0
   variable aa,ac set to new Foo()
   set aa to 0
 end main
