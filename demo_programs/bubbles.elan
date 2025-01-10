@@ -1,4 +1,4 @@
-# FFFF Elan Beta 6 valid
+# 25796633bcbfca76f8c959ed4549201fd802ee10c4edf5f8f6c8fc22f6ed152e Elan Beta 6 valid
 
 main
   variable vg set to new VectorGraphics()
@@ -19,10 +19,12 @@ procedure refresh(bubbles as Array<of CircleVG>, out vg as VectorGraphics)
     let b be bubbles[i]
     variable b2 set to copy b with cy to b.cy - 1, r to b.r + 0.2
     if random() < 0.05 then
-        set b2 to copy b2 with cx to randomInt(0, 99), r to 1, cy to 75, stroke to randomInt(0, 0xffffff)
+      set b2 to copy b2 with cx to randomInt(0, 99), r to 1, cy to 75, stroke to randomInt(0, maxColour)
     end if
     set vg to vg.replace(b, b2)
     call bubbles.putAt(i, b2)
     call vg.display()
   end for
 end procedure
+
+constant maxColour set to 0xffffff

@@ -1,10 +1,9 @@
-# FFFF Elan Beta 6 valid
+# 7c1b31c7f60dc580e1fe8eb167c6f26d57d5d0da301c1f643b320bfcd3b2998c Elan Beta 6 valid
 
 # Demo shows one way to implement a mergeSort function - using recursion
 # Since merge sort is always an 'out of place' sort, we have chosen to use immutable lists
 # It could be written with mutable lists, but the code for the merge function would need changing
 main
-  let fruit be {"plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear"}
   print mergeSort(fruit)
 end main
 
@@ -12,10 +11,10 @@ function mergeSort(li as List<of String>) returns List<of String>
   variable result set to li
   let len be li.length()
   if len > 1 then
-      let mid be floor(len/2)
-      let frontHalf be mergeSort(li[..mid])
-      let backHalf be mergeSort(li[mid..])
-      set result to merge(frontHalf, backHalf)
+    let mid be floor(len/2)
+    let frontHalf be mergeSort(li[..mid])
+    let backHalf be mergeSort(li[mid..])
+    set result to merge(frontHalf, backHalf)
   end if
   return result
 end function
@@ -25,13 +24,13 @@ function merge(a as List<of String>, b as List<of String>) returns List<of Strin
   let aLen be a.length()
   let bLen be b.length()
   if a.length() is 0 then
-      set result to b
+    set result to b
   else if bLen is 0 then
-      set result to a
+    set result to a
   else if a[0].isBefore(b[0]) then
-      set result to {a[0]} + merge(a[1..], b)
+    set result to {a[0]} + merge(a[1..], b)
   else
-      set result to {b[0]} + merge(a, b[1..])
+    set result to {b[0]} + merge(a, b[1..])
   end if
   return result
 end function
@@ -50,3 +49,5 @@ test mergeSort
   let li5 be {"apple", "apricot", "lemon", "lime", "melon", "orange", "pear", "strawberry"}
   assert mergeSort(li5) is li5
 end test
+
+constant fruit set to {"plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear"}

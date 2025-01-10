@@ -1,6 +1,8 @@
-# 93a25fc6d7a03c44e1567ca932d86698365d0e72982efd02ea80e49b4e126fd7 Elan Beta 6 valid
+# bae66f2b781144491ac1cd9e4ff92c91a8ce67818cc0534754104f4db52185b8 Elan Beta 6 valid
 
 # Use the W,A,S,D keys to change Snake direction
+constant delay set to 150
+
 main
   variable gr set to new BlockGraphics()
   variable snake set to new Snake()
@@ -10,7 +12,7 @@ main
     set gr to snake.updateGraphics(gr)
     set gr to apple.updateGraphics(gr)
     call gr.display()
-    call pause(150)
+    call pause(delay)
     call snake.clockTick(getKey(), apple)
   end while
   print "Game Over! Score: {snake.score()}"

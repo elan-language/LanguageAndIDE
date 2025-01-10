@@ -1,7 +1,7 @@
-# FFFF Elan Beta 6 valid
+# f2d3a76153f63596b62e736aeecf3dd6e22b5fa0f0a68cfc32286ea722403c03 Elan Beta 6 valid
 
 main
-  variable li set to [3, 6, 1, 0, 99, 4, 67]
+  variable li set to example.asArray()
   call inPlaceRippleSort(li)
   print li
 end main
@@ -13,12 +13,14 @@ procedure inPlaceRippleSort(out arr as Array<of Int>)
     set changes to false
     for i from 0 to lastComp step 1
       if arr[i] > arr[i + 1] then
-          let temp be arr[i]
-          call arr.putAt(i, arr[i + 1])
-          call arr.putAt(i + 1, temp)
-          set changes to true
+        let temp be arr[i]
+        call arr.putAt(i, arr[i + 1])
+        call arr.putAt(i + 1, temp)
+        set changes to true
       end if
     end for
     set lastComp to lastComp - 1
   end repeat when not changes
 end procedure
+
+constant example set to {3, 6, 1, 0, 99, 4, 67}

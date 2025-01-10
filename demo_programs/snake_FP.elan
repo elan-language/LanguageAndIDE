@@ -1,6 +1,8 @@
-# FFFF Elan Beta 6 valid
+# ebe2ee47b29effad736e8a98eff1217d2c6eee59018e6cf5688f7cbc5914a260 Elan Beta 6 valid
 
 # Use the W,A,S,D keys to change Snake direction
+constant delay set to 150
+
 main
   let rnd be new Random()
   call rnd.initialiseFromClock()
@@ -10,7 +12,7 @@ main
     set game to updateGraphics(game)
     let gr be game.graphics
     call gr.display()
-    call pause(150)
+    call pause(delay)
     set game to clockTick(game, getKey())
   end while
   print "Game Over! Score: {score(game)}"

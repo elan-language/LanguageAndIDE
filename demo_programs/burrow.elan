@@ -1,4 +1,4 @@
-# FFFF Elan Beta 6 valid
+# 49260f011f1fc8a3d0bc526885cdd29dd68e0441c0062a271de0efdf4a29aec7 Elan Beta 6 valid
 
 main
   variable g set to new BlockGraphics()
@@ -18,11 +18,11 @@ function updateCoordinates(x as Int, y as Int, dir as Int) returns (Int, Int)
   variable newX set to x
   variable newY set to y
   if dir is 0 then
-    set newX to lesserOf(x + 1, 39)
+    set newX to lesserOf(x + 1, maxCol)
   else if dir is 1 then
     set newX to greaterOf(x - 1, 0)
   else if dir is 2 then
-    set newY to lesserOf(y + 1, 29)
+    set newY to lesserOf(y + 1, maxRow)
   else if dir is 3 then
     set newY to greaterOf(y - 1, 0)
   end if
@@ -75,3 +75,7 @@ test updateCoordinates
   assert updateCoordinates(3, 0, 3) is (3, 0)
   assert updateCoordinates(3, 29, 2) is (3, 29)
 end test
+
+constant maxCol set to 39
+
+constant maxRow set to 29

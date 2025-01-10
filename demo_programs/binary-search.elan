@@ -1,7 +1,7 @@
-# 170b31510c2ec55d3d6c3181544c0d1478bcd5cc335799a0215f40646079b2ef Elan Beta 6 valid
+# cf3426e5a8967a50b961b1ec5ed97cc7b81ea73f3fd5fc6d3ea1d01ee77498ca Elan Beta 6 valid
 
 main
-  let fruit be ["apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"]
+  let fruit be example.asArray()
   variable exit set to false
   while not exit
     let wanted be inputString("What type of fruit do you want ('x' to exit)? ")
@@ -50,3 +50,5 @@ test
   let li4 be empty Array<of String>
   assert binarySearch(li4, "pear") is false
 end test
+
+constant example set to {"apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"}
