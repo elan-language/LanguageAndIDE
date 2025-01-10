@@ -119,6 +119,9 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
       selector.select(true, false);
     }
   }
+  selectNextFrame(): void {
+    this._children[0]?.select(true,false);
+  }
   removeChild(child: Frame): void {
     parentHelper_removeChild(this, child);
   }

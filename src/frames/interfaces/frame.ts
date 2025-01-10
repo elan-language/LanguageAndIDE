@@ -50,6 +50,7 @@ export interface Frame extends Selectable, Scope, ElanSymbol {
   resetCompileStatusAndErrors(): void;
   insertSelectorAfterLastField(): void;
   insertPeerSelector(before: boolean): void;
+  selectNextFrame(): void;
 
   initialKeywords(): string;
   setParent(parent: Parent): void;

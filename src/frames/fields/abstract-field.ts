@@ -483,7 +483,7 @@ export abstract class AbstractField implements Selectable, Field {
         const last = peerFields.length - 1;
         const thisField = peerFields.indexOf(this);
         if (thisField === last) {
-          this.holder.insertSelectorAfterLastField();
+          this.holder.selectNextFrame();
         } else {
           this.tab(false);
         }

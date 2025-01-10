@@ -348,8 +348,19 @@ export abstract class AbstractFrame implements Frame {
     return adjacent;
   }
   insertSelectorAfterLastField(): void {
-    //intende to overridden byFrameWithStatements
+    //intended to overridden byFrameWithStatements
     this.insertPeerSelector(false);
+  }
+
+  selectNextFrame(): void {
+    const parent = this.getParent();
+    let next = parent.getChildAfter(this);
+    if (next === this) {
+      if (!("isFile" in parent)) {
+        next = parent as unknown as Frame;
+      }
+    }
+    next.select(true, false);
   }
 
   insertPeerSelector(before: boolean): void {

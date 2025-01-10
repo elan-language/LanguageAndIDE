@@ -122,6 +122,15 @@ suite("Editing Frames", () => {
     type5.processKey(enter());
     assert.equal(select2.isSelected(), true);
   });
+  test("Enter on last field in a last child selects parent", () => {
+    const file = emptyFunctionOnly();
+    const func = file.getById("func1");
+    const returnExpr = file.getById("expr7");
+    returnExpr.select(true, false);
+    assert.equal(func.isSelected(), false);
+    returnExpr.processKey(enter());
+    assert.equal(func.isSelected(), true);
+  });
 
   test("Move", () => {
     const file = twoConstants();
