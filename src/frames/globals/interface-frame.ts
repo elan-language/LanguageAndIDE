@@ -148,7 +148,7 @@ ${parentHelper_compileChildren(this, transforms)}\r
 
     for (const ct of types) {
       const s = ct.scope!.resolveOwnSymbol(id, transforms);
-      if (isMember(s) && s.private) {
+      if (isMember(s)) {
         matches.push(s);
       }
     }
