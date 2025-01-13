@@ -297,7 +297,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "12");
   });
 
-  test("Pass_DifferentInterfaceIntoFunction2", async () => {
+  test("Pass_DifferentAbstractClassIntoFunction2", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -405,13 +405,13 @@ main
   print x.foo.f
 end main
 
-interface Foo
+abstract class Foo
   abstract property f as Foo2
-end interface
+end class
 
-interface Foo2
+abstract class Foo2
   abstract property f2 as Foo
-end interface
+end class
 
 class Bar
   constructor()
@@ -483,11 +483,11 @@ main
   call x.proc()
 end main
 
-interface Foo
+abstract class Foo
   abstract function func() returns Int
   abstract procedure proc()
   abstract property prop as Int
-end interface
+end class
 
 class Bar inherits Foo
   constructor()
@@ -519,11 +519,11 @@ main
   call x.proc()
 end main
 
-interface Foo
+abstract class Foo
   abstract function func() returns Int
   abstract procedure proc()
   abstract property prop as Int
-end interface
+end class
 
 class Bar inherits Foo
   constructor()
@@ -553,11 +553,11 @@ main
   print x.func()
 end main
 
-interface Foo
+abstract class Foo
   abstract function func() returns Int
   abstract procedure proc()
   abstract property prop as Int
-end interface
+end class
 
 class Bar inherits Foo
   constructor()
@@ -587,55 +587,16 @@ main
   call x.proc()
 end main
 
-interface Foo1
+abstract class Foo1
   abstract property prop as Int
-end interface
+end class
 
-interface Foo inherits Foo1
+abstract class Foo inherits Foo1
   abstract function func() returns Int
   abstract procedure proc()
-end interface
+end class
 
 class Bar inherits Foo
-  constructor()
-  end constructor
-
-  function func() returns Int
-    return 1
-  end function
-
-  procedure proc()
-    print 2
-  end procedure
-
-end class`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Bar must implement Foo1.prop"]);
-  });
-
-  test("Fail_DoesntImplementMultipleInheritanceProp", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-  variable x set to new Bar()
-  print x.func()
-  call x.proc()
-end main
-
-interface Foo1
-  abstract property prop as Int
-end interface
-
-interface Foo
-  abstract function func() returns Int
-  abstract procedure proc()
-end interface
-
-class Bar inherits Foo, Foo1
   constructor()
   end constructor
 
@@ -663,9 +624,9 @@ main
   
 end main
 
-interface Foo inherits Foo
+abstract class Foo inherits Foo
   abstract property prop as Int
-end interface`;
+end class`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -681,17 +642,17 @@ main
   
 end main
 
-interface Yon inherits Foo
+abstract class Yon inherits Foo
   abstract property prop as Int
-end interface
+end class
 
-interface Bar inherits Yon
+abstract class Bar inherits Yon
   abstract property prop as Int
-end interface
+end class
 
-interface Foo inherits Bar
+abstract class Foo inherits Bar
   abstract property prop as Int
-end interface`;
+end class`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -707,41 +668,19 @@ main
   
 end main
 
-interface Foo
+abstract class Foo
   abstract property prop as Int
-end interface
+end class
 
-interface Bar inherits Foo
+abstract class Bar inherits Foo
   abstract property prop as Int
-end interface`;
+end class`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Name 'prop' not unique in scope"]);
-  });
-
-  test("Fail_InheritAbstractClass", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-  
-end main
-
-abstract class Foo
-  abstract property prop1 as Int
-end class
-
-interface Bar inherits Foo
-  abstract property prop as Int
-end interface`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Superclass 'Foo' must be an interface"]);
   });
 
   test("Fail_InheritConcreteClass", async () => {
@@ -755,32 +694,15 @@ class Foo
   property prop1 as Int
 end class
 
-interface Bar inherits Foo
+abstract class Bar inherits Foo
   abstract property prop as Int
-end interface`;
+end class`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Superclass 'Foo' must be an interface"]);
-  });
-
-  test("Fail_MustBeAbstract", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-  
-end main
-
-interface Bar
-  property prop as Int
-end interface`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertDoesNotParse(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Superclass 'Foo' must be inheritable class"]);
   });
 
   test("Fail_DifferentInterfaceIntoFunction", async () => {
@@ -795,13 +717,13 @@ function func1(f as Foo1) returns Int
   return f.ff2()
 end function 
 
-interface Foo1
+abstract class Foo1
   abstract function ff1() returns Int
-end interface
+end class
 
-interface Foo2 inherits Foo1
+abstract class Foo2 inherits Foo1
   abstract function ff2() returns Int
-end interface
+end class
 
 class Bar inherits Foo2
   constructor()

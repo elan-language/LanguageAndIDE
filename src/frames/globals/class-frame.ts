@@ -256,7 +256,7 @@ export abstract class ClassFrame
         seenNames.push(cf.symbolId);
 
         for (const s of symbols) {
-          allSymbols = allSymbols.concat(this.getAllInterfaces(s, seenNames, transforms));
+          allSymbols = allSymbols.concat(this.getAllClasses(s, seenNames, filter, transforms));
         }
 
         return allSymbols.filter(filter);

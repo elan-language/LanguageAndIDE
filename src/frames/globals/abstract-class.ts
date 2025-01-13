@@ -4,6 +4,7 @@ import {
   mustBeKnownSymbolType,
   mustBeSingleAbstractSuperClass,
   mustBeUniqueNameInScope,
+  mustNotBeCircularDependency,
 } from "../compile-rules";
 import { isMember } from "../frame-helpers";
 import { ElanSymbol } from "../interfaces/elan-symbol";
@@ -85,7 +86,7 @@ end class\r\n`;
   public compile(transforms: Transforms): string {
     this.compileErrors = [];
 
-    const name = this.name.compile(transforms);
+    const name = this.name.text;
     mustBeUniqueNameInScope(
       name,
       getGlobalScope(this),
@@ -93,6 +94,18 @@ end class\r\n`;
       this.compileErrors,
       this.htmlId,
     );
+
+    const abstractClasses = this.getAllAbstractClasses(this, [], transforms);
+    const names = abstractClasses.map((i) => i.symbolId);
+
+    if (names.includes(name)) {
+      // circular interface
+      mustNotBeCircularDependency(name, this.compileErrors, this.htmlId);
+      // any other compiling is not safe
+
+      return `class ${name} {\r
+        }\r\n`;
+    }
 
     const typeAndName = this.getSuperClassesTypeAndName(transforms);
     let implement = "";
