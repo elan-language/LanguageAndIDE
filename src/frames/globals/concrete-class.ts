@@ -143,7 +143,7 @@ ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
       return this.getChildren().find((c) => c instanceof Constructor) ?? new UnknownSymbol(id);
     }
 
-    const matches = this.getChildren().filter(
+    let matches = this.getChildren().filter(
       (f) => isSymbol(f) && f.symbolId === id,
     ) as ElanSymbol[];
 
@@ -153,14 +153,20 @@ ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
 
     for (const ct of types) {
       const s = ct.scope!.resolveOwnSymbol(id, transforms);
-      if (isMember(s) && s.private) {
+      if (isMember(s)) {
         matches.push(s);
       }
+    }
+
+    if (matches.length === 2) {
+      // one of the matches must be abstract
+      matches = matches.filter((i) => isMember(i) && !i.isAbstract);
     }
 
     if (matches.length === 1) {
       return matches[0];
     }
+
     if (matches.length > 1) {
       return new DuplicateSymbol(matches);
     }

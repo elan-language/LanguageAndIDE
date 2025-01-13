@@ -1226,10 +1226,6 @@ class Bar inherits Foo
     constructor()
     end constructor
 
-    property p1 as Int
-
-    property p2 as Int
-
 end class`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
