@@ -538,7 +538,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "0");
   });
 
-  ignore_test("Pass_DefineAbstractWithPrivateMembers", async () => {
+  test("Pass_DefineAbstractWithPrivateMembers", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -566,7 +566,7 @@ class Bar inherits Foo
   procedure testPrivate(a as Int)
     call setP1(a)
     print ff()
-    print p1
+    print property.p1
   end procedure
 end class`;
 
@@ -588,15 +588,12 @@ class Foo {
     return this.p1;
   }
 
-  asString() {
-    return "empty Abstract Class Foo";
-  }
 }
 
-class Bar {
+class Bar extends Foo {
   static emptyInstance() { return system.emptyClass(Bar, []);};
-  _Foo = new Foo();
   constructor() {
+    super();
     this.p1 = 1;
   }
 
@@ -618,121 +615,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "33");
   });
 
-  ignore_test("Pass_DefineAbstractWithPrivateMembersMultipleInheritance", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-  variable x set to new Bar()
-  call x.testPrivate(3)
-end main
-
-abstract class Foo
-  private property p1 as Int
-
-  private procedure setP1(a as Int)
-    set property.p1 to a
-  end procedure
-
-  private function ff() returns Int
-    return property.p1
-  end function
-end class
-
-abstract class Yon
-  private property p2 as Int
-
-  private procedure setP2(a as Int)
-    set property.p2 to a
-  end procedure
-
-  private function ff2() returns Int
-    return property.p2
-  end function
-end class
-
-class Bar inherits Foo, Yon
-  constructor()
-  end constructor
-
-  procedure testPrivate(a as Int)
-    call setP1(a)
-    print ff()
-    print p1
-    call setP2(a + 1)
-    print ff2()
-    print p2
-  end procedure
-end class`;
-
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-async function main() {
-  var x = system.initialise(new Bar());
-  await x.testPrivate(3);
-}
-
-class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
-  p1 = 0;
-
-  async setP1(a) {
-    this.p1 = a;
-  }
-
-  ff() {
-    return this.p1;
-  }
-
-  asString() {
-    return "empty Abstract Class Foo";
-  }
-}
-
-class Yon {
-  static emptyInstance() { return system.emptyClass(Yon, [["p2", 0]]);};
-  p2 = 0;
-
-  async setP2(a) {
-    this.p2 = a;
-  }
-
-  ff2() {
-    return this.p2;
-  }
-
-  asString() {
-    return "empty Abstract Class Yon";
-  }
-}
-
-class Bar {
-  static emptyInstance() { return system.emptyClass(Bar, []);};
-  _Foo = new Foo(); _Yon = new Yon();
-  constructor() {
-
-  }
-
-  async testPrivate(a) {
-    await this.setP1(a);
-    system.printLine(_stdlib.asString(this.ff()));
-    system.printLine(_stdlib.asString(this.p1));
-    await this.setP2(a + 1);
-    system.printLine(_stdlib.asString(this.ff2()));
-    system.printLine(_stdlib.asString(this.p2));
-  }
-
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "3344");
-  });
-
-  ignore_test("Pass_DefineAbstractWithPrivateMembersIndirectInheritance", async () => {
+  test("Pass_DefineAbstractWithPrivateMembersMultipleInheritance", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -771,10 +654,10 @@ class Bar inherits Yon
   procedure testPrivate(a as Int)
     call setP1(a)
     print ff()
-    print p1
+    print property.p1
     call setP2(a + 1)
     print ff2()
-    print p2
+    print property.p2
   end procedure
 end class`;
 
@@ -796,12 +679,9 @@ class Foo {
     return this.p1;
   }
 
-  asString() {
-    return "empty Abstract Class Foo";
-  }
 }
 
-class Yon {
+class Yon extends Foo {
   static emptyInstance() { return system.emptyClass(Yon, [["p2", 0]]);};
   p2 = 0;
 
@@ -813,15 +693,120 @@ class Yon {
     return this.p2;
   }
 
-  asString() {
-    return "empty Abstract Class Yon";
-  }
 }
 
-class Bar {
+class Bar extends Yon {
   static emptyInstance() { return system.emptyClass(Bar, []);};
-  _Yon = new Yon(); _Foo = new Foo();
   constructor() {
+    super();
+
+  }
+
+  async testPrivate(a) {
+    await this.setP1(a);
+    system.printLine(_stdlib.asString(this.ff()));
+    system.printLine(_stdlib.asString(this.p1));
+    await this.setP2(a + 1);
+    system.printLine(_stdlib.asString(this.ff2()));
+    system.printLine(_stdlib.asString(this.p2));
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "3344");
+  });
+
+  test("Pass_DefineAbstractWithPrivateMembersIndirectInheritance", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable x set to new Bar()
+  call x.testPrivate(3)
+end main
+
+abstract class Foo
+  private property p1 as Int
+
+  private procedure setP1(a as Int)
+    set property.p1 to a
+  end procedure
+
+  private function ff() returns Int
+    return property.p1
+  end function
+end class
+
+abstract class Yon inherits Foo
+  private property p2 as Int
+
+  private procedure setP2(a as Int)
+    set property.p2 to a
+  end procedure
+
+  private function ff2() returns Int
+    return property.p2
+  end function
+end class
+
+class Bar inherits Yon
+  constructor()
+  end constructor
+
+  procedure testPrivate(a as Int)
+    call setP1(a)
+    print ff()
+    print property.p1
+    call setP2(a + 1)
+    print ff2()
+    print property.p2
+  end procedure
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var x = system.initialise(new Bar());
+  await x.testPrivate(3);
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
+  p1 = 0;
+
+  async setP1(a) {
+    this.p1 = a;
+  }
+
+  ff() {
+    return this.p1;
+  }
+
+}
+
+class Yon extends Foo {
+  static emptyInstance() { return system.emptyClass(Yon, [["p2", 0]]);};
+  p2 = 0;
+
+  async setP2(a) {
+    this.p2 = a;
+  }
+
+  ff2() {
+    return this.p2;
+  }
+
+}
+
+class Bar extends Yon {
+  static emptyInstance() { return system.emptyClass(Bar, []);};
+  constructor() {
+    super();
 
   }
 
