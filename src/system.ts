@@ -230,7 +230,7 @@ export class System {
   }
 
   assert(
-    actual: any,
+    actualFunc: () => any,
     expected: any,
     htmlId: string,
     stdlib: { asString: (a: any) => string },
@@ -239,7 +239,20 @@ export class System {
     if (ignored) {
       return new AssertOutcome(TestStatus.ignored, "", "", htmlId);
     }
+    try {
+      const actual = actualFunc();
+      return this.doAssert(actual, expected, htmlId, stdlib);
+    } catch (err) {
+      return this.doAssert((err as any).message, expected, htmlId, stdlib);
+    }
+  }
 
+  private doAssert(
+    actual: any,
+    expected: any,
+    htmlId: string,
+    stdlib: { asString: (a: any) => string },
+  ) {
     if (!this.equals(actual, expected)) {
       return new AssertOutcome(
         TestStatus.fail,
