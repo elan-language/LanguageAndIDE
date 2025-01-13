@@ -59,7 +59,8 @@ export class AssertStatement extends AbstractFrame implements Statement {
     const ignored = test.ignored;
     const expected = this.expected.compile(transforms);
     const actual = this.actual.compile(transforms);
-    return `${this.indent()}_outcomes.push(system.assert(${ignored ? `""` : actual}, ${ignored ? `""` : expected}, "${this.htmlId}", _stdlib, ${ignored}));`;
+    const actualFunc = `() => ${actual}`;
+    return `${this.indent()}_outcomes.push(system.assert(${ignored ? `""` : actualFunc}, ${ignored ? `""` : expected}, "${this.htmlId}", _stdlib, ${ignored}));`;
   }
 
   setOutcome(outcome: AssertOutcome) {
