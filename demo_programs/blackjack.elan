@@ -1,12 +1,12 @@
-# 669b1aa7e742ed110de842d5665d64f233b25a5ea4171476b7dec54c334e737b Elan Beta 6 valid
+# 110288b2e5e0d083875387ec1d60aa365b4d05fd7eb3fe9ddc949caf73e5a3c6 Elan Beta 6 valid
 
 main
-  call simulateManyGames()
+  call simulateGame()
 end main
 
 procedure playGame()
-  variable dealer set to new Dealer(1000)
-  variable player set to new HumanPlayer(1000)
+  variable dealer set to createDealer(1000)
+  variable player set to createHumanPlayer(1000)
   variable gameNo set to 0
   variable cont set to true
   while cont
@@ -22,23 +22,45 @@ procedure playGame()
   end while
 end procedure
 
-procedure simulateManyGames()
-  let numGames be 100000
-  variable dealer set to new Dealer(numGames)
-  variable playerA set to new AutomatedPlayer("PlayerA", ref getActionA, numGames)
-  variable playerB set to new AutomatedPlayer("PlayerB", ref getActionB, numGames)
-  for i from 1 to numGames step 1
-    call simulateOneGame(dealer, playerA, playerB)
-  end for
-  print "All players start with {numGames} points"
-  print "After playing {numGames} games they have..."
-  print 
-  print "Dealer: {dealer.score}"
-  print "PlayerA: {playerA.score}"
-  print "PlayerB: {playerB.score}"
+procedure simulateGame()
+  let startPoints be 1000
+  variable dealer set to createDealer(startPoints)
+  variable playerA set to createPlayerA(startPoints)
+  variable playerB set to createPlayerB(startPoints)
+  call playAllHands(dealer, playerA, playerB)
+  print dealer
+  print playerA
+  print playerB
+  print "Dealer has {dealer.score} points"
+  print "Player A has {playerA.score} points"
+  print "Player B has {playerB.score} points"
 end procedure
 
-procedure simulateOneGame(dealer as Dealer, playerA as AutomatedPlayer, playerB as AutomatedPlayer)
+function getActionForPlayerA(hand as Hand, dealerFaceUp as Card) returns Action
+  return Action.draw
+end function
+
+function getActionForPlayerB(hand as Hand, dealerFaceUp as Card) returns Action
+  return Action.stand
+end function
+
+function createDealer(startPoints as Int) returns Dealer
+  return new Dealer(startPoints)
+end function
+
+function createHumanPlayer(startPoints as Int) returns HumanPlayer
+  return new HumanPlayer(startPoints)
+end function
+
+function createPlayerA(startPoints as Int) returns AutomatedPlayer
+  return new AutomatedPlayer("Player A", ref getActionForPlayerA, startPoints)
+end function
+
+function createPlayerB(startPoints as Int) returns AutomatedPlayer
+  return new AutomatedPlayer("Player B", ref getActionForPlayerB, startPoints)
+end function
+
+procedure playAllHands(dealer as Dealer, playerA as AutomatedPlayer, playerB as AutomatedPlayer)
   let dfc be dealCard(random())
   call playerA.newHand(dfc)
   call playerA.playHandOut()
@@ -385,11 +407,3 @@ enum Status pending, playing, standing, blackjack, bust
 constant rankValue set to {"2":2, "3":3, "4":4, "5":5, "6":6, "7":7, "8":8, "9":9, "10":10, "J":10, "Q":10, "K":10, "A":11}
 
 constant htmlEscChars set to {"&clubs;", "&diams;", "&hearts;", "&spades;"}
-
-function getActionA(hand as Hand, dealerFaceUp as Card) returns Action
-  return Action.draw
-end function
-
-function getActionB(hand as Hand, dealerFaceUp as Card) returns Action
-  return Action.stand
-end function
