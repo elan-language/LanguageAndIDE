@@ -237,12 +237,12 @@ export abstract class ClassFrame
     return seenNames.filter((s) => s === name).length > 1;
   }
 
-  protected circularDependency(name : string) {
- // circular dependency
-      mustNotBeCircularDependency(name, this.compileErrors, this.htmlId);
-      // any other compiling is not safe
+  protected circularDependency(name: string) {
+    // circular dependency
+    mustNotBeCircularDependency(name, this.compileErrors, this.htmlId);
+    // any other compiling is not safe
 
-      return `class ${name} {\r
+    return `class ${name} {\r
         }\r\n`;
   }
 

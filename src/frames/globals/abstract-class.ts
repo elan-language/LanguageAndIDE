@@ -4,7 +4,6 @@ import {
   mustBeKnownSymbolType,
   mustBeSingleAbstractSuperClass,
   mustBeUniqueNameInScope,
-  mustNotBeCircularDependency,
 } from "../compile-rules";
 import { isMember } from "../frame-helpers";
 import { ElanSymbol } from "../interfaces/elan-symbol";
@@ -99,7 +98,7 @@ end class\r\n`;
     const interfaces = this.getAllInterfaces(this, [], transforms);
     const names = abstractClasses.concat(interfaces).map((i) => i.symbolId);
 
-    if (names.includes(name) ) {
+    if (names.includes(name)) {
       return this.circularDependency(name);
     }
 
