@@ -1154,26 +1154,6 @@ export function cannotHaveDuplicatePrivateIds(
   compileErrors.push(new DuplicateIdsCompileError(duplicates, location));
 }
 
-export function cannotAccessPrivateMemberInAbstractClass(
-  id: string,
-  compileErrors: CompileError[],
-  location: string,
-) {
-  compileErrors.push(
-    new SyntaxCompileError(`Cannot access private member ${id} in abstract class`, location),
-  );
-}
-
-export function cannotAccessAbstractMemberInAbstractClass(
-  id: string,
-  compileErrors: CompileError[],
-  location: string,
-) {
-  compileErrors.push(
-    new SyntaxCompileError(`Cannot access abstract member ${id} in abstract class`, location),
-  );
-}
-
 export function mustBeFunctionRefIfFunction(
   symbol: ElanSymbol,
   compileErrors: CompileError[],

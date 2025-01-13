@@ -166,6 +166,142 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "312");
   });
 
+  test("Pass_AbstractClassWithConcreteMembers1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable x set to new Bar()
+  call x.proc()
+end main
+
+abstract class Foo
+  function func() returns Int
+    return property.prop
+  end function
+
+  procedure proc()
+    print func()
+  end procedure
+
+  property prop as Int
+end class
+
+class Bar inherits Foo
+  constructor()
+    set property.prop to 3
+  end constructor
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var x = system.initialise(new Bar());
+  await x.proc();
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["prop", 0]]);};
+  func() {
+    return this.prop;
+  }
+
+  async proc() {
+    system.printLine(_stdlib.asString(this.func()));
+  }
+
+  prop = 0;
+
+}
+
+class Bar extends Foo {
+  static emptyInstance() { return system.emptyClass(Bar, []);};
+  constructor() {
+    super();
+    this.prop = 3;
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "3");
+  });
+
+  test("Pass_AbstractClassWithConcreteMembers2", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable x set to new Bar()
+  call x.proc()
+end main
+
+abstract class Foo
+  abstract function func() returns Int
+
+  procedure proc()
+    print func()
+  end procedure
+
+  property prop as Int
+end class
+
+class Bar inherits Foo
+  constructor()
+    set property.prop to 3
+  end constructor
+
+  function func() returns Int
+    return property.prop
+  end function
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var x = system.initialise(new Bar());
+  await x.proc();
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["prop", 0]]);};
+  func() {
+    return 0;
+  }
+
+  async proc() {
+    system.printLine(_stdlib.asString(this.func()));
+  }
+
+  prop = 0;
+
+}
+
+class Bar extends Foo {
+  static emptyInstance() { return system.emptyClass(Bar, []);};
+  constructor() {
+    super();
+    this.prop = 3;
+  }
+
+  func() {
+    return this.prop;
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "3");
+  });
+
   test("Pass_AbstractClassInheritsAbstractClass", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 

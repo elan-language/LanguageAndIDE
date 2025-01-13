@@ -1,10 +1,6 @@
 import { ElanCompilerError } from "../../elan-compiler-error";
 import { Property } from "../class-members/property";
 import { CompileError } from "../compile-error";
-import {
-  cannotAccessAbstractMemberInAbstractClass,
-  cannotAccessPrivateMemberInAbstractClass,
-} from "../compile-rules";
 import { isClass, isConstant, isFile, isMember, isScope } from "../frame-helpers";
 import { Enum } from "../globals/enum";
 import { AstNode } from "../interfaces/ast-node";
@@ -151,9 +147,9 @@ export function isPublicMember(s: ElanSymbol | Member): boolean {
 
 export function scopePrefix(
   symbol: ElanSymbol,
-  compileErors: CompileError[],
+  _compileErors: CompileError[],
   scope: Scope,
-  location: string,
+  _location: string,
 ) {
   if (symbol.symbolScope === SymbolScope.stdlib) {
     return `_stdlib.`;
@@ -161,23 +157,6 @@ export function scopePrefix(
 
   if (isConstant(symbol) && symbol.symbolScope === SymbolScope.program) {
     return isConstant(scope) ? "this." : "global.";
-  }
-
-  if (isMember(symbol)) {
-    const symbolClass = symbol.getClass();
-    const thisClass = getClassScope(scope);
-
-    if (symbol.private && symbolClass !== thisClass) {
-      if (isClassTypeDef(thisClass) && thisClass.isAbstract) {
-        cannotAccessPrivateMemberInAbstractClass(symbol.symbolId, compileErors, location);
-      }
-
-      return `this._${symbolClass.symbolId}.`;
-    }
-
-    if (symbol.isAbstract && isClassTypeDef(thisClass) && thisClass.isAbstract) {
-      cannotAccessAbstractMemberInAbstractClass(symbol.symbolId, compileErors, location);
-    }
   }
 
   if (symbol.symbolScope === SymbolScope.member) {
