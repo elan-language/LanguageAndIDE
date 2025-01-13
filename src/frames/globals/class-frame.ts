@@ -10,6 +10,7 @@ import { ProcedureMethod } from "../class-members/procedure-method";
 import { Property } from "../class-members/property";
 import { CodeSource } from "../code-source";
 import { CompileError } from "../compile-error";
+import { mustNotBeCircularDependency } from "../compile-rules";
 import { InheritsFrom } from "../fields/inheritsFrom";
 import { Regexes } from "../fields/regexes";
 import { TypeNameField } from "../fields/type-name-field";
@@ -232,8 +233,17 @@ export abstract class ClassFrame
     return [];
   }
 
-  private seenTwice(name: string, seenNames: string[]) {
+  protected seenTwice(name: string, seenNames: string[]) {
     return seenNames.filter((s) => s === name).length > 1;
+  }
+
+  protected circularDependency(name : string) {
+ // circular dependency
+      mustNotBeCircularDependency(name, this.compileErrors, this.htmlId);
+      // any other compiling is not safe
+
+      return `class ${name} {\r
+        }\r\n`;
   }
 
   public getAllClasses(

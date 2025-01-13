@@ -96,15 +96,17 @@ end class\r\n`;
     );
 
     const abstractClasses = this.getAllAbstractClasses(this, [], transforms);
-    const names = abstractClasses.map((i) => i.symbolId);
+    const interfaces = this.getAllInterfaces(this, [], transforms);
+    const names = abstractClasses.concat(interfaces).map((i) => i.symbolId);
 
-    if (names.includes(name)) {
-      // circular interface
-      mustNotBeCircularDependency(name, this.compileErrors, this.htmlId);
-      // any other compiling is not safe
+    if (names.includes(name) ) {
+      return this.circularDependency(name);
+    }
 
-      return `class ${name} {\r
-        }\r\n`;
+    for (const s of names) {
+      if (this.seenTwice(s, names)) {
+        return this.circularDependency(s);
+      }
     }
 
     const typeAndName = this.getSuperClassesTypeAndName(transforms);
