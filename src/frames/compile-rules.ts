@@ -5,7 +5,6 @@ import {
   CannotUseLikeAFunction,
   CannotUseSystemMethodInAFunction,
   CompileError,
-  DuplicateIdsCompileError,
   DuplicateKeyCompileError,
   ExtensionCompileError,
   ExtraParameterCompileError,
@@ -1144,14 +1143,6 @@ export function mustHaveUniqueKeys(
 
 export function mustBeNewable(type: string, compileErrors: CompileError[], location: string) {
   compileErrors.push(new NotNewableCompileError(type, location, false));
-}
-
-export function cannotHaveDuplicatePrivateIds(
-  duplicates: string[],
-  compileErrors: CompileError[],
-  location: string,
-) {
-  compileErrors.push(new DuplicateIdsCompileError(duplicates, location));
 }
 
 export function mustBeFunctionRefIfFunction(

@@ -1,5 +1,4 @@
 import { CodeSource } from "../code-source";
-import { cannotHaveDuplicatePrivateIds } from "../compile-rules";
 import { ParamList } from "../fields/param-list";
 import { FrameWithStatements } from "../frame-with-statements";
 import { ConcreteClass } from "../globals/concrete-class";
@@ -11,7 +10,6 @@ import { Parent } from "../interfaces/parent";
 import { constructorKeyword } from "../keywords";
 import { ClassSubType, ClassType } from "../symbols/class-type";
 import { ProcedureType } from "../symbols/procedure-type";
-import { getAllPrivateIds } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { Transforms } from "../syntax-nodes/transforms";
@@ -70,13 +68,6 @@ ${this.indent()}end constructor\r
       if (st instanceof ClassType && st.subType === ClassSubType.abstract) {
         superConstructor = `${this.indent()}${this.indent()}super();\n`;
       }
-    }
-
-    const allPrivateIds = getAllPrivateIds(parentClass, transforms);
-    const duplicates = allPrivateIds.filter((n, i, a) => a.indexOf(n) !== i);
-
-    if (duplicates.length > 0) {
-      cannotHaveDuplicatePrivateIds(duplicates, this.compileErrors, this.htmlId);
     }
 
     return `${this.indent()}constructor(${this.params.compile(transforms)}) {\r

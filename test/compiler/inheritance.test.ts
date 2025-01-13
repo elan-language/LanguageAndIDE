@@ -1983,11 +1983,11 @@ abstract class Foo
   private property p1 as Int
 end class
 
-abstract class Yon
+abstract class Yon inherits Foo
   private property p1 as String
 end class
 
-class Bar inherits Foo, Yon
+class Bar inherits Yon
   constructor()
   end constructor
 
@@ -1999,7 +1999,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Duplicate inherited ids: p1"]);
+    assertDoesNotCompile(fileImpl, ["Name 'p1' not unique in scope"]);
   });
 
   test("Fail_DuplicatePrivateMembers2", async () => {
@@ -2014,11 +2014,11 @@ abstract class Foo
   end procedure
 end class
 
-abstract class Yon
+abstract class Yon inherits Foo
   private property p1 as String
 end class
 
-class Bar inherits Foo, Yon
+class Bar inherits Yon
   constructor()
   end constructor
 
@@ -2030,7 +2030,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Duplicate inherited ids: p1"]);
+    assertDoesNotCompile(fileImpl, ["Name 'p1' not unique in scope"]);
   });
 
   test("Fail_DuplicatePrivateMembers3", async () => {
@@ -2046,11 +2046,11 @@ abstract class Foo
   end function
 end class
 
-abstract class Yon
+abstract class Yon inherits Foo
   private property p1 as String
 end class
 
-class Bar inherits Foo, Yon
+class Bar inherits Yon
   constructor()
   end constructor
 
@@ -2062,7 +2062,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Duplicate inherited ids: p1"]);
+    assertDoesNotCompile(fileImpl, ["Name 'p1' not unique in scope"]);
   });
 
   test("Fail_DuplicatePrivateMembers4", async () => {
@@ -2094,10 +2094,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Name 'p1' not unique in scope",
-      "Duplicate inherited ids: p1",
-    ]);
+    assertDoesNotCompile(fileImpl, ["Name 'p1' not unique in scope"]);
   });
 
   test("Fail_DuplicatePrivateMembers5", async () => {
@@ -2135,6 +2132,184 @@ end main
 
 abstract class Yon
   private property p1 as String
+  abstract property p1 as String
+end class
+
+class Bar inherits Yon
+  constructor()
+  end constructor
+
+  property p2 as Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Name 'p1' not unique in scope"]);
+  });
+
+  test("Fail_DuplicateMembers1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+ 
+end main
+
+abstract class Foo
+  property p1 as Int
+end class
+
+abstract class Yon inherits Foo
+  property p1 as String
+end class
+
+class Bar inherits Yon
+  constructor()
+  end constructor
+
+  property p3 as Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Name 'p1' not unique in scope"]);
+  });
+
+  test("Fail_DuplicateMembers2", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+ 
+end main
+
+abstract class Foo
+  procedure p1()
+  end procedure
+end class
+
+abstract class Yon inherits Foo
+  property p1 as String
+end class
+
+class Bar inherits Yon
+  constructor()
+  end constructor
+
+  property p3 as Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Name 'p1' not unique in scope"]);
+  });
+
+  test("Fail_DuplicateMembers3", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+ 
+end main
+
+abstract class Foo
+  function p1() returns Int
+    return 0
+  end function
+end class
+
+abstract class Yon inherits Foo
+  private property p1 as String
+end class
+
+class Bar inherits Yon
+  constructor()
+  end constructor
+
+  property p3 as Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Name 'p1' not unique in scope"]);
+  });
+
+  test("Fail_DuplicateMembers4", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+ 
+end main
+
+abstract class Foo
+  function p1() returns Int
+    return 0
+  end function
+end class
+
+abstract class Yon inherits Foo
+  private property p1 as String
+end class
+
+class Bar inherits Yon
+  constructor()
+  end constructor
+
+  property p3 as Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Name 'p1' not unique in scope"]);
+  });
+
+  test("Fail_DuplicateMembers5", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+ 
+end main
+
+abstract class Yon
+  private property p1 as String
+end class
+
+class Bar inherits Yon
+  constructor()
+  end constructor
+
+  property p1 as Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Name 'p1' not unique in scope"]);
+  });
+
+  test("Fail_DuplicateMembers6", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+ 
+end main
+
+abstract class Yon
+  property p1 as String
   abstract property p1 as String
 end class
 
