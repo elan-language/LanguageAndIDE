@@ -1,4 +1,4 @@
-# 6402363f29244835f0499d0fc6861119eb18972b28e05453d2de843545254c27 Elan Beta 6 valid
+# eeb1c40e88f77f7b2a0d60b466115944fa055e400cb5877dbdddfc306471fa73 Elan Beta 6 valid
 
 main
   call simulateGame()
@@ -194,7 +194,7 @@ class Dealer inherits Automated
     set property.dealerFaceCard to faceCard
     set property.active to false
     set property.hand to new Hand()
-    call hand.addCard(faceCard)
+    call property.hand.addCard(faceCard)
     call property.hand.draw()
   end procedure
 

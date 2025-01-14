@@ -3,6 +3,7 @@ import {
   mustBeCompatibleType,
   mustBeIndexableSymbol,
   mustBeKnownSymbol,
+  mustBePropertyPrefixedOnMember,
   mustBePublicMember,
 } from "../compile-rules";
 import { AstIndexableNode } from "../interfaces/ast-indexable-node";
@@ -84,6 +85,10 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
     }
 
     mustBeKnownSymbol(symbol, undefined, this.compileErrors, this.fieldId);
+
+    if (symbol.symbolScope === SymbolScope.member && !this.qualifier) {
+      mustBePropertyPrefixedOnMember(this.compileErrors, this.fieldId);
+    }
 
     const prefix = scopePrefix(symbol, this.compileErrors, this.scope, this.fieldId);
     const postfix = this.index

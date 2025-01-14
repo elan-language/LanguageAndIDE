@@ -1,4 +1,4 @@
-# 7d98a15ff3715c1f03a3db1872ec481a87907241effcd863f01765f02ee97cbb Elan Beta 6 valid
+# 36a78020ee99914485f3a3e32ff105670e320e82ee83380ee6bb70733c32e5c5 Elan Beta 6 valid
 
 main
   let start be new Point(5, 5)
@@ -115,7 +115,7 @@ class Solver
     if (property.current is empty Node) or (property.current.point is property.destination) then
       set property.running to false
     else
-      call current.setVisited(true)
+      call property.current.setVisited(true)
     end if
   end procedure
 

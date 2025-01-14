@@ -366,7 +366,7 @@ class Foo
     property p1 as Bar
 
     procedure length()
-      call p1.length(2)
+      call property.p1.length(2)
     end procedure
 
     function asString() returns String
