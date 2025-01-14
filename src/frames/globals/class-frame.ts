@@ -217,7 +217,7 @@ export abstract class ClassFrame
     return [c.symbolType(transforms), c.symbolId];
   }
 
-  public getSuperClassesTypeAndName(transforms: Transforms) {
+  public getDirectSuperClassesTypeAndName(transforms: Transforms) {
     if (this.doesInherit()) {
       const superClasses = this.inheritance.getOrTransformAstNode(transforms);
 

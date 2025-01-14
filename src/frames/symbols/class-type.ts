@@ -52,13 +52,6 @@ export class ClassType implements SymbolType, Scope {
   }
 
   resolveSymbol(id: string, transforms: Transforms, scope: Scope): ElanSymbol {
-    // for (const f of this.scope!.getChildren()) {
-    //   if (isSymbol(f) && f.symbolId === id) {
-    //     return f;
-    //   }
-    // }
-    // return new UnknownSymbol(id);
-
     return this.scope?.resolveSymbol(id, transforms, scope) ?? new UnknownSymbol(id);
   }
 

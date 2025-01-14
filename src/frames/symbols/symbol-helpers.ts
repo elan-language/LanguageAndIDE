@@ -521,25 +521,6 @@ export function filteredSymbols(
   return startsWith.concat(includes);
 }
 
-export function hasPrivateMembers(ct: ClassType) {
-  const children = ct.childSymbols().filter((s) => isMember(s) && s.private);
-  return children.length > 0;
-}
-
-export function getAllPrivateIds(start: Class, transforms: Transforms) {
-  const superClasses = start.getSuperClassesTypeAndName(transforms);
-  let allNames: string[] = [];
-
-  for (const ct of superClasses.map((t) => t[0]).filter((t) => t instanceof ClassType)) {
-    const children = ct.childSymbols().filter((s) => isMember(s) && s.private);
-    allNames = allNames.concat(children.map((c) => c.symbolId));
-    // todo fix cast
-    allNames = allNames.concat(getAllPrivateIds(ct.scope as Class, transforms));
-  }
-
-  return allNames;
-}
-
 export function updateScope(qualifier: AstQualifierNode | undefined, originalScope: Scope) {
   let currentScope = originalScope;
   const classScope = qualifier ? qualifier.symbolType() : undefined;

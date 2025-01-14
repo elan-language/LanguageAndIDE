@@ -61,7 +61,7 @@ ${this.indent()}end constructor\r
     this.compileErrors = [];
     const parentClass = this.getParent() as ConcreteClass;
 
-    const typeAndName = parentClass.getSuperClassesTypeAndName(transforms);
+    const typeAndName = parentClass.getDirectSuperClassesTypeAndName(transforms);
     let superConstructor = "";
 
     for (const [st] of typeAndName) {

@@ -65,7 +65,7 @@ ${parentHelper_renderChildrenAsSource(this)}\r
 end record\r\n`;
   }
 
-  public getSuperClassesTypeAndName(_transforms: Transforms) {
+  public getDirectSuperClassesTypeAndName(_transforms: Transforms) {
     return [];
   }
 

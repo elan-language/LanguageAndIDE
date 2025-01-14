@@ -9,5 +9,5 @@ export interface Class extends Scope, ClassSymbol {
   getChildren(): ElanSymbol[];
   resolveOwnSymbol(id: string, transforms: Transforms): ElanSymbol;
   ofTypes: SymbolType[];
-  getSuperClassesTypeAndName(transforms: Transforms): [SymbolType, string][];
+  getDirectSuperClassesTypeAndName(transforms: Transforms): [SymbolType, string][];
 }

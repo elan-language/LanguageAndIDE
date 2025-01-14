@@ -89,25 +89,13 @@ end class\r\n`;
       this.htmlId,
     );
 
-    // const names = this.getAllClasses(this, [], () => true, transforms).map((i) => i.symbolId);
-
-    // if (names.includes(name)) {
-    //   return this.circularDependency(name);
-    // }
-
-    // for (const s of names) {
-    //   if (this.seenTwice(s, names)) {
-    //     return this.circularDependency(s);
-    //   }
-    // }
-
     const [cd, cdName] = this.lookForCircularDependencies(this, [name], transforms);
 
     if (cd) {
       return this.circularDependency(cdName);
     }
 
-    const typeAndName = this.getSuperClassesTypeAndName(transforms);
+    const typeAndName = this.getDirectSuperClassesTypeAndName(transforms);
     let implement = "";
 
     for (const [st, name] of typeAndName) {
@@ -165,7 +153,7 @@ ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
       (f) => isSymbol(f) && f.symbolId === id,
     ) as ElanSymbol[];
 
-    const types = this.getSuperClassesTypeAndName(transforms)
+    const types = this.getDirectSuperClassesTypeAndName(transforms)
       .map((tn) => tn[0])
       .filter((t) => t instanceof ClassType);
 

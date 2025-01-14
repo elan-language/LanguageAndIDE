@@ -23,7 +23,7 @@ export class StdLibClass implements Class {
   ) {
     this.symbolId = this.name;
   }
-  getSuperClassesTypeAndName(): [SymbolType, string][] {
+  getDirectSuperClassesTypeAndName(): [SymbolType, string][] {
     return [];
   }
 

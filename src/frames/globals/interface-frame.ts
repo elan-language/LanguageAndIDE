@@ -94,18 +94,6 @@ ${endKeyword} ${interfaceKeyword}\r\n`;
       this.htmlId,
     );
 
-    // const interfaces = this.getAllInterfaces(this, [], transforms);
-    // const names = interfaces.map((i) => i.symbolId);
-
-    // if (names.includes(name)) {
-    //   // circular interface
-    //   mustNotBeCircularDependency(name, this.compileErrors, this.htmlId);
-    //   // any other compiling is not safe
-
-    //   return `class ${name} {\r
-    // }\r\n`;
-    // }
-
     const [cd, cdName] = this.lookForCircularDependencies(this, [name], transforms);
 
     if (cd) {
@@ -113,7 +101,7 @@ ${endKeyword} ${interfaceKeyword}\r\n`;
     }
 
     // this is not safe if there is a circular dependency
-    const typeAndName = this.getSuperClassesTypeAndName(transforms);
+    const typeAndName = this.getDirectSuperClassesTypeAndName(transforms);
 
     for (const [st, name] of typeAndName) {
       mustBeKnownSymbolType(st, name, this.compileErrors, this.htmlId);
@@ -147,7 +135,7 @@ ${parentHelper_compileChildren(this, transforms)}\r
       (f) => isSymbol(f) && f.symbolId === id,
     ) as ElanSymbol[];
 
-    const types = this.getSuperClassesTypeAndName(transforms)
+    const types = this.getDirectSuperClassesTypeAndName(transforms)
       .map((tn) => tn[0])
       .filter((t) => t instanceof ClassType);
 
