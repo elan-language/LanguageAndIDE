@@ -176,13 +176,16 @@ ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
       }
     }
 
-    // we might have picked up the same symbol through diamon inheritance - so filetr identical symbols
+    // we might have picked up the same symbol through diamond inheritance - so filter identical symbols
 
     matches = Array.from(new Set<ElanSymbol>(matches));
 
     if (matches.length === 2) {
       // one of the matches must be abstract
-      matches = matches.filter((i) => isMember(i) && !i.isAbstract);
+      const concreteMatches = matches.filter((i) => isMember(i) && !i.isAbstract);
+      if (concreteMatches.length === 1) {
+        matches = concreteMatches;
+      }
     }
 
     if (matches.length === 1) {

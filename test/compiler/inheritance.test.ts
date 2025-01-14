@@ -2078,7 +2078,7 @@ end class
 class Bar inherits Yon
   constructor()
   end constructor
-
+  property p1 as Int
   property p2 as Int
 end class`;
 
@@ -2256,7 +2256,7 @@ end class
 class Bar inherits Yon
   constructor()
   end constructor
-
+  property p1 as String
   property p2 as Int
 end class`;
 

@@ -151,7 +151,7 @@ ${parentHelper_compileChildren(this, transforms)}\r
       return this.getChildren().find((c) => c instanceof Constructor) ?? new UnknownSymbol(id);
     }
 
-    const matches = this.getChildren().filter(
+    let matches = this.getChildren().filter(
       (f) => isSymbol(f) && f.symbolId === id,
     ) as ElanSymbol[];
 
@@ -163,6 +163,18 @@ ${parentHelper_compileChildren(this, transforms)}\r
       const s = ct.scope!.resolveOwnSymbol(id, transforms);
       if (isMember(s)) {
         matches.push(s);
+      }
+    }
+
+    // we might have picked up the same symbol through diamond inheritance - so filter identical symbols
+
+    matches = Array.from(new Set<ElanSymbol>(matches));
+
+    if (matches.length === 2) {
+      // one of the matches must be abstract
+      const concreteMatches = matches.filter((i) => isMember(i) && !i.isAbstract);
+      if (concreteMatches.length === 1) {
+        matches = concreteMatches;
       }
     }
 
