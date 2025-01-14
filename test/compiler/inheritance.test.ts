@@ -1477,6 +1477,85 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
   });
 
+  test("Pass_DiamondInheritance", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+
+end main
+
+interface Foo
+  abstract property p1 as Int
+end interface
+
+interface Bar inherits Foo
+  abstract property p2 as Int
+end interface
+
+interface Yon inherits Foo
+  abstract property p3 as Int
+end interface
+
+class Qux inherits Bar, Yon
+  property p1 as Int
+  property p2 as Int
+  property p3 as Int
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
+  get p1() {
+    return 0;
+  }
+  set p1(p1) {
+  }
+
+}
+
+class Bar {
+  static emptyInstance() { return system.emptyClass(Bar, [["p2", 0]]);};
+  get p2() {
+    return 0;
+  }
+  set p2(p2) {
+  }
+
+}
+
+class Yon {
+  static emptyInstance() { return system.emptyClass(Yon, [["p3", 0]]);};
+  get p3() {
+    return 0;
+  }
+  set p3(p3) {
+  }
+
+}
+
+class Qux {
+  static emptyInstance() { return system.emptyClass(Qux, [["p1", 0], ["p2", 0], ["p3", 0]]);};
+  p1 = 0;
+
+  p2 = 0;
+
+  p3 = 0;
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+  });
+
   test("Fail_MissingAbstractFunction", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
@@ -2382,5 +2461,37 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["Name 'p1' not unique in scope"]);
+  });
+
+  test("Fail_DiamondInheritance", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+
+end main
+
+interface Foo
+  abstract property p1 as Int
+end interface
+
+interface Bar inherits Foo
+  abstract property p2 as Int
+end interface
+
+interface Yon inherits Foo
+  abstract property p3 as Int
+end interface
+
+class Qux inherits Bar, Yon
+  property p2 as Int
+  property p3 as Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Qux must implement Foo.p1"]);
   });
 });

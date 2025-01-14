@@ -246,6 +246,35 @@ export abstract class ClassFrame
         }\r\n`;
   }
 
+  public lookForCircularDependencies(
+    cf: ClassFrame,
+    seenNames: string[],
+    transforms: Transforms,
+  ): [boolean, string] {
+    if (cf.doesInherit()) {
+      const superClasses = cf.inheritance.getOrTransformAstNode(transforms);
+
+      if (isAstCollectionNode(superClasses)) {
+        const nodes = superClasses.items.filter((i) => isAstIdNode(i));
+        const symbols = nodes
+          .map((n) => getGlobalScope(this).resolveSymbol(n.id, transforms, this))
+          .filter((n) => n instanceof ClassFrame);
+
+        for (const s of symbols) {
+          if (seenNames.includes(s.symbolId)) {
+            return [true, s.symbolId];
+          }
+          const seenNamesThisPath = seenNames.concat([s.symbolId]);
+          const [sd, name] = this.lookForCircularDependencies(s, seenNamesThisPath, transforms);
+          if (sd) {
+            return [sd, name];
+          }
+        }
+      }
+    }
+    return [false, ""];
+  }
+
   public getAllClasses(
     cf: ClassFrame,
     seenNames: string[],

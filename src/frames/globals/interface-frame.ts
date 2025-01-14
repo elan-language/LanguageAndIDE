@@ -3,7 +3,6 @@ import {
   mustBeInterfaceClass,
   mustBeKnownSymbolType,
   mustBeUniqueNameInScope,
-  mustNotBeCircularDependency,
 } from "../compile-rules";
 import { isMember } from "../frame-helpers";
 import { ElanSymbol } from "../interfaces/elan-symbol";
@@ -95,16 +94,22 @@ ${endKeyword} ${interfaceKeyword}\r\n`;
       this.htmlId,
     );
 
-    const interfaces = this.getAllInterfaces(this, [], transforms);
-    const names = interfaces.map((i) => i.symbolId);
+    // const interfaces = this.getAllInterfaces(this, [], transforms);
+    // const names = interfaces.map((i) => i.symbolId);
 
-    if (names.includes(name)) {
-      // circular interface
-      mustNotBeCircularDependency(name, this.compileErrors, this.htmlId);
-      // any other compiling is not safe
+    // if (names.includes(name)) {
+    //   // circular interface
+    //   mustNotBeCircularDependency(name, this.compileErrors, this.htmlId);
+    //   // any other compiling is not safe
 
-      return `class ${name} {\r
-    }\r\n`;
+    //   return `class ${name} {\r
+    // }\r\n`;
+    // }
+
+    const [cd, cdName] = this.lookForCircularDependencies(this, [name], transforms);
+
+    if (cd) {
+      return this.circularDependency(cdName);
     }
 
     // this is not safe if there is a circular dependency

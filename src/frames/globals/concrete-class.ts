@@ -89,16 +89,22 @@ end class\r\n`;
       this.htmlId,
     );
 
-    const names = this.getAllClasses(this, [], () => true, transforms).map((i) => i.symbolId);
+    // const names = this.getAllClasses(this, [], () => true, transforms).map((i) => i.symbolId);
 
-    if (names.includes(name)) {
-      return this.circularDependency(name);
-    }
+    // if (names.includes(name)) {
+    //   return this.circularDependency(name);
+    // }
 
-    for (const s of names) {
-      if (this.seenTwice(s, names)) {
-        return this.circularDependency(s);
-      }
+    // for (const s of names) {
+    //   if (this.seenTwice(s, names)) {
+    //     return this.circularDependency(s);
+    //   }
+    // }
+
+    const [cd, cdName] = this.lookForCircularDependencies(this, [name], transforms);
+
+    if (cd) {
+      return this.circularDependency(cdName);
     }
 
     const typeAndName = this.getSuperClassesTypeAndName(transforms);
@@ -169,6 +175,10 @@ ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
         matches.push(s);
       }
     }
+
+    // we might have picked up the same symbol through diamon inheritance - so filetr identical symbols
+
+    matches = Array.from(new Set<ElanSymbol>(matches));
 
     if (matches.length === 2) {
       // one of the matches must be abstract

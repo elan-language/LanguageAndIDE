@@ -94,18 +94,24 @@ end class\r\n`;
       this.htmlId,
     );
 
-    const abstractClasses = this.getAllAbstractClasses(this, [], transforms);
-    const interfaces = this.getAllInterfaces(this, [], transforms);
-    const names = abstractClasses.concat(interfaces).map((i) => i.symbolId);
+    // const abstractClasses = this.getAllAbstractClasses(this, [], transforms);
+    // const interfaces = this.getAllInterfaces(this, [], transforms);
+    // const names = abstractClasses.concat(interfaces).map((i) => i.symbolId);
 
-    if (names.includes(name)) {
-      return this.circularDependency(name);
-    }
+    // if (names.includes(name)) {
+    //   return this.circularDependency(name);
+    // }
 
-    for (const s of names) {
-      if (this.seenTwice(s, names)) {
-        return this.circularDependency(s);
-      }
+    // for (const s of names) {
+    //   if (this.seenTwice(s, names)) {
+    //     return this.circularDependency(s);
+    //   }
+    // }
+
+    const [cd, cdName] = this.lookForCircularDependencies(this, [name], transforms);
+
+    if (cd) {
+      return this.circularDependency(cdName);
     }
 
     const typeAndName = this.getSuperClassesTypeAndName(transforms);
