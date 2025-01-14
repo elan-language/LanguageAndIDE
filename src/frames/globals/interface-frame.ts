@@ -34,12 +34,14 @@ export class InterfaceFrame extends ClassFrame {
     return this.name.text;
   }
   symbolType(transforms?: Transforms) {
+    const [cd] = this.lookForCircularDependencies(this, [this.name.text], transforms!);
+
     return new ClassType(
       this.symbolId,
       ClassSubType.interface,
       false,
       false,
-      this.inheritance.symbolTypes(transforms),
+      cd ? [] : this.inheritance.symbolTypes(transforms),
       this,
     );
   }
