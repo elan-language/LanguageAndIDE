@@ -45,7 +45,7 @@ import {
 } from "../parent-helpers";
 import { CommentStatement } from "../statements/comment-statement";
 import { ClassSubType } from "../symbols/class-type";
-import { getGlobalScope } from "../symbols/symbol-helpers";
+import { getGlobalScope, isSymbol, symbolMatches } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { isAstCollectionNode, isAstIdNode } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
@@ -397,4 +397,16 @@ export abstract class ClassFrame
   }
 
   abstract resolveOwnSymbol(id: string, transforms: Transforms): ElanSymbol;
+
+  symbolMatches(id: string, all: boolean, _initialScope?: Frame | undefined): ElanSymbol[] {
+    const otherMatches = this.getParent().symbolMatches(id, all, this);
+
+    const symbols = this.getChildren().filter(
+      (f) => !(f instanceof Constructor) && isSymbol(f),
+    ) as ElanSymbol[];
+
+    const matches = symbolMatches(id, all, symbols);
+
+    return matches.concat(otherMatches);
+  }
 }

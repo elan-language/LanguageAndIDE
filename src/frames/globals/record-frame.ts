@@ -13,7 +13,7 @@ import {
 } from "../parent-helpers";
 import { ClassSubType, ClassType } from "../symbols/class-type";
 import { DuplicateSymbol } from "../symbols/duplicate-symbol";
-import { getGlobalScope, isSymbol, symbolMatches } from "../symbols/symbol-helpers";
+import { getGlobalScope, isSymbol } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { Transforms } from "../syntax-nodes/transforms";
@@ -133,17 +133,5 @@ ${body}\r${asString}\r
     }
 
     return symbol;
-  }
-
-  symbolMatches(id: string, all: boolean, _initialScope?: Frame | undefined): ElanSymbol[] {
-    const otherMatches = this.getParent().symbolMatches(id, all, this);
-
-    const symbols = this.getChildren().filter(
-      (f) => !(f instanceof Constructor) && isSymbol(f),
-    ) as ElanSymbol[];
-
-    const matches = symbolMatches(id, all, symbols);
-
-    return matches.concat(otherMatches);
   }
 }
