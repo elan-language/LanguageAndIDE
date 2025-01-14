@@ -80,7 +80,7 @@ end class\r\n`;
   public compile(transforms: Transforms): string {
     this.compileErrors = [];
 
-    const name = this.name.compile(transforms);
+    const name = this.name.text;
     mustBeUniqueNameInScope(
       name,
       getGlobalScope(this),
@@ -88,6 +88,18 @@ end class\r\n`;
       this.compileErrors,
       this.htmlId,
     );
+
+    const names = this.getAllClasses(this, [], () => true, transforms).map((i) => i.symbolId);
+
+    if (names.includes(name)) {
+      return this.circularDependency(name);
+    }
+
+    for (const s of names) {
+      if (this.seenTwice(s, names)) {
+        return this.circularDependency(s);
+      }
+    }
 
     const typeAndName = this.getSuperClassesTypeAndName(transforms);
     let implement = "";
@@ -103,8 +115,8 @@ end class\r\n`;
 
     mustBeSingleAbstractSuperClass(typeAndName, this.compileErrors, this.htmlId);
 
-    const interfaces = this.getAllInterfaces(this, [this.symbolId], transforms);
-    const abstractClasses = this.getAllAbstractClasses(this, [this.symbolId], transforms);
+    const abstractClasses = this.getAllAbstractClasses(this, [], transforms);
+    const interfaces = this.getAllInterfaces(this, [], transforms);
 
     mustImplementSuperClasses(
       transforms,

@@ -1058,4 +1058,100 @@ end class`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["'noSuch' is not defined for type 'VectorGraphics'"]);
   });
+
+  test("Fail_InheritSelf", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  
+end main
+
+class Foo inherits Foo
+  property prop as Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Class/interface 'Foo' cannot inherit from itself"]);
+  });
+
+  test("Fail_InheritSelfIndirect", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  
+end main
+
+class Yon inherits Foo
+  property prop as Int
+end class
+
+class Bar inherits Yon
+  property prop as Int
+end class
+
+class Foo inherits Bar
+  property prop as Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Class/interface 'Yon' cannot inherit from itself"]);
+  });
+
+  test("Fail_InheritInterfaceIndirect", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  
+end main
+
+class Foo inherits Bar
+  property prop as Int
+end class
+
+interface Yon inherits Bar
+  abstract property prop as Int
+end interface
+
+interface Bar inherits Yon
+  abstract property prop as Int
+end interface`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Class/interface 'Bar' cannot inherit from itself"]);
+  });
+
+  test("Fail_InheritAbstractClassIndirect", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  
+end main
+
+class Foo inherits Bar
+  property prop as Int
+end class
+
+abstract class Yon inherits Bar
+  abstract property prop as Int
+end class
+
+abstract class Bar inherits Yon
+  abstract property prop as Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Class/interface 'Bar' cannot inherit from itself"]);
+  });
 });
