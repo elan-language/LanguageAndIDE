@@ -1,20 +1,16 @@
-import { Constructor } from "../class-members/constructor";
 import { mustBeImmutableType, mustBeUniqueNameInScope } from "../compile-rules";
-import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { SymbolType } from "../interfaces/symbol-type";
-import { constructorKeyword, endKeyword, recordKeyword, thisKeyword } from "../keywords";
+import { endKeyword, recordKeyword } from "../keywords";
 import {
   parentHelper_compileChildren,
   parentHelper_renderChildrenAsHtml,
   parentHelper_renderChildrenAsSource,
 } from "../parent-helpers";
 import { ClassSubType, ClassType } from "../symbols/class-type";
-import { DuplicateSymbol } from "../symbols/duplicate-symbol";
-import { getGlobalScope, isSymbol } from "../symbols/symbol-helpers";
+import { getGlobalScope } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
-import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { Transforms } from "../syntax-nodes/transforms";
 import { ClassFrame } from "./class-frame";
 
@@ -99,28 +95,5 @@ ${body}\r${asString}\r
 
   bottomKeywords(): string {
     return `${endKeyword} ${recordKeyword}`;
-  }
-
-  resolveOwnSymbol(id: string, _transforms: Transforms): ElanSymbol {
-    if (id === thisKeyword) {
-      return this;
-    }
-
-    if (id === constructorKeyword) {
-      return this.getChildren().find((c) => c instanceof Constructor) ?? new UnknownSymbol(id);
-    }
-
-    const matches = this.getChildren().filter(
-      (f) => isSymbol(f) && f.symbolId === id,
-    ) as ElanSymbol[];
-
-    if (matches.length === 1) {
-      return matches[0];
-    }
-    if (matches.length > 1) {
-      return new DuplicateSymbol(matches);
-    }
-
-    return new UnknownSymbol(id);
   }
 }

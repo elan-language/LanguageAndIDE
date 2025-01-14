@@ -1,30 +1,19 @@
-import { Constructor } from "../class-members/constructor";
 import {
   mustBeInterfaceClass,
   mustBeKnownSymbolType,
   mustBeUniqueNameInScope,
 } from "../compile-rules";
-import { isMember } from "../frame-helpers";
-import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { SymbolType } from "../interfaces/symbol-type";
-import {
-  abstractClassKeywords,
-  constructorKeyword,
-  endKeyword,
-  interfaceKeyword,
-  thisKeyword,
-} from "../keywords";
+import { abstractClassKeywords, endKeyword, interfaceKeyword } from "../keywords";
 import {
   parentHelper_compileChildren,
   parentHelper_renderChildrenAsHtml,
   parentHelper_renderChildrenAsSource,
 } from "../parent-helpers";
 import { ClassSubType, ClassType } from "../symbols/class-type";
-import { DuplicateSymbol } from "../symbols/duplicate-symbol";
-import { getGlobalScope, isSymbol } from "../symbols/symbol-helpers";
-import { UnknownSymbol } from "../symbols/unknown-symbol";
+import { getGlobalScope } from "../symbols/symbol-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 import { ClassFrame } from "./class-frame";
 
@@ -119,39 +108,5 @@ ${parentHelper_compileChildren(this, transforms)}\r
 
   bottomKeywords(): string {
     return `${endKeyword} ${interfaceKeyword}`;
-  }
-
-  resolveOwnSymbol(id: string, transforms: Transforms): ElanSymbol {
-    if (id === thisKeyword) {
-      return this;
-    }
-
-    if (id === constructorKeyword) {
-      return this.getChildren().find((c) => c instanceof Constructor) ?? new UnknownSymbol(id);
-    }
-
-    const matches = this.getChildren().filter(
-      (f) => isSymbol(f) && f.symbolId === id,
-    ) as ElanSymbol[];
-
-    const types = this.getDirectSuperClassesTypeAndName(transforms)
-      .map((tn) => tn[0])
-      .filter((t) => t instanceof ClassType);
-
-    for (const ct of types) {
-      const s = ct.scope!.resolveOwnSymbol(id, transforms);
-      if (isMember(s)) {
-        matches.push(s);
-      }
-    }
-
-    if (matches.length === 1) {
-      return matches[0];
-    }
-    if (matches.length > 1) {
-      return new DuplicateSymbol(matches);
-    }
-
-    return new UnknownSymbol(id);
   }
 }
