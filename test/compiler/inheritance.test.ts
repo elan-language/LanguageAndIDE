@@ -1235,6 +1235,84 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "6");
   });
 
+  test("Pass_InheritImplementation", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable x set to new Bar()
+  print x.ff()
+end main
+
+interface Yon
+  abstract function ff() returns Int
+end interface
+
+abstract class Foo
+
+  function ff() returns Int
+    return property.prop
+  end function
+
+  abstract property prop as Int
+end class
+
+class Bar inherits Foo, Yon
+  constructor()
+    set property.prop to 3
+  end constructor
+
+  property prop as Int
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var x = system.initialise(new Bar());
+  system.printLine(_stdlib.asString(x.ff()));
+}
+
+class Yon {
+  static emptyInstance() { return system.emptyClass(Yon, []);};
+  ff() {
+    return 0;
+  }
+
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["prop", 0]]);};
+  ff() {
+    return this.prop;
+  }
+
+  get prop() {
+    return 0;
+  }
+  set prop(prop) {
+  }
+
+}
+
+class Bar extends Foo {
+  static emptyInstance() { return system.emptyClass(Bar, [["prop", 0]]);};
+  constructor() {
+    super();
+    this.prop = 3;
+  }
+
+  prop = 0;
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "3");
+  });
+
   test("Fail_AbstractClassCannotInheritFromConcreteClass", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 

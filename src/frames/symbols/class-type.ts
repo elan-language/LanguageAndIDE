@@ -51,13 +51,15 @@ export class ClassType implements SymbolType, Scope {
     return this.scope!.getChildren().filter((c) => isSymbol(c));
   }
 
-  resolveSymbol(id: string, _transforms: Transforms, _scope: Scope): ElanSymbol {
-    for (const f of this.scope!.getChildren()) {
-      if (isSymbol(f) && f.symbolId === id) {
-        return f;
-      }
-    }
-    return new UnknownSymbol(id);
+  resolveSymbol(id: string, transforms: Transforms, scope: Scope): ElanSymbol {
+    // for (const f of this.scope!.getChildren()) {
+    //   if (isSymbol(f) && f.symbolId === id) {
+    //     return f;
+    //   }
+    // }
+    // return new UnknownSymbol(id);
+
+    return this.scope?.resolveSymbol(id, transforms, scope) ?? new UnknownSymbol(id);
   }
 
   get name() {
