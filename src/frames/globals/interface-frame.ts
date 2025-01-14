@@ -1,8 +1,4 @@
-import {
-  mustBeInterfaceClass,
-  mustBeKnownSymbolType,
-  mustBeUniqueNameInScope,
-} from "../compile-rules";
+import { mustBeInterfaceClass, mustBeKnownSymbolType } from "../compile-rules";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { SymbolType } from "../interfaces/symbol-type";
@@ -13,7 +9,6 @@ import {
   parentHelper_renderChildrenAsSource,
 } from "../parent-helpers";
 import { ClassSubType, ClassType } from "../symbols/class-type";
-import { getGlobalScope } from "../symbols/symbol-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 import { ClassFrame } from "./class-frame";
 
@@ -75,14 +70,7 @@ ${endKeyword} ${interfaceKeyword}\r\n`;
   public compile(transforms: Transforms): string {
     this.compileErrors = [];
 
-    const name = this.name.text;
-    mustBeUniqueNameInScope(
-      name,
-      getGlobalScope(this),
-      transforms,
-      this.compileErrors,
-      this.htmlId,
-    );
+    const name = this.getName(transforms);
 
     const [cd, cdName] = this.lookForCircularDependencies(this, [name], transforms);
 

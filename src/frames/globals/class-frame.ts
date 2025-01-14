@@ -10,7 +10,13 @@ import { ProcedureMethod } from "../class-members/procedure-method";
 import { Property } from "../class-members/property";
 import { CodeSource } from "../code-source";
 import { CompileError } from "../compile-error";
-import { mustNotBeCircularDependency } from "../compile-rules";
+import {
+  mustBeInheritableClassOrInterface,
+  mustBeKnownSymbolType,
+  mustBeSingleAbstractSuperClass,
+  mustBeUniqueNameInScope,
+  mustNotBeCircularDependency,
+} from "../compile-rules";
 import { InheritsFrom } from "../fields/inheritsFrom";
 import { Regexes } from "../fields/regexes";
 import { TypeNameField } from "../fields/type-name-field";
@@ -466,5 +472,35 @@ export abstract class ClassFrame
     }
 
     return new UnknownSymbol(id);
+  }
+
+  getName(transforms: Transforms) {
+    const name = this.name.text;
+    mustBeUniqueNameInScope(
+      name,
+      getGlobalScope(this),
+      transforms,
+      this.compileErrors,
+      this.htmlId,
+    );
+    return name;
+  }
+
+  getExtends(transforms: Transforms) {
+    const typeAndName = this.getDirectSuperClassesTypeAndName(transforms);
+    let implement = "";
+
+    for (const [st, name] of typeAndName) {
+      mustBeKnownSymbolType(st, name, this.compileErrors, this.htmlId);
+      mustBeInheritableClassOrInterface(st, name, this.compileErrors, this.htmlId);
+
+      if (st instanceof ClassType && st.subType === ClassSubType.abstract) {
+        implement = `extends ${name} `;
+      }
+    }
+
+    mustBeSingleAbstractSuperClass(typeAndName, this.compileErrors, this.htmlId);
+
+    return implement;
   }
 }

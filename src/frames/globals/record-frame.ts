@@ -1,4 +1,4 @@
-import { mustBeImmutableType, mustBeUniqueNameInScope } from "../compile-rules";
+import { mustBeImmutableType } from "../compile-rules";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { SymbolType } from "../interfaces/symbol-type";
@@ -9,7 +9,6 @@ import {
   parentHelper_renderChildrenAsSource,
 } from "../parent-helpers";
 import { ClassSubType, ClassType } from "../symbols/class-type";
-import { getGlobalScope } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { Transforms } from "../syntax-nodes/transforms";
 import { ClassFrame } from "./class-frame";
@@ -67,14 +66,7 @@ end record\r\n`;
   public compile(transforms: Transforms): string {
     this.compileErrors = [];
 
-    const name = this.name.compile(transforms);
-    mustBeUniqueNameInScope(
-      name,
-      getGlobalScope(this),
-      transforms,
-      this.compileErrors,
-      this.htmlId,
-    );
+    const name = this.getName(transforms);
 
     const asString = "";
     const body = parentHelper_compileChildren(this, transforms);
