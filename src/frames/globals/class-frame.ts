@@ -14,6 +14,7 @@ import { mustNotBeCircularDependency } from "../compile-rules";
 import { InheritsFrom } from "../fields/inheritsFrom";
 import { Regexes } from "../fields/regexes";
 import { TypeNameField } from "../fields/type-name-field";
+import { isMember } from "../frame-helpers";
 import { Class } from "../interfaces/class";
 import { Collapsible } from "../interfaces/collapsible";
 import { ElanSymbol } from "../interfaces/elan-symbol";
@@ -24,7 +25,7 @@ import { Parent } from "../interfaces/parent";
 import { Profile } from "../interfaces/profile";
 import { StatementFactory } from "../interfaces/statement-factory";
 import { SymbolType } from "../interfaces/symbol-type";
-import { classKeyword } from "../keywords";
+import { classKeyword, constructorKeyword, thisKeyword } from "../keywords";
 import {
   parentHelper_addChildAfter,
   parentHelper_addChildBefore,
@@ -44,7 +45,8 @@ import {
   parentHelper_removeChild,
 } from "../parent-helpers";
 import { CommentStatement } from "../statements/comment-statement";
-import { ClassSubType } from "../symbols/class-type";
+import { ClassSubType, ClassType } from "../symbols/class-type";
+import { DuplicateSymbol } from "../symbols/duplicate-symbol";
 import { getGlobalScope, isSymbol, symbolMatches } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
@@ -397,8 +399,6 @@ export abstract class ClassFrame
     return this.name.text;
   }
 
-  abstract resolveOwnSymbol(id: string, transforms: Transforms): ElanSymbol;
-
   symbolMatches(id: string, all: boolean, _initialScope?: Frame | undefined): ElanSymbol[] {
     const otherMatches = this.getParent().symbolMatches(id, all, this);
 
@@ -419,5 +419,52 @@ export abstract class ClassFrame
     }
 
     return symbol;
+  }
+
+  resolveOwnSymbol(id: string, transforms: Transforms): ElanSymbol {
+    if (id === thisKeyword) {
+      return this;
+    }
+
+    if (id === constructorKeyword) {
+      return this.getChildren().find((c) => c instanceof Constructor) ?? new UnknownSymbol(id);
+    }
+
+    let matches = this.getChildren().filter(
+      (f) => isSymbol(f) && f.symbolId === id,
+    ) as ElanSymbol[];
+
+    const types = this.getDirectSuperClassesTypeAndName(transforms)
+      .map((tn) => tn[0])
+      .filter((t) => t instanceof ClassType);
+
+    for (const ct of types) {
+      const s = ct.scope!.resolveOwnSymbol(id, transforms);
+      if (isMember(s)) {
+        matches.push(s);
+      }
+    }
+
+    // we might have picked up the same symbol through diamond inheritance - so filter identical symbols
+
+    matches = Array.from(new Set<ElanSymbol>(matches));
+
+    if (matches.length === 2) {
+      // one of the matches must be abstract
+      const concreteMatches = matches.filter((i) => isMember(i) && !i.isAbstract);
+      if (concreteMatches.length === 1) {
+        matches = concreteMatches;
+      }
+    }
+
+    if (matches.length === 1) {
+      return matches[0];
+    }
+
+    if (matches.length > 1) {
+      return new DuplicateSymbol(matches);
+    }
+
+    return new UnknownSymbol(id);
   }
 }
