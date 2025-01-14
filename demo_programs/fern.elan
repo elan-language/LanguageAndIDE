@@ -1,0 +1,77 @@
+# 3838c216dfaf2d20af2bb9da6511104b28833fea66c7de14fb1400b7aa2639fe Elan Beta 5 valid
+
+# https://en.wikipedia.org/wiki/Barnsley_fern
+# Draws a fractal image
+main
+  variable vg set to new VectorGraphics()
+  # coordinates
+  variable x set to 0.0
+  variable y set to 0.16
+  # random number
+  variable r set to 0
+  variable count set to 0
+  # don't set the count limit too high
+  # or the browser will run out of memory
+  while count < 1000
+    set vg, x, y, r to onepoint(vg, x, y, r)
+    call vg.display()
+    set count to count + 1
+  end while
+  print "Finished"
+end main
+
+function onepoint(vg as VectorGraphics, x as Float, y as Float, r as Int) returns (VectorGraphics, Float, Float, Int)
+  # next pseudo-random number (Grogono parameters)
+  variable nr set to (r*25173 + 13849) mod 0x10000
+  variable nx, ny set to onestep(x, y, nr/0x10000)
+  variable vg2 set to vg.add(new RectangleVG() with x to nx*scale + 50, y to 75 - ny*scale, height to 0.5, width to 0.5, fill to 0x408040, stroke to 0x408040, strokeWidth to 0.25)
+  return (vg2, nx, ny, nr)
+end function
+
+# r is random Float 0.0 <= r < 1.0
+# returns new x and y
+# written in a data-driven style
+function onestep(x as Float, y as Float, r as Float) returns (Float, Float)
+  # Currently you can't make the params into one long line
+  # as it makes the browser use 100% CPU
+  # xx xy yx yy cx cy probablity
+  let p1 be {0.0, 0.0, 0.0, 0.16, 0.0, 0.0, 0.01}
+  let p2 be {0.85, 0.04, -0.04, 0.85, 0.0, 1.60, 0.85}
+  let p3 be {0.20, -0.26, 0.23, 0.22, 0.0, 1.60, 0.07}
+  let p4 be {-0.15, 0.28, 0.26, 0.24, 0.0, 0.44, 0.07}
+  let params be {p1, p2, p3, p4}
+  # cumulative probabilty
+  variable cumuprob set to 0.0
+  variable done set to false
+  variable nx set to 0.0
+  variable ny set to 0.0
+  each pp in params
+    set cumuprob to cumuprob + pp[6]
+    if (not done) and (r < cumuprob)
+      then
+        set nx to x*pp[0] + y*pp[1] + pp[4]
+        set ny to x*pp[2] + y*pp[3] + pp[5]
+        set done to true
+    end if
+  end each
+  return (nx, ny)
+end function
+
+test one
+  assert roundtuple1(onestep(0.0, 0.16, 0.5)) is (0.0064, 1.736)
+  assert roundtuple2(onestep(0.0, 0.16, 0.5)) is {0.0064, 1.736}
+  assert roundtuple2(onestep(0.0, 0.16, 0.9)) is {-0.0416, 1.6352}
+end test
+
+# two approaches to rounding a tuple to N decimal places
+function roundtuple1(n as (Float, Float)) returns (Float, Float)
+  let a, b be n
+  return (round(a, 8), round(b, 8))
+end function
+
+function roundtuple2(n as (Float, Float)) returns List<of Float>
+  let a, b be n
+  return {a, b}.map(lambda x as Float => round(x, 8)).asList()
+end function
+
+constant scale set to 7

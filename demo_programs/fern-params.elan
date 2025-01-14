@@ -1,0 +1,101 @@
+# 412394d2a5c257928be03c8001cfd94ca9fe4c195f79d5c4d5de49b2d0dbf101 Elan Beta 6 valid
+
+# Program to sxtract the parameters for the Barnsley Fern from the Wikipedia page
+# https://en.wikipedia.org/wiki/Barnsley_fern
+# Prints a string suitable for pasting into the main program
+# for generating the Barnsley Fern.
+# Save the Wikipedia page HTML to a file, to be processed by this program
+# In Chrome do:
+# - [three dots top right] -> Cast, save and share -> Save page as...
+# - change "Web Page, Complete" to "Web  Page, HTML Only" bottom right
+# - change the file name to end ".txt" and click Save.
+# These instructions may not apply exactly to all versions of Chrome.
+# When this program is run, select the saved file to open.
+# Note that this program only does string manipulation:
+# at no time in this program does it create an actual "List of List of Float",
+# only a string presentation of one.
+# In case it doesn't work in the future, the output is supposed to be:
+# (split into two lines here)
+# {{0.0,0.0,0.0,0.16,0.0,0.0,0.01},{0.85,0.04,-0.04,0.85,0.0,1.60,0.85},
+# {0.20,-0.26,0.23,0.22,0.0,1.60,0.07},{-0.15,0.28,0.26,0.24,0.0,0.44,0.07}}
+main
+  let openbrace be unicode(123)
+  let file be openFileForReading()
+  variable result set to openbrace + openbrace
+  variable skipping set to true
+  while not file.endOfFile()
+    let line be file.readLine()
+    call processoneline(line, result, skipping)
+  end while
+  call file.close()
+  print result
+end main
+
+procedure processoneline(line as String, out result as String, out skipping as Boolean)
+  let openbrace be unicode(123)
+  let closebrace be unicode(125)
+  if line.contains("Portion generated") then
+    # start of the part we are interested in
+    set skipping to false
+  end if
+  if not skipping then
+    # change Unicode Minus Sign to ASCII hyphen-minus
+    variable linem set to line
+    set linem to linem.replace(unicode(0x2212), "-")
+    # fetch the number at the end of the line
+    # note that the number is held as a string at all times in this program
+    variable num set to gettrailingnumber(linem)
+    if num isnt "" then
+      if num is "0" then
+        # all values must be Floats
+        set num to "0.0"
+      end if
+      set result to result + num + ","
+    end if
+    if linem.contains("texhtml") then
+      # next row of parameters
+      set result to result + closebrace + "," + openbrace
+    end if
+    if linem.contains("Largest right-hand") then
+      # end of parameters
+      set result to result + closebrace + closebrace
+      set skipping to true
+      # we are done, tidy up result to remove excess separators
+      set result to result.replace(openbrace + closebrace + ",", "").replace("," + closebrace, closebrace)
+    end if
+  end if
+end procedure
+
+# find any number at the end of the given string
+# if no number, return empty string
+# for our purposes
+# a number is just any string of digit, full stop or minus sign in any order
+# only works if the string contains at least one non-number character
+# written in a functional style, see if you can work out how it works
+function gettrailingnumber(s as String) returns String
+  return if s is "" then "" else s[last(range(0, s.length() - 1).filter(lambda n as Int => not isnumberchar(s[n])).asList()) + 1..s.length()]
+end function
+
+function isnumberchar(s as String) returns Boolean
+  return numberChars.contains(s)
+end function
+
+# return the last element in a list of Int
+# a separate function so it can be applied to a complicated argument
+function last(l as List<of Int>) returns Int
+  return l[l.length() - 1]
+end function
+
+test strings
+  assert isnumberchar("5") is true
+  assert gettrailingnumber("abc123") is "123"
+  assert gettrailingnumber("abc") is ""
+  assert gettrailingnumber("3a-1.63") is "-1.63"
+  assert gettrailingnumber("") is ""
+end test
+
+test last
+  assert last({5, 6, 7}) is 7
+end test
+
+constant numberChars set to "-.0123456789"

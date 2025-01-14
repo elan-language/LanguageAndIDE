@@ -22,6 +22,15 @@ suite("Demo compile", () => {
   test("test chessboard", async () => {
     await testDemoProgram("chessboard.elan");
   });
+  test("test collatz", async () => {
+    await testDemoProgram("collatz.elan");
+  });
+  test("test fern", async () => {
+    await testDemoProgram("fern.elan");
+  });
+  test("test fern-params", async () => {
+    await testDemoProgram("fern-params.elan");
+  });
   test("test in-place-ripple-sort", async () => {
     await testDemoProgram("in-place-ripple-sort.elan");
   });
