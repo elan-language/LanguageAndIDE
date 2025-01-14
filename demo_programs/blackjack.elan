@@ -1,4 +1,4 @@
-# 110288b2e5e0d083875387ec1d60aa365b4d05fd7eb3fe9ddc949caf73e5a3c6 Elan Beta 6 valid
+# 6402363f29244835f0499d0fc6861119eb18972b28e05453d2de843545254c27 Elan Beta 6 valid
 
 main
   call simulateGame()
@@ -142,11 +142,6 @@ function dealCard(random as Float) returns Card
   return new Card(rank, suit)
 end function
 
-interface Automated
-  abstract procedure newHand(dealerFaceCard as Card)
-
-end interface
-
 interface Player
   abstract property hand as Hand
 
@@ -154,36 +149,16 @@ interface Player
 
 end interface
 
-class Dealer inherits Player, Automated
-  constructor(startingPoints as Int)
-    set property.score to startingPoints
-  end constructor
+abstract class Automated inherits Player
+  property hand as Hand
 
   property score as Int
 
-  property hand as Hand
+  property dealerFaceCard as Card
 
-  property faceCard as Card
+  property active as Boolean
 
-  private property active as Boolean
-
-  procedure playHandOut()
-    call start()
-    while property.hand.status is Status.playing
-      call nextMove()
-    end while
-  end procedure
-
-  procedure newHand(faceCard as Card)
-    set property.faceCard to faceCard
-    set property.active to false
-    set property.hand to new Hand()
-    call property.hand.draw()
-  end procedure
-
-  procedure changeScoreBy(amount as Int)
-    set property.score to property.score + amount
-  end procedure
+  abstract function getAction() returns Action
 
   procedure nextMove()
     if getAction() is Action.draw then
@@ -193,8 +168,34 @@ class Dealer inherits Player, Automated
     end if
   end procedure
 
+  procedure playHandOut()
+    call start()
+    while property.hand.status is Status.playing
+      call nextMove()
+    end while
+  end procedure
+
   procedure start()
     set property.active to true
+  end procedure
+
+  procedure changeScoreBy(amount as Int)
+    set property.score to property.score + amount
+  end procedure
+
+end class
+
+class Dealer inherits Automated
+  constructor(startingPoints as Int)
+    set property.score to startingPoints
+  end constructor
+
+  procedure newHand(faceCard as Card)
+    set property.dealerFaceCard to faceCard
+    set property.active to false
+    set property.hand to new Hand()
+    call hand.addCard(faceCard)
+    call property.hand.draw()
   end procedure
 
   function getAction() returns Action
@@ -202,7 +203,7 @@ class Dealer inherits Player, Automated
   end function
 
   function asString() returns String
-    return if property.active then "Dealer: {property.hand}" else "Dealer: {property.faceCard} {unicode(9633)}"
+    return if property.active then "Dealer: {property.hand}" else "Dealer: {property.dealerFaceCard} {unicode(9633)}"
   end function
 
 end class
@@ -246,48 +247,28 @@ class HumanPlayer inherits Player
 
 end class
 
-class AutomatedPlayer inherits Player, Automated
+class AutomatedPlayer inherits Automated
   constructor(name as String, decisionFunc as Func<of Hand, Card => Action>, startingPoints as Int)
     set property.name to name
     set property.decisionFunc to ref decisionFunc
     set property.score to startingPoints
   end constructor
 
-  property hand as Hand
-
-  property score as Int
-
   property name as String
-
-  private property dealerFaceCard as Card
 
   property decisionFunc as Func<of Hand, Card => Action>
 
-  procedure changeScoreBy(amount as Int)
-    set property.score to property.score + amount
+  procedure newHand(faceCard as Card)
+    set property.dealerFaceCard to faceCard
+    set property.active to false
+    set property.hand to new Hand()
+    call property.hand.draw()
+    call property.hand.draw()
   end procedure
 
   function getAction() returns Action
     return decisionFunc(property.hand, property.dealerFaceCard)
   end function
-
-  procedure playHandOut()
-    while property.hand.status is Status.playing
-      let decision be getAction()
-      if decision is Action.draw then
-        call property.hand.draw()
-      else if decision is Action.stand then
-        call property.hand.stand()
-      end if
-    end while
-  end procedure
-
-  procedure newHand(dealerFaceCard as Card)
-    set property.dealerFaceCard to dealerFaceCard
-    set property.hand to new Hand()
-    call property.hand.draw()
-    call property.hand.draw()
-  end procedure
 
   function asString() returns String
     return "{property.name}: {property.hand}"
@@ -321,6 +302,10 @@ class Hand
   procedure draw()
     set property.status to Status.playing
     let card be dealCard(random())
+    call addCard(card)
+  end procedure
+
+  procedure addCard(card as Card)
     set property.cards to property.cards + {card}
     set property.count to property.count + 1
     if card.isAce() then
