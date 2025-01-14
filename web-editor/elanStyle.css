@@ -18,7 +18,6 @@
 }
 
 input, input:focus , input:active{
-    font-family: consolas;
     border: none;
     outline: none;
     padding: 0px;
