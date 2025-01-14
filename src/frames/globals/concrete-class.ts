@@ -10,7 +10,6 @@ import { isMember } from "../frame-helpers";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
-import { Frame } from "../interfaces/frame";
 import { SymbolType } from "../interfaces/symbol-type";
 import { classKeyword, constructorKeyword, endKeyword, thisKeyword } from "../keywords";
 import {
@@ -41,12 +40,14 @@ export class ConcreteClass extends ClassFrame {
     return this.name.text;
   }
   symbolType(transforms?: Transforms) {
+    const [cd] = this.lookForCircularDependencies(this, [this.name.text], transforms!);
+
     return new ClassType(
       this.symbolId,
       ClassSubType.concrete,
       false,
       false,
-      this.inheritance.symbolTypes(transforms),
+      cd ? [] : this.inheritance.symbolTypes(transforms),
       this,
     );
   }
@@ -185,15 +186,5 @@ ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
     }
 
     return new UnknownSymbol(id);
-  }
-
-  resolveSymbol(id: string, transforms: Transforms, _initialScope: Frame): ElanSymbol {
-    const symbol = this.resolveOwnSymbol(id, transforms);
-
-    if (symbol instanceof UnknownSymbol) {
-      return this.getParent().resolveSymbol(id, transforms, this);
-    }
-
-    return symbol;
   }
 }

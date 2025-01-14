@@ -3,7 +3,6 @@ import { mustBeImmutableType, mustBeUniqueNameInScope } from "../compile-rules";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
-import { Frame } from "../interfaces/frame";
 import { SymbolType } from "../interfaces/symbol-type";
 import { constructorKeyword, endKeyword, recordKeyword, thisKeyword } from "../keywords";
 import {
@@ -123,15 +122,5 @@ ${body}\r${asString}\r
     }
 
     return new UnknownSymbol(id);
-  }
-
-  resolveSymbol(id: string, transforms: Transforms, _initialScope: Frame): ElanSymbol {
-    const symbol = this.resolveOwnSymbol(id, transforms);
-
-    if (symbol instanceof UnknownSymbol) {
-      return this.getParent().resolveSymbol(id, transforms, this);
-    }
-
-    return symbol;
   }
 }

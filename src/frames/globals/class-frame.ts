@@ -47,6 +47,7 @@ import { CommentStatement } from "../statements/comment-statement";
 import { ClassSubType } from "../symbols/class-type";
 import { getGlobalScope, isSymbol, symbolMatches } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
+import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { isAstCollectionNode, isAstIdNode } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 
@@ -408,5 +409,15 @@ export abstract class ClassFrame
     const matches = symbolMatches(id, all, symbols);
 
     return matches.concat(otherMatches);
+  }
+
+  resolveSymbol(id: string, transforms: Transforms, _initialScope: Frame): ElanSymbol {
+    const symbol = this.resolveOwnSymbol(id, transforms);
+
+    if (symbol instanceof UnknownSymbol) {
+      return this.getParent().resolveSymbol(id, transforms, this);
+    }
+
+    return symbol;
   }
 }

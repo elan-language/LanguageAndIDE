@@ -9,7 +9,6 @@ import { isMember } from "../frame-helpers";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
-import { Frame } from "../interfaces/frame";
 import { SymbolType } from "../interfaces/symbol-type";
 import {
   abstractClassKeywords,
@@ -172,15 +171,5 @@ ${parentHelper_compileChildren(this, transforms)}\r
     }
 
     return new UnknownSymbol(id);
-  }
-
-  resolveSymbol(id: string, transforms: Transforms, _initialScope: Frame): ElanSymbol {
-    const symbol = this.resolveOwnSymbol(id, transforms);
-
-    if (symbol instanceof UnknownSymbol) {
-      return this.getParent().resolveSymbol(id, transforms, this);
-    }
-
-    return symbol;
   }
 }
