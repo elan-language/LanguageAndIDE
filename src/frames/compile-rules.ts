@@ -379,7 +379,11 @@ export function mustImplementSuperClasses(
     for (const superSymbol of superSymbols.filter((ss) => isMember(ss) && ss.isAbstract)) {
       const subSymbol = classType.resolveSymbol(superSymbol.symbolId, transforms, classType);
 
-      if (subSymbol instanceof UnknownSymbol || (isMember(subSymbol) && subSymbol.isAbstract)) {
+      if (
+        subSymbol instanceof UnknownSymbol ||
+        (isMember(subSymbol) && subSymbol.isAbstract) ||
+        (isMember(subSymbol) && subSymbol.private)
+      ) {
         compileErrors.push(
           new MustImplementCompileError(
             classType.name,
@@ -1045,7 +1049,15 @@ export function mustBeUniqueNameInScope(
   const symbol = scope.resolveSymbol(name, transforms, scope);
 
   if (symbol instanceof DuplicateSymbol) {
-    compileErrors.push(new NotUniqueNameCompileError(name, location));
+    let postFix = "";
+    if (
+      symbol.duplicates.length ===
+      symbol.duplicates.filter((s) => isMember(s) && s.isAbstract).length
+    ) {
+      postFix = ". Suggestion: factor out the common member(s) into a higher level interface.";
+    }
+
+    compileErrors.push(new NotUniqueNameCompileError(name, postFix, location));
   }
 }
 
@@ -1054,7 +1066,7 @@ export function mustBeUniqueValueInScope(
   compileErrors: CompileError[],
   location: string,
 ) {
-  compileErrors.push(new NotUniqueNameCompileError(name, location));
+  compileErrors.push(new NotUniqueNameCompileError(name, "", location));
 }
 
 export function mustNotBeLet(symbol: ElanSymbol, compileErrors: CompileError[], location: string) {

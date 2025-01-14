@@ -271,8 +271,13 @@ export class MutateCompileError extends CompileError {
 }
 
 export class NotUniqueNameCompileError extends CompileError {
-  constructor(name: string, location: string) {
-    super(Priority.illegalOperation, `Name '${name}' not unique in scope`, location, false);
+  constructor(name: string, postFix: string, location: string) {
+    super(
+      Priority.illegalOperation,
+      `Name '${name}' not unique in scope${postFix}`,
+      location,
+      false,
+    );
   }
 }
 

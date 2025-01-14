@@ -984,7 +984,9 @@ end interface`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'prop' not unique in scope"]);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'prop' not unique in scope. Suggestion: factor out the common member(s) into a higher level interface.",
+    ]);
   });
 
   test("Fail_InheritAbstractClass", async () => {

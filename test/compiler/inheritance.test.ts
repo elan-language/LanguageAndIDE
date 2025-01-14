@@ -2043,7 +2043,9 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'p1' not unique in scope"]);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'p1' not unique in scope. Suggestion: factor out the common member(s) into a higher level interface.",
+    ]);
   });
 
   test("Fail_DuplicateFunctionNames", async () => {
@@ -2063,7 +2065,9 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'ff' not unique in scope"]);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'ff' not unique in scope. Suggestion: factor out the common member(s) into a higher level interface.",
+    ]);
   });
 
   test("Fail_DuplicateProcedureNames", async () => {
@@ -2083,7 +2087,9 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'ff' not unique in scope"]);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'ff' not unique in scope. Suggestion: factor out the common member(s) into a higher level interface.",
+    ]);
   });
 
   test("Fail_DuplicateMemberNames1", async () => {
@@ -2103,7 +2109,9 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'ff' not unique in scope"]);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'ff' not unique in scope. Suggestion: factor out the common member(s) into a higher level interface.",
+    ]);
   });
 
   test("Fail_DuplicateMemberNames2", async () => {
@@ -2123,7 +2131,9 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'ff' not unique in scope"]);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'ff' not unique in scope. Suggestion: factor out the common member(s) into a higher level interface.",
+    ]);
   });
 
   test("Fail_DuplicateMemberNames3", async () => {
@@ -2143,7 +2153,9 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'ff' not unique in scope"]);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'ff' not unique in scope. Suggestion: factor out the common member(s) into a higher level interface.",
+    ]);
   });
 
   test("Fail_DuplicatePrivateMembers1", async () => {
@@ -2642,7 +2654,9 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'p1' not unique in scope"]);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'p1' not unique in scope. Suggestion: factor out the common member(s) into a higher level interface.",
+    ]);
   });
 
   test("Fail_SuperclassesCannotDefineSameMember1", async () => {
@@ -2727,5 +2741,97 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["Qux must implement Foo.p1"]);
+  });
+
+  test("Fail_PrivateMemberCannotImplementInterface", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  let x be new Bar()
+  print ff(x)
+end main
+
+function ff(f as Foo) returns Int
+  return f.p1
+end function
+
+interface Foo
+  abstract property p1 as Int
+end interface
+
+class Bar inherits Foo
+  private property p1 as Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Bar must implement Foo.p1"]);
+  });
+
+  test("Fail_PrivateMemberCannotImplementInterface1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  let x be new Bar()
+  print ff(x)
+end main
+
+function ff(f as Yon) returns Int
+  return f.p1
+end function
+
+interface Yon
+  abstract property p1 as Int
+end interface
+
+abstract class Foo inherits Yon
+  private property p1 as Int
+end class
+
+class Bar inherits Foo
+
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Bar must implement Yon.p1"]);
+  });
+
+  test("Fail_PrivateMemberDuplicateId", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  let x be new Bar()
+  print ff(x)
+end main
+
+function ff(f as Yon) returns Int
+  return f.p1
+end function
+
+interface Yon
+  abstract property p1 as Int
+end interface
+
+abstract class Foo inherits Yon
+  private property p1 as Int
+end class
+
+class Bar inherits Foo
+  property p1 as Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Name 'p1' not unique in scope"]);
   });
 });
