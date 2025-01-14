@@ -20,6 +20,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var fr = system.initialise(new _stdlib.TextFileReader());
   var fw = system.initialise(new _stdlib.TextFileWriter());
@@ -44,6 +45,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var tf = await _stdlib.openFileForReading();
   var txt = tf.readWholeFile();
@@ -70,6 +72,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var tf = await _stdlib.openFileForReading();
   var txt = tf.readWholeFile();
@@ -98,6 +101,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var tf = await _stdlib.openFileForReading();
   while (!tf.endOfFile()) {
@@ -125,6 +129,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var tf = await _stdlib.openFileForReading();
   tf.close();
@@ -151,6 +156,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var tf = _stdlib.createFileForWriting("data.txt");
   tf.writeLine("something");
@@ -175,6 +181,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var tf = _stdlib.createFileForWriting("data.txt");
   await tf.writeWholeFile("something else");
@@ -199,6 +206,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var tf = _stdlib.createFileForWriting("data.txt");
   tf.writeLine("something");
@@ -227,6 +235,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var tf = _stdlib.createFileForWriting("data.txt");
   await tf.writeWholeFile("something else");

@@ -28,6 +28,7 @@ record Foo
 end record`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var a = system.initialise(new Foo());
   var b = (() => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = 2; return _a;})();
@@ -65,6 +66,7 @@ record Foo
 end record`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var a = system.initialise(new Foo());
   a = (() => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = 2; return _a;})();
@@ -106,6 +108,7 @@ record Foo
 end record`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var a = foo();
   system.printLine(_stdlib.asString(a.a));
@@ -153,6 +156,7 @@ record Foo
 end record`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var a = foo();
   system.printLine(_stdlib.asString(a.a));
@@ -199,6 +203,7 @@ record Foo
 end record`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var a = foo();
   system.printLine(_stdlib.asString(a.a));
@@ -245,6 +250,7 @@ record Foo
 end record`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var a = system.initialise(new Foo());
   var b = (() => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = 2; _a.b = "fred"; return _a;})();
@@ -290,6 +296,7 @@ record Foo
 end record`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var a = system.initialise(new Foo());
   var b = (() => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = 2; return _a;})();
@@ -330,6 +337,7 @@ record Foo
 end record`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var a = system.initialise(new Foo());
   var b = (() => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = 2 + 2; return _a;})();
@@ -370,6 +378,7 @@ record Foo
 end record`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var a = system.initialise(new Foo());
   var a1 = (() => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.b = 1; return _a;})();
@@ -418,6 +427,7 @@ record Foo
 end record`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var a = system.literalArray([0, 2]);
   var b = system.initialise(new Foo());
@@ -461,6 +471,7 @@ record Foo
 end record`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var a = system.literalArray([0, 2]);
   var b = system.initialise(new Foo());
@@ -506,6 +517,7 @@ record Foo
 end record`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var a = system.list([0, 2]);
   var b = system.initialise(new Foo());
@@ -546,6 +558,7 @@ record Foo
 end record`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var a = system.list([0, 2, 3]);
   var b = system.initialise(new Foo());

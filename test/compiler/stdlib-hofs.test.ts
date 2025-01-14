@@ -175,6 +175,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var source = _stdlib.asIterable(system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]));
   source = _stdlib.map(source, (x) => x + 1);

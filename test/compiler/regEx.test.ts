@@ -23,6 +23,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var r = /a+/;
   system.printLine(_stdlib.asString(r));
@@ -53,6 +54,7 @@ function testRegex(r as RegExp) returns Boolean
 end function`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var r = /a+/;
   system.printLine(_stdlib.asString(testRegex(r)));
@@ -87,6 +89,7 @@ function testRegex() returns RegExp
 end function`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var r = system.emptyRegExp();
   r = testRegex();
@@ -121,6 +124,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var r = /a\\/b/;
   system.printLine(_stdlib.asString(_stdlib.testRegExp("a/b", r)));

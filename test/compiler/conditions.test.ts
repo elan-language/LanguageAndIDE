@@ -22,6 +22,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   system.printLine(_stdlib.asString(3 < 4));
   system.printLine(_stdlib.asString(3 < 2));
@@ -48,6 +49,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   system.printLine(_stdlib.asString(3 > 4));
   system.printLine(_stdlib.asString(3 > 2));
@@ -74,6 +76,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   system.printLine(_stdlib.asString(3 <= 4));
   system.printLine(_stdlib.asString(3 <= 2));
@@ -100,6 +103,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   system.printLine(_stdlib.asString(3 >= 4));
   system.printLine(_stdlib.asString(3 >= 2));
@@ -126,6 +130,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   system.printLine(_stdlib.asString(3 !== 4));
   system.printLine(_stdlib.asString(3 !== 2));
@@ -152,6 +157,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   system.printLine(_stdlib.asString(3 === 4));
   system.printLine(_stdlib.asString(3 === 2));
@@ -185,6 +191,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   system.printLine(_stdlib.asString(3 < 3.1));
   system.printLine(_stdlib.asString(3 <= 3.1));
@@ -218,6 +225,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   system.printLine(_stdlib.asString((5 + 3) > (4 + 2)));
   system.printLine(_stdlib.asString((5 + 3) === (4 + 4)));

@@ -21,6 +21,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var g = system.initialise(new _stdlib.BlockGraphics());
   await g.display();
@@ -50,6 +51,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var g = system.initialise(new _stdlib.BlockGraphics());
   g = g.withUnicode(0, 0, 90, _stdlib.black, _stdlib.white);
@@ -80,6 +82,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var g = system.initialise(new _stdlib.BlockGraphics());
   g = g.withText(10, 20, "a", 1, 2);
@@ -106,6 +109,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var g = system.initialise(new _stdlib.BlockGraphics());
   g = g.withText(10, 20, "a", 1, 2);
@@ -132,6 +136,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var g = system.initialise(new _stdlib.BlockGraphics());
   g = g.withBlock(1, 0, 4);
@@ -162,6 +167,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var g = system.initialise(new _stdlib.BlockGraphics());
   g = g.withText(10, 20, "a", 1, 2);
@@ -188,6 +194,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var g = system.initialise(new _stdlib.BlockGraphics());
   await g.display();
@@ -214,6 +221,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var gr = system.initialise(new _stdlib.BlockGraphics());
   var a = await _stdlib.getKey();
@@ -240,6 +248,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var gr = system.initialise(new _stdlib.BlockGraphics());
   var a = await _stdlib.getKeyWithModifier();
@@ -265,6 +274,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var gr = system.initialise(new _stdlib.BlockGraphics());
   _stdlib.clearKeyBuffer(gr);
@@ -288,6 +298,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var a = system.initialise(new _stdlib.BlockGraphics());
 }
@@ -319,6 +330,7 @@ class Foo
 end class`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var foo = system.initialise(new Foo());
   var a = foo.p;
@@ -375,6 +387,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var g = system.initialise(new _stdlib.BlockGraphics());
   g = g.withText(0, 0, "Hello", 1, 2);
@@ -410,6 +423,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var g = system.initialise(new _stdlib.BlockGraphics());
   g = g.withText(39, 29, "Hello", 1, 2);

@@ -22,6 +22,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var pi = _stdlib.pi;
   system.printLine(_stdlib.asString(pi));
@@ -78,6 +79,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   const pi = _stdlib.pi;
   system.printLine(_stdlib.asString(pi));
@@ -150,6 +152,7 @@ class Foo
 end class`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var f = system.initialise(new Foo());
   system.printLine(_stdlib.asString(f.sin(1)));
@@ -210,6 +213,7 @@ class Foo
 end class`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var f = system.initialise(new Foo());
   await f.pause(1);
@@ -259,6 +263,7 @@ function sin(x as Float) returns Float
 end function`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var sin = 2;
   system.printLine(_stdlib.asString(sin));
@@ -294,6 +299,7 @@ procedure sin(x as Float)
 end procedure`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var sin = 2;
   system.printLine(_stdlib.asString(sin));

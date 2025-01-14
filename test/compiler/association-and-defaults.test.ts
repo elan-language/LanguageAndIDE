@@ -53,6 +53,7 @@ class Player
 end class`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var g = system.initialise(new Game());
   system.printLine(_stdlib.asString(g.p2));
@@ -136,6 +137,7 @@ class Foo
 end class`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var g = system.initialise(new Foo());
   system.printLine(_stdlib.asString(g.p1));
@@ -206,6 +208,7 @@ class Game
 end class`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var g = system.initialise(new Game());
   system.printLine(_stdlib.asString(g.i));
@@ -312,6 +315,7 @@ class Game
 end class`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var p = system.initialise(new Player());
   var g = p.g;
@@ -407,6 +411,7 @@ class Game
 end class`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var g = Game.emptyInstance();
   system.printLine(_stdlib.asString(g.i));
@@ -472,6 +477,7 @@ class Player
 end class`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var g = system.initialise(new Game());
   system.printLine(_stdlib.asString(g.p1));
@@ -581,6 +587,7 @@ class Player
 end class`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var g = system.initialise(new Game());
   system.printLine(_stdlib.asString(system.objectEquals(g.p1, Player.emptyInstance())));
@@ -709,6 +716,7 @@ class Player
 end class`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var g = system.initialise(new Game());
   system.printLine(_stdlib.asString(g.score));
@@ -817,6 +825,7 @@ class Foo
 end class`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var f = system.initialise(new Foo());
   system.printLine(_stdlib.asString(f.a));
@@ -887,6 +896,7 @@ abstract class Player
 end class`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var g = system.initialise(new Game());
   var p = g.p1;
@@ -969,6 +979,7 @@ class Game
 end class`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var g = system.initialise(new Game());
   await g.something();

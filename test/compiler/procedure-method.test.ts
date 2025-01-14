@@ -35,6 +35,7 @@ class Foo
 end class`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var f = system.initialise(new Foo());
   system.printLine(_stdlib.asString(f.p1));
@@ -96,6 +97,7 @@ class Foo
 end class`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var f = system.initialise(new Foo());
   await f.display();
@@ -180,6 +182,7 @@ class Bar
 end class`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var f = system.initialise(new Foo());
   var b = system.initialise(new Bar());

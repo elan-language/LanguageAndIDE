@@ -22,6 +22,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var a = "Hello";
   var b = "World!";
@@ -46,6 +47,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   system.printLine(_stdlib.asString("_" + "Hello" + "!"));
 }
@@ -68,6 +70,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   system.printLine(_stdlib.asString("Hello" + 3.1));
 }
@@ -91,6 +94,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var a = "abcde";
   system.printLine(_stdlib.asString(system.safeIndex(a, 2)));
@@ -117,6 +121,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var a = "abcde";
   var b = "z";
@@ -145,6 +150,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var a = "abcde";
   var b = "z";
@@ -173,6 +179,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var a = "abcde";
   system.printLine(_stdlib.asString(a.slice(1, 3)));
@@ -204,6 +211,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   system.printLine(_stdlib.asString("abc" === "abc"));
   system.printLine(_stdlib.asString("abc" === "abcd"));
@@ -237,6 +245,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   system.printLine(_stdlib.asString(_stdlib.isBefore("abc", "abC")));
   system.printLine(_stdlib.asString(_stdlib.isAfter("abcd", "abc")));
@@ -267,6 +276,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var a = "abcde";
   var b = 2.1 + 3.4;
@@ -295,6 +305,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var a = 3;
   var b = 4;
@@ -321,6 +332,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var a = 3.1 + "Hello";
   system.printLine(_stdlib.asString(a));

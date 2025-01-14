@@ -25,6 +25,7 @@ function add() returns Int
 end function`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   system.printLine(_stdlib.asString(add()));
 }
@@ -107,6 +108,7 @@ procedure foo()
 end procedure`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   await foo();
 }
@@ -231,6 +233,7 @@ function foo() returns (Int, Int)
 end function`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   const [a, length] = foo();
 }

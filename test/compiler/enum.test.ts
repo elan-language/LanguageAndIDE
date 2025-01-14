@@ -28,6 +28,7 @@ var Fruit = {
   _default : "apple", apple : "apple", orange : "orange", pear : "pear"
 };
 
+const global = new class {};
 async function main() {
   system.printLine(_stdlib.asString(Fruit.apple));
   system.printLine(_stdlib.asString(Fruit.orange));
@@ -59,6 +60,7 @@ var Fruit = {
   _default : "apple", apple : "apple", orange : "orange", pear : "pear"
 };
 
+const global = new class {};
 async function main() {
   var e = Fruit._default;
   system.printLine(_stdlib.asString(e));
@@ -96,6 +98,7 @@ var Fruit = {
   _default : "apple", apple : "apple", orange : "orange", pear : "pear"
 };
 
+const global = new class {};
 async function main() {
   var foo = system.initialise(new Foo());
   system.printLine(_stdlib.asString(foo.fruit));
@@ -143,6 +146,7 @@ var Fruit = {
   _default : "apple", apple : "apple", orange : "orange", pear : "pear"
 };
 
+const global = new class {};
 async function main() {
   var foo = Foo.emptyInstance();
   system.printLine(_stdlib.asString(foo.fruit));
@@ -184,6 +188,7 @@ var Fruit = {
   _default : "apple", apple : "apple", orange : "orange", pear : "pear"
 };
 
+const global = new class {};
 async function main() {
   var x = Fruit.apple;
   x = Fruit.pear;
@@ -216,6 +221,7 @@ var Fruit = {
   _default : "apple", apple : "apple", orange : "orange", pear : "pear"
 };
 
+const global = new class {};
 async function main() {
   var x = Fruit.apple;
   var y = x;
@@ -252,6 +258,7 @@ var Fruit = {
   _default : "apple", apple : "apple", orange : "orange", pear : "pear"
 };
 
+const global = new class {};
 async function main() {
   system.printLine(_stdlib.asString(isFavourite(Fruit.apple)));
   system.printLine(_stdlib.asString(isFavourite(Fruit.pear)));
@@ -291,6 +298,7 @@ var Fruit = {
   _default : "apple", apple : "apple", orange : "orange", pear : "pear"
 };
 
+const global = new class {};
 async function main() {
   system.printLine(_stdlib.asString(system.objectEquals(firstFruit(), Fruit.apple)));
 }
@@ -326,6 +334,7 @@ var Fruit = {
   _default : "apple", apple : "apple", orange : "orange", pear : "pear"
 };
 
+const global = new class {};
 async function main() {
   var x = Fruit.apple;
   system.printLine(_stdlib.asString(system.objectEquals(x, Fruit.apple)));
@@ -356,6 +365,7 @@ var Fruit = {
   _default : "apple", apple : "apple", orange : "orange", pear : "pear"
 };
 
+const global = new class {};
 async function main() {
   var a = "Eat more " + Fruit.apple + "s!";
   system.printLine(_stdlib.asString(a));

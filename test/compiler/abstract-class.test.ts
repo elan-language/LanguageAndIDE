@@ -44,6 +44,7 @@ class Bar inherits Foo
 end class`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var x = system.initialise(new Bar());
   system.printLine(_stdlib.asString(x.prop));
@@ -126,6 +127,7 @@ class Bar inherits Foo
 end class`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var x = system.initialise(new Bar());
   system.printLine(_stdlib.asString(x.prop));
@@ -193,6 +195,7 @@ class Bar inherits Foo
 end class`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var x = system.initialise(new Bar());
   await x.proc();
@@ -260,6 +263,7 @@ class Bar inherits Foo
 end class`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var x = system.initialise(new Bar());
   await x.proc();
@@ -341,6 +345,7 @@ class Bar inherits Foo2
 end class`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var x = system.initialise(new Bar());
   system.printLine(_stdlib.asString(x.prop));
@@ -441,6 +446,7 @@ class Bar inherits Foo2
 end class`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var x = system.initialise(new Bar());
   system.printLine(_stdlib.asString(x.prop));
@@ -542,6 +548,7 @@ class Bar inherits Foo2
 end class`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var x = system.initialise(new Bar());
   system.printLine(_stdlib.asString(func1(x)));
@@ -641,6 +648,7 @@ class Bar inherits Foo2
 end class`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var x = system.initialise(new Bar());
   system.printLine(_stdlib.asString(func1(x)));
@@ -726,6 +734,7 @@ class Bar
 end class`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var x = system.initialise(new Bar());
   system.printLine(_stdlib.asString(x.foo));
@@ -804,6 +813,7 @@ abstract class Qux inherits Bar, Yon
 end class`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
 
 }
@@ -882,6 +892,7 @@ abstract class Qux inherits Bar, Yon
 end class`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
 
 }

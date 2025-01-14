@@ -25,6 +25,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   const t = system.initialise(new _stdlib.Turtle());
   t.turn(30);
@@ -58,6 +59,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   const t = system.initialise(new _stdlib.Turtle());
   t.turn(90);
@@ -85,6 +87,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   const t = system.initialise(new _stdlib.Turtle());
   t.turn(90);
@@ -112,6 +115,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   const t = system.initialise(new _stdlib.Turtle());
   system.printLine(_stdlib.asString(t.x));
@@ -141,6 +145,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   const t = system.initialise(new _stdlib.Turtle());
   t.turn(90);
@@ -180,6 +185,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   const t = system.initialise(new _stdlib.Turtle());
   t.turn(90);
@@ -219,6 +225,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   const t = system.initialise(new _stdlib.Turtle());
   t.show();
@@ -257,6 +264,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   const t = system.initialise(new _stdlib.Turtle());
   t.show();
@@ -292,6 +300,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   const t = system.initialise(new _stdlib.Turtle());
   t.show();
