@@ -67,8 +67,6 @@ end record\r\n`;
     this.compileErrors = [];
 
     const name = this.getName(transforms);
-
-    const asString = "";
     const body = parentHelper_compileChildren(this, transforms);
 
     for (const p of this.properties()) {
@@ -77,7 +75,7 @@ end record\r\n`;
 
     return `class ${name} {\r
   static emptyInstance() { return system.emptyClass(${name}, ${this.propertiesToInit()});};\r
-${body}\r${asString}\r
+${body}\r
 }\r\n`;
   }
 

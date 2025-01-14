@@ -71,14 +71,11 @@ ${endKeyword} ${interfaceKeyword}\r\n`;
     this.compileErrors = [];
 
     const name = this.getName(transforms);
-
     const [cd, cdName] = this.lookForCircularDependencies(this, [name], transforms);
-
     if (cd) {
       return this.circularDependency(cdName);
     }
 
-    // this is not safe if there is a circular dependency
     const typeAndName = this.getDirectSuperClassesTypeAndName(transforms);
 
     for (const [st, name] of typeAndName) {

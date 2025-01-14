@@ -247,12 +247,10 @@ export abstract class ClassFrame
   }
 
   protected circularDependency(name: string) {
-    // circular dependency
+    // circular dependency detected
     mustNotBeCircularDependency(name, this.compileErrors, this.htmlId);
     // any other compiling is not safe
-
-    return `class ${name} {\r
-        }\r\n`;
+    return `class ${name} { }\r\n`;
   }
 
   public lookForCircularDependencies(

@@ -71,14 +71,12 @@ end class\r\n`;
     this.compileErrors = [];
 
     const name = this.getName(transforms);
-
     const [cd, cdName] = this.lookForCircularDependencies(this, [name], transforms);
-
     if (cd) {
       return this.circularDependency(cdName);
     }
 
-    const implement = this.getExtends(transforms);
+    const extendsClause = this.getExtends(transforms);
     const abstractClasses = this.getAllAbstractClasses(this, [], transforms);
     const interfaces = this.getAllInterfaces(this, [], transforms);
 
@@ -90,11 +88,9 @@ end class\r\n`;
       this.htmlId,
     );
 
-    const asString = "";
-
-    return `class ${name} ${implement}{\r
+    return `class ${name} ${extendsClause}{\r
   static emptyInstance() { return system.emptyClass(${name}, ${this.propertiesToInit()});};\r
-${parentHelper_compileChildren(this, transforms)}\r${asString}\r
+${parentHelper_compileChildren(this, transforms)}\r
 }\r\n`;
   }
 

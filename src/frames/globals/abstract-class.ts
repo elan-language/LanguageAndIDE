@@ -69,16 +69,14 @@ end class\r\n`;
     this.compileErrors = [];
 
     const name = this.getName(transforms);
-
     const [cd, cdName] = this.lookForCircularDependencies(this, [name], transforms);
-
     if (cd) {
       return this.circularDependency(cdName);
     }
 
-    const implement = this.getExtends(transforms);
+    const extendsClause = this.getExtends(transforms);
 
-    return `class ${name} ${implement}{\r
+    return `class ${name} ${extendsClause}{\r
   static emptyInstance() { return system.emptyClass(${name}, ${this.propertiesToInit()});};\r
 ${parentHelper_compileChildren(this, transforms)}\r
 }\r\n`;
