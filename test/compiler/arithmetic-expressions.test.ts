@@ -24,6 +24,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var x = 2 + 3 * 5 + 1;
   var y = (2 + 3) * 5 + 1;
@@ -56,6 +57,7 @@ return [main, _tests];}`;
   end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var x = 2 + (3 * 5) + 1;
   var y = ((2 + 3)) * 5 + (1);
@@ -86,6 +88,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var x = 2 + 3 ** 2;
   var y = (2 + 3) ** 2;
@@ -114,6 +117,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var x = 16 / 2 ** 3;
   var y = (16 / 2) ** 3;
@@ -142,6 +146,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var x = 16 / 2 ** 3;
   var y = (16 / 2) ** 3;
@@ -172,6 +177,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var x = 0;
   var y = 0;
@@ -202,6 +208,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var x = 11 % 3;
   var y = (5 + 6) % 3;
@@ -230,6 +237,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var x = Math.floor(11 / 3);
   var y = Math.floor((5 + 6) / 3);

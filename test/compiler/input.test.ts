@@ -20,6 +20,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var a = await _stdlib.inputString("");
   system.printLine(_stdlib.asString(a));
@@ -44,6 +45,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var a = await _stdlib.inputString("Your name");
   system.printLine(_stdlib.asString(a));
@@ -69,6 +71,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var a = 0;
   a = await _stdlib.inputInt("");
@@ -95,6 +98,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var a = 0;
   a = await _stdlib.inputFloat("");
@@ -123,6 +127,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var a = "value";
   var b = "value1";
@@ -150,6 +155,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var a = await _stdlib.inputStringWithLimits("aprompt", 3, 7);
   system.printLine(_stdlib.asString(a));
@@ -174,6 +180,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var a = await _stdlib.inputStringFromOptions("aprompt", system.literalArray(["y", "n"]));
   system.printLine(_stdlib.asString(a));
@@ -199,6 +206,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var a = 0;
   a = await _stdlib.inputInt("aprompt");
@@ -225,6 +233,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var a = 0;
   a = await _stdlib.inputIntBetween("aprompt", 3, 7);
@@ -251,6 +260,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var a = 0;
   a = await _stdlib.inputFloat("aprompt");
@@ -277,6 +287,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var a = 0;
   a = await _stdlib.inputFloatBetween("aprompt", 0, 1);
@@ -319,6 +330,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var a = "Hello " + await _stdlib.inputString("");
   system.printLine(_stdlib.asString(a));

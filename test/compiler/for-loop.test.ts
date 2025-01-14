@@ -24,6 +24,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var tot = 0;
   for (var i = 1; i <= 10; i = i + 1) {
@@ -55,6 +56,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var tot = 0;
   var i = 0;
@@ -86,6 +88,7 @@ print tot
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var tot = 0;
   for (var i = 1; i <= 10; i = i + 2) {
@@ -116,6 +119,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var tot = 0;
   for (var i = 10; i >= 3; i = i - 1) {
@@ -148,6 +152,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var tot = 0;
   for (var i = 1; i <= 3; i = i + 1) {
@@ -181,6 +186,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var lower = 1;
   var upper = 10;
@@ -216,6 +222,7 @@ procedure foo(out arr as Array<of Int>)
 end procedure`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var a = _stdlib.createArray(11, 0);
   var _a = [a];

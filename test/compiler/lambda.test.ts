@@ -24,6 +24,7 @@ procedure printModified(i as Int, f as Func<of Int => Int>)
 end procedure`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   await printModified(4, (x) => x * 3);
 }
@@ -60,6 +61,7 @@ procedure printModified(i as (Int, Int), f as Func<of (Int, Int) => Int>)
 end procedure`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   await printModified(system.tuple([4, 5]), (t) => first(t));
 }
@@ -94,6 +96,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var l = (x) => x * 5;
   system.printLine(_stdlib.asString(l(5)));
@@ -131,6 +134,7 @@ class Foo
 end class`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var foo = system.initialise(new Foo());
   await foo.setP1((x) => x);
@@ -171,6 +175,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var l = (x) => x * 5;
   system.printLine(_stdlib.asString(l(5) + 5));
@@ -199,6 +204,7 @@ function getFunc() returns Func<of Int => Int>
 end function`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var l = getFunc();
   system.printLine(_stdlib.asString(l(5)));
@@ -229,6 +235,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var x = 3;
   var l = () => x * 5;
@@ -258,6 +265,7 @@ function getFunc(x as Int) returns Func<of => Int>
 end function`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
 async function main() {
   var l = getFunc(5);
   system.printLine(_stdlib.asString(l()));
