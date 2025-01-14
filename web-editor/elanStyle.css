@@ -259,7 +259,9 @@ el-field .autocomplete-popup, el-field .autocomplete-popup * {
 .autocomplete-item.keyword {
     color: var(--keyword);
 }
-
+.autocomplete-item.id {
+    color: var(--namedValue);
+}
 .autocomplete-item.method {
     color: var(--method);
 }
