@@ -217,130 +217,6 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "3apple");
   });
 
-  // todo chnage to fail test
-  ignore_test("Pass_SuperclassesCanDefineSameMember", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-  variable x set to new Bar()
-  print x.p1
-  print x.p2
-  print x.product()
-  call x.setP1(4)
-  print x.product()
-end main
-
-abstract class Foo
-  abstract property p1 as Float
-  abstract property p2 as Float 
-end class
-
-abstract class Yon inherits Foo
-  abstract property p1 as Float 
-  abstract procedure setP1(v as Float)
-  abstract function product() returns Float
-end class
-
-class Bar inherits Yon
-    constructor()
-        set property.p1 to 3
-        set property.p2 to 4
-    end constructor
-    property p1 as Float
-    property p2 as Float
-
-    procedure setP1(p1 as Float)
-        set property.p1 to p1
-    end procedure
-
-    function product() returns Float
-        return property.p1 * property.p2
-    end function
-
-    function asString() returns String 
-        return ""
-    end function
-end class`;
-
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-async function main() {
-  var x = system.initialise(new Bar());
-  system.printLine(_stdlib.asString(x.p1));
-  system.printLine(_stdlib.asString(x.p2));
-  system.printLine(_stdlib.asString(x.product()));
-  await x.setP1(4);
-  system.printLine(_stdlib.asString(x.product()));
-}
-
-class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", 0]]);};
-  get p1() {
-    return 0;
-  }
-  set p1(p1) {
-  }
-
-  get p2() {
-    return 0;
-  }
-  set p2(p2) {
-  }
-
-}
-
-class Yon extends Foo {
-  static emptyInstance() { return system.emptyClass(Yon, [["p1", 0]]);};
-  get p1() {
-    return 0;
-  }
-  set p1(p1) {
-  }
-
-  setP1(v) {
-  }
-
-  product() {
-    return 0;
-  }
-
-}
-
-class Bar extends Yon {
-  static emptyInstance() { return system.emptyClass(Bar, [["p1", 0], ["p2", 0]]);};
-  constructor() {
-    super();
-    this.p1 = 3;
-    this.p2 = 4;
-  }
-
-  p1 = 0;
-
-  p2 = 0;
-
-  async setP1(p1) {
-    this.p1 = p1;
-  }
-
-  product() {
-    return this.p1 * this.p2;
-  }
-
-  asString() {
-    return "";
-  }
-
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "341216");
-  });
-
   test("Pass_AbstractMutableClassAsProcedureParameter", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
@@ -2402,5 +2278,109 @@ end class`;
     assertDoesNotCompile(fileImpl, [
       "There must be only one abstract superclass, Foo, Bar are abstract classes",
     ]);
+  });
+
+  test("Fail_SuperclassesCannotDefineSameMember", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable x set to new Bar()
+  print x.p1
+  print x.p2
+  print x.product()
+  call x.setP1(4)
+  print x.product()
+end main
+
+abstract class Foo
+  abstract property p1 as Float
+  abstract property p2 as Float 
+end class
+
+abstract class Yon inherits Foo
+  abstract property p1 as Float 
+  abstract procedure setP1(v as Float)
+  abstract function product() returns Float
+end class
+
+class Bar inherits Yon
+    constructor()
+        set property.p1 to 3
+        set property.p2 to 4
+    end constructor
+    property p1 as Float
+    property p2 as Float
+
+    procedure setP1(p1 as Float)
+        set property.p1 to p1
+    end procedure
+
+    function product() returns Float
+        return property.p1 * property.p2
+    end function
+
+    function asString() returns String 
+        return ""
+    end function
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Name 'p1' not unique in scope"]);
+  });
+
+  test("Fail_SuperclassesCannotDefineSameMember1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable x set to new Bar()
+  print x.p1
+  print x.p2
+  print x.product()
+  call x.setP1(4)
+  print x.product()
+end main
+
+abstract class Foo
+  abstract property p1 as Float
+  abstract property p2 as Float 
+end class
+
+interface Yon
+  abstract property p1 as Float 
+  abstract procedure setP1(v as Float)
+  abstract function product() returns Float
+end interface
+
+class Bar inherits Foo, Yon
+    constructor()
+        set property.p1 to 3
+        set property.p2 to 4
+    end constructor
+    property p1 as Float
+    property p2 as Float
+
+    procedure setP1(p1 as Float)
+        set property.p1 to p1
+    end procedure
+
+    function product() returns Float
+        return property.p1 * property.p2
+    end function
+
+    function asString() returns String 
+        return ""
+    end function
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Name 'p1' not unique in scope"]);
   });
 });
