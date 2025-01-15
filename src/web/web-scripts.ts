@@ -87,7 +87,7 @@ consoleDiv.addEventListener("click", () => {
 
 trimButton.addEventListener("click", async () => {
   file.removeAllSelectorsThatCanBe();
-  await renderAsHtml();
+  await renderAsHtml(false);
 });
 
 runButton?.addEventListener("click", () => {
@@ -161,7 +161,7 @@ clearGraphicsButton?.addEventListener("click", () => {
 
 expandCollapseButton?.addEventListener("click", async () => {
   file.expandCollapseAll();
-  await renderAsHtml();
+  await renderAsHtml(false);
 });
 
 newButton?.addEventListener("click", async () => {
@@ -338,10 +338,10 @@ async function setup(p: Profile) {
   await displayFile();
 }
 
-async function renderAsHtml() {
+async function renderAsHtml(editingField: boolean) {
   const content = await file.renderAsHtml();
   try {
-    await updateContent(content);
+    await updateContent(content, editingField);
   } catch (e) {
     await showError(e as Error, file.fileName, false);
   }
@@ -358,11 +358,13 @@ function clearUndoRedoAndAutoSave() {
   localStorage.clear();
   undoRedoFiles = [];
   lastSavedHash = "";
+  currentFieldId = "";
+  undoRedoHash = "";
 }
 
 async function resetFile() {
   file = new FileImpl(hash, profile, transforms());
-  await renderAsHtml();
+  await renderAsHtml(false);
 }
 
 async function showError(err: Error, fileName: string, reset: boolean) {
@@ -394,13 +396,13 @@ async function showError(err: Error, fileName: string, reset: boolean) {
   cursorDefault();
 }
 
-async function refreshAndDisplay(compileIfParsed?: boolean) {
+async function refreshAndDisplay(compileIfParsed: boolean, editingField: boolean) {
   file.refreshParseAndCompileStatuses(compileIfParsed);
   if (file.readCompileStatus() === CompileStatus.ok) {
     runTests();
   }
   try {
-    await renderAsHtml();
+    await renderAsHtml(editingField);
   } catch (e) {
     await showError(e as Error, file.fileName, false);
   }
@@ -411,7 +413,7 @@ async function initialDisplay(reset: boolean) {
 
   const ps = file.readParseStatus();
   if (ps === ParseStatus.valid || ps === ParseStatus.default) {
-    await refreshAndDisplay();
+    await refreshAndDisplay(false, false);
     lastSavedHash = lastSavedHash || file.currentHash;
     updateNameAndSavedStatus();
   } else {
@@ -425,7 +427,7 @@ async function displayCode(rawCode: string, fileName: string) {
   try {
     await file.parseFrom(code);
     file.fileName = fileName || file.defaultFileName;
-    await refreshAndDisplay(true);
+    await refreshAndDisplay(true, false);
   } catch (e) {
     await showError(e as Error, fileName || file.defaultFileName, true);
   }
@@ -711,7 +713,7 @@ async function handleEditorEvent(
 /**
  * Render the document
  */
-async function updateContent(text: string) {
+async function updateContent(text: string, editingField: boolean) {
   file.setRunStatus(RunStatus.default);
   doOnce = doOnce === undefined || doOnce ? true : false;
 
@@ -831,7 +833,7 @@ async function updateContent(text: string) {
     }
   }
 
-  await localAndAutoSave(focused);
+  await localAndAutoSave(focused, editingField);
   updateDisplayValues();
 
   const dbgFocused = document.querySelectorAll(".focused");
@@ -845,9 +847,9 @@ async function updateContent(text: string) {
   cursorDefault();
 }
 
-async function localAndAutoSave(field: HTMLElement | undefined) {
+async function localAndAutoSave(field: HTMLElement | undefined, editingField: boolean) {
   let code = "";
-  const newFieldId = field?.id ?? currentFieldId;
+  const newFieldId = editingField ? field?.id : undefined;
 
   if (file.readParseStatus() === ParseStatus.valid) {
     // save to local store
@@ -879,7 +881,7 @@ async function localAndAutoSave(field: HTMLElement | undefined) {
       localStorage.setItem(id, code);
       saveButton.classList.add("unsaved");
       undoRedoHash = file.currentHash;
-      currentFieldId = field?.id ?? currentFieldId;
+      currentFieldId = newFieldId ?? "";
     }
   }
 
@@ -935,7 +937,7 @@ async function inactivityRefresh() {
     file.readParseStatus() === ParseStatus.valid &&
     file.readCompileStatus() === CompileStatus.default
   ) {
-    await refreshAndDisplay(true);
+    await refreshAndDisplay(true, false);
   }
 
   inactivityTimer = setTimeout(inactivityRefresh, inactivityTimeout);
@@ -962,26 +964,27 @@ async function handleKeyAndRender(e: editorEvent) {
       case "click":
         isBeingEdited = file.getFieldBeingEdited(); //peek at value as may be changed
         if (handleClick(e, file) && isBeingEdited) {
-          await refreshAndDisplay();
+          await refreshAndDisplay(false, false);
         } else {
-          await renderAsHtml();
+          await renderAsHtml(false);
         }
         return;
       case "dblclick":
         isBeingEdited = file.getFieldBeingEdited(); //peek at value as may be changed
         if (handleDblClick(e, file) && isBeingEdited) {
-          await refreshAndDisplay();
+          await refreshAndDisplay(false, false);
         } else {
-          await renderAsHtml();
+          await renderAsHtml(false);
         }
         return;
       case "paste":
       case "key":
         const codeChanged = handleKey(e, file);
         if (codeChanged === true) {
-          await refreshAndDisplay();
+          const singleKeyEdit = !(e.modKey.control || e.modKey.shift || e.modKey.alt);
+          await refreshAndDisplay(false, singleKeyEdit);
         } else if (codeChanged === false) {
-          await renderAsHtml();
+          await renderAsHtml(false);
         }
         // undefined just return
         return;
@@ -989,7 +992,7 @@ async function handleKeyAndRender(e: editorEvent) {
   } catch (e) {
     if (e instanceof ElanCutCopyPasteError) {
       elanInputOutput.printLine(e.message);
-      await renderAsHtml();
+      await renderAsHtml(false);
       return;
     }
 
@@ -1217,7 +1220,7 @@ async function handleDownload(event: Event) {
   saveButton.classList.remove("unsaved");
   lastSavedHash = file.currentHash;
   event.preventDefault();
-  await renderAsHtml();
+  await renderAsHtml(false);
 }
 
 async function chromeSave(code: string) {
@@ -1245,7 +1248,7 @@ async function handleChromeDownload(event: Event) {
     saveButton.classList.remove("unsaved");
     lastSavedHash = file.currentHash;
 
-    await renderAsHtml();
+    await renderAsHtml(false);
   } catch (_e) {
     // user cancelled
     return;
@@ -1267,7 +1270,7 @@ async function handleChromeAutoSave(event: Event) {
   try {
     autoSaveFileHandle = await chromeSave(code);
     lastSavedHash = file.currentHash;
-    await renderAsHtml();
+    await renderAsHtml(false);
     autoSaveButton.innerText = "Auto-off";
     autoSaveButton.setAttribute("title", "Click to turn auto-save off and resume manual saving.");
   } catch (_e) {
@@ -1309,7 +1312,7 @@ async function handleTestWorkerFinished(data: WebWorkerTestMessage) {
     await showError(err, file.fileName, false);
   }
 
-  await renderAsHtml();
+  await renderAsHtml(false);
   updateDisplayValues();
 }
 

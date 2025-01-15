@@ -84,7 +84,7 @@ export interface File extends Parent {
 
   libraryScope: Scope;
 
-  refreshParseAndCompileStatuses(compileIfParsed?: boolean): void;
+  refreshParseAndCompileStatuses(compileIfParsed: boolean): void;
 
   refreshTestStatuses(outcomes: [string, AssertOutcome[]][]): void;
 

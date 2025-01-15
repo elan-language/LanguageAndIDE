@@ -31,7 +31,7 @@ suite("Overall Status Tests", () => {
   ignore_test("test top-level Parse, Compile, Test Status changes", async () => {
     const f = await loadFileAsModelNew(`${__dirname}\\files\\programs/merge-sort.elan`);
     const runner = await createTestRunner();
-    f.refreshParseAndCompileStatuses();
+    f.refreshParseAndCompileStatuses(false);
     assert.equal(f.readParseStatus(), ParseStatus.valid);
     assert.equal(f.readCompileStatus(), CompileStatus.ok);
     assert.equal(f.readTestStatus(), TestStatus.pass);
@@ -42,14 +42,14 @@ suite("Overall Status Tests", () => {
     exp20.select();
     exp20.processKey(key("Backspace"));
     exp20.processKey(key("2"));
-    await f.refreshParseAndCompileStatuses();
+    await f.refreshParseAndCompileStatuses(false);
     assert.equal(f.readParseStatus(), ParseStatus.valid);
     assert.equal(f.readCompileStatus(), CompileStatus.ok);
     assert.equal(f.readTestStatus(), TestStatus.fail);
     assert.equal(test64.renderAsHtml().startsWith(`<el-test class="error`), true);
     exp20.processKey(key("Backspace"));
     exp20.processKey(key("1"));
-    f.refreshParseAndCompileStatuses();
+    f.refreshParseAndCompileStatuses(false);
     assert.equal(f.readParseStatus(), ParseStatus.valid);
     assert.equal(f.readCompileStatus(), CompileStatus.ok);
     assert.equal(f.readTestStatus(), TestStatus.pass);
@@ -66,7 +66,7 @@ suite("Overall Status Tests", () => {
       v4.renderAsHtml().startsWith(`<el-field id="var4" class="selected focused empty warning"`),
       true,
     );
-    f.refreshParseAndCompileStatuses();
+    f.refreshParseAndCompileStatuses(false);
     assert.equal(f.readParseStatus(), ParseStatus.incomplete);
     assert.equal(f.readCompileStatus(), CompileStatus.default);
     assert.equal(m1.renderAsHtml().startsWith(`<main class="warning`), true);
@@ -75,19 +75,19 @@ suite("Overall Status Tests", () => {
       v4.renderAsHtml().startsWith(`<el-field id="var4" class="selected focused error"`),
       true,
     );
-    f.refreshParseAndCompileStatuses();
+    f.refreshParseAndCompileStatuses(false);
     assert.equal(f.readParseStatus(), ParseStatus.invalid);
     assert.equal(f.readCompileStatus(), CompileStatus.default);
     // Make parse valid but with a compile warning
     v4.processKey(key("Backspace"));
     v4.processKey(key("l"));
-    f.refreshParseAndCompileStatuses();
+    f.refreshParseAndCompileStatuses(false);
     assert.equal(f.readParseStatus(), ParseStatus.valid);
     assert.equal(f.readCompileStatus(), CompileStatus.unknownSymbol);
     assert.equal(m1.renderAsHtml().startsWith(`<main class="warning`), true);
     // Make good again
     v4.processKey(key("i"));
-    f.refreshParseAndCompileStatuses();
+    f.refreshParseAndCompileStatuses(false);
     assert.equal(f.readParseStatus(), ParseStatus.valid);
     assert.equal(f.readCompileStatus(), CompileStatus.ok);
     assert.equal(m1.renderAsHtml().startsWith(`<main class="ok`), true);

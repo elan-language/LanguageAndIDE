@@ -228,9 +228,9 @@ export class FileImpl implements File, Scope {
     return "";
   }
 
-  private getHash(body?: string): Promise<string> {
+  private async getHash(body?: string): Promise<string> {
     body = (body || this.renderHashableContent()).trim().replaceAll("\r", "");
-    return this.hash(body);
+    return await this.hash(body);
   }
 
   private getVersion() {
@@ -418,7 +418,7 @@ export class FileImpl implements File, Scope {
     );
   }
 
-  refreshParseAndCompileStatuses(compileIfParsed?: boolean) {
+  refreshParseAndCompileStatuses(compileIfParsed: boolean) {
     this._parseStatus = ParseStatus.default as ParseStatus;
     this.parseError = undefined;
     this.updateAllParseStatus();

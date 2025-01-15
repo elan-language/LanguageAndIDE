@@ -356,7 +356,7 @@ suite("Editing Frames", () => {
   test("Paste at wrong level has no effect", async () => {
     const file = await loadFileAsModelNew(`${__dirname}\\files\\single_var.elan`);
     const runner = await createTestRunner();
-    file.refreshParseAndCompileStatuses();
+    file.refreshParseAndCompileStatuses(false);
 
     const main = file.getById("main1") as MainFrame;
     const var3 = file.getById("var3");
@@ -380,7 +380,7 @@ suite("Editing Frames", () => {
   test("#634 snippet remains in scratchpad if not successfully pasted", async () => {
     const file = await loadFileAsModelNew(`${__dirname}\\files\\single_var.elan`);
     const runner = await createTestRunner();
-    file.refreshParseAndCompileStatuses();
+    file.refreshParseAndCompileStatuses(false);
 
     const main = file.getById("main1") as MainFrame;
     const var3 = file.getById("var3");
@@ -416,7 +416,7 @@ suite("Editing Frames", () => {
   test("#622 can't cut and paste a method to global level", async () => {
     const file = await loadFileAsModelNew(`${__dirname}\\files\\testcode622.elan`);
     const runner = await createTestRunner();
-    file.refreshParseAndCompileStatuses();
+    file.refreshParseAndCompileStatuses(false);
     const func9 = file.getById("func8");
     func9.select();
     func9.processKey(ctrl_x());
@@ -439,7 +439,7 @@ suite("Editing Frames", () => {
   test("#644 cutting statement when there is already a selector following", async () => {
     const file = await loadFileAsModelNew(`${__dirname}\\files\\test644.elan`);
     const runner = await createTestRunner();
-    file.refreshParseAndCompileStatuses();
+    file.refreshParseAndCompileStatuses(false);
     const var3 = file.getById("var3");
     var3.select();
     var3.processKey(enter()); //To create selector following
@@ -452,7 +452,7 @@ suite("Editing Frames", () => {
   test("#666 able to move a frame past a selector", async () => {
     const file = await loadFileAsModelNew(`${__dirname}\\files\\test666.elan`);
     const runner = await createTestRunner();
-    file.refreshParseAndCompileStatuses();
+    file.refreshParseAndCompileStatuses(false);
     const var3 = file.getById("var3");
     var3.select();
     var3.processKey(enter()); //To create selector following
