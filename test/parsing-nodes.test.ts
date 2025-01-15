@@ -1729,7 +1729,7 @@ suite("Parsing Nodes", () => {
     testNodeParse(new ExprNode(), `{0.0}`, ParseStatus.valid, `{0.0}`, "");
   });
   ignore_test("Six open brackets", () => {
-    testNodeParse(new ExprNode(), `((((((3))))))`, ParseStatus.valid, `{((((((3))))))`, "");
+    testNodeParse(new ExprNode(), `((((((3))))))`, ParseStatus.valid, `((((((3))))))`, "");
   });
 });
 
