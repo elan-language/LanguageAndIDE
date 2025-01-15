@@ -13,6 +13,7 @@ import { VarStatement } from "../src/frames/statements/var-statement";
 import { ParseStatus } from "../src/frames/status-enums";
 import { hash } from "../src/util";
 import { ignore_test, transforms } from "./compiler/compiler-test-helpers";
+import { testExtractContextForExpression } from "./testHelpers";
 
 suite("Field Parsing Tests", () => {
   test("parse CommentField", () => {
@@ -187,5 +188,20 @@ suite("Field Parsing Tests", () => {
     v.setFieldToKnownValidText(`((((((3))))))`);
     v.parseCurrentText();
     assert.equal(v.readParseStatus(), ParseStatus.valid);
+  });
+  test("parse ExpressionField - extractContextForExpression", () => {
+    testExtractContextForExpression(`foo`, ``);
+    testExtractContextForExpression(`foo.`, `foo`);
+    testExtractContextForExpression(`foo.bar`, `foo`);
+    testExtractContextForExpression(`foo123.bar`, `foo123`);
+    testExtractContextForExpression(`foo().bar`, `foo`);
+    testExtractContextForExpression(`foo(1,2,a).bar`, `foo`);
+    testExtractContextForExpression(`123.bar`, ``);
+    testExtractContextForExpression(`123.456`, ``);
+    testExtractContextForExpression(`qux.foo().bar`, `foo`);
+    testExtractContextForExpression(
+      `{{0.0,0.0,0.0,0.16,0.0,0.0,0.01},{0.85,0.04,-0.04,0.85,0.0,1.60,0.85},{0.20,-0.26,0.23,0.22,0.0,1.60,0.07},{-0.15,0.28,0.26,0.24,0.0,0.44,0.07`,
+      ``,
+    );
   });
 });

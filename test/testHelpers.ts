@@ -6,9 +6,11 @@ import { CodeSourceFromString } from "../src/frames/code-source";
 import { DefaultProfile } from "../src/frames/default-profile";
 import { AbstractField } from "../src/frames/fields/abstract-field";
 import { FileImpl } from "../src/frames/file-impl";
+import { MainFrame } from "../src/frames/globals/main-frame";
 import { editorEvent } from "../src/frames/interfaces/editor-event";
 import { File } from "../src/frames/interfaces/file";
 import { ParseNode } from "../src/frames/parse-nodes/parse-node";
+import { VarStatement } from "../src/frames/statements/var-statement";
 import { CompileStatus, ParseStatus, TestStatus } from "../src/frames/status-enums";
 import { TokenType } from "../src/frames/symbol-completion-helpers";
 import { BooleanType } from "../src/frames/symbols/boolean-type";
@@ -362,6 +364,16 @@ export function testNodeParse(
   if (html && html !== "") {
     assert.equal(node.renderAsHtml(), html);
   }
+}
+
+export function testExtractContextForExpression(text: string, context: string) {
+  const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
+  const v = new VarStatement(main);
+  const expr = v.expr;
+  expr.setFieldToKnownValidText(text);
+  expr.parseCurrentText();
+  assert.equal(expr.extractContextFromText(), context);
+
 }
 
 export function testActiveNodeAndDone(
