@@ -1716,6 +1716,18 @@ suite("Parsing Nodes", () => {
       `<el-kw>not</el-kw> (<el-id>a</el-id> + <el-id>b</el-id>)`,
     );
   });
+  test("Parse list of list of floats", () => {
+    testNodeParse(
+      new ExprNode(),
+      `{{0.0,0.0,0.0,0.16,0.0,0.0,0.01},{0.85,0.04,-0.04,0.85,0.0,1.60,0.85},{0.20,-0.26,0.23,0.22,0.0,1.60,0.07},{-0.15,0.28,0.26,0.24,0.0,0.44,0.07}}`,
+      ParseStatus.valid,
+      `{{0.0,0.0,0.0,0.16,0.0,0.0,0.01},{0.85,0.04,-0.04,0.85,0.0,1.60,0.85},{0.20,-0.26,0.23,0.22,0.0,1.60,0.07},{-0.15,0.28,0.26,0.24,0.0,0.44,0.07}}`,
+      "",
+    );
+  });
+  test("Parse list of floats 2", () => {
+    testNodeParse(new ExprNode(), `{0.0}`, ParseStatus.valid, `{0.0}`, "");
+  });
 });
 
 class test_seq1 extends AbstractSequence {

@@ -1,6 +1,7 @@
 import assert from "assert";
 import { DefaultProfile } from "../src/frames/default-profile";
 import { FileImpl } from "../src/frames/file-impl";
+import { Constant } from "../src/frames/globals/constant";
 import { GlobalFunction } from "../src/frames/globals/global-function";
 import { MainFrame } from "../src/frames/globals/main-frame";
 import { TestFrame } from "../src/frames/globals/test-frame";
@@ -170,5 +171,14 @@ suite("Field Parsing Tests", () => {
     name.parseCurrentText();
     assert.equal(name.readParseStatus(), ParseStatus.incomplete);
     assert.equal(name.textAsSource(), ``);
+  });
+  test("parse list of listof floats", () => {
+    const c = new Constant(new FileImpl(hash, new DefaultProfile(), transforms()));
+    const v = c.value;
+    v.setFieldToKnownValidText(
+      `{{0.0,0.0,0.0,0.16,0.0,0.0,0.01},{0.85,0.04,-0.04,0.85,0.0,1.60,0.85},{0.20,-0.26,0.23,0.22,0.0,1.60,0.07},{-0.15,0.28,0.26,0.24,0.0,0.44,0.07}}`,
+    );
+    v.parseCurrentText();
+    assert.equal(v.readParseStatus(), ParseStatus.valid);
   });
 });
