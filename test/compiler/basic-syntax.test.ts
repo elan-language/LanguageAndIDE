@@ -1,6 +1,7 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
+  assertDoesNotCompile,
   assertDoesNotCompileWithId,
   assertDoesNotParse,
   assertObjectCodeExecutes,
@@ -392,6 +393,23 @@ end function
     assertStatusIsValid(fileImpl);
     assertDoesNotCompileWithId(fileImpl, "print3", [
       "To evaluate function 'foo' add brackets. Or to create a reference to 'foo', precede it by 'ref'",
+    ]);
+  });
+
+  test("Fail_compilerDirective", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+    # [unknownDirective]
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "a comment may not start with [ unless it is a recognised compiler directive",
     ]);
   });
 });

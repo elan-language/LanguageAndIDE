@@ -7,6 +7,7 @@ import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
 import { commentMarker } from "../keywords";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export class CommentStatement extends AbstractFrame implements Statement, Member {
   isStatement = true;
@@ -34,20 +35,28 @@ export class CommentStatement extends AbstractFrame implements Statement, Member
     this.text.parseFrom(source);
     source.removeNewLine();
   }
+
   getFields(): Field[] {
     return [this.text];
   }
+
   getIdPrefix(): string {
     return "com";
   }
+
   renderAsHtml(): string {
     return `<el-statement><el-comment class="${this.cls()}" id='${this.htmlId}' tabindex="0"><el-top><el-kw># </el-kw>${this.text.renderAsHtml()}</el-top></el-comment></el-statement>`;
   }
+
   renderAsSource(): string {
     return `${this.indent()}# ${this.text.renderAsSource()}`;
   }
-  compile(): string {
+
+  compile(transforms: Transforms): string {
     this.compileErrors = [];
+
+    const astNode = this.text.getOrTransformAstNode(transforms);
+    astNode.compile();
     return "";
   }
 }

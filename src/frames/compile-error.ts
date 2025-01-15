@@ -331,3 +331,14 @@ export class FunctionRefCompileError extends CompileError {
     );
   }
 }
+
+export class UnknownCompilerDirectiveCompileError extends CompileError {
+  constructor(_directive: string, location: string) {
+    super(
+      Priority.illegalOperation,
+      `a comment may not start with [ unless it is a recognised compiler directive`,
+      location,
+      false,
+    );
+  }
+}

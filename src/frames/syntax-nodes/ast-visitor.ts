@@ -11,6 +11,7 @@ import { ArrayNode } from "../parse-nodes/array-node";
 import { BinaryExpression } from "../parse-nodes/binary-expression";
 import { BracketedExpression } from "../parse-nodes/bracketed-expression";
 import { CommaNode } from "../parse-nodes/comma-node";
+import { CommentNode } from "../parse-nodes/comment-node";
 import { CopyWith } from "../parse-nodes/copy-with";
 import { CSV } from "../parse-nodes/csv";
 import { DeconstructedList } from "../parse-nodes/deconstructed-list";
@@ -67,6 +68,7 @@ import { wrapScopeInScope } from "../symbols/symbol-helpers";
 import { isAstIdNode, mapOperation } from "./ast-helpers";
 import { BinaryExprAsn } from "./binary-expr-asn";
 import { BracketedAsn } from "./bracketed-asn";
+import { CommentAsn } from "./comment-asn";
 import { CompositeAsn } from "./composite-asn";
 import { CopyWithAsn } from "./copy-with-asn";
 import { CsvAsn } from "./csv-asn";
@@ -463,6 +465,10 @@ export function transform(
     const value = transform(node.expr, fieldId, scope)!;
 
     return new InterpolatedAsn(value, fieldId);
+  }
+
+  if (node instanceof CommentNode) {
+    return new CommentAsn(node.matchedText, fieldId);
   }
 
   if (node instanceof RegExMatchNode) {

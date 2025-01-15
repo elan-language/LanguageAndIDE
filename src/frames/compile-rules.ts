@@ -35,6 +35,7 @@ import {
   TypeCompileError,
   TypesCompileError,
   UndefinedSymbolCompileError,
+  UnknownCompilerDirectiveCompileError,
 } from "./compile-error";
 import {
   isClass,
@@ -1165,4 +1166,12 @@ export function mustBeFunctionRefIfFunction(
   if (symbol.symbolType() instanceof FunctionType) {
     compileErrors.push(new FunctionRefCompileError(symbol.symbolId, location));
   }
+}
+
+export function mustBeKnownCompilerDirective(
+  directive: string,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  compileErrors.push(new UnknownCompilerDirectiveCompileError(directive, location));
 }
