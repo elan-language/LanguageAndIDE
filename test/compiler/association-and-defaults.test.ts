@@ -1270,4 +1270,80 @@ end class`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["referencing a property requires a prefix"]);
   });
+
+  test("Fail_MissingPropertyKeyword5", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable bar set to new Bar()
+  call bar.p()
+end main
+
+class Foo
+  
+  procedure pp()
+    print 1
+  end procedure
+
+end class
+
+class Bar
+  constructor()
+    set property.p1 to new Foo()
+  end constructor
+
+  procedure p()
+    if property.p2 then
+      call p1.pp()
+    end if 
+  end procedure
+
+  property p1 as Foo
+  property p2 as Boolean
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["referencing a property requires a prefix"]);
+  });
+
+  test("Fail_MissingPropertyKeyword6", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable bar set to new Bar()
+  call bar.p()
+end main
+
+class Foo
+  
+  procedure pp()
+    print 1
+  end procedure
+
+end class
+
+class Bar
+  constructor()
+    set property.p1 to new Foo()
+  end constructor
+
+  procedure p()
+    if property.p2 then
+      set p2 to false
+    end if 
+  end procedure
+
+  property p1 as Foo
+  property p2 as Boolean
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["referencing a property requires a prefix"]);
+  });
 });
