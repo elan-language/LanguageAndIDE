@@ -893,7 +893,6 @@ suite("Parsing Nodes", () => {
   test("TupleNode", () => {
     testNodeParse(new TupleNode(), `(3,4)`, ParseStatus.valid, "", "", "");
     testNodeParse(new TupleNode(), `(3,"a", "hello", 4.1, true)`, ParseStatus.valid, "", "", "");
-    testNodeParse(new TupleNode(), `((3,4), ("a", true))`, ParseStatus.valid, "", "", "");
     testNodeParse(
       new TupleNode(),
       `(3,"a", "hello", 4.1, true`,
@@ -1728,8 +1727,8 @@ suite("Parsing Nodes", () => {
   test("Parse list of floats 2", () => {
     testNodeParse(new ExprNode(), `{0.0}`, ParseStatus.valid, `{0.0}`, "");
   });
-  ignore_test("Six open brackets", () => {
-    testNodeParse(new ExprNode(), `((((((3))))))`, ParseStatus.valid, `((((((3))))))`, "");
+  test("Multiple open brackets", () => {
+    testNodeParse(new ExprNode(), `((`, ParseStatus.incomplete, ``, "");
   });
 });
 

@@ -1,12 +1,12 @@
 import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { BinaryOperation } from "./binary-operation";
+import { BracketedExpressionOrTerm } from "./bracketedExprOrTerm";
 import { ExprNode } from "./expr-node";
 import { allIdsAndMethods, allKeywordsThatCanStartAnExpression } from "./parse-node-helpers";
-import { Term } from "./term";
 
 export class BinaryExpression extends AbstractSequence {
-  lhs: Term | undefined;
+  lhs: BracketedExpressionOrTerm | undefined;
   op: BinaryOperation | undefined;
   rhs: ExprNode | undefined;
 
@@ -16,7 +16,7 @@ export class BinaryExpression extends AbstractSequence {
   }
 
   parseText(text: string): void {
-    this.lhs = new Term();
+    this.lhs = new BracketedExpressionOrTerm();
     this.addElement(this.lhs);
     this.op = new BinaryOperation();
     this.addElement(this.op);

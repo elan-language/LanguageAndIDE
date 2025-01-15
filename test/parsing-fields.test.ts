@@ -182,13 +182,6 @@ suite("Field Parsing Tests", () => {
     v.parseCurrentText();
     assert.equal(v.readParseStatus(), ParseStatus.valid);
   });
-  ignore_test("parse six open brackets", () => {
-    const c = new Constant(new FileImpl(hash, new DefaultProfile(), transforms()));
-    const v = c.value;
-    v.setFieldToKnownValidText(`((((((3))))))`);
-    v.parseCurrentText();
-    assert.equal(v.readParseStatus(), ParseStatus.valid);
-  });
   test("parse ExpressionField - extractContextForExpression", () => {
     testExtractContextForExpression(`foo`, ``);
     testExtractContextForExpression(`foo.`, `foo`);

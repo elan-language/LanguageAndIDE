@@ -8,7 +8,6 @@ import { DictionaryImmutableNode } from "./immutable-dictionary-node";
 import { ListNode } from "./list-node";
 import { LitValueNode } from "./lit-value";
 import { ReferenceNode } from "./reference-node";
-import { TupleNode } from "./tuple-node";
 import { UnaryExpression } from "./unary-expression";
 
 export class TermSimple extends AbstractAlternatives {
@@ -47,9 +46,7 @@ export class TermSimple extends AbstractAlternatives {
           () => new ExprNode(),
         ),
       );
-      this.alternatives.push(new TupleNode());
       this.alternatives.push(new UnaryExpression());
-      this.alternatives.push(new BracketedExpression());
       super.parseText(text);
     }
   }

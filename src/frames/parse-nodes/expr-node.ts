@@ -18,6 +18,7 @@ import { Lambda } from "./lambda";
 import { NewInstance } from "./new-instance";
 import { ParseNode } from "./parse-node";
 import { Term } from "./term";
+import { TupleNode } from "./tuple-node";
 
 export class ExprNode extends AbstractAlternatives {
   constructor() {
@@ -33,6 +34,7 @@ export class ExprNode extends AbstractAlternatives {
       this.alternatives.push(new IfExpr());
       this.alternatives.push(new Lambda());
       this.alternatives.push(new EmptyOfTypeNode());
+      this.alternatives.push(new TupleNode());
       //then others
       this.alternatives.push(new Term());
       this.alternatives.push(new BinaryExpression());

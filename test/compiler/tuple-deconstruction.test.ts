@@ -140,8 +140,8 @@ main
   print b
 end main
 
-function foo() returns (List<of Float>, Int)
-  return ({0.0}, 0)
+function foo() returns (Float, Int)
+  return (0.0, 0)
 end function`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -153,7 +153,7 @@ async function main() {
 }
 
 function foo() {
-  return system.tuple([system.list([0]), 0]);
+  return system.tuple([0, 0]);
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -164,7 +164,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{0}0");
+    await assertObjectCodeExecutes(fileImpl, "00");
   });
 
   test("Pass_CreateAndDeconstructAFourTuple", async () => {

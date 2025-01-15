@@ -13,9 +13,11 @@ export class Term extends AbstractAlternatives {
   }
 
   parseText(text: string): void {
-    this.alternatives.push(new TermSimpleWithOptIndex());
-    this.alternatives.push(new TermChained());
-    super.parseText(text);
+    if (text.trim().length > 0) {
+      this.alternatives.push(new TermSimpleWithOptIndex());
+      this.alternatives.push(new TermChained());
+      super.parseText(text);
+    }
   }
 
   symbolCompletion_tokenTypes(): Set<TokenType> {
