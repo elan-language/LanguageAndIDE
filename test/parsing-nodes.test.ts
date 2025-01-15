@@ -382,7 +382,7 @@ suite("Parsing Nodes", () => {
     );
     //testNodeParse(new BracketedExpression(), "(a and not b  ", ParseStatus.incomplete, "(a and not b  ", "", "(a and not b"); TODO
     testNodeParse(new BracketedExpression(), "(", ParseStatus.incomplete, "(", "", "(");
-    testNodeParse(new BracketedExpression(), "()", ParseStatus.invalid, "", "()", "(");
+    testNodeParse(new BracketedExpression(), "()", ParseStatus.invalid, "", "()", "");
   });
   test("Optional", () => {
     testNodeParse(new OptionalNode(new LitInt()), "123 a", ParseStatus.valid, "123", " a", "123");

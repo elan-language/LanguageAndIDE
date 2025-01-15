@@ -77,6 +77,7 @@ export abstract class AbstractSequence extends AbstractParseNode {
     } //Finally...
     if (this.isInvalid()) {
       this.remainingText = text;
+      this.elements = [];
     } else {
       this.matchedText = text.substring(0, text.length - this.remainingText.length);
     }

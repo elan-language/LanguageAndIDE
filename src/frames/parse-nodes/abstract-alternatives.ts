@@ -39,11 +39,12 @@ export abstract class AbstractAlternatives extends AbstractParseNode {
         this.status = this.bestMatch!.status;
         this.matchedText = this.bestMatch!.matchedText;
         this.remainingText = this.bestMatch!.remainingText;
+        this.alternatives = this.alternatives.filter((alt) => alt.status > ParseStatus.invalid);
       } else {
         this.bestMatch = undefined;
         this.status = ParseStatus.invalid;
+        this.alternatives = [];
       }
-      this.alternatives = this.alternatives.filter((alt) => alt.status > ParseStatus.invalid);
     }
   }
 
