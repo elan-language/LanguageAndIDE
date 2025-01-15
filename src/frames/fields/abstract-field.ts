@@ -789,8 +789,8 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   extractContextFromText(): string {
-    const rgx = /(.*\.)*(([A-Za-z_]*)(\(.*\))*)\..*/;
-    return rgx.test(this.text) ? this.text.match(rgx)![3] : "";
+    const rgx = /([[A-Za-z][A-Za-z0-9_]*)(\(.*\))?\.([[A-Za-z][A-Za-z0-9_]*)?$/;
+    return rgx.test(this.text) ? this.text.match(rgx)![1] : "";
   }
 
   protected symbolCompletionAsHtml(transforms: Transforms): string {
