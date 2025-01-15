@@ -227,6 +227,16 @@ export function isInsideFunctionOrConstructor(parent: Parent): boolean {
   return isInsideFunctionOrConstructor(parent.getParent());
 }
 
+export function isInsideFunction(parent: Parent): boolean {
+  if (isFunction(parent)) {
+    return true;
+  }
+  if (isFile(parent)) {
+    return false;
+  }
+  return isInsideFunction(parent.getParent());
+}
+
 export function mapSymbolType(ids: string[], st: SymbolType) {
   if (ids.length > 1 && st instanceof TupleType) {
     return new DeconstructedTupleType(ids, st.ofTypes);

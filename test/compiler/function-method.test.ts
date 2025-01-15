@@ -731,12 +731,8 @@ class Foo
   property p1 as Float
 
   function times(value as Float) returns Float
-    set p1 to p1 * value
-    return p1
-  end function
-
-  function asString() returns String
-    return ""
+    set property.p1 to property.p1 * value
+    return property.p1
   end function
 
 end class`;
@@ -745,7 +741,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not reassign property: p1"]);
+    assertDoesNotCompile(fileImpl, ["May not set property: p1 in a function"]);
   });
 
   test("Fail_FunctionMethodCannotCallProcedureMethod", async () => {
@@ -897,5 +893,71 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["Name 'a' not unique in scope"]);
+  });
+
+  test("Fail_NestedUpdateProperty", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  let f be new Foo()
+  print f.foo()
+end main
+    
+class Foo
+  constructor()
+  end constructor
+
+  function foo() returns Int
+    if property.p2 then
+      set property.p1 to 1
+    end if
+    return property.p1
+  end function
+
+  property p1 as Int
+  property p2 as Boolean
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["May not set property: p1 in a function"]);
+  });
+
+  test("Fail_NestedUpdateProperty1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  let f be new Foo()
+  print f.foo()
+end main
+    
+class Foo
+  constructor()
+  end constructor
+
+  function foo() returns Int
+    if property.p2 then
+      if property.p2 then
+        if property.p2 then
+          set property.p1 to 1
+        end if
+      end if
+    end if
+    return property.p1
+  end function
+
+  property p1 as Int
+  property p2 as Boolean
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["May not set property: p1 in a function"]);
   });
 });

@@ -281,9 +281,9 @@ export class NotUniqueNameCompileError extends CompileError {
   }
 }
 
-export class ReassignCompileError extends CompileError {
+export class ReassignInFunctionCompileError extends CompileError {
   constructor(thing: string, location: string) {
-    super(Priority.illegalOperation, `May not reassign ${thing}`, location, false);
+    super(Priority.illegalOperation, `May not set ${thing} in a function`, location, false);
   }
 }
 

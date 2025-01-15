@@ -28,7 +28,7 @@ import {
   ParametersCompileError,
   ParameterTypesCompileError,
   PrivateMemberCompileError,
-  ReassignCompileError,
+  ReassignInFunctionCompileError,
   RedefinedCompileError,
   SignatureCompileError,
   SyntaxCompileError,
@@ -41,6 +41,7 @@ import {
   isClass,
   isConstant,
   isFunction,
+  isInsideFunction,
   isInsideFunctionOrConstructor,
   isLet,
   isMember,
@@ -953,11 +954,13 @@ export function mustNotBePropertyOnFunctionMethod(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (isFunction(parent) && isMember(parent)) {
+  if (isInsideFunction(parent)) {
     const s = assignable.symbolScope;
 
     if (s === SymbolScope.member) {
-      compileErrors.push(new ReassignCompileError(`property: ${getId(assignable)}`, location));
+      compileErrors.push(
+        new ReassignInFunctionCompileError(`property: ${getId(assignable)}`, location),
+      );
     }
   }
 }
