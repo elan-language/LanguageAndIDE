@@ -16,13 +16,15 @@ export class BinaryExpression extends AbstractSequence {
   }
 
   parseText(text: string): void {
-    this.lhs = new BracketedExpressionOrTerm();
-    this.addElement(this.lhs);
-    this.op = new BinaryOperation();
-    this.addElement(this.op);
-    this.rhs = new ExprNode();
-    this.addElement(this.rhs);
-    return super.parseText(text);
+    if (text.trim().length > 0) {
+      this.lhs = new BracketedExpressionOrTerm();
+      this.addElement(this.lhs);
+      this.op = new BinaryOperation();
+      this.addElement(this.op);
+      this.rhs = new ExprNode();
+      this.addElement(this.rhs);
+      return super.parseText(text);
+    }
   }
 
   compile(): string {

@@ -6,6 +6,7 @@ import { PunctuationNode } from "./punctuation-node";
 import { Term } from "./term";
 
 import { MINUS } from "../symbols";
+import { BracketedExpressionOrTerm } from "./bracketedExprOrTerm";
 import { Space } from "./parse-node-helpers";
 import { Sequence } from "./sequence";
 import { SpaceNode } from "./space-node";
@@ -26,7 +27,7 @@ export class UnaryExpression extends AbstractSequence {
       const notSp = () => new Sequence([not, sp]);
       this.unaryOp = new Alternatives([minus, notSp]);
       this.addElement(this.unaryOp);
-      this.term = new Term();
+      this.term = new BracketedExpressionOrTerm();
       this.addElement(this.term);
       return super.parseText(text);
     }

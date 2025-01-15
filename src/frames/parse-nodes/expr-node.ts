@@ -11,6 +11,7 @@ import {
 import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { BinaryExpression } from "./binary-expression";
+import { BracketedExpression } from "./bracketed-expression";
 import { CopyWith } from "./copy-with";
 import { EmptyOfTypeNode } from "./empty-of-type-node";
 import { IfExpr } from "./if-expr";
@@ -35,6 +36,7 @@ export class ExprNode extends AbstractAlternatives {
       this.alternatives.push(new Lambda());
       this.alternatives.push(new EmptyOfTypeNode());
       this.alternatives.push(new TupleNode());
+      this.alternatives.push(new BracketedExpression());
       //then others
       this.alternatives.push(new Term());
       this.alternatives.push(new BinaryExpression());

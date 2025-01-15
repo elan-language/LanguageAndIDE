@@ -5,6 +5,7 @@ import { Alternatives } from "../src/frames/parse-nodes/alternatives";
 import { BinaryExpression } from "../src/frames/parse-nodes/binary-expression";
 import { BinaryOperation } from "../src/frames/parse-nodes/binary-operation";
 import { BracketedExpression } from "../src/frames/parse-nodes/bracketed-expression";
+import { BracketedExpressionOrTerm } from "../src/frames/parse-nodes/bracketedExprOrTerm";
 import { CommaNode } from "../src/frames/parse-nodes/comma-node";
 import { CSV } from "../src/frames/parse-nodes/csv";
 import { DeconstructedList } from "../src/frames/parse-nodes/deconstructed-list";
@@ -1421,7 +1422,6 @@ suite("Parsing Nodes", () => {
       "abc(def, ghi)[0]",
       "",
     );
-    testNodeParse(new TermSimple(), `(def, ghi)`, ParseStatus.valid, "(def, ghi)", ""); // tuple
     testNodeParse(new TermSimple(), `[def, ghi]`, ParseStatus.valid, "[def, ghi]", "");
     testNodeParse(
       new TermSimple(),
@@ -1433,7 +1433,7 @@ suite("Parsing Nodes", () => {
     testNodeParse(new TermSimple(), `345`, ParseStatus.valid, "345", "");
     testNodeParse(new TermSimple(), `-345`, ParseStatus.valid, "-345", "");
     testNodeParse(new TermSimple(), `not a`, ParseStatus.valid, "not a", "");
-    testNodeParse(new TermSimple(), `(3 + a)`, ParseStatus.valid, "(3 + a)", "");
+    testNodeParse(new BracketedExpressionOrTerm(), `(3 + a)`, ParseStatus.valid, "(3 + a)", "");
     testNodeParse(new Qualifier(), `property`, ParseStatus.valid, `property`, "");
     testNodeParse(new PunctuationNode(DOT), `.`, ParseStatus.valid, `.`, "");
     testNodeParse(new ReferenceNode(), `a`, ParseStatus.valid, `a`, "");
