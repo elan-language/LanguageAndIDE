@@ -43,6 +43,7 @@ export abstract class AbstractAlternatives extends AbstractParseNode {
         this.bestMatch = undefined;
         this.status = ParseStatus.invalid;
       }
+      this.alternatives = this.alternatives.filter((alt) => alt.status > ParseStatus.invalid);
     }
   }
 
