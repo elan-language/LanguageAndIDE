@@ -230,9 +230,7 @@ el-field el-help, el-field.selected.ok el-help {
     display: none;
 }
 el-field.selected el-help, el-field.selected.ok.optional el-help  {
-    display: inline;
-    color: var(--reverseText);
-    background-color: var(--help);
+    display: none;
 }
 
 /* el-field el-compl */
