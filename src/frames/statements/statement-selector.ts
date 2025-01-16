@@ -12,12 +12,9 @@ import {
   forKeyword,
   ifKeyword,
   letKeyword,
-  matchKeyword,
-  otherwiseKeyword,
   printKeyword,
   repeatKeyword,
   setKeyword,
-  switchKeyword,
   throwKeyword,
   tryKeyword,
   variableKeyword,
@@ -73,13 +70,7 @@ export class StatementSelector extends AbstractSelector {
   validWithinCurrentContext(keyword: string, _userEntry: boolean): boolean {
     const parent = this.getParent();
     let result = false;
-    if (keyword === matchKeyword && parent.getIdPrefix() === switchKeyword) {
-      return this.isAboveOtherwiseIfPresent();
-    } else if (keyword === otherwiseKeyword && this.otherwiseMaybeAdded()) {
-      result = parent.getIdPrefix() === switchKeyword;
-    } else if (keyword === matchKeyword || keyword === otherwiseKeyword) {
-      result = false;
-    } else if (keyword === elseKeyword) {
+    if (keyword === elseKeyword) {
       result = parent.getIdPrefix() === ifKeyword;
     } else if (keyword === assertKeyword) {
       return this.isWithinATest();

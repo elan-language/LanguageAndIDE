@@ -10,7 +10,6 @@ export const constantKeyword = "constant";
 export const constructorKeyword = "constructor";
 export const copyKeyword = "copy";
 export const divKeyword = "div";
-export const doingKeyword = "doing";
 export const eachKeyword = "each";
 export const elseKeyword = "else";
 export const emptyKeyword = "empty";
@@ -33,14 +32,11 @@ export const lambdaKeyword = "lambda";
 export const letKeyword = "let";
 export const libraryKeyword = "library";
 export const mainKeyword = "main";
-export const matchKeyword = "match";
 export const modKeyword = "mod";
 export const newKeyword = "new";
 export const notKeyword = "not";
 export const ofKeyword = "of";
-export const onKeyword = "on";
 export const orKeyword = "or";
-export const otherwiseKeyword = "otherwise";
 export const outKeyword = "out";
 export const printKeyword = "print";
 export const privateKeyword = "private";
@@ -53,7 +49,6 @@ export const returnKeyword = "return";
 export const returnsKeyword = "returns";
 export const setKeyword = "set";
 export const stepKeyword = "step";
-export const switchKeyword = "switch";
 export const testKeyword = "test";
 export const thenKeyword = "then";
 export const thisKeyword = "this";
@@ -97,9 +92,11 @@ export const allKeywords = [
   forKeyword,
   fromKeyword,
   functionKeyword,
+  globalKeyword,
   ifKeyword,
   ignoreKeyword,
   importKeyword,
+  inKeyword,
   inheritsKeyword,
   isKeyword,
   isntKeyword,
@@ -112,8 +109,6 @@ export const allKeywords = [
   newKeyword,
   notKeyword,
   ofKeyword,
-  isKeyword,
-  onKeyword,
   orKeyword,
   outKeyword,
   printKeyword,
@@ -121,18 +116,19 @@ export const allKeywords = [
   procedureKeyword,
   propertyKeyword,
   recordKeyword,
+  refKeyword,
   repeatKeyword,
   returnKeyword,
   returnsKeyword,
   setKeyword,
   stepKeyword,
   testKeyword,
+  thenKeyword,
   thisKeyword,
   throwKeyword,
   toKeyword,
   tryKeyword,
   variableKeyword,
-  withKeyword,
   whileKeyword,
   withKeyword,
 ];
@@ -175,6 +171,7 @@ export const reservedWords = [
   "namespace",
   "native",
   "null",
+  "on",
   "otherwise",
   "package",
   "partial",
