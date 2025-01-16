@@ -1,6 +1,7 @@
 import { TokenType } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
+import { BracketedExpression } from "./bracketed-expression";
 import { DotBefore } from "./dot-before";
 import { IdentifierNode } from "./identifier-node";
 import { IndexSingle } from "./index-single";
@@ -16,9 +17,10 @@ export class TermChained extends AbstractSequence {
 
   parseText(text: string): void {
     if (text.length > 0) {
+      const bracketedExpr = () => new BracketedExpression();
       const termSimple = () => new TermSimple();
       const qualifier = () => new Qualifier();
-      this.head = new Alternatives([qualifier, termSimple]);
+      this.head = new Alternatives([bracketedExpr, qualifier, termSimple]);
       const prop = () => new IdentifierNode(new Set([TokenType.id_property]));
       const method = () => new MethodCallNode();
       const propOrMethod = () => new Alternatives([prop, method], this.tokenTypes);
