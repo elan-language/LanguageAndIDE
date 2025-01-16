@@ -9,6 +9,7 @@ import {
   assertParses,
   assertStatusIsValid,
   assertTestObjectCodeExecutes,
+  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -946,5 +947,56 @@ end test
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["'squareTest' is not defined"]);
+  });
+
+  ignore_test("Pass_assertWithinAMultiline", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+
+end main
+
+test square
+  let a be 1
+  if true then
+    assert a is 9
+  end if
+end test
+`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+
+}
+
+function square(x) {
+  return x ** 2;
+}
+global["square"] = square;
+
+_tests.push(["test10", async (_outcomes) => {
+  _outcomes.push(system.assert(() => square(3), 9, "assert13", _stdlib, false));
+  var actual = square(4);
+  var expected = 16;
+  _outcomes.push(system.assert(() => actual, expected, "assert22", _stdlib, false));
+}]);
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertTestObjectCodeExecutes(fileImpl, [
+      [
+        "test10",
+        [
+          new AssertOutcome(TestStatus.pass, "9", "9", "assert13"),
+          new AssertOutcome(TestStatus.pass, "16", "16", "assert22"),
+        ],
+      ],
+    ]);
   });
 });
