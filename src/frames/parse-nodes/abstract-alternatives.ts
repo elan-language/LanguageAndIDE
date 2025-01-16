@@ -46,6 +46,10 @@ export abstract class AbstractAlternatives extends AbstractParseNode {
         this.alternatives = [];
       }
     }
+    //finally
+    if (this.isDone()) {
+      this.alternatives = [];
+    }
   }
 
   renderAsHtml(): string {

@@ -75,7 +75,7 @@ export abstract class AbstractSequence extends AbstractParseNode {
         continueLoop = false;
       }
     } //Finally...
-    if (this.isInvalid()) {
+    if (this.isInvalid() || this.isEmpty()) {
       this.remainingText = text;
       this.elements = [];
     } else {
