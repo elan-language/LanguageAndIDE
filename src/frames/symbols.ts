@@ -21,4 +21,3 @@ export const LE = "<=";
 export const GE = ">=";
 export const UNDERSCORE = "_";
 export const DOUBLE_QUOTES = `"`;
-

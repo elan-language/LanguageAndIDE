@@ -114,8 +114,11 @@ export class StdLib {
   @elanConstant(ElanBoolean) true = true;
   @elanConstant(ElanBoolean) false = false;
 
-  @elanConstant()
-  pi: number = Math.PI;
+  @elanConstant() pi: number = Math.PI;
+
+  @elanConstant(ElanString) quotes = `"`;
+  @elanConstant(ElanString) openBrace = `{`;
+  @elanConstant(ElanString) closeBrace = `}`;
 
   private isValueType<T1>(v: T1) {
     return typeof v === "boolean" || typeof v === "string" || typeof v === "number";
@@ -256,7 +259,7 @@ export class StdLib {
     },
   ): T1[] {
     const lst = this.keys(dict).map((k) => dict[k]);
-    (lst as unknown as hasHiddenType)._type = "List";
+    (lst as unknown as hasHiddenType)._type = `List`;
     return lst;
   }
 
