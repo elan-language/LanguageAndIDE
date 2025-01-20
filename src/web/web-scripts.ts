@@ -398,7 +398,7 @@ async function showError(err: Error, fileName: string, reset: boolean) {
 
 async function refreshAndDisplay(compileIfParsed: boolean, editingField: boolean) {
   file.refreshParseAndCompileStatuses(compileIfParsed);
-  if (file.readCompileStatus() === CompileStatus.ok) {
+  if (file.readCompileStatus() === CompileStatus.ok && file.hasTests) {
     runTests();
   }
   try {

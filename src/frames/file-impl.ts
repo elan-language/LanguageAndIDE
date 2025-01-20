@@ -69,6 +69,7 @@ export class FileImpl implements File, Scope {
   currentHash: string = "";
   isParent: boolean = true;
   hasFields: boolean = true;
+  hasTests: boolean = false;
   isFile: boolean = true;
   parseError?: string;
   readonly defaultFileName = "code.elan";
@@ -274,6 +275,8 @@ export class FileImpl implements File, Scope {
       }
 
       result = ss.join("\r\n");
+
+      this.hasTests = this._children.some((g) => g instanceof TestFrame);
     }
     return result;
   }
@@ -470,7 +473,7 @@ export class FileImpl implements File, Scope {
   }
 
   readTestStatus(): TestStatus {
-    return this._testStatus;
+    return this.hasTests ? this._testStatus : TestStatus.default;
   }
 
   getTestError(): Error | undefined {
