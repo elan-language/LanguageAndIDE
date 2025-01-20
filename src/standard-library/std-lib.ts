@@ -385,7 +385,7 @@ export class StdLib {
   }
 
   @elanFunction(["", "index", "value"], FunctionOptions.pureExtension, ElanList(ElanT1))
-  withInsert<T1>(
+  withInsertAt<T1>(
     @elanListType(ElanT1) list: T1[],
     @elanIntType() index: number,
     @elanGenericParamT1Type() value: T1,
@@ -477,7 +477,7 @@ export class StdLib {
   }
 
   @elanProcedure(["", "other"], ProcedureOptions.extension)
-  appendList<T1>(@elanArrayType(ElanT1) list: T1[], @elanArrayType(ElanT1) listB: T1[]) {
+  appendArray<T1>(@elanArrayType(ElanT1) list: T1[], @elanArrayType(ElanT1) listB: T1[]) {
     list.push(...listB);
   }
 
@@ -487,7 +487,7 @@ export class StdLib {
   }
 
   @elanProcedure(["", "other"], ProcedureOptions.extension)
-  prependList<T1>(@elanArrayType(ElanT1) list: T1[], @elanArrayType(ElanT1) listB: T1[]) {
+  prependArray<T1>(@elanArrayType(ElanT1) list: T1[], @elanArrayType(ElanT1) listB: T1[]) {
     list.unshift(...listB);
   }
 
@@ -1020,7 +1020,7 @@ export class StdLib {
   }
 
   @elanFunction(["", "regExp"], FunctionOptions.pureExtension)
-  testRegExp(a: string, r: RegExp): boolean {
+  matchesRegExp(a: string, r: RegExp): boolean {
     return r.test(a);
   }
 
