@@ -477,7 +477,7 @@ export class StdLib {
   }
 
   @elanProcedure(["", "other"], ProcedureOptions.extension)
-  appendList<T1>(@elanArrayType(ElanT1) list: T1[], @elanArrayType(ElanT1) listB: T1[]) {
+  appendArray<T1>(@elanArrayType(ElanT1) list: T1[], @elanArrayType(ElanT1) listB: T1[]) {
     list.push(...listB);
   }
 
@@ -487,7 +487,7 @@ export class StdLib {
   }
 
   @elanProcedure(["", "other"], ProcedureOptions.extension)
-  prependList<T1>(@elanArrayType(ElanT1) list: T1[], @elanArrayType(ElanT1) listB: T1[]) {
+  prependArray<T1>(@elanArrayType(ElanT1) list: T1[], @elanArrayType(ElanT1) listB: T1[]) {
     list.unshift(...listB);
   }
 

@@ -706,13 +706,13 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "65");
   });
 
-  test("Pass_appendList", async () => {
+  test("Pass_appendArray", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
   variable a set to [1,2]
   variable b set to [3,4]
-  call a.appendList(b)
+  call a.appendArray(b)
   print a
   print b
 end main`;
@@ -722,7 +722,7 @@ const global = new class {};
 async function main() {
   var a = system.literalArray([1, 2]);
   var b = system.literalArray([3, 4]);
-  _stdlib.appendList(a, b);
+  _stdlib.appendArray(a, b);
   system.printLine(_stdlib.asString(a));
   system.printLine(_stdlib.asString(b));
 }
@@ -737,13 +737,13 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[1, 2, 3, 4][3, 4]");
   });
 
-  test("Pass_prependList", async () => {
+  test("Pass_prependArray", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
   variable a set to [1,2]
   variable b set to [3,4]
-  call a.prependList(b)
+  call a.prependArray(b)
   print a
   print b
 end main`;
@@ -753,7 +753,7 @@ const global = new class {};
 async function main() {
   var a = system.literalArray([1, 2]);
   var b = system.literalArray([3, 4]);
-  _stdlib.prependList(a, b);
+  _stdlib.prependArray(a, b);
   system.printLine(_stdlib.asString(a));
   system.printLine(_stdlib.asString(b));
 }
