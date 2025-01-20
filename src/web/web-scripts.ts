@@ -855,9 +855,9 @@ async function localAndAutoSave(field: HTMLElement | undefined, editingField: bo
     // save to local store
 
     if (undoRedoHash !== file.currentHash && !undoRedoing) {
-      if (previousFileIndex !== -1 && previousFileIndex !== undoRedoFiles.length - 2) {
-        const trimedIds = undoRedoFiles.slice(previousFileIndex + 2);
-        undoRedoFiles = undoRedoFiles.slice(0, previousFileIndex + 2);
+      if (nextFileIndex !== -1 && nextFileIndex > currentFileIndex) {
+        const trimedIds = undoRedoFiles.slice(nextFileIndex);
+        undoRedoFiles = undoRedoFiles.slice(0, nextFileIndex);
 
         for (const id of trimedIds) {
           localStorage.removeItem(id);
