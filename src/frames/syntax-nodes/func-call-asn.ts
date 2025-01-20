@@ -4,6 +4,7 @@ import {
   mustBePublicMember,
   mustBePureFunctionSymbol,
   mustCallExtensionViaQualifier,
+  mustCallMemberViaQualifier,
 } from "../compile-rules";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstNode } from "../interfaces/ast-node";
@@ -91,6 +92,14 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
       mustCallExtensionViaQualifier(
         funcSymbolType,
         this.precedingNode,
+        this.compileErrors,
+        this.fieldId,
+      );
+
+      mustCallMemberViaQualifier(
+        funcSymbol.symbolId,
+        funcSymbolType,
+        this.updatedScope,
         this.compileErrors,
         this.fieldId,
       );

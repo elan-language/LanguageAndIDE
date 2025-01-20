@@ -6,6 +6,7 @@ import {
   mustBeProcedure,
   mustBePublicMember,
   mustCallExtensionViaQualifier,
+  mustCallMemberViaQualifier,
 } from "../compile-rules";
 import { ArgListField } from "../fields/arg-list-field";
 import { ProcRefField } from "../fields/proc-ref-field";
@@ -149,6 +150,13 @@ export class CallStatement extends AbstractFrame implements Statement {
 
       if (procSymbolType instanceof ProcedureType) {
         mustCallExtensionViaQualifier(procSymbolType, qualifier, this.compileErrors, this.htmlId);
+        mustCallMemberViaQualifier(
+          id,
+          procSymbolType,
+          currentScope,
+          this.compileErrors,
+          this.htmlId,
+        );
 
         if (procSymbolType.isExtension && qualifier instanceof QualifierAsn) {
           callParameters = [qualifier.value as AstNode].concat(callParameters);

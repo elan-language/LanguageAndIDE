@@ -1293,4 +1293,25 @@ end procedure`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Cannot pass 'f[0]' as an out parameter"]);
   });
+
+  test("Fail_IncorrectScope", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable f set to new Foo()
+  call f.bar()
+end main
+
+class Foo
+end class
+
+procedure bar()
+end procedure`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'bar' is not defined for type 'Foo'"]);
+  });
 });

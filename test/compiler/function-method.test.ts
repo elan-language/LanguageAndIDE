@@ -960,4 +960,26 @@ end class`;
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["May not set property: p1 in a function"]);
   });
+
+  test("Fail_IncorrectScope", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable f set to new Foo()
+  print f.bar()
+end main
+
+class Foo
+end class
+
+function bar() returns Int
+  return 0
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'bar' is not defined for type 'Foo'"]);
+  });
 });

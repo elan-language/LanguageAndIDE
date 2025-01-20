@@ -446,6 +446,21 @@ export function mustCallExtensionViaQualifier(
   }
 }
 
+export function mustCallMemberViaQualifier(
+  id: string,
+  ft: FunctionType | ProcedureType,
+  scope: Scope | undefined,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  if (!ft.isExtension && isClass(scope)) {
+    const t = scope.resolveOwnSymbol(id, transforms());
+    if (t instanceof UnknownSymbol) {
+      compileErrors.push(new UndefinedSymbolCompileError(id, scope.symbolId, location));
+    }
+  }
+}
+
 export function mustMatchParameters(
   parms: AstNode[],
   ofType: SymbolType[],
