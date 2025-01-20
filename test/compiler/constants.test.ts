@@ -559,4 +559,34 @@ end main
     assertStatusIsValid(fileImpl);
     assertDoesNotCompileWithId(fileImpl, "const1", ["Name 'a' not unique in scope"]);
   });
+  test("Pass_usingConstantAsKeyInConstantDictionary", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+constant a set to {openBrace: blue, closeBrace:red}
+main
+  print a
+end main
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {
+  a = system.dictionaryImmutable({[_stdlib.openBrace] : _stdlib.blue, [_stdlib.closeBrace] : _stdlib.red});
+
+};
+async function main() {
+  system.printLine(_stdlib.asString(global.a));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    //const symbols not yet implemented
+    //const varConst = fileImpl.getChildFloat(0);
+    //assertIsSymbol(varConst, "a", "Int");
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "{{:255, }:16711680}");
+  });
 });
