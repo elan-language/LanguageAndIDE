@@ -1020,7 +1020,7 @@ export class StdLib {
   }
 
   @elanFunction(["", "regExp"], FunctionOptions.pureExtension)
-  testRegExp(a: string, r: RegExp): boolean {
+  matchesRegExp(a: string, r: RegExp): boolean {
     return r.test(a);
   }
 

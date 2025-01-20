@@ -909,8 +909,8 @@ return [main, _tests];}`;
 main
   let s1 be "cbababbc"
   let s2 be "cbabdabbc"
-  let result1 be s1.testRegExp(/[a-c]*/)
-  let result2 be s2.testRegExp(/^[a-c]*$/)
+  let result1 be s1.matchesRegExp(/[a-c]*/)
+  let result2 be s2.matchesRegExp(/^[a-c]*$/)
   print result1
   print result2
 end main`;
@@ -920,8 +920,8 @@ const global = new class {};
 async function main() {
   const s1 = "cbababbc";
   const s2 = "cbabdabbc";
-  const result1 = _stdlib.testRegExp(s1, /[a-c]*/);
-  const result2 = _stdlib.testRegExp(s2, /^[a-c]*$/);
+  const result1 = _stdlib.matchesRegExp(s1, /[a-c]*/);
+  const result2 = _stdlib.matchesRegExp(s2, /^[a-c]*$/);
   system.printLine(_stdlib.asString(result1));
   system.printLine(_stdlib.asString(result2));
 }
