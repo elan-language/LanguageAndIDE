@@ -385,7 +385,7 @@ export class StdLib {
   }
 
   @elanFunction(["", "index", "value"], FunctionOptions.pureExtension, ElanList(ElanT1))
-  withInsert<T1>(
+  withInsertAt<T1>(
     @elanListType(ElanT1) list: T1[],
     @elanIntType() index: number,
     @elanGenericParamT1Type() value: T1,

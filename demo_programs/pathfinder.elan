@@ -1,4 +1,4 @@
-# 36a78020ee99914485f3a3e32ff105670e320e82ee83380ee6bb70733c32e5c5 Elan Beta 6 valid
+# FFFF Elan Beta 6 valid
 
 main
   let start be new Point(5, 5)
@@ -189,7 +189,7 @@ class Solver
       let previous be node.via
       let p be node.point
       set length to length + p.minDistTo(previous)
-      set route to route.withInsert(0, previous)
+      set route to route.withInsertAt(0, previous)
       set node to getNodeFor(previous)
     end repeat when node.point is property.start
     return (route, length)

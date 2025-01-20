@@ -742,12 +742,12 @@ end main
     assertDoesNotCompile(fileImpl, ["Incompatible types List<of String> to Array<of String>"]);
   });
 
-  test("Fail_withInsert", async () => {
+  test("Fail_withInsertAt", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
   variable a set to ["one", "two", "three"]
-  set a to a.withInsert(1, "TWO")
+  set a to a.withInsertAt(1, "TWO")
   print a
 end main
 `;

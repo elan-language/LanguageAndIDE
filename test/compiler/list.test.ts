@@ -341,13 +341,13 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "{one, TWO, three}{ONE, TWO, three}");
   });
 
-  test("Pass_withInsert", async () => {
+  test("Pass_withInsertAt", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
     variable a set to {"one", "two", "three"}
-    set a to a.withInsert(1, "TWO")
-    variable b set to a.withInsert(0, "ONE")
+    set a to a.withInsertAt(1, "TWO")
+    variable b set to a.withInsertAt(0, "ONE")
     print a
     print b
 end main`;
@@ -356,8 +356,8 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.list(["one", "two", "three"]);
-  a = _stdlib.withInsert(a, 1, "TWO");
-  let b = _stdlib.withInsert(a, 0, "ONE");
+  a = _stdlib.withInsertAt(a, 1, "TWO");
+  let b = _stdlib.withInsertAt(a, 0, "ONE");
   system.printLine(_stdlib.asString(a));
   system.printLine(_stdlib.asString(b));
 }
