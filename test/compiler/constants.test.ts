@@ -574,7 +574,7 @@ const global = new class {
 
 };
 async function main() {
-  system.printLine(_stdlib.asString(global.a));
+  system.printLine(global.a);
 }
 return [main, _tests];}`;
 
