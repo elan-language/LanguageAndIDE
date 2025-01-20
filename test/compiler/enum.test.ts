@@ -24,7 +24,7 @@ end main
 enum Fruit apple, orange, pear`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-var Fruit = {
+const Fruit = {
   _default : "apple", apple : "apple", orange : "orange", pear : "pear"
 };
 
@@ -56,7 +56,7 @@ end main
 enum Fruit apple, orange, pear`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-var Fruit = {
+const Fruit = {
   _default : "apple", apple : "apple", orange : "orange", pear : "pear"
 };
 
@@ -94,7 +94,7 @@ end class
 enum Fruit apple, orange, pear`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-var Fruit = {
+const Fruit = {
   _default : "apple", apple : "apple", orange : "orange", pear : "pear"
 };
 
@@ -142,7 +142,7 @@ end class
 enum Fruit apple, orange, pear`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-var Fruit = {
+const Fruit = {
   _default : "apple", apple : "apple", orange : "orange", pear : "pear"
 };
 
@@ -184,7 +184,7 @@ end main
 enum Fruit apple, orange, pear`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-var Fruit = {
+const Fruit = {
   _default : "apple", apple : "apple", orange : "orange", pear : "pear"
 };
 
@@ -217,7 +217,7 @@ end main
 enum Fruit apple, orange, pear`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-var Fruit = {
+const Fruit = {
   _default : "apple", apple : "apple", orange : "orange", pear : "pear"
 };
 
@@ -254,7 +254,7 @@ end function
 `;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-var Fruit = {
+const Fruit = {
   _default : "apple", apple : "apple", orange : "orange", pear : "pear"
 };
 
@@ -294,7 +294,7 @@ end function
 `;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-var Fruit = {
+const Fruit = {
   _default : "apple", apple : "apple", orange : "orange", pear : "pear"
 };
 
@@ -330,7 +330,7 @@ end main
 enum Fruit apple, orange, pear`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-var Fruit = {
+const Fruit = {
   _default : "apple", apple : "apple", orange : "orange", pear : "pear"
 };
 
@@ -361,7 +361,7 @@ end main
 enum Fruit apple, orange, pear`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-var Fruit = {
+const Fruit = {
   _default : "apple", apple : "apple", orange : "orange", pear : "pear"
 };
 
