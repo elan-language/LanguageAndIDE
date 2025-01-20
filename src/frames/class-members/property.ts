@@ -3,7 +3,7 @@ import { CodeSource } from "../code-source";
 import { mustBeKnownSymbolType, mustBeUniqueNameInScope } from "../compile-rules";
 import { IdentifierField } from "../fields/identifier-field";
 import { TypeField } from "../fields/type-field";
-import { privateHelp } from "../frame-helpers";
+import { privateHelp, processTogglePrivate } from "../frame-helpers";
 import { ConcreteClass } from "../globals/concrete-class";
 import { editorEvent } from "../interfaces/editor-event";
 import { ElanSymbol } from "../interfaces/elan-symbol";
@@ -95,6 +95,7 @@ ${this.indent()}}\r\n`;
     const priv = `${privateKeyword} `;
     if (source.isMatch(priv)) {
       source.remove(priv);
+      this.private = true;
     }
     source.remove(`${propertyKeyword} `);
     this.name.parseFrom(source);
@@ -123,14 +124,20 @@ ${this.indent()}}\r\n`;
   }
 
   processKey(e: editorEvent): boolean {
-    if (!this.getClass().isAbstract && e.key === "p" && e.modKey.control) {
-      this.private = !this.private;
-      return true;
+    let result = false;
+    if (this.canBePrivate() && processTogglePrivate(this, e)) {
+      result = true;
     } else {
-      return super.processKey(e);
+      result = super.processKey(e);
     }
+    return result;
   }
   privateHelp(): string {
-    return privateHelp(this, propertyKeyword);
+    return this.canBePrivate() ? privateHelp(this, propertyKeyword) : "";
+  }
+
+  private canBePrivate(): boolean {
+    const parent = this.getClass();
+    return !parent.isRecord;
   }
 }
