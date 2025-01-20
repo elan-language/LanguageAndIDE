@@ -27,7 +27,7 @@ const global = new class {
 
 };
 async function main() {
-  system.printLine(_stdlib.asString(global.a));
+  system.printLine(global.a);
 }
 return [main, _tests];}`;
 
@@ -59,7 +59,7 @@ const global = new class {
 
 };
 async function main() {
-  system.printLine(_stdlib.asString(global.a));
+  system.printLine(global.a);
 }
 return [main, _tests];}`;
 
@@ -84,7 +84,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.dictionaryImmutable({["a"] : 1, ["b"] : 3, ["z"] : 10});
-  system.printLine(_stdlib.asString(a));
+  system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -111,7 +111,7 @@ const global = new class {
 
 };
 async function main() {
-  system.printLine(_stdlib.asString(system.safeIndex(global.a, "z")));
+  system.printLine(system.safeIndex(global.a, "z"));
 }
 return [main, _tests];}`;
 
@@ -142,7 +142,7 @@ const global = new class {
 async function main() {
   let b = system.emptyImmutableList();
   b = _stdlib.keys(global.a);
-  system.printLine(_stdlib.asString(b));
+  system.printLine(b);
 }
 return [main, _tests];}`;
 
@@ -170,8 +170,8 @@ const global = new class {
 
 };
 async function main() {
-  system.printLine(_stdlib.asString(_stdlib.hasKey(global.a, "b")));
-  system.printLine(_stdlib.asString(_stdlib.hasKey(global.a, "d")));
+  system.printLine(_stdlib.hasKey(global.a, "b"));
+  system.printLine(_stdlib.hasKey(global.a, "d"));
 }
 return [main, _tests];}`;
 
@@ -198,7 +198,7 @@ const global = new class {
 
 };
 async function main() {
-  system.printLine(_stdlib.asString(_stdlib.values(global.a)));
+  system.printLine(_stdlib.values(global.a));
 }
 return [main, _tests];}`;
 
@@ -230,8 +230,8 @@ const global = new class {
 async function main() {
   let b = _stdlib.withPutAtKey(global.a, "b", 4);
   let c = _stdlib.withPutAtKey(b, "d", 2);
-  system.printLine(_stdlib.asString(global.a));
-  system.printLine(_stdlib.asString(c));
+  system.printLine(global.a);
+  system.printLine(c);
 }
 return [main, _tests];}`;
 
@@ -261,8 +261,8 @@ const global = new class {
 };
 async function main() {
   let b = _stdlib.withRemoveAtKey(global.a, "b");
-  system.printLine(_stdlib.asString(global.a));
-  system.printLine(_stdlib.asString(b));
+  system.printLine(global.a);
+  system.printLine(b);
 }
 return [main, _tests];}`;
 
@@ -291,7 +291,7 @@ const global = new class {
 };
 async function main() {
   let b = _stdlib.withRemoveAtKey(global.a, "c");
-  system.printLine(_stdlib.asString(b));
+  system.printLine(b);
 }
 return [main, _tests];}`;
 
@@ -324,9 +324,9 @@ async function main() {
   let b = _stdlib.withPutAtKey(a, "Foo", 1);
   b = _stdlib.withPutAtKey(b, "Bar", 3);
   let k = _stdlib.keys(b);
-  system.printLine(_stdlib.asString(_stdlib.length(k)));
-  system.printLine(_stdlib.asString(system.safeIndex(b, "Foo")));
-  system.printLine(_stdlib.asString(system.safeIndex(b, "Bar")));
+  system.printLine(_stdlib.length(k));
+  system.printLine(system.safeIndex(b, "Foo"));
+  system.printLine(system.safeIndex(b, "Bar"));
 }
 return [main, _tests];}`;
 
@@ -365,9 +365,9 @@ async function main() {
   let b = _stdlib.withPutAtKey(a, Fruit.apple, 1);
   b = _stdlib.withPutAtKey(b, Fruit.orange, 3);
   let k = _stdlib.keys(b);
-  system.printLine(_stdlib.asString(_stdlib.length(k)));
-  system.printLine(_stdlib.asString(system.safeIndex(b, Fruit.apple)));
-  system.printLine(_stdlib.asString(system.safeIndex(b, Fruit.orange)));
+  system.printLine(_stdlib.length(k));
+  system.printLine(system.safeIndex(b, Fruit.apple));
+  system.printLine(system.safeIndex(b, Fruit.orange));
 }
 return [main, _tests];}`;
 
@@ -400,11 +400,11 @@ async function main() {
   let a = system.emptyDictionaryImmutable();
   let b = system.emptyDictionaryImmutable();
   b = _stdlib.withPutAtKey(a, "a", 1);
-  system.printLine(_stdlib.asString(a));
-  system.printLine(_stdlib.asString(b));
-  system.printLine(_stdlib.asString(system.objectEquals(a, b)));
-  system.printLine(_stdlib.asString(system.objectEquals(a, system.emptyDictionaryImmutable())));
-  system.printLine(_stdlib.asString(system.objectEquals(b, system.emptyDictionaryImmutable())));
+  system.printLine(a);
+  system.printLine(b);
+  system.printLine(system.objectEquals(a, b));
+  system.printLine(system.objectEquals(a, system.emptyDictionaryImmutable()));
+  system.printLine(system.objectEquals(b, system.emptyDictionaryImmutable()));
 }
 return [main, _tests];}`;
 

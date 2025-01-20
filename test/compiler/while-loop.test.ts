@@ -30,7 +30,7 @@ async function main() {
   while (x < 10) {
     x = x + 1;
   }
-  system.printLine(_stdlib.asString(x));
+  system.printLine(x);
 }
 return [main, _tests];}`;
 
@@ -73,7 +73,7 @@ async function main() {
     }
     x = x + 1;
   }
-  system.printLine(_stdlib.asString(t));
+  system.printLine(t);
 }
 return [main, _tests];}`;
 

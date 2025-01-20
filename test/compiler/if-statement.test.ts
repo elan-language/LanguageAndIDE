@@ -29,9 +29,9 @@ const global = new class {};
 async function main() {
   let a = _stdlib.true;
   if (a) {
-    system.printLine(_stdlib.asString("yes"));
+    system.printLine("yes");
   } else {
-    system.printLine(_stdlib.asString("no"));
+    system.printLine("no");
   }
 }
 return [main, _tests];}`;
@@ -62,9 +62,9 @@ const global = new class {};
 async function main() {
   let a = _stdlib.false;
   if (a) {
-    system.printLine(_stdlib.asString("yes"));
+    system.printLine("yes");
   } else {
-    system.printLine(_stdlib.asString("no"));
+    system.printLine("no");
   }
 }
 return [main, _tests];}`;
@@ -97,11 +97,11 @@ const global = new class {};
 async function main() {
   let a = 2;
   if (a === 1) {
-    system.printLine(_stdlib.asString("one"));
+    system.printLine("one");
   } else if (a === 2) {
-    system.printLine(_stdlib.asString("two"));
+    system.printLine("two");
   } else {
-    system.printLine(_stdlib.asString("neither"));
+    system.printLine("neither");
   }
 }
 return [main, _tests];}`;
@@ -134,11 +134,11 @@ const global = new class {};
 async function main() {
   let a = 3;
   if (a === 1) {
-    system.printLine(_stdlib.asString("one"));
+    system.printLine("one");
   } else if (a === 2) {
-    system.printLine(_stdlib.asString("two"));
+    system.printLine("two");
   } else {
-    system.printLine(_stdlib.asString("neither"));
+    system.printLine("neither");
   }
 }
 return [main, _tests];}`;
@@ -167,7 +167,7 @@ const global = new class {};
 async function main() {
   let a = _stdlib.true;
   if (a) {
-    system.printLine(_stdlib.asString("yes"));
+    system.printLine("yes");
   }
 }
 return [main, _tests];}`;
@@ -202,13 +202,13 @@ const global = new class {};
 async function main() {
   let a = 3;
   if (a === 1) {
-    system.printLine(_stdlib.asString("one"));
+    system.printLine("one");
   } else if (a === 2) {
-    system.printLine(_stdlib.asString("two"));
+    system.printLine("two");
   } else if (a === 3) {
-    system.printLine(_stdlib.asString("three"));
+    system.printLine("three");
   } else {
-    system.printLine(_stdlib.asString("neither"));
+    system.printLine("neither");
   }
 }
 return [main, _tests];}`;
@@ -241,11 +241,11 @@ const global = new class {};
 async function main() {
   let a = 3;
   if (a === 1) {
-    system.printLine(_stdlib.asString("one"));
+    system.printLine("one");
   } else if (a === 2) {
-    system.printLine(_stdlib.asString("two"));
+    system.printLine("two");
   } else if (a === 3) {
-    system.printLine(_stdlib.asString("three"));
+    system.printLine("three");
   }
 }
 return [main, _tests];}`;

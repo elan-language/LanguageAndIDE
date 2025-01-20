@@ -56,9 +56,9 @@ end class`;
 const global = new class {};
 async function main() {
   let g = system.initialise(new Game());
-  system.printLine(_stdlib.asString(g.p2));
-  system.printLine(_stdlib.asString(g.p1));
-  system.printLine(_stdlib.asString(g.previousScores));
+  system.printLine(g.p2);
+  system.printLine(g.p1);
+  system.printLine(g.previousScores);
 }
 
 class Game {
@@ -140,8 +140,8 @@ end class`;
 const global = new class {};
 async function main() {
   let g = system.initialise(new Foo());
-  system.printLine(_stdlib.asString(g.p1));
-  system.printLine(_stdlib.asString(g.p2));
+  system.printLine(g.p1);
+  system.printLine(g.p2);
 }
 
 class Foo {
@@ -211,17 +211,17 @@ end class`;
 const global = new class {};
 async function main() {
   let g = system.initialise(new Game());
-  system.printLine(_stdlib.asString(g.i));
-  system.printLine(_stdlib.asString(g.f));
-  system.printLine(_stdlib.asString(g.b));
-  system.printLine(_stdlib.asString(g.s));
-  system.printLine(_stdlib.asString(g.li));
-  system.printLine(_stdlib.asString(g.ds));
-  system.printLine(_stdlib.asString(g.dsi));
-  system.printLine(_stdlib.asString(g.ai));
-  system.printLine(_stdlib.asString(g.t));
-  system.printLine(_stdlib.asString(g.ff("a", "b")));
-  system.printLine(_stdlib.asString(_stdlib.matchesRegExp("aa", g.r)));
+  system.printLine(g.i);
+  system.printLine(g.f);
+  system.printLine(g.b);
+  system.printLine(g.s);
+  system.printLine(g.li);
+  system.printLine(g.ds);
+  system.printLine(g.dsi);
+  system.printLine(g.ai);
+  system.printLine(g.t);
+  system.printLine(g.ff("a", "b"));
+  system.printLine(_stdlib.matchesRegExp("aa", g.r));
 }
 
 class Game {
@@ -319,16 +319,16 @@ const global = new class {};
 async function main() {
   let p = system.initialise(new Player());
   let g = p.g;
-  system.printLine(_stdlib.asString(g.i));
-  system.printLine(_stdlib.asString(g.f));
-  system.printLine(_stdlib.asString(g.b));
-  system.printLine(_stdlib.asString(g.s));
-  system.printLine(_stdlib.asString(g.li));
-  system.printLine(_stdlib.asString(g.ds));
-  system.printLine(_stdlib.asString(g.dsi));
-  system.printLine(_stdlib.asString(g.ai));
-  system.printLine(_stdlib.asString(g.t));
-  system.printLine(_stdlib.asString(g.r));
+  system.printLine(g.i);
+  system.printLine(g.f);
+  system.printLine(g.b);
+  system.printLine(g.s);
+  system.printLine(g.li);
+  system.printLine(g.ds);
+  system.printLine(g.dsi);
+  system.printLine(g.ai);
+  system.printLine(g.t);
+  system.printLine(g.r);
 }
 
 class Player {
@@ -414,7 +414,7 @@ end class`;
 const global = new class {};
 async function main() {
   let g = Game.emptyInstance();
-  system.printLine(_stdlib.asString(g.i));
+  system.printLine(g.i);
 }
 
 class Game {
@@ -480,8 +480,8 @@ end class`;
 const global = new class {};
 async function main() {
   let g = system.initialise(new Game());
-  system.printLine(_stdlib.asString(g.p1));
-  system.printLine(_stdlib.asString(g.previousGame));
+  system.printLine(g.p1);
+  system.printLine(g.previousGame);
 }
 
 class Game {
@@ -590,13 +590,13 @@ end class`;
 const global = new class {};
 async function main() {
   let g = system.initialise(new Game());
-  system.printLine(_stdlib.asString(system.objectEquals(g.p1, Player.emptyInstance())));
-  system.printLine(_stdlib.asString(system.objectEquals(g.p2, Player.emptyInstance())));
-  system.printLine(_stdlib.asString(system.objectEquals(g.previousGame, Game.emptyInstance())));
-  system.printLine(_stdlib.asString(system.objectEquals(g.previousScores, system.emptyImmutableList())));
-  system.printLine(_stdlib.asString(g.score === 0));
-  system.printLine(_stdlib.asString(g.best === 0));
-  system.printLine(_stdlib.asString(g.r === system.emptyRegExp()));
+  system.printLine(system.objectEquals(g.p1, Player.emptyInstance()));
+  system.printLine(system.objectEquals(g.p2, Player.emptyInstance()));
+  system.printLine(system.objectEquals(g.previousGame, Game.emptyInstance()));
+  system.printLine(system.objectEquals(g.previousScores, system.emptyImmutableList()));
+  system.printLine(g.score === 0);
+  system.printLine(g.best === 0);
+  system.printLine(g.r === system.emptyRegExp());
 }
 
 class Game {
@@ -719,9 +719,9 @@ end class`;
 const global = new class {};
 async function main() {
   let g = system.initialise(new Game());
-  system.printLine(_stdlib.asString(g.score));
+  system.printLine(g.score);
   await g.setScore(0);
-  system.printLine(_stdlib.asString(g.score));
+  system.printLine(g.score);
 }
 
 class Game {
@@ -828,14 +828,14 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(new Foo());
-  system.printLine(_stdlib.asString(f.a));
-  system.printLine(_stdlib.asString(f.b));
-  system.printLine(_stdlib.asString(f.c));
-  system.printLine(_stdlib.asString(f.d));
-  system.printLine(_stdlib.asString(system.objectEquals(f.a, system.emptyImmutableList())));
-  system.printLine(_stdlib.asString(f.b === ""));
-  system.printLine(_stdlib.asString(system.objectEquals(f.c, system.emptyDictionary())));
-  system.printLine(_stdlib.asString(system.objectEquals(f.d, system.emptyArray())));
+  system.printLine(f.a);
+  system.printLine(f.b);
+  system.printLine(f.c);
+  system.printLine(f.d);
+  system.printLine(system.objectEquals(f.a, system.emptyImmutableList()));
+  system.printLine(f.b === "");
+  system.printLine(system.objectEquals(f.c, system.emptyDictionary()));
+  system.printLine(system.objectEquals(f.d, system.emptyArray()));
 }
 
 class Foo {
@@ -900,7 +900,7 @@ const global = new class {};
 async function main() {
   let g = system.initialise(new Game());
   let p = g.p1;
-  system.printLine(_stdlib.asString(p.ucName()));
+  system.printLine(p.ucName());
 }
 
 class Game {
@@ -996,7 +996,7 @@ class Game {
   async something() {
     let a = 1;
     a = system.safeIndex(this.p1, 0);
-    system.printLine(_stdlib.asString(a));
+    system.printLine(a);
   }
 
 }
@@ -1049,7 +1049,7 @@ async function main() {
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
   async pp() {
-    system.printLine(_stdlib.asString(1));
+    system.printLine(1);
   }
 
 }

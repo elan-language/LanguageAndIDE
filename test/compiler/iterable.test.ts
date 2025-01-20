@@ -34,7 +34,7 @@ async function main() {
 
 async function printEach(target) {
   for (const x of target) {
-    system.printLine(_stdlib.asString(x));
+    system.printLine(x);
   }
 }
 global["printEach"] = printEach;
@@ -65,7 +65,7 @@ end function`;
 const global = new class {};
 async function main() {
   let it = system.list(["one", "two"]);
-  system.printLine(_stdlib.asString(printEach(it)));
+  system.printLine(printEach(it));
 }
 
 function printEach(target) {
@@ -103,7 +103,7 @@ async function main() {
   let lst = system.list(["one", "two"]);
   let it = printEach(lst);
   lst = _stdlib.asList(it);
-  system.printLine(_stdlib.asString(lst));
+  system.printLine(lst);
 }
 
 function printEach(target) {
@@ -144,7 +144,7 @@ async function main() {
 
 async function printEach(target) {
   for (const x of target) {
-    system.printLine(_stdlib.asString(x));
+    system.printLine(x);
   }
 }
 global["printEach"] = printEach;
@@ -182,7 +182,7 @@ async function main() {
 
 async function printEach(target) {
   for (const x of target) {
-    system.printLine(_stdlib.asString(x));
+    system.printLine(x);
   }
 }
 global["printEach"] = printEach;
@@ -224,13 +224,13 @@ async function main() {
 }
 
 async function printAsIterable(target) {
-  system.printLine(_stdlib.asString(target));
+  system.printLine(target);
 }
 global["printAsIterable"] = printAsIterable;
 
 async function printasList(target) {
   let some = _stdlib.asList(target);
-  system.printLine(_stdlib.asString(system.list(some.slice(3, 7))));
+  system.printLine(system.list(some.slice(3, 7)));
 }
 global["printasList"] = printasList;
 return [main, _tests];}`;
@@ -267,7 +267,7 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(new Foo());
-  system.printLine(_stdlib.asString(f.it));
+  system.printLine(f.it);
 }
 
 class Foo {
@@ -326,11 +326,11 @@ async function main() {
   let foo = system.initialise(new Foo());
   let foo1 = system.initialise(new Foo());
   await foo.update();
-  system.printLine(_stdlib.asString(foo.i));
-  system.printLine(_stdlib.asString(foo1.i));
-  system.printLine(_stdlib.asString(system.objectEquals(foo.i, foo1.i)));
-  system.printLine(_stdlib.asString(system.objectEquals(foo.i, system.emptyIter())));
-  system.printLine(_stdlib.asString(system.objectEquals(foo1.i, system.emptyIter())));
+  system.printLine(foo.i);
+  system.printLine(foo1.i);
+  system.printLine(system.objectEquals(foo.i, foo1.i));
+  system.printLine(system.objectEquals(foo.i, system.emptyIter()));
+  system.printLine(system.objectEquals(foo1.i, system.emptyIter()));
 }
 
 class Foo {

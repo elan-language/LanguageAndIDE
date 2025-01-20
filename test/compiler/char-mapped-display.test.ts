@@ -86,7 +86,7 @@ const global = new class {};
 async function main() {
   let g = system.initialise(new _stdlib.BlockGraphics());
   g = g.withText(10, 20, "a", 1, 2);
-  system.printLine(_stdlib.asString(g.getChar(10, 20)));
+  system.printLine(g.getChar(10, 20));
 }
 return [main, _tests];}`;
 
@@ -113,7 +113,7 @@ const global = new class {};
 async function main() {
   let g = system.initialise(new _stdlib.BlockGraphics());
   g = g.withText(10, 20, "a", 1, 2);
-  system.printLine(_stdlib.asString(g.getForeground(10, 20)));
+  system.printLine(g.getForeground(10, 20));
 }
 return [main, _tests];}`;
 
@@ -171,7 +171,7 @@ const global = new class {};
 async function main() {
   let g = system.initialise(new _stdlib.BlockGraphics());
   g = g.withText(10, 20, "a", 1, 2);
-  system.printLine(_stdlib.asString(g.getBackground(10, 20)));
+  system.printLine(g.getBackground(10, 20));
 }
 return [main, _tests];}`;
 
@@ -225,7 +225,7 @@ const global = new class {};
 async function main() {
   let gr = system.initialise(new _stdlib.BlockGraphics());
   let a = await _stdlib.getKey();
-  system.printLine(_stdlib.asString(a));
+  system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -252,7 +252,7 @@ const global = new class {};
 async function main() {
   let gr = system.initialise(new _stdlib.BlockGraphics());
   let a = await _stdlib.getKeyWithModifier();
-  system.printLine(_stdlib.asString(a));
+  system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -334,7 +334,7 @@ const global = new class {};
 async function main() {
   let foo = system.initialise(new Foo());
   let a = foo.p;
-  system.printLine(_stdlib.asString(a));
+  system.printLine(a);
 }
 
 class Foo {

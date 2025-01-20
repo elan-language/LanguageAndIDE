@@ -23,7 +23,7 @@ end main`;
 const global = new class {};
 async function main() {
   let bReak = 2;
-  system.printLine(_stdlib.asString(bReak));
+  system.printLine(bReak);
 }
 return [main, _tests];}`;
 
@@ -56,7 +56,7 @@ end class`;
 const global = new class {};
 async function main() {
   let foo = system.initialise(new Foo());
-  system.printLine(_stdlib.asString(foo));
+  system.printLine(foo);
 }
 
 class Foo {

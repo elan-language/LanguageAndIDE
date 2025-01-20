@@ -33,7 +33,7 @@ async function main() {
 }
 
 async function printModified(i, f) {
-  system.printLine(_stdlib.asString(f(i)));
+  system.printLine(f(i));
 }
 global["printModified"] = printModified;
 
@@ -74,7 +74,7 @@ async function main() {
 }
 
 async function printModified(i, f) {
-  system.printLine(_stdlib.asString(f()));
+  system.printLine(f());
 }
 global["printModified"] = printModified;
 
@@ -115,7 +115,7 @@ async function main() {
 }
 
 async function printIt(s, c, f) {
-  system.printLine(_stdlib.asString(f(s, c)));
+  system.printLine(f(s, c));
 }
 global["printIt"] = printIt;
 
@@ -154,7 +154,7 @@ end function`;
 const global = new class {};
 async function main() {
   let f = getFunc();
-  system.printLine(_stdlib.asString(f(5)));
+  system.printLine(f(5));
 }
 
 function getFunc() {
@@ -193,7 +193,7 @@ end function`;
 const global = new class {};
 async function main() {
   let f = twice;
-  system.printLine(_stdlib.asString(f(5)));
+  system.printLine(f(5));
 }
 
 function twice(x) {
@@ -236,7 +236,7 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(new Foo(ff));
-  system.printLine(_stdlib.asString(f.pf(5)));
+  system.printLine(f.pf(5));
 }
 
 function ff(a) {
@@ -278,7 +278,7 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(_stdlib.asString(ff));
+  system.printLine(ff);
 }
 
 function ff(a) {

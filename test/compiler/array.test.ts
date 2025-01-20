@@ -25,7 +25,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.literalArray([4, 5, 6, 7, 8]);
-  system.printLine(_stdlib.asString(a));
+  system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -50,7 +50,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.initialise(system.array(new Array()));
-  system.printLine(_stdlib.asString(_stdlib.length(a)));
+  system.printLine(_stdlib.length(a));
 }
 return [main, _tests];}`;
 
@@ -76,8 +76,8 @@ end main`;
 const global = new class {};
 async function main() {
   let a = _stdlib.createArray(3, "");
-  system.printLine(_stdlib.asString(_stdlib.length(system.safeIndex(a, 0))));
-  system.printLine(_stdlib.asString(a));
+  system.printLine(_stdlib.length(system.safeIndex(a, 0)));
+  system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -109,7 +109,7 @@ const Fruit = {
 const global = new class {};
 async function main() {
   let a = _stdlib.createArray(3, Fruit.apple);
-  system.printLine(_stdlib.asString(a));
+  system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -136,7 +136,7 @@ const global = new class {};
 async function main() {
   let a = system.literalArray([1, 2, 3]);
   _stdlib.putAt(a, 0, system.safeIndex(a, 1));
-  system.printLine(_stdlib.asString(a));
+  system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -215,8 +215,8 @@ async function main() {
   let a = _stdlib.createArray(3, "");
   _stdlib.putAt(a, 0, "foo");
   _stdlib.putAt(a, 2, "yon");
-  system.printLine(_stdlib.asString(system.safeIndex(a, 0)));
-  system.printLine(_stdlib.asString(system.safeIndex(a, 2)));
+  system.printLine(system.safeIndex(a, 0));
+  system.printLine(system.safeIndex(a, 2));
 }
 return [main, _tests];}`;
 
@@ -243,7 +243,7 @@ const global = new class {};
 async function main() {
   let a = system.literalArray(["foo", "bar", "yon"]);
   a = system.array(a.slice(1));
-  system.printLine(_stdlib.asString(a));
+  system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -273,8 +273,8 @@ async function main() {
   let a = _stdlib.createArray(3, "");
   _stdlib.append(a, "foo");
   _stdlib.append(a, "yon");
-  system.printLine(_stdlib.asString(system.safeIndex(a, 3)));
-  system.printLine(_stdlib.asString(system.safeIndex(a, 4)));
+  system.printLine(system.safeIndex(a, 3));
+  system.printLine(system.safeIndex(a, 4));
 }
 return [main, _tests];}`;
 
@@ -312,8 +312,8 @@ async function main() {
   let d = "";
   c = system.safeIndex(a, 3);
   d = system.safeIndex(a, 4);
-  system.printLine(_stdlib.asString(c));
-  system.printLine(_stdlib.asString(d));
+  system.printLine(c);
+  system.printLine(d);
 }
 return [main, _tests];}`;
 
@@ -342,7 +342,7 @@ async function main() {
   let a = system.literalArray(["one", "two", "three"]);
   _stdlib.insertAt(a, 1, "foo");
   _stdlib.insertAt(a, 3, "yon");
-  system.printLine(_stdlib.asString(a));
+  system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -371,7 +371,7 @@ async function main() {
   let a = system.literalArray(["one", "two", "three"]);
   _stdlib.removeAt(a, 0);
   _stdlib.removeAt(a, 1);
-  system.printLine(_stdlib.asString(a));
+  system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -398,7 +398,7 @@ const global = new class {};
 async function main() {
   let a = system.literalArray(["one", "two", "three", "one", "two", "three"]);
   _stdlib.removeFirst(a, "two");
-  system.printLine(_stdlib.asString(a));
+  system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -425,7 +425,7 @@ const global = new class {};
 async function main() {
   let a = system.literalArray(["one", "two", "three", "one", "two", "three"]);
   _stdlib.removeAll(a, "two");
-  system.printLine(_stdlib.asString(a));
+  system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -450,7 +450,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = _stdlib.asArray(system.list(["foo", "bar", "yon"]));
-  system.printLine(_stdlib.asString(_stdlib.length(a)));
+  system.printLine(_stdlib.length(a));
 }
 return [main, _tests];}`;
 
@@ -483,11 +483,11 @@ async function main() {
   let a = system.emptyArray();
   let b = system.emptyArray();
   _stdlib.append(a, 3);
-  system.printLine(_stdlib.asString(a));
-  system.printLine(_stdlib.asString(b));
-  system.printLine(_stdlib.asString(system.objectEquals(a, b)));
-  system.printLine(_stdlib.asString(system.objectEquals(a, system.emptyArray())));
-  system.printLine(_stdlib.asString(system.objectEquals(b, system.emptyArray())));
+  system.printLine(a);
+  system.printLine(b);
+  system.printLine(system.objectEquals(a, b));
+  system.printLine(system.objectEquals(a, system.emptyArray()));
+  system.printLine(system.objectEquals(b, system.emptyArray()));
 }
 return [main, _tests];}`;
 
@@ -931,7 +931,7 @@ async function main() {
   let foo1 = foo;
   let body = system.literalArray([foo, foo1]);
   let foo2 = system.safeIndex(body, 0);
-  system.printLine(_stdlib.asString(foo2(1)));
+  system.printLine(foo2(1));
 }
 
 function foo(i) {
@@ -963,7 +963,7 @@ const global = new class {};
 async function main() {
   let arr = system.literalArray([_stdlib.sqrt]);
   let s0 = system.safeIndex(arr, 0);
-  system.printLine(_stdlib.asString(s0(4)));
+  system.printLine(s0(4));
 }
 return [main, _tests];}`;
 

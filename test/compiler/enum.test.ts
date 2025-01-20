@@ -30,9 +30,9 @@ const Fruit = {
 
 const global = new class {};
 async function main() {
-  system.printLine(_stdlib.asString(Fruit.apple));
-  system.printLine(_stdlib.asString(Fruit.orange));
-  system.printLine(_stdlib.asString(Fruit.pear));
+  system.printLine(Fruit.apple);
+  system.printLine(Fruit.orange);
+  system.printLine(Fruit.pear);
 }
 return [main, _tests];}`;
 
@@ -63,7 +63,7 @@ const Fruit = {
 const global = new class {};
 async function main() {
   let e = Fruit._default;
-  system.printLine(_stdlib.asString(e));
+  system.printLine(e);
 }
 return [main, _tests];}`;
 
@@ -101,7 +101,7 @@ const Fruit = {
 const global = new class {};
 async function main() {
   let foo = system.initialise(new Foo());
-  system.printLine(_stdlib.asString(foo.fruit));
+  system.printLine(foo.fruit);
 }
 
 class Foo {
@@ -149,7 +149,7 @@ const Fruit = {
 const global = new class {};
 async function main() {
   let foo = Foo.emptyInstance();
-  system.printLine(_stdlib.asString(foo.fruit));
+  system.printLine(foo.fruit);
 }
 
 class Foo {
@@ -192,7 +192,7 @@ const global = new class {};
 async function main() {
   let x = Fruit.apple;
   x = Fruit.pear;
-  system.printLine(_stdlib.asString(x));
+  system.printLine(x);
 }
 return [main, _tests];}`;
 
@@ -225,7 +225,7 @@ const global = new class {};
 async function main() {
   let x = Fruit.apple;
   let y = x;
-  system.printLine(_stdlib.asString(y));
+  system.printLine(y);
 }
 return [main, _tests];}`;
 
@@ -260,8 +260,8 @@ const Fruit = {
 
 const global = new class {};
 async function main() {
-  system.printLine(_stdlib.asString(isFavourite(Fruit.apple)));
-  system.printLine(_stdlib.asString(isFavourite(Fruit.pear)));
+  system.printLine(isFavourite(Fruit.apple));
+  system.printLine(isFavourite(Fruit.pear));
 }
 
 function isFavourite(f) {
@@ -300,7 +300,7 @@ const Fruit = {
 
 const global = new class {};
 async function main() {
-  system.printLine(_stdlib.asString(system.objectEquals(firstFruit(), Fruit.apple)));
+  system.printLine(system.objectEquals(firstFruit(), Fruit.apple));
 }
 
 function firstFruit() {
@@ -337,8 +337,8 @@ const Fruit = {
 const global = new class {};
 async function main() {
   let x = Fruit.apple;
-  system.printLine(_stdlib.asString(system.objectEquals(x, Fruit.apple)));
-  system.printLine(_stdlib.asString(system.objectEquals(x, Fruit.pear)));
+  system.printLine(system.objectEquals(x, Fruit.apple));
+  system.printLine(system.objectEquals(x, Fruit.pear));
 }
 return [main, _tests];}`;
 
@@ -368,7 +368,7 @@ const Fruit = {
 const global = new class {};
 async function main() {
   let a = "Eat more " + Fruit.apple + "s!";
-  system.printLine(_stdlib.asString(a));
+  system.printLine(a);
 }
 return [main, _tests];}`;
 

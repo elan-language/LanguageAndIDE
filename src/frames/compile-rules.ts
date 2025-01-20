@@ -33,6 +33,7 @@ import {
   RedefinedCompileError,
   SignatureCompileError,
   SyntaxCompileError,
+  ThisCompileError,
   TypeCompileError,
   TypesCompileError,
   UndefinedSymbolCompileError,
@@ -424,6 +425,10 @@ export function mustBeClass(symbol: ElanSymbol, compileErrors: CompileError[], l
     const unknown = st instanceof UnknownType;
     compileErrors.push(new TypeCompileError("Class", location, unknown));
   }
+}
+
+export function mustBeInsideClass(compileErrors: CompileError[], location: string) {
+  compileErrors.push(new ThisCompileError(location));
 }
 
 export function mustBeDeclaredAbove(name: string, compileErrors: CompileError[], location: string) {

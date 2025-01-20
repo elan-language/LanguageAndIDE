@@ -25,7 +25,7 @@ end main`;
 const global = new class {};
 async function main() {
   let pi = _stdlib.pi;
-  system.printLine(_stdlib.asString(pi));
+  system.printLine(pi);
 }
 return [main, _tests];}`;
 
@@ -56,8 +56,8 @@ const global = new class {
 };
 async function main() {
   let f = 2;
-  system.printLine(_stdlib.asString(f));
-  system.printLine(_stdlib.asString(global.f));
+  system.printLine(f);
+  system.printLine(global.f);
 }
 return [main, _tests];}`;
 
@@ -82,7 +82,7 @@ end main`;
 const global = new class {};
 async function main() {
   const pi = _stdlib.pi;
-  system.printLine(_stdlib.asString(pi));
+  system.printLine(pi);
 }
 return [main, _tests];}`;
 
@@ -113,8 +113,8 @@ const global = new class {
 };
 async function main() {
   const f = 2;
-  system.printLine(_stdlib.asString(f));
-  system.printLine(_stdlib.asString(global.f));
+  system.printLine(f);
+  system.printLine(global.f);
 }
 return [main, _tests];}`;
 
@@ -155,10 +155,10 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(new Foo());
-  system.printLine(_stdlib.asString(f.sin(1)));
-  system.printLine(_stdlib.asString(sin(1)));
-  system.printLine(_stdlib.asString(global.sin(1)));
-  system.printLine(_stdlib.asString(_stdlib.sin(1)));
+  system.printLine(f.sin(1));
+  system.printLine(sin(1));
+  system.printLine(global.sin(1));
+  system.printLine(_stdlib.sin(1));
 }
 
 function sin(x) {
@@ -223,7 +223,7 @@ async function main() {
 }
 
 async function pause(x) {
-  system.printLine(_stdlib.asString(111));
+  system.printLine(111);
 }
 global["pause"] = pause;
 
@@ -234,7 +234,7 @@ class Foo {
   }
 
   async pause(x) {
-    system.printLine(_stdlib.asString(222));
+    system.printLine(222);
   }
 
 }
@@ -266,8 +266,8 @@ end function`;
 const global = new class {};
 async function main() {
   let sin = 2;
-  system.printLine(_stdlib.asString(sin));
-  system.printLine(_stdlib.asString(global.sin(1)));
+  system.printLine(sin);
+  system.printLine(global.sin(1));
 }
 
 function sin(x) {
@@ -302,12 +302,12 @@ end procedure`;
 const global = new class {};
 async function main() {
   let sin = 2;
-  system.printLine(_stdlib.asString(sin));
+  system.printLine(sin);
   await global.sin(1);
 }
 
 async function sin(x) {
-  system.printLine(_stdlib.asString(111));
+  system.printLine(111);
 }
 global["sin"] = sin;
 return [main, _tests];}`;

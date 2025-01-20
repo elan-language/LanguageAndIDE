@@ -32,7 +32,7 @@ async function main() {
   for (const x of a) {
     n = n + x;
   }
-  system.printLine(_stdlib.asString(n));
+  system.printLine(n);
 }
 return [main, _tests];}`;
 
@@ -65,7 +65,7 @@ async function main() {
   for (const x of a) {
     n = n + x;
   }
-  system.printLine(_stdlib.asString(n));
+  system.printLine(n);
 }
 return [main, _tests];}`;
 
@@ -93,7 +93,7 @@ const global = new class {};
 async function main() {
   let a = "hello";
   for (const x of a) {
-    system.printLine(_stdlib.asString(x));
+    system.printLine(x);
   }
 }
 return [main, _tests];}`;
@@ -123,7 +123,7 @@ const global = new class {};
 async function main() {
   for (const x of "12") {
     for (const y of "34") {
-      system.printLine(_stdlib.asString(\`\${_stdlib.asString(x)}\${_stdlib.asString(y)}\`));
+      system.printLine(\`\${_stdlib.asString(x)}\${_stdlib.asString(y)}\`);
     }
   }
 }
@@ -155,7 +155,7 @@ end function`;
 const global = new class {};
 async function main() {
   for (const x of fruit()) {
-    system.printLine(_stdlib.asString(x));
+    system.printLine(x);
   }
 }
 

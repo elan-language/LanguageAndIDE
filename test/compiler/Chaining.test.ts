@@ -25,7 +25,7 @@ const global = new class {};
 async function main() {
   let a = system.list([system.list([1, 2]), system.list([3, 4])]);
   let b = system.safeIndex(system.safeIndex(a, 1), 1);
-  system.printLine(_stdlib.asString(b));
+  system.printLine(b);
 }
 return [main, _tests];}`;
 
@@ -52,7 +52,7 @@ const global = new class {};
 async function main() {
   let a = system.list([system.literalArray([1, 2]), system.literalArray([3, 4])]);
   let b = system.safeIndex(system.safeIndex(a, 1), 1);
-  system.printLine(_stdlib.asString(b));
+  system.printLine(b);
 }
 return [main, _tests];}`;
 
@@ -87,7 +87,7 @@ const global = new class {};
 async function main() {
   let a = system.initialise(new Foo());
   let b = system.safeIndex(a.a, 0);
-  system.printLine(_stdlib.asString(b));
+  system.printLine(b);
 }
 
 class Foo {
@@ -148,7 +148,7 @@ async function main() {
   let f = system.initialise(new Foo());
   let b = 0;
   b = f.b.y.z;
-  system.printLine(_stdlib.asString(b));
+  system.printLine(b);
 }
 
 class Foo {
@@ -235,7 +235,7 @@ async function main() {
   let f = system.literalArray([system.initialise(new Foo())]);
   let b = 0;
   b = system.safeIndex(f, 0).b.ff();
-  system.printLine(_stdlib.asString(b));
+  system.printLine(b);
 }
 
 class Foo {
@@ -308,7 +308,7 @@ async function main() {
   let f = system.list([system.initialise(new Foo())]);
   let b = 0;
   b = system.safeIndex(f, 0).b.ff();
-  system.printLine(_stdlib.asString(b));
+  system.printLine(b);
 }
 
 class Foo {
@@ -363,7 +363,7 @@ const global = new class {};
 async function main() {
   let s = "";
   s = _stdlib.upperCase(_stdlib.lowerCase("Hello World!").slice(0, 1));
-  system.printLine(_stdlib.asString(s));
+  system.printLine(s);
 }
 return [main, _tests];}`;
 
@@ -392,7 +392,7 @@ async function main() {
   let aStringVar = "abcdexefg";
   let s = "";
   s = _stdlib.asString(_stdlib.indexOf(_stdlib.upperCase(aStringVar).slice(1, 7).slice(2, 6), "X"));
-  system.printLine(_stdlib.asString(s));
+  system.printLine(s);
 }
 return [main, _tests];}`;
 
@@ -427,7 +427,7 @@ const global = new class {};
 async function main() {
   let a = "";
   a = system.safeIndex(_stdlib.upperCase(system.safeIndex((system.initialise(new Bar())).strArr, 0)), 0);
-  system.printLine(_stdlib.asString(a));
+  system.printLine(a);
 }
 
 class Bar {
@@ -475,7 +475,7 @@ async function main() {
   let aFoo = system.initialise(new Foo());
   let b = 0;
   b = _stdlib.length(system.array(aFoo.createArr(10).slice(1, 5))) + 3;
-  system.printLine(_stdlib.asString(b));
+  system.printLine(b);
 }
 
 class Foo {
@@ -535,7 +535,7 @@ async function main() {
   let aBar = system.initialise(new Bar());
   let b = 0;
   b = 5 + system.safeIndex(system.safeIndex(aBar.foo.create2DArr(), 2), 1) - 2;
-  system.printLine(_stdlib.asString(b));
+  system.printLine(b);
 }
 
 class Bar {
@@ -588,7 +588,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.list([1, 2, 3, 4, 5, 6]);
-  system.printLine(_stdlib.asString(_stdlib.reduce(_stdlib.map(_stdlib.filter(a, (x) => x > 2), (x) => x * x), 0, (s, x) => s + x)));
+  system.printLine(_stdlib.reduce(_stdlib.map(_stdlib.filter(a, (x) => x > 2), (x) => x * x), 0, (s, x) => s + x));
 }
 return [main, _tests];}`;
 
@@ -613,7 +613,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.literalArray([1, 2, 3, 4, 5, 6]);
-  system.printLine(_stdlib.asString(_stdlib.reduce(system.array(_stdlib.asArray(_stdlib.map(system.array(a.slice(0, 5)), (x) => x * x)).slice(2)), 0, (s, x) => s + x)));
+  system.printLine(_stdlib.reduce(system.array(_stdlib.asArray(_stdlib.map(system.array(a.slice(0, 5)), (x) => x * x)).slice(2)), 0, (s, x) => s + x));
 }
 return [main, _tests];}`;
 

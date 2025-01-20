@@ -22,7 +22,7 @@ end main`;
 const global = new class {};
 async function main() {
 
-  system.printLine(_stdlib.asString("Hello World!"));
+  system.printLine("Hello World!");
 }
 return [main, _tests];}`;
 

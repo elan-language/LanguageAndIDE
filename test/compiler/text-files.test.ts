@@ -49,7 +49,7 @@ const global = new class {};
 async function main() {
   let tf = await _stdlib.openFileForReading();
   let txt = tf.readWholeFile();
-  system.printLine(_stdlib.asString(txt));
+  system.printLine(txt);
 }
 return [main, _tests];}`;
 
@@ -105,7 +105,7 @@ const global = new class {};
 async function main() {
   let tf = await _stdlib.openFileForReading();
   while (!tf.endOfFile()) {
-    system.printLine(_stdlib.asString(tf.readLine()));
+    system.printLine(tf.readLine());
   }
 }
 return [main, _tests];}`;

@@ -37,7 +37,7 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(new Foo(7));
-  system.printLine(_stdlib.asString(x.p1));
+  system.printLine(x.p1);
 }
 
 class Foo {
@@ -97,7 +97,7 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(new Foo());
-  system.printLine(_stdlib.asString(f.bar()));
+  system.printLine(f.bar());
 }
 
 function doubled(f) {
@@ -158,7 +158,7 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(new Foo());
-  system.printLine(_stdlib.asString(f.bar()));
+  system.printLine(f.bar());
 }
 
 class Foo {
@@ -184,6 +184,45 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "2");
+  });
+
+  test("Pass_PrintThis", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable f set to new Foo()
+  call f.bar()
+end main
+
+class Foo
+  procedure bar()
+    print this
+  end procedure
+end class`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let f = system.initialise(new Foo());
+  await f.bar();
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, []);};
+  async bar() {
+    system.printLine(this);
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "a Foo");
   });
 
   test("Fail_UsingPropertyAsIndex1", async () => {
@@ -267,5 +306,19 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["May not re-assign the parameter 'p1'"]);
+  });
+
+  test("Fail_ThisOutsideClassScope", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  print this
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Cannot use 'this' outside class context"]);
   });
 });
