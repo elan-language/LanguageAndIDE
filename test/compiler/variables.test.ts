@@ -307,7 +307,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a
+  variable a
   set a to 4.1
 end main`;
 

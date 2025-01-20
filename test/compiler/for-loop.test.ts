@@ -225,7 +225,7 @@ end procedure`;
 const global = new class {};
 async function main() {
   let a = _stdlib.createArray(11, 0);
-  var _a = [a];
+  let _a = [a];
   await foo(_a);
   a = _a[0];
 }
