@@ -104,7 +104,7 @@ export class CallStatement extends AbstractFrame implements Statement {
             callParamSymbol.symbolScope === SymbolScope.outParameter
           ) {
             const tpName = `_${p.id}`;
-            wrappedInParameters.push(`var ${tpName} = [${pName}]`);
+            wrappedInParameters.push(`let ${tpName} = [${pName}]`);
             wrappedOutParameters.push(`${pName} = ${tpName}[0]`);
             pName = tpName;
           } else {

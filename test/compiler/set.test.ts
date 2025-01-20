@@ -99,11 +99,11 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var st1 = system.initialise(new _stdlib.Set());
-  var st2 = system.initialise(new _stdlib.Set());
+  let st1 = system.initialise(new _stdlib.Set());
+  let st2 = system.initialise(new _stdlib.Set());
   st1 = st1.add(2).add(4).add(6).add(3);
   st2 = st2.add(3).add(1).add(4).add(9);
-  var st3 = st1.intersection(st2);
+  let st3 = st1.intersection(st2);
   system.printLine(_stdlib.asString(st3));
 }
 return [main, _tests];}`;
@@ -131,11 +131,11 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var st1 = system.initialise(new _stdlib.Set());
-  var st2 = system.initialise(new _stdlib.Set());
+  let st1 = system.initialise(new _stdlib.Set());
+  let st2 = system.initialise(new _stdlib.Set());
   st1 = st1.add(2).add(4).add(6).add(3);
   st2 = st2.add(3).add(1).add(4).add(9);
-  var st3 = st1.difference(st2);
+  let st3 = st1.difference(st2);
   system.printLine(_stdlib.asString(st3));
 }
 return [main, _tests];}`;

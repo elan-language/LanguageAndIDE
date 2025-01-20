@@ -186,7 +186,7 @@ const global = new class {};
 async function main() {
   let f = system.initialise(new Foo());
   let b = system.initialise(new Bar());
-  var _b = [b];
+  let _b = [b];
   await f.times(_b);
   b = _b[0];
 }

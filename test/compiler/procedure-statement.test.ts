@@ -174,7 +174,7 @@ end procedure`;
 const global = new class {};
 async function main() {
   let a = system.literalArray([2, 3]);
-  var _a = [a];
+  let _a = [a];
   await changeFirst(_a);
   a = _a[0];
   system.printLine(_stdlib.asString(a));
@@ -472,7 +472,7 @@ const global = new class {};
 async function main() {
   let a = 2;
   let b = "hello";
-  var _a = [a]; var _b = [b];
+  let _a = [a]; let _b = [b];
   await foo(_a, _b);
   a = _a[0]; b = _b[0];
   system.printLine(_stdlib.asString(a));
@@ -517,7 +517,7 @@ const global = new class {};
 async function main() {
   let a = 2;
   let b = 3;
-  var _a = [a]; var _b = [b];
+  let _a = [a]; let _b = [b];
   await foo(_a, _b);
   a = _a[0]; b = _b[0];
   system.printLine(_stdlib.asString(a));
@@ -567,7 +567,7 @@ const global = new class {};
 async function main() {
   let a = 2;
   let b = 3;
-  var _a = [a]; var _b = [b];
+  let _a = [a]; let _b = [b];
   await foo(_a, _b);
   a = _a[0]; b = _b[0];
   system.printLine(_stdlib.asString(a));
@@ -575,7 +575,7 @@ async function main() {
 }
 
 async function foo(a, b) {
-  var _a = [a[0]]; var _b = [b[0]];
+  let _a = [a[0]]; let _b = [b[0]];
   await bar(_a, _b);
   a[0] = _a[0]; b[0] = _b[0];
 }
@@ -626,14 +626,14 @@ const global = new class {};
 async function main() {
   let a = system.initialise(new Foo());
   let b = 0;
-  var _a = [a]; var _b = [b];
+  let _a = [a]; let _b = [b];
   await foo(_a, _b);
   a = _a[0]; b = _b[0];
   system.printLine(_stdlib.asString(b));
 }
 
 async function foo(f, y) {
-  var _y = [y[0]];
+  let _y = [y[0]];
   await f[0].bar(_y);
   y[0] = _y[0];
 }
@@ -688,7 +688,7 @@ const global = new class {};
 async function main() {
   let a = system.initialise(new Foo());
   let b = 100;
-  var _a = [a]; var _b = [b];
+  let _a = [a]; let _b = [b];
   await foo(_a, _b);
   a = _a[0]; b = _b[0];
   system.printLine(_stdlib.asString(b));

@@ -123,7 +123,7 @@ main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  while var x < 10
+  while variable x < 10
     set x to x + 1
   end while
  end main
