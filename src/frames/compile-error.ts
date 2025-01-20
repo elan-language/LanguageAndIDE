@@ -36,6 +36,17 @@ export class TypeCompileError extends CompileError {
   }
 }
 
+export class DeclaredAboveCompileError extends CompileError {
+  constructor(type: string, location: string) {
+    super(
+      Priority.illegalOperation,
+      `Abstract Class '${type}' must be declared before it is used`,
+      location,
+      false,
+    );
+  }
+}
+
 export class MemberTypeCompileError extends CompileError {
   constructor(name: string, type: string, location: string, unknown: boolean) {
     super(Priority.typeError, `Member '${name}' must be of type ${type}`, location, unknown);

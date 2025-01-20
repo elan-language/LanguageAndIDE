@@ -501,4 +501,8 @@ export abstract class ClassFrame
 
     return implement;
   }
+
+  getClassIndex() {
+    return this.getParent().getChildren().indexOf(this);
+  }
 }

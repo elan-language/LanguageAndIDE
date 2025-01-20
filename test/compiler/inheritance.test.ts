@@ -2854,4 +2854,50 @@ end class`;
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["Name 'p1' not unique in scope"]);
   });
+
+  test("Fail_SuperClassUsedBeforeDeclared", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable x set to new Foo()
+end main
+
+class Foo inherits Bar
+  
+end class
+
+abstract class Bar
+  
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Abstract Class 'Bar' must be declared before it is used"]);
+  });
+
+  test("Fail_SuperClassUsedBeforeDeclared1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  
+end main
+
+abstract class Foo inherits Bar
+  
+end class
+
+abstract class Bar
+  
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Abstract Class 'Bar' must be declared before it is used"]);
+  });
 });

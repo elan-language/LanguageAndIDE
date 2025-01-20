@@ -5,6 +5,7 @@ import {
   CannotUseLikeAFunction,
   CannotUseSystemMethodInAFunction,
   CompileError,
+  DeclaredAboveCompileError,
   DuplicateKeyCompileError,
   ExtensionCompileError,
   ExtraParameterCompileError,
@@ -423,6 +424,10 @@ export function mustBeClass(symbol: ElanSymbol, compileErrors: CompileError[], l
     const unknown = st instanceof UnknownType;
     compileErrors.push(new TypeCompileError("Class", location, unknown));
   }
+}
+
+export function mustBeDeclaredAbove(name: string, compileErrors: CompileError[], location: string) {
+  compileErrors.push(new DeclaredAboveCompileError(name, location));
 }
 
 export function mustCallExtensionViaQualifier(

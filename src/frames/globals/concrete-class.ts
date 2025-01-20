@@ -1,5 +1,5 @@
 import { Constructor } from "../class-members/constructor";
-import { mustImplementSuperClasses } from "../compile-rules";
+import { mustBeDeclaredAbove, mustImplementSuperClasses } from "../compile-rules";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { SymbolType } from "../interfaces/symbol-type";
@@ -79,6 +79,15 @@ end class\r\n`;
     const extendsClause = this.getExtends(transforms);
     const abstractClasses = this.getAllAbstractClasses(this, [], transforms);
     const interfaces = this.getAllInterfaces(this, [], transforms);
+
+    const thisIndex = this.getClassIndex();
+    for (const ac of abstractClasses) {
+      const acIndex = ac.getClassIndex();
+
+      if (acIndex > thisIndex) {
+        mustBeDeclaredAbove(ac.symbolId, this.compileErrors, this.htmlId);
+      }
+    }
 
     mustImplementSuperClasses(
       transforms,

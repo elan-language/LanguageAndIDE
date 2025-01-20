@@ -1,3 +1,4 @@
+import { mustBeDeclaredAbove } from "../compile-rules";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { SymbolType } from "../interfaces/symbol-type";
@@ -72,6 +73,17 @@ end class\r\n`;
     const [cd, cdName] = this.lookForCircularDependencies(this, [name], transforms);
     if (cd) {
       return this.circularDependency(cdName);
+    }
+
+    const abstractClasses = this.getAllAbstractClasses(this, [], transforms);
+
+    const thisIndex = this.getClassIndex();
+    for (const ac of abstractClasses) {
+      const acIndex = ac.getClassIndex();
+
+      if (acIndex > thisIndex) {
+        mustBeDeclaredAbove(ac.symbolId, this.compileErrors, this.htmlId);
+      }
     }
 
     const extendsClause = this.getExtends(transforms);
