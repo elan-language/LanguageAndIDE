@@ -31,8 +31,6 @@ export class TermSimple extends AbstractAlternatives {
 
   parseText(text: string): void {
     if (text.trim().length > 0) {
-      this.alternatives.push(new LitValueNode());
-      this.alternatives.push(new ReferenceNode());
       this.alternatives.push(new ListNode(() => new ExprNode()));
       this.alternatives.push(new ArrayNode(() => new ExprNode()));
       this.alternatives.push(
@@ -50,6 +48,8 @@ export class TermSimple extends AbstractAlternatives {
       this.alternatives.push(new TupleNode());
       this.alternatives.push(new UnaryExpression());
       this.alternatives.push(new BracketedExpression());
+      this.alternatives.push(new LitValueNode());
+      this.alternatives.push(new ReferenceNode());
       super.parseText(text);
     }
   }
