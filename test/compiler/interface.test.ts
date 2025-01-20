@@ -747,6 +747,84 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
   });
 
+  test("Pass_useBeforeDeclared", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+
+end main
+
+class Foo inherits Bar
+ 
+end class
+
+interface Bar
+end interface`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, []);};
+
+}
+
+class Bar {
+  static emptyInstance() { return system.emptyClass(Bar, []);};
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+  });
+
+  test("Pass_useBeforeDeclared1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+
+end main
+
+interface Foo inherits Bar
+ 
+end interface
+
+interface Bar
+end interface`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, []);};
+
+}
+
+class Bar {
+  static emptyInstance() { return system.emptyClass(Bar, []);};
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+  });
+
   test("Fail_DoesntImplementProp", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
