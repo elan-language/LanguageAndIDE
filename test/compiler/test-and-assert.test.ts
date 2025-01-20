@@ -599,25 +599,25 @@ end main
 
 test round1
   variable a set to 1/3
-  variable b set to round(a, 4)
+  variable b set to a.round(4)
   assert b is 0.3333
 end test
 
 test round2
   variable a set to 0.9999
-  variable b set to round(a, 2)
+  variable b set to a.round(2)
   assert b is 1
 end test
 
 test round3
   variable a set to 1.25
-  variable b set to round(a, 1)
+  variable b set to a.round(1)
   assert b is 1.3
 end test
 
 test round4
   variable a set to 44.444
-  variable b set to round(a, 2)
+  variable b set to a.round(2)
   assert b is 44.44
 end test
 

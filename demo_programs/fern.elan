@@ -1,4 +1,4 @@
-# 3838c216dfaf2d20af2bb9da6511104b28833fea66c7de14fb1400b7aa2639fe Elan Beta 5 valid
+# FFFF Elan Beta 5 valid
 
 # https://en.wikipedia.org/wiki/Barnsley_fern
 # Draws a fractal image
@@ -66,12 +66,12 @@ end test
 # two approaches to rounding a tuple to N decimal places
 function roundtuple1(n as (Float, Float)) returns (Float, Float)
   let a, b be n
-  return (round(a, 8), round(b, 8))
+  return (a.round(8), b.round(8))
 end function
 
 function roundtuple2(n as (Float, Float)) returns List<of Float>
   let a, b be n
-  return {a, b}.map(lambda x as Float => round(x, 8)).asList()
+  return {a, b}.map(lambda x as Float => x.round(8)).asList()
 end function
 
 constant scale set to 7

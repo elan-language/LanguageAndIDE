@@ -1,4 +1,4 @@
-# eeb1c40e88f77f7b2a0d60b466115944fa055e400cb5877dbdddfc306471fa73 Elan Beta 6 valid
+# FFFF Elan Beta 6 valid
 
 main
   call simulateGame()
@@ -136,7 +136,7 @@ function determineOutcome(dealer as Dealer, player as Player) returns Outcome
 end function
 
 function dealCard(random as Float) returns Card
-  let number be floor(random*52)
+  let number be (random*52).floor()
   let rank be rankValue.keys()[number div 4]
   let suit be number mod 4
   return new Card(rank, suit)

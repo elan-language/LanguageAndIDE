@@ -1,4 +1,4 @@
-# 7c1b31c7f60dc580e1fe8eb167c6f26d57d5d0da301c1f643b320bfcd3b2998c Elan Beta 6 valid
+# FFFF Elan Beta 6 valid
 
 # Demo shows one way to implement a mergeSort function - using recursion
 # Since merge sort is always an 'out of place' sort, we have chosen to use immutable lists
@@ -11,7 +11,7 @@ function mergeSort(li as List<of String>) returns List<of String>
   variable result set to li
   let len be li.length()
   if len > 1 then
-    let mid be floor(len/2)
+    let mid be (len/2).floor()
     let frontHalf be mergeSort(li[..mid])
     let backHalf be mergeSort(li[mid..])
     set result to merge(frontHalf, backHalf)

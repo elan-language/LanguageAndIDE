@@ -1,4 +1,4 @@
-# 5cac3f3585d8e89ee82042ec3a7241cfcdbc933867c03795b58139cd055d53bb Elan Beta 6 valid
+# FFFF Elan Beta 6 valid
 
 main
   variable g set to new BlockGraphics()
@@ -9,7 +9,7 @@ main
     let y be randomInt(0, 29)
     let p be new Point(x, y)
     let existing be getValue(p, g)
-    let setTo be floor(random() + 0.7)
+    let setTo be (random() + 0.7).floor()
     if okToSet(p, setTo, g) then
       let colour be if setTo is 1 then white else black
       set g to g.withBlock(p.x, p.y, colour)
