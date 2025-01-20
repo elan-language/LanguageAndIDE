@@ -5,7 +5,6 @@ export class ElanRuntimeError extends Error {
 
   useLine(token: string) {
     return !(
-      token.startsWith("System") ||
       token.startsWith("data") ||
       token.startsWith("http") ||
       token.startsWith("async") ||
@@ -38,6 +37,7 @@ export class ElanRuntimeError extends Error {
           if (line.length > 1) {
             let fn = line[1];
             fn = fn === "runTests" ? "test" : fn;
+            fn = fn === "System.printLine" ? "print" : fn;
 
             if (this.useLine(fn)) {
               elanStack.push(`at ${fn}`);
