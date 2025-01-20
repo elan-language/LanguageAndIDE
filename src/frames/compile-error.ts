@@ -36,6 +36,12 @@ export class TypeCompileError extends CompileError {
   }
 }
 
+export class ThisCompileError extends CompileError {
+  constructor(location: string) {
+    super(Priority.illegalOperation, `Cannot use 'this' outside class context`, location, false);
+  }
+}
+
 export class DeclaredAboveCompileError extends CompileError {
   constructor(type: string, location: string) {
     super(
