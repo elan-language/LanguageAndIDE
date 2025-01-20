@@ -29,7 +29,7 @@ main
   print st.length()
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   const st = system.initialise(new _stdlib.Stack());
@@ -38,7 +38,7 @@ async function main() {
   st.push("pear");
   system.printLine(_stdlib.asString(st.length()));
   system.printLine(_stdlib.asString(st.peek()));
-  var fruit = st.pop();
+  let fruit = st.pop();
   system.printLine(_stdlib.asString(fruit));
   fruit = st.pop();
   system.printLine(_stdlib.asString(fruit));
@@ -114,7 +114,7 @@ main
   print st.peek()
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   const st = system.initialise(new _stdlib.Stack());
@@ -139,7 +139,7 @@ main
   print st.pop()
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   const st = system.initialise(new _stdlib.Stack());

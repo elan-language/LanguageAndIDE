@@ -24,10 +24,10 @@ record Foo
     property p1 as Float
 end record`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var f = system.initialise(new Foo());
+  let f = system.initialise(new Foo());
   system.printLine(_stdlib.asString(f.p1));
 }
 
@@ -80,10 +80,10 @@ record Foo
     property p2 as String
 end record`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var f = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.p1 = 3; _a.p2 = "hello"; return _a;})();
+  let f = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.p1 = 3; _a.p2 = "hello"; return _a;})();
   system.printLine(_stdlib.asString(f.p1));
   system.printLine(_stdlib.asString(f.p2));
 }
@@ -158,10 +158,10 @@ function fun(foo as Foo) returns Int
 end function
 `;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var f = system.initialise(new Foo());
+  let f = system.initialise(new Foo());
   system.printLine(_stdlib.asString(fun(f)));
 }
 
@@ -203,10 +203,10 @@ procedure proc(foo as Foo)
 end procedure
 `;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var f = system.initialise(new Foo());
+  let f = system.initialise(new Foo());
   await proc(f);
 }
 
@@ -254,7 +254,7 @@ record Bar
 end record
 `;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
 

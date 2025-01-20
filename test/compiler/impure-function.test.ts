@@ -33,19 +33,19 @@ procedure bar(x as Int)
 end procedure
 `;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var gr = system.initialise(new _stdlib.BlockGraphics());
-  var k = await _stdlib.getKey();
-  var r = _stdlib.randomInt(1, 6);
+  let gr = system.initialise(new _stdlib.BlockGraphics());
+  let k = await _stdlib.getKey();
+  let r = _stdlib.randomInt(1, 6);
   r = _stdlib.randomInt(1, 6) * 10;
   await bar(_stdlib.randomInt(1, 6));
 }
 
 async function foo(gr) {
-  var k = await _stdlib.getKey();
-  var r = _stdlib.randomInt(1, 6);
+  let k = await _stdlib.getKey();
+  let r = _stdlib.randomInt(1, 6);
   r = _stdlib.randomInt(1, 6) * 10;
 }
 global["foo"] = foo;

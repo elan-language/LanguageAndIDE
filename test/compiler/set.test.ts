@@ -27,10 +27,10 @@ main
   print st
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var st = system.initialise(new _stdlib.Set());
+  let st = system.initialise(new _stdlib.Set());
   st = st.add(3).add(7).add(5);
   system.printLine(_stdlib.asString(st.length()));
   st = st.add(7);
@@ -64,14 +64,14 @@ main
   print st3
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var st1 = system.initialise(new _stdlib.Set());
-  var st2 = system.initialise(new _stdlib.Set());
+  let st1 = system.initialise(new _stdlib.Set());
+  let st2 = system.initialise(new _stdlib.Set());
   st1 = st1.add(2).add(4).add(6);
   st2 = st2.add(1).add(4).add(9);
-  var st3 = st1.union(st2);
+  let st3 = st1.union(st2);
   system.printLine(_stdlib.asString(st3));
 }
 return [main, _tests];}`;
@@ -96,7 +96,7 @@ main
   print st3
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   var st1 = system.initialise(new _stdlib.Set());
@@ -128,7 +128,7 @@ main
   print st3
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   var st1 = system.initialise(new _stdlib.Set());
@@ -161,7 +161,7 @@ main
   print st2.isDisjointFrom(st3)
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   const st0 = system.initialise(new _stdlib.Set());
@@ -198,7 +198,7 @@ main
   print st0.isSubsetOf(st3)
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   const st0 = system.initialise(new _stdlib.Set());
@@ -233,7 +233,7 @@ main
   print st2
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   const st0 = system.initialise(new _stdlib.Set());
@@ -263,7 +263,7 @@ main
   print st2
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   const st0 = system.initialise(new _stdlib.Set());

@@ -26,7 +26,7 @@ function twice(x as Float) returns Float
   return x * 2
 end function`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   await printModified(3, twice);
@@ -67,7 +67,7 @@ function twice() returns Float
   return 2
 end function`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   await printModified(3, twice);
@@ -108,7 +108,7 @@ function find(x as String, y as String) returns Int
   return x.indexOf(y)
 end function`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   await printIt("Hello", "e", find);
@@ -150,10 +150,10 @@ function twice(x as Float) returns Float
   return x * 2
 end function`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var f = getFunc();
+  let f = getFunc();
   system.printLine(_stdlib.asString(f(5)));
 }
 
@@ -189,10 +189,10 @@ function twice(x as Float) returns Float
   return x * 2
 end function`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var f = twice;
+  let f = twice;
   system.printLine(_stdlib.asString(f(5)));
 }
 
@@ -232,10 +232,10 @@ class Foo
 
 end class`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var f = system.initialise(new Foo(ff));
+  let f = system.initialise(new Foo(ff));
   system.printLine(_stdlib.asString(f.pf(5)));
 }
 
@@ -275,7 +275,7 @@ function ff(a as Int) returns Int
   return a
 end function`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   system.printLine(_stdlib.asString(ff));

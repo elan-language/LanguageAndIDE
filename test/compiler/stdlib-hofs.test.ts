@@ -21,7 +21,7 @@ main
   print source.filter(lambda x as Int => (x < 3) or (x > 35)).asArray()
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
   source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
 
@@ -50,7 +50,7 @@ main
   print source.filter(lambda x as String => x is "o").asArray()
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
   source = "onetwo";
 
@@ -82,7 +82,7 @@ function filterIt(tofilter as List<of Int>) returns List<of Int>
 end function
 `;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
   source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
 
@@ -115,7 +115,7 @@ main
   print source.map(lambda x as Int => x.asString() + "*").asArray()
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
   source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
 
@@ -146,7 +146,7 @@ main
   print source.map(lambda x as String => x + "*").asArray()
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
   source = "onetwo";
 
@@ -174,10 +174,10 @@ main
   print source.asArray()
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var source = _stdlib.asIterable(system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]));
+  let source = _stdlib.asIterable(system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]));
   source = _stdlib.map(source, (x) => x + 1);
   system.printLine(_stdlib.asString(_stdlib.asArray(source)));
 }
@@ -202,7 +202,7 @@ main
   print source.reduce("Concat:", lambda s as String, x as Int => s + x.asString())
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
   source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
 
@@ -231,7 +231,7 @@ main
   print source.reduce("Concat:", lambda s as String, x as String => s + "*" + x)
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
   source = "onetwo";
 
@@ -260,13 +260,13 @@ main
   print ed
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
   source = system.list(["three", "four"]);
 
 };
 async function main() {
-  var ed = system.dictionaryImmutable({["one"] : 1, ["two"] : 2});
+  let ed = system.dictionaryImmutable({["one"] : 1, ["two"] : 2});
   ed = _stdlib.reduce(global.source, ed, (d, x) => _stdlib.withPutAtKey(d, x, 1));
   system.printLine(_stdlib.asString(ed));
 }
@@ -289,7 +289,7 @@ main
   print source.max()
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
   source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
 
@@ -316,7 +316,7 @@ main
   print source.maxBy(lambda x as Int => x mod 5)
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
   source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
 
@@ -343,7 +343,7 @@ main
   print source.maxBy(lambda x as List<of Int> => x.length())
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
   source = system.list([system.list([1]), system.list([2, 2])]);
 
@@ -370,7 +370,7 @@ main
   print source.maxBy(lambda t as String => t.length())
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
   source = system.list(["apple", "orange", "pear"]);
 
@@ -397,7 +397,7 @@ main
   print source.length()
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
   source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
 
@@ -424,7 +424,7 @@ main
   print source.min()
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
   source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
 
@@ -451,7 +451,7 @@ main
   print source.minBy(lambda x as Int => x mod 5)
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
   source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
 
@@ -480,7 +480,7 @@ main
   print source.any(lambda x as Int => x > 40)
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
   source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
 
@@ -510,7 +510,7 @@ main
   print source
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
   source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
 
@@ -542,7 +542,7 @@ main
   print source
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
   source = "dbcd";
 
@@ -572,7 +572,7 @@ main
   print source.asArray().asSet()
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
   source = system.list(["apple", "orange", "pair", "apple"]);
 

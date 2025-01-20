@@ -23,7 +23,7 @@ procedure printModified(i as Int, f as Func<of Int => Int>)
   print f(i)
 end procedure`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   await printModified(4, (x) => x * 3);
@@ -60,7 +60,7 @@ procedure printModified(i as (Int, Int), f as Func<of (Int, Int) => Int>)
   print f(i)
 end procedure`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   await printModified(system.tuple([4, 5]), (t) => first(t));
@@ -95,10 +95,10 @@ main
   print l(5)
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var l = (x) => x * 5;
+  let l = (x) => x * 5;
   system.printLine(_stdlib.asString(l(5)));
 }
 return [main, _tests];}`;
@@ -133,12 +133,12 @@ class Foo
   property p1 as Func<of Int => Int>
 end class`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var foo = system.initialise(new Foo());
+  let foo = system.initialise(new Foo());
   await foo.setP1((x) => x);
-  var v = foo.p1(5);
+  let v = foo.p1(5);
   system.printLine(_stdlib.asString(v));
 }
 
@@ -174,10 +174,10 @@ main
   print l(5) + 5
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var l = (x) => x * 5;
+  let l = (x) => x * 5;
   system.printLine(_stdlib.asString(l(5) + 5));
 }
 return [main, _tests];}`;
@@ -203,10 +203,10 @@ function getFunc() returns Func<of Int => Int>
   return lambda x as Int => x * 5
 end function`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var l = getFunc();
+  let l = getFunc();
   system.printLine(_stdlib.asString(l(5)));
 }
 
@@ -234,11 +234,11 @@ main
   print l()
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = 3;
-  var l = () => x * 5;
+  let x = 3;
+  let l = () => x * 5;
   system.printLine(_stdlib.asString(l()));
 }
 return [main, _tests];}`;
@@ -264,10 +264,10 @@ function getFunc(x as Int) returns Func<of => Int>
   return lambda => x * 5
 end function`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var l = getFunc(5);
+  let l = getFunc(5);
   system.printLine(_stdlib.asString(l()));
 }
 

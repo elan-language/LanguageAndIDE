@@ -22,10 +22,10 @@ main
   print "b".testRegExp(r)
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var r = /a+/;
+  let r = /a+/;
   system.printLine(_stdlib.asString(r));
   system.printLine(_stdlib.asString(_stdlib.testRegExp("aa", r)));
   system.printLine(_stdlib.asString(_stdlib.testRegExp("b", r)));
@@ -53,10 +53,10 @@ function testRegex(r as RegExp) returns Boolean
   return "aa".testRegExp(r)
 end function`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var r = /a+/;
+  let r = /a+/;
   system.printLine(_stdlib.asString(testRegex(r)));
 }
 
@@ -88,10 +88,10 @@ function testRegex() returns RegExp
   return /a+/
 end function`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var r = system.emptyRegExp();
+  let r = system.emptyRegExp();
   r = testRegex();
   system.printLine(_stdlib.asString(_stdlib.testRegExp("aa", r)));
 }
@@ -123,10 +123,10 @@ main
 
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var r = /a\\/b/;
+  let r = /a\\/b/;
   system.printLine(_stdlib.asString(_stdlib.testRegExp("a/b", r)));
   system.printLine(_stdlib.asString(_stdlib.testRegExp("a/b", r)));
   system.printLine(_stdlib.asString(_stdlib.testRegExp("a\b", r)));

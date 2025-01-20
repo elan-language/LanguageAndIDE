@@ -23,12 +23,12 @@ main
   print z
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = 2 + 3 * 5 + 1;
-  var y = (2 + 3) * 5 + 1;
-  var z = (2 + 3) * (5 + 1);
+  let x = 2 + 3 * 5 + 1;
+  let y = (2 + 3) * 5 + 1;
+  let z = (2 + 3) * (5 + 1);
   system.printLine(_stdlib.asString(x));
   system.printLine(_stdlib.asString(y));
   system.printLine(_stdlib.asString(z));
@@ -56,12 +56,12 @@ return [main, _tests];}`;
     print z
   end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = 2 + (3 * 5) + 1;
-  var y = ((2 + 3)) * 5 + (1);
-  var z = ((2 + 3) * (5 + 1));
+  let x = 2 + (3 * 5) + 1;
+  let y = ((2 + 3)) * 5 + (1);
+  let z = ((2 + 3) * (5 + 1));
   system.printLine(_stdlib.asString(x));
   system.printLine(_stdlib.asString(y));
   system.printLine(_stdlib.asString(z));
@@ -87,11 +87,11 @@ main
   print y
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = 2 + 3 ** 2;
-  var y = (2 + 3) ** 2;
+  let x = 2 + 3 ** 2;
+  let y = (2 + 3) ** 2;
   system.printLine(_stdlib.asString(x));
   system.printLine(_stdlib.asString(y));
 }
@@ -116,11 +116,11 @@ main
   print y
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = 16 / 2 ** 3;
-  var y = (16 / 2) ** 3;
+  let x = 16 / 2 ** 3;
+  let y = (16 / 2) ** 3;
   system.printLine(_stdlib.asString(x));
   system.printLine(_stdlib.asString(y));
 }
@@ -145,11 +145,11 @@ main
   print y
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = 16 / 2 ** 3;
-  var y = (16 / 2) ** 3;
+  let x = 16 / 2 ** 3;
+  let y = (16 / 2) ** 3;
   system.printLine(_stdlib.asString(x));
   system.printLine(_stdlib.asString(y));
 }
@@ -176,11 +176,11 @@ main
   print y
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = 0;
-  var y = 0;
+  let x = 0;
+  let y = 0;
   x = -4.7;
   y = 5 * -3;
   system.printLine(_stdlib.asString(x));
@@ -207,11 +207,11 @@ main
   print y
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = 11 % 3;
-  var y = (5 + 6) % 3;
+  let x = 11 % 3;
+  let y = (5 + 6) % 3;
   system.printLine(_stdlib.asString(x));
   system.printLine(_stdlib.asString(y));
 }
@@ -236,11 +236,11 @@ main
   print y
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = Math.floor(11 / 3);
-  var y = Math.floor((5 + 6) / 3);
+  let x = Math.floor(11 / 3);
+  let y = Math.floor((5 + 6) / 3);
   system.printLine(_stdlib.asString(x));
   system.printLine(_stdlib.asString(y));
 }

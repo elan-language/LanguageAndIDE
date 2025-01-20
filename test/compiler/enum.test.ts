@@ -23,7 +23,7 @@ end main
    
 enum Fruit apple, orange, pear`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 var Fruit = {
   _default : "apple", apple : "apple", orange : "orange", pear : "pear"
 };
@@ -55,14 +55,14 @@ end main
    
 enum Fruit apple, orange, pear`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 var Fruit = {
   _default : "apple", apple : "apple", orange : "orange", pear : "pear"
 };
 
 const global = new class {};
 async function main() {
-  var e = Fruit._default;
+  let e = Fruit._default;
   system.printLine(_stdlib.asString(e));
 }
 return [main, _tests];}`;
@@ -93,14 +93,14 @@ end class
    
 enum Fruit apple, orange, pear`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 var Fruit = {
   _default : "apple", apple : "apple", orange : "orange", pear : "pear"
 };
 
 const global = new class {};
 async function main() {
-  var foo = system.initialise(new Foo());
+  let foo = system.initialise(new Foo());
   system.printLine(_stdlib.asString(foo.fruit));
 }
 
@@ -141,14 +141,14 @@ end class
    
 enum Fruit apple, orange, pear`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 var Fruit = {
   _default : "apple", apple : "apple", orange : "orange", pear : "pear"
 };
 
 const global = new class {};
 async function main() {
-  var foo = Foo.emptyInstance();
+  let foo = Foo.emptyInstance();
   system.printLine(_stdlib.asString(foo.fruit));
 }
 
@@ -183,14 +183,14 @@ end main
    
 enum Fruit apple, orange, pear`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 var Fruit = {
   _default : "apple", apple : "apple", orange : "orange", pear : "pear"
 };
 
 const global = new class {};
 async function main() {
-  var x = Fruit.apple;
+  let x = Fruit.apple;
   x = Fruit.pear;
   system.printLine(_stdlib.asString(x));
 }
@@ -216,15 +216,15 @@ end main
    
 enum Fruit apple, orange, pear`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 var Fruit = {
   _default : "apple", apple : "apple", orange : "orange", pear : "pear"
 };
 
 const global = new class {};
 async function main() {
-  var x = Fruit.apple;
-  var y = x;
+  let x = Fruit.apple;
+  let y = x;
   system.printLine(_stdlib.asString(y));
 }
 return [main, _tests];}`;
@@ -253,7 +253,7 @@ function isFavourite(f as Fruit) returns Boolean
 end function
 `;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 var Fruit = {
   _default : "apple", apple : "apple", orange : "orange", pear : "pear"
 };
@@ -293,7 +293,7 @@ function firstFruit() returns Fruit
 end function
 `;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 var Fruit = {
   _default : "apple", apple : "apple", orange : "orange", pear : "pear"
 };
@@ -329,14 +329,14 @@ end main
    
 enum Fruit apple, orange, pear`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 var Fruit = {
   _default : "apple", apple : "apple", orange : "orange", pear : "pear"
 };
 
 const global = new class {};
 async function main() {
-  var x = Fruit.apple;
+  let x = Fruit.apple;
   system.printLine(_stdlib.asString(system.objectEquals(x, Fruit.apple)));
   system.printLine(_stdlib.asString(system.objectEquals(x, Fruit.pear)));
 }
@@ -360,14 +360,14 @@ end main
    
 enum Fruit apple, orange, pear`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 var Fruit = {
   _default : "apple", apple : "apple", orange : "orange", pear : "pear"
 };
 
 const global = new class {};
 async function main() {
-  var a = "Eat more " + Fruit.apple + "s!";
+  let a = "Eat more " + Fruit.apple + "s!";
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;

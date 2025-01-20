@@ -523,7 +523,6 @@ export class StdLib {
     return this.elanIndexOf(source, item);
   }
 
-
   @elanFunction([], FunctionOptions.pureExtension)
   trim(s: string): string {
     return s.trim();
