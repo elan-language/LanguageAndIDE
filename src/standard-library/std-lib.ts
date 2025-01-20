@@ -513,6 +513,17 @@ export class StdLib {
     return s1.indexOf(s2);
   }
 
+  @elanFunction(["", "item"], FunctionOptions.pureExtension, ElanT1)
+  indexOfItem<T1>(
+    @elanIterableType(ElanT1)
+    source: T1[],
+    @elanGenericParamT1Type()
+    item: T1,
+  ): number {
+    return this.elanIndexOf(source, item);
+  }
+
+
   @elanFunction([], FunctionOptions.pureExtension)
   trim(s: string): string {
     return s.trim();

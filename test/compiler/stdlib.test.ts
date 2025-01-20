@@ -959,4 +959,42 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "A RegExp");
   });
+  test("Pass_indexOfItem", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  let a be [1, 3, 5, 7, 9]
+  let b be {2, 4, 6, 8}
+  let c be "Hello World!"
+  print a.indexOfItem(9)
+  print a.indexOfItem(5)
+  print b.indexOfItem(2)
+  print b.indexOfItem(7)
+  print c.indexOfItem("o")
+  print c.indexOfItem("ll")
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  const a = system.literalArray([1, 3, 5, 7, 9]);
+  const b = system.list([2, 4, 6, 8]);
+  const c = "Hello World!";
+  system.printLine(_stdlib.asString(_stdlib.indexOfItem(a, 9)));
+  system.printLine(_stdlib.asString(_stdlib.indexOfItem(a, 5)));
+  system.printLine(_stdlib.asString(_stdlib.indexOfItem(b, 2)));
+  system.printLine(_stdlib.asString(_stdlib.indexOfItem(b, 7)));
+  system.printLine(_stdlib.asString(_stdlib.indexOfItem(c, "o")));
+  system.printLine(_stdlib.asString(_stdlib.indexOfItem(c, "ll")));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "420-14-1");
+  });
 });
