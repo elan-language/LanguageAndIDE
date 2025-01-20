@@ -73,7 +73,7 @@ async function main() {
 }
 
 async function foo() {
-  for (var i = 0; i <= 4; i = i + 1) {
+  for (let i = 0; i <= 4; i = i + 1) {
     const temp = system.safeIndex(global.list, i);
     system.printLine(_stdlib.asString(temp));
   }
@@ -115,7 +115,7 @@ async function main() {
 
 async function foo() {
   let list = system.list([1, 2, 3, 4, 5]);
-  for (var i = 0; i <= 3; i = i + 1) {
+  for (let i = 0; i <= 3; i = i + 1) {
     const temp = system.safeIndex(list, i);
     list = _stdlib.withPutAt(list, i, system.safeIndex(list, i + 1));
     list = _stdlib.withPutAt(list, i + 1, temp);

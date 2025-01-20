@@ -426,11 +426,11 @@ end main`;
 const global = new class {};
 async function main() {
   let results = system.literalArray([0, 0, 0, 0, 0, 0, 0]);
-  for (var i = 1; i <= 10000; i = i + 1) {
+  for (let i = 1; i <= 10000; i = i + 1) {
     let r = _stdlib.randomInt(3, 5);
     _stdlib.putAt(results, r, system.safeIndex(results, r) + 1);
   }
-  for (var i = 0; i <= 6; i = i + 1) {
+  for (let i = 0; i <= 6; i = i + 1) {
     let r = _stdlib.round(system.safeIndex(results, i) / 10000, 1);
     system.printLine(_stdlib.asString(r));
     system.printLine(_stdlib.asString(", "));
@@ -473,11 +473,11 @@ async function main() {
   let rnd = system.initialise(new _stdlib.Random());
   let val = 0;
   rnd.initialiseFromClock();
-  for (var i = 1; i <= 10000; i = i + 1) {
+  for (let i = 1; i <= 10000; i = i + 1) {
     [val, rnd] = rnd.nextInt(3, 5);
     _stdlib.putAt(results, val, system.safeIndex(results, val) + 1);
   }
-  for (var i = 0; i <= 6; i = i + 1) {
+  for (let i = 0; i <= 6; i = i + 1) {
     let r = _stdlib.round(system.safeIndex(results, i) / 10000, 1);
     system.printLine(_stdlib.asString(r));
     system.printLine(_stdlib.asString(", "));
@@ -517,11 +517,11 @@ async function main() {
   let results = system.literalArray([0, 0, 0, 0, 0, 0, 0]);
   let rnd = system.initialise(new _stdlib.Random());
   let val = 0;
-  for (var i = 1; i <= 10000; i = i + 1) {
+  for (let i = 1; i <= 10000; i = i + 1) {
     [val, rnd] = rnd.nextInt(3, 5);
     _stdlib.putAt(results, val, system.safeIndex(results, val) + 1);
   }
-  for (var i = 0; i <= 6; i = i + 1) {
+  for (let i = 0; i <= 6; i = i + 1) {
     let r = system.safeIndex(results, i);
     system.printLine(_stdlib.asString(r));
     system.printLine(_stdlib.asString(", "));
@@ -565,11 +565,11 @@ async function main() {
   let results = system.literalArray([0, 0, 0, 0, 0, 0, 0]);
   let rnd = system.initialise(new _stdlib.Random());
   let dice = 0;
-  for (var i = 1; i <= 10000; i = i + 1) {
+  for (let i = 1; i <= 10000; i = i + 1) {
     [dice, rnd] = rollDice(rnd);
     _stdlib.putAt(results, dice, system.safeIndex(results, dice) + 1);
   }
-  for (var i = 0; i <= 6; i = i + 1) {
+  for (let i = 0; i <= 6; i = i + 1) {
     let r = system.safeIndex(results, i);
     system.printLine(_stdlib.asString(r));
     system.printLine(_stdlib.asString(", "));

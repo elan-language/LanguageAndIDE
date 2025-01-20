@@ -84,7 +84,7 @@ export class Enum extends AbstractFrame implements ElanSymbol, GlobalFrame, Coll
       this.htmlId,
     );
 
-    return `var ${name} = {\r
+    return `const ${name} = {\r
 ${singleIndent()}${this.values.compile(transforms)}\r
 };\r
 `;

@@ -63,8 +63,6 @@ import { Transforms } from "./syntax-nodes/transforms";
 // for web editor bundle
 export { CodeSourceFromString };
 
-//var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
-
 export class FileImpl implements File, Scope {
   currentHash: string = "";
   isParent: boolean = true;
