@@ -3,6 +3,8 @@ import { ExprNode } from "./expr-node";
 import { PunctuationNode } from "./punctuation-node";
 
 import { CLOSE_BRACKET, OPEN_BRACKET } from "../symbols";
+import { Space } from "./parse-node-helpers";
+import { SpaceNode } from "./space-node";
 
 export class BracketedExpression extends AbstractSequence {
   expr: ExprNode | undefined;
@@ -15,8 +17,10 @@ export class BracketedExpression extends AbstractSequence {
   parseText(text: string): void {
     if (text.length > 0) {
       this.addElement(new PunctuationNode(OPEN_BRACKET));
+      this.addElement(new SpaceNode(Space.ignored));
       this.expr = new ExprNode();
       this.addElement(this.expr);
+      this.addElement(new SpaceNode(Space.ignored));
       this.addElement(new PunctuationNode(CLOSE_BRACKET));
       super.parseText(text);
     }
