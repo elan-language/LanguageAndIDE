@@ -562,7 +562,7 @@ end main
   test("Pass_usingConstantAsKeyInConstantDictionary", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
-constant a set to {openBrace: blue, closeBrace:red}
+constant a set to {openBrace:blue, closeBrace:red}
 main
   print a
 end main
@@ -574,7 +574,7 @@ const global = new class {
 
 };
 async function main() {
-  system.printLine(_stdlib.asString(global.a));
+  system.printLine(global.a);
 }
 return [main, _tests];}`;
 

@@ -543,18 +543,18 @@ export class StdLib {
     return list.join(separator);
   }
 
-  @elanFunction(["number"], FunctionOptions.pure, ElanInt)
+  @elanFunction(["number"], FunctionOptions.pureExtension, ElanInt)
   floor(n: number) {
     return Math.floor(n);
   }
 
-  @elanFunction(["number", "decimalPlaces"])
+  @elanFunction(["number", "decimalPlaces"], FunctionOptions.pureExtension)
   round(n: number, @elanIntType() places: number): number {
     const shift = 10 ** places;
     return Math.floor(n * shift + 0.5) / shift;
   }
 
-  @elanFunction(["number"], FunctionOptions.pure, ElanInt)
+  @elanFunction(["number"], FunctionOptions.pureExtension, ElanInt)
   ceiling(n: number): number {
     const fl = this.floor(n);
     return n > fl ? fl + 1 : fl;

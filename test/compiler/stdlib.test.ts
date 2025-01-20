@@ -319,25 +319,25 @@ return [main, _tests];}`;
 test 
   assert pi is 3.141592653589793
   assert abs(-3.7) is 3.7
-  assert round(acos(0.5), 3) is 1.047
-  assert round(asin(0.5), 3) is 0.524
-  assert round(atan(1), 2) is 0.79
-  assert round(cos(pi/4), 3) is 0.707
-  assert round(exp(2), 3) is 7.389
-  assert round(logE(7.398), 2) is 2
+  assert acos(0.5).round(3) is 1.047
+  assert asin(0.5).round(3) is 0.524
+  assert atan(1).round(2) is 0.79
+  assert cos(pi/4).round(3) is 0.707
+  assert exp(2).round(3) is 7.389
+  assert logE(7.398).round(2) is 2
   assert log10(1000) is 3
   assert log2(65536) is 16
-  assert round(sin(pi/6), 2) is 0.5
-  assert round(sqrt(2), 3) is 1.414
-  assert round(tan(pi/4), 2) is 1
-  assert round(sinDeg(30), 2) is 0.5
-  assert round(asinDeg(0.5), 2) is 30
-  assert round(cosDeg(60), 2) is 0.5
-  assert round(acosDeg(0.5), 2) is 60
-  assert round(tanDeg(45), 2) is 1
-  assert round(atanDeg(1), 2) is 45
-  assert round(degToRad(90), 2) is 1.57
-  assert round(radToDeg(1), 0) is 57
+  assert sin(pi/6).round(2) is 0.5
+  assert sqrt(2).round(3) is 1.414
+  assert tan(pi/4).round(2) is 1
+  assert sinDeg(30).round(2) is 0.5
+  assert asinDeg(0.5).round(2) is 30
+  assert cosDeg(60).round(2) is 0.5
+  assert acosDeg(0.5).round(2) is 60
+  assert tanDeg(45).round(2) is 1
+  assert atanDeg(1).round(2) is 45
+  assert degToRad(90).round(2) is 1.57
+  assert radToDeg(1).round(0) is 57
 end test`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -416,7 +416,7 @@ main
     call results.putAt(r, results[r] + 1)
   end for
   for i from 0 to 6 step 1
-    variable r set to round(results[i]/10000, 1)
+    variable r set to (results[i]/10000).round(1)
     print r
     print ", "
   end for
@@ -431,7 +431,7 @@ async function main() {
     _stdlib.putAt(results, r, system.safeIndex(results, r) + 1);
   }
   for (let i = 0; i <= 6; i = i + 1) {
-    let r = _stdlib.round(system.safeIndex(results, i) / 10000, 1);
+    let r = _stdlib.round((system.safeIndex(results, i) / 10000), 1);
     system.printLine(r);
     system.printLine(", ");
   }
@@ -460,7 +460,7 @@ main
     call results.putAt(val, results[val] + 1)
   end for
   for i from 0 to 6 step 1
-    variable r set to round(results[i]/10000, 1)
+    variable r set to (results[i]/10000).round(1)
     print r
     print ", "
   end for
@@ -478,7 +478,7 @@ async function main() {
     _stdlib.putAt(results, val, system.safeIndex(results, val) + 1);
   }
   for (let i = 0; i <= 6; i = i + 1) {
-    let r = _stdlib.round(system.safeIndex(results, i) / 10000, 1);
+    let r = _stdlib.round((system.safeIndex(results, i) / 10000), 1);
     system.printLine(r);
     system.printLine(", ");
   }

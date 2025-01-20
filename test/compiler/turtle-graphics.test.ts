@@ -17,9 +17,9 @@ main
   let t be new Turtle()
   call t.turn(30)
   call t.move(40)
-  print round(t.x, 2)
+  print t.x.round(2)
   print " "
-  print round(t.y, 2)
+  print t.y.round(2)
   print " "
   print t.heading
 end main`;
