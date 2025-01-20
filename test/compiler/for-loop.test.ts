@@ -27,7 +27,7 @@ end main`;
 const global = new class {};
 async function main() {
   let tot = 0;
-  for (var i = 1; i <= 10; i = i + 1) {
+  for (let i = 1; i <= 10; i = i + 1) {
     tot = tot + i;
   }
   system.printLine(_stdlib.asString(tot));
@@ -91,7 +91,7 @@ end main`;
 const global = new class {};
 async function main() {
   let tot = 0;
-  for (var i = 1; i <= 10; i = i + 2) {
+  for (let i = 1; i <= 10; i = i + 2) {
     tot = tot + i;
   }
   system.printLine(_stdlib.asString(tot));
@@ -122,7 +122,7 @@ end main`;
 const global = new class {};
 async function main() {
   let tot = 0;
-  for (var i = 10; i >= 3; i = i - 1) {
+  for (let i = 10; i >= 3; i = i - 1) {
     tot = tot + i;
   }
   system.printLine(_stdlib.asString(tot));
@@ -155,8 +155,8 @@ end main`;
 const global = new class {};
 async function main() {
   let tot = 0;
-  for (var i = 1; i <= 3; i = i + 1) {
-    for (var j = 1; j <= 4; j = j + 1) {
+  for (let i = 1; i <= 3; i = i + 1) {
+    for (let j = 1; j <= 4; j = j + 1) {
       tot = tot + 1;
     }
   }
@@ -191,7 +191,7 @@ async function main() {
   let lower = 1;
   let upper = 10;
   let tot = 0;
-  for (var i = lower; i <= upper; i = i + 2) {
+  for (let i = lower; i <= upper; i = i + 2) {
     tot = tot + i;
   }
   system.printLine(_stdlib.asString(tot));
@@ -231,7 +231,7 @@ async function main() {
 }
 
 async function foo(arr) {
-  for (var i = 0; i <= 10; i = i + 1) {
+  for (let i = 0; i <= 10; i = i + 1) {
     _stdlib.putAt(arr[0], i, 1);
   }
   system.printLine(_stdlib.asString(system.safeIndex(arr[0], 0)));
