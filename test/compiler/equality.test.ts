@@ -46,9 +46,9 @@ async function main() {
   let x = system.initialise(new Foo(7, "Apple"));
   let y = system.initialise(new Foo(7, "Orange"));
   let z = system.initialise(new Foo(7, "Orange"));
-  system.printLine(_stdlib.asString(system.objectEquals(x, x)));
-  system.printLine(_stdlib.asString(system.objectEquals(x, y)));
-  system.printLine(_stdlib.asString(system.objectEquals(y, z)));
+  system.printLine(system.objectEquals(x, x));
+  system.printLine(system.objectEquals(x, y));
+  system.printLine(system.objectEquals(y, z));
 }
 
 class Foo {
@@ -109,7 +109,7 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(new Foo());
-  system.printLine(_stdlib.asString(system.objectEquals(x, Foo.emptyInstance())));
+  system.printLine(system.objectEquals(x, Foo.emptyInstance()));
 }
 
 class Foo {
@@ -180,9 +180,9 @@ async function main() {
   let y = x;
   await y.setP1(3);
   let z = system.initialise(new Foo(8, "Orange"));
-  system.printLine(_stdlib.asString(system.objectEquals(x, x)));
-  system.printLine(_stdlib.asString(system.objectEquals(x, y)));
-  system.printLine(_stdlib.asString(system.objectEquals(x, z)));
+  system.printLine(system.objectEquals(x, x));
+  system.printLine(system.objectEquals(x, y));
+  system.printLine(system.objectEquals(x, z));
 }
 
 class Foo {

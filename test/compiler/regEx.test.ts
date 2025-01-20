@@ -26,9 +26,9 @@ end main`;
 const global = new class {};
 async function main() {
   let r = /a+/;
-  system.printLine(_stdlib.asString(r));
-  system.printLine(_stdlib.asString(_stdlib.matchesRegExp("aa", r)));
-  system.printLine(_stdlib.asString(_stdlib.matchesRegExp("b", r)));
+  system.printLine(r);
+  system.printLine(_stdlib.matchesRegExp("aa", r));
+  system.printLine(_stdlib.matchesRegExp("b", r));
 }
 return [main, _tests];}`;
 
@@ -57,7 +57,7 @@ end function`;
 const global = new class {};
 async function main() {
   let r = /a+/;
-  system.printLine(_stdlib.asString(testRegex(r)));
+  system.printLine(testRegex(r));
 }
 
 function testRegex(r) {
@@ -93,7 +93,7 @@ const global = new class {};
 async function main() {
   let r = system.emptyRegExp();
   r = testRegex();
-  system.printLine(_stdlib.asString(_stdlib.matchesRegExp("aa", r)));
+  system.printLine(_stdlib.matchesRegExp("aa", r));
 }
 
 function testRegex() {
@@ -127,10 +127,10 @@ end main`;
 const global = new class {};
 async function main() {
   let r = /a\\/b/;
-  system.printLine(_stdlib.asString(_stdlib.matchesRegExp("a/b", r)));
-  system.printLine(_stdlib.asString(_stdlib.matchesRegExp("a/b", r)));
-  system.printLine(_stdlib.asString(_stdlib.matchesRegExp("a\b", r)));
-  system.printLine(_stdlib.asString(_stdlib.matchesRegExp("a\\/b", r)));
+  system.printLine(_stdlib.matchesRegExp("a/b", r));
+  system.printLine(_stdlib.matchesRegExp("a/b", r));
+  system.printLine(_stdlib.matchesRegExp("a\b", r));
+  system.printLine(_stdlib.matchesRegExp("a\\/b", r));
 }
 return [main, _tests];}`;
 

@@ -37,7 +37,7 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(new Foo(7));
-  system.printLine(_stdlib.asString(x.p1));
+  system.printLine(x.p1);
 }
 
 class Foo {
@@ -97,7 +97,7 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(new Foo());
-  system.printLine(_stdlib.asString(f.bar()));
+  system.printLine(f.bar());
 }
 
 function doubled(f) {
@@ -158,7 +158,7 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(new Foo());
-  system.printLine(_stdlib.asString(f.bar()));
+  system.printLine(f.bar());
 }
 
 class Foo {
@@ -210,7 +210,7 @@ async function main() {
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
   async bar() {
-    system.printLine(_stdlib.asString(this));
+    system.printLine(this);
   }
 
 }

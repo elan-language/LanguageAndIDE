@@ -27,7 +27,7 @@ async function main() {
   let a = 1;
   let b = "Apple";
   let c = system.list([1, 2, 3]);
-  system.printLine(_stdlib.asString(\`\${_stdlib.asString(a)} \${_stdlib.asString(b)} \${_stdlib.asString(c)}\`));
+  system.printLine(\`\${_stdlib.asString(a)} \${_stdlib.asString(b)} \${_stdlib.asString(c)}\`);
 }
 return [main, _tests];}`;
 

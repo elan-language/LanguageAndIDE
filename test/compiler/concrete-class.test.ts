@@ -41,9 +41,9 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(new Foo());
-  system.printLine(_stdlib.asString(x.p1));
-  system.printLine(_stdlib.asString(x.p2));
-  system.printLine(_stdlib.asString(x.asString()));
+  system.printLine(x.p1);
+  system.printLine(x.p2);
+  system.printLine(x.asString());
 }
 
 class Foo {
@@ -99,8 +99,8 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(new Foo(7, "Apple"));
-  system.printLine(_stdlib.asString(x.p1));
-  system.printLine(_stdlib.asString(x.p2));
+  system.printLine(x.p1);
+  system.printLine(x.p2);
 }
 
 class Foo {
@@ -195,7 +195,7 @@ class Bar {
   p1 = 0;
 
   async printP1() {
-    system.printLine(_stdlib.asString(this.p1));
+    system.printLine(this.p1);
   }
 
 }
@@ -257,12 +257,12 @@ const global = new class {};
 async function main() {
   let foo = system.initialise(new Foo());
   let bar = foo.bar;
-  system.printLine(_stdlib.asString(bar.p1));
-  system.printLine(_stdlib.asString(bar.p2));
+  system.printLine(bar.p1);
+  system.printLine(bar.p2);
   let foo2 = bar.foo;
   let bar2 = foo2.bar;
-  system.printLine(_stdlib.asString(bar2.p1));
-  system.printLine(_stdlib.asString(bar2.p2));
+  system.printLine(bar2.p1);
+  system.printLine(bar2.p2);
 }
 
 class Foo {
@@ -342,7 +342,7 @@ const global = new class {};
 async function main() {
   let foo = system.initialise(new Foo());
   let b = system.safeIndex(foo.strArr, 0);
-  system.printLine(_stdlib.asString(b));
+  system.printLine(b);
 }
 
 class Foo {
@@ -402,7 +402,7 @@ class Foo {
 }
 
 async function proc(foo) {
-  system.printLine(_stdlib.asString(foo.p1));
+  system.printLine(foo.p1);
 }
 global["proc"] = proc;
 return [main, _tests];}`;
@@ -443,7 +443,7 @@ end function
 const global = new class {};
 async function main() {
   let f = system.initialise(new Foo());
-  system.printLine(_stdlib.asString(fun(f)));
+  system.printLine(fun(f));
 }
 
 class Foo {

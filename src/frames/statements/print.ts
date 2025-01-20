@@ -45,6 +45,6 @@ export class Print extends AbstractFrame implements Statement {
     this.compileErrors = [];
 
     const toPrint = this.expr.compile(transforms) || '""';
-    return `${this.indent()}system.printLine(_stdlib.asString(${toPrint}));`;
+    return `${this.indent()}system.printLine(${toPrint});`;
   }
 }

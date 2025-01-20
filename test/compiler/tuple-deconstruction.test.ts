@@ -31,8 +31,8 @@ async function main() {
   let y = 0;
   let z = "";
   [y, z] = x;
-  system.printLine(_stdlib.asString(y));
-  system.printLine(_stdlib.asString(z));
+  system.printLine(y);
+  system.printLine(z);
 }
 return [main, _tests];}`;
 
@@ -62,8 +62,8 @@ end function`;
 const global = new class {};
 async function main() {
   const [a, b] = foo();
-  system.printLine(_stdlib.asString(a));
-  system.printLine(_stdlib.asString(b));
+  system.printLine(a);
+  system.printLine(b);
 }
 
 function foo() {
@@ -105,8 +105,8 @@ const global = new class {};
 async function main() {
   const foo = system.initialise(new Foo());
   const [a, b] = foo.bar();
-  system.printLine(_stdlib.asString(a));
-  system.printLine(_stdlib.asString(b));
+  system.printLine(a);
+  system.printLine(b);
 }
 
 class Foo {
@@ -148,8 +148,8 @@ end function`;
 const global = new class {};
 async function main() {
   const [a, b] = foo();
-  system.printLine(_stdlib.asString(a));
-  system.printLine(_stdlib.asString(b));
+  system.printLine(a);
+  system.printLine(b);
 }
 
 function foo() {
@@ -187,14 +187,14 @@ end main
 const global = new class {};
 async function main() {
   let x = system.tuple([3, "Apple", _stdlib.true, 1.1]);
-  system.printLine(_stdlib.asString(x));
+  system.printLine(x);
   const [a, b, c, d] = x;
-  system.printLine(_stdlib.asString(a));
-  system.printLine(_stdlib.asString(b));
-  system.printLine(_stdlib.asString(c));
-  system.printLine(_stdlib.asString(d));
+  system.printLine(a);
+  system.printLine(b);
+  system.printLine(c);
+  system.printLine(d);
   const [, , e, ] = x;
-  system.printLine(_stdlib.asString(e));
+  system.printLine(e);
 }
 return [main, _tests];}`;
 
@@ -224,7 +224,7 @@ async function main() {
   let x = system.tuple([3, "Apple"]);
   let z = "";
   [, z] = x;
-  system.printLine(_stdlib.asString(z));
+  system.printLine(z);
 }
 return [main, _tests];}`;
 
@@ -254,7 +254,7 @@ async function main() {
   let x = system.tuple([3, "Apple"]);
   let y = 0;
   [y, ] = x;
-  system.printLine(_stdlib.asString(y));
+  system.printLine(y);
 }
 return [main, _tests];}`;
 
@@ -284,7 +284,7 @@ async function main() {
   let x = system.tuple([3, "Apple", 4]);
   let z = "";
   [, z, ] = x;
-  system.printLine(_stdlib.asString(z));
+  system.printLine(z);
 }
 return [main, _tests];}`;
 
@@ -314,7 +314,7 @@ async function main() {
   let x = system.tuple([3, "Apple", 4]);
   let y = 0;
   [, , y] = x;
-  system.printLine(_stdlib.asString(y));
+  system.printLine(y);
 }
 return [main, _tests];}`;
 
@@ -343,8 +343,8 @@ const global = new class {};
 async function main() {
   let x = system.tuple([3, "Apple"]);
   const [y, z] = x;
-  system.printLine(_stdlib.asString(y));
-  system.printLine(_stdlib.asString(z));
+  system.printLine(y);
+  system.printLine(z);
 }
 return [main, _tests];}`;
 
@@ -372,7 +372,7 @@ const global = new class {};
 async function main() {
   let x = system.tuple([3, "Apple"]);
   const [, z] = x;
-  system.printLine(_stdlib.asString(z));
+  system.printLine(z);
 }
 return [main, _tests];}`;
 
@@ -401,8 +401,8 @@ const global = new class {};
 async function main() {
   let x = system.tuple([3, "Apple"]);
   let [y, z] = x;
-  system.printLine(_stdlib.asString(y));
-  system.printLine(_stdlib.asString(z));
+  system.printLine(y);
+  system.printLine(z);
 }
 return [main, _tests];}`;
 
@@ -430,7 +430,7 @@ const global = new class {};
 async function main() {
   let x = system.tuple([3, "Apple"]);
   let [, z] = x;
-  system.printLine(_stdlib.asString(z));
+  system.printLine(z);
 }
 return [main, _tests];}`;
 
@@ -459,8 +459,8 @@ const global = new class {};
 async function main() {
   let t = system.tuple([3, 4, "Apple"]);
   let [x, , z] = t;
-  system.printLine(_stdlib.asString(x));
-  system.printLine(_stdlib.asString(z));
+  system.printLine(x);
+  system.printLine(z);
 }
 return [main, _tests];}`;
 
@@ -497,8 +497,8 @@ async function main() {
   let b = "";
   a = y;
   b = z;
-  system.printLine(_stdlib.asString(a));
-  system.printLine(_stdlib.asString(b));
+  system.printLine(a);
+  system.printLine(b);
 }
 return [main, _tests];}`;
 
@@ -529,8 +529,8 @@ async function main() {
   let a = system.literalArray([1, 2]);
   let x = system.tuple([3, a]);
   let [y, z] = x;
-  system.printLine(_stdlib.asString(y));
-  system.printLine(_stdlib.asString(z));
+  system.printLine(y);
+  system.printLine(z);
 }
 return [main, _tests];}`;
 
@@ -561,8 +561,8 @@ async function main() {
   let a = system.literalArray([1, 2]);
   let x = system.tuple([3, a]);
   const [y, z] = x;
-  system.printLine(_stdlib.asString(y));
-  system.printLine(_stdlib.asString(z));
+  system.printLine(y);
+  system.printLine(z);
 }
 return [main, _tests];}`;
 
@@ -597,8 +597,8 @@ async function main() {
   let y = 0;
   let z = system.emptyArray();
   [y, z] = x;
-  system.printLine(_stdlib.asString(y));
-  system.printLine(_stdlib.asString(z));
+  system.printLine(y);
+  system.printLine(z);
 }
 return [main, _tests];}`;
 
@@ -629,8 +629,8 @@ async function main() {
   let a = system.tuple([1, 2]);
   let x = system.tuple([3, a]);
   let [y, z] = x;
-  system.printLine(_stdlib.asString(y));
-  system.printLine(_stdlib.asString(z));
+  system.printLine(y);
+  system.printLine(z);
 }
 return [main, _tests];}`;
 
@@ -661,8 +661,8 @@ async function main() {
   let a = system.tuple([1, 2]);
   let x = system.tuple([3, a]);
   const [y, z] = x;
-  system.printLine(_stdlib.asString(y));
-  system.printLine(_stdlib.asString(z));
+  system.printLine(y);
+  system.printLine(z);
 }
 return [main, _tests];}`;
 
@@ -697,8 +697,8 @@ async function main() {
   let y = 0;
   let z = system.tuple([0, 0]);
   [y, z] = x;
-  system.printLine(_stdlib.asString(y));
-  system.printLine(_stdlib.asString(z));
+  system.printLine(y);
+  system.printLine(z);
 }
 return [main, _tests];}`;
 

@@ -41,7 +41,7 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(new Foo());
-  system.printLine(_stdlib.asString(f.times(2)));
+  system.printLine(f.times(2));
 }
 
 class Foo {
@@ -105,7 +105,7 @@ async function main() {
   let f = system.initialise(new Foo());
   let x = 1.1;
   x = f.times(x);
-  system.printLine(_stdlib.asString(x));
+  system.printLine(x);
 }
 
 class Foo {
@@ -169,7 +169,7 @@ async function main() {
   let f = system.initialise(new Foo());
   let x = system.emptyImmutableList();
   x = f.times(2);
-  system.printLine(_stdlib.asString(x));
+  system.printLine(x);
 }
 
 class Foo {
@@ -242,7 +242,7 @@ const global = new class {};
 async function main() {
   let b = system.initialise(new Bar());
   let x = b.getTimes();
-  system.printLine(_stdlib.asString(x));
+  system.printLine(x);
 }
 
 class Bar {
@@ -338,7 +338,7 @@ const global = new class {};
 async function main() {
   let b = system.initialise(new Bar());
   let x = b.getTimes();
-  system.printLine(_stdlib.asString(x));
+  system.printLine(x);
 }
 
 class Bar {
@@ -441,7 +441,7 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(new Foo());
-  system.printLine(_stdlib.asString(f.length()));
+  system.printLine(f.length());
 }
 
 class Foo {
@@ -548,7 +548,7 @@ const global = new class {};
 async function main() {
   let f = system.initialise(new Foo());
   let b = system.initialise(new Bar());
-  system.printLine(_stdlib.asString(f.times(b)));
+  system.printLine(f.times(b));
 }
 
 class Foo {
@@ -642,7 +642,7 @@ class Foo {
   p1 = 0;
 
   async prt() {
-    system.printLine(_stdlib.asString(this.asString()));
+    system.printLine(this.asString());
   }
 
   asString() {

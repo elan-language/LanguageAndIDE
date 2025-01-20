@@ -30,7 +30,7 @@ async function main() {
   for (let i = 1; i <= 10; i = i + 1) {
     tot = tot + i;
   }
-  system.printLine(_stdlib.asString(tot));
+  system.printLine(tot);
 }
 return [main, _tests];}`;
 
@@ -63,7 +63,7 @@ async function main() {
   for (i = 1; i <= 10; i = i + 1) {
     tot = tot + i;
   }
-  system.printLine(_stdlib.asString(tot));
+  system.printLine(tot);
 }
 return [main, _tests];}`;
 
@@ -94,7 +94,7 @@ async function main() {
   for (let i = 1; i <= 10; i = i + 2) {
     tot = tot + i;
   }
-  system.printLine(_stdlib.asString(tot));
+  system.printLine(tot);
 }
 return [main, _tests];}`;
 
@@ -125,7 +125,7 @@ async function main() {
   for (let i = 10; i >= 3; i = i - 1) {
     tot = tot + i;
   }
-  system.printLine(_stdlib.asString(tot));
+  system.printLine(tot);
 }
 return [main, _tests];}`;
 
@@ -160,7 +160,7 @@ async function main() {
       tot = tot + 1;
     }
   }
-  system.printLine(_stdlib.asString(tot));
+  system.printLine(tot);
 }
 return [main, _tests];}`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -194,7 +194,7 @@ async function main() {
   for (let i = lower; i <= upper; i = i + 2) {
     tot = tot + i;
   }
-  system.printLine(_stdlib.asString(tot));
+  system.printLine(tot);
 }
 return [main, _tests];}`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -234,7 +234,7 @@ async function foo(arr) {
   for (let i = 0; i <= 10; i = i + 1) {
     _stdlib.putAt(arr[0], i, 1);
   }
-  system.printLine(_stdlib.asString(system.safeIndex(arr[0], 0)));
+  system.printLine(system.safeIndex(arr[0], 0));
 }
 global["foo"] = foo;
 return [main, _tests];}`;

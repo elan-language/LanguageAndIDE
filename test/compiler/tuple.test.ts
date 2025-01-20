@@ -27,10 +27,10 @@ end main`;
 const global = new class {};
 async function main() {
   let x = system.tuple([3, "Apple"]);
-  system.printLine(_stdlib.asString(x));
+  system.printLine(x);
   const [f, s] = x;
-  system.printLine(_stdlib.asString(f));
-  system.printLine(_stdlib.asString(s));
+  system.printLine(f);
+  system.printLine(s);
 }
 return [main, _tests];}`;
 
@@ -62,10 +62,10 @@ end function`;
 const global = new class {};
 async function main() {
   let x = f();
-  system.printLine(_stdlib.asString(x));
+  system.printLine(x);
   const [fst, sec] = x;
-  system.printLine(_stdlib.asString(fst));
-  system.printLine(_stdlib.asString(sec));
+  system.printLine(fst);
+  system.printLine(sec);
 }
 
 function f() {
@@ -101,7 +101,7 @@ const global = new class {};
 async function main() {
   let t = f();
   const [fst, ] = t;
-  system.printLine(_stdlib.asString(fst));
+  system.printLine(fst);
 }
 
 function f() {
@@ -137,7 +137,7 @@ const global = new class {
 async function main() {
   let t = _stdlib.reduce(global.a, system.tuple([1, 1]), (i, j) => j);
   const [fst, ] = t;
-  system.printLine(_stdlib.asString(fst));
+  system.printLine(fst);
 }
 return [main, _tests];}`;
 
@@ -169,7 +169,7 @@ const global = new class {};
 async function main() {
   let x = "one";
   let y = "two";
-  system.printLine(_stdlib.asString(f(system.tuple([x, y]))));
+  system.printLine(f(system.tuple([x, y])));
 }
 
 function f(t) {
@@ -203,7 +203,7 @@ const global = new class {};
 async function main() {
   let x = system.tuple([3, "Apple"]);
   x = system.tuple([4, "Pear"]);
-  system.printLine(_stdlib.asString(x));
+  system.printLine(x);
 }
 return [main, _tests];}`;
 

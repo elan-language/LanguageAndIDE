@@ -22,7 +22,7 @@ end main`;
 const global = new class {};
 async function main() {
   let f = 1;
-  system.printLine(_stdlib.asString(_stdlib.asString(f)));
+  system.printLine(_stdlib.asString(f));
 }
 return [main, _tests];}`;
 
@@ -58,7 +58,7 @@ const global = new class {};
 async function main() {
   let f = system.initialise(new Foo());
   let s = _stdlib.asString(f);
-  system.printLine(_stdlib.asString(s));
+  system.printLine(s);
 }
 
 class Foo {
@@ -104,7 +104,7 @@ async function main() {
   let f = system.initialise(new Foo());
   let p = f.p1;
   let s = _stdlib.asString(p);
-  system.printLine(_stdlib.asString(s));
+  system.printLine(s);
 }
 
 class Foo {
@@ -164,8 +164,8 @@ async function main() {
   let s1 = f.asString();
   let p = f.p1;
   let s2 = p.asString();
-  system.printLine(_stdlib.asString(s1));
-  system.printLine(_stdlib.asString(s2));
+  system.printLine(s1);
+  system.printLine(s2);
 }
 
 class Foo {
@@ -228,7 +228,7 @@ const global = new class {};
 async function main() {
   let f = system.initialise(new Foo());
   let s = f.asString();
-  system.printLine(_stdlib.asString(s));
+  system.printLine(s);
 }
 
 class Foo {
@@ -286,7 +286,7 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(new Foo());
-  system.printLine(_stdlib.asString(f));
+  system.printLine(f);
 }
 
 class Foo {
@@ -336,13 +336,13 @@ const global = new class {};
 async function main() {
   let l = system.list([1, 2, 3]);
   let sl = _stdlib.asString(l);
-  system.printLine(_stdlib.asString(sl));
+  system.printLine(sl);
   let a = _stdlib.asArray(system.list([1, 2, 3]));
   let sa = _stdlib.asString(a);
-  system.printLine(_stdlib.asString(sa));
+  system.printLine(sa);
   let d = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
   let sd = _stdlib.asString(d);
-  system.printLine(_stdlib.asString(sd));
+  system.printLine(sd);
 }
 return [main, _tests];}`;
 

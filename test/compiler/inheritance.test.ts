@@ -57,11 +57,11 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(new Bar());
-  system.printLine(_stdlib.asString(x.p1));
-  system.printLine(_stdlib.asString(x.p2));
-  system.printLine(_stdlib.asString(x.product()));
+  system.printLine(x.p1);
+  system.printLine(x.p2);
+  system.printLine(x.product());
   await x.setP1(4);
-  system.printLine(_stdlib.asString(x.product()));
+  system.printLine(x.product());
 }
 
 class Foo {
@@ -161,8 +161,8 @@ end function`;
 const global = new class {};
 async function main() {
   let x = system.initialise(new Yon());
-  system.printLine(_stdlib.asString(f(x)));
-  system.printLine(_stdlib.asString(b(x)));
+  system.printLine(f(x));
+  system.printLine(b(x));
 }
 
 class Foo {
@@ -271,7 +271,7 @@ class Bar extends Foo {
 }
 
 async function proc(foo) {
-  system.printLine(_stdlib.asString(foo.p1));
+  system.printLine(foo.p1);
 }
 global["proc"] = proc;
 return [main, _tests];}`;
@@ -314,7 +314,7 @@ const global = new class {};
 async function main() {
   let b = system.initialise(new Bar());
   let lst = system.list([b]);
-  system.printLine(_stdlib.asString(fun(lst)));
+  system.printLine(fun(lst));
 }
 
 class Foo {
@@ -380,7 +380,7 @@ end function
 const global = new class {};
 async function main() {
   let f = system.initialise(new Bar());
-  system.printLine(_stdlib.asString(fun(f)));
+  system.printLine(fun(f));
 }
 
 class Foo {
@@ -481,8 +481,8 @@ class Bar extends Foo {
 
   async testPrivate(a) {
     await this.setP1(a);
-    system.printLine(_stdlib.asString(this.ff()));
-    system.printLine(_stdlib.asString(this.p1));
+    system.printLine(this.ff());
+    system.printLine(this.p1);
   }
 
 }
@@ -587,11 +587,11 @@ class Bar extends Yon {
 
   async testPrivate(a) {
     await this.setP1(a);
-    system.printLine(_stdlib.asString(this.ff()));
-    system.printLine(_stdlib.asString(this.p1));
+    system.printLine(this.ff());
+    system.printLine(this.p1);
     await this.setP2(a + 1);
-    system.printLine(_stdlib.asString(this.ff2()));
-    system.printLine(_stdlib.asString(this.p2));
+    system.printLine(this.ff2());
+    system.printLine(this.p2);
   }
 
 }
@@ -696,11 +696,11 @@ class Bar extends Yon {
 
   async testPrivate(a) {
     await this.setP1(a);
-    system.printLine(_stdlib.asString(this.ff()));
-    system.printLine(_stdlib.asString(this.p1));
+    system.printLine(this.ff());
+    system.printLine(this.p1);
     await this.setP2(a + 1);
-    system.printLine(_stdlib.asString(this.ff2()));
-    system.printLine(_stdlib.asString(this.p2));
+    system.printLine(this.ff2());
+    system.printLine(this.p2);
   }
 
 }
@@ -763,9 +763,9 @@ class Bar {
   }
 
   async testPrivate(a) {
-    system.printLine(_stdlib.asString(this.p1));
+    system.printLine(this.p1);
     this.p1 = a;
-    system.printLine(_stdlib.asString(this.p1));
+    system.printLine(this.p1);
   }
 
 }
@@ -842,7 +842,7 @@ class Bar extends Foo {
 
   async testPrivate(a) {
     await this.setP1(a);
-    system.printLine(_stdlib.asString(this.p1));
+    system.printLine(this.p1);
   }
 
 }
@@ -920,7 +920,7 @@ class Bar extends Foo {
 
   async testPrivate(a) {
     await this.setP1(a);
-    system.printLine(_stdlib.asString(this.p1));
+    system.printLine(this.p1);
   }
 
   async setP(a) {
@@ -987,7 +987,7 @@ class Foo {
   }
 
   async setP1(a) {
-    system.printLine(_stdlib.asString(this.ff(a)));
+    system.printLine(this.ff(a));
   }
 
 }
@@ -1003,7 +1003,7 @@ class Bar extends Foo {
 
   async testPrivate(a) {
     await this.setP1(a);
-    system.printLine(_stdlib.asString(this.p1));
+    system.printLine(this.p1);
   }
 
   ff(a) {
@@ -1082,7 +1082,7 @@ class Bar extends Foo {
 
   async testPrivate(a) {
     await this.setP1(a);
-    system.printLine(_stdlib.asString(this.p1));
+    system.printLine(this.p1);
   }
 
 }
@@ -1208,7 +1208,7 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(new Bar());
-  system.printLine(_stdlib.asString(x.testPrivate(3)));
+  system.printLine(x.testPrivate(3));
 }
 
 class Yon {
@@ -1283,7 +1283,7 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(new Bar());
-  system.printLine(_stdlib.asString(x.ff()));
+  system.printLine(x.ff());
 }
 
 class Yon {
@@ -1362,7 +1362,7 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(new Bar());
-  system.printLine(_stdlib.asString(x.ff()));
+  system.printLine(x.ff());
 }
 
 class Yon {
@@ -1441,7 +1441,7 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(new Bar());
-  system.printLine(_stdlib.asString(x.ff()));
+  system.printLine(x.ff());
 }
 
 class Yon {

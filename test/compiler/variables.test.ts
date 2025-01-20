@@ -24,7 +24,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = 3;
-  system.printLine(_stdlib.asString(a));
+  system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -51,7 +51,7 @@ const global = new class {};
 async function main() {
   let a = 3;
   let b = a;
-  system.printLine(_stdlib.asString(b));
+  system.printLine(b);
 }
 return [main, _tests];}`;
 
@@ -76,7 +76,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = 3 + 4;
-  system.printLine(_stdlib.asString(a));
+  system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -103,7 +103,7 @@ const global = new class {};
 async function main() {
   let a = 3;
   a = 4;
-  system.printLine(_stdlib.asString(a));
+  system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -130,7 +130,7 @@ const global = new class {};
 async function main() {
   let a = 3.1;
   a = 4;
-  system.printLine(_stdlib.asString(a));
+  system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -179,15 +179,15 @@ async function main() {
   let g = 3 !== 4;
   let h = !_stdlib.false;
   let k = 4 / 3;
-  system.printLine(_stdlib.asString(a));
-  system.printLine(_stdlib.asString(b));
-  system.printLine(_stdlib.asString(c));
-  system.printLine(_stdlib.asString(d));
-  system.printLine(_stdlib.asString(e));
-  system.printLine(_stdlib.asString(f));
-  system.printLine(_stdlib.asString(g));
-  system.printLine(_stdlib.asString(h));
-  system.printLine(_stdlib.asString(k));
+  system.printLine(a);
+  system.printLine(b);
+  system.printLine(c);
+  system.printLine(d);
+  system.printLine(e);
+  system.printLine(f);
+  system.printLine(g);
+  system.printLine(h);
+  system.printLine(k);
 }
 return [main, _tests];}`;
 
@@ -216,7 +216,7 @@ const Fruit = {
 const global = new class {};
 async function main() {
   let a = Fruit.apple;
-  system.printLine(_stdlib.asString(a));
+  system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -248,7 +248,7 @@ const global = new class {
 async function main() {
   let b = _stdlib.map(global.a, (x) => x);
   b = system.list([1, 2]);
-  system.printLine(_stdlib.asString(b));
+  system.printLine(b);
 }
 return [main, _tests];}`;
 
@@ -524,7 +524,7 @@ end main
 const global = new class {};
 async function main() {
   let a = ((((3))));
-  system.printLine(_stdlib.asString(a));
+  system.printLine(a);
 }
 return [main, _tests];}`;
 
