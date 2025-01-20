@@ -23,7 +23,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.literalArray([system.dictionary({["a"] : 1}), system.dictionary({["b"] : 3, ["z"] : 10})]);
+  let a = system.literalArray([system.dictionary({["a"] : 1}), system.dictionary({["b"] : 3, ["z"] : 10})]);
   _stdlib.putAtKey(system.safeIndex(a, 0), "b", 2);
   system.printLine(_stdlib.asString(system.safeIndex(system.safeIndex(a, 0), "b")));
 }
@@ -50,7 +50,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.dictionary({["a"] : system.literalArray([1, 2]), ["b"] : system.literalArray([3, 4, 5])});
+  let a = system.dictionary({["a"] : system.literalArray([1, 2]), ["b"] : system.literalArray([3, 4, 5])});
   _stdlib.putAt(system.safeIndex(a, "b"), 0, 2);
   system.printLine(_stdlib.asString(system.safeIndex(system.safeIndex(a, "b"), 0)));
 }

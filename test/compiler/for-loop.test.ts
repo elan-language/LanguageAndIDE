@@ -26,7 +26,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var tot = 0;
+  let tot = 0;
   for (var i = 1; i <= 10; i = i + 1) {
     tot = tot + i;
   }
@@ -58,8 +58,8 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var tot = 0;
-  var i = 0;
+  let tot = 0;
+  let i = 0;
   for (i = 1; i <= 10; i = i + 1) {
     tot = tot + i;
   }
@@ -90,7 +90,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var tot = 0;
+  let tot = 0;
   for (var i = 1; i <= 10; i = i + 2) {
     tot = tot + i;
   }
@@ -121,7 +121,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var tot = 0;
+  let tot = 0;
   for (var i = 10; i >= 3; i = i - 1) {
     tot = tot + i;
   }
@@ -154,7 +154,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var tot = 0;
+  let tot = 0;
   for (var i = 1; i <= 3; i = i + 1) {
     for (var j = 1; j <= 4; j = j + 1) {
       tot = tot + 1;
@@ -188,9 +188,9 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var lower = 1;
-  var upper = 10;
-  var tot = 0;
+  let lower = 1;
+  let upper = 10;
+  let tot = 0;
   for (var i = lower; i <= upper; i = i + 2) {
     tot = tot + i;
   }
@@ -224,7 +224,7 @@ end procedure`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = _stdlib.createArray(11, 0);
+  let a = _stdlib.createArray(11, 0);
   var _a = [a];
   await foo(_a);
   a = _a[0];

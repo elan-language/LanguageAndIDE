@@ -46,7 +46,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var msg = "Foo";
+  let msg = "Foo";
   throw new Error(msg);
 }
 return [main, _tests];}`;
@@ -71,7 +71,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var bar = 1;
+  let bar = 1;
   throw new Error(\`\${_stdlib.asString(bar)}\`);
 }
 return [main, _tests];}`;
@@ -140,7 +140,7 @@ async function main() {
     await foo();
     system.printLine(_stdlib.asString("not caught"));
   } catch (_e) {
-    var e = _e.message;
+    let e = _e.message;
     system.printLine(_stdlib.asString(e));
   }
 }
@@ -186,12 +186,12 @@ end class`;
 const global = new class {};
 async function main() {
   try {
-    var x = system.emptyArray();
-    var y = system.safeIndex(x, 1);
-    var z = y.p1;
+    let x = system.emptyArray();
+    let y = system.safeIndex(x, 1);
+    let z = y.p1;
     system.printLine(_stdlib.asString("not caught"));
   } catch (_e) {
-    var e = _e.message;
+    let e = _e.message;
     system.printLine(_stdlib.asString(e));
   }
 }
@@ -241,8 +241,8 @@ async function main() {
     await foo();
     system.printLine(_stdlib.asString("not caught"));
   } catch (_e) {
-    var e = _e.message;
-    var s = "";
+    let e = _e.message;
+    let s = "";
     s = e;
     system.printLine(_stdlib.asString(s));
   }

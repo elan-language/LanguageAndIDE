@@ -23,7 +23,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
+  let a = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -48,7 +48,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.dictionary({["a"] : system.dictionary({["a"] : 1}), ["b"] : system.dictionary({["b"] : 3, ["z"] : 10})});
+  let a = system.dictionary({["a"] : system.dictionary({["a"] : 1}), ["b"] : system.dictionary({["b"] : 3, ["z"] : 10})});
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -79,7 +79,7 @@ var Fruit = {
 
 const global = new class {};
 async function main() {
-  var a = system.dictionary({[Fruit.apple] : 1, [Fruit.orange] : 3, [Fruit.pear] : 10});
+  let a = system.dictionary({[Fruit.apple] : 1, [Fruit.orange] : 3, [Fruit.pear] : 10});
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -104,7 +104,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
+  let a = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
   system.printLine(_stdlib.asString(system.safeIndex(a, "z")));
 }
 return [main, _tests];}`;
@@ -129,7 +129,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.dictionary({["a"] : system.dictionary({["a"] : 1}), ["b"] : system.dictionary({["b"] : 3, ["z"] : 10})});
+  let a = system.dictionary({["a"] : system.dictionary({["a"] : 1}), ["b"] : system.dictionary({["b"] : 3, ["z"] : 10})});
   system.printLine(_stdlib.asString(system.safeIndex(system.safeIndex(a, "b"), "z")));
 }
 return [main, _tests];}`;
@@ -156,8 +156,8 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
-  var b = system.emptyImmutableList();
+  let a = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
+  let b = system.emptyImmutableList();
   b = _stdlib.keys(a);
   system.printLine(_stdlib.asString(b));
 }
@@ -184,7 +184,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
+  let a = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
   system.printLine(_stdlib.asString(_stdlib.hasKey(a, "b")));
   system.printLine(_stdlib.asString(_stdlib.hasKey(a, "d")));
 }
@@ -210,7 +210,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
+  let a = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
   system.printLine(_stdlib.asString(_stdlib.values(a)));
 }
 return [main, _tests];}`;
@@ -237,7 +237,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
+  let a = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
   _stdlib.putAtKey(a, "b", 4);
   _stdlib.putAtKey(a, "d", 2);
   system.printLine(_stdlib.asString(a));
@@ -266,7 +266,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.dictionary({["a"] : system.dictionary({["a"] : 1}), ["b"] : system.dictionary({["b"] : 3, ["z"] : 10})});
+  let a = system.dictionary({["a"] : system.dictionary({["a"] : 1}), ["b"] : system.dictionary({["b"] : 3, ["z"] : 10})});
   _stdlib.putAtKey(a, "b", system.dictionary({["c"] : 4}));
   _stdlib.putAtKey(system.safeIndex(a, "a"), "x", 2);
   system.printLine(_stdlib.asString(a));
@@ -294,7 +294,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
+  let a = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
   _stdlib.removeAtKey(a, "b");
   system.printLine(_stdlib.asString(a));
 }
@@ -321,7 +321,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.dictionary({["a"] : system.dictionary({["a"] : 1}), ["b"] : system.dictionary({["b"] : 3, ["z"] : 10})});
+  let a = system.dictionary({["a"] : system.dictionary({["a"] : 1}), ["b"] : system.dictionary({["b"] : 3, ["z"] : 10})});
   _stdlib.removeAtKey(system.safeIndex(a, "b"), "b");
   system.printLine(_stdlib.asString(a));
 }
@@ -348,7 +348,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
+  let a = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
   _stdlib.removeAtKey(a, "c");
   system.printLine(_stdlib.asString(a));
 }
@@ -379,10 +379,10 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.initialise(system.dictionary(new Object()));
+  let a = system.initialise(system.dictionary(new Object()));
   _stdlib.putAtKey(a, "Foo", 1);
   _stdlib.putAtKey(a, "Bar", 3);
-  var k = _stdlib.keys(a);
+  let k = _stdlib.keys(a);
   system.printLine(_stdlib.asString(_stdlib.length(k)));
   system.printLine(_stdlib.asString(system.safeIndex(a, "Foo")));
   system.printLine(_stdlib.asString(system.safeIndex(a, "Bar")));
@@ -415,11 +415,11 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.initialise(system.dictionary(new Object()));
+  let a = system.initialise(system.dictionary(new Object()));
   _stdlib.putAtKey(a, "Foo", system.dictionary({["ff"] : 1}));
   _stdlib.putAtKey(a, "Bar", system.initialise(system.dictionary(new Object())));
   _stdlib.putAtKey(system.safeIndex(a, "Bar"), "bb", 3);
-  var k = _stdlib.keys(a);
+  let k = _stdlib.keys(a);
   system.printLine(_stdlib.asString(_stdlib.length(k)));
   system.printLine(_stdlib.asString(system.safeIndex(a, "Foo")));
   system.printLine(_stdlib.asString(system.safeIndex(a, "Bar")));
@@ -457,10 +457,10 @@ var Fruit = {
 
 const global = new class {};
 async function main() {
-  var a = system.initialise(system.dictionary(new Object()));
+  let a = system.initialise(system.dictionary(new Object()));
   _stdlib.putAtKey(a, Fruit.apple, 1);
   _stdlib.putAtKey(a, Fruit.orange, 3);
-  var k = _stdlib.keys(a);
+  let k = _stdlib.keys(a);
   system.printLine(_stdlib.asString(_stdlib.length(k)));
   system.printLine(_stdlib.asString(system.safeIndex(a, Fruit.apple)));
   system.printLine(_stdlib.asString(system.safeIndex(a, Fruit.orange)));
@@ -493,8 +493,8 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.emptyDictionary();
-  var b = system.emptyDictionary();
+  let a = system.emptyDictionary();
+  let b = system.emptyDictionary();
   _stdlib.putAtKey(a, "a", 3);
   system.printLine(_stdlib.asString(a));
   system.printLine(_stdlib.asString(b));
@@ -530,8 +530,8 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.emptyDictionary();
-  var b = system.emptyDictionary();
+  let a = system.emptyDictionary();
+  let b = system.emptyDictionary();
   _stdlib.putAtKey(a, "a", system.dictionary({["a"] : 1}));
   system.printLine(_stdlib.asString(a));
   system.printLine(_stdlib.asString(b));

@@ -46,8 +46,8 @@ global["square"] = square;
 
 _tests.push(["test10", async (_outcomes) => {
   _outcomes.push(system.assert(() => square(3), 9, "assert13", _stdlib, false));
-  var actual = square(4);
-  var expected = 16;
+  let actual = square(4);
+  let expected = 16;
   _outcomes.push(system.assert(() => actual, expected, "assert22", _stdlib, false));
 }]);
 return [main, _tests];}`;
@@ -88,7 +88,7 @@ async function main() {
 }
 
 _tests.push(["test3", async (_outcomes) => {
-  var t = system.tuple(["one", "two"]);
+  let t = system.tuple(["one", "two"]);
   _outcomes.push(system.assert(() => t, system.tuple(["one", "two"]), "assert9", _stdlib, false));
 }]);
 return [main, _tests];}`;
@@ -354,7 +354,7 @@ async function main() {
 }
 
 _tests.push(["test3", async (_outcomes) => {
-  var arr = system.emptyArray();
+  let arr = system.emptyArray();
   _outcomes.push(system.assert(() => system.safeIndex(arr, 1), "Out of range index: 1 size: 0", "assert9", _stdlib, false));
 }]);
 return [main, _tests];}`;
@@ -399,7 +399,7 @@ async function main() {
 }
 
 _tests.push(["test3", async (_outcomes) => {
-  var arr = system.emptyArray();
+  let arr = system.emptyArray();
   _outcomes.push(system.assert(() => system.safeIndex(arr, 1), 0, "assert9", _stdlib, false));
 }]);
 return [main, _tests];}`;
@@ -437,8 +437,8 @@ async function main() {
 }
 
 _tests.push(["test3", async (_outcomes) => {
-  var arr = system.emptyArray();
-  var b = system.safeIndex(arr, 1);
+  let arr = system.emptyArray();
+  let b = system.safeIndex(arr, 1);
   _outcomes.push(system.assert(() => b, 0, "assert12", _stdlib, false));
 }]);
 return [main, _tests];}`;
@@ -520,31 +520,31 @@ async function main() {
 }
 
 _tests.push(["test3", async (_outcomes) => {
-  var a = system.list([3, 2, 4, 0]);
-  var b = system.list([3, 2, 4, 0]);
+  let a = system.list([3, 2, 4, 0]);
+  let b = system.list([3, 2, 4, 0]);
   _outcomes.push(system.assert(() => a, b, "assert12", _stdlib, false));
 }]);
 
 _tests.push(["test15", async (_outcomes) => {
-  var a = system.dictionary({[3] : "a", [2] : "b", [4] : "c"});
-  var b = system.dictionary({[3] : "a", [2] : "b", [4] : "c"});
+  let a = system.dictionary({[3] : "a", [2] : "b", [4] : "c"});
+  let b = system.dictionary({[3] : "a", [2] : "b", [4] : "c"});
   _outcomes.push(system.assert(() => a, b, "assert24", _stdlib, false));
 }]);
 
 _tests.push(["test27", async (_outcomes) => {
-  var a = "Hello World";
-  var b = "Hello" + " " + "World";
+  let a = "Hello World";
+  let b = "Hello" + " " + "World";
   _outcomes.push(system.assert(() => a, b, "assert36", _stdlib, false));
 }]);
 
 _tests.push(["test39", async (_outcomes) => {
-  var a = 0;
-  var b = 0;
+  let a = 0;
+  let b = 0;
   _outcomes.push(system.assert(() => a, b, "assert48", _stdlib, false));
 }]);
 
 _tests.push(["test54", async (_outcomes) => {
-  var b = "Hello";
+  let b = "Hello";
   _outcomes.push(system.assert(() => global.hello, b, "assert60", _stdlib, false));
 }]);
 
@@ -559,14 +559,14 @@ class Foo {
 }
 
 _tests.push(["test76", async (_outcomes) => {
-  var a = system.initialise(new Foo(3));
-  var b = system.initialise(new Foo(3));
+  let a = system.initialise(new Foo(3));
+  let b = system.initialise(new Foo(3));
   _outcomes.push(system.assert(() => a, b, "assert85", _stdlib, false));
 }]);
 
 _tests.push(["test88", async (_outcomes) => {
-  var a = Foo.emptyInstance();
-  var b = Foo.emptyInstance();
+  let a = Foo.emptyInstance();
+  let b = Foo.emptyInstance();
   _outcomes.push(system.assert(() => a, b, "assert97", _stdlib, false));
 }]);
 return [main, _tests];}`;
@@ -630,26 +630,26 @@ async function main() {
 }
 
 _tests.push(["test3", async (_outcomes) => {
-  var a = 1 / 3;
-  var b = _stdlib.round(a, 4);
+  let a = 1 / 3;
+  let b = _stdlib.round(a, 4);
   _outcomes.push(system.assert(() => b, 0.3333, "assert12", _stdlib, false));
 }]);
 
 _tests.push(["test15", async (_outcomes) => {
-  var a = 0.9999;
-  var b = _stdlib.round(a, 2);
+  let a = 0.9999;
+  let b = _stdlib.round(a, 2);
   _outcomes.push(system.assert(() => b, 1, "assert24", _stdlib, false));
 }]);
 
 _tests.push(["test27", async (_outcomes) => {
-  var a = 1.25;
-  var b = _stdlib.round(a, 1);
+  let a = 1.25;
+  let b = _stdlib.round(a, 1);
   _outcomes.push(system.assert(() => b, 1.3, "assert36", _stdlib, false));
 }]);
 
 _tests.push(["test39", async (_outcomes) => {
-  var a = 44.444;
-  var b = _stdlib.round(a, 2);
+  let a = 44.444;
+  let b = _stdlib.round(a, 2);
   _outcomes.push(system.assert(() => b, 44.44, "assert48", _stdlib, false));
 }]);
 return [main, _tests];}`;
@@ -977,8 +977,8 @@ global["square"] = square;
 
 _tests.push(["test10", async (_outcomes) => {
   _outcomes.push(system.assert(() => square(3), 9, "assert13", _stdlib, false));
-  var actual = square(4);
-  var expected = 16;
+  let actual = square(4);
+  let expected = 16;
   _outcomes.push(system.assert(() => actual, expected, "assert22", _stdlib, false));
 }]);
 return [main, _tests];}`;

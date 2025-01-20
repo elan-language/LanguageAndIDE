@@ -27,7 +27,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = _stdlib.true;
+  let a = _stdlib.true;
   if (a) {
     system.printLine(_stdlib.asString("yes"));
   } else {
@@ -60,7 +60,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = _stdlib.false;
+  let a = _stdlib.false;
   if (a) {
     system.printLine(_stdlib.asString("yes"));
   } else {
@@ -95,7 +95,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = 2;
+  let a = 2;
   if (a === 1) {
     system.printLine(_stdlib.asString("one"));
   } else if (a === 2) {
@@ -132,7 +132,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = 3;
+  let a = 3;
   if (a === 1) {
     system.printLine(_stdlib.asString("one"));
   } else if (a === 2) {
@@ -165,7 +165,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = _stdlib.true;
+  let a = _stdlib.true;
   if (a) {
     system.printLine(_stdlib.asString("yes"));
   }
@@ -200,7 +200,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = 3;
+  let a = 3;
   if (a === 1) {
     system.printLine(_stdlib.asString("one"));
   } else if (a === 2) {
@@ -239,7 +239,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = 3;
+  let a = 3;
   if (a === 1) {
     system.printLine(_stdlib.asString("one"));
   } else if (a === 2) {

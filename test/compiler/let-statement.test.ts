@@ -114,7 +114,7 @@ async function main() {
 }
 
 async function foo() {
-  var list = system.list([1, 2, 3, 4, 5]);
+  let list = system.list([1, 2, 3, 4, 5]);
   for (var i = 0; i <= 3; i = i + 1) {
     const temp = system.safeIndex(list, i);
     list = _stdlib.withPutAt(list, i, system.safeIndex(list, i + 1));
@@ -132,6 +132,46 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "{2, 3, 4, 5, 1}");
+  });
+
+  test("Pass_Scoped", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  print foo()
+end main
+
+function foo() returns Int
+  if true then
+    variable i set to 0
+  end if
+  let i be 1
+  return i
+end function`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  system.printLine(_stdlib.asString(foo()));
+}
+
+function foo() {
+  if (_stdlib.true) {
+    let i = 0;
+  }
+  const i = 1;
+  return i;
+}
+global["foo"] = foo;
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1");
   });
 
   test("Fail_cannotRedefine ", async () => {

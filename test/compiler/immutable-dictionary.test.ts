@@ -83,7 +83,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.dictionaryImmutable({["a"] : 1, ["b"] : 3, ["z"] : 10});
+  let a = system.dictionaryImmutable({["a"] : 1, ["b"] : 3, ["z"] : 10});
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -140,7 +140,7 @@ const global = new class {
 
 };
 async function main() {
-  var b = system.emptyImmutableList();
+  let b = system.emptyImmutableList();
   b = _stdlib.keys(global.a);
   system.printLine(_stdlib.asString(b));
 }
@@ -228,8 +228,8 @@ const global = new class {
 
 };
 async function main() {
-  var b = _stdlib.withPutAtKey(global.a, "b", 4);
-  var c = _stdlib.withPutAtKey(b, "d", 2);
+  let b = _stdlib.withPutAtKey(global.a, "b", 4);
+  let c = _stdlib.withPutAtKey(b, "d", 2);
   system.printLine(_stdlib.asString(global.a));
   system.printLine(_stdlib.asString(c));
 }
@@ -260,7 +260,7 @@ const global = new class {
 
 };
 async function main() {
-  var b = _stdlib.withRemoveAtKey(global.a, "b");
+  let b = _stdlib.withRemoveAtKey(global.a, "b");
   system.printLine(_stdlib.asString(global.a));
   system.printLine(_stdlib.asString(b));
 }
@@ -290,7 +290,7 @@ const global = new class {
 
 };
 async function main() {
-  var b = _stdlib.withRemoveAtKey(global.a, "c");
+  let b = _stdlib.withRemoveAtKey(global.a, "c");
   system.printLine(_stdlib.asString(b));
 }
 return [main, _tests];}`;
@@ -320,10 +320,10 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.initialise(system.dictionaryImmutable(new Object()));
-  var b = _stdlib.withPutAtKey(a, "Foo", 1);
+  let a = system.initialise(system.dictionaryImmutable(new Object()));
+  let b = _stdlib.withPutAtKey(a, "Foo", 1);
   b = _stdlib.withPutAtKey(b, "Bar", 3);
-  var k = _stdlib.keys(b);
+  let k = _stdlib.keys(b);
   system.printLine(_stdlib.asString(_stdlib.length(k)));
   system.printLine(_stdlib.asString(system.safeIndex(b, "Foo")));
   system.printLine(_stdlib.asString(system.safeIndex(b, "Bar")));
@@ -361,10 +361,10 @@ var Fruit = {
 
 const global = new class {};
 async function main() {
-  var a = system.initialise(system.dictionaryImmutable(new Object()));
-  var b = _stdlib.withPutAtKey(a, Fruit.apple, 1);
+  let a = system.initialise(system.dictionaryImmutable(new Object()));
+  let b = _stdlib.withPutAtKey(a, Fruit.apple, 1);
   b = _stdlib.withPutAtKey(b, Fruit.orange, 3);
-  var k = _stdlib.keys(b);
+  let k = _stdlib.keys(b);
   system.printLine(_stdlib.asString(_stdlib.length(k)));
   system.printLine(_stdlib.asString(system.safeIndex(b, Fruit.apple)));
   system.printLine(_stdlib.asString(system.safeIndex(b, Fruit.orange)));
@@ -397,8 +397,8 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.emptyDictionaryImmutable();
-  var b = system.emptyDictionaryImmutable();
+  let a = system.emptyDictionaryImmutable();
+  let b = system.emptyDictionaryImmutable();
   b = _stdlib.withPutAtKey(a, "a", 1);
   system.printLine(_stdlib.asString(a));
   system.printLine(_stdlib.asString(b));

@@ -26,7 +26,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = 0;
+  let x = 0;
   while (x < 10) {
     x = x + 1;
   }
@@ -63,10 +63,10 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var t = 0;
-  var x = 0;
+  let t = 0;
+  let x = 0;
   while (x < 3) {
-    var y = 0;
+    let y = 0;
     while (y < 4) {
       y = y + 1;
       t = t + 1;
@@ -90,7 +90,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x = 0
+  let x = 0
   while x < 10
     set x to x + 1
  end main

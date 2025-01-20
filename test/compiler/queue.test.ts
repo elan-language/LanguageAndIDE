@@ -38,7 +38,7 @@ async function main() {
   st.enqueue("pear");
   system.printLine(_stdlib.asString(st.length()));
   system.printLine(_stdlib.asString(st.peek()));
-  var fruit = st.dequeue();
+  let fruit = st.dequeue();
   system.printLine(_stdlib.asString(fruit));
   fruit = st.dequeue();
   system.printLine(_stdlib.asString(fruit));

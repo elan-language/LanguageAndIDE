@@ -22,7 +22,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var bReak = 2;
+  let bReak = 2;
   system.printLine(_stdlib.asString(bReak));
 }
 return [main, _tests];}`;
@@ -55,7 +55,7 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var foo = system.initialise(new Foo());
+  let foo = system.initialise(new Foo());
   system.printLine(_stdlib.asString(foo));
 }
 

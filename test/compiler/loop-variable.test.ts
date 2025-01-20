@@ -29,7 +29,7 @@ end main`;
 const global = new class {};
 async function removeLetters(wordAsPlayed) {
   for (const letter of wordAsPlayed) {
-    var x = letter;
+    let x = letter;
     await removeLetter(x);
   }
 }

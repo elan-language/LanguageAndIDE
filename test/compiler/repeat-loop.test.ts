@@ -26,7 +26,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = 0;
+  let x = 0;
   do {
     x = x + 1;
   } while (!(x >= 10));
@@ -63,10 +63,10 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var t = 0;
-  var x = 0;
+  let t = 0;
+  let x = 0;
   do {
-    var y = 0;
+    let y = 0;
     do {
       y = y + 1;
       t = t + 1;

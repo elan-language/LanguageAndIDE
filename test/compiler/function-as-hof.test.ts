@@ -153,7 +153,7 @@ end function`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var f = getFunc();
+  let f = getFunc();
   system.printLine(_stdlib.asString(f(5)));
 }
 
@@ -192,7 +192,7 @@ end function`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var f = twice;
+  let f = twice;
   system.printLine(_stdlib.asString(f(5)));
 }
 
@@ -235,7 +235,7 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var f = system.initialise(new Foo(ff));
+  let f = system.initialise(new Foo(ff));
   system.printLine(_stdlib.asString(f.pf(5)));
 }
 

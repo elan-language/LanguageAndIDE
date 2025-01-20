@@ -46,7 +46,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = _stdlib.sin(_stdlib.pi / 180 * 30);
+  let x = _stdlib.sin(_stdlib.pi / 180 * 30);
   system.printLine(_stdlib.asString(x));
 }
 return [main, _tests];}`;
@@ -72,8 +72,8 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = _stdlib.pi / 180 * 30;
-  var y = _stdlib.sin(x);
+  let x = _stdlib.pi / 180 * 30;
+  let y = _stdlib.sin(x);
   system.printLine(_stdlib.asString(y));
 }
 return [main, _tests];}`;
@@ -99,8 +99,8 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = _stdlib.pi / 180 * 30;
-  var y = _stdlib.sin(x) + _stdlib.cos(x);
+  let x = _stdlib.pi / 180 * 30;
+  let y = _stdlib.sin(x) + _stdlib.cos(x);
   system.printLine(_stdlib.asString(y));
 }
 return [main, _tests];}`;
@@ -126,8 +126,8 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = 0.7;
-  var y = _stdlib.sin(x) ** 2 + _stdlib.cos(x) ** 2;
+  let x = 0.7;
+  let y = _stdlib.sin(x) ** 2 + _stdlib.cos(x) ** 2;
   system.printLine(_stdlib.asString(y));
 }
 return [main, _tests];}`;
@@ -152,7 +152,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = _stdlib.min(system.list([3.1, 3]));
+  let x = _stdlib.min(system.list([3.1, 3]));
   system.printLine(_stdlib.asString(x));
 }
 return [main, _tests];}`;
@@ -178,8 +178,8 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var i = system.literalArray(["a", "b"]);
-  var x = _stdlib.contains(i, "b");
+  let i = system.literalArray(["a", "b"]);
+  let x = _stdlib.contains(i, "b");
   system.printLine(_stdlib.asString(x));
 }
 return [main, _tests];}`;

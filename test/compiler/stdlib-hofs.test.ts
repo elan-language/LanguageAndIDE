@@ -177,7 +177,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var source = _stdlib.asIterable(system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]));
+  let source = _stdlib.asIterable(system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]));
   source = _stdlib.map(source, (x) => x + 1);
   system.printLine(_stdlib.asString(_stdlib.asArray(source)));
 }
@@ -266,7 +266,7 @@ const global = new class {
 
 };
 async function main() {
-  var ed = system.dictionaryImmutable({["one"] : 1, ["two"] : 2});
+  let ed = system.dictionaryImmutable({["one"] : 1, ["two"] : 2});
   ed = _stdlib.reduce(global.source, ed, (d, x) => _stdlib.withPutAtKey(d, x, 1));
   system.printLine(_stdlib.asString(ed));
 }

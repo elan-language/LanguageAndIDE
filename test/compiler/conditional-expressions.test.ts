@@ -62,8 +62,8 @@ end main
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var score = 70;
-  var grade = score > 80 ? "Distinction" : score > 60 ? "Merit" : score > 40 ? "Pass" : "Fail";
+  let score = 70;
+  let grade = score > 80 ? "Distinction" : score > 60 ? "Merit" : score > 40 ? "Pass" : "Fail";
   system.printLine(_stdlib.asString(grade));
 }
 return [main, _tests];}`;

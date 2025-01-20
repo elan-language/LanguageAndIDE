@@ -43,9 +43,9 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = system.initialise(new Foo(7, "Apple"));
-  var y = system.initialise(new Foo(7, "Orange"));
-  var z = system.initialise(new Foo(7, "Orange"));
+  let x = system.initialise(new Foo(7, "Apple"));
+  let y = system.initialise(new Foo(7, "Orange"));
+  let z = system.initialise(new Foo(7, "Orange"));
   system.printLine(_stdlib.asString(system.objectEquals(x, x)));
   system.printLine(_stdlib.asString(system.objectEquals(x, y)));
   system.printLine(_stdlib.asString(system.objectEquals(y, z)));
@@ -108,7 +108,7 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = system.initialise(new Foo());
+  let x = system.initialise(new Foo());
   system.printLine(_stdlib.asString(system.objectEquals(x, Foo.emptyInstance())));
 }
 
@@ -176,10 +176,10 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = system.initialise(new Foo(7, "Apple"));
-  var y = x;
+  let x = system.initialise(new Foo(7, "Apple"));
+  let y = x;
   await y.setP1(3);
-  var z = system.initialise(new Foo(8, "Orange"));
+  let z = system.initialise(new Foo(8, "Orange"));
   system.printLine(_stdlib.asString(system.objectEquals(x, x)));
   system.printLine(_stdlib.asString(system.objectEquals(x, y)));
   system.printLine(_stdlib.asString(system.objectEquals(x, z)));

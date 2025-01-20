@@ -38,7 +38,7 @@ async function main() {
   st.push("pear");
   system.printLine(_stdlib.asString(st.length()));
   system.printLine(_stdlib.asString(st.peek()));
-  var fruit = st.pop();
+  let fruit = st.pop();
   system.printLine(_stdlib.asString(fruit));
   fruit = st.pop();
   system.printLine(_stdlib.asString(fruit));

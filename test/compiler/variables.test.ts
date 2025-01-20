@@ -23,7 +23,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = 3;
+  let a = 3;
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -49,8 +49,8 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = 3;
-  var b = a;
+  let a = 3;
+  let b = a;
   system.printLine(_stdlib.asString(b));
 }
 return [main, _tests];}`;
@@ -75,7 +75,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = 3 + 4;
+  let a = 3 + 4;
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -101,7 +101,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = 3;
+  let a = 3;
   a = 4;
   system.printLine(_stdlib.asString(a));
 }
@@ -128,7 +128,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = 3.1;
+  let a = 3.1;
   a = 4;
   system.printLine(_stdlib.asString(a));
 }
@@ -170,15 +170,15 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = 3 - 4;
-  var b = 3 < 4;
-  var c = 3 <= 4;
-  var d = 3 > 4;
-  var e = 3 >= 4;
-  var f = 3 === 4;
-  var g = 3 !== 4;
-  var h = !_stdlib.false;
-  var k = 4 / 3;
+  let a = 3 - 4;
+  let b = 3 < 4;
+  let c = 3 <= 4;
+  let d = 3 > 4;
+  let e = 3 >= 4;
+  let f = 3 === 4;
+  let g = 3 !== 4;
+  let h = !_stdlib.false;
+  let k = 4 / 3;
   system.printLine(_stdlib.asString(a));
   system.printLine(_stdlib.asString(b));
   system.printLine(_stdlib.asString(c));
@@ -215,7 +215,7 @@ var Fruit = {
 
 const global = new class {};
 async function main() {
-  var a = Fruit.apple;
+  let a = Fruit.apple;
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -246,7 +246,7 @@ const global = new class {
 
 };
 async function main() {
-  var b = _stdlib.map(global.a, (x) => x);
+  let b = _stdlib.map(global.a, (x) => x);
   b = system.list([1, 2]);
   system.printLine(_stdlib.asString(b));
 }
@@ -321,7 +321,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var A = 4.1
+  let a = 4.1
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -494,7 +494,7 @@ end function`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var [a, length] = foo();
+  let [a, length] = foo();
 }
 
 function foo() {
@@ -523,7 +523,7 @@ end main
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = ((((3))));
+  let a = ((((3))));
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;

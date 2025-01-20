@@ -40,7 +40,7 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var f = system.initialise(new Foo());
+  let f = system.initialise(new Foo());
   system.printLine(_stdlib.asString(f.times(2)));
 }
 
@@ -102,8 +102,8 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var f = system.initialise(new Foo());
-  var x = 1.1;
+  let f = system.initialise(new Foo());
+  let x = 1.1;
   x = f.times(x);
   system.printLine(_stdlib.asString(x));
 }
@@ -166,8 +166,8 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var f = system.initialise(new Foo());
-  var x = system.emptyImmutableList();
+  let f = system.initialise(new Foo());
+  let x = system.emptyImmutableList();
   x = f.times(2);
   system.printLine(_stdlib.asString(x));
 }
@@ -240,8 +240,8 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var b = system.initialise(new Bar());
-  var x = b.getTimes();
+  let b = system.initialise(new Bar());
+  let x = b.getTimes();
   system.printLine(_stdlib.asString(x));
 }
 
@@ -260,7 +260,7 @@ class Bar {
   }
 
   getTimes() {
-    var x = system.emptyImmutableList();
+    let x = system.emptyImmutableList();
     x = this.p1.times(2);
     return x;
   }
@@ -336,8 +336,8 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var b = system.initialise(new Bar());
-  var x = b.getTimes();
+  let b = system.initialise(new Bar());
+  let x = b.getTimes();
   system.printLine(_stdlib.asString(x));
 }
 
@@ -356,7 +356,7 @@ class Bar {
   }
 
   getTimes() {
-    var x = system.emptyImmutableList();
+    let x = system.emptyImmutableList();
     x = this.p1.times(2);
     return x;
   }
@@ -440,7 +440,7 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var f = system.initialise(new Foo());
+  let f = system.initialise(new Foo());
   system.printLine(_stdlib.asString(f.length()));
 }
 
@@ -546,8 +546,8 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var f = system.initialise(new Foo());
-  var b = system.initialise(new Bar());
+  let f = system.initialise(new Foo());
+  let b = system.initialise(new Bar());
   system.printLine(_stdlib.asString(f.times(b)));
 }
 
@@ -629,7 +629,7 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var f = system.initialise(new Foo());
+  let f = system.initialise(new Foo());
   await f.prt();
 }
 

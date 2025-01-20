@@ -27,9 +27,9 @@ end main
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = system.tuple([3, "Apple"]);
-  var y = 0;
-  var z = "";
+  let x = system.tuple([3, "Apple"]);
+  let y = 0;
+  let z = "";
   [y, z] = x;
   system.printLine(_stdlib.asString(y));
   system.printLine(_stdlib.asString(z));
@@ -186,7 +186,7 @@ end main
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = system.tuple([3, "Apple", _stdlib.true, 1.1]);
+  let x = system.tuple([3, "Apple", _stdlib.true, 1.1]);
   system.printLine(_stdlib.asString(x));
   const [a, b, c, d] = x;
   system.printLine(_stdlib.asString(a));
@@ -221,8 +221,8 @@ end main
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = system.tuple([3, "Apple"]);
-  var z = "";
+  let x = system.tuple([3, "Apple"]);
+  let z = "";
   [, z] = x;
   system.printLine(_stdlib.asString(z));
 }
@@ -251,8 +251,8 @@ end main
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = system.tuple([3, "Apple"]);
-  var y = 0;
+  let x = system.tuple([3, "Apple"]);
+  let y = 0;
   [y, ] = x;
   system.printLine(_stdlib.asString(y));
 }
@@ -281,8 +281,8 @@ end main
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = system.tuple([3, "Apple", 4]);
-  var z = "";
+  let x = system.tuple([3, "Apple", 4]);
+  let z = "";
   [, z, ] = x;
   system.printLine(_stdlib.asString(z));
 }
@@ -311,8 +311,8 @@ end main
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = system.tuple([3, "Apple", 4]);
-  var y = 0;
+  let x = system.tuple([3, "Apple", 4]);
+  let y = 0;
   [, , y] = x;
   system.printLine(_stdlib.asString(y));
 }
@@ -341,7 +341,7 @@ end main
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = system.tuple([3, "Apple"]);
+  let x = system.tuple([3, "Apple"]);
   const [y, z] = x;
   system.printLine(_stdlib.asString(y));
   system.printLine(_stdlib.asString(z));
@@ -370,7 +370,7 @@ end main
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = system.tuple([3, "Apple"]);
+  let x = system.tuple([3, "Apple"]);
   const [, z] = x;
   system.printLine(_stdlib.asString(z));
 }
@@ -399,8 +399,8 @@ end main
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = system.tuple([3, "Apple"]);
-  var [y, z] = x;
+  let x = system.tuple([3, "Apple"]);
+  let [y, z] = x;
   system.printLine(_stdlib.asString(y));
   system.printLine(_stdlib.asString(z));
 }
@@ -428,8 +428,8 @@ end main
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = system.tuple([3, "Apple"]);
-  var [, z] = x;
+  let x = system.tuple([3, "Apple"]);
+  let [, z] = x;
   system.printLine(_stdlib.asString(z));
 }
 return [main, _tests];}`;
@@ -457,8 +457,8 @@ end main
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var t = system.tuple([3, 4, "Apple"]);
-  var [x, , z] = t;
+  let t = system.tuple([3, 4, "Apple"]);
+  let [x, , z] = t;
   system.printLine(_stdlib.asString(x));
   system.printLine(_stdlib.asString(z));
 }
@@ -491,10 +491,10 @@ end main
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = system.tuple([3, "Apple"]);
-  var [y, z] = x;
-  var a = 0;
-  var b = "";
+  let x = system.tuple([3, "Apple"]);
+  let [y, z] = x;
+  let a = 0;
+  let b = "";
   a = y;
   b = z;
   system.printLine(_stdlib.asString(a));
@@ -526,9 +526,9 @@ end main
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.literalArray([1, 2]);
-  var x = system.tuple([3, a]);
-  var [y, z] = x;
+  let a = system.literalArray([1, 2]);
+  let x = system.tuple([3, a]);
+  let [y, z] = x;
   system.printLine(_stdlib.asString(y));
   system.printLine(_stdlib.asString(z));
 }
@@ -558,8 +558,8 @@ end main
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.literalArray([1, 2]);
-  var x = system.tuple([3, a]);
+  let a = system.literalArray([1, 2]);
+  let x = system.tuple([3, a]);
   const [y, z] = x;
   system.printLine(_stdlib.asString(y));
   system.printLine(_stdlib.asString(z));
@@ -592,10 +592,10 @@ end main
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.literalArray([1, 2]);
-  var x = system.tuple([3, a]);
-  var y = 0;
-  var z = system.emptyArray();
+  let a = system.literalArray([1, 2]);
+  let x = system.tuple([3, a]);
+  let y = 0;
+  let z = system.emptyArray();
   [y, z] = x;
   system.printLine(_stdlib.asString(y));
   system.printLine(_stdlib.asString(z));
@@ -626,9 +626,9 @@ end main
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.tuple([1, 2]);
-  var x = system.tuple([3, a]);
-  var [y, z] = x;
+  let a = system.tuple([1, 2]);
+  let x = system.tuple([3, a]);
+  let [y, z] = x;
   system.printLine(_stdlib.asString(y));
   system.printLine(_stdlib.asString(z));
 }
@@ -658,8 +658,8 @@ end main
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.tuple([1, 2]);
-  var x = system.tuple([3, a]);
+  let a = system.tuple([1, 2]);
+  let x = system.tuple([3, a]);
   const [y, z] = x;
   system.printLine(_stdlib.asString(y));
   system.printLine(_stdlib.asString(z));
@@ -692,10 +692,10 @@ end main
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.tuple([1, 2]);
-  var x = system.tuple([3, a]);
-  var y = 0;
-  var z = system.tuple([0, 0]);
+  let a = system.tuple([1, 2]);
+  let x = system.tuple([3, a]);
+  let y = 0;
+  let z = system.tuple([0, 0]);
   [y, z] = x;
   system.printLine(_stdlib.asString(y));
   system.printLine(_stdlib.asString(z));
@@ -725,8 +725,8 @@ end main
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.tuple([1, "string"]);
-  var [y, z] = a;
+  let a = system.tuple([1, "string"]);
+  let [y, z] = a;
   y = y;
   z = z;
 }

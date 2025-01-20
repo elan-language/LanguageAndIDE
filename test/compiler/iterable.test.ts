@@ -28,7 +28,7 @@ end procedure`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var it = system.list([1, 5, 6]);
+  let it = system.list([1, 5, 6]);
   await printEach(it);
 }
 
@@ -64,7 +64,7 @@ end function`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var it = system.list(["one", "two"]);
+  let it = system.list(["one", "two"]);
   system.printLine(_stdlib.asString(printEach(it)));
 }
 
@@ -100,8 +100,8 @@ end function`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var lst = system.list(["one", "two"]);
-  var it = printEach(lst);
+  let lst = system.list(["one", "two"]);
+  let it = printEach(lst);
   lst = _stdlib.asList(it);
   system.printLine(_stdlib.asString(lst));
 }
@@ -138,7 +138,7 @@ end procedure`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var arr = system.literalArray([1, 3, 6]);
+  let arr = system.literalArray([1, 3, 6]);
   await printEach(arr);
 }
 
@@ -176,7 +176,7 @@ end procedure`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var s = "Foo";
+  let s = "Foo";
   await printEach(s);
 }
 
@@ -218,7 +218,7 @@ end procedure`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var it = system.list([1, 2, 3, 4, 5, 6, 7]);
+  let it = system.list([1, 2, 3, 4, 5, 6, 7]);
   await printAsIterable(it);
   await printasList(it);
 }
@@ -229,7 +229,7 @@ async function printAsIterable(target) {
 global["printAsIterable"] = printAsIterable;
 
 async function printasList(target) {
-  var some = _stdlib.asList(target);
+  let some = _stdlib.asList(target);
   system.printLine(_stdlib.asString(system.list(some.slice(3, 7))));
 }
 global["printasList"] = printasList;
@@ -266,7 +266,7 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var f = system.initialise(new Foo());
+  let f = system.initialise(new Foo());
   system.printLine(_stdlib.asString(f.it));
 }
 
@@ -323,8 +323,8 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var foo = system.initialise(new Foo());
-  var foo1 = system.initialise(new Foo());
+  let foo = system.initialise(new Foo());
+  let foo1 = system.initialise(new Foo());
   await foo.update();
   system.printLine(_stdlib.asString(foo.i));
   system.printLine(_stdlib.asString(foo1.i));
