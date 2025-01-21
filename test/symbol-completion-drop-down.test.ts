@@ -1820,8 +1820,7 @@ end class`;
     await assertSymbolCompletionWithString(fileImpl, "ident22", "ba", expected);
   });
 
-  // pending fix for 'extractContextFromText'
-  ignore_test("Pass_largeConstant", async () => {
+  test("Pass_largeConstant", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 constant a set to {0,0}
@@ -1840,5 +1839,21 @@ end main`;
       "{{0.0,0.0,0.0,0.16,0.0,0.0,0.01},{0.85,0.04,-0.04,0.85,0.0,1.60,0.85},{0.20,-0.26,0.23,0.22,0.0,1.60,0.07},{-0.15,0.28,0.26,0.24,0.0,0.44,0.07}}",
       expected,
     );
+  });
+
+  test("Pass_stringExtension", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable s set to "Hello World"
+  let b be s.contains("e")
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [["contains", "contains", "contains("]] as [string, string, string][];
+
+    await assertSymbolCompletionWithString(fileImpl, "expr8", "s.con", expected);
   });
 });

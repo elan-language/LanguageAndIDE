@@ -283,7 +283,9 @@ function matchGenericTypes(actualType: SymbolType, paramType: SymbolType) {
 
   if (
     paramType instanceof IterableType &&
-    (actualType instanceof ListType || actualType instanceof ArrayType)
+    (actualType instanceof ListType ||
+      actualType instanceof ArrayType ||
+      actualType instanceof StringType)
   ) {
     return true;
   }
@@ -315,7 +317,10 @@ export function matchType(actualType: SymbolType, paramType: SymbolType): boolea
     return true;
   }
 
-  if (isGenericSymbolType(paramType) && isGenericSymbolType(actualType)) {
+  if (
+    isGenericSymbolType(paramType) &&
+    (isGenericSymbolType(actualType) || actualType instanceof StringType)
+  ) {
     return (
       matchGenericTypes(actualType, paramType) &&
       (paramType.ofType instanceof GenericParameterType ||
