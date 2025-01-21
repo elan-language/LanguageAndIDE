@@ -22,9 +22,12 @@ export class NewInstance extends AbstractSequence {
       this.addElement(new SpaceNode(Space.required));
       this.type = new TypeSimpleOrGeneric(new Set<TokenType>([TokenType.type_concrete]));
       this.addElement(this.type);
+      this.addElement(new SpaceNode(Space.ignored));
       this.addElement(new PunctuationNode(OPEN_BRACKET));
+      this.addElement(new SpaceNode(Space.ignored));
       this.args = new ArgListNode(() => this.type!.matchedText);
       this.addElement(this.args);
+      this.addElement(new SpaceNode(Space.ignored));
       this.addElement(new PunctuationNode(CLOSE_BRACKET));
       this.withClause = new OptionalNode(new WithClause(() => this.type!.matchedText));
       this.addElement(this.withClause);
