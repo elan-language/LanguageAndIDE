@@ -70,9 +70,7 @@ end record`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable f set to new Foo() with
-   p1 set to 3,
-   p2 set to "hello"
+  variable f set to new Foo() with p1 set to 3, p2 set to "hello"
   print f.p1
   print f.p2
 end main

@@ -236,7 +236,7 @@ return [main, _tests];}`;
 
 main
   variable a set to new Foo()
-  variable b set to copy a with a to 2, b set to "fred"
+  variable b set to copy a with a set to 2, b set to "fred"
   print a.a
   print a.b
   print b.a
@@ -458,7 +458,7 @@ return [main, _tests];}`;
 main
   variable a set to [0,2]
   variable b set to new Foo()
-  variable c set to copy b with b to a[0], c to a[1], d set to a.length()
+  variable c set to copy b with b set to a[0], c set to a[1], d set to a.length()
   print c.b
   print c.c
   print c.d

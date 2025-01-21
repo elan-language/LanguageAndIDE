@@ -25,12 +25,7 @@ main
       # draw what we have got so far, scaled to the canvas
       variable vg set to new VectorGraphics()
       for i from 0 to p.length() - 2 step 1
-        set vg to vg.add(new LineVG() with
-         x1 set to scx(i, p),
-         y1 set to scy(p[i], max),
-         x2 set to scx(i + 1, p),
-         y2 set to scy(p[i + 1], max), 
-         fill to grey)
+        set vg to vg.add(new LineVG() with x1 set to scx(i, p), y1 set to scy(p[i], max), x2 set to scx(i + 1, p), y2 set to scy(p[i + 1], max), fill set to grey)
       end for
       call vg.display()
       print x

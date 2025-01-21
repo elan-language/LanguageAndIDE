@@ -180,7 +180,7 @@ main
   variable upper set to 10
   variable tot set to 0
   for i from lower to upper step 2
-      set tot to tot + i
+    set tot to tot + i
   end for
   print tot
 end main`;
@@ -333,8 +333,7 @@ end main
 main
   variable tot set to 0
   for i from 1 to 3 step 1
-    for j from 1 to 4 step 1
-      set tot to tot + 1
+    for j from 1 to 4 step 1  set tot to tot + 1
     end for
 end main
 `;
@@ -350,8 +349,7 @@ end main
 
 main
   variable tot set to 0
-  for i from 1 to 10
-    set tot to tot + i
+  for i from 1 to 10  set tot to tot + i
   next i
 end main
 `;
@@ -367,8 +365,7 @@ end main
 
 main
   variable tot set to 0
-  for i from 1 to 10 step 1
-    set tot to tot + i
+  for i from 1 to 10 step 1  set tot to tot + i
     break
   end for
 end main
@@ -385,8 +382,7 @@ end main
 
 main
   variable tot set to 0
-  for i from 1 to 10 step 1
-    set tot to tot + i
+  for i from 1 to 10 step 1  set tot to tot + i
     continue
   end for
 end main

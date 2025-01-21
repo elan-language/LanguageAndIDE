@@ -174,12 +174,12 @@ suite("Parsing Nodes", () => {
     );
   });
   test("Set Clause", () => {
-    testNodeParse(new ToClause(() => ""), "x to p.x + 3", ParseStatus.valid, "", "", "", "");
+    testNodeParse(new ToClause(() => ""), "x set to p.x + 3", ParseStatus.valid, "", "", "", "");
   });
   test("CSV of set clauses", () => {
     testNodeParse(
       new CSV(() => new ToClause(() => ""), 1),
-      "x to p.x + 3, y to p.y - 1",
+      "x set to p.x + 3, y set to p.y - 1",
       ParseStatus.valid,
       "",
       "",
@@ -191,7 +191,7 @@ suite("Parsing Nodes", () => {
   test("Expression + with clause", () => {
     testNodeParse(
       new ExprNode(),
-      "copy p with x to p.x + 3, y set to p.y - 1",
+      "copy p with x set to p.x + 3, y set to p.y - 1",
       ParseStatus.valid,
       "",
       "",

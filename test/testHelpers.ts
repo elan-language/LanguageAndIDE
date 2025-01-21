@@ -214,7 +214,7 @@ export async function assertAutocompletes(
   await doAsserts(f, fld, expected);
 }
 
-export async function assertAutocompletesWithString(
+export async function assertSymbolCompletionWithString(
   f: FileImpl,
   id: string,
   text: string,
