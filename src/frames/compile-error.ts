@@ -9,16 +9,15 @@ export abstract class CompileError {
     private readonly basePriority: Priority,
     public readonly message: string,
     public readonly locationId: string,
-    public readonly isWarning: boolean,
   ) {}
+
+  public get isWarning() {
+    return this.basePriority === Priority.unknownIdentifier;
+  }
 
   //
   public get priority() {
-    return this.basePriority === Priority.illegalOperation
-      ? this.isWarning
-        ? Priority.typeError
-        : Priority.illegalOperation
-      : this.basePriority;
+    return this.basePriority;
   }
 
   public toString() {
@@ -31,14 +30,14 @@ export abstract class CompileError {
 }
 
 export class TypeCompileError extends CompileError {
-  constructor(type: string, location: string, unknown: boolean) {
-    super(Priority.typeError, `Expression must be ${type}`, location, unknown);
+  constructor(type: string, location: string) {
+    super(Priority.typeError, `Expression must be ${type}`, location);
   }
 }
 
 export class ThisCompileError extends CompileError {
   constructor(location: string) {
-    super(Priority.illegalOperation, `Cannot use 'this' outside class context`, location, false);
+    super(Priority.illegalOperation, `Cannot use 'this' outside class context`, location);
   }
 }
 
@@ -48,119 +47,102 @@ export class DeclaredAboveCompileError extends CompileError {
       Priority.illegalOperation,
       `Abstract Class '${type}' must be declared before it is used`,
       location,
-      false,
     );
   }
 }
 
 export class MemberTypeCompileError extends CompileError {
-  constructor(name: string, type: string, location: string, unknown: boolean) {
-    super(Priority.typeError, `Member '${name}' must be of type ${type}`, location, unknown);
+  constructor(name: string, type: string, location: string) {
+    super(Priority.typeError, `Member '${name}' must be of type ${type}`, location);
   }
 }
 
 export class TypesCompileError extends CompileError {
-  constructor(type1: string, type2: string, addInfo: string, location: string, unknown: boolean) {
-    super(
-      Priority.typeError,
-      `Incompatible types ${type1} to ${type2}${addInfo}`,
-      location,
-      unknown,
-    );
+  constructor(type1: string, type2: string, addInfo: string, location: string) {
+    super(Priority.typeError, `Incompatible types ${type1} to ${type2}${addInfo}`, location);
   }
 }
 
 export class ArraySizeCompileError extends CompileError {
   constructor(location: string) {
-    super(Priority.illegalOperation, `Array requires 1 or 2 parameters`, location, false);
+    super(Priority.illegalOperation, `Array requires 1 or 2 parameters`, location);
   }
 }
 
 export class SyntaxCompileError extends CompileError {
   constructor(message: string, location: string) {
-    super(Priority.illegalOperation, message, location, false);
+    super(Priority.illegalOperation, message, location);
   }
 }
 
 export class UndefinedSymbolCompileError extends CompileError {
   constructor(id: string, type: string, location: string) {
     const postfix = type ? ` for type '${type}'` : "";
-    super(Priority.unknownIdentifier, `'${id}' is not defined${postfix}`, location, true);
+    super(Priority.unknownIdentifier, `'${id}' is not defined${postfix}`, location);
   }
 }
 
 export class CannotCallAFunction extends CompileError {
-  constructor(location: string, unknown: boolean) {
-    super(Priority.illegalOperation, `Cannot call a function as a procedure`, location, unknown);
+  constructor(location: string) {
+    super(Priority.illegalOperation, `Cannot call a function as a procedure`, location);
   }
 }
 
 export class CannotUseSystemMethodInAFunction extends CompileError {
-  constructor(location: string, unknown: boolean) {
-    super(Priority.illegalOperation, `Cannot use a system method in a function`, location, unknown);
+  constructor(location: string) {
+    super(Priority.illegalOperation, `Cannot use a system method in a function`, location);
   }
 }
 
 export class CannotUseLikeAFunction extends CompileError {
-  constructor(id: string, location: string, unknown: boolean) {
+  constructor(id: string, location: string) {
     super(
       Priority.illegalOperation,
       `Cannot call procedure '${id}' within an expression`,
       location,
-      unknown,
     );
   }
 }
 
 export class CannotCallAsAMethod extends CompileError {
-  constructor(id: string, symbolType: string, location: string, unknown: boolean) {
-    super(
-      Priority.illegalOperation,
-      `Cannot invoke ${symbolType} '${id}' as a method`,
-      location,
-      unknown,
-    );
+  constructor(id: string, symbolType: string, location: string) {
+    super(Priority.illegalOperation, `Cannot invoke ${symbolType} '${id}' as a method`, location);
   }
 }
 
 export class NotIndexableCompileError extends CompileError {
-  constructor(type: string, location: string, unknown: boolean) {
-    super(Priority.illegalOperation, `Cannot index ${type}`, location, unknown);
+  constructor(type: string, location: string) {
+    super(Priority.illegalOperation, `Cannot index ${type}`, location);
   }
 }
 
 export class NotRangeableCompileError extends CompileError {
-  constructor(type: string, location: string, unknown: boolean) {
-    super(Priority.illegalOperation, `Cannot range ${type}`, location, unknown);
+  constructor(type: string, location: string) {
+    super(Priority.illegalOperation, `Cannot range ${type}`, location);
   }
 }
 
 export class NotNewableCompileError extends CompileError {
-  constructor(type: string, location: string, unknown: boolean) {
-    super(Priority.typeError, `Cannot new ${type}`, location, unknown);
+  constructor(type: string, location: string) {
+    super(Priority.typeError, `Cannot new ${type}`, location);
   }
 }
 
 export class NotIterableCompileError extends CompileError {
-  constructor(type: string, location: string, unknown: boolean) {
-    super(Priority.illegalOperation, `Cannot iterate ${type}`, location, unknown);
+  constructor(type: string, location: string) {
+    super(Priority.illegalOperation, `Cannot iterate ${type}`, location);
   }
 }
 
 export class MustBeAbstractCompileError extends CompileError {
   constructor(type: string, location: string) {
-    super(
-      Priority.illegalOperation,
-      `Superclass '${type}' must be inheritable class`,
-      location,
-      false,
-    );
+    super(Priority.illegalOperation, `Superclass '${type}' must be inheritable class`, location);
   }
 }
 
 export class MustBeInterfaceCompileError extends CompileError {
   constructor(type: string, location: string) {
-    super(Priority.illegalOperation, `Superclass '${type}' must be an interface`, location, false);
+    super(Priority.illegalOperation, `Superclass '${type}' must be an interface`, location);
   }
 }
 
@@ -170,7 +152,6 @@ export class MustNotBeCircularDependencyCompileError extends CompileError {
       Priority.illegalOperation,
       `Class/interface '${type}' cannot inherit from itself`,
       location,
-      false,
     );
   }
 }
@@ -181,14 +162,13 @@ export class MustBeSingleAbstractCompileError extends CompileError {
       Priority.illegalOperation,
       `There must be only one abstract superclass, ${types.join(", ")} are abstract classes`,
       location,
-      false,
     );
   }
 }
 
 export class PrivateMemberCompileError extends CompileError {
   constructor(id: string, location: string) {
-    super(Priority.illegalOperation, `Cannot reference private member '${id}'`, location, false);
+    super(Priority.illegalOperation, `Cannot reference private member '${id}'`, location);
   }
 }
 
@@ -198,74 +178,63 @@ export class MustImplementCompileError extends CompileError {
       Priority.illegalOperation,
       `${classType} must implement ${superClassType}.${id}`,
       location,
-      false,
     );
   }
 }
 
 export class MustBeConcreteCompileError extends CompileError {
   constructor(type: string, location: string) {
-    super(Priority.illegalOperation, `${type} must be concrete to new`, location, false);
+    super(Priority.illegalOperation, `${type} must be concrete to new`, location);
   }
 }
 
 export class MustBeRecordCompileError extends CompileError {
-  constructor(type: string, location: string, unknown: boolean) {
-    super(Priority.typeError, `${type} must be a record to use 'with'`, location, unknown);
+  constructor(type: string, location: string) {
+    super(Priority.typeError, `${type} must be a record to use 'with'`, location);
   }
 }
 
 export class OutParameterCompileError extends CompileError {
-  constructor(name: string, location: string, unknown: boolean) {
-    super(Priority.typeError, `Cannot pass '${name}' as an out parameter`, location, unknown);
+  constructor(name: string, location: string) {
+    super(Priority.typeError, `Cannot pass '${name}' as an out parameter`, location);
   }
 }
 
 export class ExtensionCompileError extends CompileError {
   constructor(location: string) {
-    super(Priority.illegalOperation, `Cannot call extension method directly`, location, false);
+    super(Priority.illegalOperation, `Cannot call extension method directly`, location);
   }
 }
 
 export class MissingParameterCompileError extends CompileError {
   constructor(description: string, location: string) {
     const priority = Priority.unknownIdentifier;
-    const unknown = true;
-    super(priority, `Missing argument(s). Expected: ${description}`, location, unknown);
+    super(priority, `Missing argument(s). Expected: ${description}`, location);
   }
 }
 
 export class ExtraParameterCompileError extends CompileError {
   constructor(description: string, location: string) {
     const priority = Priority.illegalOperation;
-    const unknown = false;
     description = description ? description : "none";
-    super(priority, `Too many argument(s). Expected: ${description}`, location, unknown);
+    super(priority, `Too many argument(s). Expected: ${description}`, location);
   }
 }
 
 export class ParameterTypesCompileError extends CompileError {
   constructor(description: string, provided: string, location: string) {
     const priority = Priority.typeError;
-    const unknown = false;
-    super(
-      priority,
-      `Argument types expected: ${description} Provided: ${provided}`,
-      location,
-      unknown,
-    );
+    super(priority, `Argument types expected: ${description} Provided: ${provided}`, location);
   }
 }
 
 export class ParametersCompileError extends CompileError {
   constructor(expected: number, actual: number, location: string, generic?: boolean) {
     const priority = actual < expected ? Priority.unknownIdentifier : Priority.illegalOperation;
-    const unknown = priority === Priority.unknownIdentifier;
     super(
       priority,
       `${generic ? "<of Type(s)>" : "Parameters"} expected: ${expected} got: ${actual}`,
       location,
-      unknown,
     );
   }
 }
@@ -276,31 +245,25 @@ export class SignatureCompileError extends CompileError {
       Priority.illegalOperation,
       `Function Signatures do not match expected: ${expected} parameter(s) got: ${actual}`,
       location,
-      false,
     );
   }
 }
 
 export class MutateCompileError extends CompileError {
   constructor(name: string, purpose: string, location: string) {
-    super(Priority.illegalOperation, `May not re-assign the ${purpose} '${name}'`, location, false);
+    super(Priority.illegalOperation, `May not re-assign the ${purpose} '${name}'`, location);
   }
 }
 
 export class NotUniqueNameCompileError extends CompileError {
   constructor(name: string, postFix: string, location: string) {
-    super(
-      Priority.illegalOperation,
-      `Name '${name}' not unique in scope${postFix}`,
-      location,
-      false,
-    );
+    super(Priority.illegalOperation, `Name '${name}' not unique in scope${postFix}`, location);
   }
 }
 
 export class ReassignInFunctionCompileError extends CompileError {
   constructor(thing: string, location: string) {
-    super(Priority.illegalOperation, `May not set ${thing} in a function`, location, false);
+    super(Priority.illegalOperation, `May not set ${thing} in a function`, location);
   }
 }
 
@@ -310,7 +273,6 @@ export class RedefinedCompileError extends CompileError {
       Priority.illegalOperation,
       `The identifier '${id}' is already used for a ${purpose} and cannot be re-defined here.`,
       location,
-      false,
     );
   }
 }
@@ -321,20 +283,19 @@ export class IndexCompileError extends CompileError {
       Priority.illegalOperation,
       `May not set an indexed value in a function: ${thing}`,
       location,
-      false,
     );
   }
 }
 
 export class DuplicateKeyCompileError extends CompileError {
   constructor(location: string) {
-    super(Priority.typeError, `Duplicate Dictionary key(s)`, location, false);
+    super(Priority.typeError, `Duplicate Dictionary key(s)`, location);
   }
 }
 
 export class DuplicateIdsCompileError extends CompileError {
   constructor(ids: string[], location: string) {
-    super(Priority.typeError, `Duplicate inherited ids: ${ids.join(", ")}`, location, false);
+    super(Priority.typeError, `Duplicate inherited ids: ${ids.join(", ")}`, location);
   }
 }
 
@@ -344,7 +305,6 @@ export class FunctionRefCompileError extends CompileError {
       Priority.illegalOperation,
       `To evaluate function '${id}' add brackets. Or to create a reference to '${id}', precede it by 'ref'`,
       location,
-      false,
     );
   }
 }
@@ -355,7 +315,6 @@ export class UnknownCompilerDirectiveCompileError extends CompileError {
       Priority.illegalOperation,
       `a comment may not start with [ unless it is a recognised compiler directive`,
       location,
-      false,
     );
   }
 }
