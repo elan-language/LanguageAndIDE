@@ -19,8 +19,13 @@ import { Overtyper } from "../overtyper";
 import { CSV } from "../parse-nodes/csv";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { CompileStatus, DisplayStatus, ParseStatus } from "../status-enums";
-import { KeywordCompletion, SymbolCompletionSpec } from "../symbol-completion-helpers";
-import { filteredSymbols, removeIfSingleFullMatch } from "../symbols/symbol-helpers";
+import { KeywordCompletion, SymbolCompletionSpec, TokenType } from "../symbol-completion-helpers";
+import {
+  filteredSymbols,
+  isInsideClass,
+  isProperty,
+  removeIfSingleFullMatch,
+} from "../symbols/symbol-helpers";
 import { SymbolWrapper } from "../symbols/symbol-wrapper";
 import { UnknownType } from "../symbols/unknown-type";
 import { EmptyAsn } from "../syntax-nodes/empty-asn";
@@ -692,8 +697,28 @@ export abstract class AbstractField implements Selectable, Field {
     return UnknownType.Instance;
   }
 
+  allPropertiesInScope() {
+    const all = this.getHolder().symbolMatches("", true, this.getHolder());
+    return all.filter((s) => isProperty(s)) as ElanSymbol[];
+  }
+
   matchingSymbolsForId(spec: SymbolCompletionSpec, transforms: Transforms): ElanSymbol[] {
-    const symbols = filteredSymbols(spec, transforms, this.getHolder());
+    const scope = this.getHolder();
+    let symbols = filteredSymbols(spec, transforms, this.getHolder());
+    if (isInsideClass(scope)) {
+      if (propertyKeyword.startsWith(spec.toMatch)) {
+        const allProperties = this.allPropertiesInScope();
+        symbols = symbols.filter((s) => !allProperties.includes(s)).concat(allProperties);
+      } else if (spec.context === propertyKeyword) {
+        const newSpec = new SymbolCompletionSpec(
+          spec.toMatch,
+          new Set<TokenType>([TokenType.id_property]),
+          new Set<KeywordCompletion>(),
+          "",
+        );
+        symbols = filteredSymbols(newSpec, transforms, scope);
+      }
+    }
     return removeIfSingleFullMatch(symbols, spec.toMatch);
   }
 
