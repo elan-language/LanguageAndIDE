@@ -1,4 +1,4 @@
-# 82f810360cb9a72ddaa837271ff44fe71ac0cea93643ecbd0fc71a0239a5d7ca Elan Beta 6 valid
+# FFFF Elan Beta 6 valid
 
 # A program to investigate the Collatz Conjecture
 # https://en.wikipedia.org/wiki/Collatz_conjecture
@@ -25,7 +25,12 @@ main
       # draw what we have got so far, scaled to the canvas
       variable vg set to new VectorGraphics()
       for i from 0 to p.length() - 2 step 1
-        set vg to vg.add(new LineVG() with x1 to scx(i, p), y1 to scy(p[i], max), x2 to scx(i + 1, p), y2 to scy(p[i + 1], max), fill to grey)
+        set vg to vg.add(new LineVG() with
+         x1 set to scx(i, p),
+         y1 set to scy(p[i], max),
+         x2 set to scx(i + 1, p),
+         y2 set to scy(p[i + 1], max), 
+         fill to grey)
       end for
       call vg.display()
       print x

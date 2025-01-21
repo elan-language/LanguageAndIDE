@@ -15,7 +15,9 @@ suite("Record Deconstruction", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to new Foo() with a to 100, b to "fred"
+  variable x set to new Foo() with
+   a set to 100,
+   b set to "fred"
   variable a set to 0
   variable b set to ""
   set a, b to x
@@ -61,7 +63,11 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to new Foo() with a to 3, fruit to "Apple", aBool to true, aFloat to 1.1
+  variable x set to new Foo() with
+   a set to 3,
+   fruit set to "Apple",
+   aBool set to true,
+   aFloat set to 1.1
   let a, fruit, aBool, aFloat be x
   print a
   print fruit
@@ -115,7 +121,9 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to new Foo() with a to 100, b to "fred"
+  variable x set to new Foo() with
+   a set to 100,
+   b set to "fred"
   variable b set to ""
   set _, b to x
   print b
@@ -138,7 +146,9 @@ end record`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to new Foo() with a to 100, b to "fred"
+  variable x set to new Foo() with
+   a set to 100,
+   b set to "fred"
   let _, b be x
   print b
 end main
@@ -160,7 +170,9 @@ end record`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to new Foo() with a to 100, b to "fred"
+  variable x set to new Foo() with
+   a set to 100,
+   b set to "fred"
   variable a, b set to x
   print a
   print b
@@ -202,7 +214,9 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to new Foo() with a to 100, b to "fred"
+  variable x set to new Foo() with
+   a set to 100,
+   b set to "fred"
   variable _, b set to x
   print b
 end main
@@ -224,7 +238,9 @@ end record`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to new Foo() with a to 100, b to "fred"
+  variable x set to new Foo() with
+   a set to 100,
+   b set to "fred"
   variable a, b set to x
   variable y set to 0
   variable z set to ""
@@ -274,7 +290,9 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to new Foo() with a to {1,2}, b to "fred"
+  variable x set to new Foo() with
+   a set to {1,2},
+   b set to "fred"
   variable a, b set to x
   variable y set to empty List<of Int>
   variable z set to ""
@@ -324,7 +342,9 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  let x be new Foo() with a to {1,2}, b to "fred"
+  let x be new Foo() with
+   a set to {1,2},
+   b set to "fred"
   let a, b be x
   print a
   print b
@@ -366,7 +386,9 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to new Foo() with a to {1,2}, b to "fred"
+  variable x set to new Foo() with
+   a set to {1,2},
+   b set to "fred"
   let a, b be x
   print a
   print b
@@ -408,8 +430,11 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to new Foo() with a to {1,2}, b to "fred"
-  variable y set to new Bar() with c to x
+  variable x set to new Foo() with
+   a set to {1,2},
+   b set to "fred"
+  variable y set to new Bar() with
+   c set to x
   variable c, d set to y
   print c
   print d
@@ -471,8 +496,11 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  let x be new Foo() with a to {1,2}, b to "fred"
-  let y be new Bar() with c to x
+  let x be new Foo() with
+   a set to {1,2},
+   b set to "fred"
+  let y be new Bar() with
+   c set to x
   variable c, d set to y
   print c
   print d
@@ -535,7 +563,9 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to new Foo() with a to {1,2}, b to "fred"
+  variable x set to new Foo() with
+   a set to {1,2},
+   b set to "fred"
   variable a set to empty List<of Int>
   variable b set to ""
   set a, b to x
@@ -581,8 +611,11 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to new Foo() with a to {1,2}, b to "fred"
-  variable y set to new Bar() with c to x
+  variable x set to new Foo() with
+   a set to {1,2},
+   b set to "fred"
+  variable y set to new Bar() with
+   c set to x
   variable c set to empty Foo
   variable d set to ""
   set c, d to y
@@ -648,8 +681,11 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  let x be new Foo() with a to {1,2}, b to "fred"
-  let y be new Bar() with c to x
+  let x be new Foo() with
+   a set to {1,2},
+   b set to "fred"
+  let y be new Bar() with
+   c set to x
   variable c set to empty Foo
   variable d set to ""
   set c, d to y
@@ -715,7 +751,9 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to new Foo() with a to 100, b to "fred"
+  variable x set to new Foo() with
+   a set to 100,
+   b set to "fred"
   variable a set to ""
   variable b set to 0
   set a, b to x
@@ -743,7 +781,9 @@ end record`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to new Foo() with a to 100, b to "fred"
+  variable x set to new Foo() with
+   a set to 100,
+   b set to "fred"
   variable a set to ""
   set a, b to x
   print a
@@ -767,7 +807,9 @@ end record`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to new Foo() with a to 100, b to "fred"
+  variable x set to new Foo() with
+   a set to 100,
+   b set to "fred"
   variable a set to ""
   variable a, b set to x
   print a
@@ -794,7 +836,9 @@ end record`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to new Foo() with a to 100, b to "fred"
+  variable x set to new Foo() with
+   a set to 100,
+   b set to "fred"
   let a be 0
   let b be ""
   set a, b to x

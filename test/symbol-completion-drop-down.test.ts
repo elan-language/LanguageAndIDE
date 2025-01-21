@@ -1308,7 +1308,7 @@ end main`;
 
     main
       variable a set to new Foo()
-      variable b set to copy a with a to 2
+      variable b set to copy a with a set to 2
     end main
     
     record Foo
@@ -1328,7 +1328,7 @@ end main`;
 
     main
       variable a set to new Foo()
-      variable b set to copy a with a to 2
+      variable b set to copy a with a set to 2
     end main
     
     record Foo
@@ -1348,7 +1348,7 @@ end main`;
 
     main
       variable a set to new Foo()
-      variable b set to copy a with a to 2
+      variable b set to copy a with a set to 2
     end main
     
     record Foo
@@ -1368,7 +1368,7 @@ end main`;
 
     main
       variable a set to new Foo()
-      variable b set to copy a with a to 2
+      variable b set to copy a with a set to 2
     end main
     
     record Foo
@@ -1388,7 +1388,7 @@ end main`;
 
     main
       variable a set to new Foo()
-      variable b set to copy a with a to 2
+      variable b set to copy a with a set to 2
     end main
     
     record Foo
@@ -1412,7 +1412,7 @@ end main`;
 
     main
       variable a set to new Foo()
-      variable b set to copy a with a to 2
+      variable b set to copy a with a set to 2
     end main
     
     record Foo
@@ -1428,14 +1428,14 @@ end main`;
       ["ab", "*", "*"],
     ] as [string, string, string][];
 
-    await assertAutocompletesWithString(fileImpl, "expr8", "copy a with aa to 0, a", expected);
+    await assertAutocompletesWithString(fileImpl, "expr8", "copy a with aa set to 0, a", expected);
   });
 
   test("Pass_newWith1", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
     main
-      variable a set to new Foo() with a to 2
+      variable a set to new Foo() with a set to 2
     end main
     
     record Foo
@@ -1454,7 +1454,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
     main
-      variable a set to new Foo() with a to 2
+      variable a set to new Foo() with a set to 2
     end main
     
     record Foo
@@ -1477,7 +1477,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
     main
-      variable a set to new Foo() with a to 2
+      variable a set to new Foo() with a set to 2
     end main
     
     record Foo
@@ -1686,7 +1686,8 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  let c be new CircleVG() with cx to 1
+  let c be new CircleVG() with
+   cx set to 1
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);

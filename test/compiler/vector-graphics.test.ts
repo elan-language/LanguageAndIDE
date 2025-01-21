@@ -103,7 +103,13 @@ return [main, _tests];}`;
 
 main
   let vg be new VectorGraphics()
-  let circ be new CircleVG() with cx to 90, cy to 70, r to 13, stroke to red, strokeWidth to 2, fill to green
+  let circ be new CircleVG() with
+   cx set to 90,
+   cy set to 70,
+   r set to 13,
+   stroke set to red,
+   strokeWidth set to 2,
+   fill set to green
   let vg2 be vg.add(circ)
   print vg2.asHtml()
 end main`;
@@ -333,7 +339,13 @@ return [main, _tests];}`;
 
 main
   let vg be new VectorGraphics()
-  let circ be new CircleVG() with cx to 90, cy to 70, r to 13, stroke to red, strokeWidth to 2, fill to -1
+  let circ be new CircleVG() with
+   cx set to 90,
+   cy set to 70,
+   r set to 13,
+   stroke set to red,
+   strokeWidth to 2,
+   fill to -1
   let vg2 be vg.add(circ)
   print vg2.asHtml()
 end main`;
@@ -368,7 +380,8 @@ return [main, _tests];}`;
 
 main
   let vg be new VectorGraphics()
-  let circ be new CircleVG() with stroke to -1
+  let circ be new CircleVG() with
+   stroke set to -1
   let vg2 be vg.add(circ)
   print vg2.asHtml()
 end main`;
@@ -399,7 +412,8 @@ return [main, _tests];}`;
 
 main
   let vg be new VectorGraphics()
-  let circ be new CircleVG() with fill to 0x1000000
+  let circ be new CircleVG() with
+   fill set to 0x1000000
   let vg2 be vg.add(circ)
   print vg2.asHtml()
 end main`;

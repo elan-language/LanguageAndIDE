@@ -18,7 +18,7 @@ suite("With", () => {
 
 main
   variable a set to new Foo()
-  variable b set to copy a with a to 2
+  variable b set to copy a with a set to 2
   print a.a
   print b.a
 end main
@@ -57,7 +57,7 @@ return [main, _tests];}`;
 
 main
   variable a set to new Foo()
-  set a to copy a with a to 2
+  set a to copy a with a set to 2
   print a.a
 end main
 
@@ -99,7 +99,7 @@ end main
 
 function foo() returns Foo
   variable a set to new Foo()
-  let b be copy a with a to 2
+  let b be copy a with a set to 2
   return b
 end function
 
@@ -147,7 +147,7 @@ end main
 
 function foo() returns Foo
   let a be new Foo()
-  let b be copy a with a to 2
+  let b be copy a with a set to 2
   return b
 end function
 
@@ -195,7 +195,7 @@ end main
 
 function foo() returns Foo
   variable a set to new Foo()
-  return copy a with a to 2
+  return copy a with a set to 2
 end function
 
 record Foo
@@ -236,7 +236,7 @@ return [main, _tests];}`;
 
 main
   variable a set to new Foo()
-  variable b set to copy a with a to 2, b to "fred"
+  variable b set to copy a with a to 2, b set to "fred"
   print a.a
   print a.b
   print b.a
@@ -283,7 +283,7 @@ return [main, _tests];}`;
 
 main
   variable a set to new Foo()
-  variable b set to copy a with a to 2
+  variable b set to copy a with a set to 2
   print a.a
   print b.a
 end main
@@ -327,7 +327,7 @@ return [main, _tests];}`;
 
 main
   variable a set to new Foo()
-  variable b set to copy a with a to 2 + 2
+  variable b set to copy a with a set to 2 + 2
   print a.a
   print b.a
 end main
@@ -366,8 +366,8 @@ return [main, _tests];}`;
 
 main
   variable a set to new Foo()
-  variable a1 set to copy a with b to 1
-  variable b set to copy a with a to a1
+  variable a1 set to copy a with b set to 1
+  variable b set to copy a with a set to a1
   print a.a.b
   print b.a.b
 end main
@@ -417,7 +417,7 @@ return [main, _tests];}`;
 main
   variable a set to [0,2]
   variable b set to new Foo()
-  variable c set to copy b with b to a[1]
+  variable c set to copy b with b set to a[1]
   print b.b
   print c.b
 end main
@@ -458,7 +458,7 @@ return [main, _tests];}`;
 main
   variable a set to [0,2]
   variable b set to new Foo()
-  variable c set to copy b with b to a[0], c to a[1], d to a.length()
+  variable c set to copy b with b to a[0], c to a[1], d set to a.length()
   print c.b
   print c.c
   print c.d
@@ -507,7 +507,7 @@ return [main, _tests];}`;
 main
   variable a set to {0,2}
   variable b set to new Foo()
-  variable c set to copy b with b to a[1]
+  variable c set to copy b with b set to a[1]
   print b.b
   print c.b
 end main
@@ -548,7 +548,7 @@ return [main, _tests];}`;
 main
   variable a set to {0,2,3}
   variable b set to new Foo()
-  variable c set to copy b with b to a.length()
+  variable c set to copy b with b set to a.length()
   print b.b
   print c.b
 end main
@@ -588,7 +588,7 @@ return [main, _tests];}`;
 
 main
   variable b set to new Foo()
-  variable c set to copy b with b to [0]
+  variable c set to copy b with b set to [0]
   print c.b
 end main
 
@@ -608,7 +608,7 @@ end record`;
 
 main
   variable a set to {1, 2}
-  variable b set to copy a with a to 0
+  variable b set to copy a with a set to 0
   print b
 end main`;
 
@@ -624,7 +624,7 @@ end main`;
 
 main
   variable a set to {3}
-  variable b set to copy a with a to 0
+  variable b set to copy a with a set to 0
   print b
 end main`;
 
@@ -640,7 +640,7 @@ end main`;
 
 main
   variable b set to new Foo()
-  variable c set to copy b with b to 0
+  variable c set to copy b with b set to 0
   print c.d
 end main
 
@@ -673,7 +673,7 @@ end record`;
 
 main
   variable b set to new Foo()
-  variable c set to copy b with b to 0
+  variable c set to copy b with b set to 0
   print c.b
 end main
 
@@ -696,7 +696,7 @@ end class`;
 
 main
   variable b set to new Foo()
-  variable c set to copy b with aa to aa -1
+  variable c set to copy b with aa set to aa -1
   print c.aa
 end main
 

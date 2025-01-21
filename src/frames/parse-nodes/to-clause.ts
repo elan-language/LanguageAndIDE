@@ -1,4 +1,4 @@
-import { toKeyword } from "../keywords";
+import { setKeyword, toKeyword } from "../keywords";
 import { TokenType } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { ExprNode } from "./expr-node";
@@ -15,26 +15,29 @@ export class ToClause extends AbstractSequence {
   constructor(context: () => string) {
     super();
     this.context = context;
-    this.completionWhenEmpty = "<i>name</i> to <i>expression</i>";
+    this.completionWhenEmpty = "<i>name</i> set to <i>expression</i>";
   }
 
   parseText(text: string): void {
     this.property = new IdentifierNode(new Set<TokenType>([TokenType.id_property]), this.context);
     const sp0 = new SpaceNode(Space.required);
-    const to = new KeywordNode(toKeyword);
+    const set = new KeywordNode(setKeyword);
     const sp1 = new SpaceNode(Space.required);
+    const to = new KeywordNode(toKeyword);
+    const sp2 = new SpaceNode(Space.required);
     this.expr = new ExprNode();
     this.addElement(this.property);
     this.addElement(sp0);
-    this.addElement(to);
+    this.addElement(set);
     this.addElement(sp1);
+    this.addElement(to);
+    this.addElement(sp2);
     this.addElement(this.expr);
     return super.parseText(text);
   }
   compile(): string {
     const codeArray = this.getElements().map((e) => e.compile());
     const code = codeArray.join(" ");
-
     return code;
   }
 
@@ -48,5 +51,9 @@ export class ToClause extends AbstractSequence {
 
   symbolCompletion_context(): string {
     return this.context();
+  }
+
+  override renderAsHtml(): string {
+    return `<br>${this.property?.renderAsHtml()}<el-kw> set to </el-kw>${this.expr?.renderAsHtml()}`;
   }
 }

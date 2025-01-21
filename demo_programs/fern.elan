@@ -24,7 +24,14 @@ function onepoint(vg as VectorGraphics, x as Float, y as Float, r as Int) return
   # next pseudo-random number (Grogono parameters)
   variable nr set to (r*25173 + 13849) mod 0x10000
   variable nx, ny set to onestep(x, y, nr/0x10000)
-  variable vg2 set to vg.add(new RectangleVG() with x to nx*scale + 50, y to 75 - ny*scale, height to 0.5, width to 0.5, fill to 0x408040, stroke to 0x408040, strokeWidth to 0.25)
+  variable vg2 set to vg.add(new RectangleVG() with
+   x set to nx*scale + 50,
+   y set to 75 - ny*scale,
+   height set to 0.5,
+   width set to 0.5,
+   fill set to 0x408040,
+   stroke set to 0x408040,
+   strokeWidth set to 0.25)
   return (vg2, nx, ny, nr)
 end function
 

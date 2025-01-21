@@ -14,7 +14,7 @@ export class WithClause extends AbstractSequence {
   constructor(context: () => string) {
     super();
     this.context = context;
-    this.completionWhenEmpty = " with <i>name</i> to <i>expression</i>";
+    this.completionWhenEmpty = " with <i>name</i> set to <i>expression</i>";
   }
 
   parseText(text: string): void {
@@ -32,5 +32,9 @@ export class WithClause extends AbstractSequence {
     return this.getElements().length === 0
       ? new Set<KeywordCompletion>([KeywordCompletion.create(withKeyword)])
       : super.symbolCompletion_keywords();
+  }
+
+  override renderAsHtml(): string {
+    return `<el-kw> with </el-kw>${this.toClauses?.renderAsHtml()}`;
   }
 }

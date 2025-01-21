@@ -191,7 +191,7 @@ suite("Parsing Nodes", () => {
   test("Expression + with clause", () => {
     testNodeParse(
       new ExprNode(),
-      "copy p with x to p.x + 3, y to p.y - 1",
+      "copy p with x to p.x + 3, y set to p.y - 1",
       ParseStatus.valid,
       "",
       "",
@@ -202,7 +202,7 @@ suite("Parsing Nodes", () => {
   test("new record + with clause", () => {
     testNodeParse(
       new ExprNode(),
-      "new Foo() with x to 3, y to 1",
+      "new Foo() with x set to 3, y set to 1",
       ParseStatus.valid,
       "",
       "",

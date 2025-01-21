@@ -438,7 +438,7 @@ suite("Symbol Completion Spec", () => {
   test("'to' clause #902 - 2", () => {
     testSymbolCompletionSpec(
       new ExprNode(),
-      "new CircleVG() with cx to ",
+      "new CircleVG() with cx set to ",
       ParseStatus.incomplete,
       ExprNode.name,
       "",
@@ -472,7 +472,7 @@ suite("Symbol Completion Spec", () => {
   test("'to' clause #902 - 4", () => {
     testSymbolCompletionSpec(
       new ExprNode(),
-      "copy c with cx to ",
+      "copy c with cx set to ",
       ParseStatus.incomplete,
       ExprNode.name,
       "",
