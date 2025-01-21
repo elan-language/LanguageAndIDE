@@ -56,7 +56,7 @@ import { DuplicateSymbol } from "../symbols/duplicate-symbol";
 import { getGlobalScope, isSymbol, symbolMatches } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
-import { isAstCollectionNode, isAstIdNode } from "../syntax-nodes/ast-helpers";
+import { isAstCollectionNode, isAstIdNode, transforms } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 
 export abstract class ClassFrame
@@ -414,9 +414,20 @@ export abstract class ClassFrame
       (f) => !(f instanceof Constructor) && isSymbol(f),
     ) as ElanSymbol[];
 
+    const types = this.getDirectSuperClassesTypeAndName(transforms())
+      .map((tn) => tn[0])
+      .filter((t) => t instanceof ClassType);
+
+    let inheritedMatches: ElanSymbol[] = [];
+
+    for (const ct of types) {
+      const s = ct.scope!.symbolMatches(id, all);
+      inheritedMatches = inheritedMatches.concat(s);
+    }
+
     const matches = symbolMatches(id, all, symbols);
 
-    return matches.concat(otherMatches);
+    return matches.concat(inheritedMatches).concat(otherMatches);
   }
 
   resolveSymbol(id: string, transforms: Transforms, _initialScope: Frame): ElanSymbol {
