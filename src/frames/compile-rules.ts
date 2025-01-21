@@ -201,12 +201,46 @@ export function mustNotBeKeyword(id: string, compileErrors: CompileError[], loca
 }
 
 export function mustBeProcedure(
+  symbolId: string,
   symbolType: SymbolType,
+  symbolScope: SymbolScope,
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (!(symbolType instanceof ProcedureType)) {
+  if (symbolType instanceof FunctionType) {
     compileErrors.push(new CannotCallAFunction(location, symbolType instanceof UnknownType));
+  } else if (!(symbolType instanceof ProcedureType)) {
+    compileErrors.push(
+      new CannotCallAsAMethod(
+        symbolId,
+        symbolScopeToFriendlyName(symbolScope),
+        location,
+        symbolType instanceof UnknownType,
+      ),
+    );
+  }
+}
+
+export function mustBeCallable(
+  symbolId: string,
+  symbolType: SymbolType,
+  symbolScope: SymbolScope,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  if (symbolType instanceof ProcedureType) {
+    compileErrors.push(
+      new CannotUseLikeAFunction(symbolId, location, symbolType instanceof UnknownType),
+    );
+  } else {
+    compileErrors.push(
+      new CannotCallAsAMethod(
+        symbolId,
+        symbolScopeToFriendlyName(symbolScope),
+        location,
+        symbolType instanceof UnknownType,
+      ),
+    );
   }
 }
 
@@ -233,32 +267,17 @@ export function mustBeDeconstructableType(
 }
 
 export function mustBePureFunctionSymbol(
-  symbolId: string,
-  symbolType: SymbolType,
-  symbolScope: SymbolScope,
+  symbolType: FunctionType,
   scope: Scope,
   compileErrors: CompileError[],
   location: string,
 ) {
   if (InFunctionScope(scope)) {
-    if (!(symbolType instanceof FunctionType) || !symbolType.isPure) {
+    if (!symbolType.isPure) {
       compileErrors.push(
         new CannotUseSystemMethodInAFunction(location, symbolType instanceof UnknownType),
       );
     }
-  } else if (symbolType instanceof ProcedureType) {
-    compileErrors.push(
-      new CannotUseLikeAFunction(symbolId, location, symbolType instanceof UnknownType),
-    );
-  } else if (!(symbolType instanceof FunctionType)) {
-    compileErrors.push(
-      new CannotCallAsAMethod(
-        symbolId,
-        symbolScopeToFriendlyName(symbolScope),
-        location,
-        symbolType instanceof UnknownType,
-      ),
-    );
   }
 }
 

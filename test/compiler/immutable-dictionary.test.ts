@@ -614,4 +614,40 @@ end main`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["<of Type(s)> expected: 2 got: 0"]);
   });
+
+  test("Fail_WrongIndexBrackets", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+constant a set to {0:"a"}
+
+main
+  print p1()
+end main
+
+function p1() returns String
+  return "{a(0)}"
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Cannot invoke identifier 'a' as a method"]);
+  });
+
+  test("Fail_WrongIndexBrackets1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+constant a set to {0:"a"}
+
+main
+  call a()
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Cannot invoke identifier 'a' as a method"]);
+  });
 });
