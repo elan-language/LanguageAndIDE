@@ -264,7 +264,7 @@ function checkIsChrome() {
   const isIOSChrome = winNav.userAgent.match("CriOS");
   const isGoogleChrome =
     typeof (winNav as any).userAgentData !== "undefined"
-      ? (winNav as any).userAgentData.brands[0].brand === "Google Chrome"
+      ? (winNav as any).userAgentData.brands.some((b: any) => b.brand === "Google Chrome")
       : vendorName === "Google Inc.";
 
   if (isIOSChrome) {
