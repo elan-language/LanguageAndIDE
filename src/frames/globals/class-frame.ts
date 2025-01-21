@@ -184,6 +184,10 @@ export abstract class ClassFrame
     return this.getChildren().length > 1;
   }
 
+  selectNextFrame(): void {
+    this._children[0]?.select(true, false);
+  }
+
   doesInherit(): boolean {
     return this.inheritance.text !== "";
   }
