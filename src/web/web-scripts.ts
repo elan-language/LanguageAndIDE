@@ -603,9 +603,15 @@ function getEditorMsg(
 }
 
 function handlePaste(event: Event, target: HTMLInputElement, msg: editorEvent): boolean {
+  // outside of handler or selection is gone
+  const start = target.selectionStart ?? 0;
+  const end = target.selectionEnd ?? 0;
   target.addEventListener("paste", async (event: ClipboardEvent) => {
-    const txt = await navigator.clipboard.readText();
     const mk = { control: false, shift: false, alt: false };
+    const txt = await navigator.clipboard.readText();
+    if (start !== end) {
+      await handleEditorEvent(event, "key", "frame", mk, msg.id, "Delete", [start, end]);
+    }
     await handleEditorEvent(event, "paste", "frame", mk, msg.id, txt);
   });
   event.stopPropagation();
