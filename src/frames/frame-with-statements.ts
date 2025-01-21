@@ -32,6 +32,7 @@ import {
   parentHelper_renderChildrenAsSource,
   parentHelper_selectFirstChild,
 } from "./parent-helpers";
+import { AssertStatement } from "./statements/assert-statement";
 import { DefinitionAdapter } from "./statements/definition-adapter";
 import { StatementSelector } from "./statements/statement-selector";
 import { getDeconstructionIds, isSymbol, symbolMatches } from "./symbols/symbol-helpers";
@@ -299,5 +300,16 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
   aggregateCompileErrors(): CompileError[] {
     const cc = parentHelper_aggregateCompileErrorsOfChildren(this);
     return cc.concat(super.aggregateCompileErrors());
+  }
+
+  getAsserts() {
+    const children = this.getChildren();
+    let asserts = children.filter((c) => c instanceof AssertStatement) as AssertStatement[];
+
+    for (const f of children.filter((c) => c instanceof FrameWithStatements)) {
+      asserts = asserts.concat(f.getAsserts());
+    }
+
+    return asserts;
   }
 }
