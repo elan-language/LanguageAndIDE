@@ -120,21 +120,18 @@ ${this.compileTestBody(transforms)}\r
 }]);\r\n`;
   }
 
-  getAsserts() {
-    return this.getChildren().filter((c) => c instanceof AssertStatement) as AssertStatement[];
-  }
-
   setAssertOutcomes(outcomes: AssertOutcome[]) {
     this.resetTestStatus();
+    const asserts = this.getAsserts();
 
     if (outcomes.some((o) => o.status === TestStatus.error)) {
       this._testStatus = TestStatus.error;
 
-      for (const assert of this.getAsserts()) {
+      for (const assert of asserts) {
         assert.outcome = undefined;
       }
     } else {
-      for (const assert of this.getAsserts()) {
+      for (const assert of asserts) {
         const match = outcomes.filter((o) => o.htmlId === assert.getHtmlId());
         if (match.length === 1) {
           assert.setOutcome(match[0]);

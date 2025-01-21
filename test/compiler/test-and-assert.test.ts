@@ -949,7 +949,7 @@ end test
     assertDoesNotCompile(fileImpl, ["'squareTest' is not defined"]);
   });
 
-  ignore_test("Pass_assertWithinAMultiline", async () => {
+  test("Pass_assertWithinAMultiline", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -970,16 +970,11 @@ async function main() {
 
 }
 
-function square(x) {
-  return x ** 2;
-}
-global["square"] = square;
-
-_tests.push(["test10", async (_outcomes) => {
-  _outcomes.push(system.assert(() => square(3), 9, "assert13", _stdlib, false));
-  let actual = square(4);
-  let expected = 16;
-  _outcomes.push(system.assert(() => actual, expected, "assert22", _stdlib, false));
+_tests.push(["test3", async (_outcomes) => {
+  const a = 1;
+  if (_stdlib.true) {
+    _outcomes.push(system.assert(() => a, 9, "assert12", _stdlib, undefined));
+  }
 }]);
 return [main, _tests];}`;
 
@@ -990,13 +985,7 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertTestObjectCodeExecutes(fileImpl, [
-      [
-        "test10",
-        [
-          new AssertOutcome(TestStatus.pass, "9", "9", "assert13"),
-          new AssertOutcome(TestStatus.pass, "16", "16", "assert22"),
-        ],
-      ],
+      ["test3", [new AssertOutcome(TestStatus.fail, "1", "9", "assert12")]],
     ]);
   });
 });
