@@ -1,8 +1,6 @@
-# FFFF Elan Beta 6 valid
+# 81c643b5686be7678578576c75a6a51ea8d4399b3d0b48c6ca63b804ceac9d5e Elan Beta 6 valid
 
 # Use the W,A,S,D keys to change Snake direction
-constant delay set to 150
-
 main
   let rnd be new Random()
   call rnd.initialiseFromClock()
@@ -12,7 +10,7 @@ main
     set game to updateGraphics(game)
     let gr be game.graphics
     call gr.display()
-    call pause(delay)
+    call pause(150)
     set game to clockTick(game, getKey())
   end while
   print "Game Over! Score: {score(game)}"
@@ -77,7 +75,11 @@ function bodyOverlaps(g as Game, target as Square) returns Boolean
 end function
 
 function newGame(rnd as Random) returns Game
-  return new Game() with rnd set to rnd, graphics set to new BlockGraphics(), head set to newSquare(22, 15), body set to {newSquare(20, 15), newSquare(21, 15)}, priorTail set to empty Square,  key set to "d", isOn set to true
+  return new Game() with rnd set to rnd, graphics set to new BlockGraphics(), head set to newSquare(22, 15), body set to {newSquare(20, 15), newSquare(21, 15)}, priorTail set to empty Square, key set to "d", isOn set to true
+end function
+
+function newSquare(x as Int, y as Int) returns Square
+  return new Square() with x set to x, y set to y
 end function
 
 record Game
@@ -98,10 +100,6 @@ record Game
   property key as String
 
 end record
-
-function newSquare(x as Int, y as Int) returns Square
-  return new Square() with x set to x, y set to y
-end function
 
 record Square
   property x as Int
