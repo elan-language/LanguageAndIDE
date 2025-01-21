@@ -1856,4 +1856,78 @@ end main`;
 
     await assertSymbolCompletionWithString(fileImpl, "expr8", "s.con", expected);
   });
+
+  test("Pass_stringExtension", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable s set to "Hello World"
+  let b be s.contains("e")
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [["contains", "contains", "contains("]] as [string, string, string][];
+
+    await assertSymbolCompletionWithString(fileImpl, "expr8", "s.con", expected);
+  });
+
+  test("Pass_listExtension1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to range(1,4)
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["map", "map", "map("],
+      ["maxBy", "maxBy", "maxBy("],
+    ] as [string, string, string][];
+
+    await assertSymbolCompletionWithString(fileImpl, "expr5", "range(1,4).ma", expected);
+  });
+
+  ignore_test("Pass_listExtension2", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to range(1,4)
+end main
+
+function last(l as List<of Int>) returns Int
+  return l[l.length() - 1]
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["map", "map", "map("],
+      ["maxBy", "maxBy", "maxBy("],
+    ] as [string, string, string][];
+
+    await assertSymbolCompletionWithString(fileImpl, "expr5", "last(range(1,4).ma", expected);
+  });
+
+  ignore_test("Pass_bracketedExpression", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to 1 < 2
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["black", "black", "black"],
+      ["blue", "blue", "blue"],
+    ] as [string, string, string][];
+
+    await assertSymbolCompletionWithString(fileImpl, "expr5", "(1 < bl", expected);
+  });
 });
