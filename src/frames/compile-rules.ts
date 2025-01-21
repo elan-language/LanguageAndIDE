@@ -100,37 +100,37 @@ import {
 import { Transforms } from "./syntax-nodes/transforms";
 
 export function mustBeOfSymbolType(
-  exprType: SymbolType | undefined,
+  exprType: SymbolType,
   ofType: SymbolType,
   compileErrors: CompileError[],
   location: string,
 ) {
-  const unknown = exprType?.name === undefined || ofType.name === undefined;
-  if (exprType?.name !== ofType.name) {
+  const unknown = exprType instanceof UnknownType;
+  if (!unknown && exprType.name !== ofType.name) {
     compileErrors.push(new TypeCompileError(ofType.name, location, unknown));
   }
 }
 
 export function mustBeMemberOfSymbolType(
   name: string,
-  exprType: SymbolType | undefined,
+  exprType: SymbolType,
   ofType: SymbolType,
   compileErrors: CompileError[],
   location: string,
 ) {
-  const unknown = exprType?.name === undefined || ofType.name === undefined;
-  if (exprType?.name !== ofType.name) {
+  const unknown = exprType instanceof UnknownType;
+  if (!unknown && exprType.name !== ofType.name) {
     compileErrors.push(new MemberTypeCompileError(name, ofType.name, location, unknown));
   }
 }
 
 export function mustBeOfType(
-  expr: AstNode | undefined,
+  expr: AstNode,
   ofType: SymbolType,
   compileErrors: CompileError[],
   location: string,
 ) {
-  mustBeOfSymbolType(expr?.symbolType(), ofType, compileErrors, location);
+  mustBeOfSymbolType(expr.symbolType(), ofType, compileErrors, location);
 }
 
 export function mustNotHaveConditionalAfterUnconditionalElse(
@@ -174,10 +174,9 @@ export function mustBeRecord(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (!symbolType.isImmutable) {
-    compileErrors.push(
-      new MustBeRecordCompileError(symbolType.name, location, symbolType instanceof UnknownType),
-    );
+  const unknown = symbolType instanceof UnknownType;
+  if (!unknown && !symbolType.isImmutable) {
+    compileErrors.push(new MustBeRecordCompileError(symbolType.name, location, unknown));
   }
 }
 
@@ -207,16 +206,12 @@ export function mustBeProcedure(
   compileErrors: CompileError[],
   location: string,
 ) {
+  const unknown = symbolType instanceof UnknownType;
   if (symbolType instanceof FunctionType) {
-    compileErrors.push(new CannotCallAFunction(location, symbolType instanceof UnknownType));
-  } else if (!(symbolType instanceof ProcedureType)) {
+    compileErrors.push(new CannotCallAFunction(location, unknown));
+  } else if (!unknown && !(symbolType instanceof ProcedureType)) {
     compileErrors.push(
-      new CannotCallAsAMethod(
-        symbolId,
-        symbolScopeToFriendlyName(symbolScope),
-        location,
-        symbolType instanceof UnknownType,
-      ),
+      new CannotCallAsAMethod(symbolId, symbolScopeToFriendlyName(symbolScope), location, unknown),
     );
   }
 }
@@ -228,18 +223,12 @@ export function mustBeCallable(
   compileErrors: CompileError[],
   location: string,
 ) {
+  const unknown = symbolType instanceof UnknownType;
   if (symbolType instanceof ProcedureType) {
+    compileErrors.push(new CannotUseLikeAFunction(symbolId, location, unknown));
+  } else if (!unknown) {
     compileErrors.push(
-      new CannotUseLikeAFunction(symbolId, location, symbolType instanceof UnknownType),
-    );
-  } else {
-    compileErrors.push(
-      new CannotCallAsAMethod(
-        symbolId,
-        symbolScopeToFriendlyName(symbolScope),
-        location,
-        symbolType instanceof UnknownType,
-      ),
+      new CannotCallAsAMethod(symbolId, symbolScopeToFriendlyName(symbolScope), location, unknown),
     );
   }
 }
@@ -249,8 +238,9 @@ export function mustBeRecordType(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (!(symbolType instanceof ClassType)) {
-    compileErrors.push(new TypeCompileError("record", location, symbolType instanceof UnknownType));
+  const unknown = symbolType instanceof UnknownType;
+  if (!unknown && !(symbolType instanceof ClassType)) {
+    compileErrors.push(new TypeCompileError("record", location, unknown));
   }
 }
 
@@ -259,10 +249,9 @@ export function mustBeDeconstructableType(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (!isDeconstructedType(symbolType)) {
-    compileErrors.push(
-      new TypeCompileError("able to be deconstructed", location, symbolType instanceof UnknownType),
-    );
+  const unknown = symbolType instanceof UnknownType;
+  if (!unknown && !isDeconstructedType(symbolType)) {
+    compileErrors.push(new TypeCompileError("able to be deconstructed", location, unknown));
   }
 }
 
@@ -273,10 +262,9 @@ export function mustBePureFunctionSymbol(
   location: string,
 ) {
   if (InFunctionScope(scope)) {
-    if (!symbolType.isPure) {
-      compileErrors.push(
-        new CannotUseSystemMethodInAFunction(location, symbolType instanceof UnknownType),
-      );
+    const unknown = symbolType instanceof UnknownType;
+    if (!unknown && !symbolType.isPure) {
+      compileErrors.push(new CannotUseSystemMethodInAFunction(location, unknown));
     }
   }
 }
@@ -301,38 +289,41 @@ export function mustBeRangeableSymbol(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (!(read && isIndexableType(symbolType))) {
-    compileErrors.push(
-      new NotRangeableCompileError(symbolType.name, location, symbolType instanceof UnknownType),
-    );
+  const unknown = symbolType instanceof UnknownType;
+  if (!unknown && !(read && isIndexableType(symbolType))) {
+    compileErrors.push(new NotRangeableCompileError(symbolType.name, location, unknown));
   }
 }
 
 export function mustBeInheritableClassOrInterface(
-  type: SymbolType,
+  symbolType: SymbolType,
   name: string,
   compileErrors: CompileError[],
   location: string,
 ) {
+  const unknown = symbolType instanceof UnknownType;
   if (
-    !(type instanceof ClassType) ||
-    type.subType === ClassSubType.concrete ||
-    type.isNotInheritable
+    !unknown &&
+    (!(symbolType instanceof ClassType) ||
+      symbolType.subType === ClassSubType.concrete ||
+      symbolType.isNotInheritable)
   ) {
     compileErrors.push(new MustBeAbstractCompileError(name, location));
   }
 }
 
 export function mustBeInterfaceClass(
-  type: SymbolType,
+  symbolType: SymbolType,
   name: string,
   compileErrors: CompileError[],
   location: string,
 ) {
+  const unknown = symbolType instanceof UnknownType;
   if (
-    !(type instanceof ClassType) ||
-    type.subType !== ClassSubType.interface ||
-    type.isNotInheritable
+    !unknown &&
+    (!(symbolType instanceof ClassType) ||
+      symbolType.subType !== ClassSubType.interface ||
+      symbolType.isNotInheritable)
   ) {
     compileErrors.push(new MustBeInterfaceCompileError(name, location));
   }
@@ -442,7 +433,9 @@ export function mustBeClass(symbol: ElanSymbol, compileErrors: CompileError[], l
   if (!isClass(symbol)) {
     const st = symbol.symbolType();
     const unknown = st instanceof UnknownType;
-    compileErrors.push(new TypeCompileError("Class", location, unknown));
+    if (!unknown) {
+      compileErrors.push(new TypeCompileError("Class", location, unknown));
+    }
   }
 }
 
@@ -1083,7 +1076,9 @@ export function cannotPassAsOutParameter(
     compileErrors.push(new OutParameterCompileError(parameter, location, false));
   } else {
     const unknown = parameter.symbolType() === UnknownType.Instance;
-    compileErrors.push(new OutParameterCompileError(parameter.toString(), location, unknown));
+    if (!unknown) {
+      compileErrors.push(new OutParameterCompileError(parameter.toString(), location, unknown));
+    }
   }
 }
 
@@ -1183,10 +1178,9 @@ export function mustBeIterable(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (!isIterableType(symbolType)) {
-    compileErrors.push(
-      new NotIterableCompileError(symbolType.name, location, symbolType instanceof UnknownType),
-    );
+  const unknown = symbolType instanceof UnknownType;
+  if (!unknown && !isIterableType(symbolType)) {
+    compileErrors.push(new NotIterableCompileError(symbolType.name, location, unknown));
   }
 }
 

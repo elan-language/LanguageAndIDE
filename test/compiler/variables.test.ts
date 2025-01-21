@@ -474,10 +474,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "expr11", [
-      "'x' is not defined",
-      "Cannot invoke identifier 'x' as a method",
-    ]);
+    assertDoesNotCompileWithId(fileImpl, "expr11", ["'x' is not defined"]);
   });
 
   test("Pass_Redefine", async () => {

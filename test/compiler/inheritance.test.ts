@@ -2585,10 +2585,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'BaseVg' is not defined",
-      "Superclass 'BaseVg' must be inheritable class",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'BaseVg' is not defined"]);
   });
 
   test("Fail_OnlyOneAbstract Class", async () => {

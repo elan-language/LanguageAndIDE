@@ -6,6 +6,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -1338,6 +1339,34 @@ class Bar
 
   property p1 as Foo
   property p2 as Boolean
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["referencing a property requires a prefix"]);
+  });
+
+  ignore_test("Fail_CannotCall", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable bar set to new Bar()
+  call bar.p()
+end main
+
+class Foo
+
+end class
+
+class Bar
+
+  procedure p()
+    call property.p1()
+  end procedure
+
+  property p1 as Foo
 end class`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);

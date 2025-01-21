@@ -185,4 +185,20 @@ end main`;
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["Expression must be Boolean"]);
   });
+
+  test("Fail_WhileConditionUnknown", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  while a
+    print a
+  end while
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'a' is not defined"]);
+  });
 });
