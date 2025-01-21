@@ -705,6 +705,12 @@ async function handleEditorEvent(
     return;
   }
 
+  if (key === "Delete" && event.target instanceof HTMLInputElement) {
+    const start = event.target.selectionStart ?? 0;
+    const end = event.target.selectionEnd ?? 0;
+    msg.selection = [start, end];
+  }
+
   handleKeyAndRender(msg);
   event.preventDefault();
   event.stopPropagation();
