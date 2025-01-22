@@ -223,14 +223,16 @@ export abstract class AbstractField implements Selectable, Field {
         break;
       }
       case "Delete": {
-        if (e.selection || this.cursorPos < textLen) {
-          const [start, end] = e.selection ?? [this.cursorPos, this.cursorPos + 1];
-          this.text = this.text.slice(0, start) + this.text.slice(end);
-          this.setSelection(start);
-          this.parseCurrentText();
-          this.codeHasChanged = true;
-          this.editingField();
+        const [start, end] = e.selection!;
+        if (start === textLen) {
+          break;
         }
+        const endMod = start === end ? start + 1 : end;
+        this.text = this.text.slice(0, start) + this.text.slice(endMod);
+        this.setSelection(start);
+        this.parseCurrentText();
+        this.codeHasChanged = true;
+        this.editingField();
         break;
       }
       case "t": {
