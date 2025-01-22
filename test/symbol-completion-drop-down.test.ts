@@ -2051,4 +2051,58 @@ end class`;
 
     await assertSymbolCompletionWithString(fileImpl, "expr26", "ff", expected);
   });
+
+  test("Pass_inheritProcedure", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+abstract class Bar
+  procedure pp1()
+  end procedure
+end class
+
+class Foo inherits Bar
+  procedure pp()
+    call pp1()
+  end procedure
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["pp", "pp", "pp"],
+      ["pp1", "pp1", "pp1"],
+    ] as [string, string, string][];
+
+    await assertSymbolCompletionWithString(fileImpl, "ident18", "pp", expected);
+  });
+
+  test("Pass_inheritIndirectProcedure", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+abstract class Yon
+  procedure pp1()
+  end procedure
+end class
+
+abstract class Bar inherits Yon
+  
+end class
+
+class Foo inherits Bar
+  procedure pp()
+    call pp1()
+  end procedure
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["pp", "pp", "pp"],
+      ["pp1", "pp1", "pp1"],
+    ] as [string, string, string][];
+
+    await assertSymbolCompletionWithString(fileImpl, "ident22", "pp", expected);
+  });
 });
