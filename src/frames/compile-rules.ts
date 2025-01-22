@@ -29,6 +29,7 @@ import {
   ParametersCompileError,
   ParameterTypesCompileError,
   PrivateMemberCompileError,
+  PropertyCompileError,
   ReassignInFunctionCompileError,
   RedefinedCompileError,
   SignatureCompileError,
@@ -97,6 +98,7 @@ import {
   isAstIndexableNode,
   transforms,
 } from "./syntax-nodes/ast-helpers";
+import { ThisAsn } from "./syntax-nodes/this-asn";
 import { Transforms } from "./syntax-nodes/transforms";
 
 function knownType(symbolType: SymbolType) {
@@ -447,6 +449,16 @@ export function mustCallExtensionViaQualifier(
 ) {
   if (ft.isExtension && qualifier === undefined) {
     compileErrors.push(new ExtensionCompileError(location));
+  }
+}
+
+export function mustbeValidQualifier(
+  qualifier: AstNode | undefined,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  if (qualifier instanceof ThisAsn) {
+    compileErrors.push(new PropertyCompileError(location));
   }
 }
 

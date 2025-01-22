@@ -206,6 +206,12 @@ export class ExtensionCompileError extends CompileError {
   }
 }
 
+export class PropertyCompileError extends CompileError {
+  constructor(location: string) {
+    super(Priority.illegalOperation, `Cannot prefix function with 'property'`, location);
+  }
+}
+
 export class MissingParameterCompileError extends CompileError {
   constructor(description: string, location: string) {
     const priority = Priority.unknownIdentifier;

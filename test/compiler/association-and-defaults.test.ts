@@ -1375,4 +1375,61 @@ end class`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["referencing a property requires a prefix"]);
   });
+
+  test("Fail_spuriousProperty1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+class Bar
+  procedure p()
+    let a be property.asString()
+  end procedure
+
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Cannot prefix function with 'property'"]);
+  });
+
+  test("Fail_spuriousProperty2", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+function foo() returns Int
+  return 0
+end function
+
+class Bar
+  procedure p()
+    let a be property.foo()
+  end procedure
+
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Cannot prefix function with 'property'"]);
+  });
+
+  test("Fail_spuriousProperty3", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+constant aa set to 1
+
+class Bar
+  procedure p()
+    let a be property.aa
+  end procedure
+
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'aa' is not defined for type 'Bar'"]);
+  });
 });

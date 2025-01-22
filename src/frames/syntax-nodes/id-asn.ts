@@ -6,6 +6,7 @@ import {
   mustBePublicMember,
   mustNotBeKeyword,
 } from "../compile-rules";
+import { isClass } from "../frame-helpers";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstNode } from "../interfaces/ast-node";
 import { Scope } from "../interfaces/scope";
@@ -43,6 +44,10 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
 
   getSymbol() {
     const searchScope = this.updatedScope ?? this.scope.getParentScope();
+    if (isClass(searchScope)) {
+      return searchScope.resolveOwnSymbol(this.id, transforms());
+    }
+
     return searchScope.resolveSymbol(this.id, transforms(), this.scope);
   }
 

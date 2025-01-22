@@ -9,7 +9,7 @@ import { transforms } from "./ast-helpers";
 
 export class ThisAsn extends AbstractAstNode implements AstNode {
   constructor(
-    private originalKeyword: string,
+    private originalKeyword: "property" | "this",
     public readonly fieldId: string,
     private readonly scope: Scope,
   ) {

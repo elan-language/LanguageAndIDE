@@ -4,6 +4,7 @@ import {
   mustBeKnownSymbol,
   mustBePublicMember,
   mustBePureFunctionSymbol,
+  mustbeValidQualifier,
   mustCallExtensionViaQualifier,
   mustCallMemberViaQualifier,
 } from "../compile-rules";
@@ -80,6 +81,8 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
     if (!isMemberOnFieldsClass(funcSymbol, transforms(), this.scope)) {
       mustBePublicMember(funcSymbol, this.compileErrors, this.fieldId);
     }
+
+    mustbeValidQualifier(this.precedingNode, this.compileErrors, this.fieldId);
 
     if (funcSymbolType instanceof FunctionType) {
       mustBePureFunctionSymbol(funcSymbolType, this.scope, this.compileErrors, this.fieldId);
