@@ -1143,7 +1143,7 @@ async function handleChromeUploadOrAppend(upload: boolean) {
       id: lastDirId,
     });
     const codeFile = await fileHandle.getFile();
-    const fileName = codeFile.name;
+    const fileName = upload ? codeFile.name : file.fileName;
     const rawCode = await codeFile.text();
     if (upload) {
       file = new FileImpl(hash, profile, transforms());
@@ -1176,7 +1176,7 @@ function handleUploadOrAppend(event: Event, upload: boolean) {
   const elanFile = (event.target as any).files?.[0] as any;
 
   if (elanFile) {
-    const fileName = elanFile.name;
+    const fileName = upload ? elanFile.name : file.fileName;
     cursorWait();
     clearDisplays();
     const reader = new FileReader();
