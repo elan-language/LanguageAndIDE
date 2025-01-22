@@ -1970,4 +1970,29 @@ end class`;
 
     await assertSymbolCompletionWithString(fileImpl, "expr18", "pp", expected);
   });
+
+  test("Pass_inheritIndirectProperty", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+abstract class Yon
+  property pp1 as Int
+end class
+
+abstract class Bar inherits Yon
+
+end class
+
+class Foo inherits Bar
+  procedure p()
+    variable a set to property.pp1
+  end procedure
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [["pp1", "property.pp1", "property.pp1"]] as [string, string, string][];
+
+    await assertSymbolCompletionWithString(fileImpl, "expr22", "pp", expected);
+  });
 });

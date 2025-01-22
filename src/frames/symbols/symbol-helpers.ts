@@ -510,6 +510,11 @@ function filterSymbols(matches: ElanSymbol[], filters: ((s: ElanSymbol) => boole
   return filtered.filter((e) => !e.symbolId.startsWith("_"));
 }
 
+function ensureUnique(symbols: ElanSymbol[]) {
+  const uniqueNames = Array.from(new Set<string>(symbols.map((s) => s.symbolId)));
+  return uniqueNames.map((n) => symbols.find((s) => s.symbolId === n)) as ElanSymbol[];
+}
+
 export function filteredSymbols(
   spec: SymbolCompletionSpec,
   transforms: Transforms,
@@ -517,7 +522,7 @@ export function filteredSymbols(
 ): ElanSymbol[] {
   const matches = matchingSymbols(spec, transforms, scope);
   const filters = filtersForTokenType(spec.tokenTypes, transforms);
-  const filtered = filterSymbols(matches, filters);
+  const filtered = ensureUnique(filterSymbols(matches, filters));
 
   const startsWith = filtered
     .filter((s) => s.symbolId.toUpperCase().startsWith(spec.toMatch.toUpperCase()))
