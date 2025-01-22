@@ -972,6 +972,8 @@ main
   print b.indexOfItem(7)
   print c.indexOfItem("o")
   print c.indexOfItem("ll")
+  variable i set to 1
+  set i to a.indexOfItem(9)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -986,6 +988,8 @@ async function main() {
   system.printLine(_stdlib.indexOfItem(b, 7));
   system.printLine(_stdlib.indexOfItem(c, "o"));
   system.printLine(_stdlib.indexOfItem(c, "ll"));
+  let i = 1;
+  i = _stdlib.indexOfItem(a, 9);
 }
 return [main, _tests];}`;
 
@@ -996,5 +1000,31 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "420-14-1");
+  });
+  test("Pass_asUnicodeReturnsInt#1061", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable i set to 1
+  set i to "A".asUnicode()
+  print i
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let i = 1;
+  i = _stdlib.asUnicode("A");
+  system.printLine(i);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "65");
   });
 });

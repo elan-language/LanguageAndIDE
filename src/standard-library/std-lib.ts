@@ -192,7 +192,7 @@ export class StdLib {
     return String.fromCharCode(n);
   }
 
-  @elanFunction(["character"], FunctionOptions.pureExtension)
+  @elanFunction(["character"], FunctionOptions.pureExtension, ElanInt)
   asUnicode(s: string): number {
     return s.charCodeAt(0);
   }
@@ -513,7 +513,7 @@ export class StdLib {
     return s1.indexOf(s2);
   }
 
-  @elanFunction(["", "item"], FunctionOptions.pureExtension, ElanT1)
+  @elanFunction(["", "item"], FunctionOptions.pureExtension, ElanInt)
   indexOfItem<T1>(
     @elanIterableType(ElanT1)
     source: T1[],
