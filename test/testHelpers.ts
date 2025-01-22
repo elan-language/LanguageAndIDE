@@ -223,6 +223,8 @@ export async function assertSymbolCompletionWithString(
   assertParses(f);
   const fld = f.getById(id) as AbstractField;
 
+  assert.notStrictEqual(fld, undefined, `${id} not found`)
+
   fld.text = "";
   
   fld.select();
