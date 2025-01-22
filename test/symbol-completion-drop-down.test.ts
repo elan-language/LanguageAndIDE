@@ -792,8 +792,8 @@ end class`;
     const expected = [
       ["property", "*", "*"],
       ["p", "*", "*"],
-      ["foo", "*", "*"],
       ["b", "*", "*"],
+      ["foo", "*", "*"],
     ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "ident24", "p", 0, expected, true);
@@ -827,8 +827,8 @@ end class`;
 
     const expected = [
       ["property", "*", "*"],
-      ["foo", "*", "*"],
       ["b", "*", "*"],
+      ["foo", "*", "*"],
     ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "ident24", "r", 1, expected);
@@ -1969,6 +1969,99 @@ end class`;
     const expected = [["pp1", "property.pp1", "property.pp1"]] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "expr18", "pp", expected);
+  });
+
+  test("Pass_inheritPropertyKeyword1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+abstract class Yon
+  property pp as Int
+end class
+
+abstract class Bar inherits Yon
+  property ppp as Int
+end class
+
+class Foo inherits Bar
+  procedure proc()
+    variable a set to property.pp
+  end procedure
+
+  property pppp as Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["pp", "property.pp", "property.pp"],
+      ["ppp", "property.ppp", "property.ppp"],
+      ["pppp", "property.pppp", "property.pppp"],
+    ] as [string, string, string][];
+
+    await assertSymbolCompletionWithString(fileImpl, "expr25", "pp", expected);
+  });
+
+  test("Pass_inheritPropertyKeyword2", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+abstract class Yon
+  property pp as Int
+end class
+
+abstract class Bar inherits Yon
+  property ppp as Int
+end class
+
+class Foo inherits Bar
+  procedure proc()
+    variable a set to property.pp
+  end procedure
+
+  property pppp as Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["pp", "property.pp", "property.pp"],
+      ["ppp", "property.ppp", "property.ppp"],
+      ["pppp", "property.pppp", "property.pppp"],
+    ] as [string, string, string][];
+
+    await assertSymbolCompletionWithString(fileImpl, "expr25", "prop", expected);
+  });
+
+  test("Pass_inheritPropertyKeyword3", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+abstract class Yon
+  property pp as Int
+end class
+
+abstract class Bar inherits Yon
+  property ppp as Int
+end class
+
+class Foo inherits Bar
+  procedure proc()
+    variable a set to property.pp
+  end procedure
+
+  property pppp as Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["pp", "property.pp", "property.pp"],
+      ["ppp", "property.ppp", "property.ppp"],
+      ["pppp", "property.pppp", "property.pppp"],
+    ] as [string, string, string][];
+
+    await assertSymbolCompletionWithString(fileImpl, "expr25", "property.", expected);
   });
 
   test("Pass_inheritIndirectProperty", async () => {

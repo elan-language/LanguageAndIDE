@@ -24,6 +24,7 @@ import {
   filteredSymbols,
   isInsideClass,
   isProperty,
+  orderSymbol,
   removeIfSingleFullMatch,
 } from "../symbols/symbol-helpers";
 import { SymbolWrapper } from "../symbols/symbol-wrapper";
@@ -707,7 +708,7 @@ export abstract class AbstractField implements Selectable, Field {
     let symbols = filteredSymbols(spec, transforms, this.getHolder());
     if (isInsideClass(scope)) {
       if (propertyKeyword.startsWith(spec.toMatch)) {
-        const allProperties = this.allPropertiesInScope();
+        const allProperties = this.allPropertiesInScope().sort(orderSymbol);
         symbols = symbols.filter((s) => !allProperties.includes(s)).concat(allProperties);
       } else if (spec.context === propertyKeyword) {
         const newSpec = new SymbolCompletionSpec(

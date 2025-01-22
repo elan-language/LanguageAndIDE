@@ -42,6 +42,7 @@ import { ProcedureType } from "./procedure-type";
 import { RegExpType } from "./regexp-type";
 import { StringType } from "./string-type";
 import { SymbolScope } from "./symbol-scope";
+import { UnknownSymbol } from "./unknown-symbol";
 
 export function isDeconstructedType(s?: SymbolType): s is DeconstructedSymbolType {
   return !!s && "symbolTypeFor" in s;
@@ -425,6 +426,10 @@ function matchingSymbolsWithQualifier(
 ): ElanSymbol[] {
   const qual = scope.resolveSymbol(qualId, transforms, scope);
 
+  if (qual instanceof UnknownSymbol) {
+    return [];
+  }
+
   // class scope so all or matching symbols on class
   let qualSt = qual.symbolType(transforms);
 
@@ -496,7 +501,7 @@ export function removeIfSingleFullMatch(symbols: ElanSymbol[], id: string): Elan
   }
 }
 
-function orderSymbol(s1: ElanSymbol, s2: ElanSymbol) {
+export function orderSymbol(s1: ElanSymbol, s2: ElanSymbol) {
   return s1.symbolId.localeCompare(s2.symbolId);
 }
 
