@@ -64,7 +64,6 @@ let undoRedoing: boolean = false;
 let currentFieldId: string = "";
 
 let file: File;
-let doOnce = true;
 let profile: Profile;
 let lastSavedHash = "";
 let undoRedoHash = "";
@@ -728,12 +727,15 @@ async function handleEditorEvent(
   event.stopPropagation();
 }
 
+function getFocused() {
+  return document.querySelector(".focused") as HTMLUnknownElement | undefined;
+}
+
 /**
  * Render the document
  */
 async function updateContent(text: string, editingField: boolean) {
   file.setRunStatus(RunStatus.default);
-  doOnce = doOnce === undefined || doOnce ? true : false;
 
   codeContainer!.innerHTML = text;
 
@@ -778,17 +780,18 @@ async function updateContent(text: string, editingField: boolean) {
   }
 
   const input = document.querySelector(".focused input") as HTMLInputElement;
-  const focused = document.querySelector(".focused") as HTMLUnknownElement;
+  const focused = getFocused();
   const elanCode = document.querySelector(".elan-code") as HTMLDivElement;
 
-  if (doOnce) {
-    doOnce = false;
-
-    elanCode!.addEventListener("keydown", (event: Event) => {
-      const ke = event as KeyboardEvent;
-      handleEditorEvent(event, "key", "window", getModKey(ke), undefined, ke.key);
-    });
-  }
+  elanCode?.addEventListener("click", () => {
+    const focused = getFocused();
+    if (focused) {
+      focused.focus();
+    } else {
+      file.getFirstChild().select();
+      getFocused()?.focus();
+    }
+  });
 
   if (input) {
     const cursorStart = input.dataset.cursorstart as string;
