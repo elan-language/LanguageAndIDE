@@ -515,17 +515,6 @@ function updateDisplayValues() {
       elem.removeAttribute("hidden");
     }
 
-    if (useChromeFileAPI()) {
-      if (!isParsing) {
-        disable(autoSaveButton, "Code must be parsing in order to save");
-      } else {
-        enable(
-          autoSaveButton,
-          "Save to file now and then auto-save to same file whenever code is changed and parses",
-        );
-      }
-    }
-
     if (isEmpty) {
       disable(saveButton, "Some code must be added in order to save");
     } else if (!isParsing) {
@@ -555,6 +544,23 @@ function updateDisplayValues() {
       disable(redoButton, "Nothing to redo");
     } else {
       enable(redoButton, "Redo last change (Ctrl + y");
+    }
+
+    if (autoSaveFileHandle) {
+      autoSaveButton.innerText = "Auto-off";
+      autoSaveButton.setAttribute("title", "Click to turn auto-save off and resume manual saving.");
+    } else {
+      if (useChromeFileAPI()) {
+        autoSaveButton.innerText = "Auto";
+        if (isParsing) {
+          enable(
+            autoSaveButton,
+            "Save to file now and then auto-save to same file whenever code is changed and parses",
+          );
+        } else {
+          disable(autoSaveButton, "Code must be parsing in order to save");
+        }
+      }
     }
   }
 }
@@ -1272,7 +1278,6 @@ async function handleChromeDownload(event: Event) {
 async function handleChromeAutoSave(event: Event) {
   if (autoSaveFileHandle) {
     autoSaveFileHandle = undefined;
-    autoSaveButton.innerText = "Auto";
     updateDisplayValues();
     return;
   }
@@ -1283,8 +1288,6 @@ async function handleChromeAutoSave(event: Event) {
     autoSaveFileHandle = await chromeSave(code);
     lastSavedHash = file.currentHash;
     await renderAsHtml(false);
-    autoSaveButton.innerText = "Auto-off";
-    autoSaveButton.setAttribute("title", "Click to turn auto-save off and resume manual saving.");
   } catch (_e) {
     // user cancelled
     return;
