@@ -575,8 +575,8 @@ function enable(button: HTMLButtonElement, msg = "") {
 }
 
 function getEditorMsg(
-  type: "key" | "click" | "dblclick" | "paste",
-  target: "frame" | "window",
+  type: "key" | "click" | "dblclick" | "paste" | "contextmenu",
+  target: "frame",
   id: string | undefined,
   key: string | undefined,
   modKey: { control: boolean; shift: boolean; alt: boolean },
@@ -603,6 +603,16 @@ function getEditorMsg(
         id: id,
         modKey: modKey,
         selection: selection,
+      };
+    case "contextmenu":
+      return {
+        type: type,
+        target: target,
+        key: "ContextMenu",
+        id: id,
+        modKey: modKey,
+        selection: selection,
+        autocomplete: autocomplete,
       };
   }
 }
@@ -685,6 +695,7 @@ function isSupportedKey(evt: editorEvent) {
     case "ArrowDown":
     case "Backspace":
     case "Delete":
+    case "ContextMenu":
       return true;
     default:
       return !evt.key || evt.key.length === 1;
@@ -693,8 +704,8 @@ function isSupportedKey(evt: editorEvent) {
 
 async function handleEditorEvent(
   event: Event,
-  type: "key" | "click" | "dblclick" | "paste",
-  target: "frame" | "window",
+  type: "key" | "click" | "dblclick" | "paste" | "contextmenu",
+  target: "frame",
   modKey: { control: boolean; shift: boolean; alt: boolean },
   id?: string | undefined,
   key?: string | undefined,
@@ -777,6 +788,12 @@ async function updateContent(text: string, editingField: boolean) {
       const ke = event as KeyboardEvent;
       handleEditorEvent(event, "dblclick", "frame", getModKey(ke), id);
     });
+
+    frame.addEventListener("contextmenu", (event) => {
+      const mk = { control: false, shift: false, alt: false };
+      handleEditorEvent(event, "contextmenu", "frame", mk, id);
+      event.preventDefault();
+    });
   }
 
   const input = document.querySelector(".focused input") as HTMLInputElement;
@@ -792,6 +809,30 @@ async function updateContent(text: string, editingField: boolean) {
       getFocused()?.focus();
     }
   });
+
+  if (document.querySelector(".context-menu")) {
+    const items = document.querySelectorAll(".context-menu-item");
+
+    for (const item of items) {
+      item.addEventListener("click", (event) => {
+        const ke = event as PointerEvent;
+        const tgt = ke.target as HTMLDivElement;
+        const id = tgt.dataset.id;
+        const func = tgt.dataset.func;
+
+        handleEditorEvent(
+          event,
+          "contextmenu",
+          "frame",
+          getModKey(ke),
+          id,
+          "ContextMenu",
+          undefined,
+          func,
+        );
+      });
+    }
+  }
 
   if (input) {
     const cursorStart = input.dataset.cursorstart as string;
@@ -1008,6 +1049,10 @@ async function handleKeyAndRender(e: editorEvent) {
           await renderAsHtml(false);
         }
         // undefined just return
+        return;
+      case "contextmenu":
+        handleKey(e, file);
+        await renderAsHtml(false);
         return;
     }
   } catch (e) {

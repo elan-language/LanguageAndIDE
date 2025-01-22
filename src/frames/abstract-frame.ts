@@ -44,6 +44,8 @@ export abstract class AbstractFrame implements Frame {
   private _parseStatus: ParseStatus = ParseStatus.default;
   private _compileStatus: CompileStatus = CompileStatus.default;
 
+  protected showContextMenu = false;
+
   constructor(parent: Parent) {
     this._parent = parent;
     const file = this.getFile();
@@ -293,6 +295,16 @@ export abstract class AbstractFrame implements Frame {
           codeHasChanged = true;
           break;
         }
+      }
+      case "ContextMenu": {
+        // todo renamethis to data say
+        if (e.autocomplete) {
+          const map = this.getContextMenuItems();
+          map.get(e.autocomplete)![1]?.();
+        } else {
+          this.showContextMenu = true;
+        }
+        break;
       }
     }
     return codeHasChanged;
@@ -590,5 +602,31 @@ export abstract class AbstractFrame implements Frame {
   }
   compileMsgAsHtml() {
     return helper_compileMsgAsHtml(this);
+  }
+
+  setBreakPoint() {}
+
+  getContextMenuItems() {
+    const map = new Map<string, [string, () => void]>();
+    map.set("setBP", ["set Break Point", this.setBreakPoint]);
+    return map;
+  }
+
+  contextMenu() {
+    if (this.showContextMenu) {
+      this.showContextMenu = false;
+      const items: string[] = [];
+      const map = this.getContextMenuItems();
+
+      for (const k of map.keys()) {
+        const val = map.get(k)!;
+        items.push(
+          `<div class='context-menu-item' data-id='${this.htmlId}' data-func='${k}'>${val[0]}</div>`,
+        );
+      }
+
+      return `<div class='context-menu'>${items.join("")}</div>`;
+    }
+    return "";
   }
 }
