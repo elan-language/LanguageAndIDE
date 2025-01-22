@@ -1995,4 +1995,60 @@ end class`;
 
     await assertSymbolCompletionWithString(fileImpl, "expr22", "pp", expected);
   });
+
+  test("Pass_inheritFunction", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+abstract class Bar
+  function ff1() returns Int
+    return 0
+  end function
+end class
+
+class Foo inherits Bar
+  function ff() returns Int
+    return ff1()
+  end function
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["ff", "ff", "ff("],
+      ["ff1", "ff1", "ff1("],
+    ] as [string, string, string][];
+
+    await assertSymbolCompletionWithString(fileImpl, "expr22", "ff", expected);
+  });
+
+  test("Pass_inheritIndirectFunction", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+abstract class Yon
+  function ff1() returns Int
+    return 0
+  end function
+end class
+
+abstract class Bar inherits Yon
+
+end class
+
+class Foo inherits Bar
+  function ff() returns Int
+    return ff1()
+  end function
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["ff", "ff", "ff("],
+      ["ff1", "ff1", "ff1("],
+    ] as [string, string, string][];
+
+    await assertSymbolCompletionWithString(fileImpl, "expr26", "ff", expected);
+  });
 });
