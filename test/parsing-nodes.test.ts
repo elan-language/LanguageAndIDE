@@ -11,7 +11,7 @@ import { DeconstructedList } from "../src/frames/parse-nodes/deconstructed-list"
 import { DeconstructedTuple } from "../src/frames/parse-nodes/deconstructed-tuple";
 import { DictionaryNode } from "../src/frames/parse-nodes/dictionary-node";
 import { DotAfter } from "../src/frames/parse-nodes/dot-after";
-import { DotBefore } from "../src/frames/parse-nodes/dot-before";
+import { DottedTerm } from "../src/frames/parse-nodes/dotted-term";
 import { ExprNode } from "../src/frames/parse-nodes/expr-node";
 import { IdentifierNode } from "../src/frames/parse-nodes/identifier-node";
 import { IfExpr } from "../src/frames/parse-nodes/if-expr";
@@ -1438,7 +1438,7 @@ suite("Parsing Nodes", () => {
     testNodeParse(new Qualifier(), `property`, ParseStatus.valid, `property`, "");
     testNodeParse(new PunctuationNode(DOT), `.`, ParseStatus.valid, `.`, "");
     testNodeParse(new ReferenceNode(), `a`, ParseStatus.valid, `a`, "");
-    testNodeParse(new DotBefore(new ReferenceNode()), `.a`, ParseStatus.valid, `.a`, "");
+    testNodeParse(new DottedTerm(), `.a`, ParseStatus.valid, `.a`, "");
     testNodeParse(new DotAfter(new ReferenceNode()), `.a`, ParseStatus.invalid, ``, ".a");
     testNodeParse(new TermChained(), `property.a`, ParseStatus.valid, `property.a`, "");
     testNodeParse(
