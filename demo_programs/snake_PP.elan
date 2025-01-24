@@ -1,4 +1,4 @@
-# 308e143314d0471522f5c05016f2c1910ef310fed5593847e375bef4eb33f95b Elan Beta 6 valid
+# 4141e723391aa2ee322f66035217443cb2534e6f7c093a0c86000ef9400b9f6c Elan Beta 6 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -95,12 +95,12 @@ end test
 
 test getAdjacentSquare
   let sq be [20, 15]
-  assert getAdjacentSquare(sq, "up") is (20, 14)
-  assert getAdjacentSquare(sq, "down") is (20, 16)
-  assert getAdjacentSquare(sq, "left") is (19, 15)
-  assert getAdjacentSquare(sq, "right") is (21, 15)
+  assert getAdjacentSquare(sq, "up") is [20, 14]
+  assert getAdjacentSquare(sq, "down") is [20, 16]
+  assert getAdjacentSquare(sq, "left") is [19, 15]
+  assert getAdjacentSquare(sq, "right") is [21, 15]
   # boundary
-  assert getAdjacentSquare([0, 15], "left") is (-1, 15)
+  assert getAdjacentSquare([0, 15], "left") is [-1, 15]
 end test
 
 test directionByKey

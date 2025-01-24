@@ -1,4 +1,4 @@
-# 3681067ac2ef88e1ce457704bead5ef7a53ab2fa0c8c1747510874c7faf78154 Elan Beta 6 valid
+# 4076fd417a9553519baade42728251e1afc5bf544d9845ab97ada015055aa457 Elan Beta 6 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -54,10 +54,10 @@ end function
 function eatAppleIfPoss(g as Game) returns Game
   let tail be g.body[0]
   let moveTail be g.body[1..g.body.length()]
-  return if overApple(g) then newApple(g) else copy g with priorTail set to tail, body set to moveTail
+  return if headOverApple(g) then newApple(g) else copy g with priorTail set to tail, body set to moveTail
 end function
 
-function overApple(g as Game) returns Boolean
+function headOverApple(g as Game) returns Boolean
   return g.head is g.apple
 end function
 
@@ -201,9 +201,9 @@ end test
 test overApple
   let g1 be newGame(new Random())
   let g2 be copy g1 with apple set to newSquare(23, 15)
-  assert overApple(g2) is false
+  assert headOverApple(g2) is false
   let g3 be copy g2 with head set to newSquare(23, 15)
-  assert overApple(g3) is true
+  assert headOverApple(g3) is true
 end test
 
 test gameOver
