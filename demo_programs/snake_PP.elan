@@ -1,64 +1,51 @@
-# FFFF Elan Beta 6 valid
+# 308e143314d0471522f5c05016f2c1910ef310fed5593847e375bef4eb33f95b Elan Beta 6 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
   variable gr set to new BlockGraphics()
-  variable head set to tuple(20, 15)
+  variable head set to [20, 15]
   variable tail set to head
   variable body set to [head]
   variable currentDir set to "right"
   variable gameOn set to true
-  variable apple set to tuple(0, 0)
+  variable apple set to [0, 0]
   call setAppleToRandomPosition(apple, body)
   while gameOn
-    set gr to updateGraphics(gr, head, tail, body, apple)
+    variable gr2 set to gr.withBlock(head[0], head[1], green)
+    variable paintTail set to white
+    if body[0] is tail then
+      set paintTail to green
+    end if
+    set gr2 to gr2.withBlock(tail[0], tail[1], paintTail).withBlock(apple[0], apple[1], red)
     call gr.display()
     set currentDir to directionByKey(currentDir, getKey())
     set tail to body[0]
     call body.append(head)
     set head to getAdjacentSquare(head, currentDir)
-    set gameOn to not hasHitEdge(head) and not overlaps(body, head)
-    call eatAppleIfPoss(head, body, apple)
+    set gameOn to not hasHitEdge(head[0], head[1]) and not overlaps(body, head)
+    if head is apple then
+      call setAppleToRandomPosition(apple, body)
+    else
+      call body.removeAt(0)
+    end if
     call pause(150)
   end while
   print "Game Over! Score: {body.length() - 1}"
 end main
 
-procedure setAppleToRandomPosition(out apple as (Int, Int), body as Array<of (Int, Int)>)
+procedure setAppleToRandomPosition(out apple as Array<of Int>, body as Array2D<of Int>)
   repeat
-    set apple to tuple(randomInt(0, 39), randomInt(0, 29))
+    set apple to [randomInt(0, 39), randomInt(0, 29)]
   end repeat when not overlaps(body, apple)
 end procedure
 
-procedure eatAppleIfPoss(head as (Int, Int), out body as Array<of (Int, Int)>, out apple as (Int, Int))
-  if head is apple then
-    call setAppleToRandomPosition(apple, body)
-  else
-    call body.removeAt(0)
-  end if
-end procedure
-
-function updateGraphics(gr as BlockGraphics, head as (Int, Int), tail as (Int, Int), body as Array<of (Int, Int)>, apple as (Int, Int)) returns BlockGraphics
-  let headX, headY be head
-  let tailX, tailY be tail
-  let appleX, appleY be apple
-  variable gr2 set to gr.withBlock(headX, headY, green)
-  if body[0] is tail then
-    set gr2 to gr2.withBlock(tailX, tailY, green)
-  else
-    set gr2 to gr2.withBlock(tailX, tailY, white)
-  end if
-  set gr2 to gr2.withBlock(appleX, appleY, red)
-  return gr2
-end function
-
-function hasHitEdge(head as (Int, Int)) returns Boolean
-  let headX, headY be head
+function hasHitEdge(headX as Int, headY as Int) returns Boolean
   return (headX < 0) or (headY < 0) or (headX > 39) or (headY > 29)
 end function
 
-function getAdjacentSquare(sq as (Int, Int), dir as String) returns (Int, Int)
-  variable newX, newY set to sq
+function getAdjacentSquare(sq as Array<of Int>, dir as String) returns Array<of Int>
+  variable newX set to sq[0]
+  variable newY set to sq[1]
   if dir is "left" then
     set newX to newX - 1
   else if dir is "right" then
@@ -68,10 +55,10 @@ function getAdjacentSquare(sq as (Int, Int), dir as String) returns (Int, Int)
   else if dir is "down" then
     set newY to newY + 1
   end if
-  return tuple(newX, newY)
+  return [newX, newY]
 end function
 
-function overlaps(body as Array<of (Int, Int)>, sq as (Int, Int)) returns Boolean
+function overlaps(body as Array2D<of Int>, sq as Array<of Int>) returns Boolean
   variable result set to false
   each seg in body
     if (seg is sq) then
@@ -95,62 +82,25 @@ function directionByKey(current as String, key as String) returns String
   return dir
 end function
 
-# 70 frames (excluding tests)
-test updateGraphics - one segment body
-  variable gr set to new BlockGraphics()
-  let head be tuple(20, 15)
-  let tail be tuple(20, 15)
-  let body be [head]
-  let apple be tuple(6, 7)
-  set gr to updateGraphics(gr, head, tail, body, apple)
-  # First check the default (by looking at top-left block)
-  assert gr.getBackground(0, 0) is white
-  # test apple
-  assert gr.getBackground(6, 7) is red
-  # test snake is just one block by checking all around
-  assert gr.getBackground(20, 15) is green
-  assert gr.getBackground(19, 15) is white
-  assert gr.getBackground(21, 15) is white
-  assert gr.getBackground(20, 14) is white
-  assert gr.getBackground(20, 16) is white
-end test
-
-test updateGraphics - longer body
-  variable gr set to new BlockGraphics()
-  # draw existing 2-seg snake
-  set gr to gr.withBlock(30, 20, green).withBlock(30, 21, green).withBlock(30, 22, green)
-  # define snake's new position
-  let head be tuple(30, 23)
-  let tail be tuple(30, 20)
-  let body be [tuple(30, 21), tuple(30, 22), head]
-  let apple be tuple(0, 0)
-  set gr to updateGraphics(gr, head, tail, body, apple)
-  # test snake is just one block by checking all around
-  assert gr.getBackground(30, 20) is white
-  assert gr.getBackground(30, 21) is green
-  assert gr.getBackground(30, 22) is green
-  assert gr.getBackground(30, 23) is green
-end test
-
 test hasHitEdge
-  assert hasHitEdge(tuple(0, 0)) is false
-  assert hasHitEdge(tuple(0, 29)) is false
-  assert hasHitEdge(tuple(39, 0)) is false
-  assert hasHitEdge(tuple(29, 29)) is false
-  assert hasHitEdge(tuple(-1, 5)) is true
-  assert hasHitEdge(tuple(5, 30)) is true
-  assert hasHitEdge(tuple(40, 5)) is true
-  assert hasHitEdge(tuple(5, -1)) is true
+  assert hasHitEdge(0, 0) is false
+  assert hasHitEdge(0, 29) is false
+  assert hasHitEdge(39, 0) is false
+  assert hasHitEdge(29, 29) is false
+  assert hasHitEdge(-1, 5) is true
+  assert hasHitEdge(5, 30) is true
+  assert hasHitEdge(40, 5) is true
+  assert hasHitEdge(5, -1) is true
 end test
 
 test getAdjacentSquare
-  let sq be tuple(20, 15)
-  assert getAdjacentSquare(sq, "up") is tuple(20, 14)
-  assert getAdjacentSquare(sq, "down") is tuple(20, 16)
-  assert getAdjacentSquare(sq, "left") is tuple(19, 15)
-  assert getAdjacentSquare(sq, "right") is tuple(21, 15)
+  let sq be [20, 15]
+  assert getAdjacentSquare(sq, "up") is (20, 14)
+  assert getAdjacentSquare(sq, "down") is (20, 16)
+  assert getAdjacentSquare(sq, "left") is (19, 15)
+  assert getAdjacentSquare(sq, "right") is (21, 15)
   # boundary
-  assert getAdjacentSquare(tuple(0, 15), "left") is tuple(-1, 15)
+  assert getAdjacentSquare([0, 15], "left") is (-1, 15)
 end test
 
 test directionByKey
@@ -165,11 +115,11 @@ test directionByKey
 end test
 
 test overlaps
-  let body be [tuple(1, 2), tuple(3, 4)]
-  assert overlaps(body, tuple(1, 2)) is true
-  assert overlaps(body, tuple(3, 4)) is true
-  assert overlaps(body, tuple(1, 1)) is false
-  assert overlaps(body, tuple(2, 1)) is false
+  let body be [[1, 2], [3, 4]]
+  assert overlaps(body, [1, 2]) is true
+  assert overlaps(body, [3, 4]) is true
+  assert overlaps(body, [1, 1]) is false
+  assert overlaps(body, [2, 1]) is false
 end test
 
-# Test coverage: 60% (42/70 frames)
+# Test coverage: 48% (29/61 frames)

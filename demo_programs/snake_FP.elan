@@ -1,4 +1,4 @@
-# 81c643b5686be7678578576c75a6a51ea8d4399b3d0b48c6ca63b804ceac9d5e Elan Beta 6 valid
+# 3681067ac2ef88e1ce457704bead5ef7a53ab2fa0c8c1747510874c7faf78154 Elan Beta 6 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -78,10 +78,6 @@ function newGame(rnd as Random) returns Game
   return new Game() with rnd set to rnd, graphics set to new BlockGraphics(), head set to newSquare(22, 15), body set to {newSquare(20, 15), newSquare(21, 15)}, priorTail set to empty Square, key set to "d", isOn set to true
 end function
 
-function newSquare(x as Int, y as Int) returns Square
-  return new Square() with x set to x, y set to y
-end function
-
 record Game
   property head as Square
 
@@ -100,6 +96,10 @@ record Game
   property key as String
 
 end record
+
+function newSquare(x as Int, y as Int) returns Square
+  return new Square() with x set to x, y set to y
+end function
 
 record Square
   property x as Int
@@ -260,4 +260,4 @@ test newGame
   assert game.isOn is true
 end test
 
-# Test coverage: 94% (62/66 frames)
+# Test coverage: 82% (54/66 frames)
