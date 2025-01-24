@@ -15,7 +15,7 @@ suite("Tuple Deconstruction", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to (3, "Apple")
+  variable x set to tuple(3, "Apple")
   variable y set to 0
   variable z set to ""
   set y, z to x
@@ -55,7 +55,7 @@ main
 end main
 
 function foo() returns (Float, Int)
-  return (0.0, 0)
+  return tuple(0.0, 0)
 end function`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -96,7 +96,7 @@ class Foo
   end constructor
 
   function bar() returns (Float, Int)
-    return (0.0, 0)
+    return tuple(0.0, 0)
   end function
 end class`;
 
@@ -141,7 +141,7 @@ main
 end main
 
 function foo() returns (List<of Float>, Int)
-  return ({0.0}, 0)
+  return tuple({0.0}, 0)
 end function`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -171,7 +171,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to (3, "Apple", true, 1.1)
+  variable x set to tuple(3, "Apple", true, 1.1)
   print x
   let a, b, c, d be x
   print a
@@ -211,7 +211,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to (3, "Apple")
+  variable x set to tuple(3, "Apple")
   variable z set to ""
   set _, z to x
   print z
@@ -241,7 +241,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to (3, "Apple")
+  variable x set to tuple(3, "Apple")
   variable y set to 0
   set y, _ to x
   print y
@@ -271,7 +271,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to (3, "Apple", 4)
+  variable x set to tuple(3, "Apple", 4)
   variable z set to ""
   set _, z, _ to x
   print z
@@ -301,7 +301,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to (3, "Apple", 4)
+  variable x set to tuple(3, "Apple", 4)
   variable y set to 0
   set _, _, y to x
   print y
@@ -331,7 +331,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to (3, "Apple")
+  variable x set to tuple(3, "Apple")
   let y, z be x
   print y
   print z
@@ -361,7 +361,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to (3, "Apple")
+  variable x set to tuple(3, "Apple")
   let _, z be x
   print z
 end main
@@ -389,7 +389,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to (3, "Apple")
+  variable x set to tuple(3, "Apple")
   variable y, z set to x
   print y
   print z
@@ -419,7 +419,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to (3, "Apple")
+  variable x set to tuple(3, "Apple")
   variable _, z set to x
   print z
 end main
@@ -447,7 +447,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable t set to (3, 4, "Apple")
+  variable t set to tuple(3, 4, "Apple")
   variable x, _, z set to t
   print x
   print z
@@ -477,7 +477,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to (3, "Apple")
+  variable x set to tuple(3, "Apple")
   variable y, z set to x
   variable a set to 0
   variable b set to ""
@@ -516,7 +516,7 @@ return [main, _tests];}`;
 
 main
   variable a set to [1,2]
-  variable x set to (3, a)
+  variable x set to tuple(3, a)
   variable y, z set to x
   print y
   print z
@@ -548,7 +548,7 @@ return [main, _tests];}`;
 
 main
   variable a set to [1,2]
-  variable x set to (3, a)
+  variable x set to tuple(3, a)
   let y, z be x
   print y
   print z
@@ -580,7 +580,7 @@ return [main, _tests];}`;
 
 main
   variable a set to [1,2]
-  variable x set to (3, a)
+  variable x set to tuple(3, a)
   variable y set to 0
   variable z set to empty Array<of Int>
   set y, z to x
@@ -615,8 +615,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to (1,2)
-  variable x set to (3, a)
+  variable a set to tuple(1,2)
+  variable x set to tuple(3, a)
   variable y, z set to x
   print y
   print z
@@ -647,8 +647,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to (1,2)
-  variable x set to (3, a)
+  variable a set to tuple(1,2)
+  variable x set to tuple(3, a)
   let y, z be x
   print y
   print z
@@ -679,10 +679,10 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to (1, 2)
-  variable x set to (3, a)
+  variable a set to tuple(1, 2)
+  variable x set to tuple(3, a)
   variable y set to 0
-  variable z set to (0, 0)
+  variable z set to tuple(0, 0)
   set y, z to x
   print y
   print z
@@ -715,7 +715,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to (1, "string")
+  variable a set to tuple(1, "string")
   variable y, z set to a
   set y to y
   set z to z
@@ -745,7 +745,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to (3,"Apple")
+  variable x set to tuple(3,"Apple")
   variable y set to 0
   variable z set to ""
   set z, y to x
@@ -769,7 +769,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to (3,"Apple")
+  variable x set to tuple(3,"Apple")
   variable z set to ""
   set z, y to x
   print y
@@ -789,7 +789,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to (3,"Apple")
+  variable x set to tuple(3,"Apple")
   variable z set to 0
   variable z, y set to x
   print y
@@ -811,7 +811,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to (3, "Apple")
+  variable x set to tuple(3, "Apple")
   variable y set to ""
   set y, _ to x
   print y
@@ -830,7 +830,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to (3, "Apple")
+  variable x set to tuple(3, "Apple")
   let y be 0
   let z be ""
   set y, z to x

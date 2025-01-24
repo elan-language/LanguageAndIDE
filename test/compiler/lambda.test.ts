@@ -48,7 +48,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  call printModified((4, 5), lambda t as (Int, Int) => first(t))
+  call printModified(tuple(4, 5), lambda t as (Int, Int) => first(t))
 end main
 
 function first(t as (Int, Int)) returns Int

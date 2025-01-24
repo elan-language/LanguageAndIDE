@@ -76,8 +76,8 @@ main
 end main
 
 test square
-  variable t set to ("one", "two")
-  assert t is ("one", "two")
+  variable t set to tuple("one", "two")
+  assert t is tuple("one", "two")
 end test
 `;
 
@@ -111,8 +111,8 @@ main
 end main
 
 test square
-  let t be ("one", "two")
-  assert t is ("one", "two")
+  let t be tuple("one", "two")
+  assert t is tuple("one", "two")
 end test
 `;
 
@@ -146,8 +146,8 @@ main
 end main
 
 test square
-  let t1 be ("one", "two")
-  let t2 be ("one", "two")
+  let t1 be tuple("one", "two")
+  let t2 be tuple("one", "two")
   assert t1 is t2
 end test
 `;

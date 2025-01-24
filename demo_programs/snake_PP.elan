@@ -1,14 +1,14 @@
-# 58780d8dd7bc978820fba4f650d30e64544ce4eb0741ae41ddfeee189c76f710 Elan Beta 6 valid
+# FFFF Elan Beta 6 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
   variable gr set to new BlockGraphics()
-  variable head set to (20, 15)
+  variable head set to tuple(20, 15)
   variable tail set to head
   variable body set to [head]
   variable currentDir set to "right"
   variable gameOn set to true
-  variable apple set to (0, 0)
+  variable apple set to tuple(0, 0)
   call setAppleToRandomPosition(apple, body)
   while gameOn
     set gr to updateGraphics(gr, head, tail, body, apple)
@@ -26,7 +26,7 @@ end main
 
 procedure setAppleToRandomPosition(out apple as (Int, Int), body as Array<of (Int, Int)>)
   repeat
-    set apple to (randomInt(0, 39), randomInt(0, 29))
+    set apple to tuple(randomInt(0, 39), randomInt(0, 29))
   end repeat when not overlaps(body, apple)
 end procedure
 
@@ -68,7 +68,7 @@ function getAdjacentSquare(sq as (Int, Int), dir as String) returns (Int, Int)
   else if dir is "down" then
     set newY to newY + 1
   end if
-  return (newX, newY)
+  return tuple(newX, newY)
 end function
 
 function overlaps(body as Array<of (Int, Int)>, sq as (Int, Int)) returns Boolean
@@ -98,10 +98,10 @@ end function
 # 70 frames (excluding tests)
 test updateGraphics - one segment body
   variable gr set to new BlockGraphics()
-  let head be (20, 15)
-  let tail be (20, 15)
+  let head be tuple(20, 15)
+  let tail be tuple(20, 15)
   let body be [head]
-  let apple be (6, 7)
+  let apple be tuple(6, 7)
   set gr to updateGraphics(gr, head, tail, body, apple)
   # First check the default (by looking at top-left block)
   assert gr.getBackground(0, 0) is white
@@ -120,10 +120,10 @@ test updateGraphics - longer body
   # draw existing 2-seg snake
   set gr to gr.withBlock(30, 20, green).withBlock(30, 21, green).withBlock(30, 22, green)
   # define snake's new position
-  let head be (30, 23)
-  let tail be (30, 20)
-  let body be [(30, 21), (30, 22), head]
-  let apple be (0, 0)
+  let head be tuple(30, 23)
+  let tail be tuple(30, 20)
+  let body be [tuple(30, 21), tuple(30, 22), head]
+  let apple be tuple(0, 0)
   set gr to updateGraphics(gr, head, tail, body, apple)
   # test snake is just one block by checking all around
   assert gr.getBackground(30, 20) is white
@@ -133,24 +133,24 @@ test updateGraphics - longer body
 end test
 
 test hasHitEdge
-  assert hasHitEdge((0, 0)) is false
-  assert hasHitEdge((0, 29)) is false
-  assert hasHitEdge((39, 0)) is false
-  assert hasHitEdge((29, 29)) is false
-  assert hasHitEdge((-1, 5)) is true
-  assert hasHitEdge((5, 30)) is true
-  assert hasHitEdge((40, 5)) is true
-  assert hasHitEdge((5, -1)) is true
+  assert hasHitEdge(tuple(0, 0)) is false
+  assert hasHitEdge(tuple(0, 29)) is false
+  assert hasHitEdge(tuple(39, 0)) is false
+  assert hasHitEdge(tuple(29, 29)) is false
+  assert hasHitEdge(tuple(-1, 5)) is true
+  assert hasHitEdge(tuple(5, 30)) is true
+  assert hasHitEdge(tuple(40, 5)) is true
+  assert hasHitEdge(tuple(5, -1)) is true
 end test
 
 test getAdjacentSquare
-  let sq be (20, 15)
-  assert getAdjacentSquare(sq, "up") is (20, 14)
-  assert getAdjacentSquare(sq, "down") is (20, 16)
-  assert getAdjacentSquare(sq, "left") is (19, 15)
-  assert getAdjacentSquare(sq, "right") is (21, 15)
+  let sq be tuple(20, 15)
+  assert getAdjacentSquare(sq, "up") is tuple(20, 14)
+  assert getAdjacentSquare(sq, "down") is tuple(20, 16)
+  assert getAdjacentSquare(sq, "left") is tuple(19, 15)
+  assert getAdjacentSquare(sq, "right") is tuple(21, 15)
   # boundary
-  assert getAdjacentSquare((0, 15), "left") is (-1, 15)
+  assert getAdjacentSquare(tuple(0, 15), "left") is tuple(-1, 15)
 end test
 
 test directionByKey
@@ -165,11 +165,11 @@ test directionByKey
 end test
 
 test overlaps
-  let body be [(1, 2), (3, 4)]
-  assert overlaps(body, (1, 2)) is true
-  assert overlaps(body, (3, 4)) is true
-  assert overlaps(body, (1, 1)) is false
-  assert overlaps(body, (2, 1)) is false
+  let body be [tuple(1, 2), tuple(3, 4)]
+  assert overlaps(body, tuple(1, 2)) is true
+  assert overlaps(body, tuple(3, 4)) is true
+  assert overlaps(body, tuple(1, 1)) is false
+  assert overlaps(body, tuple(2, 1)) is false
 end test
 
 # Test coverage: 60% (42/70 frames)

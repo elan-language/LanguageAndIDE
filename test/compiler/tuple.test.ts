@@ -16,7 +16,7 @@ suite("Tuple", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-    variable x set to (3, "Apple")
+    variable x set to tuple(3, "Apple")
     print x
     let f, s be x
     print f
@@ -55,7 +55,7 @@ main
 end main
 
 function f() returns (String, String)
-   return ("1", "2")
+   return tuple("1", "2")
 end function`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -93,7 +93,7 @@ main
 end main
 
 function f() returns (String, String)
-   return ("1", "2")
+   return tuple("1", "2")
 end function`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -123,11 +123,11 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable t set to a.reduce((1, 1), lambda i as (Int, Int), j as (Int, Int) => j)
+  variable t set to a.reduce(tuple(1, 1), lambda i as (Int, Int), j as (Int, Int) => j)
   let fst, _ be t
   print fst
 end main
-constant a set to {(1,2)}`;
+constant a set to {tuple(1,2)}`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
@@ -156,7 +156,7 @@ return [main, _tests];}`;
 main
   variable x set to "one"
   variable y set to "two"
-  print f((x,y))
+  print f(tuple(x,y))
 end main
 
 function f(t as (String, String)) returns String
@@ -192,8 +192,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to (3,"Apple")
-  set x to (4,"Pear")
+  variable x set to tuple(3,"Apple")
+  set x to tuple(4,"Pear")
   print x
 end main
 `;
@@ -220,7 +220,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to (3,"Apple")
+  variable x set to tuple(3,"Apple")
   variable a, b, c set to x
   print c
 end main
@@ -238,7 +238,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to (3,"Apple")
+  variable x set to tuple(3,"Apple")
   variable y set to 4
   set _, y to x
   print y
@@ -272,8 +272,8 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to (3, "Apple")
-  set x to ("4", "Pear")
+  variable x set to tuple(3, "Apple")
+  set x to tuple("4", "Pear")
 end main
 `;
 
@@ -289,8 +289,8 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to (3, "Apple", 4)
-  set x to (4, "Pear")
+  variable x set to tuple(3, "Apple", 4)
+  set x to tuple(4, "Pear")
 end main
 `;
 
@@ -306,8 +306,8 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to (3, "Apple")
-  set x to (4, "Pear", 3)
+  variable x set to tuple(3, "Apple")
+  set x to tuple(4, "Pear", 3)
 end main
 `;
 

@@ -42,7 +42,7 @@ return [main, _tests];}`;
   test("Pass_Tuple", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
-constant k set to (3, "Apple")
+constant k set to tuple(3, "Apple")
 
 main 
   print k

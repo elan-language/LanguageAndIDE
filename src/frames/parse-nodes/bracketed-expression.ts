@@ -17,7 +17,6 @@ export class BracketedExpression extends AbstractSequence {
   parseText(text: string): void {
     if (text.length > 0) {
       this.addElement(new PunctuationNode(OPEN_BRACKET));
-      this.addElement(new SpaceNode(Space.ignored));
       this.expr = new ExprNode();
       this.addElement(this.expr);
       this.addElement(new SpaceNode(Space.ignored));

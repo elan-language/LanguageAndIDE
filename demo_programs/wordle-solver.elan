@@ -65,11 +65,11 @@ function evaluateGreens(attempt as String, target as String) returns List<of Str
 end function
 
 test evaluateGreens
-  assert evaluateGreens("ABCDE", "AXXXX") is ("*BCDE", ".XXXX")
-  assert evaluateGreens("ABCDE", "XXXXE") is ("ABCD*", "XXXX.")
-  assert evaluateGreens("ABCDE", "ABCDE") is ("*****", ".....")
-  assert evaluateGreens("AACDE", "AXXXX") is ("*ACDE", ".XXXX")
-  assert evaluateGreens("ABCDE", "AAXXX") is ("*BCDE", ".AXXX")
+  assert evaluateGreens("ABCDE", "AXXXX") is tuple("*BCDE", ".XXXX")
+  assert evaluateGreens("ABCDE", "XXXXE") is tuple("ABCD*", "XXXX.")
+  assert evaluateGreens("ABCDE", "ABCDE") is tuple("*****", ".....")
+  assert evaluateGreens("AACDE", "AXXXX") is tuple("*ACDE", ".XXXX")
+  assert evaluateGreens("ABCDE", "AAXXX") is tuple("*BCDE", ".AXXX")
 end test
 
 function isYellow(attempt as String, target as String, n as Int) returns Boolean
@@ -126,12 +126,12 @@ function evaluateYellows(attempt as String, target as String) returns List<of St
 end function
 
 test evaluateYellows
-  assert evaluateYellows("ABCDE", "XAXXX") is ("+____", "X.XXX")
-  assert evaluateYellows("ABCDE", "XXXXA") is ("+____", "XXXX.")
-  assert evaluateYellows("ABCDE", "XXXXE") is ("____+", "XXXX.")
-  assert evaluateYellows("ABCDE", "XAAXX") is ("+____", "X.AXX")
-  assert evaluateYellows("AACDE", "XAXXX") is ("+____", "X.XXX")
-  assert evaluateYellows("ABCDE", "BCDEA") is ("+++++", ".....")
+  assert evaluateYellows("ABCDE", "XAXXX") is tuple("+____", "X.XXX")
+  assert evaluateYellows("ABCDE", "XXXXA") is tuple("+____", "XXXX.")
+  assert evaluateYellows("ABCDE", "XXXXE") is tuple("____+", "XXXX.")
+  assert evaluateYellows("ABCDE", "XAAXX") is tuple("+____", "X.AXX")
+  assert evaluateYellows("AACDE", "XAXXX") is tuple("+____", "X.XXX")
+  assert evaluateYellows("ABCDE", "BCDEA") is tuple("+++++", ".....")
 end test
 
 function markAttempt(attempt as String, target as String) returns String

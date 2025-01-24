@@ -7,6 +7,7 @@ import {
   notKeyword,
   refKeyword,
   thisKeyword,
+  tupleKeyword,
 } from "../keywords";
 import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { AbstractAlternatives } from "./abstract-alternatives";
@@ -18,6 +19,7 @@ import { Lambda } from "./lambda";
 import { NewInstance } from "./new-instance";
 import { ParseNode } from "./parse-node";
 import { Term } from "./term";
+import { TupleNode } from "./tuple-node";
 
 export class ExprNode extends AbstractAlternatives {
   constructor() {
@@ -33,6 +35,7 @@ export class ExprNode extends AbstractAlternatives {
       this.alternatives.push(new IfExpr());
       this.alternatives.push(new Lambda());
       this.alternatives.push(new EmptyOfTypeNode());
+      this.alternatives.push(new TupleNode());
       //then others
       this.alternatives.push(new Term());
       this.alternatives.push(new BinaryExpression());
@@ -79,6 +82,7 @@ export class ExprNode extends AbstractAlternatives {
       refKeyword,
       notKeyword,
     ].map((kw) => KeywordCompletion.create(kw));
+    kws.push(KeywordCompletion.create(tupleKeyword, false, false, true));
     const trim = this.matchedText.trim();
     if (trim.length > 0) {
       kws = kws.filter((kw) => kw.keyword.startsWith(trim));

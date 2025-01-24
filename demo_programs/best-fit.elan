@@ -8,7 +8,7 @@ function bestFitLine(points as List<of Point>) returns (Float, Float)
   let n be points.length()
   let a be (sumY*sumXsq - sumX*sumXY)/(n*sumXsq - sumX*sumX)
   let b be (n*sumXY - sumX*sumY)/(n*sumXsq - sumX*sumX)
-  return (a, b)
+  return tuple(a, b)
 end function
 
 class Point
