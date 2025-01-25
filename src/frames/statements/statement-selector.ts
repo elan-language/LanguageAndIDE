@@ -73,9 +73,13 @@ export class StatementSelector extends AbstractSelector {
     if (keyword === elseKeyword) {
       result = parent.getIdPrefix() === ifKeyword;
     } else if (keyword === assertKeyword) {
-      return this.isWithinATest();
+      return this.isDirectlyWithinATest();
     } else if (keyword === printKeyword || keyword === callKeyword) {
-      result = !(this.isWithinAFunction() || this.isWithinATest() || this.isWithinAConstructor());
+      result = !(
+        this.isWithinAFunction() ||
+        this.isDirectlyWithinATest() ||
+        this.isWithinAConstructor()
+      );
     } else {
       result = true;
     }
@@ -86,8 +90,8 @@ export class StatementSelector extends AbstractSelector {
     return this.isWithinContext(this.getParent(), "func");
   }
 
-  private isWithinATest(): boolean {
-    return this.isWithinContext(this.getParent(), "test");
+  private isDirectlyWithinATest(): boolean {
+    return this.getParent().getIdPrefix() === "test";
   }
 
   private isWithinAConstructor(): boolean {
