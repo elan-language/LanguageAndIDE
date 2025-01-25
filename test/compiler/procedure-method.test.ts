@@ -34,13 +34,13 @@ class Foo
     end function
 end class`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var f = system.initialise(new Foo());
-  system.printLine(_stdlib.asString(f.p1));
+  let f = system.initialise(new Foo());
+  system.printLine(f.p1);
   await f.setP1(7);
-  system.printLine(_stdlib.asString(f.p1));
+  system.printLine(f.p1);
 }
 
 class Foo {
@@ -96,10 +96,10 @@ class Foo
 
 end class`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var f = system.initialise(new Foo());
+  let f = system.initialise(new Foo());
   await f.display();
 }
 
@@ -112,7 +112,7 @@ class Foo {
   p1 = 0;
 
   async display() {
-    system.printLine(_stdlib.asString(this.p1));
+    system.printLine(this.p1);
   }
 
   asString() {
@@ -181,12 +181,12 @@ class Bar
 
 end class`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var f = system.initialise(new Foo());
-  var b = system.initialise(new Bar());
-  var _b = [b];
+  let f = system.initialise(new Foo());
+  let b = system.initialise(new Bar());
+  let _b = [b];
   await f.times(_b);
   b = _b[0];
 }
@@ -203,7 +203,7 @@ class Foo {
     await b[0].p1PlusOne();
     await this.p1PlusOne();
     this.p1 = this.p1 + b[0].p1;
-    system.printLine(_stdlib.asString(this.p1));
+    system.printLine(this.p1);
   }
 
   async p1PlusOne() {

@@ -20,6 +20,7 @@ import { GlobalComment } from "./globals/global-comment";
 import { GlobalFunction } from "./globals/global-function";
 import { GlobalProcedure } from "./globals/global-procedure";
 import { GlobalSelector } from "./globals/global-selector";
+import { InterfaceFrame } from "./globals/interface-frame";
 import { MainFrame } from "./globals/main-frame";
 import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
@@ -58,17 +59,15 @@ import { DuplicateSymbol } from "./symbols/duplicate-symbol";
 import { elanSymbols } from "./symbols/elan-symbols";
 import { isSymbol, symbolMatches } from "./symbols/symbol-helpers";
 import { Transforms } from "./syntax-nodes/transforms";
-import { InterfaceFrame } from "./globals/interface-frame";
 
 // for web editor bundle
 export { CodeSourceFromString };
-
-//var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 
 export class FileImpl implements File, Scope {
   currentHash: string = "";
   isParent: boolean = true;
   hasFields: boolean = true;
+  hasTests: boolean = false;
   isFile: boolean = true;
   parseError?: string;
   readonly defaultFileName = "code.elan";
@@ -274,6 +273,8 @@ export class FileImpl implements File, Scope {
       }
 
       result = ss.join("\r\n");
+
+      this.hasTests = this._children.some((g) => g instanceof TestFrame);
     }
     return result;
   }
@@ -285,7 +286,7 @@ export class FileImpl implements File, Scope {
   }
 
   compile(): string {
-    const stdlib = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {`;
+    const stdlib = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {`;
     return `${stdlib}\n${this.compileGlobals()}return [main, _tests];}`;
   }
 
@@ -303,7 +304,7 @@ export class FileImpl implements File, Scope {
   }
 };`;
 
-    const stdlib = `import { StdLib } from "${base}/elan-api.js"; var system; var _stdlib; var _tests = []; async function program() { _stdlib = new StdLib(); system = _stdlib.system; system.stdlib = _stdlib  `;
+    const stdlib = `import { StdLib } from "${base}/elan-api.js"; let system; let _stdlib; let _tests = []; async function program() { _stdlib = new StdLib(); system = _stdlib.system; system.stdlib = _stdlib  `;
     return `${stdlib}\n${this.compileGlobals()}return [main, _tests];}\n${onmsg}`;
   }
 
@@ -321,7 +322,7 @@ export class FileImpl implements File, Scope {
   }
 };`;
 
-    const stdlib = `import { StdLib } from "${base}/elan-api.js"; var system; var _stdlib; var _tests = []; async function program() { _stdlib = new StdLib(); system = _stdlib.system; system.stdlib = _stdlib  `;
+    const stdlib = `import { StdLib } from "${base}/elan-api.js"; let system; let _stdlib; let _tests = []; async function program() { _stdlib = new StdLib(); system = _stdlib.system; system.stdlib = _stdlib  `;
     return `${stdlib}\n${this.compileGlobals()}return [main, _tests];}\n${onmsg}`;
   }
 
@@ -470,7 +471,7 @@ export class FileImpl implements File, Scope {
   }
 
   readTestStatus(): TestStatus {
-    return this._testStatus;
+    return this.hasTests ? this._testStatus : TestStatus.default;
   }
 
   getTestError(): Error | undefined {

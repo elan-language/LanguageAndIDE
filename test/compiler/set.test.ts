@@ -27,19 +27,19 @@ main
   print st
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var st = system.initialise(new _stdlib.Set());
+  let st = system.initialise(new _stdlib.Set());
   st = st.add(3).add(7).add(5);
-  system.printLine(_stdlib.asString(st.length()));
+  system.printLine(st.length());
   st = st.add(7);
-  system.printLine(_stdlib.asString(st.length()));
+  system.printLine(st.length());
   st = st.remove(3);
-  system.printLine(_stdlib.asString(st.length()));
+  system.printLine(st.length());
   st = st.remove(3);
-  system.printLine(_stdlib.asString(st.length()));
-  system.printLine(_stdlib.asString(st));
+  system.printLine(st.length());
+  system.printLine(st);
 }
 return [main, _tests];}`;
 
@@ -64,15 +64,15 @@ main
   print st3
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var st1 = system.initialise(new _stdlib.Set());
-  var st2 = system.initialise(new _stdlib.Set());
+  let st1 = system.initialise(new _stdlib.Set());
+  let st2 = system.initialise(new _stdlib.Set());
   st1 = st1.add(2).add(4).add(6);
   st2 = st2.add(1).add(4).add(9);
-  var st3 = st1.union(st2);
-  system.printLine(_stdlib.asString(st3));
+  let st3 = st1.union(st2);
+  system.printLine(st3);
 }
 return [main, _tests];}`;
 
@@ -96,15 +96,15 @@ main
   print st3
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var st1 = system.initialise(new _stdlib.Set());
-  var st2 = system.initialise(new _stdlib.Set());
+  let st1 = system.initialise(new _stdlib.Set());
+  let st2 = system.initialise(new _stdlib.Set());
   st1 = st1.add(2).add(4).add(6).add(3);
   st2 = st2.add(3).add(1).add(4).add(9);
-  var st3 = st1.intersection(st2);
-  system.printLine(_stdlib.asString(st3));
+  let st3 = st1.intersection(st2);
+  system.printLine(st3);
 }
 return [main, _tests];}`;
 
@@ -128,15 +128,15 @@ main
   print st3
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var st1 = system.initialise(new _stdlib.Set());
-  var st2 = system.initialise(new _stdlib.Set());
+  let st1 = system.initialise(new _stdlib.Set());
+  let st2 = system.initialise(new _stdlib.Set());
   st1 = st1.add(2).add(4).add(6).add(3);
   st2 = st2.add(3).add(1).add(4).add(9);
-  var st3 = st1.difference(st2);
-  system.printLine(_stdlib.asString(st3));
+  let st3 = st1.difference(st2);
+  system.printLine(st3);
 }
 return [main, _tests];}`;
 
@@ -161,16 +161,16 @@ main
   print st2.isDisjointFrom(st3)
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   const st0 = system.initialise(new _stdlib.Set());
   const st1 = st0.add(2).add(4).add(6).add(3);
   const st2 = st0.add(3).add(1).add(4).add(9);
   const st3 = st0.add(8).add(9);
-  system.printLine(_stdlib.asString(st1.isDisjointFrom(st2)));
-  system.printLine(_stdlib.asString(st1.isDisjointFrom(st3)));
-  system.printLine(_stdlib.asString(st2.isDisjointFrom(st3)));
+  system.printLine(st1.isDisjointFrom(st2));
+  system.printLine(st1.isDisjointFrom(st3));
+  system.printLine(st2.isDisjointFrom(st3));
 }
 return [main, _tests];}`;
 
@@ -198,19 +198,19 @@ main
   print st0.isSubsetOf(st3)
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   const st0 = system.initialise(new _stdlib.Set());
   const st1 = st0.add(2).add(4).add(6).add(3);
   const st2 = st0.add(4).add(6);
   const st3 = st0.add(4).add(6).add(1);
-  system.printLine(_stdlib.asString(st2.isSubsetOf(st1)));
-  system.printLine(_stdlib.asString(st2.isSupersetOf(st1)));
-  system.printLine(_stdlib.asString(st1.isSupersetOf(st2)));
-  system.printLine(_stdlib.asString(st1.isSupersetOf(st3)));
-  system.printLine(_stdlib.asString(st3.isSupersetOf(st0)));
-  system.printLine(_stdlib.asString(st0.isSubsetOf(st3)));
+  system.printLine(st2.isSubsetOf(st1));
+  system.printLine(st2.isSupersetOf(st1));
+  system.printLine(st1.isSupersetOf(st2));
+  system.printLine(st1.isSupersetOf(st3));
+  system.printLine(st3.isSupersetOf(st0));
+  system.printLine(st0.isSubsetOf(st3));
 }
 return [main, _tests];}`;
 
@@ -233,14 +233,14 @@ main
   print st2
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   const st0 = system.initialise(new _stdlib.Set());
   const st1 = st0.addFromList(system.list([2, 4, 6, 3]));
-  system.printLine(_stdlib.asString(st1));
+  system.printLine(st1);
   const st2 = st1.addFromList(system.list([2, 5, 6]));
-  system.printLine(_stdlib.asString(st2));
+  system.printLine(st2);
 }
 return [main, _tests];}`;
 
@@ -263,14 +263,14 @@ main
   print st2
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   const st0 = system.initialise(new _stdlib.Set());
   const st1 = st0.addFromArray(system.literalArray([2, 4, 6, 3]));
-  system.printLine(_stdlib.asString(st1));
+  system.printLine(st1);
   const st2 = st1.addFromArray(system.literalArray([2, 5, 6]));
-  system.printLine(_stdlib.asString(st2));
+  system.printLine(st2);
 }
 return [main, _tests];}`;
 

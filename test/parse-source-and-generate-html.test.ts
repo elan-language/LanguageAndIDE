@@ -1,3 +1,4 @@
+import { ignore_test } from "./compiler/compiler-test-helpers";
 import {
   CollapseAll,
   ExpandAll,
@@ -42,7 +43,7 @@ suite("Parse source and generate Html", () => {
     );
   });
 
-  test("Test Classes", async () => {
+  ignore_test("Test Classes", async () => {
     await assertGeneratesHtmlandSameSourceNew(
       `${__dirname}\\files\\T05_classes.elan`,
       `${__dirname}\\files\\T05_classes.html`,

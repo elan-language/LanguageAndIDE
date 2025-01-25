@@ -74,7 +74,13 @@ export class SymbolWrapper {
 
   get insertedText() {
     if (this.wrapped instanceof KeywordCompletion) {
-      const postfix = this.wrapped.dotAfter ? "." : this.wrapped.spaceAfter ? " " : "";
+      const postfix = this.wrapped.dotAfter
+        ? "."
+        : this.wrapped.spaceAfter
+          ? " "
+          : this.wrapped.openBracketAfter
+            ? "("
+            : "";
       return `${this.name}${postfix}`;
     }
 

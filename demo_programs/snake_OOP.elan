@@ -1,8 +1,6 @@
-# bae66f2b781144491ac1cd9e4ff92c91a8ce67818cc0534754104f4db52185b8 Elan Beta 6 valid
+# 34d6d6421a725f8734ea1b7b65e20a368ce4ba4058b6bf3a9edd1f151bb949de Elan Beta 6 valid
 
 # Use the W,A,S,D keys to change Snake direction
-constant delay set to 150
-
 main
   variable gr set to new BlockGraphics()
   variable snake set to new Snake()
@@ -12,7 +10,7 @@ main
     set gr to snake.updateGraphics(gr)
     set gr to apple.updateGraphics(gr)
     call gr.display()
-    call pause(delay)
+    call pause(150)
     call snake.clockTick(getKey(), apple)
   end while
   print "Game Over! Score: {snake.score()}"
@@ -88,10 +86,6 @@ class Snake
 end class
 
 class Apple
-  constructor()
-
-  end constructor
-
   property location as Square
 
   procedure newRandomPosition(snake as Snake)
@@ -195,4 +189,4 @@ test square
   assert gr.getBackground(3, 4) is blue
 end test
 
-# Testcoverage: 43% (40/94 frames)
+# Testcoverage: 45% (40/88 frames)

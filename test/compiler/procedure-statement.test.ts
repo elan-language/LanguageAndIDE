@@ -26,16 +26,16 @@ procedure foo()
   print 2
 end procedure`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(_stdlib.asString(1));
+  system.printLine(1);
   await foo();
-  system.printLine(_stdlib.asString(3));
+  system.printLine(3);
 }
 
 async function foo() {
-  system.printLine(_stdlib.asString(2));
+  system.printLine(2);
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -66,21 +66,21 @@ procedure foo(x as Array<of Int>, y as List<of Int>, z as Dictionary<of String, 
   print t
 end procedure`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.literalArray([1, 2]);
-  var b = system.list([3, 4]);
-  var c = system.dictionary({["a"] : _stdlib.true, ["b"] : _stdlib.false});
-  var d = system.dictionaryImmutable({["a"] : _stdlib.true, ["b"] : _stdlib.false});
+  let a = system.literalArray([1, 2]);
+  let b = system.list([3, 4]);
+  let c = system.dictionary({["a"] : _stdlib.true, ["b"] : _stdlib.false});
+  let d = system.dictionaryImmutable({["a"] : _stdlib.true, ["b"] : _stdlib.false});
   await foo(a, b, c, d);
 }
 
 async function foo(x, y, z, t) {
-  system.printLine(_stdlib.asString(x));
-  system.printLine(_stdlib.asString(y));
-  system.printLine(_stdlib.asString(z));
-  system.printLine(_stdlib.asString(t));
+  system.printLine(x);
+  system.printLine(y);
+  system.printLine(z);
+  system.printLine(t);
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -102,11 +102,11 @@ main
   print 1
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   await _stdlib.pause(1);
-  system.printLine(_stdlib.asString(1));
+  system.printLine(1);
 }
 return [main, _tests];}`;
 
@@ -133,17 +133,17 @@ procedure foo(a as Float, b as String)
   print b
 end procedure`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = 2;
-  var b = "hello";
+  let a = 2;
+  let b = "hello";
   await foo(a, b);
 }
 
 async function foo(a, b) {
-  system.printLine(_stdlib.asString(a));
-  system.printLine(_stdlib.asString(b));
+  system.printLine(a);
+  system.printLine(b);
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -170,14 +170,14 @@ procedure changeFirst(out a as Array<of Int>)
     call a.putAt(0, 5)
 end procedure`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.literalArray([2, 3]);
-  var _a = [a];
+  let a = system.literalArray([2, 3]);
+  let _a = [a];
   await changeFirst(_a);
   a = _a[0];
-  system.printLine(_stdlib.asString(a));
+  system.printLine(a);
 }
 
 async function changeFirst(a) {
@@ -208,16 +208,16 @@ procedure foo(a as Int, b as String)
   print b
 end procedure`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = 1;
+  let a = 1;
   await foo(a + 1, "hello");
 }
 
 async function foo(a, b) {
-  system.printLine(_stdlib.asString(a));
-  system.printLine(_stdlib.asString(b));
+  system.printLine(a);
+  system.printLine(b);
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -248,21 +248,21 @@ procedure bar()
   print 2
 end procedure`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   await foo();
-  system.printLine(_stdlib.asString(3));
+  system.printLine(3);
 }
 
 async function foo() {
-  system.printLine(_stdlib.asString(1));
+  system.printLine(1);
   await bar();
 }
 global["foo"] = foo;
 
 async function bar() {
-  system.printLine(_stdlib.asString(2));
+  system.printLine(2);
 }
 global["bar"] = bar;
 return [main, _tests];}`;
@@ -288,7 +288,7 @@ procedure square(x as Int)
   print x * x
 end procedure`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   await square(3);
@@ -296,7 +296,7 @@ async function main() {
 }
 
 async function square(x) {
-  system.printLine(_stdlib.asString(x * x));
+  system.printLine(x * x);
 }
 global["square"] = square;
 return [main, _tests];}`;
@@ -325,7 +325,7 @@ procedure foo(a as Int)
   end if
 end procedure`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   await foo(3);
@@ -333,8 +333,8 @@ async function main() {
 
 async function foo(a) {
   if (a > 0) {
-    system.printLine(_stdlib.asString(a));
-    var b = a - 1;
+    system.printLine(a);
+    let b = a - 1;
     await foo(b);
   }
 }
@@ -392,10 +392,10 @@ class Bar
 
 end class`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var f = system.initialise(new Foo());
+  let f = system.initialise(new Foo());
   await f.length();
 }
 
@@ -432,7 +432,7 @@ class Bar {
   p1 = 0;
 
   async length(plus) {
-    system.printLine(_stdlib.asString(this.p1 + plus));
+    system.printLine(this.p1 + plus);
   }
 
   asString() {
@@ -467,16 +467,16 @@ procedure foo(out x as Float, out y as String)
   set y to "goodbye"
 end procedure`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = 2;
-  var b = "hello";
-  var _a = [a]; var _b = [b];
+  let a = 2;
+  let b = "hello";
+  let _a = [a]; let _b = [b];
   await foo(_a, _b);
   a = _a[0]; b = _b[0];
-  system.printLine(_stdlib.asString(a));
-  system.printLine(_stdlib.asString(b));
+  system.printLine(a);
+  system.printLine(b);
 }
 
 async function foo(x, y) {
@@ -512,20 +512,20 @@ procedure foo(out x as Float, out y as Float)
   set y to c
 end procedure`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = 2;
-  var b = 3;
-  var _a = [a]; var _b = [b];
+  let a = 2;
+  let b = 3;
+  let _a = [a]; let _b = [b];
   await foo(_a, _b);
   a = _a[0]; b = _b[0];
-  system.printLine(_stdlib.asString(a));
-  system.printLine(_stdlib.asString(b));
+  system.printLine(a);
+  system.printLine(b);
 }
 
 async function foo(x, y) {
-  var c = x[0];
+  let c = x[0];
   x[0] = y[0];
   y[0] = c;
 }
@@ -562,27 +562,27 @@ procedure bar(out a as Float, out b as Float)
   set b to c
 end procedure`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = 2;
-  var b = 3;
-  var _a = [a]; var _b = [b];
+  let a = 2;
+  let b = 3;
+  let _a = [a]; let _b = [b];
   await foo(_a, _b);
   a = _a[0]; b = _b[0];
-  system.printLine(_stdlib.asString(a));
-  system.printLine(_stdlib.asString(b));
+  system.printLine(a);
+  system.printLine(b);
 }
 
 async function foo(a, b) {
-  var _a = [a[0]]; var _b = [b[0]];
+  let _a = [a[0]]; let _b = [b[0]];
   await bar(_a, _b);
   a[0] = _a[0]; b[0] = _b[0];
 }
 global["foo"] = foo;
 
 async function bar(a, b) {
-  var c = a[0];
+  let c = a[0];
   a[0] = b[0];
   b[0] = c;
 }
@@ -621,19 +621,19 @@ class Foo
   end procedure
 end class`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.initialise(new Foo());
-  var b = 0;
-  var _a = [a]; var _b = [b];
+  let a = system.initialise(new Foo());
+  let b = 0;
+  let _a = [a]; let _b = [b];
   await foo(_a, _b);
   a = _a[0]; b = _b[0];
-  system.printLine(_stdlib.asString(b));
+  system.printLine(b);
 }
 
 async function foo(f, y) {
-  var _y = [y[0]];
+  let _y = [y[0]];
   await f[0].bar(_y);
   y[0] = _y[0];
 }
@@ -683,15 +683,15 @@ class Foo
   property ff as Int
 end class`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.initialise(new Foo());
-  var b = 100;
-  var _a = [a]; var _b = [b];
+  let a = system.initialise(new Foo());
+  let b = 100;
+  let _a = [a]; let _b = [b];
   await foo(_a, _b);
   a = _a[0]; b = _b[0];
-  system.printLine(_stdlib.asString(b));
+  system.printLine(b);
 }
 
 async function foo(f, y) {
@@ -1292,5 +1292,26 @@ end procedure`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Cannot pass 'f[0]' as an out parameter"]);
+  });
+
+  test("Fail_IncorrectScope", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable f set to new Foo()
+  call f.bar()
+end main
+
+class Foo
+end class
+
+procedure bar()
+end procedure`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'bar' is not defined for type 'Foo'"]);
   });
 });

@@ -23,14 +23,14 @@ main
   print x
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = 0;
+  let x = 0;
   while (x < 10) {
     x = x + 1;
   }
-  system.printLine(_stdlib.asString(x));
+  system.printLine(x);
 }
 return [main, _tests];}`;
 
@@ -60,20 +60,20 @@ main
   print t
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var t = 0;
-  var x = 0;
+  let t = 0;
+  let x = 0;
   while (x < 3) {
-    var y = 0;
+    let y = 0;
     while (y < 4) {
       y = y + 1;
       t = t + 1;
     }
     x = x + 1;
   }
-  system.printLine(_stdlib.asString(t));
+  system.printLine(t);
 }
 return [main, _tests];}`;
 
@@ -90,7 +90,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var x = 0
+  let x = 0
   while x < 10
     set x to x + 1
  end main
@@ -123,7 +123,7 @@ main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  while var x < 10
+  while variable x < 10
     set x to x + 1
   end while
  end main
@@ -184,5 +184,21 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["Expression must be Boolean"]);
+  });
+
+  test("Fail_WhileConditionUnknown", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  while a
+    print a
+  end while
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'a' is not defined"]);
   });
 });

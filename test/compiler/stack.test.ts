@@ -29,20 +29,20 @@ main
   print st.length()
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   const st = system.initialise(new _stdlib.Stack());
-  system.printLine(_stdlib.asString(st.length()));
+  system.printLine(st.length());
   st.push("apple");
   st.push("pear");
-  system.printLine(_stdlib.asString(st.length()));
-  system.printLine(_stdlib.asString(st.peek()));
-  var fruit = st.pop();
-  system.printLine(_stdlib.asString(fruit));
+  system.printLine(st.length());
+  system.printLine(st.peek());
+  let fruit = st.pop();
+  system.printLine(fruit);
   fruit = st.pop();
-  system.printLine(_stdlib.asString(fruit));
-  system.printLine(_stdlib.asString(st.length()));
+  system.printLine(fruit);
+  system.printLine(st.length());
 }
 return [main, _tests];}`;
 
@@ -114,11 +114,11 @@ main
   print st.peek()
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   const st = system.initialise(new _stdlib.Stack());
-  system.printLine(_stdlib.asString(st.peek()));
+  system.printLine(st.peek());
 }
 return [main, _tests];}`;
 
@@ -139,11 +139,11 @@ main
   print st.pop()
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   const st = system.initialise(new _stdlib.Stack());
-  system.printLine(_stdlib.asString(st.pop()));
+  system.printLine(st.pop());
 }
 return [main, _tests];}`;
 

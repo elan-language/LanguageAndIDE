@@ -25,16 +25,16 @@ procedure printEach(target as Iterable<of Float>)
   end each
 end procedure`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var it = system.list([1, 5, 6]);
+  let it = system.list([1, 5, 6]);
   await printEach(it);
 }
 
 async function printEach(target) {
   for (const x of target) {
-    system.printLine(_stdlib.asString(x));
+    system.printLine(x);
   }
 }
 global["printEach"] = printEach;
@@ -61,11 +61,11 @@ function printEach(target as Iterable<of String>) returns Iterable<of String>
   return target
 end function`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var it = system.list(["one", "two"]);
-  system.printLine(_stdlib.asString(printEach(it)));
+  let it = system.list(["one", "two"]);
+  system.printLine(printEach(it));
 }
 
 function printEach(target) {
@@ -97,13 +97,13 @@ function printEach(target as Iterable<of String>) returns Iterable<of String>
   return target
 end function`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var lst = system.list(["one", "two"]);
-  var it = printEach(lst);
+  let lst = system.list(["one", "two"]);
+  let it = printEach(lst);
   lst = _stdlib.asList(it);
-  system.printLine(_stdlib.asString(lst));
+  system.printLine(lst);
 }
 
 function printEach(target) {
@@ -135,16 +135,16 @@ procedure printEach(target as Iterable<of Int>)
   end each
 end procedure`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var arr = system.literalArray([1, 3, 6]);
+  let arr = system.literalArray([1, 3, 6]);
   await printEach(arr);
 }
 
 async function printEach(target) {
   for (const x of target) {
-    system.printLine(_stdlib.asString(x));
+    system.printLine(x);
   }
 }
 global["printEach"] = printEach;
@@ -173,16 +173,16 @@ procedure printEach(target as Iterable<of String>)
   end each
 end procedure`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var s = "Foo";
+  let s = "Foo";
   await printEach(s);
 }
 
 async function printEach(target) {
   for (const x of target) {
-    system.printLine(_stdlib.asString(x));
+    system.printLine(x);
   }
 }
 global["printEach"] = printEach;
@@ -215,22 +215,22 @@ procedure printasList(target as Iterable<of Float>)
   print some[3..7]
 end procedure`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var it = system.list([1, 2, 3, 4, 5, 6, 7]);
+  let it = system.list([1, 2, 3, 4, 5, 6, 7]);
   await printAsIterable(it);
   await printasList(it);
 }
 
 async function printAsIterable(target) {
-  system.printLine(_stdlib.asString(target));
+  system.printLine(target);
 }
 global["printAsIterable"] = printAsIterable;
 
 async function printasList(target) {
-  var some = _stdlib.asList(target);
-  system.printLine(_stdlib.asString(system.list(some.slice(3, 7))));
+  let some = _stdlib.asList(target);
+  system.printLine(system.list(some.slice(3, 7)));
 }
 global["printasList"] = printasList;
 return [main, _tests];}`;
@@ -263,11 +263,11 @@ class Foo
   end function
 end class`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var f = system.initialise(new Foo());
-  system.printLine(_stdlib.asString(f.it));
+  let f = system.initialise(new Foo());
+  system.printLine(f.it);
 }
 
 class Foo {
@@ -320,17 +320,17 @@ class Foo
   end procedure
 end class`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var foo = system.initialise(new Foo());
-  var foo1 = system.initialise(new Foo());
+  let foo = system.initialise(new Foo());
+  let foo1 = system.initialise(new Foo());
   await foo.update();
-  system.printLine(_stdlib.asString(foo.i));
-  system.printLine(_stdlib.asString(foo1.i));
-  system.printLine(_stdlib.asString(system.objectEquals(foo.i, foo1.i)));
-  system.printLine(_stdlib.asString(system.objectEquals(foo.i, system.emptyIter())));
-  system.printLine(_stdlib.asString(system.objectEquals(foo1.i, system.emptyIter())));
+  system.printLine(foo.i);
+  system.printLine(foo1.i);
+  system.printLine(system.objectEquals(foo.i, foo1.i));
+  system.printLine(system.objectEquals(foo.i, system.emptyIter()));
+  system.printLine(system.objectEquals(foo1.i, system.emptyIter()));
 }
 
 class Foo {

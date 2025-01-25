@@ -37,11 +37,11 @@ class Foo
 
 end class`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var f = system.initialise(new Foo());
-  system.printLine(_stdlib.asString(f.times(2)));
+  let f = system.initialise(new Foo());
+  system.printLine(f.times(2));
 }
 
 class Foo {
@@ -99,13 +99,13 @@ class Foo
 
 end class`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var f = system.initialise(new Foo());
-  var x = 1.1;
+  let f = system.initialise(new Foo());
+  let x = 1.1;
   x = f.times(x);
-  system.printLine(_stdlib.asString(x));
+  system.printLine(x);
 }
 
 class Foo {
@@ -163,13 +163,13 @@ class Foo
 
 end class`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var f = system.initialise(new Foo());
-  var x = system.emptyImmutableList();
+  let f = system.initialise(new Foo());
+  let x = system.emptyImmutableList();
   x = f.times(2);
-  system.printLine(_stdlib.asString(x));
+  system.printLine(x);
 }
 
 class Foo {
@@ -237,12 +237,12 @@ class Foo
 
 end class`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var b = system.initialise(new Bar());
-  var x = b.getTimes();
-  system.printLine(_stdlib.asString(x));
+  let b = system.initialise(new Bar());
+  let x = b.getTimes();
+  system.printLine(x);
 }
 
 class Bar {
@@ -260,7 +260,7 @@ class Bar {
   }
 
   getTimes() {
-    var x = system.emptyImmutableList();
+    let x = system.emptyImmutableList();
     x = this.p1.times(2);
     return x;
   }
@@ -333,12 +333,12 @@ class Qux
   end constructor
 end class`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var b = system.initialise(new Bar());
-  var x = b.getTimes();
-  system.printLine(_stdlib.asString(x));
+  let b = system.initialise(new Bar());
+  let x = b.getTimes();
+  system.printLine(x);
 }
 
 class Bar {
@@ -356,7 +356,7 @@ class Bar {
   }
 
   getTimes() {
-    var x = system.emptyImmutableList();
+    let x = system.emptyImmutableList();
     x = this.p1.times(2);
     return x;
   }
@@ -437,11 +437,11 @@ class Bar
 
 end class`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var f = system.initialise(new Foo());
-  system.printLine(_stdlib.asString(f.length()));
+  let f = system.initialise(new Foo());
+  system.printLine(f.length());
 }
 
 class Foo {
@@ -543,12 +543,12 @@ class Bar
 
 end class`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var f = system.initialise(new Foo());
-  var b = system.initialise(new Bar());
-  system.printLine(_stdlib.asString(f.times(b)));
+  let f = system.initialise(new Foo());
+  let b = system.initialise(new Bar());
+  system.printLine(f.times(b));
 }
 
 class Foo {
@@ -626,10 +626,10 @@ class Foo
 
 end class`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var f = system.initialise(new Foo());
+  let f = system.initialise(new Foo());
   await f.prt();
 }
 
@@ -642,7 +642,7 @@ class Foo {
   p1 = 0;
 
   async prt() {
-    system.printLine(_stdlib.asString(this.asString()));
+    system.printLine(this.asString());
   }
 
   asString() {
@@ -959,5 +959,27 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["May not set property: p1 in a function"]);
+  });
+
+  test("Fail_IncorrectScope", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable f set to new Foo()
+  print f.bar()
+end main
+
+class Foo
+end class
+
+function bar() returns Int
+  return 0
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'bar' is not defined for type 'Foo'"]);
   });
 });

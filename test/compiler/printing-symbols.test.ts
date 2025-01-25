@@ -17,10 +17,10 @@ main
   print 
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(_stdlib.asString(""));
+  system.printLine("");
 }
 return [main, _tests];}`;
 
@@ -39,10 +39,10 @@ main
   print "¬!£$%^&*()@~#|<>'"
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(_stdlib.asString("¬!£$%^&*()@~#|<>'"));
+  system.printLine("¬!£$%^&*()@~#|<>'");
 }
 return [main, _tests];}`;
 
@@ -61,7 +61,7 @@ main
   call printTab(5, "Foo")
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   _stdlib.printTab(5, "Foo");

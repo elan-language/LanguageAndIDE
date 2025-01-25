@@ -86,7 +86,7 @@ export class CatchStatement extends AbstractFrame implements Statement, ElanSymb
     this.compileErrors = [];
     const vid = this.variable.compile(transforms);
     return `${this.parentIndent()}} catch (_${vid}) {\r
-${this.indent()}  var ${vid} = _${vid}.message;\r`;
+${this.indent()}  let ${vid} = _${vid}.message;\r`;
   }
 
   resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {

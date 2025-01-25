@@ -1,7 +1,7 @@
 import { DefaultProfile } from "../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../src/frames/file-impl";
 import { ignore_test, testHash, transforms } from "./compiler/compiler-test-helpers";
-import { assertAutocompletes, assertAutocompletesWithString } from "./testHelpers";
+import { assertAutocompletes, assertSymbolCompletionWithString } from "./testHelpers";
 
 suite("SymbolCompletionDropDown", () => {
   test("Pass_LocalVars", async () => {
@@ -42,7 +42,7 @@ end main`;
       ["foobar", "foobar", "foobar"],
     ] as [string, string, string][];
 
-    await assertAutocompletesWithString(fileImpl, "ident10", " ", expected);
+    await assertSymbolCompletionWithString(fileImpl, "ident10", " ", expected);
   });
 
   test("Pass_Let", async () => {
@@ -61,7 +61,7 @@ end main`;
       ["openFileForReading", "openFileForReading", "openFileForReading("],
     ] as [string, string, string][];
 
-    await assertAutocompletesWithString(fileImpl, "expr5", "fo", expected);
+    await assertSymbolCompletionWithString(fileImpl, "expr5", "fo", expected);
   });
 
   test("Pass_keyword", async () => {
@@ -79,7 +79,7 @@ end main`;
       ["bitNot", "bitNot", "bitNot("],
     ] as [string, string, string][];
 
-    await assertAutocompletesWithString(fileImpl, "expr5", "no", expected);
+    await assertSymbolCompletionWithString(fileImpl, "expr5", "no", expected);
   });
 
   test("Pass_Keywords", async () => {
@@ -114,7 +114,7 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    await assertAutocompletesWithString(fileImpl, "expr5", " ", 70);
+    await assertSymbolCompletionWithString(fileImpl, "expr5", " ", 71);
   });
 
   test("Pass_LocalVarsCaseInsensitive1", async () => {
@@ -202,7 +202,7 @@ end class`;
       ["aa3", "property.aa3", "property.aa3"],
     ] as [string, string, string][];
 
-    await assertAutocompletesWithString(fileImpl, "ident9", "a", expected);
+    await assertSymbolCompletionWithString(fileImpl, "ident9", "a", expected);
   });
 
   test("Pass_InProcedure", async () => {
@@ -230,7 +230,7 @@ end class`;
       ["aa3", "property.aa3", "property.aa3"],
     ] as [string, string, string][];
 
-    await assertAutocompletesWithString(fileImpl, "ident16", "a", expected);
+    await assertSymbolCompletionWithString(fileImpl, "ident16", "a", expected);
   });
 
   test("Pass_InProcedureParameter", async () => {
@@ -258,7 +258,7 @@ end class`;
       ["aa3", "property.aa3", "property.aa3"],
     ] as [string, string, string][];
 
-    await assertAutocompletesWithString(fileImpl, "ident16", "a", expected);
+    await assertSymbolCompletionWithString(fileImpl, "ident16", "a", expected);
   });
 
   test("Pass_InProcedureOutParameter", async () => {
@@ -287,7 +287,7 @@ end class`;
       ["aa4", "aa4", "aa4"],
     ] as [string, string, string][];
 
-    await assertAutocompletesWithString(fileImpl, "ident16", "a", expected);
+    await assertSymbolCompletionWithString(fileImpl, "ident16", "a", expected);
   });
 
   test("Pass_FiltersByInput", async () => {
@@ -341,7 +341,7 @@ end main`;
 
     const expected = [["white", "white", "white"]] as [string, string, string][];
 
-    await assertAutocompletesWithString(fileImpl, "expr5", "wh", expected);
+    await assertSymbolCompletionWithString(fileImpl, "expr5", "wh", expected);
   });
 
   test("Pass_CallLocalVars", async () => {
@@ -482,10 +482,10 @@ end main`;
 
     const expected = [
       ["append", "*", "*"],
-      ["appendList", "*", "*"],
+      ["appendArray", "*", "*"],
       ["insertAt", "*", "*"],
       ["prepend", "*", "*"],
-      ["prependList", "*", "*"],
+      ["prependArray", "*", "*"],
       ["putAt", "*", "*"],
       ["removeAll", "*", "*"],
       ["removeAt", "*", "*"],
@@ -508,7 +508,7 @@ end main`;
 
     const expected = [
       ["append", "*", "*"],
-      ["appendList", "*", "*"],
+      ["appendArray", "*", "*"],
     ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "ident7", "p", 5, expected);
@@ -792,8 +792,8 @@ end class`;
     const expected = [
       ["property", "*", "*"],
       ["p", "*", "*"],
-      ["foo", "*", "*"],
       ["b", "*", "*"],
+      ["foo", "*", "*"],
     ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "ident24", "p", 0, expected, true);
@@ -827,8 +827,8 @@ end class`;
 
     const expected = [
       ["property", "*", "*"],
-      ["foo", "*", "*"],
       ["b", "*", "*"],
+      ["foo", "*", "*"],
     ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "ident24", "r", 1, expected);
@@ -861,7 +861,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [["foo", "*", "*"]] as [string, string, string][];
-    await assertAutocompletesWithString(fileImpl, "ident24", "property.f", expected);
+    await assertSymbolCompletionWithString(fileImpl, "ident24", "property.f", expected);
   });
 
   test("Pass_properties6", async () => {
@@ -954,7 +954,7 @@ end class`;
 
     const expected = [["pp2", "*", "*"]] as [string, string, string][];
 
-    await assertAutocompletesWithString(fileImpl, "ident7", "foo.p", expected);
+    await assertSymbolCompletionWithString(fileImpl, "ident7", "foo.p", expected);
   });
 
   test("Pass_private2", async () => {
@@ -985,7 +985,7 @@ end class`;
       ["pp2", "*", "*"],
     ] as [string, string, string][];
 
-    await assertAutocompletesWithString(fileImpl, "ident19", "pp", expected);
+    await assertSymbolCompletionWithString(fileImpl, "ident19", "pp", expected);
   });
 
   test("Pass_assert", async () => {
@@ -1018,7 +1018,7 @@ end test`;
       ["ff", "*", "*"],
     ] as [string, string, string][];
 
-    await assertAutocompletesWithString(fileImpl, "text24", "gr.", expected);
+    await assertSymbolCompletionWithString(fileImpl, "text24", "gr.", expected);
   });
 
   test("Pass_typeName1", async () => {
@@ -1041,7 +1041,7 @@ end function`;
       ["String", "*", "*"],
     ] as [string, string, string][];
 
-    await assertAutocompletesWithString(fileImpl, "params6", "a as S", expected);
+    await assertSymbolCompletionWithString(fileImpl, "params6", "a as S", expected);
   });
 
   test("Pass_typeName2", async () => {
@@ -1064,7 +1064,7 @@ end function`;
       ["DictionaryImmutable", "*", "*"],
     ] as [string, string, string][];
 
-    await assertAutocompletesWithString(fileImpl, "params6", "a as I", expected);
+    await assertSymbolCompletionWithString(fileImpl, "params6", "a as I", expected);
   });
 
   test("Pass_type_dictionaryImmutable", async () => {
@@ -1088,7 +1088,7 @@ end function`;
       ["GraphicsBase", "*", "*"],
     ] as [string, string, string][];
 
-    await assertAutocompletesWithString(
+    await assertSymbolCompletionWithString(
       fileImpl,
       "params6",
       "a as Dictionary<of Float, B",
@@ -1117,7 +1117,7 @@ end function`;
       ["GraphicsBase", "*", "*"],
     ] as [string, string, string][];
 
-    await assertAutocompletesWithString(fileImpl, "params6", "a as Int, b as B", expected);
+    await assertSymbolCompletionWithString(fileImpl, "params6", "a as Int, b as B", expected);
   });
 
   test("Pass_typeName6", async () => {
@@ -1140,7 +1140,7 @@ end function`;
       ["DictionaryImmutable", "*", "*"],
     ] as [string, string, string][];
 
-    await assertAutocompletesWithString(fileImpl, "params6", "a as Set<of I", expected);
+    await assertSymbolCompletionWithString(fileImpl, "params6", "a as Set<of I", expected);
   });
 
   test("Pass_typeName7", async () => {
@@ -1163,7 +1163,7 @@ end function`;
       ["VectorGraphics", "*", "*"],
     ] as [string, string, string][];
 
-    await assertAutocompletesWithString(fileImpl, "params6", "a as Graphics", expected);
+    await assertSymbolCompletionWithString(fileImpl, "params6", "a as Graphics", expected);
   });
 
   test("Pass_returnType1", async () => {
@@ -1182,7 +1182,7 @@ end function`;
       ["String", "*", "*"],
     ] as [string, string, string][];
 
-    await assertAutocompletesWithString(fileImpl, "type5", "S", expected);
+    await assertSymbolCompletionWithString(fileImpl, "type5", "S", expected);
   });
 
   test("Pass_returnType2", async () => {
@@ -1201,7 +1201,7 @@ end function`;
       ["VectorGraphics", "*", "*"],
     ] as [string, string, string][];
 
-    await assertAutocompletesWithString(fileImpl, "type5", "Graphics", expected);
+    await assertSymbolCompletionWithString(fileImpl, "type5", "Graphics", expected);
   });
 
   test("Pass_functionResult", async () => {
@@ -1241,7 +1241,7 @@ end class`;
       ["f3", "*", "*"],
     ] as [string, string, string][];
 
-    await assertAutocompletesWithString(fileImpl, "expr5", "foo().", expected);
+    await assertSymbolCompletionWithString(fileImpl, "expr5", "foo().", expected);
   });
 
   test("Pass_functionResultWithParams", async () => {
@@ -1281,7 +1281,7 @@ end class`;
       ["f3", "*", "*"],
     ] as [string, string, string][];
 
-    await assertAutocompletesWithString(fileImpl, "expr5", "foo(1).", expected);
+    await assertSymbolCompletionWithString(fileImpl, "expr5", "foo(1).", expected);
   });
 
   test("Pass_complexExpression1", async () => {
@@ -1300,7 +1300,7 @@ end main`;
       ["false", "*", "*"],
     ] as [string, string, string][];
 
-    await assertAutocompletesWithString(fileImpl, "expr8", "abs(al", expected);
+    await assertSymbolCompletionWithString(fileImpl, "expr8", "abs(al", expected);
   });
 
   test("Pass_with1", async () => {
@@ -1308,7 +1308,7 @@ end main`;
 
     main
       variable a set to new Foo()
-      variable b set to copy a with a to 2
+      variable b set to copy a with a set to 2
     end main
     
     record Foo
@@ -1320,7 +1320,7 @@ end main`;
 
     const expected = [["a", "*", "*"]] as [string, string, string][];
 
-    await assertAutocompletesWithString(fileImpl, "expr8", "copy a with ", expected);
+    await assertSymbolCompletionWithString(fileImpl, "expr8", "copy a with ", expected);
   });
 
   test("Pass_withIgnoreKeyword1", async () => {
@@ -1328,7 +1328,7 @@ end main`;
 
     main
       variable a set to new Foo()
-      variable b set to copy a with a to 2
+      variable b set to copy a with a set to 2
     end main
     
     record Foo
@@ -1340,7 +1340,7 @@ end main`;
 
     const expected = [["with", "*", "*"]] as [string, string, string][];
 
-    await assertAutocompletesWithString(fileImpl, "expr8", "copy a ", expected);
+    await assertSymbolCompletionWithString(fileImpl, "expr8", "copy a ", expected);
   });
 
   test("Pass_withIgnoreKeyword2", async () => {
@@ -1348,7 +1348,7 @@ end main`;
 
     main
       variable a set to new Foo()
-      variable b set to copy a with a to 2
+      variable b set to copy a with a set to 2
     end main
     
     record Foo
@@ -1360,7 +1360,7 @@ end main`;
 
     const expected = [["with", "*", "*"]] as [string, string, string][];
 
-    await assertAutocompletesWithString(fileImpl, "expr8", "copy a w", expected);
+    await assertSymbolCompletionWithString(fileImpl, "expr8", "copy a w", expected);
   });
 
   test("Pass_withIgnoreKeyword3", async () => {
@@ -1368,7 +1368,7 @@ end main`;
 
     main
       variable a set to new Foo()
-      variable b set to copy a with a to 2
+      variable b set to copy a with a set to 2
     end main
     
     record Foo
@@ -1380,7 +1380,7 @@ end main`;
 
     const expected = [["to", "*", "*"]] as [string, string, string][];
 
-    await assertAutocompletesWithString(fileImpl, "expr8", "copy a with a ", expected);
+    await assertSymbolCompletionWithString(fileImpl, "expr8", "copy a with a set ", expected);
   });
 
   test("Pass_with2", async () => {
@@ -1388,7 +1388,7 @@ end main`;
 
     main
       variable a set to new Foo()
-      variable b set to copy a with a to 2
+      variable b set to copy a with a set to 2
     end main
     
     record Foo
@@ -1404,7 +1404,7 @@ end main`;
       ["ab", "*", "*"],
     ] as [string, string, string][];
 
-    await assertAutocompletesWithString(fileImpl, "expr8", "copy a with a", expected);
+    await assertSymbolCompletionWithString(fileImpl, "expr8", "copy a with a", expected);
   });
 
   test("Pass_with3", async () => {
@@ -1412,7 +1412,7 @@ end main`;
 
     main
       variable a set to new Foo()
-      variable b set to copy a with a to 2
+      variable b set to copy a with a set to 2
     end main
     
     record Foo
@@ -1428,14 +1428,19 @@ end main`;
       ["ab", "*", "*"],
     ] as [string, string, string][];
 
-    await assertAutocompletesWithString(fileImpl, "expr8", "copy a with aa to 0, a", expected);
+    await assertSymbolCompletionWithString(
+      fileImpl,
+      "expr8",
+      "copy a with aa set to 0, a",
+      expected,
+    );
   });
 
   test("Pass_newWith1", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
     main
-      variable a set to new Foo() with a to 2
+      variable a set to new Foo() with a set to 2
     end main
     
     record Foo
@@ -1447,14 +1452,14 @@ end main`;
 
     const expected = [["a", "*", "*"]] as [string, string, string][];
 
-    await assertAutocompletesWithString(fileImpl, "expr5", "new Foo() with ", expected);
+    await assertSymbolCompletionWithString(fileImpl, "expr5", "new Foo() with ", expected);
   });
 
   test("Pass_newWith2", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
     main
-      variable a set to new Foo() with a to 2
+      variable a set to new Foo() with a set to 2
     end main
     
     record Foo
@@ -1470,14 +1475,14 @@ end main`;
       ["ab", "*", "*"],
     ] as [string, string, string][];
 
-    await assertAutocompletesWithString(fileImpl, "expr5", "new Foo() with a", expected);
+    await assertSymbolCompletionWithString(fileImpl, "expr5", "new Foo() with a", expected);
   });
 
   test("Pass_newWith3", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
     main
-      variable a set to new Foo() with a to 2
+      variable a set to new Foo() with a set to 2
     end main
     
     record Foo
@@ -1493,7 +1498,12 @@ end main`;
       ["ab", "*", "*"],
     ] as [string, string, string][];
 
-    await assertAutocompletesWithString(fileImpl, "expr5", "new Foo() with aa to 0, a", expected);
+    await assertSymbolCompletionWithString(
+      fileImpl,
+      "expr5",
+      "new Foo() with aa set to 2, a",
+      expected,
+    );
   });
 
   test("Pass_libExtension1", async () => {
@@ -1513,7 +1523,7 @@ end main`;
       ["display", "*", "*"],
     ] as [string, string, string][];
 
-    await assertAutocompletesWithString(fileImpl, "ident7", "foo.", expected);
+    await assertSymbolCompletionWithString(fileImpl, "ident7", "foo.", expected);
   });
 
   test("Pass_libExtension2", async () => {
@@ -1539,7 +1549,7 @@ end main`;
       ["withUnicode", "*", "*"],
     ] as [string, string, string][];
 
-    await assertAutocompletesWithString(fileImpl, "expr8", "foo.", expected);
+    await assertSymbolCompletionWithString(fileImpl, "expr8", "foo.", expected);
   });
 
   test("Pass_newType1", async () => {
@@ -1557,7 +1567,7 @@ end main`;
       ["Boolean", "*", "*"],
     ] as [string, string, string][];
 
-    await assertAutocompletesWithString(fileImpl, "expr5", "new B", expected);
+    await assertSymbolCompletionWithString(fileImpl, "expr5", "new B", expected);
   });
 
   test("Pass_newType2", async () => {
@@ -1595,7 +1605,7 @@ end main`;
       ["VectorGraphics", "*", "*"],
     ] as [string, string, string][];
 
-    await assertAutocompletesWithString(fileImpl, "expr5", "new ", expected);
+    await assertSymbolCompletionWithString(fileImpl, "expr5", "new ", expected);
   });
 
   test("Pass_Deconstruction1", async () => {
@@ -1616,7 +1626,7 @@ end main`;
       ["ac", "ac", "ac"],
     ] as [string, string, string][];
 
-    await assertAutocompletesWithString(fileImpl, "ident10", "a", expected);
+    await assertSymbolCompletionWithString(fileImpl, "ident10", "a", expected);
   });
 
   test("Pass_Deconstruction2", async () => {
@@ -1624,7 +1634,7 @@ end main`;
 
 main
   variable ab set to 0
-  variable aa,ac set to (0, "fred")
+  variable aa,ac set to tuple(0, "fred")
   set aa to 0
 end main`;
 
@@ -1637,7 +1647,7 @@ end main`;
       ["ac", "ac", "ac"],
     ] as [string, string, string][];
 
-    await assertAutocompletesWithString(fileImpl, "ident10", "a", expected);
+    await assertSymbolCompletionWithString(fileImpl, "ident10", "a", expected);
   });
 
   test("Pass_Deconstruction3", async () => {
@@ -1663,7 +1673,7 @@ end record`;
       ["ac", "ac", "ac"],
     ] as [string, string, string][];
 
-    await assertAutocompletesWithString(fileImpl, "ident10", "a", expected);
+    await assertSymbolCompletionWithString(fileImpl, "ident10", "a", expected);
   });
 
   test("Pass_Parameter", async () => {
@@ -1679,14 +1689,14 @@ end main`;
 
     const expected = [["CircleVG", "CircleVG", "CircleVG"]] as [string, string, string][];
 
-    await assertAutocompletesWithString(fileImpl, "args8", "0, new C", expected);
+    await assertSymbolCompletionWithString(fileImpl, "args8", "0, new C", expected);
   });
 
   test("Pass_withParameters", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  let c be new CircleVG() with cx to 1
+  let c be new CircleVG() with cx set to 1
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -1697,7 +1707,7 @@ end main`;
       ["cy", "cy", "cy"],
     ] as [string, string, string][];
 
-    await assertAutocompletesWithString(fileImpl, "expr5", "new CircleVG() with c", expected);
+    await assertSymbolCompletionWithString(fileImpl, "expr5", "new CircleVG() with c", expected);
   });
 
   test("Pass_newConcreteType #897", async () => {
@@ -1736,7 +1746,7 @@ end main`;
       ["VectorGraphics", "*", "*"],
     ] as [string, string, string][];
 
-    await assertAutocompletesWithString(fileImpl, "expr8", "vg.add(new ", expected);
+    await assertSymbolCompletionWithString(fileImpl, "expr8", "vg.add(new ", expected);
   });
 
   test("Pass_EnumType", async () => {
@@ -1753,7 +1763,7 @@ enum Fruit apple, orange, pear`;
 
     const expected = [["Fruit", "Fruit", "Fruit"]] as [string, string, string][];
 
-    await assertAutocompletesWithString(fileImpl, "expr5", "Fr", expected);
+    await assertSymbolCompletionWithString(fileImpl, "expr5", "Fr", expected);
   });
 
   test("Pass_enumValue", async () => {
@@ -1774,7 +1784,7 @@ enum Fruit apple, orange, pear`;
       ["pear", "pear", "pear"],
     ] as [string, string, string][];
 
-    await assertAutocompletesWithString(fileImpl, "expr5", "Fruit.", expected);
+    await assertSymbolCompletionWithString(fileImpl, "expr5", "Fruit.", expected);
   });
 
   test("Pass_propProc", async () => {
@@ -1807,11 +1817,10 @@ end class`;
       ["bar2", "bar2", "bar2"],
     ] as [string, string, string][];
 
-    await assertAutocompletesWithString(fileImpl, "ident22", "ba", expected);
+    await assertSymbolCompletionWithString(fileImpl, "ident22", "ba", expected);
   });
 
-  // pending fix for 'extractContextFromText'
-  ignore_test("Pass_largeConstant", async () => {
+  test("Pass_largeConstant", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 constant a set to {0,0}
@@ -1824,11 +1833,369 @@ end main`;
 
     const expected = [] as [string, string, string][];
 
-    await assertAutocompletesWithString(
+    await assertSymbolCompletionWithString(
       fileImpl,
       "text3",
       "{{0.0,0.0,0.0,0.16,0.0,0.0,0.01},{0.85,0.04,-0.04,0.85,0.0,1.60,0.85},{0.20,-0.26,0.23,0.22,0.0,1.60,0.07},{-0.15,0.28,0.26,0.24,0.0,0.44,0.07}}",
       expected,
     );
+  });
+
+  test("Pass_stringExtension", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable s set to "Hello World"
+  let b be s.contains("e")
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [["contains", "contains", "contains("]] as [string, string, string][];
+
+    await assertSymbolCompletionWithString(fileImpl, "expr8", "s.con", expected);
+  });
+
+  test("Pass_stringExtension", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable s set to "Hello World"
+  let b be s.contains("e")
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [["contains", "contains", "contains("]] as [string, string, string][];
+
+    await assertSymbolCompletionWithString(fileImpl, "expr8", "s.con", expected);
+  });
+
+  test("Pass_listExtension1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to range(1,4)
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["map", "map", "map("],
+      ["maxBy", "maxBy", "maxBy("],
+    ] as [string, string, string][];
+
+    await assertSymbolCompletionWithString(fileImpl, "expr5", "range(1,4).ma", expected);
+  });
+
+  ignore_test("Pass_listExtension2", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to range(1,4)
+end main
+
+function last(l as List<of Int>) returns Int
+  return l[l.length() - 1]
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["map", "map", "map("],
+      ["maxBy", "maxBy", "maxBy("],
+    ] as [string, string, string][];
+
+    await assertSymbolCompletionWithString(fileImpl, "expr5", "last(range(1,4).ma", expected);
+  });
+
+  ignore_test("Pass_bracketedExpression", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to 1 < 2
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["black", "black", "black"],
+      ["blue", "blue", "blue"],
+    ] as [string, string, string][];
+
+    await assertSymbolCompletionWithString(fileImpl, "expr5", "(1 < bl", expected);
+  });
+
+  test("Pass_callProperty", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+class Foo
+  property p1 as Foo
+
+  procedure pp()
+    call property.p1.pp()
+  end procedure
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [["p1", "property.p1", "property.p1"]] as [string, string, string][];
+
+    await assertSymbolCompletionWithString(fileImpl, "ident13", "property.", expected);
+  });
+
+  test("Pass_inheritProperty", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+abstract class Bar
+  property pp1 as Int
+end class
+
+class Foo inherits Bar
+  procedure pp()
+    variable a set to property.pp1
+  end procedure
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [["pp1", "property.pp1", "property.pp1"]] as [string, string, string][];
+
+    await assertSymbolCompletionWithString(fileImpl, "expr18", "pp", expected);
+  });
+
+  test("Pass_inheritPropertyKeyword1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+abstract class Yon
+  property pp as Int
+end class
+
+abstract class Bar inherits Yon
+  property ppp as Int
+end class
+
+class Foo inherits Bar
+  procedure proc()
+    variable a set to property.pp
+  end procedure
+
+  property pppp as Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["pp", "property.pp", "property.pp"],
+      ["ppp", "property.ppp", "property.ppp"],
+      ["pppp", "property.pppp", "property.pppp"],
+    ] as [string, string, string][];
+
+    await assertSymbolCompletionWithString(fileImpl, "expr25", "pp", expected);
+  });
+
+  test("Pass_inheritPropertyKeyword2", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+abstract class Yon
+  property pp as Int
+end class
+
+abstract class Bar inherits Yon
+  property ppp as Int
+end class
+
+class Foo inherits Bar
+  procedure proc()
+    variable a set to property.pp
+  end procedure
+
+  property pppp as Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["pp", "property.pp", "property.pp"],
+      ["ppp", "property.ppp", "property.ppp"],
+      ["pppp", "property.pppp", "property.pppp"],
+    ] as [string, string, string][];
+
+    await assertSymbolCompletionWithString(fileImpl, "expr25", "prop", expected);
+  });
+
+  test("Pass_inheritPropertyKeyword3", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+abstract class Yon
+  property pp as Int
+end class
+
+abstract class Bar inherits Yon
+  property ppp as Int
+end class
+
+class Foo inherits Bar
+  procedure proc()
+    variable a set to property.pp
+  end procedure
+
+  property pppp as Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["pp", "property.pp", "property.pp"],
+      ["ppp", "property.ppp", "property.ppp"],
+      ["pppp", "property.pppp", "property.pppp"],
+    ] as [string, string, string][];
+
+    await assertSymbolCompletionWithString(fileImpl, "expr25", "property.", expected);
+  });
+
+  test("Pass_inheritIndirectProperty", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+abstract class Yon
+  property pp1 as Int
+end class
+
+abstract class Bar inherits Yon
+
+end class
+
+class Foo inherits Bar
+  procedure p()
+    variable a set to property.pp1
+  end procedure
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [["pp1", "property.pp1", "property.pp1"]] as [string, string, string][];
+
+    await assertSymbolCompletionWithString(fileImpl, "expr22", "pp", expected);
+  });
+
+  test("Pass_inheritFunction", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+abstract class Bar
+  function ff1() returns Int
+    return 0
+  end function
+end class
+
+class Foo inherits Bar
+  function ff() returns Int
+    return ff1()
+  end function
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["ff", "ff", "ff("],
+      ["ff1", "ff1", "ff1("],
+    ] as [string, string, string][];
+
+    await assertSymbolCompletionWithString(fileImpl, "expr22", "ff", expected);
+  });
+
+  test("Pass_inheritIndirectFunction", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+abstract class Yon
+  function ff1() returns Int
+    return 0
+  end function
+end class
+
+abstract class Bar inherits Yon
+
+end class
+
+class Foo inherits Bar
+  function ff() returns Int
+    return ff1()
+  end function
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["ff", "ff", "ff("],
+      ["ff1", "ff1", "ff1("],
+    ] as [string, string, string][];
+
+    await assertSymbolCompletionWithString(fileImpl, "expr26", "ff", expected);
+  });
+
+  test("Pass_inheritProcedure", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+abstract class Bar
+  procedure pp1()
+  end procedure
+end class
+
+class Foo inherits Bar
+  procedure pp()
+    call pp1()
+  end procedure
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["pp", "pp", "pp"],
+      ["pp1", "pp1", "pp1"],
+    ] as [string, string, string][];
+
+    await assertSymbolCompletionWithString(fileImpl, "ident18", "pp", expected);
+  });
+
+  test("Pass_inheritIndirectProcedure", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+abstract class Yon
+  procedure pp1()
+  end procedure
+end class
+
+abstract class Bar inherits Yon
+  
+end class
+
+class Foo inherits Bar
+  procedure pp()
+    call pp1()
+  end procedure
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["pp", "pp", "pp"],
+      ["pp1", "pp1", "pp1"],
+    ] as [string, string, string][];
+
+    await assertSymbolCompletionWithString(fileImpl, "ident22", "pp", expected);
   });
 });

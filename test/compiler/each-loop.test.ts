@@ -24,15 +24,15 @@ main
   print n
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.list([7, 8, 9]);
-  var n = 0;
+  let a = system.list([7, 8, 9]);
+  let n = 0;
   for (const x of a) {
     n = n + x;
   }
-  system.printLine(_stdlib.asString(n));
+  system.printLine(n);
 }
 return [main, _tests];}`;
 
@@ -57,15 +57,15 @@ main
   print n
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = _stdlib.asArray(system.list([7, 8, 9]));
-  var n = 0;
+  let a = _stdlib.asArray(system.list([7, 8, 9]));
+  let n = 0;
   for (const x of a) {
     n = n + x;
   }
-  system.printLine(_stdlib.asString(n));
+  system.printLine(n);
 }
 return [main, _tests];}`;
 
@@ -88,12 +88,12 @@ main
   end each
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = "hello";
+  let a = "hello";
   for (const x of a) {
-    system.printLine(_stdlib.asString(x));
+    system.printLine(x);
   }
 }
 return [main, _tests];}`;
@@ -118,12 +118,12 @@ main
   end each
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   for (const x of "12") {
     for (const y of "34") {
-      system.printLine(_stdlib.asString(\`\${_stdlib.asString(x)}\${_stdlib.asString(y)}\`));
+      system.printLine(\`\${_stdlib.asString(x)}\${_stdlib.asString(y)}\`);
     }
   }
 }
@@ -151,11 +151,11 @@ function fruit() returns List<of String>
   return {"apple","orange", "pear"}
 end function`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   for (const x of fruit()) {
-    system.printLine(_stdlib.asString(x));
+    system.printLine(x);
   }
 }
 

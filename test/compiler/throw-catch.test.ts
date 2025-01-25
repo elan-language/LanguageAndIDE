@@ -19,7 +19,7 @@ main
     throw exception "Foo"
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   throw new Error("Foo");
@@ -43,10 +43,10 @@ main
   throw exception msg
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var msg = "Foo";
+  let msg = "Foo";
   throw new Error(msg);
 }
 return [main, _tests];}`;
@@ -68,10 +68,10 @@ main
   throw exception "{bar}"
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var bar = 1;
+  let bar = 1;
   throw new Error(\`\${_stdlib.asString(bar)}\`);
 }
 return [main, _tests];}`;
@@ -96,7 +96,7 @@ procedure foo()
   throw exception "Foo"
 end procedure`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   await foo();
@@ -133,15 +133,15 @@ procedure foo()
   throw exception "Foo"
 end procedure`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   try {
     await foo();
-    system.printLine(_stdlib.asString("not caught"));
+    system.printLine("not caught");
   } catch (_e) {
-    var e = _e.message;
-    system.printLine(_stdlib.asString(e));
+    let e = _e.message;
+    system.printLine(e);
   }
 }
 
@@ -182,17 +182,17 @@ class Foo
 
 end class`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   try {
-    var x = system.emptyArray();
-    var y = system.safeIndex(x, 1);
-    var z = y.p1;
-    system.printLine(_stdlib.asString("not caught"));
+    let x = system.emptyArray();
+    let y = system.safeIndex(x, 1);
+    let z = y.p1;
+    system.printLine("not caught");
   } catch (_e) {
-    var e = _e.message;
-    system.printLine(_stdlib.asString(e));
+    let e = _e.message;
+    system.printLine(e);
   }
 }
 
@@ -234,17 +234,17 @@ procedure foo()
   throw exception "Foo"
 end procedure`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   try {
     await foo();
-    system.printLine(_stdlib.asString("not caught"));
+    system.printLine("not caught");
   } catch (_e) {
-    var e = _e.message;
-    var s = "";
+    let e = _e.message;
+    let s = "";
     s = e;
-    system.printLine(_stdlib.asString(s));
+    system.printLine(s);
   }
 }
 

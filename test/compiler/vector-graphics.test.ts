@@ -35,11 +35,11 @@ main
   print vg.asHtml()
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   const vg = system.initialise(new _stdlib.VectorGraphics());
-  system.printLine(_stdlib.asString(vg.asHtml()));
+  system.printLine(vg.asHtml());
 }
 return [main, _tests];}`;
 
@@ -69,7 +69,7 @@ main
   print vg2.asHtml()
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   const vg = system.initialise(new _stdlib.VectorGraphics());
@@ -77,7 +77,7 @@ async function main() {
   const line = system.initialise(new _stdlib.LineVG());
   const rect = system.initialise(new _stdlib.RectangleVG());
   const vg2 = vg.add(circ).add(line).add(rect);
-  system.printLine(_stdlib.asString(vg2.asHtml()));
+  system.printLine(vg2.asHtml());
 }
 return [main, _tests];}`;
 
@@ -103,18 +103,18 @@ return [main, _tests];}`;
 
 main
   let vg be new VectorGraphics()
-  let circ be new CircleVG() with cx to 90, cy to 70, r to 13, stroke to red, strokeWidth to 2, fill to green
+  let circ be new CircleVG() with cx set to 90, cy set to 70, r set to 13, stroke set to red, strokeWidth set to 2, fill set to green
   let vg2 be vg.add(circ)
   print vg2.asHtml()
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   const vg = system.initialise(new _stdlib.VectorGraphics());
   const circ = (() => {const _a = {...system.initialise(new _stdlib.CircleVG())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new _stdlib.CircleVG()))); _a.cx = 90; _a.cy = 70; _a.r = 13; _a.stroke = _stdlib.red; _a.strokeWidth = 2; _a.fill = _stdlib.green; return _a;})();
   const vg2 = vg.add(circ);
-  system.printLine(_stdlib.asString(vg2.asHtml()));
+  system.printLine(vg2.asHtml());
 }
 return [main, _tests];}`;
 
@@ -146,7 +146,7 @@ main
   print vg3.asHtml()
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   const vg = system.initialise(new _stdlib.VectorGraphics());
@@ -155,7 +155,7 @@ async function main() {
   const rect = system.initialise(new _stdlib.RectangleVG());
   const vg2 = vg.add(circ).add(line).add(rect);
   const vg3 = vg2.removeLast();
-  system.printLine(_stdlib.asString(vg3.asHtml()));
+  system.printLine(vg3.asHtml());
 }
 return [main, _tests];}`;
 
@@ -188,7 +188,7 @@ main
   print vg3.asHtml()
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   const vg = system.initialise(new _stdlib.VectorGraphics());
@@ -197,7 +197,7 @@ async function main() {
   const rect = system.initialise(new _stdlib.RectangleVG());
   const vg2 = vg.add(circ).add(line).add(rect);
   const vg3 = vg2.remove(line);
-  system.printLine(_stdlib.asString(vg3.asHtml()));
+  system.printLine(vg3.asHtml());
 }
 return [main, _tests];}`;
 
@@ -230,7 +230,7 @@ main
   print vg3.asHtml()
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   const vg = system.initialise(new _stdlib.VectorGraphics());
@@ -239,7 +239,7 @@ async function main() {
   const rect = system.initialise(new _stdlib.RectangleVG());
   const vg2 = vg.add(circ).add(line).add(rect);
   const vg3 = vg2.remove(circ);
-  system.printLine(_stdlib.asString(vg3.asHtml()));
+  system.printLine(vg3.asHtml());
 }
 return [main, _tests];}`;
 
@@ -268,12 +268,12 @@ main
   let line be new LineVG()
   let rect be new RectangleVG()
   let vg2 be vg.add(circ).add(line).add(rect)
-  let circ2 be copy circ with fill to green
+  let circ2 be copy circ with fill set to green
   let vg3 be vg2.replace(circ, circ2)
   print vg3.asHtml()
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   const vg = system.initialise(new _stdlib.VectorGraphics());
@@ -283,7 +283,7 @@ async function main() {
   const vg2 = vg.add(circ).add(line).add(rect);
   const circ2 = (() => {const _a = {...circ}; Object.setPrototypeOf(_a, Object.getPrototypeOf(circ)); _a.fill = _stdlib.green; return _a;})();
   const vg3 = vg2.replace(circ, circ2);
-  system.printLine(_stdlib.asString(vg3.asHtml()));
+  system.printLine(vg3.asHtml());
 }
 return [main, _tests];}`;
 
@@ -311,11 +311,11 @@ main
   print circ.cx
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   const circ = system.initialise(new _stdlib.CircleVG());
-  system.printLine(_stdlib.asString(circ.cx));
+  system.printLine(circ.cx);
 }
 return [main, _tests];}`;
 
@@ -333,18 +333,18 @@ return [main, _tests];}`;
 
 main
   let vg be new VectorGraphics()
-  let circ be new CircleVG() with cx to 90, cy to 70, r to 13, stroke to red, strokeWidth to 2, fill to -1
+  let circ be new CircleVG() with cx set to 90, cy set to 70, r set to 13, stroke set to red, strokeWidth set to 2, fill set to -1
   let vg2 be vg.add(circ)
   print vg2.asHtml()
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   const vg = system.initialise(new _stdlib.VectorGraphics());
   const circ = (() => {const _a = {...system.initialise(new _stdlib.CircleVG())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new _stdlib.CircleVG()))); _a.cx = 90; _a.cy = 70; _a.r = 13; _a.stroke = _stdlib.red; _a.strokeWidth = 2; _a.fill = -1; return _a;})();
   const vg2 = vg.add(circ);
-  system.printLine(_stdlib.asString(vg2.asHtml()));
+  system.printLine(vg2.asHtml());
 }
 return [main, _tests];}`;
 
@@ -368,18 +368,18 @@ return [main, _tests];}`;
 
 main
   let vg be new VectorGraphics()
-  let circ be new CircleVG() with stroke to -1
+  let circ be new CircleVG() with stroke set to -1
   let vg2 be vg.add(circ)
   print vg2.asHtml()
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   const vg = system.initialise(new _stdlib.VectorGraphics());
   const circ = (() => {const _a = {...system.initialise(new _stdlib.CircleVG())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new _stdlib.CircleVG()))); _a.stroke = -1; return _a;})();
   const vg2 = vg.add(circ);
-  system.printLine(_stdlib.asString(vg2.asHtml()));
+  system.printLine(vg2.asHtml());
 }
 return [main, _tests];}`;
 
@@ -399,18 +399,18 @@ return [main, _tests];}`;
 
 main
   let vg be new VectorGraphics()
-  let circ be new CircleVG() with fill to 0x1000000
+  let circ be new CircleVG() with fill set to 0x1000000
   let vg2 be vg.add(circ)
   print vg2.asHtml()
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   const vg = system.initialise(new _stdlib.VectorGraphics());
   const circ = (() => {const _a = {...system.initialise(new _stdlib.CircleVG())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new _stdlib.CircleVG()))); _a.fill = 16777216; return _a;})();
   const vg2 = vg.add(circ);
-  system.printLine(_stdlib.asString(vg2.asHtml()));
+  system.printLine(vg2.asHtml());
 }
 return [main, _tests];}`;
 

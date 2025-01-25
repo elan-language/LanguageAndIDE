@@ -23,14 +23,14 @@ main
   print x
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = 0;
+  let x = 0;
   do {
     x = x + 1;
   } while (!(x >= 10));
-  system.printLine(_stdlib.asString(x));
+  system.printLine(x);
 }
 return [main, _tests];}`;
 
@@ -60,20 +60,20 @@ main
   print t
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var t = 0;
-  var x = 0;
+  let t = 0;
+  let x = 0;
   do {
-    var y = 0;
+    let y = 0;
     do {
       y = y + 1;
       t = t + 1;
     } while (!(y > 4));
     x = x + 1;
   } while (!(x > 3));
-  system.printLine(_stdlib.asString(t));
+  system.printLine(t);
 }
 return [main, _tests];}`;
 

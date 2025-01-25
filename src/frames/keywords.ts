@@ -55,6 +55,7 @@ export const thisKeyword = "this";
 export const throwKeyword = "throw";
 export const toKeyword = "to";
 export const tryKeyword = "try";
+export const tupleKeyword = "tuple";
 export const variableKeyword = "variable";
 export const whileKeyword = "while";
 export const withKeyword = "with";
@@ -128,6 +129,7 @@ export const allKeywords = [
   throwKeyword,
   toKeyword,
   tryKeyword,
+  tupleKeyword,
   variableKeyword,
   whileKeyword,
   withKeyword,

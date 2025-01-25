@@ -21,13 +21,13 @@ main
   print "{a} {b} {c}"
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = 1;
-  var b = "Apple";
-  var c = system.list([1, 2, 3]);
-  system.printLine(_stdlib.asString(\`\${_stdlib.asString(a)} \${_stdlib.asString(b)} \${_stdlib.asString(c)}\`));
+  let a = 1;
+  let b = "Apple";
+  let c = system.list([1, 2, 3]);
+  system.printLine(\`\${_stdlib.asString(a)} \${_stdlib.asString(b)} \${_stdlib.asString(c)}\`);
 }
 return [main, _tests];}`;
 

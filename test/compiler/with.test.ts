@@ -18,7 +18,7 @@ suite("With", () => {
 
 main
   variable a set to new Foo()
-  variable b set to copy a with a to 2
+  variable b set to copy a with a set to 2
   print a.a
   print b.a
 end main
@@ -27,13 +27,13 @@ record Foo
   property a as Int
 end record`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.initialise(new Foo());
-  var b = (() => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = 2; return _a;})();
-  system.printLine(_stdlib.asString(a.a));
-  system.printLine(_stdlib.asString(b.a));
+  let a = system.initialise(new Foo());
+  let b = (() => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = 2; return _a;})();
+  system.printLine(a.a);
+  system.printLine(b.a);
 }
 
 class Foo {
@@ -57,7 +57,7 @@ return [main, _tests];}`;
 
 main
   variable a set to new Foo()
-  set a to copy a with a to 2
+  set a to copy a with a set to 2
   print a.a
 end main
 
@@ -65,12 +65,12 @@ record Foo
   property a as Int
 end record`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.initialise(new Foo());
+  let a = system.initialise(new Foo());
   a = (() => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = 2; return _a;})();
-  system.printLine(_stdlib.asString(a.a));
+  system.printLine(a.a);
 }
 
 class Foo {
@@ -99,7 +99,7 @@ end main
 
 function foo() returns Foo
   variable a set to new Foo()
-  let b be copy a with a to 2
+  let b be copy a with a set to 2
   return b
 end function
 
@@ -107,15 +107,15 @@ record Foo
   property a as Int
 end record`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = foo();
-  system.printLine(_stdlib.asString(a.a));
+  let a = foo();
+  system.printLine(a.a);
 }
 
 function foo() {
-  var a = system.initialise(new Foo());
+  let a = system.initialise(new Foo());
   const b = (() => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = 2; return _a;})();
   return b;
 }
@@ -147,7 +147,7 @@ end main
 
 function foo() returns Foo
   let a be new Foo()
-  let b be copy a with a to 2
+  let b be copy a with a set to 2
   return b
 end function
 
@@ -155,11 +155,11 @@ record Foo
   property a as Int
 end record`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = foo();
-  system.printLine(_stdlib.asString(a.a));
+  let a = foo();
+  system.printLine(a.a);
 }
 
 function foo() {
@@ -195,22 +195,22 @@ end main
 
 function foo() returns Foo
   variable a set to new Foo()
-  return copy a with a to 2
+  return copy a with a set to 2
 end function
 
 record Foo
   property a as Int
 end record`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = foo();
-  system.printLine(_stdlib.asString(a.a));
+  let a = foo();
+  system.printLine(a.a);
 }
 
 function foo() {
-  var a = system.initialise(new Foo());
+  let a = system.initialise(new Foo());
   return (() => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = 2; return _a;})();
 }
 global["foo"] = foo;
@@ -236,7 +236,7 @@ return [main, _tests];}`;
 
 main
   variable a set to new Foo()
-  variable b set to copy a with a to 2, b to "fred"
+  variable b set to copy a with a set to 2, b set to "fred"
   print a.a
   print a.b
   print b.a
@@ -249,15 +249,15 @@ record Foo
   property b as String
 end record`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.initialise(new Foo());
-  var b = (() => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = 2; _a.b = "fred"; return _a;})();
-  system.printLine(_stdlib.asString(a.a));
-  system.printLine(_stdlib.asString(a.b));
-  system.printLine(_stdlib.asString(b.a));
-  system.printLine(_stdlib.asString(b.b));
+  let a = system.initialise(new Foo());
+  let b = (() => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = 2; _a.b = "fred"; return _a;})();
+  system.printLine(a.a);
+  system.printLine(a.b);
+  system.printLine(b.a);
+  system.printLine(b.b);
 }
 
 class Foo {
@@ -283,7 +283,7 @@ return [main, _tests];}`;
 
 main
   variable a set to new Foo()
-  variable b set to copy a with a to 2
+  variable b set to copy a with a set to 2
   print a.a
   print b.a
 end main
@@ -295,13 +295,13 @@ record Foo
 
 end record`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.initialise(new Foo());
-  var b = (() => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = 2; return _a;})();
-  system.printLine(_stdlib.asString(a.a));
-  system.printLine(_stdlib.asString(b.a));
+  let a = system.initialise(new Foo());
+  let b = (() => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = 2; return _a;})();
+  system.printLine(a.a);
+  system.printLine(b.a);
 }
 
 class Foo {
@@ -327,7 +327,7 @@ return [main, _tests];}`;
 
 main
   variable a set to new Foo()
-  variable b set to copy a with a to 2 + 2
+  variable b set to copy a with a set to 2 + 2
   print a.a
   print b.a
 end main
@@ -336,13 +336,13 @@ record Foo
   property a as Int
 end record`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.initialise(new Foo());
-  var b = (() => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = 2 + 2; return _a;})();
-  system.printLine(_stdlib.asString(a.a));
-  system.printLine(_stdlib.asString(b.a));
+  let a = system.initialise(new Foo());
+  let b = (() => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = 2 + 2; return _a;})();
+  system.printLine(a.a);
+  system.printLine(b.a);
 }
 
 class Foo {
@@ -366,8 +366,8 @@ return [main, _tests];}`;
 
 main
   variable a set to new Foo()
-  variable a1 set to copy a with b to 1
-  variable b set to copy a with a to a1
+  variable a1 set to copy a with b set to 1
+  variable b set to copy a with a set to a1
   print a.a.b
   print b.a.b
 end main
@@ -377,14 +377,14 @@ record Foo
   property b as Int
 end record`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.initialise(new Foo());
-  var a1 = (() => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.b = 1; return _a;})();
-  var b = (() => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = a1; return _a;})();
-  system.printLine(_stdlib.asString(a.a.b));
-  system.printLine(_stdlib.asString(b.a.b));
+  let a = system.initialise(new Foo());
+  let a1 = (() => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.b = 1; return _a;})();
+  let b = (() => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = a1; return _a;})();
+  system.printLine(a.a.b);
+  system.printLine(b.a.b);
 }
 
 class Foo {
@@ -417,7 +417,7 @@ return [main, _tests];}`;
 main
   variable a set to [0,2]
   variable b set to new Foo()
-  variable c set to copy b with b to a[1]
+  variable c set to copy b with b set to a[1]
   print b.b
   print c.b
 end main
@@ -426,14 +426,14 @@ record Foo
   property b as Int
 end record`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.literalArray([0, 2]);
-  var b = system.initialise(new Foo());
-  var c = (() => {const _a = {...b}; Object.setPrototypeOf(_a, Object.getPrototypeOf(b)); _a.b = system.safeIndex(a, 1); return _a;})();
-  system.printLine(_stdlib.asString(b.b));
-  system.printLine(_stdlib.asString(c.b));
+  let a = system.literalArray([0, 2]);
+  let b = system.initialise(new Foo());
+  let c = (() => {const _a = {...b}; Object.setPrototypeOf(_a, Object.getPrototypeOf(b)); _a.b = system.safeIndex(a, 1); return _a;})();
+  system.printLine(b.b);
+  system.printLine(c.b);
 }
 
 class Foo {
@@ -458,7 +458,7 @@ return [main, _tests];}`;
 main
   variable a set to [0,2]
   variable b set to new Foo()
-  variable c set to copy b with b to a[0], c to a[1], d to a.length()
+  variable c set to copy b with b set to a[0], c set to a[1], d set to a.length()
   print c.b
   print c.c
   print c.d
@@ -470,15 +470,15 @@ record Foo
   property d as Int
 end record`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.literalArray([0, 2]);
-  var b = system.initialise(new Foo());
-  var c = (() => {const _a = {...b}; Object.setPrototypeOf(_a, Object.getPrototypeOf(b)); _a.b = system.safeIndex(a, 0); _a.c = system.safeIndex(a, 1); _a.d = _stdlib.length(a); return _a;})();
-  system.printLine(_stdlib.asString(c.b));
-  system.printLine(_stdlib.asString(c.c));
-  system.printLine(_stdlib.asString(c.d));
+  let a = system.literalArray([0, 2]);
+  let b = system.initialise(new Foo());
+  let c = (() => {const _a = {...b}; Object.setPrototypeOf(_a, Object.getPrototypeOf(b)); _a.b = system.safeIndex(a, 0); _a.c = system.safeIndex(a, 1); _a.d = _stdlib.length(a); return _a;})();
+  system.printLine(c.b);
+  system.printLine(c.c);
+  system.printLine(c.d);
 }
 
 class Foo {
@@ -507,7 +507,7 @@ return [main, _tests];}`;
 main
   variable a set to {0,2}
   variable b set to new Foo()
-  variable c set to copy b with b to a[1]
+  variable c set to copy b with b set to a[1]
   print b.b
   print c.b
 end main
@@ -516,14 +516,14 @@ record Foo
   property b as Int
 end record`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.list([0, 2]);
-  var b = system.initialise(new Foo());
-  var c = (() => {const _a = {...b}; Object.setPrototypeOf(_a, Object.getPrototypeOf(b)); _a.b = system.safeIndex(a, 1); return _a;})();
-  system.printLine(_stdlib.asString(b.b));
-  system.printLine(_stdlib.asString(c.b));
+  let a = system.list([0, 2]);
+  let b = system.initialise(new Foo());
+  let c = (() => {const _a = {...b}; Object.setPrototypeOf(_a, Object.getPrototypeOf(b)); _a.b = system.safeIndex(a, 1); return _a;})();
+  system.printLine(b.b);
+  system.printLine(c.b);
 }
 
 class Foo {
@@ -548,7 +548,7 @@ return [main, _tests];}`;
 main
   variable a set to {0,2,3}
   variable b set to new Foo()
-  variable c set to copy b with b to a.length()
+  variable c set to copy b with b set to a.length()
   print b.b
   print c.b
 end main
@@ -557,14 +557,14 @@ record Foo
   property b as Int
 end record`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.list([0, 2, 3]);
-  var b = system.initialise(new Foo());
-  var c = (() => {const _a = {...b}; Object.setPrototypeOf(_a, Object.getPrototypeOf(b)); _a.b = _stdlib.length(a); return _a;})();
-  system.printLine(_stdlib.asString(b.b));
-  system.printLine(_stdlib.asString(c.b));
+  let a = system.list([0, 2, 3]);
+  let b = system.initialise(new Foo());
+  let c = (() => {const _a = {...b}; Object.setPrototypeOf(_a, Object.getPrototypeOf(b)); _a.b = _stdlib.length(a); return _a;})();
+  system.printLine(b.b);
+  system.printLine(c.b);
 }
 
 class Foo {
@@ -588,7 +588,7 @@ return [main, _tests];}`;
 
 main
   variable b set to new Foo()
-  variable c set to copy b with b to [0]
+  variable c set to copy b with b set to [0]
   print c.b
 end main
 
@@ -608,7 +608,7 @@ end record`;
 
 main
   variable a set to {1, 2}
-  variable b set to copy a with a to 0
+  variable b set to copy a with a set to 0
   print b
 end main`;
 
@@ -624,7 +624,7 @@ end main`;
 
 main
   variable a set to {3}
-  variable b set to copy a with a to 0
+  variable b set to copy a with a set to 0
   print b
 end main`;
 
@@ -640,7 +640,7 @@ end main`;
 
 main
   variable b set to new Foo()
-  variable c set to copy b with b to 0
+  variable c set to copy b with b set to 0
   print c.d
 end main
 
@@ -673,7 +673,7 @@ end record`;
 
 main
   variable b set to new Foo()
-  variable c set to copy b with b to 0
+  variable c set to copy b with b set to 0
   print c.b
 end main
 
@@ -696,7 +696,7 @@ end class`;
 
 main
   variable b set to new Foo()
-  variable c set to copy b with aa to aa -1
+  variable c set to copy b with aa set to aa -1
   print c.aa
 end main
 

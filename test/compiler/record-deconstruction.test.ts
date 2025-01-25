@@ -15,7 +15,7 @@ suite("Record Deconstruction", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to new Foo() with a to 100, b to "fred"
+  variable x set to new Foo() with a set to 100, b set to "fred"
   variable a set to 0
   variable b set to ""
   set a, b to x
@@ -28,15 +28,15 @@ record Foo
   property b as String
 end record`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = 100; _a.b = "fred"; return _a;})();
-  var a = 0;
-  var b = "";
+  let x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = 100; _a.b = "fred"; return _a;})();
+  let a = 0;
+  let b = "";
   ({a, b} = x);
-  system.printLine(_stdlib.asString(a));
-  system.printLine(_stdlib.asString(b));
+  system.printLine(a);
+  system.printLine(b);
 }
 
 class Foo {
@@ -61,7 +61,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to new Foo() with a to 3, fruit to "Apple", aBool to true, aFloat to 1.1
+  variable x set to new Foo() with a set to 3, fruit set to "Apple", aBool set to true, aFloat set to 1.1
   let a, fruit, aBool, aFloat be x
   print a
   print fruit
@@ -78,15 +78,15 @@ record Foo
 end record
 `;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = 3; _a.fruit = "Apple"; _a.aBool = _stdlib.true; _a.aFloat = 1.1; return _a;})();
+  let x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = 3; _a.fruit = "Apple"; _a.aBool = _stdlib.true; _a.aFloat = 1.1; return _a;})();
   const {a, fruit, aBool, aFloat} = x;
-  system.printLine(_stdlib.asString(a));
-  system.printLine(_stdlib.asString(fruit));
-  system.printLine(_stdlib.asString(aBool));
-  system.printLine(_stdlib.asString(aFloat));
+  system.printLine(a);
+  system.printLine(fruit);
+  system.printLine(aBool);
+  system.printLine(aFloat);
 }
 
 class Foo {
@@ -115,7 +115,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to new Foo() with a to 100, b to "fred"
+  variable x set to new Foo() with a set to 100, b set to "fred"
   variable b set to ""
   set _, b to x
   print b
@@ -138,7 +138,7 @@ end record`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to new Foo() with a to 100, b to "fred"
+  variable x set to new Foo() with a set to 100, b set to "fred"
   let _, b be x
   print b
 end main
@@ -160,7 +160,7 @@ end record`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to new Foo() with a to 100, b to "fred"
+  variable x set to new Foo() with a set to 100, b set to "fred"
   variable a, b set to x
   print a
   print b
@@ -171,13 +171,13 @@ record Foo
   property b as String
 end record`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = 100; _a.b = "fred"; return _a;})();
-  var {a, b} = x;
-  system.printLine(_stdlib.asString(a));
-  system.printLine(_stdlib.asString(b));
+  let x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = 100; _a.b = "fred"; return _a;})();
+  let {a, b} = x;
+  system.printLine(a);
+  system.printLine(b);
 }
 
 class Foo {
@@ -202,7 +202,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to new Foo() with a to 100, b to "fred"
+  variable x set to new Foo() with a set to 100, b set to "fred"
   variable _, b set to x
   print b
 end main
@@ -224,7 +224,7 @@ end record`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to new Foo() with a to 100, b to "fred"
+  variable x set to new Foo() with a set to 100, b set to "fred"
   variable a, b set to x
   variable y set to 0
   variable z set to ""
@@ -239,17 +239,17 @@ record Foo
   property b as String
 end record`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = 100; _a.b = "fred"; return _a;})();
-  var {a, b} = x;
-  var y = 0;
-  var z = "";
+  let x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = 100; _a.b = "fred"; return _a;})();
+  let {a, b} = x;
+  let y = 0;
+  let z = "";
   y = a;
   z = b;
-  system.printLine(_stdlib.asString(y));
-  system.printLine(_stdlib.asString(z));
+  system.printLine(y);
+  system.printLine(z);
 }
 
 class Foo {
@@ -274,7 +274,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to new Foo() with a to {1,2}, b to "fred"
+  variable x set to new Foo() with a set to {1,2}, b set to "fred"
   variable a, b set to x
   variable y set to empty List<of Int>
   variable z set to ""
@@ -289,17 +289,17 @@ record Foo
   property b as String
 end record`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = system.list([1, 2]); _a.b = "fred"; return _a;})();
-  var {a, b} = x;
-  var y = system.emptyImmutableList();
-  var z = "";
+  let x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = system.list([1, 2]); _a.b = "fred"; return _a;})();
+  let {a, b} = x;
+  let y = system.emptyImmutableList();
+  let z = "";
   y = a;
   z = b;
-  system.printLine(_stdlib.asString(y));
-  system.printLine(_stdlib.asString(z));
+  system.printLine(y);
+  system.printLine(z);
 }
 
 class Foo {
@@ -324,7 +324,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  let x be new Foo() with a to {1,2}, b to "fred"
+  let x be new Foo() with a set to {1,2}, b set to "fred"
   let a, b be x
   print a
   print b
@@ -335,13 +335,13 @@ record Foo
   property b as String
 end record`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   const x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = system.list([1, 2]); _a.b = "fred"; return _a;})();
   const {a, b} = x;
-  system.printLine(_stdlib.asString(a));
-  system.printLine(_stdlib.asString(b));
+  system.printLine(a);
+  system.printLine(b);
 }
 
 class Foo {
@@ -366,7 +366,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to new Foo() with a to {1,2}, b to "fred"
+  variable x set to new Foo() with a set to {1,2}, b set to "fred"
   let a, b be x
   print a
   print b
@@ -377,13 +377,13 @@ record Foo
   property b as String
 end record`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = system.list([1, 2]); _a.b = "fred"; return _a;})();
+  let x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = system.list([1, 2]); _a.b = "fred"; return _a;})();
   const {a, b} = x;
-  system.printLine(_stdlib.asString(a));
-  system.printLine(_stdlib.asString(b));
+  system.printLine(a);
+  system.printLine(b);
 }
 
 class Foo {
@@ -408,8 +408,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to new Foo() with a to {1,2}, b to "fred"
-  variable y set to new Bar() with c to x
+  variable x set to new Foo() with a set to {1,2}, b set to "fred"
+  variable y set to new Bar() with c set to x
   variable c, d set to y
   print c
   print d
@@ -425,14 +425,14 @@ record Bar
   property d as String
 end record`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = system.list([1, 2]); _a.b = "fred"; return _a;})();
-  var y = (() => {const _a = {...system.initialise(new Bar())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Bar()))); _a.c = x; return _a;})();
-  var {c, d} = y;
-  system.printLine(_stdlib.asString(c));
-  system.printLine(_stdlib.asString(d));
+  let x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = system.list([1, 2]); _a.b = "fred"; return _a;})();
+  let y = (() => {const _a = {...system.initialise(new Bar())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Bar()))); _a.c = x; return _a;})();
+  let {c, d} = y;
+  system.printLine(c);
+  system.printLine(d);
 }
 
 class Foo {
@@ -471,8 +471,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  let x be new Foo() with a to {1,2}, b to "fred"
-  let y be new Bar() with c to x
+  let x be new Foo() with a set to {1,2}, b set to "fred"
+  let y be new Bar() with c set to x
   variable c, d set to y
   print c
   print d
@@ -488,14 +488,14 @@ record Bar
   property d as String
 end record`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   const x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = system.list([1, 2]); _a.b = "fred"; return _a;})();
   const y = (() => {const _a = {...system.initialise(new Bar())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Bar()))); _a.c = x; return _a;})();
-  var {c, d} = y;
-  system.printLine(_stdlib.asString(c));
-  system.printLine(_stdlib.asString(d));
+  let {c, d} = y;
+  system.printLine(c);
+  system.printLine(d);
 }
 
 class Foo {
@@ -535,7 +535,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to new Foo() with a to {1,2}, b to "fred"
+  variable x set to new Foo() with a set to {1,2}, b set to "fred"
   variable a set to empty List<of Int>
   variable b set to ""
   set a, b to x
@@ -548,15 +548,15 @@ record Foo
   property b as String
 end record`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = system.list([1, 2]); _a.b = "fred"; return _a;})();
-  var a = system.emptyImmutableList();
-  var b = "";
+  let x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = system.list([1, 2]); _a.b = "fred"; return _a;})();
+  let a = system.emptyImmutableList();
+  let b = "";
   ({a, b} = x);
-  system.printLine(_stdlib.asString(a));
-  system.printLine(_stdlib.asString(b));
+  system.printLine(a);
+  system.printLine(b);
 }
 
 class Foo {
@@ -581,8 +581,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to new Foo() with a to {1,2}, b to "fred"
-  variable y set to new Bar() with c to x
+  variable x set to new Foo() with a set to {1,2}, b set to "fred"
+  variable y set to new Bar() with c set to x
   variable c set to empty Foo
   variable d set to ""
   set c, d to y
@@ -600,16 +600,16 @@ record Bar
   property d as String
 end record`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = system.list([1, 2]); _a.b = "fred"; return _a;})();
-  var y = (() => {const _a = {...system.initialise(new Bar())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Bar()))); _a.c = x; return _a;})();
-  var c = Foo.emptyInstance();
-  var d = "";
+  let x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = system.list([1, 2]); _a.b = "fred"; return _a;})();
+  let y = (() => {const _a = {...system.initialise(new Bar())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Bar()))); _a.c = x; return _a;})();
+  let c = Foo.emptyInstance();
+  let d = "";
   ({c, d} = y);
-  system.printLine(_stdlib.asString(c));
-  system.printLine(_stdlib.asString(d));
+  system.printLine(c);
+  system.printLine(d);
 }
 
 class Foo {
@@ -648,8 +648,8 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  let x be new Foo() with a to {1,2}, b to "fred"
-  let y be new Bar() with c to x
+  let x be new Foo() with a set to {1,2}, b set to "fred"
+  let y be new Bar() with c set to x
   variable c set to empty Foo
   variable d set to ""
   set c, d to y
@@ -667,16 +667,16 @@ record Bar
   property d as String
 end record`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   const x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = system.list([1, 2]); _a.b = "fred"; return _a;})();
   const y = (() => {const _a = {...system.initialise(new Bar())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Bar()))); _a.c = x; return _a;})();
-  var c = Foo.emptyInstance();
-  var d = "";
+  let c = Foo.emptyInstance();
+  let d = "";
   ({c, d} = y);
-  system.printLine(_stdlib.asString(c));
-  system.printLine(_stdlib.asString(d));
+  system.printLine(c);
+  system.printLine(d);
 }
 
 class Foo {
@@ -715,7 +715,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to new Foo() with a to 100, b to "fred"
+  variable x set to new Foo() with a set to 100, b set to "fred"
   variable a set to ""
   variable b set to 0
   set a, b to x
@@ -743,7 +743,7 @@ end record`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to new Foo() with a to 100, b to "fred"
+  variable x set to new Foo() with a set to 100, b set to "fred"
   variable a set to ""
   set a, b to x
   print a
@@ -767,7 +767,7 @@ end record`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to new Foo() with a to 100, b to "fred"
+  variable x set to new Foo() with a set to 100, b set to "fred"
   variable a set to ""
   variable a, b set to x
   print a
@@ -794,7 +794,7 @@ end record`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to new Foo() with a to 100, b to "fred"
+  variable x set to new Foo() with a set to 100, b set to "fred"
   let a be 0
   let b be ""
   set a, b to x

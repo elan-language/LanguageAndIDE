@@ -15,7 +15,7 @@ suite("Tuple Deconstruction", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to (3, "Apple")
+  variable x set to tuple(3, "Apple")
   variable y set to 0
   variable z set to ""
   set y, z to x
@@ -24,15 +24,15 @@ main
 end main
 `;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = system.tuple([3, "Apple"]);
-  var y = 0;
-  var z = "";
+  let x = system.tuple([3, "Apple"]);
+  let y = 0;
+  let z = "";
   [y, z] = x;
-  system.printLine(_stdlib.asString(y));
-  system.printLine(_stdlib.asString(z));
+  system.printLine(y);
+  system.printLine(z);
 }
 return [main, _tests];}`;
 
@@ -55,15 +55,15 @@ main
 end main
 
 function foo() returns (Float, Int)
-  return (0.0, 0)
+  return tuple(0.0, 0)
 end function`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   const [a, b] = foo();
-  system.printLine(_stdlib.asString(a));
-  system.printLine(_stdlib.asString(b));
+  system.printLine(a);
+  system.printLine(b);
 }
 
 function foo() {
@@ -96,17 +96,17 @@ class Foo
   end constructor
 
   function bar() returns (Float, Int)
-    return (0.0, 0)
+    return tuple(0.0, 0)
   end function
 end class`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   const foo = system.initialise(new Foo());
   const [a, b] = foo.bar();
-  system.printLine(_stdlib.asString(a));
-  system.printLine(_stdlib.asString(b));
+  system.printLine(a);
+  system.printLine(b);
 }
 
 class Foo {
@@ -141,15 +141,15 @@ main
 end main
 
 function foo() returns (List<of Float>, Int)
-  return ({0.0}, 0)
+  return tuple({0.0}, 0)
 end function`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   const [a, b] = foo();
-  system.printLine(_stdlib.asString(a));
-  system.printLine(_stdlib.asString(b));
+  system.printLine(a);
+  system.printLine(b);
 }
 
 function foo() {
@@ -171,7 +171,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to (3, "Apple", true, 1.1)
+  variable x set to tuple(3, "Apple", true, 1.1)
   print x
   let a, b, c, d be x
   print a
@@ -183,18 +183,18 @@ main
 end main
 `;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = system.tuple([3, "Apple", _stdlib.true, 1.1]);
-  system.printLine(_stdlib.asString(x));
+  let x = system.tuple([3, "Apple", _stdlib.true, 1.1]);
+  system.printLine(x);
   const [a, b, c, d] = x;
-  system.printLine(_stdlib.asString(a));
-  system.printLine(_stdlib.asString(b));
-  system.printLine(_stdlib.asString(c));
-  system.printLine(_stdlib.asString(d));
+  system.printLine(a);
+  system.printLine(b);
+  system.printLine(c);
+  system.printLine(d);
   const [, , e, ] = x;
-  system.printLine(_stdlib.asString(e));
+  system.printLine(e);
 }
 return [main, _tests];}`;
 
@@ -211,20 +211,20 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to (3, "Apple")
+  variable x set to tuple(3, "Apple")
   variable z set to ""
   set _, z to x
   print z
 end main
 `;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = system.tuple([3, "Apple"]);
-  var z = "";
+  let x = system.tuple([3, "Apple"]);
+  let z = "";
   [, z] = x;
-  system.printLine(_stdlib.asString(z));
+  system.printLine(z);
 }
 return [main, _tests];}`;
 
@@ -241,20 +241,20 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to (3, "Apple")
+  variable x set to tuple(3, "Apple")
   variable y set to 0
   set y, _ to x
   print y
 end main
 `;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = system.tuple([3, "Apple"]);
-  var y = 0;
+  let x = system.tuple([3, "Apple"]);
+  let y = 0;
   [y, ] = x;
-  system.printLine(_stdlib.asString(y));
+  system.printLine(y);
 }
 return [main, _tests];}`;
 
@@ -271,20 +271,20 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to (3, "Apple", 4)
+  variable x set to tuple(3, "Apple", 4)
   variable z set to ""
   set _, z, _ to x
   print z
 end main
 `;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = system.tuple([3, "Apple", 4]);
-  var z = "";
+  let x = system.tuple([3, "Apple", 4]);
+  let z = "";
   [, z, ] = x;
-  system.printLine(_stdlib.asString(z));
+  system.printLine(z);
 }
 return [main, _tests];}`;
 
@@ -301,20 +301,20 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to (3, "Apple", 4)
+  variable x set to tuple(3, "Apple", 4)
   variable y set to 0
   set _, _, y to x
   print y
 end main
 `;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = system.tuple([3, "Apple", 4]);
-  var y = 0;
+  let x = system.tuple([3, "Apple", 4]);
+  let y = 0;
   [, , y] = x;
-  system.printLine(_stdlib.asString(y));
+  system.printLine(y);
 }
 return [main, _tests];}`;
 
@@ -331,20 +331,20 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to (3, "Apple")
+  variable x set to tuple(3, "Apple")
   let y, z be x
   print y
   print z
 end main
 `;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = system.tuple([3, "Apple"]);
+  let x = system.tuple([3, "Apple"]);
   const [y, z] = x;
-  system.printLine(_stdlib.asString(y));
-  system.printLine(_stdlib.asString(z));
+  system.printLine(y);
+  system.printLine(z);
 }
 return [main, _tests];}`;
 
@@ -361,18 +361,18 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to (3, "Apple")
+  variable x set to tuple(3, "Apple")
   let _, z be x
   print z
 end main
 `;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = system.tuple([3, "Apple"]);
+  let x = system.tuple([3, "Apple"]);
   const [, z] = x;
-  system.printLine(_stdlib.asString(z));
+  system.printLine(z);
 }
 return [main, _tests];}`;
 
@@ -389,20 +389,20 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to (3, "Apple")
+  variable x set to tuple(3, "Apple")
   variable y, z set to x
   print y
   print z
 end main
 `;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = system.tuple([3, "Apple"]);
-  var [y, z] = x;
-  system.printLine(_stdlib.asString(y));
-  system.printLine(_stdlib.asString(z));
+  let x = system.tuple([3, "Apple"]);
+  let [y, z] = x;
+  system.printLine(y);
+  system.printLine(z);
 }
 return [main, _tests];}`;
 
@@ -419,18 +419,18 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to (3, "Apple")
+  variable x set to tuple(3, "Apple")
   variable _, z set to x
   print z
 end main
 `;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = system.tuple([3, "Apple"]);
-  var [, z] = x;
-  system.printLine(_stdlib.asString(z));
+  let x = system.tuple([3, "Apple"]);
+  let [, z] = x;
+  system.printLine(z);
 }
 return [main, _tests];}`;
 
@@ -447,20 +447,20 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable t set to (3, 4, "Apple")
+  variable t set to tuple(3, 4, "Apple")
   variable x, _, z set to t
   print x
   print z
 end main
 `;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var t = system.tuple([3, 4, "Apple"]);
-  var [x, , z] = t;
-  system.printLine(_stdlib.asString(x));
-  system.printLine(_stdlib.asString(z));
+  let t = system.tuple([3, 4, "Apple"]);
+  let [x, , z] = t;
+  system.printLine(x);
+  system.printLine(z);
 }
 return [main, _tests];}`;
 
@@ -477,7 +477,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to (3, "Apple")
+  variable x set to tuple(3, "Apple")
   variable y, z set to x
   variable a set to 0
   variable b set to ""
@@ -488,17 +488,17 @@ main
 end main
 `;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var x = system.tuple([3, "Apple"]);
-  var [y, z] = x;
-  var a = 0;
-  var b = "";
+  let x = system.tuple([3, "Apple"]);
+  let [y, z] = x;
+  let a = 0;
+  let b = "";
   a = y;
   b = z;
-  system.printLine(_stdlib.asString(a));
-  system.printLine(_stdlib.asString(b));
+  system.printLine(a);
+  system.printLine(b);
 }
 return [main, _tests];}`;
 
@@ -516,21 +516,21 @@ return [main, _tests];}`;
 
 main
   variable a set to [1,2]
-  variable x set to (3, a)
+  variable x set to tuple(3, a)
   variable y, z set to x
   print y
   print z
 end main
 `;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.literalArray([1, 2]);
-  var x = system.tuple([3, a]);
-  var [y, z] = x;
-  system.printLine(_stdlib.asString(y));
-  system.printLine(_stdlib.asString(z));
+  let a = system.literalArray([1, 2]);
+  let x = system.tuple([3, a]);
+  let [y, z] = x;
+  system.printLine(y);
+  system.printLine(z);
 }
 return [main, _tests];}`;
 
@@ -548,21 +548,21 @@ return [main, _tests];}`;
 
 main
   variable a set to [1,2]
-  variable x set to (3, a)
+  variable x set to tuple(3, a)
   let y, z be x
   print y
   print z
 end main
 `;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.literalArray([1, 2]);
-  var x = system.tuple([3, a]);
+  let a = system.literalArray([1, 2]);
+  let x = system.tuple([3, a]);
   const [y, z] = x;
-  system.printLine(_stdlib.asString(y));
-  system.printLine(_stdlib.asString(z));
+  system.printLine(y);
+  system.printLine(z);
 }
 return [main, _tests];}`;
 
@@ -580,7 +580,7 @@ return [main, _tests];}`;
 
 main
   variable a set to [1,2]
-  variable x set to (3, a)
+  variable x set to tuple(3, a)
   variable y set to 0
   variable z set to empty Array<of Int>
   set y, z to x
@@ -589,16 +589,16 @@ main
 end main
 `;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.literalArray([1, 2]);
-  var x = system.tuple([3, a]);
-  var y = 0;
-  var z = system.emptyArray();
+  let a = system.literalArray([1, 2]);
+  let x = system.tuple([3, a]);
+  let y = 0;
+  let z = system.emptyArray();
   [y, z] = x;
-  system.printLine(_stdlib.asString(y));
-  system.printLine(_stdlib.asString(z));
+  system.printLine(y);
+  system.printLine(z);
 }
 return [main, _tests];}`;
 
@@ -615,22 +615,22 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to (1,2)
-  variable x set to (3, a)
+  variable a set to tuple(1,2)
+  variable x set to tuple(3, a)
   variable y, z set to x
   print y
   print z
 end main
 `;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.tuple([1, 2]);
-  var x = system.tuple([3, a]);
-  var [y, z] = x;
-  system.printLine(_stdlib.asString(y));
-  system.printLine(_stdlib.asString(z));
+  let a = system.tuple([1, 2]);
+  let x = system.tuple([3, a]);
+  let [y, z] = x;
+  system.printLine(y);
+  system.printLine(z);
 }
 return [main, _tests];}`;
 
@@ -647,22 +647,22 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to (1,2)
-  variable x set to (3, a)
+  variable a set to tuple(1,2)
+  variable x set to tuple(3, a)
   let y, z be x
   print y
   print z
 end main
 `;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.tuple([1, 2]);
-  var x = system.tuple([3, a]);
+  let a = system.tuple([1, 2]);
+  let x = system.tuple([3, a]);
   const [y, z] = x;
-  system.printLine(_stdlib.asString(y));
-  system.printLine(_stdlib.asString(z));
+  system.printLine(y);
+  system.printLine(z);
 }
 return [main, _tests];}`;
 
@@ -679,26 +679,26 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to (1, 2)
-  variable x set to (3, a)
+  variable a set to tuple(1, 2)
+  variable x set to tuple(3, a)
   variable y set to 0
-  variable z set to (0, 0)
+  variable z set to tuple(0, 0)
   set y, z to x
   print y
   print z
 end main
 `;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.tuple([1, 2]);
-  var x = system.tuple([3, a]);
-  var y = 0;
-  var z = system.tuple([0, 0]);
+  let a = system.tuple([1, 2]);
+  let x = system.tuple([3, a]);
+  let y = 0;
+  let z = system.tuple([0, 0]);
   [y, z] = x;
-  system.printLine(_stdlib.asString(y));
-  system.printLine(_stdlib.asString(z));
+  system.printLine(y);
+  system.printLine(z);
 }
 return [main, _tests];}`;
 
@@ -715,18 +715,18 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to (1, "string")
+  variable a set to tuple(1, "string")
   variable y, z set to a
   set y to y
   set z to z
 end main
 `;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.tuple([1, "string"]);
-  var [y, z] = a;
+  let a = system.tuple([1, "string"]);
+  let [y, z] = a;
   y = y;
   z = z;
 }
@@ -745,7 +745,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to (3,"Apple")
+  variable x set to tuple(3,"Apple")
   variable y set to 0
   variable z set to ""
   set z, y to x
@@ -769,7 +769,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to (3,"Apple")
+  variable x set to tuple(3,"Apple")
   variable z set to ""
   set z, y to x
   print y
@@ -789,7 +789,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to (3,"Apple")
+  variable x set to tuple(3,"Apple")
   variable z set to 0
   variable z, y set to x
   print y
@@ -811,7 +811,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to (3, "Apple")
+  variable x set to tuple(3, "Apple")
   variable y set to ""
   set y, _ to x
   print y
@@ -830,7 +830,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to (3, "Apple")
+  variable x set to tuple(3, "Apple")
   let y be 0
   let z be ""
   set y, z to x

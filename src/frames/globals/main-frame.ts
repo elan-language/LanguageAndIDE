@@ -38,7 +38,7 @@ export class MainFrame extends FrameWithStatements implements GlobalFrame {
     return `<main class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>main</el-kw>${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
-<el-kw>end main</el-kw>
+<el-kw>end main</el-kw>${this.contextMenu()}
 </main>`;
   }
 

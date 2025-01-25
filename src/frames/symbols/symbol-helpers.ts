@@ -42,6 +42,7 @@ import { ProcedureType } from "./procedure-type";
 import { RegExpType } from "./regexp-type";
 import { StringType } from "./string-type";
 import { SymbolScope } from "./symbol-scope";
+import { UnknownSymbol } from "./unknown-symbol";
 
 export function isDeconstructedType(s?: SymbolType): s is DeconstructedSymbolType {
   return !!s && "symbolTypeFor" in s;
@@ -283,7 +284,9 @@ function matchGenericTypes(actualType: SymbolType, paramType: SymbolType) {
 
   if (
     paramType instanceof IterableType &&
-    (actualType instanceof ListType || actualType instanceof ArrayType)
+    (actualType instanceof ListType ||
+      actualType instanceof ArrayType ||
+      actualType instanceof StringType)
   ) {
     return true;
   }
@@ -315,7 +318,10 @@ export function matchType(actualType: SymbolType, paramType: SymbolType): boolea
     return true;
   }
 
-  if (isGenericSymbolType(paramType) && isGenericSymbolType(actualType)) {
+  if (
+    isGenericSymbolType(paramType) &&
+    (isGenericSymbolType(actualType) || actualType instanceof StringType)
+  ) {
     return (
       matchGenericTypes(actualType, paramType) &&
       (paramType.ofType instanceof GenericParameterType ||
@@ -420,6 +426,10 @@ function matchingSymbolsWithQualifier(
 ): ElanSymbol[] {
   const qual = scope.resolveSymbol(qualId, transforms, scope);
 
+  if (qual instanceof UnknownSymbol) {
+    return [];
+  }
+
   // class scope so all or matching symbols on class
   let qualSt = qual.symbolType(transforms);
 
@@ -491,7 +501,7 @@ export function removeIfSingleFullMatch(symbols: ElanSymbol[], id: string): Elan
   }
 }
 
-function orderSymbol(s1: ElanSymbol, s2: ElanSymbol) {
+export function orderSymbol(s1: ElanSymbol, s2: ElanSymbol) {
   return s1.symbolId.localeCompare(s2.symbolId);
 }
 
@@ -505,6 +515,11 @@ function filterSymbols(matches: ElanSymbol[], filters: ((s: ElanSymbol) => boole
   return filtered.filter((e) => !e.symbolId.startsWith("_"));
 }
 
+function ensureUnique(symbols: ElanSymbol[]) {
+  const uniqueNames = Array.from(new Set<string>(symbols.map((s) => s.symbolId)));
+  return uniqueNames.map((n) => symbols.find((s) => s.symbolId === n)) as ElanSymbol[];
+}
+
 export function filteredSymbols(
   spec: SymbolCompletionSpec,
   transforms: Transforms,
@@ -512,7 +527,7 @@ export function filteredSymbols(
 ): ElanSymbol[] {
   const matches = matchingSymbols(spec, transforms, scope);
   const filters = filtersForTokenType(spec.tokenTypes, transforms);
-  const filtered = filterSymbols(matches, filters);
+  const filtered = ensureUnique(filterSymbols(matches, filters));
 
   const startsWith = filtered
     .filter((s) => s.symbolId.toUpperCase().startsWith(spec.toMatch.toUpperCase()))

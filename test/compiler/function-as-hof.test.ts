@@ -26,14 +26,14 @@ function twice(x as Float) returns Float
   return x * 2
 end function`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   await printModified(3, twice);
 }
 
 async function printModified(i, f) {
-  system.printLine(_stdlib.asString(f(i)));
+  system.printLine(f(i));
 }
 global["printModified"] = printModified;
 
@@ -67,14 +67,14 @@ function twice() returns Float
   return 2
 end function`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   await printModified(3, twice);
 }
 
 async function printModified(i, f) {
-  system.printLine(_stdlib.asString(f()));
+  system.printLine(f());
 }
 global["printModified"] = printModified;
 
@@ -108,14 +108,14 @@ function find(x as String, y as String) returns Int
   return x.indexOf(y)
 end function`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   await printIt("Hello", "e", find);
 }
 
 async function printIt(s, c, f) {
-  system.printLine(_stdlib.asString(f(s, c)));
+  system.printLine(f(s, c));
 }
 global["printIt"] = printIt;
 
@@ -150,11 +150,11 @@ function twice(x as Float) returns Float
   return x * 2
 end function`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var f = getFunc();
-  system.printLine(_stdlib.asString(f(5)));
+  let f = getFunc();
+  system.printLine(f(5));
 }
 
 function getFunc() {
@@ -189,11 +189,11 @@ function twice(x as Float) returns Float
   return x * 2
 end function`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var f = twice;
-  system.printLine(_stdlib.asString(f(5)));
+  let f = twice;
+  system.printLine(f(5));
 }
 
 function twice(x) {
@@ -232,11 +232,11 @@ class Foo
 
 end class`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var f = system.initialise(new Foo(ff));
-  system.printLine(_stdlib.asString(f.pf(5)));
+  let f = system.initialise(new Foo(ff));
+  system.printLine(f.pf(5));
 }
 
 function ff(a) {
@@ -275,10 +275,10 @@ function ff(a as Int) returns Int
   return a
 end function`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(_stdlib.asString(ff));
+  system.printLine(ff);
 }
 
 function ff(a) {

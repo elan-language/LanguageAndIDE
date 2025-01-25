@@ -6,6 +6,7 @@ import {
   mustBeProcedure,
   mustBePublicMember,
   mustCallExtensionViaQualifier,
+  mustCallMemberViaQualifier,
 } from "../compile-rules";
 import { ArgListField } from "../fields/arg-list-field";
 import { ProcRefField } from "../fields/proc-ref-field";
@@ -104,7 +105,7 @@ export class CallStatement extends AbstractFrame implements Statement {
             callParamSymbol.symbolScope === SymbolScope.outParameter
           ) {
             const tpName = `_${p.id}`;
-            wrappedInParameters.push(`var ${tpName} = [${pName}]`);
+            wrappedInParameters.push(`let ${tpName} = [${pName}]`);
             wrappedOutParameters.push(`${pName} = ${tpName}[0]`);
             pName = tpName;
           } else {
@@ -134,7 +135,13 @@ export class CallStatement extends AbstractFrame implements Statement {
     const procSymbol = currentScope.resolveSymbol(id, transforms, this);
 
     mustBeKnownSymbol(procSymbol, currentScope, this.compileErrors, this.htmlId);
-    mustBeProcedure(procSymbol.symbolType(transforms), this.compileErrors, this.htmlId);
+    mustBeProcedure(
+      procSymbol.symbolId,
+      procSymbol.symbolType(transforms),
+      procSymbol.symbolScope,
+      this.compileErrors,
+      this.htmlId,
+    );
 
     if (!isMemberOnFieldsClass(procSymbol, transforms, this)) {
       mustBePublicMember(procSymbol, this.compileErrors, this.htmlId);
@@ -149,6 +156,13 @@ export class CallStatement extends AbstractFrame implements Statement {
 
       if (procSymbolType instanceof ProcedureType) {
         mustCallExtensionViaQualifier(procSymbolType, qualifier, this.compileErrors, this.htmlId);
+        mustCallMemberViaQualifier(
+          id,
+          procSymbolType,
+          currentScope,
+          this.compileErrors,
+          this.htmlId,
+        );
 
         if (procSymbolType.isExtension && qualifier instanceof QualifierAsn) {
           callParameters = [qualifier.value as AstNode].concat(callParameters);

@@ -30,7 +30,7 @@ export class VarStatement extends AbstractDefinitionStatement implements Stateme
   }
 
   getJsKeyword() {
-    return "var";
+    return "let";
   }
 
   renderAsHtml(): string {

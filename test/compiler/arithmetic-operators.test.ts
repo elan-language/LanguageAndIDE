@@ -20,10 +20,10 @@ main
   print 3 + 4
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(_stdlib.asString(3 + 4));
+  system.printLine(3 + 4);
 }
 return [main, _tests];}`;
 
@@ -43,10 +43,10 @@ main
   print 3 - 4
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(_stdlib.asString(3 - 4));
+  system.printLine(3 - 4);
 }
 return [main, _tests];}`;
 
@@ -66,10 +66,10 @@ main
   print 3 * 4
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(_stdlib.asString(3 * 4));
+  system.printLine(3 * 4);
 }
 return [main, _tests];}`;
 
@@ -90,11 +90,11 @@ main
   print a + 4
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = 3;
-  system.printLine(_stdlib.asString(a + 4));
+  let a = 3;
+  system.printLine(a + 4);
 }
 return [main, _tests];}`;
 
@@ -114,10 +114,10 @@ main
   print 3 / 2
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(_stdlib.asString(3 / 2));
+  system.printLine(3 / 2);
 }
 return [main, _tests];}`;
 
@@ -137,10 +137,10 @@ main
   print 7 div 2
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(_stdlib.asString(Math.floor(7 / 2)));
+  system.printLine(Math.floor(7 / 2));
 }
 return [main, _tests];}`;
 
@@ -160,10 +160,10 @@ main
   print 11 mod 3
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(_stdlib.asString(11 % 3));
+  system.printLine(11 % 3);
 }
 return [main, _tests];}`;
 
@@ -183,10 +183,10 @@ main
   print if (25 mod 20) < 19 then 1 else 2
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(_stdlib.asString((25 % 20) < 19 ? 1 : 2));
+  system.printLine((25 % 20) < 19 ? 1 : 2);
 }
 return [main, _tests];}`;
 
@@ -206,10 +206,10 @@ main
   print 3 ^ 3
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(_stdlib.asString(3 ** 3));
+  system.printLine(3 ** 3);
 }
 return [main, _tests];}`;
 
@@ -231,12 +231,12 @@ main
   print a
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = 3;
+  let a = 3;
   a = a + 1;
-  system.printLine(_stdlib.asString(a));
+  system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -253,7 +253,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  var a = 3 4
+  let a = 3 4
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -340,10 +340,10 @@ main
   print 7 div 2.5
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(_stdlib.asString(Math.floor(7.6 / 2.5)));
+  system.printLine(Math.floor(7.6 / 2.5));
 }
 return [main, _tests];}`;
 

@@ -6,6 +6,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -52,13 +53,13 @@ class Player
 
 end class`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var g = system.initialise(new Game());
-  system.printLine(_stdlib.asString(g.p2));
-  system.printLine(_stdlib.asString(g.p1));
-  system.printLine(_stdlib.asString(g.previousScores));
+  let g = system.initialise(new Game());
+  system.printLine(g.p2);
+  system.printLine(g.p1);
+  system.printLine(g.previousScores);
 }
 
 class Game {
@@ -136,12 +137,12 @@ class Foo
     property p2 as Int
 end class`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var g = system.initialise(new Foo());
-  system.printLine(_stdlib.asString(g.p1));
-  system.printLine(_stdlib.asString(g.p2));
+  let g = system.initialise(new Foo());
+  system.printLine(g.p1);
+  system.printLine(g.p2);
 }
 
 class Foo {
@@ -182,7 +183,7 @@ main
   print g.ai
   print g.t
   print g.ff("a", "b")
-  print "aa".testRegExp(g.r)
+  print "aa".matchesRegExp(g.r)
 end main
 
 class Game
@@ -207,21 +208,21 @@ class Game
 
 end class`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var g = system.initialise(new Game());
-  system.printLine(_stdlib.asString(g.i));
-  system.printLine(_stdlib.asString(g.f));
-  system.printLine(_stdlib.asString(g.b));
-  system.printLine(_stdlib.asString(g.s));
-  system.printLine(_stdlib.asString(g.li));
-  system.printLine(_stdlib.asString(g.ds));
-  system.printLine(_stdlib.asString(g.dsi));
-  system.printLine(_stdlib.asString(g.ai));
-  system.printLine(_stdlib.asString(g.t));
-  system.printLine(_stdlib.asString(g.ff("a", "b")));
-  system.printLine(_stdlib.asString(_stdlib.testRegExp("aa", g.r)));
+  let g = system.initialise(new Game());
+  system.printLine(g.i);
+  system.printLine(g.f);
+  system.printLine(g.b);
+  system.printLine(g.s);
+  system.printLine(g.li);
+  system.printLine(g.ds);
+  system.printLine(g.dsi);
+  system.printLine(g.ai);
+  system.printLine(g.t);
+  system.printLine(g.ff("a", "b"));
+  system.printLine(_stdlib.matchesRegExp("aa", g.r));
 }
 
 class Game {
@@ -314,21 +315,21 @@ class Game
 
 end class`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var p = system.initialise(new Player());
-  var g = p.g;
-  system.printLine(_stdlib.asString(g.i));
-  system.printLine(_stdlib.asString(g.f));
-  system.printLine(_stdlib.asString(g.b));
-  system.printLine(_stdlib.asString(g.s));
-  system.printLine(_stdlib.asString(g.li));
-  system.printLine(_stdlib.asString(g.ds));
-  system.printLine(_stdlib.asString(g.dsi));
-  system.printLine(_stdlib.asString(g.ai));
-  system.printLine(_stdlib.asString(g.t));
-  system.printLine(_stdlib.asString(g.r));
+  let p = system.initialise(new Player());
+  let g = p.g;
+  system.printLine(g.i);
+  system.printLine(g.f);
+  system.printLine(g.b);
+  system.printLine(g.s);
+  system.printLine(g.li);
+  system.printLine(g.ds);
+  system.printLine(g.dsi);
+  system.printLine(g.ai);
+  system.printLine(g.t);
+  system.printLine(g.r);
 }
 
 class Player {
@@ -410,11 +411,11 @@ class Game
 
 end class`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var g = Game.emptyInstance();
-  system.printLine(_stdlib.asString(g.i));
+  let g = Game.emptyInstance();
+  system.printLine(g.i);
 }
 
 class Game {
@@ -476,12 +477,12 @@ class Player
 
 end class`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var g = system.initialise(new Game());
-  system.printLine(_stdlib.asString(g.p1));
-  system.printLine(_stdlib.asString(g.previousGame));
+  let g = system.initialise(new Game());
+  system.printLine(g.p1);
+  system.printLine(g.previousGame);
 }
 
 class Game {
@@ -586,17 +587,17 @@ class Player
 
 end class`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var g = system.initialise(new Game());
-  system.printLine(_stdlib.asString(system.objectEquals(g.p1, Player.emptyInstance())));
-  system.printLine(_stdlib.asString(system.objectEquals(g.p2, Player.emptyInstance())));
-  system.printLine(_stdlib.asString(system.objectEquals(g.previousGame, Game.emptyInstance())));
-  system.printLine(_stdlib.asString(system.objectEquals(g.previousScores, system.emptyImmutableList())));
-  system.printLine(_stdlib.asString(g.score === 0));
-  system.printLine(_stdlib.asString(g.best === 0));
-  system.printLine(_stdlib.asString(g.r === system.emptyRegExp()));
+  let g = system.initialise(new Game());
+  system.printLine(system.objectEquals(g.p1, Player.emptyInstance()));
+  system.printLine(system.objectEquals(g.p2, Player.emptyInstance()));
+  system.printLine(system.objectEquals(g.previousGame, Game.emptyInstance()));
+  system.printLine(system.objectEquals(g.previousScores, system.emptyImmutableList()));
+  system.printLine(g.score === 0);
+  system.printLine(g.best === 0);
+  system.printLine(g.r === system.emptyRegExp());
 }
 
 class Game {
@@ -715,13 +716,13 @@ class Player
 
 end class`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var g = system.initialise(new Game());
-  system.printLine(_stdlib.asString(g.score));
+  let g = system.initialise(new Game());
+  system.printLine(g.score);
   await g.setScore(0);
-  system.printLine(_stdlib.asString(g.score));
+  system.printLine(g.score);
 }
 
 class Game {
@@ -824,18 +825,18 @@ class Foo
 
 end class`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var f = system.initialise(new Foo());
-  system.printLine(_stdlib.asString(f.a));
-  system.printLine(_stdlib.asString(f.b));
-  system.printLine(_stdlib.asString(f.c));
-  system.printLine(_stdlib.asString(f.d));
-  system.printLine(_stdlib.asString(system.objectEquals(f.a, system.emptyImmutableList())));
-  system.printLine(_stdlib.asString(f.b === ""));
-  system.printLine(_stdlib.asString(system.objectEquals(f.c, system.emptyDictionary())));
-  system.printLine(_stdlib.asString(system.objectEquals(f.d, system.emptyArray())));
+  let f = system.initialise(new Foo());
+  system.printLine(f.a);
+  system.printLine(f.b);
+  system.printLine(f.c);
+  system.printLine(f.d);
+  system.printLine(system.objectEquals(f.a, system.emptyImmutableList()));
+  system.printLine(f.b === "");
+  system.printLine(system.objectEquals(f.c, system.emptyDictionary()));
+  system.printLine(system.objectEquals(f.d, system.emptyArray()));
 }
 
 class Foo {
@@ -895,12 +896,12 @@ abstract class Player
     abstract function ucName() returns String
 end class`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var g = system.initialise(new Game());
-  var p = g.p1;
-  system.printLine(_stdlib.asString(p.ucName()));
+  let g = system.initialise(new Game());
+  let p = g.p1;
+  system.printLine(p.ucName());
 }
 
 class Game {
@@ -978,10 +979,10 @@ class Game
 
 end class`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var g = system.initialise(new Game());
+  let g = system.initialise(new Game());
   await g.something();
 }
 
@@ -994,9 +995,9 @@ class Game {
   p1 = system.emptyArray();
 
   async something() {
-    var a = 1;
+    let a = 1;
     a = system.safeIndex(this.p1, 0);
-    system.printLine(_stdlib.asString(a));
+    system.printLine(a);
   }
 
 }
@@ -1039,17 +1040,17 @@ class Bar
   property p1 as Foo
 end class`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var bar = system.initialise(new Bar());
+  let bar = system.initialise(new Bar());
   await bar.p();
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
   async pp() {
-    system.printLine(_stdlib.asString(1));
+    system.printLine(1);
   }
 
 }
@@ -1345,5 +1346,90 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["referencing a property requires a prefix"]);
+  });
+
+  ignore_test("Fail_CannotCall", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable bar set to new Bar()
+  call bar.p()
+end main
+
+class Foo
+
+end class
+
+class Bar
+
+  procedure p()
+    call property.p1()
+  end procedure
+
+  property p1 as Foo
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["referencing a property requires a prefix"]);
+  });
+
+  test("Fail_spuriousProperty1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+class Bar
+  procedure p()
+    let a be property.asString()
+  end procedure
+
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Cannot prefix function with 'property'"]);
+  });
+
+  test("Fail_spuriousProperty2", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+function foo() returns Int
+  return 0
+end function
+
+class Bar
+  procedure p()
+    let a be property.foo()
+  end procedure
+
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Cannot prefix function with 'property'"]);
+  });
+
+  test("Fail_spuriousProperty3", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+constant aa set to 1
+
+class Bar
+  procedure p()
+    let a be property.aa
+  end procedure
+
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'aa' is not defined for type 'Bar'"]);
   });
 });

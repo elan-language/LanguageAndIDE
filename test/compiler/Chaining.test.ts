@@ -20,12 +20,12 @@ main
   print b
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.list([system.list([1, 2]), system.list([3, 4])]);
-  var b = system.safeIndex(system.safeIndex(a, 1), 1);
-  system.printLine(_stdlib.asString(b));
+  let a = system.list([system.list([1, 2]), system.list([3, 4])]);
+  let b = system.safeIndex(system.safeIndex(a, 1), 1);
+  system.printLine(b);
 }
 return [main, _tests];}`;
 
@@ -47,12 +47,12 @@ main
   print b
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.list([system.literalArray([1, 2]), system.literalArray([3, 4])]);
-  var b = system.safeIndex(system.safeIndex(a, 1), 1);
-  system.printLine(_stdlib.asString(b));
+  let a = system.list([system.literalArray([1, 2]), system.literalArray([3, 4])]);
+  let b = system.safeIndex(system.safeIndex(a, 1), 1);
+  system.printLine(b);
 }
 return [main, _tests];}`;
 
@@ -82,12 +82,12 @@ class Foo
   property a as List<of Int>
 end class`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.initialise(new Foo());
-  var b = system.safeIndex(a.a, 0);
-  system.printLine(_stdlib.asString(b));
+  let a = system.initialise(new Foo());
+  let b = system.safeIndex(a.a, 0);
+  system.printLine(b);
 }
 
 class Foo {
@@ -142,13 +142,13 @@ class Yon
   property z as Int
 end class`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var f = system.initialise(new Foo());
-  var b = 0;
+  let f = system.initialise(new Foo());
+  let b = 0;
   b = f.b.y.z;
-  system.printLine(_stdlib.asString(b));
+  system.printLine(b);
 }
 
 class Foo {
@@ -229,13 +229,13 @@ class Bar
   end function
 end class`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var f = system.literalArray([system.initialise(new Foo())]);
-  var b = 0;
+  let f = system.literalArray([system.initialise(new Foo())]);
+  let b = 0;
   b = system.safeIndex(f, 0).b.ff();
-  system.printLine(_stdlib.asString(b));
+  system.printLine(b);
 }
 
 class Foo {
@@ -302,13 +302,13 @@ class Bar
   end function
 end class`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var f = system.list([system.initialise(new Foo())]);
-  var b = 0;
+  let f = system.list([system.initialise(new Foo())]);
+  let b = 0;
   b = system.safeIndex(f, 0).b.ff();
-  system.printLine(_stdlib.asString(b));
+  system.printLine(b);
 }
 
 class Foo {
@@ -358,12 +358,12 @@ main
   print s
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var s = "";
+  let s = "";
   s = _stdlib.upperCase(_stdlib.lowerCase("Hello World!").slice(0, 1));
-  system.printLine(_stdlib.asString(s));
+  system.printLine(s);
 }
 return [main, _tests];}`;
 
@@ -386,13 +386,13 @@ main
   print s
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var aStringVar = "abcdexefg";
-  var s = "";
+  let aStringVar = "abcdexefg";
+  let s = "";
   s = _stdlib.asString(_stdlib.indexOf(_stdlib.upperCase(aStringVar).slice(1, 7).slice(2, 6), "X"));
-  system.printLine(_stdlib.asString(s));
+  system.printLine(s);
 }
 return [main, _tests];}`;
 
@@ -422,12 +422,12 @@ class Bar
 
 end class`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = "";
+  let a = "";
   a = system.safeIndex(_stdlib.upperCase(system.safeIndex((system.initialise(new Bar())).strArr, 0)), 0);
-  system.printLine(_stdlib.asString(a));
+  system.printLine(a);
 }
 
 class Bar {
@@ -469,13 +469,13 @@ class Foo
 
 end class`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var aFoo = system.initialise(new Foo());
-  var b = 0;
+  let aFoo = system.initialise(new Foo());
+  let b = 0;
   b = _stdlib.length(system.array(aFoo.createArr(10).slice(1, 5))) + 3;
-  system.printLine(_stdlib.asString(b));
+  system.printLine(b);
 }
 
 class Foo {
@@ -529,13 +529,13 @@ class Foo
 
 end class`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var aBar = system.initialise(new Bar());
-  var b = 0;
+  let aBar = system.initialise(new Bar());
+  let b = 0;
   b = 5 + system.safeIndex(system.safeIndex(aBar.foo.create2DArr(), 2), 1) - 2;
-  system.printLine(_stdlib.asString(b));
+  system.printLine(b);
 }
 
 class Bar {
@@ -584,11 +584,11 @@ main
   print a.filter(lambda x as Int => x > 2).map(lambda x as Int => x * x).reduce(0, lambda s as Int, x as Int => s + x)
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.list([1, 2, 3, 4, 5, 6]);
-  system.printLine(_stdlib.asString(_stdlib.reduce(_stdlib.map(_stdlib.filter(a, (x) => x > 2), (x) => x * x), 0, (s, x) => s + x)));
+  let a = system.list([1, 2, 3, 4, 5, 6]);
+  system.printLine(_stdlib.reduce(_stdlib.map(_stdlib.filter(a, (x) => x > 2), (x) => x * x), 0, (s, x) => s + x));
 }
 return [main, _tests];}`;
 
@@ -609,11 +609,11 @@ main
   print a[..5].map(lambda x as Int => x * x).asArray()[2..].reduce(0, lambda s as Int, x as Int => s + x)
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.literalArray([1, 2, 3, 4, 5, 6]);
-  system.printLine(_stdlib.asString(_stdlib.reduce(system.array(_stdlib.asArray(_stdlib.map(system.array(a.slice(0, 5)), (x) => x * x)).slice(2)), 0, (s, x) => s + x)));
+  let a = system.literalArray([1, 2, 3, 4, 5, 6]);
+  system.printLine(_stdlib.reduce(system.array(_stdlib.asArray(_stdlib.map(system.array(a.slice(0, 5)), (x) => x * x)).slice(2)), 0, (s, x) => s + x));
 }
 return [main, _tests];}`;
 

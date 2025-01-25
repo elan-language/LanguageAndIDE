@@ -114,8 +114,11 @@ export class StdLib {
   @elanConstant(ElanBoolean) true = true;
   @elanConstant(ElanBoolean) false = false;
 
-  @elanConstant()
-  pi: number = Math.PI;
+  @elanConstant() pi: number = Math.PI;
+
+  @elanConstant(ElanString) quotes = `"`;
+  @elanConstant(ElanString) openBrace = `{`;
+  @elanConstant(ElanString) closeBrace = `}`;
 
   private isValueType<T1>(v: T1) {
     return typeof v === "boolean" || typeof v === "string" || typeof v === "number";
@@ -189,7 +192,7 @@ export class StdLib {
     return String.fromCharCode(n);
   }
 
-  @elanFunction(["character"], FunctionOptions.pureExtension)
+  @elanFunction(["character"], FunctionOptions.pureExtension, ElanInt)
   asUnicode(s: string): number {
     return s.charCodeAt(0);
   }
@@ -256,7 +259,7 @@ export class StdLib {
     },
   ): T1[] {
     const lst = this.keys(dict).map((k) => dict[k]);
-    (lst as unknown as hasHiddenType)._type = "List";
+    (lst as unknown as hasHiddenType)._type = `List`;
     return lst;
   }
 
@@ -382,7 +385,7 @@ export class StdLib {
   }
 
   @elanFunction(["", "index", "value"], FunctionOptions.pureExtension, ElanList(ElanT1))
-  withInsert<T1>(
+  withInsertAt<T1>(
     @elanListType(ElanT1) list: T1[],
     @elanIntType() index: number,
     @elanGenericParamT1Type() value: T1,
@@ -474,7 +477,7 @@ export class StdLib {
   }
 
   @elanProcedure(["", "other"], ProcedureOptions.extension)
-  appendList<T1>(@elanArrayType(ElanT1) list: T1[], @elanArrayType(ElanT1) listB: T1[]) {
+  appendArray<T1>(@elanArrayType(ElanT1) list: T1[], @elanArrayType(ElanT1) listB: T1[]) {
     list.push(...listB);
   }
 
@@ -484,7 +487,7 @@ export class StdLib {
   }
 
   @elanProcedure(["", "other"], ProcedureOptions.extension)
-  prependList<T1>(@elanArrayType(ElanT1) list: T1[], @elanArrayType(ElanT1) listB: T1[]) {
+  prependArray<T1>(@elanArrayType(ElanT1) list: T1[], @elanArrayType(ElanT1) listB: T1[]) {
     list.unshift(...listB);
   }
 
@@ -510,6 +513,16 @@ export class StdLib {
     return s1.indexOf(s2);
   }
 
+  @elanFunction(["", "item"], FunctionOptions.pureExtension, ElanInt)
+  indexOfItem<T1>(
+    @elanIterableType(ElanT1)
+    source: T1[],
+    @elanGenericParamT1Type()
+    item: T1,
+  ): number {
+    return this.elanIndexOf(source, item);
+  }
+
   @elanFunction([], FunctionOptions.pureExtension)
   trim(s: string): string {
     return s.trim();
@@ -530,18 +543,18 @@ export class StdLib {
     return list.join(separator);
   }
 
-  @elanFunction(["number"], FunctionOptions.pure, ElanInt)
+  @elanFunction(["number"], FunctionOptions.pureExtension, ElanInt)
   floor(n: number) {
     return Math.floor(n);
   }
 
-  @elanFunction(["number", "decimalPlaces"])
+  @elanFunction(["number", "decimalPlaces"], FunctionOptions.pureExtension)
   round(n: number, @elanIntType() places: number): number {
     const shift = 10 ** places;
     return Math.floor(n * shift + 0.5) / shift;
   }
 
-  @elanFunction(["number"], FunctionOptions.pure, ElanInt)
+  @elanFunction(["number"], FunctionOptions.pureExtension, ElanInt)
   ceiling(n: number): number {
     const fl = this.floor(n);
     return n > fl ? fl + 1 : fl;
@@ -1007,7 +1020,7 @@ export class StdLib {
   }
 
   @elanFunction(["", "regExp"], FunctionOptions.pureExtension)
-  testRegExp(a: string, r: RegExp): boolean {
+  matchesRegExp(a: string, r: RegExp): boolean {
     return r.test(a);
   }
 

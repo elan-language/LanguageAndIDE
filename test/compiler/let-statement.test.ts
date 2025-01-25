@@ -24,10 +24,10 @@ function add() returns Int
   return x + y
 end function`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(_stdlib.asString(add()));
+  system.printLine(add());
 }
 
 function add() {
@@ -63,7 +63,7 @@ procedure foo()
   end for
 end procedure`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
   list = system.list([1, 2, 3, 4, 5]);
 
@@ -73,9 +73,9 @@ async function main() {
 }
 
 async function foo() {
-  for (var i = 0; i <= 4; i = i + 1) {
+  for (let i = 0; i <= 4; i = i + 1) {
     const temp = system.safeIndex(global.list, i);
-    system.printLine(_stdlib.asString(temp));
+    system.printLine(temp);
   }
 }
 global["foo"] = foo;
@@ -107,20 +107,20 @@ procedure foo()
   print list
 end procedure`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   await foo();
 }
 
 async function foo() {
-  var list = system.list([1, 2, 3, 4, 5]);
-  for (var i = 0; i <= 3; i = i + 1) {
+  let list = system.list([1, 2, 3, 4, 5]);
+  for (let i = 0; i <= 3; i = i + 1) {
     const temp = system.safeIndex(list, i);
     list = _stdlib.withPutAt(list, i, system.safeIndex(list, i + 1));
     list = _stdlib.withPutAt(list, i + 1, temp);
   }
-  system.printLine(_stdlib.asString(list));
+  system.printLine(list);
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -132,6 +132,46 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "{2, 3, 4, 5, 1}");
+  });
+
+  test("Pass_Scoped", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  print foo()
+end main
+
+function foo() returns Int
+  if true then
+    variable i set to 0
+  end if
+  let i be 1
+  return i
+end function`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  system.printLine(foo());
+}
+
+function foo() {
+  if (_stdlib.true) {
+    let i = 0;
+  }
+  const i = 1;
+  return i;
+}
+global["foo"] = foo;
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1");
   });
 
   test("Fail_cannotRedefine ", async () => {
@@ -229,10 +269,10 @@ main
 end main
 
 function foo() returns (Int, Int)
-  return (0, 0)
+  return tuple(0, 0)
 end function`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   const [a, length] = foo();

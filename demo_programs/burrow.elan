@@ -26,7 +26,7 @@ function updateCoordinates(x as Int, y as Int, dir as Int) returns (Int, Int)
   else if dir is 3 then
     set newY to greaterOf(y - 1, 0)
   end if
-  return (newX, newY)
+  return tuple(newX, newY)
 end function
 
 function lesserOf(value1 as Int, value2 as Int) returns Int
@@ -65,15 +65,15 @@ end test
 
 test updateCoordinates
   # normal
-  assert updateCoordinates(3, 7, 0) is (4, 7)
-  assert updateCoordinates(3, 7, 1) is (2, 7)
-  assert updateCoordinates(3, 7, 2) is (3, 8)
-  assert updateCoordinates(3, 7, 3) is (3, 6)
+  assert updateCoordinates(3, 7, 0) is tuple(4, 7)
+  assert updateCoordinates(3, 7, 1) is tuple(2, 7)
+  assert updateCoordinates(3, 7, 2) is tuple(3, 8)
+  assert updateCoordinates(3, 7, 3) is tuple(3, 6)
   # edge (keeps within boundaries of Graphics display)
-  assert updateCoordinates(0, 7, 1) is (0, 7)
-  assert updateCoordinates(39, 7, 0) is (39, 7)
-  assert updateCoordinates(3, 0, 3) is (3, 0)
-  assert updateCoordinates(3, 29, 2) is (3, 29)
+  assert updateCoordinates(0, 7, 1) is tuple(0, 7)
+  assert updateCoordinates(39, 7, 0) is tuple(39, 7)
+  assert updateCoordinates(3, 0, 3) is tuple(3, 0)
+  assert updateCoordinates(3, 29, 2) is tuple(3, 29)
 end test
 
 constant maxCol set to 39

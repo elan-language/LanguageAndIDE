@@ -67,7 +67,7 @@ ${this.indent()}end for`;
     let declare = "";
 
     if (id instanceof UnknownSymbol) {
-      declare = "var ";
+      declare = "let ";
     } else {
       mustBeOfSymbolType(
         id.symbolType(transforms),

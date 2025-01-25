@@ -46,6 +46,8 @@ import {
   tab,
   up,
 } from "./testHelpers";
+import { TypeNameField } from "../src/frames/fields/type-name-field";
+import { InheritsFrom } from "../src/frames/fields/inheritsFrom";
 
 suite("Editing Frames", () => {
   test("Enter on a frame to Insert new code - creating a selector", () => {
@@ -85,6 +87,21 @@ suite("Editing Frames", () => {
     assert.equal(file.getChildren().length, 2);
     const select0 = file.getById("select0") as IdentifierField;
     assert.equal(select0.isSelected(), true);
+  });
+  test("#1057 enter on inheritance clause field should put focus *inside* the class, not the next global", () => {
+    const file = classWithConstructor();
+    assert.equal(file.getChildren().length, 2);
+    const className = file.getById("type2") as TypeNameField;
+    className.select();
+    assert.equal(className.isSelected(), true);
+    className.processKey(enter());
+    assert.equal(className.isSelected(), false);
+    const text3 = file.getById("text3") as InheritsFrom;
+    assert.equal(text3.isSelected(), true);
+    text3.processKey(enter());
+    assert.equal(text3.isSelected(), false);
+    const constructor = file.getById("constructor5") as Constructor;
+    assert.equal(constructor.isSelected(), true);
   });
   test("Tab/Shift-Tab on a field goes to next/prev", () => {
     const file = oneConstant();

@@ -64,7 +64,6 @@ let undoRedoing: boolean = false;
 let currentFieldId: string = "";
 
 let file: File;
-let doOnce = true;
 let profile: Profile;
 let lastSavedHash = "";
 let undoRedoHash = "";
@@ -264,7 +263,7 @@ function checkIsChrome() {
   const isIOSChrome = winNav.userAgent.match("CriOS");
   const isGoogleChrome =
     typeof (winNav as any).userAgentData !== "undefined"
-      ? (winNav as any).userAgentData.brands[0].brand === "Google Chrome"
+      ? (winNav as any).userAgentData.brands.some((b: any) => b.brand === "Google Chrome")
       : vendorName === "Google Inc.";
 
   if (isIOSChrome) {
@@ -398,7 +397,7 @@ async function showError(err: Error, fileName: string, reset: boolean) {
 
 async function refreshAndDisplay(compileIfParsed: boolean, editingField: boolean) {
   file.refreshParseAndCompileStatuses(compileIfParsed);
-  if (file.readCompileStatus() === CompileStatus.ok) {
+  if (file.readCompileStatus() === CompileStatus.ok && file.hasTests) {
     runTests();
   }
   try {
@@ -515,17 +514,6 @@ function updateDisplayValues() {
       elem.removeAttribute("hidden");
     }
 
-    if (useChromeFileAPI()) {
-      if (!isParsing) {
-        disable(autoSaveButton, "Code must be parsing in order to save");
-      } else {
-        enable(
-          autoSaveButton,
-          "Save to file now and then auto-save to same file whenever code is changed and parses",
-        );
-      }
-    }
-
     if (isEmpty) {
       disable(saveButton, "Some code must be added in order to save");
     } else if (!isParsing) {
@@ -556,6 +544,23 @@ function updateDisplayValues() {
     } else {
       enable(redoButton, "Redo last change (Ctrl + y");
     }
+
+    if (autoSaveFileHandle) {
+      autoSaveButton.innerText = "Auto-off";
+      autoSaveButton.setAttribute("title", "Click to turn auto-save off and resume manual saving.");
+    } else {
+      if (useChromeFileAPI()) {
+        autoSaveButton.innerText = "Auto";
+        if (isParsing) {
+          enable(
+            autoSaveButton,
+            "Save to file now and then auto-save to same file whenever code is changed and parses",
+          );
+        } else {
+          disable(autoSaveButton, "Code must be parsing in order to save");
+        }
+      }
+    }
   }
 }
 
@@ -570,8 +575,8 @@ function enable(button: HTMLButtonElement, msg = "") {
 }
 
 function getEditorMsg(
-  type: "key" | "click" | "dblclick" | "paste",
-  target: "frame" | "window",
+  type: "key" | "click" | "dblclick" | "paste" | "contextmenu",
+  target: "frame",
   id: string | undefined,
   key: string | undefined,
   modKey: { control: boolean; shift: boolean; alt: boolean },
@@ -599,13 +604,29 @@ function getEditorMsg(
         modKey: modKey,
         selection: selection,
       };
+    case "contextmenu":
+      return {
+        type: type,
+        target: target,
+        key: "ContextMenu",
+        id: id,
+        modKey: modKey,
+        selection: selection,
+        autocomplete: autocomplete,
+      };
   }
 }
 
 function handlePaste(event: Event, target: HTMLInputElement, msg: editorEvent): boolean {
+  // outside of handler or selection is gone
+  const start = target.selectionStart ?? 0;
+  const end = target.selectionEnd ?? 0;
   target.addEventListener("paste", async (event: ClipboardEvent) => {
-    const txt = await navigator.clipboard.readText();
     const mk = { control: false, shift: false, alt: false };
+    const txt = await navigator.clipboard.readText();
+    if (start !== end) {
+      await handleEditorEvent(event, "key", "frame", mk, msg.id, "Delete", [start, end]);
+    }
     await handleEditorEvent(event, "paste", "frame", mk, msg.id, txt);
   });
   event.stopPropagation();
@@ -674,6 +695,7 @@ function isSupportedKey(evt: editorEvent) {
     case "ArrowDown":
     case "Backspace":
     case "Delete":
+    case "ContextMenu":
       return true;
     default:
       return !evt.key || evt.key.length === 1;
@@ -682,8 +704,8 @@ function isSupportedKey(evt: editorEvent) {
 
 async function handleEditorEvent(
   event: Event,
-  type: "key" | "click" | "dblclick" | "paste",
-  target: "frame" | "window",
+  type: "key" | "click" | "dblclick" | "paste" | "contextmenu",
+  target: "frame",
   modKey: { control: boolean; shift: boolean; alt: boolean },
   id?: string | undefined,
   key?: string | undefined,
@@ -705,9 +727,19 @@ async function handleEditorEvent(
     return;
   }
 
+  if (key === "Delete" && !selection && event.target instanceof HTMLInputElement) {
+    const start = event.target.selectionStart ?? 0;
+    const end = event.target.selectionEnd ?? 0;
+    msg.selection = [start, end];
+  }
+
   handleKeyAndRender(msg);
   event.preventDefault();
   event.stopPropagation();
+}
+
+function getFocused() {
+  return document.querySelector(".focused") as HTMLUnknownElement | undefined;
 }
 
 /**
@@ -715,7 +747,6 @@ async function handleEditorEvent(
  */
 async function updateContent(text: string, editingField: boolean) {
   file.setRunStatus(RunStatus.default);
-  doOnce = doOnce === undefined || doOnce ? true : false;
 
   codeContainer!.innerHTML = text;
 
@@ -757,19 +788,50 @@ async function updateContent(text: string, editingField: boolean) {
       const ke = event as KeyboardEvent;
       handleEditorEvent(event, "dblclick", "frame", getModKey(ke), id);
     });
+
+    frame.addEventListener("contextmenu", (event) => {
+      const mk = { control: false, shift: false, alt: false };
+      handleEditorEvent(event, "contextmenu", "frame", mk, id);
+      event.preventDefault();
+    });
   }
 
   const input = document.querySelector(".focused input") as HTMLInputElement;
-  const focused = document.querySelector(".focused") as HTMLUnknownElement;
+  const focused = getFocused();
   const elanCode = document.querySelector(".elan-code") as HTMLDivElement;
 
-  if (doOnce) {
-    doOnce = false;
+  elanCode?.addEventListener("click", () => {
+    const focused = getFocused();
+    if (focused) {
+      focused.focus();
+    } else {
+      file.getFirstChild().select();
+      getFocused()?.focus();
+    }
+  });
 
-    elanCode!.addEventListener("keydown", (event: Event) => {
-      const ke = event as KeyboardEvent;
-      handleEditorEvent(event, "key", "window", getModKey(ke), undefined, ke.key);
-    });
+  if (document.querySelector(".context-menu")) {
+    const items = document.querySelectorAll(".context-menu-item");
+
+    for (const item of items) {
+      item.addEventListener("click", (event) => {
+        const ke = event as PointerEvent;
+        const tgt = ke.target as HTMLDivElement;
+        const id = tgt.dataset.id;
+        const func = tgt.dataset.func;
+
+        handleEditorEvent(
+          event,
+          "contextmenu",
+          "frame",
+          getModKey(ke),
+          id,
+          "ContextMenu",
+          undefined,
+          func,
+        );
+      });
+    }
   }
 
   if (input) {
@@ -855,9 +917,9 @@ async function localAndAutoSave(field: HTMLElement | undefined, editingField: bo
     // save to local store
 
     if (undoRedoHash !== file.currentHash && !undoRedoing) {
-      if (previousFileIndex !== -1 && previousFileIndex !== undoRedoFiles.length - 2) {
-        const trimedIds = undoRedoFiles.slice(previousFileIndex + 2);
-        undoRedoFiles = undoRedoFiles.slice(0, previousFileIndex + 2);
+      if (nextFileIndex !== -1 && nextFileIndex > currentFileIndex) {
+        const trimedIds = undoRedoFiles.slice(nextFileIndex);
+        undoRedoFiles = undoRedoFiles.slice(0, nextFileIndex);
 
         for (const id of trimedIds) {
           localStorage.removeItem(id);
@@ -987,6 +1049,10 @@ async function handleKeyAndRender(e: editorEvent) {
           await renderAsHtml(false);
         }
         // undefined just return
+        return;
+      case "contextmenu":
+        handleKey(e, file);
+        await renderAsHtml(false);
         return;
     }
   } catch (e) {
@@ -1125,7 +1191,7 @@ async function handleChromeUploadOrAppend(upload: boolean) {
       id: lastDirId,
     });
     const codeFile = await fileHandle.getFile();
-    const fileName = codeFile.name;
+    const fileName = upload ? codeFile.name : file.fileName;
     const rawCode = await codeFile.text();
     if (upload) {
       file = new FileImpl(hash, profile, transforms());
@@ -1158,7 +1224,7 @@ function handleUploadOrAppend(event: Event, upload: boolean) {
   const elanFile = (event.target as any).files?.[0] as any;
 
   if (elanFile) {
-    const fileName = elanFile.name;
+    const fileName = upload ? elanFile.name : file.fileName;
     cursorWait();
     clearDisplays();
     const reader = new FileReader();
@@ -1260,7 +1326,6 @@ async function handleChromeDownload(event: Event) {
 async function handleChromeAutoSave(event: Event) {
   if (autoSaveFileHandle) {
     autoSaveFileHandle = undefined;
-    autoSaveButton.innerText = "Auto";
     updateDisplayValues();
     return;
   }
@@ -1271,8 +1336,6 @@ async function handleChromeAutoSave(event: Event) {
     autoSaveFileHandle = await chromeSave(code);
     lastSavedHash = file.currentHash;
     await renderAsHtml(false);
-    autoSaveButton.innerText = "Auto-off";
-    autoSaveButton.setAttribute("title", "Click to turn auto-save off and resume manual saving.");
   } catch (_e) {
     // user cancelled
     return;

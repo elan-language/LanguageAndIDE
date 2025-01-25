@@ -1,10 +1,10 @@
-# 25796633bcbfca76f8c959ed4549201fd802ee10c4edf5f8f6c8fc22f6ed152e Elan Beta 6 valid
+# 4775e5ef6c31f0dccc35f16a5b682813a7718954146a748b194504a153d79862 Elan Beta 6 valid
 
 main
   variable vg set to new VectorGraphics()
   let bubbles be empty Array<of CircleVG>
   for i from 0 to 19 step 1
-    let b be new CircleVG() with cx to i*5 + 2, cy to 75, r to 1, fill to -1, stroke to white
+    let b be new CircleVG() with cx set to i*5 + 2, cy set to 75, r set to 1, fill set to -1, stroke set to white
     call bubbles.append(b)
     set vg to vg.add(b)
   end for
@@ -17,9 +17,9 @@ end main
 procedure refresh(bubbles as Array<of CircleVG>, out vg as VectorGraphics)
   for i from 0 to 19 step 1
     let b be bubbles[i]
-    variable b2 set to copy b with cy to b.cy - 1, r to b.r + 0.2
+    variable b2 set to copy b with cy set to b.cy - 1, r set to b.r + 0.2
     if random() < 0.05 then
-      set b2 to copy b2 with cx to randomInt(0, 99), r to 1, cy to 75, stroke to randomInt(0, maxColour)
+      set b2 to copy b2 with cx set to randomInt(0, 99), r set to 1, cy set to 75, stroke set to randomInt(0, maxColour)
     end if
     set vg to vg.replace(b, b2)
     call bubbles.putAt(i, b2)

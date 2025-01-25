@@ -23,14 +23,14 @@ main
   print c
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.literalArray([1, 2]);
-  var b = system.literalArray([3, 4]);
-  var c = system.initialise(system.array(new Array()));
+  let a = system.literalArray([1, 2]);
+  let b = system.literalArray([3, 4]);
+  let c = system.initialise(system.array(new Array()));
   c = system.literalArray([a, b]);
-  system.printLine(_stdlib.asString(c));
+  system.printLine(c);
 }
 return [main, _tests];}`;
 
@@ -60,11 +60,11 @@ function bar(arr as Array2D<of Int>) returns Array2D<of Int>
 end function
 `;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.initialise(system.array(new Array()));
-  system.printLine(_stdlib.asString(foo(a)));
+  let a = system.initialise(system.array(new Array()));
+  system.printLine(foo(a));
 }
 
 function foo(arr) {
@@ -96,12 +96,12 @@ main
   print a.length()
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.initialise(system.array(new Array()));
+  let a = system.initialise(system.array(new Array()));
   a = _stdlib.createArray2D(3, 0, "");
-  system.printLine(_stdlib.asString(_stdlib.length(a)));
+  system.printLine(_stdlib.length(a));
 }
 return [main, _tests];}`;
 
@@ -126,15 +126,15 @@ main
   print a[2][0]
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.initialise(system.array(new Array()));
+  let a = system.initialise(system.array(new Array()));
   a = system.literalArray([system.literalArray([""]), system.literalArray([""]), system.literalArray([""])]);
   _stdlib.putAt(a, 0, system.literalArray(["bar", "foo"]));
   _stdlib.putAt(a, 2, system.literalArray(["yon", "xan"]));
-  system.printLine(_stdlib.asString(system.safeIndex(system.safeIndex(a, 0), 1)));
-  system.printLine(_stdlib.asString(system.safeIndex(system.safeIndex(a, 2), 0)));
+  system.printLine(system.safeIndex(system.safeIndex(a, 0), 1));
+  system.printLine(system.safeIndex(system.safeIndex(a, 2), 0));
 }
 return [main, _tests];}`;
 
@@ -158,14 +158,14 @@ main
   print a[0][1]
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.emptyArray();
+  let a = system.emptyArray();
   a = _stdlib.createArray2D(3, 0, "");
   _stdlib.putAt(a, 0, system.literalArray(["bar", "foo"]));
   _stdlib.putAt(system.safeIndex(a, 0), 1, "yon");
-  system.printLine(_stdlib.asString(system.safeIndex(system.safeIndex(a, 0), 1)));
+  system.printLine(system.safeIndex(system.safeIndex(a, 0), 1));
 }
 return [main, _tests];}`;
 
@@ -190,15 +190,15 @@ main
   print a[4]
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.emptyArray();
+  let a = system.emptyArray();
   a = _stdlib.createArray2D(3, 0, "");
   _stdlib.append(a, system.literalArray(["foo"]));
   _stdlib.append(a, system.literalArray(["yon"]));
-  system.printLine(_stdlib.asString(system.safeIndex(a, 3)));
-  system.printLine(_stdlib.asString(system.safeIndex(a, 4)));
+  system.printLine(system.safeIndex(a, 3));
+  system.printLine(system.safeIndex(a, 4));
 }
 return [main, _tests];}`;
 
@@ -222,14 +222,14 @@ main
   print a
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.emptyArray();
+  let a = system.emptyArray();
   a = _stdlib.createArray2D(3, 0, "");
   _stdlib.append(system.safeIndex(a, 1), "foo");
   _stdlib.append(system.safeIndex(a, 2), "yon");
-  system.printLine(_stdlib.asString(a));
+  system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -256,17 +256,17 @@ main
   print b is empty Array<of Array<of Int>>
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.emptyArray();
-  var b = system.emptyArray();
+  let a = system.emptyArray();
+  let b = system.emptyArray();
   _stdlib.append(a, system.literalArray([3]));
-  system.printLine(_stdlib.asString(a));
-  system.printLine(_stdlib.asString(b));
-  system.printLine(_stdlib.asString(system.objectEquals(a, b)));
-  system.printLine(_stdlib.asString(system.objectEquals(a, system.emptyArray())));
-  system.printLine(_stdlib.asString(system.objectEquals(b, system.emptyArray())));
+  system.printLine(a);
+  system.printLine(b);
+  system.printLine(system.objectEquals(a, b));
+  system.printLine(system.objectEquals(a, system.emptyArray()));
+  system.printLine(system.objectEquals(b, system.emptyArray()));
 }
 return [main, _tests];}`;
 
@@ -288,12 +288,12 @@ main
   print a
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.initialise(system.array(new Array()));
+  let a = system.initialise(system.array(new Array()));
   a = _stdlib.createArray2D(2, 2, 0);
-  system.printLine(_stdlib.asString(a));
+  system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -315,12 +315,12 @@ main
   print a
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.initialise(system.array(new Array()));
+  let a = system.initialise(system.array(new Array()));
   a = _stdlib.createArray2D(2, 2, 1);
-  system.printLine(_stdlib.asString(a));
+  system.printLine(a);
 }
 return [main, _tests];}`;
 

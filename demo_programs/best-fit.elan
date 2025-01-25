@@ -8,7 +8,7 @@ function bestFitLine(points as List<of Point>) returns (Float, Float)
   let n be points.length()
   let a be (sumY*sumXsq - sumX*sumXY)/(n*sumXsq - sumX*sumX)
   let b be (n*sumXY - sumX*sumY)/(n*sumXsq - sumX*sumX)
-  return (a, b)
+  return tuple(a, b)
 end function
 
 class Point
@@ -26,6 +26,6 @@ end class
 test 
   let l1 be {new Point(0.71, 1.12), new Point(3.56, 5.36), new Point(7.83, 9.04)}
   let first, second be bestFitLine(l1)
-  assert round(first, 3) is 0.766
-  assert round(second, 3) is 1.093
+  assert first.round(3) is 0.766
+  assert second.round(3) is 1.093
 end test

@@ -272,13 +272,9 @@ export function currentParameterIndex(text: string) {
 }
 
 export function privateHelp(member: Member, memberType: string): string {
-  let result = "";
-  if (!member.isAbstract) {
-    result = member.private
-      ? `title="To make ${memberType} public, select '${memberType}' frame then Ctrl-p."`
-      : `title="To make ${memberType} private, select '${memberType}' frame then Ctrl-p."`;
-  }
-  return result;
+  return member.private
+    ? `title="To make ${memberType} public, select '${memberType}' frame then Ctrl-p."`
+    : `title="To make ${memberType} private, select '${memberType}' frame then Ctrl-p."`;
 }
 
 export function processTogglePrivate(member: Member, e: editorEvent): boolean {

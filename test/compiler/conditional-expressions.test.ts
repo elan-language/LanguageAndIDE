@@ -25,13 +25,13 @@ function grade(score as Float) returns String
   return if score > 80 then "Distinction" else if score > 60 then "Merit" else if score > 40 then "Pass" else "Fail"
 end function`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(_stdlib.asString(grade(90)));
-  system.printLine(_stdlib.asString(grade(70)));
-  system.printLine(_stdlib.asString(grade(50)));
-  system.printLine(_stdlib.asString(grade(30)));
+  system.printLine(grade(90));
+  system.printLine(grade(70));
+  system.printLine(grade(50));
+  system.printLine(grade(30));
 }
 
 function grade(score) {
@@ -59,12 +59,12 @@ main
 end main
 `;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var score = 70;
-  var grade = score > 80 ? "Distinction" : score > 60 ? "Merit" : score > 40 ? "Pass" : "Fail";
-  system.printLine(_stdlib.asString(grade));
+  let score = 70;
+  let grade = score > 80 ? "Distinction" : score > 60 ? "Merit" : score > 40 ? "Pass" : "Fail";
+  system.printLine(grade);
 }
 return [main, _tests];}`;
 

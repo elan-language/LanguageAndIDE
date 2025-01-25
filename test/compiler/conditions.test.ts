@@ -21,12 +21,12 @@ main
   print 3 < 3
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(_stdlib.asString(3 < 4));
-  system.printLine(_stdlib.asString(3 < 2));
-  system.printLine(_stdlib.asString(3 < 3));
+  system.printLine(3 < 4);
+  system.printLine(3 < 2);
+  system.printLine(3 < 3);
 }
 return [main, _tests];}`;
 
@@ -48,12 +48,12 @@ main
   print 3 > 3
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(_stdlib.asString(3 > 4));
-  system.printLine(_stdlib.asString(3 > 2));
-  system.printLine(_stdlib.asString(3 > 3));
+  system.printLine(3 > 4);
+  system.printLine(3 > 2);
+  system.printLine(3 > 3);
 }
 return [main, _tests];}`;
 
@@ -75,12 +75,12 @@ main
   print 3 <= 3
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(_stdlib.asString(3 <= 4));
-  system.printLine(_stdlib.asString(3 <= 2));
-  system.printLine(_stdlib.asString(3 <= 3));
+  system.printLine(3 <= 4);
+  system.printLine(3 <= 2);
+  system.printLine(3 <= 3);
 }
 return [main, _tests];}`;
 
@@ -102,12 +102,12 @@ main
   print 3 >= 3
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(_stdlib.asString(3 >= 4));
-  system.printLine(_stdlib.asString(3 >= 2));
-  system.printLine(_stdlib.asString(3 >= 3));
+  system.printLine(3 >= 4);
+  system.printLine(3 >= 2);
+  system.printLine(3 >= 3);
 }
 return [main, _tests];}`;
 
@@ -129,12 +129,12 @@ main
   print 3 isnt 3
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(_stdlib.asString(3 !== 4));
-  system.printLine(_stdlib.asString(3 !== 2));
-  system.printLine(_stdlib.asString(3 !== 3));
+  system.printLine(3 !== 4);
+  system.printLine(3 !== 2);
+  system.printLine(3 !== 3);
 }
 return [main, _tests];}`;
 
@@ -156,12 +156,12 @@ main
   print 3 is 3
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(_stdlib.asString(3 === 4));
-  system.printLine(_stdlib.asString(3 === 2));
-  system.printLine(_stdlib.asString(3 === 3));
+  system.printLine(3 === 4);
+  system.printLine(3 === 2);
+  system.printLine(3 === 3);
 }
 return [main, _tests];}`;
 
@@ -190,19 +190,19 @@ main
   print 3.1 >= 3
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(_stdlib.asString(3 < 3.1));
-  system.printLine(_stdlib.asString(3 <= 3.1));
-  system.printLine(_stdlib.asString(3 > 3.1));
-  system.printLine(_stdlib.asString(3 >= 3.1));
-  system.printLine(_stdlib.asString(3 === 3));
-  system.printLine(_stdlib.asString(3 !== 3));
-  system.printLine(_stdlib.asString(3.1 < 3));
-  system.printLine(_stdlib.asString(3.1 <= 3));
-  system.printLine(_stdlib.asString(3.1 > 3));
-  system.printLine(_stdlib.asString(3.1 >= 3));
+  system.printLine(3 < 3.1);
+  system.printLine(3 <= 3.1);
+  system.printLine(3 > 3.1);
+  system.printLine(3 >= 3.1);
+  system.printLine(3 === 3);
+  system.printLine(3 !== 3);
+  system.printLine(3.1 < 3);
+  system.printLine(3.1 <= 3);
+  system.printLine(3.1 > 3);
+  system.printLine(3.1 >= 3);
 }
 return [main, _tests];}`;
 
@@ -224,12 +224,12 @@ main
   print (5 + 3) > (4 + 6)
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(_stdlib.asString((5 + 3) > (4 + 2)));
-  system.printLine(_stdlib.asString((5 + 3) === (4 + 4)));
-  system.printLine(_stdlib.asString((5 + 3) > (4 + 6)));
+  system.printLine((5 + 3) > (4 + 2));
+  system.printLine((5 + 3) === (4 + 4));
+  system.printLine((5 + 3) > (4 + 6));
 }
 return [main, _tests];}`;
 

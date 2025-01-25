@@ -18,17 +18,17 @@ suite("RegExp", () => {
 main
   variable r set to /a+/
   print r
-  print "aa".testRegExp(r)
-  print "b".testRegExp(r)
+  print "aa".matchesRegExp(r)
+  print "b".matchesRegExp(r)
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var r = /a+/;
-  system.printLine(_stdlib.asString(r));
-  system.printLine(_stdlib.asString(_stdlib.testRegExp("aa", r)));
-  system.printLine(_stdlib.asString(_stdlib.testRegExp("b", r)));
+  let r = /a+/;
+  system.printLine(r);
+  system.printLine(_stdlib.matchesRegExp("aa", r));
+  system.printLine(_stdlib.matchesRegExp("b", r));
 }
 return [main, _tests];}`;
 
@@ -50,18 +50,18 @@ main
 end main
 
 function testRegex(r as RegExp) returns Boolean
-  return "aa".testRegExp(r)
+  return "aa".matchesRegExp(r)
 end function`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var r = /a+/;
-  system.printLine(_stdlib.asString(testRegex(r)));
+  let r = /a+/;
+  system.printLine(testRegex(r));
 }
 
 function testRegex(r) {
-  return _stdlib.testRegExp("aa", r);
+  return _stdlib.matchesRegExp("aa", r);
 }
 global["testRegex"] = testRegex;
 return [main, _tests];}`;
@@ -81,19 +81,19 @@ return [main, _tests];}`;
 main
   variable r set to empty RegExp
   set r to testRegex()
-  print "aa".testRegExp(r)
+  print "aa".matchesRegExp(r)
 end main
 
 function testRegex() returns RegExp
   return /a+/
 end function`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var r = system.emptyRegExp();
+  let r = system.emptyRegExp();
   r = testRegex();
-  system.printLine(_stdlib.asString(_stdlib.testRegExp("aa", r)));
+  system.printLine(_stdlib.matchesRegExp("aa", r));
 }
 
 function testRegex() {
@@ -116,21 +116,21 @@ return [main, _tests];}`;
 
 main
   variable r set to /a\\/b/
-  print "a/b".testRegExp(r)
-  print "a\/b".testRegExp(r)
-  print "a\b".testRegExp(r)
-  print "a\\/b".testRegExp(r)
+  print "a/b".matchesRegExp(r)
+  print "a\/b".matchesRegExp(r)
+  print "a\b".matchesRegExp(r)
+  print "a\\/b".matchesRegExp(r)
 
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var r = /a\\/b/;
-  system.printLine(_stdlib.asString(_stdlib.testRegExp("a/b", r)));
-  system.printLine(_stdlib.asString(_stdlib.testRegExp("a/b", r)));
-  system.printLine(_stdlib.asString(_stdlib.testRegExp("a\b", r)));
-  system.printLine(_stdlib.asString(_stdlib.testRegExp("a\\/b", r)));
+  let r = /a\\/b/;
+  system.printLine(_stdlib.matchesRegExp("a/b", r));
+  system.printLine(_stdlib.matchesRegExp("a/b", r));
+  system.printLine(_stdlib.matchesRegExp("a\b", r));
+  system.printLine(_stdlib.matchesRegExp("a\\/b", r));
 }
 return [main, _tests];}`;
 
@@ -161,8 +161,8 @@ end main`;
 
 main
   variable r set to "/a+/"
-  print "aa".testRegExp(r)
-  print "b".testRegExp(r)
+  print "aa".matchesRegExp(r)
+  print "b".matchesRegExp(r)
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);

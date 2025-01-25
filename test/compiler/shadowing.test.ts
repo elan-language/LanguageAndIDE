@@ -21,11 +21,11 @@ main
   print pi
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var pi = _stdlib.pi;
-  system.printLine(_stdlib.asString(pi));
+  let pi = _stdlib.pi;
+  system.printLine(pi);
 }
 return [main, _tests];}`;
 
@@ -49,15 +49,15 @@ main
   print global.f
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
   f = 1;
 
 };
 async function main() {
-  var f = 2;
-  system.printLine(_stdlib.asString(f));
-  system.printLine(_stdlib.asString(global.f));
+  let f = 2;
+  system.printLine(f);
+  system.printLine(global.f);
 }
 return [main, _tests];}`;
 
@@ -78,11 +78,11 @@ main
   print pi
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   const pi = _stdlib.pi;
-  system.printLine(_stdlib.asString(pi));
+  system.printLine(pi);
 }
 return [main, _tests];}`;
 
@@ -106,15 +106,15 @@ main
   print global.f
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
   f = 1;
 
 };
 async function main() {
   const f = 2;
-  system.printLine(_stdlib.asString(f));
-  system.printLine(_stdlib.asString(global.f));
+  system.printLine(f);
+  system.printLine(global.f);
 }
 return [main, _tests];}`;
 
@@ -151,14 +151,14 @@ class Foo
     end function
 end class`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var f = system.initialise(new Foo());
-  system.printLine(_stdlib.asString(f.sin(1)));
-  system.printLine(_stdlib.asString(sin(1)));
-  system.printLine(_stdlib.asString(global.sin(1)));
-  system.printLine(_stdlib.asString(_stdlib.sin(1)));
+  let f = system.initialise(new Foo());
+  system.printLine(f.sin(1));
+  system.printLine(sin(1));
+  system.printLine(global.sin(1));
+  system.printLine(_stdlib.sin(1));
 }
 
 function sin(x) {
@@ -212,10 +212,10 @@ class Foo
     end procedure
 end class`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var f = system.initialise(new Foo());
+  let f = system.initialise(new Foo());
   await f.pause(1);
   await pause(1);
   await global.pause(1);
@@ -223,7 +223,7 @@ async function main() {
 }
 
 async function pause(x) {
-  system.printLine(_stdlib.asString(111));
+  system.printLine(111);
 }
 global["pause"] = pause;
 
@@ -234,7 +234,7 @@ class Foo {
   }
 
   async pause(x) {
-    system.printLine(_stdlib.asString(222));
+    system.printLine(222);
   }
 
 }
@@ -262,12 +262,12 @@ function sin(x as Float) returns Float
     return 111
 end function`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var sin = 2;
-  system.printLine(_stdlib.asString(sin));
-  system.printLine(_stdlib.asString(global.sin(1)));
+  let sin = 2;
+  system.printLine(sin);
+  system.printLine(global.sin(1));
 }
 
 function sin(x) {
@@ -298,16 +298,16 @@ procedure sin(x as Float)
   print 111
 end procedure`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var sin = 2;
-  system.printLine(_stdlib.asString(sin));
+  let sin = 2;
+  system.printLine(sin);
   await global.sin(1);
 }
 
 async function sin(x) {
-  system.printLine(_stdlib.asString(111));
+  system.printLine(111);
 }
 global["sin"] = sin;
 return [main, _tests];}`;

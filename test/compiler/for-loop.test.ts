@@ -23,14 +23,14 @@ main
   print tot
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var tot = 0;
-  for (var i = 1; i <= 10; i = i + 1) {
+  let tot = 0;
+  for (let i = 1; i <= 10; i = i + 1) {
     tot = tot + i;
   }
-  system.printLine(_stdlib.asString(tot));
+  system.printLine(tot);
 }
 return [main, _tests];}`;
 
@@ -55,15 +55,15 @@ main
   print tot
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var tot = 0;
-  var i = 0;
+  let tot = 0;
+  let i = 0;
   for (i = 1; i <= 10; i = i + 1) {
     tot = tot + i;
   }
-  system.printLine(_stdlib.asString(tot));
+  system.printLine(tot);
 }
 return [main, _tests];}`;
 
@@ -87,14 +87,14 @@ end for
 print tot
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var tot = 0;
-  for (var i = 1; i <= 10; i = i + 2) {
+  let tot = 0;
+  for (let i = 1; i <= 10; i = i + 2) {
     tot = tot + i;
   }
-  system.printLine(_stdlib.asString(tot));
+  system.printLine(tot);
 }
 return [main, _tests];}`;
 
@@ -118,14 +118,14 @@ main
   print tot
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var tot = 0;
-  for (var i = 10; i >= 3; i = i - 1) {
+  let tot = 0;
+  for (let i = 10; i >= 3; i = i - 1) {
     tot = tot + i;
   }
-  system.printLine(_stdlib.asString(tot));
+  system.printLine(tot);
 }
 return [main, _tests];}`;
 
@@ -151,16 +151,16 @@ main
   print tot
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var tot = 0;
-  for (var i = 1; i <= 3; i = i + 1) {
-    for (var j = 1; j <= 4; j = j + 1) {
+  let tot = 0;
+  for (let i = 1; i <= 3; i = i + 1) {
+    for (let j = 1; j <= 4; j = j + 1) {
       tot = tot + 1;
     }
   }
-  system.printLine(_stdlib.asString(tot));
+  system.printLine(tot);
 }
 return [main, _tests];}`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -180,21 +180,21 @@ main
   variable upper set to 10
   variable tot set to 0
   for i from lower to upper step 2
-      set tot to tot + i
+    set tot to tot + i
   end for
   print tot
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var lower = 1;
-  var upper = 10;
-  var tot = 0;
-  for (var i = lower; i <= upper; i = i + 2) {
+  let lower = 1;
+  let upper = 10;
+  let tot = 0;
+  for (let i = lower; i <= upper; i = i + 2) {
     tot = tot + i;
   }
-  system.printLine(_stdlib.asString(tot));
+  system.printLine(tot);
 }
 return [main, _tests];}`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -221,20 +221,20 @@ procedure foo(out arr as Array<of Int>)
   print arr[0]
 end procedure`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = _stdlib.createArray(11, 0);
-  var _a = [a];
+  let a = _stdlib.createArray(11, 0);
+  let _a = [a];
   await foo(_a);
   a = _a[0];
 }
 
 async function foo(arr) {
-  for (var i = 0; i <= 10; i = i + 1) {
+  for (let i = 0; i <= 10; i = i + 1) {
     _stdlib.putAt(arr[0], i, 1);
   }
-  system.printLine(_stdlib.asString(system.safeIndex(arr[0], 0)));
+  system.printLine(system.safeIndex(arr[0], 0));
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -333,8 +333,7 @@ end main
 main
   variable tot set to 0
   for i from 1 to 3 step 1
-    for j from 1 to 4 step 1
-      set tot to tot + 1
+    for j from 1 to 4 step 1  set tot to tot + 1
     end for
 end main
 `;
@@ -350,8 +349,7 @@ end main
 
 main
   variable tot set to 0
-  for i from 1 to 10
-    set tot to tot + i
+  for i from 1 to 10  set tot to tot + i
   next i
 end main
 `;
@@ -367,8 +365,7 @@ end main
 
 main
   variable tot set to 0
-  for i from 1 to 10 step 1
-    set tot to tot + i
+  for i from 1 to 10 step 1  set tot to tot + i
     break
   end for
 end main
@@ -385,8 +382,7 @@ end main
 
 main
   variable tot set to 0
-  for i from 1 to 10 step 1
-    set tot to tot + i
+  for i from 1 to 10 step 1  set tot to tot + i
     continue
   end for
 end main

@@ -10,7 +10,12 @@ import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
-import { abstractFunctionKeywords } from "../keywords";
+import {
+  abstractFunctionKeywords,
+  abstractKeyword,
+  functionKeyword,
+  returnsKeyword,
+} from "../keywords";
 import { FunctionType } from "../symbols/function-type";
 import { getClassScope } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
@@ -52,12 +57,12 @@ export class AbstractFunction extends AbstractFrame implements Member, ElanSymbo
 
   renderAsHtml(): string {
     return `<el-func class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<el-top><el-kw>abstract function </el-kw><el-method>${this.name.renderAsHtml()}</el-method>(${this.params.renderAsHtml()})<el-kw> return </el-kw>${this.returnType.renderAsHtml()}</el-top>${this.compileMsgAsHtml()}${this.getFrNo()}</el-func>
+<el-top><el-kw>${abstractKeyword} ${functionKeyword} </el-kw><el-method>${this.name.renderAsHtml()}</el-method>(${this.params.renderAsHtml()})<el-kw> ${returnsKeyword} </el-kw>${this.returnType.renderAsHtml()}</el-top>${this.compileMsgAsHtml()}${this.getFrNo()}</el-func>
 `;
   }
 
   public override renderAsSource(): string {
-    return `${this.indent()}abstract function ${this.name.renderAsSource()}(${this.params.renderAsSource()}) returns ${this.returnType.renderAsSource()}\r
+    return `${this.indent()}${abstractKeyword} ${functionKeyword} ${this.name.renderAsSource()}(${this.params.renderAsSource()}) ${returnsKeyword} ${this.returnType.renderAsSource()}\r
 `;
   }
 
@@ -77,11 +82,11 @@ ${this.indent()}}\r
   }
 
   parseFrom(source: CodeSource): void {
-    source.remove("abstract function ");
+    source.remove(`${abstractKeyword} ${functionKeyword} `);
     this.name.parseFrom(source);
     source.remove("(");
     this.params.parseFrom(source);
-    source.remove(") returns ");
+    source.remove(`) ${returnsKeyword} `);
     this.returnType.parseFrom(source);
   }
 

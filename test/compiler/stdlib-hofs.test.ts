@@ -21,15 +21,15 @@ main
   print source.filter(lambda x as Int => (x < 3) or (x > 35)).asArray()
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
   source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
 
 };
 async function main() {
-  system.printLine(_stdlib.asString(_stdlib.asArray(_stdlib.filter(global.source, (x) => x > 20))));
-  system.printLine(_stdlib.asString(_stdlib.asArray(_stdlib.filter(global.source, (x) => x > 20))));
-  system.printLine(_stdlib.asString(_stdlib.asArray(_stdlib.filter(global.source, (x) => (x < 3) || (x > 35)))));
+  system.printLine(_stdlib.asArray(_stdlib.filter(global.source, (x) => x > 20)));
+  system.printLine(_stdlib.asArray(_stdlib.filter(global.source, (x) => x > 20)));
+  system.printLine(_stdlib.asArray(_stdlib.filter(global.source, (x) => (x < 3) || (x > 35))));
 }
 return [main, _tests];}`;
 
@@ -50,13 +50,13 @@ main
   print source.filter(lambda x as String => x is "o").asArray()
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
   source = "onetwo";
 
 };
 async function main() {
-  system.printLine(_stdlib.asString(_stdlib.asArray(_stdlib.filter(global.source, (x) => x === "o"))));
+  system.printLine(_stdlib.asArray(_stdlib.filter(global.source, (x) => x === "o")));
 }
 return [main, _tests];}`;
 
@@ -82,13 +82,13 @@ function filterIt(tofilter as List<of Int>) returns List<of Int>
 end function
 `;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
   source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
 
 };
 async function main() {
-  system.printLine(_stdlib.asString(filterIt(global.source)));
+  system.printLine(filterIt(global.source));
 }
 
 function filterIt(tofilter) {
@@ -115,14 +115,14 @@ main
   print source.map(lambda x as Int => x.asString() + "*").asArray()
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
   source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
 
 };
 async function main() {
-  system.printLine(_stdlib.asString(_stdlib.asArray(_stdlib.map(global.source, (x) => x + 1))));
-  system.printLine(_stdlib.asString(_stdlib.asArray(_stdlib.map(global.source, (x) => _stdlib.asString(x) + "*"))));
+  system.printLine(_stdlib.asArray(_stdlib.map(global.source, (x) => x + 1)));
+  system.printLine(_stdlib.asArray(_stdlib.map(global.source, (x) => _stdlib.asString(x) + "*")));
 }
 return [main, _tests];}`;
 
@@ -146,13 +146,13 @@ main
   print source.map(lambda x as String => x + "*").asArray()
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
   source = "onetwo";
 
 };
 async function main() {
-  system.printLine(_stdlib.asString(_stdlib.asArray(_stdlib.map(global.source, (x) => x + "*"))));
+  system.printLine(_stdlib.asArray(_stdlib.map(global.source, (x) => x + "*")));
 }
 return [main, _tests];}`;
 
@@ -174,12 +174,12 @@ main
   print source.asArray()
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var source = _stdlib.asIterable(system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]));
+  let source = _stdlib.asIterable(system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]));
   source = _stdlib.map(source, (x) => x + 1);
-  system.printLine(_stdlib.asString(_stdlib.asArray(source)));
+  system.printLine(_stdlib.asArray(source));
 }
 return [main, _tests];}`;
 
@@ -202,15 +202,15 @@ main
   print source.reduce("Concat:", lambda s as String, x as Int => s + x.asString())
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
   source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
 
 };
 async function main() {
-  system.printLine(_stdlib.asString(_stdlib.reduce(global.source, 0, (s, x) => s + x)));
-  system.printLine(_stdlib.asString(_stdlib.reduce(global.source, 100, (s, x) => s + x)));
-  system.printLine(_stdlib.asString(_stdlib.reduce(global.source, "Concat:", (s, x) => s + _stdlib.asString(x))));
+  system.printLine(_stdlib.reduce(global.source, 0, (s, x) => s + x));
+  system.printLine(_stdlib.reduce(global.source, 100, (s, x) => s + x));
+  system.printLine(_stdlib.reduce(global.source, "Concat:", (s, x) => s + _stdlib.asString(x)));
 }
 return [main, _tests];}`;
 
@@ -231,13 +231,13 @@ main
   print source.reduce("Concat:", lambda s as String, x as String => s + "*" + x)
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
   source = "onetwo";
 
 };
 async function main() {
-  system.printLine(_stdlib.asString(_stdlib.reduce(global.source, "Concat:", (s, x) => s + "*" + x)));
+  system.printLine(_stdlib.reduce(global.source, "Concat:", (s, x) => s + "*" + x));
 }
 return [main, _tests];}`;
 
@@ -260,15 +260,15 @@ main
   print ed
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
   source = system.list(["three", "four"]);
 
 };
 async function main() {
-  var ed = system.dictionaryImmutable({["one"] : 1, ["two"] : 2});
+  let ed = system.dictionaryImmutable({["one"] : 1, ["two"] : 2});
   ed = _stdlib.reduce(global.source, ed, (d, x) => _stdlib.withPutAtKey(d, x, 1));
-  system.printLine(_stdlib.asString(ed));
+  system.printLine(ed);
 }
 return [main, _tests];}`;
 
@@ -289,13 +289,13 @@ main
   print source.max()
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
   source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
 
 };
 async function main() {
-  system.printLine(_stdlib.asString(_stdlib.max(global.source)));
+  system.printLine(_stdlib.max(global.source));
 }
 return [main, _tests];}`;
 
@@ -316,13 +316,13 @@ main
   print source.maxBy(lambda x as Int => x mod 5)
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
   source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
 
 };
 async function main() {
-  system.printLine(_stdlib.asString(_stdlib.maxBy(global.source, (x) => x % 5)));
+  system.printLine(_stdlib.maxBy(global.source, (x) => x % 5));
 }
 return [main, _tests];}`;
 
@@ -343,13 +343,13 @@ main
   print source.maxBy(lambda x as List<of Int> => x.length())
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
   source = system.list([system.list([1]), system.list([2, 2])]);
 
 };
 async function main() {
-  system.printLine(_stdlib.asString(_stdlib.maxBy(global.source, (x) => _stdlib.length(x))));
+  system.printLine(_stdlib.maxBy(global.source, (x) => _stdlib.length(x)));
 }
 return [main, _tests];}`;
 
@@ -370,13 +370,13 @@ main
   print source.maxBy(lambda t as String => t.length())
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
   source = system.list(["apple", "orange", "pear"]);
 
 };
 async function main() {
-  system.printLine(_stdlib.asString(_stdlib.maxBy(global.source, (t) => _stdlib.length(t))));
+  system.printLine(_stdlib.maxBy(global.source, (t) => _stdlib.length(t)));
 }
 return [main, _tests];}`;
 
@@ -397,13 +397,13 @@ main
   print source.length()
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
   source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
 
 };
 async function main() {
-  system.printLine(_stdlib.asString(_stdlib.length(global.source)));
+  system.printLine(_stdlib.length(global.source));
 }
 return [main, _tests];}`;
 
@@ -424,13 +424,13 @@ main
   print source.min()
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
   source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
 
 };
 async function main() {
-  system.printLine(_stdlib.asString(_stdlib.min(global.source)));
+  system.printLine(_stdlib.min(global.source));
 }
 return [main, _tests];}`;
 
@@ -451,13 +451,13 @@ main
   print source.minBy(lambda x as Int => x mod 5)
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
   source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
 
 };
 async function main() {
-  system.printLine(_stdlib.asString(_stdlib.minBy(global.source, (x) => x % 5)));
+  system.printLine(_stdlib.minBy(global.source, (x) => x % 5));
 }
 return [main, _tests];}`;
 
@@ -480,15 +480,15 @@ main
   print source.any(lambda x as Int => x > 40)
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
   source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
 
 };
 async function main() {
-  system.printLine(_stdlib.asString(_stdlib.any(global.source, (x) => x > 20)));
-  system.printLine(_stdlib.asString(_stdlib.any(global.source, (x) => (x % 2) === 0)));
-  system.printLine(_stdlib.asString(_stdlib.any(global.source, (x) => x > 40)));
+  system.printLine(_stdlib.any(global.source, (x) => x > 20));
+  system.printLine(_stdlib.any(global.source, (x) => (x % 2) === 0));
+  system.printLine(_stdlib.any(global.source, (x) => x > 40));
 }
 return [main, _tests];}`;
 
@@ -510,14 +510,14 @@ main
   print source
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
   source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
 
 };
 async function main() {
-  system.printLine(_stdlib.asString(_stdlib.asArray(_stdlib.sortBy(global.source, (x, y) => x === y ? 0 : x < y ? 1 : -1))));
-  system.printLine(_stdlib.asString(global.source));
+  system.printLine(_stdlib.asArray(_stdlib.sortBy(global.source, (x, y) => x === y ? 0 : x < y ? 1 : -1)));
+  system.printLine(global.source);
 }
 return [main, _tests];}`;
 
@@ -542,14 +542,14 @@ main
   print source
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
   source = "dbcd";
 
 };
 async function main() {
-  system.printLine(_stdlib.asString(_stdlib.asArray(_stdlib.sortBy(global.source, (x, y) => x === y ? 0 : _stdlib.isAfter(x, y) ? 1 : -1))));
-  system.printLine(_stdlib.asString(global.source));
+  system.printLine(_stdlib.asArray(_stdlib.sortBy(global.source, (x, y) => x === y ? 0 : _stdlib.isAfter(x, y) ? 1 : -1)));
+  system.printLine(global.source);
 }
 return [main, _tests];}`;
 
@@ -572,15 +572,15 @@ main
   print source.asArray().asSet()
 end main`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
   source = system.list(["apple", "orange", "pair", "apple"]);
 
 };
 async function main() {
-  system.printLine(_stdlib.asString(_stdlib.asSet(global.source)));
-  system.printLine(_stdlib.asString(_stdlib.asSet(_stdlib.asIterable(global.source))));
-  system.printLine(_stdlib.asString(_stdlib.asSet(_stdlib.asArray(global.source))));
+  system.printLine(_stdlib.asSet(global.source));
+  system.printLine(_stdlib.asSet(_stdlib.asIterable(global.source)));
+  system.printLine(_stdlib.asSet(_stdlib.asArray(global.source)));
 }
 return [main, _tests];}`;
 

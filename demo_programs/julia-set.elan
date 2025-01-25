@@ -1,4 +1,4 @@
-# b9b124e60533c6710b2cda42132f03402372ec0cf20cef87b5c60b2bd6b9c328 Elan Beta 6 valid
+# FFFF Elan Beta 6 valid
 
 # Acknowledgements:
 # https://mathworld.wolfram.com/JuliaSet.html
@@ -26,7 +26,7 @@ function allpoints(vg as VectorGraphics, p as Coords) returns VectorGraphics
       let n be onepoint((xp - width/2)/p.scale - p.xoff, (yp - height/2)/p.scale - p.yoff, nmax, p)
       # colour depends on how many iterations were done for that point
       let col be if n is nmax then 0xffffff else ((n*0x010201) mod 0xffffff)
-      set vg2 to vg2.add(new RectangleVG() with x to xp/2, y to yp/2, height to 0.5, width to 0.5, fill to col, stroke to col, strokeWidth to 0.25)
+      set vg2 to vg2.add(new RectangleVG() with x set to xp/2, y set to yp/2, height set to 0.5, width set to 0.5, fill set to col, stroke set to col, strokeWidth set to 0.25)
     end for
   end for
   return vg2

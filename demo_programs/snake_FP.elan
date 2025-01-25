@@ -1,8 +1,6 @@
-# ebe2ee47b29effad736e8a98eff1217d2c6eee59018e6cf5688f7cbc5914a260 Elan Beta 6 valid
+# 4076fd417a9553519baade42728251e1afc5bf544d9845ab97ada015055aa457 Elan Beta 6 valid
 
 # Use the W,A,S,D keys to change Snake direction
-constant delay set to 150
-
 main
   let rnd be new Random()
   call rnd.initialiseFromClock()
@@ -12,32 +10,32 @@ main
     set game to updateGraphics(game)
     let gr be game.graphics
     call gr.display()
-    call pause(delay)
+    call pause(150)
     set game to clockTick(game, getKey())
   end while
   print "Game Over! Score: {score(game)}"
 end main
 
 function clockTick(g as Game, k as String) returns Game
-  let g2 be if k is "" then g else copy g with key to k
+  let g2 be if k is "" then g else copy g with key set to k
   let g3 be moveSnake(g2)
   let g4 be eatAppleIfPoss(g3)
-  return if gameOver(g4) then copy g4 with isOn to false else g4
+  return if gameOver(g4) then copy g4 with isOn set to false else g4
 end function
 
 function updateGraphics(g as Game) returns Game
-  let g2 be copy g with graphics to g.graphics.withBlock(g.apple.x, g.apple.y, red)
-  let g3 be copy g2 with graphics to g2.graphics.withBlock(g2.head.x, g2.head.y, green)
+  let g2 be copy g with graphics set to g.graphics.withBlock(g.apple.x, g.apple.y, red)
+  let g3 be copy g2 with graphics set to g2.graphics.withBlock(g2.head.x, g2.head.y, green)
   let tail be g3.body[0]
   let tailColour be if tail is g3.priorTail then green else white
-  return copy g3 with graphics to g3.graphics.withBlock(tail.x, tail.y, tailColour)
+  return copy g3 with graphics set to g3.graphics.withBlock(tail.x, tail.y, tailColour)
 end function
 
 function newApple(g as Game) returns Game
   let x, rnd2 be g.rnd.nextInt(0, 39)
   let y, rnd3 be rnd2.nextInt(0, 29)
   let apple2 be newSquare(x, y)
-  let g2 be copy g with apple to apple2, rnd to rnd3
+  let g2 be copy g with apple set to apple2, rnd set to rnd3
   return if bodyOverlaps(g2, apple2) then newApple(g2) else g2
 end function
 
@@ -50,16 +48,16 @@ function moveSnake(g as Game) returns Game
   let x, y be g.head
   let newX be if k is "a" then x - 1 else if k is "d" then x + 1 else x
   let newY be if k is "w" then y - 1 else if k is "s" then y + 1 else y
-  return copy g with body to g.body + g.head, head to newSquare(newX, newY)
+  return copy g with body set to g.body + g.head, head set to newSquare(newX, newY)
 end function
 
 function eatAppleIfPoss(g as Game) returns Game
   let tail be g.body[0]
   let moveTail be g.body[1..g.body.length()]
-  return if overApple(g) then newApple(g) else copy g with priorTail to tail, body to moveTail
+  return if headOverApple(g) then newApple(g) else copy g with priorTail set to tail, body set to moveTail
 end function
 
-function overApple(g as Game) returns Boolean
+function headOverApple(g as Game) returns Boolean
   return g.head is g.apple
 end function
 
@@ -77,7 +75,7 @@ function bodyOverlaps(g as Game, target as Square) returns Boolean
 end function
 
 function newGame(rnd as Random) returns Game
-  return new Game() with rnd to rnd, graphics to new BlockGraphics(), head to newSquare(22, 15), body to {newSquare(20, 15), newSquare(21, 15)}, priorTail to empty Square, key to "d", isOn to true
+  return new Game() with rnd set to rnd, graphics set to new BlockGraphics(), head set to newSquare(22, 15), body set to {newSquare(20, 15), newSquare(21, 15)}, priorTail set to empty Square, key set to "d", isOn set to true
 end function
 
 record Game
@@ -100,7 +98,7 @@ record Game
 end record
 
 function newSquare(x as Int, y as Int) returns Square
-  return new Square() with x to x, y to y
+  return new Square() with x set to x, y set to y
 end function
 
 record Square
@@ -118,12 +116,12 @@ test clockTick
   assert g3.body.length() is 2
   assert g3.priorTail is g2.body[0]
   assert g3.isOn is true
-  let g4 be copy g3 with apple to newSquare(22, 17)
+  let g4 be copy g3 with apple set to newSquare(22, 17)
   let g5 be clockTick(g4, "s")
   assert g5.body.length() is 3
   assert g5.priorTail is g4.priorTail
   assert g5.isOn is true
-  let g6 be copy g5 with head to newSquare(22, 29)
+  let g6 be copy g5 with head set to newSquare(22, 29)
   let g7 be clockTick(g6, "s")
   assert g7.isOn is false
 end test
@@ -151,7 +149,7 @@ test newApple
   assert g3.apple is newSquare(10, 12)
   # test that apple is never over snake
   let g4 be newGame(new Random())
-  let g5 be copy g4 with body to {newSquare(12, 15)}
+  let g5 be copy g4 with body set to {newSquare(12, 15)}
   let g6 be newApple(g5)
   assert g6.apple is newSquare(10, 12)
 end test
@@ -159,26 +157,26 @@ end test
 test score
   let g1 be newGame(new Random())
   assert score(g1) is 0
-  let g2 be copy g1 with body to {newSquare(4, 4), newSquare(5, 4)}
+  let g2 be copy g1 with body set to {newSquare(4, 4), newSquare(5, 4)}
   assert score(g2) is 0
-  let g3 be copy g1 with body to {newSquare(3, 4), newSquare(4, 4), newSquare(5, 4)}
+  let g3 be copy g1 with body set to {newSquare(3, 4), newSquare(4, 4), newSquare(5, 4)}
   assert score(g3) is 1
-  let g4 be copy g1 with body to {newSquare(3, 4), newSquare(4, 4), newSquare(5, 4), newSquare(5, 5)}
+  let g4 be copy g1 with body set to {newSquare(3, 4), newSquare(4, 4), newSquare(5, 4), newSquare(5, 5)}
   assert score(g4) is 2
 end test
 
 test moveSnake
   let g1 be newGame(new Random())
-  let g2 be copy g1 with key to "a"
+  let g2 be copy g1 with key set to "a"
   let g3 be moveSnake(g2)
   assert g3.head is newSquare(21, 15)
-  let g4 be copy g1 with key to "d"
+  let g4 be copy g1 with key set to "d"
   let g5 be moveSnake(g4)
   assert g5.head is newSquare(23, 15)
-  let g6 be copy g1 with key to "w"
+  let g6 be copy g1 with key set to "w"
   let g7 be moveSnake(g6)
   assert g7.head is newSquare(22, 14)
-  let g8 be copy g1 with key to "s"
+  let g8 be copy g1 with key set to "s"
   let g9 be moveSnake(g8)
   assert g9.head is newSquare(22, 16)
 end test
@@ -187,13 +185,13 @@ test eatAppleIfPoss
   let g1 be newGame(new Random())
   assert g1.body.length() is 2
   # negative case
-  let g2 be copy g1 with apple to newSquare(23, 15)
+  let g2 be copy g1 with apple set to newSquare(23, 15)
   let g3 be eatAppleIfPoss(g2)
   assert g3.body.length() is 1
   assert g3.apple is g2.apple
   assert g3.priorTail is g2.body[0]
   # positive case
-  let g4 be copy g2 with head to newSquare(23, 15)
+  let g4 be copy g2 with head set to newSquare(23, 15)
   let g5 be eatAppleIfPoss(g4)
   assert g5.body.length() is 2
   assert g5.apple is newSquare(12, 15)
@@ -202,39 +200,39 @@ end test
 
 test overApple
   let g1 be newGame(new Random())
-  let g2 be copy g1 with apple to newSquare(23, 15)
-  assert overApple(g2) is false
-  let g3 be copy g2 with head to newSquare(23, 15)
-  assert overApple(g3) is true
+  let g2 be copy g1 with apple set to newSquare(23, 15)
+  assert headOverApple(g2) is false
+  let g3 be copy g2 with head set to newSquare(23, 15)
+  assert headOverApple(g3) is true
 end test
 
 test gameOver
   let g1 be newGame(new Random())
   assert gameOver(g1) is false
-  let g2 be copy g1 with head to newSquare(0, 0)
+  let g2 be copy g1 with head set to newSquare(0, 0)
   assert gameOver(g2) is false
-  let g3 be copy g1 with head to newSquare(40, 15)
+  let g3 be copy g1 with head set to newSquare(40, 15)
   assert gameOver(g3) is true
-  let g4 be copy g1 with head to newSquare(21, 15)
+  let g4 be copy g1 with head set to newSquare(21, 15)
   assert gameOver(g4) is true
 end test
 
 test headIsAtEdge
   let g1 be newGame(new Random())
   assert hasHitEdge(g1) is false
-  let g2 be copy g1 with head to newSquare(40, 15)
+  let g2 be copy g1 with head set to newSquare(40, 15)
   assert hasHitEdge(g2) is true
-  let g3 be copy g1 with head to newSquare(-1, 15)
+  let g3 be copy g1 with head set to newSquare(-1, 15)
   assert hasHitEdge(g3) is true
-  let g4 be copy g1 with head to newSquare(20, 30)
+  let g4 be copy g1 with head set to newSquare(20, 30)
   assert hasHitEdge(g4) is true
-  let g5 be copy g1 with head to newSquare(20, -1)
+  let g5 be copy g1 with head set to newSquare(20, -1)
   assert hasHitEdge(g5) is true
 end test
 
 test bodyOverlaps
   let g1 be newGame(new Random())
-  let g2 be copy g1 with body to {newSquare(3, 4), newSquare(4, 4), newSquare(5, 4)}
+  let g2 be copy g1 with body set to {newSquare(3, 4), newSquare(4, 4), newSquare(5, 4)}
   assert bodyOverlaps(g2, newSquare(3, 4)) is true
   assert bodyOverlaps(g2, newSquare(4, 4)) is true
   assert bodyOverlaps(g2, newSquare(5, 4)) is true
@@ -262,4 +260,4 @@ test newGame
   assert game.isOn is true
 end test
 
-# Test coverage: 94% (62/66 frames)
+# Test coverage: 82% (54/66 frames)

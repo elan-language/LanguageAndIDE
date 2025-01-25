@@ -26,15 +26,15 @@ main
 end main
 `;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.literalArray([1, 2, 3]);
-  var x = 1;
-  var y = system.emptyArray();
+  let a = system.literalArray([1, 2, 3]);
+  let x = 1;
+  let y = system.emptyArray();
   [x, y] = system.deconstructList(a);
-  system.printLine(_stdlib.asString(x));
-  system.printLine(_stdlib.asString(y));
+  system.printLine(x);
+  system.printLine(y);
 }
 return [main, _tests];}`;
 
@@ -58,13 +58,13 @@ main
 end main
 `;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.literalArray([1, 2, 3]);
-  var y = system.emptyArray();
+  let a = system.literalArray([1, 2, 3]);
+  let y = system.emptyArray();
   [, y] = system.deconstructList(a);
-  system.printLine(_stdlib.asString(y));
+  system.printLine(y);
 }
 return [main, _tests];}`;
 
@@ -88,13 +88,13 @@ main
 end main
 `;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.literalArray([1, 2, 3]);
-  var x = 1;
+  let a = system.literalArray([1, 2, 3]);
+  let x = 1;
   [x, ] = system.deconstructList(a);
-  system.printLine(_stdlib.asString(x));
+  system.printLine(x);
 }
 return [main, _tests];}`;
 
@@ -118,13 +118,13 @@ main
 end main
 `;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.literalArray([1, 2, 3]);
-  var [x, y] = system.deconstructList(a);
-  system.printLine(_stdlib.asString(x));
-  system.printLine(_stdlib.asString(y));
+  let a = system.literalArray([1, 2, 3]);
+  let [x, y] = system.deconstructList(a);
+  system.printLine(x);
+  system.printLine(y);
 }
 return [main, _tests];}`;
 
@@ -150,15 +150,15 @@ main
 end main
 `;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.literalArray([system.literalArray([1, 2, 3]), system.literalArray([4, 5, 6]), system.literalArray([7, 8, 9])]);
-  var x = system.emptyArray();
-  var y = system.emptyArray();
+  let a = system.literalArray([system.literalArray([1, 2, 3]), system.literalArray([4, 5, 6]), system.literalArray([7, 8, 9])]);
+  let x = system.emptyArray();
+  let y = system.emptyArray();
   [x, y] = system.deconstructList(a);
-  system.printLine(_stdlib.asString(x));
-  system.printLine(_stdlib.asString(y));
+  system.printLine(x);
+  system.printLine(y);
 }
 return [main, _tests];}`;
 
@@ -182,13 +182,13 @@ main
 end main
 `;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.literalArray([system.literalArray([1, 2, 3]), system.literalArray([4, 5, 6]), system.literalArray([7, 8, 9])]);
-  var [x, y] = system.deconstructList(a);
-  system.printLine(_stdlib.asString(x));
-  system.printLine(_stdlib.asString(y));
+  let a = system.literalArray([system.literalArray([1, 2, 3]), system.literalArray([4, 5, 6]), system.literalArray([7, 8, 9])]);
+  let [x, y] = system.deconstructList(a);
+  system.printLine(x);
+  system.printLine(y);
 }
 return [main, _tests];}`;
 
@@ -212,13 +212,13 @@ main
 end main
 `;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.literalArray([system.literalArray([1, 2, 3]), system.literalArray([4, 5, 6]), system.literalArray([7, 8, 9])]);
+  let a = system.literalArray([system.literalArray([1, 2, 3]), system.literalArray([4, 5, 6]), system.literalArray([7, 8, 9])]);
   const [x, y] = system.deconstructList(a);
-  system.printLine(_stdlib.asString(x));
-  system.printLine(_stdlib.asString(y));
+  system.printLine(x);
+  system.printLine(y);
 }
 return [main, _tests];}`;
 
@@ -244,15 +244,15 @@ main
 end main
 `;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.literalArray([1]);
-  var x = 1;
-  var y = system.emptyArray();
+  let a = system.literalArray([1]);
+  let x = 1;
+  let y = system.emptyArray();
   [x, y] = system.deconstructList(a);
-  system.printLine(_stdlib.asString(x));
-  system.printLine(_stdlib.asString(y));
+  system.printLine(x);
+  system.printLine(y);
 }
 return [main, _tests];}`;
 
@@ -276,13 +276,13 @@ main
 end main
 `;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.list([1, 2, 3]);
+  let a = system.list([1, 2, 3]);
   const [x, y] = system.deconstructList(a);
-  system.printLine(_stdlib.asString(x));
-  system.printLine(_stdlib.asString(y));
+  system.printLine(x);
+  system.printLine(y);
 }
 return [main, _tests];}`;
 
@@ -305,12 +305,12 @@ main
 end main
 `;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.list([1, 2, 3]);
+  let a = system.list([1, 2, 3]);
   const [x, ] = system.deconstructList(a);
-  system.printLine(_stdlib.asString(x));
+  system.printLine(x);
 }
 return [main, _tests];}`;
 
@@ -333,12 +333,12 @@ main
 end main
 `;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.list([1, 2, 3]);
+  let a = system.list([1, 2, 3]);
   const [, y] = system.deconstructList(a);
-  system.printLine(_stdlib.asString(y));
+  system.printLine(y);
 }
 return [main, _tests];}`;
 
@@ -362,13 +362,13 @@ main
 end main
 `;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.literalArray([1]);
-  var [x, y] = system.deconstructList(a);
-  system.printLine(_stdlib.asString(x));
-  system.printLine(_stdlib.asString(y));
+  let a = system.literalArray([1]);
+  let [x, y] = system.deconstructList(a);
+  system.printLine(x);
+  system.printLine(y);
 }
 return [main, _tests];}`;
 
@@ -392,13 +392,13 @@ main
 end main
 `;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.literalArray([1]);
+  let a = system.literalArray([1]);
   const [x, y] = system.deconstructList(a);
-  system.printLine(_stdlib.asString(x));
-  system.printLine(_stdlib.asString(y));
+  system.printLine(x);
+  system.printLine(y);
 }
 return [main, _tests];}`;
 
@@ -422,13 +422,13 @@ main
 end main
 `;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.list([1, 2, 3]);
-  var [x, y] = system.deconstructList(a);
-  system.printLine(_stdlib.asString(x));
-  system.printLine(_stdlib.asString(y));
+  let a = system.list([1, 2, 3]);
+  let [x, y] = system.deconstructList(a);
+  system.printLine(x);
+  system.printLine(y);
 }
 return [main, _tests];}`;
 
@@ -454,15 +454,15 @@ main
 end main
 `;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.list([1, 2, 3]);
-  var x = 1;
-  var y = system.emptyImmutableList();
+  let a = system.list([1, 2, 3]);
+  let x = 1;
+  let y = system.emptyImmutableList();
   [x, y] = system.deconstructList(a);
-  system.printLine(_stdlib.asString(x));
-  system.printLine(_stdlib.asString(y));
+  system.printLine(x);
+  system.printLine(y);
 }
 return [main, _tests];}`;
 
@@ -486,11 +486,11 @@ main
 end main
 `;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  var a = system.list([1, 2, 3]);
-  var [x, y] = system.deconstructList(a);
+  let a = system.list([1, 2, 3]);
+  let [x, y] = system.deconstructList(a);
   x = x;
   y = y;
 }

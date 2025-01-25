@@ -19,8 +19,14 @@ import { Overtyper } from "../overtyper";
 import { CSV } from "../parse-nodes/csv";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { CompileStatus, DisplayStatus, ParseStatus } from "../status-enums";
-import { KeywordCompletion, SymbolCompletionSpec } from "../symbol-completion-helpers";
-import { filteredSymbols, removeIfSingleFullMatch } from "../symbols/symbol-helpers";
+import { KeywordCompletion, SymbolCompletionSpec, TokenType } from "../symbol-completion-helpers";
+import {
+  filteredSymbols,
+  isInsideClass,
+  isProperty,
+  orderSymbol,
+  removeIfSingleFullMatch,
+} from "../symbols/symbol-helpers";
 import { SymbolWrapper } from "../symbols/symbol-wrapper";
 import { UnknownType } from "../symbols/unknown-type";
 import { EmptyAsn } from "../syntax-nodes/empty-asn";
@@ -218,19 +224,27 @@ export abstract class AbstractField implements Selectable, Field {
         break;
       }
       case "Delete": {
-        if (e.selection || this.cursorPos < textLen) {
-          const [start, end] = e.selection ?? [this.cursorPos, this.cursorPos + 1];
-          this.text = this.text.slice(0, start) + this.text.slice(end);
-          this.setSelection(start);
-          this.parseCurrentText();
-          this.codeHasChanged = true;
-          this.editingField();
+        const [start, end] = e.selection!;
+        if (start === textLen) {
+          break;
         }
+        const endMod = start === end ? start + 1 : end;
+        this.text = this.text.slice(0, start) + this.text.slice(endMod);
+        this.setSelection(start);
+        this.parseCurrentText();
+        this.codeHasChanged = true;
+        this.editingField();
         break;
       }
       case "t": {
         if (e.modKey.alt) {
           this.getFile().removeAllSelectorsThatCanBe();
+          break;
+        }
+      }
+      case "a": {
+        if (e.modKey.control) {
+          this.setSelection(0, this.text.length);
           break;
         }
       }
@@ -686,8 +700,28 @@ export abstract class AbstractField implements Selectable, Field {
     return UnknownType.Instance;
   }
 
+  allPropertiesInScope() {
+    const all = this.getHolder().symbolMatches("", true, this.getHolder());
+    return all.filter((s) => isProperty(s)) as ElanSymbol[];
+  }
+
   matchingSymbolsForId(spec: SymbolCompletionSpec, transforms: Transforms): ElanSymbol[] {
-    const symbols = filteredSymbols(spec, transforms, this.getHolder());
+    const scope = this.getHolder();
+    let symbols = filteredSymbols(spec, transforms, this.getHolder());
+    if (isInsideClass(scope)) {
+      if (propertyKeyword.startsWith(spec.toMatch)) {
+        const allProperties = this.allPropertiesInScope().sort(orderSymbol);
+        symbols = symbols.filter((s) => !allProperties.includes(s)).concat(allProperties);
+      } else if (spec.context === propertyKeyword) {
+        const newSpec = new SymbolCompletionSpec(
+          spec.toMatch,
+          new Set<TokenType>([TokenType.id_property]),
+          new Set<KeywordCompletion>(),
+          "",
+        );
+        symbols = filteredSymbols(newSpec, transforms, scope);
+      }
+    }
     return removeIfSingleFullMatch(symbols, spec.toMatch);
   }
 

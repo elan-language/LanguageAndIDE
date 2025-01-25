@@ -214,7 +214,7 @@ export async function assertAutocompletes(
   await doAsserts(f, fld, expected);
 }
 
-export async function assertAutocompletesWithString(
+export async function assertSymbolCompletionWithString(
   f: FileImpl,
   id: string,
   text: string,
@@ -222,6 +222,8 @@ export async function assertAutocompletesWithString(
 ): Promise<void> {
   assertParses(f);
   const fld = f.getById(id) as AbstractField;
+
+  assert.notStrictEqual(fld, undefined, `${id} not found`)
 
   fld.text = "";
   

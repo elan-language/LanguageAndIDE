@@ -83,7 +83,7 @@ suite("Symbol Completion Spec", () => {
       new ExprNode(),
       "t",
       ParseStatus.valid,
-      ReferenceNode.name,
+      ExprNode.name,
       "t",
       [
         TokenType.id_constant,
@@ -96,7 +96,7 @@ suite("Symbol Completion Spec", () => {
         TokenType.method_function,
         TokenType.method_system,
       ],
-      ["this"],
+      ["this,tuple"],
     );
   });
   test("Expression2", () => {
@@ -159,7 +159,7 @@ suite("Symbol Completion Spec", () => {
         TokenType.method_function,
         TokenType.method_system,
       ],
-      ["new,copy,if,lambda,empty,this,ref,not"],
+      ["new,copy,if,lambda,empty,this,ref,not,tuple"],
     );
   });
   test("Expression3", () => {
@@ -334,7 +334,7 @@ suite("Symbol Completion Spec", () => {
       new ExprNode(),
       "(",
       ParseStatus.incomplete,
-      TermSimple.name,
+      ExprNode.name,
       "",
       [
         TokenType.id_constant,
@@ -347,7 +347,7 @@ suite("Symbol Completion Spec", () => {
         TokenType.method_function,
         TokenType.method_system,
       ],
-      ["new,copy,if,lambda,empty,this,ref,not"],
+      ["new,copy,if,lambda,empty,this,ref,not,tuple"],
       "",
     );
   });
@@ -438,7 +438,7 @@ suite("Symbol Completion Spec", () => {
   test("'to' clause #902 - 2", () => {
     testSymbolCompletionSpec(
       new ExprNode(),
-      "new CircleVG() with cx to ",
+      "new CircleVG() with cx set to ",
       ParseStatus.incomplete,
       ExprNode.name,
       "",
@@ -453,7 +453,7 @@ suite("Symbol Completion Spec", () => {
         TokenType.method_function,
         TokenType.method_system,
       ],
-      ["new,copy,if,lambda,empty,this,ref,not"],
+      ["new,copy,if,lambda,empty,this,ref,not,tuple"],
       "",
     );
   });
@@ -472,7 +472,7 @@ suite("Symbol Completion Spec", () => {
   test("'to' clause #902 - 4", () => {
     testSymbolCompletionSpec(
       new ExprNode(),
-      "copy c with cx to ",
+      "copy c with cx set to ",
       ParseStatus.incomplete,
       ExprNode.name,
       "",
@@ -487,7 +487,7 @@ suite("Symbol Completion Spec", () => {
         TokenType.method_function,
         TokenType.method_system,
       ],
-      ["new,copy,if,lambda,empty,this,ref,not"],
+      ["new,copy,if,lambda,empty,this,ref,not,tuple"],
       "",
     );
   });
@@ -506,12 +506,12 @@ suite("Symbol Completion Spec", () => {
   test("#909 Tuple 1", () => {
     testSymbolCompletionSpec(
       new ExprNode(),
-      "(",
+      "tuple(",
       ParseStatus.incomplete,
-      TermSimple.name,
+      ExprNode.name,
       "",
       allIds.concat([TokenType.method_function, TokenType.method_system]),
-      ["new,copy,if,lambda,empty,this,ref,not"],
+      ["new,copy,if,lambda,empty,this,ref,not,tuple"],
       "",
     );
   });
@@ -520,7 +520,7 @@ suite("Symbol Completion Spec", () => {
       new ExprNode(),
       "(a",
       ParseStatus.incomplete,
-      TermSimple.name,
+      ReferenceNode.name,
       "a",
       allIds.concat([TokenType.method_function, TokenType.method_system]),
       [""],
@@ -530,7 +530,7 @@ suite("Symbol Completion Spec", () => {
   test("#909 Tuple 3", () => {
     testSymbolCompletionSpec(
       new ExprNode(),
-      "(a, a",
+      "tuple(a, a",
       ParseStatus.incomplete,
       ReferenceNode.name,
       "a",
@@ -547,7 +547,7 @@ suite("Symbol Completion Spec", () => {
       TermSimple.name,
       "",
       allIds.concat([TokenType.method_function, TokenType.method_system]),
-      ["new,copy,if,lambda,empty,this,ref,not"],
+      ["new,copy,if,lambda,empty,this,ref,not,tuple"],
       "",
     );
   });
@@ -583,7 +583,7 @@ suite("Symbol Completion Spec", () => {
       TermSimple.name,
       "",
       allIds.concat([TokenType.method_function, TokenType.method_system]),
-      ["new,copy,if,lambda,empty,this,ref,not"],
+      ["new,copy,if,lambda,empty,this,ref,not,tuple"],
       "",
     );
   });

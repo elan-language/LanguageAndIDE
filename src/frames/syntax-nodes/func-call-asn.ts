@@ -1,9 +1,12 @@
 import { CompileError } from "../compile-error";
 import {
+  mustBeCallable,
   mustBeKnownSymbol,
   mustBePublicMember,
   mustBePureFunctionSymbol,
+  mustbeValidQualifier,
   mustCallExtensionViaQualifier,
+  mustCallMemberViaQualifier,
 } from "../compile-rules";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstNode } from "../interfaces/ast-node";
@@ -74,23 +77,27 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
     const [funcSymbol, funcSymbolType] = this.getSymbolAndType();
 
     mustBeKnownSymbol(funcSymbol, this.updatedScope, this.compileErrors, this.fieldId);
-    mustBePureFunctionSymbol(
-      funcSymbol.symbolId,
-      funcSymbolType,
-      funcSymbol.symbolScope,
-      this.scope,
-      this.compileErrors,
-      this.fieldId,
-    );
 
     if (!isMemberOnFieldsClass(funcSymbol, transforms(), this.scope)) {
       mustBePublicMember(funcSymbol, this.compileErrors, this.fieldId);
     }
 
+    mustbeValidQualifier(this.precedingNode, this.compileErrors, this.fieldId);
+
     if (funcSymbolType instanceof FunctionType) {
+      mustBePureFunctionSymbol(funcSymbolType, this.scope, this.compileErrors, this.fieldId);
+
       mustCallExtensionViaQualifier(
         funcSymbolType,
         this.precedingNode,
+        this.compileErrors,
+        this.fieldId,
+      );
+
+      mustCallMemberViaQualifier(
+        funcSymbol.symbolId,
+        funcSymbolType,
+        this.updatedScope,
         this.compileErrors,
         this.fieldId,
       );
@@ -106,6 +113,14 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
       matchParametersAndTypes(funcSymbolType, parameters, cls, this.compileErrors, this.fieldId);
 
       this.isAsync = funcSymbolType.isAsync;
+    } else {
+      mustBeCallable(
+        funcSymbol.symbolId,
+        funcSymbolType,
+        funcSymbol.symbolScope,
+        this.compileErrors,
+        this.fieldId,
+      );
     }
 
     const showPreviousNode = this.precedingNode && this.showPreviousNode;

@@ -18,7 +18,7 @@ import { DeconstructedList } from "../parse-nodes/deconstructed-list";
 import { DeconstructedTuple } from "../parse-nodes/deconstructed-tuple";
 import { DictionaryNode } from "../parse-nodes/dictionary-node";
 import { DotAfter } from "../parse-nodes/dot-after";
-import { DotBefore } from "../parse-nodes/dot-before";
+import { DottedTerm } from "../parse-nodes/dotted-term";
 import { EmptyOfTypeNode } from "../parse-nodes/empty-of-type-node";
 import { EnumVal } from "../parse-nodes/enum-val";
 import { FunctionRefNode } from "../parse-nodes/function-ref-node";
@@ -401,8 +401,8 @@ export function transform(
     return new CompositeAsn(expr1, expr2, fieldId, scope);
   }
 
-  if (node instanceof DotBefore) {
-    return transform(node.node, fieldId, scope);
+  if (node instanceof DottedTerm) {
+    return transform(node.term, fieldId, scope);
   }
 
   if (node instanceof CopyWith) {

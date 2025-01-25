@@ -1,4 +1,4 @@
-# 36a78020ee99914485f3a3e32ff105670e320e82ee83380ee6bb70733c32e5c5 Elan Beta 6 valid
+# FFFF Elan Beta 6 valid
 
 main
   let start be new Point(5, 5)
@@ -30,7 +30,7 @@ procedure runSolver(gr as BlockGraphics, start as Point, destination as Point, r
     let route, length be solver.getRouteAndLength()
     set gr2 to addRoute(gr2, route)
     call gr2.display()
-    print "Length of route: {round(length, 2)}"
+    print "Length of route: {length.round(2)}"
   else
     print "No route from start to destination found through these rocks."
   end if
@@ -189,10 +189,10 @@ class Solver
       let previous be node.via
       let p be node.point
       set length to length + p.minDistTo(previous)
-      set route to route.withInsert(0, previous)
+      set route to route.withInsertAt(0, previous)
       set node to getNodeFor(previous)
     end repeat when node.point is property.start
-    return (route, length)
+    return tuple(route, length)
   end function
 
 end class
@@ -249,7 +249,7 @@ class Point
   end function
 
   function isAdjacentTo(p as Point) returns Boolean
-    return (minDistTo(p) is 1) or round(minDistTo(p), 4) is round(sqrt(2), 4)
+    return (minDistTo(p) is 1) or (minDistTo(p).round(4) is sqrt(2).round(4))
   end function
 
   # Returns the 8 theoretically-neighbouring points, whether or not within bounds

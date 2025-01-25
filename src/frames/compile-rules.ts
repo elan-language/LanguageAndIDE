@@ -5,6 +5,7 @@ import {
   CannotUseLikeAFunction,
   CannotUseSystemMethodInAFunction,
   CompileError,
+  DeclaredAboveCompileError,
   DuplicateKeyCompileError,
   ExtensionCompileError,
   ExtraParameterCompileError,
@@ -28,10 +29,12 @@ import {
   ParametersCompileError,
   ParameterTypesCompileError,
   PrivateMemberCompileError,
+  PropertyCompileError,
   ReassignInFunctionCompileError,
   RedefinedCompileError,
   SignatureCompileError,
   SyntaxCompileError,
+  ThisCompileError,
   TypeCompileError,
   TypesCompileError,
   UndefinedSymbolCompileError,
@@ -95,40 +98,43 @@ import {
   isAstIndexableNode,
   transforms,
 } from "./syntax-nodes/ast-helpers";
+import { ThisAsn } from "./syntax-nodes/this-asn";
 import { Transforms } from "./syntax-nodes/transforms";
 
+function knownType(symbolType: SymbolType) {
+  return !(symbolType instanceof UnknownType);
+}
+
 export function mustBeOfSymbolType(
-  exprType: SymbolType | undefined,
+  exprType: SymbolType,
   ofType: SymbolType,
   compileErrors: CompileError[],
   location: string,
 ) {
-  const unknown = exprType?.name === undefined || ofType.name === undefined;
-  if (exprType?.name !== ofType.name) {
-    compileErrors.push(new TypeCompileError(ofType.name, location, unknown));
+  if (knownType(exprType) && exprType.name !== ofType.name) {
+    compileErrors.push(new TypeCompileError(ofType.name, location));
   }
 }
 
 export function mustBeMemberOfSymbolType(
   name: string,
-  exprType: SymbolType | undefined,
+  exprType: SymbolType,
   ofType: SymbolType,
   compileErrors: CompileError[],
   location: string,
 ) {
-  const unknown = exprType?.name === undefined || ofType.name === undefined;
-  if (exprType?.name !== ofType.name) {
-    compileErrors.push(new MemberTypeCompileError(name, ofType.name, location, unknown));
+  if (knownType(exprType) && exprType.name !== ofType.name) {
+    compileErrors.push(new MemberTypeCompileError(name, ofType.name, location));
   }
 }
 
 export function mustBeOfType(
-  expr: AstNode | undefined,
+  expr: AstNode,
   ofType: SymbolType,
   compileErrors: CompileError[],
   location: string,
 ) {
-  mustBeOfSymbolType(expr?.symbolType(), ofType, compileErrors, location);
+  mustBeOfSymbolType(expr.symbolType(), ofType, compileErrors, location);
 }
 
 export function mustNotHaveConditionalAfterUnconditionalElse(
@@ -172,10 +178,8 @@ export function mustBeRecord(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (!symbolType.isImmutable) {
-    compileErrors.push(
-      new MustBeRecordCompileError(symbolType.name, location, symbolType instanceof UnknownType),
-    );
+  if (knownType(symbolType) && !symbolType.isImmutable) {
+    compileErrors.push(new MustBeRecordCompileError(symbolType.name, location));
   }
 }
 
@@ -199,12 +203,34 @@ export function mustNotBeKeyword(id: string, compileErrors: CompileError[], loca
 }
 
 export function mustBeProcedure(
+  symbolId: string,
   symbolType: SymbolType,
+  symbolScope: SymbolScope,
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (!(symbolType instanceof ProcedureType)) {
-    compileErrors.push(new CannotCallAFunction(location, symbolType instanceof UnknownType));
+  if (symbolType instanceof FunctionType) {
+    compileErrors.push(new CannotCallAFunction(location));
+  } else if (knownType(symbolType) && !(symbolType instanceof ProcedureType)) {
+    compileErrors.push(
+      new CannotCallAsAMethod(symbolId, symbolScopeToFriendlyName(symbolScope), location),
+    );
+  }
+}
+
+export function mustBeCallable(
+  symbolId: string,
+  symbolType: SymbolType,
+  symbolScope: SymbolScope,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  if (symbolType instanceof ProcedureType) {
+    compileErrors.push(new CannotUseLikeAFunction(symbolId, location));
+  } else if (knownType(symbolType)) {
+    compileErrors.push(
+      new CannotCallAsAMethod(symbolId, symbolScopeToFriendlyName(symbolScope), location),
+    );
   }
 }
 
@@ -213,8 +239,8 @@ export function mustBeRecordType(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (!(symbolType instanceof ClassType)) {
-    compileErrors.push(new TypeCompileError("record", location, symbolType instanceof UnknownType));
+  if (knownType(symbolType) && !(symbolType instanceof ClassType)) {
+    compileErrors.push(new TypeCompileError("record", location));
   }
 }
 
@@ -223,40 +249,21 @@ export function mustBeDeconstructableType(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (!isDeconstructedType(symbolType)) {
-    compileErrors.push(
-      new TypeCompileError("able to be deconstructed", location, symbolType instanceof UnknownType),
-    );
+  if (knownType(symbolType) && !isDeconstructedType(symbolType)) {
+    compileErrors.push(new TypeCompileError("able to be deconstructed", location));
   }
 }
 
 export function mustBePureFunctionSymbol(
-  symbolId: string,
-  symbolType: SymbolType,
-  symbolScope: SymbolScope,
+  symbolType: FunctionType,
   scope: Scope,
   compileErrors: CompileError[],
   location: string,
 ) {
   if (InFunctionScope(scope)) {
-    if (!(symbolType instanceof FunctionType) || !symbolType.isPure) {
-      compileErrors.push(
-        new CannotUseSystemMethodInAFunction(location, symbolType instanceof UnknownType),
-      );
+    if (knownType(symbolType) && !symbolType.isPure) {
+      compileErrors.push(new CannotUseSystemMethodInAFunction(location));
     }
-  } else if (symbolType instanceof ProcedureType) {
-    compileErrors.push(
-      new CannotUseLikeAFunction(symbolId, location, symbolType instanceof UnknownType),
-    );
-  } else if (!(symbolType instanceof FunctionType)) {
-    compileErrors.push(
-      new CannotCallAsAMethod(
-        symbolId,
-        symbolScopeToFriendlyName(symbolScope),
-        location,
-        symbolType instanceof UnknownType,
-      ),
-    );
   }
 }
 
@@ -270,7 +277,7 @@ export function mustBeIndexableSymbol(
   if (symbolType instanceof UnknownType) {
     compileErrors.push(new UndefinedSymbolCompileError(symbolId, "", location));
   } else if (!(read && (isIndexableType(symbolType) || isAnyDictionaryType(symbolType)))) {
-    compileErrors.push(new NotIndexableCompileError(symbolType.name, location, false));
+    compileErrors.push(new NotIndexableCompileError(symbolType.name, location));
   }
 }
 
@@ -280,38 +287,38 @@ export function mustBeRangeableSymbol(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (!(read && isIndexableType(symbolType))) {
-    compileErrors.push(
-      new NotRangeableCompileError(symbolType.name, location, symbolType instanceof UnknownType),
-    );
+  if (knownType(symbolType) && !(read && isIndexableType(symbolType))) {
+    compileErrors.push(new NotRangeableCompileError(symbolType.name, location));
   }
 }
 
 export function mustBeInheritableClassOrInterface(
-  type: SymbolType,
+  symbolType: SymbolType,
   name: string,
   compileErrors: CompileError[],
   location: string,
 ) {
   if (
-    !(type instanceof ClassType) ||
-    type.subType === ClassSubType.concrete ||
-    type.isNotInheritable
+    knownType(symbolType) &&
+    (!(symbolType instanceof ClassType) ||
+      symbolType.subType === ClassSubType.concrete ||
+      symbolType.isNotInheritable)
   ) {
     compileErrors.push(new MustBeAbstractCompileError(name, location));
   }
 }
 
 export function mustBeInterfaceClass(
-  type: SymbolType,
+  symbolType: SymbolType,
   name: string,
   compileErrors: CompileError[],
   location: string,
 ) {
   if (
-    !(type instanceof ClassType) ||
-    type.subType !== ClassSubType.interface ||
-    type.isNotInheritable
+    knownType(symbolType) &&
+    (!(symbolType instanceof ClassType) ||
+      symbolType.subType !== ClassSubType.interface ||
+      symbolType.isNotInheritable)
   ) {
     compileErrors.push(new MustBeInterfaceCompileError(name, location));
   }
@@ -420,9 +427,18 @@ export function mustBeConcreteClass(
 export function mustBeClass(symbol: ElanSymbol, compileErrors: CompileError[], location: string) {
   if (!isClass(symbol)) {
     const st = symbol.symbolType();
-    const unknown = st instanceof UnknownType;
-    compileErrors.push(new TypeCompileError("Class", location, unknown));
+    if (knownType(st)) {
+      compileErrors.push(new TypeCompileError("Class", location));
+    }
   }
+}
+
+export function mustBeInsideClass(compileErrors: CompileError[], location: string) {
+  compileErrors.push(new ThisCompileError(location));
+}
+
+export function mustBeDeclaredAbove(name: string, compileErrors: CompileError[], location: string) {
+  compileErrors.push(new DeclaredAboveCompileError(name, location));
 }
 
 export function mustCallExtensionViaQualifier(
@@ -433,6 +449,31 @@ export function mustCallExtensionViaQualifier(
 ) {
   if (ft.isExtension && qualifier === undefined) {
     compileErrors.push(new ExtensionCompileError(location));
+  }
+}
+
+export function mustbeValidQualifier(
+  qualifier: AstNode | undefined,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  if (qualifier instanceof ThisAsn) {
+    compileErrors.push(new PropertyCompileError(location));
+  }
+}
+
+export function mustCallMemberViaQualifier(
+  id: string,
+  ft: FunctionType | ProcedureType,
+  scope: Scope | undefined,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  if (!ft.isExtension && isClass(scope)) {
+    const t = scope.resolveOwnSymbol(id, transforms());
+    if (t instanceof UnknownSymbol) {
+      compileErrors.push(new UndefinedSymbolCompileError(id, scope.symbolId, location));
+    }
   }
 }
 
@@ -510,16 +551,14 @@ function FailIncompatible(
     addInfo = " try converting Iterable to a concrete type with e.g. '.asList()'";
   }
 
-  const unknown = lhs === UnknownType.Instance || rhs === UnknownType.Instance;
-  if (!unknown) {
-    compileErrors.push(new TypesCompileError(rhs.name, lhs.name, addInfo, location, false));
+  if (knownType(lhs) && knownType(rhs)) {
+    compileErrors.push(new TypesCompileError(rhs.name, lhs.name, addInfo, location));
   }
 }
 
 function FailNotNumber(lhs: SymbolType, compileErrors: CompileError[], location: string) {
-  const unknown = lhs === UnknownType.Instance;
-  if (!unknown) {
-    compileErrors.push(new TypesCompileError(lhs.name, "Float or Int", "", location, false));
+  if (knownType(lhs)) {
+    compileErrors.push(new TypesCompileError(lhs.name, "Float or Int", "", location));
   }
 }
 
@@ -1036,10 +1075,11 @@ export function cannotPassAsOutParameter(
   location: string,
 ) {
   if (typeof parameter === "string") {
-    compileErrors.push(new OutParameterCompileError(parameter, location, false));
+    compileErrors.push(new OutParameterCompileError(parameter, location));
   } else {
-    const unknown = parameter.symbolType() === UnknownType.Instance;
-    compileErrors.push(new OutParameterCompileError(parameter.toString(), location, unknown));
+    if (knownType(parameter.symbolType())) {
+      compileErrors.push(new OutParameterCompileError(parameter.toString(), location));
+    }
   }
 }
 
@@ -1139,10 +1179,8 @@ export function mustBeIterable(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (!isIterableType(symbolType)) {
-    compileErrors.push(
-      new NotIterableCompileError(symbolType.name, location, symbolType instanceof UnknownType),
-    );
+  if (knownType(symbolType) && !isIterableType(symbolType)) {
+    compileErrors.push(new NotIterableCompileError(symbolType.name, location));
   }
 }
 
@@ -1158,7 +1196,7 @@ export function mustHaveUniqueKeys(
 }
 
 export function mustBeNewable(type: string, compileErrors: CompileError[], location: string) {
-  compileErrors.push(new NotNewableCompileError(type, location, false));
+  compileErrors.push(new NotNewableCompileError(type, location));
 }
 
 export function mustBeFunctionRefIfFunction(
