@@ -19,6 +19,7 @@ import { Statement } from "../interfaces/statement";
 import { callKeyword } from "../keywords";
 import { ProcedureType } from "../symbols/procedure-type";
 import {
+  allScopedSymbols,
   isMemberOnFieldsClass,
   scopePrefix,
   updateScopeAndQualifier,
@@ -69,7 +70,7 @@ export class CallStatement extends AbstractFrame implements Statement {
   }
 
   renderAsHtml(): string {
-    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><el-top><el-kw>call </el-kw>${this.proc.renderAsHtml()}(${this.args.renderAsHtml()})${this.compileMsgAsHtml()}${this.getFrNo()}</el-statement>`;
+    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><el-top><el-kw>call </el-kw>${this.proc.renderAsHtml()}(${this.args.renderAsHtml()})${this.compileMsgAsHtml()}${this.getFrNo()}${this.contextMenu()}</el-statement>`;
   }
 
   renderAsSource(): string {
@@ -202,7 +203,9 @@ export class CallStatement extends AbstractFrame implements Statement {
         wrappedOutParms = `\n${this.indent()}${wrappedOutParameters.join("; ")};`;
       }
 
-      return `${wrappedInParms}${this.indent()}${async}${prefix}${id}(${parms});${wrappedOutParms}`;
+      const symbols = () => allScopedSymbols(this.getParent(), this);
+
+      return `${wrappedInParms}${this.indent()}${this.breakPoint(symbols)}${async}${prefix}${id}(${parms});${wrappedOutParms}`;
     }
     return "";
   }

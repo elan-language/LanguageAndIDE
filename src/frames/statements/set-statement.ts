@@ -16,6 +16,7 @@ import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
 import { setKeyword, toKeyword } from "../keywords";
+import { allScopedSymbols } from "../symbols/symbol-helpers";
 import { getIds, wrapDeconstructionLhs, wrapDeconstructionRhs } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 
@@ -103,6 +104,8 @@ export class SetStatement extends AbstractFrame implements Statement {
 
     const rhs = wrapDeconstructionRhs(assignableAstNode, exprAstNode, true);
 
-    return `${this.indent()}${lhs} = ${rhs};`;
+    const symbols = () => allScopedSymbols(this.getParent(), this);
+
+    return `${this.indent()}${this.breakPoint(symbols)}${lhs} = ${rhs};`;
   }
 }
