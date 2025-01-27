@@ -11,7 +11,7 @@ import { Parent } from "../interfaces/parent";
 import { Scope } from "../interfaces/scope";
 import { procedureKeyword } from "../keywords";
 import { ProcedureType } from "../symbols/procedure-type";
-import { getGlobalScope } from "../symbols/symbol-helpers";
+import { allScopedSymbols, getGlobalScope } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { Transforms } from "../syntax-nodes/transforms";
@@ -55,7 +55,7 @@ export abstract class ProcedureFrame extends FrameWithStatements implements Elan
     return `<el-proc class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-method>${this.name.renderAsHtml()}</el-method>(${this.params.renderAsHtml()})${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
-<el-kw>end procedure</el-kw>
+<el-kw>end procedure</el-kw>${this.contextMenu()}
 </el-proc>`;
   }
 
@@ -89,8 +89,10 @@ ${this.renderChildrenAsHtml()}
       this.htmlId,
     );
 
+    const symbols = () => allScopedSymbols(this.getParent(), this);
+
     return `${name}(${this.params.compile(transforms)}) {\r
-${this.compileStatements(transforms)}\r`;
+${this.breakPoint(symbols)}${this.compileStatements(transforms)}\r`;
   }
 
   public override symbolMatches(id: string, all: boolean, initialScope?: Frame): ElanSymbol[] {

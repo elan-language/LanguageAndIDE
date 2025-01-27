@@ -12,6 +12,7 @@ import { StdLib } from "../standard-library/std-lib";
 import { fetchProfile, hash, transforms } from "./web-helpers";
 import { WebInputOutput } from "./web-input-output";
 import {
+  WebWorkerBreakpointMessage,
   WebWorkerMessage,
   WebWorkerReadMessage,
   WebWorkerStatusMessage,
@@ -91,6 +92,20 @@ trimButton.addEventListener("click", async () => {
 
 runButton?.addEventListener("click", () => {
   try {
+    if (file.readRunStatus() === RunStatus.paused && runWorker) {
+      runWorker.postMessage({ type: "resume" } as WebWorkerMessage);
+
+      const pausedAt = document.getElementsByClassName("paused-at");
+
+      for (const e of pausedAt) {
+        e.classList.remove("paused-at");
+      }
+
+      file.setRunStatus(RunStatus.running);
+      updateDisplayValues();
+      return;
+    }
+
     clearDisplays();
     file.setRunStatus(RunStatus.running);
     updateDisplayValues();
@@ -109,6 +124,9 @@ runButton?.addEventListener("click", () => {
       switch (data.type) {
         case "write":
           await handleWorkerIO(data);
+          break;
+        case "breakpoint":
+          await handleRunWorkerPaused(data);
           break;
         case "status":
           switch (data.status) {
@@ -139,15 +157,13 @@ runButton?.addEventListener("click", () => {
 
 stopButton?.addEventListener("click", () => {
   if (runWorker) {
-    runWorker.terminate();
-    runWorker = undefined;
-    file.setRunStatus(RunStatus.default);
+    handleRunWorkerFinished();
   }
   if (testWorker) {
     endTests();
     file.setTestStatus(TestStatus.default);
+    updateDisplayValues();
   }
-  updateDisplayValues();
 });
 
 clearConsoleButton?.addEventListener("click", () => {
@@ -474,14 +490,21 @@ function updateDisplayValues() {
   const isEmpty = file.readParseStatus() === ParseStatus.default;
   const isParsing = file.readParseStatus() === ParseStatus.valid;
   const isCompiling = file.readCompileStatus() === CompileStatus.ok;
-  const isRunning = file.readRunStatus() === RunStatus.running;
+  const isRunning =
+    file.readRunStatus() === RunStatus.running || file.readRunStatus() === RunStatus.paused;
+  const isPaused = file.readRunStatus() === RunStatus.paused;
   const isTestRunning = file.readTestStatus() === TestStatus.running;
 
   saveButton.hidden = !!autoSaveFileHandle;
 
   if (isRunning || isTestRunning) {
     codeContainer?.classList.add("running");
-    disable(runButton, isRunning ? "Program is already running" : "Tests are running");
+
+    if (isPaused) {
+      enable(runButton, "Resume the program");
+    } else {
+      disable(runButton, isRunning ? "Program is already running" : "Tests are running");
+    }
     enable(stopButton, isRunning ? "Stop the program" : "Stop the Tests");
     const msg = isRunning ? "Program is running" : "Tests are running";
     disable(loadButton, msg);
@@ -1113,11 +1136,36 @@ async function handleWorkerIO(data: WebWorkerWriteMessage) {
   }
 }
 
+function clearPaused() {
+  const pausedAt = document.getElementsByClassName("paused-at");
+
+  for (const e of pausedAt) {
+    e.classList.remove("paused-at");
+  }
+}
+
 function handleRunWorkerFinished() {
   runWorker?.terminate();
   runWorker = undefined;
   console.info("elan program completed OK");
   file.setRunStatus(RunStatus.default);
+  clearPaused();
+  updateDisplayValues();
+}
+
+async function handleRunWorkerPaused(data: WebWorkerBreakpointMessage): Promise<void> {
+  console.info("elan program paused");
+  file.setRunStatus(RunStatus.paused);
+  const variables = data.value;
+  elanInputOutput.clearConsole();
+
+  for (const v of variables) {
+    elanInputOutput.printLine(`${v[0]} : ${v[1]}`);
+  }
+
+  const pausedAt = document.getElementById(data.pausedAt);
+  pausedAt?.classList.add("paused-at");
+
   updateDisplayValues();
 }
 
@@ -1128,6 +1176,7 @@ async function handleRunWorkerError(data: WebWorkerStatusMessage) {
   const err = e instanceof ElanRuntimeError ? e : new ElanRuntimeError(e as any);
   await showError(err, file.fileName, false);
   file.setRunStatus(RunStatus.error);
+  clearPaused();
   updateDisplayValues();
 }
 

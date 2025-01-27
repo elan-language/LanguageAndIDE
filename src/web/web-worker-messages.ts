@@ -22,6 +22,18 @@ export type WebWorkerTestMessage = {
   value: [string, AssertOutcome[]][];
 };
 
+export type WebWorkerBreakpointMessage = {
+  type: "breakpoint";
+  value: [string, string][];
+  pausedAt: string;
+};
+
 export type WebWorkerMessage = {
-  type: "start" | "read" | "write" | "status" | "test";
-} & (WebWorkerStatusMessage | WebWorkerWriteMessage | WebWorkerReadMessage | WebWorkerTestMessage);
+  type: "start" | "read" | "write" | "status" | "test" | "resume" | "breakpoint";
+} & (
+  | WebWorkerStatusMessage
+  | WebWorkerWriteMessage
+  | WebWorkerReadMessage
+  | WebWorkerTestMessage
+  | WebWorkerBreakpointMessage
+);

@@ -249,7 +249,7 @@ el-field.selected.empty.optional el-compl, el-field.selected.empty.optional el-c
     display: none;
 }
 
-el-field .autocomplete-popup, el-field .autocomplete-popup * {
+el-field .autocomplete-popup, .context-menu, el-field .autocomplete-popup * {
     text-indent: 0;
     background-color: lightgray;
 }
@@ -355,5 +355,21 @@ el-statement.selected > el-fr
 
 .outdent {
     border-left: 0;
+}
+
+.breakpoint > el-top el-kw {
+    background-color: chartreuse;
+}
+
+.paused-at > el-top el-kw {
+    background-color:red;
+}
+
+el-statement.breakpoint > el-kw {
+    background-color: chartreuse;
+}
+
+el-statement.paused-at > el-kw {
+    background-color:red;
 }
 

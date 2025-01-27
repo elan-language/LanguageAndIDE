@@ -26,6 +26,7 @@ import {
 } from "./parent-helpers";
 import { ScratchPad } from "./scratch-pad";
 import { CompileStatus, DisplayStatus, ParseStatus } from "./status-enums";
+import { orderSymbol } from "./symbols/symbol-helpers";
 import { SymbolScope } from "./symbols/symbol-scope";
 import { UnknownType } from "./symbols/unknown-type";
 import { Transforms } from "./syntax-nodes/transforms";
@@ -45,6 +46,8 @@ export abstract class AbstractFrame implements Frame {
   private _compileStatus: CompileStatus = CompileStatus.default;
 
   protected showContextMenu = false;
+  protected hasBreakPoint = false;
+  protected paused = false;
 
   constructor(parent: Parent) {
     this._parent = parent;
@@ -221,20 +224,20 @@ export abstract class AbstractFrame implements Frame {
       case "o": {
         if (e.modKey.control && isCollapsible(this)) {
           this.expandCollapse();
-          break;
         }
+        break;
       }
       case "O": {
         if (e.modKey.control) {
           this.expandCollapseAll();
-          break;
         }
+        break;
       }
       case "t": {
         if (e.modKey.alt) {
           this.getFile().removeAllSelectorsThatCanBe();
-          break;
         }
+        break;
       }
       case "ArrowUp": {
         if (e.modKey.control && this.movable) {
@@ -278,8 +281,8 @@ export abstract class AbstractFrame implements Frame {
         if (e.modKey.control) {
           this.getParent().deleteSelectedChildren();
           codeHasChanged = true;
-          break;
         }
+        break;
       }
       case "Backspace": {
         if (this.isNew) {
@@ -288,13 +291,12 @@ export abstract class AbstractFrame implements Frame {
         }
         break;
       }
-
       case "x": {
         if (e.modKey.control) {
           this.cut();
           codeHasChanged = true;
-          break;
         }
+        break;
       }
       case "ContextMenu": {
         // todo renamethis to data say
@@ -428,6 +430,8 @@ export abstract class AbstractFrame implements Frame {
     this.pushClass(this.collapsed, "collapsed");
     this.pushClass(this.selected, "selected");
     this.pushClass(this.focused, "focused");
+    this.pushClass(this.hasBreakPoint, "breakpoint");
+    this.pushClass(this.paused, "paused");
     this._classes.push(DisplayStatus[this.readDisplayStatus()]);
   }
 
@@ -604,11 +608,24 @@ export abstract class AbstractFrame implements Frame {
     return helper_compileMsgAsHtml(this);
   }
 
-  setBreakPoint() {}
+  setBreakPoint = () => {
+    this.hasBreakPoint = true;
+  };
+
+  clearBreakPoint = () => {
+    this.hasBreakPoint = false;
+  };
 
   getContextMenuItems() {
     const map = new Map<string, [string, () => void]>();
-    map.set("setBP", ["set Break Point", this.setBreakPoint]);
+
+    // Must be arrow functions for this binding
+    if (this.hasBreakPoint) {
+      map.set("clearBP", ["clear Break Point", this.clearBreakPoint]);
+    } else {
+      map.set("setBP", ["set Break Point", this.setBreakPoint]);
+    }
+
     return map;
   }
 
@@ -628,5 +645,34 @@ export abstract class AbstractFrame implements Frame {
       return `<div class='context-menu'>${items.join("")}</div>`;
     }
     return "";
+  }
+
+  breakPoint(scopedSymbols: () => ElanSymbol[]) {
+    if (!this.hasBreakPoint) {
+      return "";
+    }
+
+    const resolveId: string[] = [];
+    const symbols = scopedSymbols().sort(orderSymbol);
+
+    for (const symbol of symbols) {
+      const idPrefix = symbol.symbolScope === SymbolScope.program ? "global." : "";
+
+      const scopePrefix =
+        symbol.symbolScope === SymbolScope.stdlib
+          ? "_stdlib."
+          : symbol.symbolScope === SymbolScope.program
+            ? "global."
+            : "";
+      const id = `${idPrefix}${symbol.symbolId}`;
+      const value = `${scopePrefix}${symbol.symbolId}`;
+      resolveId.push(`_scopedIds${this.htmlId}.push(["${id}", _stdlib.asString(${value})]);`);
+    }
+
+    const resolve = `const _scopedIds${this.htmlId} = [];
+  ${resolveId.join("\r")}`;
+
+    return `${resolve}
+await system.breakPoint(_scopedIds${this.htmlId}, "${this.htmlId}");`;
   }
 }

@@ -393,9 +393,13 @@ export function isExpression(s: ElanSymbol, transforms: Transforms) {
   return !isProcedure(s, transforms);
 }
 
-export function isTypeName(s?: ElanSymbol) {
-  const firstChar = s?.symbolId[0] ?? "";
+export function firstCharIsUpper(s: string) {
+  const firstChar = s[0] ?? "";
   return firstChar.toUpperCase() === firstChar;
+}
+
+export function isTypeName(s?: ElanSymbol) {
+  return firstCharIsUpper(s?.symbolId ?? "");
 }
 
 export function isAbstractClass(s?: ElanSymbol) {
@@ -693,4 +697,10 @@ export function parameterNames(st: SymbolType) {
     return descriptions;
   }
   return [];
+}
+
+export function allScopedSymbols(scope: Scope, initialScope: Scope) {
+  return scope
+    .symbolMatches("", true, initialScope)
+    .filter((s) => isValueType(s.symbolType()) && !firstCharIsUpper(s.symbolId));
 }

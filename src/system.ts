@@ -3,6 +3,7 @@ import { ElanInputOutput } from "./elan-input-output";
 import { ElanRuntimeError } from "./elan-runtime-error";
 import { TestStatus } from "./frames/status-enums";
 import { hasHiddenType } from "./has-hidden-type";
+import { WebWorkerBreakpointMessage } from "./web/web-worker-messages";
 
 export class AssertOutcome {
   constructor(
@@ -301,5 +302,29 @@ export class System {
     tests.length = 0;
 
     return allOutcomes;
+  }
+
+  async breakPoint(allScopedSymbols: [string, string][], id: string): Promise<void> {
+    let paused = true;
+
+    onmessage = async (e) => {
+      if (e.data.type === "resume") {
+        paused = false;
+      }
+    };
+
+    return new Promise<void>((rs) => {
+      postMessage({
+        type: "breakpoint",
+        value: allScopedSymbols,
+        pausedAt: id,
+      } as WebWorkerBreakpointMessage);
+      const timeOut = setInterval(async () => {
+        if (!paused) {
+          clearInterval(timeOut);
+          rs();
+        }
+      }, 250);
+    });
   }
 }

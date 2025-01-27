@@ -12,6 +12,7 @@ import { Profile } from "../interfaces/profile";
 import { endKeyword, functionKeyword, returnKeyword, returnsKeyword } from "../keywords";
 import { ReturnStatement } from "../statements/return-statement";
 import { FunctionType } from "../symbols/function-type";
+import { allScopedSymbols } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { Transforms } from "../syntax-nodes/transforms";
@@ -67,7 +68,7 @@ export abstract class FunctionFrame extends FrameWithStatements implements Paren
     return `<el-func class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>${functionKeyword} </el-kw><el-method>${this.name.renderAsHtml()}</el-method>(${this.params.renderAsHtml()})<el-kw> ${returnsKeyword} </el-kw>${this.returnType.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
-<el-kw>${endKeyword} ${functionKeyword}</el-kw>
+<el-kw>${endKeyword} ${functionKeyword}</el-kw>${this.contextMenu()}
 </el-func>`;
   }
 
@@ -106,8 +107,10 @@ ${this.renderChildrenAsHtml()}
   }
 
   public compile(transforms: Transforms): string {
+    const symbols = () => allScopedSymbols(this.getParent(), this);
+
     return `${this.name.compile(transforms)}(${this.params.compile(transforms)}) {\r
-${this.compileStatements(transforms)}\r`;
+${this.breakPoint(symbols)}${this.compileStatements(transforms)}\r`;
   }
 
   public override symbolMatches(id: string, all: boolean, initialScope?: Frame): ElanSymbol[] {
