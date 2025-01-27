@@ -7,6 +7,7 @@ import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
 import { endKeyword, ifKeyword, thenKeyword } from "../keywords";
 import { BooleanType } from "../symbols/boolean-type";
+import { allScopedSymbols } from "../symbols/symbol-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 import { Else } from "./else";
 
@@ -35,7 +36,7 @@ export class IfStatement extends FrameWithStatements implements Statement {
     return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>${ifKeyword} </el-kw>${this.condition.renderAsHtml()}<el-kw> ${thenKeyword}</el-kw>${this.getFrNo()}</el-top>${this.compileMsgAsHtml()}
 ${this.renderChildrenAsHtml()}
-<el-kw>${endKeyword} ${ifKeyword}</el-kw>
+<el-kw>${endKeyword} ${ifKeyword}</el-kw>${this.contextMenu()}
 </el-statement>`;
   }
   renderAsSource(): string {
@@ -58,7 +59,9 @@ ${this.indent()}${endKeyword} ${ifKeyword}`;
       mustNotHaveConditionalAfterUnconditionalElse(elses, this.compileErrors, this.htmlId);
     }
 
-    return `${this.indent()}if (${this.condition.compile(transforms)}) {\r
+    const symbols = () => allScopedSymbols(this.getParent(), this);
+
+    return `${this.indent()}${this.breakPoint(symbols)}if (${this.condition.compile(transforms)}) {\r
 ${this.compileStatements(transforms)}\r
 ${this.indent()}}`;
   }

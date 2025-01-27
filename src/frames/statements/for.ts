@@ -10,6 +10,7 @@ import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
 import { forKeyword } from "../keywords";
 import { IntType } from "../symbols/int-type";
+import { allScopedSymbols } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { Transforms } from "../syntax-nodes/transforms";
@@ -46,7 +47,7 @@ export class For extends FrameWithStatements implements Statement {
     return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>for </el-kw>${this.variable.renderAsHtml()}<el-kw> from </el-kw>${this.from.renderAsHtml()}<el-kw> to </el-kw>${this.to.renderAsHtml()}<el-kw> step </el-kw>${this.step.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
-<el-kw>end for</el-kw>
+<el-kw>end for</el-kw>${this.contextMenu()}
 </el-statement>`;
   }
 
@@ -105,7 +106,9 @@ ${this.indent()}end for`;
       s = s.slice(1);
     }
 
-    return `${this.indent()}for (${declare}${v} = ${f}; ${v} ${compare} ${t}; ${v} = ${v} ${incDec} ${s}) {\r
+    const symbols = () => allScopedSymbols(this.getParent(), this);
+
+    return `${this.indent()}${this.breakPoint(symbols)}for (${declare}${v} = ${f}; ${v} ${compare} ${t}; ${v} = ${v} ${incDec} ${s}) {\r
 ${this.compileStatements(transforms)}\r
 ${this.indent()}}`;
   }
