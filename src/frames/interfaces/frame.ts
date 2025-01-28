@@ -56,4 +56,6 @@ export interface Frame extends Selectable, Scope, ElanSymbol {
   setParent(parent: Parent): void;
 
   deleteIfPermissible(): void;
+
+  clearBreakpoints(): void;
 }

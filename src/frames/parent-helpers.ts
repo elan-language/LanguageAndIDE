@@ -224,3 +224,9 @@ function moveUpOne(parent: Parent, child: Frame): boolean {
   }
   return result;
 }
+
+export function parentHelper_clearBreakpoints(parent: Parent) {
+  for (const frame of parent.getChildren()) {
+    frame.clearBreakpoints();
+  }
+}

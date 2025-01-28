@@ -14,6 +14,7 @@ import {
   parentHelper_addChildAfter,
   parentHelper_addChildBefore,
   parentHelper_aggregateCompileErrorsOfChildren,
+  parentHelper_clearBreakpoints,
   parentHelper_compileChildren,
   parentHelper_deleteSelectedChildren,
   parentHelper_getChildAfter,
@@ -311,5 +312,10 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     }
 
     return asserts;
+  }
+
+  clearBreakpoints(): void {
+    this.hasBreakPoint = false;
+    parentHelper_clearBreakpoints(this);
   }
 }

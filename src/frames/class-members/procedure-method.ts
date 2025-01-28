@@ -50,7 +50,7 @@ ${this.indent()}end procedure\r
     return `<el-proc class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.privateHelp()}>
 ${this.bpAsHtml}<el-top><el-expand>+</el-expand>${this.modifierAsHtml()}<el-kw>procedure </el-kw><el-method>${this.name.renderAsHtml()}</el-method>(${this.params.renderAsHtml()})${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
-<el-kw>end procedure</el-kw>
+<el-kw>end procedure</el-kw>${this.contextMenu()}
 </el-proc>`;
   }
 
