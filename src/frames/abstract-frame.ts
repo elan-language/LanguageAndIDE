@@ -48,6 +48,7 @@ export abstract class AbstractFrame implements Frame {
   protected showContextMenu = false;
   protected hasBreakPoint = false;
   protected paused = false;
+  protected bpAsHtml = `<el-bp>&#x1f5f2;</el-bp>`;
 
   constructor(parent: Parent) {
     this._parent = parent;

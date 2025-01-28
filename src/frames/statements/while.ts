@@ -28,8 +28,8 @@ export class While extends FrameWithStatements {
     return "while";
   }
   renderAsHtml(): string {
-    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>while </el-kw>${this.condition.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
+    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.bpAsHtml}
+${this.bpAsHtml}<el-top><el-expand>+</el-expand><el-kw>while </el-kw>${this.condition.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
 <el-kw>end while</el-kw>
 </el-statement>`;
