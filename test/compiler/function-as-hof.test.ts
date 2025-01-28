@@ -63,7 +63,7 @@ procedure printModified(i as Float, f as Func<of => Float>)
   print f()
 end procedure
   
-function twice() returns Float
+async function twice() returns Float
   return 2
 end function`;
 
@@ -78,7 +78,7 @@ async function printModified(i, f) {
 }
 global["printModified"] = printModified;
 
-function twice() {
+async function twice() {
   return 2;
 }
 global["twice"] = twice;
@@ -119,7 +119,7 @@ async function printIt(s, c, f) {
 }
 global["printIt"] = printIt;
 
-function find(x, y) {
+async function find(x, y) {
   return _stdlib.indexOf(x, y);
 }
 global["find"] = find;
@@ -157,12 +157,12 @@ async function main() {
   await system.printLine(f(5));
 }
 
-function getasync func() {
+async function getasync func() {
   return twice;
 }
 global["getFunc"] = getFunc;
 
-function twice(x) {
+async function twice(x) {
   return x * 2;
 }
 global["twice"] = twice;
@@ -196,7 +196,7 @@ async function main() {
   await system.printLine(f(5));
 }
 
-function twice(x) {
+async function twice(x) {
   return x * 2;
 }
 global["twice"] = twice;
@@ -239,7 +239,7 @@ async function main() {
   await system.printLine(f.pf(5));
 }
 
-function ff(a) {
+async function ff(a) {
   return a;
 }
 global["ff"] = ff;
@@ -281,7 +281,7 @@ async function main() {
   await system.printLine(ff);
 }
 
-function ff(a) {
+async function ff(a) {
   return a;
 }
 global["ff"] = ff;

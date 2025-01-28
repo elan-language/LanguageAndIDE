@@ -41,7 +41,7 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(new Foo());
-  await system.printLine(f.times(2));
+  await system.printLine(await f.times(2));
 }
 
 class Foo {
@@ -52,7 +52,7 @@ class Foo {
 
   p1 = 0;
 
-  times(value) {
+  async times(value) {
     return this.p1 * value;
   }
 
@@ -104,7 +104,7 @@ const global = new class {};
 async function main() {
   let f = system.initialise(new Foo());
   let x = 1.1;
-  x = f.times(x);
+  x = await f.times(x);
   await system.printLine(x);
 }
 
@@ -116,7 +116,7 @@ class Foo {
 
   p1 = 0;
 
-  times(value) {
+  async times(value) {
     return this.p1 * value;
   }
 
@@ -168,7 +168,7 @@ const global = new class {};
 async function main() {
   let f = system.initialise(new Foo());
   let x = system.emptyImmutableList();
-  x = f.times(2);
+  x = await f.times(2);
   await system.printLine(x);
 }
 
@@ -180,7 +180,7 @@ class Foo {
 
   p1 = 0;
 
-  times(value) {
+  async times(value) {
     return system.list([this.p1 * value]);
   }
 
@@ -241,7 +241,7 @@ end class`;
 const global = new class {};
 async function main() {
   let b = system.initialise(new Bar());
-  let x = b.getTimes();
+  let x = await b.getTimes();
   await system.printLine(x);
 }
 
@@ -259,9 +259,9 @@ class Bar {
     this._p1 = p1;
   }
 
-  getTimes() {
+  async getTimes() {
     let x = system.emptyImmutableList();
-    x = this.p1.times(2);
+    x = await this.p1.times(2);
     return x;
   }
 
@@ -275,7 +275,7 @@ class Foo {
 
   p1 = 0;
 
-  times(value) {
+  async times(value) {
     return system.list([this.p1 * value]);
   }
 
@@ -337,7 +337,7 @@ end class`;
 const global = new class {};
 async function main() {
   let b = system.initialise(new Bar());
-  let x = b.getTimes();
+  let x = await b.getTimes();
   await system.printLine(x);
 }
 
@@ -355,7 +355,7 @@ class Bar {
     this._p1 = p1;
   }
 
-  getTimes() {
+  async getTimes() {
     let x = system.emptyImmutableList();
     x = this.p1.times(2);
     return x;
@@ -371,7 +371,7 @@ class Foo {
 
   p1 = 0;
 
-  times(value) {
+  async times(value) {
     return system.list([system.initialise(new Qux())]);
   }
 
@@ -441,7 +441,7 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(new Foo());
-  await system.printLine(f.length());
+  await system.printLine(await f.length());
 }
 
 class Foo {
@@ -458,7 +458,7 @@ class Foo {
     this._p1 = p1;
   }
 
-  length() {
+  async length() {
     return this.p1.length() + 2;
   }
 
@@ -476,7 +476,7 @@ class Bar {
 
   p1 = 0;
 
-  length() {
+  async length() {
     return this.p1;
   }
 
@@ -548,7 +548,7 @@ const global = new class {};
 async function main() {
   let f = system.initialise(new Foo());
   let b = system.initialise(new Bar());
-  await system.printLine(f.times(b));
+  await system.printLine(await f.times(b));
 }
 
 class Foo {
@@ -559,11 +559,11 @@ class Foo {
 
   p1 = 0;
 
-  times(b) {
-    return this.p1PlusOne() * b.p1PlusOne();
+  async times(b) {
+    return await this.p1PlusOne() * await b.p1PlusOne();
   }
 
-  p1PlusOne() {
+  async p1PlusOne() {
     return this.p1 + 1;
   }
 
@@ -581,7 +581,7 @@ class Bar {
 
   p1 = 0;
 
-  p1PlusOne() {
+  async p1PlusOne() {
     return this.p1 + 1;
   }
 
