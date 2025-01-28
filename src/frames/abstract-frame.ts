@@ -677,14 +677,22 @@ export abstract class AbstractFrame implements Frame {
     const symbols = scopedSymbols().filter(this.isNotGlobalOrLib).sort(orderSymbol);
 
     for (const symbol of symbols) {
-      const idPrefix = symbol.symbolScope === SymbolScope.program ? "global." : "";
+      const idPrefix =
+        symbol.symbolScope === SymbolScope.program
+          ? "global."
+          : symbol.symbolScope === SymbolScope.member
+            ? "property."
+            : "";
 
       const scopePrefix =
         symbol.symbolScope === SymbolScope.stdlib
           ? "_stdlib."
           : symbol.symbolScope === SymbolScope.program
             ? "global."
-            : "";
+            : symbol.symbolScope === SymbolScope.member
+              ? "this."
+              : "";
+
       const id = `${idPrefix}${symbol.symbolId}`;
       const value = `${scopePrefix}${symbol.symbolId}`;
       resolveId.push(`_scopedIds${this.htmlId}.push(["${id}", system.debugSymbol(${value})]);`);
