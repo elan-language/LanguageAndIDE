@@ -304,6 +304,14 @@ export class System {
     return allOutcomes;
   }
 
+  debugSymbol(symbol: any) {
+    try {
+      return this._stdlib.asString(symbol);
+    } catch (_e) {
+      return "error resolving";
+    }
+  }
+
   async breakPoint(allScopedSymbols: [string, string][], id: string): Promise<void> {
     let paused = true;
 

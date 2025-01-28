@@ -76,7 +76,7 @@ export abstract class AbstractDefinitionStatement
 
     const rhsCode = wrapDeconstructionRhs(lhs, rhs, false);
 
-    return `${this.indent()}${this.breakPoint(this.debugSymbols())}${this.getJsKeyword()} ${lhsCode} = ${rhsCode};`;
+    return `${this.breakPoint(this.debugSymbols())}${this.indent()}${this.getJsKeyword()} ${lhsCode} = ${rhsCode};`;
   }
 
   get symbolId() {

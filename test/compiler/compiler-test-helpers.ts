@@ -11,6 +11,7 @@ import { StdLib } from "../../src/standard-library/std-lib";
 import { AssertOutcome } from "../../src/system";
 import { TestInputOutput } from "./test-input-output";
 import { getTestSystem } from "./test-system";
+import { AbstractFrame } from "../../src/frames/abstract-frame";
 
 export function assertParses(file: FileImpl) {
   assert.strictEqual(file.parseError, undefined, "Unexpected parse error: " + file.parseError);
@@ -34,6 +35,17 @@ export function assertStatusIsInvalid(file: FileImpl) {
 
 export function assertObjectCodeIs(file: FileImpl, objectCode: string) {
   const actual = file.compile().replaceAll("\r", "");
+  const expected = objectCode.replaceAll("\r", "");
+  const errors = file.aggregateCompileErrors();
+  assert.strictEqual(errors.length, 0, errors.map((e) => e.message).join(", "));
+  assert.strictEqual(actual, expected);
+}
+
+export function assertWorkerCompiledObjectCodeIs(file: FileImpl, objectCode: string, debugId : string) {
+  const bp = file.getById(debugId) as AbstractFrame;
+  bp.hasBreakPoint = true;
+
+  const actual = file.compileAsWorker("").replaceAll("\r", "");
   const expected = objectCode.replaceAll("\r", "");
   const errors = file.aggregateCompileErrors();
   assert.strictEqual(errors.length, 0, errors.map((e) => e.message).join(", "));
