@@ -36,6 +36,7 @@ import {
   parentHelper_addChildAfter,
   parentHelper_addChildBefore,
   parentHelper_aggregateCompileErrorsOfChildren,
+  parentHelper_clearBreakpoints,
   parentHelper_deleteSelectedChildren,
   parentHelper_getChildAfter,
   parentHelper_getChildBefore,
@@ -519,5 +520,10 @@ export abstract class ClassFrame
 
   getClassIndex() {
     return this.getParent().getChildren().indexOf(this);
+  }
+
+  clearBreakpoints(): void {
+    this.hasBreakPoint = false;
+    parentHelper_clearBreakpoints(this);
   }
 }

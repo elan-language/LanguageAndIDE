@@ -38,6 +38,7 @@ import {
   parentHelper_addChildAfter,
   parentHelper_addChildBefore,
   parentHelper_aggregateCompileErrorsOfChildren,
+  parentHelper_clearBreakpoints,
   parentHelper_deleteSelectedChildren,
   parentHelper_getChildAfter,
   parentHelper_getChildBefore,
@@ -729,6 +730,10 @@ export class FileImpl implements File, Scope {
 
   get libraryScope() {
     return this._stdLibSymbols;
+  }
+
+  clearBreakpoints() {
+    parentHelper_clearBreakpoints(this);
   }
 }
 

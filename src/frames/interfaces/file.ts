@@ -96,4 +96,6 @@ export interface File extends Parent {
   removeAllSelectorsThatCanBe(): void;
   currentHash: string;
   hasTests: boolean;
+
+  clearBreakpoints(): void;
 }

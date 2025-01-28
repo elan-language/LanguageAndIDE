@@ -608,6 +608,10 @@ export abstract class AbstractFrame implements Frame {
     return helper_compileMsgAsHtml(this);
   }
 
+  clearBreakpoints(): void {
+    this.hasBreakPoint = false;
+  }
+
   setBreakPoint = () => {
     this.hasBreakPoint = true;
   };
@@ -616,15 +620,21 @@ export abstract class AbstractFrame implements Frame {
     this.hasBreakPoint = false;
   };
 
+  clearAllBreakPoints = () => {
+    this.getFile().clearBreakpoints();
+  };
+
   getContextMenuItems() {
     const map = new Map<string, [string, () => void]>();
 
     // Must be arrow functions for this binding
     if (this.hasBreakPoint) {
-      map.set("clearBP", ["clear Break Point", this.clearBreakPoint]);
+      map.set("clearBP", ["clear BreakPoint", this.clearBreakPoint]);
     } else {
-      map.set("setBP", ["set Break Point", this.setBreakPoint]);
+      map.set("setBP", ["set BreakPoint", this.setBreakPoint]);
     }
+
+    map.set("clearAllBP", ["clear all BreakPoints", this.clearAllBreakPoints]);
 
     return map;
   }
