@@ -39,7 +39,7 @@ export class Each extends FrameWithStatements implements Statement {
   }
   renderAsHtml(): string {
     return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-${this.bpAsHtml}<el-top><el-expand>+</el-expand><el-kw>each </el-kw>${this.variable.renderAsHtml()}<el-kw> in </el-kw>${this.iter.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
+<el-top>${this.bpAsHtml}<el-expand>+</el-expand><el-kw>each </el-kw>${this.variable.renderAsHtml()}<el-kw> in </el-kw>${this.iter.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
 <el-kw>end each</el-kw>${this.contextMenu()}
 </el-statement>`;

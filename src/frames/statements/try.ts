@@ -34,7 +34,7 @@ export class TryStatement extends FrameWithStatements {
 
   renderAsHtml(): string {
     return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-${this.bpAsHtml}<el-top><el-expand>+</el-expand><el-kw>${tryKeyword} </el-kw>${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
+<el-top>${this.bpAsHtml}<el-expand>+</el-expand><el-kw>${tryKeyword} </el-kw>${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
 <el-kw>end try</el-kw>${this.contextMenu()}
 </el-statement>`;

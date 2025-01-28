@@ -54,7 +54,7 @@ export class AbstractClass extends ClassFrame {
 
   public renderAsHtml(): string {
     return `<el-class class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-${this.bpAsHtml}<el-top><el-expand>+</el-expand><el-kw>abstract class </el-kw>${this.name.renderAsHtml()}${this.inheritanceAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
+<el-top>${this.bpAsHtml}<el-expand>+</el-expand><el-kw>abstract class </el-kw>${this.name.renderAsHtml()}${this.inheritanceAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
 ${parentHelper_renderChildrenAsHtml(this)}
 <el-kw>end class</el-kw>
 </el-class>`;

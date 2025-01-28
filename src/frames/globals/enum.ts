@@ -59,10 +59,10 @@ export class Enum extends AbstractFrame implements ElanSymbol, GlobalFrame, Coll
     return "enum";
   }
   renderAsHtml(): string {
-    return `<el-enum class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.bpAsHtml}<el-top><el-expand>+</el-expand><el-kw>enum </el-kw>${this.name.renderAsHtml()}</el-top> ${this.values.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-enum>`;
+    return `<el-enum class="${this.cls()}" id='${this.htmlId}' tabindex="0"><el-top>${this.bpAsHtml}<el-expand>+</el-expand><el-kw>enum </el-kw>${this.name.renderAsHtml()}</el-top> ${this.values.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-enum>`;
   }
 
-  //`<el-const class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.bpAsHtml}<el-top><el-expand>+</el-expand><el-kw>constant </el-kw>${this.name.renderAsHtml()}</el-top><el-kw> set to </el-kw>${this.value.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-const>`;
+  //`<el-const class="${this.cls()}" id='${this.htmlId}' tabindex="0"><el-top>${this.bpAsHtml}<el-expand>+</el-expand><el-kw>constant </el-kw>${this.name.renderAsHtml()}</el-top><el-kw> set to </el-kw>${this.value.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-const>`;
 
   indent(): string {
     return "";
