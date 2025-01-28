@@ -4,20 +4,24 @@ import {
   mustBeKnownSymbolType,
   mustBeUniqueNameInScope,
 } from "../compile-rules";
-import { privateHelp, processTogglePrivate, singleIndent } from "../frame-helpers";
+import {
+  addPrivateToggleToContextMenu,
+  processTogglePrivate,
+  singleIndent,
+} from "../frame-helpers";
 import { ConcreteClass } from "../globals/concrete-class";
 import { FunctionFrame } from "../globals/function-frame";
 import { editorEvent } from "../interfaces/editor-event";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Frame } from "../interfaces/frame";
-import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
+import { PossiblyPrivateMember } from "../interfaces/possibly-private-member";
 import { endKeyword, functionKeyword, privateKeyword, returnsKeyword } from "../keywords";
 import { getClassScope } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { Transforms } from "../syntax-nodes/transforms";
 
-export class FunctionMethod extends FunctionFrame implements Member {
+export class FunctionMethod extends FunctionFrame implements PossiblyPrivateMember {
   isMember: boolean = true;
   private: boolean;
   isAbstract = false;
@@ -50,7 +54,7 @@ ${this.indent()}${endKeyword} ${functionKeyword}\r
 `;
   }
   public renderAsHtml(): string {
-    return `<el-func class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.privateHelp()}>
+    return `<el-func class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.toolTip()}>
 <el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>${this.modifierAsHtml()}<el-kw>${functionKeyword} </el-kw><el-method>${this.name.renderAsHtml()}</el-method>(${this.params.renderAsHtml()})<el-kw> ${returnsKeyword} </el-kw>${this.returnType.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
 <el-kw>${endKeyword} ${functionKeyword}</el-kw>
@@ -109,7 +113,16 @@ ${this.indent()}}\r
     return result;
   }
 
-  privateHelp(): string {
-    return privateHelp(this, functionKeyword);
+  makePublic = () => {
+    this.private = false;
+  };
+  makePrivate = () => {
+    this.private = true;
+  };
+
+  getContextMenuItems() {
+    const map = super.getContextMenuItems();
+    addPrivateToggleToContextMenu(this, map);
+    return map;
   }
 }

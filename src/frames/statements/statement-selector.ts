@@ -4,21 +4,21 @@ import { Frame } from "../interfaces/frame";
 import { Parent } from "../interfaces/parent";
 import { StatementFactory } from "../interfaces/statement-factory";
 import {
-  assertKeyword,
-  callKeyword,
-  commentMarker,
-  eachKeyword,
-  elseKeyword,
-  forKeyword,
-  ifKeyword,
-  letKeyword,
-  printKeyword,
-  repeatKeyword,
-  setKeyword,
-  throwKeyword,
-  tryKeyword,
-  variableKeyword,
-  whileKeyword,
+    assertKeyword,
+    callKeyword,
+    commentMarker,
+    eachKeyword,
+    elseKeyword,
+    forKeyword,
+    ifKeyword,
+    letKeyword,
+    printKeyword,
+    repeatKeyword,
+    setKeyword,
+    throwKeyword,
+    tryKeyword,
+    variableKeyword,
+    whileKeyword,
 } from "../keywords";
 
 export class StatementSelector extends AbstractSelector {
@@ -105,6 +105,6 @@ export class StatementSelector extends AbstractSelector {
   }
 
   renderAsHtml(): string {
-    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.bpAsHtml()}${this.textToDisplayAsHtml()}</el-statement>`;
+    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.toolTip()}>${this.bpAsHtml()}${this.textToDisplayAsHtml()}</el-statement>`;
   }
 }

@@ -4,9 +4,9 @@ import { File } from "../interfaces/file";
 import { SymbolType } from "../interfaces/symbol-type";
 import { abstractClassKeywords, endKeyword, interfaceKeyword } from "../keywords";
 import {
-  parentHelper_compileChildren,
-  parentHelper_renderChildrenAsHtml,
-  parentHelper_renderChildrenAsSource,
+    parentHelper_compileChildren,
+    parentHelper_renderChildrenAsHtml,
+    parentHelper_renderChildrenAsSource,
 } from "../parent-helpers";
 import { ClassSubType, ClassType } from "../symbols/class-type";
 import { Transforms } from "../syntax-nodes/transforms";
@@ -54,7 +54,7 @@ export class InterfaceFrame extends ClassFrame {
   }
 
   public renderAsHtml(): string {
-    return `<el-class class="${this.cls()}" id='${this.htmlId}' tabindex="0">
+    return `<el-class class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.toolTip()}>
 <el-top>${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>${interfaceKeyword} </el-kw>${this.name.renderAsHtml()}${this.inheritanceAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
 ${parentHelper_renderChildrenAsHtml(this)}
 <el-kw>${endKeyword} ${interfaceKeyword}</el-kw>

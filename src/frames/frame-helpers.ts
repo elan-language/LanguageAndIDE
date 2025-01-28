@@ -12,6 +12,7 @@ import { Frame } from "./interfaces/frame";
 import { GlobalFrame } from "./interfaces/global-frame";
 import { Member } from "./interfaces/member";
 import { Parent } from "./interfaces/parent";
+import { PossiblyPrivateMember } from "./interfaces/possibly-private-member";
 import { Scope } from "./interfaces/scope";
 import { Selectable } from "./interfaces/selectable";
 import { Statement } from "./interfaces/statement";
@@ -271,12 +272,6 @@ export function currentParameterIndex(text: string) {
   return 0;
 }
 
-export function privateHelp(member: Member, memberType: string): string {
-  return member.private
-    ? `title="To make ${memberType} public, select '${memberType}' frame then Ctrl-p."`
-    : `title="To make ${memberType} private, select '${memberType}' frame then Ctrl-p."`;
-}
-
 export function processTogglePrivate(member: Member, e: editorEvent): boolean {
   let result = false;
   if (e.key === "p" && e.modKey.control) {
@@ -284,4 +279,15 @@ export function processTogglePrivate(member: Member, e: editorEvent): boolean {
     result = true;
   }
   return result;
+}
+
+export function addPrivateToggleToContextMenu(
+  member: PossiblyPrivateMember,
+  menu: Map<string, [string, () => void]>,
+) {
+  if (member.private) {
+    menu.set("makePublic", ["make public (Ctrl-p)", member.makePublic]);
+  } else {
+    menu.set("makePrivate", ["make private (Ctrl-p)", member.makePrivate]);
+  }
 }

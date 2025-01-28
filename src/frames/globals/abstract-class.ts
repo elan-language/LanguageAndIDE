@@ -4,9 +4,9 @@ import { File } from "../interfaces/file";
 import { SymbolType } from "../interfaces/symbol-type";
 import { abstractClassKeywords, classKeyword, endKeyword } from "../keywords";
 import {
-  parentHelper_compileChildren,
-  parentHelper_renderChildrenAsHtml,
-  parentHelper_renderChildrenAsSource,
+    parentHelper_compileChildren,
+    parentHelper_renderChildrenAsHtml,
+    parentHelper_renderChildrenAsSource,
 } from "../parent-helpers";
 import { ClassSubType, ClassType } from "../symbols/class-type";
 import { Transforms } from "../syntax-nodes/transforms";
@@ -53,7 +53,7 @@ export class AbstractClass extends ClassFrame {
   }
 
   public renderAsHtml(): string {
-    return `<el-class class="${this.cls()}" id='${this.htmlId}' tabindex="0">
+    return `<el-class class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.toolTip()}>
 <el-top>${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>abstract class </el-kw>${this.name.renderAsHtml()}${this.inheritanceAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
 ${parentHelper_renderChildrenAsHtml(this)}
 <el-kw>end class</el-kw>

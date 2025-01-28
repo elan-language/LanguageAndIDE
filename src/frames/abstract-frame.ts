@@ -706,4 +706,8 @@ export abstract class AbstractFrame implements Frame {
 
     return `${resolve}await system.breakPoint(_scopedIds${this.htmlId}, "${this.htmlId}");\r\n`;
   }
+
+  protected toolTip(): string {
+    return `title="Right-mouse-click, Ctrl-m, or 'Context Menu' key, to show available actions"`;
+  }
 }

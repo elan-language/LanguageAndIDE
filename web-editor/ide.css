@@ -243,6 +243,10 @@ button#expand-collapse {
   padding-left: 1px;
 }
 
+.context-menu * {
+  font-family: var(--ideTitleFont);
+}
+
 .selected el-top .context-menu {
   background-color: lightgrey;
   border-right-color: black;

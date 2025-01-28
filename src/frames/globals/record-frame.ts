@@ -4,9 +4,9 @@ import { File } from "../interfaces/file";
 import { SymbolType } from "../interfaces/symbol-type";
 import { endKeyword, recordKeyword } from "../keywords";
 import {
-  parentHelper_compileChildren,
-  parentHelper_renderChildrenAsHtml,
-  parentHelper_renderChildrenAsSource,
+    parentHelper_compileChildren,
+    parentHelper_renderChildrenAsHtml,
+    parentHelper_renderChildrenAsSource,
 } from "../parent-helpers";
 import { ClassSubType, ClassType } from "../symbols/class-type";
 import { SymbolScope } from "../symbols/symbol-scope";
@@ -46,7 +46,7 @@ export class RecordFrame extends ClassFrame {
   }
 
   public renderAsHtml(): string {
-    return `<el-class class="${this.cls()}" id='${this.htmlId}' tabindex="0">
+    return `<el-class class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.toolTip()}>
 <el-top>${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>record </el-kw>${this.name.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
 ${parentHelper_renderChildrenAsHtml(this)}
 <el-kw>end record</el-kw>
