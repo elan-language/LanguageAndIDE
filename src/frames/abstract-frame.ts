@@ -272,14 +272,14 @@ export abstract class AbstractFrame implements Frame {
       }
       case "Delete": {
         if (e.modKey.control) {
-          this.getParent().deleteSelectedChildren();
+          this.deleteSelected();
           codeHasChanged = true;
         }
         break;
       }
       case "d": {
         if (e.modKey.control) {
-          this.getParent().deleteSelectedChildren();
+          this.deleteSelected();
           codeHasChanged = true;
         }
         break;
@@ -298,12 +298,23 @@ export abstract class AbstractFrame implements Frame {
         }
         break;
       }
+      case "b": {
+        if (e.modKey.control) {
+          this.toggleBreakPoint();
+          codeHasChanged = true;
+        }
+        break;
+      }
       case "ContextMenu": {
-        // todo renamethis to data say
         if (e.autocomplete) {
+          // This case is when user has selected an item FROM the context menu
           const map = this.getContextMenuItems();
           map.get(e.autocomplete)![1]?.();
         } else {
+          // Bringup the context menu
+          if (!this.isSelected()) {
+            this.select(true, false);
+          }
           this.showContextMenu = true;
         }
         break;
@@ -311,7 +322,11 @@ export abstract class AbstractFrame implements Frame {
     }
     return codeHasChanged;
   }
-  cut(): void {
+  deleteSelected = () => {
+    this.getParent().deleteSelectedChildren();
+  };
+
+  cut = () => {
     const selected = parentHelper_getAllSelectedChildren(this.getParent());
     const nonSelectors = selected.filter((s) => !(s.initialKeywords() === "selector"));
     if (nonSelectors.length === 0) {
@@ -330,7 +345,7 @@ export abstract class AbstractFrame implements Frame {
     if (!("isSelector" in newFocus) && !newFocus.getParent().minimumNumberOfChildrenExceeded()) {
       newFocus.insertPeerSelector(false);
     }
-  }
+  };
 
   deleteIfPermissible(): void {
     if (this.movable) {
@@ -620,6 +635,14 @@ export abstract class AbstractFrame implements Frame {
     this.hasBreakPoint = false;
   };
 
+  toggleBreakPoint = () => {
+    if (this.hasBreakPoint) {
+      this.clearBreakPoint();
+    } else {
+      this.setBreakPoint();
+    }
+  };
+
   clearAllBreakPoints = () => {
     this.getFile().clearBreakpoints();
   };
@@ -629,13 +652,12 @@ export abstract class AbstractFrame implements Frame {
 
     // Must be arrow functions for this binding
     if (this.hasBreakPoint) {
-      map.set("clearBP", ["clear BreakPoint", this.clearBreakPoint]);
+      map.set("clearBP", ["clear BreakPoint (Ctrl-b)", this.clearBreakPoint]);
     } else {
-      map.set("setBP", ["set BreakPoint", this.setBreakPoint]);
+      map.set("setBP", ["set BreakPoint (Ctrl-b)", this.setBreakPoint]);
     }
-
-    map.set("clearAllBP", ["clear all BreakPoints", this.clearAllBreakPoints]);
-
+    map.set("cut", ["cut (Ctrl-x)", this.cut]);
+    map.set("delete", ["delete (Ctrl-Delete or Ctrl-d)", this.deleteSelected]);
     return map;
   }
 
@@ -708,6 +730,6 @@ export abstract class AbstractFrame implements Frame {
   }
 
   protected toolTip(): string {
-    return `title="Right-mouse-click, Ctrl-m, or 'Context Menu' key, to show available actions"`;
+    return `title="Right-mouse-click or Ctrl-m to show context menu"`;
   }
 }

@@ -4,9 +4,9 @@ import { File } from "../interfaces/file";
 import { SymbolType } from "../interfaces/symbol-type";
 import { abstractClassKeywords, endKeyword, interfaceKeyword } from "../keywords";
 import {
-    parentHelper_compileChildren,
-    parentHelper_renderChildrenAsHtml,
-    parentHelper_renderChildrenAsSource,
+  parentHelper_compileChildren,
+  parentHelper_renderChildrenAsHtml,
+  parentHelper_renderChildrenAsSource,
 } from "../parent-helpers";
 import { ClassSubType, ClassType } from "../symbols/class-type";
 import { Transforms } from "../syntax-nodes/transforms";
