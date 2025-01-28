@@ -105,6 +105,6 @@ export class StatementSelector extends AbstractSelector {
   }
 
   renderAsHtml(): string {
-    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.bpAsHtml}${this.textToDisplayAsHtml()}</el-statement>`;
+    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.bpAsHtml()}${this.textToDisplayAsHtml()}</el-statement>`;
   }
 }

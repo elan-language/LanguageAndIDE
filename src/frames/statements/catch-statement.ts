@@ -68,7 +68,7 @@ export class CatchStatement extends AbstractFrame implements Statement, ElanSymb
   keywords = `${catchKeyword} ${exceptionKeyword} ${inKeyword} `;
 
   renderAsHtml(): string {
-    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><el-top>${this.bpAsHtml}<el-expand>+</el-expand><el-kw>${this.keywords}</el-kw>${this.variable.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>{this.contextMenu()}</el-statement>`;
+    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><el-top>${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>${this.keywords}</el-kw>${this.variable.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>{this.contextMenu()}</el-statement>`;
   }
 
   renderAsSource(): string {

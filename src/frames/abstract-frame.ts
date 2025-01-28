@@ -48,7 +48,6 @@ export abstract class AbstractFrame implements Frame {
   protected showContextMenu = false;
   hasBreakPoint = false;
   protected paused = false;
-  protected bpAsHtml = `<el-bp>&#x1f5f2;</el-bp>`;
 
   constructor(parent: Parent) {
     this._parent = parent;
@@ -666,6 +665,10 @@ export abstract class AbstractFrame implements Frame {
     const scope = s.symbolScope;
 
     return !(scope === SymbolScope.program || scope === SymbolScope.stdlib);
+  }
+
+  bpAsHtml(): string {
+    return this.hasBreakPoint ? `<el-bp>&#x1f5f2;</el-bp>` : ``;
   }
 
   breakPoint(scopedSymbols: () => ElanSymbol[]) {
