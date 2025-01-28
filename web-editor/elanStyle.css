@@ -116,6 +116,7 @@ el-global:has(el-comment) {
     border-left-color: var(--selection);
 }
 
+.selected > el-bp,
 .selected > el-top, 
 .selected > el-top *, 
 .selected > el-kw, 
@@ -358,17 +359,35 @@ el-statement.selected > el-fr
 }
 
 
-
 el-bp {
     display: none;
 }
 .breakpoint > el-top el-bp, .breakpoint > el-bp {
     display: inline;
     color: red;
-    background-color: white;
 }
 
-.paused-at > el-top el-kw {
-    background-color:red;
+.paused-at > * {
+    border-left-color: var(--warning);
 }
 
+.paused-at > el-bp,
+.paused-at > el-top, 
+.paused-at > el-top *, 
+.paused-at > el-kw, 
+.paused-at > el-field, 
+.paused-at > el-field *, 
+.paused-at > el-txt, 
+.paused-at > el-place, 
+.paused-at > el-compl,
+.paused-at > .outdent el-top, 
+.paused-at > .outdent el-top * {
+    background-color: var(--warning);
+    border-right-color: var(--warning);
+}
+el-statement.paused-at > el-fr  
+ {
+    background-color: var(--warning);
+    color: white;
+    text-indent: 0;
+}
