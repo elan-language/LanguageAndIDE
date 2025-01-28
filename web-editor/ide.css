@@ -213,7 +213,7 @@ button#expand-collapse {
   grid-column: 23;
 }
 
-.autocomplete-popup {
+.autocomplete-popup, .context-menu {
   visibility: visible;
   width: fit-content;
   background-color: lightgrey;
@@ -227,14 +227,14 @@ button#expand-collapse {
   border: solid 1px;
 }
 
-.autocomplete-popup > div {
+.autocomplete-popup > div, .context-menu > div  {
   color: black;
   background-color: lightgrey;
   text-align: left;
   padding-left: 1px;
 }
 
-.autocomplete-popup > div.selected {
+.autocomplete-popup > div.selected, .context-menu > div.selected {
   color: white;
   background-color: var(--help);
 }

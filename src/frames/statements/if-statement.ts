@@ -33,9 +33,9 @@ export class IfStatement extends FrameWithStatements implements Statement {
 
   renderAsHtml(): string {
     return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<el-top>${this.bpAsHtml}<el-expand>+</el-expand><el-kw>${ifKeyword} </el-kw>${this.condition.renderAsHtml()}<el-kw> ${thenKeyword}</el-kw>${this.getFrNo()}</el-top>${this.compileMsgAsHtml()}
+<el-top>${this.contextMenu()}${this.bpAsHtml}<el-expand>+</el-expand><el-kw>${ifKeyword} </el-kw>${this.condition.renderAsHtml()}<el-kw> ${thenKeyword}</el-kw>${this.getFrNo()}</el-top>${this.compileMsgAsHtml()}
 ${this.renderChildrenAsHtml()}
-<el-kw>${endKeyword} ${ifKeyword}</el-kw>${this.contextMenu()}
+<el-kw>${endKeyword} ${ifKeyword}</el-kw>
 </el-statement>`;
   }
   renderAsSource(): string {

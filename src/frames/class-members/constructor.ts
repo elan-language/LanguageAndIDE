@@ -46,7 +46,7 @@ export class Constructor extends FrameWithStatements implements ElanSymbol, Memb
     return `<el-constructor class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <el-top>${this.bpAsHtml}<el-expand>+</el-expand><el-kw>constructor</el-kw>(${this.params.renderAsHtml()})${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
-<el-kw>end constructor</el-kw>${this.contextMenu()}
+<el-kw>end constructor</el-kw>
 </el-constructor>`;
   }
 
