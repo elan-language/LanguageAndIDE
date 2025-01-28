@@ -1,8 +1,8 @@
-* {
+.elan-code * {
     font-family: consolas, monospace;
     font-size: 11pt;
 }
-.elan-code, #console {
+.elan-code {
     color: var(--defaultText);
     background-color: var(--defaultBackground);
     border-color: var(--defaultBackground);

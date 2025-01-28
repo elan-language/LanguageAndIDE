@@ -29,7 +29,7 @@ export class Repeat extends FrameWithStatements implements Statement {
     return "repeat";
   }
   renderAsHtml(): string {
-    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
+    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.toolTip()}>
 <el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>repeat</el-kw></el-top>${this.getFrNo()}
 ${this.renderChildrenAsHtml()}
 <el-kw>end repeat when </el-kw>${this.condition.renderAsHtml()}

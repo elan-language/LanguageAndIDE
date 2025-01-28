@@ -3,13 +3,13 @@ import { CodeSource } from "../code-source";
 import { mustBeKnownSymbolType, mustBeUniqueNameInScope } from "../compile-rules";
 import { IdentifierField } from "../fields/identifier-field";
 import { TypeField } from "../fields/type-field";
-import { privateHelp, processTogglePrivate } from "../frame-helpers";
+import { addPrivateToggleToContextMenu, processTogglePrivate } from "../frame-helpers";
 import { ConcreteClass } from "../globals/concrete-class";
 import { editorEvent } from "../interfaces/editor-event";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
-import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
+import { PossiblyPrivateMember } from "../interfaces/possibly-private-member";
 import { asKeyword, privateKeyword, propertyKeyword } from "../keywords";
 import { ClassType } from "../symbols/class-type";
 import { getClassScope } from "../symbols/symbol-helpers";
@@ -17,7 +17,7 @@ import { SymbolScope } from "../symbols/symbol-scope";
 import { transforms } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 
-export class Property extends AbstractFrame implements Member, ElanSymbol {
+export class Property extends AbstractFrame implements PossiblyPrivateMember, ElanSymbol {
   isMember = true;
   isProperty = true;
   isAbstract = false;
@@ -55,7 +55,7 @@ export class Property extends AbstractFrame implements Member, ElanSymbol {
   }
 
   renderAsHtml(): string {
-    return `<el-prop class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.privateHelp()}>${this.modifierAsHtml()}<el-kw>${propertyKeyword} </el-kw>${this.name.renderAsHtml()}<el-kw> ${asKeyword} </el-kw>${this.type.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-prop>`;
+    return `<el-prop class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.toolTip()}>${this.modifierAsHtml()}<el-kw>${propertyKeyword} </el-kw>${this.name.renderAsHtml()}<el-kw> ${asKeyword} </el-kw>${this.type.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-prop>`;
   }
 
   renderAsSource(): string {
@@ -132,12 +132,21 @@ ${this.indent()}}\r\n`;
     }
     return result;
   }
-  privateHelp(): string {
-    return this.canBePrivate() ? privateHelp(this, propertyKeyword) : "";
-  }
 
   private canBePrivate(): boolean {
     const parent = this.getClass();
     return !parent.isRecord;
+  }
+
+  makePublic = () => {
+    this.private = false;
+  };
+  makePrivate = () => {
+    this.private = true;
+  };
+  getContextMenuItems() {
+    const map = super.getContextMenuItems();
+    addPrivateToggleToContextMenu(this, map);
+    return map;
   }
 }

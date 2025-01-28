@@ -153,7 +153,7 @@ suite("Parsing Frame Tests", async () => {
   });
 
   test("parse Frames - header file", async () => {
-    const code = `# 719e1393c2f8375498ed84fee29f755cc7c1f872843142a9ada699a8ceb153a6 Elan Beta 6 valid
+    const code = `# 2520a4ba773978407afd9bdfb9618f36cc30fc6c74bcae2501ac648116082cf2 Elan Beta 7 valid
 
 `;
     const source = new CodeSourceFromString(code);
@@ -164,7 +164,7 @@ suite("Parsing Frame Tests", async () => {
   });
 
   test("parse Frames - constant only", async () => {
-    const code = `# 4f66e0a09ddb11adb8ef575e33ea3ec31760c0824f81430489e3aa7ad48ec8a9 Elan Beta 6 valid
+    const code = `# 939e9c906ff466c9cce681151eaff8c192764e6a63dba9f2d4aa6dae2ab14c7b Elan Beta 7 valid
 
 constant pi set to 3.142
 `;
@@ -176,7 +176,7 @@ constant pi set to 3.142
   });
 
   test("parse Frames - two constants", async () => {
-    const code = `# d516ced284527dd582a7401b8163d30decc2002f8346f2e4806f06e04cc63e82 Elan Beta 6 valid
+    const code = `# 6283a88a98ad6cf9152349ee82db2cc7c03a7cee57047af23dda0c788d22329b Elan Beta 7 valid
 
 constant pi set to 3.142
 
@@ -190,7 +190,7 @@ constant e set to 2.718
   });
 
   test("parse Frames - main only", async () => {
-    const code = `# 3175c3042013af423ced2ff62d624d6c7b30a8a5c825d8247213017efdd9047d Elan Beta 6 valid
+    const code = `# 3e6820a9b1af2e81216dfc65348ba06a750a2fbaf77ca23a28800c98c2918242 Elan Beta 7 valid
 
 main
 
@@ -204,7 +204,7 @@ end main
   });
 
   test("parse Frames - hello world", async () => {
-    const code = `# 46c2066c9e8626db1e5df9fc0989e5c1dfc3127e9fed79859cfc577c71c75af7 Elan Beta 6 valid
+    const code = `# b33086c476b572303f34f47cefd057c856c6df419f4519504a6d905ae52492d4 Elan Beta 7 valid
 
 # my comment
 main
@@ -223,7 +223,7 @@ end main
   });
 
   test("parse Frames - main with all single-line statements", async () => {
-    const code = `# ff04a94fc602795dc219e6682f9e5a10fcead480f8eb18310f5b8a14d6866623 Elan Beta 6 valid
+    const code = `# 6ecea7d2298bb15dc4eac4b3ea0f20277c64374ccd11b40706052708016a17f8 Elan Beta 7 valid
 
 main
   variable name set to value or expression
@@ -241,7 +241,7 @@ end main
   });
 
   test("parse Frames - all globals except class", async () => {
-    const code = `# db67340853a723a3e5e7d3d883144bed11b2fac4373b088403352984c4bc1ff5 Elan Beta 6 valid
+    const code = `# 3f3dcf04e39ad08d25e5c309f59e11cdec90b0568bc7c15f45506e0c0121aa11 Elan Beta 7 valid
 
 constant phi set to 1.618
 
@@ -267,7 +267,7 @@ enum Fruit apple, orange, pear
   });
 
   test("parse Frames - class", async () => {
-    const code = `# 6d2a117b69359fe72ef6a940fa5f0a3b8f65a120adf7c81e6ce3e2bf6273f004 Elan Beta 6 valid
+    const code = `# 95e5192d9566c87ccf96787bec0f0dab75417bd0bcd6d2560ef2b4b47812e381 Elan Beta 7 valid
 
 class Player inherits Foo, Bar
   constructor()
@@ -294,7 +294,7 @@ end class
   });
 
   test("parse Frames - record", async () => {
-    const code = `# beb9b33287df6231b35873b1be30b8d3874fbdc83a0f609684d4e041ce34d311 Elan Beta 6 valid
+    const code = `# 6f81ed3ab5937d6d04af1190b29968d1fc61c7ed6c9e7a95da531a8231001fe7 Elan Beta 7 valid
 
 record Foo
   property bar as Int
@@ -309,7 +309,7 @@ end record
   });
 
   test("parse Frames - abstract class", async () => {
-    const code = `# ce26ca7d7a84daa93d60234e97ecbee012518bf8d8fb92d392b97e3463fb8f83 Elan Beta 6 valid
+    const code = `# 8f6a9351d59b4ba175c44353a87012932644c1001f62b194a1b3cf39a461f61c Elan Beta 7 valid
 
 abstract class Foo
   abstract property p1 as Int
@@ -330,7 +330,7 @@ end class
   });
 
   test("parse Frames - else with and without if", async () => {
-    const code = `# dd739090ebd707416cc579ad4e91e33a6b88db029257a0fce2039fb7cffcb632 Elan Beta 6 valid
+    const code = `# 281d972ac065c6115d09db91ed56a5a00bf56f0e731e52243fb77d9159093df9 Elan Beta 7 valid
 
 main
   if true then
@@ -347,7 +347,7 @@ end main
   });
 
   test("abstract class can contain concrete property", async () => {
-    const code = `# FFFF Elan Beta 6 valid
+    const code = `# FFFF Elan Beta 7 valid
 
 abstract class Card
   property value as Int
@@ -361,7 +361,7 @@ end class
   });
 
   test("abstract class can contain concrete method", async () => {
-    const code = `# FFFF Elan Beta 6 valid
+    const code = `# FFFF Elan Beta 7 valid
 
 abstract class Card
   function bar() returns Int
@@ -376,7 +376,7 @@ end class
     assert.equal(source.getRemainingCode(), "");
   });
   test("record cannot contain any method", async () => {
-    const code = `# FFFF Elan Beta 6 valid
+    const code = `# FFFF Elan Beta 7 valid
 
 record Card
   function foo() returns Int
@@ -391,7 +391,7 @@ end record
   });
 
   test("#367 abstract class cannot contain constructor", async () => {
-    const code = `# FFFF Elan Beta 6 valid
+    const code = `# FFFF Elan Beta 7 valid
 
 abstract class Card
   constructor()
@@ -406,7 +406,7 @@ abstract class Card
     assert.equal(fl.parseError!.includes(`0 matches found at constructor()`), true);
   });
   test("#927 parse test and ignored test", async () => {
-    const code = `# 9b250ad8ceebfcf9b9bbe42807285d70ec040fd68947a06832cca5baf02e01b9 Elan Beta 6 valid
+    const code = `# 9a2048297419853d0fbdbadd9be5985a848aa7bb917a763abebb60b12cb4c5e8 Elan Beta 7 valid
 
 ignore test bar
 
@@ -419,7 +419,7 @@ end test
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
   test("#927 - 2", async () => {
-    const code = `# c85e80268e281ef07934ae0f09052e649958dad5f6e929c60ef37019929e8e0d Elan Beta 6 valid
+    const code = `# 3916c0c063c0162b6695807af1981550e0195a91ed165db92daca7368473f984 Elan Beta 7 valid
 
 ignore test foo
 
@@ -436,7 +436,7 @@ end test
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
   test("#927 - 3", async () => {
-    const code = `# 9b59b1cc3225dab834747e0301aadc2a034137f0c25a172a7f68f789c756bec5 Elan Beta 6 valid
+    const code = `# 2ec53a18846a018386ae7801a387daefc7ed70193ed5c627c317b2bcd109cd98 Elan Beta 7 valid
 
 test foo
 
@@ -453,7 +453,7 @@ end test
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
   test("#942 private members", async () => {
-    const code = `# 60b9cf692bb7f41ff1928267008cef4de7b026a810d576a27e13fc3c807ae0bf Elan Beta 6 valid
+    const code = `# 4ed3506c0b406bfeb5943a1a6bd9f54cfa9023cc8d819cdecdb35561930cf2f6 Elan Beta 7 valid
 
 class Foo
   constructor()

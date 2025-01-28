@@ -75,8 +75,8 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
     return "test";
   }
   public renderAsHtml(): string {
-    return `<el-test class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.ignoreHelp()}>
-<el-top>${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>${this.ignoreKw()}test </el-kw>${this.testDescription.renderAsHtml()}${this.compileOrTestMsgAsHtml()}${this.getFrNo()}</el-top>
+    return `<el-test class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.toolTip()}>
+<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>${this.ignoreKw()}test </el-kw>${this.testDescription.renderAsHtml()}${this.compileOrTestMsgAsHtml()}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
 <el-kw>end test</el-kw>
 </el-test>`;
@@ -163,9 +163,26 @@ ${this.compileTestBody(transforms)}\r
     return this.ignored ? `${ignoreKeyword} ` : ``;
   }
 
-  ignoreHelp() {
-    return this.ignored
-      ? `title="To un-ignore, select 'test' frame then Ctrl-i."`
-      : `title="To ignore, select 'test' frame then Ctrl-i"`;
+  ignore = () => {
+    this.ignored = true;
+  };
+
+  unignore = () => {
+    this.ignored = false;
+  };
+
+  getContextMenuItems() {
+    const map = new Map<string, [string, () => void]>(); //Normally: = super.getContextMenuItems()
+    // Must be arrow functions for this binding
+    if (this.ignored) {
+      map.set("unignore", ["un-ignore test (Ctrl-i)", this.unignore]);
+    } else {
+      map.set("ignore", ["ignore test (Ctrl-i)", this.ignore]);
+    }
+    return map;
   }
+
+  clearBreakPoint = () => {
+    this.hasBreakPoint = false;
+  };
 }
