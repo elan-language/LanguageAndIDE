@@ -14,7 +14,7 @@ import { Field } from "../interfaces/field";
 import { Frame } from "../interfaces/frame";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
-import { allScopedSymbols, getDeconstructionIds, symbolMatches } from "../symbols/symbol-helpers";
+import { getDeconstructionIds, symbolMatches } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { getIds, wrapDeconstructionLhs, wrapDeconstructionRhs } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
@@ -76,9 +76,7 @@ export abstract class AbstractDefinitionStatement
 
     const rhsCode = wrapDeconstructionRhs(lhs, rhs, false);
 
-    const symbols = () => allScopedSymbols(this.getParent(), this);
-
-    return `${this.indent()}${this.breakPoint(symbols)}${this.getJsKeyword()} ${lhsCode} = ${rhsCode};`;
+    return `${this.indent()}${this.breakPoint(this.debugSymbols())}${this.getJsKeyword()} ${lhsCode} = ${rhsCode};`;
   }
 
   get symbolId() {

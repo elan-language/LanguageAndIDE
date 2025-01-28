@@ -6,7 +6,6 @@ import { File } from "../interfaces/file";
 import { GlobalFrame } from "../interfaces/global-frame";
 import { mainKeyword } from "../keywords";
 import { DuplicateSymbol } from "../symbols/duplicate-symbol";
-import { allScopedSymbols } from "../symbols/symbol-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 
 export class MainFrame extends FrameWithStatements implements GlobalFrame {
@@ -63,10 +62,8 @@ end main\r
       mustNotHaveDuplicateMain(this.compileErrors, this.htmlId);
     }
 
-    const symbols = () => allScopedSymbols(this.getParent(), this);
-
     return `async function main() {\r
-${this.breakPoint(symbols)}${this.compileStatements(transforms)}\r
+${this.breakPoint(this.debugSymbols())}${this.compileStatements(transforms)}\r
 }\r
 `;
   }

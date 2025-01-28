@@ -7,7 +7,6 @@ import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
 import { endKeyword, ifKeyword, thenKeyword } from "../keywords";
 import { BooleanType } from "../symbols/boolean-type";
-import { allScopedSymbols } from "../symbols/symbol-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 import { Else } from "./else";
 
@@ -59,9 +58,7 @@ ${this.indent()}${endKeyword} ${ifKeyword}`;
       mustNotHaveConditionalAfterUnconditionalElse(elses, this.compileErrors, this.htmlId);
     }
 
-    const symbols = () => allScopedSymbols(this.getParent(), this);
-
-    return `${this.indent()}${this.breakPoint(symbols)}if (${this.condition.compile(transforms)}) {\r
+    return `${this.indent()}${this.breakPoint(this.debugSymbols())}if (${this.condition.compile(transforms)}) {\r
 ${this.compileStatements(transforms)}\r
 ${this.indent()}}`;
   }

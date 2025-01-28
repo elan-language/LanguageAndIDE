@@ -41,7 +41,7 @@ export class Each extends FrameWithStatements implements Statement {
     return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.bpAsHtml}
 ${this.bpAsHtml}<el-top><el-expand>+</el-expand><el-kw>each </el-kw>${this.variable.renderAsHtml()}<el-kw> in </el-kw>${this.iter.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
-<el-kw>end each</el-kw>
+<el-kw>end each</el-kw>${this.contextMenu()}
 </el-statement>`;
   }
 
@@ -62,7 +62,7 @@ ${this.indent()}end each`;
     const iterType = this.iter.getOrTransformAstNode(transforms)?.symbolType();
     mustBeIterable(iterType!, this.compileErrors, this.htmlId);
 
-    return `${this.indent()}for (const ${this.variable.compile(transforms)} of ${this.iter.compile(transforms)}) {\r
+    return `${this.indent()}${this.breakPoint(this.debugSymbols())}for (const ${this.variable.compile(transforms)} of ${this.iter.compile(transforms)}) {\r
 ${this.compileChildren(transforms)}\r
 ${this.indent()}}`;
   }

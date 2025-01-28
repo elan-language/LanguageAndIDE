@@ -7,7 +7,6 @@ import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
 import { repeatKeyword } from "../keywords";
 import { BooleanType } from "../symbols/boolean-type";
-import { allScopedSymbols } from "../symbols/symbol-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 
 export class Repeat extends FrameWithStatements implements Statement {
@@ -52,9 +51,7 @@ ${this.indent()}end repeat when ${this.condition.renderAsSource()}`;
       this.htmlId,
     );
 
-    const symbols = () => allScopedSymbols(this.getParent(), this);
-
-    return `${this.indent()}${this.breakPoint(symbols)}do {\r
+    return `${this.indent()}${this.breakPoint(this.debugSymbols())}do {\r
 ${this.compileStatements(transforms)}\r
 ${this.indent()}} while (!(${this.condition.compile(transforms)}));`;
   }

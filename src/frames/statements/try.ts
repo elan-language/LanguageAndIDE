@@ -36,7 +36,7 @@ export class TryStatement extends FrameWithStatements {
     return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.bpAsHtml}
 ${this.bpAsHtml}<el-top><el-expand>+</el-expand><el-kw>${tryKeyword} </el-kw>${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
-<el-kw>end try</el-kw>
+<el-kw>end try</el-kw>${this.contextMenu()}
 </el-statement>`;
   }
   renderAsSource(): string {
@@ -61,7 +61,7 @@ ${this.indent()}${endKeyword} ${tryKeyword}`;
   compile(transforms: Transforms): string {
     this.compileErrors = [];
 
-    return `${this.indent()}try {\r
+    return `${this.indent()}${this.breakPoint(this.debugSymbols())}try {\r
 ${this.compileStatements(transforms)}\r
 ${this.indent()}}`;
   }

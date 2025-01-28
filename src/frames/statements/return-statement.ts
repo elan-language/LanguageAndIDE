@@ -31,7 +31,7 @@ export class ReturnStatement extends AbstractFrame implements Statement {
     return "return";
   }
   renderAsHtml(): string {
-    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.bpAsHtml}<el-kw>return </el-kw>${this.expr.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-statement>`;
+    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.bpAsHtml}<el-kw>return </el-kw>${this.expr.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}${this.contextMenu()}</el-statement>`;
   }
 
   renderAsSource(): string {
@@ -40,7 +40,7 @@ export class ReturnStatement extends AbstractFrame implements Statement {
 
   compile(transforms: Transforms): string {
     this.compileErrors = [];
-    return `${this.indent()}return ${this.expr.compile(transforms)};`;
+    return `${this.indent()}${this.breakPoint(this.debugSymbols())}return ${this.expr.compile(transforms)};`;
   }
 
   parseFrom(source: CodeSource): void {
