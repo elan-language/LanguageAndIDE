@@ -19,7 +19,6 @@ import { Statement } from "../interfaces/statement";
 import { callKeyword } from "../keywords";
 import { ProcedureType } from "../symbols/procedure-type";
 import {
-  allScopedSymbols,
   isMemberOnFieldsClass,
   scopePrefix,
   updateScopeAndQualifier,
@@ -203,9 +202,7 @@ export class CallStatement extends AbstractFrame implements Statement {
         wrappedOutParms = `\n${this.indent()}${wrappedOutParameters.join("; ")};`;
       }
 
-      const symbols = () => allScopedSymbols(this.getParent(), this);
-
-      return `${wrappedInParms}${this.indent()}${this.breakPoint(symbols)}${async}${prefix}${id}(${parms});${wrappedOutParms}`;
+      return `${wrappedInParms}${this.indent()}${this.breakPoint(this.debugSymbols())}${async}${prefix}${id}(${parms});${wrappedOutParms}`;
     }
     return "";
   }

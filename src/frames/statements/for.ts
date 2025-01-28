@@ -10,7 +10,6 @@ import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
 import { forKeyword } from "../keywords";
 import { IntType } from "../symbols/int-type";
-import { allScopedSymbols } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { Transforms } from "../syntax-nodes/transforms";
@@ -106,9 +105,7 @@ ${this.indent()}end for`;
       s = s.slice(1);
     }
 
-    const symbols = () => allScopedSymbols(this.getParent(), this);
-
-    return `${this.indent()}${this.breakPoint(symbols)}for (${declare}${v} = ${f}; ${v} ${compare} ${t}; ${v} = ${v} ${incDec} ${s}) {\r
+    return `${this.indent()}${this.breakPoint(this.debugSymbols())}for (${declare}${v} = ${f}; ${v} ${compare} ${t}; ${v} = ${v} ${incDec} ${s}) {\r
 ${this.compileStatements(transforms)}\r
 ${this.indent()}}`;
   }

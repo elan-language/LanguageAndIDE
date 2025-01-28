@@ -31,7 +31,7 @@ export class Throw extends AbstractFrame implements Statement {
     return "throw";
   }
   renderAsHtml(): string {
-    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><el-kw>${throwKeyword} ${exceptionKeyword} </el-kw>${this.text.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-statement>`;
+    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><el-kw>${throwKeyword} ${exceptionKeyword} </el-kw>${this.text.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}${this.contextMenu()}</el-statement>`;
   }
 
   renderAsSource(): string {

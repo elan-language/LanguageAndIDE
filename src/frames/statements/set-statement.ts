@@ -16,7 +16,6 @@ import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
 import { setKeyword, toKeyword } from "../keywords";
-import { allScopedSymbols } from "../symbols/symbol-helpers";
 import { getIds, wrapDeconstructionLhs, wrapDeconstructionRhs } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 
@@ -50,7 +49,7 @@ export class SetStatement extends AbstractFrame implements Statement {
     return "set";
   }
   renderAsHtml(): string {
-    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><el-kw>${setKeyword} </el-kw>${this.assignable.renderAsHtml()}<el-kw> ${toKeyword} </el-kw>${this.expr.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-statement>`;
+    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><el-kw>${setKeyword} </el-kw>${this.assignable.renderAsHtml()}<el-kw> ${toKeyword} </el-kw>${this.expr.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}${this.contextMenu()}</el-statement>`;
   }
   renderAsSource(): string {
     return `${this.indent()}${setKeyword} ${this.assignable.renderAsSource()} ${toKeyword} ${this.expr.renderAsSource()}`;
@@ -104,8 +103,6 @@ export class SetStatement extends AbstractFrame implements Statement {
 
     const rhs = wrapDeconstructionRhs(assignableAstNode, exprAstNode, true);
 
-    const symbols = () => allScopedSymbols(this.getParent(), this);
-
-    return `${this.indent()}${this.breakPoint(symbols)}${lhs} = ${rhs};`;
+    return `${this.indent()}${this.breakPoint(this.debugSymbols())}${lhs} = ${rhs};`;
   }
 }

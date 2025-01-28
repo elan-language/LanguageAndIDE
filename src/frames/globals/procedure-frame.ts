@@ -11,7 +11,7 @@ import { Parent } from "../interfaces/parent";
 import { Scope } from "../interfaces/scope";
 import { procedureKeyword } from "../keywords";
 import { ProcedureType } from "../symbols/procedure-type";
-import { allScopedSymbols, getGlobalScope } from "../symbols/symbol-helpers";
+import { getGlobalScope } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { Transforms } from "../syntax-nodes/transforms";
@@ -89,10 +89,8 @@ ${this.renderChildrenAsHtml()}
       this.htmlId,
     );
 
-    const symbols = () => allScopedSymbols(this.getParent(), this);
-
     return `${name}(${this.params.compile(transforms)}) {\r
-${this.breakPoint(symbols)}${this.compileStatements(transforms)}\r`;
+${this.breakPoint(this.debugSymbols())}${this.compileStatements(transforms)}\r`;
   }
 
   public override symbolMatches(id: string, all: boolean, initialScope?: Frame): ElanSymbol[] {

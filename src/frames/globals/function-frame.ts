@@ -12,7 +12,6 @@ import { Profile } from "../interfaces/profile";
 import { endKeyword, functionKeyword, returnKeyword, returnsKeyword } from "../keywords";
 import { ReturnStatement } from "../statements/return-statement";
 import { FunctionType } from "../symbols/function-type";
-import { allScopedSymbols } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { Transforms } from "../syntax-nodes/transforms";
@@ -107,10 +106,8 @@ ${this.renderChildrenAsHtml()}
   }
 
   public compile(transforms: Transforms): string {
-    const symbols = () => allScopedSymbols(this.getParent(), this);
-
     return `${this.name.compile(transforms)}(${this.params.compile(transforms)}) {\r
-${this.breakPoint(symbols)}${this.compileStatements(transforms)}\r`;
+${this.breakPoint(this.debugSymbols())}${this.compileStatements(transforms)}\r`;
   }
 
   public override symbolMatches(id: string, all: boolean, initialScope?: Frame): ElanSymbol[] {

@@ -26,7 +26,7 @@ import {
 } from "./parent-helpers";
 import { ScratchPad } from "./scratch-pad";
 import { CompileStatus, DisplayStatus, ParseStatus } from "./status-enums";
-import { orderSymbol } from "./symbols/symbol-helpers";
+import { allScopedSymbols, orderSymbol } from "./symbols/symbol-helpers";
 import { SymbolScope } from "./symbols/symbol-scope";
 import { UnknownType } from "./symbols/unknown-type";
 import { Transforms } from "./syntax-nodes/transforms";
@@ -645,6 +645,10 @@ export abstract class AbstractFrame implements Frame {
       return `<div class='context-menu'>${items.join("")}</div>`;
     }
     return "";
+  }
+
+  debugSymbols() {
+    return () => allScopedSymbols(this.getParent(), this);
   }
 
   breakPoint(scopedSymbols: () => ElanSymbol[]) {
