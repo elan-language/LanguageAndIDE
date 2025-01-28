@@ -651,13 +651,19 @@ export abstract class AbstractFrame implements Frame {
     return () => allScopedSymbols(this.getParent(), this);
   }
 
+  isNotGlobalOrLib(s: ElanSymbol) {
+    const scope = s.symbolScope;
+
+    return !(scope === SymbolScope.program || scope === SymbolScope.stdlib);
+  }
+
   breakPoint(scopedSymbols: () => ElanSymbol[]) {
     if (!this.hasBreakPoint) {
       return "";
     }
 
     const resolveId: string[] = [];
-    const symbols = scopedSymbols().sort(orderSymbol);
+    const symbols = scopedSymbols().filter(this.isNotGlobalOrLib).sort(orderSymbol);
 
     for (const symbol of symbols) {
       const idPrefix = symbol.symbolScope === SymbolScope.program ? "global." : "";
