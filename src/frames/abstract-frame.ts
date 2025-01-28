@@ -46,7 +46,7 @@ export abstract class AbstractFrame implements Frame {
   private _compileStatus: CompileStatus = CompileStatus.default;
 
   protected showContextMenu = false;
-  protected hasBreakPoint = false;
+  hasBreakPoint = false;
   protected paused = false;
   protected bpAsHtml = `<el-bp>&#x1f5f2;</el-bp>`;
 
@@ -687,13 +687,12 @@ export abstract class AbstractFrame implements Frame {
             : "";
       const id = `${idPrefix}${symbol.symbolId}`;
       const value = `${scopePrefix}${symbol.symbolId}`;
-      resolveId.push(`_scopedIds${this.htmlId}.push(["${id}", _stdlib.asString(${value})]);`);
+      resolveId.push(`_scopedIds${this.htmlId}.push(["${id}", system.debugSymbol(${value})]);`);
     }
 
-    const resolve = `const _scopedIds${this.htmlId} = [];
+    const resolve = `${this.indent()}const _scopedIds${this.htmlId} = [];
   ${resolveId.join("\r")}`;
 
-    return `${resolve}
-await system.breakPoint(_scopedIds${this.htmlId}, "${this.htmlId}");`;
+    return `${resolve}await system.breakPoint(_scopedIds${this.htmlId}, "${this.htmlId}");\r\n`;
   }
 }

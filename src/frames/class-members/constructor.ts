@@ -71,7 +71,7 @@ ${this.indent()}end constructor\r
     }
 
     return `${this.indent()}constructor(${this.params.compile(transforms)}) {\r
-${superConstructor}${this.compileStatements(transforms)}\r
+${superConstructor}${this.breakPoint(this.debugSymbols())}${this.compileStatements(transforms)}\r
 ${this.indent()}}\r
 `;
   }
