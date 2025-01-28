@@ -7,6 +7,15 @@
     --ideTitleSize: 12pt;
 }
 
+#console {
+  color: var(--defaultText);
+  background-color: var(--defaultBackground);
+  border-color: var(--defaultBackground);
+  font-style: normal;
+  font-family: consolas, monospace;
+  font-size: 11pt;
+}
+
 body {
     background-color: var(--ideDefaultBackground);
     display: grid;
