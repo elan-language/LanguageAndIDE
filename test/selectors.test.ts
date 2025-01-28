@@ -159,7 +159,7 @@ suite("Selector tests", () => {
     assert.equal(help, " throw try");
     assert.equal(
       s.renderAsHtml(),
-      `<el-statement class="ok" id='select3' tabindex="0"><el-select><el-txt>t</el-txt><el-place>new code</el-place><el-help class="selector"> throw try</el-help></el-select></el-statement>`,
+      `<el-statement class="ok" id='select3' tabindex="0"><el-bp>&#x1f5f2;</el-bp><el-select><el-txt>t</el-txt><el-place>new code</el-place><el-help class="selector"> throw try</el-help></el-select></el-statement>`,
     );
   });
 

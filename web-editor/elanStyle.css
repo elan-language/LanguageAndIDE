@@ -357,19 +357,18 @@ el-statement.selected > el-fr
     border-left: 0;
 }
 
-.breakpoint > el-top el-kw {
-    background-color: chartreuse;
+
+
+el-bp {
+    display: none;
+}
+.breakpoint > el-top el-bp, .breakpoint > el-bp {
+    display: inline;
+    color: red;
+    background-color: white;
 }
 
 .paused-at > el-top el-kw {
-    background-color:red;
-}
-
-el-statement.breakpoint > el-kw {
-    background-color: chartreuse;
-}
-
-el-statement.paused-at > el-kw {
     background-color:red;
 }
 

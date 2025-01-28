@@ -45,7 +45,7 @@ export class CommentStatement extends AbstractFrame implements Statement, Member
   }
 
   renderAsHtml(): string {
-    return `<el-statement><el-comment class="${this.cls()}" id='${this.htmlId}' tabindex="0"><el-top><el-kw># </el-kw>${this.text.renderAsHtml()}</el-top></el-comment></el-statement>`;
+    return `<el-statement>${this.bpAsHtml}<el-comment class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.bpAsHtml}<el-top><el-kw># </el-kw>${this.text.renderAsHtml()}</el-top></el-comment></el-statement>`;
   }
 
   renderAsSource(): string {
