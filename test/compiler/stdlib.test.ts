@@ -34,12 +34,12 @@ const global = new class {
 };
 async function main() {
   let arr = system.literalArray(["three", "four"]);
-  system.printLine(_stdlib.contains(global.lst, 1));
-  system.printLine(_stdlib.contains(global.lst, 3));
-  system.printLine(_stdlib.contains(arr, "four"));
-  system.printLine(_stdlib.contains(arr, "five"));
-  system.printLine(_stdlib.contains("onetwo", "two"));
-  system.printLine(_stdlib.contains("onetwo", "three"));
+  await system.printLine(_stdlib.contains(global.lst, 1));
+  await system.printLine(_stdlib.contains(global.lst, 3));
+  await system.printLine(_stdlib.contains(arr, "four"));
+  await system.printLine(_stdlib.contains(arr, "five"));
+  await system.printLine(_stdlib.contains("onetwo", "two"));
+  await system.printLine(_stdlib.contains("onetwo", "three"));
 }
 return [main, _tests];}`;
 
@@ -64,9 +64,9 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(1);
+  await system.printLine(1);
   await _stdlib.pause(100);
-  system.printLine(2);
+  await system.printLine(2);
 }
 return [main, _tests];}`;
 
@@ -95,7 +95,7 @@ async function main() {
   let a = _stdlib.clock();
   await _stdlib.pause(100);
   let b = _stdlib.clock();
-  system.printLine(b > a);
+  await system.printLine(b > a);
 }
 return [main, _tests];}`;
 
@@ -123,8 +123,8 @@ const global = new class {};
 async function main() {
   let a = _stdlib.random();
   let b = _stdlib.random();
-  system.printLine(a < 1);
-  system.printLine(a !== b);
+  await system.printLine(a < 1);
+  await system.printLine(a !== b);
 }
 return [main, _tests];}`;
 
@@ -149,7 +149,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = _stdlib.parseAsFloat("10.1");
-  system.printLine(a);
+  await system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -174,7 +174,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = _stdlib.parseAsFloat("x12");
-  system.printLine(a);
+  await system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -199,7 +199,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = _stdlib.parseAsInt("10.1");
-  system.printLine(a);
+  await system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -224,7 +224,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = _stdlib.parseAsInt("");
-  system.printLine(a);
+  await system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -248,7 +248,7 @@ end main`;
 const global = new class {};
 async function main() {
   _stdlib.printNoLine("Hello");
-  system.printLine("!");
+  await system.printLine("!");
 }
 return [main, _tests];}`;
 
@@ -298,9 +298,9 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(_stdlib.openBrace);
-  system.printLine(_stdlib.closeBrace);
-  system.printLine(_stdlib.quotes);
+  await system.printLine(_stdlib.openBrace);
+  await system.printLine(_stdlib.closeBrace);
+  await system.printLine(_stdlib.quotes);
 }
 return [main, _tests];}`;
 
@@ -432,8 +432,8 @@ async function main() {
   }
   for (let i = 0; i <= 6; i = i + 1) {
     let r = _stdlib.round((system.safeIndex(results, i) / 10000), 1);
-    system.printLine(r);
-    system.printLine(", ");
+    await system.printLine(r);
+    await system.printLine(", ");
   }
 }
 return [main, _tests];}`;
@@ -479,8 +479,8 @@ async function main() {
   }
   for (let i = 0; i <= 6; i = i + 1) {
     let r = _stdlib.round((system.safeIndex(results, i) / 10000), 1);
-    system.printLine(r);
-    system.printLine(", ");
+    await system.printLine(r);
+    await system.printLine(", ");
   }
 }
 return [main, _tests];}`;
@@ -523,8 +523,8 @@ async function main() {
   }
   for (let i = 0; i <= 6; i = i + 1) {
     let r = system.safeIndex(results, i);
-    system.printLine(r);
-    system.printLine(", ");
+    await system.printLine(r);
+    await system.printLine(", ");
   }
 }
 return [main, _tests];}`;
@@ -571,8 +571,8 @@ async function main() {
   }
   for (let i = 0; i <= 6; i = i + 1) {
     let r = system.safeIndex(results, i);
-    system.printLine(r);
-    system.printLine(", ");
+    await system.printLine(r);
+    await system.printLine(", ");
   }
 }
 
@@ -617,7 +617,7 @@ async function main() {
   let nota = _stdlib.bitNot(a);
   let aL = _stdlib.bitShiftL(a, 2);
   let aR = _stdlib.bitShiftR(a, 2);
-  system.printLine(_stdlib.asBinary(a) + " " + _stdlib.asBinary(b) + " " + _stdlib.asBinary(anb) + " " + _stdlib.asBinary(aob) + " " + _stdlib.asBinary(axb) + " " + _stdlib.asBinary(nota) + " " + _stdlib.asBinary(aL) + " " + _stdlib.asBinary(aR));
+  await system.printLine(_stdlib.asBinary(a) + " " + _stdlib.asBinary(b) + " " + _stdlib.asBinary(anb) + " " + _stdlib.asBinary(aob) + " " + _stdlib.asBinary(axb) + " " + _stdlib.asBinary(nota) + " " + _stdlib.asBinary(aL) + " " + _stdlib.asBinary(aR));
 }
 return [main, _tests];}`;
 
@@ -647,7 +647,7 @@ async function main() {
   _stdlib.putAt2D(oxoBoard, 0, 0, "o");
   _stdlib.putAt2D(oxoBoard, 2, 2, "o");
   _stdlib.putAt2D(oxoBoard, 1, 1, "x");
-  system.printLine(oxoBoard);
+  await system.printLine(oxoBoard);
 }
 return [main, _tests];}`;
 
@@ -670,7 +670,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(_stdlib.unicode(65));
+  await system.printLine(_stdlib.unicode(65));
 }
 return [main, _tests];}`;
 
@@ -693,7 +693,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(_stdlib.asUnicode("Apple"));
+  await system.printLine(_stdlib.asUnicode("Apple"));
 }
 return [main, _tests];}`;
 
@@ -723,8 +723,8 @@ async function main() {
   let a = system.literalArray([1, 2]);
   let b = system.literalArray([3, 4]);
   _stdlib.appendArray(a, b);
-  system.printLine(a);
-  system.printLine(b);
+  await system.printLine(a);
+  await system.printLine(b);
 }
 return [main, _tests];}`;
 
@@ -754,8 +754,8 @@ async function main() {
   let a = system.literalArray([1, 2]);
   let b = system.literalArray([3, 4]);
   _stdlib.prependArray(a, b);
-  system.printLine(a);
-  system.printLine(b);
+  await system.printLine(a);
+  await system.printLine(b);
 }
 return [main, _tests];}`;
 
@@ -784,7 +784,7 @@ async function main() {
   let a = system.literalArray([1, 2]);
   let b = 3;
   _stdlib.prepend(a, b);
-  system.printLine(a);
+  await system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -811,7 +811,7 @@ const global = new class {};
 async function main() {
   const s = "Now is the time...";
   const words = _stdlib.split(s, " ");
-  system.printLine(words);
+  await system.printLine(words);
 }
 return [main, _tests];}`;
 
@@ -837,7 +837,7 @@ const global = new class {};
 async function main() {
   const words = system.literalArray(["Now", "is", "the", "time..."]);
   const s = _stdlib.joinArrayElements(words, "-");
-  system.printLine(s);
+  await system.printLine(s);
 }
 return [main, _tests];}`;
 
@@ -863,7 +863,7 @@ const global = new class {};
 async function main() {
   const words = system.list(["Now", "is", "the", "time..."]);
   const s = _stdlib.joinListElements(words, ".");
-  system.printLine(s);
+  await system.printLine(s);
 }
 return [main, _tests];}`;
 
@@ -890,8 +890,8 @@ const global = new class {};
 async function main() {
   const s1 = "[a] [b]";
   const s2 = _stdlib.replace(_stdlib.replace(s1, "[", _stdlib.unicode(123)), "]", _stdlib.unicode(125));
-  system.printLine(s1);
-  system.printLine(s2);
+  await system.printLine(s1);
+  await system.printLine(s2);
 }
 return [main, _tests];}`;
 
@@ -922,8 +922,8 @@ async function main() {
   const s2 = "cbabdabbc";
   const result1 = _stdlib.matchesRegExp(s1, /[a-c]*/);
   const result2 = _stdlib.matchesRegExp(s2, /^[a-c]*$/);
-  system.printLine(result1);
-  system.printLine(result2);
+  await system.printLine(result1);
+  await system.printLine(result2);
 }
 return [main, _tests];}`;
 
@@ -947,7 +947,7 @@ end main`;
 const global = new class {};
 async function main() {
   const r = _stdlib.asRegExp("[a-c]*");
-  system.printLine(r);
+  await system.printLine(r);
 }
 return [main, _tests];}`;
 
@@ -982,12 +982,12 @@ async function main() {
   const a = system.literalArray([1, 3, 5, 7, 9]);
   const b = system.list([2, 4, 6, 8]);
   const c = "Hello World!";
-  system.printLine(_stdlib.indexOfItem(a, 9));
-  system.printLine(_stdlib.indexOfItem(a, 5));
-  system.printLine(_stdlib.indexOfItem(b, 2));
-  system.printLine(_stdlib.indexOfItem(b, 7));
-  system.printLine(_stdlib.indexOfItem(c, "o"));
-  system.printLine(_stdlib.indexOfItem(c, "ll"));
+  await system.printLine(_stdlib.indexOfItem(a, 9));
+  await system.printLine(_stdlib.indexOfItem(a, 5));
+  await system.printLine(_stdlib.indexOfItem(b, 2));
+  await system.printLine(_stdlib.indexOfItem(b, 7));
+  await system.printLine(_stdlib.indexOfItem(c, "o"));
+  await system.printLine(_stdlib.indexOfItem(c, "ll"));
   let i = 1;
   i = _stdlib.indexOfItem(a, 9);
 }
@@ -1015,7 +1015,7 @@ const global = new class {};
 async function main() {
   let i = 1;
   i = _stdlib.asUnicode("A");
-  system.printLine(i);
+  await system.printLine(i);
 }
 return [main, _tests];}`;
 

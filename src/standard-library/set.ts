@@ -11,6 +11,7 @@ import {
   ElanInt,
   ElanList,
   elanListType,
+  ElanString,
   ElanT1,
   FunctionOptions,
 } from "../elan-type-annotations";
@@ -133,8 +134,8 @@ export class ElanSet<T1> {
     return Array.from(this.contents);
   }
 
-  @elanFunction([], FunctionOptions.pure)
-  asString(): string {
-    return this.stdlib.asString(this.stdlib.asList(Array.from(this.contents)));
+  @elanFunction([], FunctionOptions.pureAsync, ElanString)
+  async asString(): Promise<string> {
+    return await this.stdlib.asString(this.stdlib.asList(Array.from(this.contents)));
   }
 }

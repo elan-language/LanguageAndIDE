@@ -48,14 +48,14 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(new Bar());
-  system.printLine(x.prop);
-  system.printLine(x.func());
+  await system.printLine(x.prop);
+  await system.printLine(x.func());
   await x.proc();
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["prop", 0]]);};
-  func() {
+  async func() {
     return 0;
   }
 
@@ -76,12 +76,12 @@ class Bar {
     this.prop = 3;
   }
 
-  func() {
+  async func() {
     return 1;
   }
 
   async proc() {
-    system.printLine(2);
+    await system.printLine(2);
   }
 
   prop = 0;
@@ -140,14 +140,14 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(new Bar());
-  system.printLine(x.prop);
-  system.printLine(x.func());
+  await system.printLine(x.prop);
+  await system.printLine(x.func());
   await x.proc();
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
-  func() {
+  async func() {
     return 0;
   }
 
@@ -176,12 +176,12 @@ class Bar {
     this.prop = 3;
   }
 
-  func() {
+  async func() {
     return 1;
   }
 
   async proc() {
-    system.printLine(2);
+    await system.printLine(2);
   }
 
   prop = 0;
@@ -240,14 +240,14 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(new Bar());
-  system.printLine(x.prop);
-  system.printLine(x.func());
+  await system.printLine(x.prop);
+  await system.printLine(x.func());
   await x.proc();
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
-  func() {
+  async func() {
     return 0;
   }
 
@@ -276,12 +276,12 @@ class Bar {
     this.prop = 3;
   }
 
-  func() {
+  async func() {
     return 1;
   }
 
   async proc() {
-    system.printLine(2);
+    await system.printLine(2);
   }
 
   prop = 0;
@@ -341,8 +341,8 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(new Bar());
-  system.printLine(func1(x));
-  system.printLine(func2(x));
+  await system.printLine(func1(x));
+  await system.printLine(func2(x));
 }
 
 function func1(f) {
@@ -440,8 +440,8 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(new Bar());
-  system.printLine(func1(x));
-  system.printLine(func2(x));
+  await system.printLine(func1(x));
+  await system.printLine(func2(x));
 }
 
 function func1(f) {
@@ -539,8 +539,8 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(new Bar());
-  system.printLine(func1(x));
-  system.printLine(func2(x));
+  await system.printLine(func1(x));
+  await system.printLine(func2(x));
 }
 
 function func1(f) {
@@ -624,8 +624,8 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(new Bar());
-  system.printLine(x.foo);
-  system.printLine(x.foo.f);
+  await system.printLine(x.foo);
+  await system.printLine(x.foo.f);
 }
 
 class Foo {

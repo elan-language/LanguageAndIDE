@@ -1,7 +1,6 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
-  assertObjectCodeExecutes,
   assertParses,
   assertStatusIsValid,
   assertWorkerCompiledObjectCodeIs,
@@ -24,7 +23,7 @@ async function main() {
   const _scopedIdsvar3 = [];
   await system.breakPoint(_scopedIdsvar3, "var3");
   let a = 3;
-  system.printLine(a);
+  await system.printLine(a);
 }
 return [main, _tests];}
 onmessage = async (e) => {

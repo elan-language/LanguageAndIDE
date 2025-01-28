@@ -33,16 +33,16 @@ end main`;
 const global = new class {};
 async function main() {
   const st = system.initialise(new _stdlib.Stack());
-  system.printLine(st.length());
+  await system.printLine(st.length());
   st.push("apple");
   st.push("pear");
-  system.printLine(st.length());
-  system.printLine(st.peek());
+  await system.printLine(st.length());
+  await system.printLine(st.peek());
   let fruit = st.pop();
-  system.printLine(fruit);
+  await system.printLine(fruit);
   fruit = st.pop();
-  system.printLine(fruit);
-  system.printLine(st.length());
+  await system.printLine(fruit);
+  await system.printLine(st.length());
 }
 return [main, _tests];}`;
 
@@ -118,7 +118,7 @@ end main`;
 const global = new class {};
 async function main() {
   const st = system.initialise(new _stdlib.Stack());
-  system.printLine(st.peek());
+  await system.printLine(st.peek());
 }
 return [main, _tests];}`;
 
@@ -143,7 +143,7 @@ end main`;
 const global = new class {};
 async function main() {
   const st = system.initialise(new _stdlib.Stack());
-  system.printLine(st.pop());
+  await system.printLine(st.pop());
 }
 return [main, _tests];}`;
 

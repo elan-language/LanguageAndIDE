@@ -57,9 +57,9 @@ end class`;
 const global = new class {};
 async function main() {
   let g = system.initialise(new Game());
-  system.printLine(g.p2);
-  system.printLine(g.p1);
-  system.printLine(g.previousScores);
+  await system.printLine(g.p2);
+  await system.printLine(g.p1);
+  await system.printLine(g.previousScores);
 }
 
 class Game {
@@ -88,7 +88,7 @@ class Game {
 
   previousScores = system.emptyImmutableList();
 
-  asString() {
+  async asString() {
     return "A game";
   }
 
@@ -102,7 +102,7 @@ class Player {
 
   name = "";
 
-  asString() {
+  async asString() {
     return this.name;
   }
 
@@ -141,8 +141,8 @@ end class`;
 const global = new class {};
 async function main() {
   let g = system.initialise(new Foo());
-  system.printLine(g.p1);
-  system.printLine(g.p2);
+  await system.printLine(g.p1);
+  await system.printLine(g.p2);
 }
 
 class Foo {
@@ -212,17 +212,17 @@ end class`;
 const global = new class {};
 async function main() {
   let g = system.initialise(new Game());
-  system.printLine(g.i);
-  system.printLine(g.f);
-  system.printLine(g.b);
-  system.printLine(g.s);
-  system.printLine(g.li);
-  system.printLine(g.ds);
-  system.printLine(g.dsi);
-  system.printLine(g.ai);
-  system.printLine(g.t);
-  system.printLine(g.ff("a", "b"));
-  system.printLine(_stdlib.matchesRegExp("aa", g.r));
+  await system.printLine(g.i);
+  await system.printLine(g.f);
+  await system.printLine(g.b);
+  await system.printLine(g.s);
+  await system.printLine(g.li);
+  await system.printLine(g.ds);
+  await system.printLine(g.dsi);
+  await system.printLine(g.ai);
+  await system.printLine(g.t);
+  await system.printLine(g.ff("a", "b"));
+  await system.printLine(_stdlib.matchesRegExp("aa", g.r));
 }
 
 class Game {
@@ -253,7 +253,7 @@ class Game {
 
   r = system.emptyRegExp();
 
-  asString() {
+  async asString() {
     return "A game";
   }
 
@@ -320,16 +320,16 @@ const global = new class {};
 async function main() {
   let p = system.initialise(new Player());
   let g = p.g;
-  system.printLine(g.i);
-  system.printLine(g.f);
-  system.printLine(g.b);
-  system.printLine(g.s);
-  system.printLine(g.li);
-  system.printLine(g.ds);
-  system.printLine(g.dsi);
-  system.printLine(g.ai);
-  system.printLine(g.t);
-  system.printLine(g.r);
+  await system.printLine(g.i);
+  await system.printLine(g.f);
+  await system.printLine(g.b);
+  await system.printLine(g.s);
+  await system.printLine(g.li);
+  await system.printLine(g.ds);
+  await system.printLine(g.dsi);
+  await system.printLine(g.ai);
+  await system.printLine(g.t);
+  await system.printLine(g.r);
 }
 
 class Player {
@@ -374,7 +374,7 @@ class Game {
 
   r = system.emptyRegExp();
 
-  asString() {
+  async asString() {
     return "A game";
   }
 
@@ -415,7 +415,7 @@ end class`;
 const global = new class {};
 async function main() {
   let g = Game.emptyInstance();
-  system.printLine(g.i);
+  await system.printLine(g.i);
 }
 
 class Game {
@@ -426,7 +426,7 @@ class Game {
 
   i = 0;
 
-  asString() {
+  async asString() {
     return "A game";
   }
 
@@ -481,8 +481,8 @@ end class`;
 const global = new class {};
 async function main() {
   let g = system.initialise(new Game());
-  system.printLine(g.p1);
-  system.printLine(g.previousGame);
+  await system.printLine(g.p1);
+  await system.printLine(g.previousGame);
 }
 
 class Game {
@@ -507,7 +507,7 @@ class Game {
     this._previousGame = previousGame;
   }
 
-  asString() {
+  async asString() {
     return "A game";
   }
 
@@ -521,7 +521,7 @@ class Player {
 
   name = "";
 
-  asString() {
+  async asString() {
     return this.name;
   }
 
@@ -591,13 +591,13 @@ end class`;
 const global = new class {};
 async function main() {
   let g = system.initialise(new Game());
-  system.printLine(system.objectEquals(g.p1, Player.emptyInstance()));
-  system.printLine(system.objectEquals(g.p2, Player.emptyInstance()));
-  system.printLine(system.objectEquals(g.previousGame, Game.emptyInstance()));
-  system.printLine(system.objectEquals(g.previousScores, system.emptyImmutableList()));
-  system.printLine(g.score === 0);
-  system.printLine(g.best === 0);
-  system.printLine(g.r === system.emptyRegExp());
+  await system.printLine(system.objectEquals(g.p1, Player.emptyInstance()));
+  await system.printLine(system.objectEquals(g.p2, Player.emptyInstance()));
+  await system.printLine(system.objectEquals(g.previousGame, Game.emptyInstance()));
+  await system.printLine(system.objectEquals(g.previousScores, system.emptyImmutableList()));
+  await system.printLine(g.score === 0);
+  await system.printLine(g.best === 0);
+  await system.printLine(g.r === system.emptyRegExp());
 }
 
 class Game {
@@ -638,7 +638,7 @@ class Game {
 
   r = system.emptyRegExp();
 
-  asString() {
+  async asString() {
     return "A game";
   }
 
@@ -652,7 +652,7 @@ class Player {
 
   name = "";
 
-  asString() {
+  async asString() {
     return this.name;
   }
 
@@ -720,9 +720,9 @@ end class`;
 const global = new class {};
 async function main() {
   let g = system.initialise(new Game());
-  system.printLine(g.score);
+  await system.printLine(g.score);
   await g.setScore(0);
-  system.printLine(g.score);
+  await system.printLine(g.score);
 }
 
 class Game {
@@ -765,7 +765,7 @@ class Game {
 
   previousScores = system.emptyImmutableList();
 
-  asString() {
+  async asString() {
     return "A game";
   }
 
@@ -779,7 +779,7 @@ class Player {
 
   name = "";
 
-  asString() {
+  async asString() {
     return this.name;
   }
 
@@ -829,14 +829,14 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(new Foo());
-  system.printLine(f.a);
-  system.printLine(f.b);
-  system.printLine(f.c);
-  system.printLine(f.d);
-  system.printLine(system.objectEquals(f.a, system.emptyImmutableList()));
-  system.printLine(f.b === "");
-  system.printLine(system.objectEquals(f.c, system.emptyDictionary()));
-  system.printLine(system.objectEquals(f.d, system.emptyArray()));
+  await system.printLine(f.a);
+  await system.printLine(f.b);
+  await system.printLine(f.c);
+  await system.printLine(f.d);
+  await system.printLine(system.objectEquals(f.a, system.emptyImmutableList()));
+  await system.printLine(f.b === "");
+  await system.printLine(system.objectEquals(f.c, system.emptyDictionary()));
+  await system.printLine(system.objectEquals(f.d, system.emptyArray()));
 }
 
 class Foo {
@@ -853,7 +853,7 @@ class Foo {
 
   d = system.emptyArray();
 
-  asString() {
+  async asString() {
     return "A Foo";
   }
 
@@ -901,7 +901,7 @@ const global = new class {};
 async function main() {
   let g = system.initialise(new Game());
   let p = g.p1;
-  system.printLine(p.ucName());
+  await system.printLine(await p.ucName());
 }
 
 class Game {
@@ -926,7 +926,7 @@ class Game {
     this._p2 = p2;
   }
 
-  asString() {
+  async asString() {
     return "A game";
   }
 
@@ -940,7 +940,7 @@ class Player {
   set name(name) {
   }
 
-  ucName() {
+  async ucName() {
     return "";
   }
 
@@ -997,7 +997,7 @@ class Game {
   async something() {
     let a = 1;
     a = system.safeIndex(this.p1, 0);
-    system.printLine(a);
+    await system.printLine(a);
   }
 
 }
@@ -1050,7 +1050,7 @@ async function main() {
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
   async pp() {
-    system.printLine(1);
+    await system.printLine(1);
   }
 
 }

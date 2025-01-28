@@ -28,13 +28,13 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(grade(90));
-  system.printLine(grade(70));
-  system.printLine(grade(50));
-  system.printLine(grade(30));
+  await system.printLine(await grade(90));
+  await system.printLine(await grade(70));
+  await system.printLine(await grade(50));
+  await system.printLine(await grade(30));
 }
 
-function grade(score) {
+async function grade(score) {
   return score > 80 ? "Distinction" : score > 60 ? "Merit" : score > 40 ? "Pass" : "Fail";
 }
 global["grade"] = grade;
@@ -64,7 +64,7 @@ const global = new class {};
 async function main() {
   let score = 70;
   let grade = score > 80 ? "Distinction" : score > 60 ? "Merit" : score > 40 ? "Pass" : "Fail";
-  system.printLine(grade);
+  await system.printLine(grade);
 }
 return [main, _tests];}`;
 

@@ -39,7 +39,7 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(new Foo());
-  system.printLine(x);
+  await system.printLine(x);
 }
 
 class Foo {
@@ -53,7 +53,7 @@ class Foo {
 
   p2 = "";
 
-  asString() {
+  async asString() {
     return this.p2;
   }
 
@@ -99,7 +99,7 @@ const global = new class {};
 async function main() {
   let x = system.initialise(new Foo());
   await x.testSetP1(5);
-  system.printLine(x.p1);
+  await system.printLine(x.p1);
 }
 
 class Foo {
@@ -156,7 +156,7 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(new Foo());
-  system.printLine(f.testFf("test"));
+  await system.printLine(f.testFf("test"));
 }
 
 class Foo {

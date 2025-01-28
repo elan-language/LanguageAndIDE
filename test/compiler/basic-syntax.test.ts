@@ -71,8 +71,8 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine("");
-  system.printLine("");
+  await system.printLine("");
+  await system.printLine("");
 }
 return [main, _tests];}`;
 
@@ -95,7 +95,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine("Hello World!");
+  await system.printLine("Hello World!");
 }
 return [main, _tests];}`;
 
@@ -118,7 +118,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(("Hello World!"));
+  await system.printLine(("Hello World!"));
 }
 return [main, _tests];}`;
 
@@ -141,7 +141,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(1);
+  await system.printLine(1);
 }
 return [main, _tests];}`;
 
@@ -164,7 +164,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(2.1);
+  await system.printLine(2.1);
 }
 return [main, _tests];}`;
 
@@ -187,7 +187,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(21000);
+  await system.printLine(21000);
 }
 return [main, _tests];}`;
 
@@ -210,7 +210,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(2.1e+100);
+  await system.printLine(2.1e+100);
 }
 return [main, _tests];}`;
 
@@ -233,7 +233,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(0.00021);
+  await system.printLine(0.00021);
 }
 return [main, _tests];}`;
 
@@ -256,7 +256,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine("%");
+  await system.printLine("%");
 }
 return [main, _tests];}`;
 
@@ -279,7 +279,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(_stdlib.true);
+  await system.printLine(_stdlib.true);
 }
 return [main, _tests];}`;
 
@@ -302,7 +302,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine("");
+  await system.printLine("");
 }
 return [main, _tests];}`;
 

@@ -32,7 +32,7 @@ async function main() {
   for (const x of a) {
     n = n + x;
   }
-  system.printLine(n);
+  await system.printLine(n);
 }
 return [main, _tests];}`;
 
@@ -65,7 +65,7 @@ async function main() {
   for (const x of a) {
     n = n + x;
   }
-  system.printLine(n);
+  await system.printLine(n);
 }
 return [main, _tests];}`;
 
@@ -93,7 +93,7 @@ const global = new class {};
 async function main() {
   let a = "hello";
   for (const x of a) {
-    system.printLine(x);
+    await system.printLine(x);
   }
 }
 return [main, _tests];}`;
@@ -123,7 +123,7 @@ const global = new class {};
 async function main() {
   for (const x of "12") {
     for (const y of "34") {
-      system.printLine(\`\${_stdlib.asString(x)}\${_stdlib.asString(y)}\`);
+      await system.printLine(\`\${_stdlib.asString(x)}\${_stdlib.asString(y)}\`);
     }
   }
 }
@@ -154,12 +154,12 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  for (const x of fruit()) {
-    system.printLine(x);
+  for (const x of await fruit()) {
+    await system.printLine(x);
   }
 }
 
-function fruit() {
+async function fruit() {
   return system.list(["apple", "orange", "pear"]);
 }
 global["fruit"] = fruit;

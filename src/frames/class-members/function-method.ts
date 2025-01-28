@@ -70,7 +70,7 @@ ${this.renderChildrenAsHtml()}
     const rst = returnStatement.symbolType();
 
     mustBeCompatibleType(rt, rst, this.compileErrors, returnStatement!.fieldId);
-    return `${this.indent()}${super.compile(transforms)}\r
+    return `${this.indent()}async ${super.compile(transforms)}\r
 ${this.indent()}}\r
 `;
   }

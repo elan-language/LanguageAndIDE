@@ -41,7 +41,7 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(new Foo());
-  system.printLine(f.times(2));
+  await system.printLine(f.times(2));
 }
 
 class Foo {
@@ -56,7 +56,7 @@ class Foo {
     return this.p1 * value;
   }
 
-  asString() {
+  async asString() {
     return "";
   }
 
@@ -105,7 +105,7 @@ async function main() {
   let f = system.initialise(new Foo());
   let x = 1.1;
   x = f.times(x);
-  system.printLine(x);
+  await system.printLine(x);
 }
 
 class Foo {
@@ -120,7 +120,7 @@ class Foo {
     return this.p1 * value;
   }
 
-  asString() {
+  async asString() {
     return "";
   }
 
@@ -169,7 +169,7 @@ async function main() {
   let f = system.initialise(new Foo());
   let x = system.emptyImmutableList();
   x = f.times(2);
-  system.printLine(x);
+  await system.printLine(x);
 }
 
 class Foo {
@@ -184,7 +184,7 @@ class Foo {
     return system.list([this.p1 * value]);
   }
 
-  asString() {
+  async asString() {
     return "";
   }
 
@@ -242,7 +242,7 @@ const global = new class {};
 async function main() {
   let b = system.initialise(new Bar());
   let x = b.getTimes();
-  system.printLine(x);
+  await system.printLine(x);
 }
 
 class Bar {
@@ -338,7 +338,7 @@ const global = new class {};
 async function main() {
   let b = system.initialise(new Bar());
   let x = b.getTimes();
-  system.printLine(x);
+  await system.printLine(x);
 }
 
 class Bar {
@@ -441,7 +441,7 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(new Foo());
-  system.printLine(f.length());
+  await system.printLine(f.length());
 }
 
 class Foo {
@@ -462,7 +462,7 @@ class Foo {
     return this.p1.length() + 2;
   }
 
-  asString() {
+  async asString() {
     return "";
   }
 
@@ -480,7 +480,7 @@ class Bar {
     return this.p1;
   }
 
-  asString() {
+  async asString() {
     return "";
   }
 
@@ -548,7 +548,7 @@ const global = new class {};
 async function main() {
   let f = system.initialise(new Foo());
   let b = system.initialise(new Bar());
-  system.printLine(f.times(b));
+  await system.printLine(f.times(b));
 }
 
 class Foo {
@@ -567,7 +567,7 @@ class Foo {
     return this.p1 + 1;
   }
 
-  asString() {
+  async asString() {
     return "";
   }
 
@@ -585,7 +585,7 @@ class Bar {
     return this.p1 + 1;
   }
 
-  asString() {
+  async asString() {
     return "";
   }
 
@@ -642,11 +642,11 @@ class Foo {
   p1 = 0;
 
   async prt() {
-    system.printLine(this.asString());
+    await system.printLine(this.asString());
   }
 
-  asString() {
-    return _stdlib.asString(this.p1);
+  async asString() {
+    return await _stdlib.asString(this.p1);
   }
 
 }

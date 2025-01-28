@@ -41,9 +41,9 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(new Foo());
-  system.printLine(x.p1);
-  system.printLine(x.p2);
-  system.printLine(x.asString());
+  await system.printLine(x.p1);
+  await system.printLine(x.p2);
+  await system.printLine(await x.asString());
 }
 
 class Foo {
@@ -56,7 +56,7 @@ class Foo {
 
   p2 = "";
 
-  asString() {
+  async asString() {
     return "";
   }
 
@@ -99,8 +99,8 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(new Foo(7, "Apple"));
-  system.printLine(x.p1);
-  system.printLine(x.p2);
+  await system.printLine(x.p1);
+  await system.printLine(x.p2);
 }
 
 class Foo {
@@ -114,7 +114,7 @@ class Foo {
 
   p2 = "";
 
-  asString() {
+  async asString() {
     return "";
   }
 
@@ -195,7 +195,7 @@ class Bar {
   p1 = 0;
 
   async printP1() {
-    system.printLine(this.p1);
+    await system.printLine(this.p1);
   }
 
 }
@@ -257,12 +257,12 @@ const global = new class {};
 async function main() {
   let foo = system.initialise(new Foo());
   let bar = foo.bar;
-  system.printLine(bar.p1);
-  system.printLine(bar.p2);
+  await system.printLine(bar.p1);
+  await system.printLine(bar.p2);
   let foo2 = bar.foo;
   let bar2 = foo2.bar;
-  system.printLine(bar2.p1);
-  system.printLine(bar2.p2);
+  await system.printLine(bar2.p1);
+  await system.printLine(bar2.p2);
 }
 
 class Foo {
@@ -279,7 +279,7 @@ class Foo {
     this._bar = bar;
   }
 
-  asString() {
+  async asString() {
     return "";
   }
 
@@ -303,7 +303,7 @@ class Bar {
     this._foo = foo;
   }
 
-  asString() {
+  async asString() {
     return "";
   }
 
@@ -342,7 +342,7 @@ const global = new class {};
 async function main() {
   let foo = system.initialise(new Foo());
   let b = system.safeIndex(foo.strArr, 0);
-  system.printLine(b);
+  await system.printLine(b);
 }
 
 class Foo {
@@ -402,7 +402,7 @@ class Foo {
 }
 
 async function proc(foo) {
-  system.printLine(foo.p1);
+  await system.printLine(foo.p1);
 }
 global["proc"] = proc;
 return [main, _tests];}`;
@@ -443,7 +443,7 @@ end function
 const global = new class {};
 async function main() {
   let f = system.initialise(new Foo());
-  system.printLine(fun(f));
+  await system.printLine(await fun(f));
 }
 
 class Foo {
@@ -460,7 +460,7 @@ class Foo {
 
 }
 
-function fun(foo) {
+async function fun(foo) {
   return foo.p1;
 }
 global["fun"] = fun;

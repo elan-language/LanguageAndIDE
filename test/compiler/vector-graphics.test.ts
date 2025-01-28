@@ -39,7 +39,7 @@ end main`;
 const global = new class {};
 async function main() {
   const vg = system.initialise(new _stdlib.VectorGraphics());
-  system.printLine(vg.asHtml());
+  await system.printLine(vg.asHtml());
 }
 return [main, _tests];}`;
 
@@ -77,7 +77,7 @@ async function main() {
   const line = system.initialise(new _stdlib.LineVG());
   const rect = system.initialise(new _stdlib.RectangleVG());
   const vg2 = vg.add(circ).add(line).add(rect);
-  system.printLine(vg2.asHtml());
+  await system.printLine(vg2.asHtml());
 }
 return [main, _tests];}`;
 
@@ -114,7 +114,7 @@ async function main() {
   const vg = system.initialise(new _stdlib.VectorGraphics());
   const circ = (() => {const _a = {...system.initialise(new _stdlib.CircleVG())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new _stdlib.CircleVG()))); _a.cx = 90; _a.cy = 70; _a.r = 13; _a.stroke = _stdlib.red; _a.strokeWidth = 2; _a.fill = _stdlib.green; return _a;})();
   const vg2 = vg.add(circ);
-  system.printLine(vg2.asHtml());
+  await system.printLine(vg2.asHtml());
 }
 return [main, _tests];}`;
 
@@ -155,7 +155,7 @@ async function main() {
   const rect = system.initialise(new _stdlib.RectangleVG());
   const vg2 = vg.add(circ).add(line).add(rect);
   const vg3 = vg2.removeLast();
-  system.printLine(vg3.asHtml());
+  await system.printLine(vg3.asHtml());
 }
 return [main, _tests];}`;
 
@@ -197,7 +197,7 @@ async function main() {
   const rect = system.initialise(new _stdlib.RectangleVG());
   const vg2 = vg.add(circ).add(line).add(rect);
   const vg3 = vg2.remove(line);
-  system.printLine(vg3.asHtml());
+  await system.printLine(vg3.asHtml());
 }
 return [main, _tests];}`;
 
@@ -239,7 +239,7 @@ async function main() {
   const rect = system.initialise(new _stdlib.RectangleVG());
   const vg2 = vg.add(circ).add(line).add(rect);
   const vg3 = vg2.remove(circ);
-  system.printLine(vg3.asHtml());
+  await system.printLine(vg3.asHtml());
 }
 return [main, _tests];}`;
 
@@ -283,7 +283,7 @@ async function main() {
   const vg2 = vg.add(circ).add(line).add(rect);
   const circ2 = (() => {const _a = {...circ}; Object.setPrototypeOf(_a, Object.getPrototypeOf(circ)); _a.fill = _stdlib.green; return _a;})();
   const vg3 = vg2.replace(circ, circ2);
-  system.printLine(vg3.asHtml());
+  await system.printLine(vg3.asHtml());
 }
 return [main, _tests];}`;
 
@@ -315,7 +315,7 @@ end main`;
 const global = new class {};
 async function main() {
   const circ = system.initialise(new _stdlib.CircleVG());
-  system.printLine(circ.cx);
+  await system.printLine(circ.cx);
 }
 return [main, _tests];}`;
 
@@ -344,7 +344,7 @@ async function main() {
   const vg = system.initialise(new _stdlib.VectorGraphics());
   const circ = (() => {const _a = {...system.initialise(new _stdlib.CircleVG())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new _stdlib.CircleVG()))); _a.cx = 90; _a.cy = 70; _a.r = 13; _a.stroke = _stdlib.red; _a.strokeWidth = 2; _a.fill = -1; return _a;})();
   const vg2 = vg.add(circ);
-  system.printLine(vg2.asHtml());
+  await system.printLine(vg2.asHtml());
 }
 return [main, _tests];}`;
 
@@ -379,7 +379,7 @@ async function main() {
   const vg = system.initialise(new _stdlib.VectorGraphics());
   const circ = (() => {const _a = {...system.initialise(new _stdlib.CircleVG())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new _stdlib.CircleVG()))); _a.stroke = -1; return _a;})();
   const vg2 = vg.add(circ);
-  system.printLine(vg2.asHtml());
+  await system.printLine(vg2.asHtml());
 }
 return [main, _tests];}`;
 
@@ -410,7 +410,7 @@ async function main() {
   const vg = system.initialise(new _stdlib.VectorGraphics());
   const circ = (() => {const _a = {...system.initialise(new _stdlib.CircleVG())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new _stdlib.CircleVG()))); _a.fill = 16777216; return _a;})();
   const vg2 = vg.add(circ);
-  system.printLine(vg2.asHtml());
+  await system.printLine(vg2.asHtml());
 }
 return [main, _tests];}`;
 

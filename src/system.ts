@@ -166,8 +166,8 @@ export class System {
     toIndex[index] = value;
   }
 
-  printLine(s: any) {
-    const ss = this._stdlib.asString(s);
+  async printLine(s: any) {
+    const ss = await this._stdlib.asString(s);
     this.elanInputOutput.printLine(ss);
   }
 

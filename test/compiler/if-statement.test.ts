@@ -29,9 +29,9 @@ const global = new class {};
 async function main() {
   let a = _stdlib.true;
   if (a) {
-    system.printLine("yes");
+    await system.printLine("yes");
   } else {
-    system.printLine("no");
+    await system.printLine("no");
   }
 }
 return [main, _tests];}`;
@@ -62,9 +62,9 @@ const global = new class {};
 async function main() {
   let a = _stdlib.false;
   if (a) {
-    system.printLine("yes");
+    await system.printLine("yes");
   } else {
-    system.printLine("no");
+    await system.printLine("no");
   }
 }
 return [main, _tests];}`;
@@ -97,11 +97,11 @@ const global = new class {};
 async function main() {
   let a = 2;
   if (a === 1) {
-    system.printLine("one");
+    await system.printLine("one");
   } else if (a === 2) {
-    system.printLine("two");
+    await system.printLine("two");
   } else {
-    system.printLine("neither");
+    await system.printLine("neither");
   }
 }
 return [main, _tests];}`;
@@ -134,11 +134,11 @@ const global = new class {};
 async function main() {
   let a = 3;
   if (a === 1) {
-    system.printLine("one");
+    await system.printLine("one");
   } else if (a === 2) {
-    system.printLine("two");
+    await system.printLine("two");
   } else {
-    system.printLine("neither");
+    await system.printLine("neither");
   }
 }
 return [main, _tests];}`;
@@ -167,7 +167,7 @@ const global = new class {};
 async function main() {
   let a = _stdlib.true;
   if (a) {
-    system.printLine("yes");
+    await system.printLine("yes");
   }
 }
 return [main, _tests];}`;
@@ -202,13 +202,13 @@ const global = new class {};
 async function main() {
   let a = 3;
   if (a === 1) {
-    system.printLine("one");
+    await system.printLine("one");
   } else if (a === 2) {
-    system.printLine("two");
+    await system.printLine("two");
   } else if (a === 3) {
-    system.printLine("three");
+    await system.printLine("three");
   } else {
-    system.printLine("neither");
+    await system.printLine("neither");
   }
 }
 return [main, _tests];}`;
@@ -241,11 +241,11 @@ const global = new class {};
 async function main() {
   let a = 3;
   if (a === 1) {
-    system.printLine("one");
+    await system.printLine("one");
   } else if (a === 2) {
-    system.printLine("two");
+    await system.printLine("two");
   } else if (a === 3) {
-    system.printLine("three");
+    await system.printLine("three");
   }
 }
 return [main, _tests];}`;

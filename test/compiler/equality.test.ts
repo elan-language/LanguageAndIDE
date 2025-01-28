@@ -46,9 +46,9 @@ async function main() {
   let x = system.initialise(new Foo(7, "Apple"));
   let y = system.initialise(new Foo(7, "Orange"));
   let z = system.initialise(new Foo(7, "Orange"));
-  system.printLine(system.objectEquals(x, x));
-  system.printLine(system.objectEquals(x, y));
-  system.printLine(system.objectEquals(y, z));
+  await system.printLine(system.objectEquals(x, x));
+  await system.printLine(system.objectEquals(x, y));
+  await system.printLine(system.objectEquals(y, z));
 }
 
 class Foo {
@@ -66,7 +66,7 @@ class Foo {
     this.p1 = v;
   }
 
-  asString() {
+  async asString() {
     return \`\${_stdlib.asString(this.p1)} \${_stdlib.asString(this.p2)}\`;
   }
 
@@ -109,7 +109,7 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(new Foo());
-  system.printLine(system.objectEquals(x, Foo.emptyInstance()));
+  await system.printLine(system.objectEquals(x, Foo.emptyInstance()));
 }
 
 class Foo {
@@ -126,7 +126,7 @@ class Foo {
     this.p1 = v;
   }
 
-  asString() {
+  async asString() {
     return \`\${_stdlib.asString(this.p1)} \${_stdlib.asString(this.p2)}\`;
   }
 
@@ -180,9 +180,9 @@ async function main() {
   let y = x;
   await y.setP1(3);
   let z = system.initialise(new Foo(8, "Orange"));
-  system.printLine(system.objectEquals(x, x));
-  system.printLine(system.objectEquals(x, y));
-  system.printLine(system.objectEquals(x, z));
+  await system.printLine(system.objectEquals(x, x));
+  await system.printLine(system.objectEquals(x, y));
+  await system.printLine(system.objectEquals(x, z));
 }
 
 class Foo {
@@ -200,7 +200,7 @@ class Foo {
     this.p1 = v;
   }
 
-  asString() {
+  async asString() {
     return \`\${_stdlib.asString(this.p1)} \${_stdlib.asString(this.p2)}\`;
   }
 

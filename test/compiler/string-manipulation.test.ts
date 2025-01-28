@@ -26,7 +26,7 @@ const global = new class {};
 async function main() {
   let a = "Hello";
   let b = "World!";
-  system.printLine(a + " " + b);
+  await system.printLine(a + " " + b);
 }
 return [main, _tests];}`;
 
@@ -49,7 +49,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine("_" + "Hello" + "!");
+  await system.printLine("_" + "Hello" + "!");
 }
 return [main, _tests];}`;
 
@@ -72,7 +72,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine("Hello" + 3.1);
+  await system.printLine("Hello" + 3.1);
 }
 return [main, _tests];}`;
 
@@ -97,7 +97,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = "abcde";
-  system.printLine(system.safeIndex(a, 2));
+  await system.printLine(system.safeIndex(a, 2));
 }
 return [main, _tests];}`;
 
@@ -126,7 +126,7 @@ async function main() {
   let a = "abcde";
   let b = "z";
   b = b + system.safeIndex(a, 0);
-  system.printLine(b);
+  await system.printLine(b);
 }
 return [main, _tests];}`;
 
@@ -155,7 +155,7 @@ async function main() {
   let a = "abcde";
   let b = "z";
   b = system.safeIndex(a, 0);
-  system.printLine(b);
+  await system.printLine(b);
 }
 return [main, _tests];}`;
 
@@ -182,9 +182,9 @@ end main`;
 const global = new class {};
 async function main() {
   let a = "abcde";
-  system.printLine(a.slice(1, 3));
-  system.printLine(a.slice(2));
-  system.printLine(a.slice(0, 2));
+  await system.printLine(a.slice(1, 3));
+  await system.printLine(a.slice(2));
+  await system.printLine(a.slice(0, 2));
 }
 return [main, _tests];}`;
 
@@ -213,13 +213,13 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine("abc" === "abc");
-  system.printLine("abc" === "abcd");
-  system.printLine("abc" === "Abc");
-  system.printLine("abc" === "abc");
-  system.printLine("abc" !== "abcd");
-  system.printLine("abc" !== "abcd");
-  system.printLine("abc" !== "Abc");
+  await system.printLine("abc" === "abc");
+  await system.printLine("abc" === "abcd");
+  await system.printLine("abc" === "Abc");
+  await system.printLine("abc" === "abc");
+  await system.printLine("abc" !== "abcd");
+  await system.printLine("abc" !== "abcd");
+  await system.printLine("abc" !== "Abc");
 }
 return [main, _tests];}`;
 
@@ -247,12 +247,12 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(_stdlib.isBefore("abc", "abC"));
-  system.printLine(_stdlib.isAfter("abcd", "abc"));
-  system.printLine(_stdlib.isAfterOrSameAs("abc", "abc"));
-  system.printLine(_stdlib.isBeforeOrSameAs("abc", "abc"));
-  system.printLine(_stdlib.isAfterOrSameAs("abcd", "abc"));
-  system.printLine(_stdlib.isBeforeOrSameAs("abcd", "abc"));
+  await system.printLine(_stdlib.isBefore("abc", "abC"));
+  await system.printLine(_stdlib.isAfter("abcd", "abc"));
+  await system.printLine(_stdlib.isAfterOrSameAs("abc", "abc"));
+  await system.printLine(_stdlib.isBeforeOrSameAs("abc", "abc"));
+  await system.printLine(_stdlib.isAfterOrSameAs("abcd", "abc"));
+  await system.printLine(_stdlib.isBeforeOrSameAs("abcd", "abc"));
 }
 return [main, _tests];}`;
 
@@ -280,8 +280,8 @@ const global = new class {};
 async function main() {
   let a = "abcde";
   let b = 2.1 + 3.4;
-  a = _stdlib.asString(b);
-  system.printLine(a);
+  a = await _stdlib.asString(b);
+  await system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -310,7 +310,7 @@ async function main() {
   let a = 3;
   let b = 4;
   let c = \`\${_stdlib.asString(a)} x \${_stdlib.asString(b)} = \${_stdlib.asString(a * b)}\`;
-  system.printLine(c);
+  await system.printLine(c);
 }
 return [main, _tests];}`;
 
@@ -335,7 +335,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = 3.1 + "Hello";
-  system.printLine(a);
+  await system.printLine(a);
 }
 return [main, _tests];}`;
 

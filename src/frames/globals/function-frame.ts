@@ -41,7 +41,7 @@ export abstract class FunctionFrame extends FrameWithStatements implements Paren
   symbolType(transforms?: Transforms) {
     const [pn, pt] = this.params.symbolNamesAndTypes(transforms);
     const rt = this.returnType.symbolType(transforms);
-    return new FunctionType(pn, pt, rt, false);
+    return new FunctionType(pn, pt, rt, false, true, true);
   }
 
   get symbolScope() {

@@ -38,9 +38,9 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(new Foo());
-  system.printLine(f.p1);
+  await system.printLine(f.p1);
   await f.setP1(7);
-  system.printLine(f.p1);
+  await system.printLine(f.p1);
 }
 
 class Foo {
@@ -55,7 +55,7 @@ class Foo {
     this.p1 = value;
   }
 
-  asString() {
+  async asString() {
     return "";
   }
 
@@ -112,10 +112,10 @@ class Foo {
   p1 = 0;
 
   async display() {
-    system.printLine(this.p1);
+    await system.printLine(this.p1);
   }
 
-  asString() {
+  async asString() {
     return "";
   }
 
@@ -203,14 +203,14 @@ class Foo {
     await b[0].p1PlusOne();
     await this.p1PlusOne();
     this.p1 = this.p1 + b[0].p1;
-    system.printLine(this.p1);
+    await system.printLine(this.p1);
   }
 
   async p1PlusOne() {
     this.p1 = this.p1 + 1;
   }
 
-  asString() {
+  async asString() {
     return "";
   }
 
@@ -228,7 +228,7 @@ class Bar {
     this.p1 = this.p1 + 1;
   }
 
-  asString() {
+  async asString() {
     return "";
   }
 

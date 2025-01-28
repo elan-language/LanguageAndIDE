@@ -124,8 +124,8 @@ export class StdLib {
     return typeof v === "boolean" || typeof v === "string" || typeof v === "number";
   }
 
-  @elanFunction([], FunctionOptions.pureExtension)
-  asString<T1>(@elanGenericParamT1Type() v: T1 | T1[] | undefined): string {
+  @elanFunction([], FunctionOptions.pureAsyncExtension, ElanString)
+  async asString<T1>(@elanGenericParamT1Type() v: T1 | T1[] | undefined): Promise<string> {
     if (v === undefined || v === null) {
       throw new ElanRuntimeError(`Out of range error`);
     }
@@ -146,16 +146,31 @@ export class StdLib {
       return "A RegExp";
     }
 
+    async function convertList<T>(v: T[], stdlib: StdLib) {
+      const items: string[] = [];
+
+      for (const i of v) {
+        const s = await stdlib.asString(i);
+        items.push(s);
+      }
+
+      return items.join(", ");
+    }
+
     if (Array.isArray(v)) {
       const type = (v as unknown as hasHiddenType)._type;
+      let items: string = "";
 
       switch (type) {
         case "List":
-          return `{${v.map((i) => this.asString(i)).join(", ")}}`;
+          items = await convertList(v, this);
+          return `{${items}}`;
         case "Tuple":
-          return `(${v.map((i) => this.asString(i)).join(", ")})`;
+          items = await convertList(v, this);
+          return `(${items})`;
         case "Array":
-          return `[${v.map((i) => this.asString(i)).join(", ")}]`;
+          items = await convertList(v, this);
+          return `[${items}]`;
         case "Iterable":
           return `an Iterable`;
         default:
@@ -164,7 +179,18 @@ export class StdLib {
     }
 
     if (typeof v === "object" && "asString" in v) {
-      return (v.asString as () => string)();
+      return await (v.asString as () => Promise<string>)();
+    }
+
+    async function convertDict(o: { [key: string]: object }, names: string[], stdlib: StdLib) {
+      const items: string[] = [];
+
+      for (const n of names) {
+        const s = await stdlib.asString(o[n]);
+        items.push(`${n}:${s}`);
+      }
+
+      return items.join(", ");
     }
 
     if (typeof v === "object" && v.constructor.name === "Object") {
@@ -173,7 +199,8 @@ export class StdLib {
 
       const items = Object.getOwnPropertyNames(v).filter((s) => s !== "_type");
       const o = v as { [key: string]: object };
-      return `${pf}${items.map((n) => `${n}:${this.asString(o[n])}`).join(", ")}${sf}`;
+      const dict = await convertDict(o, items, this);
+      return `${pf}${dict}${sf}`;
     }
 
     if (typeof v === "object") {
@@ -715,9 +742,7 @@ export class StdLib {
   @elanFunction(["size", "initialValue"], FunctionOptions.pure, ElanArray(ElanT1))
   createArray<T1>(@elanIntType() x: number, @elanGenericParamT1Type() value: T1) {
     if (!this.isValueType(value)) {
-      throw new ElanRuntimeError(
-        `Can only create array with simple value, not: ${this.asString(value)}`,
-      );
+      throw new ElanRuntimeError(`Can only create array with simple value`);
     }
 
     const toInit = this.system.array([]);
@@ -741,9 +766,7 @@ export class StdLib {
     @elanGenericParamT1Type() value: T1,
   ) {
     if (!this.isValueType(value)) {
-      throw new ElanRuntimeError(
-        `Can only initialise array with simple value, not: ${this.asString(value)}`,
-      );
+      throw new ElanRuntimeError(`Can only initialise array with simple value`);
     }
 
     const toInit = this.system.array([]);

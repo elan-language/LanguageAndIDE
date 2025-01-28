@@ -26,7 +26,7 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(foo(3, 4));
+  await system.printLine(foo(3, 4));
 }
 
 function foo(a, b) {
@@ -60,7 +60,7 @@ end function`;
 const global = new class {};
 async function main() {
   let a = system.safeIndex(foo(1, 2), 0);
-  system.printLine(a);
+  await system.printLine(a);
 }
 
 function foo(a, b) {
@@ -94,7 +94,7 @@ end function`;
 const global = new class {};
 async function main() {
   let a = system.array(foo(1, 2).slice(0, 1));
-  system.printLine(a);
+  await system.printLine(a);
 }
 
 function foo(a, b) {
@@ -126,7 +126,7 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(foo(3, 4));
+  await system.printLine(foo(3, 4));
 }
 
 function foo(a, b) {
@@ -163,7 +163,7 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(foo(3, 4));
+  await system.printLine(foo(3, 4));
 }
 
 function foo(a, b) {
@@ -203,7 +203,7 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(foo(3, 4));
+  await system.printLine(foo(3, 4));
 }
 
 function foo(a, b) {
@@ -241,7 +241,7 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(factorial(5));
+  await system.printLine(factorial(5));
 }
 
 function factorial(a) {
@@ -291,7 +291,7 @@ end class`;
 const global = new class {};
 async function main() {
   let b = system.initialise(new Bar());
-  system.printLine(foo(b));
+  await system.printLine(foo(b));
 }
 
 function foo(bar) {
@@ -305,7 +305,7 @@ class Bar {
 
   }
 
-  asString() {
+  async asString() {
     return "bar";
   }
 

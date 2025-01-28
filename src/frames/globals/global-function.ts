@@ -48,7 +48,7 @@ ${endKeyword} ${functionKeyword}\r
 
     mustBeCompatibleType(rt, rst, this.compileErrors, this.htmlId);
 
-    return `function ${super.compile(transforms)}\r
+    return `async function ${super.compile(transforms)}\r
 }
 global["${name}"] = ${name};
 `;

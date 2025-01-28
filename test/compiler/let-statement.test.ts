@@ -27,7 +27,7 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(add());
+  await system.printLine(add());
 }
 
 function add() {
@@ -75,7 +75,7 @@ async function main() {
 async function foo() {
   for (let i = 0; i <= 4; i = i + 1) {
     const temp = system.safeIndex(global.list, i);
-    system.printLine(temp);
+    await system.printLine(temp);
   }
 }
 global["foo"] = foo;
@@ -120,7 +120,7 @@ async function foo() {
     list = _stdlib.withPutAt(list, i, system.safeIndex(list, i + 1));
     list = _stdlib.withPutAt(list, i + 1, temp);
   }
-  system.printLine(list);
+  await system.printLine(list);
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -152,7 +152,7 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(foo());
+  await system.printLine(foo());
 }
 
 function foo() {

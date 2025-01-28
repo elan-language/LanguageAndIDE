@@ -35,8 +35,8 @@ async function main() {
   let a = 0;
   let b = "";
   ({a, b} = x);
-  system.printLine(a);
-  system.printLine(b);
+  await system.printLine(a);
+  await system.printLine(b);
 }
 
 class Foo {
@@ -83,10 +83,10 @@ const global = new class {};
 async function main() {
   let x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = 3; _a.fruit = "Apple"; _a.aBool = _stdlib.true; _a.aFloat = 1.1; return _a;})();
   const {a, fruit, aBool, aFloat} = x;
-  system.printLine(a);
-  system.printLine(fruit);
-  system.printLine(aBool);
-  system.printLine(aFloat);
+  await system.printLine(a);
+  await system.printLine(fruit);
+  await system.printLine(aBool);
+  await system.printLine(aFloat);
 }
 
 class Foo {
@@ -176,8 +176,8 @@ const global = new class {};
 async function main() {
   let x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = 100; _a.b = "fred"; return _a;})();
   let {a, b} = x;
-  system.printLine(a);
-  system.printLine(b);
+  await system.printLine(a);
+  await system.printLine(b);
 }
 
 class Foo {
@@ -248,8 +248,8 @@ async function main() {
   let z = "";
   y = a;
   z = b;
-  system.printLine(y);
-  system.printLine(z);
+  await system.printLine(y);
+  await system.printLine(z);
 }
 
 class Foo {
@@ -298,8 +298,8 @@ async function main() {
   let z = "";
   y = a;
   z = b;
-  system.printLine(y);
-  system.printLine(z);
+  await system.printLine(y);
+  await system.printLine(z);
 }
 
 class Foo {
@@ -340,8 +340,8 @@ const global = new class {};
 async function main() {
   const x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = system.list([1, 2]); _a.b = "fred"; return _a;})();
   const {a, b} = x;
-  system.printLine(a);
-  system.printLine(b);
+  await system.printLine(a);
+  await system.printLine(b);
 }
 
 class Foo {
@@ -382,8 +382,8 @@ const global = new class {};
 async function main() {
   let x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = system.list([1, 2]); _a.b = "fred"; return _a;})();
   const {a, b} = x;
-  system.printLine(a);
-  system.printLine(b);
+  await system.printLine(a);
+  await system.printLine(b);
 }
 
 class Foo {
@@ -431,8 +431,8 @@ async function main() {
   let x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = system.list([1, 2]); _a.b = "fred"; return _a;})();
   let y = (() => {const _a = {...system.initialise(new Bar())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Bar()))); _a.c = x; return _a;})();
   let {c, d} = y;
-  system.printLine(c);
-  system.printLine(d);
+  await system.printLine(c);
+  await system.printLine(d);
 }
 
 class Foo {
@@ -494,8 +494,8 @@ async function main() {
   const x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = system.list([1, 2]); _a.b = "fred"; return _a;})();
   const y = (() => {const _a = {...system.initialise(new Bar())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Bar()))); _a.c = x; return _a;})();
   let {c, d} = y;
-  system.printLine(c);
-  system.printLine(d);
+  await system.printLine(c);
+  await system.printLine(d);
 }
 
 class Foo {
@@ -555,8 +555,8 @@ async function main() {
   let a = system.emptyImmutableList();
   let b = "";
   ({a, b} = x);
-  system.printLine(a);
-  system.printLine(b);
+  await system.printLine(a);
+  await system.printLine(b);
 }
 
 class Foo {
@@ -608,8 +608,8 @@ async function main() {
   let c = Foo.emptyInstance();
   let d = "";
   ({c, d} = y);
-  system.printLine(c);
-  system.printLine(d);
+  await system.printLine(c);
+  await system.printLine(d);
 }
 
 class Foo {
@@ -675,8 +675,8 @@ async function main() {
   let c = Foo.emptyInstance();
   let d = "";
   ({c, d} = y);
-  system.printLine(c);
-  system.printLine(d);
+  await system.printLine(c);
+  await system.printLine(d);
 }
 
 class Foo {

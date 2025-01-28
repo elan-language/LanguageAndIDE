@@ -33,16 +33,16 @@ end main`;
 const global = new class {};
 async function main() {
   const st = system.initialise(new _stdlib.Queue());
-  system.printLine(st.length());
+  await system.printLine(st.length());
   st.enqueue("apple");
   st.enqueue("pear");
-  system.printLine(st.length());
-  system.printLine(st.peek());
+  await system.printLine(st.length());
+  await system.printLine(st.peek());
   let fruit = st.dequeue();
-  system.printLine(fruit);
+  await system.printLine(fruit);
   fruit = st.dequeue();
-  system.printLine(fruit);
-  system.printLine(st.length());
+  await system.printLine(fruit);
+  await system.printLine(st.length());
 }
 return [main, _tests];}`;
 
@@ -100,7 +100,7 @@ end main`;
 const global = new class {};
 async function main() {
   const st = system.initialise(new _stdlib.Queue());
-  system.printLine(st.peek());
+  await system.printLine(st.peek());
 }
 return [main, _tests];}`;
 
@@ -125,7 +125,7 @@ end main`;
 const global = new class {};
 async function main() {
   const st = system.initialise(new _stdlib.Queue());
-  system.printLine(st.dequeue());
+  await system.printLine(st.dequeue());
 }
 return [main, _tests];}`;
 

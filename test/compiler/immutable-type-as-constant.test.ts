@@ -26,7 +26,7 @@ const global = new class {
 
 };
 async function main() {
-  system.printLine(global.k);
+  await system.printLine(global.k);
 }
 return [main, _tests];}`;
 
@@ -54,7 +54,7 @@ const global = new class {
 
 };
 async function main() {
-  system.printLine(global.k);
+  await system.printLine(global.k);
 }
 return [main, _tests];}`;
 
@@ -82,7 +82,7 @@ const global = new class {
 
 };
 async function main() {
-  system.printLine(global.k);
+  await system.printLine(global.k);
 }
 return [main, _tests];}`;
 
@@ -110,7 +110,7 @@ const global = new class {
 
 };
 async function main() {
-  system.printLine(global.k);
+  await system.printLine(global.k);
 }
 return [main, _tests];}`;
 

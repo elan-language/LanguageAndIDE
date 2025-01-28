@@ -138,10 +138,10 @@ const global = new class {};
 async function main() {
   try {
     await foo();
-    system.printLine("not caught");
+    await system.printLine("not caught");
   } catch (_e) {
     let e = _e.message;
-    system.printLine(e);
+    await system.printLine(e);
   }
 }
 
@@ -189,10 +189,10 @@ async function main() {
     let x = system.emptyArray();
     let y = system.safeIndex(x, 1);
     let z = y.p1;
-    system.printLine("not caught");
+    await system.printLine("not caught");
   } catch (_e) {
     let e = _e.message;
-    system.printLine(e);
+    await system.printLine(e);
   }
 }
 
@@ -239,12 +239,12 @@ const global = new class {};
 async function main() {
   try {
     await foo();
-    system.printLine("not caught");
+    await system.printLine("not caught");
   } catch (_e) {
     let e = _e.message;
     let s = "";
     s = e;
-    system.printLine(s);
+    await system.printLine(s);
   }
 }
 

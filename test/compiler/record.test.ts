@@ -28,7 +28,7 @@ end record`;
 const global = new class {};
 async function main() {
   let f = system.initialise(new Foo());
-  system.printLine(f.p1);
+  await system.printLine(f.p1);
 }
 
 class Foo {
@@ -84,8 +84,8 @@ end record`;
 const global = new class {};
 async function main() {
   let f = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.p1 = 3; _a.p2 = "hello"; return _a;})();
-  system.printLine(f.p1);
-  system.printLine(f.p2);
+  await system.printLine(f.p1);
+  await system.printLine(f.p2);
 }
 
 class Foo {
@@ -162,7 +162,7 @@ end function
 const global = new class {};
 async function main() {
   let f = system.initialise(new Foo());
-  system.printLine(fun(f));
+  await system.printLine(fun(f));
 }
 
 class Foo {
@@ -217,7 +217,7 @@ class Foo {
 }
 
 async function proc(foo) {
-  system.printLine(foo.p1);
+  await system.printLine(foo.p1);
 }
 global["proc"] = proc;
 return [main, _tests];}`;

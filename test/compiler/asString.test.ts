@@ -22,7 +22,7 @@ end main`;
 const global = new class {};
 async function main() {
   let f = 1;
-  system.printLine(_stdlib.asString(f));
+  await system.printLine(await _stdlib.asString(f));
 }
 return [main, _tests];}`;
 
@@ -57,8 +57,8 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(new Foo());
-  let s = _stdlib.asString(f);
-  system.printLine(s);
+  let s = await _stdlib.asString(f);
+  await system.printLine(s);
 }
 
 class Foo {
@@ -103,8 +103,8 @@ const global = new class {};
 async function main() {
   let f = system.initialise(new Foo());
   let p = f.p1;
-  let s = _stdlib.asString(p);
-  system.printLine(s);
+  let s = await _stdlib.asString(p);
+  await system.printLine(s);
 }
 
 class Foo {
@@ -161,11 +161,11 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(new Foo());
-  let s1 = f.asString();
+  let s1 = await f.asString();
   let p = f.p1;
-  let s2 = p.asString();
-  system.printLine(s1);
-  system.printLine(s2);
+  let s2 = await p.asString();
+  await system.printLine(s1);
+  await system.printLine(s2);
 }
 
 class Foo {
@@ -182,7 +182,7 @@ class Foo {
     this._p1 = p1;
   }
 
-  asString() {
+  async asString() {
     return "Custom asString";
   }
 
@@ -227,8 +227,8 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(new Foo());
-  let s = f.asString();
-  system.printLine(s);
+  let s = await f.asString();
+  await system.printLine(s);
 }
 
 class Foo {
@@ -242,7 +242,7 @@ class Foo {
 
   p2 = "";
 
-  asString() {
+  async asString() {
     return this.p2;
   }
 
@@ -286,7 +286,7 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(new Foo());
-  system.printLine(f);
+  await system.printLine(f);
 }
 
 class Foo {
@@ -300,7 +300,7 @@ class Foo {
 
   p2 = "";
 
-  asString() {
+  async asString() {
     return this.p2;
   }
 
@@ -335,14 +335,14 @@ end main`;
 const global = new class {};
 async function main() {
   let l = system.list([1, 2, 3]);
-  let sl = _stdlib.asString(l);
-  system.printLine(sl);
+  let sl = await _stdlib.asString(l);
+  await system.printLine(sl);
   let a = _stdlib.asArray(system.list([1, 2, 3]));
-  let sa = _stdlib.asString(a);
-  system.printLine(sa);
+  let sa = await _stdlib.asString(a);
+  await system.printLine(sa);
   let d = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
-  let sd = _stdlib.asString(d);
-  system.printLine(sd);
+  let sd = await _stdlib.asString(d);
+  await system.printLine(sd);
 }
 return [main, _tests];}`;
 

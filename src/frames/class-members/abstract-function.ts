@@ -73,7 +73,7 @@ export class AbstractFunction extends AbstractFrame implements Member, ElanSymbo
     mustBeUniqueNameInScope(name, getClassScope(this), transforms, this.compileErrors, this.htmlId);
 
     if (name !== "asString") {
-      return `${this.indent()}${name}(${this.params.compile(transforms)}) {\r
+      return `${this.indent()}async ${name}(${this.params.compile(transforms)}) {\r
 ${this.indent()}${this.indent()}return ${this.returnType.compile(transforms)};\r
 ${this.indent()}}\r
 `;
@@ -97,7 +97,7 @@ ${this.indent()}}\r
   symbolType(transforms?: Transforms) {
     const [pn, pt] = this.params.symbolNamesAndTypes(transforms);
     const rt = this.returnType.symbolType(transforms);
-    return new FunctionType(pn, pt, rt, false);
+    return new FunctionType(pn, pt, rt, false, true, true);
   }
 
   get symbolScope() {

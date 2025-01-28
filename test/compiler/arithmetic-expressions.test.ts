@@ -29,9 +29,9 @@ async function main() {
   let x = 2 + 3 * 5 + 1;
   let y = (2 + 3) * 5 + 1;
   let z = (2 + 3) * (5 + 1);
-  system.printLine(x);
-  system.printLine(y);
-  system.printLine(z);
+  await system.printLine(x);
+  await system.printLine(y);
+  await system.printLine(z);
 }
 return [main, _tests];}`;
 
@@ -62,9 +62,9 @@ async function main() {
   let x = 2 + (3 * 5) + 1;
   let y = ((2 + 3)) * 5 + (1);
   let z = ((2 + 3) * (5 + 1));
-  system.printLine(x);
-  system.printLine(y);
-  system.printLine(z);
+  await system.printLine(x);
+  await system.printLine(y);
+  await system.printLine(z);
 }
 return [main, _tests];}`;
 
@@ -92,8 +92,8 @@ const global = new class {};
 async function main() {
   let x = 2 + 3 ** 2;
   let y = (2 + 3) ** 2;
-  system.printLine(x);
-  system.printLine(y);
+  await system.printLine(x);
+  await system.printLine(y);
 }
 return [main, _tests];}`;
 
@@ -121,8 +121,8 @@ const global = new class {};
 async function main() {
   let x = 16 / 2 ** 3;
   let y = (16 / 2) ** 3;
-  system.printLine(x);
-  system.printLine(y);
+  await system.printLine(x);
+  await system.printLine(y);
 }
 return [main, _tests];}`;
 
@@ -150,8 +150,8 @@ const global = new class {};
 async function main() {
   let x = 16 / 2 ** 3;
   let y = (16 / 2) ** 3;
-  system.printLine(x);
-  system.printLine(y);
+  await system.printLine(x);
+  await system.printLine(y);
 }
 return [main, _tests];}`;
 
@@ -183,8 +183,8 @@ async function main() {
   let y = 0;
   x = -4.7;
   y = 5 * -3;
-  system.printLine(x);
-  system.printLine(y);
+  await system.printLine(x);
+  await system.printLine(y);
 }
 return [main, _tests];}`;
 
@@ -212,8 +212,8 @@ const global = new class {};
 async function main() {
   let x = 11 % 3;
   let y = (5 + 6) % 3;
-  system.printLine(x);
-  system.printLine(y);
+  await system.printLine(x);
+  await system.printLine(y);
 }
 return [main, _tests];}`;
 
@@ -241,8 +241,8 @@ const global = new class {};
 async function main() {
   let x = Math.floor(11 / 3);
   let y = Math.floor((5 + 6) / 3);
-  system.printLine(x);
-  system.printLine(y);
+  await system.printLine(x);
+  await system.printLine(y);
 }
 return [main, _tests];}`;
 

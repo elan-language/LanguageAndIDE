@@ -23,7 +23,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = await _stdlib.inputString("");
-  system.printLine(a);
+  await system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -48,7 +48,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = await _stdlib.inputString("Your name");
-  system.printLine(a);
+  await system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -75,7 +75,7 @@ const global = new class {};
 async function main() {
   let a = 0;
   a = await _stdlib.inputInt("");
-  system.printLine(a);
+  await system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -102,7 +102,7 @@ const global = new class {};
 async function main() {
   let a = 0;
   a = await _stdlib.inputFloat("");
-  system.printLine(a);
+  await system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -133,7 +133,7 @@ async function main() {
   let b = "value1";
   a = await _stdlib.inputString("");
   b = a;
-  system.printLine(b);
+  await system.printLine(b);
 }
 return [main, _tests];}`;
 
@@ -158,7 +158,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = await _stdlib.inputStringWithLimits("aprompt", 3, 7);
-  system.printLine(a);
+  await system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -183,7 +183,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = await _stdlib.inputStringFromOptions("aprompt", system.literalArray(["y", "n"]));
-  system.printLine(a);
+  await system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -210,7 +210,7 @@ const global = new class {};
 async function main() {
   let a = 0;
   a = await _stdlib.inputInt("aprompt");
-  system.printLine(a);
+  await system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -237,7 +237,7 @@ const global = new class {};
 async function main() {
   let a = 0;
   a = await _stdlib.inputIntBetween("aprompt", 3, 7);
-  system.printLine(a);
+  await system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -264,7 +264,7 @@ const global = new class {};
 async function main() {
   let a = 0;
   a = await _stdlib.inputFloat("aprompt");
-  system.printLine(a);
+  await system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -291,7 +291,7 @@ const global = new class {};
 async function main() {
   let a = 0;
   a = await _stdlib.inputFloatBetween("aprompt", 0, 1);
-  system.printLine(a);
+  await system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -333,7 +333,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = "Hello " + await _stdlib.inputString("");
-  system.printLine(a);
+  await system.printLine(a);
 }
 return [main, _tests];}`;
 
