@@ -74,10 +74,10 @@ body {
     height:20px;
     margin-bottom: 5px;
   }
-  #status-values .ok {
+  #status-values .ok, #status-values .running {
     background-color: var(--ok);
   }
-  #status-values .warning {
+  #status-values .warning, #status-values .paused  {
     background-color: var(--warning);
   }
   #status-values .error {

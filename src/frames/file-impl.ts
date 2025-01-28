@@ -8,7 +8,6 @@ import {
   expandCollapseAll,
   helper_compileStatusAsDisplayStatus,
   helper_parseStatusAsDisplayStatus,
-  helper_runStatusAsDisplayStatus,
   helper_testStatusAsDisplayStatus,
   isSelector,
 } from "./frame-helpers";
@@ -393,7 +392,7 @@ export class FileImpl implements File, Scope {
     return this._runStatus;
   }
   readRunStatusForDashboard(): string {
-    return DisplayStatus[helper_runStatusAsDisplayStatus(this._runStatus)];
+    return RunStatus[this._runStatus];
   }
   setRunStatus(s: RunStatus) {
     this._runStatus = s;
