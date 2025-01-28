@@ -234,6 +234,11 @@ button#expand-collapse {
   padding-left: 1px;
 }
 
+.selected el-top .context-menu {
+  background-color: lightgrey;
+  border-right-color: black;
+}
+
 .autocomplete-popup > div.selected, 
 .autocomplete-popup > div:hover,
 .context-menu > div.selected,
