@@ -61,7 +61,7 @@ ${this.indent()}${endKeyword} ${tryKeyword}`;
   compile(transforms: Transforms): string {
     this.compileErrors = [];
 
-    return `${this.indent()}try {\r
+    return `${this.indent()}${this.breakPoint(this.debugSymbols())}try {\r
 ${this.compileStatements(transforms)}\r
 ${this.indent()}}`;
   }

@@ -40,6 +40,6 @@ export class Throw extends AbstractFrame implements Statement {
 
   compile(transforms: Transforms): string {
     this.compileErrors = [];
-    return `${this.indent()}throw new Error(${this.text.compile(transforms)});`;
+    return `${this.indent()}${this.breakPoint(this.debugSymbols())}throw new Error(${this.text.compile(transforms)});`;
   }
 }

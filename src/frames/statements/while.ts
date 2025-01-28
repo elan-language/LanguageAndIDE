@@ -49,7 +49,7 @@ ${this.indent()}end while`;
       this.htmlId,
     );
 
-    return `${this.indent()}while (${this.condition.compile(transforms)}) {\r
+    return `${this.indent()}${this.breakPoint(this.debugSymbols())}while (${this.condition.compile(transforms)}) {\r
 ${this.compileStatements(transforms)}\r
 ${this.indent()}}`;
   }

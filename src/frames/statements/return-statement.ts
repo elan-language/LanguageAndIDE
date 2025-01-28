@@ -40,7 +40,7 @@ export class ReturnStatement extends AbstractFrame implements Statement {
 
   compile(transforms: Transforms): string {
     this.compileErrors = [];
-    return `${this.indent()}return ${this.expr.compile(transforms)};`;
+    return `${this.indent()}${this.breakPoint(this.debugSymbols())}return ${this.expr.compile(transforms)};`;
   }
 
   parseFrom(source: CodeSource): void {

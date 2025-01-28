@@ -62,7 +62,7 @@ ${this.indent()}end each`;
     const iterType = this.iter.getOrTransformAstNode(transforms)?.symbolType();
     mustBeIterable(iterType!, this.compileErrors, this.htmlId);
 
-    return `${this.indent()}for (const ${this.variable.compile(transforms)} of ${this.iter.compile(transforms)}) {\r
+    return `${this.indent()}${this.breakPoint(this.debugSymbols())}for (const ${this.variable.compile(transforms)} of ${this.iter.compile(transforms)}) {\r
 ${this.compileChildren(transforms)}\r
 ${this.indent()}}`;
   }
