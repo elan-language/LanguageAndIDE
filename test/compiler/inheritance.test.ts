@@ -59,9 +59,9 @@ async function main() {
   let x = system.initialise(new Bar());
   await system.printLine(x.p1);
   await system.printLine(x.p2);
-  await system.printLine(x.product());
+  await system.printLine(await x.product());
   await x.setP1(4);
-  await system.printLine(x.product());
+  await system.printLine(await x.product());
 }
 
 class Foo {
@@ -81,7 +81,7 @@ class Foo {
   setP1(v) {
   }
 
-  product() {
+  async product() {
     return 0;
   }
 
@@ -103,7 +103,7 @@ class Bar extends Foo {
     this.p1 = p1;
   }
 
-  product() {
+  async product() {
     return this.p1 * this.p2;
   }
 
@@ -161,8 +161,8 @@ end function`;
 const global = new class {};
 async function main() {
   let x = system.initialise(new Yon());
-  await system.printLine(f(x));
-  await system.printLine(b(x));
+  await system.printLine(await f(x));
+  await system.printLine(await b(x));
 }
 
 class Foo {
@@ -199,12 +199,12 @@ class Yon extends Bar {
 
 }
 
-function b(bar) {
+async function b(bar) {
   return bar.p2;
 }
 global["b"] = b;
 
-function f(foo) {
+async function f(foo) {
   return foo.p1;
 }
 global["f"] = f;
@@ -314,7 +314,7 @@ const global = new class {};
 async function main() {
   let b = system.initialise(new Bar());
   let lst = system.list([b]);
-  await system.printLine(fun(lst));
+  await system.printLine(await fun(lst));
 }
 
 class Foo {
@@ -338,7 +338,7 @@ class Bar extends Foo {
 
 }
 
-function fun(l) {
+async function fun(l) {
   return system.safeIndex(l, 0);
 }
 global["fun"] = fun;
@@ -380,7 +380,7 @@ end function
 const global = new class {};
 async function main() {
   let f = system.initialise(new Bar());
-  await system.printLine(fun(f));
+  await system.printLine(await fun(f));
 }
 
 class Foo {
@@ -404,7 +404,7 @@ class Bar extends Foo {
 
 }
 
-function fun(foo) {
+async function fun(foo) {
   return foo.p1;
 }
 global["fun"] = fun;
@@ -466,7 +466,7 @@ class Foo {
     this.p1 = a;
   }
 
-  ff() {
+  async ff() {
     return this.p1;
   }
 
@@ -558,7 +558,7 @@ class Foo {
     this.p1 = a;
   }
 
-  ff() {
+  async ff() {
     return this.p1;
   }
 
@@ -572,7 +572,7 @@ class Yon extends Foo {
     this.p2 = a;
   }
 
-  ff2() {
+  async ff2() {
     return this.p2;
   }
 
@@ -587,10 +587,10 @@ class Bar extends Yon {
 
   async testPrivate(a) {
     await this.setP1(a);
-    await system.printLine(this.ff());
+    await system.printLine(await this.ff());
     await system.printLine(this.p1);
     await this.setP2(a + 1);
-    await system.printLine(this.ff2());
+    await system.printLine(await this.ff2());
     await system.printLine(this.p2);
   }
 
@@ -667,7 +667,7 @@ class Foo {
     this.p1 = a;
   }
 
-  ff() {
+  async ff() {
     return this.p1;
   }
 
@@ -681,7 +681,7 @@ class Yon extends Foo {
     this.p2 = a;
   }
 
-  ff2() {
+  async ff2() {
     return this.p2;
   }
 
@@ -696,10 +696,10 @@ class Bar extends Yon {
 
   async testPrivate(a) {
     await this.setP1(a);
-    await system.printLine(this.ff());
+    await system.printLine(await this.ff());
     await system.printLine(this.p1);
     await this.setP2(a + 1);
-    await system.printLine(this.ff2());
+    await system.printLine(await this.ff2());
     await system.printLine(this.p2);
   }
 
@@ -987,7 +987,7 @@ class Foo {
   }
 
   async setP1(a) {
-    await system.printLine(this.ff(a));
+    await system.printLine(await this.ff(a));
   }
 
 }
@@ -1006,7 +1006,7 @@ class Bar extends Foo {
     await system.printLine(this.p1);
   }
 
-  ff(a) {
+  async ff(a) {
     return a;
   }
 
@@ -1208,12 +1208,12 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(new Bar());
-  await system.printLine(x.testPrivate(3));
+  await system.printLine(await x.testPrivate(3));
 }
 
 class Yon {
   static emptyInstance() { return system.emptyClass(Yon, []);};
-  ff() {
+  async ff() {
     return 6;
   }
 
@@ -1221,7 +1221,7 @@ class Yon {
 
 class Foo extends Yon {
   static emptyInstance() { return system.emptyClass(Foo, []);};
-  fff() {
+  async fff() {
     return this.ff();
   }
 
@@ -1234,7 +1234,7 @@ class Bar extends Foo {
 
   }
 
-  testPrivate(a) {
+  async testPrivate(a) {
     return this.fff();
   }
 
@@ -1283,12 +1283,12 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(new Bar());
-  await system.printLine(x.ff());
+  await system.printLine(await x.ff());
 }
 
 class Yon {
   static emptyInstance() { return system.emptyClass(Yon, []);};
-  ff() {
+  async ff() {
     return 0;
   }
 
@@ -1296,7 +1296,7 @@ class Yon {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["prop", 0]]);};
-  ff() {
+  async ff() {
     return this.prop;
   }
 
@@ -1362,12 +1362,12 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(new Bar());
-  await system.printLine(x.ff());
+  await system.printLine(await x.ff());
 }
 
 class Yon {
   static emptyInstance() { return system.emptyClass(Yon, []);};
-  ff() {
+  async ff() {
     return 0;
   }
 
@@ -1375,7 +1375,7 @@ class Yon {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["prop", 0]]);};
-  ff() {
+  async ff() {
     return this.prop;
   }
 
@@ -1441,12 +1441,12 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(new Bar());
-  await system.printLine(x.ff());
+  await system.printLine(await x.ff());
 }
 
 class Yon {
   static emptyInstance() { return system.emptyClass(Yon, []);};
-  ff() {
+  async ff() {
     return 0;
   }
 
@@ -1454,7 +1454,7 @@ class Yon {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["prop", 0]]);};
-  ff() {
+  async ff() {
     return this.prop;
   }
 

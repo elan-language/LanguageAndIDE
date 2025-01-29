@@ -61,12 +61,12 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const [a, b] = foo();
+  const [a, b] = await foo();
   await system.printLine(a);
   await system.printLine(b);
 }
 
-function foo() {
+async function foo() {
   return system.tuple([0, 0]);
 }
 global["foo"] = foo;
@@ -104,7 +104,7 @@ end class`;
 const global = new class {};
 async function main() {
   const foo = system.initialise(new Foo());
-  const [a, b] = foo.bar();
+  const [a, b] = await foo.bar();
   await system.printLine(a);
   await system.printLine(b);
 }
@@ -115,7 +115,7 @@ class Foo {
 
   }
 
-  bar() {
+  async bar() {
     return system.tuple([0, 0]);
   }
 
@@ -147,12 +147,12 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const [a, b] = foo();
+  const [a, b] = await foo();
   await system.printLine(a);
   await system.printLine(b);
 }
 
-function foo() {
+async function foo() {
   return system.tuple([system.list([0]), 0]);
 }
 global["foo"] = foo;

@@ -49,7 +49,7 @@ const global = new class {};
 async function main() {
   let x = system.initialise(new Bar());
   await system.printLine(x.prop);
-  await system.printLine(x.func());
+  await system.printLine(await x.func());
   await x.proc();
 }
 
@@ -141,7 +141,7 @@ const global = new class {};
 async function main() {
   let x = system.initialise(new Bar());
   await system.printLine(x.prop);
-  await system.printLine(x.func());
+  await system.printLine(await x.func());
   await x.proc();
 }
 
@@ -241,7 +241,7 @@ const global = new class {};
 async function main() {
   let x = system.initialise(new Bar());
   await system.printLine(x.prop);
-  await system.printLine(x.func());
+  await system.printLine(await x.func());
   await x.proc();
 }
 

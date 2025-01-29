@@ -38,14 +38,14 @@ async function main() {
 
 }
 
-function square(x) {
+async function square(x) {
   return x ** 2;
 }
 global["square"] = square;
 
 _tests.push(["test10", async (_outcomes) => {
   _outcomes.push(system.assert(() => square(3), 9, "assert13", _stdlib, false));
-  let actual = square(4);
+  let actual = await square(4);
   let expected = 16;
   _outcomes.push(system.assert(() => actual, expected, "assert22", _stdlib, false));
 }]);

@@ -274,7 +274,7 @@ main
 end main
 
 function foo(bar as Bar) returns String
-    return bar.asString()
+    return await bar.asString()
 end function
 
 class Bar

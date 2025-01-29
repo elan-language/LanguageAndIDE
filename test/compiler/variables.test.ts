@@ -491,10 +491,10 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let [a, length] = foo();
+  let [a, length] = await foo();
 }
 
-function foo() {
+async function foo() {
   return system.tuple([0, 0]);
 }
 global["foo"] = foo;

@@ -97,10 +97,10 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(new Foo());
-  await system.printLine(f.bar());
+  await system.printLine(await f.bar());
 }
 
-function doubled(f) {
+async function doubled(f) {
   return 2 * f.p1;
 }
 global["doubled"] = doubled;
@@ -113,7 +113,7 @@ class Foo {
 
   p1 = 0;
 
-  bar() {
+  async bar() {
     return doubled(this);
   }
 
@@ -158,7 +158,7 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(new Foo());
-  await system.printLine(f.bar());
+  await system.printLine(await f.bar());
 }
 
 class Foo {
@@ -169,7 +169,7 @@ class Foo {
 
   p1 = 0;
 
-  bar() {
+  async bar() {
     let lst = system.literalArray([1, 2]);
     return system.safeIndex(lst, this.p1);
   }

@@ -61,14 +61,14 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = f();
+  let x = await f();
   await system.printLine(x);
   const [fst, sec] = x;
   await system.printLine(fst);
   await system.printLine(sec);
 }
 
-function f() {
+async function f() {
   return system.tuple(["1", "2"]);
 }
 global["f"] = f;
@@ -99,12 +99,12 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let t = f();
+  let t = await f();
   const [fst, ] = t;
   await system.printLine(fst);
 }
 
-function f() {
+async function f() {
   return system.tuple(["1", "2"]);
 }
 global["f"] = f;
@@ -169,10 +169,10 @@ const global = new class {};
 async function main() {
   let x = "one";
   let y = "two";
-  await system.printLine(f(system.tuple([x, y])));
+  await system.printLine(await f(system.tuple([x, y])));
 }
 
-function f(t) {
+async function f(t) {
   const [first, ] = t;
   return first;
 }

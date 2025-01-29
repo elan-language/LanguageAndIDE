@@ -110,11 +110,11 @@ end record`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = foo();
+  let a = await foo();
   await system.printLine(a.a);
 }
 
-function foo() {
+async function foo() {
   let a = system.initialise(new Foo());
   const b = (() => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = 2; return _a;})();
   return b;
@@ -158,11 +158,11 @@ end record`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = foo();
+  let a = await foo();
   await system.printLine(a.a);
 }
 
-function foo() {
+async function foo() {
   const a = system.initialise(new Foo());
   const b = (() => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = 2; return _a;})();
   return b;
@@ -205,11 +205,11 @@ end record`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = foo();
+  let a = await foo();
   await system.printLine(a.a);
 }
 
-function foo() {
+async function foo() {
   let a = system.initialise(new Foo());
   return (() => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = 2; return _a;})();
 }
