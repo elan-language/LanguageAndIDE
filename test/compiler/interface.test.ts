@@ -341,23 +341,23 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(new Bar());
-  await system.printLine(func1(x));
-  await system.printLine(func2(x));
+  await system.printLine(await func1(x));
+  await system.printLine(await func2(x));
 }
 
-function func1(f) {
-  return f.ff1();
+async function func1(f) {
+  return await f.ff1();
 }
 global["func1"] = func1;
 
-function func2(f) {
-  return f.ff2();
+async function func2(f) {
+  return await f.ff2();
 }
 global["func2"] = func2;
 
 class Foo1 {
   static emptyInstance() { return system.emptyClass(Foo1, []);};
-  ff1() {
+  async ff1() {
     return 0;
   }
 
@@ -365,7 +365,7 @@ class Foo1 {
 
 class Foo2 {
   static emptyInstance() { return system.emptyClass(Foo2, []);};
-  ff2() {
+  async ff2() {
     return 0;
   }
 
@@ -377,11 +377,11 @@ class Bar {
 
   }
 
-  ff1() {
+  async ff1() {
     return 1;
   }
 
-  ff2() {
+  async ff2() {
     return 2;
   }
 
@@ -440,23 +440,23 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(new Bar());
-  await system.printLine(func1(x));
-  await system.printLine(func2(x));
+  await system.printLine(await func1(x));
+  await system.printLine(await func2(x));
 }
 
-function func1(f) {
-  return f.ff1();
+async function func1(f) {
+  return await f.ff1();
 }
 global["func1"] = func1;
 
-function func2(f) {
-  return f.ff2();
+async function func2(f) {
+  return await f.ff2();
 }
 global["func2"] = func2;
 
 class Foo1 {
   static emptyInstance() { return system.emptyClass(Foo1, []);};
-  ff1() {
+  async ff1() {
     return 0;
   }
 
@@ -464,7 +464,7 @@ class Foo1 {
 
 class Foo2 {
   static emptyInstance() { return system.emptyClass(Foo2, []);};
-  ff2() {
+  async ff2() {
     return 0;
   }
 
@@ -476,11 +476,11 @@ class Bar {
 
   }
 
-  ff1() {
+  async ff1() {
     return 1;
   }
 
-  ff2() {
+  async ff2() {
     return 2;
   }
 
@@ -539,23 +539,23 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(new Bar());
-  await system.printLine(func1(x));
-  await system.printLine(func2(x));
+  await system.printLine(await func1(x));
+  await system.printLine(await func2(x));
 }
 
-function func1(f) {
-  return f.ff1();
+async function func1(f) {
+  return await f.ff1();
 }
 global["func1"] = func1;
 
-function func2(f) {
-  return f.ff1();
+async function func2(f) {
+  return await f.ff1();
 }
 global["func2"] = func2;
 
 class Foo1 {
   static emptyInstance() { return system.emptyClass(Foo1, []);};
-  ff1() {
+  async ff1() {
     return 0;
   }
 
@@ -563,7 +563,7 @@ class Foo1 {
 
 class Foo2 {
   static emptyInstance() { return system.emptyClass(Foo2, []);};
-  ff2() {
+  async ff2() {
     return 0;
   }
 
@@ -575,11 +575,11 @@ class Bar {
 
   }
 
-  ff1() {
+  async ff1() {
     return 1;
   }
 
-  ff2() {
+  async ff2() {
     return 2;
   }
 

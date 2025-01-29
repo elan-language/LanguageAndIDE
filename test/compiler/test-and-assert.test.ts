@@ -307,7 +307,7 @@ async function main() {
 
 }
 
-function square(x) {
+async function square(x) {
   return x ** 2;
 }
 global["square"] = square;
@@ -713,7 +713,7 @@ async function main() {
 
 }
 
-function square(x) {
+async function square(x) {
   return x ** 2;
 }
 global["square"] = square;
@@ -755,7 +755,7 @@ async function main() {
 
 }
 
-function square(x) {
+async function square(x) {
   return x ** 2;
 }
 global["square"] = square;
@@ -799,7 +799,7 @@ async function main() {
 
 }
 
-function square(x) {
+async function square(x) {
   while (_stdlib.true) {
 
   }
@@ -846,7 +846,7 @@ async function main() {
 
 }
 
-function square(x) {
+async function square(x) {
   return x ** 2;
 }
 global["square"] = square;

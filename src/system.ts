@@ -235,7 +235,7 @@ export class System {
     actualFunc: () => Promise<any>,
     expected: any,
     htmlId: string,
-    stdlib: { asString: (a: any) => string },
+    stdlib: { asString: (a: any) => Promise<string> },
     ignored: boolean,
   ) {
     if (ignored) {
@@ -243,30 +243,30 @@ export class System {
     }
     try {
       const actual = await actualFunc();
-      return this.doAssert(actual, expected, htmlId, stdlib);
+      return await this.doAssert(actual, expected, htmlId, stdlib);
     } catch (err) {
-      return this.doAssert((err as any).message, expected, htmlId, stdlib);
+      return await this.doAssert((err as any).message, expected, htmlId, stdlib);
     }
   }
 
-  private doAssert(
+  private async doAssert(
     actual: any,
     expected: any,
     htmlId: string,
-    stdlib: { asString: (a: any) => string },
+    stdlib: { asString: (a: any) => Promise<string> },
   ) {
     if (!this.equals(actual, expected)) {
       return new AssertOutcome(
         TestStatus.fail,
-        `${stdlib.asString(actual)}`,
-        `${stdlib.asString(expected)}`,
+        `${await stdlib.asString(actual)}`,
+        `${await stdlib.asString(expected)}`,
         htmlId,
       );
     }
     return new AssertOutcome(
       TestStatus.pass,
-      `${stdlib.asString(actual)}`,
-      `${stdlib.asString(expected)}`,
+      `${await stdlib.asString(actual)}`,
+      `${await stdlib.asString(expected)}`,
       htmlId,
     );
   }
