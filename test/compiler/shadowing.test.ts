@@ -156,7 +156,7 @@ const global = new class {};
 async function main() {
   let f = system.initialise(new Foo());
   await system.printLine((await f.sin(1)));
-  await system.printLine(await sin(1));
+  await system.printLine((await sin(1)));
   await system.printLine((await global.sin(1)));
   await system.printLine(_stdlib.sin(1));
 }

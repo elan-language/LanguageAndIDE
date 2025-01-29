@@ -37,14 +37,14 @@ end procedure
 const global = new class {};
 async function main() {
   let gr = system.initialise(new _stdlib.BlockGraphics());
-  let k = await _stdlib.getKey();
+  let k = (await _stdlib.getKey());
   let r = _stdlib.randomInt(1, 6);
   r = _stdlib.randomInt(1, 6) * 10;
   await bar(_stdlib.randomInt(1, 6));
 }
 
 async function foo(gr) {
-  let k = await _stdlib.getKey();
+  let k = (await _stdlib.getKey());
   let r = _stdlib.randomInt(1, 6);
   r = _stdlib.randomInt(1, 6) * 10;
 }

@@ -28,10 +28,10 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.printLine(await grade(90));
-  await system.printLine(await grade(70));
-  await system.printLine(await grade(50));
-  await system.printLine(await grade(30));
+  await system.printLine((await grade(90)));
+  await system.printLine((await grade(70)));
+  await system.printLine((await grade(50)));
+  await system.printLine((await grade(30)));
 }
 
 async function grade(score) {

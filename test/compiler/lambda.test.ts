@@ -30,7 +30,7 @@ async function main() {
 }
 
 async function printModified(i, f) {
-  await system.printLine(await f(i));
+  await system.printLine((await f(i)));
 }
 global["printModified"] = printModified;
 return [main, _tests];}`;
@@ -63,7 +63,7 @@ end procedure`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await printModified(system.tuple([4, 5]), async (t) => await first(t));
+  await printModified(system.tuple([4, 5]), async (t) => (await first(t)));
 }
 
 async function first(t) {
@@ -73,7 +73,7 @@ async function first(t) {
 global["first"] = first;
 
 async function printModified(i, f) {
-  await system.printLine(await f(i));
+  await system.printLine((await f(i)));
 }
 global["printModified"] = printModified;
 return [main, _tests];}`;
@@ -99,7 +99,7 @@ end main`;
 const global = new class {};
 async function main() {
   let l = async (x) => x * 5;
-  await system.printLine(await l(5));
+  await system.printLine((await l(5)));
 }
 return [main, _tests];}`;
 
@@ -178,7 +178,7 @@ end main`;
 const global = new class {};
 async function main() {
   let l = async (x) => x * 5;
-  await system.printLine(await l(5) + 5);
+  await system.printLine((await l(5)) + 5);
 }
 return [main, _tests];}`;
 
@@ -206,8 +206,8 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let l = await getFunc();
-  await system.printLine(await l(5));
+  let l = (await getFunc());
+  await system.printLine((await l(5)));
 }
 
 async function getFunc() {
@@ -239,7 +239,7 @@ const global = new class {};
 async function main() {
   let x = 3;
   let l = async () => x * 5;
-  await system.printLine(await l());
+  await system.printLine((await l()));
 }
 return [main, _tests];}`;
 
@@ -267,8 +267,8 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let l = await getFunc(5);
-  await system.printLine(await l());
+  let l = (await getFunc(5));
+  await system.printLine((await l()));
 }
 
 async function getFunc(x) {

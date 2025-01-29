@@ -560,7 +560,7 @@ class Foo {
   p1 = 0;
 
   async times(b) {
-    return await this.p1PlusOne() * (await b.p1PlusOne());
+    return (await this.p1PlusOne()) * (await b.p1PlusOne());
   }
 
   async p1PlusOne() {
@@ -642,11 +642,11 @@ class Foo {
   p1 = 0;
 
   async prt() {
-    await system.printLine(await this.asString());
+    await system.printLine((await this.asString()));
   }
 
   async asString() {
-    return await _stdlib.asString(this.p1);
+    return (await _stdlib.asString(this.p1));
   }
 
 }

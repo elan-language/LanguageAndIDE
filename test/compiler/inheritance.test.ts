@@ -161,8 +161,8 @@ end function`;
 const global = new class {};
 async function main() {
   let x = system.initialise(new Yon());
-  await system.printLine(await f(x));
-  await system.printLine(await b(x));
+  await system.printLine((await f(x)));
+  await system.printLine((await b(x)));
 }
 
 class Foo {
@@ -314,7 +314,7 @@ const global = new class {};
 async function main() {
   let b = system.initialise(new Bar());
   let lst = system.list([b]);
-  await system.printLine(await fun(lst));
+  await system.printLine((await fun(lst)));
 }
 
 class Foo {
@@ -380,7 +380,7 @@ end function
 const global = new class {};
 async function main() {
   let f = system.initialise(new Bar());
-  await system.printLine(await fun(f));
+  await system.printLine((await fun(f)));
 }
 
 class Foo {
@@ -481,7 +481,7 @@ class Bar extends Foo {
 
   async testPrivate(a) {
     await this.setP1(a);
-    await system.printLine(await this.ff());
+    await system.printLine((await this.ff()));
     await system.printLine(this.p1);
   }
 
@@ -587,10 +587,10 @@ class Bar extends Yon {
 
   async testPrivate(a) {
     await this.setP1(a);
-    await system.printLine(await this.ff());
+    await system.printLine((await this.ff()));
     await system.printLine(this.p1);
     await this.setP2(a + 1);
-    await system.printLine(await this.ff2());
+    await system.printLine((await this.ff2()));
     await system.printLine(this.p2);
   }
 
@@ -696,10 +696,10 @@ class Bar extends Yon {
 
   async testPrivate(a) {
     await this.setP1(a);
-    await system.printLine(await this.ff());
+    await system.printLine((await this.ff()));
     await system.printLine(this.p1);
     await this.setP2(a + 1);
-    await system.printLine(await this.ff2());
+    await system.printLine((await this.ff2()));
     await system.printLine(this.p2);
   }
 
@@ -987,7 +987,7 @@ class Foo {
   }
 
   async setP1(a) {
-    await system.printLine(await this.ff(a));
+    await system.printLine((await this.ff(a)));
   }
 
 }
@@ -1222,7 +1222,7 @@ class Yon {
 class Foo extends Yon {
   static emptyInstance() { return system.emptyClass(Foo, []);};
   async fff() {
-    return await this.ff();
+    return (await this.ff());
   }
 
 }
@@ -1235,7 +1235,7 @@ class Bar extends Foo {
   }
 
   async testPrivate(a) {
-    return await this.fff();
+    return (await this.fff());
   }
 
 }

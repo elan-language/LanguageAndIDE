@@ -443,7 +443,7 @@ end function
 const global = new class {};
 async function main() {
   let f = system.initialise(new Foo());
-  await system.printLine(await fun(f));
+  await system.printLine((await fun(f)));
 }
 
 class Foo {

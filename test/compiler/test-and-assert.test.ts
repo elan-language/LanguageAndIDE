@@ -44,8 +44,8 @@ async function square(x) {
 global["square"] = square;
 
 _tests.push(["test10", async (_outcomes) => {
-  _outcomes.push(await system.assert(async () => await square(3), 9, "assert13", _stdlib, false));
-  let actual = await square(4);
+  _outcomes.push(await system.assert(async () => (await square(3)), 9, "assert13", _stdlib, false));
+  let actual = (await square(4));
   let expected = 16;
   _outcomes.push(await system.assert(async () => actual, expected, "assert22", _stdlib, false));
 }]);
@@ -313,8 +313,8 @@ async function square(x) {
 global["square"] = square;
 
 _tests.push(["test10", async (_outcomes) => {
-  _outcomes.push(await system.assert(async () => await square(3), 10, "assert13", _stdlib, false));
-  _outcomes.push(await system.assert(async () => await square(4), 16, "assert16", _stdlib, false));
+  _outcomes.push(await system.assert(async () => (await square(3)), 10, "assert13", _stdlib, false));
+  _outcomes.push(await system.assert(async () => (await square(4)), 16, "assert16", _stdlib, false));
 }]);
 return [main, _tests];}`;
 
@@ -719,7 +719,7 @@ async function square(x) {
 global["square"] = square;
 
 _tests.push(["test10", async (_outcomes) => {
-  _outcomes.push(await system.assert(async () => await square(3), 3 * 3, "assert13", _stdlib, false));
+  _outcomes.push(await system.assert(async () => (await square(3)), 3 * 3, "assert13", _stdlib, false));
 }]);
 return [main, _tests];}`;
 

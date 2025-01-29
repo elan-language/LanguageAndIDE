@@ -33,7 +33,7 @@ async function main() {
 }
 
 async function printModified(i, f) {
-  await system.printLine(await f(i));
+  await system.printLine((await f(i)));
 }
 global["printModified"] = printModified;
 
@@ -74,7 +74,7 @@ async function main() {
 }
 
 async function printModified(i, f) {
-  await system.printLine(await f());
+  await system.printLine((await f()));
 }
 global["printModified"] = printModified;
 
@@ -115,7 +115,7 @@ async function main() {
 }
 
 async function printIt(s, c, f) {
-  await system.printLine(await f(s, c));
+  await system.printLine((await f(s, c)));
 }
 global["printIt"] = printIt;
 
@@ -153,8 +153,8 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let f = await getFunc();
-  await system.printLine(await f(5));
+  let f = (await getFunc());
+  await system.printLine((await f(5)));
 }
 
 async function getFunc() {
@@ -193,7 +193,7 @@ end function`;
 const global = new class {};
 async function main() {
   let f = twice;
-  await system.printLine(await f(5));
+  await system.printLine((await f(5)));
 }
 
 async function twice(x) {

@@ -65,7 +65,7 @@ end function`;
 const global = new class {};
 async function main() {
   let it = system.list(["one", "two"]);
-  await system.printLine(await printEach(it));
+  await system.printLine((await printEach(it)));
 }
 
 async function printEach(target) {
@@ -101,7 +101,7 @@ end function`;
 const global = new class {};
 async function main() {
   let lst = system.list(["one", "two"]);
-  let it = await printEach(lst);
+  let it = (await printEach(lst));
   lst = _stdlib.asList(it);
   await system.printLine(lst);
 }

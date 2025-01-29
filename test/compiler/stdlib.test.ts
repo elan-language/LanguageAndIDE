@@ -566,7 +566,7 @@ async function main() {
   let rnd = system.initialise(new _stdlib.Random());
   let dice = 0;
   for (let i = 1; i <= 10000; i = i + 1) {
-    [dice, rnd] = await rollDice(rnd);
+    [dice, rnd] = (await rollDice(rnd));
     _stdlib.putAt(results, dice, system.safeIndex(results, dice) + 1);
   }
   for (let i = 0; i <= 6; i = i + 1) {

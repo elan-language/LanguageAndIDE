@@ -170,7 +170,7 @@ class Foo {
   }
 
   async testFf(f) {
-    return await this.ff(f);
+    return (await this.ff(f));
   }
 
 }

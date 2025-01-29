@@ -280,7 +280,7 @@ const global = new class {};
 async function main() {
   let a = "abcde";
   let b = 2.1 + 3.4;
-  a = await _stdlib.asString(b);
+  a = (await _stdlib.asString(b));
   await system.printLine(a);
 }
 return [main, _tests];}`;

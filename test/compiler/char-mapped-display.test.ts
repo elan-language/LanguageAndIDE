@@ -224,7 +224,7 @@ end main`;
 const global = new class {};
 async function main() {
   let gr = system.initialise(new _stdlib.BlockGraphics());
-  let a = await _stdlib.getKey();
+  let a = (await _stdlib.getKey());
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -251,7 +251,7 @@ end main`;
 const global = new class {};
 async function main() {
   let gr = system.initialise(new _stdlib.BlockGraphics());
-  let a = await _stdlib.getKeyWithModifier();
+  let a = (await _stdlib.getKeyWithModifier());
   await system.printLine(a);
 }
 return [main, _tests];}`;

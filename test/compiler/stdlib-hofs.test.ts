@@ -88,7 +88,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(await filterIt(global.source));
+  await system.printLine((await filterIt(global.source)));
 }
 
 async function filterIt(tofilter) {
@@ -122,7 +122,7 @@ const global = new class {
 };
 async function main() {
   await system.printLine(_stdlib.asArray(_stdlib.map(global.source, async (x) => x + 1)));
-  await system.printLine(_stdlib.asArray(_stdlib.map(global.source, async (x) => await _stdlib.asString(x) + "*")));
+  await system.printLine(_stdlib.asArray(_stdlib.map(global.source, async (x) => (await _stdlib.asString(x)) + "*")));
 }
 return [main, _tests];}`;
 
@@ -210,7 +210,7 @@ const global = new class {
 async function main() {
   await system.printLine(_stdlib.reduce(global.source, 0, async (s, x) => s + x));
   await system.printLine(_stdlib.reduce(global.source, 100, async (s, x) => s + x));
-  await system.printLine(_stdlib.reduce(global.source, "Concat:", async (s, x) => s + await _stdlib.asString(x)));
+  await system.printLine(_stdlib.reduce(global.source, "Concat:", async (s, x) => s + (await _stdlib.asString(x))));
 }
 return [main, _tests];}`;
 

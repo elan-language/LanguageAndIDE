@@ -208,7 +208,7 @@ class Foo {
   }
 
   async proc() {
-    await system.printLine(await this.func());
+    await system.printLine((await this.func()));
   }
 
   prop = 0;
@@ -276,7 +276,7 @@ class Foo {
   }
 
   async proc() {
-    await system.printLine(await this.func());
+    await system.printLine((await this.func()));
   }
 
   prop = 0;
@@ -551,8 +551,8 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(new Bar());
-  await system.printLine(await func1(x));
-  await system.printLine(await func2(x));
+  await system.printLine((await func1(x)));
+  await system.printLine((await func2(x)));
 }
 
 async function func1(f) {
@@ -651,8 +651,8 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(new Bar());
-  await system.printLine(await func1(x));
-  await system.printLine(await func2(x));
+  await system.printLine((await func1(x)));
+  await system.printLine((await func2(x)));
 }
 
 async function func1(f) {

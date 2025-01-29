@@ -925,7 +925,7 @@ async function main() {
   let foo1 = foo;
   let body = system.literalArray([foo, foo1]);
   let foo2 = system.safeIndex(body, 0);
-  await system.printLine(await foo2(1));
+  await system.printLine((await foo2(1)));
 }
 
 async function foo(i) {

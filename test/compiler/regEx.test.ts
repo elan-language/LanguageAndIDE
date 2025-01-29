@@ -57,7 +57,7 @@ end function`;
 const global = new class {};
 async function main() {
   let r = /a+/;
-  await system.printLine(await testRegex(r));
+  await system.printLine((await testRegex(r)));
 }
 
 async function testRegex(r) {
@@ -92,7 +92,7 @@ end function`;
 const global = new class {};
 async function main() {
   let r = system.emptyRegExp();
-  r = await testRegex();
+  r = (await testRegex());
   await system.printLine(_stdlib.matchesRegExp("aa", r));
 }
 

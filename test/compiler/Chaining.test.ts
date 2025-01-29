@@ -391,7 +391,7 @@ const global = new class {};
 async function main() {
   let aStringVar = "abcdexefg";
   let s = "";
-  s = await _stdlib.asString(_stdlib.indexOf(_stdlib.upperCase(aStringVar).slice(1, 7).slice(2, 6), "X"));
+  s = (await _stdlib.asString(_stdlib.indexOf(_stdlib.upperCase(aStringVar).slice(1, 7).slice(2, 6), "X")));
   await system.printLine(s);
 }
 return [main, _tests];}`;

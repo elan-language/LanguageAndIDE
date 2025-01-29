@@ -341,8 +341,8 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(new Bar());
-  await system.printLine(await func1(x));
-  await system.printLine(await func2(x));
+  await system.printLine((await func1(x)));
+  await system.printLine((await func2(x)));
 }
 
 async function func1(f) {
@@ -440,8 +440,8 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(new Bar());
-  await system.printLine(await func1(x));
-  await system.printLine(await func2(x));
+  await system.printLine((await func1(x)));
+  await system.printLine((await func2(x)));
 }
 
 async function func1(f) {
@@ -539,8 +539,8 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(new Bar());
-  await system.printLine(await func1(x));
-  await system.printLine(await func2(x));
+  await system.printLine((await func1(x)));
+  await system.printLine((await func2(x)));
 }
 
 async function func1(f) {
