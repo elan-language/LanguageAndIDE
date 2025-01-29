@@ -304,9 +304,9 @@ export class System {
     return allOutcomes;
   }
 
-  debugSymbol(symbol: any) {
+  async debugSymbol(symbol: any) {
     try {
-      return this._stdlib.asString(symbol);
+      return await this._stdlib.asString(symbol);
     } catch (_e) {
       return "error resolving";
     }

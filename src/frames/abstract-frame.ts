@@ -720,7 +720,9 @@ export abstract class AbstractFrame implements Frame {
 
       const id = `${idPrefix}${symbol.symbolId}`;
       const value = `${scopePrefix}${symbol.symbolId}`;
-      resolveId.push(`_scopedIds${this.htmlId}.push(["${id}", system.debugSymbol(${value})]);`);
+      resolveId.push(
+        `_scopedIds${this.htmlId}.push(["${id}", await system.debugSymbol(${value})]);`,
+      );
     }
 
     const resolve = `${this.indent()}const _scopedIds${this.htmlId} = [];
