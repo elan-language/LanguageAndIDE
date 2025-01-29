@@ -587,15 +587,32 @@ export class StdLib {
     return n > fl ? fl + 1 : fl;
   }
 
-  @elanFunction(["", "lambdaOrFunctionRef"], FunctionOptions.pureExtension, ElanIterable(ElanT1))
-  filter<T1>(
+  @elanFunction(
+    ["", "lambdaOrFunctionRef"],
+    FunctionOptions.pureAsyncExtension,
+    ElanIterable(ElanT1),
+  )
+  async filter<T1>(
     @elanIterableType(ElanT1)
     source: T1[] | string,
     @elanFuncType([ElanT1], ElanBoolean)
-    predicate: (value: T1 | string) => boolean,
-  ): (T1 | string)[] {
+    predicate: (value: T1 | string) => Promise<boolean>,
+  ): Promise<(T1 | string)[]> {
     const list = typeof source === "string" ? source.split("") : [...source];
-    return this.asIterable(list.filter(predicate));
+    //return this.asIterable(list.filter(predicate));
+
+    const asyncFilter = async (
+      list: string[] | T1[],
+      predicate: (value: T1 | string) => Promise<boolean>,
+    ) => {
+      const results = await Promise.all(list.map(predicate));
+
+      return list.filter((_v, index) => results[index]);
+    };
+
+    const result = await asyncFilter(list, predicate);
+
+    return this.asIterable(result);
   }
 
   @elanFunction(["", "lambdaOrFunctionRef"], FunctionOptions.pureExtension, ElanIterable(ElanT2))

@@ -27,9 +27,9 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(_stdlib.asArray(_stdlib.filter(global.source, async (x) => x > 20)));
-  await system.printLine(_stdlib.asArray(_stdlib.filter(global.source, async (x) => x > 20)));
-  await system.printLine(_stdlib.asArray(_stdlib.filter(global.source, async (x) => (x < 3) || (x > 35))));
+  await system.printLine(_stdlib.asArray((await _stdlib.filter(global.source, async (x) => x > 20))));
+  await system.printLine(_stdlib.asArray((await _stdlib.filter(global.source, async (x) => x > 20))));
+  await system.printLine(_stdlib.asArray((await _stdlib.filter(global.source, async (x) => (x < 3) || (x > 35)))));
 }
 return [main, _tests];}`;
 
