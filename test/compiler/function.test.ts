@@ -295,7 +295,7 @@ async function main() {
 }
 
 async function foo(bar) {
-  return await bar.asString();
+  return (await bar.asString());
 }
 global["foo"] = foo;
 

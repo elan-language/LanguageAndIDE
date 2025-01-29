@@ -234,7 +234,7 @@ const global = new class {};
 async function main() {
   let f = system.literalArray([system.initialise(new Foo())]);
   let b = 0;
-  b = system.safeIndex(f, 0).b.ff();
+  b = (await system.safeIndex(f, 0).b.ff());
   await system.printLine(b);
 }
 
@@ -260,7 +260,7 @@ class Bar {
 
   }
 
-  ff() {
+  async ff() {
     return 4;
   }
 
@@ -307,7 +307,7 @@ const global = new class {};
 async function main() {
   let f = system.list([system.initialise(new Foo())]);
   let b = 0;
-  b = system.safeIndex(f, 0).b.ff();
+  b = (await system.safeIndex(f, 0).b.ff());
   await system.printLine(b);
 }
 
@@ -333,7 +333,7 @@ class Bar {
 
   }
 
-  ff() {
+  async ff() {
     return 4;
   }
 
@@ -474,7 +474,7 @@ const global = new class {};
 async function main() {
   let aFoo = system.initialise(new Foo());
   let b = 0;
-  b = _stdlib.length(system.array(await aFoo.createArr(10).slice(1, 5))) + 3;
+  b = _stdlib.length(system.array((await aFoo.createArr(10)).slice(1, 5))) + 3;
   await system.printLine(b);
 }
 
@@ -534,7 +534,7 @@ const global = new class {};
 async function main() {
   let aBar = system.initialise(new Bar());
   let b = 0;
-  b = 5 + system.safeIndex(system.safeIndex(await aBar.foo.create2DArr(), 2), 1) - 2;
+  b = 5 + system.safeIndex(system.safeIndex((await aBar.foo.create2DArr()), 2), 1) - 2;
   await system.printLine(b);
 }
 

@@ -59,9 +59,9 @@ async function main() {
   let x = system.initialise(new Bar());
   await system.printLine(x.p1);
   await system.printLine(x.p2);
-  await system.printLine(await x.product());
+  await system.printLine((await x.product()));
   await x.setP1(4);
-  await system.printLine(await x.product());
+  await system.printLine((await x.product()));
 }
 
 class Foo {
@@ -1208,7 +1208,7 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(new Bar());
-  await system.printLine(await x.testPrivate(3));
+  await system.printLine((await x.testPrivate(3)));
 }
 
 class Yon {
@@ -1283,7 +1283,7 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(new Bar());
-  await system.printLine(await x.ff());
+  await system.printLine((await x.ff()));
 }
 
 class Yon {
@@ -1362,7 +1362,7 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(new Bar());
-  await system.printLine(await x.ff());
+  await system.printLine((await x.ff()));
 }
 
 class Yon {
@@ -1441,7 +1441,7 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(new Bar());
-  await system.printLine(await x.ff());
+  await system.printLine((await x.ff()));
 }
 
 class Yon {

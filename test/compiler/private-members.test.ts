@@ -156,7 +156,7 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(new Foo());
-  await system.printLine(await f.testFf("test"));
+  await system.printLine((await f.testFf("test")));
 }
 
 class Foo {

@@ -41,7 +41,7 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(new Foo());
-  await system.printLine(await f.times(2));
+  await system.printLine((await f.times(2)));
 }
 
 class Foo {
@@ -104,7 +104,7 @@ const global = new class {};
 async function main() {
   let f = system.initialise(new Foo());
   let x = 1.1;
-  x = await f.times(x);
+  x = (await f.times(x));
   await system.printLine(x);
 }
 
@@ -168,7 +168,7 @@ const global = new class {};
 async function main() {
   let f = system.initialise(new Foo());
   let x = system.emptyImmutableList();
-  x = await f.times(2);
+  x = (await f.times(2));
   await system.printLine(x);
 }
 
@@ -241,7 +241,7 @@ end class`;
 const global = new class {};
 async function main() {
   let b = system.initialise(new Bar());
-  let x = await b.getTimes();
+  let x = (await b.getTimes());
   await system.printLine(x);
 }
 
@@ -261,7 +261,7 @@ class Bar {
 
   async getTimes() {
     let x = system.emptyImmutableList();
-    x = await this.p1.times(2);
+    x = (await this.p1.times(2));
     return x;
   }
 
@@ -337,7 +337,7 @@ end class`;
 const global = new class {};
 async function main() {
   let b = system.initialise(new Bar());
-  let x = await b.getTimes();
+  let x = (await b.getTimes());
   await system.printLine(x);
 }
 
@@ -357,7 +357,7 @@ class Bar {
 
   async getTimes() {
     let x = system.emptyImmutableList();
-    x = this.p1.times(2);
+    x = (await this.p1.times(2));
     return x;
   }
 
@@ -441,7 +441,7 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(new Foo());
-  await system.printLine(await f.length());
+  await system.printLine((await f.length()));
 }
 
 class Foo {
@@ -459,7 +459,7 @@ class Foo {
   }
 
   async length() {
-    return this.p1.length() + 2;
+    return (await this.p1.length()) + 2;
   }
 
   async asString() {
@@ -548,7 +548,7 @@ const global = new class {};
 async function main() {
   let f = system.initialise(new Foo());
   let b = system.initialise(new Bar());
-  await system.printLine(await f.times(b));
+  await system.printLine((await f.times(b)));
 }
 
 class Foo {
@@ -560,7 +560,7 @@ class Foo {
   p1 = 0;
 
   async times(b) {
-    return await this.p1PlusOne() * await b.p1PlusOne();
+    return await this.p1PlusOne() * (await b.p1PlusOne());
   }
 
   async p1PlusOne() {

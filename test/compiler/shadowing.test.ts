@@ -155,9 +155,9 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(new Foo());
-  await system.printLine(await f.sin(1));
+  await system.printLine((await f.sin(1)));
   await system.printLine(await sin(1));
-  await system.printLine(await global.sin(1));
+  await system.printLine((await global.sin(1)));
   await system.printLine(_stdlib.sin(1));
 }
 
@@ -267,7 +267,7 @@ const global = new class {};
 async function main() {
   let sin = 2;
   await system.printLine(sin);
-  await system.printLine(await global.sin(1));
+  await system.printLine((await global.sin(1)));
 }
 
 async function sin(x) {

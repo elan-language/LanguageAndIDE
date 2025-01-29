@@ -97,7 +97,7 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(new Foo());
-  await system.printLine(await f.bar());
+  await system.printLine((await f.bar()));
 }
 
 async function doubled(f) {
@@ -158,7 +158,7 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(new Foo());
-  await system.printLine(await f.bar());
+  await system.printLine((await f.bar()));
 }
 
 class Foo {

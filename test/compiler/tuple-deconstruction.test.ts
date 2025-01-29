@@ -104,7 +104,7 @@ end class`;
 const global = new class {};
 async function main() {
   const foo = system.initialise(new Foo());
-  const [a, b] = await foo.bar();
+  const [a, b] = (await foo.bar());
   await system.printLine(a);
   await system.printLine(b);
 }

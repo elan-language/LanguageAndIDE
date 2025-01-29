@@ -18,7 +18,7 @@ export class CompositeAsn extends AbstractAstNode implements AstNode {
     super();
   }
 
-  private finalNode?: AstNode;
+  private finalNode?: ChainedAsn;
 
   aggregateCompileErrors(): CompileError[] {
     return this.compileErrors
@@ -48,8 +48,9 @@ export class CompositeAsn extends AbstractAstNode implements AstNode {
         code = [];
       } else {
         if (previousCode) {
-          const async = currentNode.isAsync ? "await " : "";
-          code.push(`${async}${previousCode}`);
+          // const async = currentNode.isAsync ? "await " : "";
+          // code.push(`${async}${previousCode}`);
+          code.push(`${previousCode}`);
         }
       }
 
@@ -69,7 +70,11 @@ export class CompositeAsn extends AbstractAstNode implements AstNode {
       }
     }
 
-    return code.join(".");
+    const showAwait = this.finalNode!.isAsync && this.finalNode?.showPreviousNode;
+    const isAsyncStart = showAwait ? "(await " : "";
+    const isAsyncEnd = showAwait ? ")" : "";
+
+    return `${isAsyncStart}${code.join(".")}${isAsyncEnd}`;
   }
 
   symbolType() {

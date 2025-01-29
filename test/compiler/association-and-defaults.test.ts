@@ -901,7 +901,7 @@ const global = new class {};
 async function main() {
   let g = system.initialise(new Game());
   let p = g.p1;
-  await system.printLine(await p.ucName());
+  await system.printLine((await p.ucName()));
 }
 
 class Game {

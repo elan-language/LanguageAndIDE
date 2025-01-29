@@ -43,7 +43,7 @@ async function main() {
   let x = system.initialise(new Foo());
   await system.printLine(x.p1);
   await system.printLine(x.p2);
-  await system.printLine(await x.asString());
+  await system.printLine((await x.asString()));
 }
 
 class Foo {

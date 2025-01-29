@@ -49,7 +49,7 @@ const global = new class {};
 async function main() {
   let x = system.initialise(new Bar());
   await system.printLine(x.prop);
-  await system.printLine(await x.func());
+  await system.printLine((await x.func()));
   await x.proc();
 }
 
@@ -141,7 +141,7 @@ const global = new class {};
 async function main() {
   let x = system.initialise(new Bar());
   await system.printLine(x.prop);
-  await system.printLine(await x.func());
+  await system.printLine((await x.func()));
   await x.proc();
 }
 
@@ -241,7 +241,7 @@ const global = new class {};
 async function main() {
   let x = system.initialise(new Bar());
   await system.printLine(x.prop);
-  await system.printLine(await x.func());
+  await system.printLine((await x.func()));
   await x.proc();
 }
 
@@ -346,12 +346,12 @@ async function main() {
 }
 
 async function func1(f) {
-  return await f.ff1();
+  return (await f.ff1());
 }
 global["func1"] = func1;
 
 async function func2(f) {
-  return await f.ff2();
+  return (await f.ff2());
 }
 global["func2"] = func2;
 
@@ -445,12 +445,12 @@ async function main() {
 }
 
 async function func1(f) {
-  return await f.ff1();
+  return (await f.ff1());
 }
 global["func1"] = func1;
 
 async function func2(f) {
-  return await f.ff2();
+  return (await f.ff2());
 }
 global["func2"] = func2;
 
@@ -544,12 +544,12 @@ async function main() {
 }
 
 async function func1(f) {
-  return await f.ff1();
+  return (await f.ff1());
 }
 global["func1"] = func1;
 
 async function func2(f) {
-  return await f.ff1();
+  return (await f.ff1());
 }
 global["func2"] = func2;
 

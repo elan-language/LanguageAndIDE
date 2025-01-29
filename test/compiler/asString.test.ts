@@ -161,9 +161,9 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(new Foo());
-  let s1 = await f.asString();
+  let s1 = (await f.asString());
   let p = f.p1;
-  let s2 = await p.asString();
+  let s2 = (await p.asString());
   await system.printLine(s1);
   await system.printLine(s2);
 }
@@ -227,7 +227,7 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(new Foo());
-  let s = await f.asString();
+  let s = (await f.asString());
   await system.printLine(s);
 }
 
