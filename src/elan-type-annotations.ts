@@ -185,6 +185,8 @@ export class ElanFuncTypeDescriptor implements TypeDescriptor {
       this.parameters.map((p) => p.mapType()),
       this.returnType.mapType(),
       false,
+      true,
+      false,
     );
   }
 }

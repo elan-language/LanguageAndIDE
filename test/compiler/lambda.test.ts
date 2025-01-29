@@ -30,7 +30,7 @@ async function main() {
 }
 
 async function printModified(i, f) {
-  await system.printLine(f(i));
+  await system.printLine(await f(i));
 }
 global["printModified"] = printModified;
 return [main, _tests];}`;
@@ -73,7 +73,7 @@ async function first(t) {
 global["first"] = first;
 
 async function printModified(i, f) {
-  await system.printLine(f(i));
+  await system.printLine(await f(i));
 }
 global["printModified"] = printModified;
 return [main, _tests];}`;
@@ -99,7 +99,7 @@ end main`;
 const global = new class {};
 async function main() {
   let l = (x) => x * 5;
-  await system.printLine(l(5));
+  await system.printLine(await l(5));
 }
 return [main, _tests];}`;
 
@@ -138,7 +138,7 @@ const global = new class {};
 async function main() {
   let foo = system.initialise(new Foo());
   await foo.setP1((x) => x);
-  let v = foo.p1(5);
+  let v = (await foo.p1(5));
   await system.printLine(v);
 }
 

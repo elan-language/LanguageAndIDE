@@ -132,7 +132,7 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
       const pNames = names.slice(0, -1);
       const pTypes = types.slice(0, -1);
       const rType = types[types.length - 1] ?? UnknownType.Instance;
-      return new FunctionType(pNames, pTypes, rType, false);
+      return new FunctionType(pNames, pTypes, rType, false, true, true);
     }
 
     if (st instanceof ClassType) {

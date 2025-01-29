@@ -22,12 +22,12 @@ export class LambdaAsn extends AbstractAstNode implements AstNode {
   compile(): string {
     this.compileErrors = [];
 
-    return `(${this.signature.compile()}) => ${this.body.compile()}`;
+    return `async (${this.signature.compile()}) => ${this.body.compile()}`;
   }
 
   symbolType() {
     const [pn, pt] = this.signature.parameterNamesAndTypes();
-    return new FunctionType(pn, pt, this.body.symbolType(), false);
+    return new FunctionType(pn, pt, this.body.symbolType(), false, true, true);
   }
 
   toString() {

@@ -221,7 +221,7 @@ async function main() {
   await system.printLine(g.dsi);
   await system.printLine(g.ai);
   await system.printLine(g.t);
-  await system.printLine(g.ff("a", "b"));
+  await system.printLine((await g.ff("a", "b")));
   await system.printLine(_stdlib.matchesRegExp("aa", g.r));
 }
 

@@ -33,7 +33,7 @@ async function main() {
 }
 
 async function printModified(i, f) {
-  await system.printLine(f(i));
+  await system.printLine(await f(i));
 }
 global["printModified"] = printModified;
 
@@ -74,7 +74,7 @@ async function main() {
 }
 
 async function printModified(i, f) {
-  await system.printLine(f());
+  await system.printLine(await f());
 }
 global["printModified"] = printModified;
 
@@ -115,7 +115,7 @@ async function main() {
 }
 
 async function printIt(s, c, f) {
-  await system.printLine(f(s, c));
+  await system.printLine(await f(s, c));
 }
 global["printIt"] = printIt;
 
@@ -236,7 +236,7 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(new Foo(ff));
-  await system.printLine(f.pf(5));
+  await system.printLine((await f.pf(5)));
 }
 
 async function ff(a) {

@@ -189,6 +189,7 @@ export function generateType(type: SymbolType, matches: Map<string, SymbolType>)
       generateType(type.returnType, matches),
       type.isExtension,
       type.isPure,
+      type.isAsync,
     );
   }
 
