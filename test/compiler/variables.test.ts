@@ -246,7 +246,7 @@ const global = new class {
 
 };
 async function main() {
-  let b = _stdlib.map(global.a, (x) => x);
+  let b = _stdlib.map(global.a, async (x) => x);
   b = system.list([1, 2]);
   await system.printLine(b);
 }

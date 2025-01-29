@@ -27,9 +27,9 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(_stdlib.asArray(_stdlib.filter(global.source, (x) => x > 20)));
-  await system.printLine(_stdlib.asArray(_stdlib.filter(global.source, (x) => x > 20)));
-  await system.printLine(_stdlib.asArray(_stdlib.filter(global.source, (x) => (x < 3) || (x > 35))));
+  await system.printLine(_stdlib.asArray(_stdlib.filter(global.source, async (x) => x > 20)));
+  await system.printLine(_stdlib.asArray(_stdlib.filter(global.source, async (x) => x > 20)));
+  await system.printLine(_stdlib.asArray(_stdlib.filter(global.source, async (x) => (x < 3) || (x > 35))));
 }
 return [main, _tests];}`;
 
@@ -56,7 +56,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(_stdlib.asArray(_stdlib.filter(global.source, (x) => x === "o")));
+  await system.printLine(_stdlib.asArray(_stdlib.filter(global.source, async (x) => x === "o")));
 }
 return [main, _tests];}`;
 
@@ -92,7 +92,7 @@ async function main() {
 }
 
 async function filterIt(tofilter) {
-  return _stdlib.asList(_stdlib.filter(tofilter, (x) => x > 20));
+  return _stdlib.asList(_stdlib.filter(tofilter, async (x) => x > 20));
 }
 global["filterIt"] = filterIt;
 return [main, _tests];}`;
@@ -121,8 +121,8 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(_stdlib.asArray(_stdlib.map(global.source, (x) => x + 1)));
-  await system.printLine(_stdlib.asArray(_stdlib.map(global.source, (x) => await _stdlib.asString(x) + "*")));
+  await system.printLine(_stdlib.asArray(_stdlib.map(global.source, async (x) => x + 1)));
+  await system.printLine(_stdlib.asArray(_stdlib.map(global.source, async (x) => await _stdlib.asString(x) + "*")));
 }
 return [main, _tests];}`;
 
@@ -152,7 +152,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(_stdlib.asArray(_stdlib.map(global.source, (x) => x + "*")));
+  await system.printLine(_stdlib.asArray(_stdlib.map(global.source, async (x) => x + "*")));
 }
 return [main, _tests];}`;
 
@@ -178,7 +178,7 @@ end main`;
 const global = new class {};
 async function main() {
   let source = _stdlib.asIterable(system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]));
-  source = _stdlib.map(source, (x) => x + 1);
+  source = _stdlib.map(source, async (x) => x + 1);
   await system.printLine(_stdlib.asArray(source));
 }
 return [main, _tests];}`;
@@ -208,9 +208,9 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(_stdlib.reduce(global.source, 0, (s, x) => s + x));
-  await system.printLine(_stdlib.reduce(global.source, 100, (s, x) => s + x));
-  await system.printLine(_stdlib.reduce(global.source, "Concat:", (s, x) => s + await _stdlib.asString(x)));
+  await system.printLine(_stdlib.reduce(global.source, 0, async (s, x) => s + x));
+  await system.printLine(_stdlib.reduce(global.source, 100, async (s, x) => s + x));
+  await system.printLine(_stdlib.reduce(global.source, "Concat:", async (s, x) => s + await _stdlib.asString(x)));
 }
 return [main, _tests];}`;
 
@@ -237,7 +237,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(_stdlib.reduce(global.source, "Concat:", (s, x) => s + "*" + x));
+  await system.printLine(_stdlib.reduce(global.source, "Concat:", async (s, x) => s + "*" + x));
 }
 return [main, _tests];}`;
 
@@ -267,7 +267,7 @@ const global = new class {
 };
 async function main() {
   let ed = system.dictionaryImmutable({["one"] : 1, ["two"] : 2});
-  ed = _stdlib.reduce(global.source, ed, (d, x) => _stdlib.withPutAtKey(d, x, 1));
+  ed = _stdlib.reduce(global.source, ed, async (d, x) => _stdlib.withPutAtKey(d, x, 1));
   await system.printLine(ed);
 }
 return [main, _tests];}`;
@@ -322,7 +322,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(_stdlib.maxBy(global.source, (x) => x % 5));
+  await system.printLine(_stdlib.maxBy(global.source, async (x) => x % 5));
 }
 return [main, _tests];}`;
 
@@ -349,7 +349,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(_stdlib.maxBy(global.source, (x) => _stdlib.length(x)));
+  await system.printLine(_stdlib.maxBy(global.source, async (x) => _stdlib.length(x)));
 }
 return [main, _tests];}`;
 
@@ -376,7 +376,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(_stdlib.maxBy(global.source, (t) => _stdlib.length(t)));
+  await system.printLine(_stdlib.maxBy(global.source, async (t) => _stdlib.length(t)));
 }
 return [main, _tests];}`;
 
@@ -457,7 +457,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(_stdlib.minBy(global.source, (x) => x % 5));
+  await system.printLine(_stdlib.minBy(global.source, async (x) => x % 5));
 }
 return [main, _tests];}`;
 
@@ -486,9 +486,9 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(_stdlib.any(global.source, (x) => x > 20));
-  await system.printLine(_stdlib.any(global.source, (x) => (x % 2) === 0));
-  await system.printLine(_stdlib.any(global.source, (x) => x > 40));
+  await system.printLine(_stdlib.any(global.source, async (x) => x > 20));
+  await system.printLine(_stdlib.any(global.source, async (x) => (x % 2) === 0));
+  await system.printLine(_stdlib.any(global.source, async (x) => x > 40));
 }
 return [main, _tests];}`;
 
@@ -516,7 +516,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(_stdlib.asArray(_stdlib.sortBy(global.source, (x, y) => x === y ? 0 : x < y ? 1 : -1)));
+  await system.printLine(_stdlib.asArray(_stdlib.sortBy(global.source, async (x, y) => x === y ? 0 : x < y ? 1 : -1)));
   await system.printLine(global.source);
 }
 return [main, _tests];}`;
@@ -548,7 +548,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(_stdlib.asArray(_stdlib.sortBy(global.source, (x, y) => x === y ? 0 : _stdlib.isAfter(x, y) ? 1 : -1)));
+  await system.printLine(_stdlib.asArray(_stdlib.sortBy(global.source, async (x, y) => x === y ? 0 : _stdlib.isAfter(x, y) ? 1 : -1)));
   await system.printLine(global.source);
 }
 return [main, _tests];}`;

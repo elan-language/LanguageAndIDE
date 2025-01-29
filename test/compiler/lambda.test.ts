@@ -26,7 +26,7 @@ end procedure`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await printModified(4, (x) => x * 3);
+  await printModified(4, async (x) => x * 3);
 }
 
 async function printModified(i, f) {
@@ -63,7 +63,7 @@ end procedure`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await printModified(system.tuple([4, 5]), (t) => await first(t));
+  await printModified(system.tuple([4, 5]), async (t) => await first(t));
 }
 
 async function first(t) {
@@ -98,7 +98,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let l = (x) => x * 5;
+  let l = async (x) => x * 5;
   await system.printLine(await l(5));
 }
 return [main, _tests];}`;
@@ -137,7 +137,7 @@ end class`;
 const global = new class {};
 async function main() {
   let foo = system.initialise(new Foo());
-  await foo.setP1((x) => x);
+  await foo.setP1(async (x) => x);
   let v = (await foo.p1(5));
   await system.printLine(v);
 }
@@ -177,8 +177,8 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let l = (x) => x * 5;
-  await system.printLine(l(5) + 5);
+  let l = async (x) => x * 5;
+  await system.printLine(await l(5) + 5);
 }
 return [main, _tests];}`;
 
@@ -207,11 +207,11 @@ end function`;
 const global = new class {};
 async function main() {
   let l = await getFunc();
-  await system.printLine(l(5));
+  await system.printLine(await l(5));
 }
 
 async function getFunc() {
-  return (x) => x * 5;
+  return async (x) => x * 5;
 }
 global["getFunc"] = getFunc;
 return [main, _tests];}`;
@@ -238,8 +238,8 @@ end main`;
 const global = new class {};
 async function main() {
   let x = 3;
-  let l = () => x * 5;
-  await system.printLine(l());
+  let l = async () => x * 5;
+  await system.printLine(await l());
 }
 return [main, _tests];}`;
 
@@ -268,11 +268,11 @@ end function`;
 const global = new class {};
 async function main() {
   let l = await getFunc(5);
-  await system.printLine(l());
+  await system.printLine(await l());
 }
 
 async function getFunc(x) {
-  return () => x * 5;
+  return async () => x * 5;
 }
 global["getFunc"] = getFunc;
 return [main, _tests];}`;
