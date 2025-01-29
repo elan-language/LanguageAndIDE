@@ -309,7 +309,7 @@ const global = new class {};
 async function main() {
   let a = 3;
   let b = 4;
-  let c = \`\${_stdlib.asString(a)} x \${_stdlib.asString(b)} = \${_stdlib.asString(a * b)}\`;
+  let c = \`\${await _stdlib.asString(a)} x \${await _stdlib.asString(b)} = \${await _stdlib.asString(a * b)}\`;
   await system.printLine(c);
 }
 return [main, _tests];}`;

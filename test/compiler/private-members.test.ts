@@ -156,7 +156,7 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(new Foo());
-  await system.printLine(f.testFf("test"));
+  await system.printLine(await f.testFf("test"));
 }
 
 class Foo {
@@ -165,12 +165,12 @@ class Foo {
 
   }
 
-  ff(f) {
+  async ff(f) {
     return f;
   }
 
-  testFf(f) {
-    return this.ff(f);
+  async testFf(f) {
+    return await this.ff(f);
   }
 
 }

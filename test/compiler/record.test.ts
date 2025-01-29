@@ -162,7 +162,7 @@ end function
 const global = new class {};
 async function main() {
   let f = system.initialise(new Foo());
-  await system.printLine(fun(f));
+  await system.printLine(await fun(f));
 }
 
 class Foo {
@@ -171,7 +171,7 @@ class Foo {
 
 }
 
-function fun(foo) {
+async function fun(foo) {
   return foo.p1;
 }
 global["fun"] = fun;

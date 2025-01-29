@@ -65,10 +65,10 @@ end function`;
 const global = new class {};
 async function main() {
   let it = system.list(["one", "two"]);
-  await system.printLine(printEach(it));
+  await system.printLine(await printEach(it));
 }
 
-function printEach(target) {
+async function printEach(target) {
   return target;
 }
 global["printEach"] = printEach;
@@ -101,12 +101,12 @@ end function`;
 const global = new class {};
 async function main() {
   let lst = system.list(["one", "two"]);
-  let it = printEach(lst);
+  let it = await printEach(lst);
   lst = _stdlib.asList(it);
   await system.printLine(lst);
 }
 
-function printEach(target) {
+async function printEach(target) {
   return target;
 }
 global["printEach"] = printEach;

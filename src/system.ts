@@ -231,8 +231,8 @@ export class System {
     return true;
   }
 
-  assert(
-    actualFunc: () => any,
+  async assert(
+    actualFunc: () => Promise<any>,
     expected: any,
     htmlId: string,
     stdlib: { asString: (a: any) => string },
@@ -242,7 +242,7 @@ export class System {
       return new AssertOutcome(TestStatus.ignored, "", "", htmlId);
     }
     try {
-      const actual = actualFunc();
+      const actual = await actualFunc();
       return this.doAssert(actual, expected, htmlId, stdlib);
     } catch (err) {
       return this.doAssert((err as any).message, expected, htmlId, stdlib);

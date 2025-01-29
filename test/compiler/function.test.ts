@@ -274,7 +274,7 @@ main
 end main
 
 function foo(bar as Bar) returns String
-    return await bar.asString()
+    return bar.asString()
 end function
 
 class Bar
@@ -295,7 +295,7 @@ async function main() {
 }
 
 async function foo(bar) {
-  return bar.asString();
+  return await bar.asString();
 }
 global["foo"] = foo;
 

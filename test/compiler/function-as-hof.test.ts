@@ -37,7 +37,7 @@ async function printModified(i, f) {
 }
 global["printModified"] = printModified;
 
-function twice(x) {
+async function twice(x) {
   return x * 2;
 }
 global["twice"] = twice;
@@ -63,7 +63,7 @@ procedure printModified(i as Float, f as Func<of => Float>)
   print f()
 end procedure
   
-async function twice() returns Float
+function twice() returns Float
   return 2
 end function`;
 

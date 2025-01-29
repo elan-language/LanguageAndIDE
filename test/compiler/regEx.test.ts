@@ -57,10 +57,10 @@ end function`;
 const global = new class {};
 async function main() {
   let r = /a+/;
-  await system.printLine(testRegex(r));
+  await system.printLine(await testRegex(r));
 }
 
-function testRegex(r) {
+async function testRegex(r) {
   return _stdlib.matchesRegExp("aa", r);
 }
 global["testRegex"] = testRegex;
@@ -92,11 +92,11 @@ end function`;
 const global = new class {};
 async function main() {
   let r = system.emptyRegExp();
-  r = testRegex();
+  r = await testRegex();
   await system.printLine(_stdlib.matchesRegExp("aa", r));
 }
 
-function testRegex() {
+async function testRegex() {
   return /a+/;
 }
 global["testRegex"] = testRegex;

@@ -123,7 +123,7 @@ const global = new class {};
 async function main() {
   for (const x of "12") {
     for (const y of "34") {
-      await system.printLine(\`\${_stdlib.asString(x)}\${_stdlib.asString(y)}\`);
+      await system.printLine(\`\${await _stdlib.asString(x)}\${await _stdlib.asString(y)}\`);
     }
   }
 }

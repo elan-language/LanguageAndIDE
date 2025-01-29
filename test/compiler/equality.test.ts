@@ -67,7 +67,7 @@ class Foo {
   }
 
   async asString() {
-    return \`\${_stdlib.asString(this.p1)} \${_stdlib.asString(this.p2)}\`;
+    return \`\${await _stdlib.asString(this.p1)} \${await _stdlib.asString(this.p2)}\`;
   }
 
 }
@@ -127,7 +127,7 @@ class Foo {
   }
 
   async asString() {
-    return \`\${_stdlib.asString(this.p1)} \${_stdlib.asString(this.p2)}\`;
+    return \`\${await _stdlib.asString(this.p1)} \${await _stdlib.asString(this.p2)}\`;
   }
 
 }
@@ -201,7 +201,7 @@ class Foo {
   }
 
   async asString() {
-    return \`\${_stdlib.asString(this.p1)} \${_stdlib.asString(this.p2)}\`;
+    return \`\${await _stdlib.asString(this.p1)} \${await _stdlib.asString(this.p2)}\`;
   }
 
 }

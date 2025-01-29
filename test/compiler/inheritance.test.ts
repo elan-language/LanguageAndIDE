@@ -481,7 +481,7 @@ class Bar extends Foo {
 
   async testPrivate(a) {
     await this.setP1(a);
-    await system.printLine(this.ff());
+    await system.printLine(await this.ff());
     await system.printLine(this.p1);
   }
 
@@ -982,7 +982,7 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
-  ff(a) {
+  async ff(a) {
     return 0;
   }
 
@@ -1222,7 +1222,7 @@ class Yon {
 class Foo extends Yon {
   static emptyInstance() { return system.emptyClass(Foo, []);};
   async fff() {
-    return this.ff();
+    return await this.ff();
   }
 
 }
@@ -1235,7 +1235,7 @@ class Bar extends Foo {
   }
 
   async testPrivate(a) {
-    return this.fff();
+    return await this.fff();
   }
 
 }
