@@ -761,7 +761,7 @@ async function square(x) {
 global["square"] = square;
 
 _tests.push(["test10", async (_outcomes) => {
-  _outcomes.push(await system.assert(async "", "", "assert13", _stdlib, true));
+  _outcomes.push(await system.assert("", "", "assert13", _stdlib, true));
 }]);
 return [main, _tests];}`;
 
@@ -808,7 +808,7 @@ async function square(x) {
 global["square"] = square;
 
 _tests.push(["test13", async (_outcomes) => {
-  _outcomes.push(await system.assert(async "", "", "assert16", _stdlib, true));
+  _outcomes.push(await system.assert("", "", "assert16", _stdlib, true));
 }]);
 return [main, _tests];}`;
 
@@ -852,7 +852,7 @@ async function square(x) {
 global["square"] = square;
 
 _tests.push(["test10", async (_outcomes) => {
-  _outcomes.push(await system.assert(async "", "", "assert16", _stdlib, true));
+  _outcomes.push(await system.assert("", "", "assert16", _stdlib, true));
 }]);
 return [main, _tests];}`;
 

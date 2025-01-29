@@ -642,7 +642,7 @@ class Foo {
   p1 = 0;
 
   async prt() {
-    await system.printLine(this.asString());
+    await system.printLine(await this.asString());
   }
 
   async asString() {

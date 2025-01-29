@@ -88,10 +88,10 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(filterIt(global.source));
+  await system.printLine(await filterIt(global.source));
 }
 
-function filterIt(tofilter) {
+async function filterIt(tofilter) {
   return _stdlib.asList(_stdlib.filter(tofilter, (x) => x > 20));
 }
 global["filterIt"] = filterIt;

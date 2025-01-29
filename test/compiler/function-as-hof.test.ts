@@ -153,11 +153,11 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let f = getFunc();
-  await system.printLine(f(5));
+  let f = await getFunc();
+  await system.printLine(await f(5));
 }
 
-async function getasync func() {
+async function getFunc() {
   return twice;
 }
 global["getFunc"] = getFunc;
@@ -193,7 +193,7 @@ end function`;
 const global = new class {};
 async function main() {
   let f = twice;
-  await system.printLine(f(5));
+  await system.printLine(await f(5));
 }
 
 async function twice(x) {

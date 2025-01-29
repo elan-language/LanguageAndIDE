@@ -72,7 +72,7 @@ end main`;
 const global = new class {};
 async function main() {
   let bar = 1;
-  throw new Error(\`\${await_stdlib.asString(bar)}\`);
+  throw new Error(\`\${await _stdlib.asString(bar)}\`);
 }
 return [main, _tests];}`;
 
