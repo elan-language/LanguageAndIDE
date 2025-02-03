@@ -48,8 +48,15 @@
         <div class="elan-code" data-code=""></div>
         <img id="logo" src="images/reverse-logo.png">
         <div id="help">
-        <a id="videos" href="https://www.youtube.com/playlist?list=PLhZaBW7EbafOPO4YyuovGI1prCViAeVKM" target="_blank" rel="noopener noreferrer" tabindex="3">Videos</a>
-        <a id="manual" title="Open the Reference Manual" href="ReferenceManual.html" target="_blank" rel="noopener noreferrer" tabindex="3">Help</a>
+        <div class="dropdown">
+            <button id="help" class="plain" tabindex="1">Help</button>
+            <div class="dropdown-content">
+                <div class="help-file"><a href="ElanTopics.html" target="_blank" rel="noopener noreferrer" tabindex="3">Index</a></div>
+                <div class="help-file"><a href="EditorRef.html" target="_blank" rel="noopener noreferrer" tabindex="3">Editor Reference</a></div>
+                <div class="help-file"><a href="LangRef.html" target="_blank" rel="noopener noreferrer" tabindex="3">Language Reference</a></div>
+                <div class="help-file"><a href="LibRef.html" target="_blank" rel="noopener noreferrer" tabindex="3">Library Reference</a></div>
+            </div>          
+        </div>
         </div>
         <div id="console-title">Console</div>
         <button id="clear-console" class="plain"  tabindex="2">Clear</button>

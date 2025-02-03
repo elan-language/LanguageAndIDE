@@ -139,19 +139,6 @@ body {
     margin-top: 5px;
   }
 
-  #help * {
-    float:left;
-    font-family: var(--ideTitleFont);
-    font-size: var(--ideTitleSize);
-    color: black;
-    text-decoration: none;
-    background-color: white;
-    padding-left: 2px;
-    padding-right: 2px;
-    margin-left: 5px;
-    margin-bottom: 5px;
-  }
-
   #logo {
     grid-row: 1/4;
     grid-column: 44 / 48;
@@ -197,7 +184,7 @@ button.plain, button.plain:hover, button.plain:active, button.plain:focus  {
     color: black; /* To prevent the help a-link being coloured mauve when visited*/
 }
 
-button.plain:hover:enabled, button.plain:active, button.plain:focus, #help *:hover, #help *:focus {
+button.plain:hover:enabled, button.plain:active, button.plain:focus {
   text-decoration: underline;
 }
 
@@ -276,13 +263,24 @@ button#expand-collapse {
   width: 282px;  /* width of button bar */
 }
 
-.demo-file {
+.help-file, .help-file a {
   font-family: var(--ideTitleFont);
+  font-size: var(--ideTitleSize);
+  color: black;
+  text-decoration: none;
+  padding-left: 2px;
+  padding-right: 2px;
 }
 
-.demo-file:hover, demo-file:active {
+
+.demo-file:hover, demo-file:active, .help-file:hover, .help-file:hover, .help-file a:active, .help-file a:hover  {
   background-color: var(--ideDefaultBackground);
   color: white;
+  text-decoration: none; 
+}
+
+.demo-file, #help {
+  font-family: var(--ideTitleFont);
 }
 
 .elan-code:not( :focus-within),
