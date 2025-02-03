@@ -92,8 +92,10 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
+
   async _initialise() {
 
+    return this;
   }
 
   async asString() {
@@ -165,8 +167,10 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
+
   async _initialise() {
 
+    return this;
   }
 
   async asString() {
@@ -690,8 +694,10 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["it", system.emptyImmutableList()]]);};
+
   async _initialise() {
 
+    return this;
   }
 
   it = system.emptyImmutableList();

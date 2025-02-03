@@ -144,8 +144,10 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", system.emptyFunc(0)]]);};
+
   async _initialise() {
 
+    return this;
   }
 
   async setP1(p) {

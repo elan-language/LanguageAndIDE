@@ -158,6 +158,7 @@ class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["fruit", Fruit._default]]);};
 
   async _initialise() {
+
     return this;
   }
 

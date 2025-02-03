@@ -268,6 +268,7 @@ class Bar {
   static emptyInstance() { return system.emptyClass(Bar, []);};
 
   async _initialise() {
+
     return this;
   }
 
@@ -344,6 +345,7 @@ class Bar {
   static emptyInstance() { return system.emptyClass(Bar, []);};
 
   async _initialise() {
+
     return this;
   }
 
@@ -578,6 +580,7 @@ class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
 
   async _initialise() {
+
     return this;
   }
 

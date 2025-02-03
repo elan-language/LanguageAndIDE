@@ -72,8 +72,10 @@ class Foo {
 
 class Bar {
   static emptyInstance() { return system.emptyClass(Bar, [["prop", 0]]);};
+
   async _initialise() {
     this.prop = 3;
+    return this;
   }
 
   async func() {
@@ -172,8 +174,10 @@ class Foo2 {
 
 class Bar {
   static emptyInstance() { return system.emptyClass(Bar, [["prop", 0]]);};
+
   async _initialise() {
     this.prop = 3;
+    return this;
   }
 
   async func() {
@@ -272,8 +276,10 @@ class Foo2 {
 
 class Bar {
   static emptyInstance() { return system.emptyClass(Bar, [["prop", 0]]);};
+
   async _initialise() {
     this.prop = 3;
+    return this;
   }
 
   async func() {
@@ -373,8 +379,10 @@ class Foo2 {
 
 class Bar {
   static emptyInstance() { return system.emptyClass(Bar, []);};
+
   async _initialise() {
 
+    return this;
   }
 
   async ff1() {
@@ -472,8 +480,10 @@ class Foo2 {
 
 class Bar {
   static emptyInstance() { return system.emptyClass(Bar, []);};
+
   async _initialise() {
 
+    return this;
   }
 
   async ff1() {
@@ -571,8 +581,10 @@ class Foo2 {
 
 class Bar {
   static emptyInstance() { return system.emptyClass(Bar, []);};
+
   async _initialise() {
 
+    return this;
   }
 
   async ff1() {
@@ -650,8 +662,10 @@ class Foo2 {
 
 class Bar {
   static emptyInstance() { return system.emptyClass(Bar, []);};
+
   async _initialise() {
 
+    return this;
   }
 
   _foo;
@@ -769,6 +783,7 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
+  async _initialise() { return this; }
 
 }
 

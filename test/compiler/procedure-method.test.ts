@@ -45,8 +45,10 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
+
   async _initialise() {
     this.p1 = 5;
+    return this;
   }
 
   p1 = 0;
@@ -105,8 +107,10 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
+
   async _initialise() {
     this.p1 = 5;
+    return this;
   }
 
   p1 = 0;
@@ -193,8 +197,10 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
+
   async _initialise() {
     this.p1 = 5;
+    return this;
   }
 
   p1 = 0;
@@ -218,8 +224,10 @@ class Foo {
 
 class Bar {
   static emptyInstance() { return system.emptyClass(Bar, [["p1", 0]]);};
+
   async _initialise() {
     this.p1 = 1;
+    return this;
   }
 
   p1 = 0;

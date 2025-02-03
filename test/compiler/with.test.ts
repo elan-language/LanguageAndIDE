@@ -38,6 +38,7 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["a", 0]]);};
+  async _initialise() { return this; }
   a = 0;
 
 }
@@ -75,6 +76,7 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["a", 0]]);};
+  async _initialise() { return this; }
   a = 0;
 
 }
@@ -123,6 +125,7 @@ global["foo"] = foo;
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["a", 0]]);};
+  async _initialise() { return this; }
   a = 0;
 
 }
@@ -171,6 +174,7 @@ global["foo"] = foo;
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["a", 0]]);};
+  async _initialise() { return this; }
   a = 0;
 
 }
@@ -217,6 +221,7 @@ global["foo"] = foo;
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["a", 0]]);};
+  async _initialise() { return this; }
   a = 0;
 
 }
@@ -262,6 +267,7 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["a", 0], ["b", ""]]);};
+  async _initialise() { return this; }
   a = 0;
 
   b = "";
@@ -306,6 +312,7 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["a", 0], ["b", 0]]);};
+  async _initialise() { return this; }
   a = 0;
 
   b = 0;
@@ -347,6 +354,7 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["a", 0]]);};
+  async _initialise() { return this; }
   a = 0;
 
 }
@@ -389,6 +397,7 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["b", 0]]);};
+  async _initialise() { return this; }
   _a;
   get a() {
     return this._a ??= Foo.emptyInstance();
@@ -438,6 +447,7 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["b", 0]]);};
+  async _initialise() { return this; }
   b = 0;
 
 }
@@ -483,6 +493,7 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["b", 0], ["c", 0], ["d", 0]]);};
+  async _initialise() { return this; }
   b = 0;
 
   c = 0;
@@ -541,6 +552,7 @@ global["doIndex"] = doIndex;
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["b", 0], ["c", 0], ["d", 0]]);};
+  async _initialise() { return this; }
   b = 0;
 
   c = 0;
@@ -586,6 +598,7 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["b", 0]]);};
+  async _initialise() { return this; }
   b = 0;
 
 }
@@ -627,6 +640,7 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["b", 0]]);};
+  async _initialise() { return this; }
   b = 0;
 
 }

@@ -168,8 +168,10 @@ global["sin"] = sin;
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
+
   async _initialise() {
 
+    return this;
   }
 
   async sin(x) {
@@ -229,8 +231,10 @@ global["pause"] = pause;
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
+
   async _initialise() {
 
+    return this;
   }
 
   async pause(x) {

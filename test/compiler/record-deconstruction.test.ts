@@ -41,6 +41,7 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["a", 0], ["b", ""]]);};
+  async _initialise() { return this; }
   a = 0;
 
   b = "";
@@ -91,6 +92,7 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["a", 0], ["fruit", ""], ["aBool", false], ["aFloat", 0]]);};
+  async _initialise() { return this; }
   a = 0;
 
   fruit = "";
@@ -182,6 +184,7 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["a", 0], ["b", ""]]);};
+  async _initialise() { return this; }
   a = 0;
 
   b = "";
@@ -254,6 +257,7 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["a", 0], ["b", ""]]);};
+  async _initialise() { return this; }
   a = 0;
 
   b = "";
@@ -304,6 +308,7 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["a", system.emptyImmutableList()], ["b", ""]]);};
+  async _initialise() { return this; }
   a = system.emptyImmutableList();
 
   b = "";
@@ -346,6 +351,7 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["a", system.emptyImmutableList()], ["b", ""]]);};
+  async _initialise() { return this; }
   a = system.emptyImmutableList();
 
   b = "";
@@ -388,6 +394,7 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["a", system.emptyImmutableList()], ["b", ""]]);};
+  async _initialise() { return this; }
   a = system.emptyImmutableList();
 
   b = "";
@@ -437,6 +444,7 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["a", system.emptyImmutableList()], ["b", ""]]);};
+  async _initialise() { return this; }
   a = system.emptyImmutableList();
 
   b = "";
@@ -445,6 +453,7 @@ class Foo {
 
 class Bar {
   static emptyInstance() { return system.emptyClass(Bar, [["d", ""]]);};
+  async _initialise() { return this; }
   _c;
   get c() {
     return this._c ??= Foo.emptyInstance();
@@ -500,6 +509,7 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["a", system.emptyImmutableList()], ["b", ""]]);};
+  async _initialise() { return this; }
   a = system.emptyImmutableList();
 
   b = "";
@@ -508,6 +518,7 @@ class Foo {
 
 class Bar {
   static emptyInstance() { return system.emptyClass(Bar, [["d", ""]]);};
+  async _initialise() { return this; }
   _c;
   get c() {
     return this._c ??= Foo.emptyInstance();
@@ -561,6 +572,7 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["a", system.emptyImmutableList()], ["b", ""]]);};
+  async _initialise() { return this; }
   a = system.emptyImmutableList();
 
   b = "";
@@ -614,6 +626,7 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["a", system.emptyImmutableList()], ["b", ""]]);};
+  async _initialise() { return this; }
   a = system.emptyImmutableList();
 
   b = "";
@@ -622,6 +635,7 @@ class Foo {
 
 class Bar {
   static emptyInstance() { return system.emptyClass(Bar, [["d", ""]]);};
+  async _initialise() { return this; }
   _c;
   get c() {
     return this._c ??= Foo.emptyInstance();
@@ -681,6 +695,7 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["a", system.emptyImmutableList()], ["b", ""]]);};
+  async _initialise() { return this; }
   a = system.emptyImmutableList();
 
   b = "";
@@ -689,6 +704,7 @@ class Foo {
 
 class Bar {
   static emptyInstance() { return system.emptyClass(Bar, [["d", ""]]);};
+  async _initialise() { return this; }
   _c;
   get c() {
     return this._c ??= Foo.emptyInstance();

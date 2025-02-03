@@ -272,8 +272,10 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["it", system.emptyIter()]]);};
+
   async _initialise() {
 
+    return this;
   }
 
   it = system.emptyIter();
@@ -335,8 +337,10 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["i", system.emptyIter()]]);};
+
   async _initialise() {
 
+    return this;
   }
 
   i = system.emptyIter();

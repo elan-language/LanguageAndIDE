@@ -33,6 +33,7 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
+  async _initialise() { return this; }
   p1 = 0;
 
 }
@@ -90,6 +91,7 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", ""]]);};
+  async _initialise() { return this; }
   p1 = 0;
 
   p2 = "";
@@ -167,6 +169,7 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
+  async _initialise() { return this; }
   p1 = 0;
 
 }
@@ -212,6 +215,7 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
+  async _initialise() { return this; }
   p1 = 0;
 
 }
@@ -262,6 +266,7 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", 0], ["p3", ""], ["p4", false], ["p5", system.emptyRegExp()], ["p6", system.emptyImmutableList()], ["p7", system.emptyDictionaryImmutable()]]);};
+  async _initialise() { return this; }
   p1 = 0;
 
   p2 = 0;
@@ -288,6 +293,7 @@ class Foo {
 
 class Bar {
   static emptyInstance() { return system.emptyClass(Bar, [["p1", 0]]);};
+  async _initialise() { return this; }
   p1 = 0;
 
 }
