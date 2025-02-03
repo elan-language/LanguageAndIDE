@@ -50,6 +50,59 @@ import { TextFileWriter } from "./text-file-writer";
 import { Turtle } from "./turtle";
 import { VectorGraphics } from "./vector-graphics";
 
+async function getPivot<T1>(x: T1, y: T1, z: T1, compare: (a: T1, b: T1) => Promise<number>) {
+  if ((await compare(x, y)) < 0) {
+    if ((await compare(y, z)) < 0) {
+      return y;
+    } else if ((await compare(z, x)) < 0) {
+      return x;
+    } else {
+      return z;
+    }
+  } else if ((await compare(y, z)) > 0) {
+    return y;
+  } else if ((await compare(z, x)) > 0) {
+    return x;
+  } else {
+    return z;
+  }
+}
+
+// from github https://gist.github.com/kimamula/fa34190db624239111bbe0deba72a6ab
+async function quickSort<T1>(
+  arr: T1[],
+  compare: (a: T1, b: T1) => Promise<number>,
+  left = 0,
+  right = arr.length - 1,
+) {
+  if (left < right) {
+    let i = left,
+      j = right,
+      tmp;
+    const pivot = await getPivot(arr[i], arr[i + Math.floor((j - i) / 2)], arr[j], compare);
+    while (true) {
+      while ((await compare(arr[i], pivot)) < 0) {
+        i++;
+      }
+      while ((await compare(pivot, arr[j])) < 0) {
+        j--;
+      }
+      if (i >= j) {
+        break;
+      }
+      tmp = arr[i];
+      arr[i] = arr[j];
+      arr[j] = tmp;
+
+      i++;
+      j--;
+    }
+    await quickSort(arr, compare, left, i - 1);
+    await quickSort(arr, compare, j + 1, right);
+  }
+  return arr;
+}
+
 export class StdLib {
   constructor() {
     this.system = new System(new StubInputOutput());
@@ -615,27 +668,45 @@ export class StdLib {
     return this.asIterable(result);
   }
 
-  @elanFunction(["", "lambdaOrFunctionRef"], FunctionOptions.pureExtension, ElanIterable(ElanT2))
-  map<T1, T2>(
+  @elanFunction(
+    ["", "lambdaOrFunctionRef"],
+    FunctionOptions.pureAsyncExtension,
+    ElanIterable(ElanT2),
+  )
+  async map<T1, T2>(
     @elanIterableType(ElanT1)
     source: T1[] | string,
     @elanFuncType([ElanT1], ElanT2)
-    predicate: (value: T1 | string) => T2,
+    predicate: (value: T1 | string) => Promise<T2>,
   ) {
     const list = typeof source === "string" ? source.split("") : [...source];
-    return this.asIterable(list.map(predicate));
+
+    const results = await Promise.all(list.map(predicate));
+
+    return this.asIterable(results);
   }
 
-  @elanFunction(["", "initialValue", "lambdaOrFunctionRef"], FunctionOptions.pureExtension, ElanT2)
-  reduce<T1, T2>(
+  @elanFunction(
+    ["", "initialValue", "lambdaOrFunctionRef"],
+    FunctionOptions.pureAsyncExtension,
+    ElanT2,
+  )
+  async reduce<T1, T2>(
     @elanIterableType(ElanT1)
     source: T1[] | string,
     @elanGenericParamT2Type() initValue: T2,
     @elanFuncType([ElanT2, ElanT1], ElanT2)
-    predicate: (s: T2, value: T1 | string) => T2,
-  ): T2 {
+    predicate: (s: T2, value: T1 | string) => Promise<T2>,
+  ): Promise<T2> {
     const list = typeof source === "string" ? source.split("") : [...source];
-    return list.reduce(predicate, initValue);
+
+    let acc: T2 = initValue;
+
+    for (const i of list) {
+      acc = await predicate(acc, i);
+    }
+
+    return acc;
   }
 
   @elanFunction([], FunctionOptions.pureExtension)
@@ -643,13 +714,13 @@ export class StdLib {
     return Math.max(...source);
   }
 
-  @elanFunction(["", "lambdaOrFunctionRef"], FunctionOptions.pureExtension, ElanT1)
-  maxBy<T1>(
+  @elanFunction(["", "lambdaOrFunctionRef"], FunctionOptions.pureAsyncExtension, ElanT1)
+  async maxBy<T1>(
     @elanIterableType(ElanT1) source: T1[],
     @elanFuncType([ElanT1], ElanFloat)
-    predicate: (value: T1) => number,
-  ): T1 {
-    const mm = source.map(predicate);
+    predicate: (value: T1) => Promise<number>,
+  ): Promise<T1> {
+    const mm = await this.map(source, predicate as (value: string | T1) => Promise<number>);
     const max = Math.max(...mm);
     const i = this.elanIndexOf(mm, max);
     return source[i];
@@ -660,35 +731,45 @@ export class StdLib {
     return Math.min(...source);
   }
 
-  @elanFunction(["", "lambdaOrFunctionRef"], FunctionOptions.pureExtension, ElanT1)
-  minBy<T1>(
+  @elanFunction(["", "lambdaOrFunctionRef"], FunctionOptions.pureAsyncExtension, ElanT1)
+  async minBy<T1>(
     @elanIterableType(ElanT1) source: T1[],
     @elanFuncType([ElanT1], ElanFloat)
-    predicate: (value: T1) => number,
-  ): T1 {
-    const mm = source.map(predicate);
+    predicate: (value: T1) => Promise<number>,
+  ): Promise<T1> {
+    const mm = await this.map(source, predicate as (value: string | T1) => Promise<number>);
     const min = Math.min(...mm);
     const i = this.elanIndexOf(mm, min);
     return source[i];
   }
 
-  @elanFunction(["", "lambdaOrFunctionRef"], FunctionOptions.pureExtension, ElanIterable(ElanT1))
-  sortBy<T1>(
+  @elanFunction(
+    ["", "lambdaOrFunctionRef"],
+    FunctionOptions.pureAsyncExtension,
+    ElanIterable(ElanT1),
+  )
+  async sortBy<T1>(
     @elanIterableType(ElanT1) source: T1[],
     @elanFuncType([ElanT1, ElanT1], ElanInt)
-    predicate: (a: T1, b: T1) => number,
-  ): T1[] {
+    predicate: (a: T1, b: T1) => Promise<number>,
+  ): Promise<T1[]> {
     const clone = [...source];
-    return this.asIterable(clone.sort(predicate));
+    return this.asIterable(await quickSort(clone, predicate));
   }
 
-  @elanFunction(["", "lambdaOrFunctionRef"], FunctionOptions.pureExtension)
-  any<T1>(
+  @elanFunction(["", "lambdaOrFunctionRef"], FunctionOptions.pureAsyncExtension, ElanBoolean)
+  async any<T1>(
     @elanIterableType(ElanT1) source: T1[],
     @elanFuncType([ElanT1], ElanBoolean)
-    predicate: (value: T1) => boolean,
-  ): boolean {
-    return source.some(predicate);
+    predicate: (value: T1) => Promise<boolean>,
+  ): Promise<boolean> {
+    for (const i of source) {
+      if (await predicate(i)) {
+        return this.true;
+      }
+    }
+
+    return this.false;
   }
 
   @elanFunction(["", "item"], FunctionOptions.pureExtension)

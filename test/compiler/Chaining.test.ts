@@ -588,7 +588,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.list([1, 2, 3, 4, 5, 6]);
-  await system.printLine(_stdlib.reduce(_stdlib.map(_stdlib.filter(a, async (x) => x > 2), async (x) => x * x), 0, async (s, x) => s + x));
+  await system.printLine((await _stdlib.reduce((await _stdlib.map((await _stdlib.filter(a, async (x) => x > 2)), async (x) => x * x)), 0, async (s, x) => s + x)));
 }
 return [main, _tests];}`;
 
@@ -613,7 +613,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.literalArray([1, 2, 3, 4, 5, 6]);
-  await system.printLine(_stdlib.reduce(system.array(_stdlib.asArray(_stdlib.map(system.array(a.slice(0, 5)), async (x) => x * x)).slice(2)), 0, async (s, x) => s + x));
+  await system.printLine((await _stdlib.reduce(system.array(_stdlib.asArray((await _stdlib.map(system.array(a.slice(0, 5)), async (x) => x * x))).slice(2)), 0, async (s, x) => s + x)));
 }
 return [main, _tests];}`;
 
