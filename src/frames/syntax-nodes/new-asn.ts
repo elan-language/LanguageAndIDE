@@ -86,7 +86,7 @@ export class NewAsn extends AbstractAstNode implements AstNode {
 
       const scope = libScope ? "_stdlib." : "";
 
-      return `system.initialise(new ${scope}${type.className}(${parametersAsString}))`;
+      return `system.initialise(await new ${scope}${type.className}()._initialise(${parametersAsString}))`;
     }
 
     mustBeNewable(typeAsString, this.compileErrors, this.fieldId);

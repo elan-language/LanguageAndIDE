@@ -25,6 +25,10 @@ export class ElanSet<T1> {
     return new ElanSet();
   }
 
+  async _initialise() {
+    return this;
+  }
+
   private _system?: System;
 
   set system(value: System) {

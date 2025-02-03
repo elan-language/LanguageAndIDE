@@ -85,14 +85,14 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(new Foo());
+  let a = system.initialise(await new Foo()._initialise());
   let b = system.list([a]);
   await system.printLine(b);
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
-  constructor() {
+  async _initialise() {
 
   }
 
@@ -165,7 +165,7 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
-  constructor() {
+  async _initialise() {
 
   }
 
@@ -684,13 +684,13 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let f = system.initialise(new Foo());
+  let f = system.initialise(await new Foo()._initialise());
   await system.printLine(f.it);
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["it", system.emptyImmutableList()]]);};
-  constructor() {
+  async _initialise() {
 
   }
 

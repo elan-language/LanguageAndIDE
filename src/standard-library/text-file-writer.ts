@@ -8,6 +8,10 @@ export class TextFileWriter {
     return new TextFileWriter();
   }
 
+  async _initialise() {
+    return this;
+  }
+
   constructor() {}
 
   private system?: System;

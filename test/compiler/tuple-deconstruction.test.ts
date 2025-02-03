@@ -103,7 +103,7 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const foo = system.initialise(new Foo());
+  const foo = system.initialise(await new Foo()._initialise());
   const [a, b] = (await foo.bar());
   await system.printLine(a);
   await system.printLine(b);
@@ -111,7 +111,7 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
-  constructor() {
+  async _initialise() {
 
   }
 

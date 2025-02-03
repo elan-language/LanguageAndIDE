@@ -20,6 +20,10 @@ export class Random {
     return new Random();
   }
 
+  async _initialise() {
+    return this;
+  }
+
   constructor() {
     this.u = 521288629;
     this.v = 362436069;

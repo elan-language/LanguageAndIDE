@@ -7,6 +7,10 @@ export class LineVG extends BaseVG {
     return new LineVG();
   }
 
+  async _initialise() {
+    return this;
+  }
+
   constructor() {
     super();
     this.x2 = 100;

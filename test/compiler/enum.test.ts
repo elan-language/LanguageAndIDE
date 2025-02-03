@@ -100,14 +100,16 @@ const Fruit = {
 
 const global = new class {};
 async function main() {
-  let foo = system.initialise(new Foo());
+  let foo = system.initialise(await new Foo()._initialise());
   await system.printLine(foo.fruit);
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["fruit", Fruit._default]]);};
-  constructor() {
 
+  async _initialise() {
+
+    return this;
   }
 
   fruit = Fruit._default;
@@ -154,8 +156,9 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["fruit", Fruit._default]]);};
-  constructor() {
 
+  async _initialise() {
+    return this;
   }
 
   fruit = Fruit._default;

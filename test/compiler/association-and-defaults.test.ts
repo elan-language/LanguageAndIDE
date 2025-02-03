@@ -56,7 +56,7 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let g = system.initialise(new Game());
+  let g = system.initialise(await new Game()._initialise());
   await system.printLine(g.p2);
   await system.printLine(g.p1);
   await system.printLine(g.previousScores);
@@ -64,10 +64,12 @@ async function main() {
 
 class Game {
   static emptyInstance() { return system.emptyClass(Game, [["previousScores", system.emptyImmutableList()]]);};
-  constructor() {
-    this.p2 = system.initialise(new Player("Chloe"));
-    this.p1 = system.initialise(new Player("Joe"));
+
+  async _initialise() {
+    this.p2 = system.initialise(await new Player()._initialise("Chloe"));
+    this.p1 = system.initialise(await new Player()._initialise("Joe"));
     this.previousScores = system.list([5, 2, 4]);
+    return this;
   }
 
   _p1;
@@ -96,8 +98,10 @@ class Game {
 
 class Player {
   static emptyInstance() { return system.emptyClass(Player, [["name", ""]]);};
-  constructor(name) {
+
+  async _initialise(name) {
     this.name = name;
+    return this;
   }
 
   name = "";
@@ -140,16 +144,18 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let g = system.initialise(new Foo());
+  let g = system.initialise(await new Foo()._initialise());
   await system.printLine(g.p1);
   await system.printLine(g.p2);
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", 0]]);};
-  constructor() {
+
+  async _initialise() {
     this.p2 = 1;
     this.p1 = this.p2;
+    return this;
   }
 
   p1 = 0;
@@ -211,7 +217,7 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let g = system.initialise(new Game());
+  let g = system.initialise(await new Game()._initialise());
   await system.printLine(g.i);
   await system.printLine(g.f);
   await system.printLine(g.b);
@@ -227,8 +233,10 @@ async function main() {
 
 class Game {
   static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.emptyImmutableList()], ["ds", system.emptyDictionary()], ["dsi", system.emptyDictionaryImmutable()], ["ai", system.emptyArray()], ["t", system.emptyTuple([0, "", system.emptyImmutableList()])], ["ff", system.emptyFunc(0)], ["r", system.emptyRegExp()]]);};
-  constructor() {
 
+  async _initialise() {
+
+    return this;
   }
 
   i = 0;
@@ -318,7 +326,7 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let p = system.initialise(new Player());
+  let p = system.initialise(await new Player()._initialise());
   let g = p.g;
   await system.printLine(g.i);
   await system.printLine(g.f);
@@ -334,8 +342,10 @@ async function main() {
 
 class Player {
   static emptyInstance() { return system.emptyClass(Player, []);};
-  constructor() {
 
+  async _initialise() {
+
+    return this;
   }
 
   _g;
@@ -350,8 +360,10 @@ class Player {
 
 class Game {
   static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.emptyImmutableList()], ["ds", system.emptyDictionary()], ["dsi", system.emptyDictionaryImmutable()], ["ai", system.emptyArray()], ["t", system.emptyTuple([0, "", system.emptyImmutableList()])], ["r", system.emptyRegExp()]]);};
-  constructor() {
 
+  async _initialise() {
+
+    return this;
   }
 
   i = 0;
@@ -420,8 +432,10 @@ async function main() {
 
 class Game {
   static emptyInstance() { return system.emptyClass(Game, [["i", 0]]);};
-  constructor() {
+
+  async _initialise() {
     this.i = 100;
+    return this;
   }
 
   i = 0;
@@ -480,15 +494,17 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let g = system.initialise(new Game());
+  let g = system.initialise(await new Game()._initialise());
   await system.printLine(g.p1);
   await system.printLine(g.previousGame);
 }
 
 class Game {
   static emptyInstance() { return system.emptyClass(Game, []);};
-  constructor() {
 
+  async _initialise() {
+
+    return this;
   }
 
   _p1;
@@ -515,8 +531,10 @@ class Game {
 
 class Player {
   static emptyInstance() { return system.emptyClass(Player, [["name", ""]]);};
-  constructor(name) {
+
+  async _initialise(name) {
     this.name = name;
+    return this;
   }
 
   name = "";
@@ -590,7 +608,7 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let g = system.initialise(new Game());
+  let g = system.initialise(await new Game()._initialise());
   await system.printLine(system.objectEquals(g.p1, Player.emptyInstance()));
   await system.printLine(system.objectEquals(g.p2, Player.emptyInstance()));
   await system.printLine(system.objectEquals(g.previousGame, Game.emptyInstance()));
@@ -602,8 +620,10 @@ async function main() {
 
 class Game {
   static emptyInstance() { return system.emptyClass(Game, [["score", 0], ["best", 0], ["previousScores", system.emptyImmutableList()], ["r", system.emptyRegExp()]]);};
-  constructor() {
+
+  async _initialise() {
     this.score = 1;
+    return this;
   }
 
   score = 0;
@@ -646,8 +666,10 @@ class Game {
 
 class Player {
   static emptyInstance() { return system.emptyClass(Player, [["name", ""]]);};
-  constructor(name) {
+
+  async _initialise(name) {
     this.name = name;
+    return this;
   }
 
   name = "";
@@ -719,7 +741,7 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let g = system.initialise(new Game());
+  let g = system.initialise(await new Game()._initialise());
   await system.printLine(g.score);
   await g.setScore(0);
   await system.printLine(g.score);
@@ -727,8 +749,10 @@ async function main() {
 
 class Game {
   static emptyInstance() { return system.emptyClass(Game, [["score", 0], ["best", 0], ["previousScores", system.emptyImmutableList()]]);};
-  constructor() {
+
+  async _initialise() {
     this.score = 10;
+    return this;
   }
 
   score = 0;
@@ -773,8 +797,10 @@ class Game {
 
 class Player {
   static emptyInstance() { return system.emptyClass(Player, [["name", ""]]);};
-  constructor(name) {
+
+  async _initialise(name) {
     this.name = name;
+    return this;
   }
 
   name = "";
@@ -828,7 +854,7 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let f = system.initialise(new Foo());
+  let f = system.initialise(await new Foo()._initialise());
   await system.printLine(f.a);
   await system.printLine(f.b);
   await system.printLine(f.c);
@@ -841,8 +867,10 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["a", system.emptyImmutableList()], ["b", ""], ["c", system.emptyDictionary()], ["d", system.emptyArray()]]);};
-  constructor() {
 
+  async _initialise() {
+
+    return this;
   }
 
   a = system.emptyImmutableList();
@@ -899,15 +927,17 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let g = system.initialise(new Game());
+  let g = system.initialise(await new Game()._initialise());
   let p = g.p1;
   await system.printLine((await p.ucName()));
 }
 
 class Game {
   static emptyInstance() { return system.emptyClass(Game, []);};
-  constructor() {
 
+  async _initialise() {
+
+    return this;
   }
 
   _p1;
@@ -982,14 +1012,16 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let g = system.initialise(new Game());
+  let g = system.initialise(await new Game()._initialise());
   await g.something();
 }
 
 class Game {
   static emptyInstance() { return system.emptyClass(Game, [["p1", system.emptyArray()]]);};
-  constructor() {
+
+  async _initialise() {
     this.p1 = system.literalArray([1, 2, 3]);
+    return this;
   }
 
   p1 = system.emptyArray();
@@ -1043,12 +1075,13 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let bar = system.initialise(new Bar());
+  let bar = system.initialise(await new Bar()._initialise());
   await bar.p();
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
+  async _initialise() { return this; }
   async pp() {
     await system.printLine(1);
   }
@@ -1057,8 +1090,10 @@ class Foo {
 
 class Bar {
   static emptyInstance() { return system.emptyClass(Bar, []);};
-  constructor() {
-    this.p1 = system.initialise(new Foo());
+
+  async _initialise() {
+    this.p1 = system.initialise(await new Foo()._initialise());
+    return this;
   }
 
   async p() {

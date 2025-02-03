@@ -23,7 +23,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let g = system.initialise(new _stdlib.BlockGraphics());
+  let g = system.initialise(await new _stdlib.BlockGraphics()._initialise());
   await g.display();
 }
 return [main, _tests];}`;
@@ -53,7 +53,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let g = system.initialise(new _stdlib.BlockGraphics());
+  let g = system.initialise(await new _stdlib.BlockGraphics()._initialise());
   g = g.withUnicode(0, 0, 90, _stdlib.black, _stdlib.white);
   await g.display();
 }
@@ -84,7 +84,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let g = system.initialise(new _stdlib.BlockGraphics());
+  let g = system.initialise(await new _stdlib.BlockGraphics()._initialise());
   g = g.withText(10, 20, "a", 1, 2);
   await system.printLine(g.getChar(10, 20));
 }
@@ -111,7 +111,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let g = system.initialise(new _stdlib.BlockGraphics());
+  let g = system.initialise(await new _stdlib.BlockGraphics()._initialise());
   g = g.withText(10, 20, "a", 1, 2);
   await system.printLine(g.getForeground(10, 20));
 }
@@ -138,7 +138,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let g = system.initialise(new _stdlib.BlockGraphics());
+  let g = system.initialise(await new _stdlib.BlockGraphics()._initialise());
   g = g.withBlock(1, 0, 4);
   await g.display();
 }
@@ -169,7 +169,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let g = system.initialise(new _stdlib.BlockGraphics());
+  let g = system.initialise(await new _stdlib.BlockGraphics()._initialise());
   g = g.withText(10, 20, "a", 1, 2);
   await system.printLine(g.getBackground(10, 20));
 }
@@ -196,7 +196,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let g = system.initialise(new _stdlib.BlockGraphics());
+  let g = system.initialise(await new _stdlib.BlockGraphics()._initialise());
   await g.display();
   _stdlib.clearGraphics(g);
 }
@@ -223,7 +223,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let gr = system.initialise(new _stdlib.BlockGraphics());
+  let gr = system.initialise(await new _stdlib.BlockGraphics()._initialise());
   let a = (await _stdlib.getKey());
   await system.printLine(a);
 }
@@ -250,7 +250,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let gr = system.initialise(new _stdlib.BlockGraphics());
+  let gr = system.initialise(await new _stdlib.BlockGraphics()._initialise());
   let a = (await _stdlib.getKeyWithModifier());
   await system.printLine(a);
 }
@@ -276,7 +276,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let gr = system.initialise(new _stdlib.BlockGraphics());
+  let gr = system.initialise(await new _stdlib.BlockGraphics()._initialise());
   _stdlib.clearKeyBuffer(gr);
 }
 return [main, _tests];}`;
@@ -300,7 +300,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(new _stdlib.BlockGraphics());
+  let a = system.initialise(await new _stdlib.BlockGraphics()._initialise());
 }
 return [main, _tests];}`;
 
@@ -332,15 +332,17 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let foo = system.initialise(new Foo());
+  let foo = system.initialise(await new Foo()._initialise());
   let a = foo.p;
   await system.printLine(a);
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
-  constructor() {
 
+  async _initialise() {
+
+    return this;
   }
 
   _p;
@@ -389,7 +391,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let g = system.initialise(new _stdlib.BlockGraphics());
+  let g = system.initialise(await new _stdlib.BlockGraphics()._initialise());
   g = g.withText(0, 0, "Hello", 1, 2);
   await g.display();
 }
@@ -425,7 +427,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let g = system.initialise(new _stdlib.BlockGraphics());
+  let g = system.initialise(await new _stdlib.BlockGraphics()._initialise());
   g = g.withText(39, 29, "Hello", 1, 2);
   await g.display();
 }

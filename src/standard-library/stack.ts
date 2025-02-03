@@ -18,6 +18,10 @@ export class Stack<T1> {
     return new Stack();
   }
 
+  async _initialise() {
+    return this;
+  }
+
   constructor() {
     this.contents = [];
   }

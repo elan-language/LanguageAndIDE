@@ -47,7 +47,7 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = system.initialise(new Bar());
+  let x = system.initialise(await new Bar()._initialise());
   await system.printLine(x.prop);
   await system.printLine((await x.func()));
   await x.proc();
@@ -72,7 +72,7 @@ class Foo {
 
 class Bar {
   static emptyInstance() { return system.emptyClass(Bar, [["prop", 0]]);};
-  constructor() {
+  async _initialise() {
     this.prop = 3;
   }
 
@@ -139,7 +139,7 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = system.initialise(new Bar());
+  let x = system.initialise(await new Bar()._initialise());
   await system.printLine(x.prop);
   await system.printLine((await x.func()));
   await x.proc();
@@ -172,7 +172,7 @@ class Foo2 {
 
 class Bar {
   static emptyInstance() { return system.emptyClass(Bar, [["prop", 0]]);};
-  constructor() {
+  async _initialise() {
     this.prop = 3;
   }
 
@@ -239,7 +239,7 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = system.initialise(new Bar());
+  let x = system.initialise(await new Bar()._initialise());
   await system.printLine(x.prop);
   await system.printLine((await x.func()));
   await x.proc();
@@ -272,7 +272,7 @@ class Foo2 {
 
 class Bar {
   static emptyInstance() { return system.emptyClass(Bar, [["prop", 0]]);};
-  constructor() {
+  async _initialise() {
     this.prop = 3;
   }
 
@@ -340,7 +340,7 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = system.initialise(new Bar());
+  let x = system.initialise(await new Bar()._initialise());
   await system.printLine((await func1(x)));
   await system.printLine((await func2(x)));
 }
@@ -373,7 +373,7 @@ class Foo2 {
 
 class Bar {
   static emptyInstance() { return system.emptyClass(Bar, []);};
-  constructor() {
+  async _initialise() {
 
   }
 
@@ -439,7 +439,7 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = system.initialise(new Bar());
+  let x = system.initialise(await new Bar()._initialise());
   await system.printLine((await func1(x)));
   await system.printLine((await func2(x)));
 }
@@ -472,7 +472,7 @@ class Foo2 {
 
 class Bar {
   static emptyInstance() { return system.emptyClass(Bar, []);};
-  constructor() {
+  async _initialise() {
 
   }
 
@@ -538,7 +538,7 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = system.initialise(new Bar());
+  let x = system.initialise(await new Bar()._initialise());
   await system.printLine((await func1(x)));
   await system.printLine((await func2(x)));
 }
@@ -571,7 +571,7 @@ class Foo2 {
 
 class Bar {
   static emptyInstance() { return system.emptyClass(Bar, []);};
-  constructor() {
+  async _initialise() {
 
   }
 
@@ -623,7 +623,7 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = system.initialise(new Bar());
+  let x = system.initialise(await new Bar()._initialise());
   await system.printLine(x.foo);
   await system.printLine(x.foo.f);
 }
@@ -650,7 +650,7 @@ class Foo2 {
 
 class Bar {
   static emptyInstance() { return system.emptyClass(Bar, []);};
-  constructor() {
+  async _initialise() {
 
   }
 

@@ -173,7 +173,7 @@ global["foo"] = foo;
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
-  constructor() {
+  async _initialise() {
 
   }
 
@@ -290,7 +290,7 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let b = system.initialise(new Bar());
+  let b = system.initialise(await new Bar()._initialise());
   await system.printLine((await foo(b)));
 }
 
@@ -301,7 +301,7 @@ global["foo"] = foo;
 
 class Bar {
   static emptyInstance() { return system.emptyClass(Bar, []);};
-  constructor() {
+  async _initialise() {
 
   }
 
