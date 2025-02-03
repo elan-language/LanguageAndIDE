@@ -71,7 +71,7 @@ export class CopyWithAsn extends AbstractAstNode implements AstNode {
       withClauseStr = ` ${withClause.join("; ")};`;
     }
 
-    return `(() => {const ${tempTo} = {...${from}}; Object.setPrototypeOf(${tempTo}, Object.getPrototypeOf(${from}));${withClauseStr} return ${tempTo};})()`;
+    return `await (async () => {const ${tempTo} = {...${from}}; Object.setPrototypeOf(${tempTo}, Object.getPrototypeOf(${from}));${withClauseStr} return ${tempTo};})()`;
   }
 
   symbolType() {
