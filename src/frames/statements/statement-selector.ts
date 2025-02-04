@@ -24,6 +24,7 @@ import {
 export class StatementSelector extends AbstractSelector {
   isStatement = true;
   private factory: StatementFactory;
+  hrefForFrameHelp: string = "LangRef.html#Statement_selector";
 
   constructor(parent: FrameWithStatements) {
     super(parent);

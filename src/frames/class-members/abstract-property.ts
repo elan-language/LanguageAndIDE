@@ -21,6 +21,7 @@ export class AbstractProperty extends AbstractFrame implements Member, ElanSymbo
   name: IdentifierField;
   type: TypeField;
   public private: boolean = false;
+  hrefForFrameHelp: string = "LangRef.html#Abstract_property";
 
   constructor(parent: Parent) {
     super(parent);

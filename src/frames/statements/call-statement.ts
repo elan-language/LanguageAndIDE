@@ -32,13 +32,14 @@ import {
 import { QualifierAsn } from "../syntax-nodes/qualifier-asn";
 import { Transforms } from "../syntax-nodes/transforms";
 import { LetStatement } from "./let-statement";
-import { VarStatement } from "./var-statement";
+import { VariableStatement } from "./variable-statement";
 
 export class CallStatement extends AbstractFrame implements Statement {
   isStatement = true;
   isCall = true;
   proc: ProcRefField;
   args: ArgListField;
+  hrefForFrameHelp: string = "LangRef.html#call";
 
   constructor(parent: Parent) {
     super(parent);
@@ -100,7 +101,7 @@ export class CallStatement extends AbstractFrame implements Statement {
         if (isAstIdNode(p)) {
           const callParamSymbol = this.getParentScope().resolveSymbol(p.id, transforms, this);
           if (
-            callParamSymbol instanceof VarStatement ||
+            callParamSymbol instanceof VariableStatement ||
             callParamSymbol.symbolScope === SymbolScope.parameter ||
             callParamSymbol.symbolScope === SymbolScope.outParameter
           ) {

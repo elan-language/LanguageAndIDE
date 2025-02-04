@@ -23,6 +23,7 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
   file: File;
   private _testStatus: TestStatus;
   public ignored = false;
+  hrefForFrameHelp: string = "LangRef.html#test";
 
   constructor(parent: File) {
     super(parent);

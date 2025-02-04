@@ -22,6 +22,7 @@ import { ParseStatus } from "../status-enums";
 export class GlobalSelector extends AbstractSelector implements GlobalFrame {
   isGlobal = true;
   file: File;
+  hrefForFrameHelp: string = "LangRef.html#Global_selector";
 
   constructor(parent: File) {
     super(parent);

@@ -10,6 +10,7 @@ export class GlobalComment extends AbstractFrame implements GlobalFrame {
   isGlobal = true;
   public text: CommentField;
   file: File;
+  hrefForFrameHelp: string = "LangRef.html#Comment";
 
   constructor(parent: File) {
     super(parent);

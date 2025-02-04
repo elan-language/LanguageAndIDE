@@ -44,6 +44,7 @@ export abstract class AbstractFrame implements Frame {
   protected movable: boolean = true;
   private _parseStatus: ParseStatus = ParseStatus.default;
   private _compileStatus: CompileStatus = CompileStatus.default;
+  abstract hrefForFrameHelp: string;
 
   protected showContextMenu = false;
   hasBreakPoint = false;
@@ -648,8 +649,8 @@ export abstract class AbstractFrame implements Frame {
   };
 
   getContextMenuItems() {
-    const map = new Map<string, [string, () => void | undefined, string]>();
-
+    const map = new Map<string, [string, (() => void) | undefined, string]>();
+    map.set("frameHelp", ["Help for this instruction", undefined, this.hrefForFrameHelp]);
     // Must be arrow functions for this binding
     if (this.hasBreakPoint) {
       map.set("clearBP", ["clear breakpoint (Ctrl-b)", this.clearBreakPoint, ""]);

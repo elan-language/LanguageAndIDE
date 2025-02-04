@@ -84,8 +84,8 @@ export function isReifyableSymbolType(
   return !!s && "reify" in s;
 }
 
-export function isVarStatement(s?: ElanSymbol): boolean {
-  return !!s && "isVarStatement" in s;
+export function isVariableStatement(s?: ElanSymbol): boolean {
+  return !!s && "isVariableStatement" in s;
 }
 
 export function isLetStatement(s?: ElanSymbol): boolean {
@@ -109,7 +109,7 @@ export function isParameter(s?: ElanSymbol): boolean {
 }
 
 export function isAssignable(s?: ElanSymbol): boolean {
-  return !!s && (isVarStatement(s) || isProperty(s) || isOutParameter(s));
+  return !!s && (isVariableStatement(s) || isProperty(s) || isOutParameter(s));
 }
 
 export function isClassTypeDef(s?: ElanSymbol | Scope): s is Class {
@@ -386,7 +386,7 @@ export function isFunctionType(s: SymbolType): s is FunctionType {
 }
 
 export function isIdOrProcedure(s: ElanSymbol, transforms: Transforms) {
-  return isProcedure(s, transforms) || isVarStatement(s);
+  return isProcedure(s, transforms) || isVariableStatement(s);
 }
 
 export function isExpression(s: ElanSymbol, transforms: Transforms) {
@@ -610,7 +610,7 @@ export function isId(f: ElanSymbol): f is ElanSymbol {
   return (
     isConstant(f) ||
     isLetStatement(f) ||
-    isVarStatement(f) ||
+    isVariableStatement(f) ||
     isParameter(f) ||
     isOutParameter(f) ||
     isProperty(f) ||
@@ -642,7 +642,7 @@ export function filterForTokenType(
     case TokenType.id_let:
       return isLetStatement;
     case TokenType.id_variable:
-      return isVarStatement;
+      return isVariableStatement;
     case TokenType.id_parameter_regular:
       return isParameter;
     case TokenType.id_parameter_out:

@@ -15,7 +15,7 @@ import { Repeat } from "./statements/repeat";
 import { SetStatement } from "./statements/set-statement";
 import { Throw } from "./statements/throw";
 import { TryStatement } from "./statements/try";
-import { VarStatement } from "./statements/var-statement";
+import { VariableStatement } from "./statements/variable-statement";
 import { While } from "./statements/while";
 
 export class StatementFactoryImpl implements StatementFactory {
@@ -59,7 +59,7 @@ export class StatementFactoryImpl implements StatementFactory {
     return new TryStatement(parent);
   }
   public newVar(parent: Parent): Frame {
-    return new VarStatement(parent);
+    return new VariableStatement(parent);
   }
   public newWhile(parent: Parent): Frame {
     return new While(parent);

@@ -12,6 +12,7 @@ import { FunctionFrame } from "./function-frame";
 
 export class GlobalFunction extends FunctionFrame implements GlobalFrame {
   isGlobal = true;
+  hrefForFrameHelp: string = "LangRef.html#function";
 
   constructor(parent: Parent) {
     super(parent);

@@ -11,7 +11,7 @@ import { Print } from "../src/frames/statements/print";
 import { SetStatement } from "../src/frames/statements/set-statement";
 import { StatementSelector } from "../src/frames/statements/statement-selector";
 import { Throw } from "../src/frames/statements/throw";
-import { VarStatement } from "../src/frames/statements/var-statement";
+import { VariableStatement } from "../src/frames/statements/variable-statement";
 import { hash } from "../src/util";
 import { transforms } from "./compiler/compiler-test-helpers";
 
@@ -86,7 +86,7 @@ suite("Parsing Frame Tests", async () => {
     const source = new CodeSourceFromString(code + "\n");
     const fl = new FileImpl(hash, new DefaultProfile(), transforms());
     const m = new MainFrame(fl);
-    const v = new VarStatement(m);
+    const v = new VariableStatement(m);
     v.parseFrom(source);
     assert.equal(source.hasMoreCode(), false);
     assert.equal(v.renderAsSource(), code);
