@@ -842,17 +842,22 @@ async function updateContent(text: string, editingField: boolean) {
         const tgt = ke.target as HTMLDivElement;
         const id = tgt.dataset.id;
         const func = tgt.dataset.func;
+        const href = tgt.dataset.href;
 
-        handleEditorEvent(
-          event,
-          "contextmenu",
-          "frame",
-          getModKey(ke),
-          id,
-          "ContextMenu",
-          undefined,
-          func,
-        );
+        if (href) {
+          window.open(`documentation/${href}`, "_blank")?.focus();
+        } else {
+          handleEditorEvent(
+            event,
+            "contextmenu",
+            "frame",
+            getModKey(ke),
+            id,
+            "ContextMenu",
+            undefined,
+            func,
+          );
+        }
       });
     }
   }

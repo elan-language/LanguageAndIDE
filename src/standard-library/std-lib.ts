@@ -773,7 +773,7 @@ export class StdLib {
     const [b, f] = this.parseAsFloat(s);
     const i = Math.floor(f);
     if (b && f === i) {
-      return [b,i];
+      return [b, i];
     }
     return [false, 0];
   }
