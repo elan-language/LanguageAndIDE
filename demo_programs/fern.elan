@@ -70,7 +70,7 @@ end function
 
 function roundtuple2(n as (Float, Float)) returns List<of Float>
   let a, b be n
-  return {a, b}.map(lambda x as Float => x.round(8)).asList()
+  return {a, b}.map(lambda x as Float => x.round(8))
 end function
 
 constant scale set to 7

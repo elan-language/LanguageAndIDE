@@ -152,7 +152,7 @@ test markAttempt
 end test
 
 function possibleAnswersAfterAttempt(prior as List<of String>, attempt as String, mark as String) returns List<of String>
-  return prior.filter(lambda w as String => markAttempt(attempt, w) is mark).asList()
+  return prior.filter(lambda w as String => markAttempt(attempt, w) is mark)
 end function
 
 test possibleAnswersAfterAttempt
@@ -186,7 +186,7 @@ test maxWordCountRemainingAfterAttempt
 end test
 
 function allRemainingWordCounts(possAnswers as List<of String>) returns List<of WordCount>
-  return possAnswers.map(lambda w as String => new WordCount(w, maxWordCountRemainingAfterAttempt(possAnswers, w))).asList()
+  return possAnswers.map(lambda w as String => new WordCount(w, maxWordCountRemainingAfterAttempt(possAnswers, w)))
 end function
 
 function betterOf(wc1 as WordCount, wc2 as WordCount, possAnswers as List<of String>) returns WordCount

@@ -1085,7 +1085,6 @@ end function`;
       ["BaseVG", "*", "*"],
       ["BlockGraphics", "*", "*"],
       ["Boolean", "*", "*"],
-      ["GraphicsBase", "*", "*"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(
@@ -1114,7 +1113,6 @@ end function`;
       ["BaseVG", "*", "*"],
       ["BlockGraphics", "*", "*"],
       ["Boolean", "*", "*"],
-      ["GraphicsBase", "*", "*"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "params6", "a as Int, b as B", expected);
@@ -1158,7 +1156,6 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["GraphicsBase", "*", "*"],
       ["BlockGraphics", "*", "*"],
       ["VectorGraphics", "*", "*"],
     ] as [string, string, string][];
@@ -1196,7 +1193,6 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["GraphicsBase", "*", "*"],
       ["BlockGraphics", "*", "*"],
       ["VectorGraphics", "*", "*"],
     ] as [string, string, string][];
