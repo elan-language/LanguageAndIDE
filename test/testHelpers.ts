@@ -218,10 +218,13 @@ export async function assertAutocompletes(
   await doAsserts(f, fld, expected);
 }
 
+function dump(v : [string, string][]) {
+  return v.map(t => `${t[0]}:${t[1]}`).join(", ")
+}
 
 function assertData(variables: [string, string][], expected: [string, string][]) {
   
- 
+  assert.strictEqual(variables.length, expected.length, `got: ${dump(variables)} expected: ${dump(expected)}`)
 
   for (let i = 0; i < variables.length; i++) {
     const v = variables[i];
@@ -239,7 +242,6 @@ function handleBreakPoint (runWorker : Worker) {
   
       switch (data.type) {
         case "breakpoint":
-          //assertData(data, expected);
           rs(data.value)
           break;
         default:
@@ -248,7 +250,8 @@ function handleBreakPoint (runWorker : Worker) {
     });
   
     runWorker.addEventListener("error", (ev: ErrorEvent) => {
-      //assert.fail()
+     
+
       rj(`unexpected error ${ev}`);
     });
   

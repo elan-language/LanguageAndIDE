@@ -385,6 +385,10 @@ export function isFunctionType(s: SymbolType): s is FunctionType {
   return !!s && s instanceof FunctionType;
 }
 
+export function isProcedureType(s: SymbolType): s is FunctionType {
+  return !!s && s instanceof ProcedureType;
+}
+
 export function isIdOrProcedure(s: ElanSymbol, transforms: Transforms) {
   return isProcedure(s, transforms) || isVarStatement(s);
 }
@@ -699,8 +703,15 @@ export function parameterNames(st: SymbolType) {
   return [];
 }
 
+function isNotFuncOrProcOrType(s: ElanSymbol) {
+  const st = s.symbolType();
+  return !(
+    st instanceof FunctionType ||
+    st instanceof ProcedureType ||
+    firstCharIsUpper(s.symbolId)
+  );
+}
+
 export function allScopedSymbols(scope: Scope, initialScope: Scope) {
-  return scope
-    .symbolMatches("", true, initialScope)
-    .filter((s) => isValueType(s.symbolType()) && !firstCharIsUpper(s.symbolId));
+  return scope.symbolMatches("", true, initialScope).filter((s) => isNotFuncOrProcOrType(s));
 }

@@ -16,7 +16,7 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [["a", "1"]] as [string, string][];
+    const expected = [] as [string, string][];
 
     await assertDebugBreakPoint(fileImpl, "main4", expected);
   });
