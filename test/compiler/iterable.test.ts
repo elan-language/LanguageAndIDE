@@ -442,7 +442,7 @@ end procedure`;
     assertDoesNotCompile(fileImpl, ["Cannot range Iterable<of Int>"]);
   });
 
-  test("Fail_TypeMsg", async () => {
+  test("Pass_CanAssignMapResultToList", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -455,8 +455,6 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Incompatible types Iterable<of Int> to List<of Int> try converting Iterable to a concrete type with e.g. '.asList()'",
-    ]);
+    assertStatusIsValid(fileImpl);
   });
 });
