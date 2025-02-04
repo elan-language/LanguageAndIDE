@@ -169,7 +169,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}.asIterable()
+  variable source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
   set source to source.map(lambda x as Int => x + 1)
   print source.asArray()
 end main`;
@@ -177,7 +177,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let source = _stdlib.asIterable(system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]));
+  let source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
   source = (await _stdlib.map(source, async (x) => x + 1));
   await system.printLine(_stdlib.asArray(source));
 }
@@ -537,7 +537,6 @@ return [main, _tests];}`;
 constant source set to {"apple", "orange", "pair", "apple"}
 main
   print source.asSet()
-  print source.asIterable().asSet()
   print source.asArray().asSet()
 end main`;
 
@@ -548,7 +547,6 @@ const global = new class {
 };
 async function main() {
   await system.printLine(_stdlib.asSet(global.source));
-  await system.printLine(_stdlib.asSet(_stdlib.asIterable(global.source)));
   await system.printLine(_stdlib.asSet(_stdlib.asArray(global.source)));
 }
 return [main, _tests];}`;
@@ -559,10 +557,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      "{apple, orange, pair}{apple, orange, pair}{apple, orange, pair}",
-    );
+    await assertObjectCodeExecutes(fileImpl, "{apple, orange, pair}{apple, orange, pair}");
   });
 
   test("Fail_MaxOnNonNumeric", async () => {

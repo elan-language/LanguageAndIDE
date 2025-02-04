@@ -303,13 +303,6 @@ export class StdLib {
     return seq;
   }
 
-  @elanFunction([], FunctionOptions.pureExtension, ElanList(ElanT1))
-  asIterable<T1>(@elanIterableType(ElanT1) arr: T1[]): T1[] {
-    const list = [...arr];
-    (list as unknown as hasHiddenType)._type = "Iterable";
-    return list as T1[];
-  }
-
   @elanFunction([], FunctionOptions.pureExtension, ElanT1)
   head<T1>(@elanIterableType(ElanT1) arr: T1[]): T1 {
     return this.system.safeIndex(arr, 0);
