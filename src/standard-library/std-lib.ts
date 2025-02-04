@@ -20,8 +20,8 @@ import {
   elanGenericParamT2Type,
   ElanInt,
   elanIntType,
-  ElanList,
   elanIterableType,
+  ElanList,
   elanListType,
   elanProcedure,
   ElanString,
@@ -127,9 +127,6 @@ export class StdLib {
 
   @elanClassExport(ElanSet)
   Set = ElanSet;
-
-  @elanClassExport(GraphicsBase)
-  GraphicsBase = GraphicsBase;
 
   @elanClassExport(BlockGraphics)
   BlockGraphics = BlockGraphics;
