@@ -40,7 +40,7 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = system.initialise(new Foo());
+  let x = system.initialise(await new Foo()._initialise());
   await system.printLine(x.p1);
   await system.printLine(x.p2);
   await system.printLine((await x.asString()));
@@ -48,8 +48,10 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", ""]]);};
-  constructor() {
+
+  async _initialise() {
     this.p1 = 5;
+    return this;
   }
 
   p1 = 0;
@@ -98,16 +100,18 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = system.initialise(new Foo(7, "Apple"));
+  let x = system.initialise(await new Foo()._initialise(7, "Apple"));
   await system.printLine(x.p1);
   await system.printLine(x.p2);
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", ""]]);};
-  constructor(p_1, p_2) {
+
+  async _initialise(p_1, p_2) {
     this.p1 = p_1;
     this.p2 = p_2;
+    return this;
   }
 
   p1 = 0;
@@ -164,16 +168,18 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = system.initialise(new Foo());
+  let x = system.initialise(await new Foo()._initialise());
   let y = x.b;
   await y.printP1();
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
-  constructor() {
-    let bar = system.initialise(new Bar());
+
+  async _initialise() {
+    let bar = system.initialise(await new Bar()._initialise());
     this.b = bar;
+    return this;
   }
 
   _b;
@@ -188,8 +194,10 @@ class Foo {
 
 class Bar {
   static emptyInstance() { return system.emptyClass(Bar, [["p1", 0]]);};
-  constructor() {
+
+  async _initialise() {
     this.p1 = 5;
+    return this;
   }
 
   p1 = 0;
@@ -255,7 +263,7 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let foo = system.initialise(new Foo());
+  let foo = system.initialise(await new Foo()._initialise());
   let bar = foo.bar;
   await system.printLine(bar.p1);
   await system.printLine(bar.p2);
@@ -267,8 +275,10 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
-  constructor() {
 
+  async _initialise() {
+
+    return this;
   }
 
   _bar;
@@ -287,8 +297,10 @@ class Foo {
 
 class Bar {
   static emptyInstance() { return system.emptyClass(Bar, [["p1", 0], ["p2", ""]]);};
-  constructor() {
 
+  async _initialise() {
+
+    return this;
   }
 
   p1 = 0;
@@ -340,15 +352,17 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let foo = system.initialise(new Foo());
+  let foo = system.initialise(await new Foo()._initialise());
   let b = system.safeIndex(foo.strArr, 0);
   await system.printLine(b);
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["strArr", system.emptyArray()]]);};
-  constructor() {
+
+  async _initialise() {
     this.strArr = system.literalArray(["apple", "orange", "pair"]);
+    return this;
   }
 
   strArr = system.emptyArray();
@@ -387,14 +401,16 @@ end procedure
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let f = system.initialise(new Foo());
+  let f = system.initialise(await new Foo()._initialise());
   await proc(f);
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
-  constructor() {
 
+  async _initialise() {
+
+    return this;
   }
 
   p1 = 0;
@@ -442,14 +458,16 @@ end function
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let f = system.initialise(new Foo());
+  let f = system.initialise(await new Foo()._initialise());
   await system.printLine((await fun(f)));
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
-  constructor() {
 
+  async _initialise() {
+
+    return this;
   }
 
   p1 = 0;
@@ -493,6 +511,59 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
+  });
+
+  test("Pass_ConstructorWithFunction", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable f set to new Foo()
+  print f.p1
+end main
+
+class Foo
+  constructor()
+    set property.p1 to ff()
+  end constructor
+
+  property p1 as Int
+
+  function ff() returns Int
+    return 0
+  end function
+end class`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let f = system.initialise(await new Foo()._initialise());
+  await system.printLine(f.p1);
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
+
+  async _initialise() {
+    this.p1 = (await this.ff());
+    return this;
+  }
+
+  p1 = 0;
+
+  async ff() {
+    return 0;
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "0");
   });
 
   test("Fail_InitialisePropertyInLine", async () => {

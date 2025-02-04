@@ -20,6 +20,10 @@ export class BlockGraphics extends GraphicsBase {
     return new BlockGraphics();
   }
 
+  async _initialise() {
+    return this;
+  }
+
   constructor() {
     super();
     this.internalRep = this.initialisedGraphics(0xffffff);

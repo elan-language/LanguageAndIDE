@@ -21,6 +21,10 @@ export class VectorGraphics {
     return new VectorGraphics();
   }
 
+  async _initialise() {
+    return this;
+  }
+
   constructor() {}
 
   private stdlib!: StdLib; // injected

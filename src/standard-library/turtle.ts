@@ -23,6 +23,11 @@ export class Turtle extends GraphicsBase {
   static emptyInstance() {
     return new Turtle();
   }
+
+  async _initialise() {
+    return this;
+  }
+
   private _system?: System;
 
   set system(value: System) {

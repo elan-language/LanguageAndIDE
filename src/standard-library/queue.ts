@@ -18,6 +18,10 @@ export class Queue<T1> {
     return new Queue();
   }
 
+  async _initialise() {
+    return this;
+  }
+
   constructor() {
     this.contents = [];
   }

@@ -32,7 +32,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const st = system.initialise(new _stdlib.Queue());
+  const st = system.initialise(await new _stdlib.Queue()._initialise());
   await system.printLine(st.length());
   st.enqueue("apple");
   st.enqueue("pear");
@@ -99,7 +99,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const st = system.initialise(new _stdlib.Queue());
+  const st = system.initialise(await new _stdlib.Queue()._initialise());
   await system.printLine(st.peek());
 }
 return [main, _tests];}`;
@@ -124,7 +124,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const st = system.initialise(new _stdlib.Queue());
+  const st = system.initialise(await new _stdlib.Queue()._initialise());
   await system.printLine(st.dequeue());
 }
 return [main, _tests];}`;

@@ -395,14 +395,16 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let f = system.initialise(new Foo());
+  let f = system.initialise(await new Foo()._initialise());
   await f.length();
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
-  constructor() {
-    this.p1 = system.initialise(new Bar());
+
+  async _initialise() {
+    this.p1 = system.initialise(await new Bar()._initialise());
+    return this;
   }
 
   _p1;
@@ -425,8 +427,10 @@ class Foo {
 
 class Bar {
   static emptyInstance() { return system.emptyClass(Bar, [["p1", 0]]);};
-  constructor() {
+
+  async _initialise() {
     this.p1 = 5;
+    return this;
   }
 
   p1 = 0;
@@ -624,7 +628,7 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(new Foo());
+  let a = system.initialise(await new Foo()._initialise());
   let b = 0;
   let _a = [a]; let _b = [b];
   await foo(_a, _b);
@@ -641,8 +645,10 @@ global["foo"] = foo;
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
-  constructor() {
 
+  async _initialise() {
+
+    return this;
   }
 
   async bar(z) {
@@ -686,7 +692,7 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(new Foo());
+  let a = system.initialise(await new Foo()._initialise());
   let b = 100;
   let _a = [a]; let _b = [b];
   await foo(_a, _b);
@@ -701,8 +707,10 @@ global["foo"] = foo;
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["ff", 0]]);};
-  constructor() {
+
+  async _initialise() {
     this.ff = 1;
+    return this;
   }
 
   ff = 0;

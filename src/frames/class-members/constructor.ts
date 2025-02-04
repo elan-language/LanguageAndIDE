@@ -8,7 +8,6 @@ import { Frame } from "../interfaces/frame";
 import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
 import { constructorKeyword } from "../keywords";
-import { ClassSubType, ClassType } from "../symbols/class-type";
 import { ProcedureType } from "../symbols/procedure-type";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
@@ -59,19 +58,20 @@ ${this.indent()}end constructor\r
 
   public compile(transforms: Transforms): string {
     this.compileErrors = [];
-    const parentClass = this.getParent() as ConcreteClass;
+    // const parentClass = this.getParent() as ConcreteClass;
 
-    const typeAndName = parentClass.getDirectSuperClassesTypeAndName(transforms);
-    let superConstructor = "";
+    // const typeAndName = parentClass.getDirectSuperClassesTypeAndName(transforms);
+    // let superConstructor = "";
 
-    for (const [st] of typeAndName) {
-      if (st instanceof ClassType && st.subType === ClassSubType.abstract) {
-        superConstructor = `${this.indent()}${this.indent()}super();\n`;
-      }
-    }
+    // for (const [st] of typeAndName) {
+    //   if (st instanceof ClassType && st.subType === ClassSubType.abstract) {
+    //     superConstructor = `${this.indent()}${this.indent()}super();\n`;
+    //   }
+    // }
 
-    return `${this.indent()}constructor(${this.params.compile(transforms)}) {\r
-${superConstructor}${this.breakPoint(this.debugSymbols())}${this.compileStatements(transforms)}\r
+    return `${this.indent()}async _initialise(${this.params.compile(transforms)}) {\r
+${this.breakPoint(this.debugSymbols())}${this.compileStatements(transforms)}\r
+${this.indent()}${this.indent()}return this;\r
 ${this.indent()}}\r
 `;
   }

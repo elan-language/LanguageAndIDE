@@ -38,7 +38,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const vg = system.initialise(new _stdlib.VectorGraphics());
+  const vg = system.initialise(await new _stdlib.VectorGraphics()._initialise());
   await system.printLine(vg.asHtml());
 }
 return [main, _tests];}`;
@@ -72,7 +72,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const vg = system.initialise(new _stdlib.VectorGraphics());
+  const vg = system.initialise(await new _stdlib.VectorGraphics()._initialise());
   const circ = system.initialise(new _stdlib.CircleVG());
   const line = system.initialise(new _stdlib.LineVG());
   const rect = system.initialise(new _stdlib.RectangleVG());
@@ -111,7 +111,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const vg = system.initialise(new _stdlib.VectorGraphics());
+  const vg = system.initialise(await new _stdlib.VectorGraphics()._initialise());
   const circ = await (async () => {const _a = {...system.initialise(new _stdlib.CircleVG())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new _stdlib.CircleVG()))); _a.cx = 90; _a.cy = 70; _a.r = 13; _a.stroke = _stdlib.red; _a.strokeWidth = 2; _a.fill = _stdlib.green; return _a;})();
   const vg2 = vg.add(circ);
   await system.printLine(vg2.asHtml());
@@ -149,7 +149,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const vg = system.initialise(new _stdlib.VectorGraphics());
+  const vg = system.initialise(await new _stdlib.VectorGraphics()._initialise());
   const circ = system.initialise(new _stdlib.CircleVG());
   const line = system.initialise(new _stdlib.LineVG());
   const rect = system.initialise(new _stdlib.RectangleVG());
@@ -191,7 +191,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const vg = system.initialise(new _stdlib.VectorGraphics());
+  const vg = system.initialise(await new _stdlib.VectorGraphics()._initialise());
   const circ = system.initialise(new _stdlib.CircleVG());
   const line = system.initialise(new _stdlib.LineVG());
   const rect = system.initialise(new _stdlib.RectangleVG());
@@ -233,7 +233,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const vg = system.initialise(new _stdlib.VectorGraphics());
+  const vg = system.initialise(await new _stdlib.VectorGraphics()._initialise());
   const circ = system.initialise(new _stdlib.CircleVG());
   const line = system.initialise(new _stdlib.LineVG());
   const rect = system.initialise(new _stdlib.RectangleVG());
@@ -276,7 +276,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const vg = system.initialise(new _stdlib.VectorGraphics());
+  const vg = system.initialise(await new _stdlib.VectorGraphics()._initialise());
   const circ = system.initialise(new _stdlib.CircleVG());
   const line = system.initialise(new _stdlib.LineVG());
   const rect = system.initialise(new _stdlib.RectangleVG());
@@ -341,7 +341,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const vg = system.initialise(new _stdlib.VectorGraphics());
+  const vg = system.initialise(await new _stdlib.VectorGraphics()._initialise());
   const circ = await (async () => {const _a = {...system.initialise(new _stdlib.CircleVG())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new _stdlib.CircleVG()))); _a.cx = 90; _a.cy = 70; _a.r = 13; _a.stroke = _stdlib.red; _a.strokeWidth = 2; _a.fill = -1; return _a;})();
   const vg2 = vg.add(circ);
   await system.printLine(vg2.asHtml());
@@ -376,7 +376,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const vg = system.initialise(new _stdlib.VectorGraphics());
+  const vg = system.initialise(await new _stdlib.VectorGraphics()._initialise());
   const circ = await (async () => {const _a = {...system.initialise(new _stdlib.CircleVG())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new _stdlib.CircleVG()))); _a.stroke = -1; return _a;})();
   const vg2 = vg.add(circ);
   await system.printLine(vg2.asHtml());
@@ -407,7 +407,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const vg = system.initialise(new _stdlib.VectorGraphics());
+  const vg = system.initialise(await new _stdlib.VectorGraphics()._initialise());
   const circ = await (async () => {const _a = {...system.initialise(new _stdlib.CircleVG())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new _stdlib.CircleVG()))); _a.fill = 16777216; return _a;})();
   const vg2 = vg.add(circ);
   await system.printLine(vg2.asHtml());

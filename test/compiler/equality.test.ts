@@ -43,9 +43,9 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = system.initialise(new Foo(7, "Apple"));
-  let y = system.initialise(new Foo(7, "Orange"));
-  let z = system.initialise(new Foo(7, "Orange"));
+  let x = system.initialise(await new Foo()._initialise(7, "Apple"));
+  let y = system.initialise(await new Foo()._initialise(7, "Orange"));
+  let z = system.initialise(await new Foo()._initialise(7, "Orange"));
   await system.printLine(system.objectEquals(x, x));
   await system.printLine(system.objectEquals(x, y));
   await system.printLine(system.objectEquals(y, z));
@@ -53,9 +53,11 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", ""]]);};
-  constructor(p1, p2) {
+
+  async _initialise(p1, p2) {
     this.p1 = p1;
     this.p2 = p2;
+    return this;
   }
 
   p1 = 0;
@@ -108,14 +110,16 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = system.initialise(new Foo());
+  let x = system.initialise(await new Foo()._initialise());
   await system.printLine(system.objectEquals(x, Foo.emptyInstance()));
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", ""]]);};
-  constructor() {
 
+  async _initialise() {
+
+    return this;
   }
 
   p1 = 0;
@@ -176,10 +180,10 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = system.initialise(new Foo(7, "Apple"));
+  let x = system.initialise(await new Foo()._initialise(7, "Apple"));
   let y = x;
   await y.setP1(3);
-  let z = system.initialise(new Foo(8, "Orange"));
+  let z = system.initialise(await new Foo()._initialise(8, "Orange"));
   await system.printLine(system.objectEquals(x, x));
   await system.printLine(system.objectEquals(x, y));
   await system.printLine(system.objectEquals(x, z));
@@ -187,9 +191,11 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", ""]]);};
-  constructor(p1, p2) {
+
+  async _initialise(p1, p2) {
     this.p1 = p1;
     this.p2 = p2;
+    return this;
   }
 
   p1 = 0;

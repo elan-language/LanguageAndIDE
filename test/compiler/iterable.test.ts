@@ -266,14 +266,16 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let f = system.initialise(new Foo());
+  let f = system.initialise(await new Foo()._initialise());
   await system.printLine(f.it);
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["it", system.emptyIter()]]);};
-  constructor() {
 
+  async _initialise() {
+
+    return this;
   }
 
   it = system.emptyIter();
@@ -323,8 +325,8 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let foo = system.initialise(new Foo());
-  let foo1 = system.initialise(new Foo());
+  let foo = system.initialise(await new Foo()._initialise());
+  let foo1 = system.initialise(await new Foo()._initialise());
   await foo.update();
   await system.printLine(foo.i);
   await system.printLine(foo1.i);
@@ -335,8 +337,10 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["i", system.emptyIter()]]);};
-  constructor() {
 
+  async _initialise() {
+
+    return this;
   }
 
   i = system.emptyIter();

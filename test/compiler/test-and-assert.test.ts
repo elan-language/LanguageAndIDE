@@ -203,14 +203,14 @@ async function main() {
 }
 
 _tests.push(["test3", async (_outcomes) => {
-  const f = system.initialise(new Foo());
+  const f = system.initialise(await new Foo()._initialise());
   const t2 = 10;
   _outcomes.push(await system.assert(async () => f.p1, t2, "assert12", _stdlib, false));
 }]);
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
-  constructor() {
+  async _initialise() {
     this.p1 = 10;
   }
 
@@ -258,14 +258,14 @@ async function main() {
 }
 
 _tests.push(["test3", async (_outcomes) => {
-  const f = system.initialise(new Foo());
+  const f = system.initialise(await new Foo()._initialise());
   const t2 = 10;
   _outcomes.push(await system.assert(async () => t2, f.p1, "assert12", _stdlib, false));
 }]);
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
-  constructor() {
+  async _initialise() {
     this.p1 = 10;
   }
 
@@ -549,8 +549,10 @@ _tests.push(["test54", async (_outcomes) => {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["bar", 0]]);};
-  constructor(b) {
+
+  async _initialise(b) {
     this.bar = b;
+    return this;
   }
 
   bar = 0;
@@ -558,8 +560,8 @@ class Foo {
 }
 
 _tests.push(["test76", async (_outcomes) => {
-  let a = system.initialise(new Foo(3));
-  let b = system.initialise(new Foo(3));
+  let a = system.initialise(await new Foo()._initialise(3));
+  let b = system.initialise(await new Foo()._initialise(3));
   _outcomes.push(await system.assert(async () => a, b, "assert85", _stdlib, false));
 }]);
 

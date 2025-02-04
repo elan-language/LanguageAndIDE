@@ -97,8 +97,13 @@ end class\r\n`;
       this.htmlId,
     );
 
+    const emptyInitialise = this.getChildren().some((m) => "isConstructor" in m)
+      ? ""
+      : `  ${this.indent()}async _initialise() { return this; }`;
+
     return `class ${name} ${extendsClause}{\r
-  static emptyInstance() { return system.emptyClass(${name}, ${this.propertiesToInit()});};\r
+  static emptyInstance() { return system.emptyClass(${name}, ${this.propertiesToInit()});};
+${emptyInitialise}
 ${parentHelper_compileChildren(this, transforms)}\r
 }\r\n`;
   }

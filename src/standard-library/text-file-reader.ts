@@ -14,6 +14,10 @@ export class TextFileReader {
     return new TextFileReader();
   }
 
+  async _initialise() {
+    return this;
+  }
+
   constructor() {}
 
   private system?: System;

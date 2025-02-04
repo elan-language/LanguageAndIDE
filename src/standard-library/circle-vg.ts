@@ -7,6 +7,10 @@ export class CircleVG extends BaseVG {
     return new CircleVG();
   }
 
+  async _initialise() {
+    return this;
+  }
+
   constructor() {
     super();
     this.cx = 100;

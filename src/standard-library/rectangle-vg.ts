@@ -7,6 +7,10 @@ export class RectangleVG extends BaseVG {
     return new RectangleVG();
   }
 
+  async _initialise() {
+    return this;
+  }
+
   constructor() {
     super();
     this.x = 30;

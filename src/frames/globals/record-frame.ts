@@ -75,6 +75,7 @@ end record\r\n`;
 
     return `class ${name} {\r
   static emptyInstance() { return system.emptyClass(${name}, ${this.propertiesToInit()});};\r
+  async _initialise() { return this; }\r
 ${body}\r
 }\r\n`;
   }

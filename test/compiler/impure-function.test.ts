@@ -36,7 +36,7 @@ end procedure
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let gr = system.initialise(new _stdlib.BlockGraphics());
+  let gr = system.initialise(await new _stdlib.BlockGraphics()._initialise());
   let k = (await _stdlib.getKey());
   let r = _stdlib.randomInt(1, 6);
   r = _stdlib.randomInt(1, 6) * 10;
