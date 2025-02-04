@@ -291,24 +291,6 @@ export class FileImpl implements File, Scope {
   }
 
   compileAsWorker(base: string): string {
-    const onmsg = `onmessage = async (e) => {
-  if (e.data.type === "start") {
-    try {
-      const [main, tests] = await program();
-      await main();
-      postMessage({type : "status", status : "finished"});
-    }
-    catch (e) {
-      postMessage({type : "status", status : "error", error : e});
-    }
-  }
-};`;
-
-    const stdlib = `import { StdLib } from "${base}/elan-api.js"; let system; let _stdlib; let _tests = []; async function program() { _stdlib = new StdLib(); system = _stdlib.system; system.stdlib = _stdlib  `;
-    return `${stdlib}\n${this.compileGlobals()}return [main, _tests];}\n${onmsg}`;
-  }
-
-  compileAsWorker1(base: string): string {
     const onmsg = `addEventListener("message", async (e) => {
   if (e.data.type === "start") {
     try {

@@ -5,7 +5,10 @@ import { Statement } from "../interfaces/statement";
 import { setKeyword, toKeyword, variableKeyword } from "../keywords";
 import { AbstractDefinitionStatement } from "./abstract-definition.statement";
 
-export class VariableStatement extends AbstractDefinitionStatement implements Statement, ElanSymbol {
+export class VariableStatement
+  extends AbstractDefinitionStatement
+  implements Statement, ElanSymbol
+{
   isVariableStatement = true;
   hrefForFrameHelp: string = "LangRef.html#variable";
 

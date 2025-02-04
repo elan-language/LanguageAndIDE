@@ -272,7 +272,7 @@ export async function assertDebugBreakPoint(
   fld.hasBreakPoint = true;
 
   const dir = __dirname.replaceAll("\\", "/");
-  const jsCode = f.compileAsWorker1(`file:///${dir}`);
+  const jsCode = f.compileAsWorker(`file:///${dir}`);
   const asUrl = "data:text/javascript;base64," + btoa(jsCode);
 
   const runWorker = new Worker(asUrl, { type: "module" });

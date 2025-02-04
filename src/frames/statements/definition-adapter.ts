@@ -1,6 +1,10 @@
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { SymbolType } from "../interfaces/symbol-type";
-import { getDeconstructionIds, isLetStatement, isVariableStatement } from "../symbols/symbol-helpers";
+import {
+  getDeconstructionIds,
+  isLetStatement,
+  isVariableStatement,
+} from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { Transforms } from "../syntax-nodes/transforms";
 
