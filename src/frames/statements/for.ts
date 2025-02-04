@@ -139,4 +139,22 @@ ${this.indent()}}`;
 
     return super.resolveSymbol(id, transforms, initialScope);
   }
+
+  symbolMatches(id: string, all: boolean, _initialScope?: Frame): ElanSymbol[] {
+    const matches = super.symbolMatches(id, all, this);
+    const localMatches: ElanSymbol[] = [];
+
+    const v = this.variable.text;
+
+    if (id === v || all) {
+      const counter = {
+        symbolId: v,
+        symbolType: () => IntType.Instance,
+        symbolScope: SymbolScope.counter,
+      };
+      localMatches.push(counter);
+    }
+
+    return localMatches.concat(matches);
+  }
 }
