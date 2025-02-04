@@ -62,7 +62,7 @@ end function
 
 # colour: 0 for black, 1 for white
 function okToSet(p as Point, colour as Int, g as BlockGraphics) returns Boolean
-  let n be p.neighbouringPoints().map(lambda p as Point => getValue(p, g)).asList()
+  let n be p.neighbouringPoints().map(lambda p as Point => getValue(p, g))
   let q1 be isValidQuadrant(n[0] + n[1]*2 + colour*4 + n[3]*8)
   let q2 be isValidQuadrant(n[1] + n[2]*2 + n[4]*4 + colour*8)
   let q3 be isValidQuadrant(colour + n[4]*2 + n[7]*4 + n[6]*8)

@@ -634,11 +634,7 @@ export class StdLib {
     return n > fl ? fl + 1 : fl;
   }
 
-  @elanFunction(
-    ["", "lambdaOrFunctionRef"],
-    FunctionOptions.pureAsyncExtension,
-    ElanList(ElanT1),
-  )
+  @elanFunction(["", "lambdaOrFunctionRef"], FunctionOptions.pureAsyncExtension, ElanList(ElanT1))
   async filter<T1>(
     @elanIterableType(ElanT1)
     source: T1[] | string,
@@ -646,7 +642,7 @@ export class StdLib {
     predicate: (value: T1 | string) => Promise<boolean>,
   ): Promise<(T1 | string)[]> {
     const list = typeof source === "string" ? source.split("") : [...source];
-    //return this.asIterable(list.filter(predicate));
+    //return this.asList(list.filter(predicate));
 
     const asyncFilter = async (
       list: string[] | T1[],
@@ -659,14 +655,10 @@ export class StdLib {
 
     const result = await asyncFilter(list, predicate);
 
-    return this.asIterable(result);
+    return this.asList(result);
   }
 
-  @elanFunction(
-    ["", "lambdaOrFunctionRef"],
-    FunctionOptions.pureAsyncExtension,
-    ElanList(ElanT2),
-  )
+  @elanFunction(["", "lambdaOrFunctionRef"], FunctionOptions.pureAsyncExtension, ElanList(ElanT2))
   async map<T1, T2>(
     @elanIterableType(ElanT1)
     source: T1[] | string,
@@ -677,7 +669,7 @@ export class StdLib {
 
     const results = await Promise.all(list.map(predicate));
 
-    return results;
+    return this.asList(results);
   }
 
   @elanFunction(
@@ -737,18 +729,14 @@ export class StdLib {
     return source[i];
   }
 
-  @elanFunction(
-    ["", "lambdaOrFunctionRef"],
-    FunctionOptions.pureAsyncExtension,
-    ElanList(ElanT1),
-  )
+  @elanFunction(["", "lambdaOrFunctionRef"], FunctionOptions.pureAsyncExtension, ElanList(ElanT1))
   async sortBy<T1>(
     @elanIterableType(ElanT1) source: T1[],
     @elanFuncType([ElanT1, ElanT1], ElanInt)
     predicate: (a: T1, b: T1) => Promise<number>,
   ): Promise<T1[]> {
     const clone = [...source];
-    return this.asIterable(await quickSort(clone, predicate));
+    return this.asList(await quickSort(clone, predicate));
   }
 
   @elanFunction(["", "lambdaOrFunctionRef"], FunctionOptions.pureAsyncExtension, ElanBoolean)
