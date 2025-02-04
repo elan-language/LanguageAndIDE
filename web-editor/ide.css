@@ -7,7 +7,7 @@
     --ideTitleSize: 12pt;
 }
 
-#console {
+#console, #console input {
   color: var(--defaultText);
   background-color: var(--defaultBackground);
   border-color: var(--defaultBackground);
