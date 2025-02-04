@@ -161,7 +161,7 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = system.initialise(new Yon());
+  let x = system.initialise(await new Yon()._initialise());
   await system.printLine((await f(x)));
   await system.printLine((await b(x)));
 }

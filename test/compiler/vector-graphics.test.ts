@@ -73,9 +73,9 @@ end main`;
 const global = new class {};
 async function main() {
   const vg = system.initialise(await new _stdlib.VectorGraphics()._initialise());
-  const circ = system.initialise(new _stdlib.CircleVG());
-  const line = system.initialise(new _stdlib.LineVG());
-  const rect = system.initialise(new _stdlib.RectangleVG());
+  const circ = system.initialise(await new _stdlib.CircleVG()._initialise());
+  const line = system.initialise(await new _stdlib.LineVG()._initialise());
+  const rect = system.initialise(await new _stdlib.RectangleVG()._initialise());
   const vg2 = vg.add(circ).add(line).add(rect);
   await system.printLine(vg2.asHtml());
 }
@@ -112,7 +112,7 @@ end main`;
 const global = new class {};
 async function main() {
   const vg = system.initialise(await new _stdlib.VectorGraphics()._initialise());
-  const circ = await (async () => {const _a = {...system.initialise(new _stdlib.CircleVG())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new _stdlib.CircleVG()))); _a.cx = 90; _a.cy = 70; _a.r = 13; _a.stroke = _stdlib.red; _a.strokeWidth = 2; _a.fill = _stdlib.green; return _a;})();
+  const circ = await (async () => {const _a = {...system.initialise(await new _stdlib.CircleVG()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new _stdlib.CircleVG()._initialise()))); _a.cx = 90; _a.cy = 70; _a.r = 13; _a.stroke = _stdlib.red; _a.strokeWidth = 2; _a.fill = _stdlib.green; return _a;})();
   const vg2 = vg.add(circ);
   await system.printLine(vg2.asHtml());
 }
@@ -150,9 +150,9 @@ end main`;
 const global = new class {};
 async function main() {
   const vg = system.initialise(await new _stdlib.VectorGraphics()._initialise());
-  const circ = system.initialise(new _stdlib.CircleVG());
-  const line = system.initialise(new _stdlib.LineVG());
-  const rect = system.initialise(new _stdlib.RectangleVG());
+  const circ = system.initialise(await new _stdlib.CircleVG()._initialise());
+  const line = system.initialise(await new _stdlib.LineVG()._initialise());
+  const rect = system.initialise(await new _stdlib.RectangleVG()._initialise());
   const vg2 = vg.add(circ).add(line).add(rect);
   const vg3 = vg2.removeLast();
   await system.printLine(vg3.asHtml());
@@ -192,9 +192,9 @@ end main`;
 const global = new class {};
 async function main() {
   const vg = system.initialise(await new _stdlib.VectorGraphics()._initialise());
-  const circ = system.initialise(new _stdlib.CircleVG());
-  const line = system.initialise(new _stdlib.LineVG());
-  const rect = system.initialise(new _stdlib.RectangleVG());
+  const circ = system.initialise(await new _stdlib.CircleVG()._initialise());
+  const line = system.initialise(await new _stdlib.LineVG()._initialise());
+  const rect = system.initialise(await new _stdlib.RectangleVG()._initialise());
   const vg2 = vg.add(circ).add(line).add(rect);
   const vg3 = vg2.remove(line);
   await system.printLine(vg3.asHtml());
@@ -234,9 +234,9 @@ end main`;
 const global = new class {};
 async function main() {
   const vg = system.initialise(await new _stdlib.VectorGraphics()._initialise());
-  const circ = system.initialise(new _stdlib.CircleVG());
-  const line = system.initialise(new _stdlib.LineVG());
-  const rect = system.initialise(new _stdlib.RectangleVG());
+  const circ = system.initialise(await new _stdlib.CircleVG()._initialise());
+  const line = system.initialise(await new _stdlib.LineVG()._initialise());
+  const rect = system.initialise(await new _stdlib.RectangleVG()._initialise());
   const vg2 = vg.add(circ).add(line).add(rect);
   const vg3 = vg2.remove(circ);
   await system.printLine(vg3.asHtml());
@@ -277,9 +277,9 @@ end main`;
 const global = new class {};
 async function main() {
   const vg = system.initialise(await new _stdlib.VectorGraphics()._initialise());
-  const circ = system.initialise(new _stdlib.CircleVG());
-  const line = system.initialise(new _stdlib.LineVG());
-  const rect = system.initialise(new _stdlib.RectangleVG());
+  const circ = system.initialise(await new _stdlib.CircleVG()._initialise());
+  const line = system.initialise(await new _stdlib.LineVG()._initialise());
+  const rect = system.initialise(await new _stdlib.RectangleVG()._initialise());
   const vg2 = vg.add(circ).add(line).add(rect);
   const circ2 = await (async () => {const _a = {...circ}; Object.setPrototypeOf(_a, Object.getPrototypeOf(circ)); _a.fill = _stdlib.green; return _a;})();
   const vg3 = vg2.replace(circ, circ2);
@@ -314,7 +314,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const circ = system.initialise(new _stdlib.CircleVG());
+  const circ = system.initialise(await new _stdlib.CircleVG()._initialise());
   await system.printLine(circ.cx);
 }
 return [main, _tests];}`;
@@ -342,7 +342,7 @@ end main`;
 const global = new class {};
 async function main() {
   const vg = system.initialise(await new _stdlib.VectorGraphics()._initialise());
-  const circ = await (async () => {const _a = {...system.initialise(new _stdlib.CircleVG())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new _stdlib.CircleVG()))); _a.cx = 90; _a.cy = 70; _a.r = 13; _a.stroke = _stdlib.red; _a.strokeWidth = 2; _a.fill = -1; return _a;})();
+  const circ = await (async () => {const _a = {...system.initialise(await new _stdlib.CircleVG()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new _stdlib.CircleVG()._initialise()))); _a.cx = 90; _a.cy = 70; _a.r = 13; _a.stroke = _stdlib.red; _a.strokeWidth = 2; _a.fill = -1; return _a;})();
   const vg2 = vg.add(circ);
   await system.printLine(vg2.asHtml());
 }
@@ -377,7 +377,7 @@ end main`;
 const global = new class {};
 async function main() {
   const vg = system.initialise(await new _stdlib.VectorGraphics()._initialise());
-  const circ = await (async () => {const _a = {...system.initialise(new _stdlib.CircleVG())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new _stdlib.CircleVG()))); _a.stroke = -1; return _a;})();
+  const circ = await (async () => {const _a = {...system.initialise(await new _stdlib.CircleVG()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new _stdlib.CircleVG()._initialise()))); _a.stroke = -1; return _a;})();
   const vg2 = vg.add(circ);
   await system.printLine(vg2.asHtml());
 }
@@ -408,7 +408,7 @@ end main`;
 const global = new class {};
 async function main() {
   const vg = system.initialise(await new _stdlib.VectorGraphics()._initialise());
-  const circ = await (async () => {const _a = {...system.initialise(new _stdlib.CircleVG())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new _stdlib.CircleVG()))); _a.fill = 16777216; return _a;})();
+  const circ = await (async () => {const _a = {...system.initialise(await new _stdlib.CircleVG()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new _stdlib.CircleVG()._initialise()))); _a.fill = 16777216; return _a;})();
   const vg2 = vg.add(circ);
   await system.printLine(vg2.asHtml());
 }

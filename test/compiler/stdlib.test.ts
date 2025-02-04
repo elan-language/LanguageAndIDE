@@ -470,7 +470,7 @@ end main`;
 const global = new class {};
 async function main() {
   let results = system.literalArray([0, 0, 0, 0, 0, 0, 0]);
-  let rnd = system.initialise(new _stdlib.Random());
+  let rnd = system.initialise(await new _stdlib.Random()._initialise());
   let val = 0;
   rnd.initialiseFromClock();
   for (let i = 1; i <= 10000; i = i + 1) {
@@ -515,7 +515,7 @@ end main`;
 const global = new class {};
 async function main() {
   let results = system.literalArray([0, 0, 0, 0, 0, 0, 0]);
-  let rnd = system.initialise(new _stdlib.Random());
+  let rnd = system.initialise(await new _stdlib.Random()._initialise());
   let val = 0;
   for (let i = 1; i <= 10000; i = i + 1) {
     [val, rnd] = rnd.nextInt(3, 5);
@@ -563,7 +563,7 @@ end function`;
 const global = new class {};
 async function main() {
   let results = system.literalArray([0, 0, 0, 0, 0, 0, 0]);
-  let rnd = system.initialise(new _stdlib.Random());
+  let rnd = system.initialise(await new _stdlib.Random()._initialise());
   let dice = 0;
   for (let i = 1; i <= 10000; i = i + 1) {
     [dice, rnd] = (await rollDice(rnd));
