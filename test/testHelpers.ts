@@ -10,7 +10,7 @@ import { MainFrame } from "../src/frames/globals/main-frame";
 import { editorEvent } from "../src/frames/interfaces/editor-event";
 import { File } from "../src/frames/interfaces/file";
 import { ParseNode } from "../src/frames/parse-nodes/parse-node";
-import { VarStatement } from "../src/frames/statements/var-statement";
+import { VariableStatement } from "../src/frames/statements/variable-statement";
 import { CompileStatus, ParseStatus, TestStatus } from "../src/frames/status-enums";
 import { TokenType } from "../src/frames/symbol-completion-helpers";
 import { BooleanType } from "../src/frames/symbols/boolean-type";
@@ -441,7 +441,7 @@ export function testNodeParse(
 
 export function testExtractContextForExpression(text: string, context: string) {
   const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
-  const v = new VarStatement(main);
+  const v = new VariableStatement(main);
   const expr = v.expr;
   expr.setFieldToKnownValidText(text);
   expr.parseCurrentText();

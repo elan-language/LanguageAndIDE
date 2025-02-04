@@ -44,6 +44,7 @@ export abstract class AbstractFrame implements Frame {
   protected movable: boolean = true;
   private _parseStatus: ParseStatus = ParseStatus.default;
   private _compileStatus: CompileStatus = CompileStatus.default;
+  abstract hrefForFrameHelp: string;
 
   protected showContextMenu = false;
   hasBreakPoint = false;
@@ -648,16 +649,17 @@ export abstract class AbstractFrame implements Frame {
   };
 
   getContextMenuItems() {
-    const map = new Map<string, [string, () => void]>();
-
+    const map = new Map<string, [string, (() => void) | undefined, string]>();
+    map.set("frameHelp", ["Help for this instruction", undefined, this.hrefForFrameHelp]);
     // Must be arrow functions for this binding
     if (this.hasBreakPoint) {
-      map.set("clearBP", ["clear BreakPoint (Ctrl-b)", this.clearBreakPoint]);
+      map.set("clearBP", ["clear breakpoint (Ctrl-b)", this.clearBreakPoint, ""]);
+      map.set("clearAllBP", ["clear all breakpoints", this.clearAllBreakPoints, ""]);
     } else {
-      map.set("setBP", ["set BreakPoint (Ctrl-b)", this.setBreakPoint]);
+      map.set("setBP", ["set breakpoint (Ctrl-b)", this.setBreakPoint, ""]);
     }
-    map.set("cut", ["cut (Ctrl-x)", this.cut]);
-    map.set("delete", ["delete (Ctrl-Delete or Ctrl-d)", this.deleteSelected]);
+    map.set("cut", ["cut (Ctrl-x)", this.cut, ""]);
+    map.set("delete", ["delete (Ctrl-Delete or Ctrl-d)", this.deleteSelected, ""]);
     return map;
   }
 
@@ -670,7 +672,7 @@ export abstract class AbstractFrame implements Frame {
       for (const k of map.keys()) {
         const val = map.get(k)!;
         items.push(
-          `<div class='context-menu-item' data-id='${this.htmlId}' data-func='${k}'>${val[0]}</div>`,
+          `<div class='context-menu-item' data-id='${this.htmlId}' data-func='${k}' data-href='${val[2]}'>${val[0]}</div>`,
         );
       }
 

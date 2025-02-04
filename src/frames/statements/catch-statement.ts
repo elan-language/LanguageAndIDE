@@ -16,6 +16,7 @@ export class CatchStatement extends AbstractFrame implements Statement, ElanSymb
   isStatement = true;
   isCatch = true;
   variable: IdentifierField;
+  hrefForFrameHelp: string = "LangRef.html#catch";
 
   constructor(parent: Parent) {
     super(parent);

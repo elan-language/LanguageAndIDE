@@ -9,10 +9,10 @@ import { AssertStatement } from "../src/frames/statements/assert-statement";
 import { CallStatement } from "../src/frames/statements/call-statement";
 import { CommentStatement } from "../src/frames/statements/comment-statement";
 import { LetStatement } from "../src/frames/statements/let-statement";
-import { VarStatement } from "../src/frames/statements/var-statement";
+import { VariableStatement } from "../src/frames/statements/variable-statement";
 import { ParseStatus } from "../src/frames/status-enums";
 import { hash } from "../src/util";
-import { ignore_test, transforms } from "./compiler/compiler-test-helpers";
+import { transforms } from "./compiler/compiler-test-helpers";
 import { testExtractContextForExpression } from "./testHelpers";
 
 suite("Field Parsing Tests", () => {
@@ -32,7 +32,7 @@ suite("Field Parsing Tests", () => {
   });
   test("parse varDefField", () => {
     const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
-    const variable = new VarStatement(main);
+    const variable = new VariableStatement(main);
     const id = variable.name;
     assert.equal(id.textAsSource(), "");
     assert.equal(id.readParseStatus(), ParseStatus.incomplete);
@@ -111,7 +111,7 @@ suite("Field Parsing Tests", () => {
 
   test("parse ExpressionField - literal string with interpolations", () => {
     const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
-    const v = new VarStatement(main);
+    const v = new VariableStatement(main);
     const expr = v.expr;
     expr.setFieldToKnownValidText(`"{op} times {op2} equals {op1*op2}"`);
     expr.parseCurrentText();
@@ -166,7 +166,7 @@ suite("Field Parsing Tests", () => {
   });
   test("#950 space at start of var-def-field is ignored", () => {
     const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
-    const v = new VarStatement(main);
+    const v = new VariableStatement(main);
     const name = v.name;
     name.setFieldToKnownValidText(" ");
     name.parseCurrentText();

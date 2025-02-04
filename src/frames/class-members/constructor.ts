@@ -19,6 +19,7 @@ export class Constructor extends FrameWithStatements implements ElanSymbol, Memb
   isAbstract = false;
   private = false;
   public params: ParamList;
+  hrefForFrameHelp: string = "LangRef.html#constructor";
 
   constructor(parent: Parent) {
     super(parent);

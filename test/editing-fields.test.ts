@@ -8,7 +8,7 @@ import { MainFrame } from "../src/frames/globals/main-frame";
 import { CallStatement } from "../src/frames/statements/call-statement";
 import { IfStatement } from "../src/frames/statements/if-statement";
 import { SetStatement } from "../src/frames/statements/set-statement";
-import { VarStatement } from "../src/frames/statements/var-statement";
+import { VariableStatement } from "../src/frames/statements/variable-statement";
 import { hash } from "../src/util";
 import { transforms } from "./compiler/compiler-test-helpers";
 import { key, tab } from "./testHelpers";
@@ -197,7 +197,7 @@ suite("Editing Fields Tests", () => {
 
   test("Tabbing to use plain text completions #485", () => {
     const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
-    const v = new VarStatement(main);
+    const v = new VariableStatement(main);
     const expr = v.expr;
     expr.processKey(key("l"));
     expr.processKey(key("a"));

@@ -21,6 +21,7 @@ export class ProcedureMethod extends ProcedureFrame implements PossiblyPrivateMe
   isMember: boolean = true;
   private: boolean;
   isAbstract = false;
+  hrefForFrameHelp: string = "LangRef.html#procedure_method";
 
   constructor(parent: Parent, priv = false) {
     super(parent);

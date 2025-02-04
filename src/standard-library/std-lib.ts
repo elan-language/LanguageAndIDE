@@ -757,21 +757,6 @@ export class StdLib {
     return this.asIterable(await quickSort(clone, predicate));
   }
 
-  @elanFunction(["", "lambdaOrFunctionRef"], FunctionOptions.pureAsyncExtension, ElanBoolean)
-  async any<T1>(
-    @elanIterableType(ElanT1) source: T1[],
-    @elanFuncType([ElanT1], ElanBoolean)
-    predicate: (value: T1) => Promise<boolean>,
-  ): Promise<boolean> {
-    for (const i of source) {
-      if (await predicate(i)) {
-        return this.true;
-      }
-    }
-
-    return this.false;
-  }
-
   @elanFunction(["", "item"], FunctionOptions.pureExtension)
   contains<T1>(
     @elanIterableType(ElanT1) source: T1[],
