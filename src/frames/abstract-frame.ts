@@ -652,9 +652,10 @@ export abstract class AbstractFrame implements Frame {
 
     // Must be arrow functions for this binding
     if (this.hasBreakPoint) {
-      map.set("clearBP", ["clear BreakPoint (Ctrl-b)", this.clearBreakPoint]);
+      map.set("clearBP", ["clear breakpoint (Ctrl-b)", this.clearBreakPoint]);
+      map.set("clearAllBP", ["clear all breakpoints", this.clearAllBreakPoints]);
     } else {
-      map.set("setBP", ["set BreakPoint (Ctrl-b)", this.setBreakPoint]);
+      map.set("setBP", ["set breakpoint (Ctrl-b)", this.setBreakPoint]);
     }
     map.set("cut", ["cut (Ctrl-x)", this.cut]);
     map.set("delete", ["delete (Ctrl-Delete or Ctrl-d)", this.deleteSelected]);
