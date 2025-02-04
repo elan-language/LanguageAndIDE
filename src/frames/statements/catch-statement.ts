@@ -69,7 +69,7 @@ export class CatchStatement extends AbstractFrame implements Statement, ElanSymb
   keywords = `${catchKeyword} ${exceptionKeyword} ${inKeyword} `;
 
   renderAsHtml(): string {
-    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.toolTip()}><el-top>${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>${this.keywords}</el-kw>${this.variable.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>{this.contextMenu()}</el-statement>`;
+    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.toolTip()}><el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>${this.keywords}</el-kw>${this.variable.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top></el-statement>`;
   }
 
   renderAsSource(): string {
@@ -96,5 +96,23 @@ ${this.indent()}  let ${vid} = _${vid}.message;\r`;
     }
 
     return super.resolveSymbol(id, transforms, initialScope);
+  }
+
+  symbolMatches(id: string, all: boolean, _initialScope?: Frame): ElanSymbol[] {
+    const matches = super.symbolMatches(id, all, this);
+    const localMatches: ElanSymbol[] = [];
+
+    const v = this.variable.text;
+
+    if (id === v || all) {
+      const counter = {
+        symbolId: v,
+        symbolType: () => StringType.Instance,
+        symbolScope: SymbolScope.parameter,
+      };
+      localMatches.push(counter);
+    }
+
+    return localMatches.concat(matches);
   }
 }

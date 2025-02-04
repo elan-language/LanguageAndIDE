@@ -287,4 +287,70 @@ end main`;
 
     await assertDebugBreakPoint(fileImpl, "set21", expected);
   });
+
+  test("Pass_InRepeatLoop", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable x set to 0
+  repeat
+    set x to x + 1
+  end repeat when x >= 10
+  print x
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [["x", "0"]] as [string, string][];
+
+    await assertDebugBreakPoint(fileImpl, "set9", expected);
+  });
+
+  test("Pass_InTry", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  try
+    variable a set to 1
+    set a to 2
+    throw exception "error"
+  catch exception in e
+    variable b set to e
+    print b
+  end try
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [["a", "1"]] as [string, string][];
+
+    await assertDebugBreakPoint(fileImpl, "set11", expected);
+  });
+
+  ignore_test("Pass_InCatch", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  try
+    variable a set to 1
+    set a to 2
+    throw exception "error"
+  catch exception in e
+    variable b set to e
+    print b
+  end try
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["b", "error"],
+      ["e", "error"],
+    ] as [string, string][];
+
+    await assertDebugBreakPoint(fileImpl, "print19", expected);
+  });
 });
