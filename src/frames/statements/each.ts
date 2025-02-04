@@ -12,6 +12,7 @@ import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
 import { eachKeyword } from "../keywords";
 import { SymbolScope } from "../symbols/symbol-scope";
+import { transforms } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 
 export class Each extends FrameWithStatements implements Statement {
@@ -103,5 +104,24 @@ ${this.indent()}}`;
     }
 
     return super.resolveSymbol(id, transforms, initialScope);
+  }
+
+  symbolMatches(id: string, all: boolean, _initialScope?: Frame): ElanSymbol[] {
+    const matches = super.symbolMatches(id, all, this);
+    const localMatches: ElanSymbol[] = [];
+
+    const v = this.variable.text;
+
+    if (id === v || all) {
+      const st = (this.iter.symbolType(transforms()) as GenericSymbolType).ofType;
+      const counter = {
+        symbolId: v,
+        symbolType: () => st,
+        symbolScope: SymbolScope.counter,
+      };
+      localMatches.push(counter);
+    }
+
+    return localMatches.concat(matches);
   }
 }
