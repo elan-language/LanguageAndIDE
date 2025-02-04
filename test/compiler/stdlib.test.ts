@@ -191,14 +191,14 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to parseAsInt("10.1")
+  variable a set to parseAsInt("10")
   print a
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.parseAsInt("10.1");
+  let a = _stdlib.parseAsInt("10");
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -224,6 +224,30 @@ end main`;
 const global = new class {};
 async function main() {
   let a = _stdlib.parseAsInt("");
+  await system.printLine(a);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "false,0");
+  });
+  test("Pass_parseAsInt1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to parseAsInt("10.1")
+  print a
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = _stdlib.parseAsInt("10.1");
   await system.printLine(a);
 }
 return [main, _tests];}`;

@@ -771,7 +771,11 @@ export class StdLib {
   @elanFunction(["string"], FunctionOptions.pure, ElanTuple([ElanBoolean, ElanInt]))
   parseAsInt(s: string): [boolean, number] {
     const [b, f] = this.parseAsFloat(s);
-    return [b, Math.floor(f)];
+    const i = Math.floor(f);
+    if (b && f === i) {
+      return [b,i];
+    }
+    return [false, 0];
   }
 
   @elanProcedure(["text"])
