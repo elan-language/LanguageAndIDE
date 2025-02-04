@@ -3,7 +3,6 @@ import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import { TestStatus } from "../../src/frames/status-enums";
 import { AssertOutcome } from "../../src/system";
 import {
-  assertDoesNotCompile,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
@@ -824,22 +823,31 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "{Now, is, the, time...}");
   });
-  test("Fail_joinArray", async () => {
+  test("Pass_joinArray", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
   let words be ["Now", "is","the","time..."]
-  let s be words.join("-")
+  let s be words.join(".")
   print s
 end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  const words = system.literalArray(["Now", "is", "the", "time..."]);
+  const s = _stdlib.join(words, ".");
+  await system.printLine(s);
+}
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Incompatible types Array<of String> to List<of String> try converting with '.asList()'",
-    ]);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "Now.is.the.time...");
   });
   test("Pass_joinList", async () => {
     const code = `# FFFF Elan v1.0.0 valid

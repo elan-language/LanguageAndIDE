@@ -613,7 +613,7 @@ export class StdLib {
   }
 
   @elanFunction(["", "separator"], FunctionOptions.pureExtension)
-  join(@elanListType(ElanString) list: string[], separator: string): string {
+  join(@elanIterableType(ElanString) list: string[], separator: string): string {
     return list.join(separator);
   }
 
