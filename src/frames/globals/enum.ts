@@ -24,6 +24,7 @@ export class Enum extends AbstractFrame implements ElanSymbol, GlobalFrame, Coll
   name: TypeNameField;
   values: EnumValues;
   file: File;
+  hrefForFrameHelp: string = "LangRef.html#enum";
 
   constructor(parent: File) {
     super(parent);

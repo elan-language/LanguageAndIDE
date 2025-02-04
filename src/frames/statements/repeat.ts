@@ -12,6 +12,7 @@ import { Transforms } from "../syntax-nodes/transforms";
 export class Repeat extends FrameWithStatements implements Statement {
   isStatement: boolean = true;
   condition: ExpressionField;
+  hrefForFrameHelp: string = "LangRef.html#repeat";
 
   constructor(parent: Parent) {
     super(parent);

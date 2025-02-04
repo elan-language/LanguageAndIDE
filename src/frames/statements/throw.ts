@@ -10,6 +10,7 @@ import { Transforms } from "../syntax-nodes/transforms";
 export class Throw extends AbstractFrame implements Statement {
   isStatement = true;
   text: ExceptionMessage;
+  hrefForFrameHelp: string = "LangRef.html#throw";
 
   constructor(parent: Parent) {
     super(parent);

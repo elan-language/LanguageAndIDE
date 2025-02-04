@@ -28,6 +28,7 @@ export class AbstractFunction extends AbstractFrame implements Member, ElanSymbo
   public name: IdentifierField;
   public params: ParamList;
   public returnType: TypeField;
+  hrefForFrameHelp: string = "LangRef.html#Abstract_function";
 
   constructor(parent: Parent) {
     super(parent);

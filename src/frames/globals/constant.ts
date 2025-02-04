@@ -21,6 +21,7 @@ export class Constant extends AbstractFrame implements ElanSymbol, GlobalFrame, 
   value: ConstantValueField;
   file: File;
   isConstant = true;
+  hrefForFrameHelp: string = "LangRef.html#constant";
 
   constructor(parent: File) {
     super(parent);

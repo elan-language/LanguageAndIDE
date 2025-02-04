@@ -11,6 +11,7 @@ import { Transforms } from "../syntax-nodes/transforms";
 export class While extends FrameWithStatements {
   isStatement = true;
   condition: ExpressionField;
+  hrefForFrameHelp: string = "LangRef.html#while";
 
   constructor(parent: Parent) {
     super(parent);

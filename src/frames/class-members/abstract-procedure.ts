@@ -21,6 +21,7 @@ export class AbstractProcedure extends AbstractFrame implements Member, ElanSymb
   private = false;
   public name: IdentifierField;
   public params: ParamList;
+  hrefForFrameHelp: string = "LangRef.html#Abstract_procedure";
 
   constructor(parent: Parent) {
     super(parent);

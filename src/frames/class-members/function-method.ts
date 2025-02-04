@@ -25,6 +25,7 @@ export class FunctionMethod extends FunctionFrame implements PossiblyPrivateMemb
   isMember: boolean = true;
   private: boolean;
   isAbstract = false;
+  hrefForFrameHelp: string = "LangRef.html#function_method";
 
   constructor(parent: Parent, priv = false) {
     super(parent);

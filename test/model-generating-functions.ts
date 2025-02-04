@@ -24,7 +24,7 @@ import { SetStatement } from "../src/frames/statements/set-statement";
 import { StatementSelector } from "../src/frames/statements/statement-selector";
 import { Throw } from "../src/frames/statements/throw";
 import { TryStatement } from "../src/frames/statements/try";
-import { VarStatement } from "../src/frames/statements/var-statement";
+import { VariableStatement } from "../src/frames/statements/variable-statement";
 import { While } from "../src/frames/statements/while";
 import { hash } from "../src/util";
 import { transforms } from "./compiler/compiler-test-helpers";
@@ -72,7 +72,7 @@ export function T03_mainWithAllStatements(): FileImpl {
   const m = new MainFrame(f);
   f.addChildBefore(m, gs);
   const ssm = m.getFirstSelectorAsDirectChild();
-  const v = new VarStatement(m);
+  const v = new VariableStatement(m);
   m.addChildBefore(v, ssm);
   const s = new SetStatement(m);
   s.assignable.setFieldToKnownValidText("a");

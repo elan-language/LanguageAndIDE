@@ -13,6 +13,8 @@ import { Transforms } from "../syntax-nodes/transforms";
 import { ClassFrame } from "./class-frame";
 
 export class AbstractClass extends ClassFrame {
+  hrefForFrameHelp: string = "LangRef.html#Abstract_class";
+
   constructor(parent: File) {
     super(parent);
     this.isAbstract = true;
