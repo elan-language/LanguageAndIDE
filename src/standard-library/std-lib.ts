@@ -20,9 +20,8 @@ import {
   elanGenericParamT2Type,
   ElanInt,
   elanIntType,
-  ElanIterable,
-  elanIterableType,
   ElanList,
+  elanIterableType,
   elanListType,
   elanProcedure,
   ElanString,
@@ -297,7 +296,7 @@ export class StdLib {
     return set.addFromArray(arr);
   }
 
-  @elanFunction(["start", "end"], FunctionOptions.pure, ElanIterable(ElanInt))
+  @elanFunction(["start", "end"], FunctionOptions.pure, ElanList(ElanInt))
   range(@elanIntType() start: number, @elanIntType() end: number): number[] {
     const seq = [];
     for (let i = start; i <= end; i++) {
@@ -307,7 +306,7 @@ export class StdLib {
     return seq;
   }
 
-  @elanFunction([], FunctionOptions.pureExtension, ElanIterable(ElanT1))
+  @elanFunction([], FunctionOptions.pureExtension, ElanList(ElanT1))
   asIterable<T1>(@elanIterableType(ElanT1) arr: T1[]): T1[] {
     const list = [...arr];
     (list as unknown as hasHiddenType)._type = "Iterable";
@@ -638,7 +637,7 @@ export class StdLib {
   @elanFunction(
     ["", "lambdaOrFunctionRef"],
     FunctionOptions.pureAsyncExtension,
-    ElanIterable(ElanT1),
+    ElanList(ElanT1),
   )
   async filter<T1>(
     @elanIterableType(ElanT1)
@@ -666,7 +665,7 @@ export class StdLib {
   @elanFunction(
     ["", "lambdaOrFunctionRef"],
     FunctionOptions.pureAsyncExtension,
-    ElanIterable(ElanT2),
+    ElanList(ElanT2),
   )
   async map<T1, T2>(
     @elanIterableType(ElanT1)
@@ -678,7 +677,7 @@ export class StdLib {
 
     const results = await Promise.all(list.map(predicate));
 
-    return this.asIterable(results);
+    return results;
   }
 
   @elanFunction(
@@ -741,7 +740,7 @@ export class StdLib {
   @elanFunction(
     ["", "lambdaOrFunctionRef"],
     FunctionOptions.pureAsyncExtension,
-    ElanIterable(ElanT1),
+    ElanList(ElanT1),
   )
   async sortBy<T1>(
     @elanIterableType(ElanT1) source: T1[],
