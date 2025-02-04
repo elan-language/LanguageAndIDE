@@ -23,6 +23,10 @@ import { StdLib } from "../src/standard-library/std-lib";
 import { hash } from "../src/util";
 import { assertParses, transforms } from "./compiler/compiler-test-helpers";
 import { getTestSystem } from "./compiler/test-system";
+import { AbstractFrame } from "../src/frames/abstract-frame";
+import {  WebWorkerMessage } from "../src/web/web-worker-messages";
+import  Worker  from 'web-worker';
+
 
 // flag to update test file
 const updateTestFiles = true;
@@ -212,6 +216,70 @@ export async function assertAutocompletes(
   fld.cursorPos = at;
   fld.processKey(getEvent(char));
   await doAsserts(f, fld, expected);
+}
+
+
+function assertData(variables: [string, string][], expected: [string, string][]) {
+  
+ 
+
+  for (let i = 0; i < variables.length; i++) {
+    const v = variables[i];
+    const e = expected[i];
+
+    assert.strictEqual(v[0], e[0]);
+    assert.strictEqual(v[1], e[1]);
+  }
+}
+
+function handleBreakPoint (runWorker : Worker) {
+  return new Promise<[string, string][]>((rs, rj) => {
+    runWorker.addEventListener("message", (e: MessageEvent<WebWorkerMessage>) => {
+      const data = e.data;
+  
+      switch (data.type) {
+        case "breakpoint":
+          //assertData(data, expected);
+          rs(data.value)
+          break;
+        default:
+          rj(`unexpected response ${data.type}`)
+      }
+    });
+  
+    runWorker.addEventListener("error", (ev: ErrorEvent) => {
+      //assert.fail()
+      rj(`unexpected error ${ev}`);
+    });
+  
+    runWorker.postMessage({ type: "start" } as WebWorkerMessage);
+  });
+}
+
+
+export async function assertDebugBreakPoint(
+  f: FileImpl,
+  id: string,
+  expected: [string, string][],
+): Promise<void> {
+  assertParses(f);
+  
+  const fld = f.getById(id) as AbstractFrame;
+
+  fld.hasBreakPoint = true;
+
+  
+  const jsCode = f.compileAsWorker1(`file:///C:/GitHub/IDE/out/test`);
+  const asUrl = "data:text/javascript;base64," + btoa(jsCode);
+
+  const runWorker = new Worker(asUrl, { type: "module" });
+
+  const data = await handleBreakPoint(runWorker);
+  runWorker.terminate();
+
+  assertData(data, expected);
+
+
 }
 
 export async function assertSymbolCompletionWithString(

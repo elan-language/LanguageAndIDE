@@ -315,11 +315,11 @@ export class System {
   async breakPoint(allScopedSymbols: [string, string][], id: string): Promise<void> {
     let paused = true;
 
-    onmessage = async (e) => {
+    addEventListener("message", async (e) => {
       if (e.data.type === "resume") {
         paused = false;
       }
-    };
+    });
 
     return new Promise<void>((rs) => {
       postMessage({
