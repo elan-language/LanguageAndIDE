@@ -8,7 +8,7 @@ import { OperationSymbol } from "./operation-symbol";
 
 export class UnaryExprAsn extends AbstractAstNode implements AstNode {
   constructor(
-    private readonly op: OperationSymbol,
+    public readonly op: OperationSymbol,
     private readonly operand: AstNode,
     public readonly fieldId: string,
   ) {

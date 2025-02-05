@@ -267,6 +267,10 @@ export function mustBePureFunctionSymbol(
   }
 }
 
+export function mustNotBeNegativeIndex(compileErrors: CompileError[], location: string) {
+  compileErrors.push(new SyntaxCompileError("Index cannot be negative", location));
+}
+
 export function mustBeIndexableSymbol(
   symbolId: string,
   symbolType: SymbolType,

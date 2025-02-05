@@ -888,36 +888,6 @@ end main`;
     assertDoesNotCompile(fileImpl, ["Incompatible types List<of String> to Array<of String>"]);
   });
 
-  test("Fail_assignRange", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-    variable a set to [1,2,3,4]
-    set a[1..2] to a
-    print a
-end main`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertDoesNotParse(fileImpl);
-  });
-
-  test("Fail_withoutGenericType", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-    variable a set to new Array()
-    print a
-end main`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["<of Type(s)> expected: 1 got: 0"]);
-  });
-
   test("Pass_listOfFunctionGenericType", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
@@ -1003,5 +973,68 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, `2`);
+  });
+
+  test("Fail_withoutGenericType", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+    variable a set to new Array()
+    print a
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["<of Type(s)> expected: 1 got: 0"]);
+  });
+
+  test("Fail_assignRange", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+    variable a set to [1,2,3,4]
+    set a[1..2] to a
+    print a
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test("Fail_negativeIndexCompile", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+    variable a set to [1,2,3,4]
+    variable b set to a[-1]
+    print b
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Index cannot be negative"]);
+  });
+
+  test("Fail_negativeIndexRuntime", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+    variable a set to [1,2,3,4]
+    variable b set to -1
+    variable c set to a[b]
+    print c
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    await assertObjectCodeDoesNotExecute(fileImpl, "Out of range index: -1 size: 4");
   });
 });

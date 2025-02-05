@@ -4,6 +4,7 @@ import {
   mustBeCompatibleType,
   mustBeIndexableSymbol,
   mustBeRangeableSymbol,
+  mustNotBeNegativeIndex,
 } from "../compile-rules";
 import { AstNode } from "../interfaces/ast-node";
 import { Scope } from "../interfaces/scope";
@@ -15,7 +16,9 @@ import { isAnyDictionaryType, isGenericSymbolType } from "../symbols/symbol-help
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { ChainedAsn } from "./chained-asn";
+import { OperationSymbol } from "./operation-symbol";
 import { RangeAsn } from "./range-asn";
+import { UnaryExprAsn } from "./unary-expr-asn";
 
 export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
   constructor(
@@ -52,8 +55,10 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
   }
 
   compileIndexParameters() {
-    if (this.index1 instanceof RangeAsn || this.index1 instanceof IndexAsn) {
-      return `${this.index1.compile()}`;
+    if (this.index1 instanceof UnaryExprAsn) {
+      if (this.index1.op === OperationSymbol.Minus) {
+        mustNotBeNegativeIndex(this.compileErrors, this.fieldId);
+      }
     }
 
     return `${this.index1.compile()}`;
