@@ -2,6 +2,8 @@
 import assert from "assert";
 import { readFileSync, writeFileSync } from "fs";
 import * as jsdom from "jsdom";
+import Worker from 'web-worker';
+import { AbstractFrame } from "../src/frames/abstract-frame";
 import { CodeSourceFromString } from "../src/frames/code-source";
 import { DefaultProfile } from "../src/frames/default-profile";
 import { AbstractField } from "../src/frames/fields/abstract-field";
@@ -21,15 +23,13 @@ import { UnknownType } from "../src/frames/symbols/unknown-type";
 import { getTestRunner } from "../src/runner";
 import { StdLib } from "../src/standard-library/std-lib";
 import { hash } from "../src/util";
+import { WebWorkerMessage } from "../src/web/web-worker-messages";
 import { assertParses, transforms } from "./compiler/compiler-test-helpers";
 import { getTestSystem } from "./compiler/test-system";
-import { AbstractFrame } from "../src/frames/abstract-frame";
-import {  WebWorkerMessage } from "../src/web/web-worker-messages";
-import  Worker  from 'web-worker';
 
 
 // flag to update test file
-const updateTestFiles = true;
+const updateTestFiles = false;
 
 export async function assertEffectOfActionNew(
   sourceFile: string,

@@ -112,7 +112,7 @@ el-global:has(el-comment) {
 }
 
 /* Frame selection */
-.selected > * {
+.selected > * , .selected > .outdent *{
     border-left-color: var(--selection);
 }
 
@@ -125,7 +125,8 @@ el-global:has(el-comment) {
 .selected > el-txt, 
 .selected > el-place, 
 .selected > el-compl,
-.selected > .outdent el-top, .selected > .outdent el-top * {
+.selected > .outdent el-top, .selected > .outdent el-top *
+{
     background-color: var(--selection);
     border-right-color: var(--selection);
 }

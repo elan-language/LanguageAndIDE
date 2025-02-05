@@ -14,4 +14,5 @@ export class Regexes {
   static readonly leadingSpaceNotNL = /^[^\S\r\n]+/;
   static readonly anythingExceptUnescapedForwardSlash = /^([^\/\\]|\\.)+/;
   static readonly flags = /^[dgimsuvy]*/;
+  static readonly whiteSpaceButNotNewline = /[^\S\r\n]/;
 }
