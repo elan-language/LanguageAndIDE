@@ -1,11 +1,12 @@
 import { CompileError } from "../compile-error";
+import { mustNotBeTwoUnaryExpressions as mustNotBeSequentialUnaryExpressions } from "../compile-rules";
 import { AstNode } from "../interfaces/ast-node";
 import { BooleanType } from "../symbols/boolean-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { mapOperationSymbol } from "./ast-helpers";
 import { OperationSymbol } from "./operation-symbol";
 
-export class UnaryExprASn extends AbstractAstNode implements AstNode {
+export class UnaryExprAsn extends AbstractAstNode implements AstNode {
   constructor(
     private readonly op: OperationSymbol,
     private readonly operand: AstNode,
@@ -31,6 +32,11 @@ export class UnaryExprASn extends AbstractAstNode implements AstNode {
 
   compile(): string {
     this.compileErrors = [];
+
+    if (this.operand instanceof UnaryExprAsn) {
+      mustNotBeSequentialUnaryExpressions(this.compileErrors, this.fieldId);
+    }
+
     return `${this.opToJs()}${this.operand.compile()}`;
   }
 

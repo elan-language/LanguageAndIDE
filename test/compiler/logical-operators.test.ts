@@ -92,12 +92,8 @@ return [main, _tests];}`;
 main
   variable a set to not false
   variable b set to not true
-  variable c set to not not true
-  variable d set to not not false
   print a
   print b
-  print c
-  print d
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -105,12 +101,8 @@ const global = new class {};
 async function main() {
   let a = !_stdlib.false;
   let b = !_stdlib.true;
-  let c = !!_stdlib.true;
-  let d = !!_stdlib.false;
   await system.printLine(a);
   await system.printLine(b);
-  await system.printLine(c);
-  await system.printLine(d);
 }
 return [main, _tests];}`;
 
@@ -120,7 +112,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "truefalsetruefalse");
+    await assertObjectCodeExecutes(fileImpl, "truefalse");
   });
 
   test("Pass_Precedence", async () => {

@@ -105,7 +105,7 @@ import { SegmentedStringAsn } from "./segmented-string-asn";
 import { ThisAsn } from "./this-asn";
 import { ToAsn } from "./to-asn";
 import { TypeAsn } from "./type-asn";
-import { UnaryExprASn } from "./unary-expr-asn";
+import { UnaryExprAsn } from "./unary-expr-asn";
 import { VarAsn } from "./var-asn";
 
 export function transformMany(
@@ -148,7 +148,7 @@ export function transform(
     const op = mapOperation(node.unaryOp!.matchedText);
     const operand = transform(node.term, fieldId, scope) as AstNode;
 
-    return new UnaryExprASn(op, operand, fieldId);
+    return new UnaryExprAsn(op, operand, fieldId);
   }
 
   if (node instanceof BinaryExpression) {

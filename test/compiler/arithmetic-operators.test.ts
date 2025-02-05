@@ -384,4 +384,66 @@ end main`;
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["Incompatible types Float to Int"]);
   });
+
+  test("Fail_DoubleMinus1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  let x be --4
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Unsupported operation"]);
+  });
+
+  test("Fail_DoubleMinus2", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable x set to 1
+  variable y set to --x
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Unsupported operation"]);
+  });
+
+  test("Fail_DoubleNot1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  let x be not not true
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Unsupported operation"]);
+  });
+
+  test("Fail_DoubleNot2", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable x set to true
+  variable y set to not not x
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Unsupported operation"]);
+  });
 });

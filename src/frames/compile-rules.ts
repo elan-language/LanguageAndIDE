@@ -1216,3 +1216,7 @@ export function mustBeKnownCompilerDirective(
 ) {
   compileErrors.push(new UnknownCompilerDirectiveCompileError(directive, location));
 }
+
+export function mustNotBeTwoUnaryExpressions(compileErrors: CompileError[], location: string) {
+  compileErrors.push(new SyntaxCompileError("Unsupported operation", location));
+}
