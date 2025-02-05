@@ -1482,6 +1482,7 @@ function runTestsInner() {
   try {
     clearDisplays();
     file.setTestStatus(TestStatus.running);
+
     updateDisplayValues();
     const path = `${document.location.origin}${document.location.pathname}`.replace(
       "/index.html",

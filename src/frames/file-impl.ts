@@ -37,7 +37,6 @@ import {
   parentHelper_addChildAfter,
   parentHelper_addChildBefore,
   parentHelper_aggregateCompileErrorsOfChildren,
-  parentHelper_clearBreakpoints,
   parentHelper_deleteSelectedChildren,
   parentHelper_getChildAfter,
   parentHelper_getChildBefore,
@@ -50,11 +49,19 @@ import {
   parentHelper_removeChild,
   parentHelper_renderChildrenAsHtml,
   parentHelper_renderChildrenAsSource,
+  parentHelper_updateBreakpoints,
   worstParseStatus,
 } from "./parent-helpers";
 import { ScratchPad } from "./scratch-pad";
 import { StatementFactoryImpl } from "./statement-factory-impl";
-import { CompileStatus, DisplayStatus, ParseStatus, RunStatus, TestStatus } from "./status-enums";
+import {
+  BreakpointStatus,
+  CompileStatus,
+  DisplayStatus,
+  ParseStatus,
+  RunStatus,
+  TestStatus,
+} from "./status-enums";
 import { DuplicateSymbol } from "./symbols/duplicate-symbol";
 import { elanSymbols } from "./symbols/elan-symbols";
 import { isSymbol, symbolMatches } from "./symbols/symbol-helpers";
@@ -291,6 +298,7 @@ export class FileImpl implements File, Scope {
   }
 
   compileAsWorker(base: string): string {
+    this.updateBreakpoints(BreakpointStatus.active);
     const onmsg = `addEventListener("message", async (e) => {
   if (e.data.type === "start") {
     try {
@@ -309,6 +317,7 @@ export class FileImpl implements File, Scope {
   }
 
   compileAsTestWorker(base: string): string {
+    this.updateBreakpoints(BreakpointStatus.disabled);
     const onmsg = `onmessage = async (e) => {
   if (e.data.type === "start") {
     try {
@@ -731,8 +740,8 @@ export class FileImpl implements File, Scope {
     return this._stdLibSymbols;
   }
 
-  clearBreakpoints() {
-    parentHelper_clearBreakpoints(this);
+  updateBreakpoints(newState: BreakpointStatus) {
+    parentHelper_updateBreakpoints(this, newState);
   }
 }
 

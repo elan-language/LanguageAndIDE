@@ -14,7 +14,6 @@ import {
   parentHelper_addChildAfter,
   parentHelper_addChildBefore,
   parentHelper_aggregateCompileErrorsOfChildren,
-  parentHelper_clearBreakpoints,
   parentHelper_compileChildren,
   parentHelper_deleteSelectedChildren,
   parentHelper_getChildAfter,
@@ -32,10 +31,12 @@ import {
   parentHelper_renderChildrenAsHtml,
   parentHelper_renderChildrenAsSource,
   parentHelper_selectFirstChild,
+  parentHelper_updateBreakpoints,
 } from "./parent-helpers";
 import { AssertStatement } from "./statements/assert-statement";
 import { DefinitionAdapter } from "./statements/definition-adapter";
 import { StatementSelector } from "./statements/statement-selector";
+import { BreakpointStatus } from "./status-enums";
 import { getDeconstructionIds, isSymbol, symbolMatches } from "./symbols/symbol-helpers";
 import { Transforms } from "./syntax-nodes/transforms";
 
@@ -314,8 +315,8 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     return asserts;
   }
 
-  clearBreakpoints(): void {
-    this.hasBreakPoint = false;
-    parentHelper_clearBreakpoints(this);
+  updateBreakpoints(newStatus: BreakpointStatus): void {
+    super.updateBreakpoints(newStatus);
+    parentHelper_updateBreakpoints(this, newStatus);
   }
 }

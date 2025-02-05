@@ -41,17 +41,6 @@ export function assertObjectCodeIs(file: FileImpl, objectCode: string) {
   assert.strictEqual(actual, expected);
 }
 
-export function assertWorkerCompiledObjectCodeIs(file: FileImpl, objectCode: string, debugId : string) {
-  const bp = file.getById(debugId) as AbstractFrame;
-  bp.hasBreakPoint = true;
-
-  const actual = file.compileAsWorker("").replaceAll("\r", "");
-  const expected = objectCode.replaceAll("\r", "");
-  const errors = file.aggregateCompileErrors();
-  assert.strictEqual(errors.length, 0, errors.map((e) => e.message).join(", "));
-  assert.strictEqual(actual, expected);
-}
-
 export function assertDoesNotCompile(file: FileImpl, msgs: string[]) {
   file.compile();
 

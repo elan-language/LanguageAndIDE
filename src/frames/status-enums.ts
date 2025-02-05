@@ -36,3 +36,9 @@ export enum DisplayStatus {
   ok,
   default,
 }
+
+export enum BreakpointStatus {
+  none,
+  disabled,
+  active,
+}

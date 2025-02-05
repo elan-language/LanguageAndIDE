@@ -25,7 +25,7 @@ import {
   parentHelper_removeAllSelectedChildren,
 } from "./parent-helpers";
 import { ScratchPad } from "./scratch-pad";
-import { CompileStatus, DisplayStatus, ParseStatus } from "./status-enums";
+import { BreakpointStatus, CompileStatus, DisplayStatus, ParseStatus } from "./status-enums";
 import { allScopedSymbols, orderSymbol } from "./symbols/symbol-helpers";
 import { SymbolScope } from "./symbols/symbol-scope";
 import { UnknownType } from "./symbols/unknown-type";
@@ -47,7 +47,7 @@ export abstract class AbstractFrame implements Frame {
   abstract hrefForFrameHelp: string;
 
   protected showContextMenu = false;
-  hasBreakPoint = false;
+  breakpointStatus: BreakpointStatus = BreakpointStatus.none;
   protected paused = false;
 
   constructor(parent: Parent) {
@@ -446,7 +446,7 @@ export abstract class AbstractFrame implements Frame {
     this.pushClass(this.collapsed, "collapsed");
     this.pushClass(this.selected, "selected");
     this.pushClass(this.focused, "focused");
-    this.pushClass(this.hasBreakPoint, "breakpoint");
+    this.pushClass(this.breakpointStatus !== BreakpointStatus.none, "breakpoint");
     this.pushClass(this.paused, "paused");
     this._classes.push(DisplayStatus[this.readDisplayStatus()]);
   }
@@ -624,20 +624,36 @@ export abstract class AbstractFrame implements Frame {
     return helper_compileMsgAsHtml(this);
   }
 
-  clearBreakpoints(): void {
-    this.hasBreakPoint = false;
+  updateBreakpoints(newState: BreakpointStatus): void {
+    if (newState === BreakpointStatus.none) {
+      this.breakpointStatus = newState;
+    }
+
+    if (
+      this.breakpointStatus === BreakpointStatus.active &&
+      newState === BreakpointStatus.disabled
+    ) {
+      this.breakpointStatus = newState;
+    }
+
+    if (
+      this.breakpointStatus === BreakpointStatus.disabled &&
+      newState === BreakpointStatus.active
+    ) {
+      this.breakpointStatus = newState;
+    }
   }
 
   setBreakPoint = () => {
-    this.hasBreakPoint = true;
+    this.breakpointStatus = BreakpointStatus.active;
   };
 
   clearBreakPoint = () => {
-    this.hasBreakPoint = false;
+    this.breakpointStatus = BreakpointStatus.none;
   };
 
   toggleBreakPoint = () => {
-    if (this.hasBreakPoint) {
+    if (this.breakpointStatus) {
       this.clearBreakPoint();
     } else {
       this.setBreakPoint();
@@ -645,14 +661,14 @@ export abstract class AbstractFrame implements Frame {
   };
 
   clearAllBreakPoints = () => {
-    this.getFile().clearBreakpoints();
+    this.getFile().updateBreakpoints(BreakpointStatus.none);
   };
 
   getContextMenuItems() {
     const map = new Map<string, [string, (() => void) | undefined, string]>();
     map.set("frameHelp", ["Help for this instruction", undefined, this.hrefForFrameHelp]);
     // Must be arrow functions for this binding
-    if (this.hasBreakPoint) {
+    if (this.breakpointStatus === BreakpointStatus.active) {
       map.set("clearBP", ["clear breakpoint (Ctrl-b)", this.clearBreakPoint, ""]);
       map.set("clearAllBP", ["clear all breakpoints", this.clearAllBreakPoints, ""]);
     } else {
@@ -692,11 +708,11 @@ export abstract class AbstractFrame implements Frame {
   }
 
   bpAsHtml(): string {
-    return this.hasBreakPoint ? `<el-bp>&#x1f5f2;</el-bp>` : ``;
+    return this.breakpointStatus === BreakpointStatus.none ? "" : `<el-bp>&#x1f5f2;</el-bp>`;
   }
 
   breakPoint(scopedSymbols: () => ElanSymbol[]) {
-    if (!this.hasBreakPoint) {
+    if (this.breakpointStatus !== BreakpointStatus.active) {
       return "";
     }
 

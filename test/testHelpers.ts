@@ -11,7 +11,7 @@ import { editorEvent } from "../src/frames/interfaces/editor-event";
 import { File } from "../src/frames/interfaces/file";
 import { ParseNode } from "../src/frames/parse-nodes/parse-node";
 import { VariableStatement } from "../src/frames/statements/variable-statement";
-import { CompileStatus, ParseStatus, TestStatus } from "../src/frames/status-enums";
+import { BreakpointStatus, CompileStatus, ParseStatus, TestStatus } from "../src/frames/status-enums";
 import { TokenType } from "../src/frames/symbol-completion-helpers";
 import { BooleanType } from "../src/frames/symbols/boolean-type";
 import { FloatType } from "../src/frames/symbols/float-type";
@@ -269,7 +269,7 @@ export async function assertDebugBreakPoint(
   
   const fld = f.getById(id) as AbstractFrame;
 
-  fld.hasBreakPoint = true;
+  fld.breakpointStatus = BreakpointStatus.active;
 
   const dir = __dirname.replaceAll("\\", "/");
   const jsCode = f.compileAsWorker(`file:///${dir}`);

@@ -36,7 +36,6 @@ import {
   parentHelper_addChildAfter,
   parentHelper_addChildBefore,
   parentHelper_aggregateCompileErrorsOfChildren,
-  parentHelper_clearBreakpoints,
   parentHelper_deleteSelectedChildren,
   parentHelper_getChildAfter,
   parentHelper_getChildBefore,
@@ -50,8 +49,10 @@ import {
   parentHelper_readWorstCompileStatusOfChildren,
   parentHelper_readWorstParseStatusOfChildren,
   parentHelper_removeChild,
+  parentHelper_updateBreakpoints,
 } from "../parent-helpers";
 import { CommentStatement } from "../statements/comment-statement";
+import { BreakpointStatus } from "../status-enums";
 import { ClassSubType, ClassType } from "../symbols/class-type";
 import { DuplicateSymbol } from "../symbols/duplicate-symbol";
 import { getGlobalScope, isSymbol, symbolMatches } from "../symbols/symbol-helpers";
@@ -523,8 +524,8 @@ export abstract class ClassFrame
     return this.getParent().getChildren().indexOf(this);
   }
 
-  clearBreakpoints(): void {
-    this.hasBreakPoint = false;
-    parentHelper_clearBreakpoints(this);
+  updateBreakpoints(newStatus: BreakpointStatus): void {
+    super.updateBreakpoints(newStatus);
+    parentHelper_updateBreakpoints(this, newStatus);
   }
 }

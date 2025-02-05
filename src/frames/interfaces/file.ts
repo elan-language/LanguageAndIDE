@@ -3,7 +3,13 @@ import { CodeSource } from "../code-source";
 import { CompileError } from "../compile-error";
 import { editorEvent } from "../interfaces/editor-event";
 import { ScratchPad } from "../scratch-pad";
-import { CompileStatus, ParseStatus, RunStatus, TestStatus } from "../status-enums";
+import {
+  BreakpointStatus,
+  CompileStatus,
+  ParseStatus,
+  RunStatus,
+  TestStatus,
+} from "../status-enums";
 import { Frame } from "./frame";
 import { Parent } from "./parent";
 import { Profile } from "./profile";
@@ -97,5 +103,5 @@ export interface File extends Parent {
   currentHash: string;
   hasTests: boolean;
 
-  clearBreakpoints(): void;
+  updateBreakpoints(newState: BreakpointStatus): void;
 }

@@ -13,7 +13,7 @@ import { GlobalFrame } from "../interfaces/global-frame";
 import { ignoreKeyword, testKeyword } from "../keywords";
 import { parentHelper_compileFrames } from "../parent-helpers";
 import { AssertStatement } from "../statements/assert-statement";
-import { DisplayStatus, TestStatus } from "../status-enums";
+import { BreakpointStatus, DisplayStatus, TestStatus } from "../status-enums";
 import { Transforms } from "../syntax-nodes/transforms";
 
 export class TestFrame extends FrameWithStatements implements GlobalFrame {
@@ -184,6 +184,6 @@ ${this.compileTestBody(transforms)}\r
   }
 
   clearBreakPoint = () => {
-    this.hasBreakPoint = false;
+    this.breakpointStatus = BreakpointStatus.none;
   };
 }
