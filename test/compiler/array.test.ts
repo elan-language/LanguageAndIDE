@@ -608,6 +608,41 @@ end main
     ]);
   });
 
+  test("Fail_IndexTypeIncompatibility", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to new Array<of String>()
+  call a.putAt(0, "fred")
+  call a.putAt(1, "bill")
+  variable b set to 0
+  set b to a[0]
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types String to Int"]);
+  });
+
+  test("Fail_IndexTypeIncompatibility1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to new Array<of String>()
+  call a.append(1)
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Argument types expected: value (String) Provided: Int"]);
+  });
+
   test("Fail_NoSet", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
