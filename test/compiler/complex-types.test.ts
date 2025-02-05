@@ -2,6 +2,7 @@ import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
   assertDoesNotCompile,
+  assertDoesNotParse,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
@@ -135,5 +136,49 @@ end main`;
     assertDoesNotCompile(fileImpl, [
       "Argument types expected: index (Int), value (Int) Provided: String, Int",
     ]);
+  });
+
+  test("Fail_UnknownOfType", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  let a be new Array<of Foo>()
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'Foo' is not defined"]);
+  });
+
+  test("Fail_UnknowNestedOfType", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  let a be new Array<of Array<of Foo>>()
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'Foo' is not defined"]);
+  });
+
+  test("Fail_NotType", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  let t be 1
+  let a be new Array<of t>()
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
   });
 });

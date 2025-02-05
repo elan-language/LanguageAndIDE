@@ -1,5 +1,5 @@
 import { CompileError } from "../compile-error";
-import { mustMatchGenericParameters } from "../compile-rules";
+import { mustBeKnownSymbolType, mustMatchGenericParameters } from "../compile-rules";
 import { AstNode } from "../interfaces/ast-node";
 import { AstTypeNode } from "../interfaces/ast-type-node";
 import { Scope } from "../interfaces/scope";
@@ -72,12 +72,23 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
   compile(): string {
     this.compileErrors = [];
 
+    mustBeKnownSymbolType(
+      this.rootSymbol().symbolType(transforms()),
+      this.id,
+      this.compileErrors,
+      this.fieldId,
+    );
+
     mustMatchGenericParameters(
       this.genericParameters,
       this.expectedMinimumGenericParameters(),
       this.compileErrors,
       this.fieldId,
     );
+
+    for (const gp of this.genericParameters) {
+      gp.compile();
+    }
 
     if (this.id === "Dictionary" || this.id === "DictionaryImmutable") {
       return "Object";
@@ -99,9 +110,13 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
     return this.genericParameters[index]?.symbolType() ?? UnknownType.Instance;
   }
 
-  symbolType() {
+  rootSymbol() {
     const globalScope = getGlobalScope(this.scope);
-    const symbol = globalScope.resolveSymbol(this.id, transforms(), this.scope);
+    return globalScope.resolveSymbol(this.id, transforms(), this.scope);
+  }
+
+  symbolType() {
+    const symbol = this.rootSymbol();
     const st = symbol.symbolType(transforms());
 
     if (isReifyableSymbolType(st)) {
