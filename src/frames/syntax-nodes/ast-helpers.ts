@@ -142,50 +142,61 @@ export function containsGenericType(type: SymbolType): boolean {
   return false;
 }
 
-export function generateType(type: SymbolType, matches: Map<string, SymbolType>): SymbolType {
+export function generateType(
+  type: SymbolType,
+  matches: Map<string, SymbolType>,
+  depth = 0,
+): SymbolType {
+  depth++;
+
+  // arbitary depth
+  if (depth > 20) {
+    return type;
+  }
+
   if (type instanceof GenericParameterType) {
     const match = matches.get(type.id);
     if (match instanceof TypeHolder) {
-      return generateType(match.symbolType, matches);
+      return generateType(match.symbolType, matches, depth);
     }
 
     return match ?? UnknownType.Instance;
   }
   if (type instanceof ArrayType) {
-    return new ArrayType(generateType(type.ofType, matches));
+    return new ArrayType(generateType(type.ofType, matches, depth));
   }
   if (type instanceof ListType) {
-    return new ListType(generateType(type.ofType, matches));
+    return new ListType(generateType(type.ofType, matches, depth));
   }
   if (type instanceof IterableType) {
-    return new IterableType(generateType(type.ofType, matches));
+    return new IterableType(generateType(type.ofType, matches, depth));
   }
   if (type instanceof DictionaryType) {
     return new DictionaryType(
-      generateType(type.keyType, matches),
-      generateType(type.valueType, matches),
+      generateType(type.keyType, matches, depth),
+      generateType(type.valueType, matches, depth),
     );
   }
   if (type instanceof DictionaryImmutableType) {
     return new DictionaryImmutableType(
-      generateType(type.keyType, matches),
-      generateType(type.valueType, matches),
+      generateType(type.keyType, matches, depth),
+      generateType(type.valueType, matches, depth),
     );
   }
   if (type instanceof AbstractDictionaryType) {
     return new AbstractDictionaryType(
-      generateType(type.keyType, matches),
-      generateType(type.valueType, matches),
+      generateType(type.keyType, matches, depth),
+      generateType(type.valueType, matches, depth),
     );
   }
   if (type instanceof TupleType) {
-    return new TupleType(type.ofTypes.map((t) => generateType(t, matches)));
+    return new TupleType(type.ofTypes.map((t) => generateType(t, matches, depth)));
   }
 
   if (type instanceof FunctionType) {
     return new FunctionType(
       type.parameterNames,
-      type.parameterTypes.map((t) => generateType(t, matches)),
+      type.parameterTypes.map((t) => generateType(t, matches, depth)),
       generateType(type.returnType, matches),
       type.isExtension,
       type.isPure,

@@ -591,4 +591,21 @@ end main`;
       "Argument types expected: lambdaOrFunctionRef (Func<of String => Float>) Provided: Func<of String => String>",
     ]);
   });
+
+  test("Fail_MissingBrackets", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+constant source set to {"apple":"apple", "orange":"orange", "pair":"pair"}
+main
+  print source.keys.map(lambda s as String => s)
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "To evaluate function 'keys' add brackets. Or to create a reference to 'keys', precede it by 'ref'",
+    ]);
+  });
 });
