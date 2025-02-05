@@ -78,6 +78,10 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
     return `system.safeIndex(${code})`;
   }
 
+  wrapRange(code: string): string {
+    return `system.safeSlice(${code})`;
+  }
+
   getIndexType(rootType: SymbolType): [SymbolType, SymbolType] {
     if (isGenericSymbolType(rootType)) {
       return [IntType.Instance, rootType.ofType];
@@ -100,6 +104,17 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
     return code;
   }
 
+  compileRange(rootType: SymbolType, code: string, idx: string) {
+    mustBeRangeableSymbol(rootType, true, this.compileErrors, this.fieldId);
+    const [indexType] = this.getIndexType(rootType);
+    mustBeCompatibleType(indexType, IntType.Instance, this.compileErrors, this.fieldId);
+    code = `${code}, ${idx}`;
+    code = this.wrapRange(code);
+    code = this.wrapListOrArray(rootType, code);
+
+    return code;
+  }
+
   compile(): string {
     this.compileErrors = [];
 
@@ -118,11 +133,7 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
         code = this.compileIndex(getId(this.precedingNode), rootType, this, code, idx);
       }
       if (this.isRange()) {
-        mustBeRangeableSymbol(rootType, true, this.compileErrors, this.fieldId);
-        const [indexType] = this.getIndexType(rootType);
-        mustBeCompatibleType(indexType, IntType.Instance, this.compileErrors, this.fieldId);
-        code = `${code}${idx}`;
-        code = this.wrapListOrArray(rootType, code);
+        code = this.compileRange(rootType, code, idx);
       }
     }
 

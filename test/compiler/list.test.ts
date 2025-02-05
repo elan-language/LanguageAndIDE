@@ -475,9 +475,9 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.list([4, 5, 6, 7, 8]);
-  await system.printLine(system.list(a.slice(2, 5)));
-  await system.printLine(system.list(a.slice(1, 3)));
-  await system.printLine(system.list(a.slice(0, 2)));
+  await system.printLine(system.list(system.safeSlice(a, 2, 5)));
+  await system.printLine(system.list(system.safeSlice(a, 1, 3)));
+  await system.printLine(system.list(system.safeSlice(a, 0, 2)));
 }
 return [main, _tests];}`;
 

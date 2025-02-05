@@ -93,7 +93,7 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.array((await foo(1, 2)).slice(0, 1));
+  let a = system.array(system.safeSlice((await foo(1, 2)), 0, 1));
   await system.printLine(a);
 }
 

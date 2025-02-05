@@ -236,7 +236,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.literalArray(["foo", "bar", "yon"]);
-  a = system.array(a.slice(1));
+  a = system.array(system.safeSlice(a, 1));
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -1028,6 +1028,72 @@ main
     variable a set to [1,2,3,4]
     variable b set to -1
     variable c set to a[b]
+    print c
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    await assertObjectCodeDoesNotExecute(fileImpl, "Out of range index: -1 size: 4");
+  });
+
+  test("Fail_negativeRange1Compile", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+    variable a set to [1,2,3,4]
+    variable b set to a[-1..2]
+    print b
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Index cannot be negative"]);
+  });
+
+  test("Fail_negativeRange1Runtime", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+    variable a set to [1,2,3,4]
+    variable b set to -1
+    variable c set to a[b..2]
+    print c
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    await assertObjectCodeDoesNotExecute(fileImpl, "Out of range index: -1 size: 4");
+  });
+
+  test("Fail_negativeRange2Compile", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+    variable a set to [1,2,3,4]
+    variable b set to a[0..-1]
+    print b
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Index cannot be negative"]);
+  });
+
+  test("Fail_negativeRange2Runtime", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+    variable a set to [1,2,3,4]
+    variable b set to -1
+    variable c set to a[0..b]
     print c
 end main`;
 

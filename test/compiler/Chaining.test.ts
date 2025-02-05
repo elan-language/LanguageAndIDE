@@ -378,7 +378,7 @@ end main`;
 const global = new class {};
 async function main() {
   let s = "";
-  s = _stdlib.upperCase(_stdlib.lowerCase("Hello World!").slice(0, 1));
+  s = _stdlib.upperCase(system.safeSlice(_stdlib.lowerCase("Hello World!"), 0, 1));
   await system.printLine(s);
 }
 return [main, _tests];}`;
@@ -407,7 +407,7 @@ const global = new class {};
 async function main() {
   let aStringVar = "abcdexefg";
   let s = "";
-  s = (await _stdlib.asString(_stdlib.indexOf(_stdlib.upperCase(aStringVar).slice(1, 7).slice(2, 6), "X")));
+  s = (await _stdlib.asString(_stdlib.indexOf(system.safeSlice(system.safeSlice(_stdlib.upperCase(aStringVar), 1, 7), 2, 6), "X")));
   await system.printLine(s);
 }
 return [main, _tests];}`;
@@ -492,7 +492,7 @@ const global = new class {};
 async function main() {
   let aFoo = system.initialise(await new Foo()._initialise());
   let b = 0;
-  b = _stdlib.length(system.array((await aFoo.createArr(10)).slice(1, 5))) + 3;
+  b = _stdlib.length(system.array(system.safeSlice((await aFoo.createArr(10)), 1, 5))) + 3;
   await system.printLine(b);
 }
 
@@ -637,7 +637,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.literalArray([1, 2, 3, 4, 5, 6]);
-  await system.printLine((await _stdlib.reduce(system.array(_stdlib.asArray((await _stdlib.map(system.array(a.slice(0, 5)), async (x) => x * x))).slice(2)), 0, async (s, x) => s + x)));
+  await system.printLine((await _stdlib.reduce(system.array(system.safeSlice(_stdlib.asArray((await _stdlib.map(system.array(system.safeSlice(a, 0, 5)), async (x) => x * x))), 2)), 0, async (s, x) => s + x)));
 }
 return [main, _tests];}`;
 
