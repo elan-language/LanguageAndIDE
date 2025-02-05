@@ -174,9 +174,9 @@ end procedure`;
 const global = new class {};
 async function main() {
   let a = system.literalArray([2, 3]);
-  let _a = [a];
-  await changeFirst(_a);
-  a = _a[0];
+  let _a18 = [a];
+  await changeFirst(_a18);
+  a = _a18[0];
   await system.printLine(a);
 }
 
@@ -476,9 +476,9 @@ const global = new class {};
 async function main() {
   let a = 2;
   let b = "hello";
-  let _a = [a]; let _b = [b];
-  await foo(_a, _b);
-  a = _a[0]; b = _b[0];
+  let _a26 = [a]; let _b26 = [b];
+  await foo(_a26, _b26);
+  a = _a26[0]; b = _b26[0];
   await system.printLine(a);
   await system.printLine(b);
 }
@@ -521,9 +521,9 @@ const global = new class {};
 async function main() {
   let a = 2;
   let b = 3;
-  let _a = [a]; let _b = [b];
-  await foo(_a, _b);
-  a = _a[0]; b = _b[0];
+  let _a29 = [a]; let _b29 = [b];
+  await foo(_a29, _b29);
+  a = _a29[0]; b = _b29[0];
   await system.printLine(a);
   await system.printLine(b);
 }
@@ -571,17 +571,17 @@ const global = new class {};
 async function main() {
   let a = 2;
   let b = 3;
-  let _a = [a]; let _b = [b];
-  await foo(_a, _b);
-  a = _a[0]; b = _b[0];
+  let _a36 = [a]; let _b36 = [b];
+  await foo(_a36, _b36);
+  a = _a36[0]; b = _b36[0];
   await system.printLine(a);
   await system.printLine(b);
 }
 
 async function foo(a, b) {
-  let _a = [a[0]]; let _b = [b[0]];
-  await bar(_a, _b);
-  a[0] = _a[0]; b[0] = _b[0];
+  let _a37 = [a[0]]; let _b37 = [b[0]];
+  await bar(_a37, _b37);
+  a[0] = _a37[0]; b[0] = _b37[0];
 }
 global["foo"] = foo;
 
@@ -630,16 +630,16 @@ const global = new class {};
 async function main() {
   let a = system.initialise(await new Foo()._initialise());
   let b = 0;
-  let _a = [a]; let _b = [b];
-  await foo(_a, _b);
-  a = _a[0]; b = _b[0];
+  let _a35 = [a]; let _b35 = [b];
+  await foo(_a35, _b35);
+  a = _a35[0]; b = _b35[0];
   await system.printLine(b);
 }
 
 async function foo(f, y) {
-  let _y = [y[0]];
-  await f[0].bar(_y);
-  y[0] = _y[0];
+  let _y36 = [y[0]];
+  await f[0].bar(_y36);
+  y[0] = _y36[0];
 }
 global["foo"] = foo;
 
@@ -694,9 +694,9 @@ const global = new class {};
 async function main() {
   let a = system.initialise(await new Foo()._initialise());
   let b = 100;
-  let _a = [a]; let _b = [b];
-  await foo(_a, _b);
-  a = _a[0]; b = _b[0];
+  let _a34 = [a]; let _b34 = [b];
+  await foo(_a34, _b34);
+  a = _a34[0]; b = _b34[0];
   await system.printLine(b);
 }
 
@@ -725,6 +725,50 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "101");
+  });
+
+  test("Pass_MultipleCallsWithOutParameters", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable x set to 1
+  call addOne(x)
+  print x
+  call addOne(x)
+  print x
+end main
+
+procedure addOne(out n as Int)
+  set n to n + 1
+end procedure`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let x = 1;
+  let _x23 = [x];
+  await addOne(_x23);
+  x = _x23[0];
+  await system.printLine(x);
+  let _x24 = [x];
+  await addOne(_x24);
+  x = _x24[0];
+  await system.printLine(x);
+}
+
+async function addOne(n) {
+  n[0] = n[0] + 1;
+}
+global["addOne"] = addOne;
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "23");
   });
 
   test("Fail_CallingUndeclaredProc", async () => {

@@ -82,6 +82,7 @@ export class CallStatement extends AbstractFrame implements Statement {
     callParameters: AstNode[],
     transforms: Transforms,
   ): [string[], string[], string[]] {
+    const postFix = this.getFile().getNextId();
     const wrappedInParameters: string[] = [];
     const wrappedOutParameters: string[] = [];
     const passedParameters: string[] = [];
@@ -105,7 +106,7 @@ export class CallStatement extends AbstractFrame implements Statement {
             callParamSymbol.symbolScope === SymbolScope.parameter ||
             callParamSymbol.symbolScope === SymbolScope.outParameter
           ) {
-            const tpName = `_${p.id}`;
+            const tpName = `_${p.id}${postFix}`;
             wrappedInParameters.push(`let ${tpName} = [${pName}]`);
             wrappedOutParameters.push(`${pName} = ${tpName}[0]`);
             pName = tpName;
