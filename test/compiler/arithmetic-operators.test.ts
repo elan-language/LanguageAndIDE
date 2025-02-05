@@ -222,6 +222,43 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "27");
   });
 
+  test("Pass_PowerTypes", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to 1
+  variable b set to 1.1
+  set a to 2 ^ 2
+  set b to 2 ^ 2
+  set b to 2 ^ 0.5
+  set b to 0.5 ^ 2
+  print a
+  print b
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = 1;
+  let b = 1.1;
+  a = 2 ** 2;
+  b = 2 ** 2;
+  b = 2 ** 0.5;
+  b = 0.5 ** 2;
+  await system.printLine(a);
+  await system.printLine(b);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "40.25");
+  });
+
   test("Pass_UseVariableBothSides", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
@@ -445,5 +482,37 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["Unsupported operation"]);
+  });
+
+  test("Fail_PowerType1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable x set to 1
+  set x to 2 ^ 0.5
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Float to Int"]);
+  });
+
+  test("Fail_PowerType2", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable x set to 1
+  set x to 0.5 ^ 2
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Float to Int"]);
   });
 });

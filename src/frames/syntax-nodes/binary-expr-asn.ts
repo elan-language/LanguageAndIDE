@@ -206,6 +206,8 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
         return this.MostPreciseSymbol(this.lhs.symbolType(), this.rhs.symbolType());
       case OperationSymbol.Multiply:
         return this.MostPreciseSymbol(this.lhs.symbolType(), this.rhs.symbolType());
+      case OperationSymbol.Pow:
+        return this.MostPreciseSymbol(this.lhs.symbolType(), this.rhs.symbolType());
       case OperationSymbol.Div:
         return IntType.Instance;
       case OperationSymbol.Mod:
