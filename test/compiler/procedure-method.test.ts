@@ -190,9 +190,9 @@ const global = new class {};
 async function main() {
   let f = system.initialise(await new Foo()._initialise());
   let b = system.initialise(await new Bar()._initialise());
-  let _b = [b];
-  await f.times(_b);
-  b = _b[0];
+  let _b81 = [b];
+  await f.times(_b81);
+  b = _b81[0];
 }
 
 class Foo {

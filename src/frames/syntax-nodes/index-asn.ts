@@ -4,6 +4,7 @@ import {
   mustBeCompatibleType,
   mustBeIndexableSymbol,
   mustBeRangeableSymbol,
+  mustNotBeNegativeIndex,
 } from "../compile-rules";
 import { AstNode } from "../interfaces/ast-node";
 import { Scope } from "../interfaces/scope";
@@ -15,7 +16,9 @@ import { isAnyDictionaryType, isGenericSymbolType } from "../symbols/symbol-help
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { ChainedAsn } from "./chained-asn";
+import { OperationSymbol } from "./operation-symbol";
 import { RangeAsn } from "./range-asn";
+import { UnaryExprAsn } from "./unary-expr-asn";
 
 export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
   constructor(
@@ -52,8 +55,10 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
   }
 
   compileIndexParameters() {
-    if (this.index1 instanceof RangeAsn || this.index1 instanceof IndexAsn) {
-      return `${this.index1.compile()}`;
+    if (this.index1 instanceof UnaryExprAsn) {
+      if (this.index1.op === OperationSymbol.Minus) {
+        mustNotBeNegativeIndex(this.compileErrors, this.fieldId);
+      }
     }
 
     return `${this.index1.compile()}`;
@@ -71,6 +76,10 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
 
   wrapIndex(code: string): string {
     return `system.safeIndex(${code})`;
+  }
+
+  wrapRange(code: string): string {
+    return `system.safeSlice(${code})`;
   }
 
   getIndexType(rootType: SymbolType): [SymbolType, SymbolType] {
@@ -95,6 +104,17 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
     return code;
   }
 
+  compileRange(rootType: SymbolType, code: string, idx: string) {
+    mustBeRangeableSymbol(rootType, true, this.compileErrors, this.fieldId);
+    const [indexType] = this.getIndexType(rootType);
+    mustBeCompatibleType(indexType, IntType.Instance, this.compileErrors, this.fieldId);
+    code = `${code}, ${idx}`;
+    code = this.wrapRange(code);
+    code = this.wrapListOrArray(rootType, code);
+
+    return code;
+  }
+
   compile(): string {
     this.compileErrors = [];
 
@@ -113,11 +133,7 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
         code = this.compileIndex(getId(this.precedingNode), rootType, this, code, idx);
       }
       if (this.isRange()) {
-        mustBeRangeableSymbol(rootType, true, this.compileErrors, this.fieldId);
-        const [indexType] = this.getIndexType(rootType);
-        mustBeCompatibleType(indexType, IntType.Instance, this.compileErrors, this.fieldId);
-        code = `${code}${idx}`;
-        code = this.wrapListOrArray(rootType, code);
+        code = this.compileRange(rootType, code, idx);
       }
     }
 

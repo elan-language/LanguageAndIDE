@@ -182,9 +182,9 @@ end main`;
 const global = new class {};
 async function main() {
   let a = "abcde";
-  await system.printLine(a.slice(1, 3));
-  await system.printLine(a.slice(2));
-  await system.printLine(a.slice(0, 2));
+  await system.printLine(system.safeSlice(a, 1, 3));
+  await system.printLine(system.safeSlice(a, 2));
+  await system.printLine(system.safeSlice(a, 0, 2));
 }
 return [main, _tests];}`;
 

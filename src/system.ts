@@ -144,6 +144,32 @@ export class System {
     return r;
   }
 
+  safeSlice<T1>(
+    indexable: T1[] | undefined,
+    index1: number | undefined,
+    index2: number | undefined,
+  ) {
+    if (indexable === undefined) {
+      throw new ElanRuntimeError(`Out of range index`);
+    }
+
+    if (index1 && index1 < 0) {
+      this.throwRangeError(indexable, index1);
+    }
+
+    if (index2 && index2 < 0) {
+      this.throwRangeError(indexable, index2);
+    }
+
+    const r = indexable.slice(index1, index2);
+
+    if (r === undefined) {
+      throw new ElanRuntimeError(`Out of range index`);
+    }
+
+    return r;
+  }
+
   safeDictionarySet(toIndex: any, index: any, value: any) {
     const d = this.dictionary(toIndex ?? {}) as any;
     d[index] = value;

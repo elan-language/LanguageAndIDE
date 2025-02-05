@@ -48,8 +48,6 @@ export class CompositeAsn extends AbstractAstNode implements AstNode {
         code = [];
       } else {
         if (previousCode) {
-          // const async = currentNode.isAsync ? "await " : "";
-          // code.push(`${async}${previousCode}`);
           code.push(`${previousCode}`);
         }
       }
