@@ -1060,7 +1060,6 @@ end function`;
 
     const expected = [
       ["Int", "*", "*"],
-      ["Iterable", "*", "*"],
       ["DictionaryImmutable", "*", "*"],
     ] as [string, string, string][];
 
@@ -1134,7 +1133,6 @@ end function`;
 
     const expected = [
       ["Int", "*", "*"],
-      ["Iterable", "*", "*"],
       ["DictionaryImmutable", "*", "*"],
     ] as [string, string, string][];
 

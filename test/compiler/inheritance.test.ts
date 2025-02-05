@@ -2553,24 +2553,6 @@ end class`;
     assertDoesNotCompile(fileImpl, ["Name 'p1' not unique in scope"]);
   });
 
-  test("Fail_IterableSuperclass", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-class Bar inherits Iterable<of Int>
-  constructor()
-  end constructor
-
-  property p2 as Int
-end class`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Superclass 'Iterable' must be inheritable class"]);
-  });
-
   test("Fail_StdLibSuperClass", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 

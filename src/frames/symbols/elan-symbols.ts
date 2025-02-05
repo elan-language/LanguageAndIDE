@@ -10,7 +10,6 @@ import { FloatType } from "./float-type";
 import { FunctionType } from "./function-type";
 import { GenericParameterType } from "./generic-parameter-type";
 import { IntType } from "./int-type";
-import { IterableType } from "./iterable-type";
 import { ListType } from "./list-type";
 import { RegExpType } from "./regexp-type";
 import { StringType } from "./string-type";
@@ -55,18 +54,6 @@ const regExpSymbol: ElanSymbol = {
     return RegExpType.Instance;
   },
   symbolScope: SymbolScope.program,
-};
-
-const iterableSymbol: ClassSymbol = {
-  symbolId: "Iterable",
-  symbolType: function (_transforms?: Transforms): SymbolType {
-    return new IterableType(new GenericParameterType("T"));
-  },
-  symbolScope: SymbolScope.program,
-  isClass: true,
-  isAbstract: true,
-  isNotInheritable: true,
-  ofTypes: [new GenericParameterType("T")],
 };
 
 const arraySymbol: ClassSymbol = {
@@ -169,7 +156,6 @@ export const elanSymbols = [
   stringSymbol,
   booleanSymbol,
   regExpSymbol,
-  iterableSymbol,
   tupleSymbol,
   arraySymbol,
   array2DSymbol,
