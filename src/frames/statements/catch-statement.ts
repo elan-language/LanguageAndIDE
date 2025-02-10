@@ -6,6 +6,7 @@ import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { Frame } from "../interfaces/frame";
 import { Parent } from "../interfaces/parent";
+import { Scope } from "../interfaces/scope";
 import { Statement } from "../interfaces/statement";
 import { SymbolType } from "../interfaces/symbol-type";
 import { catchKeyword, exceptionKeyword, inKeyword } from "../keywords";
@@ -102,6 +103,10 @@ ${this.indent()}${singleIndent()}let ${vid} = _${vid}.message;
 ${this.compileStatements(transforms)}\r`;
   }
 
+  override getParentScope(): Scope {
+    return this.getParent().getParentScope();
+  }
+
   resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
     if (this.variable.text === id) {
       return this;
@@ -111,7 +116,7 @@ ${this.compileStatements(transforms)}\r`;
   }
 
   symbolMatches(id: string, all: boolean, _initialScope?: Frame): ElanSymbol[] {
-    const matches = super.symbolMatches(id, all, this);
+    const matches = super.symbolMatches(id, all, _initialScope);
     const localMatches: ElanSymbol[] = [];
 
     const v = this.variable.text;

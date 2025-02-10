@@ -329,7 +329,7 @@ end main`;
     await assertDebugBreakPoint(fileImpl, "set11", expected);
   });
 
-  ignore_test("Pass_InCatch", async () => {
+  test("Pass_InCatch", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main

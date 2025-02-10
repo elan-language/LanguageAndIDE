@@ -1,6 +1,7 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
+  assertDoesNotCompile,
   assertDoesNotParse,
   assertObjectCodeDoesNotExecute,
   assertObjectCodeExecutes,
@@ -265,6 +266,51 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Foo");
   });
 
+  test("Pass_RedfineVariable inCatch", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  try
+    variable a set to 1
+    throw exception "fail"
+  catch exception in e
+    variable a set to e
+    print a
+  end try
+end main
+  
+procedure foo()
+  throw exception "Foo"
+end procedure`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  try {
+    let a = 1;
+    throw new Error("fail");
+  } catch (_e) {
+    let e = _e.message;
+    let a = e;
+    await system.printLine(a);
+  }
+}
+
+async function foo() {
+  throw new Error("Foo");
+}
+global["foo"] = foo;
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "fail");
+  });
+
   test("Fail_ThrowExceptionInFunction", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
@@ -320,5 +366,30 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
+  });
+
+  test("Fail_TryVariableOutOfSCopeInCatch", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  try
+    variable a set to 1
+    throw exception "fail"
+  catch exception in e
+    print a
+  end try
+end main
+  
+procedure foo()
+  throw exception "Foo"
+end procedure
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'a' is not defined"]);
   });
 });
