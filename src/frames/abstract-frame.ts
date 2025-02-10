@@ -526,6 +526,10 @@ export abstract class AbstractFrame implements Frame {
     return this.getParent();
   }
 
+  getCurrentScope(): Scope {
+    return this;
+  }
+
   expandCollapse(): void {
     if (this.isCollapsed()) {
       this.expand();

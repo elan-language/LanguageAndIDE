@@ -266,7 +266,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Foo");
   });
 
-  test("Pass_RedfineVariable inCatch", async () => {
+  test("Pass_RedefineVariableinCatch", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -309,6 +309,49 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "fail");
+  });
+
+  test("Pass_UseOuterScopeVariableInCatch", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to 1
+  try
+    throw exception "fail"
+  catch exception in e
+    print a
+  end try
+end main
+  
+procedure foo()
+  throw exception "Foo"
+end procedure`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = 1;
+  try {
+    throw new Error("fail");
+  } catch (_e) {
+    let e = _e.message;
+    await system.printLine(a);
+  }
+}
+
+async function foo() {
+  throw new Error("Foo");
+}
+global["foo"] = foo;
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1");
   });
 
   test("Fail_ThrowExceptionInFunction", async () => {
@@ -368,7 +411,7 @@ end main
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_TryVariableOutOfSCopeInCatch", async () => {
+  test("Fail_TryVariableOutOfScopeInCatch", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -384,12 +427,38 @@ procedure foo()
   throw exception "Foo"
 end procedure
 `;
-
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["'a' is not defined"]);
+  });
+
+  test("Fail_RedefineVariableinCatch1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to 1
+  try
+    throw exception "fail"
+  catch exception in e
+    variable a set to e
+    print a
+  end try
+end main
+  
+procedure foo()
+  throw exception "Foo"
+end procedure`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "The identifier 'a' is already used for a variable and cannot be re-defined here.",
+    ]);
   });
 });

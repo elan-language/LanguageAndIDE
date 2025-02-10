@@ -263,7 +263,7 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
       }
     }
 
-    return this.getParentScope().resolveSymbol(id, transforms, this);
+    return this.getParentScope().resolveSymbol(id, transforms, this.getCurrentScope());
   }
 
   handleDeconstruction(ss: ElanSymbol[]) {
@@ -285,7 +285,7 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
   }
 
   symbolMatches(id: string, all: boolean, initialScope?: Frame): ElanSymbol[] {
-    const matches = this.getParentScope().symbolMatches(id, all, this);
+    const matches = this.getParentScope().symbolMatches(id, all, this.getCurrentScope());
     let localMatches: ElanSymbol[] = [];
 
     const fst = this.getFirstChild();

@@ -107,6 +107,10 @@ ${this.compileStatements(transforms)}\r`;
     return this.getParent().getParentScope();
   }
 
+  getCurrentScope(): Scope {
+    return this.getParent();
+  }
+
   resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
     if (this.variable.text === id) {
       return this;
