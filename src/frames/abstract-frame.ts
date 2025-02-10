@@ -97,11 +97,11 @@ export abstract class AbstractFrame implements Frame {
   }
 
   resolveSymbol(id: string | undefined, transforms: Transforms, _initialScope: Frame): ElanSymbol {
-    return this.getParent().resolveSymbol(id, transforms, this);
+    return this.getParentScope().resolveSymbol(id, transforms, this.getCurrentScope());
   }
 
   symbolMatches(id: string, all: boolean, _initialScope?: Scope): ElanSymbol[] {
-    return this.getParent().symbolMatches(id, all, this);
+    return this.getParentScope().symbolMatches(id, all, this.getCurrentScope());
   }
 
   compile(_transforms: Transforms): string {

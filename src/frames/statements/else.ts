@@ -4,9 +4,12 @@ import { mustBeOfType } from "../compile-rules";
 import { ExpressionField } from "../fields/expression-field";
 import { IfSelector } from "../fields/if-selector";
 import { Field } from "../interfaces/field";
+import { Frame } from "../interfaces/frame";
 import { Parent } from "../interfaces/parent";
+import { Scope } from "../interfaces/scope";
 import { Statement } from "../interfaces/statement";
 import { elseKeyword, thenKeyword } from "../keywords";
+import { compileStatements } from "../parent-helpers";
 import { BooleanType } from "../symbols/boolean-type";
 import { Transforms } from "../syntax-nodes/transforms";
 
@@ -82,7 +85,8 @@ export class Else extends AbstractFrame implements Statement {
 
   compile(transforms: Transforms): string {
     this.compileErrors = [];
-    return `${this.indent()}} else ${this.compileIfClause(transforms)}`;
+    return `${this.indent()}} else ${this.compileIfClause(transforms)}
+${compileStatements(transforms, this._children)}`;
   }
 
   parseFrom(source: CodeSource): void {
@@ -94,5 +98,25 @@ export class Else extends AbstractFrame implements Statement {
       this.condition.parseFrom(new CodeSourceFromString(condition));
       source.remove(" then");
     }
+  }
+
+  getCurrentScope(): Scope {
+    return this._scope!;
+  }
+
+  getParentScope(): Scope {
+    return this.getCurrentScope().getParentScope();
+  }
+
+  _scope: Scope | undefined = undefined;
+  _children: Frame[] = [];
+
+  setScope(s: Scope) {
+    this._scope = s;
+    this._children = [];
+  }
+
+  addChild(f: Frame) {
+    this._children.push(f);
   }
 }

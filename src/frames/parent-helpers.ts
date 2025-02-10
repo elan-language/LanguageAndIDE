@@ -109,6 +109,18 @@ export function isNotSelectorFrame(f: Frame) {
   return !!f && !("isSelector" in f);
 }
 
+export function compileStatements(transforms: Transforms, statements: Frame[]): string {
+  let result = "";
+  if (statements.length > 0) {
+    const ss: Array<string> = [];
+    for (const frame of statements.filter(isNotSelectorFrame)) {
+      ss.push(frame.compile(transforms));
+    }
+    result = ss.join("\r\n");
+  }
+  return result;
+}
+
 export function parentHelper_renderChildrenAsSource(parent: Parent): string {
   let result = "";
   if (parent.getChildren().length > 0) {

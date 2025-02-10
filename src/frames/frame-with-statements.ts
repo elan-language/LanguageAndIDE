@@ -10,7 +10,7 @@ import { Parent } from "./interfaces/parent";
 import { Profile } from "./interfaces/profile";
 import { StatementFactory } from "./interfaces/statement-factory";
 import {
-  isNotSelectorFrame,
+  compileStatements,
   parentHelper_addChildAfter,
   parentHelper_addChildBefore,
   parentHelper_aggregateCompileErrorsOfChildren,
@@ -221,16 +221,8 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     return result;
   }
 
-  protected compileStatements(transforms: Transforms): string {
-    let result = "";
-    if (this._children.length > 0) {
-      const ss: Array<string> = [];
-      for (const frame of this._children.filter(isNotSelectorFrame)) {
-        ss.push(frame.compile(transforms));
-      }
-      result = ss.join("\r\n");
-    }
-    return result;
+  protected compileChildStatements(transforms: Transforms): string {
+    return compileStatements(transforms, this._children);
   }
 
   multipleIds(sid: string) {

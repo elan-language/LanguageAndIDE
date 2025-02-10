@@ -7,6 +7,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -354,5 +355,95 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["Expression must be Boolean"]);
+  });
+
+  test("Fail_RedefineVariable in if", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+  main
+    variable a set to 2
+    if a is 1 then
+      variable a set to 3
+    else if a is 2 then
+      print "two"
+    else
+      print "neither"
+    end if
+  end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "The identifier 'a' is already used for a variable and cannot be re-defined here.",
+    ]);
+  });
+
+  test("Fail_RedefineVariable in else if", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+  main
+    variable a set to 2
+    if a is 1 then
+      print "one"
+    else if a is 2 then
+      variable a set to 3
+    else
+      print "neither"
+    end if
+  end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "The identifier 'a' is already used for a variable and cannot be re-defined here.",
+    ]);
+  });
+
+  test("Fail_RedefineVariable in else", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+  main
+    variable a set to 2
+    if a is 1 then
+      print "one"
+    else if a is 2 then
+      print "two"
+    else
+      variable a set to 3
+    end if
+  end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "The identifier 'a' is already used for a variable and cannot be re-defined here.",
+    ]);
+  });
+
+  ignore_test("Fail_useOutOfScopeVariable", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+  main
+    variable a set to 2
+    if a is 1 then
+      variable b set to 2
+    else if a is 2 then
+      print b
+    else
+      variable c set to 2
+    end if
+  end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'b' is undefined"]);
   });
 });

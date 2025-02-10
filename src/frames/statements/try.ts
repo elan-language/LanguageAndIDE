@@ -60,7 +60,7 @@ ${this.indent()}${endKeyword} ${tryKeyword}`;
     this.compileErrors = [];
 
     return `${this.indent()}${this.breakPoint(this.debugSymbols())}try {\r
-${this.compileStatements(transforms)}\r
+${this.compileChildren(transforms)}\r
 ${this.indent()}}`;
   }
 }
