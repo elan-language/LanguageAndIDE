@@ -36,7 +36,7 @@ const trimButton = document.getElementById("trim") as HTMLButtonElement;
 const consoleDiv = document.getElementById("console") as HTMLDivElement;
 const graphicsDiv = document.getElementById("graphics") as HTMLDivElement;
 const loadButton = document.getElementById("load") as HTMLButtonElement;
-const appendButton = document.getElementById("add") as HTMLButtonElement;
+const appendButton = document.getElementById("append") as HTMLButtonElement;
 const saveButton = document.getElementById("save") as HTMLButtonElement;
 const autoSaveButton = document.getElementById("auto-save") as HTMLButtonElement;
 const undoButton = document.getElementById("undo") as HTMLButtonElement;
@@ -588,7 +588,7 @@ function updateDisplayValues() {
     disable([stopButton, pauseButton, stepButton], "Program is not running");
 
     enable(loadButton, "Load code from a file");
-    enable(appendButton, "Add code from a file onto the end of the existing code");
+    enable(appendButton, "Append code from a file onto the end of the existing code");
     enable(newButton, "Clear the current code and start afresh");
     enable(demosButton, "Load a demonstration program");
     enable(trimButton, "Remove all 'newCode' selectors that can be removed (shortcut: Alt-t)");
