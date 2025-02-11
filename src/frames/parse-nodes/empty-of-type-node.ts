@@ -13,7 +13,14 @@ export class EmptyOfTypeNode extends AbstractSequence {
     if (text.trim().length > 0) {
       this.addElement(new KeywordNode(emptyKeyword));
       this.addElement(new SpaceNode(Space.required));
-      this.type = new TypeNode(new Set<TokenType>([TokenType.type_concrete]));
+      this.type = new TypeNode(
+        new Set<TokenType>([
+          TokenType.type_concrete,
+          TokenType.type_abstract,
+          TokenType.type_enum,
+          TokenType.type_notInheritable,
+        ]),
+      );
       this.addElement(this.type);
       super.parseText(text);
     }

@@ -30,4 +30,8 @@ export class TypeNode extends AbstractAlternatives {
       super.parseText(text.trimStart());
     }
   }
+
+  override symbolCompletion_tokenTypes(): Set<TokenType> {
+    return this.matchedText.length === 0 ? this.tokenTypes : super.symbolCompletion_tokenTypes();
+  }
 }
