@@ -34,10 +34,9 @@ import {
   parentHelper_updateBreakpoints,
 } from "./parent-helpers";
 import { AssertStatement } from "./statements/assert-statement";
-import { DefinitionAdapter } from "./statements/definition-adapter";
 import { StatementSelector } from "./statements/statement-selector";
 import { BreakpointStatus } from "./status-enums";
-import { getDeconstructionIds, isSymbol, symbolMatches } from "./symbols/symbol-helpers";
+import { getIds, handleDeconstruction, isSymbol, symbolMatches } from "./symbols/symbol-helpers";
 import { Transforms } from "./syntax-nodes/transforms";
 
 export abstract class FrameWithStatements extends AbstractFrame implements Parent, Collapsible {
@@ -229,16 +228,6 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     return sid.includes(",") || sid.includes(":");
   }
 
-  getIds(sid: string) {
-    if (sid.includes(",")) {
-      return sid.split(",").map((s) => s.trim());
-    }
-    if (sid.includes(":")) {
-      return sid.split(":").map((s) => s.trim());
-    }
-    return [sid];
-  }
-
   resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
     const fst = this.getFirstChild();
     let range = this.getChildRange(fst, initialScope);
@@ -247,7 +236,7 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
 
       for (const f of range) {
         if (isSymbol(f) && id) {
-          const sids = this.getIds(f.symbolId);
+          const sids = getIds(f.symbolId);
           if (sids.includes(id)) {
             return f;
           }
@@ -258,24 +247,6 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     return this.getParentScope().resolveSymbol(id, transforms, this.getCurrentScope());
   }
 
-  handleDeconstruction(ss: ElanSymbol[]) {
-    const newSymbols: ElanSymbol[] = [];
-
-    for (const s of ss) {
-      const ids = getDeconstructionIds(s.symbolId);
-
-      if (ids.length === 1) {
-        newSymbols.push(s);
-      } else {
-        for (let i = 0; i < ids.length; i++) {
-          newSymbols.push(new DefinitionAdapter(s, i));
-        }
-      }
-    }
-
-    return newSymbols;
-  }
-
   symbolMatches(id: string, all: boolean, initialScope?: Frame): ElanSymbol[] {
     const matches = this.getParentScope().symbolMatches(id, all, this.getCurrentScope());
     let localMatches: ElanSymbol[] = [];
@@ -284,7 +255,7 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     let range = this.getChildRange(fst, initialScope!);
     if (range.length > 1) {
       range = range.slice(0, range.length - 1);
-      const symbols = this.handleDeconstruction(range.filter((r) => isSymbol(r)));
+      const symbols = handleDeconstruction(range.filter((r) => isSymbol(r)));
       localMatches = symbolMatches(id, all, symbols);
     }
 

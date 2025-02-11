@@ -12,6 +12,7 @@ import { Statement } from "../interfaces/statement";
 import { elseKeyword, thenKeyword } from "../keywords";
 import { compileStatements } from "../parent-helpers";
 import { BooleanType } from "../symbols/boolean-type";
+import { getIds, handleDeconstruction, isSymbol, symbolMatches } from "../symbols/symbol-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 
 export class Else extends AbstractFrame implements Statement {
@@ -117,11 +118,51 @@ ${compileStatements(transforms, this.compileChildren)}`;
     return this.compileScope!.getParentScope();
   }
 
-  resolveSymbol(id: string | undefined, transforms: Transforms, _initialScope: Frame): ElanSymbol {
+  getChildRange(initialScope: Frame) {
+    const fst = this.compileChildren[0];
+    const fi = this.compileChildren.indexOf(fst);
+    const li = this.compileChildren.indexOf(initialScope);
+
+    return fi < li
+      ? this.compileChildren.slice(fi, li + 1)
+      : this.compileChildren.slice(li, fi + 1);
+  }
+
+  resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
+    if (this.compileChildren.length > 0) {
+      let range = this.getChildRange(initialScope);
+
+      if (range.length > 1) {
+        range = range.slice(0, range.length - 1);
+
+        for (const f of range) {
+          if (isSymbol(f) && id) {
+            const sids = getIds(f.symbolId);
+            if (sids.includes(id)) {
+              return f;
+            }
+          }
+        }
+      }
+    }
+
     return this.getOuterScope().resolveSymbol(id, transforms, this.getCurrentScope());
   }
 
-  symbolMatches(id: string, all: boolean, _initialScope?: Scope): ElanSymbol[] {
-    return this.getOuterScope().symbolMatches(id, all, this.getCurrentScope());
+  symbolMatches(id: string, all: boolean, initialScope?: Scope): ElanSymbol[] {
+    const matches = this.getOuterScope().symbolMatches(id, all, this.getCurrentScope());
+
+    let localMatches: ElanSymbol[] = [];
+
+    if (this.compileChildren.length > 0) {
+      let range = this.getChildRange(initialScope as Frame);
+
+      if (range.length > 1) {
+        range = range.slice(0, range.length - 1);
+        const symbols = handleDeconstruction(range.filter((r) => isSymbol(r)));
+        localMatches = symbolMatches(id, all, symbols);
+      }
+    }
+    return localMatches.concat(matches);
   }
 }

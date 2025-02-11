@@ -19,6 +19,7 @@ import { ReifyableSymbolType } from "../interfaces/reifyable-symbol-type";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { globalKeyword, libraryKeyword } from "../keywords";
+import { DefinitionAdapter } from "../statements/definition-adapter";
 import { SymbolCompletionSpec, TokenType } from "../symbol-completion-helpers";
 import { isAstIdNode, isAstQualifiedNode, transforms } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
@@ -714,4 +715,32 @@ function isNotFuncOrProcOrType(s: ElanSymbol) {
 
 export function allScopedSymbols(scope: Scope, initialScope: Scope) {
   return scope.symbolMatches("", true, initialScope).filter((s) => isNotFuncOrProcOrType(s));
+}
+
+export function getIds(sid: string) {
+  if (sid.includes(",")) {
+    return sid.split(",").map((s) => s.trim());
+  }
+  if (sid.includes(":")) {
+    return sid.split(":").map((s) => s.trim());
+  }
+  return [sid];
+}
+
+export function handleDeconstruction(ss: ElanSymbol[]) {
+  const newSymbols: ElanSymbol[] = [];
+
+  for (const s of ss) {
+    const ids = getDeconstructionIds(s.symbolId);
+
+    if (ids.length === 1) {
+      newSymbols.push(s);
+    } else {
+      for (let i = 0; i < ids.length; i++) {
+        newSymbols.push(new DefinitionAdapter(s, i));
+      }
+    }
+  }
+
+  return newSymbols;
 }

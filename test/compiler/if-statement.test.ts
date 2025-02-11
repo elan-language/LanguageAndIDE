@@ -289,6 +289,39 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "");
   });
 
+  test("Pass_localVariableInIf", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to 3
+  if a is 1 then
+    variable b set to a
+    set b to 2
+    print b
+  end if
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = 3;
+  if (a === 1) {
+    let b = a;
+    b = 2;
+    await system.printLine(b);
+  }
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "");
+  });
+
   test("Pass_variableInElse", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
@@ -308,6 +341,76 @@ async function main() {
   if (a === 1) {
     await system.printLine("");
   } else {
+    a = 3;
+  }
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "");
+  });
+
+  test("Pass_localVariableInElse", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to 3
+  if a is 1 then
+    print ""
+  else
+    variable b set to a
+    set b to 2
+    print b
+  end if
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = 3;
+  if (a === 1) {
+    await system.printLine("");
+  } else {
+    let b = a;
+    b = 2;
+    await system.printLine(b);
+  }
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "2");
+  });
+
+  test("Pass_variableInElseIf", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to 3
+  if a is 1 then
+    print ""
+  else if a is 2 then 
+    set a to 3
+  end if
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = 3;
+  if (a === 1) {
+    await system.printLine("");
+  } else if (a === 2) {
     a = 3;
   }
 }
