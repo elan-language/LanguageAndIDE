@@ -197,11 +197,15 @@ export abstract class AbstractField implements Selectable, Field {
         break;
       }
       case "ArrowUp": {
-        this.selectFromAutoCompleteItems(true);
+        if (this.popupAsHtml() !== "") {
+          this.selectFromAutoCompleteItems(true);
+        }
         break;
       }
       case "ArrowDown": {
-        this.selectFromAutoCompleteItems(false);
+        if (this.popupAsHtml() !== "") {
+          this.selectFromAutoCompleteItems(false);
+        }
         break;
       }
       case "Backspace": {
