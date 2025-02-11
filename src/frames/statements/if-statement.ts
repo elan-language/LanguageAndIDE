@@ -54,9 +54,10 @@ ${this.indent()}${endKeyword} ${ifKeyword}`;
     for (const c of this.getChildren()) {
       if (c instanceof Else) {
         currentElse = c;
-        currentElse.setScope(this);
+        currentElse.setCompileScope(this);
         ifChildren.push(c);
       } else if (currentElse) {
+        c.setCompileScope(currentElse);
         currentElse.addChild(c);
       } else {
         ifChildren.push(c);

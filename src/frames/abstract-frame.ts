@@ -58,6 +58,21 @@ export abstract class AbstractFrame implements Frame {
     map.set(this.htmlId, this);
     this.setMap(map);
   }
+
+  compileScope: Scope | undefined;
+
+  setCompileScope(s: Scope): void {
+    this.compileScope = s;
+  }
+
+  getCurrentScope(): Scope {
+    return this.compileScope ?? this;
+  }
+
+  getParentScope(): Scope {
+    return this.compileScope ?? this.getParent();
+  }
+
   hasBeenAddedTo(): void {
     this.isNew = false;
   }
@@ -520,14 +535,6 @@ export abstract class AbstractFrame implements Frame {
       return this._parent;
     }
     throw new Error(`Frame : ${this.htmlId} has no Parent`);
-  }
-
-  getParentScope(): Scope {
-    return this.getParent();
-  }
-
-  getCurrentScope(): Scope {
-    return this;
   }
 
   expandCollapse(): void {

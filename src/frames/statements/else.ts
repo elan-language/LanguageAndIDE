@@ -3,6 +3,7 @@ import { CodeSource, CodeSourceFromString } from "../code-source";
 import { mustBeOfType } from "../compile-rules";
 import { ExpressionField } from "../fields/expression-field";
 import { IfSelector } from "../fields/if-selector";
+import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { Frame } from "../interfaces/frame";
 import { Parent } from "../interfaces/parent";
@@ -86,7 +87,7 @@ export class Else extends AbstractFrame implements Statement {
   compile(transforms: Transforms): string {
     this.compileErrors = [];
     return `${this.indent()}} else ${this.compileIfClause(transforms)}
-${compileStatements(transforms, this._children)}`;
+${compileStatements(transforms, this.compileChildren)}`;
   }
 
   parseFrom(source: CodeSource): void {
@@ -100,23 +101,27 @@ ${compileStatements(transforms, this._children)}`;
     }
   }
 
-  getCurrentScope(): Scope {
-    return this._scope!;
-  }
+  compileChildren: Frame[] = [];
 
-  getParentScope(): Scope {
-    return this.getCurrentScope().getParentScope();
-  }
-
-  _scope: Scope | undefined = undefined;
-  _children: Frame[] = [];
-
-  setScope(s: Scope) {
-    this._scope = s;
-    this._children = [];
+  setCompileScope(s: Scope) {
+    this.compileScope = s;
+    this.compileChildren = [];
   }
 
   addChild(f: Frame) {
-    this._children.push(f);
+    this.compileChildren.push(f);
+  }
+
+  getOuterScope() {
+    // need to get scope of IfStatement
+    return this.compileScope!.getParentScope();
+  }
+
+  resolveSymbol(id: string | undefined, transforms: Transforms, _initialScope: Frame): ElanSymbol {
+    return this.getOuterScope().resolveSymbol(id, transforms, this.getCurrentScope());
+  }
+
+  symbolMatches(id: string, all: boolean, _initialScope?: Scope): ElanSymbol[] {
+    return this.getOuterScope().symbolMatches(id, all, this.getCurrentScope());
   }
 }

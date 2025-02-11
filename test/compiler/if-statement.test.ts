@@ -260,6 +260,68 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "three");
   });
 
+  test("Pass_variableInIf", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to 3
+  if a is 1 then
+    set a to 2
+  end if
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = 3;
+  if (a === 1) {
+    a = 2;
+  }
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "");
+  });
+
+  test("Pass_variableInElse", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to 3
+  if a is 1 then
+    print ""
+  else
+    set a to 3
+  end if
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = 3;
+  if (a === 1) {
+    await system.printLine("");
+  } else {
+    a = 3;
+  }
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "");
+  });
+
   test("Fail_noEndIf", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
@@ -426,7 +488,7 @@ end main`;
     ]);
   });
 
-  ignore_test("Fail_useOutOfScopeVariable", async () => {
+  test("Fail_useOutOfScopeVariable", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
   main
@@ -444,6 +506,6 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'b' is undefined"]);
+    assertDoesNotCompile(fileImpl, ["'b' is not defined"]);
   });
 });
