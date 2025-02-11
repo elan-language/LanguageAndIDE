@@ -107,7 +107,7 @@ ${this.indent()}end for`;
     }
 
     return `${this.indent()}${this.breakPoint(this.debugSymbols())}for (${declare}${v} = ${f}; ${v} ${compare} ${t}; ${v} = ${v} ${incDec} ${s}) {\r
-${this.compileStatements(transforms)}\r
+${this.compileChildren(transforms)}\r
 ${this.indent()}}`;
   }
 

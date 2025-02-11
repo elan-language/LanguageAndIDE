@@ -51,7 +51,7 @@ ${this.indent()}end while`;
     );
 
     return `${this.indent()}${this.breakPoint(this.debugSymbols())}while (${this.condition.compile(transforms)}) {\r
-${this.compileStatements(transforms)}\r
+${this.compileChildren(transforms)}\r
 ${this.indent()}}`;
   }
 

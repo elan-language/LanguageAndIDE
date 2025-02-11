@@ -53,7 +53,7 @@ ${this.indent()}end repeat when ${this.condition.renderAsSource()}`;
     );
 
     return `${this.indent()}${this.breakPoint(this.debugSymbols())}do {\r
-${this.compileStatements(transforms)}\r
+${this.compileChildren(transforms)}\r
 ${this.indent()}} while (!(${this.condition.compile(transforms)}));`;
   }
 

@@ -3,9 +3,11 @@ import { mustBeOfType, mustNotHaveConditionalAfterUnconditionalElse } from "../c
 import { ExpressionField } from "../fields/expression-field";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Field } from "../interfaces/field";
+import { Frame } from "../interfaces/frame";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
 import { endKeyword, ifKeyword, thenKeyword } from "../keywords";
+import { compileStatements } from "../parent-helpers";
 import { BooleanType } from "../symbols/boolean-type";
 import { Transforms } from "../syntax-nodes/transforms";
 import { Else } from "./else";
@@ -45,6 +47,26 @@ ${this.renderChildrenAsSource()}\r
 ${this.indent()}${endKeyword} ${ifKeyword}`;
   }
 
+  reconfigureForCompile(): Frame[] {
+    const ifChildren: Frame[] = [];
+    let currentElse: Else | undefined = undefined;
+
+    for (const c of this.getChildren()) {
+      if (c instanceof Else) {
+        currentElse = c;
+        currentElse.setCompileScope(this);
+        ifChildren.push(c);
+      } else if (currentElse) {
+        c.setCompileScope(currentElse);
+        currentElse.addChild(c);
+      } else {
+        ifChildren.push(c);
+      }
+    }
+
+    return ifChildren;
+  }
+
   compile(transforms: Transforms): string {
     this.compileErrors = [];
 
@@ -55,12 +77,15 @@ ${this.indent()}${endKeyword} ${ifKeyword}`;
       this.htmlId,
     );
     const elses = this.getChildren().filter((c) => c instanceof Else) as Else[];
+    let toCompile = this.getChildren();
+
     if (elses.length > 0) {
       mustNotHaveConditionalAfterUnconditionalElse(elses, this.compileErrors, this.htmlId);
+      toCompile = this.reconfigureForCompile();
     }
 
     return `${this.indent()}${this.breakPoint(this.debugSymbols())}if (${this.condition.compile(transforms)}) {\r
-${this.compileStatements(transforms)}\r
+${compileStatements(transforms, toCompile)}\r
 ${this.indent()}}`;
   }
 

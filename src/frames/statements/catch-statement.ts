@@ -100,14 +100,14 @@ ${this.renderChildrenAsSource()}`;
     const vid = this.variable.compile(transforms);
     return `${this.parentIndent()}} catch (_${vid}) {\r
 ${this.indent()}${singleIndent()}let ${vid} = _${vid}.message;
-${this.compileStatements(transforms)}\r`;
+${this.compileChildren(transforms)}\r`;
   }
 
   override getParentScope(): Scope {
     return this.getParent().getParentScope();
   }
 
-  getCurrentScope(): Scope {
+  override getCurrentScope(): Scope {
     return this.getParent();
   }
 

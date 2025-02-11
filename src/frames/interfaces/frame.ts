@@ -58,4 +58,6 @@ export interface Frame extends Selectable, Scope, ElanSymbol {
   deleteIfPermissible(): void;
 
   updateBreakpoints(newState: BreakpointStatus): void;
+
+  setCompileScope(s: Scope): void;
 }

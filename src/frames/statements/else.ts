@@ -3,10 +3,14 @@ import { CodeSource, CodeSourceFromString } from "../code-source";
 import { mustBeOfType } from "../compile-rules";
 import { ExpressionField } from "../fields/expression-field";
 import { IfSelector } from "../fields/if-selector";
+import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
+import { Frame } from "../interfaces/frame";
 import { Parent } from "../interfaces/parent";
+import { Scope } from "../interfaces/scope";
 import { Statement } from "../interfaces/statement";
 import { elseKeyword, thenKeyword } from "../keywords";
+import { compileStatements } from "../parent-helpers";
 import { BooleanType } from "../symbols/boolean-type";
 import { Transforms } from "../syntax-nodes/transforms";
 
@@ -82,7 +86,8 @@ export class Else extends AbstractFrame implements Statement {
 
   compile(transforms: Transforms): string {
     this.compileErrors = [];
-    return `${this.indent()}} else ${this.compileIfClause(transforms)}`;
+    return `${this.indent()}} else ${this.compileIfClause(transforms)}
+${compileStatements(transforms, this.compileChildren)}`;
   }
 
   parseFrom(source: CodeSource): void {
@@ -94,5 +99,29 @@ export class Else extends AbstractFrame implements Statement {
       this.condition.parseFrom(new CodeSourceFromString(condition));
       source.remove(" then");
     }
+  }
+
+  compileChildren: Frame[] = [];
+
+  setCompileScope(s: Scope) {
+    this.compileScope = s;
+    this.compileChildren = [];
+  }
+
+  addChild(f: Frame) {
+    this.compileChildren.push(f);
+  }
+
+  getOuterScope() {
+    // need to get scope of IfStatement
+    return this.compileScope!.getParentScope();
+  }
+
+  resolveSymbol(id: string | undefined, transforms: Transforms, _initialScope: Frame): ElanSymbol {
+    return this.getOuterScope().resolveSymbol(id, transforms, this.getCurrentScope());
+  }
+
+  symbolMatches(id: string, all: boolean, _initialScope?: Scope): ElanSymbol[] {
+    return this.getOuterScope().symbolMatches(id, all, this.getCurrentScope());
   }
 }

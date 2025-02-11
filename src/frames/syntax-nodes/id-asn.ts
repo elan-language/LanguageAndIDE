@@ -10,6 +10,7 @@ import { isClass } from "../frame-helpers";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstNode } from "../interfaces/ast-node";
 import { Scope } from "../interfaces/scope";
+import { AbstractDefinitionStatement } from "../statements/abstract-definition.statement";
 import { isDeconstructedType, isMemberOnFieldsClass, scopePrefix } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { AbstractAstNode } from "./abstract-ast-node";
@@ -43,9 +44,12 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
   }
 
   getSymbol() {
-    const searchScope = this.updatedScope ?? this.scope.getParentScope();
+    let searchScope = this.updatedScope ?? this.scope;
     if (isClass(searchScope)) {
       return searchScope.resolveOwnSymbol(this.id, transforms());
+    }
+    if (this.scope instanceof AbstractDefinitionStatement) {
+      searchScope = this.scope.getParent();
     }
 
     return searchScope.resolveSymbol(this.id, transforms(), this.scope);

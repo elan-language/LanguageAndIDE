@@ -61,7 +61,7 @@ ${this.indent()}end constructor\r
     this.compileErrors = [];
 
     return `${this.indent()}async _initialise(${this.params.compile(transforms)}) {\r
-${this.breakPoint(this.debugSymbols())}${this.compileStatements(transforms)}\r
+${this.breakPoint(this.debugSymbols())}${this.compileChildren(transforms)}\r
 ${this.indent()}${this.indent()}return this;\r
 ${this.indent()}}\r
 `;

@@ -64,7 +64,7 @@ end main\r
     }
 
     return `async function main() {\r
-${this.breakPoint(this.debugSymbols())}${this.compileStatements(transforms)}\r
+${this.breakPoint(this.debugSymbols())}${this.compileChildren(transforms)}\r
 }\r
 `;
   }

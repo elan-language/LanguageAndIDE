@@ -90,7 +90,7 @@ ${this.renderChildrenAsHtml()}
     );
 
     return `${name}(${this.params.compile(transforms)}) {\r
-${this.breakPoint(this.debugSymbols())}${this.compileStatements(transforms)}\r`;
+${this.breakPoint(this.debugSymbols())}${this.compileChildren(transforms)}\r`;
   }
 
   public override symbolMatches(id: string, all: boolean, initialScope?: Frame): ElanSymbol[] {
