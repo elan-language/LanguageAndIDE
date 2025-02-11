@@ -403,4 +403,29 @@ end main`;
 
     await assertDebugBreakPoint(fileImpl, "set21", expected);
   });
+
+  test("Pass_InElseIf", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to false
+  if a then
+    variable b set to 1
+    set b to 2
+  else if a is false then 
+    variable c set to 1
+    set c to 2
+  end if
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["a", "false"],
+      ["c", "1"],
+    ] as [string, string][];
+
+    await assertDebugBreakPoint(fileImpl, "set21", expected);
+  });
 });
