@@ -25,7 +25,7 @@ import {
   parentHelper_removeAllSelectedChildren,
 } from "./parent-helpers";
 import { ScratchPad } from "./scratch-pad";
-import { BreakpointStatus, CompileStatus, DisplayStatus, ParseStatus } from "./status-enums";
+import { BreakpointStatus, CompileStatus, DisplayColour, ParseStatus } from "./status-enums";
 import { allScopedSymbols, orderSymbol } from "./symbols/symbol-helpers";
 import { SymbolScope } from "./symbols/symbol-scope";
 import { UnknownType } from "./symbols/unknown-type";
@@ -463,10 +463,10 @@ export abstract class AbstractFrame implements Frame {
     this.pushClass(this.focused, "focused");
     this.pushClass(this.breakpointStatus !== BreakpointStatus.none, "breakpoint");
     this.pushClass(this.paused, "paused");
-    this._classes.push(DisplayStatus[this.readDisplayStatus()]);
+    this._classes.push(DisplayColour[this.readDisplayStatus()]);
   }
 
-  protected readDisplayStatus(): DisplayStatus {
+  protected readDisplayStatus(): DisplayColour {
     return helper_CompileOrParseAsDisplayStatus(this);
   }
 

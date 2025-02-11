@@ -17,7 +17,7 @@ import { Scope } from "./interfaces/scope";
 import { Selectable } from "./interfaces/selectable";
 import { Statement } from "./interfaces/statement";
 import { SymbolType } from "./interfaces/symbol-type";
-import { CompileStatus, DisplayStatus, ParseStatus, RunStatus, TestStatus } from "./status-enums";
+import { CompileStatus, DisplayColour, ParseStatus, RunStatus, TestStatus } from "./status-enums";
 import { ArrayType } from "./symbols/array-type";
 import { ClassType } from "./symbols/class-type";
 import { DeconstructedListType } from "./symbols/deconstructed-list-type";
@@ -138,8 +138,8 @@ export function helper_compileMsgAsHtml(loc: Frame | Field): string {
   }
   let cls = "";
   const compile = helper_compileStatusAsDisplayStatus(loc.readCompileStatus());
-  if (compile === DisplayStatus.error || compile === DisplayStatus.warning) {
-    cls = DisplayStatus[compile];
+  if (compile === DisplayColour.error || compile === DisplayColour.warning) {
+    cls = DisplayColour[compile];
   }
   const toDisplay = escapeHtmlChars(msg);
   return cls === "" ? "<el-msg></el-msg>" : ` <el-msg class="${cls}">${toDisplay}</el-msg>`;
@@ -150,16 +150,16 @@ export function helper_deriveCompileStatusFromErrors(errors: CompileError[]): Co
   if (errors.length === 0) {
     result = CompileStatus.ok;
   } else {
-    result = errors.some((e) => !e.isWarning) ? CompileStatus.error : CompileStatus.unknownSymbol;
+    result = errors.some((e) => !e.isWarning) ? CompileStatus.error : CompileStatus.unknown_symbol;
   }
   return result;
 }
 
-export function helper_CompileOrParseAsDisplayStatus(loc: Frame | Field): DisplayStatus {
+export function helper_CompileOrParseAsDisplayStatus(loc: Frame | Field): DisplayColour {
   let status = helper_parseStatusAsDisplayStatus(loc.readParseStatus());
-  if (status === DisplayStatus.ok) {
+  if (status === DisplayColour.ok) {
     const compile = helper_compileStatusAsDisplayStatus(loc.readCompileStatus());
-    if (compile !== DisplayStatus.default) {
+    if (compile !== DisplayColour.none) {
       // Implies that the compiler has not been run
       status = compile;
     }
@@ -167,50 +167,50 @@ export function helper_CompileOrParseAsDisplayStatus(loc: Frame | Field): Displa
   return status;
 }
 
-export function helper_parseStatusAsDisplayStatus(ps: ParseStatus): DisplayStatus {
-  let overall = DisplayStatus.default;
+export function helper_parseStatusAsDisplayStatus(ps: ParseStatus): DisplayColour {
+  let overall = DisplayColour.none;
   if (ps === ParseStatus.valid) {
-    overall = DisplayStatus.ok;
+    overall = DisplayColour.ok;
   } else if (ps === ParseStatus.incomplete) {
-    overall = DisplayStatus.warning;
+    overall = DisplayColour.warning;
   } else if (ps === ParseStatus.invalid) {
-    overall = DisplayStatus.error;
+    overall = DisplayColour.error;
   }
   return overall;
 }
 
-export function helper_compileStatusAsDisplayStatus(cs: CompileStatus): DisplayStatus {
-  let overall = DisplayStatus.default;
+export function helper_compileStatusAsDisplayStatus(cs: CompileStatus): DisplayColour {
+  let overall = DisplayColour.none;
   if (cs === CompileStatus.ok) {
-    overall = DisplayStatus.ok;
-  } else if (cs === CompileStatus.unknownSymbol) {
-    overall = DisplayStatus.warning;
+    overall = DisplayColour.ok;
+  } else if (cs === CompileStatus.unknown_symbol) {
+    overall = DisplayColour.warning;
   } else if (cs === CompileStatus.error) {
-    overall = DisplayStatus.error;
+    overall = DisplayColour.error;
   }
   return overall;
 }
 
-export function helper_testStatusAsDisplayStatus(ts: TestStatus): DisplayStatus {
-  let overall = DisplayStatus.default;
+export function helper_testStatusAsDisplayStatus(ts: TestStatus): DisplayColour {
+  let overall = DisplayColour.none;
   if (ts === TestStatus.pass) {
-    overall = DisplayStatus.ok;
+    overall = DisplayColour.ok;
   } else if (ts === TestStatus.running || ts === TestStatus.ignored) {
-    overall = DisplayStatus.warning;
+    overall = DisplayColour.warning;
   } else if (ts === TestStatus.fail || ts === TestStatus.error) {
-    overall = DisplayStatus.error;
+    overall = DisplayColour.error;
   }
   return overall;
 }
 
-export function helper_runStatusAsDisplayStatus(rs: RunStatus): DisplayStatus {
-  let overall = DisplayStatus.default;
+export function helper_runStatusAsDisplayStatus(rs: RunStatus): DisplayColour {
+  let overall = DisplayColour.none;
   if (rs === RunStatus.running) {
-    overall = DisplayStatus.ok;
+    overall = DisplayColour.ok;
   } else if (rs === RunStatus.paused) {
-    overall = DisplayStatus.warning;
+    overall = DisplayColour.warning;
   } else if (rs === RunStatus.error) {
-    overall = DisplayStatus.error;
+    overall = DisplayColour.error;
   }
   return overall;
 }

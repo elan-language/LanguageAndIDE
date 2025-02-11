@@ -9,7 +9,7 @@ import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
 import { assertKeyword } from "../keywords";
-import { CompileStatus, DisplayStatus, TestStatus } from "../status-enums";
+import { CompileStatus, DisplayColour, TestStatus } from "../status-enums";
 import { Transforms } from "../syntax-nodes/transforms";
 
 export class AssertStatement extends AbstractFrame implements Statement {
@@ -86,13 +86,13 @@ export class AssertStatement extends AbstractFrame implements Statement {
     let cls = "";
     let msg = "";
     if (!this.outcome || this.outcome.status === TestStatus.ignored) {
-      cls = DisplayStatus[DisplayStatus.warning];
+      cls = DisplayColour[DisplayColour.warning];
       msg = `not run`;
     } else if (this.outcome.status === TestStatus.fail) {
-      cls = DisplayStatus[DisplayStatus.error];
+      cls = DisplayColour[DisplayColour.error];
       msg = `actual: ${this.outcome!.actual}`;
     } else if (this.outcome.status === TestStatus.pass) {
-      cls = DisplayStatus[DisplayStatus.ok];
+      cls = DisplayColour[DisplayColour.ok];
       msg = `pass`;
     }
     return ` <el-msg class="${cls}">${msg}</el-msg>`;

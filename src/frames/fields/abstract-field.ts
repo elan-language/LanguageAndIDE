@@ -18,7 +18,7 @@ import { propertyKeyword } from "../keywords";
 import { Overtyper } from "../overtyper";
 import { CSV } from "../parse-nodes/csv";
 import { ParseNode } from "../parse-nodes/parse-node";
-import { CompileStatus, DisplayStatus, ParseStatus } from "../status-enums";
+import { CompileStatus, DisplayColour, ParseStatus } from "../status-enums";
 import { KeywordCompletion, SymbolCompletionSpec, TokenType } from "../symbol-completion-helpers";
 import {
   filteredSymbols,
@@ -628,10 +628,10 @@ export abstract class AbstractField implements Selectable, Field {
     this.pushClass(this.focused, "focused");
     this.pushClass(!this.text, "empty");
     this.pushClass(this.isOptional(), "optional");
-    this._classes.push(DisplayStatus[this.readDisplayStatus()]);
+    this._classes.push(DisplayColour[this.readDisplayStatus()]);
   }
 
-  private readDisplayStatus(): DisplayStatus {
+  private readDisplayStatus(): DisplayColour {
     return helper_CompileOrParseAsDisplayStatus(this);
   }
 
@@ -648,7 +648,7 @@ export abstract class AbstractField implements Selectable, Field {
 
   protected getMessage(): string {
     return this.parseErrorMsg !== ""
-      ? `<el-msg class="${DisplayStatus[DisplayStatus.error]}"> ${this.parseErrorMsg}</el-msg>`
+      ? `<el-msg class="${DisplayColour[DisplayColour.error]}"> ${this.parseErrorMsg}</el-msg>`
       : helper_compileMsgAsHtml(this);
   }
 

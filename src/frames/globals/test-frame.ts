@@ -13,7 +13,7 @@ import { GlobalFrame } from "../interfaces/global-frame";
 import { ignoreKeyword, testKeyword } from "../keywords";
 import { parentHelper_compileFrames } from "../parent-helpers";
 import { AssertStatement } from "../statements/assert-statement";
-import { BreakpointStatus, DisplayStatus, TestStatus } from "../status-enums";
+import { BreakpointStatus, DisplayColour, TestStatus } from "../status-enums";
 import { Transforms } from "../syntax-nodes/transforms";
 
 export class TestFrame extends FrameWithStatements implements GlobalFrame {
@@ -35,10 +35,10 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
     this._testStatus = TestStatus.default;
   }
 
-  override readDisplayStatus(): DisplayStatus {
-    let overall = DisplayStatus.error;
+  override readDisplayStatus(): DisplayColour {
+    let overall = DisplayColour.error;
     const parseCompile = helper_CompileOrParseAsDisplayStatus(this);
-    if (parseCompile !== DisplayStatus.ok) {
+    if (parseCompile !== DisplayColour.ok) {
       overall = parseCompile;
     } else {
       overall = helper_testStatusAsDisplayStatus(this._testStatus);
@@ -149,7 +149,7 @@ ${this.compileTestBody(transforms)}\r
   }
 
   testMsgAsHtml(): string {
-    return ` <el-msg class="${DisplayStatus[DisplayStatus.error]}">failed to run</el-msg>`;
+    return ` <el-msg class="${DisplayColour[DisplayColour.error]}">failed to run</el-msg>`;
   }
 
   processKey(e: editorEvent): boolean {

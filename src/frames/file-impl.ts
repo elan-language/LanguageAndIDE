@@ -57,7 +57,7 @@ import { StatementFactoryImpl } from "./statement-factory-impl";
 import {
   BreakpointStatus,
   CompileStatus,
-  DisplayStatus,
+  DisplayColour,
   ParseStatus,
   RunStatus,
   TestStatus,
@@ -227,7 +227,7 @@ export class FileImpl implements File, Scope {
     this._frNo = 1;
     const globals = parentHelper_renderChildrenAsHtml(this);
     this.currentHash = await this.getHash();
-    return `<el-header># <el-hash>${this.currentHash}</el-hash> ${this.getVersion()}${this.getProfileName()} <span id="fileStatus" class="${this.parseStatusAsString()}">${this.parseStatusAsString()}</span></el-header>\r\n${globals}`;
+    return `<el-header># <el-hash>${this.currentHash}</el-hash> ${this.getVersion()}${this.getProfileName()} <span id="fileStatus" class="${this.getParseStatusLabel()}">${this.getParseStatusLabel()}</span></el-header>\r\n${globals}`;
   }
 
   public indent(): string {
@@ -337,7 +337,7 @@ export class FileImpl implements File, Scope {
 
   renderHashableContent(): string {
     const globals = parentHelper_renderChildrenAsSource(this);
-    let html = `${this.getVersion()}${this.getProfileName()} ${this.parseStatusAsString()}\r\n\r\n${globals}`;
+    let html = `${this.getVersion()}${this.getProfileName()} ${this.getParseStatusLabel()}\r\n\r\n${globals}`;
     html = html.endsWith("\r\n") ? html : html + "\r\n"; // To accommodate possibility that last global is a global-comment
     return html;
   }
@@ -400,20 +400,26 @@ export class FileImpl implements File, Scope {
   readRunStatus(): RunStatus {
     return this._runStatus;
   }
-  readRunStatusForDashboard(): string {
+  getRunStatusLabel(): string {
+    const status = this.readRunStatus();
+    return status === RunStatus.default ? "" : RunStatus[status];
+  }
+  getRunStatusColour(): string {
     return RunStatus[this._runStatus];
   }
   setRunStatus(s: RunStatus) {
     this._runStatus = s;
   }
+
   readParseStatus(): ParseStatus {
     return this._parseStatus;
   }
-  parseStatusAsString(): string {
-    return ParseStatus[this.readParseStatus()];
+  getParseStatusLabel(): string {
+    const status = this.readParseStatus();
+    return status === ParseStatus.default ? "" : ParseStatus[status];
   }
-  readParseStatusForDashboard(): string {
-    return DisplayStatus[helper_parseStatusAsDisplayStatus(this._parseStatus)];
+  getParseStatusColour(): string {
+    return DisplayColour[helper_parseStatusAsDisplayStatus(this._parseStatus)];
   }
 
   setTestStatus(s: TestStatus) {
@@ -461,13 +467,17 @@ export class FileImpl implements File, Scope {
   readCompileStatus(): CompileStatus {
     return this._compileStatus;
   }
-  readCompileStatusForDashboard(): string {
-    let status = DisplayStatus.default;
+  getCompileStatusLabel(): string {
+    const status = this.readCompileStatus();
+    return status === CompileStatus.default ? "" : CompileStatus[status].replace("_", " ");
+  }
+  getCompileStatusColour(): string {
+    let status = DisplayColour.none;
     const parseStatus = helper_parseStatusAsDisplayStatus(this.readParseStatus());
-    if (parseStatus === DisplayStatus.ok) {
+    if (parseStatus === DisplayColour.ok) {
       status = helper_compileStatusAsDisplayStatus(this._compileStatus);
     }
-    return DisplayStatus[status];
+    return DisplayColour[status];
   }
   updateAllCompileStatus(): void {
     this.getChildren().forEach((c) => c.updateCompileStatus());
@@ -482,22 +492,23 @@ export class FileImpl implements File, Scope {
   readTestStatus(): TestStatus {
     return this.hasTests ? this._testStatus : TestStatus.default;
   }
-
   getTestError(): Error | undefined {
     return this._testError;
   }
-
-  readTestStatusForDashboard(): string {
-    let status: DisplayStatus;
+  getTestStatusLabel(): string {
+    return this.getTestStatusColour() === "none" ? "" : TestStatus[this.readTestStatus()];
+  }
+  getTestStatusColour(): string {
+    let status: DisplayColour;
     if (
       this.readParseStatus() !== ParseStatus.valid ||
       this.readCompileStatus() !== CompileStatus.ok
     ) {
-      status = DisplayStatus.default;
+      status = DisplayColour.none;
     } else {
       status = helper_testStatusAsDisplayStatus(this.readTestStatus());
     }
-    return DisplayStatus[status];
+    return DisplayColour[status];
   }
   updateAllTestStatus(): void {
     const tests = this.getTestFrames();

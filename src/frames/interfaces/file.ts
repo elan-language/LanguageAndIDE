@@ -44,21 +44,25 @@ export interface File extends Parent {
   expandCollapseAll(): void;
 
   readParseStatus(): ParseStatus;
-  readParseStatusForDashboard(): string;
+  getParseStatusLabel(): string;
+  getParseStatusColour(): string;
   updateAllParseStatus(): void;
 
   readCompileStatus(): CompileStatus;
-  readCompileStatusForDashboard(): string;
+  getCompileStatusLabel(): string;
+  getCompileStatusColour(): string;
   updateAllCompileStatus(): void;
   resetAllCompileStatusAndErrors(): void;
 
   readTestStatus(): TestStatus;
-  readTestStatusForDashboard(): string;
+  getTestStatusLabel(): string;
+  getTestStatusColour(): string;
   updateAllTestStatus(): void;
   resetAllTestStatus(): void;
 
   readRunStatus(): RunStatus;
-  readRunStatusForDashboard(): string;
+  getRunStatusLabel(): string;
+  getRunStatusColour(): string;
 
   //Internal use only
   createMain(): Frame;

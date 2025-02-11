@@ -514,22 +514,22 @@ function canUndo() {
   return (isParsing && previousFileIndex > -1) || (!isParsing && currentFileIndex > -1);
 }
 
-function setStatus(html: HTMLDivElement, status: string, showTooltip = true): void {
-  html.setAttribute("class", status);
+function setStatus(html: HTMLDivElement, colour: string, label: string, showTooltip = true): void {
+  html.setAttribute("class", colour);
   const tooltip =
-    showTooltip && (status === "error" || status === "warning")
+    showTooltip && (colour === "error" || colour === "warning")
       ? "Click to navigate to first issue in (expanded) code"
       : "";
   html.setAttribute("title", tooltip);
-  html.innerText = status === "default" ? "" : status;
+  html.innerText = label;
 }
 
 function updateDisplayValues() {
   updateNameAndSavedStatus();
-  setStatus(parseStatus, file.readParseStatusForDashboard());
-  setStatus(compileStatus, file.readCompileStatusForDashboard());
-  setStatus(testStatus, file.readTestStatusForDashboard());
-  setStatus(runStatus, file.readRunStatusForDashboard(), false);
+  setStatus(parseStatus, file.getParseStatusColour(), file.getParseStatusLabel());
+  setStatus(compileStatus, file.getCompileStatusColour(), file.getCompileStatusLabel());
+  setStatus(testStatus, file.getTestStatusColour(), file.getTestStatusLabel());
+  setStatus(runStatus, file.getRunStatusColour(), file.getRunStatusLabel(), false);
   // Button control
   const isEmpty = file.readParseStatus() === ParseStatus.default;
   const isParsing = file.readParseStatus() === ParseStatus.valid;

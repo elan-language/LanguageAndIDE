@@ -83,7 +83,7 @@ suite("Overall Status Tests", () => {
     v4.processKey(key("l"));
     f.refreshParseAndCompileStatuses(false);
     assert.equal(f.readParseStatus(), ParseStatus.valid);
-    assert.equal(f.readCompileStatus(), CompileStatus.unknownSymbol);
+    assert.equal(f.readCompileStatus(), CompileStatus.unknown_symbol);
     assert.equal(m1.renderAsHtml().startsWith(`<main class="warning`), true);
     // Make good again
     v4.processKey(key("i"));

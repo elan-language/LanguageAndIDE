@@ -84,7 +84,7 @@ suite("Selector tests", () => {
     assert.equal(help, " constant class");
     assert.equal(
       g.renderAsHtml(),
-      `<el-global class="default" id='select1' tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-select><el-txt>c</el-txt><el-place>new code</el-place><el-help class="selector"> constant class</el-help></el-select></el-global>`,
+      `<el-global class="none" id='select1' tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-select><el-txt>c</el-txt><el-place>new code</el-place><el-help class="selector"> constant class</el-help></el-select></el-global>`,
     );
   });
 

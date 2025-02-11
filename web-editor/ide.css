@@ -254,6 +254,8 @@ button#expand-collapse {
   background-color: white;
   border: black 1px solid;
   width: 282px;  /* width of button bar */
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 .menu-item:hover, .menu-item:active, .menu-item:hover a, .menu-item:active a{
