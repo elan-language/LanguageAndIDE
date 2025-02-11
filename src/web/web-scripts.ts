@@ -559,7 +559,7 @@ function updateDisplayValues() {
     if (isRunning && debugMode && !isPaused) {
       enable(pauseButton, "Pause the program");
     } else {
-      disable([pauseButton], "Cannot pause");
+      disable([pauseButton], "Can only pause a program running in Debug mode");
     }
 
     const msg = isRunning ? "Program is running" : "Tests are running";
