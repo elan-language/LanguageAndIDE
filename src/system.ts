@@ -357,6 +357,7 @@ export class System {
         value: allScopedSymbols,
         pausedAt: id,
       } as WebWorkerBreakpointMessage);
+
       const timeOut = setInterval(async () => {
         if (!paused) {
           clearInterval(timeOut);

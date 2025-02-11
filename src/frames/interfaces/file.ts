@@ -4,7 +4,7 @@ import { CompileError } from "../compile-error";
 import { editorEvent } from "../interfaces/editor-event";
 import { ScratchPad } from "../scratch-pad";
 import {
-  BreakpointStatus,
+  BreakpointEvent,
   CompileStatus,
   ParseStatus,
   RunStatus,
@@ -103,5 +103,5 @@ export interface File extends Parent {
   currentHash: string;
   hasTests: boolean;
 
-  updateBreakpoints(newState: BreakpointStatus): void;
+  updateBreakpoints(event: BreakpointEvent): void;
 }

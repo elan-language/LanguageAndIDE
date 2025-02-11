@@ -52,7 +52,7 @@ import {
   parentHelper_updateBreakpoints,
 } from "../parent-helpers";
 import { CommentStatement } from "../statements/comment-statement";
-import { BreakpointStatus } from "../status-enums";
+import { BreakpointEvent } from "../status-enums";
 import { ClassSubType, ClassType } from "../symbols/class-type";
 import { DuplicateSymbol } from "../symbols/duplicate-symbol";
 import { getGlobalScope, isSymbol, symbolMatches } from "../symbols/symbol-helpers";
@@ -524,8 +524,8 @@ export abstract class ClassFrame
     return this.getParent().getChildren().indexOf(this);
   }
 
-  updateBreakpoints(newStatus: BreakpointStatus): void {
-    super.updateBreakpoints(newStatus);
-    parentHelper_updateBreakpoints(this, newStatus);
+  updateBreakpoints(event: BreakpointEvent): void {
+    super.updateBreakpoints(event);
+    parentHelper_updateBreakpoints(this, event);
   }
 }
