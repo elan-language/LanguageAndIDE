@@ -244,6 +244,9 @@ function handleBreakPoint (runWorker : Worker) {
         case "breakpoint":
           rs(data.value)
           break;
+        case "singlestep":
+          runWorker.postMessage({ type: "resume" } as WebWorkerMessage);
+          break;
         default:
           rj(`unexpected response '${data.type}'`)
       }
@@ -272,7 +275,7 @@ export async function assertDebugBreakPoint(
   fld.breakpointStatus = BreakpointStatus.active;
 
   const dir = __dirname.replaceAll("\\", "/");
-  const jsCode = f.compileAsWorker(`file:///${dir}`);
+  const jsCode = f.compileAsWorker(`file:///${dir}`, true);
   const asUrl = "data:text/javascript;base64," + btoa(jsCode);
 
   const runWorker = new Worker(asUrl, { type: "module" });

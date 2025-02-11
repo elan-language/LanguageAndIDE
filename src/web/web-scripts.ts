@@ -25,8 +25,8 @@ const codeContainer = document.querySelector(".elan-code");
 const runButton = document.getElementById("run-button") as HTMLButtonElement;
 const runDebugButton = document.getElementById("run-debug-button") as HTMLButtonElement;
 const stopButton = document.getElementById("stop") as HTMLButtonElement;
-const _pauseButton = document.getElementById("pause") as HTMLButtonElement;
-const _stepButton = document.getElementById("step") as HTMLButtonElement;
+const pauseButton = document.getElementById("pause") as HTMLButtonElement;
+const stepButton = document.getElementById("step") as HTMLButtonElement;
 const clearConsoleButton = document.getElementById("clear-console") as HTMLButtonElement;
 const clearGraphicsButton = document.getElementById("clear-graphics") as HTMLButtonElement;
 const expandCollapseButton = document.getElementById("expand-collapse") as HTMLButtonElement;
@@ -74,6 +74,8 @@ let runWorker: Worker | undefined;
 let testWorker: Worker | undefined;
 let inactivityTimer: any | undefined = undefined;
 let autoSaveFileHandle: FileSystemFileHandle | undefined = undefined;
+let singleStepping = false;
+let debugMode = false;
 
 autoSaveButton.hidden = !useChromeFileAPI();
 
@@ -92,19 +94,23 @@ trimButton.addEventListener("click", async () => {
   await renderAsHtml(false);
 });
 
+function resumeProgram() {
+  runWorker!.postMessage({ type: "resume" } as WebWorkerMessage);
+
+  const pausedAt = document.getElementsByClassName("paused-at");
+
+  for (const e of pausedAt) {
+    e.classList.remove("paused-at");
+  }
+
+  file.setRunStatus(RunStatus.running);
+  updateDisplayValues();
+}
+
 function runProgram() {
   try {
-    if (file.readRunStatus() === RunStatus.paused && runWorker) {
-      runWorker.postMessage({ type: "resume" } as WebWorkerMessage);
-
-      const pausedAt = document.getElementsByClassName("paused-at");
-
-      for (const e of pausedAt) {
-        e.classList.remove("paused-at");
-      }
-
-      file.setRunStatus(RunStatus.running);
-      updateDisplayValues();
+    if (file.readRunStatus() === RunStatus.paused && runWorker && debugMode) {
+      resumeProgram();
       return;
     }
 
@@ -115,7 +121,7 @@ function runProgram() {
       "/index.html",
       "",
     );
-    const jsCode = file.compileAsWorker(path);
+    const jsCode = file.compileAsWorker(path, debugMode);
     const asUrl = "data:text/javascript;base64," + btoa(jsCode);
 
     runWorker = new Worker(asUrl, { type: "module" });
@@ -129,6 +135,9 @@ function runProgram() {
           break;
         case "breakpoint":
           await handleRunWorkerPaused(data);
+          break;
+        case "singlestep":
+          await handleRunWorkerSingleStep(data);
           break;
         case "status":
           switch (data.status) {
@@ -158,14 +167,31 @@ function runProgram() {
 }
 
 runButton?.addEventListener("click", () => {
+  debugMode = false;
+  singleStepping = false;
   runProgram();
 });
 
 runDebugButton?.addEventListener("click", () => {
+  debugMode = true;
+  singleStepping = false;
   runProgram();
 });
 
+stepButton?.addEventListener("click", () => {
+  singleStepping = true;
+  if (file.readRunStatus() === RunStatus.paused && runWorker) {
+    resumeProgram();
+    return;
+  }
+});
+
+pauseButton?.addEventListener("click", () => {
+  singleStepping = true;
+});
+
 stopButton?.addEventListener("click", () => {
+  debugMode = singleStepping = false;
   if (runWorker) {
     handleRunWorkerFinished();
   }
@@ -336,6 +362,8 @@ if (okToContinue) {
       runButton,
       runDebugButton,
       stopButton,
+      pauseButton,
+      stepButton,
       loadButton,
       appendButton,
       saveButton,
@@ -517,18 +545,27 @@ function updateDisplayValues() {
     codeContainer?.classList.add("running");
 
     if (isPaused) {
-      enable(runButton, "Resume the program");
       enable(runDebugButton, "Resume the program");
+      enable(stepButton, "Single step the program");
     } else {
       disable(
-        [runButton, runDebugButton],
+        [runButton, runDebugButton, stepButton],
         isRunning ? "Program is already running" : "Tests are running",
       );
     }
+
     enable(stopButton, isRunning ? "Stop the program" : "Stop the Tests");
+
+    if (isRunning && debugMode && !isPaused) {
+      enable(pauseButton, "Pause the program");
+    } else {
+      disable([pauseButton], "Cannot pause");
+    }
+
     const msg = isRunning ? "Program is running" : "Tests are running";
     disable(
       [
+        runButton,
         loadButton,
         appendButton,
         saveButton,
@@ -547,9 +584,8 @@ function updateDisplayValues() {
     }
   } else {
     codeContainer?.classList.remove("running");
-    const msg = "Program is not running";
-    disable([stopButton], msg);
-    //disable(pauseButton, msg);
+
+    disable([stopButton, pauseButton, stepButton], "Program is not running");
 
     enable(loadButton, "Load code from a file");
     enable(appendButton, "Add code from a file onto the end of the existing code");
@@ -579,7 +615,7 @@ function updateDisplayValues() {
       );
     } else {
       enable(runButton, "Run the program");
-      enable(runDebugButton, "Run the program");
+      enable(runDebugButton, "Debug the program");
     }
 
     if (canUndo()) {
@@ -1199,6 +1235,14 @@ async function handleRunWorkerPaused(data: WebWorkerBreakpointMessage): Promise<
   pausedAt?.classList.add("paused-at");
 
   updateDisplayValues();
+}
+
+async function handleRunWorkerSingleStep(data: WebWorkerBreakpointMessage): Promise<void> {
+  if (singleStepping) {
+    handleRunWorkerPaused(data);
+  } else if (runWorker) {
+    resumeProgram();
+  }
 }
 
 async function handleRunWorkerError(data: WebWorkerStatusMessage) {

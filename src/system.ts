@@ -338,7 +338,11 @@ export class System {
     }
   }
 
-  async breakPoint(allScopedSymbols: [string, string][], id: string): Promise<void> {
+  async breakPoint(
+    allScopedSymbols: [string, string][],
+    id: string,
+    singlestep: boolean,
+  ): Promise<void> {
     let paused = true;
 
     addEventListener("message", async (e) => {
@@ -349,7 +353,7 @@ export class System {
 
     return new Promise<void>((rs) => {
       postMessage({
-        type: "breakpoint",
+        type: singlestep ? "singlestep" : "breakpoint",
         value: allScopedSymbols,
         pausedAt: id,
       } as WebWorkerBreakpointMessage);
@@ -358,7 +362,7 @@ export class System {
           clearInterval(timeOut);
           rs();
         }
-      }, 250);
+      }, 1);
     });
   }
 }

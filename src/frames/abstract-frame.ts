@@ -653,6 +653,10 @@ export abstract class AbstractFrame implements Frame {
     ) {
       this.breakpointStatus = newState;
     }
+
+    if (this.breakpointStatus === BreakpointStatus.none && newState === BreakpointStatus.active) {
+      this.breakpointStatus = BreakpointStatus.singlestep;
+    }
   }
 
   setBreakPoint = () => {
@@ -664,7 +668,7 @@ export abstract class AbstractFrame implements Frame {
   };
 
   toggleBreakPoint = () => {
-    if (this.breakpointStatus) {
+    if (this.hasBreakpoint()) {
       this.clearBreakPoint();
     } else {
       this.setBreakPoint();
@@ -675,11 +679,18 @@ export abstract class AbstractFrame implements Frame {
     this.getFile().updateBreakpoints(BreakpointStatus.none);
   };
 
+  hasBreakpoint() {
+    return (
+      this.breakpointStatus === BreakpointStatus.active ||
+      this.breakpointStatus === BreakpointStatus.disabled
+    );
+  }
+
   getContextMenuItems() {
     const map = new Map<string, [string, (() => void) | undefined, string]>();
     map.set("frameHelp", ["Help for this instruction", undefined, this.hrefForFrameHelp]);
     // Must be arrow functions for this binding
-    if (this.breakpointStatus === BreakpointStatus.active) {
+    if (this.hasBreakpoint()) {
       map.set("clearBP", ["clear breakpoint (Ctrl-b)", this.clearBreakPoint, ""]);
       map.set("clearAllBP", ["clear all breakpoints", this.clearAllBreakPoints, ""]);
     } else {
@@ -719,45 +730,50 @@ export abstract class AbstractFrame implements Frame {
   }
 
   bpAsHtml(): string {
-    return this.breakpointStatus === BreakpointStatus.none ? "" : `<el-bp>&#x1f5f2;</el-bp>`;
+    return this.hasBreakpoint() ? `<el-bp>&#x1f5f2;</el-bp>` : "";
   }
 
   breakPoint(scopedSymbols: () => ElanSymbol[]) {
-    if (this.breakpointStatus !== BreakpointStatus.active) {
-      return "";
-    }
+    if (
+      this.breakpointStatus === BreakpointStatus.active ||
+      this.breakpointStatus === BreakpointStatus.singlestep
+    ) {
+      const resolveId: string[] = [];
+      const symbols = scopedSymbols().filter(this.isNotGlobalOrLib).sort(orderSymbol);
 
-    const resolveId: string[] = [];
-    const symbols = scopedSymbols().filter(this.isNotGlobalOrLib).sort(orderSymbol);
-
-    for (const symbol of symbols) {
-      const idPrefix =
-        symbol.symbolScope === SymbolScope.program
-          ? "global."
-          : symbol.symbolScope === SymbolScope.member
-            ? "property."
-            : "";
-
-      const scopePrefix =
-        symbol.symbolScope === SymbolScope.stdlib
-          ? "_stdlib."
-          : symbol.symbolScope === SymbolScope.program
+      for (const symbol of symbols) {
+        const idPrefix =
+          symbol.symbolScope === SymbolScope.program
             ? "global."
             : symbol.symbolScope === SymbolScope.member
-              ? "this."
+              ? "property."
               : "";
 
-      const id = `${idPrefix}${symbol.symbolId}`;
-      const value = `${scopePrefix}${symbol.symbolId}`;
-      resolveId.push(
-        `_scopedIds${this.htmlId}.push(["${id}", await system.debugSymbol(${value})]);`,
-      );
-    }
+        const scopePrefix =
+          symbol.symbolScope === SymbolScope.stdlib
+            ? "_stdlib."
+            : symbol.symbolScope === SymbolScope.program
+              ? "global."
+              : symbol.symbolScope === SymbolScope.member
+                ? "this."
+                : "";
 
-    const resolve = `${this.indent()}const _scopedIds${this.htmlId} = [];
+        const id = `${idPrefix}${symbol.symbolId}`;
+        const value = `${scopePrefix}${symbol.symbolId}`;
+        resolveId.push(
+          `_scopedIds${this.htmlId}.push(["${id}", await system.debugSymbol(${value})]);`,
+        );
+      }
+
+      const resolve = `${this.indent()}const _scopedIds${this.htmlId} = [];
   ${resolveId.join("\r")}`;
 
-    return `${resolve}await system.breakPoint(_scopedIds${this.htmlId}, "${this.htmlId}");\r\n`;
+      const type = this.breakpointStatus === BreakpointStatus.singlestep ? "true" : "false";
+
+      return `${resolve}await system.breakPoint(_scopedIds${this.htmlId}, "${this.htmlId}", ${type});\r\n`;
+    }
+
+    return "";
   }
 
   protected toolTip(): string {

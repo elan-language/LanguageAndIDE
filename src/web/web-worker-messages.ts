@@ -23,13 +23,13 @@ export type WebWorkerTestMessage = {
 };
 
 export type WebWorkerBreakpointMessage = {
-  type: "breakpoint";
+  type: "breakpoint" | "singlestep";
   value: [string, string][];
   pausedAt: string;
 };
 
 export type WebWorkerMessage = {
-  type: "start" | "read" | "write" | "status" | "test" | "resume" | "breakpoint";
+  type: "start" | "read" | "write" | "status" | "test" | "resume" | "breakpoint" | "singlestep";
 } & (
   | WebWorkerStatusMessage
   | WebWorkerWriteMessage

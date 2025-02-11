@@ -297,8 +297,8 @@ export class FileImpl implements File, Scope {
     return `${stdlib}\n${this.compileGlobals()}return [main, _tests];}`;
   }
 
-  compileAsWorker(base: string): string {
-    this.updateBreakpoints(BreakpointStatus.active);
+  compileAsWorker(base: string, debugMode: boolean): string {
+    this.updateBreakpoints(debugMode ? BreakpointStatus.active : BreakpointStatus.disabled);
     const onmsg = `addEventListener("message", async (e) => {
   if (e.data.type === "start") {
     try {
