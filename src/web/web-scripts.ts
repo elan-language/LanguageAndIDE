@@ -25,7 +25,6 @@ const codeContainer = document.querySelector(".elan-code");
 const runButton = document.getElementById("run-button") as HTMLButtonElement;
 const runDebugButton = document.getElementById("run-debug-button") as HTMLButtonElement;
 const stopButton = document.getElementById("stop") as HTMLButtonElement;
-const _debugButton = document.getElementById("debug") as HTMLButtonElement;
 const _pauseButton = document.getElementById("pause") as HTMLButtonElement;
 const _stepButton = document.getElementById("step") as HTMLButtonElement;
 const clearConsoleButton = document.getElementById("clear-console") as HTMLButtonElement;
