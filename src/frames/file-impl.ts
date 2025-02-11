@@ -55,7 +55,7 @@ import {
 import { ScratchPad } from "./scratch-pad";
 import { StatementFactoryImpl } from "./statement-factory-impl";
 import {
-  BreakpointStatus,
+  BreakpointEvent,
   CompileStatus,
   DisplayColour,
   ParseStatus,
@@ -298,7 +298,7 @@ export class FileImpl implements File, Scope {
   }
 
   compileAsWorker(base: string, debugMode: boolean): string {
-    this.updateBreakpoints(debugMode ? BreakpointStatus.active : BreakpointStatus.disabled);
+    this.updateBreakpoints(debugMode ? BreakpointEvent.activate : BreakpointEvent.disable);
     const onmsg = `addEventListener("message", async (e) => {
   if (e.data.type === "start") {
     try {
@@ -317,7 +317,7 @@ export class FileImpl implements File, Scope {
   }
 
   compileAsTestWorker(base: string): string {
-    this.updateBreakpoints(BreakpointStatus.disabled);
+    this.updateBreakpoints(BreakpointEvent.disable);
     const onmsg = `onmessage = async (e) => {
   if (e.data.type === "start") {
     try {
@@ -751,8 +751,8 @@ export class FileImpl implements File, Scope {
     return this._stdLibSymbols;
   }
 
-  updateBreakpoints(newState: BreakpointStatus) {
-    parentHelper_updateBreakpoints(this, newState);
+  updateBreakpoints(event: BreakpointEvent) {
+    parentHelper_updateBreakpoints(this, event);
   }
 }
 

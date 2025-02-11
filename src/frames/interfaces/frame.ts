@@ -1,5 +1,5 @@
 import { CompileError } from "../compile-error";
-import { BreakpointStatus, CompileStatus, ParseStatus } from "../status-enums";
+import { BreakpointEvent, CompileStatus, ParseStatus } from "../status-enums";
 import { Transforms } from "../syntax-nodes/transforms";
 import { ElanSymbol } from "./elan-symbol";
 import { Field } from "./field";
@@ -57,7 +57,7 @@ export interface Frame extends Selectable, Scope, ElanSymbol {
 
   deleteIfPermissible(): void;
 
-  updateBreakpoints(newState: BreakpointStatus): void;
+  updateBreakpoints(event: BreakpointEvent): void;
 
   setCompileScope(s: Scope): void;
 }

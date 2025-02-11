@@ -2,7 +2,7 @@ import { AbstractSelector } from "./abstract-selector";
 import { CompileError } from "./compile-error";
 import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
-import { BreakpointStatus, CompileStatus, ParseStatus } from "./status-enums";
+import { BreakpointEvent, CompileStatus, ParseStatus } from "./status-enums";
 import { Transforms } from "./syntax-nodes/transforms";
 
 export function worstParseStatus(prev: ParseStatus, cur: ParseStatus) {
@@ -237,8 +237,8 @@ function moveUpOne(parent: Parent, child: Frame): boolean {
   return result;
 }
 
-export function parentHelper_updateBreakpoints(parent: Parent, newStatus: BreakpointStatus) {
+export function parentHelper_updateBreakpoints(parent: Parent, event: BreakpointEvent) {
   for (const frame of parent.getChildren()) {
-    frame.updateBreakpoints(newStatus);
+    frame.updateBreakpoints(event);
   }
 }

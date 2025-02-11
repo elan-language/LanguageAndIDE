@@ -43,3 +43,9 @@ export enum BreakpointStatus {
   active,
   singlestep,
 }
+
+export enum BreakpointEvent {
+  clear,
+  activate,
+  disable,
+}

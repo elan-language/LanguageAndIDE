@@ -25,7 +25,13 @@ import {
   parentHelper_removeAllSelectedChildren,
 } from "./parent-helpers";
 import { ScratchPad } from "./scratch-pad";
-import { BreakpointStatus, CompileStatus, DisplayColour, ParseStatus } from "./status-enums";
+import {
+  BreakpointEvent,
+  BreakpointStatus,
+  CompileStatus,
+  DisplayColour,
+  ParseStatus,
+} from "./status-enums";
 import { allScopedSymbols, orderSymbol } from "./symbols/symbol-helpers";
 import { SymbolScope } from "./symbols/symbol-scope";
 import { UnknownType } from "./symbols/unknown-type";
@@ -635,28 +641,49 @@ export abstract class AbstractFrame implements Frame {
     return helper_compileMsgAsHtml(this);
   }
 
-  updateBreakpoints(newState: BreakpointStatus): void {
-    if (newState === BreakpointStatus.none) {
-      this.breakpointStatus = newState;
+  getNextState(currentState: BreakpointStatus, event: BreakpointEvent) {
+    switch (currentState) {
+      case BreakpointStatus.none:
+        switch (event) {
+          case BreakpointEvent.clear:
+            return BreakpointStatus.none;
+          case BreakpointEvent.activate:
+            return BreakpointStatus.singlestep;
+          case BreakpointEvent.disable:
+            return BreakpointStatus.none;
+        }
+      case BreakpointStatus.disabled:
+        switch (event) {
+          case BreakpointEvent.clear:
+            return BreakpointStatus.none;
+          case BreakpointEvent.activate:
+            return BreakpointStatus.active;
+          case BreakpointEvent.disable:
+            return BreakpointStatus.disabled;
+        }
+      case BreakpointStatus.active:
+        switch (event) {
+          case BreakpointEvent.clear:
+            return BreakpointStatus.none;
+          case BreakpointEvent.activate:
+            return BreakpointStatus.active;
+          case BreakpointEvent.disable:
+            return BreakpointStatus.disabled;
+        }
+      case BreakpointStatus.singlestep:
+        switch (event) {
+          case BreakpointEvent.clear:
+            return BreakpointStatus.none;
+          case BreakpointEvent.activate:
+            return BreakpointStatus.singlestep;
+          case BreakpointEvent.disable:
+            return BreakpointStatus.none;
+        }
     }
+  }
 
-    if (
-      this.breakpointStatus === BreakpointStatus.active &&
-      newState === BreakpointStatus.disabled
-    ) {
-      this.breakpointStatus = newState;
-    }
-
-    if (
-      this.breakpointStatus === BreakpointStatus.disabled &&
-      newState === BreakpointStatus.active
-    ) {
-      this.breakpointStatus = newState;
-    }
-
-    if (this.breakpointStatus === BreakpointStatus.none && newState === BreakpointStatus.active) {
-      this.breakpointStatus = BreakpointStatus.singlestep;
-    }
+  updateBreakpoints(event: BreakpointEvent): void {
+    this.breakpointStatus = this.getNextState(this.breakpointStatus, event);
   }
 
   setBreakPoint = () => {
@@ -676,7 +703,7 @@ export abstract class AbstractFrame implements Frame {
   };
 
   clearAllBreakPoints = () => {
-    this.getFile().updateBreakpoints(BreakpointStatus.none);
+    this.getFile().updateBreakpoints(BreakpointEvent.clear);
   };
 
   hasBreakpoint() {

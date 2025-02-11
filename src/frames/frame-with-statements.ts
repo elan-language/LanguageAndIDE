@@ -35,7 +35,7 @@ import {
 } from "./parent-helpers";
 import { AssertStatement } from "./statements/assert-statement";
 import { StatementSelector } from "./statements/statement-selector";
-import { BreakpointStatus } from "./status-enums";
+import { BreakpointEvent } from "./status-enums";
 import { getIds, handleDeconstruction, isSymbol, symbolMatches } from "./symbols/symbol-helpers";
 import { Transforms } from "./syntax-nodes/transforms";
 
@@ -278,8 +278,8 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     return asserts;
   }
 
-  updateBreakpoints(newStatus: BreakpointStatus): void {
-    super.updateBreakpoints(newStatus);
-    parentHelper_updateBreakpoints(this, newStatus);
+  updateBreakpoints(event: BreakpointEvent): void {
+    super.updateBreakpoints(event);
+    parentHelper_updateBreakpoints(this, event);
   }
 }
