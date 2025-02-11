@@ -24,7 +24,9 @@ import {
 const codeContainer = document.querySelector(".elan-code");
 const runButton = document.getElementById("run-button") as HTMLButtonElement;
 const stopButton = document.getElementById("stop") as HTMLButtonElement;
+const _debugButton = document.getElementById("debug") as HTMLButtonElement;
 const _pauseButton = document.getElementById("pause") as HTMLButtonElement;
+const _stepButton = document.getElementById("step") as HTMLButtonElement;
 const clearConsoleButton = document.getElementById("clear-console") as HTMLButtonElement;
 const clearGraphicsButton = document.getElementById("clear-graphics") as HTMLButtonElement;
 const expandCollapseButton = document.getElementById("expand-collapse") as HTMLButtonElement;
@@ -569,11 +571,11 @@ function updateDisplayValues() {
     }
 
     if (autoSaveFileHandle) {
-      autoSaveButton.innerText = "Auto-off";
+      autoSaveButton.innerText = "Cancel Auto Save";
       autoSaveButton.setAttribute("title", "Click to turn auto-save off and resume manual saving.");
     } else {
       if (useChromeFileAPI()) {
-        autoSaveButton.innerText = "Auto";
+        autoSaveButton.innerText = "Auto Save";
         if (isParsing) {
           enable(
             autoSaveButton,
