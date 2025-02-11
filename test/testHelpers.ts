@@ -245,7 +245,7 @@ function handleBreakPoint (runWorker : Worker) {
           rs(data.value)
           break;
         default:
-          rj(`unexpected response ${data.type}`)
+          rj(`unexpected response '${data.type}'`)
       }
     });
   

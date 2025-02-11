@@ -379,11 +379,11 @@ end main`;
     await assertDebugBreakPoint(fileImpl, "set12", expected);
   });
 
-  ignore_test("Pass_InElse", async () => {
+  test("Pass_InElse", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to true
+  variable a set to false
   if a then
     variable b set to 1
     set b to 2
@@ -397,7 +397,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["a", "true"],
+      ["a", "false"],
       ["c", "1"],
     ] as [string, string][];
 

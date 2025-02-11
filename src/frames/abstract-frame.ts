@@ -709,7 +709,7 @@ export abstract class AbstractFrame implements Frame {
   }
 
   debugSymbols() {
-    return () => allScopedSymbols(this.getParent(), this);
+    return () => allScopedSymbols(this.getParentScope(), this);
   }
 
   isNotGlobalOrLib(s: ElanSymbol) {
