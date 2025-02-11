@@ -23,6 +23,7 @@ import {
 // static html elements
 const codeContainer = document.querySelector(".elan-code");
 const runButton = document.getElementById("run-button") as HTMLButtonElement;
+const runDebugButton = document.getElementById("run-debug-button") as HTMLButtonElement;
 const stopButton = document.getElementById("stop") as HTMLButtonElement;
 const _pauseButton = document.getElementById("pause") as HTMLButtonElement;
 const clearConsoleButton = document.getElementById("clear-console") as HTMLButtonElement;
@@ -90,7 +91,7 @@ trimButton.addEventListener("click", async () => {
   await renderAsHtml(false);
 });
 
-runButton?.addEventListener("click", () => {
+function runProgram() {
   try {
     if (file.readRunStatus() === RunStatus.paused && runWorker) {
       runWorker.postMessage({ type: "resume" } as WebWorkerMessage);
@@ -153,6 +154,14 @@ runButton?.addEventListener("click", () => {
     file.setRunStatus(RunStatus.error);
     updateDisplayValues();
   }
+}
+
+runButton?.addEventListener("click", () => {
+  runProgram();
+});
+
+runDebugButton?.addEventListener("click", () => {
+  runProgram();
 });
 
 stopButton?.addEventListener("click", () => {
@@ -321,20 +330,26 @@ if (okToContinue) {
     });
 } else {
   const msg = "Require Chrome";
-  disable(runButton, msg);
-  disable(stopButton, msg);
-  disable(loadButton, msg);
-  disable(appendButton, msg);
-  disable(saveButton, msg);
-  disable(autoSaveButton, msg);
-  disable(newButton, msg);
-  disable(demosButton, msg);
-  disable(trimButton, msg);
-  disable(expandCollapseButton, msg);
-  disable(undoButton, msg);
-  disable(redoButton, msg);
-  disable(clearConsoleButton, msg);
-  disable(clearGraphicsButton, msg);
+  disable(
+    [
+      runButton,
+      runDebugButton,
+      stopButton,
+      loadButton,
+      appendButton,
+      saveButton,
+      autoSaveButton,
+      newButton,
+      demosButton,
+      trimButton,
+      expandCollapseButton,
+      undoButton,
+      redoButton,
+      clearConsoleButton,
+      clearGraphicsButton,
+    ],
+    msg,
+  );
   for (const elem of demoFiles) {
     elem.setAttribute("hidden", "");
   }
@@ -502,28 +517,37 @@ function updateDisplayValues() {
 
     if (isPaused) {
       enable(runButton, "Resume the program");
+      enable(runDebugButton, "Resume the program");
     } else {
-      disable(runButton, isRunning ? "Program is already running" : "Tests are running");
+      disable(
+        [runButton, runDebugButton],
+        isRunning ? "Program is already running" : "Tests are running",
+      );
     }
     enable(stopButton, isRunning ? "Stop the program" : "Stop the Tests");
     const msg = isRunning ? "Program is running" : "Tests are running";
-    disable(loadButton, msg);
-    disable(appendButton, msg);
-    disable(saveButton, msg);
-    disable(autoSaveButton, msg);
-    disable(newButton, msg);
-    disable(demosButton, msg);
-    disable(trimButton, msg);
-    disable(expandCollapseButton, msg);
-    disable(undoButton, msg);
-    disable(redoButton, msg);
+    disable(
+      [
+        loadButton,
+        appendButton,
+        saveButton,
+        autoSaveButton,
+        newButton,
+        demosButton,
+        trimButton,
+        expandCollapseButton,
+        undoButton,
+        redoButton,
+      ],
+      msg,
+    );
     for (const elem of demoFiles) {
       elem.setAttribute("hidden", "");
     }
   } else {
     codeContainer?.classList.remove("running");
     const msg = "Program is not running";
-    disable(stopButton, msg);
+    disable([stopButton], msg);
     //disable(pauseButton, msg);
 
     enable(loadButton, "Load code from a file");
@@ -538,32 +562,33 @@ function updateDisplayValues() {
     }
 
     if (isEmpty) {
-      disable(saveButton, "Some code must be added in order to save");
+      disable([saveButton], "Some code must be added in order to save");
     } else if (!isParsing) {
-      disable(saveButton, "Code must be parsing in order to save");
+      disable([saveButton], "Code must be parsing in order to save");
     } else {
       enable(saveButton, "Save the code into a file");
     }
 
     if (!file.containsMain()) {
-      disable(runButton, "Code must have a 'main' routine to be run");
+      disable([runButton, runDebugButton], "Code must have a 'main' routine to be run");
     } else if (!isCompiling) {
       disable(
-        runButton,
+        [runButton, runDebugButton],
         "Program is not yet compiled. If you have just edited a field, press Enter or Tab to complete.",
       );
     } else {
       enable(runButton, "Run the program");
+      enable(runDebugButton, "Run the program");
     }
 
     if (canUndo()) {
       enable(undoButton, "Undo last change (Ctrl + z)");
     } else {
-      disable(undoButton, "Nothing to undo");
+      disable([undoButton], "Nothing to undo");
     }
 
     if (nextFileIndex === -1) {
-      disable(redoButton, "Nothing to redo");
+      disable([redoButton], "Nothing to redo");
     } else {
       enable(redoButton, "Redo last change (Ctrl + y");
     }
@@ -580,16 +605,18 @@ function updateDisplayValues() {
             "Save to file now and then auto-save to same file whenever code is changed and parses",
           );
         } else {
-          disable(autoSaveButton, "Code must be parsing in order to save");
+          disable([autoSaveButton], "Code must be parsing in order to save");
         }
       }
     }
   }
 }
 
-function disable(button: HTMLButtonElement, msg = "") {
-  button.setAttribute("disabled", "");
-  button.setAttribute("title", msg);
+function disable(buttons: HTMLButtonElement[], msg = "") {
+  for (const button of buttons) {
+    button.setAttribute("disabled", "");
+    button.setAttribute("title", msg);
+  }
 }
 
 function enable(button: HTMLButtonElement, msg = "") {
@@ -997,8 +1024,7 @@ async function replaceCode(indexToUse: number, msg: string) {
   updateIndexes(indexToUse);
   const code = localStorage.getItem(id);
   if (code) {
-    disable(undoButton, msg);
-    disable(redoButton, msg);
+    disable([undoButton, redoButton], msg);
     cursorWait();
     undoRedoing = true;
     const fn = file.fileName;
