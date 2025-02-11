@@ -342,16 +342,25 @@ export class System {
     allScopedSymbols: [string, string][],
     id: string,
     singlestep: boolean,
-  ): Promise<void> {
+    pause: boolean,
+  ): Promise<boolean> {
+    if (singlestep && !pause) {
+      return false;
+    }
+
     let paused = true;
+    let nextPause = false;
 
     addEventListener("message", async (e) => {
       if (e.data.type === "resume") {
         paused = false;
       }
+      if (e.data.type === "pause") {
+        nextPause = true;
+      }
     });
 
-    return new Promise<void>((rs) => {
+    return new Promise<boolean>((rs) => {
       postMessage({
         type: singlestep ? "singlestep" : "breakpoint",
         value: allScopedSymbols,
@@ -361,7 +370,7 @@ export class System {
       const timeOut = setInterval(async () => {
         if (!paused) {
           clearInterval(timeOut);
-          rs();
+          rs(nextPause);
         }
       }, 1);
     });

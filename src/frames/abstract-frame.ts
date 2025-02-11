@@ -793,11 +793,11 @@ export abstract class AbstractFrame implements Frame {
       }
 
       const resolve = `${this.indent()}const _scopedIds${this.htmlId} = [];
-  ${resolveId.join("\r")}`;
+${resolveId.join("\r")}`;
 
       const type = this.breakpointStatus === BreakpointStatus.singlestep ? "true" : "false";
 
-      return `${resolve}await system.breakPoint(_scopedIds${this.htmlId}, "${this.htmlId}", ${type});\r\n`;
+      return `${resolve}__pause = await system.breakPoint(_scopedIds${this.htmlId}, "${this.htmlId}", ${type}, __pause);\r\n`;
     }
 
     return "";

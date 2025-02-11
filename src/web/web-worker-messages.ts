@@ -29,7 +29,16 @@ export type WebWorkerBreakpointMessage = {
 };
 
 export type WebWorkerMessage = {
-  type: "start" | "read" | "write" | "status" | "test" | "resume" | "breakpoint" | "singlestep";
+  type:
+    | "start"
+    | "read"
+    | "write"
+    | "status"
+    | "test"
+    | "resume"
+    | "breakpoint"
+    | "singlestep"
+    | "pause";
 } & (
   | WebWorkerStatusMessage
   | WebWorkerWriteMessage

@@ -95,6 +95,10 @@ trimButton.addEventListener("click", async () => {
 });
 
 function resumeProgram() {
+  if (singleStepping) {
+    runWorker!.postMessage({ type: "pause" } as WebWorkerMessage);
+  }
+
   runWorker!.postMessage({ type: "resume" } as WebWorkerMessage);
 
   const pausedAt = document.getElementsByClassName("paused-at");
@@ -188,6 +192,7 @@ stepButton?.addEventListener("click", () => {
 
 pauseButton?.addEventListener("click", () => {
   singleStepping = true;
+  runWorker!.postMessage({ type: "pause" } as WebWorkerMessage);
 });
 
 stopButton?.addEventListener("click", () => {
