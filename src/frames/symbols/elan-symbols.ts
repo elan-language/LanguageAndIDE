@@ -88,7 +88,7 @@ const tupleSymbol: ClassSymbol = {
   symbolScope: SymbolScope.program,
   isClass: true,
   isAbstract: true,
-  isNotInheritable: false,
+  isNotInheritable: true,
   ofTypes: [new GenericParameterType("T1"), new GenericParameterType("T2")],
 };
 

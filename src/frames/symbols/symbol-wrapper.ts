@@ -11,6 +11,7 @@ import {
   isFunction,
   isId,
   isMemberOnFieldsClass,
+  isNotInheritableClass,
   isProcedure,
   isProperty,
 } from "./symbol-helpers";
@@ -57,7 +58,7 @@ export class SymbolWrapper {
 
     // order is important
 
-    if (isConcreteTypeName(symbol) || isAbstractTypeName(symbol)) {
+    if (isConcreteTypeName(symbol) || isAbstractTypeName(symbol) || isNotInheritableClass(symbol)) {
       return " type";
     }
 
