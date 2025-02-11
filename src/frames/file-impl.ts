@@ -310,9 +310,12 @@ export class FileImpl implements File, Scope {
       postMessage({type : "status", status : "error", error : e});
     }
   }
+  if (e.data.type === "pause") {
+    __pause = true;
+  }
   });`;
 
-    const stdlib = `import { StdLib } from "${base}/elan-api.js"; let system; let _stdlib; let _tests = []; async function program() { _stdlib = new StdLib(); system = _stdlib.system; system.stdlib = _stdlib  `;
+    const stdlib = `import { StdLib } from "${base}/elan-api.js"; let system; let _stdlib; let _tests = []; let __pause = false; async function program() { _stdlib = new StdLib(); system = _stdlib.system; system.stdlib = _stdlib  `;
     return `${stdlib}\n${this.compileGlobals()}return [main, _tests];}\n${onmsg}`;
   }
 
