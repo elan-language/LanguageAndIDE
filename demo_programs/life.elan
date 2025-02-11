@@ -30,24 +30,24 @@ function updateGraphics(grid as Array<of Boolean>, gr as BlockGraphics) returns 
   return gr2
 end function
 
-function n(c as Int) returns Int
+function north(c as Int) returns Int
   return if c > 39 then c - 40 else c + 1160
 end function
 
-function s(c as Int) returns Int
+function south(c as Int) returns Int
   return if c < 1160 then c + 40 else c - 1160
 end function
 
-function e(c as Int) returns Int
+function east(c as Int) returns Int
   return if (c mod 40) < 39 then c + 1 else c - 39
 end function
 
-function w(c as Int) returns Int
+function west(c as Int) returns Int
   return if (c mod 40) > 0 then c - 1 else c + 39
 end function
 
 function neighbourCells(c as Int) returns Array<of Int>
-  return [n(w(c)), n(c), n(e(c)), w(c), e(c), s(w(c)), s(c), s(e(c))]
+  return [north(west(c)), north(c), north(east(c)), west(c), east(c), south(west(c)), south(c), south(east(c))]
 end function
 
 function liveNeighbours(cells as Array<of Boolean>, c as Int) returns Int
@@ -75,63 +75,63 @@ constant black set to 0x000000
 constant white set to 0xffffff
 
 test north
-  assert n(90) is 50
-  assert n(39) is 1199
-  assert n(0) is 1160
-  assert n(40) is 0
+  assert north(90) is 50
+  assert north(39) is 1199
+  assert north(0) is 1160
+  assert north(40) is 0
 end test
 
 test south
-  assert s(90) is 130
-  assert s(39) is 79
-  assert s(1160) is 0
-  assert s(1199) is 39
+  assert south(90) is 130
+  assert south(39) is 79
+  assert south(1160) is 0
+  assert south(1199) is 39
 end test
 
 test east
-  assert e(90) is 91
-  assert e(39) is 0
-  assert e(40) is 41
-  assert e(1199) is 1160
+  assert east(90) is 91
+  assert east(39) is 0
+  assert east(40) is 41
+  assert east(1199) is 1160
 end test
 
 test 
-  assert w(90) is 89
-  assert w(39) is 38
-  assert w(0) is 39
-  assert w(1160) is 1199
+  assert west(90) is 89
+  assert west(39) is 38
+  assert west(0) is 39
+  assert west(1160) is 1199
 end test
 
 test north_east
-  assert n(e(90)) is 51
-  assert n(e(0)) is 1161
-  assert n(e(39)) is 1160
-  assert n(e(1160)) is 1121
-  assert n(e(1199)) is 1120
+  assert north(east(90)) is 51
+  assert north(east(0)) is 1161
+  assert north(east(39)) is 1160
+  assert north(east(1160)) is 1121
+  assert north(east(1199)) is 1120
 end test
 
 test 
-  assert s(e(90)) is 131
-  assert s(e(0)) is 41
-  assert s(e(39)) is 40
-  assert s(e(1160)) is 1
-  assert s(e(1199)) is 0
+  assert south(east(90)) is 131
+  assert south(east(0)) is 41
+  assert south(east(39)) is 40
+  assert south(east(1160)) is 1
+  assert south(east(1199)) is 0
 end test
 
 test 
-  assert n(w(90)) is 49
-  assert n(w(0)) is 1199
-  assert n(w(39)) is 1198
-  assert n(w(1160)) is 1159
-  assert n(w(1199)) is 1158
+  assert north(west(90)) is 49
+  assert north(west(0)) is 1199
+  assert north(west(39)) is 1198
+  assert north(west(1160)) is 1159
+  assert north(west(1199)) is 1158
 end test
 
 test 
-  assert s(w(90)) is 129
-  assert s(w(0)) is 79
-  assert s(w(39)) is 78
-  assert s(w(1160)) is 39
-  assert s(w(1199)) is 38
+  assert south(west(90)) is 129
+  assert south(west(0)) is 79
+  assert south(west(39)) is 78
+  assert south(west(1160)) is 39
+  assert south(west(1199)) is 38
 end test
 
 test 
