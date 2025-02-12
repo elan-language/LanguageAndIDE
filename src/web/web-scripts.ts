@@ -529,6 +529,22 @@ function setStatus(html: HTMLDivElement, colour: string, label: string, showTool
   html.innerText = label;
 }
 
+function isRunningState() {
+  return file.readRunStatus() === RunStatus.running || file.readRunStatus() === RunStatus.paused;
+}
+
+function isPausedState() {
+  return file.readRunStatus() === RunStatus.paused;
+}
+
+function setPauseButtonState(waitingForUserInput?: boolean) {
+  if (isRunningState() && debugMode && !isPausedState() && !waitingForUserInput) {
+    enable(pauseButton, "Pause the program");
+  } else {
+    disable([pauseButton], "Can only pause a program running in Debug mode");
+  }
+}
+
 function updateDisplayValues() {
   updateNameAndSavedStatus();
   setStatus(parseStatus, file.getParseStatusColour(), file.getParseStatusLabel());
@@ -539,9 +555,8 @@ function updateDisplayValues() {
   const isEmpty = file.readParseStatus() === ParseStatus.default;
   const isParsing = file.readParseStatus() === ParseStatus.valid;
   const isCompiling = file.readCompileStatus() === CompileStatus.ok;
-  const isRunning =
-    file.readRunStatus() === RunStatus.running || file.readRunStatus() === RunStatus.paused;
-  const isPaused = file.readRunStatus() === RunStatus.paused;
+  const isRunning = isRunningState();
+  const isPaused = isPausedState();
   const isTestRunning = file.readTestStatus() === TestStatus.running;
 
   saveButton.hidden = !!autoSaveFileHandle;
@@ -561,11 +576,7 @@ function updateDisplayValues() {
 
     enable(stopButton, isRunning ? "Stop the program" : "Stop the Tests");
 
-    if (isRunning && debugMode && !isPaused) {
-      enable(pauseButton, "Pause the program");
-    } else {
-      disable([pauseButton], "Can only pause a program running in Debug mode");
-    }
+    setPauseButtonState();
 
     const msg = isRunning ? "Program is running" : "Tests are running";
     disable(
@@ -1173,7 +1184,9 @@ function errorMsg(value: unknown) {
 async function handleWorkerIO(data: WebWorkerWriteMessage) {
   switch (data.function) {
     case "readLine":
+      setPauseButtonState(true);
       const line = await elanInputOutput.readLine();
+      setPauseButtonState(false);
       runWorker?.postMessage(readMsg(line));
       break;
     case "waitForAnyKey":
