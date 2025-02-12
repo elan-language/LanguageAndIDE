@@ -155,7 +155,7 @@ export class WebInputOutput implements ElanInputOutput {
   }
   clearRawHtml() {
     this.clearKeyBuffer();
-    document.getElementById("raw-html")!.innerHTML = "";
+    document.getElementById("printed-text")!.innerHTML = "";
   }
   drawBlockGraphics(html: string): void {
     document.getElementById("block-graphics")!.innerHTML = html;
@@ -272,7 +272,7 @@ export class WebInputOutput implements ElanInputOutput {
   }
 
   renderPrintedText(): void {
-    const div = document.getElementById("raw-html")!;
+    const div = document.getElementById("printed-text")!;
     div.innerHTML = this.printedText;
     this.display.focus();
   }
