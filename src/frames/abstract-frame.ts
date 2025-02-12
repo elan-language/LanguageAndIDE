@@ -760,44 +760,61 @@ export abstract class AbstractFrame implements Frame {
     return this.hasBreakpoint() ? `<el-bp>&#x1f5f2;</el-bp>` : "";
   }
 
+  bpIndent() {
+    return this.indent() === "" ? "  " : this.indent();
+  }
+
+  resolveVariables(scopedSymbols: () => ElanSymbol[]) {
+    const resolveId: string[] = [];
+    const symbols = scopedSymbols().filter(this.isNotGlobalOrLib).sort(orderSymbol);
+    const indent = this.bpIndent();
+
+    for (const symbol of symbols) {
+      const idPrefix =
+        symbol.symbolScope === SymbolScope.program
+          ? "global."
+          : symbol.symbolScope === SymbolScope.member
+            ? "property."
+            : "";
+
+      const scopePrefix =
+        symbol.symbolScope === SymbolScope.stdlib
+          ? "_stdlib."
+          : symbol.symbolScope === SymbolScope.program
+            ? "global."
+            : symbol.symbolScope === SymbolScope.member
+              ? "this."
+              : "";
+
+      const id = `${idPrefix}${symbol.symbolId}`;
+      const value = `${scopePrefix}${symbol.symbolId}`;
+      resolveId.push(
+        `${indent}_scopedIds${this.htmlId}.push(["${id}", await system.debugSymbol(${value})]);`,
+      );
+    }
+
+    return `${resolveId.join("\r\n")}`;
+  }
+
   breakPoint(scopedSymbols: () => ElanSymbol[]) {
     if (
       this.breakpointStatus === BreakpointStatus.active ||
       this.breakpointStatus === BreakpointStatus.singlestep
     ) {
-      const resolveId: string[] = [];
-      const symbols = scopedSymbols().filter(this.isNotGlobalOrLib).sort(orderSymbol);
+      let resolve = this.resolveVariables(scopedSymbols);
+      const type = this.breakpointStatus === BreakpointStatus.singlestep ? "true" : "false";
+      const indent = this.bpIndent();
 
-      for (const symbol of symbols) {
-        const idPrefix =
-          symbol.symbolScope === SymbolScope.program
-            ? "global."
-            : symbol.symbolScope === SymbolScope.member
-              ? "property."
-              : "";
-
-        const scopePrefix =
-          symbol.symbolScope === SymbolScope.stdlib
-            ? "_stdlib."
-            : symbol.symbolScope === SymbolScope.program
-              ? "global."
-              : symbol.symbolScope === SymbolScope.member
-                ? "this."
-                : "";
-
-        const id = `${idPrefix}${symbol.symbolId}`;
-        const value = `${scopePrefix}${symbol.symbolId}`;
-        resolveId.push(
-          `_scopedIds${this.htmlId}.push(["${id}", await system.debugSymbol(${value})]);`,
-        );
+      if (this.breakpointStatus === BreakpointStatus.singlestep) {
+        resolve = `${indent}if (__pause) {
+${resolve}
+${indent}}`;
       }
 
-      const resolve = `${this.indent()}const _scopedIds${this.htmlId} = [];
-${resolveId.join("\r")}`;
+      resolve = `${indent}const _scopedIds${this.htmlId} = [];
+${resolve}`;
 
-      const type = this.breakpointStatus === BreakpointStatus.singlestep ? "true" : "false";
-
-      return `${resolve}__pause = await system.breakPoint(_scopedIds${this.htmlId}, "${this.htmlId}", ${type}, __pause);\r\n`;
+      return `${resolve}\r\n${indent}__pause = await system.breakPoint(_scopedIds${this.htmlId}, "${this.htmlId}", ${type}, __pause);\r\n`;
     }
 
     return "";
