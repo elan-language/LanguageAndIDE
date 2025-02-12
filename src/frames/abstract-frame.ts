@@ -767,6 +767,7 @@ export abstract class AbstractFrame implements Frame {
     ) {
       const resolveId: string[] = [];
       const symbols = scopedSymbols().filter(this.isNotGlobalOrLib).sort(orderSymbol);
+      const indent = this.indent() === "" ? "  " : this.indent();
 
       for (const symbol of symbols) {
         const idPrefix =
@@ -788,16 +789,16 @@ export abstract class AbstractFrame implements Frame {
         const id = `${idPrefix}${symbol.symbolId}`;
         const value = `${scopePrefix}${symbol.symbolId}`;
         resolveId.push(
-          `_scopedIds${this.htmlId}.push(["${id}", await system.debugSymbol(${value})]);`,
+          `${indent}_scopedIds${this.htmlId}.push(["${id}", await system.debugSymbol(${value})]);`,
         );
       }
 
-      const resolve = `${this.indent()}const _scopedIds${this.htmlId} = [];
-${resolveId.join("\r")}`;
+      const resolve = `${indent}const _scopedIds${this.htmlId} = [];
+${resolveId.join("\r\n")}`;
 
       const type = this.breakpointStatus === BreakpointStatus.singlestep ? "true" : "false";
 
-      return `${resolve}__pause = await system.breakPoint(_scopedIds${this.htmlId}, "${this.htmlId}", ${type}, __pause);\r\n`;
+      return `${resolve}\r\n${indent}__pause = await system.breakPoint(_scopedIds${this.htmlId}, "${this.htmlId}", ${type}, __pause);\r\n`;
     }
 
     return "";
