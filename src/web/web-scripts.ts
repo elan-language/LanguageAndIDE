@@ -21,7 +21,7 @@ import {
 } from "./web-worker-messages";
 
 // static html elements
-const codeContainer = document.querySelector(".elan-code");
+const codeContainer = document.querySelector(".elan-code") as HTMLDivElement;
 const runButton = document.getElementById("run-button") as HTMLButtonElement;
 const runDebugButton = document.getElementById("run-debug-button") as HTMLButtonElement;
 const stopButton = document.getElementById("stop") as HTMLButtonElement;
@@ -821,6 +821,12 @@ async function handleEditorEvent(
   selection?: [number, number] | undefined,
   autocomplete?: string | undefined,
 ) {
+  if (isRunningState()) {
+    event?.preventDefault();
+    event.stopPropagation();
+    return;
+  }
+
   const msg = getEditorMsg(type, target, id, key, modKey, selection, autocomplete);
 
   if (!isSupportedKey(msg)) {
@@ -886,6 +892,8 @@ async function updateContent(text: string, editingField: boolean) {
       if (me.button === 0 && me.shiftKey) {
         // left button only
         handleEditorEvent(event, "click", "frame", getModKey(me), id);
+      } else {
+        event.preventDefault();
       }
     });
 
@@ -905,11 +913,20 @@ async function updateContent(text: string, editingField: boolean) {
     });
   }
 
-  const input = document.querySelector(".focused input") as HTMLInputElement;
-  const focused = getFocused();
-  const elanCode = document.querySelector(".elan-code") as HTMLDivElement;
+  function getInput() {
+    return document.querySelector(".focused input") as HTMLInputElement;
+  }
 
-  elanCode?.addEventListener("click", () => {
+  const input = getInput();
+  const focused = getFocused();
+
+  codeContainer?.addEventListener("click", (event) => {
+    if (isRunningState()) {
+      event.preventDefault();
+      event.stopPropagation();
+      return;
+    }
+
     const focused = getFocused();
     if (focused) {
       focused.focus();
@@ -917,6 +934,12 @@ async function updateContent(text: string, editingField: boolean) {
       file.getFirstChild().select();
       getFocused()?.focus();
     }
+  });
+
+  codeContainer.addEventListener("mousedown", (event) => {
+    // to prevent codeContainer taking focus on a click
+    event.preventDefault();
+    event.stopPropagation();
   });
 
   if (document.querySelector(".context-menu")) {
@@ -961,7 +984,7 @@ async function updateContent(text: string, editingField: boolean) {
   } else if (focused) {
     focused.focus();
   } else {
-    elanCode.focus();
+    codeContainer.focus();
   }
 
   if (document.querySelector(".autocomplete-popup")) {
