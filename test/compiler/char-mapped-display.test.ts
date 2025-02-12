@@ -198,7 +198,7 @@ const global = new class {};
 async function main() {
   let g = system.initialise(await new _stdlib.BlockGraphics()._initialise());
   await g.display();
-  _stdlib.clearGraphics(g);
+  await g.clearGraphics();
 }
 return [main, _tests];}`;
 

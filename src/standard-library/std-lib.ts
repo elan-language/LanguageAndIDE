@@ -1140,10 +1140,6 @@ export class StdLib {
   }
 
   // Graphics
-  @elanProcedure([], ProcedureOptions.extension)
-  clearGraphics(@elanClassType(GraphicsBase) _g: GraphicsBase) {
-    this.system!.elanInputOutput.clearGraphics();
-  }
 
   @elanProcedure([], ProcedureOptions.async)
   waitForAnyKey() {

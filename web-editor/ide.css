@@ -107,6 +107,17 @@ body {
     margin: 0;
     width: 100%;
     aspect-ratio: 4/3;
+    position:relative;
+  }
+  #block-graphics,#vector-graphics {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  #vector-graphics {
+    z-index: 10;
   }
   #block-graphics {
     width: 100%;
@@ -277,4 +288,3 @@ button#expand-collapse {
   background-color: var(--selection);
   width: 100%;
 }
-

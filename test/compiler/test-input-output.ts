@@ -29,10 +29,19 @@ export class TestInputOutput implements ElanInputOutput {
   inputed: string = "";
   drawn: string = "";
 
-  drawGraphics(html: string): void {
+  drawBlockGraphics(html: string): void {
     this.drawn = html;
   }
-  clearGraphics(): void {
+  clearBlockGraphics(): void {
+    this.drawn = "";
+  }
+  drawVectorGraphics(html: string): void {
+    this.drawn = html;
+  }
+  clearVectorGraphics(): void {
+    this.drawn = "";
+  }
+  clearAllGraphics(): void {
     this.drawn = "";
   }
   print(line: string): void {

@@ -42,8 +42,20 @@ export class StubInputOutput implements ElanInputOutput {
     return { type: "write", function: func, parameters: parameters ?? [] } as WebWorkerWriteMessage;
   }
 
-  drawGraphics(html: string): void {
-    postMessage(this.writeMsg("drawGraphics", [html]));
+  drawBlockGraphics(html: string): void {
+    postMessage(this.writeMsg("drawBlockGraphics", [html]));
+  }
+  clearBlockGraphics() {
+    postMessage(this.writeMsg("clearBlockGraphics"));
+  }
+  drawVectorGraphics(html: string): void {
+    postMessage(this.writeMsg("drawVectorGraphics", [html]));
+  }
+  clearVectorGraphics() {
+    postMessage(this.writeMsg("clearVectorGraphics"));
+  }
+  clearAllGraphics() {
+    postMessage(this.writeMsg("clearAllGraphics"));
   }
 
   printLine(text: string) {
@@ -122,9 +134,5 @@ export class StubInputOutput implements ElanInputOutput {
 
   clearConsole() {
     postMessage(this.writeMsg("clearConsole"));
-  }
-
-  clearGraphics() {
-    postMessage(this.writeMsg("clearGraphics"));
   }
 }

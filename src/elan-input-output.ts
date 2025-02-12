@@ -9,9 +9,13 @@ export interface ElanInputOutput {
 
   clearConsole(): void;
 
-  clearGraphics(): void;
+  drawBlockGraphics(html: string): void;
+  clearBlockGraphics(): void;
 
-  drawGraphics(html: string): void;
+  drawVectorGraphics(html: string): void;
+  clearVectorGraphics(): void;
+
+  clearAllGraphics(): void;
 
   waitForAnyKey(): Promise<void>;
 

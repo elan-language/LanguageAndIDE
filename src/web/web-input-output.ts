@@ -164,6 +164,29 @@ export class WebInputOutput implements ElanInputOutput {
     this.graphics.focus();
   }
 
+  drawBlockGraphics(html: string): void {
+    document.getElementById("block-graphics")!.innerHTML = html;
+    this.graphics.focus();
+  }
+  clearBlockGraphics() {
+    this.clearKeyBuffer();
+    this.drawBlockGraphics("");
+  }
+
+  drawVectorGraphics(html: string): void {
+    document.getElementById("vector-graphics")!.innerHTML = html;
+    this.graphics.focus();
+  }
+  clearVectorGraphics() {
+    this.clearKeyBuffer();
+    this.drawVectorGraphics("");
+  }
+  clearAllGraphics() {
+    this.clearKeyBuffer();
+    this.clearBlockGraphics();
+    this.clearVectorGraphics();
+  }
+
   previousContent: string = "";
   currentInterval?: any;
 
@@ -257,10 +280,5 @@ export class WebInputOutput implements ElanInputOutput {
   clearConsole() {
     this.previousContent = "";
     this.consoleWindow.innerHTML = this.renderConsole();
-  }
-
-  clearGraphics() {
-    this.clearKeyBuffer();
-    this.graphicsWindow.innerHTML = `<div></div>`;
   }
 }

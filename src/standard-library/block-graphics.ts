@@ -192,7 +192,7 @@ export class BlockGraphics extends GraphicsBase {
 
   @elanFunction([], FunctionOptions.pure)
   asHtml(): string {
-    let rendered = `<div id="block-graphics">`;
+    let rendered = ``;
 
     for (let y = 0; y < this.ySize; y++) {
       for (let x = 0; x < this.xSize; x++) {
@@ -200,7 +200,7 @@ export class BlockGraphics extends GraphicsBase {
         rendered = `${rendered}<div style="color:${this.asHex(f)};background-color:${this.asHex(b)};">${c}</div>`;
       }
     }
-    return rendered + "</div>";
+    return rendered;
   }
 
   private asHex(n: number): string {
@@ -212,7 +212,12 @@ export class BlockGraphics extends GraphicsBase {
   @elanProcedure([], ProcedureOptions.async)
   display(): Promise<void> {
     const html = this.asHtml();
-    this.system!.elanInputOutput.drawGraphics(html);
+    this.system!.elanInputOutput.drawBlockGraphics(html);
     return this.pause(0);
+  }
+
+  @elanProcedure([], ProcedureOptions.async)
+  clearGraphics() {
+    this.system!.elanInputOutput.clearBlockGraphics();
   }
 }

@@ -92,7 +92,12 @@ export class VectorGraphics {
   @elanProcedure([], ProcedureOptions.async)
   display(): Promise<void> {
     const html = this.asHtml();
-    this.system!.elanInputOutput.drawGraphics(html);
+    this.system!.elanInputOutput.drawVectorGraphics(html);
     return this.stdlib.pause(0);
+  }
+
+  @elanProcedure([], ProcedureOptions.async)
+  clearGraphics() {
+    this.system!.elanInputOutput.clearVectorGraphics();
   }
 }

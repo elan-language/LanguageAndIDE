@@ -212,7 +212,7 @@ clearConsoleButton?.addEventListener("click", () => {
 });
 
 clearGraphicsButton?.addEventListener("click", () => {
-  elanInputOutput.clearGraphics();
+  elanInputOutput.clearAllGraphics();
 });
 
 expandCollapseButton?.addEventListener("click", async () => {
@@ -413,7 +413,7 @@ async function renderAsHtml(editingField: boolean) {
 
 function clearDisplays() {
   elanInputOutput.clearConsole();
-  elanInputOutput.clearGraphics();
+  elanInputOutput.clearAllGraphics();
 }
 
 function clearUndoRedoAndAutoSave() {
