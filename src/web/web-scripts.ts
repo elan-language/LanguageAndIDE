@@ -440,7 +440,7 @@ async function showError(err: Error, fileName: string, reset: boolean) {
   file.fileName = fileName;
 
   if (err.message === cannotLoadFile) {
-    elanInputOutput.printLine(err.message);
+    systemConsolePrintLine(err.message);
   } else if (err.stack) {
     let msg = "";
     let stack = "";
@@ -452,12 +452,18 @@ async function showError(err: Error, fileName: string, reset: boolean) {
         "An unexpected error has occurred; please email whole-screen snapshot to rpawson@nakedobjects.org\nTo continue, try clicking the Refresh icon on the browser.";
       stack = err.stack;
     }
-    elanInputOutput.printLine(msg);
-    elanInputOutput.printLine(stack);
+    systemConsolePrintLine(msg);
+    systemConsolePrintLine(stack);
   } else {
-    elanInputOutput.printLine(err.message ?? "Unknown error parsing file");
+    systemConsolePrintLine(err.message ?? "Unknown error parsing file");
   }
   cursorDefault();
+}
+
+function systemConsolePrintLine(text: string) {
+  const console = document.getElementById("console")!;
+  console.innerHTML = console.innerHTML + text + "\n";
+  console.scrollTop = console.scrollHeight;
 }
 
 async function refreshAndDisplay(compileIfParsed: boolean, editingField: boolean) {
@@ -1164,7 +1170,7 @@ async function handleKeyAndRender(e: editorEvent) {
     }
   } catch (e) {
     if (e instanceof ElanCutCopyPasteError) {
-      elanInputOutput.printLine(e.message);
+      systemConsolePrintLine(e.message);
       await renderAsHtml(false);
       return;
     }
@@ -1246,7 +1252,7 @@ async function handleRunWorkerPaused(data: WebWorkerBreakpointMessage): Promise<
   elanInputOutput.clearConsole();
 
   for (const v of variables) {
-    elanInputOutput.printLine(`${v[0]} : ${v[1]}`);
+    systemConsolePrintLine(`${v[0]} : ${v[1]}`);
   }
 
   const pausedAt = document.getElementById(data.pausedAt);
@@ -1534,7 +1540,7 @@ async function handleTestWorkerError(data: WebWorkerStatusMessage) {
 function handleTestAbort() {
   endTests();
   file.setTestStatus(TestStatus.error);
-  elanInputOutput.printLine("Tests timed out and were aborted");
+  systemConsolePrintLine("Tests timed out and were aborted");
   updateDisplayValues();
 }
 
