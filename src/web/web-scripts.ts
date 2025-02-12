@@ -27,13 +27,14 @@ const runDebugButton = document.getElementById("run-debug-button") as HTMLButton
 const stopButton = document.getElementById("stop") as HTMLButtonElement;
 const pauseButton = document.getElementById("pause") as HTMLButtonElement;
 const stepButton = document.getElementById("step") as HTMLButtonElement;
-const clearConsoleButton = document.getElementById("clear-console") as HTMLButtonElement;
-const clearGraphicsButton = document.getElementById("clear-graphics") as HTMLButtonElement;
+const clearSystemInfoButton = document.getElementById("clear-system-info") as HTMLButtonElement;
+const clearGraphicsButton = document.getElementById("clear-display") as HTMLButtonElement;
 const expandCollapseButton = document.getElementById("expand-collapse") as HTMLButtonElement;
 const newButton = document.getElementById("new") as HTMLButtonElement;
 const demosButton = document.getElementById("demos") as HTMLButtonElement;
 const trimButton = document.getElementById("trim") as HTMLButtonElement;
-const consoleDiv = document.getElementById("console") as HTMLDivElement;
+const systemInfoDiv = document.getElementById("system-info") as HTMLDivElement;
+const displayDiv = document.getElementById("display") as HTMLDivElement;
 const loadButton = document.getElementById("load") as HTMLButtonElement;
 const appendButton = document.getElementById("append") as HTMLButtonElement;
 const saveButton = document.getElementById("save") as HTMLButtonElement;
@@ -84,8 +85,8 @@ undoButton.addEventListener("click", undo);
 
 redoButton.addEventListener("click", redo);
 
-consoleDiv.addEventListener("click", () => {
-  consoleDiv.getElementsByTagName("input")?.[0]?.focus();
+displayDiv.addEventListener("click", () => {
+  displayDiv.getElementsByTagName("input")?.[0]?.focus();
 });
 
 trimButton.addEventListener("click", async () => {
@@ -206,8 +207,8 @@ stopButton?.addEventListener("click", () => {
   }
 });
 
-clearConsoleButton?.addEventListener("click", () => {
-  consoleDiv.innerHTML = "";
+clearSystemInfoButton?.addEventListener("click", () => {
+  systemInfoDiv.innerHTML = "";
 });
 
 clearGraphicsButton?.addEventListener("click", () => {
@@ -378,7 +379,7 @@ if (okToContinue) {
       expandCollapseButton,
       undoButton,
       redoButton,
-      clearConsoleButton,
+      clearSystemInfoButton,
       clearGraphicsButton,
     ],
     msg,
@@ -411,7 +412,7 @@ async function renderAsHtml(editingField: boolean) {
 }
 
 function clearDisplays() {
-  elanInputOutput.clearConsole();
+  systemInfoDiv.innerHTML = "";
   elanInputOutput.clearAllGraphics();
 }
 
@@ -439,7 +440,7 @@ async function showError(err: Error, fileName: string, reset: boolean) {
   file.fileName = fileName;
 
   if (err.message === cannotLoadFile) {
-    systemConsolePrintLine(err.message);
+    systemInfoPrintLine(err.message);
   } else if (err.stack) {
     let msg = "";
     let stack = "";
@@ -451,18 +452,18 @@ async function showError(err: Error, fileName: string, reset: boolean) {
         "An unexpected error has occurred; please email whole-screen snapshot to rpawson@nakedobjects.org\nTo continue, try clicking the Refresh icon on the browser.";
       stack = err.stack;
     }
-    systemConsolePrintLine(msg);
-    systemConsolePrintLine(stack);
+    systemInfoPrintLine(msg);
+    systemInfoPrintLine(stack);
   } else {
-    systemConsolePrintLine(err.message ?? "Unknown error parsing file");
+    systemInfoPrintLine(err.message ?? "Unknown error parsing file");
   }
   cursorDefault();
 }
 
-function systemConsolePrintLine(text: string) {
-  const console = document.getElementById("console")!;
-  console.innerHTML = console.innerHTML + text + "\n";
-  console.scrollTop = console.scrollHeight;
+function systemInfoPrintLine(text: string) {
+  const systemInfo = document.getElementById("system-info")!;
+  systemInfo.innerHTML = systemInfo.innerHTML + text + "\n";
+  systemInfo.scrollTop = systemInfo.scrollHeight;
 }
 
 async function refreshAndDisplay(compileIfParsed: boolean, editingField: boolean) {
@@ -1192,7 +1193,7 @@ async function handleKeyAndRender(e: editorEvent) {
     }
   } catch (e) {
     if (e instanceof ElanCutCopyPasteError) {
-      systemConsolePrintLine(e.message);
+      systemInfoPrintLine(e.message);
       await renderAsHtml(false);
       return;
     }
@@ -1271,10 +1272,10 @@ async function handleRunWorkerPaused(data: WebWorkerBreakpointMessage): Promise<
   console.info("elan program paused");
   file.setRunStatus(RunStatus.paused);
   const variables = data.value;
-  elanInputOutput.clearConsole();
+  systemInfoDiv.innerHTML = "";
 
   for (const v of variables) {
-    systemConsolePrintLine(`${v[0]} : ${v[1]}`);
+    systemInfoPrintLine(`${v[0]} : ${v[1]}`);
   }
 
   const pausedAt = document.getElementById(data.pausedAt);
@@ -1562,7 +1563,7 @@ async function handleTestWorkerError(data: WebWorkerStatusMessage) {
 function handleTestAbort() {
   endTests();
   file.setTestStatus(TestStatus.error);
-  systemConsolePrintLine("Tests timed out and were aborted");
+  systemInfoPrintLine("Tests timed out and were aborted");
   updateDisplayValues();
 }
 

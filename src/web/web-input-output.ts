@@ -4,19 +4,19 @@ import { ElanInputOutput } from "../elan-input-output";
 export class WebInputOutput implements ElanInputOutput {
   keyBuffer: KeyboardEvent[] = [];
 
-  private graphics: HTMLElement;
+  private display: HTMLElement;
   private lastDirId = "elan-data";
 
   constructor() {
-    this.graphics = document.getElementById("graphics") as HTMLElement;
-    this.graphics.addEventListener("keydown", (k: KeyboardEvent) => {
+    this.display = document.getElementById("display") as HTMLElement;
+    this.display.addEventListener("keydown", (k: KeyboardEvent) => {
       if (k.key === "Shift" || k.key === "Control" || k.key === "Alt") {
         return;
       }
       this.keyBuffer.push(k);
     });
 
-    this.graphics.focus();
+    this.display.focus();
   }
 
   useChromeFileAPI() {
@@ -25,7 +25,7 @@ export class WebInputOutput implements ElanInputOutput {
 
   chooser() {
     const f = document.createElement("input");
-    const g = document.getElementById("graphics") as HTMLElement;
+    const g = this.display;
     f.style.display = "none";
     f.type = "file";
     f.name = "file";
@@ -35,7 +35,7 @@ export class WebInputOutput implements ElanInputOutput {
 
   chromeChooser() {
     const f = document.createElement("input");
-    const g = document.getElementById("graphics") as HTMLElement;
+    const g = this.display as HTMLElement;
     f.style.display = "none";
     g.appendChild(f);
     return f;
@@ -67,7 +67,7 @@ export class WebInputOutput implements ElanInputOutput {
       });
 
       chooser.click();
-      document.getElementById("graphics")?.removeChild(chooser);
+      this.display?.removeChild(chooser);
     });
   }
 
@@ -159,7 +159,7 @@ export class WebInputOutput implements ElanInputOutput {
   }
   drawBlockGraphics(html: string): void {
     document.getElementById("block-graphics")!.innerHTML = html;
-    this.graphics.focus();
+    this.display.focus();
   }
   clearBlockGraphics() {
     this.clearKeyBuffer();
@@ -168,7 +168,7 @@ export class WebInputOutput implements ElanInputOutput {
 
   drawVectorGraphics(html: string): void {
     document.getElementById("vector-graphics")!.innerHTML = html;
-    this.graphics.focus();
+    this.display.focus();
   }
   clearVectorGraphics() {
     this.clearKeyBuffer();
@@ -186,7 +186,7 @@ export class WebInputOutput implements ElanInputOutput {
 
   printLine(text: string) {
     this.print(`${text}<br>`);
-    const element = document.getElementById("console")!;
+    const element = document.getElementById("raw-info")!;
     element.scrollTop = element.scrollHeight;
   }
 
@@ -209,7 +209,7 @@ export class WebInputOutput implements ElanInputOutput {
     clearInterval(this.currentInterval);
     const inputOffset = this.printedText.indexOf("<input");
     this.printedText = `${this.printedText.slice(0, inputOffset)}`;
-    this.graphics.focus();
+    this.display.focus();
   }
 
   readLine() {
@@ -245,7 +245,7 @@ export class WebInputOutput implements ElanInputOutput {
   }
 
   getKey() {
-    this.graphics.focus();
+    this.display.focus();
     const evt = this.keyBuffer[0];
     this.keyBuffer = this.keyBuffer.slice(1);
     const ks = evt ? evt.key : "";
@@ -257,7 +257,7 @@ export class WebInputOutput implements ElanInputOutput {
   }
 
   getKeyWithModifier(): Promise<[string, string]> {
-    this.graphics.focus();
+    this.display.focus();
     const evt = this.keyBuffer.pop();
     const ks: [string, string] = evt ? [evt.key, this.getModKey(evt)] : ["", ""];
     return Promise.resolve(ks);
@@ -267,14 +267,18 @@ export class WebInputOutput implements ElanInputOutput {
     this.keyBuffer = [];
   }
 
-  clearConsole() {
-    this.printedText = "";
-    this.renderPrintedText();
+  clearSystemInfo() {
+    document.getElementById("system-info")!.innerHTML = "";
   }
 
   renderPrintedText(): void {
     const div = document.getElementById("raw-html")!;
     div.innerHTML = this.printedText;
-    this.graphics.focus();
+    this.display.focus();
+  }
+
+  clearPrintedText() {
+    this.printedText = "";
+    this.renderPrintedText();
   }
 }

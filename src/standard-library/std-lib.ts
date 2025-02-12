@@ -795,7 +795,7 @@ export class StdLib {
 
   @elanProcedure([])
   clearConsole() {
-    this.system.elanInputOutput.clearConsole();
+    this.system.elanInputOutput.clearPrintedText();
   }
 
   @elanFunction(["size", "initialValue"], FunctionOptions.pure, ElanArray(ElanT1))

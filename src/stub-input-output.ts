@@ -132,7 +132,10 @@ export class StubInputOutput implements ElanInputOutput {
     postMessage(this.writeMsg("clearKeyBuffer"));
   }
 
-  clearConsole() {
-    postMessage(this.writeMsg("clearConsole"));
+  clearPrintedText() {
+    postMessage(this.writeMsg("clearPrintedText"));
+  }
+  clearSystemInfo() {
+    postMessage(this.writeMsg("clearSystemInfo"));
   }
 }

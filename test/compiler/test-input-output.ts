@@ -60,7 +60,10 @@ export class TestInputOutput implements ElanInputOutput {
   readLine(): Promise<string> {
     return Promise.resolve(this.inputed);
   }
-  clearConsole(): void {
+  clearPrintedText(): void {
+    this.printed = "";
+  }
+  clearSystemInfo(): void {
     this.printed = "";
   }
 }

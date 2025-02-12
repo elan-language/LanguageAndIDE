@@ -7,7 +7,7 @@
     --ideTitleSize: 12pt;
 }
 
-#console, #raw-html, #raw-html input {
+#system-info, #raw-html, #raw-html input {
   color: var(--defaultText);
   border-color: var(--defaultBackground);
   font-style: normal;
@@ -15,7 +15,7 @@
   font-size: 11pt;
 }
 
-#console {
+#system-info {
   background-color: var(--defaultBackground);
 }
 
@@ -33,7 +33,7 @@ body {
     padding: 10px;
     margin: 0;
   }
-  #code-title, #console-title, #graphics-title, #status .row {
+  #code-title, #system-info-title, #display-title, #status .row {
     background-color: var(--ideDefaultBackground);
     color: var(--ideReverseText);
     font-family: var(--ideTitleFont);
@@ -42,11 +42,6 @@ body {
   #code-title {
     display: inline;
 }
-#console-title {
-  grid-row: 5;
-  grid-column: 34 / 48;
-  margin-left: 5px;
-  }
 
 .elan-code{
   grid-column: 1 / 32;
@@ -55,12 +50,7 @@ body {
   margin-left: 10px;
   position: relative;
 }
-  #console {
-    grid-column:33 / 48;
-    grid-row: 6/15;
-    white-space: pre;
-    padding: 5px;
-  }
+
   #status-names {
     grid-column: 43 / 44;
     grid-row: 1/5;
@@ -95,16 +85,35 @@ body {
   #status-values .error {
     background-color: var(--error);
   }
-
-  #graphics-title {
+  button#clear-system-info {
+    grid-row: 27;
+    grid-column: 33 / 34;
+  }
+  #system-info-title {
+    grid-row: 27;
     grid-column: 34 / 48;
-    grid-row: 16;
+    margin-left: 5px;
+  }
+  #system-info {
+      grid-column:33 / 48;
+      grid-row: 28/36;
+      white-space: pre;
+      padding: 5px;
+    }
+    button#clear-display {
+      grid-row: 5;
+      grid-column: 33 / 34;
+    }
+  #display-title {
+    grid-column: 34 / 48;
+    grid-row: 5;
     margin-left: 5px;
     }
-  #graphics {
+
+  #display {
     /* position pane within outer grid */
     grid-column: 33 / 48;
-    grid-row: 17/36;
+    grid-row: 6/25;
     background-color: var(--idePanelBackground);
     overflow: hidden;
     margin: 0;
@@ -202,18 +211,10 @@ button.plain:disabled {
   color: grey;
 }
 
-#console, .elan-code {
+#system-info, .elan-code {
   overflow-y: auto;
 }
 
-button#clear-console {
-  grid-row: 5;
-  grid-column: 33 / 34;
-}
-button#clear-graphics {
-  grid-row: 16;
-  grid-column: 33 / 34;
-}
 button#expand-collapse {
   grid-row: 1;
   grid-column: 23;
@@ -285,8 +286,8 @@ button#expand-collapse {
   font-family: var(--ideTitleFont);
 }
 
-.elan-code:not( :focus-within),
- #graphics:not(:focus) {
+.elan-code:not( :focus-within)
+{
   opacity: 0.75;  
 }
 

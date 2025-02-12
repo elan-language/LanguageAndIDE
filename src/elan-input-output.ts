@@ -7,7 +7,8 @@ export interface ElanInputOutput {
 
   readLine(): Promise<string>;
 
-  clearConsole(): void;
+  clearPrintedText(): void;
+  clearSystemInfo(): void;
 
   drawBlockGraphics(html: string): void;
   clearBlockGraphics(): void;
