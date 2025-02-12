@@ -95,6 +95,7 @@ trimButton.addEventListener("click", async () => {
 });
 
 function resumeProgram() {
+  pendingBreakpoints = [];
   if (singleStepping) {
     runWorker!.postMessage({ type: "pause" } as WebWorkerMessage);
   }
@@ -182,8 +183,16 @@ runDebugButton?.addEventListener("click", () => {
   runProgram();
 });
 
-stepButton?.addEventListener("click", () => {
+stepButton?.addEventListener("click", async () => {
   singleStepping = true;
+
+  if (pendingBreakpoints.length > 0) {
+    const next = pendingBreakpoints[0];
+    pendingBreakpoints = pendingBreakpoints.slice(1);
+    await handleRunWorkerPaused(next);
+    return;
+  }
+
   if (file.readRunStatus() === RunStatus.paused && runWorker) {
     resumeProgram();
     return;
@@ -1268,9 +1277,16 @@ function handleRunWorkerFinished() {
   updateDisplayValues();
 }
 
+let pendingBreakpoints: WebWorkerBreakpointMessage[] = [];
+
 async function handleRunWorkerPaused(data: WebWorkerBreakpointMessage): Promise<void> {
-  console.info("elan program paused");
+  if (isPausedState()) {
+    pendingBreakpoints.push(data);
+    return;
+  }
   file.setRunStatus(RunStatus.paused);
+  pendingBreakpoints = [];
+  console.info("elan program paused");
   const variables = data.value;
   systemInfoDiv.innerHTML = "";
 
