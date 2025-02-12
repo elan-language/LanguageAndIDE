@@ -34,7 +34,6 @@ const newButton = document.getElementById("new") as HTMLButtonElement;
 const demosButton = document.getElementById("demos") as HTMLButtonElement;
 const trimButton = document.getElementById("trim") as HTMLButtonElement;
 const consoleDiv = document.getElementById("console") as HTMLDivElement;
-const graphicsDiv = document.getElementById("graphics") as HTMLDivElement;
 const loadButton = document.getElementById("load") as HTMLButtonElement;
 const appendButton = document.getElementById("append") as HTMLButtonElement;
 const saveButton = document.getElementById("save") as HTMLButtonElement;
@@ -58,7 +57,7 @@ system.stdlib = stdlib; // to allow injection
 // well known ids
 const lastDirId = "elan-files";
 
-const elanInputOutput = new WebInputOutput(consoleDiv, graphicsDiv);
+const elanInputOutput = new WebInputOutput();
 let undoRedoFiles: string[] = [];
 let previousFileIndex: number = -1;
 let currentFileIndex: number = -1;
@@ -208,7 +207,7 @@ stopButton?.addEventListener("click", () => {
 });
 
 clearConsoleButton?.addEventListener("click", () => {
-  elanInputOutput.clearConsole();
+  consoleDiv.innerHTML = "";
 });
 
 clearGraphicsButton?.addEventListener("click", () => {

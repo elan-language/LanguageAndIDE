@@ -7,13 +7,16 @@
     --ideTitleSize: 12pt;
 }
 
-#console, #console input {
+#console, #raw-html, #raw-html input {
   color: var(--defaultText);
-  background-color: var(--defaultBackground);
   border-color: var(--defaultBackground);
   font-style: normal;
   font-family: consolas, monospace;
   font-size: 11pt;
+}
+
+#console {
+  background-color: var(--defaultBackground);
 }
 
 body {
@@ -109,7 +112,7 @@ body {
     aspect-ratio: 4/3;
     position:relative;
   }
-  #block-graphics,#vector-graphics {
+  #block-graphics,#vector-graphics,#raw-html {
     width: 100%;
     height: 100%;
     position: absolute;
@@ -118,6 +121,9 @@ body {
   }
   #vector-graphics {
     z-index: 10;
+  }
+  #raw-html {
+    z-index: 20;
   }
   #block-graphics {
     width: 100%;
@@ -284,7 +290,7 @@ button#expand-collapse {
   opacity: 0.75;  
 }
 
-#console input:focus {
+#raw-html input:focus {
   background-color: var(--selection);
   width: 100%;
 }

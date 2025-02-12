@@ -7,12 +7,7 @@ export class WebInputOutput implements ElanInputOutput {
   private graphics: HTMLElement;
   private lastDirId = "elan-data";
 
-  constructor(
-    private readonly consoleWindow: { innerHTML: string },
-    private readonly graphicsWindow: { innerHTML: string },
-  ) {
-    consoleWindow.innerHTML = this.renderConsole();
-
+  constructor() {
     this.graphics = document.getElementById("graphics") as HTMLElement;
     this.graphics.addEventListener("keydown", (k: KeyboardEvent) => {
       if (k.key === "Shift" || k.key === "Control" || k.key === "Alt") {
@@ -158,12 +153,10 @@ export class WebInputOutput implements ElanInputOutput {
       }
     });
   }
-
-  drawGraphics(html: string): void {
-    this.graphicsWindow.innerHTML = html;
-    this.graphics.focus();
+  clearRawHtml() {
+    this.clearKeyBuffer();
+    document.getElementById("raw-html")!.innerHTML = "";
   }
-
   drawBlockGraphics(html: string): void {
     document.getElementById("block-graphics")!.innerHTML = html;
     this.graphics.focus();
@@ -183,44 +176,45 @@ export class WebInputOutput implements ElanInputOutput {
   }
   clearAllGraphics() {
     this.clearKeyBuffer();
+    this.clearRawHtml();
     this.clearBlockGraphics();
     this.clearVectorGraphics();
   }
 
-  previousContent: string = "";
+  printedText: string = "";
   currentInterval?: any;
 
   printLine(text: string) {
-    this.print(`${text}\n`);
+    this.print(`${text}<br>`);
     const element = document.getElementById("console")!;
     element.scrollTop = element.scrollHeight;
   }
 
   print(text: string) {
-    this.previousContent = `${this.previousContent}${text}`;
-    this.consoleWindow.innerHTML = this.renderConsole();
+    this.printedText = `${this.printedText}${text}`;
+    this.renderPrintedText();
   }
 
   printTab(position: number, text: string) {
-    const lastNl = this.previousContent.lastIndexOf("\n");
+    const lastNl = this.printedText.lastIndexOf("<br>");
     const spaces =
       "                                                                                ";
-    const charsSinceNl = this.previousContent.length - lastNl;
+    const charsSinceNl = this.printedText.length - lastNl;
     const tab = spaces.substring(0, position - charsSinceNl + 1);
-    this.previousContent = `${this.previousContent}${tab}${text}`;
-    this.consoleWindow.innerHTML = this.renderConsole();
+    this.printedText = `${this.printedText}${tab}${text}`;
+    this.renderPrintedText();
   }
 
   stopReading() {
     clearInterval(this.currentInterval);
-    const inputOffset = this.previousContent.indexOf("<input");
-    this.previousContent = `${this.previousContent.slice(0, inputOffset)}`;
+    const inputOffset = this.printedText.indexOf("<input");
+    this.printedText = `${this.printedText.slice(0, inputOffset)}`;
     this.graphics.focus();
   }
 
   readLine() {
-    this.previousContent = `${this.previousContent}<input id = "inp" type="text" autofocus tabindex="2"></input>`;
-    this.consoleWindow.innerHTML = this.renderConsole();
+    this.printedText = `${this.printedText}<input id = "inp" type="text" autofocus tabindex="2"></input>`;
+    this.renderPrintedText();
     const inp = document.getElementById("inp") as HTMLInputElement;
     inp.focus();
 
@@ -273,12 +267,14 @@ export class WebInputOutput implements ElanInputOutput {
     this.keyBuffer = [];
   }
 
-  private renderConsole() {
-    return `<div>${this.previousContent}</div>`;
+  clearConsole() {
+    this.printedText = "";
+    this.renderPrintedText();
   }
 
-  clearConsole() {
-    this.previousContent = "";
-    this.consoleWindow.innerHTML = this.renderConsole();
+  renderPrintedText(): void {
+    const div = document.getElementById("raw-html")!;
+    div.innerHTML = this.printedText;
+    this.graphics.focus();
   }
 }
