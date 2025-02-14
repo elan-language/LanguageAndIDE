@@ -72,7 +72,7 @@ export abstract class AbstractFrame implements Frame {
   }
 
   getCurrentScope(): Scope {
-    return this.compileScope ?? this;
+    return this;
   }
 
   getParentScope(): Scope {

@@ -72,6 +72,10 @@ export class Else extends AbstractFrame implements Statement {
     return `{`;
   }
 
+  getCurrentScope(): Scope {
+    return this.compileScope ?? this;
+  }
+
   indent() {
     return this.getParent()!.indent(); //overrides the additional indent added for most child statements
   }
