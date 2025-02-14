@@ -102,12 +102,7 @@ function resumeProgram() {
 
   runWorker!.postMessage({ type: "resume" } as WebWorkerMessage);
 
-  const pausedAt = document.getElementsByClassName("paused-at");
-
-  for (const e of pausedAt) {
-    e.classList.remove("paused-at");
-  }
-
+  clearPaused();
   file.setRunStatus(RunStatus.running);
   updateDisplayValues();
 }
@@ -1296,6 +1291,7 @@ async function handleRunWorkerPaused(data: WebWorkerBreakpointMessage): Promise<
 
   const pausedAt = document.getElementById(data.pausedAt);
   pausedAt?.classList.add("paused-at");
+  pausedAt?.scrollIntoView();
 
   updateDisplayValues();
 }
