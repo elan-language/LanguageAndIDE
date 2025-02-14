@@ -290,7 +290,9 @@ button#expand-collapse {
 {
   opacity: 0.75;  
 }
-
+#printed-text {
+  overflow-y: auto;
+}
 #printed-text input:focus {
   background-color: var(--selection);
   width: 100%;

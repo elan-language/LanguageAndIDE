@@ -186,7 +186,7 @@ export class WebInputOutput implements ElanInputOutput {
 
   printLine(text: string) {
     this.print(`${text}<br>`);
-    const element = document.getElementById("raw-info")!;
+    const element = document.getElementById("printed-text")!;
     element.scrollTop = element.scrollHeight;
   }
 
