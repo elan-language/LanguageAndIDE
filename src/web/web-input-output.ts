@@ -153,10 +153,6 @@ export class WebInputOutput implements ElanInputOutput {
       }
     });
   }
-  clearRawHtml() {
-    this.clearKeyBuffer();
-    document.getElementById("printed-text")!.innerHTML = "";
-  }
   drawBlockGraphics(html: string): void {
     document.getElementById("block-graphics")!.innerHTML = html;
     this.display.focus();
@@ -176,7 +172,7 @@ export class WebInputOutput implements ElanInputOutput {
   }
   clearAllGraphics() {
     this.clearKeyBuffer();
-    this.clearRawHtml();
+    this.clearPrintedText();
     this.clearBlockGraphics();
     this.clearVectorGraphics();
   }
@@ -276,7 +272,6 @@ export class WebInputOutput implements ElanInputOutput {
     div.innerHTML = this.printedText;
     this.display.focus();
   }
-
   clearPrintedText() {
     this.printedText = "";
     this.renderPrintedText();
