@@ -90,8 +90,8 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = 2 + 3 ** 2;
-  let y = (2 + 3) ** 2;
+  let x = 2 + system.nanCheck(3 ** 2);
+  let y = system.nanCheck((2 + 3) ** 2);
   await system.printLine(x);
   await system.printLine(y);
 }
@@ -119,8 +119,8 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = 16 / 2 ** 3;
-  let y = (16 / 2) ** 3;
+  let x = system.nanCheck(16 / system.nanCheck(2 ** 3));
+  let y = system.nanCheck((system.nanCheck(16 / 2)) ** 3);
   await system.printLine(x);
   await system.printLine(y);
 }
@@ -148,8 +148,8 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = 16 / 2 ** 3;
-  let y = (16 / 2) ** 3;
+  let x = system.nanCheck(16 / system.nanCheck(2 ** 3));
+  let y = system.nanCheck((system.nanCheck(16 / 2)) ** 3);
   await system.printLine(x);
   await system.printLine(y);
 }
@@ -181,8 +181,8 @@ const global = new class {};
 async function main() {
   let x = 0;
   let y = 0;
-  x = -4.7;
-  y = 5 * -3;
+  x = (-4.7);
+  y = 5 * (-3);
   await system.printLine(x);
   await system.printLine(y);
 }
@@ -210,8 +210,8 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = 11 % 3;
-  let y = (5 + 6) % 3;
+  let x = system.nanCheck(11 % 3);
+  let y = system.nanCheck((5 + 6) % 3);
   await system.printLine(x);
   await system.printLine(y);
 }
@@ -239,8 +239,8 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = Math.floor(11 / 3);
-  let y = Math.floor((5 + 6) / 3);
+  let x = system.nanCheck(Math.floor(11 / 3));
+  let y = system.nanCheck(Math.floor((5 + 6) / 3));
   await system.printLine(x);
   await system.printLine(y);
 }

@@ -63,6 +63,17 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
     return false;
   }
 
+  private isNanCheckOp() {
+    switch (this.op) {
+      case OperationSymbol.Divide:
+      case OperationSymbol.Pow:
+      case OperationSymbol.Div:
+      case OperationSymbol.Mod:
+        return true;
+    }
+    return false;
+  }
+
   private isIntegerOnlyOp() {
     switch (this.op) {
       case OperationSymbol.Div:
@@ -179,13 +190,13 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
       return `system.objectEquals(${lhsCode}, ${rhsCode})`;
     }
 
-    const code = `${lhsCode} ${this.opToJs()} ${rhsCode}`;
+    let code = `${lhsCode} ${this.opToJs()} ${rhsCode}`;
 
     if (this.op === OperationSymbol.Div) {
-      return `Math.floor(${code})`;
+      code = `Math.floor(${code})`;
     }
 
-    return code;
+    return this.isNanCheckOp() ? `system.nanCheck(${code})` : code;
   }
 
   symbolType() {

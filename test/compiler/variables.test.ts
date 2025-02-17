@@ -178,7 +178,7 @@ async function main() {
   let f = 3 === 4;
   let g = 3 !== 4;
   let h = !_stdlib.false;
-  let k = 4 / 3;
+  let k = system.nanCheck(4 / 3);
   await system.printLine(a);
   await system.printLine(b);
   await system.printLine(c);

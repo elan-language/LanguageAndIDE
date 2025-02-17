@@ -39,7 +39,7 @@ async function main() {
 }
 
 async function square(x) {
-  return x ** 2;
+  return system.nanCheck(x ** 2);
 }
 global["square"] = square;
 
@@ -357,7 +357,7 @@ async function main() {
 }
 
 async function square(x) {
-  return x ** 2;
+  return system.nanCheck(x ** 2);
 }
 global["square"] = square;
 
@@ -680,7 +680,7 @@ async function main() {
 }
 
 _tests.push(["test3", async (_outcomes) => {
-  let a = 1 / 3;
+  let a = system.nanCheck(1 / 3);
   let b = _stdlib.round(a, 4);
   _outcomes.push(await system.assert(async () => b, 0.3333, "assert12", _stdlib, false));
 }]);
@@ -765,7 +765,7 @@ async function main() {
 }
 
 async function square(x) {
-  return x ** 2;
+  return system.nanCheck(x ** 2);
 }
 global["square"] = square;
 
@@ -807,7 +807,7 @@ async function main() {
 }
 
 async function square(x) {
-  return x ** 2;
+  return system.nanCheck(x ** 2);
 }
 global["square"] = square;
 
@@ -854,7 +854,7 @@ async function square(x) {
   while (_stdlib.true) {
 
   }
-  return x ** 2;
+  return system.nanCheck(x ** 2);
 }
 global["square"] = square;
 
@@ -898,7 +898,7 @@ async function main() {
 }
 
 async function square(x) {
-  return x ** 2;
+  return system.nanCheck(x ** 2);
 }
 global["square"] = square;
 

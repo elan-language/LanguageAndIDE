@@ -994,7 +994,7 @@ end main
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.list([system.list([0, 0, 0, 0.16, 0, 0, 0.01]), system.list([0.85, 0.04, -0.04, 0.85, 0, 1.6, 0.85]), system.list([0.2, -0.26, 0.23, 0.22, 0, 1.6, 0.07]), system.list([-0.15, 0.28, 0.26, 0.24, 0, 0.44, 0.07])]);
+  let a = system.list([system.list([0, 0, 0, 0.16, 0, 0, 0.01]), system.list([0.85, 0.04, (-0.04), 0.85, 0, 1.6, 0.85]), system.list([0.2, (-0.26), 0.23, 0.22, 0, 1.6, 0.07]), system.list([(-0.15), 0.28, 0.26, 0.24, 0, 0.44, 0.07])]);
   await system.printLine(a);
 }
 return [main, _tests];}`;

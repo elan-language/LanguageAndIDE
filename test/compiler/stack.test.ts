@@ -128,7 +128,10 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    assertObjectCodeDoesNotExecute(fileImpl, "Cannot peek an empty Stack - check using length()");
+    await assertObjectCodeDoesNotExecute(
+      fileImpl,
+      "Cannot peek an empty Stack - check using length()",
+    );
   });
 
   test("Fail_Stack_pop_empty_stack", async () => {
@@ -153,7 +156,10 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    assertObjectCodeDoesNotExecute(fileImpl, "Cannot pop an empty Stack - check using length()");
+    await assertObjectCodeDoesNotExecute(
+      fileImpl,
+      "Cannot pop an empty Stack - check using length()",
+    );
   });
 
   test("Fail_StackWithoutGenericParm", async () => {

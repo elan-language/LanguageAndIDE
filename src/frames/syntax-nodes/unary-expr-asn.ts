@@ -37,7 +37,10 @@ export class UnaryExprAsn extends AbstractAstNode implements AstNode {
       mustNotBeSequentialUnaryExpressions(this.compileErrors, this.fieldId);
     }
 
-    return `${this.opToJs()}${this.operand.compile()}`;
+    const code = `${this.opToJs()}${this.operand.compile()}`;
+
+    // to avoid js compile errors with exponents
+    return this.op === OperationSymbol.Minus ? `(${code})` : code;
   }
 
   symbolType() {

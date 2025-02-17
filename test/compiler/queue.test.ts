@@ -110,7 +110,10 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    assertObjectCodeDoesNotExecute(fileImpl, "Cannot peek an empty Queue - check using length()");
+    await assertObjectCodeDoesNotExecute(
+      fileImpl,
+      "Cannot peek an empty Queue - check using length()",
+    );
   });
 
   test("Fail_Queue_dequeue_empty_Queue", async () => {
@@ -135,7 +138,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    assertObjectCodeDoesNotExecute(
+    await assertObjectCodeDoesNotExecute(
       fileImpl,
       "Cannot dequeue an empty Queue - check using length()",
     );

@@ -62,7 +62,7 @@ ${this.indent()}end for`;
     const v = this.variable.compile(transforms);
     const f = this.from.compile(transforms);
     const t = this.to.compile(transforms);
-    let s = this.step.compile(transforms);
+    let s = this.step.text;
 
     const id = this.getParentScope().resolveSymbol(v, transforms, this);
     let declare = "";

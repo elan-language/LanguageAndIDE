@@ -4,6 +4,7 @@ import {
   assertDoesNotCompile,
   assertDoesNotCompileWithId,
   assertDoesNotParse,
+  assertObjectCodeDoesNotExecute,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
@@ -117,7 +118,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.printLine(3 / 2);
+  await system.printLine(system.nanCheck(3 / 2));
 }
 return [main, _tests];}`;
 
@@ -140,7 +141,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.printLine(Math.floor(7 / 2));
+  await system.printLine(system.nanCheck(Math.floor(7 / 2)));
 }
 return [main, _tests];}`;
 
@@ -163,7 +164,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.printLine(11 % 3);
+  await system.printLine(system.nanCheck(11 % 3));
 }
 return [main, _tests];}`;
 
@@ -186,7 +187,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.printLine((25 % 20) < 19 ? 1 : 2);
+  await system.printLine((system.nanCheck(25 % 20)) < 19 ? 1 : 2);
 }
 return [main, _tests];}`;
 
@@ -209,7 +210,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.printLine(3 ** 3);
+  await system.printLine(system.nanCheck(3 ** 3));
 }
 return [main, _tests];}`;
 
@@ -241,10 +242,10 @@ const global = new class {};
 async function main() {
   let a = 1;
   let b = 1.1;
-  a = 2 ** 2;
-  b = 2 ** 2;
-  b = 2 ** 0.5;
-  b = 0.5 ** 2;
+  a = system.nanCheck(2 ** 2);
+  b = system.nanCheck(2 ** 2);
+  b = system.nanCheck(2 ** 0.5);
+  b = system.nanCheck(0.5 ** 2);
   await system.printLine(a);
   await system.printLine(b);
 }

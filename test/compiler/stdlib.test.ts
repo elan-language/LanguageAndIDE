@@ -368,18 +368,18 @@ end test`;
 const global = new class {};
 _tests.push(["test1", async (_outcomes) => {
   _outcomes.push(await system.assert(async () => _stdlib.pi, 3.141592653589793, "assert4", _stdlib, false));
-  _outcomes.push(await system.assert(async () => _stdlib.abs(-3.7), 3.7, "assert7", _stdlib, false));
+  _outcomes.push(await system.assert(async () => _stdlib.abs((-3.7)), 3.7, "assert7", _stdlib, false));
   _outcomes.push(await system.assert(async () => _stdlib.round(_stdlib.acos(0.5), 3), 1.047, "assert10", _stdlib, false));
   _outcomes.push(await system.assert(async () => _stdlib.round(_stdlib.asin(0.5), 3), 0.524, "assert13", _stdlib, false));
   _outcomes.push(await system.assert(async () => _stdlib.round(_stdlib.atan(1), 2), 0.79, "assert16", _stdlib, false));
-  _outcomes.push(await system.assert(async () => _stdlib.round(_stdlib.cos(_stdlib.pi / 4), 3), 0.707, "assert19", _stdlib, false));
+  _outcomes.push(await system.assert(async () => _stdlib.round(_stdlib.cos(system.nanCheck(_stdlib.pi / 4)), 3), 0.707, "assert19", _stdlib, false));
   _outcomes.push(await system.assert(async () => _stdlib.round(_stdlib.exp(2), 3), 7.389, "assert22", _stdlib, false));
   _outcomes.push(await system.assert(async () => _stdlib.round(_stdlib.logE(7.398), 2), 2, "assert25", _stdlib, false));
   _outcomes.push(await system.assert(async () => _stdlib.log10(1000), 3, "assert28", _stdlib, false));
   _outcomes.push(await system.assert(async () => _stdlib.log2(65536), 16, "assert31", _stdlib, false));
-  _outcomes.push(await system.assert(async () => _stdlib.round(_stdlib.sin(_stdlib.pi / 6), 2), 0.5, "assert34", _stdlib, false));
+  _outcomes.push(await system.assert(async () => _stdlib.round(_stdlib.sin(system.nanCheck(_stdlib.pi / 6)), 2), 0.5, "assert34", _stdlib, false));
   _outcomes.push(await system.assert(async () => _stdlib.round(_stdlib.sqrt(2), 3), 1.414, "assert37", _stdlib, false));
-  _outcomes.push(await system.assert(async () => _stdlib.round(_stdlib.tan(_stdlib.pi / 4), 2), 1, "assert40", _stdlib, false));
+  _outcomes.push(await system.assert(async () => _stdlib.round(_stdlib.tan(system.nanCheck(_stdlib.pi / 4)), 2), 1, "assert40", _stdlib, false));
   _outcomes.push(await system.assert(async () => _stdlib.round(_stdlib.sinDeg(30), 2), 0.5, "assert43", _stdlib, false));
   _outcomes.push(await system.assert(async () => _stdlib.round(_stdlib.asinDeg(0.5), 2), 30, "assert46", _stdlib, false));
   _outcomes.push(await system.assert(async () => _stdlib.round(_stdlib.cosDeg(60), 2), 0.5, "assert49", _stdlib, false));
@@ -430,7 +430,7 @@ return [main, _tests];}`;
       ],
     ]);
   });
-  test("random", async () => {
+  test("Pass_Random", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -455,7 +455,7 @@ async function main() {
     _stdlib.putAt(results, r, system.safeIndex(results, r) + 1);
   }
   for (let i = 0; i <= 6; i = i + 1) {
-    let r = _stdlib.round((system.safeIndex(results, i) / 10000), 1);
+    let r = _stdlib.round((system.nanCheck(system.safeIndex(results, i) / 10000)), 1);
     await system.printLine(r);
     await system.printLine(", ");
   }
@@ -502,7 +502,7 @@ async function main() {
     _stdlib.putAt(results, val, system.safeIndex(results, val) + 1);
   }
   for (let i = 0; i <= 6; i = i + 1) {
-    let r = _stdlib.round((system.safeIndex(results, i) / 10000), 1);
+    let r = _stdlib.round((system.nanCheck(system.safeIndex(results, i) / 10000)), 1);
     await system.printLine(r);
     await system.printLine(", ");
   }

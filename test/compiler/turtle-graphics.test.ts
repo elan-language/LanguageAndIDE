@@ -91,7 +91,7 @@ const global = new class {};
 async function main() {
   const t = system.initialise(await new _stdlib.Turtle()._initialise());
   t.turn(90);
-  t.turn(-1000);
+  t.turn((-1000));
   await system.printLine(t.heading);
 }
 return [main, _tests];}`;
