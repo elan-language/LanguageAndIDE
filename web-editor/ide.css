@@ -178,6 +178,7 @@ body {
   margin-bottom: 10px;
   aspect-ratio: 4/3;
   position: relative;
+  flex-shrink: 0;
 }
 
 #block-graphics,
@@ -271,7 +272,7 @@ button.plain:disabled {
   color: grey;
 }
 
-#system-info,
+#system-info
 {
 overflow-y: auto;
 }
