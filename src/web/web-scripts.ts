@@ -97,8 +97,7 @@ document.addEventListener("mousemove", (event) => {
   if (dragging) {
     const x = event.screenX;
     const width = document.getElementsByTagName("body")[0].scrollWidth;
-    const pp = (x / width) * 100;
-
+    const pp = ((x - 10) / width) * 100;
     lhs?.setAttribute("style", `flex-basis: ${pp}%`);
   }
 });
