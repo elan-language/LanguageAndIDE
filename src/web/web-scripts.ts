@@ -75,6 +75,7 @@ let testWorker: Worker | undefined;
 let inactivityTimer: any | undefined = undefined;
 let autoSaveFileHandle: FileSystemFileHandle | undefined = undefined;
 let singleStepping = false;
+let processingSingleStep = false;
 let debugMode = false;
 
 autoSaveButton.hidden = !useChromeFileAPI();
@@ -134,10 +135,21 @@ function runProgram() {
           await handleWorkerIO(data);
           break;
         case "breakpoint":
-          await handleRunWorkerPaused(data);
+          if (isPausedState()) {
+            pendingBreakpoints.push(data);
+          } else {
+            pendingBreakpoints = [];
+            await handleRunWorkerPaused(data);
+          }
           break;
         case "singlestep":
-          await handleRunWorkerSingleStep(data);
+          if (processingSingleStep) {
+            pendingBreakpoints.push(data);
+          } else {
+            processingSingleStep = true;
+            pendingBreakpoints = [];
+            await handleRunWorkerSingleStep(data);
+          }
           break;
         case "status":
           switch (data.status) {
@@ -167,14 +179,13 @@ function runProgram() {
 }
 
 runButton?.addEventListener("click", () => {
-  debugMode = false;
-  singleStepping = false;
+  debugMode = singleStepping = processingSingleStep = false;
   runProgram();
 });
 
 runDebugButton?.addEventListener("click", () => {
   debugMode = true;
-  singleStepping = false;
+  singleStepping = processingSingleStep = false;
   runProgram();
 });
 
@@ -188,6 +199,7 @@ stepButton?.addEventListener("click", async () => {
     return;
   }
 
+  processingSingleStep = false;
   if (file.readRunStatus() === RunStatus.paused && runWorker) {
     resumeProgram();
     return;
@@ -1275,12 +1287,7 @@ function handleRunWorkerFinished() {
 let pendingBreakpoints: WebWorkerBreakpointMessage[] = [];
 
 async function handleRunWorkerPaused(data: WebWorkerBreakpointMessage): Promise<void> {
-  if (isPausedState()) {
-    pendingBreakpoints.push(data);
-    return;
-  }
   file.setRunStatus(RunStatus.paused);
-  pendingBreakpoints = [];
   console.info("elan program paused");
   const variables = data.value;
   systemInfoDiv.innerHTML = "";
@@ -1299,8 +1306,6 @@ async function handleRunWorkerPaused(data: WebWorkerBreakpointMessage): Promise<
 async function handleRunWorkerSingleStep(data: WebWorkerBreakpointMessage): Promise<void> {
   if (singleStepping) {
     handleRunWorkerPaused(data);
-  } else if (runWorker) {
-    resumeProgram();
   }
 }
 

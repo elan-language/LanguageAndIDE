@@ -4,7 +4,7 @@ import { ignore_test, testHash, transforms } from "./compiler/compiler-test-help
 import { assertDebugBreakPoint } from "./testHelpers";
 
 suite("DebugBreakpoint", () => {
-  ignore_test("Pass_Main", async () => {
+  test("Pass_Main", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 constant a set to 1
@@ -427,5 +427,26 @@ end main`;
     ] as [string, string][];
 
     await assertDebugBreakPoint(fileImpl, "set21", expected);
+  });
+
+  test("Pass_AsyncBreakPoints", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to [ff(1), ff(2)]
+  print a
+end main
+
+function ff(a as Int) returns Int
+  return a
+end function
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [["a", "1"]] as [string, string][];
+
+    await assertDebugBreakPoint(fileImpl, "return13", expected);
   });
 });
