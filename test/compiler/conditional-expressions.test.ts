@@ -1,6 +1,7 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
+  assertDoesNotCompile,
   assertDoesNotParse,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
@@ -96,5 +97,37 @@ end function
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
+  });
+
+  test("Fail_NotBooleanCondition", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+ variable a set to if 2 then 5 else 7
+ print a
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Condition of 'if' expression does not evaluate to a Boolean"]);
+  });
+
+  test("Fail_BranchesDifferentTypes", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+ variable a set to if true then "five" else 7
+ print a
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
   });
 });

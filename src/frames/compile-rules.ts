@@ -137,6 +137,23 @@ export function mustBeOfType(
   mustBeOfSymbolType(expr.symbolType(), ofType, compileErrors, location);
 }
 
+export function mustBeBooleanCondition(
+  expr: AstNode,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  const st = expr.symbolType();
+
+  if (knownType(st) && st !== BooleanType.Instance) {
+    compileErrors.push(
+      new SyntaxCompileError(
+        "Condition of 'if' expression does not evaluate to a Boolean",
+        location,
+      ),
+    );
+  }
+}
+
 export function mustNotHaveConditionalAfterUnconditionalElse(
   elses: { hasIf: boolean }[],
   compileErrors: CompileError[],

@@ -1,7 +1,6 @@
 import { CompileError } from "../compile-error";
-import { mustBeOfType } from "../compile-rules";
+import { mustBeBooleanCondition, mustBeCompatibleType } from "../compile-rules";
 import { AstNode } from "../interfaces/ast-node";
-import { BooleanType } from "../symbols/boolean-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 
 export class IfExprAsn extends AbstractAstNode implements AstNode {
@@ -23,8 +22,20 @@ export class IfExprAsn extends AbstractAstNode implements AstNode {
 
   compile(): string {
     this.compileErrors = [];
-    mustBeOfType(this.condition, BooleanType.Instance, this.compileErrors, this.fieldId);
-    return `${this.condition.compile()} ? ${this.expr1.compile()} : ${this.expr2.compile()}`;
+    const conditionCode = this.condition.compile();
+    const expr1Code = this.expr1.compile();
+    const expr2Code = this.expr2.compile();
+
+    mustBeBooleanCondition(this.condition, this.compileErrors, this.fieldId);
+
+    mustBeCompatibleType(
+      this.expr1.symbolType(),
+      this.expr2.symbolType(),
+      this.compileErrors,
+      this.fieldId,
+    );
+
+    return `${conditionCode} ? ${expr1Code} : ${expr2Code}`;
   }
 
   symbolType() {
