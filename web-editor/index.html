@@ -10,86 +10,102 @@
         <title>Elan Beta</title>
     </head>
     <body>
-        <div id="code-controls">
-            <div class="dropdown">
-                <button id="demos" class="plain" tabindex="1">Demo</button>
-                <div class="dropdown-content">
-                    <div class="demo-file menu-item" id="demo/binary-search.elan">Binary Search</div>
-                    <div class="demo-file menu-item" id="demo/bubbles.elan">Bubbles</div>
-                    <div class="demo-file menu-item" id="demo/burrow.elan">Burrow</div>
-                    <div class="demo-file menu-item" id="demo/collatz.elan">Collatz</div>
-                    <div class="demo-file menu-item" id="demo/fern.elan">Fern</div>
-                    <div class="demo-file menu-item" id="demo/in-place-ripple-sort.elan">In-place ripple sort</div>
-                    <div class="demo-file menu-item" id="demo/julia-set.elan">Julia set</div>
-                    <div class="demo-file menu-item" id="demo/life.elan">Life</div>
-                    <div class="demo-file menu-item" id="demo/maze-generator.elan">Maze generator</div>
-                    <div class="demo-file menu-item" id="demo/merge-sort.elan">Merge sort</div>
-                    <div class="demo-file menu-item" id="demo/pathfinder.elan">Pathfinder</div>
-                    <div class="demo-file menu-item" id="demo/roman-numerals-turing-machine.elan">Roman Numerals Turing Machine</div>
-                    <div class="demo-file menu-item" id="demo/snake_PP.elan">Snake - procedural</div>
-                    <div class="demo-file menu-item" id="demo/snake_OOP.elan">Snake - object-oriented</div>
-                    <div class="demo-file menu-item" id="demo/snake_FP.elan">Snake - functional</div>
-                    <div class="demo-file menu-item" id="demo/turtle-spiral.elan">Turtle Spiral</div>
-                    <div class="demo-file menu-item" id="demo/turtle-snowflake.elan">Turtle Snowflake</div>
-                    <div class="demo-file menu-item" id="demo/wordle-solver.elan">Wordle Solver</div>
-                  </div>          
+        <div id="lhs">
+            <div id="code-controls">
+                <div class="dropdown">
+                    <button id="demos" class="plain" tabindex="1">Demo</button>
+                    <div class="dropdown-content">
+                        <div class="demo-file menu-item" id="demo/binary-search.elan">Binary Search</div>
+                        <div class="demo-file menu-item" id="demo/bubbles.elan">Bubbles</div>
+                        <div class="demo-file menu-item" id="demo/burrow.elan">Burrow</div>
+                        <div class="demo-file menu-item" id="demo/collatz.elan">Collatz</div>
+                        <div class="demo-file menu-item" id="demo/fern.elan">Fern</div>
+                        <div class="demo-file menu-item" id="demo/in-place-ripple-sort.elan">In-place ripple sort</div>
+                        <div class="demo-file menu-item" id="demo/julia-set.elan">Julia set</div>
+                        <div class="demo-file menu-item" id="demo/life.elan">Life</div>
+                        <div class="demo-file menu-item" id="demo/maze-generator.elan">Maze generator</div>
+                        <div class="demo-file menu-item" id="demo/merge-sort.elan">Merge sort</div>
+                        <div class="demo-file menu-item" id="demo/pathfinder.elan">Pathfinder</div>
+                        <div class="demo-file menu-item" id="demo/roman-numerals-turing-machine.elan">Roman Numerals Turing Machine</div>
+                        <div class="demo-file menu-item" id="demo/snake_PP.elan">Snake - procedural</div>
+                        <div class="demo-file menu-item" id="demo/snake_OOP.elan">Snake - object-oriented</div>
+                        <div class="demo-file menu-item" id="demo/snake_FP.elan">Snake - functional</div>
+                        <div class="demo-file menu-item" id="demo/turtle-spiral.elan">Turtle Spiral</div>
+                        <div class="demo-file menu-item" id="demo/turtle-snowflake.elan">Turtle Snowflake</div>
+                        <div class="demo-file menu-item" id="demo/wordle-solver.elan">Wordle Solver</div>
+                        </div>          
+                </div>
+                <div class="dropdown">
+                    <button id="help" class="plain" tabindex="1">Help</button>
+                    <div class="dropdown-content">
+                        <div class="menu-item help-file"><a href="documentation/ElanIndex.html" target="_blank" rel="noopener noreferrer" tabindex="3">Index</a></div>
+                        <div class="menu-item help-file"><a href="documentation/EditorRef.html" target="_blank" rel="noopener noreferrer" tabindex="3">Editor Reference</a></div>
+                        <div class="menu-item help-file"><a href="documentation/LangRef.html" target="_blank" rel="noopener noreferrer" tabindex="3">Language Reference</a></div>
+                        <div class="menu-item help-file"><a href="documentation/LibRef.html" target="_blank" rel="noopener noreferrer" tabindex="3">Library Reference</a></div>
+                    </div>          
+                </div>
+                <div class="dropdown">
+                    <button id="file" class="plain" tabindex="1">File</button>
+                    <div class="dropdown-content">
+                        <div class="menu-item" id="new" class="plain" tabindex="1">New</div>
+                        <div class="menu-item" id="load"  tabindex="1">Load</div>
+                        <div class="menu-item" id="append"  tabindex="1">Append</div>
+                        <div class="menu-item" id="auto-save"  tabindex="1">Auto Save</div>
+                        <div class="menu-item" id="save" tabindex="1">Manual Save</div>
+                    </div>
+                </div>
+
+                <button id="trim" class="plain" tabindex="1">Trim</button>
+                <button id="expand-collapse" class="plain" tabindex="1">+/-</button>
+                <button id="undo" class="plain" tabindex="1">Undo</button>  
+                <button id="redo" class="plain" tabindex="1">Redo</button>
+                <div id="code-title"></div>   
             </div>
-            <div class="dropdown">
-                <button id="help" class="plain" tabindex="1">Help</button>
-                <div class="dropdown-content">
-                    <div class="menu-item help-file"><a href="documentation/ElanIndex.html" target="_blank" rel="noopener noreferrer" tabindex="3">Index</a></div>
-                    <div class="menu-item help-file"><a href="documentation/EditorRef.html" target="_blank" rel="noopener noreferrer" tabindex="3">Editor Reference</a></div>
-                    <div class="menu-item help-file"><a href="documentation/LangRef.html" target="_blank" rel="noopener noreferrer" tabindex="3">Language Reference</a></div>
-                    <div class="menu-item help-file"><a href="documentation/LibRef.html" target="_blank" rel="noopener noreferrer" tabindex="3">Library Reference</a></div>
-                </div>          
-            </div>
-            <div class="dropdown">
-                <button id="file" class="plain" tabindex="1">File</button>
-                <div class="dropdown-content">
-                    <div class="menu-item" id="new" class="plain" tabindex="1">New</div>
-                    <div class="menu-item" id="load"  tabindex="1">Load</div>
-                    <div class="menu-item" id="append"  tabindex="1">Append</div>
-                    <div class="menu-item" id="auto-save"  tabindex="1">Auto Save</div>
-                    <div class="menu-item" id="save" tabindex="1">Manual Save</div>
+            <div class="elan-code" data-code=""></div>
+        </div>
+        <div id="centre-bar"></div>
+        <div id="rhs">
+            <div id="rh-header">
+                <div id="rh-header-l">
+                    <div id="run-controls">
+                        <button id="run-button" class="icon"  tabindex="1"><img src="images/Run.png"></button>
+                        <button id="run-debug-button" class="icon"  tabindex="1"><img src="images/Debug.png"></button>
+                        <button id="stop" class="icon" disabled  tabindex="1"><img src="images/Stop.png"></button>
+                        <button id="pause" class="icon" disabled title="Pause" tabindex="1"><img src="images/Pause.png"></button>
+                        <button id="step" class="icon" disabled title="Single Step" tabindex="1"><img src="images/Step.png"></button>
+                    </div>
+                    <div id="display-title">
+                        <button id="clear-display" class="plain" tabindex="2">Clear</button>
+                        <span>Display</span>
+                    </div>
+                </div>
+                <div id="status">
+                    <div id="status-names">
+                        <div>Parse</div>
+                        <div>Compile</div>
+                        <div>Test</div>
+                        <div>Run</div>
+                    </div>
+                    <div id="status-values">
+                        <div id="parse" class=""></div>
+                        <div id="compile" class=""></div>
+                        <div id="test" class=""></div>
+                        <div id="run-status" class=""></div>
+                    </div>
                 </div>
             </div>
-
-            <button id="trim" class="plain" tabindex="1">Trim</button>
-            <button id="expand-collapse" class="plain" tabindex="1">+/-</button>
-            <button id="undo" class="plain" tabindex="1">Undo</button>  
-            <button id="redo" class="plain" tabindex="1">Redo</button>
-            <div id="code-title"></div>   
-        </div>
-        <div class="elan-code" data-code=""></div>
-        <!-- <img id="logo" src="images/reverse-logo.png"> -->
-        <div id="system-info-title">System info</div>
-        <button id="clear-system-info" class="plain"  tabindex="2">Clear</button>
-        <div id="system-info"></div>
-        <div id="status-names">
-            <div>Parse</div>
-            <div>Compile</div>
-            <div>Test</div>
-            <div>Run</div>
-        </div>
-        <div id="status-values">
-            <div id="parse" class=""></div>
-            <div id="compile" class=""></div>
-            <div id="test" class=""></div>
-            <div id="run-status" class=""></div>
-        </div>
-        <div id="run-controls">
-            <button id="run-button" class="icon"  tabindex="1"><img src="images/Run.png"></button>
-            <button id="run-debug-button" class="icon"  tabindex="1"><img src="images/Debug.png"></button>
-            <button id="stop" class="icon" disabled  tabindex="1"><img src="images/Stop.png"></button>
-            <button id="pause" class="icon" disabled title="Pause" tabindex="1"><img src="images/Pause.png"></button>
-            <button id="step" class="icon" disabled title="Single Step" tabindex="1"><img src="images/Step.png"></button>
-        </div>
-        <div id="display-title">Display</div>
-        <button id="clear-display" class="plain" tabindex="2">Clear</button>
-        <div id="display" tabindex="2">
-            <div id="printed-text"></div>
-            <div id="block-graphics"></div>
-            <div id="vector-graphics"></div>
+            <div id="display" tabindex="2">
+                <div id="printed-text"></div>
+                <div id="block-graphics"></div>
+                <div id="vector-graphics"></div>
+            </div>
+            <div id="rh-footer">
+                <div id="system-info-title">
+                <button id="clear-system-info" class="plain"  tabindex="2">Clear</button>
+                <span>System info</span>
+                </div>
+                <div id="system-info"></div>
+            </div>
         </div>
         <script src="elan-api.js" type="module"></script>
         <script src="web-scripts.js"></script>
