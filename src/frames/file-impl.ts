@@ -5,11 +5,11 @@ import { CodeSource, CodeSourceFromString } from "./code-source";
 import { CompileError } from "./compile-error";
 import { Regexes } from "./fields/regexes";
 import {
-    expandCollapseAll,
-    helper_compileStatusAsDisplayStatus,
-    helper_parseStatusAsDisplayStatus,
-    helper_testStatusAsDisplayStatus,
-    isSelector,
+  expandCollapseAll,
+  helper_compileStatusAsDisplayStatus,
+  helper_parseStatusAsDisplayStatus,
+  helper_testStatusAsDisplayStatus,
+  isSelector,
 } from "./frame-helpers";
 import { AbstractClass } from "./globals/abstract-class";
 import { ConcreteClass } from "./globals/concrete-class";
@@ -34,33 +34,33 @@ import { Scope } from "./interfaces/scope";
 import { Selectable } from "./interfaces/selectable";
 import { StatementFactory } from "./interfaces/statement-factory";
 import {
-    parentHelper_addChildAfter,
-    parentHelper_addChildBefore,
-    parentHelper_aggregateCompileErrorsOfChildren,
-    parentHelper_deleteSelectedChildren,
-    parentHelper_getChildAfter,
-    parentHelper_getChildBefore,
-    parentHelper_getChildRange,
-    parentHelper_getFirstChild,
-    parentHelper_getLastChild,
-    parentHelper_insertOrGotoChildSelector,
-    parentHelper_readWorstCompileStatusOfChildren,
-    parentHelper_readWorstParseStatusOfChildren,
-    parentHelper_removeChild,
-    parentHelper_renderChildrenAsHtml,
-    parentHelper_renderChildrenAsSource,
-    parentHelper_updateBreakpoints,
-    worstParseStatus,
+  parentHelper_addChildAfter,
+  parentHelper_addChildBefore,
+  parentHelper_aggregateCompileErrorsOfChildren,
+  parentHelper_deleteSelectedChildren,
+  parentHelper_getChildAfter,
+  parentHelper_getChildBefore,
+  parentHelper_getChildRange,
+  parentHelper_getFirstChild,
+  parentHelper_getLastChild,
+  parentHelper_insertOrGotoChildSelector,
+  parentHelper_readWorstCompileStatusOfChildren,
+  parentHelper_readWorstParseStatusOfChildren,
+  parentHelper_removeChild,
+  parentHelper_renderChildrenAsHtml,
+  parentHelper_renderChildrenAsSource,
+  parentHelper_updateBreakpoints,
+  worstParseStatus,
 } from "./parent-helpers";
 import { ScratchPad } from "./scratch-pad";
 import { StatementFactoryImpl } from "./statement-factory-impl";
 import {
-    BreakpointEvent,
-    CompileStatus,
-    DisplayColour,
-    ParseStatus,
-    RunStatus,
-    TestStatus,
+  BreakpointEvent,
+  CompileStatus,
+  DisplayColour,
+  ParseStatus,
+  RunStatus,
+  TestStatus,
 } from "./status-enums";
 import { DuplicateSymbol } from "./symbols/duplicate-symbol";
 import { elanSymbols } from "./symbols/elan-symbols";
