@@ -69,7 +69,7 @@ suite("Misc Tests", () => {
     const fl = new FileImpl(hash, new DefaultProfile(), transforms());
     await await fl.parseFrom(source);
     const elan = await fl.renderAsSource();
-    const code = `# 2520a4ba773978407afd9bdfb9618f36cc30fc6c74bcae2501ac648116082cf2 Elan Beta 7 valid
+    const code = `# 9a81c6ebcc4a6c9a3e8224fcaefc4d5d8145b628049b282c7eda482e1cc5f63d Elan Beta 8 valid
 
 `;
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
