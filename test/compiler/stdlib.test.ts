@@ -159,7 +159,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "true,10.1");
+    await assertObjectCodeExecutes(fileImpl, "(true, 10.1)");
   });
 
   test("Pass_parseAsFloat2", async () => {
@@ -184,7 +184,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "false,0");
+    await assertObjectCodeExecutes(fileImpl, "(false, 0)");
   });
 
   test("Pass_parseAsInt1", async () => {
@@ -209,7 +209,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "true,10");
+    await assertObjectCodeExecutes(fileImpl, "(true, 10)");
   });
 
   test("Pass_parseAsInt2", async () => {
@@ -234,9 +234,9 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "false,0");
+    await assertObjectCodeExecutes(fileImpl, "(false, 0)");
   });
-  test("Pass_parseAsInt1", async () => {
+  test("Pass_parseAsInt3", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -258,7 +258,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "false,0");
+    await assertObjectCodeExecutes(fileImpl, "(false, 0)");
   });
   test("Pass print (procedure)", async () => {
     const code = `# FFFF Elan v1.0.0 valid

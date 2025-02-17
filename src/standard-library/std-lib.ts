@@ -763,9 +763,9 @@ export class StdLib {
   parseAsFloat(s: string): [boolean, number] {
     const f = parseFloat(s);
     if (Number.isFinite(f)) {
-      return [true, f];
+      return this.system.tuple([true, f]) as [boolean, number];
     }
-    return [false, 0];
+    return this.system.tuple([false, 0]) as [boolean, number];
   }
 
   @elanFunction(["string"], FunctionOptions.pure, ElanTuple([ElanBoolean, ElanInt]))
@@ -773,9 +773,9 @@ export class StdLib {
     const [b, f] = this.parseAsFloat(s);
     const i = Math.floor(f);
     if (b && f === i) {
-      return [b, i];
+      return this.system.tuple([b, i]) as [boolean, number];
     }
-    return [false, 0];
+    return this.system.tuple([false, 0]) as [boolean, number];
   }
 
   @elanProcedure(["text"])
