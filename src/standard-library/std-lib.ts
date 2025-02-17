@@ -216,7 +216,7 @@ export class StdLib {
           return `{${items}}`;
         case "Tuple":
           items = await convertList(v, this);
-          return `(${items})`;
+          return `tuple(${items})`;
         case "Array":
           items = await convertList(v, this);
           return `[${items}]`;

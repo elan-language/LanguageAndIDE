@@ -40,7 +40,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "(3, Apple)3Apple");
+    await assertObjectCodeExecutes(fileImpl, "tuple(3, Apple)3Apple");
   });
 
   test("Pass_FunctionReturnsTuple", async () => {
@@ -80,7 +80,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "(1, 2)12");
+    await assertObjectCodeExecutes(fileImpl, "tuple(1, 2)12");
   });
 
   test("Pass_IndexFunctionReturnsTuple", async () => {
@@ -213,7 +213,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "(4, Pear)");
+    await assertObjectCodeExecutes(fileImpl, "tuple(4, Pear)");
   });
 
   test("Fail_OutOfRangeError", async () => {
