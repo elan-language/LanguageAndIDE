@@ -354,11 +354,12 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "truefalse");
   });
-  test("Pass_coercionToString", async () => {
+
+  test("Pass_InInterpolatedString", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to "Eat more " + Fruit.apple + "s!"
+  variable a set to "Eat more {Fruit.apple}s!"
   print a
 end main
    
@@ -371,7 +372,7 @@ const Fruit = {
 
 const global = new class {};
 async function main() {
-  let a = "Eat more " + Fruit.apple + "s!";
+  let a = \`Eat more \${await _stdlib.asString(Fruit.apple)}s!\`;
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -383,6 +384,27 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "Eat more apples!");
+  });
+
+  test("Fail_coercionToString", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to "Eat more " + Fruit.apple
+  print a
+end main
+   
+enum Fruit apple, orange, pear`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types String to Float or Int",
+      "Incompatible types Fruit to Float or Int",
+    ]);
   });
 
   test("Fail_InvalidTypeName", async () => {

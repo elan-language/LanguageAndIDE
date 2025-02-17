@@ -9,7 +9,6 @@ import {
 import { AstNode } from "../interfaces/ast-node";
 import { SymbolType } from "../interfaces/symbol-type";
 import { BooleanType } from "../symbols/boolean-type";
-import { EnumType } from "../symbols/enum-type";
 import { FloatType } from "../symbols/float-type";
 import { IntType } from "../symbols/int-type";
 import { ListType } from "../symbols/list-type";
@@ -128,13 +127,8 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
     }
   }
 
-  isAppendPrependable(st: SymbolType) {
-    return (
-      st instanceof StringType ||
-      st instanceof IntType ||
-      st instanceof FloatType ||
-      st instanceof EnumType
-    );
+  isString(st: SymbolType) {
+    return st instanceof StringType;
   }
 
   compile(): string {
@@ -157,11 +151,7 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
       return `system.concat(${lhsCode}, ${rhsCode})`;
     }
 
-    if (
-      this.op === OperationSymbol.Add &&
-      this.isAppendPrependable(lst) &&
-      this.isAppendPrependable(rst)
-    ) {
+    if (this.op === OperationSymbol.Add && this.isString(lst) && this.isString(rst)) {
       return `${lhsCode} + ${rhsCode}`;
     }
 

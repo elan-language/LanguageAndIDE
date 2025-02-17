@@ -62,27 +62,34 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "_Hello!");
   });
 
-  test("Pass_AppendFloat", async () => {
+  test("Fail_AppendFloat", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
   print "Hello" + 3.1
 end main`;
 
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  await system.printLine("Hello" + 3.1);
-}
-return [main, _tests];}`;
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types String to Float or Int"]);
+  });
+
+  test("Fail_AppendInt", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  print "Hello" + 3
+end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "Hello3.1");
+    assertDoesNotCompile(fileImpl, ["Incompatible types String to Float or Int"]);
   });
 
   test("Pass_Indexing", async () => {
@@ -323,7 +330,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "3 x 4 = 12");
   });
 
-  test("Pass_AppendStringToFloat", async () => {
+  test("Fail_AppendStringToFloat", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -331,21 +338,28 @@ main
   print a
 end main`;
 
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let a = 3.1 + "Hello";
-  await system.printLine(a);
-}
-return [main, _tests];}`;
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types String to Float or Int"]);
+  });
+
+  test("Fail_AppendStringToInt", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to 3 + "Hello"
+  print a
+end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "3.1Hello");
+    assertDoesNotCompile(fileImpl, ["Incompatible types String to Float or Int"]);
   });
 
   test("Fail_IndexOutOfRange", async () => {

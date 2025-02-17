@@ -214,6 +214,14 @@ export class System {
     return this.list([lhs as T].concat(rhs));
   }
 
+  nanCheck(num: number) {
+    if (isNaN(num)) {
+      throw new ElanRuntimeError(`Not a valid numeric result`);
+    }
+
+    return num;
+  }
+
   equals(i1: any, i2: any) {
     const t = typeof i1;
 
