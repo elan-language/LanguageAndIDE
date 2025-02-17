@@ -16,6 +16,15 @@
   font-family: consolas, monospace;
   font-size: 11pt;
 }
+#code-title,
+#system-info-title,
+#display-title,
+#status {
+  background-color: var(--ideDefaultBackground);
+  color: var(--ideReverseText);
+  font-family: var(--ideTitleFont);
+  font-size: var(--ideTitleSize);
+}
 
 body {
   background-color: var(--ideDefaultBackground);
@@ -36,24 +45,25 @@ body {
 }
 
 #lhs {
-  flex-basis: 60%;
   margin-left: 10px;
+}
+
+#rhs {
+  flex-grow: 1;
+  margin-right: 10px;
+}
+
+#centre-bar {
+  cursor: col-resize;
+}
+#centre-bar:hover, #centre-bar:active {
+ background-color: darkblue;
 }
 
 #code-controls {
   display: flex;
   flex-direction: row;
   background-color: var(--ideDefaultBackground);
-}
-
-#code-title,
-#system-info-title,
-#display-title,
-#status {
-  background-color: var(--ideDefaultBackground);
-  color: var(--ideReverseText);
-  font-family: var(--ideTitleFont);
-  font-size: var(--ideTitleSize);
 }
 
 #code-title {
@@ -72,11 +82,6 @@ body {
   flex-basis: 20px;
 }
 
-#rhs {
-  flex-basis: auto;
-  flex-grow: 1;
-  margin-right: 10px;
-}
 
 #rh-header {
   display: flex;
@@ -91,14 +96,14 @@ body {
 }
 
 
-#run-controls {
+#run-controls, #code-controls {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
   background-color: var(--ideDefaultBackground);
 }
 
-#display-title {
+#display-title, #system-info-title {
   align-self: bottom;
   display: flex;
   flex-direction: row;
@@ -127,16 +132,9 @@ body {
   flex-direction: column;
 }
 
-#system-info-title {
-  display: flex;
-  flex-direction: row;
-}
-
 #status span {
   margin-right:10px;
 }
-
-
 
 #status-names div {
   background-color: var(--ideDefaultBackground);
