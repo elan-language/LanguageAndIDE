@@ -64,7 +64,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "(3, Apple)");
+    await assertObjectCodeExecutes(fileImpl, "tuple(3, Apple)");
   });
 
   test("Pass_List", async () => {

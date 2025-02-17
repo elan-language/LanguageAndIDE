@@ -99,7 +99,10 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertTestObjectCodeExecutes(fileImpl, [
-      ["test3", [new AssertOutcome(TestStatus.pass, "(one, two)", "(one, two)", "assert9")]],
+      [
+        "test3",
+        [new AssertOutcome(TestStatus.pass, "tuple(one, two)", "tuple(one, two)", "assert9")],
+      ],
     ]);
   });
 
@@ -134,7 +137,46 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertTestObjectCodeExecutes(fileImpl, [
-      ["test3", [new AssertOutcome(TestStatus.pass, "(one, two)", "(one, two)", "assert9")]],
+      [
+        "test3",
+        [new AssertOutcome(TestStatus.pass, "tuple(one, two)", "tuple(one, two)", "assert9")],
+      ],
+    ]);
+  });
+
+  test("Pass_AssertTupleFromParseAsInt", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+end main
+
+test square
+  assert parseAsInt("3") is tuple(true, 3)
+end test
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+
+}
+
+_tests.push(["test3", async (_outcomes) => {
+  _outcomes.push(await system.assert(async () => _stdlib.parseAsInt("3"), system.tuple([_stdlib.true, 3]), "assert6", _stdlib, false));
+}]);
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertTestObjectCodeExecutes(fileImpl, [
+      [
+        "test3",
+        [new AssertOutcome(TestStatus.pass, "tuple(true, 3)", "tuple(true, 3)", "assert6")],
+      ],
     ]);
   });
 
@@ -171,7 +213,10 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertTestObjectCodeExecutes(fileImpl, [
-      ["test3", [new AssertOutcome(TestStatus.pass, "(one, two)", "(one, two)", "assert12")]],
+      [
+        "test3",
+        [new AssertOutcome(TestStatus.pass, "tuple(one, two)", "tuple(one, two)", "assert12")],
+      ],
     ]);
   });
 

@@ -206,7 +206,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "(3, Apple, true, 1.1)3Appletrue1.1true");
+    await assertObjectCodeExecutes(fileImpl, "tuple(3, Apple, true, 1.1)3Appletrue1.1true");
   });
 
   test("Pass_DeconstructIntoExistingVariablesWithDiscard1", async () => {
@@ -642,7 +642,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "3(1, 2)");
+    await assertObjectCodeExecutes(fileImpl, "3tuple(1, 2)");
   });
 
   test("Pass_DeconstructTupleWithTupleIntoNewLet", async () => {
@@ -674,7 +674,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "3(1, 2)");
+    await assertObjectCodeExecutes(fileImpl, "3tuple(1, 2)");
   });
 
   test("Pass_DeconstructTupleWithTupleIntoExisting", async () => {
@@ -710,7 +710,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "3(1, 2)");
+    await assertObjectCodeExecutes(fileImpl, "3tuple(1, 2)");
   });
 
   test("Pass_DeconstructTupleTypes", async () => {
