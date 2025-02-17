@@ -55,6 +55,7 @@ body {
 
 #centre-bar {
   cursor: col-resize;
+  flex-basis: 20px;
 }
 #centre-bar:hover, #centre-bar:active {
  background-color: darkblue;
@@ -77,11 +78,6 @@ body {
   position: relative;
   overflow-y: auto;
 }
-
-#centre-bar {
-  flex-basis: 20px;
-}
-
 
 #rh-header {
   display: flex;
