@@ -93,6 +93,7 @@ body {
 
 #run-controls {
   display: flex;
+  flex-wrap: wrap;
   flex-direction: row;
   background-color: var(--ideDefaultBackground);
 }
@@ -114,7 +115,7 @@ body {
 }
 
 #status-values {
-  margin-left: 20px;
+  margin-left: 10px;
 }
 #status-values div{
   width: 100px;
