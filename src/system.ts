@@ -215,11 +215,10 @@ export class System {
   }
 
   nanCheck(num: number) {
-    if (isNaN(num)) {
-      throw new ElanRuntimeError(`Not a valid numeric result`);
+    if (isFinite(num)) {
+      return num;
     }
-
-    return num;
+    throw new ElanRuntimeError(`Not a valid numeric result`);
   }
 
   equals(i1: any, i2: any) {

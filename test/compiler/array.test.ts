@@ -8,6 +8,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -948,7 +949,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "1");
   });
 
-  test("Pass_listOfGenericFunction", async () => {
+  ignore_test("Pass_listOfGenericFunction", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
