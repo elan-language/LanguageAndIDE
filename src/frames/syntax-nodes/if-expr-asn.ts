@@ -1,6 +1,7 @@
 import { CompileError } from "../compile-error";
 import { mustBeBooleanCondition, mustBeCompatibleType } from "../compile-rules";
 import { AstNode } from "../interfaces/ast-node";
+import { ClassType } from "../symbols/class-type";
 import { mostPreciseSymbol } from "../symbols/symbol-helpers";
 import { AbstractAstNode } from "./abstract-ast-node";
 
@@ -40,7 +41,20 @@ export class IfExprAsn extends AbstractAstNode implements AstNode {
   }
 
   symbolType() {
-    return mostPreciseSymbol(this.expr1.symbolType(), this.expr2.symbolType());
+    const e1St = this.expr1.symbolType();
+    const e2St = this.expr2.symbolType();
+
+    if (e1St instanceof ClassType && e2St instanceof ClassType) {
+      if (e1St.isAssignableFrom(e2St)) {
+        return e1St;
+      }
+
+      if (e2St.isAssignableFrom(e1St)) {
+        return e2St;
+      }
+    }
+
+    return mostPreciseSymbol(e1St, e2St);
   }
 
   toString() {

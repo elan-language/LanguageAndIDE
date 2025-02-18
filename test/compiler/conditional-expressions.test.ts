@@ -372,4 +372,58 @@ end class`;
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["Cannot determine common type between Foo and Bar"]);
   });
+
+  test("Fail_CannotAssignToBaseClass1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable score set to new Bar()
+  set score to if false then new Bar() else cast(new Bar())
+  print score
+end main
+
+abstract class Foo
+end class
+
+class Bar inherits Foo
+end class
+
+function cast(bar as Foo) returns Foo
+  return bar
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Foo to Bar"]);
+  });
+
+  test("Fail_CannotAssignToBaseClass2", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable score set to new Bar()
+  set score to if false then cast(new Bar()) else new Bar()
+  print score
+end main
+
+abstract class Foo
+end class
+
+class Bar inherits Foo
+end class
+
+function cast(bar as Foo) returns Foo
+  return bar
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Foo to Bar"]);
+  });
 });
