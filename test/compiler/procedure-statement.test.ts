@@ -771,6 +771,42 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "23");
   });
 
+  test("Pass_PrintOutParameter", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable x set to 1
+  call printParameter(x)
+end main
+
+procedure printParameter(out n as Int)
+  print n
+end procedure`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let x = 1;
+  let _x15 = [x];
+  await printParameter(_x15);
+  x = _x15[0];
+}
+
+async function printParameter(n) {
+  await system.printLine(n[0]);
+}
+global["printParameter"] = printParameter;
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1");
+  });
+
   test("Fail_CallingUndeclaredProc", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 

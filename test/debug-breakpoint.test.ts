@@ -449,4 +449,24 @@ end function
 
     await assertDebugBreakPoint(fileImpl, "return13", expected);
   });
+
+  test("Pass_OutParameter", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable x set to 1
+  call printParameter(x)
+end main
+  
+procedure printParameter(out n as Int)
+  print n
+end procedure`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [["n", "1"]] as [string, string][];
+
+    await assertDebugBreakPoint(fileImpl, "print13", expected);
+  });
 });
