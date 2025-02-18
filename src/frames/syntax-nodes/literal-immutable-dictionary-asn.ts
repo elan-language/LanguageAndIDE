@@ -1,5 +1,5 @@
 import { CompileError } from "../compile-error";
-import { mustBeCompatibleType, mustHaveUniqueKeys } from "../compile-rules";
+import { mustBeAssignableType, mustHaveUniqueKeys } from "../compile-rules";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstNode } from "../interfaces/ast-node";
 import { DictionaryImmutableType } from "../symbols/dictionary-immutable-type";
@@ -32,8 +32,8 @@ export class LiteralDictionaryImmutableAsn extends AbstractAstNode implements As
     const ofValueType = first.symbolType();
 
     for (const i of items) {
-      mustBeCompatibleType(ofKeyType, i.keySymbolType(), this.compileErrors, this.fieldId);
-      mustBeCompatibleType(ofValueType, i.symbolType(), this.compileErrors, this.fieldId);
+      mustBeAssignableType(ofKeyType, i.keySymbolType(), this.compileErrors, this.fieldId);
+      mustBeAssignableType(ofValueType, i.symbolType(), this.compileErrors, this.fieldId);
     }
 
     const itemList = this.list.items.map((p) => `${p.compile()}`).join(", ");

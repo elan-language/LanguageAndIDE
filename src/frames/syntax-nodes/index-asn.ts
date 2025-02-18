@@ -1,7 +1,7 @@
 import { CompileError } from "../compile-error";
 import {
   getId,
-  mustBeCompatibleType,
+  mustBeAssignableType,
   mustBeIndexableSymbol,
   mustBeRangeableSymbol,
   mustNotBeNegativeIndex,
@@ -95,7 +95,7 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
   compileIndex(id: string, rootType: SymbolType, index: IndexAsn, q: string, idx: string) {
     mustBeIndexableSymbol(id, rootType, true, this.compileErrors, this.fieldId);
     const [indexType] = this.getIndexType(rootType);
-    mustBeCompatibleType(indexType, index.index1.symbolType(), this.compileErrors, this.fieldId);
+    mustBeAssignableType(indexType, index.index1.symbolType(), this.compileErrors, this.fieldId);
 
     let code = `${q}, ${idx}`;
 
@@ -107,7 +107,7 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
   compileRange(rootType: SymbolType, code: string, idx: string) {
     mustBeRangeableSymbol(rootType, true, this.compileErrors, this.fieldId);
     const [indexType] = this.getIndexType(rootType);
-    mustBeCompatibleType(indexType, IntType.Instance, this.compileErrors, this.fieldId);
+    mustBeAssignableType(indexType, IntType.Instance, this.compileErrors, this.fieldId);
     code = `${code}, ${idx}`;
     code = this.wrapRange(code);
     code = this.wrapListOrArray(rootType, code);

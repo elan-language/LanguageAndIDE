@@ -34,6 +34,7 @@ import {
   RedefinedCompileError,
   SignatureCompileError,
   SyntaxCompileError,
+  TernaryCompileError,
   ThisCompileError,
   TypeCompileError,
   TypesCompileError,
@@ -524,7 +525,7 @@ export function mustMatchParameters(
   }
 
   if (extensionParm && extensionOfType) {
-    mustBeCompatibleType(extensionOfType, extensionParm.symbolType(), compileErrors, location);
+    mustBeAssignableType(extensionOfType, extensionParm.symbolType(), compileErrors, location);
   }
 
   const maxLen = parms.length > ofType.length ? parms.length : ofType.length;
@@ -535,7 +536,7 @@ export function mustMatchParameters(
     const p = parmTypes[i];
     const t = ofType[i];
     if (p && t) {
-      mustBeCompatibleType(t, p, tempErrors, location);
+      mustBeAssignableType(t, p, tempErrors, location);
     }
   }
 
@@ -556,7 +557,7 @@ export function mustMatchGenericParameters(
   }
 }
 
-function FailIncompatible(
+function FailNotAssignable(
   lhs: SymbolType,
   rhs: SymbolType,
   compileErrors: CompileError[],
@@ -574,6 +575,17 @@ function FailIncompatible(
 
   if (knownType(lhs) && knownType(rhs)) {
     compileErrors.push(new TypesCompileError(rhs.name, lhs.name, addInfo, location));
+  }
+}
+
+function FailNoCommonType(
+  lhs: SymbolType,
+  rhs: SymbolType,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  if (knownType(lhs) && knownType(rhs)) {
+    compileErrors.push(new TernaryCompileError(rhs.name, lhs.name, location));
   }
 }
 
@@ -610,7 +622,7 @@ export function mustBeCoercibleType(
     FailCannotCompareProcFunc(compileErrors, location);
   }
 
-  mustBeCompatibleType(lhs, rhs, compileErrors, location);
+  mustBeAssignableType(lhs, rhs, compileErrors, location);
 }
 
 export function mustBeNumberType(
@@ -633,8 +645,8 @@ export function mustBeBooleanType(
   compileErrors: CompileError[],
   location: string,
 ) {
-  mustBeCompatibleType(BooleanType.Instance, lhs, compileErrors, location);
-  mustBeCompatibleType(BooleanType.Instance, rhs, compileErrors, location);
+  mustBeAssignableType(BooleanType.Instance, lhs, compileErrors, location);
+  mustBeAssignableType(BooleanType.Instance, rhs, compileErrors, location);
 }
 
 export function mustBeIntegerType(
@@ -643,8 +655,8 @@ export function mustBeIntegerType(
   compileErrors: CompileError[],
   location: string,
 ) {
-  mustBeCompatibleType(IntType.Instance, lhs, compileErrors, location);
-  mustBeCompatibleType(IntType.Instance, rhs, compileErrors, location);
+  mustBeAssignableType(IntType.Instance, lhs, compileErrors, location);
+  mustBeAssignableType(IntType.Instance, rhs, compileErrors, location);
 }
 
 function mustBeCompatibleTypes(
@@ -659,7 +671,7 @@ function mustBeCompatibleTypes(
 
   const maxLen = lhss.length > rhss.length ? lhss.length : rhss.length;
   for (let i = 0; i < maxLen; i++) {
-    mustBeCompatibleType(
+    mustBeAssignableType(
       lhss[i] ?? UnknownType.Instance,
       rhss[i] ?? UnknownType.Instance,
       compileErrors,
@@ -681,7 +693,7 @@ function mustBeCompatibleSignatures(
 
   const maxLen = lhss.length > rhss.length ? lhss.length : rhss.length;
   for (let i = 0; i < maxLen; i++) {
-    mustBeCompatibleType(
+    mustBeAssignableType(
       lhss[i] ?? UnknownType.Instance,
       rhss[i] ?? UnknownType.Instance,
       compileErrors,
@@ -698,7 +710,7 @@ export function mustBeCompatibleMutableType(
   location: string,
 ) {
   if (lhs.isImmutable !== rhs.isImmutable) {
-    FailIncompatible(lhs, rhs, compileErrors, location);
+    FailNotAssignable(lhs, rhs, compileErrors, location);
   }
 }
 
@@ -734,93 +746,118 @@ export function mustBeCompatibleType(
   compileErrors: CompileError[],
   location: string,
 ) {
+  if (
+    lhs.name === rhs.name ||
+    ((lhs instanceof IntType || lhs instanceof FloatType) &&
+      (rhs instanceof FloatType || rhs instanceof IntType))
+  ) {
+    return;
+  }
+
+  if (
+    lhs instanceof ClassType &&
+    rhs instanceof ClassType &&
+    (lhs.isAssignableFrom(rhs) || rhs.isAssignableFrom(lhs))
+  ) {
+    return;
+  }
+
+  FailNoCommonType(lhs, rhs, compileErrors, location);
+}
+
+export function mustBeAssignableType(
+  lhs: SymbolType,
+  rhs: SymbolType,
+  compileErrors: CompileError[],
+  location: string,
+) {
   if (lhs instanceof RegExpType && !(rhs instanceof RegExpType)) {
-    FailIncompatible(lhs, rhs, compileErrors, location);
+    FailNotAssignable(lhs, rhs, compileErrors, location);
     return;
   }
   if (lhs instanceof BooleanType && !(rhs instanceof BooleanType)) {
-    FailIncompatible(lhs, rhs, compileErrors, location);
+    FailNotAssignable(lhs, rhs, compileErrors, location);
     return;
   }
   if (lhs instanceof StringType && !(rhs instanceof StringType)) {
-    FailIncompatible(lhs, rhs, compileErrors, location);
+    FailNotAssignable(lhs, rhs, compileErrors, location);
     return;
   }
   if (lhs instanceof IntType && !(rhs instanceof IntType)) {
-    FailIncompatible(lhs, rhs, compileErrors, location);
+    FailNotAssignable(lhs, rhs, compileErrors, location);
     return;
   }
   if (lhs instanceof FloatType && !isNumber(rhs)) {
-    FailIncompatible(lhs, rhs, compileErrors, location);
+    FailNotAssignable(lhs, rhs, compileErrors, location);
     return;
   }
 
   if (lhs instanceof ListType && rhs instanceof ListType) {
     if (!isInvariantType(lhs.ofType, rhs.ofType, true)) {
-      FailIncompatible(lhs, rhs, compileErrors, location);
+      FailNotAssignable(lhs, rhs, compileErrors, location);
     }
     return;
   }
 
   if (lhs instanceof ListType && !(rhs instanceof ListType)) {
-    FailIncompatible(lhs, rhs, compileErrors, location);
+    FailNotAssignable(lhs, rhs, compileErrors, location);
     return;
   }
 
   if (lhs instanceof ArrayType && rhs instanceof ArrayType) {
     if (!isInvariantType(lhs.ofType, rhs.ofType, true)) {
-      FailIncompatible(lhs, rhs, compileErrors, location);
+      FailNotAssignable(lhs, rhs, compileErrors, location);
     }
     return;
   }
 
   if (lhs instanceof ArrayType && !(rhs instanceof ArrayType)) {
-    FailIncompatible(lhs, rhs, compileErrors, location);
+    FailNotAssignable(lhs, rhs, compileErrors, location);
     return;
   }
 
   if (lhs instanceof DictionaryType && rhs instanceof DictionaryType) {
     if (!isInvariantType(lhs.keyType, rhs.keyType, true)) {
-      FailIncompatible(lhs, rhs, compileErrors, location);
+      FailNotAssignable(lhs, rhs, compileErrors, location);
     }
     if (!isInvariantType(lhs.valueType, rhs.valueType, true)) {
-      FailIncompatible(lhs, rhs, compileErrors, location);
+      FailNotAssignable(lhs, rhs, compileErrors, location);
     }
     return;
   }
 
   if (lhs instanceof DictionaryType && !(rhs instanceof DictionaryType)) {
-    FailIncompatible(lhs, rhs, compileErrors, location);
+    FailNotAssignable(lhs, rhs, compileErrors, location);
     return;
   }
 
   if (lhs instanceof DictionaryImmutableType && rhs instanceof DictionaryImmutableType) {
     if (!isInvariantType(lhs.keyType, rhs.keyType, true)) {
-      FailIncompatible(lhs, rhs, compileErrors, location);
+      FailNotAssignable(lhs, rhs, compileErrors, location);
     }
     if (!isInvariantType(lhs.valueType, rhs.valueType, true)) {
-      FailIncompatible(lhs, rhs, compileErrors, location);
+      FailNotAssignable(lhs, rhs, compileErrors, location);
     }
     return;
   }
 
   if (lhs instanceof DictionaryImmutableType && !(rhs instanceof DictionaryImmutableType)) {
-    FailIncompatible(lhs, rhs, compileErrors, location);
+    FailNotAssignable(lhs, rhs, compileErrors, location);
     return;
   }
 
   if (lhs instanceof AbstractDictionaryType && isAnyDictionaryType(rhs)) {
     if (!isInvariantType(lhs.keyType, rhs.keyType, true)) {
-      FailIncompatible(lhs, rhs, compileErrors, location);
+      FailNotAssignable(lhs, rhs, compileErrors, location);
     }
     if (!isInvariantType(lhs.valueType, rhs.valueType, true)) {
-      FailIncompatible(lhs, rhs, compileErrors, location);
+      FailNotAssignable(lhs, rhs, compileErrors, location);
     }
     return;
   }
 
   if (lhs instanceof AbstractDictionaryType && !isAnyDictionaryType(rhs)) {
-    FailIncompatible(lhs, rhs, compileErrors, location);
+    FailNotAssignable(lhs, rhs, compileErrors, location);
     return;
   }
 
@@ -836,7 +873,7 @@ export function mustBeCompatibleType(
           new SyntaxCompileError(`Wrong number of deconstructed variables`, location),
         );
       } else {
-        FailIncompatible(lhs, rhs, compileErrors, location);
+        FailNotAssignable(lhs, rhs, compileErrors, location);
       }
     }
   }
@@ -845,36 +882,36 @@ export function mustBeCompatibleType(
     (lhs instanceof TupleType || lhs instanceof DeconstructedTupleType) &&
     !(rhs instanceof TupleType)
   ) {
-    FailIncompatible(lhs, rhs, compileErrors, location);
+    FailNotAssignable(lhs, rhs, compileErrors, location);
     return;
   }
 
   if (lhs instanceof IterableType && !isIterableType(rhs)) {
-    FailIncompatible(lhs, rhs, compileErrors, location);
+    FailNotAssignable(lhs, rhs, compileErrors, location);
     return;
   }
 
   if (lhs instanceof IterableType && isIterableType(rhs)) {
     if (!isInvariantType(lhs.ofType, rhs.ofType, true)) {
-      FailIncompatible(lhs, rhs, compileErrors, location);
+      FailNotAssignable(lhs, rhs, compileErrors, location);
     }
     return;
   }
 
   if (lhs instanceof EnumType && rhs instanceof EnumType) {
     if (lhs.name !== rhs.name) {
-      FailIncompatible(lhs, rhs, compileErrors, location);
+      FailNotAssignable(lhs, rhs, compileErrors, location);
       return;
     }
   }
 
   if (lhs instanceof EnumType && !(rhs instanceof EnumType)) {
-    FailIncompatible(lhs, rhs, compileErrors, location);
+    FailNotAssignable(lhs, rhs, compileErrors, location);
     return;
   }
 
   if (rhs instanceof EnumType && !(lhs instanceof EnumType)) {
-    FailIncompatible(lhs, rhs, compileErrors, location);
+    FailNotAssignable(lhs, rhs, compileErrors, location);
     return;
   }
 
@@ -882,7 +919,7 @@ export function mustBeCompatibleType(
     if (lhs.isAssignableFrom(rhs)) {
       return;
     }
-    FailIncompatible(lhs, rhs, compileErrors, location);
+    FailNotAssignable(lhs, rhs, compileErrors, location);
     return;
   }
 
@@ -890,39 +927,39 @@ export function mustBeCompatibleType(
     (lhs instanceof FunctionType && !(rhs instanceof FunctionType)) ||
     (rhs instanceof FunctionType && !(lhs instanceof FunctionType))
   ) {
-    FailIncompatible(lhs, rhs, compileErrors, location);
+    FailNotAssignable(lhs, rhs, compileErrors, location);
     return;
   }
 
   if (lhs instanceof FunctionType && rhs instanceof FunctionType) {
     mustBeCompatibleSignatures(lhs.parameterTypes, rhs.parameterTypes, compileErrors, location);
-    mustBeCompatibleType(lhs.returnType, rhs.returnType, compileErrors, location);
+    mustBeAssignableType(lhs.returnType, rhs.returnType, compileErrors, location);
     return;
   }
 
   if (lhs instanceof GenericParameterType && rhs instanceof GenericParameterType) {
     if (lhs.name !== rhs.name) {
-      FailIncompatible(lhs, rhs, compileErrors, location);
+      FailNotAssignable(lhs, rhs, compileErrors, location);
     }
     return;
   }
 
   if (lhs instanceof DeconstructedListType) {
     if (isGenericSymbolType(lhs.tailType)) {
-      mustBeCompatibleType(lhs.headType, lhs.tailType.ofType, compileErrors, location);
+      mustBeAssignableType(lhs.headType, lhs.tailType.ofType, compileErrors, location);
     }
 
-    mustBeCompatibleType(lhs.tailType, rhs, compileErrors, location);
+    mustBeAssignableType(lhs.tailType, rhs, compileErrors, location);
 
     if (isGenericSymbolType(rhs)) {
-      mustBeCompatibleType(lhs.headType, rhs.ofType, compileErrors, location);
+      mustBeAssignableType(lhs.headType, rhs.ofType, compileErrors, location);
     }
 
     return;
   }
 
   if (lhs instanceof GenericParameterType || rhs instanceof GenericParameterType) {
-    FailIncompatible(lhs, rhs, compileErrors, location);
+    FailNotAssignable(lhs, rhs, compileErrors, location);
   }
 }
 
@@ -948,7 +985,7 @@ function mustBeCompatibleDeconstruction(
         const llst = lst.ofTypes[i];
         const rrst = childSymbols.find((s) => s.symbolId === id)!.symbolType(transforms());
 
-        mustBeCompatibleType(llst, rrst, compileErrors, location);
+        mustBeAssignableType(llst, rrst, compileErrors, location);
       } else {
         const msg = id
           ? `No such property '${id}' on record '${rst.name}`
@@ -998,7 +1035,7 @@ export function mustBeCompatibleNode(
     }
   }
 
-  mustBeCompatibleType(lst, rst, compileErrors, location);
+  mustBeAssignableType(lst, rst, compileErrors, location);
 }
 
 export function getId(astNode: AstNode) {

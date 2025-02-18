@@ -1,5 +1,5 @@
 import {
-  mustBeCompatibleType,
+  mustBeAssignableType,
   mustBeKnownSymbolType,
   mustBeUniqueNameInScope,
 } from "../compile-rules";
@@ -47,7 +47,7 @@ ${endKeyword} ${functionKeyword}\r
     const returnStatement = this.getReturnStatement().expr.getOrTransformAstNode(transforms);
     const rst = returnStatement.symbolType();
 
-    mustBeCompatibleType(rt, rst, this.compileErrors, this.htmlId);
+    mustBeAssignableType(rt, rst, this.compileErrors, this.htmlId);
 
     return `async function ${super.compile(transforms)}\r
 }
