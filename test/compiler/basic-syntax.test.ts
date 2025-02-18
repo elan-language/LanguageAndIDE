@@ -396,12 +396,45 @@ end function
     ]);
   });
 
-  test("Fail_compilerDirective", async () => {
+  test("Fail_compilerDirective1", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-    # [unknownDirective]
+  # [unknownDirective]
 end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "a comment may not start with [ unless it is a recognised compiler directive",
+    ]);
+  });
+
+  test("Fail_compilerDirective1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+class Foo
+  # [unknownDirective]
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "a comment may not start with [ unless it is a recognised compiler directive",
+    ]);
+  });
+
+  test("Fail_compilerDirective3", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+# [unknownDirective]
+`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));

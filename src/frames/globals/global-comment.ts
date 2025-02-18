@@ -1,3 +1,4 @@
+import { transforms } from "../../web/web-helpers";
 import { AbstractFrame } from "../abstract-frame";
 import { CodeSource } from "../code-source";
 import { CommentField } from "../fields/comment-field";
@@ -40,6 +41,7 @@ export class GlobalComment extends AbstractFrame implements GlobalFrame {
 
   compile(): string {
     this.compileErrors = [];
+    this.text.compile(transforms());
     return "";
   }
 
