@@ -928,8 +928,6 @@ async function updateContent(text: string, editingField: boolean) {
       if (me.button === 0 && me.shiftKey) {
         // left button only
         handleEditorEvent(event, "click", "frame", getModKey(me), id);
-      } else {
-        event.preventDefault();
       }
     });
 
@@ -974,8 +972,10 @@ async function updateContent(text: string, editingField: boolean) {
 
   codeContainer.addEventListener("mousedown", (event) => {
     // to prevent codeContainer taking focus on a click
-    event.preventDefault();
-    event.stopPropagation();
+    if (isRunningState()) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
   });
 
   if (document.querySelector(".context-menu")) {
