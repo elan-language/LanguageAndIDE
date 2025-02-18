@@ -169,6 +169,6 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Argument types expected: regExp (RegExp) Provided: String"]);
+    assertDoesNotCompile(fileImpl, ["Argument types. Expected: regExp (RegExp) Provided: String"]);
   });
 });

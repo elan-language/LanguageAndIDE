@@ -687,7 +687,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Argument types expected: val (Int) Provided: Float"]);
+    assertDoesNotCompile(fileImpl, ["Argument types. Expected: val (Int) Provided: Float"]);
   });
 
   test("Fail_SupplyingArgumentNotSpecified", async () => {
@@ -791,7 +791,7 @@ end procedure
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Argument types expected: bar (Bar) Provided: Foo"]);
+    assertDoesNotCompile(fileImpl, ["Argument types. Expected: bar (Bar) Provided: Foo"]);
   });
 
   test("Fail_IncompatibleClassAsFunctionParameter", async () => {
@@ -824,7 +824,7 @@ end function
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Argument types expected: bar (Bar) Provided: Foo"]);
+    assertDoesNotCompile(fileImpl, ["Argument types. Expected: bar (Bar) Provided: Foo"]);
   });
 
   test("Fail_UnknownPropertyType", async () => {
@@ -1063,7 +1063,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["<of Type(s)> expected: 0 got: 1"]);
+    assertDoesNotCompile(fileImpl, ["<of Type(s)> Expected: 0 Provided: 1"]);
   });
 
   test("Fail_UnnecessaryGenericParm2", async () => {
@@ -1078,7 +1078,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["<of Type(s)> expected: 0 got: 1"]);
+    assertDoesNotCompile(fileImpl, ["<of Type(s)> Expected: 0 Provided: 1"]);
   });
 
   test("Fail_CannotNewUnknownType", async () => {

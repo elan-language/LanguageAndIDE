@@ -627,7 +627,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Argument types expected: parameter1 (String) Provided: Int"]);
+    assertDoesNotCompile(fileImpl, ["Argument types. Expected: parameter1 (String) Provided: Int"]);
   });
 
   test("Fail_SetInvalidKeyType", async () => {
@@ -644,7 +644,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: key (String), value (Int) Provided: Int, Int",
+      "Argument types. Expected: key (String), value (Int) Provided: Int, Int",
     ]);
   });
 
@@ -681,7 +681,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: key (String), value (Int) Provided: String, Float",
+      "Argument types. Expected: key (String), value (Int) Provided: String, Float",
     ]);
   });
 
@@ -716,7 +716,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["<of Type(s)> expected: 2 got: 0"]);
+    assertDoesNotCompile(fileImpl, ["<of Type(s)> Expected: 2 Provided: 0"]);
   });
 
   test("Fail_IndexWrongType1", async () => {
@@ -733,7 +733,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: key (String), value (Int) Provided: Int, Int",
+      "Argument types. Expected: key (String), value (Int) Provided: Int, Int",
     ]);
   });
 
@@ -767,7 +767,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: key (String), value (Int) Provided: Int, Int",
+      "Argument types. Expected: key (String), value (Int) Provided: Int, Int",
     ]);
   });
 

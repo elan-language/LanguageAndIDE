@@ -590,7 +590,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: lambdaOrFunctionRef (Func<of String => Float>) Provided: Func<of String => String>",
+      "Argument types. Expected: lambdaOrFunctionRef (Func<of String => Float>) Provided: Func<of String => String>",
     ]);
   });
 

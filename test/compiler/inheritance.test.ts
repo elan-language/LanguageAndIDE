@@ -1915,7 +1915,7 @@ end function
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Argument types expected: bar (Bar) Provided: Foo"]);
+    assertDoesNotCompile(fileImpl, ["Argument types. Expected: bar (Bar) Provided: Foo"]);
   });
 
   test("Fail_Invariance1", async () => {
@@ -1948,7 +1948,7 @@ end function
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: l (List<of Foo>) Provided: List<of Bar>",
+      "Argument types. Expected: l (List<of Foo>) Provided: List<of Bar>",
     ]);
   });
 
@@ -1982,7 +1982,7 @@ end procedure
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: l (Array<of Foo>) Provided: Array<of Bar>",
+      "Argument types. Expected: l (Array<of Foo>) Provided: Array<of Bar>",
     ]);
   });
 
@@ -2015,7 +2015,7 @@ end function
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: l (DictionaryImmutable<of String, Foo>) Provided: DictionaryImmutable<of String, Bar>",
+      "Argument types. Expected: l (DictionaryImmutable<of String, Foo>) Provided: DictionaryImmutable<of String, Bar>",
     ]);
   });
 

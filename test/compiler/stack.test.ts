@@ -69,7 +69,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Argument types expected: parameter0 (String) Provided: Int"]);
+    assertDoesNotCompile(fileImpl, ["Argument types. Expected: parameter0 (String) Provided: Int"]);
   });
 
   test("Fail_Stack_adding_incompatible_type2", async () => {
@@ -85,7 +85,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Argument types expected: parameter0 (String) Provided: Int"]);
+    assertDoesNotCompile(fileImpl, ["Argument types. Expected: parameter0 (String) Provided: Int"]);
   });
 
   test("Fail_Stack_peek_incompatible_type", async () => {
@@ -174,6 +174,6 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["<of Type(s)> expected: 1 got: 0"]);
+    assertDoesNotCompile(fileImpl, ["<of Type(s)> Expected: 1 Provided: 0"]);
   });
 });

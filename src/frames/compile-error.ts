@@ -240,7 +240,7 @@ export class ExtraParameterCompileError extends CompileError {
 export class ParameterTypesCompileError extends CompileError {
   constructor(description: string, provided: string, location: string) {
     const priority = Priority.typeError;
-    super(priority, `Argument types expected: ${description} Provided: ${provided}`, location);
+    super(priority, `Argument types. Expected: ${description} Provided: ${provided}`, location);
   }
 }
 
@@ -249,7 +249,7 @@ export class ParametersCompileError extends CompileError {
     const priority = actual < expected ? Priority.unknownIdentifier : Priority.illegalOperation;
     super(
       priority,
-      `${generic ? "<of Type(s)>" : "Parameters"} expected: ${expected} got: ${actual}`,
+      `${generic ? "<of Type(s)>" : "Parameters"} Expected: ${expected} Provided: ${actual}`,
       location,
     );
   }
@@ -259,7 +259,7 @@ export class SignatureCompileError extends CompileError {
   constructor(expected: number, actual: number, location: string) {
     super(
       Priority.illegalOperation,
-      `Function Signatures do not match expected: ${expected} parameter(s) got: ${actual}`,
+      `Function Signatures do not match. Expected: ${expected} parameter(s) Provided: ${actual}`,
       location,
     );
   }

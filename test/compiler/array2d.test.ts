@@ -363,7 +363,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: index (Int), value (Array<of String>) Provided: Int, String",
+      "Argument types. Expected: index (Int), value (Array<of String>) Provided: Int, String",
     ]);
   });
 
@@ -399,7 +399,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: index (Int), value (Array<of String>) Provided: Int, Boolean",
+      "Argument types. Expected: index (Int), value (Array<of String>) Provided: Int, Boolean",
     ]);
   });
 
@@ -417,7 +417,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: value (Array<of String>) Provided: String",
+      "Argument types. Expected: value (Array<of String>) Provided: String",
     ]);
   });
 
@@ -453,7 +453,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: index (Int), value (Int) Provided: String, Int",
+      "Argument types. Expected: index (Int), value (Int) Provided: String, Int",
     ]);
   });
 });

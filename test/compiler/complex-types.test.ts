@@ -80,7 +80,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: index (Int), value (Dictionary<of String, Int>) Provided: String, Dictionary<of String, Int>",
+      "Argument types. Expected: index (Int), value (Dictionary<of String, Int>) Provided: String, Dictionary<of String, Int>",
     ]);
   });
 
@@ -98,7 +98,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: key (String), value (Int) Provided: Int, Int",
+      "Argument types. Expected: key (String), value (Int) Provided: Int, Int",
     ]);
   });
 
@@ -116,7 +116,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: key (String), value (Array<of Int>) Provided: Int, Array<of Int>",
+      "Argument types. Expected: key (String), value (Array<of Int>) Provided: Int, Array<of Int>",
     ]);
   });
 
@@ -134,7 +134,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: index (Int), value (Int) Provided: String, Int",
+      "Argument types. Expected: index (Int), value (Int) Provided: String, Int",
     ]);
   });
 

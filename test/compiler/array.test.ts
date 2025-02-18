@@ -605,7 +605,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: index (Int), value (String) Provided: Int, Boolean",
+      "Argument types. Expected: index (Int), value (String) Provided: Int, Boolean",
     ]);
   });
 
@@ -641,7 +641,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Argument types expected: value (String) Provided: Int"]);
+    assertDoesNotCompile(fileImpl, ["Argument types. Expected: value (String) Provided: Int"]);
   });
 
   test("Fail_NoSet", async () => {
@@ -673,7 +673,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: index (Int), value (String) Provided: String, String",
+      "Argument types. Expected: index (Int), value (String) Provided: String, String",
     ]);
   });
 
@@ -690,7 +690,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: size (Int), initialValue (Int) Provided: Float, Int",
+      "Argument types. Expected: size (Int), initialValue (Int) Provided: Float, Int",
     ]);
   });
 
@@ -1002,7 +1002,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["<of Type(s)> expected: 1 got: 0"]);
+    assertDoesNotCompile(fileImpl, ["<of Type(s)> Expected: 1 Provided: 0"]);
   });
 
   test("Fail_assignRange", async () => {

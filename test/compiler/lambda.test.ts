@@ -322,7 +322,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: i (Int), f (Func<of Int => Int>) Provided: Int, Func<of Int => String>",
+      "Argument types. Expected: i (Int), f (Func<of Int => Int>) Provided: Int, Func<of Int => String>",
     ]);
   });
 
@@ -341,7 +341,7 @@ end procedure`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Argument types expected: parameter0 (Int) Provided: String"]);
+    assertDoesNotCompile(fileImpl, ["Argument types. Expected: parameter0 (Int) Provided: String"]);
   });
 
   test("Fail_PassLambdaWithWrongTypes1", async () => {
@@ -360,7 +360,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: i (Int), f (Func<of  => Int>) Provided: Int, Func<of Int => Int>",
+      "Argument types. Expected: i (Int), f (Func<of  => Int>) Provided: Int, Func<of Int => Int>",
     ]);
   });
 
@@ -380,7 +380,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: i (Int), f (Func<of Int => Int>) Provided: Int, Func<of  => Int>",
+      "Argument types. Expected: i (Int), f (Func<of Int => Int>) Provided: Int, Func<of  => Int>",
     ]);
   });
 

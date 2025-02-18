@@ -384,8 +384,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: p (Int) Provided: Boolean",
-      "Argument types expected: p (Int) Provided: Float",
+      "Argument types. Expected: p (Int) Provided: Boolean",
+      "Argument types. Expected: p (Int) Provided: Float",
     ]);
   });
 
@@ -712,7 +712,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: a (Int), b (Int) Provided: Int, String",
+      "Argument types. Expected: a (Int), b (Int) Provided: Int, String",
     ]);
   });
 
