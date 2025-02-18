@@ -1,5 +1,9 @@
 import { CompileError } from "../compile-error";
-import { mustNotBeTwoUnaryExpressions as mustNotBeSequentialUnaryExpressions } from "../compile-rules";
+import {
+  mustBeBooleanType,
+  mustBeNumberType,
+  mustNotBeTwoUnaryExpressions as mustNotBeSequentialUnaryExpressions,
+} from "../compile-rules";
 import { AstNode } from "../interfaces/ast-node";
 import { BooleanType } from "../symbols/boolean-type";
 import { AbstractAstNode } from "./abstract-ast-node";
@@ -38,9 +42,17 @@ export class UnaryExprAsn extends AbstractAstNode implements AstNode {
     }
 
     const code = `${this.opToJs()}${this.operand.compile()}`;
+    const opSt = this.operand.symbolType();
 
-    // to avoid js compile errors with exponents
-    return this.op === OperationSymbol.Minus ? `(${code})` : code;
+    if (this.op === OperationSymbol.Minus) {
+      mustBeNumberType(opSt, this.compileErrors, this.fieldId);
+      // to avoid js compile errors with exponents
+      return `(${code})`;
+    }
+
+    // not
+    mustBeBooleanType(opSt, this.compileErrors, this.fieldId);
+    return code;
   }
 
   symbolType() {

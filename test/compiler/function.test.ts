@@ -977,6 +977,7 @@ end function`;
       "Incompatible types Func<of  => Int> to Float or Int",
       "To evaluate function 'p1' add brackets. Or to create a reference to 'p1', precede it by 'ref'",
       "To evaluate function 'p2' add brackets. Or to create a reference to 'p2', precede it by 'ref'",
+      "Incompatible types Func<of  => Int> to Float or Int",
       "To evaluate function 'p1' add brackets. Or to create a reference to 'p1', precede it by 'ref'",
     ]);
   });

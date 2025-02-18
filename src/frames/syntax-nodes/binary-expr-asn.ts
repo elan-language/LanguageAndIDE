@@ -1,10 +1,10 @@
 import { CompileError } from "../compile-error";
 import {
   mustBeAssignableType,
-  mustBeBooleanType,
+  mustBeBooleanTypes,
   mustBeCoercibleType,
   mustBeIntegerType,
-  mustBeNumberType,
+  mustBeNumberTypes,
 } from "../compile-rules";
 import { AstNode } from "../interfaces/ast-node";
 import { SymbolType } from "../interfaces/symbol-type";
@@ -163,7 +163,7 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
     }
 
     if (this.isCompareOp() || this.isArithmeticOp()) {
-      mustBeNumberType(lst, rst, this.compileErrors, this.fieldId);
+      mustBeNumberTypes(lst, rst, this.compileErrors, this.fieldId);
     }
 
     if (this.isIntegerOnlyOp()) {
@@ -171,7 +171,7 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
     }
 
     if (this.isLogicalOp()) {
-      mustBeBooleanType(lst, rst, this.compileErrors, this.fieldId);
+      mustBeBooleanTypes(lst, rst, this.compileErrors, this.fieldId);
     }
 
     if (this.op === OperationSymbol.Equals && (isValueType(lst) || isValueType(rst))) {

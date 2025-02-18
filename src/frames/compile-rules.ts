@@ -625,28 +625,35 @@ export function mustBeCoercibleType(
   mustBeAssignableType(lhs, rhs, compileErrors, location);
 }
 
-export function mustBeNumberType(
-  lhs: SymbolType,
-  rhs: SymbolType,
-  compileErrors: CompileError[],
-  location: string,
-) {
-  if (!isNumber(lhs)) {
-    FailNotNumber(lhs, compileErrors, location);
-  }
-  if (!isNumber(rhs)) {
-    FailNotNumber(rhs, compileErrors, location);
+export function mustBeNumberType(st: SymbolType, compileErrors: CompileError[], location: string) {
+  if (!isNumber(st)) {
+    FailNotNumber(st, compileErrors, location);
   }
 }
 
-export function mustBeBooleanType(
+export function mustBeNumberTypes(
   lhs: SymbolType,
   rhs: SymbolType,
   compileErrors: CompileError[],
   location: string,
 ) {
-  mustBeAssignableType(BooleanType.Instance, lhs, compileErrors, location);
-  mustBeAssignableType(BooleanType.Instance, rhs, compileErrors, location);
+  mustBeNumberType(lhs, compileErrors, location);
+
+  mustBeNumberType(rhs, compileErrors, location);
+}
+
+export function mustBeBooleanType(st: SymbolType, compileErrors: CompileError[], location: string) {
+  mustBeAssignableType(BooleanType.Instance, st, compileErrors, location);
+}
+
+export function mustBeBooleanTypes(
+  lhs: SymbolType,
+  rhs: SymbolType,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  mustBeBooleanType(lhs, compileErrors, location);
+  mustBeBooleanType(rhs, compileErrors, location);
 }
 
 export function mustBeIntegerType(

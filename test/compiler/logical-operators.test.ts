@@ -261,7 +261,7 @@ end main`;
     assertDoesNotCompile(fileImpl, ["Incompatible types Boolean to Float or Int"]);
   });
 
-  test("fail_CombineLogicalOpsWithComparison2WithoutBrackets", async () => {
+  test("Fail_CombineLogicalOpsWithComparison2WithoutBrackets", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main 
@@ -311,5 +311,71 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
+  });
+
+  test("Fail_notOnNonBoolean1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to not 1
+  print a
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Int to Boolean"]);
+  });
+
+  test("Fail_notOnNonBoolean2", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to "fred"
+  variable b set to not a
+  print b
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types String to Boolean"]);
+  });
+
+  test("Fail_minusOnNonNumber1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to - true
+  print a
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Boolean to Float or Int"]);
+  });
+
+  test("Fail_minusOnNonNumber2", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to "fred"
+  variable b set to -a
+  print b
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types String to Float or Int"]);
   });
 });
