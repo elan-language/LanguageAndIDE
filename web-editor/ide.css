@@ -34,6 +34,7 @@ body {
   width: 100%;
   overflow: hidden;
   margin: 0;
+  padding: 0;
 }
 
 #lhs,
@@ -163,13 +164,15 @@ body {
 
 #rh-footer {
   flex: 1;
+  overflow-y: auto;
 }
 
 #system-info {
-  flex: 1;
+  flex-grow: 1;
   background-color: var(--defaultBackground);
   white-space: pre;
   padding: 5px;
+  overflow-y: auto;
 }
 
 #display {
@@ -270,11 +273,6 @@ button.plain:focus {
 
 button.plain:disabled {
   color: grey;
-}
-
-#system-info
-{
-overflow-y: auto;
 }
 
 .autocomplete-popup,
