@@ -1234,8 +1234,8 @@ end procedure`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "Cannot do equality operations on Procedures or Functions",
-      "Incompatible types Procedure () to Float or Int",
-      "Incompatible types Procedure () to Float or Int",
+      "Incompatible types. Expected: Float or Int Provided: Procedure ()",
+      "Incompatible types. Expected: Float or Int Provided: Procedure ()",
     ]);
   });
 
@@ -1252,7 +1252,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types Procedure (Array<of Generic Parameter T1>, Generic Parameter T1) to Array<of Int>",
+      "Incompatible types. Expected: Array<of Int> Provided: Procedure (Array<of Generic Parameter T1>, Generic Parameter T1)",
       "Cannot call procedure 'append' within an expression",
     ]);
   });

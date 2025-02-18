@@ -250,7 +250,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types String to Int"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: String"]);
   });
 
   test("Fail_ImmutableSoCannotAssignAnItem", async () => {
@@ -282,7 +282,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types String to Int"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: String"]);
   });
 
   test("Fail_DifferentSizeTuples1", async () => {
@@ -299,7 +299,9 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types (Int, String) to (Int, String, Int)"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: (Int, String, Int) Provided: (Int, String)",
+    ]);
   });
 
   test("Fail_DifferentSizeTuples2", async () => {
@@ -316,6 +318,8 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types (Int, String, Int) to (Int, String)"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: (Int, String) Provided: (Int, String, Int)",
+    ]);
   });
 });

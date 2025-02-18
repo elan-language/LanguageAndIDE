@@ -750,8 +750,8 @@ end record`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types Int to String",
-      "Incompatible types String to Int",
+      "Incompatible types. Expected: String Provided: Int",
+      "Incompatible types. Expected: Int Provided: String",
     ]);
   });
 
@@ -776,7 +776,10 @@ end record`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String", "'b' is not defined"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: String Provided: Int",
+      "'b' is not defined",
+    ]);
   });
 
   test("Fail_DeconstructIntoMixed2", async () => {
@@ -802,7 +805,7 @@ end record`;
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "The identifier 'a' is already used for a variable and cannot be re-defined here.",
-      "Incompatible types Int to String",
+      "Incompatible types. Expected: String Provided: Int",
     ]);
   });
 

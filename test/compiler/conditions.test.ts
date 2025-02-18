@@ -344,12 +344,12 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types String to Int",
-      "Incompatible types String to Int",
-      "Incompatible types String to Float or Int",
-      "Incompatible types String to Float or Int",
-      "Incompatible types String to Float or Int",
-      "Incompatible types String to Float or Int",
+      "Incompatible types. Expected: Int Provided: String",
+      "Incompatible types. Expected: Int Provided: String",
+      "Incompatible types. Expected: Float or Int Provided: String",
+      "Incompatible types. Expected: Float or Int Provided: String",
+      "Incompatible types. Expected: Float or Int Provided: String",
+      "Incompatible types. Expected: Float or Int Provided: String",
     ]);
   });
 
@@ -391,6 +391,8 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Boolean to Float or Int"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Float or Int Provided: Boolean",
+    ]);
   });
 });

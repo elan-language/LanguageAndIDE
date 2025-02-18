@@ -404,7 +404,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Boolean to Int"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: Boolean"]);
   });
 
   test("Fail_noReturnType", async () => {
@@ -475,7 +475,7 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: String Provided: Int"]);
   });
 
   test("Fail_NoReturn2", async () => {
@@ -529,7 +529,7 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Float to Int"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: Float"]);
   });
 
   test("Fail_statementAfterReturn", async () => {
@@ -944,8 +944,8 @@ end function`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "Cannot do equality operations on Procedures or Functions",
-      "Incompatible types Func<of  => Int> to Float or Int",
-      "Incompatible types Func<of  => Int> to Float or Int",
+      "Incompatible types. Expected: Float or Int Provided: Func<of  => Int>",
+      "Incompatible types. Expected: Float or Int Provided: Func<of  => Int>",
     ]);
   });
 
@@ -973,11 +973,11 @@ end function`;
       "Cannot do equality operations on Procedures or Functions",
       "To evaluate function 'p1' add brackets. Or to create a reference to 'p1', precede it by 'ref'",
       "To evaluate function 'p2' add brackets. Or to create a reference to 'p2', precede it by 'ref'",
-      "Incompatible types Func<of  => Int> to Float or Int",
-      "Incompatible types Func<of  => Int> to Float or Int",
+      "Incompatible types. Expected: Float or Int Provided: Func<of  => Int>",
+      "Incompatible types. Expected: Float or Int Provided: Func<of  => Int>",
       "To evaluate function 'p1' add brackets. Or to create a reference to 'p1', precede it by 'ref'",
       "To evaluate function 'p2' add brackets. Or to create a reference to 'p2', precede it by 'ref'",
-      "Incompatible types Func<of  => Int> to Float or Int",
+      "Incompatible types. Expected: Float or Int Provided: Func<of  => Int>",
       "To evaluate function 'p1' add brackets. Or to create a reference to 'p1', precede it by 'ref'",
     ]);
   });

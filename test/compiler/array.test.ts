@@ -625,7 +625,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types String to Int"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: String"]);
   });
 
   test("Fail_IndexTypeIncompatibility1", async () => {
@@ -769,7 +769,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types List<of String> to Array<of String>"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Array<of String> Provided: List<of String>",
+    ]);
   });
 
   test("Fail_withInsertAt", async () => {
@@ -786,7 +788,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types List<of String> to Array<of String>"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Array<of String> Provided: List<of String>",
+    ]);
   });
 
   test("Fail_withRemove", async () => {
@@ -820,7 +824,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types List<of String> to Array<of String>"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Array<of String> Provided: List<of String>",
+    ]);
   });
 
   test("Fail_appendWithPlus", async () => {
@@ -837,7 +843,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Array<of String> to Float or Int"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Float or Int Provided: Array<of String>",
+    ]);
   });
 
   test("Fail_prependWithPlus", async () => {
@@ -854,7 +862,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types String to Array<of String>"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Array<of String> Provided: String",
+    ]);
   });
 
   test("Fail_withRemoveFirst", async () => {
@@ -870,7 +880,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types List<of String> to Array<of String>"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Array<of String> Provided: List<of String>",
+    ]);
   });
 
   test("Fail_withRemoveAll", async () => {
@@ -886,7 +898,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types List<of String> to Array<of String>"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Array<of String> Provided: List<of String>",
+    ]);
   });
 
   test("Pass_listOfFunctionGenericType", async () => {

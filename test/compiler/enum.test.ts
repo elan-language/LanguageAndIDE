@@ -402,8 +402,8 @@ enum Fruit apple, orange, pear`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types String to Float or Int",
-      "Incompatible types Fruit to Float or Int",
+      "Incompatible types. Expected: Float or Int Provided: String",
+      "Incompatible types. Expected: Float or Int Provided: Fruit",
     ]);
   });
 
@@ -463,7 +463,7 @@ enum Fruit apple, orange, pear`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Fruit to Int"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: Fruit"]);
   });
 
   test("Fail_undefinedEnum", async () => {

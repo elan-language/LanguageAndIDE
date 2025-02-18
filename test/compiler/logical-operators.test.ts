@@ -218,14 +218,14 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types Int to Boolean",
-      "Incompatible types Int to Boolean",
-      "Incompatible types Int to Boolean",
-      "Incompatible types Int to Boolean",
-      "Incompatible types Int to Boolean",
-      "Incompatible types Int to Boolean",
-      "Incompatible types Int to Boolean",
-      "Incompatible types Int to Boolean",
+      "Incompatible types. Expected: Boolean Provided: Int",
+      "Incompatible types. Expected: Boolean Provided: Int",
+      "Incompatible types. Expected: Boolean Provided: Int",
+      "Incompatible types. Expected: Boolean Provided: Int",
+      "Incompatible types. Expected: Boolean Provided: Int",
+      "Incompatible types. Expected: Boolean Provided: Int",
+      "Incompatible types. Expected: Boolean Provided: Int",
+      "Incompatible types. Expected: Boolean Provided: Int",
     ]);
   });
 
@@ -242,7 +242,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Boolean to Float or Int"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Float or Int Provided: Boolean",
+    ]);
   });
 
   test("Fail_CombineLogicalOpsWithComparisonWithoutBrackets2", async () => {
@@ -258,7 +260,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Boolean to Float or Int"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Float or Int Provided: Boolean",
+    ]);
   });
 
   test("Fail_CombineLogicalOpsWithComparison2WithoutBrackets", async () => {
@@ -326,7 +330,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Int to Boolean"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Boolean Provided: Int"]);
   });
 
   test("Fail_notOnNonBoolean2", async () => {
@@ -343,7 +347,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types String to Boolean"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Boolean Provided: String"]);
   });
 
   test("Fail_minusOnNonNumber1", async () => {
@@ -359,7 +363,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Boolean to Float or Int"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Float or Int Provided: Boolean",
+    ]);
   });
 
   test("Fail_minusOnNonNumber2", async () => {
@@ -376,6 +382,6 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types String to Float or Int"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Float or Int Provided: String"]);
   });
 });

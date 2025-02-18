@@ -672,7 +672,7 @@ end record`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Array<of Int> to Int"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: Array<of Int>"]);
   });
 
   test("Fail_NotClass", async () => {

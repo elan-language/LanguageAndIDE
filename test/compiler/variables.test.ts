@@ -300,7 +300,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "set6", ["Incompatible types Float to String"]);
+    assertDoesNotCompileWithId(fileImpl, "set6", [
+      "Incompatible types. Expected: String Provided: Float",
+    ]);
   });
 
   test("Fail_NotInitialized", async () => {
@@ -396,10 +398,18 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "set22", ["Incompatible types Float to Boolean"]);
-    assertDoesNotCompileWithId(fileImpl, "set25", ["Incompatible types Boolean to Int"]);
-    assertDoesNotCompileWithId(fileImpl, "set28", ["Incompatible types List<of Float> to String"]);
-    assertDoesNotCompileWithId(fileImpl, "set31", ["Incompatible types Float to Int"]);
+    assertDoesNotCompileWithId(fileImpl, "set22", [
+      "Incompatible types. Expected: Boolean Provided: Float",
+    ]);
+    assertDoesNotCompileWithId(fileImpl, "set25", [
+      "Incompatible types. Expected: Int Provided: Boolean",
+    ]);
+    assertDoesNotCompileWithId(fileImpl, "set28", [
+      "Incompatible types. Expected: String Provided: List<of Float>",
+    ]);
+    assertDoesNotCompileWithId(fileImpl, "set31", [
+      "Incompatible types. Expected: Int Provided: Float",
+    ]);
   });
 
   test("Fail_TypeCheck2", async () => {
@@ -419,15 +429,15 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompileWithId(fileImpl, "set12", [
-      "Incompatible types List<of Float> to Array<of String>",
+      "Incompatible types. Expected: Array<of String> Provided: List<of Float>",
     ]);
 
     assertDoesNotCompileWithId(fileImpl, "set15", [
-      "Incompatible types Array<of String> to List<of Float> try converting with '.asList()'",
+      "Incompatible types. Expected: List<of Float> try converting with '.asList()' Provided: Array<of String>",
     ]);
 
     assertDoesNotCompileWithId(fileImpl, "set18", [
-      "Incompatible types List<of Float> to Dictionary<of String, Float>",
+      "Incompatible types. Expected: Dictionary<of String, Float> Provided: List<of Float>",
     ]);
   });
 

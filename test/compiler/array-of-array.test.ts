@@ -596,7 +596,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types String to Array<of String>"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Array<of String> Provided: String",
+    ]);
   });
 
   test("Fail_1DArrayAccessedAs2D2", async () => {
@@ -612,7 +614,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Int to Array<of Int>"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Array<of Int> Provided: Int"]);
   });
 
   test("Fail_2DArrayAccessedAs1D", async () => {
@@ -700,7 +702,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types String to Int"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: String"]);
   });
 
   test("Fail_IndexWrongType2", async () => {

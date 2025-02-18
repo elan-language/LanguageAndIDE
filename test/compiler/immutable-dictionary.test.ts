@@ -446,7 +446,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Float to Int"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: Float"]);
   });
 
   test("Fail_InconsistentTypes2", async () => {
@@ -462,7 +462,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: String Provided: Int"]);
   });
 
   test("Fail_AccessByInvalidKey", async () => {
@@ -563,7 +563,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types DictionaryImmutable<of String, Int> to Dictionary<of String, Int>",
+      "Incompatible types. Expected: Dictionary<of String, Int> Provided: DictionaryImmutable<of String, Int>",
     ]);
   });
 
@@ -582,7 +582,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types DictionaryImmutable<of String, Int> to Dictionary<of String, Int>",
+      "Incompatible types. Expected: Dictionary<of String, Int> Provided: DictionaryImmutable<of String, Int>",
     ]);
   });
 

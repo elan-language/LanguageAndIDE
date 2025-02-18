@@ -572,7 +572,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types List<of String> to Iterable<of Float>"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Iterable<of Float> Provided: List<of String>",
+    ]);
   });
 
   test("Fail_MaxLambdaReturningNonNumeric", async () => {

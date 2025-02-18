@@ -521,7 +521,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: String Provided: Int"]);
   });
 
   test("Fail_DeconstructIntoWrongType2", async () => {
@@ -540,7 +540,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types String to Int"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: String"]);
   });
 
   test("Fail_DeconstructIntoWrongType3", async () => {
@@ -559,7 +559,9 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Array<of Int> to Array<of String>"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Array<of String> Provided: Array<of Int>",
+    ]);
   });
 
   test("Fail_DeconstructIntoWrongType4", async () => {
@@ -578,7 +580,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Array<of Int> to Int"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: Array<of Int>"]);
   });
 
   test("Fail_DeconstructIntoWrongType5", async () => {
@@ -597,7 +599,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Int to Array<of Int>"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Array<of Int> Provided: Int"]);
   });
 
   test("Fail_DeconstructIntoWrongType6", async () => {
@@ -617,7 +619,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types Array<of Int> to List<of Int> try converting with '.asList()'",
+      "Incompatible types. Expected: List<of Int> try converting with '.asList()' Provided: Array<of Int>",
     ]);
   });
 
@@ -636,7 +638,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: String Provided: Int"]);
   });
 
   test("Fail_DeconstructIntoWrongType2WithDiscard", async () => {
@@ -654,7 +656,9 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Array<of Int> to Array<of String>"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Array<of String> Provided: Array<of Int>",
+    ]);
   });
 
   test("Fail_CannotDeconstruct1", async () => {

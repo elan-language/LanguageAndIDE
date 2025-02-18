@@ -307,7 +307,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Float to Int"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: Float"]);
   });
 
   test("Fail_MostPreciseType2", async () => {
@@ -324,7 +324,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Float to Int"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: Float"]);
   });
 
   test("Fail_NoCommonSuperClass1", async () => {
@@ -347,7 +347,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Foo to Bar"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Bar Provided: Foo"]);
   });
 
   test("Fail_NoCommonSuperClass2", async () => {
@@ -397,7 +397,7 @@ end function`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Foo to Bar"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Bar Provided: Foo"]);
   });
 
   test("Fail_CannotAssignToBaseClass2", async () => {
@@ -424,6 +424,6 @@ end function`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Foo to Bar"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Bar Provided: Foo"]);
   });
 });
