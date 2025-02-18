@@ -754,6 +754,14 @@ export function mustBeCompatibleType(
     return;
   }
 
+  if (
+    lhs instanceof ClassType &&
+    rhs instanceof ClassType &&
+    (lhs.isAssignableFrom(rhs) || rhs.isAssignableFrom(lhs))
+  ) {
+    return;
+  }
+
   FailNoCommonType(lhs, rhs, compileErrors, location);
 }
 

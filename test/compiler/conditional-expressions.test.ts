@@ -134,6 +134,112 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "60.1");
   });
 
+  test("Pass_CommonSuperClass1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable score set to cast(new Bar())
+  set score to if false then new Bar() else cast(new Bar())
+  print score
+end main
+
+abstract class Foo
+end class
+
+class Bar inherits Foo
+end class
+
+function cast(bar as Foo) returns Foo
+  return bar
+end function`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let score = (await cast(system.initialise(await new Bar()._initialise())));
+  score = _stdlib.false ? system.initialise(await new Bar()._initialise()) : (await cast(system.initialise(await new Bar()._initialise())));
+  await system.printLine(score);
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, []);};
+
+}
+
+class Bar extends Foo {
+  static emptyInstance() { return system.emptyClass(Bar, []);};
+  async _initialise() { return this; }
+
+}
+
+async function cast(bar) {
+  return bar;
+}
+global["cast"] = cast;
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "a Bar");
+  });
+
+  test("Pass_CommonSuperClass2", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable score set to cast(new Bar())
+  set score to if false then cast(new Bar()) else new Bar()
+  print score
+end main
+
+abstract class Foo
+end class
+
+class Bar inherits Foo
+end class
+
+function cast(bar as Foo) returns Foo
+  return bar
+end function`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let score = (await cast(system.initialise(await new Bar()._initialise())));
+  score = _stdlib.false ? (await cast(system.initialise(await new Bar()._initialise()))) : system.initialise(await new Bar()._initialise());
+  await system.printLine(score);
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, []);};
+
+}
+
+class Bar extends Foo {
+  static emptyInstance() { return system.emptyClass(Bar, []);};
+  async _initialise() { return this; }
+
+}
+
+async function cast(bar) {
+  return bar;
+}
+global["cast"] = cast;
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "a Bar");
+  });
+
   test("Fail_EndIf", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
@@ -219,5 +325,51 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["Incompatible types Float to Int"]);
+  });
+
+  test("Fail_NoCommonSuperClass1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable score set to new Bar()
+  set score to if false then new Foo() else new Bar()
+  print score
+end main
+
+class Foo
+end class
+
+class Bar
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Foo to Bar"]);
+  });
+
+  test("Fail_NoCommonSuperClass2", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable score set to new Bar()
+  set score to if false then new Bar() else new Foo()
+  print score
+end main
+
+class Foo
+end class
+
+class Bar
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Cannot determine common type between Foo and Bar"]);
   });
 });
