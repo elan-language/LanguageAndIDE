@@ -807,6 +807,15 @@ function handleCutAndPaste(event: Event, msg: editorEvent) {
   return false;
 }
 
+function handleEscape(e: editorEvent) {
+  if (e.key === "Escape") {
+    demosButton.focus();
+    return true;
+  }
+
+  return false;
+}
+
 async function handleUndoAndRedo(event: Event, msg: editorEvent) {
   if (msg.modKey.control) {
     switch (msg.key) {
@@ -840,6 +849,7 @@ function isSupportedKey(evt: editorEvent) {
     case "ArrowDown":
     case "Backspace":
     case "Delete":
+    case "Escape":
     case "ContextMenu":
       return true;
     default:
@@ -867,6 +877,10 @@ async function handleEditorEvent(
 
   if (!isSupportedKey(msg)) {
     // discard
+    return;
+  }
+
+  if (handleEscape(msg)) {
     return;
   }
 
@@ -1180,11 +1194,6 @@ async function inactivityRefresh() {
 async function handleKeyAndRender(e: editorEvent) {
   if (file.readRunStatus() === RunStatus.running) {
     // no change while running
-    return;
-  }
-
-  if (e.key === "Escape") {
-    demosButton.focus();
     return;
   }
 
