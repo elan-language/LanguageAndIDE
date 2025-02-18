@@ -794,7 +794,7 @@ export class StdLib {
   }
 
   @elanProcedure([])
-  clearConsole() {
+  clearPrintedText() {
     this.system.elanInputOutput.clearPrintedText();
   }
 

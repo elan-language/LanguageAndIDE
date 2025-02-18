@@ -10,7 +10,7 @@ procedure playGame()
   variable gameNo set to 0
   variable cont set to true
   while cont
-    call clearConsole()
+    call clearPrintedText()
     call playOneRound(dealer, player)
     let outcome be determineOutcome(dealer, player)
     call updateScores(dealer, player, outcome)
@@ -103,7 +103,7 @@ procedure playersTurn(dealer as Dealer, player as HumanPlayer)
 end procedure
 
 procedure displayHands(dealer as Dealer, player as HumanPlayer)
-  call clearConsole()
+  call clearPrintedText()
   print dealer
   print player
 end procedure

@@ -46,6 +46,17 @@ export class Turtle extends GraphicsBase {
     this.width = 1;
     this.vg = new VectorGraphics(); // replaced by initialised version in set system()
   }
+
+  private reset() {
+    this.x = 50;
+    this.y = 37.5;
+    this.heading = 0;
+    this.pen = true;
+    this.shown = false;
+    this.colour = 0;
+    this.width = 1;
+  }
+
   private stdlib!: StdLib; // injected
 
   vg: VectorGraphics;
@@ -71,6 +82,18 @@ export class Turtle extends GraphicsBase {
       this.addTurtleIfShown();
       this.vg.display();
     }
+  }
+
+  @elanProcedure([])
+  clearAndReset() {
+    this.vg = this._system!.initialise(new VectorGraphics());
+    this.x = 50;
+    this.y = 37.5;
+    this.heading = 0;
+    this.pen = true;
+    this.colour = 0;
+    this.width = 1;
+    this.vg.display();
   }
 
   @elanProcedure([])

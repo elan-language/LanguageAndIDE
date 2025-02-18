@@ -181,7 +181,7 @@ export class WebInputOutput implements ElanInputOutput {
   currentInterval?: any;
 
   printLine(text: string) {
-    this.print(`${text}<br>`);
+    this.print(`${text}\n`);
     const element = document.getElementById("printed-text")!;
     element.scrollTop = element.scrollHeight;
   }
@@ -192,7 +192,7 @@ export class WebInputOutput implements ElanInputOutput {
   }
 
   printTab(position: number, text: string) {
-    const lastNl = this.printedText.lastIndexOf("<br>");
+    const lastNl = this.printedText.lastIndexOf("\n");
     const spaces =
       "                                                                                ";
     const charsSinceNl = this.printedText.length - lastNl;

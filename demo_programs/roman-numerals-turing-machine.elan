@@ -1,4 +1,4 @@
-# c76ca237e6b06c0b61648d85d1d44797e10b7106a56c6c0eec21257fe411df99 Elan Beta 6 valid
+# FFFF Elan Beta 6 valid
 
 # Turing Machine that converts a Year from decimal to roman numerals
 # Run the program, enter the number to convert and watch the machine in action.
@@ -15,7 +15,7 @@ main
     let rule be tm.findMatchingRule()
     call tm.singleStep()
     set steps to steps + 1
-    call clearConsole()
+    call clearPrintedText()
     call printLine(tm.tape)
     call printTab(tm.headPosition - 1, "^\n")
     call printLine("Step: {steps}\nState: {tm.currentState}\nRule applied: {rule}")
