@@ -106,6 +106,10 @@ body {
   flex-direction: row;
 }
 
+#printed-text {
+  white-space: pre;
+}
+
 #status {
   display: flex;
   flex-direction: row;
