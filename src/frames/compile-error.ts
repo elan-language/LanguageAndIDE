@@ -63,6 +63,16 @@ export class TypesCompileError extends CompileError {
   }
 }
 
+export class TernaryCompileError extends CompileError {
+  constructor(type1: string, type2: string, location: string) {
+    super(
+      Priority.typeError,
+      `Cannot determine common type between ${type1} and ${type2}`,
+      location,
+    );
+  }
+}
+
 export class ArraySizeCompileError extends CompileError {
   constructor(location: string) {
     super(Priority.illegalOperation, `Array requires 1 or 2 parameters`, location);

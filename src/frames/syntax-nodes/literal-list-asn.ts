@@ -1,5 +1,5 @@
 import { CompileError } from "../compile-error";
-import { mustBeCompatibleType } from "../compile-rules";
+import { mustBeAssignableType } from "../compile-rules";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstNode } from "../interfaces/ast-node";
 import { ListType } from "../symbols/list-type";
@@ -27,7 +27,7 @@ export class LiteralListAsn extends AbstractAstNode implements AstCollectionNode
     const ofType = this.items[0]?.symbolType();
 
     for (const i of this.items) {
-      mustBeCompatibleType(ofType, i.symbolType(), this.compileErrors, this.fieldId);
+      mustBeAssignableType(ofType, i.symbolType(), this.compileErrors, this.fieldId);
     }
 
     const it = this.items.map((p) => p.compile()).join(", ");

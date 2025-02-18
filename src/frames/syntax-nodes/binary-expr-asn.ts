@@ -1,8 +1,8 @@
 import { CompileError } from "../compile-error";
 import {
+  mustBeAssignableType,
   mustBeBooleanType,
   mustBeCoercibleType,
-  mustBeCompatibleType,
   mustBeIntegerType,
   mustBeNumberType,
 } from "../compile-rules";
@@ -13,7 +13,7 @@ import { FloatType } from "../symbols/float-type";
 import { IntType } from "../symbols/int-type";
 import { ListType } from "../symbols/list-type";
 import { StringType } from "../symbols/string-type";
-import { isValueType } from "../symbols/symbol-helpers";
+import { isValueType, mostPreciseSymbol } from "../symbols/symbol-helpers";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { mapOperationSymbol } from "./ast-helpers";
 import { OperationSymbol } from "./operation-symbol";
@@ -32,14 +32,6 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
     return this.compileErrors
       .concat(this.lhs.aggregateCompileErrors())
       .concat(this.rhs.aggregateCompileErrors());
-  }
-
-  private MostPreciseSymbol(lhs: SymbolType, rhs: SymbolType): SymbolType {
-    if (lhs instanceof FloatType || rhs instanceof FloatType) {
-      return FloatType.Instance;
-    }
-
-    return lhs;
   }
 
   private isEqualityOp() {
@@ -153,11 +145,11 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
 
     if (this.op === OperationSymbol.Add && (lst instanceof ListType || rst instanceof ListType)) {
       if (lst instanceof ListType && rst instanceof ListType) {
-        mustBeCompatibleType(lst, rst, this.compileErrors, this.fieldId);
+        mustBeAssignableType(lst, rst, this.compileErrors, this.fieldId);
       } else if (lst instanceof ListType) {
-        mustBeCompatibleType(lst.ofType, rst, this.compileErrors, this.fieldId);
+        mustBeAssignableType(lst.ofType, rst, this.compileErrors, this.fieldId);
       } else if (rst instanceof ListType) {
-        mustBeCompatibleType(lst, rst.ofType, this.compileErrors, this.fieldId);
+        mustBeAssignableType(lst, rst.ofType, this.compileErrors, this.fieldId);
       }
       return `system.concat(${lhsCode}, ${rhsCode})`;
     }
@@ -202,13 +194,13 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
   symbolType() {
     switch (this.op) {
       case OperationSymbol.Add:
-        return this.MostPreciseSymbol(this.lhs.symbolType(), this.rhs.symbolType());
+        return mostPreciseSymbol(this.lhs.symbolType(), this.rhs.symbolType());
       case OperationSymbol.Minus:
-        return this.MostPreciseSymbol(this.lhs.symbolType(), this.rhs.symbolType());
+        return mostPreciseSymbol(this.lhs.symbolType(), this.rhs.symbolType());
       case OperationSymbol.Multiply:
-        return this.MostPreciseSymbol(this.lhs.symbolType(), this.rhs.symbolType());
+        return mostPreciseSymbol(this.lhs.symbolType(), this.rhs.symbolType());
       case OperationSymbol.Pow:
-        return this.MostPreciseSymbol(this.lhs.symbolType(), this.rhs.symbolType());
+        return mostPreciseSymbol(this.lhs.symbolType(), this.rhs.symbolType());
       case OperationSymbol.Div:
         return IntType.Instance;
       case OperationSymbol.Mod:

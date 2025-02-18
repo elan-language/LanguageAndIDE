@@ -78,6 +78,62 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Merit");
   });
 
+  test("Pass_MostPreciseType1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable score set to 70.1
+  set score to if true then 60.1 else 60
+  print score
+end main
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let score = 70.1;
+  score = _stdlib.true ? 60.1 : 60;
+  await system.printLine(score);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "60.1");
+  });
+
+  test("Pass_MostPreciseType2", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable score set to 70.1
+  set score to if false then 60 else 60.1
+  print score
+end main
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let score = 70.1;
+  score = _stdlib.false ? 60 : 60.1;
+  await system.printLine(score);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "60.1");
+  });
+
   test("Fail_EndIf", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
@@ -128,6 +184,40 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
+    assertDoesNotCompile(fileImpl, ["Cannot determine common type between Int and String"]);
+  });
+
+  test("Fail_MostPreciseType1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+ variable a set to 10
+ set a to if true then 0.5 else 10
+ print a
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Float to Int"]);
+  });
+
+  test("Fail_MostPreciseType2", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+ variable a set to 10
+ set a to if true then 10 else 0.5
+ print a
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Float to Int"]);
   });
 });

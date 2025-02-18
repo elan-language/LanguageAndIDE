@@ -1,6 +1,7 @@
 import { CompileError } from "../compile-error";
 import { mustBeBooleanCondition, mustBeCompatibleType } from "../compile-rules";
 import { AstNode } from "../interfaces/ast-node";
+import { mostPreciseSymbol } from "../symbols/symbol-helpers";
 import { AbstractAstNode } from "./abstract-ast-node";
 
 export class IfExprAsn extends AbstractAstNode implements AstNode {
@@ -39,7 +40,7 @@ export class IfExprAsn extends AbstractAstNode implements AstNode {
   }
 
   symbolType() {
-    return this.expr1.symbolType();
+    return mostPreciseSymbol(this.expr1.symbolType(), this.expr2.symbolType());
   }
 
   toString() {

@@ -744,3 +744,11 @@ export function handleDeconstruction(ss: ElanSymbol[]) {
 
   return newSymbols;
 }
+
+export function mostPreciseSymbol(lhs: SymbolType, rhs: SymbolType): SymbolType {
+  if (lhs instanceof FloatType || rhs instanceof FloatType) {
+    return FloatType.Instance;
+  }
+
+  return lhs;
+}

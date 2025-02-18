@@ -1,6 +1,6 @@
 import { CodeSource } from "../code-source";
 import {
-  mustBeCompatibleType,
+  mustBeAssignableType,
   mustBeKnownSymbolType,
   mustBeUniqueNameInScope,
 } from "../compile-rules";
@@ -74,7 +74,7 @@ ${this.renderChildrenAsHtml()}
     const returnStatement = this.getReturnStatement().expr.getOrTransformAstNode(transforms);
     const rst = returnStatement.symbolType();
 
-    mustBeCompatibleType(rt, rst, this.compileErrors, returnStatement!.fieldId);
+    mustBeAssignableType(rt, rst, this.compileErrors, returnStatement!.fieldId);
     return `${this.indent()}async ${super.compile(transforms)}\r
 ${this.indent()}}\r
 `;
