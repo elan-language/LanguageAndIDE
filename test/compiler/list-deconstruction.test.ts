@@ -826,4 +826,22 @@ end main
       "May not re-assign the 'let' 'y'",
     ]);
   });
+
+  test("Fail_DeconstructIntoExistingAndNewVariables", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to [1,2,3]
+  variable x set to 1
+  set x:y to a
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'y' is not defined"]);
+  });
 });

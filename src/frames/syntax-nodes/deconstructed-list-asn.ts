@@ -18,7 +18,7 @@ export class DeconstructedListAsn extends AbstractAstNode implements AstIdNode {
   }
 
   aggregateCompileErrors(): CompileError[] {
-    return this.compileErrors;
+    return this.compileErrors.concat(this.head.compileErrors).concat(this.tail.compileErrors);
   }
 
   compile(): string {

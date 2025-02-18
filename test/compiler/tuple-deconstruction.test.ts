@@ -885,4 +885,22 @@ end main
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["Expression must be able to be deconstructed"]);
   });
+
+  test("Fail_DeconstructIntoExistingAndNewVariables", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to tuple(1, 2)
+  variable x set to 1
+  set x, y to a
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'y' is not defined"]);
+  });
 });
