@@ -153,7 +153,7 @@ ${compileStatements(transforms, this.compileChildren)}`;
     return this.getOuterScope().resolveSymbol(id, transforms, this.getCurrentScope());
   }
 
-  symbolMatches(id: string, all: boolean, initialScope?: Scope): ElanSymbol[] {
+  symbolMatches(id: string, all: boolean, initialScope: Scope): ElanSymbol[] {
     const matches = this.getOuterScope().symbolMatches(id, all, this.getCurrentScope());
 
     let localMatches: ElanSymbol[] = [];

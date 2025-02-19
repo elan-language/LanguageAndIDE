@@ -93,7 +93,7 @@ export class StdLibClass implements Class {
     return this.scope;
   }
 
-  symbolMatches(id: string, all: boolean, _initialScope?: Scope): ElanSymbol[] {
+  symbolMatches(id: string, all: boolean, _initialScope: Scope): ElanSymbol[] {
     const otherMatches = this.getParentScope().symbolMatches(id, all, this);
 
     const symbols = this.getChildren().filter(
