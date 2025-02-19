@@ -20,11 +20,13 @@ import { AbstractAstNode } from "./abstract-ast-node";
 import {
   containsGenericType,
   generateType,
+  isEmptyNode,
   matchGenericTypes,
   matchParametersAndTypes,
   transforms,
 } from "./ast-helpers";
 import { ChainedAsn } from "./chained-asn";
+import { EmptyAsn } from "./empty-asn";
 
 export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
   constructor(
@@ -36,7 +38,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
     super();
   }
 
-  private precedingNode?: AstNode = undefined;
+  private precedingNode: AstNode = new EmptyAsn("");
   private updatedScope?: Scope = undefined;
 
   updateScopeAndChain(scope: Scope, ast: AstNode) {
@@ -53,7 +55,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
   private isExtensionMethod: boolean = false;
 
   aggregateCompileErrors(): CompileError[] {
-    const cc = this.precedingNode?.aggregateCompileErrors() ?? [];
+    const cc = this.precedingNode.aggregateCompileErrors();
     let pc: CompileError[] = [];
 
     for (const i of this.parameters) {
@@ -102,12 +104,12 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
         this.fieldId,
       );
 
-      if (funcSymbolType.isExtension && this.precedingNode) {
+      if (funcSymbolType.isExtension && !isEmptyNode(this.precedingNode)) {
         this.isExtensionMethod = true;
         parameters = [this.precedingNode].concat(parameters);
       }
 
-      const st = this.precedingNode?.symbolType();
+      const st = this.precedingNode.symbolType();
       const cls = st instanceof ClassType ? st.scope : undefined;
 
       matchParametersAndTypes(funcSymbolType, parameters, cls, this.compileErrors, this.fieldId);
@@ -123,10 +125,10 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
       );
     }
 
-    const showPreviousNode = this.precedingNode && this.showPreviousNode;
+    const showPreviousNode = !isEmptyNode(this.precedingNode) && this.showPreviousNode;
     const showAwait =
       this.isAsync &&
-      (!showPreviousNode || (this.updatedScope === undefined && this.precedingNode === undefined));
+      (!showPreviousNode || (this.updatedScope === undefined && isEmptyNode(this.precedingNode)));
     const asyncStart = showAwait ? "(await " : "";
 
     const asyncEnd = showAwait ? ")" : "";
@@ -147,11 +149,11 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
       if (containsGenericType(returnType)) {
         let callParameters = this.parameters;
 
-        if (funcSymbolType.isExtension && this.precedingNode) {
+        if (funcSymbolType.isExtension && !isEmptyNode(this.precedingNode)) {
           callParameters = [this.precedingNode].concat(callParameters);
         }
 
-        const st = this.precedingNode?.symbolType();
+        const st = this.precedingNode.symbolType();
         const cls = st instanceof ClassType ? st.scope : undefined;
 
         const matches = matchGenericTypes(funcSymbolType, callParameters, cls);

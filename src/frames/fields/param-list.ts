@@ -19,7 +19,6 @@ import { symbolMatches } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { isAstCollectionNode, isAstIdNode, transforms } from "../syntax-nodes/ast-helpers";
-import { EmptyAsn } from "../syntax-nodes/empty-asn";
 import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractField } from "./abstract-field";
 
@@ -120,7 +119,7 @@ export class ParamList extends AbstractField implements Scope {
     }
   }
 
-  private getIdNodes(parms: AstNode | EmptyAsn): AstIdNode[] {
+  private getIdNodes(parms: AstNode): AstIdNode[] {
     if (isAstCollectionNode(parms)) {
       return parms.items.filter((n) => isAstIdNode(n)) as AstIdNode[];
     }

@@ -27,8 +27,10 @@ import { SymbolScope } from "../symbols/symbol-scope";
 import {
   isAstCollectionNode,
   isAstIdNode,
+  isEmptyNode,
   matchParametersAndTypes,
 } from "../syntax-nodes/ast-helpers";
+import { EmptyAsn } from "../syntax-nodes/empty-asn";
 import { QualifierAsn } from "../syntax-nodes/qualifier-asn";
 import { Transforms } from "../syntax-nodes/transforms";
 import { LetStatement } from "./let-statement";
@@ -168,7 +170,7 @@ export class CallStatement extends AbstractFrame implements Statement {
 
         if (procSymbolType.isExtension && qualifier instanceof QualifierAsn) {
           callParameters = [qualifier.value as AstNode].concat(callParameters);
-          qualifier = undefined;
+          qualifier = new EmptyAsn("");
         }
 
         matchParametersAndTypes(
@@ -189,7 +191,7 @@ export class CallStatement extends AbstractFrame implements Statement {
       );
 
       const parms = passedParameters.join(", ");
-      const prefix = qualifier
+      const prefix = !isEmptyNode(qualifier)
         ? `${qualifier.compile()}`
         : scopePrefix(procSymbol, this.compileErrors, this, this.htmlId);
       const async = isAsync ? "await " : "";

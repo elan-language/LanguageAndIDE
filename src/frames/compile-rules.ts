@@ -98,6 +98,7 @@ import {
   InFunctionScope,
   isAstIdNode,
   isAstIndexableNode,
+  isEmptyNode,
   transforms,
 } from "./syntax-nodes/ast-helpers";
 import { ThisAsn } from "./syntax-nodes/this-asn";
@@ -466,17 +467,17 @@ export function mustBeDeclaredAbove(name: string, compileErrors: CompileError[],
 
 export function mustCallExtensionViaQualifier(
   ft: FunctionType | ProcedureType,
-  qualifier: AstNode | undefined,
+  qualifier: AstNode,
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (ft.isExtension && qualifier === undefined) {
+  if (ft.isExtension && isEmptyNode(qualifier)) {
     compileErrors.push(new ExtensionCompileError(location));
   }
 }
 
 export function mustbeValidQualifier(
-  qualifier: AstNode | undefined,
+  qualifier: AstNode,
   compileErrors: CompileError[],
   location: string,
 ) {

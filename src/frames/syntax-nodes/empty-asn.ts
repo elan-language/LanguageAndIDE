@@ -26,6 +26,10 @@ export class EmptyAsn implements AstNode {
     return UnknownType.Instance;
   }
 
+  get value() {
+    return new EmptyAsn("");
+  }
+
   toString() {
     return "";
   }

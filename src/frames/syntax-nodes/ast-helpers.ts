@@ -32,6 +32,7 @@ import { UnknownType } from "../symbols/unknown-type";
 import { transform, transformMany } from "./ast-visitor";
 import { DeconstructedListAsn } from "./deconstructed-list-asn";
 import { DeconstructedTupleAsn } from "./deconstructed-tuple-asn";
+import { EmptyAsn } from "./empty-asn";
 import { OperationSymbol } from "./operation-symbol";
 import { Transforms } from "./transforms";
 
@@ -53,6 +54,10 @@ export function isAstCollectionNode(n: AstNode): n is AstCollectionNode {
 
 export function isAstIdNode(n: AstNode | undefined): n is AstIdNode {
   return !!n && "id" in n;
+}
+
+export function isEmptyNode(n: AstNode): n is EmptyAsn {
+  return !!n && "isEmpty" in n;
 }
 
 export function InFunctionScope(start: Scope): boolean {

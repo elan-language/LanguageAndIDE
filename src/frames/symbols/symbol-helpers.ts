@@ -21,7 +21,13 @@ import { SymbolType } from "../interfaces/symbol-type";
 import { globalKeyword, libraryKeyword } from "../keywords";
 import { DefinitionAdapter } from "../statements/definition-adapter";
 import { SymbolCompletionSpec, TokenType } from "../symbol-completion-helpers";
-import { isAstIdNode, isAstQualifiedNode, transforms } from "../syntax-nodes/ast-helpers";
+import {
+  isAstIdNode,
+  isAstQualifiedNode,
+  isEmptyNode,
+  transforms,
+} from "../syntax-nodes/ast-helpers";
+import { EmptyAsn } from "../syntax-nodes/empty-asn";
 import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractDictionaryType } from "./abstract-dictionary-type";
 import { AbstractListType } from "./abstract-list-type";
@@ -173,12 +179,12 @@ export function scopePrefix(
 }
 
 function internalUpdateScopeAndQualifier(
-  qualifierScope: SymbolType | undefined,
+  qualifierScope: SymbolType,
   currentScope: Scope,
   transforms: Transforms,
-  value: AstNode | undefined,
-  qualifier: AstNode | undefined,
-): [AstNode | undefined, Scope] {
+  value: AstNode,
+  qualifier: AstNode,
+): [AstNode, Scope] {
   if (qualifierScope instanceof ClassType) {
     const classSymbol = currentScope.resolveSymbol(
       qualifierScope.className,
@@ -189,10 +195,10 @@ function internalUpdateScopeAndQualifier(
     currentScope = isScope(classSymbol) ? classSymbol : currentScope;
   } else if (isAstIdNode(value) && value.id === libraryKeyword) {
     currentScope = getGlobalScope(currentScope).libraryScope;
-    qualifier = undefined;
+    qualifier = new EmptyAsn("");
   } else if (isAstIdNode(value) && value.id === globalKeyword) {
     currentScope = getGlobalScope(currentScope);
-  } else if (qualifier) {
+  } else if (!isEmptyNode(qualifier)) {
     currentScope = getGlobalScope(currentScope).libraryScope;
   } else {
     currentScope = currentScope.getParentScope();
@@ -204,10 +210,10 @@ export function updateScopeAndQualifier(
   rootNode: AstNode,
   transforms: Transforms,
   currentScope: Scope,
-): [AstNode | undefined, Scope] {
-  const qualifier = isAstQualifiedNode(rootNode) ? rootNode.qualifier : undefined;
-  const qualifierScope = qualifier?.symbolType();
-  const value = qualifier?.value;
+): [AstNode, Scope] {
+  const qualifier = isAstQualifiedNode(rootNode) ? rootNode.qualifier : new EmptyAsn("");
+  const qualifierScope = qualifier.symbolType();
+  const value = qualifier.value;
 
   return internalUpdateScopeAndQualifier(
     qualifierScope,
@@ -549,9 +555,9 @@ export function filteredSymbols(
   return startsWith.concat(includes);
 }
 
-export function updateScope(qualifier: AstQualifierNode | undefined, originalScope: Scope) {
+export function updateScope(qualifier: AstQualifierNode | EmptyAsn, originalScope: Scope) {
   let currentScope = originalScope;
-  const classScope = qualifier ? qualifier.symbolType() : undefined;
+  const classScope = qualifier.symbolType();
   if (classScope instanceof ClassType) {
     const classSymbol = originalScope.resolveSymbol(
       classScope.className,

@@ -418,15 +418,15 @@ export function transform(
 
   if (node instanceof RangeNode) {
     const fromNode = node.fromIndex?.matchedNode;
-    const from = fromNode ? transform(fromNode, fieldId, scope) : undefined;
+    const from = fromNode ? (transform(fromNode, fieldId, scope) as AstNode) : new EmptyAsn("");
     const toNode = node.toIndex?.matchedNode;
-    const to = toNode ? transform(toNode, fieldId, scope) : undefined;
+    const to = toNode ? (transform(toNode, fieldId, scope) as AstNode) : new EmptyAsn("");
     return new RangeAsn(from, to, fieldId);
   }
 
   if (node instanceof IndexSingle) {
     const index = transform(node.contents, fieldId, scope) as AstNode;
-    return new IndexAsn(index, undefined, fieldId);
+    return new IndexAsn(index, fieldId);
   }
 
   if (node instanceof DotAfter) {
@@ -436,8 +436,9 @@ export function transform(
 
   if (node instanceof InstanceNode) {
     const id = node.variable!.matchedText;
-    const index = transform(node.index, fieldId, scope) as IndexAsn | undefined;
-    return new VarAsn(id, false, undefined, index, fieldId, scope);
+    const index =
+      (transform(node.index, fieldId, scope) as IndexAsn | undefined) ?? new EmptyAsn("");
+    return new VarAsn(id, false, new EmptyAsn(""), index, fieldId, scope);
   }
 
   if (node instanceof IfExpr) {
@@ -478,13 +479,14 @@ export function transform(
   if (node instanceof PropertyRef) {
     const qualifier = transform(node.qualifier, fieldId, scope) as AstQualifierNode;
     const name = transform(node.name, fieldId, scope) as AstIdNode;
-    return new VarAsn(name.id, true, qualifier, undefined, fieldId, scope);
+    return new VarAsn(name.id, true, qualifier, new EmptyAsn(""), fieldId, scope);
   }
 
   if (node instanceof InstanceProcRef) {
-    const q = transform(node.prefix, fieldId, scope) as AstQualifierNode | undefined;
+    const q =
+      (transform(node.prefix, fieldId, scope) as AstQualifierNode | undefined) ?? new EmptyAsn("");
     const id = node.procName!.matchedText;
-    return new VarAsn(id, false, q, undefined, fieldId, scope);
+    return new VarAsn(id, false, q, new EmptyAsn(""), fieldId, scope);
   }
 
   if (node instanceof FunctionRefNode) {

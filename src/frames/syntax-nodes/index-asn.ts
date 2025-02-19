@@ -23,7 +23,6 @@ import { UnaryExprAsn } from "./unary-expr-asn";
 export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
   constructor(
     public readonly index1: AstNode,
-    public readonly index2: AstNode | undefined,
     public readonly fieldId: string,
   ) {
     super();
