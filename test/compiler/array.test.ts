@@ -942,8 +942,8 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let foo1 = foo;
-  let body = system.literalArray([foo, foo1]);
+  let foo1 = global.foo;
+  let body = system.literalArray([global.foo, foo1]);
   let foo2 = system.safeIndex(body, 0);
   await system.printLine((await foo2(1)));
 }

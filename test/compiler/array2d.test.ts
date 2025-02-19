@@ -64,11 +64,11 @@ end function
 const global = new class {};
 async function main() {
   let a = system.initialise(system.array(new Array()));
-  await system.printLine((await foo(a)));
+  await system.printLine((await global.foo(a)));
 }
 
 async function foo(arr) {
-  return (await bar(arr));
+  return (await global.bar(arr));
 }
 global["foo"] = foo;
 

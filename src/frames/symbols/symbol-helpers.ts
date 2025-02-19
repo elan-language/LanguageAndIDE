@@ -165,6 +165,10 @@ export function scopePrefix(
     return `this.`;
   }
 
+  if (isFunction(symbol, transforms()) && symbol.symbolScope === SymbolScope.program) {
+    return "global.";
+  }
+
   return "";
 }
 

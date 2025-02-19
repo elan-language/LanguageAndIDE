@@ -162,8 +162,8 @@ end function`;
 const global = new class {};
 async function main() {
   let x = system.initialise(await new Yon()._initialise());
-  await system.printLine((await f(x)));
-  await system.printLine((await b(x)));
+  await system.printLine((await global.f(x)));
+  await system.printLine((await global.b(x)));
 }
 
 class Foo {
@@ -317,7 +317,7 @@ const global = new class {};
 async function main() {
   let b = system.initialise(await new Bar()._initialise());
   let lst = system.list([b]);
-  await system.printLine((await fun(lst)));
+  await system.printLine((await global.fun(lst)));
 }
 
 class Foo {
@@ -384,7 +384,7 @@ end function
 const global = new class {};
 async function main() {
   let f = system.initialise(await new Bar()._initialise());
-  await system.printLine((await fun(f)));
+  await system.printLine((await global.fun(f)));
 }
 
 class Foo {

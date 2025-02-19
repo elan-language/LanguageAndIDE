@@ -156,7 +156,7 @@ const global = new class {};
 async function main() {
   let f = system.initialise(await new Foo()._initialise());
   await system.printLine((await f.sin(1)));
-  await system.printLine((await sin(1)));
+  await system.printLine((await global.sin(1)));
   await system.printLine((await global.sin(1)));
   await system.printLine(_stdlib.sin(1));
 }
@@ -323,6 +323,40 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "2111");
+  });
+
+  test("Pass_LocalVarShadowsGlobalFunction", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  let add2 be add2(1)
+  print add2
+end main
+
+function add2(x as Float) returns Float
+  return x + 2
+end function`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  const add2 = (await global.add2(1));
+  await system.printLine(add2);
+}
+
+async function add2(x) {
+  return x + 2;
+}
+global["add2"] = add2;
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "3");
   });
 
   ignore_test("Fail_LocalShadowsConstant", async () => {

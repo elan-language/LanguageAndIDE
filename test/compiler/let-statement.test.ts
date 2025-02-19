@@ -27,7 +27,7 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.printLine((await add()));
+  await system.printLine((await global.add()));
 }
 
 async function add() {
@@ -152,7 +152,7 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.printLine((await foo()));
+  await system.printLine((await global.foo()));
 }
 
 async function foo() {
@@ -275,7 +275,7 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const [a, length] = (await foo());
+  const [a, length] = (await global.foo());
 }
 
 async function foo() {

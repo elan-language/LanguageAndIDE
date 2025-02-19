@@ -264,8 +264,8 @@ const Fruit = {
 
 const global = new class {};
 async function main() {
-  await system.printLine((await isFavourite(Fruit.apple)));
-  await system.printLine((await isFavourite(Fruit.pear)));
+  await system.printLine((await global.isFavourite(Fruit.apple)));
+  await system.printLine((await global.isFavourite(Fruit.pear)));
 }
 
 async function isFavourite(f) {
@@ -304,7 +304,7 @@ const Fruit = {
 
 const global = new class {};
 async function main() {
-  await system.printLine(system.objectEquals((await firstFruit()), Fruit.apple));
+  await system.printLine(system.objectEquals((await global.firstFruit()), Fruit.apple));
 }
 
 async function firstFruit() {

@@ -48,7 +48,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  call printModified(tuple(4, 5), lambda t as (Int, Int) => first(t))
+  call printModified(tuple(4, 5), lambda t as (Int, Int) => global.first(t))
 end main
 
 function first(t as (Int, Int)) returns Int
@@ -63,7 +63,7 @@ end procedure`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await printModified(system.tuple([4, 5]), async (t) => (await first(t)));
+  await printModified(system.tuple([4, 5]), async (t) => (await global.first(t)));
 }
 
 async function first(t) {
@@ -208,7 +208,7 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let l = (await getFunc());
+  let l = (await global.getFunc());
   await system.printLine((await l(5)));
 }
 
@@ -269,7 +269,7 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let l = (await getFunc(5));
+  let l = (await global.getFunc(5));
   await system.printLine((await l()));
 }
 

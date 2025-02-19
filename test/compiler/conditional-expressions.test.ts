@@ -29,10 +29,10 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.printLine((await grade(90)));
-  await system.printLine((await grade(70)));
-  await system.printLine((await grade(50)));
-  await system.printLine((await grade(30)));
+  await system.printLine((await global.grade(90)));
+  await system.printLine((await global.grade(70)));
+  await system.printLine((await global.grade(50)));
+  await system.printLine((await global.grade(30)));
 }
 
 async function grade(score) {
@@ -156,8 +156,8 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let score = (await cast(system.initialise(await new Bar()._initialise())));
-  score = _stdlib.false ? system.initialise(await new Bar()._initialise()) : (await cast(system.initialise(await new Bar()._initialise())));
+  let score = (await global.cast(system.initialise(await new Bar()._initialise())));
+  score = _stdlib.false ? system.initialise(await new Bar()._initialise()) : (await global.cast(system.initialise(await new Bar()._initialise())));
   await system.printLine(score);
 }
 
@@ -209,8 +209,8 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let score = (await cast(system.initialise(await new Bar()._initialise())));
-  score = _stdlib.false ? (await cast(system.initialise(await new Bar()._initialise()))) : system.initialise(await new Bar()._initialise());
+  let score = (await global.cast(system.initialise(await new Bar()._initialise())));
+  score = _stdlib.false ? (await global.cast(system.initialise(await new Bar()._initialise()))) : system.initialise(await new Bar()._initialise());
   await system.printLine(score);
 }
 

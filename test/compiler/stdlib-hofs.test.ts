@@ -88,7 +88,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine((await filterIt(global.source)));
+  await system.printLine((await global.filterIt(global.source)));
 }
 
 async function filterIt(tofilter) {

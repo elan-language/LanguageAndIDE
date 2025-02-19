@@ -59,7 +59,11 @@ export class MemberTypeCompileError extends CompileError {
 
 export class TypesCompileError extends CompileError {
   constructor(type1: string, type2: string, addInfo: string, location: string) {
-    super(Priority.typeError, `Incompatible types. Expected: ${type2}${addInfo} Provided: ${type1}`, location);
+    super(
+      Priority.typeError,
+      `Incompatible types. Expected: ${type2}${addInfo} Provided: ${type1}`,
+      location,
+    );
   }
 }
 

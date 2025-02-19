@@ -164,7 +164,7 @@ end function
 const global = new class {};
 async function main() {
   let f = system.initialise(await new Foo()._initialise());
-  await system.printLine((await fun(f)));
+  await system.printLine((await global.fun(f)));
 }
 
 class Foo {

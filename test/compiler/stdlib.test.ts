@@ -561,7 +561,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "0, 0, 0, 3365, 3268, 3367, 0, ");
   });
-  test("passing Random type", async () => {
+  test("Pass_RandomType", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -590,7 +590,7 @@ async function main() {
   let rnd = system.initialise(await new _stdlib.Random()._initialise());
   let dice = 0;
   for (let i = 1; i <= 10000; i = i + 1) {
-    [dice, rnd] = (await rollDice(rnd));
+    [dice, rnd] = (await global.rollDice(rnd));
     _stdlib.putAt(results, dice, system.safeIndex(results, dice) + 1);
   }
   for (let i = 0; i <= 6; i = i + 1) {

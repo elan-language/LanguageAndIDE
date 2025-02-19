@@ -29,7 +29,7 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await printModified(3, twice);
+  await printModified(3, global.twice);
 }
 
 async function printModified(i, f) {
@@ -70,7 +70,7 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await printModified(3, twice);
+  await printModified(3, global.twice);
 }
 
 async function printModified(i, f) {
@@ -111,7 +111,7 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await printIt("Hello", "e", find);
+  await printIt("Hello", "e", global.find);
 }
 
 async function printIt(s, c, f) {
@@ -153,12 +153,12 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let f = (await getFunc());
+  let f = (await global.getFunc());
   await system.printLine((await f(5)));
 }
 
 async function getFunc() {
-  return twice;
+  return global.twice;
 }
 global["getFunc"] = getFunc;
 
@@ -192,7 +192,7 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let f = twice;
+  let f = global.twice;
   await system.printLine((await f(5)));
 }
 
@@ -235,7 +235,7 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let f = system.initialise(await new Foo()._initialise(ff));
+  let f = system.initialise(await new Foo()._initialise(global.ff));
   await system.printLine((await f.pf(5)));
 }
 
@@ -280,7 +280,7 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.printLine(ff);
+  await system.printLine(global.ff);
 }
 
 async function ff(a) {

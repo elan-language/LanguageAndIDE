@@ -118,7 +118,7 @@ class Foo {
   p1 = 0;
 
   async bar() {
-    return (await doubled(this));
+    return (await global.doubled(this));
   }
 
   async asString() {
