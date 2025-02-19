@@ -351,6 +351,11 @@ button.plain:disabled {
   text-decoration: none;
 }
 
+.menu-item.disabled, .menu-item.disabled:hover  {
+  color: grey;
+  background-color: white;
+}
+
 .menu-item,
 #help {
   font-family: var(--ideTitleFont);

@@ -30,15 +30,15 @@ const stepButton = document.getElementById("step") as HTMLButtonElement;
 const clearSystemInfoButton = document.getElementById("clear-system-info") as HTMLButtonElement;
 const clearGraphicsButton = document.getElementById("clear-display") as HTMLButtonElement;
 const expandCollapseButton = document.getElementById("expand-collapse") as HTMLButtonElement;
-const newButton = document.getElementById("new") as HTMLButtonElement;
+const newMenuItem = document.getElementById("new") as HTMLElement;
 const demosButton = document.getElementById("demos") as HTMLButtonElement;
 const trimButton = document.getElementById("trim") as HTMLButtonElement;
 const systemInfoDiv = document.getElementById("system-info") as HTMLDivElement;
 const displayDiv = document.getElementById("display") as HTMLDivElement;
-const loadButton = document.getElementById("load") as HTMLButtonElement;
-const appendButton = document.getElementById("append") as HTMLButtonElement;
-const saveButton = document.getElementById("save") as HTMLButtonElement;
-const autoSaveButton = document.getElementById("auto-save") as HTMLButtonElement;
+const loadMenuItem = document.getElementById("load") as HTMLDivElement;
+const appendMenuItem = document.getElementById("append") as HTMLDivElement;
+const saveMenuItem = document.getElementById("save") as HTMLDivElement;
+const autoSaveMenuItem = document.getElementById("auto-save") as HTMLDivElement;
 const undoButton = document.getElementById("undo") as HTMLButtonElement;
 const redoButton = document.getElementById("redo") as HTMLButtonElement;
 
@@ -81,7 +81,7 @@ let processingSingleStep = false;
 let debugMode = false;
 let dragging = false;
 
-autoSaveButton.hidden = !useChromeFileAPI();
+autoSaveMenuItem.hidden = !useChromeFileAPI();
 
 // add all the listeners
 
@@ -256,7 +256,7 @@ expandCollapseButton?.addEventListener("click", async () => {
   await renderAsHtml(false);
 });
 
-newButton?.addEventListener("click", async () => {
+newMenuItem?.addEventListener("click", async () => {
   if (checkForUnsavedChanges()) {
     clearDisplays();
     clearUndoRedoAndAutoSave();
@@ -265,13 +265,13 @@ newButton?.addEventListener("click", async () => {
   }
 });
 
-loadButton.addEventListener("click", chooser(getUploader()));
+loadMenuItem.addEventListener("click", chooser(getUploader()));
 
-appendButton.addEventListener("click", chooser(getAppender()));
+appendMenuItem.addEventListener("click", chooser(getAppender()));
 
-saveButton.addEventListener("click", getDownloader());
+saveMenuItem.addEventListener("click", getDownloader());
 
-autoSaveButton.addEventListener("click", handleChromeAutoSave);
+autoSaveMenuItem.addEventListener("click", handleChromeAutoSave);
 
 for (const elem of demoFiles) {
   elem.addEventListener("click", async () => {
@@ -398,18 +398,18 @@ if (okToContinue) {
     });
 } else {
   const msg = "Require Chrome";
-  disable(
+  disableButtons(
     [
       runButton,
       runDebugButton,
       stopButton,
       pauseButton,
       stepButton,
-      loadButton,
-      appendButton,
-      saveButton,
-      autoSaveButton,
-      newButton,
+      loadMenuItem,
+      appendMenuItem,
+      saveMenuItem,
+      autoSaveMenuItem,
+      newMenuItem,
       demosButton,
       trimButton,
       expandCollapseButton,
@@ -583,7 +583,7 @@ function setPauseButtonState(waitingForUserInput?: boolean) {
   if (isRunningState() && debugMode && !isPausedState() && !waitingForUserInput) {
     enable(pauseButton, "Pause the program");
   } else {
-    disable([pauseButton], "Can only pause a program running in Debug mode");
+    disableButtons([pauseButton], "Can only pause a program running in Debug mode");
   }
 }
 
@@ -601,7 +601,7 @@ function updateDisplayValues() {
   const isPaused = isPausedState();
   const isTestRunning = file.readTestStatus() === TestStatus.running;
 
-  saveButton.hidden = !!autoSaveFileHandle;
+  saveMenuItem.hidden = !!autoSaveFileHandle;
 
   if (isRunning || isTestRunning) {
     codeContainer?.classList.add("running");
@@ -610,7 +610,7 @@ function updateDisplayValues() {
       enable(runDebugButton, "Resume the program");
       enable(stepButton, "Single step the program");
     } else {
-      disable(
+      disableButtons(
         [runButton, runDebugButton, stepButton],
         isRunning ? "Program is already running" : "Tests are running",
       );
@@ -621,14 +621,14 @@ function updateDisplayValues() {
     setPauseButtonState();
 
     const msg = isRunning ? "Program is running" : "Tests are running";
-    disable(
+    disableButtons(
       [
         runButton,
-        loadButton,
-        appendButton,
-        saveButton,
-        autoSaveButton,
-        newButton,
+        loadMenuItem,
+        appendMenuItem,
+        saveMenuItem,
+        autoSaveMenuItem,
+        newMenuItem,
         demosButton,
         trimButton,
         expandCollapseButton,
@@ -643,11 +643,11 @@ function updateDisplayValues() {
   } else {
     codeContainer?.classList.remove("running");
 
-    disable([stopButton, pauseButton, stepButton], "Program is not running");
+    disableButtons([stopButton, pauseButton, stepButton], "Program is not running");
 
-    enable(loadButton, "Load code from a file");
-    enable(appendButton, "Append code from a file onto the end of the existing code");
-    enable(newButton, "Clear the current code and start afresh");
+    enable(loadMenuItem, "Load code from a file");
+    enable(appendMenuItem, "Append code from a file onto the end of the existing code");
+    enable(newMenuItem, "Clear the current code and start afresh");
     enable(demosButton, "Load a demonstration program");
     enable(trimButton, "Remove all 'newCode' selectors that can be removed (shortcut: Alt-t)");
     enable(expandCollapseButton, "Expand / Collapse all code regions");
@@ -657,17 +657,17 @@ function updateDisplayValues() {
     }
 
     if (isEmpty) {
-      disable([saveButton], "Some code must be added in order to save");
+      disableButtons([saveMenuItem], "Some code must be added in order to save");
     } else if (!isParsing) {
-      disable([saveButton], "Code must be parsing in order to save");
+      disableButtons([saveMenuItem], "Code must be parsing in order to save");
     } else {
-      enable(saveButton, "Save the code into a file");
+      enable(saveMenuItem, "Save the code into a file");
     }
 
     if (!file.containsMain()) {
-      disable([runButton, runDebugButton], "Code must have a 'main' routine to be run");
+      disableButtons([runButton, runDebugButton], "Code must have a 'main' routine to be run");
     } else if (!isCompiling) {
-      disable(
+      disableButtons(
         [runButton, runDebugButton],
         "Program is not yet compiled. If you have just edited a field, press Enter or Tab to complete.",
       );
@@ -679,44 +679,59 @@ function updateDisplayValues() {
     if (canUndo()) {
       enable(undoButton, "Undo last change (Ctrl + z)");
     } else {
-      disable([undoButton], "Nothing to undo");
+      disableButtons([undoButton], "Nothing to undo");
     }
 
     if (nextFileIndex === -1) {
-      disable([redoButton], "Nothing to redo");
+      disableButtons([redoButton], "Nothing to redo");
     } else {
       enable(redoButton, "Redo last change (Ctrl + y");
     }
 
     if (autoSaveFileHandle) {
-      autoSaveButton.innerText = "Cancel Auto Save";
-      autoSaveButton.setAttribute("title", "Click to turn auto-save off and resume manual saving.");
+      autoSaveMenuItem.innerText = "Cancel Auto Save";
+      autoSaveMenuItem.setAttribute(
+        "title",
+        "Click to turn auto-save off and resume manual saving.",
+      );
     } else {
       if (useChromeFileAPI()) {
-        autoSaveButton.innerText = "Auto Save";
+        autoSaveMenuItem.innerText = "Auto Save";
         if (isParsing) {
           enable(
-            autoSaveButton,
+            autoSaveMenuItem,
             "Save to file now and then auto-save to same file whenever code is changed and parses",
           );
         } else {
-          disable([autoSaveButton], "Code must be parsing in order to save");
+          disableButtons([autoSaveMenuItem], "Code must be parsing in order to save");
         }
       }
     }
   }
 }
 
-function disable(buttons: HTMLButtonElement[], msg = "") {
-  for (const button of buttons) {
-    button.setAttribute("disabled", "");
-    button.setAttribute("title", msg);
+function disableButtons(elements: HTMLElement[], msg = "") {
+  for (const element of elements) {
+    if (isButton(element)) {
+      element.setAttribute("disabled", "");
+    } else if (!element.classList.contains("disabled")) {
+      element.classList.add("disabled");
+    }
+    element.setAttribute("title", msg);
   }
 }
 
-function enable(button: HTMLButtonElement, msg = "") {
-  button.removeAttribute("disabled");
-  button.setAttribute("title", msg);
+function isButton(element: HTMLElement): element is HTMLButtonElement {
+  return "disabled" in element;
+}
+
+function enable(element: HTMLElement, msg = "") {
+  if (isButton(element)) {
+    element.removeAttribute("disabled");
+  } else {
+    element.classList.remove("disabled");
+  }
+  element.setAttribute("title", msg);
 }
 
 function getEditorMsg(
@@ -1128,7 +1143,7 @@ async function localAndAutoSave(field: HTMLElement | undefined, editingField: bo
       nextFileIndex = -1;
 
       localStorage.setItem(id, code);
-      saveButton.classList.add("unsaved");
+      saveMenuItem.classList.add("unsaved");
       undoRedoHash = file.currentHash;
       currentFieldId = newFieldId ?? "";
     }
@@ -1156,7 +1171,7 @@ async function replaceCode(indexToUse: number, msg: string) {
   updateIndexes(indexToUse);
   const code = localStorage.getItem(id);
   if (code) {
-    disable([undoButton, redoButton], msg);
+    disableButtons([undoButton, redoButton], msg);
     cursorWait();
     undoRedoing = true;
     const fn = file.fileName;
@@ -1381,8 +1396,10 @@ function getUploader() {
 }
 
 function getDownloader() {
-  // The `showOpenFilePicker()` method of the File System Access API is supported.
-  return useChromeFileAPI() ? handleChromeDownload : handleDownload;
+  if (!saveMenuItem.classList.contains("disabled")) {
+    // The `showOpenFilePicker()` method of the File System Access API is supported.
+    return useChromeFileAPI() ? handleChromeDownload : handleDownload;
+  }
 }
 
 function getAppender() {
@@ -1501,7 +1518,7 @@ async function handleDownload(event: Event) {
   aElement.setAttribute("target", "_blank");
   aElement.click();
   URL.revokeObjectURL(href);
-  saveButton.classList.remove("unsaved");
+  saveMenuItem.classList.remove("unsaved");
   lastSavedHash = file.currentHash;
   event.preventDefault();
   await renderAsHtml(false);
@@ -1529,7 +1546,7 @@ async function handleChromeDownload(event: Event) {
   try {
     await chromeSave(code);
 
-    saveButton.classList.remove("unsaved");
+    saveMenuItem.classList.remove("unsaved");
     lastSavedHash = file.currentHash;
 
     await renderAsHtml(false);
@@ -1542,6 +1559,9 @@ async function handleChromeDownload(event: Event) {
 }
 
 async function handleChromeAutoSave(event: Event) {
+  if (autoSaveMenuItem.classList.contains("disabled")) {
+    return;
+  }
   if (autoSaveFileHandle) {
     autoSaveFileHandle = undefined;
     updateDisplayValues();
