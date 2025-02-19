@@ -70,7 +70,7 @@ ${this.renderChildrenAsHtml()}
     return this.parseStandardEnding(source, "end procedure");
   }
 
-  resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
+  resolveSymbol(id: string, transforms: Transforms, initialScope: Frame): ElanSymbol {
     if (this.name.text === id) {
       return this;
     }

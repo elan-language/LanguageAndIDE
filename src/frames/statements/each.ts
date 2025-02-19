@@ -56,12 +56,12 @@ ${this.indent()}end each`;
   compile(transforms: Transforms): string {
     this.compileErrors = [];
 
-    const id = this.variable.getOrTransformAstNode(transforms)?.compile();
-    const symbol = this.getParent().resolveSymbol(id!, transforms, this);
+    const id = this.variable.getOrTransformAstNode(transforms).compile();
+    const symbol = this.getParent().resolveSymbol(id, transforms, this);
 
     mustNotBeRedefined(symbol, this.compileErrors, this.htmlId);
 
-    const iterType = this.iter.getOrTransformAstNode(transforms)?.symbolType();
+    const iterType = this.iter.getOrTransformAstNode(transforms).symbolType();
     mustBeIterable(iterType!, this.compileErrors, this.htmlId);
 
     return `${this.indent()}${this.breakPoint(this.debugSymbols())}for (const ${this.variable.compile(transforms)} of ${this.iter.compile(transforms)}) {\r
@@ -79,7 +79,7 @@ ${this.indent()}}`;
     return this.parseStandardEnding(source, "end each");
   }
 
-  resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
+  resolveSymbol(id: string, transforms: Transforms, initialScope: Frame): ElanSymbol {
     const v = this.variable.text;
 
     if (id === v) {

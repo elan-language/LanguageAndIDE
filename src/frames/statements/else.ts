@@ -132,7 +132,7 @@ ${compileStatements(transforms, this.compileChildren)}`;
       : this.compileChildren.slice(li, fi + 1);
   }
 
-  resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
+  resolveSymbol(id: string, transforms: Transforms, initialScope: Frame): ElanSymbol {
     if (this.compileChildren.length > 0) {
       let range = this.getChildRange(initialScope);
 

@@ -125,7 +125,7 @@ ${this.indent()}}`;
     return this.parseStandardEnding(source, "end for");
   }
 
-  resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
+  resolveSymbol(id: string, transforms: Transforms, initialScope: Frame): ElanSymbol {
     const v = this.variable.text;
 
     if (id === v) {

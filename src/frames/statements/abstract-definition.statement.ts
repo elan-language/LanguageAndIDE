@@ -93,7 +93,7 @@ export abstract class AbstractDefinitionStatement
     return SymbolScope.local;
   }
 
-  resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
+  resolveSymbol(id: string, transforms: Transforms, initialScope: Frame): ElanSymbol {
     if (id === this.symbolId) {
       return this;
     }

@@ -687,7 +687,7 @@ export abstract class AbstractField implements Selectable, Field {
   compile(transforms: Transforms): string {
     this.compileErrors = [];
     if (this.rootNode && this.rootNode.status === ParseStatus.valid) {
-      return this.getOrTransformAstNode(transforms)?.compile() ?? "";
+      return this.getOrTransformAstNode(transforms).compile();
     }
 
     return "";

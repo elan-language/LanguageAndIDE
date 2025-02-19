@@ -77,7 +77,7 @@ ${this.indent()}}\r
     return this.parseStandardEnding(source, "end constructor");
   }
 
-  resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
+  resolveSymbol(id: string, transforms: Transforms, initialScope: Frame): ElanSymbol {
     const s = this.params.resolveSymbol(id, transforms, this);
     return s instanceof UnknownSymbol ? super.resolveSymbol(id, transforms, initialScope) : s;
   }

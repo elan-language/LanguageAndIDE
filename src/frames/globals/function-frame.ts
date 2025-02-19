@@ -95,7 +95,7 @@ ${this.renderChildrenAsHtml()}
     return this.getChildren().filter((s) => "isReturnStatement" in s)[0] as ReturnStatement;
   }
 
-  resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
+  resolveSymbol(id: string, transforms: Transforms, initialScope: Frame): ElanSymbol {
     if (this.name.text === id) {
       return this;
     }

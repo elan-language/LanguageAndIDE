@@ -79,8 +79,8 @@ export class StdLibClass implements Class {
     return new UnknownSymbol(id);
   }
 
-  resolveSymbol(id: string | undefined, transforms: Transforms, _scope: Scope): ElanSymbol {
-    const symbol = this.resolveOwnSymbol(id!, transforms);
+  resolveSymbol(id: string, transforms: Transforms, _scope: Scope): ElanSymbol {
+    const symbol = this.resolveOwnSymbol(id, transforms);
 
     if (symbol instanceof UnknownSymbol) {
       return this.getParentScope().resolveSymbol(id, transforms, this);

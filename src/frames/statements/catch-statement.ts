@@ -111,7 +111,7 @@ ${this.compileChildren(transforms)}\r`;
     return this.getParent();
   }
 
-  resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
+  resolveSymbol(id: string, transforms: Transforms, initialScope: Frame): ElanSymbol {
     if (this.variable.text === id) {
       return this;
     }

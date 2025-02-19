@@ -262,7 +262,7 @@ export function getClassScope(start: Scope): Class | NullScope {
 
 export function wrapScopeInScope(wrapped: Scope): Scope {
   return {
-    resolveSymbol: (id: string | undefined, transforms: Transforms, scope: Scope) =>
+    resolveSymbol: (id: string, transforms: Transforms, scope: Scope) =>
       wrapped.resolveSymbol(id, transforms, scope),
 
     getParentScope: () => wrapped,

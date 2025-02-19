@@ -72,7 +72,7 @@ export class StdLibSymbols implements Scope {
     return NullScope.Instance;
   }
 
-  resolveSymbol(id: string | undefined, _transforms: Transforms, _scope: Scope): ElanSymbol {
+  resolveSymbol(id: string, _transforms: Transforms, _scope: Scope): ElanSymbol {
     return id ? (this.symbols.get(id) ?? new UnknownSymbol(id)) : new UnknownSymbol();
   }
 }
