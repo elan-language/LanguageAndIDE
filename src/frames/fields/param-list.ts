@@ -52,7 +52,7 @@ export class ParamList extends AbstractField implements Scope {
     return [];
   }
 
-  symbolMatches(id: string, all: boolean, _initialScope?: Scope): ElanSymbol[] {
+  symbolMatches(id: string, all: boolean, _initialScope: Scope): ElanSymbol[] {
     const symbols = this.getParamsAsSymbols();
     return symbolMatches(id, all, symbols);
   }

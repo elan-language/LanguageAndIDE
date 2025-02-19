@@ -18,7 +18,7 @@ export class NullScope implements Scope {
     return NullScope.Instance;
   }
 
-  symbolMatches(_id: string, _all: boolean, _initialScope?: Scope): ElanSymbol[] {
+  symbolMatches(_id: string, _all: boolean, _initialScope: Scope): ElanSymbol[] {
     return [];
   }
 

@@ -69,7 +69,7 @@ export class CatchStatement extends FrameWithStatements implements Statement, El
   }
 
   parentIndent(): string {
-    return this.getParent()?.indent();
+    return this.getParent().indent();
   }
 
   keywords = `${catchKeyword} ${exceptionKeyword} ${inKeyword} `;

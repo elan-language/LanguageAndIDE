@@ -6,7 +6,6 @@ import { Transforms } from "../syntax-nodes/transforms";
 import { NullScope } from "./null-scope";
 import { isSymbol, symbolMatches } from "./symbol-helpers";
 import { SymbolScope } from "./symbol-scope";
-import { UnknownSymbol } from "./unknown-symbol";
 
 export enum ClassSubType {
   concrete,
@@ -53,7 +52,7 @@ export class ClassType implements SymbolType, Scope {
   }
 
   resolveSymbol(id: string, transforms: Transforms, scope: Scope): ElanSymbol {
-    return this.scope?.resolveSymbol(id, transforms, scope) ?? new UnknownSymbol(id);
+    return this.scope.resolveSymbol(id, transforms, scope);
   }
 
   get name() {
@@ -65,7 +64,7 @@ export class ClassType implements SymbolType, Scope {
   }
 
   get initialValue() {
-    const isStdLib = this.scope?.symbolScope === SymbolScope.stdlib;
+    const isStdLib = this.scope.symbolScope === SymbolScope.stdlib;
     const prefix = isStdLib ? "system.initialise(_stdlib." : "";
     const postfix = isStdLib ? ")" : "";
     return `${prefix}${this.className}.emptyInstance()${postfix}`;

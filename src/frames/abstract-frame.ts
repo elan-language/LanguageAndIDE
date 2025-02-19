@@ -485,7 +485,7 @@ export abstract class AbstractFrame implements Frame {
 
   indent(): string {
     if (this.hasParent()) {
-      return this.getParent()?.indent() + singleIndent();
+      return this.getParent().indent() + singleIndent();
     } else {
       return singleIndent();
     }
