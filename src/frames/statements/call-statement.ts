@@ -170,7 +170,7 @@ export class CallStatement extends AbstractFrame implements Statement {
 
         if (procSymbolType.isExtension && qualifier instanceof QualifierAsn) {
           callParameters = [qualifier.value as AstNode].concat(callParameters);
-          qualifier = new EmptyAsn("");
+          qualifier = EmptyAsn.Instance;
         }
 
         matchParametersAndTypes(

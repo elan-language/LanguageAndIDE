@@ -681,7 +681,7 @@ export abstract class AbstractField implements Selectable, Field {
       }
       this.codeHasChanged = false;
     }
-    return this.astNode ?? new EmptyAsn(this.htmlId);
+    return this.astNode ?? EmptyAsn.Instance;
   }
 
   compile(transforms: Transforms): string {

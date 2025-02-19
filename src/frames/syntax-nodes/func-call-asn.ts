@@ -38,7 +38,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
     super();
   }
 
-  private precedingNode: AstNode = new EmptyAsn("");
+  private precedingNode: AstNode = EmptyAsn.Instance;
   private updatedScope?: Scope = undefined;
 
   updateScopeAndChain(scope: Scope, ast: AstNode) {

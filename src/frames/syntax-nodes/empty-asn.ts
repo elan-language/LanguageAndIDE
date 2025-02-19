@@ -4,7 +4,7 @@ import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownType } from "../symbols/unknown-type";
 
 export class EmptyAsn implements AstNode {
-  constructor(public readonly fieldId: string) {}
+  private constructor(public readonly fieldId: string) {}
 
   items: AstNode[] = [];
 
@@ -27,7 +27,7 @@ export class EmptyAsn implements AstNode {
   }
 
   get value() {
-    return new EmptyAsn("");
+    return EmptyAsn.Instance;
   }
 
   toString() {
@@ -35,4 +35,6 @@ export class EmptyAsn implements AstNode {
   }
 
   isEmpty = true;
+
+  static Instance: EmptyAsn = new EmptyAsn("");
 }

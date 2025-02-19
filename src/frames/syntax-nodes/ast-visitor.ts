@@ -332,7 +332,7 @@ export function transform(
     if (node.bestMatch) {
       return transform(node.bestMatch, fieldId, scope);
     }
-    return new EmptyAsn(fieldId);
+    return EmptyAsn.Instance;
   }
 
   if (node instanceof ListNode) {
@@ -418,9 +418,9 @@ export function transform(
 
   if (node instanceof RangeNode) {
     const fromNode = node.fromIndex?.matchedNode;
-    const from = fromNode ? (transform(fromNode, fieldId, scope) as AstNode) : new EmptyAsn("");
+    const from = fromNode ? (transform(fromNode, fieldId, scope) as AstNode) : EmptyAsn.Instance;
     const toNode = node.toIndex?.matchedNode;
-    const to = toNode ? (transform(toNode, fieldId, scope) as AstNode) : new EmptyAsn("");
+    const to = toNode ? (transform(toNode, fieldId, scope) as AstNode) : EmptyAsn.Instance;
     return new RangeAsn(from, to, fieldId);
   }
 
@@ -437,8 +437,8 @@ export function transform(
   if (node instanceof InstanceNode) {
     const id = node.variable!.matchedText;
     const index =
-      (transform(node.index, fieldId, scope) as IndexAsn | undefined) ?? new EmptyAsn("");
-    return new VarAsn(id, false, new EmptyAsn(""), index, fieldId, scope);
+      (transform(node.index, fieldId, scope) as IndexAsn | undefined) ?? EmptyAsn.Instance;
+    return new VarAsn(id, false, EmptyAsn.Instance, index, fieldId, scope);
   }
 
   if (node instanceof IfExpr) {
@@ -479,14 +479,14 @@ export function transform(
   if (node instanceof PropertyRef) {
     const qualifier = transform(node.qualifier, fieldId, scope) as AstQualifierNode;
     const name = transform(node.name, fieldId, scope) as AstIdNode;
-    return new VarAsn(name.id, true, qualifier, new EmptyAsn(""), fieldId, scope);
+    return new VarAsn(name.id, true, qualifier, EmptyAsn.Instance, fieldId, scope);
   }
 
   if (node instanceof InstanceProcRef) {
     const q =
-      (transform(node.prefix, fieldId, scope) as AstQualifierNode | undefined) ?? new EmptyAsn("");
+      (transform(node.prefix, fieldId, scope) as AstQualifierNode | undefined) ?? EmptyAsn.Instance;
     const id = node.procName!.matchedText;
-    return new VarAsn(id, false, q, new EmptyAsn(""), fieldId, scope);
+    return new VarAsn(id, false, q, EmptyAsn.Instance, fieldId, scope);
   }
 
   if (node instanceof FunctionRefNode) {

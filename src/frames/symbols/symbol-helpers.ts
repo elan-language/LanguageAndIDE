@@ -195,7 +195,7 @@ function internalUpdateScopeAndQualifier(
     currentScope = isScope(classSymbol) ? classSymbol : currentScope;
   } else if (isAstIdNode(value) && value.id === libraryKeyword) {
     currentScope = getGlobalScope(currentScope).libraryScope;
-    qualifier = new EmptyAsn("");
+    qualifier = EmptyAsn.Instance;
   } else if (isAstIdNode(value) && value.id === globalKeyword) {
     currentScope = getGlobalScope(currentScope);
   } else if (!isEmptyNode(qualifier)) {
@@ -211,7 +211,7 @@ export function updateScopeAndQualifier(
   transforms: Transforms,
   currentScope: Scope,
 ): [AstNode, Scope] {
-  const qualifier = isAstQualifiedNode(rootNode) ? rootNode.qualifier : new EmptyAsn("");
+  const qualifier = isAstQualifiedNode(rootNode) ? rootNode.qualifier : EmptyAsn.Instance;
   const qualifierScope = qualifier.symbolType();
   const value = qualifier.value;
 
