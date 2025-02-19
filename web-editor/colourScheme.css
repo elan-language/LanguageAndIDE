@@ -2,12 +2,12 @@
     --defaultBackground: white;
     --defaultText: black;
     --reverseText: white;
+    
     --selection:rgb(173, 214, 255);
     --ok: rgb(169, 247, 169); 
     --warning: rgb(246, 193, 94);
     --error:  rgb(255, 90, 90);
     --optional:  lightgrey;
-    --help: rgb(68, 114, 196);
 
     --keyword: rgb(56,0,255);
     --method: rgb(152, 118, 49);
