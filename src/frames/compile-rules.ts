@@ -20,6 +20,7 @@ import {
   MustImplementCompileError,
   MustNotBeCircularDependencyCompileError,
   MutateCompileError,
+  NotGlobalFunctionRefCompileError,
   NotIndexableCompileError,
   NotIterableCompileError,
   NotNewableCompileError,
@@ -1270,7 +1271,26 @@ export function mustBeFunctionRefIfFunction(
   location: string,
 ) {
   if (symbol.symbolType() instanceof FunctionType) {
-    compileErrors.push(new FunctionRefCompileError(symbol.symbolId, location));
+    compileErrors.push(
+      new FunctionRefCompileError(
+        symbol.symbolId,
+        !(symbol.symbolScope === SymbolScope.stdlib || symbol.symbolScope === SymbolScope.member),
+        location,
+      ),
+    );
+  }
+}
+
+export function mustBeGlobalFunctionIfRef(
+  symbol: ElanSymbol,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  if (
+    symbol.symbolType() instanceof FunctionType &&
+    (symbol.symbolScope === SymbolScope.stdlib || symbol.symbolScope === SymbolScope.member)
+  ) {
+    compileErrors.push(new NotGlobalFunctionRefCompileError(symbol.symbolId, location));
   }
 }
 

@@ -1016,9 +1016,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "To evaluate function 'withBlock' add brackets. Or to create a reference to 'withBlock', precede it by 'ref'",
-    ]);
+    assertDoesNotCompile(fileImpl, ["To evaluate function 'withBlock' add brackets."]);
   });
 
   test("Fail_LibFunctionWithoutRefKeyword", async () => {
@@ -1033,9 +1031,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "To evaluate function 'abs' add brackets. Or to create a reference to 'abs', precede it by 'ref'",
-    ]);
+    assertDoesNotCompile(fileImpl, ["To evaluate function 'abs' add brackets."]);
   });
 
   test("Fail_PrintLibFunctionWithoutRefKeyword", async () => {
@@ -1050,9 +1046,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "To evaluate function 'abs' add brackets. Or to create a reference to 'abs', precede it by 'ref'",
-    ]);
+    assertDoesNotCompile(fileImpl, ["To evaluate function 'abs' add brackets."]);
   });
 
   test("Fail_NoIndexing", async () => {

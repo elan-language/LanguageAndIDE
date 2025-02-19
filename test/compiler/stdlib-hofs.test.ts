@@ -606,8 +606,6 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "To evaluate function 'keys' add brackets. Or to create a reference to 'keys', precede it by 'ref'",
-    ]);
+    assertDoesNotCompile(fileImpl, ["To evaluate function 'keys' add brackets."]);
   });
 });

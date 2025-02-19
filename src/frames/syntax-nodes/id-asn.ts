@@ -1,6 +1,7 @@
 import { CompileError } from "../compile-error";
 import {
   mustBeFunctionRefIfFunction,
+  mustBeGlobalFunctionIfRef,
   mustBeKnownSymbol,
   mustBePropertyPrefixedOnMember,
   mustBePublicMember,
@@ -77,6 +78,8 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
 
     if (!this.isFuncRef) {
       mustBeFunctionRefIfFunction(symbol, this.compileErrors, this.fieldId);
+    } else {
+      mustBeGlobalFunctionIfRef(symbol, this.compileErrors, this.fieldId);
     }
 
     const prefix = this.updatedScope

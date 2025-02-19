@@ -320,10 +320,21 @@ export class DuplicateIdsCompileError extends CompileError {
 }
 
 export class FunctionRefCompileError extends CompileError {
+  constructor(id: string, isGlobal: boolean, location: string) {
+    const postfix = isGlobal ? ` Or to create a reference to '${id}', precede it by 'ref'` : "";
+    super(
+      Priority.illegalOperation,
+      `To evaluate function '${id}' add brackets.${postfix}`,
+      location,
+    );
+  }
+}
+
+export class NotGlobalFunctionRefCompileError extends CompileError {
   constructor(id: string, location: string) {
     super(
       Priority.illegalOperation,
-      `To evaluate function '${id}' add brackets. Or to create a reference to '${id}', precede it by 'ref'`,
+      `Library or class function '${id}' cannot be preceded by by 'ref'`,
       location,
     );
   }
