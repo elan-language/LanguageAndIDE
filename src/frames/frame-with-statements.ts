@@ -8,6 +8,7 @@ import { ElanSymbol } from "./interfaces/elan-symbol";
 import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
 import { Profile } from "./interfaces/profile";
+import { Scope } from "./interfaces/scope";
 import { StatementFactory } from "./interfaces/statement-factory";
 import {
   compileStatements,
@@ -228,9 +229,9 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     return sid.includes(",") || sid.includes(":");
   }
 
-  resolveSymbol(id: string, transforms: Transforms, initialScope: Frame): ElanSymbol {
+  resolveSymbol(id: string, transforms: Transforms, initialScope: Scope): ElanSymbol {
     const fst = this.getFirstChild();
-    let range = this.getChildRange(fst, initialScope);
+    let range = this.getChildRange(fst, initialScope as Frame);
     if (range.length > 1) {
       range = range.slice(0, range.length - 1);
 
@@ -247,12 +248,12 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     return this.getParentScope().resolveSymbol(id, transforms, this.getCurrentScope());
   }
 
-  symbolMatches(id: string, all: boolean, initialScope?: Frame): ElanSymbol[] {
+  symbolMatches(id: string, all: boolean, initialScope: Scope): ElanSymbol[] {
     const matches = this.getParentScope().symbolMatches(id, all, this.getCurrentScope());
     let localMatches: ElanSymbol[] = [];
 
     const fst = this.getFirstChild();
-    let range = this.getChildRange(fst, initialScope!);
+    let range = this.getChildRange(fst, initialScope as Frame);
     if (range.length > 1) {
       range = range.slice(0, range.length - 1);
       const symbols = handleDeconstruction(range.filter((r) => isSymbol(r)));

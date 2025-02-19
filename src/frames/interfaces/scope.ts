@@ -6,5 +6,5 @@ export interface Scope {
 
   getParentScope(): Scope;
 
-  symbolMatches(id: string, all: boolean, initialScope?: Scope): ElanSymbol[];
+  symbolMatches(id: string, all: boolean, initialScope: Scope): ElanSymbol[];
 }

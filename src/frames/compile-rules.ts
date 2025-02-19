@@ -172,7 +172,7 @@ export function mustNotHaveConditionalAfterUnconditionalElse(
 
 export function mustBeKnownSymbol(
   symbol: ElanSymbol,
-  scope: Scope | undefined,
+  scope: Scope,
   compileErrors: CompileError[],
   location: string,
 ) {
@@ -489,7 +489,7 @@ export function mustbeValidQualifier(
 export function mustCallMemberViaQualifier(
   id: string,
   ft: FunctionType | ProcedureType,
-  scope: Scope | undefined,
+  scope: Scope,
   compileErrors: CompileError[],
   location: string,
 ) {

@@ -29,6 +29,7 @@ import { File } from "../interfaces/file";
 import { Frame } from "../interfaces/frame";
 import { Parent } from "../interfaces/parent";
 import { Profile } from "../interfaces/profile";
+import { Scope } from "../interfaces/scope";
 import { StatementFactory } from "../interfaces/statement-factory";
 import { SymbolType } from "../interfaces/symbol-type";
 import { classKeyword, constructorKeyword, thisKeyword } from "../keywords";
@@ -55,6 +56,7 @@ import { CommentStatement } from "../statements/comment-statement";
 import { BreakpointEvent } from "../status-enums";
 import { ClassSubType, ClassType } from "../symbols/class-type";
 import { DuplicateSymbol } from "../symbols/duplicate-symbol";
+import { NullScope } from "../symbols/null-scope";
 import { getGlobalScope, isSymbol, symbolMatches } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
@@ -410,7 +412,7 @@ export abstract class ClassFrame
     return this.name.text;
   }
 
-  symbolMatches(id: string, all: boolean, _initialScope?: Frame | undefined): ElanSymbol[] {
+  symbolMatches(id: string, all: boolean, _initialScope: Scope): ElanSymbol[] {
     const otherMatches = this.getParent().symbolMatches(id, all, this);
 
     const symbols = this.getChildren().filter(
@@ -424,7 +426,7 @@ export abstract class ClassFrame
     let inheritedMatches: ElanSymbol[] = [];
 
     for (const ct of types) {
-      const s = ct.scope!.symbolMatches(id, all);
+      const s = ct.scope.symbolMatches(id, all, NullScope.Instance);
       inheritedMatches = inheritedMatches.concat(s);
     }
 
@@ -433,7 +435,7 @@ export abstract class ClassFrame
     return matches.concat(inheritedMatches).concat(otherMatches);
   }
 
-  resolveSymbol(id: string, transforms: Transforms, _initialScope: Frame): ElanSymbol {
+  resolveSymbol(id: string, transforms: Transforms, _initialScope: Scope): ElanSymbol {
     const symbol = this.resolveOwnSymbol(id, transforms);
 
     if (symbol instanceof UnknownSymbol) {

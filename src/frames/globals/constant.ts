@@ -7,8 +7,8 @@ import { Collapsible } from "../interfaces/collapsible";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
-import { Frame } from "../interfaces/frame";
 import { GlobalFrame } from "../interfaces/global-frame";
+import { Scope } from "../interfaces/scope";
 import { constantKeyword } from "../keywords";
 import { getGlobalScope } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
@@ -91,7 +91,7 @@ export class Constant extends AbstractFrame implements ElanSymbol, GlobalFrame, 
     return SymbolScope.program;
   }
 
-  resolveSymbol(id: string, transforms: Transforms, initialScope: Frame): ElanSymbol {
+  resolveSymbol(id: string, transforms: Transforms, initialScope: Scope): ElanSymbol {
     if (id === this.symbolId) {
       return this;
     }

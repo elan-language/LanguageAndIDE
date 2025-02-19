@@ -3,6 +3,7 @@ import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../syntax-nodes/transforms";
+import { NullScope } from "./null-scope";
 import { isSymbol, symbolMatches } from "./symbol-helpers";
 import { SymbolScope } from "./symbol-scope";
 import { UnknownSymbol } from "./unknown-symbol";
@@ -20,7 +21,7 @@ export class ClassType implements SymbolType, Scope {
     public readonly isNotInheritable: boolean,
     public readonly isImmutable: boolean,
     public readonly inheritsFrom: SymbolType[],
-    public scope: Class | undefined,
+    public scope: Class | NullScope,
   ) {}
 
   updateScope(scope: Class) {

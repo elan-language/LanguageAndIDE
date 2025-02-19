@@ -273,7 +273,7 @@ export function wrapScopeInScope(wrapped: Scope): Scope {
 
     getParentScope: () => wrapped,
 
-    symbolMatches: (id: string, all: boolean, initialScope?: Scope) =>
+    symbolMatches: (id: string, all: boolean, initialScope: Scope) =>
       wrapped.symbolMatches(id, all, initialScope),
   };
 }
@@ -462,7 +462,9 @@ function matchingSymbolsWithQualifier(
     const cls = getGlobalScope(scope).resolveSymbol(qualSt.className, transforms, scope);
 
     if (isClassTypeDef(cls)) {
-      qualifiedSymbols = cls.symbolMatches(propId, !propId).filter((s) => isPublicMember(s));
+      qualifiedSymbols = cls
+        .symbolMatches(propId, !propId, NullScope.Instance)
+        .filter((s) => isPublicMember(s));
     }
   }
 
@@ -470,12 +472,12 @@ function matchingSymbolsWithQualifier(
     const en = getGlobalScope(scope).resolveSymbol(qualSt.name, transforms, scope);
 
     if (isEnumDef(en)) {
-      qualifiedSymbols = en.symbolMatches(propId, !propId);
+      qualifiedSymbols = en.symbolMatches(propId, !propId, NullScope.Instance);
     }
   }
 
   const allExtensions = getGlobalScope(scope)
-    .libraryScope.symbolMatches(propId, !propId)
+    .libraryScope.symbolMatches(propId, !propId, NullScope.Instance)
     .filter((s) => {
       const st = s.symbolType(transforms);
       return (

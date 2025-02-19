@@ -8,8 +8,8 @@ import { Collapsible } from "../interfaces/collapsible";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
-import { Frame } from "../interfaces/frame";
 import { GlobalFrame } from "../interfaces/global-frame";
+import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { enumKeyword } from "../keywords";
 import { EnumType } from "../symbols/enum-type";
@@ -110,7 +110,7 @@ ${singleIndent()}${this.values.compile(transforms)}\r
     }));
   }
 
-  resolveSymbol(id: string, transforms: Transforms, _initialScope: Frame): ElanSymbol {
+  resolveSymbol(id: string, transforms: Transforms, _initialScope: Scope): ElanSymbol {
     for (const n of this.enumValueSymbols()) {
       if (n.symbolId === id) {
         return n;
@@ -120,7 +120,7 @@ ${singleIndent()}${this.values.compile(transforms)}\r
     return this.getParent().resolveSymbol(id, transforms, this);
   }
 
-  symbolMatches(id: string, all: boolean, _initialScope?: Frame | undefined): ElanSymbol[] {
+  symbolMatches(id: string, all: boolean, _initialScope: Scope): ElanSymbol[] {
     const otherMatches = this.getParent().symbolMatches(id, all, this);
     const symbols = this.enumValueSymbols();
     const matches = symbolMatches(id, all, symbols);

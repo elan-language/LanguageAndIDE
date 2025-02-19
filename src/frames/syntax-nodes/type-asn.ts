@@ -58,8 +58,8 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
       return st.ofTypes.length;
     }
 
-    if (st instanceof ClassType) {
-      return st.scope?.ofTypes.length ?? 0;
+    if (st instanceof ClassType && isClassTypeDef(st.scope)) {
+      return st.scope.ofTypes.length ?? 0;
     }
 
     if (st instanceof FunctionType) {

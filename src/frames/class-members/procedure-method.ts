@@ -9,9 +9,9 @@ import { ConcreteClass } from "../globals/concrete-class";
 import { ProcedureFrame } from "../globals/procedure-frame";
 import { editorEvent } from "../interfaces/editor-event";
 import { ElanSymbol } from "../interfaces/elan-symbol";
-import { Frame } from "../interfaces/frame";
 import { Parent } from "../interfaces/parent";
 import { PossiblyPrivateMember } from "../interfaces/possibly-private-member";
+import { Scope } from "../interfaces/scope";
 import { privateKeyword } from "../keywords";
 import { getClassScope } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
@@ -83,7 +83,7 @@ ${this.indent()}}\r
     return super.parseBottom(source);
   }
 
-  resolveSymbol(id: string, transforms: Transforms, initialScope: Frame): ElanSymbol {
+  resolveSymbol(id: string, transforms: Transforms, initialScope: Scope): ElanSymbol {
     if (this.name.text === id) {
       return this;
     }

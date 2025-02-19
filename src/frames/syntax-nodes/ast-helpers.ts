@@ -242,7 +242,7 @@ export function match(
 export function matchGenericTypes(
   type: FunctionType | ProcedureType,
   parameters: AstNode[],
-  cls?: Scope,
+  cls: Scope,
 ) {
   const matches = new Map<string, SymbolType>();
 
@@ -268,7 +268,7 @@ export function matchClassGenericTypes(type: Class, parameters: AstNode[]) {
 export function matchParametersAndTypes(
   funcSymbolType: FunctionType | ProcedureType,
   parameters: AstNode[],
-  classTypeDef: Scope | undefined,
+  classTypeDef: Scope,
   compileErrors: CompileError[],
   location: string,
 ) {

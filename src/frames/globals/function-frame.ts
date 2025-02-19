@@ -6,9 +6,9 @@ import { FrameWithStatements } from "../frame-with-statements";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
-import { Frame } from "../interfaces/frame";
 import { Parent } from "../interfaces/parent";
 import { Profile } from "../interfaces/profile";
+import { Scope } from "../interfaces/scope";
 import { endKeyword, functionKeyword, returnKeyword, returnsKeyword } from "../keywords";
 import { ReturnStatement } from "../statements/return-statement";
 import { FunctionType } from "../symbols/function-type";
@@ -95,7 +95,7 @@ ${this.renderChildrenAsHtml()}
     return this.getChildren().filter((s) => "isReturnStatement" in s)[0] as ReturnStatement;
   }
 
-  resolveSymbol(id: string, transforms: Transforms, initialScope: Frame): ElanSymbol {
+  resolveSymbol(id: string, transforms: Transforms, initialScope: Scope): ElanSymbol {
     if (this.name.text === id) {
       return this;
     }
@@ -110,7 +110,7 @@ ${this.renderChildrenAsHtml()}
 ${this.breakPoint(this.debugSymbols())}${this.compileChildren(transforms)}\r`;
   }
 
-  public override symbolMatches(id: string, all: boolean, initialScope?: Frame): ElanSymbol[] {
+  public override symbolMatches(id: string, all: boolean, initialScope: Scope): ElanSymbol[] {
     const matches = super.symbolMatches(id, all, initialScope);
     const localMatches = this.params.symbolMatches(id, all, initialScope);
     return localMatches.concat(matches);

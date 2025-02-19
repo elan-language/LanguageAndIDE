@@ -12,6 +12,7 @@ import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstNode } from "../interfaces/ast-node";
 import { Scope } from "../interfaces/scope";
 import { AbstractDefinitionStatement } from "../statements/abstract-definition.statement";
+import { NullScope } from "../symbols/null-scope";
 import { isDeconstructedType, isMemberOnFieldsClass, scopePrefix } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { AbstractAstNode } from "./abstract-ast-node";
@@ -28,7 +29,7 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
     super();
   }
 
-  private updatedScope?: Scope;
+  private updatedScope: Scope = NullScope.Instance;
 
   updateScopeAndChain(s: Scope, _ast: AstNode) {
     this.updatedScope = s;
@@ -45,7 +46,7 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
   }
 
   getSymbol() {
-    let searchScope = this.updatedScope ?? this.scope;
+    let searchScope = this.updatedScope === NullScope.Instance ? this.scope : this.updatedScope;
     if (isClass(searchScope)) {
       return searchScope.resolveOwnSymbol(this.id, transforms());
     }
@@ -72,7 +73,7 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
       mustBePublicMember(symbol, this.compileErrors, this.fieldId);
     }
 
-    if (symbol.symbolScope === SymbolScope.member && !this.updatedScope) {
+    if (symbol.symbolScope === SymbolScope.member && this.updatedScope === NullScope.Instance) {
       mustBePropertyPrefixedOnMember(this.compileErrors, this.fieldId);
     }
 
@@ -82,9 +83,10 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
       mustBeGlobalFunctionIfRef(symbol, this.compileErrors, this.fieldId);
     }
 
-    const prefix = this.updatedScope
-      ? ""
-      : scopePrefix(symbol, this.compileErrors, this.scope, this.fieldId);
+    const prefix =
+      this.updatedScope !== NullScope.Instance
+        ? ""
+        : scopePrefix(symbol, this.compileErrors, this.scope, this.fieldId);
 
     const postfix = symbol.symbolScope === SymbolScope.outParameter ? "[0]" : "";
 

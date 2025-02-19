@@ -122,17 +122,17 @@ ${compileStatements(transforms, this.compileChildren)}`;
     return this.compileScope!.getParentScope();
   }
 
-  getChildRange(initialScope: Frame) {
+  getChildRange(initialScope: Scope) {
     const fst = this.compileChildren[0];
     const fi = this.compileChildren.indexOf(fst);
-    const li = this.compileChildren.indexOf(initialScope);
+    const li = this.compileChildren.indexOf(initialScope as Frame);
 
     return fi < li
       ? this.compileChildren.slice(fi, li + 1)
       : this.compileChildren.slice(li, fi + 1);
   }
 
-  resolveSymbol(id: string, transforms: Transforms, initialScope: Frame): ElanSymbol {
+  resolveSymbol(id: string, transforms: Transforms, initialScope: Scope): ElanSymbol {
     if (this.compileChildren.length > 0) {
       let range = this.getChildRange(initialScope);
 

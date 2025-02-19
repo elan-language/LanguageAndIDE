@@ -11,6 +11,7 @@ import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { IntType } from "../symbols/int-type";
+import { NullScope } from "../symbols/null-scope";
 import {
   isAnyDictionaryType,
   isDeconstructedType,
@@ -85,7 +86,7 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
       mustBePublicMember(symbol, this.compileErrors, this.fieldId);
     }
 
-    mustBeKnownSymbol(symbol, undefined, this.compileErrors, this.fieldId);
+    mustBeKnownSymbol(symbol, NullScope.Instance, this.compileErrors, this.fieldId);
 
     if (symbol.symbolScope === SymbolScope.member && isEmptyNode(this.qualifier)) {
       mustBePropertyPrefixedOnMember(this.compileErrors, this.fieldId);

@@ -4,9 +4,9 @@ import { FrameWithStatements } from "../frame-with-statements";
 import { ConcreteClass } from "../globals/concrete-class";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
-import { Frame } from "../interfaces/frame";
 import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
+import { Scope } from "../interfaces/scope";
 import { constructorKeyword } from "../keywords";
 import { ProcedureType } from "../symbols/procedure-type";
 import { SymbolScope } from "../symbols/symbol-scope";
@@ -77,12 +77,12 @@ ${this.indent()}}\r
     return this.parseStandardEnding(source, "end constructor");
   }
 
-  resolveSymbol(id: string, transforms: Transforms, initialScope: Frame): ElanSymbol {
+  resolveSymbol(id: string, transforms: Transforms, initialScope: Scope): ElanSymbol {
     const s = this.params.resolveSymbol(id, transforms, this);
     return s instanceof UnknownSymbol ? super.resolveSymbol(id, transforms, initialScope) : s;
   }
 
-  public override symbolMatches(id: string, all: boolean, initialScope?: Frame): ElanSymbol[] {
+  public override symbolMatches(id: string, all: boolean, initialScope: Scope): ElanSymbol[] {
     const matches = super.symbolMatches(id, all, initialScope);
     const localMatches = this.params.symbolMatches(id, all, initialScope);
     return localMatches.concat(matches);

@@ -11,8 +11,8 @@ import { VarDefField } from "../fields/var-def-field";
 import { mapSymbolType } from "../frame-helpers";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
-import { Frame } from "../interfaces/frame";
 import { Parent } from "../interfaces/parent";
+import { Scope } from "../interfaces/scope";
 import { Statement } from "../interfaces/statement";
 import { getDeconstructionIds, symbolMatches } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
@@ -93,7 +93,7 @@ export abstract class AbstractDefinitionStatement
     return SymbolScope.local;
   }
 
-  resolveSymbol(id: string, transforms: Transforms, initialScope: Frame): ElanSymbol {
+  resolveSymbol(id: string, transforms: Transforms, initialScope: Scope): ElanSymbol {
     if (id === this.symbolId) {
       return this;
     }
@@ -101,7 +101,7 @@ export abstract class AbstractDefinitionStatement
     return super.resolveSymbol(id, transforms, initialScope);
   }
 
-  symbolMatches(id: string, all: boolean, initialScope?: Frame): ElanSymbol[] {
+  symbolMatches(id: string, all: boolean, initialScope: Scope): ElanSymbol[] {
     const matches = super.symbolMatches(id, all, initialScope);
     const ids = getDeconstructionIds(this.symbolId);
 

@@ -82,7 +82,7 @@ export class ParamList extends AbstractField implements Scope {
     return [names, types];
   }
 
-  resolveSymbol(id: string, _transforms: Transforms, _initialScope: Frame): ElanSymbol {
+  resolveSymbol(id: string, _transforms: Transforms, _initialScope: Scope): ElanSymbol {
     const allSymbols = this.getParamsAsSymbols();
     const matches = allSymbols.filter((n) => n.symbolId === id);
 

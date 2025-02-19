@@ -5,8 +5,8 @@ import { IdentifierField } from "../fields/identifier-field";
 import { FrameWithStatements } from "../frame-with-statements";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
-import { Frame } from "../interfaces/frame";
 import { Parent } from "../interfaces/parent";
+import { Scope } from "../interfaces/scope";
 import { Statement } from "../interfaces/statement";
 import { forKeyword } from "../keywords";
 import { IntType } from "../symbols/int-type";
@@ -125,7 +125,7 @@ ${this.indent()}}`;
     return this.parseStandardEnding(source, "end for");
   }
 
-  resolveSymbol(id: string, transforms: Transforms, initialScope: Frame): ElanSymbol {
+  resolveSymbol(id: string, transforms: Transforms, initialScope: Scope): ElanSymbol {
     const v = this.variable.text;
 
     if (id === v) {
@@ -140,7 +140,7 @@ ${this.indent()}}`;
     return super.resolveSymbol(id, transforms, initialScope);
   }
 
-  symbolMatches(id: string, all: boolean, _initialScope?: Frame): ElanSymbol[] {
+  symbolMatches(id: string, all: boolean, _initialScope: Scope): ElanSymbol[] {
     const matches = super.symbolMatches(id, all, this);
     const localMatches: ElanSymbol[] = [];
 
