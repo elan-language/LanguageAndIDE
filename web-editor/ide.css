@@ -277,8 +277,35 @@ button.plain:focus {
   text-decoration: underline;
 }
 
-button.plain:disabled {
+button.plain:disabled, menu-item.button.plain:disabled {
   color: grey;
+}
+
+.dropdown-content button.plain,
+.dropdown-content button.plain:hover,
+.dropdown-content button.plain:active,
+.dropdown-content button.plain:focus
+{
+ display:block;
+ padding-left: 0px;
+ margin-bottom: 0px;
+}
+
+.dropdown-content button.plain:hover,
+.dropdown-content button.plain:active,
+.dropdown-content button.plain:focus {
+  background-color: var(--ideDefaultBackground);
+  color: white;
+  text-decoration: none;
+}
+
+.dropdown-content button.plain:disabled:hover,
+.dropdown-content button.plain:disabled:active,
+.dropdown-content button.plain:disabled:focus
+ {
+  background-color: white;
+  color: grey;
+  text-decoration: none;
 }
 
 .autocomplete-popup,
@@ -342,10 +369,13 @@ button.plain:disabled {
   padding-right: 5px;
 }
 
-.menu-item:hover,
-.menu-item:active,
-.menu-item:hover a,
-.menu-item:active a {
+
+
+.menu-item:hover, button.menu-item:hover
+.menu-item:active, button.menu-item:active
+.menu-item:hover a,  button.menu-item:hover a
+.menu-item:active a, button.menu-item:active a
+{
   background-color: var(--ideDefaultBackground);
   color: white;
   text-decoration: none;
