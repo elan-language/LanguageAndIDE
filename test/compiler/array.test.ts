@@ -8,7 +8,6 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -939,33 +938,6 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "1");
-  });
-
-  ignore_test("Pass_listOfGenericFunction", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-  variable arr set to [ref sqrt]
-  variable s0 set to arr[0]
-  print s0(4)
-end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let arr = system.literalArray([_stdlib.sqrt]);
-  let s0 = system.safeIndex(arr, 0);
-  await system.printLine(s0(4));
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, `2`);
   });
 
   test("Fail_withoutGenericType", async () => {

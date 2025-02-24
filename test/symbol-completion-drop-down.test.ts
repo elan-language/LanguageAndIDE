@@ -1907,7 +1907,7 @@ end function`;
     await assertSymbolCompletionWithString(fileImpl, "expr5", "last(range(1,4).ma", expected);
   });
 
-  ignore_test("Pass_bracketedExpression", async () => {
+  test("Pass_bracketedExpression", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main

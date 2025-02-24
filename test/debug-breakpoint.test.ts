@@ -1,6 +1,6 @@
 import { DefaultProfile } from "../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../src/frames/file-impl";
-import { ignore_test, testHash, transforms } from "./compiler/compiler-test-helpers";
+import { testHash, transforms } from "./compiler/compiler-test-helpers";
 import { assertDebugBreakPoint } from "./testHelpers";
 
 suite("DebugBreakpoint", () => {
