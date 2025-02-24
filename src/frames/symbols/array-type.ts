@@ -10,6 +10,10 @@ export class ArrayType extends AbstractListType implements IterableSymbolType, R
     super(ofType);
   }
 
+  isAssignableFrom(_otherType: SymbolType): boolean {
+    throw new Error("Method not implemented.");
+  }
+
   isImmutable = false;
 
   initialValue = "system.emptyArray()";

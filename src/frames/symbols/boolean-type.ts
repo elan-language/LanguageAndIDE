@@ -13,4 +13,8 @@ export class BooleanType implements SymbolType {
   toString(): string {
     return "Boolean";
   }
+
+  isAssignableFrom(_otherType: SymbolType): boolean {
+    throw new Error("Method not implemented.");
+  }
 }

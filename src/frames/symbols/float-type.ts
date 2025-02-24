@@ -12,4 +12,8 @@ export class FloatType implements SymbolType {
   toString(): string {
     return `Float`;
   }
+
+  isAssignableFrom(_otherType: SymbolType): boolean {
+    throw new Error("Method not implemented.");
+  }
 }

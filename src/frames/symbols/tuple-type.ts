@@ -17,4 +17,8 @@ export class TupleType implements SymbolType {
   toString(): string {
     return `(${this.ofTypes.map((t) => t.name).join(", ")})`;
   }
+
+  isAssignableFrom(_otherType: SymbolType): boolean {
+    throw new Error("Method not implemented.");
+  }
 }

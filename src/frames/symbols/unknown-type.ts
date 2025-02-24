@@ -13,4 +13,8 @@ export class UnknownType implements SymbolType {
   toString(): string {
     return `Unknown`;
   }
+
+  isAssignableFrom(_otherType: SymbolType): boolean {
+    throw new Error("Method not implemented.");
+  }
 }

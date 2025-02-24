@@ -12,4 +12,8 @@ export class EnumValueType implements SymbolType {
   toString() {
     return `${this.owner}.${this.name}`;
   }
+
+  isAssignableFrom(_otherType: SymbolType): boolean {
+    throw new Error("Method not implemented.");
+  }
 }

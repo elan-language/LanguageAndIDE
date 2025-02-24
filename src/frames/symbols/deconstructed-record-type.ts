@@ -31,4 +31,8 @@ export class DeconstructedRecordType implements DeconstructedSymbolType {
   toString(): string {
     return `( ${this.record})`;
   }
+
+  isAssignableFrom(_otherType: SymbolType): boolean {
+    throw new Error("Method not implemented.");
+  }
 }

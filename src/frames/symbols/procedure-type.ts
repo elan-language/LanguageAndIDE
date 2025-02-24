@@ -19,4 +19,8 @@ export class ProcedureType implements SymbolType {
   toString(): string {
     return `Procedure`;
   }
+
+  isAssignableFrom(_otherType: SymbolType): boolean {
+    throw new Error("Method not implemented.");
+  }
 }

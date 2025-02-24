@@ -11,4 +11,8 @@ export class LetType implements GenericSymbolType {
   get name() {
     return `Let <${this.ofType.name}>`;
   }
+
+  isAssignableFrom(_otherType: SymbolType): boolean {
+    throw new Error("Method not implemented.");
+  }
 }

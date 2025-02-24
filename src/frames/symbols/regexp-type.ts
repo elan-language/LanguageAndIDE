@@ -14,4 +14,8 @@ export class RegExpType implements SymbolType {
   toString(): string {
     return `RegExp`;
   }
+
+  isAssignableFrom(_otherType: SymbolType): boolean {
+    throw new Error("Method not implemented.");
+  }
 }

@@ -33,4 +33,8 @@ export class ListType extends AbstractListType implements IterableSymbolType, Re
 
     return new ListType(gt);
   }
+
+  isAssignableFrom(_otherType: SymbolType): boolean {
+    throw new Error("Method not implemented.");
+  }
 }

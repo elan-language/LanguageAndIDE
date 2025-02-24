@@ -20,4 +20,8 @@ export class DictionaryImmutableType implements DictionarySymbolType {
   toString(): string {
     return "DictionaryImmutable";
   }
+
+  isAssignableFrom(_otherType: SymbolType): boolean {
+    throw new Error("Method not implemented.");
+  }
 }

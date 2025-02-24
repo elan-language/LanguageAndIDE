@@ -29,4 +29,8 @@ export class IterableType implements IterableSymbolType, ReifyableSymbolType {
 
     return new IterableType(gt);
   }
+
+  isAssignableFrom(_otherType: SymbolType): boolean {
+    throw new Error("Method not implemented.");
+  }
 }

@@ -14,4 +14,8 @@ export class GenericParameterType implements SymbolType {
   toString() {
     return this.name;
   }
+
+  isAssignableFrom(_otherType: SymbolType): boolean {
+    throw new Error("Method not implemented.");
+  }
 }

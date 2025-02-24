@@ -30,4 +30,8 @@ export class DeconstructedListType implements DeconstructedSymbolType {
   toString(): string {
     return `${this.headdId}:${this.tailId}`;
   }
+
+  isAssignableFrom(_otherType: SymbolType): boolean {
+    throw new Error("Method not implemented.");
+  }
 }

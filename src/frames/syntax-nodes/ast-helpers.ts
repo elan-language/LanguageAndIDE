@@ -88,6 +88,9 @@ class TypeHolder implements SymbolType {
     public readonly symbolType: SymbolType,
     public readonly ofTypes: SymbolType[],
   ) {}
+  isAssignableFrom(_otherType: SymbolType): boolean {
+    throw new Error("Method not implemented.");
+  }
   isImmutable = false;
   name = "TypeHolder";
   initialValue = "";

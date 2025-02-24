@@ -13,4 +13,8 @@ export class IntType implements SymbolType {
   toString(): string {
     return "Int";
   }
+
+  isAssignableFrom(_otherType: SymbolType): boolean {
+    throw new Error("Method not implemented.");
+  }
 }

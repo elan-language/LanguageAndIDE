@@ -6,6 +6,9 @@ export class AbstractDictionaryType implements DictionarySymbolType {
     public readonly keyType: SymbolType,
     public readonly valueType: SymbolType,
   ) {}
+  isAssignableFrom(_otherType: SymbolType): boolean {
+    throw new Error("Method not implemented.");
+  }
   isImmutable = false;
 
   initialValue = "";
