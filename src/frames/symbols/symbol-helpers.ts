@@ -34,6 +34,7 @@ import { AbstractListType } from "./abstract-list-type";
 import { ArrayType } from "./array-type";
 import { BooleanType } from "./boolean-type";
 import { ClassType } from "./class-type";
+import { DeconstructedTupleType } from "./deconstructed-tuple-type";
 import { DictionaryImmutableType } from "./dictionary-immutable-type";
 import { DictionaryType } from "./dictionary-type";
 import { EnumType } from "./enum-type";
@@ -49,7 +50,9 @@ import { ProcedureType } from "./procedure-type";
 import { RegExpType } from "./regexp-type";
 import { StringType } from "./string-type";
 import { SymbolScope } from "./symbol-scope";
+import { TupleType } from "./tuple-type";
 import { UnknownSymbol } from "./unknown-symbol";
+import { UnknownType } from "./unknown-type";
 
 export function isDeconstructedType(s?: SymbolType): s is DeconstructedSymbolType {
   return !!s && "symbolTypeFor" in s;
@@ -763,4 +766,202 @@ export function mostPreciseSymbol(lhs: SymbolType, rhs: SymbolType): SymbolType 
   }
 
   return lhs;
+}
+
+export function isAssignableFrom(lhs: SymbolType, rhs: SymbolType): boolean {
+  if (lhs instanceof RegExpType && !(rhs instanceof RegExpType)) {
+    return false;
+  }
+  if (lhs instanceof BooleanType && !(rhs instanceof BooleanType)) {
+    return false;
+  }
+  if (lhs instanceof StringType && !(rhs instanceof StringType)) {
+    return false;
+  }
+
+  if (lhs instanceof IntType && !(rhs instanceof IntType)) {
+    return false;
+  }
+  if (lhs instanceof FloatType && !isNumber(rhs)) {
+    return false;
+  }
+
+  if (lhs instanceof ListType && rhs instanceof ListType) {
+    if (!isInvariantType(lhs.ofType, rhs.ofType, true)) {
+      return false;
+    }
+    return true;
+  }
+
+  if (lhs instanceof ListType && !(rhs instanceof ListType)) {
+    return false;
+  }
+
+  if (lhs instanceof ArrayType && rhs instanceof ArrayType) {
+    if (!isInvariantType(lhs.ofType, rhs.ofType, true)) {
+      return false;
+    }
+    return true;
+  }
+
+  if (lhs instanceof ArrayType && !(rhs instanceof ArrayType)) {
+    return false;
+  }
+
+  if (lhs instanceof DictionaryType && rhs instanceof DictionaryType) {
+    if (!isInvariantType(lhs.keyType, rhs.keyType, true)) {
+      return false;
+    }
+    if (!isInvariantType(lhs.valueType, rhs.valueType, true)) {
+      return false;
+    }
+    return true;
+  }
+
+  if (lhs instanceof DictionaryType && !(rhs instanceof DictionaryType)) {
+    return false;
+  }
+
+  if (lhs instanceof DictionaryImmutableType && rhs instanceof DictionaryImmutableType) {
+    if (!isInvariantType(lhs.keyType, rhs.keyType, true)) {
+      return false;
+    }
+    if (!isInvariantType(lhs.valueType, rhs.valueType, true)) {
+      return false;
+    }
+    return true;
+  }
+
+  if (lhs instanceof DictionaryImmutableType && !(rhs instanceof DictionaryImmutableType)) {
+    return false;
+  }
+
+  if (lhs instanceof AbstractDictionaryType && isAnyDictionaryType(rhs)) {
+    if (!isInvariantType(lhs.keyType, rhs.keyType, true)) {
+      return false;
+    }
+    if (!isInvariantType(lhs.valueType, rhs.valueType, true)) {
+      return false;
+    }
+    return true;
+  }
+
+  if (lhs instanceof AbstractDictionaryType && !isAnyDictionaryType(rhs)) {
+    return false;
+  }
+
+  // if (
+  //   (lhs instanceof TupleType || lhs instanceof DeconstructedTupleType) &&
+  //   rhs instanceof TupleType
+  // ) {
+  //   if (lhs.ofTypes.length === rhs.ofTypes.length) {
+  //     mustBeCompatibleTypes(lhs.ofTypes, rhs.ofTypes, compileErrors, location);
+  //   } else {
+  //     if (lhs instanceof DeconstructedTupleType) {
+  //       compileErrors.push(
+  //         new SyntaxCompileError(`Wrong number of deconstructed variables`, location),
+  //       );
+  //     } else {
+  //       FailNotAssignable(lhs, rhs, compileErrors, location);
+  //     }
+  //   }
+  // }
+
+  if (
+    (lhs instanceof TupleType || lhs instanceof DeconstructedTupleType) &&
+    !(rhs instanceof TupleType)
+  ) {
+    return false;
+  }
+
+  if (lhs instanceof IterableType && !isIterableType(rhs)) {
+    return false;
+  }
+
+  if (lhs instanceof IterableType && isIterableType(rhs)) {
+    if (!isInvariantType(lhs.ofType, rhs.ofType, true)) {
+      return false;
+    }
+    return true;
+  }
+
+  if (lhs instanceof EnumType && rhs instanceof EnumType) {
+    if (lhs.name !== rhs.name) {
+      return false;
+    }
+  }
+
+  if (lhs instanceof EnumType && !(rhs instanceof EnumType)) {
+    return false;
+  }
+
+  if (rhs instanceof EnumType && !(lhs instanceof EnumType)) {
+    return false;
+  }
+
+  if (lhs instanceof ClassType) {
+    if (lhs.isAssignableFrom(rhs)) {
+      return true;
+    }
+    return false;
+  }
+
+  if (
+    (lhs instanceof FunctionType && !(rhs instanceof FunctionType)) ||
+    (rhs instanceof FunctionType && !(lhs instanceof FunctionType))
+  ) {
+    return false;
+  }
+
+  // if (lhs instanceof FunctionType && rhs instanceof FunctionType) {
+  //   mustBeCompatibleSignatures(lhs.parameterTypes, rhs.parameterTypes, compileErrors, location);
+  //   mustBeAssignableType(lhs.returnType, rhs.returnType, compileErrors, location);
+  //   return;
+  // }
+
+  if (lhs instanceof GenericParameterType && rhs instanceof GenericParameterType) {
+    if (lhs.name !== rhs.name) {
+      return false;
+    }
+    return true;
+  }
+
+  // if (lhs instanceof DeconstructedListType) {
+  //   let ok = true;
+
+  //   if (isGenericSymbolType(lhs.tailType)) {
+  //     ok = isAssignableFrom(lhs.headType, lhs.tailType.ofType);
+  //   }
+
+  //   ok = ok && isAssignableFrom(lhs.tailType, rhs);
+
+  //   if (isGenericSymbolType(rhs)) {
+  //     ok = ok && isAssignableFrom(lhs.headType, rhs.ofType);
+  //   }
+
+  //   return ok;
+  // }
+
+  if (lhs instanceof GenericParameterType || rhs instanceof GenericParameterType) {
+    return false;
+  }
+
+  return true;
+}
+
+export function isNumber(st: SymbolType) {
+  return st instanceof IntType || st instanceof FloatType;
+}
+
+export function isInvariantType(lhs: SymbolType, rhs: SymbolType, immutable: boolean) {
+  if (lhs instanceof FloatType && immutable && isNumber(rhs)) {
+    // OK Float/Int -> Float on immutable
+    return true;
+  }
+
+  return lhs.name === rhs.name;
+}
+
+export function knownType(symbolType: SymbolType) {
+  return !(symbolType instanceof UnknownType);
 }

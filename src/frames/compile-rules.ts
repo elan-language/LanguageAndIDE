@@ -59,34 +59,30 @@ import { Scope } from "./interfaces/scope";
 import { SymbolType } from "./interfaces/symbol-type";
 import { allKeywords, reservedWords } from "./keywords";
 import { LetStatement } from "./statements/let-statement";
-import { AbstractDictionaryType } from "./symbols/abstract-dictionary-type";
 import { ArrayType } from "./symbols/array-type";
 import { BooleanType } from "./symbols/boolean-type";
 import { ClassSubType, ClassType } from "./symbols/class-type";
 import { DeconstructedListType } from "./symbols/deconstructed-list-type";
 import { DeconstructedTupleType } from "./symbols/deconstructed-tuple-type";
-import { DictionaryImmutableType } from "./symbols/dictionary-immutable-type";
-import { DictionaryType } from "./symbols/dictionary-type";
 import { DuplicateSymbol } from "./symbols/duplicate-symbol";
-import { EnumType } from "./symbols/enum-type";
 import { FloatType } from "./symbols/float-type";
 import { FunctionType } from "./symbols/function-type";
-import { GenericParameterType } from "./symbols/generic-parameter-type";
 import { IntType } from "./symbols/int-type";
 import { IterableType } from "./symbols/iterable-type";
 import { ListType } from "./symbols/list-type";
 import { ProcedureType } from "./symbols/procedure-type";
-import { RegExpType } from "./symbols/regexp-type";
-import { StringType } from "./symbols/string-type";
 import {
   isAnyDictionaryType,
+  isAssignableFrom,
   isClassTypeDef,
   isDeconstructedType,
   isGenericSymbolType,
   isIndexableType,
   isIterableType,
   isListType,
+  isNumber,
   isProperty,
+  knownType,
   symbolScopeToFriendlyName,
 } from "./symbols/symbol-helpers";
 import { SymbolScope } from "./symbols/symbol-scope";
@@ -103,10 +99,6 @@ import {
 } from "./syntax-nodes/ast-helpers";
 import { ThisAsn } from "./syntax-nodes/this-asn";
 import { Transforms } from "./syntax-nodes/transforms";
-
-function knownType(symbolType: SymbolType) {
-  return !(symbolType instanceof UnknownType);
-}
 
 export function mustBeOfSymbolType(
   exprType: SymbolType,
@@ -736,19 +728,6 @@ export function mustBeImmutableType(
   }
 }
 
-function isNumber(st: SymbolType) {
-  return st instanceof IntType || st instanceof FloatType;
-}
-
-export function isInvariantType(lhs: SymbolType, rhs: SymbolType, immutable: boolean) {
-  if (lhs instanceof FloatType && immutable && isNumber(rhs)) {
-    // OK Float/Int -> Float on immutable
-    return true;
-  }
-
-  return lhs.name === rhs.name;
-}
-
 export function mustBeCompatibleType(
   lhs: SymbolType,
   rhs: SymbolType,
@@ -772,187 +751,6 @@ export function mustBeCompatibleType(
   }
 
   FailNoCommonType(lhs, rhs, compileErrors, location);
-}
-
-export function isAssignableFrom(lhs: SymbolType, rhs: SymbolType): boolean {
-  if (lhs instanceof RegExpType && !(rhs instanceof RegExpType)) {
-    return false;
-  }
-  if (lhs instanceof BooleanType && !(rhs instanceof BooleanType)) {
-    return false;
-  }
-  if (lhs instanceof StringType && !(rhs instanceof StringType)) {
-    return false;
-  }
-
-  if (lhs instanceof IntType && !(rhs instanceof IntType)) {
-    return false;
-  }
-  if (lhs instanceof FloatType && !isNumber(rhs)) {
-    return false;
-  }
-
-  if (lhs instanceof ListType && rhs instanceof ListType) {
-    if (!isInvariantType(lhs.ofType, rhs.ofType, true)) {
-      return false;
-    }
-    return true;
-  }
-
-  if (lhs instanceof ListType && !(rhs instanceof ListType)) {
-    return false;
-  }
-
-  if (lhs instanceof ArrayType && rhs instanceof ArrayType) {
-    if (!isInvariantType(lhs.ofType, rhs.ofType, true)) {
-      return false;
-    }
-    return true;
-  }
-
-  if (lhs instanceof ArrayType && !(rhs instanceof ArrayType)) {
-    return false;
-  }
-
-  if (lhs instanceof DictionaryType && rhs instanceof DictionaryType) {
-    if (!isInvariantType(lhs.keyType, rhs.keyType, true)) {
-      return false;
-    }
-    if (!isInvariantType(lhs.valueType, rhs.valueType, true)) {
-      return false;
-    }
-    return true;
-  }
-
-  if (lhs instanceof DictionaryType && !(rhs instanceof DictionaryType)) {
-    return false;
-  }
-
-  if (lhs instanceof DictionaryImmutableType && rhs instanceof DictionaryImmutableType) {
-    if (!isInvariantType(lhs.keyType, rhs.keyType, true)) {
-      return false;
-    }
-    if (!isInvariantType(lhs.valueType, rhs.valueType, true)) {
-      return false;
-    }
-    return true;
-  }
-
-  if (lhs instanceof DictionaryImmutableType && !(rhs instanceof DictionaryImmutableType)) {
-    return false;
-  }
-
-  if (lhs instanceof AbstractDictionaryType && isAnyDictionaryType(rhs)) {
-    if (!isInvariantType(lhs.keyType, rhs.keyType, true)) {
-      return false;
-    }
-    if (!isInvariantType(lhs.valueType, rhs.valueType, true)) {
-      return false;
-    }
-    return true;
-  }
-
-  if (lhs instanceof AbstractDictionaryType && !isAnyDictionaryType(rhs)) {
-    return false;
-  }
-
-  // if (
-  //   (lhs instanceof TupleType || lhs instanceof DeconstructedTupleType) &&
-  //   rhs instanceof TupleType
-  // ) {
-  //   if (lhs.ofTypes.length === rhs.ofTypes.length) {
-  //     mustBeCompatibleTypes(lhs.ofTypes, rhs.ofTypes, compileErrors, location);
-  //   } else {
-  //     if (lhs instanceof DeconstructedTupleType) {
-  //       compileErrors.push(
-  //         new SyntaxCompileError(`Wrong number of deconstructed variables`, location),
-  //       );
-  //     } else {
-  //       FailNotAssignable(lhs, rhs, compileErrors, location);
-  //     }
-  //   }
-  // }
-
-  if (
-    (lhs instanceof TupleType || lhs instanceof DeconstructedTupleType) &&
-    !(rhs instanceof TupleType)
-  ) {
-    return false;
-  }
-
-  if (lhs instanceof IterableType && !isIterableType(rhs)) {
-    return false;
-  }
-
-  if (lhs instanceof IterableType && isIterableType(rhs)) {
-    if (!isInvariantType(lhs.ofType, rhs.ofType, true)) {
-      return false;
-    }
-    return true;
-  }
-
-  if (lhs instanceof EnumType && rhs instanceof EnumType) {
-    if (lhs.name !== rhs.name) {
-      return false;
-    }
-  }
-
-  if (lhs instanceof EnumType && !(rhs instanceof EnumType)) {
-    return false;
-  }
-
-  if (rhs instanceof EnumType && !(lhs instanceof EnumType)) {
-    return false;
-  }
-
-  if (lhs instanceof ClassType) {
-    if (lhs.isAssignableFrom(rhs)) {
-      return true;
-    }
-    return false;
-  }
-
-  if (
-    (lhs instanceof FunctionType && !(rhs instanceof FunctionType)) ||
-    (rhs instanceof FunctionType && !(lhs instanceof FunctionType))
-  ) {
-    return false;
-  }
-
-  // if (lhs instanceof FunctionType && rhs instanceof FunctionType) {
-  //   mustBeCompatibleSignatures(lhs.parameterTypes, rhs.parameterTypes, compileErrors, location);
-  //   mustBeAssignableType(lhs.returnType, rhs.returnType, compileErrors, location);
-  //   return;
-  // }
-
-  if (lhs instanceof GenericParameterType && rhs instanceof GenericParameterType) {
-    if (lhs.name !== rhs.name) {
-      return false;
-    }
-    return true;
-  }
-
-  // if (lhs instanceof DeconstructedListType) {
-  //   let ok = true;
-
-  //   if (isGenericSymbolType(lhs.tailType)) {
-  //     ok = isAssignableFrom(lhs.headType, lhs.tailType.ofType);
-  //   }
-
-  //   ok = ok && isAssignableFrom(lhs.tailType, rhs);
-
-  //   if (isGenericSymbolType(rhs)) {
-  //     ok = ok && isAssignableFrom(lhs.headType, rhs.ofType);
-  //   }
-
-  //   return ok;
-  // }
-
-  if (lhs instanceof GenericParameterType || rhs instanceof GenericParameterType) {
-    return false;
-  }
-
-  return true;
 }
 
 export function mustBeAssignableType(
@@ -1003,174 +801,6 @@ export function mustBeAssignableType(
   }
 
   FailNotAssignable(lhs, rhs, compileErrors, location);
-
-  // if (lhs instanceof RegExpType && !(rhs instanceof RegExpType)) {
-  //   FailNotAssignable(lhs, rhs, compileErrors, location);
-  //   return;
-  // }
-  // if (lhs instanceof BooleanType && !(rhs instanceof BooleanType)) {
-  //   FailNotAssignable(lhs, rhs, compileErrors, location);
-  //   return;
-  // }
-  // if (lhs instanceof StringType && !(rhs instanceof StringType)) {
-  //   FailNotAssignable(lhs, rhs, compileErrors, location);
-  //   return;
-  // }
-  // if (lhs instanceof IntType && !(rhs instanceof IntType)) {
-  //   FailNotAssignable(lhs, rhs, compileErrors, location);
-  //   return;
-  // }
-  // if (lhs instanceof FloatType && !isNumber(rhs)) {
-  //   FailNotAssignable(lhs, rhs, compileErrors, location);
-  //   return;
-  // }
-
-  // if (lhs instanceof ListType && rhs instanceof ListType) {
-  //   if (!isInvariantType(lhs.ofType, rhs.ofType, true)) {
-  //     FailNotAssignable(lhs, rhs, compileErrors, location);
-  //   }
-  //   return;
-  // }
-
-  // if (lhs instanceof ListType && !(rhs instanceof ListType)) {
-  //   FailNotAssignable(lhs, rhs, compileErrors, location);
-  //   return;
-  // }
-
-  // if (lhs instanceof ArrayType && rhs instanceof ArrayType) {
-  //   if (!isInvariantType(lhs.ofType, rhs.ofType, true)) {
-  //     FailNotAssignable(lhs, rhs, compileErrors, location);
-  //   }
-  //   return;
-  // }
-
-  // if (lhs instanceof ArrayType && !(rhs instanceof ArrayType)) {
-  //   FailNotAssignable(lhs, rhs, compileErrors, location);
-  //   return;
-  // }
-
-  // if (lhs instanceof DictionaryType && rhs instanceof DictionaryType) {
-  //   if (!isInvariantType(lhs.keyType, rhs.keyType, true)) {
-  //     FailNotAssignable(lhs, rhs, compileErrors, location);
-  //   }
-  //   if (!isInvariantType(lhs.valueType, rhs.valueType, true)) {
-  //     FailNotAssignable(lhs, rhs, compileErrors, location);
-  //   }
-  //   return;
-  // }
-
-  // if (lhs instanceof DictionaryType && !(rhs instanceof DictionaryType)) {
-  //   FailNotAssignable(lhs, rhs, compileErrors, location);
-  //   return;
-  // }
-
-  // if (lhs instanceof DictionaryImmutableType && rhs instanceof DictionaryImmutableType) {
-  //   if (!isInvariantType(lhs.keyType, rhs.keyType, true)) {
-  //     FailNotAssignable(lhs, rhs, compileErrors, location);
-  //   }
-  //   if (!isInvariantType(lhs.valueType, rhs.valueType, true)) {
-  //     FailNotAssignable(lhs, rhs, compileErrors, location);
-  //   }
-  //   return;
-  // }
-
-  // if (lhs instanceof DictionaryImmutableType && !(rhs instanceof DictionaryImmutableType)) {
-  //   FailNotAssignable(lhs, rhs, compileErrors, location);
-  //   return;
-  // }
-
-  // if (lhs instanceof AbstractDictionaryType && isAnyDictionaryType(rhs)) {
-  //   if (!isInvariantType(lhs.keyType, rhs.keyType, true)) {
-  //     FailNotAssignable(lhs, rhs, compileErrors, location);
-  //   }
-  //   if (!isInvariantType(lhs.valueType, rhs.valueType, true)) {
-  //     FailNotAssignable(lhs, rhs, compileErrors, location);
-  //   }
-  //   return;
-  // }
-
-  // if (lhs instanceof AbstractDictionaryType && !isAnyDictionaryType(rhs)) {
-  //   FailNotAssignable(lhs, rhs, compileErrors, location);
-  //   return;
-  // }
-
-  // if (
-  //   (lhs instanceof TupleType || lhs instanceof DeconstructedTupleType) &&
-  //   !(rhs instanceof TupleType)
-  // ) {
-  //   FailNotAssignable(lhs, rhs, compileErrors, location);
-  //   return;
-  // }
-
-  // if (lhs instanceof IterableType && !isIterableType(rhs)) {
-  //   FailNotAssignable(lhs, rhs, compileErrors, location);
-  //   return;
-  // }
-
-  // if (lhs instanceof IterableType && isIterableType(rhs)) {
-  //   if (!isInvariantType(lhs.ofType, rhs.ofType, true)) {
-  //     FailNotAssignable(lhs, rhs, compileErrors, location);
-  //   }
-  //   return;
-  // }
-
-  // if (lhs instanceof EnumType && rhs instanceof EnumType) {
-  //   if (lhs.name !== rhs.name) {
-  //     FailNotAssignable(lhs, rhs, compileErrors, location);
-  //     return;
-  //   }
-  // }
-
-  // if (lhs instanceof EnumType && !(rhs instanceof EnumType)) {
-  //   FailNotAssignable(lhs, rhs, compileErrors, location);
-  //   return;
-  // }
-
-  // if (rhs instanceof EnumType && !(lhs instanceof EnumType)) {
-  //   FailNotAssignable(lhs, rhs, compileErrors, location);
-  //   return;
-  // }
-
-  // if (lhs instanceof ClassType) {
-  //   if (lhs.isAssignableFrom(rhs)) {
-  //     return;
-  //   }
-  //   FailNotAssignable(lhs, rhs, compileErrors, location);
-  //   return;
-  // }
-
-  // if (
-  //   (lhs instanceof FunctionType && !(rhs instanceof FunctionType)) ||
-  //   (rhs instanceof FunctionType && !(lhs instanceof FunctionType))
-  // ) {
-  //   FailNotAssignable(lhs, rhs, compileErrors, location);
-  //   return;
-  // }
-
-  // if (lhs instanceof GenericParameterType && rhs instanceof GenericParameterType) {
-  //   if (lhs.name !== rhs.name) {
-  //     FailNotAssignable(lhs, rhs, compileErrors, location);
-  //   }
-  //   return;
-  // }
-
-  // if (lhs instanceof DeconstructedListType) {
-  //   if (isGenericSymbolType(lhs.tailType)) {
-  //     mustBeAssignableType(lhs.headType, lhs.tailType.ofType, compileErrors, location);
-  //   }
-
-  //   mustBeAssignableType(lhs.tailType, rhs, compileErrors, location);
-
-  //   if (isGenericSymbolType(rhs)) {
-  //     mustBeAssignableType(lhs.headType, rhs.ofType, compileErrors, location);
-  //   }
-
-  //   return;
-  // }
-
-  // if (lhs instanceof GenericParameterType || rhs instanceof GenericParameterType) {
-  //   FailNotAssignable(lhs, rhs, compileErrors, location);
-  // }
 }
 
 function mustBeCompatibleDeconstruction(
