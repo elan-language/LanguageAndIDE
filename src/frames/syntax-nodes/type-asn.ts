@@ -7,6 +7,7 @@ import { ClassType } from "../symbols/class-type";
 import { DictionaryImmutableType } from "../symbols/dictionary-immutable-type";
 import { DictionaryType } from "../symbols/dictionary-type";
 import { FunctionType } from "../symbols/function-type";
+import { ListType } from "../symbols/list-type";
 import { StringType } from "../symbols/string-type";
 import {
   getGlobalScope,
@@ -71,13 +72,9 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
 
   compile(): string {
     this.compileErrors = [];
+    const rootSt = this.rootSymbol().symbolType(transforms());
 
-    mustBeKnownSymbolType(
-      this.rootSymbol().symbolType(transforms()),
-      this.id,
-      this.compileErrors,
-      this.fieldId,
-    );
+    mustBeKnownSymbolType(rootSt, this.id, this.compileErrors, this.fieldId);
 
     mustMatchGenericParameters(
       this.genericParameters,
@@ -90,11 +87,11 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
       gp.compile();
     }
 
-    if (this.id === "Dictionary" || this.id === "DictionaryImmutable") {
+    if (isAnyDictionaryType(rootSt)) {
       return "Object";
     }
 
-    if (this.id === "List") {
+    if (rootSt instanceof ListType) {
       return "Array";
     }
 
