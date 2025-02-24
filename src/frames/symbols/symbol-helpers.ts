@@ -769,48 +769,6 @@ export function mostPreciseSymbol(lhs: SymbolType, rhs: SymbolType): SymbolType 
 }
 
 export function isAssignableFrom(lhs: SymbolType, rhs: SymbolType): boolean {
-  if (lhs instanceof DictionaryType && rhs instanceof DictionaryType) {
-    if (!isInvariantType(lhs.keyType, rhs.keyType, true)) {
-      return false;
-    }
-    if (!isInvariantType(lhs.valueType, rhs.valueType, true)) {
-      return false;
-    }
-    return true;
-  }
-
-  if (lhs instanceof DictionaryType && !(rhs instanceof DictionaryType)) {
-    return false;
-  }
-
-  if (lhs instanceof DictionaryImmutableType && rhs instanceof DictionaryImmutableType) {
-    if (!isInvariantType(lhs.keyType, rhs.keyType, true)) {
-      return false;
-    }
-    if (!isInvariantType(lhs.valueType, rhs.valueType, true)) {
-      return false;
-    }
-    return true;
-  }
-
-  if (lhs instanceof DictionaryImmutableType && !(rhs instanceof DictionaryImmutableType)) {
-    return false;
-  }
-
-  if (lhs instanceof AbstractDictionaryType && isAnyDictionaryType(rhs)) {
-    if (!isInvariantType(lhs.keyType, rhs.keyType, true)) {
-      return false;
-    }
-    if (!isInvariantType(lhs.valueType, rhs.valueType, true)) {
-      return false;
-    }
-    return true;
-  }
-
-  if (lhs instanceof AbstractDictionaryType && !isAnyDictionaryType(rhs)) {
-    return false;
-  }
-
   // if (
   //   (lhs instanceof TupleType || lhs instanceof DeconstructedTupleType) &&
   //   rhs instanceof TupleType

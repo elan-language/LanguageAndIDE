@@ -1,6 +1,6 @@
 import { DictionarySymbolType } from "../interfaces/dictionary-symbol-type";
 import { SymbolType } from "../interfaces/symbol-type";
-import { isAssignableFrom } from "./symbol-helpers";
+import { isInvariantType } from "./symbol-helpers";
 
 export class DictionaryType implements DictionarySymbolType {
   constructor(
@@ -22,6 +22,13 @@ export class DictionaryType implements DictionarySymbolType {
   }
 
   isAssignableFrom(otherType: SymbolType): boolean {
-    return isAssignableFrom(this, otherType);
+    if (otherType instanceof DictionaryType) {
+      return (
+        isInvariantType(this.keyType, otherType.keyType, true) &&
+        isInvariantType(this.valueType, otherType.valueType, true)
+      );
+    }
+
+    return false;
   }
 }

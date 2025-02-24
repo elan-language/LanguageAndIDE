@@ -1,15 +1,13 @@
 import { DictionarySymbolType } from "../interfaces/dictionary-symbol-type";
 import { SymbolType } from "../interfaces/symbol-type";
-import { isAssignableFrom } from "./symbol-helpers";
+import { isAnyDictionaryType, isInvariantType } from "./symbol-helpers";
 
 export class AbstractDictionaryType implements DictionarySymbolType {
   constructor(
     public readonly keyType: SymbolType,
     public readonly valueType: SymbolType,
   ) {}
-  isAssignableFrom(otherType: SymbolType): boolean {
-    return isAssignableFrom(this, otherType);
-  }
+
   isImmutable = false;
 
   initialValue = "";
@@ -22,5 +20,16 @@ export class AbstractDictionaryType implements DictionarySymbolType {
 
   toString(): string {
     return "AbstractDictionary";
+  }
+
+  isAssignableFrom(otherType: SymbolType): boolean {
+    if (isAnyDictionaryType(otherType)) {
+      return (
+        isInvariantType(this.keyType, otherType.keyType, true) &&
+        isInvariantType(this.valueType, otherType.valueType, true)
+      );
+    }
+
+    return false;
   }
 }
