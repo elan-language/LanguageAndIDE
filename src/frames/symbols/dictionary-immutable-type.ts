@@ -1,5 +1,6 @@
 import { DictionarySymbolType } from "../interfaces/dictionary-symbol-type";
 import { SymbolType } from "../interfaces/symbol-type";
+import { isAssignableFrom } from "./symbol-helpers";
 
 export class DictionaryImmutableType implements DictionarySymbolType {
   constructor(
@@ -21,7 +22,7 @@ export class DictionaryImmutableType implements DictionarySymbolType {
     return "DictionaryImmutable";
   }
 
-  isAssignableFrom(_otherType: SymbolType): boolean {
-    throw new Error("Method not implemented.");
+  isAssignableFrom(otherType: SymbolType): boolean {
+    return isAssignableFrom(this, otherType);
   }
 }

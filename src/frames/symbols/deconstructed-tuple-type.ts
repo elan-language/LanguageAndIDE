@@ -1,5 +1,6 @@
 import { DeconstructedSymbolType } from "../interfaces/deconstructed-symbol-type";
 import { SymbolType } from "../interfaces/symbol-type";
+import { isAssignableFrom } from "./symbol-helpers";
 import { UnknownType } from "./unknown-type";
 
 export class DeconstructedTupleType implements DeconstructedSymbolType {
@@ -30,7 +31,7 @@ export class DeconstructedTupleType implements DeconstructedSymbolType {
     return `(${this.ofTypes.map((t) => t.name).join(", ")})`;
   }
 
-  isAssignableFrom(_otherType: SymbolType): boolean {
-    throw new Error("Method not implemented.");
+  isAssignableFrom(otherType: SymbolType): boolean {
+    return isAssignableFrom(this, otherType);
   }
 }

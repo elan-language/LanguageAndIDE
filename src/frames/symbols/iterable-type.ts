@@ -1,7 +1,7 @@
 import { IterableSymbolType } from "../interfaces/iterable-symbol-type";
 import { ReifyableSymbolType } from "../interfaces/reifyable-symbol-type";
 import { SymbolType } from "../interfaces/symbol-type";
-import { isReifyableSymbolType } from "./symbol-helpers";
+import { isAssignableFrom, isReifyableSymbolType } from "./symbol-helpers";
 import { UnknownType } from "./unknown-type";
 
 export class IterableType implements IterableSymbolType, ReifyableSymbolType {
@@ -30,7 +30,7 @@ export class IterableType implements IterableSymbolType, ReifyableSymbolType {
     return new IterableType(gt);
   }
 
-  isAssignableFrom(_otherType: SymbolType): boolean {
-    throw new Error("Method not implemented.");
+  isAssignableFrom(otherType: SymbolType): boolean {
+    return isAssignableFrom(this, otherType);
   }
 }

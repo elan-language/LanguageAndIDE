@@ -1,4 +1,5 @@
 import { SymbolType } from "../interfaces/symbol-type";
+import { isAssignableFrom } from "./symbol-helpers";
 
 export class TupleType implements SymbolType {
   constructor(public readonly ofTypes: SymbolType[]) {}
@@ -18,7 +19,7 @@ export class TupleType implements SymbolType {
     return `(${this.ofTypes.map((t) => t.name).join(", ")})`;
   }
 
-  isAssignableFrom(_otherType: SymbolType): boolean {
-    throw new Error("Method not implemented.");
+  isAssignableFrom(otherType: SymbolType): boolean {
+    return isAssignableFrom(this, otherType);
   }
 }

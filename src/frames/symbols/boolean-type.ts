@@ -1,4 +1,5 @@
 import { SymbolType } from "../interfaces/symbol-type";
+import { isAssignableFrom } from "./symbol-helpers";
 
 export class BooleanType implements SymbolType {
   private constructor() {}
@@ -14,7 +15,7 @@ export class BooleanType implements SymbolType {
     return "Boolean";
   }
 
-  isAssignableFrom(_otherType: SymbolType): boolean {
-    throw new Error("Method not implemented.");
+  isAssignableFrom(otherType: SymbolType): boolean {
+    return isAssignableFrom(this, otherType);
   }
 }

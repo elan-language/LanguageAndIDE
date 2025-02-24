@@ -1,4 +1,5 @@
 import { SymbolType } from "../interfaces/symbol-type";
+import { isAssignableFrom } from "./symbol-helpers";
 
 export class FunctionType implements SymbolType {
   constructor(
@@ -23,7 +24,7 @@ export class FunctionType implements SymbolType {
     return "Func";
   }
 
-  isAssignableFrom(_otherType: SymbolType): boolean {
-    throw new Error("Method not implemented.");
+  isAssignableFrom(otherType: SymbolType): boolean {
+    return isAssignableFrom(this, otherType);
   }
 }

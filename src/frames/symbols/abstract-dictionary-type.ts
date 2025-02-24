@@ -1,13 +1,14 @@
 import { DictionarySymbolType } from "../interfaces/dictionary-symbol-type";
 import { SymbolType } from "../interfaces/symbol-type";
+import { isAssignableFrom } from "./symbol-helpers";
 
 export class AbstractDictionaryType implements DictionarySymbolType {
   constructor(
     public readonly keyType: SymbolType,
     public readonly valueType: SymbolType,
   ) {}
-  isAssignableFrom(_otherType: SymbolType): boolean {
-    throw new Error("Method not implemented.");
+  isAssignableFrom(otherType: SymbolType): boolean {
+    return isAssignableFrom(this, otherType);
   }
   isImmutable = false;
 
