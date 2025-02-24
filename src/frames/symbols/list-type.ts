@@ -2,7 +2,7 @@ import { IterableSymbolType } from "../interfaces/iterable-symbol-type";
 import { ReifyableSymbolType } from "../interfaces/reifyable-symbol-type";
 import { SymbolType } from "../interfaces/symbol-type";
 import { AbstractListType } from "./abstract-list-type";
-import { isAssignableFrom, isReifyableSymbolType } from "./symbol-helpers";
+import { isInvariantType, isReifyableSymbolType } from "./symbol-helpers";
 import { UnknownType } from "./unknown-type";
 
 export class ListType extends AbstractListType implements IterableSymbolType, ReifyableSymbolType {
@@ -35,6 +35,9 @@ export class ListType extends AbstractListType implements IterableSymbolType, Re
   }
 
   isAssignableFrom(otherType: SymbolType): boolean {
-    return isAssignableFrom(this, otherType);
+    if (otherType instanceof ListType) {
+      return isInvariantType(this.ofType, otherType.ofType, true);
+    }
+    return false;
   }
 }

@@ -1,5 +1,5 @@
 import { SymbolType } from "../interfaces/symbol-type";
-import { isAssignableFrom } from "./symbol-helpers";
+import { isNumber } from "./symbol-helpers";
 
 export class FloatType implements SymbolType {
   private constructor() {}
@@ -15,6 +15,6 @@ export class FloatType implements SymbolType {
   }
 
   isAssignableFrom(otherType: SymbolType): boolean {
-    return isAssignableFrom(this, otherType);
+    return isNumber(otherType);
   }
 }

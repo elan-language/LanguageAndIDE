@@ -769,45 +769,6 @@ export function mostPreciseSymbol(lhs: SymbolType, rhs: SymbolType): SymbolType 
 }
 
 export function isAssignableFrom(lhs: SymbolType, rhs: SymbolType): boolean {
-  if (lhs instanceof RegExpType && !(rhs instanceof RegExpType)) {
-    return false;
-  }
-  if (lhs instanceof BooleanType && !(rhs instanceof BooleanType)) {
-    return false;
-  }
-  if (lhs instanceof StringType && !(rhs instanceof StringType)) {
-    return false;
-  }
-
-  if (lhs instanceof IntType && !(rhs instanceof IntType)) {
-    return false;
-  }
-  if (lhs instanceof FloatType && !isNumber(rhs)) {
-    return false;
-  }
-
-  if (lhs instanceof ListType && rhs instanceof ListType) {
-    if (!isInvariantType(lhs.ofType, rhs.ofType, true)) {
-      return false;
-    }
-    return true;
-  }
-
-  if (lhs instanceof ListType && !(rhs instanceof ListType)) {
-    return false;
-  }
-
-  if (lhs instanceof ArrayType && rhs instanceof ArrayType) {
-    if (!isInvariantType(lhs.ofType, rhs.ofType, true)) {
-      return false;
-    }
-    return true;
-  }
-
-  if (lhs instanceof ArrayType && !(rhs instanceof ArrayType)) {
-    return false;
-  }
-
   if (lhs instanceof DictionaryType && rhs instanceof DictionaryType) {
     if (!isInvariantType(lhs.keyType, rhs.keyType, true)) {
       return false;

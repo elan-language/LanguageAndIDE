@@ -1,6 +1,5 @@
 import { IterableSymbolType } from "../interfaces/iterable-symbol-type";
 import { SymbolType } from "../interfaces/symbol-type";
-import { isAssignableFrom } from "./symbol-helpers";
 
 export class StringType implements IterableSymbolType {
   private constructor() {}
@@ -23,6 +22,6 @@ export class StringType implements IterableSymbolType {
   }
 
   isAssignableFrom(otherType: SymbolType): boolean {
-    return isAssignableFrom(this, otherType);
+    return otherType instanceof StringType;
   }
 }
