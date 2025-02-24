@@ -33,7 +33,6 @@ import {
   PropertyCompileError,
   ReassignInFunctionCompileError,
   RedefinedCompileError,
-  SignatureCompileError,
   SyntaxCompileError,
   TernaryCompileError,
   ThisCompileError,
@@ -62,7 +61,6 @@ import { LetStatement } from "./statements/let-statement";
 import { ArrayType } from "./symbols/array-type";
 import { BooleanType } from "./symbols/boolean-type";
 import { ClassSubType, ClassType } from "./symbols/class-type";
-import { DeconstructedListType } from "./symbols/deconstructed-list-type";
 import { DeconstructedTupleType } from "./symbols/deconstructed-tuple-type";
 import { DuplicateSymbol } from "./symbols/duplicate-symbol";
 import { FloatType } from "./symbols/float-type";
@@ -75,7 +73,6 @@ import {
   isAnyDictionaryType,
   isClassTypeDef,
   isDeconstructedType,
-  isGenericSymbolType,
   isIndexableType,
   isIterableType,
   isListType,
@@ -659,50 +656,6 @@ export function mustBeIntegerType(
   mustBeAssignableType(IntType.Instance, rhs, compileErrors, location);
 }
 
-function mustBeCompatibleTypes(
-  lhss: SymbolType[],
-  rhss: SymbolType[],
-  compileErrors: CompileError[],
-  location: string,
-) {
-  if (lhss.length !== rhss.length) {
-    compileErrors.push(new ParametersCompileError(rhss.length, lhss.length, location));
-  }
-
-  const maxLen = lhss.length > rhss.length ? lhss.length : rhss.length;
-  for (let i = 0; i < maxLen; i++) {
-    mustBeAssignableType(
-      lhss[i] ?? UnknownType.Instance,
-      rhss[i] ?? UnknownType.Instance,
-      compileErrors,
-      location,
-    );
-  }
-  return;
-}
-
-function mustBeCompatibleSignatures(
-  lhss: SymbolType[],
-  rhss: SymbolType[],
-  compileErrors: CompileError[],
-  location: string,
-) {
-  if (lhss.length !== rhss.length) {
-    compileErrors.push(new SignatureCompileError(lhss.length, rhss.length, location));
-  }
-
-  const maxLen = lhss.length > rhss.length ? lhss.length : rhss.length;
-  for (let i = 0; i < maxLen; i++) {
-    mustBeAssignableType(
-      lhss[i] ?? UnknownType.Instance,
-      rhss[i] ?? UnknownType.Instance,
-      compileErrors,
-      location,
-    );
-  }
-  return;
-}
-
 export function mustBeCompatibleMutableType(
   lhs: SymbolType,
   rhs: SymbolType,
@@ -758,43 +711,6 @@ export function mustBeAssignableType(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (
-    (lhs instanceof TupleType || lhs instanceof DeconstructedTupleType) &&
-    rhs instanceof TupleType
-  ) {
-    if (lhs.ofTypes.length === rhs.ofTypes.length) {
-      mustBeCompatibleTypes(lhs.ofTypes, rhs.ofTypes, compileErrors, location);
-    } else {
-      if (lhs instanceof DeconstructedTupleType) {
-        compileErrors.push(
-          new SyntaxCompileError(`Wrong number of deconstructed variables`, location),
-        );
-      } else {
-        FailNotAssignable(lhs, rhs, compileErrors, location);
-      }
-    }
-  }
-
-  if (lhs instanceof FunctionType && rhs instanceof FunctionType) {
-    mustBeCompatibleSignatures(lhs.parameterTypes, rhs.parameterTypes, compileErrors, location);
-    mustBeAssignableType(lhs.returnType, rhs.returnType, compileErrors, location);
-    return;
-  }
-
-  if (lhs instanceof DeconstructedListType) {
-    if (isGenericSymbolType(lhs.tailType)) {
-      mustBeAssignableType(lhs.headType, lhs.tailType.ofType, compileErrors, location);
-    }
-
-    mustBeAssignableType(lhs.tailType, rhs, compileErrors, location);
-
-    if (isGenericSymbolType(rhs)) {
-      mustBeAssignableType(lhs.headType, rhs.ofType, compileErrors, location);
-    }
-
-    return;
-  }
-
   if (!lhs.isAssignableFrom(rhs)) {
     FailNotAssignable(lhs, rhs, compileErrors, location);
   }

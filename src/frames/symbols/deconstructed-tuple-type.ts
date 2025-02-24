@@ -23,12 +23,16 @@ export class DeconstructedTupleType implements DeconstructedSymbolType {
 
   private typeMap = {} as { [index: string]: SymbolType };
 
+  nameOrDiscard(name: string, index: number) {
+    return this.ids[index] ? name : "_";
+  }
+
   get name() {
-    return `${this.ofTypes.map((t) => t.name).join(", ")}`;
+    return `${this.ofTypes.map((t, i) => this.nameOrDiscard(t.name, i)).join(", ")}`;
   }
 
   toString(): string {
-    return `(${this.ofTypes.map((t) => t.name).join(", ")})`;
+    return this.name;
   }
 
   isAssignableFrom(otherType: SymbolType): boolean {

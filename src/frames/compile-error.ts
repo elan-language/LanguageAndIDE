@@ -259,16 +259,6 @@ export class ParametersCompileError extends CompileError {
   }
 }
 
-export class SignatureCompileError extends CompileError {
-  constructor(expected: number, actual: number, location: string) {
-    super(
-      Priority.illegalOperation,
-      `Function Signatures do not match. Expected: ${expected} parameter(s) Provided: ${actual}`,
-      location,
-    );
-  }
-}
-
 export class MutateCompileError extends CompileError {
   constructor(name: string, purpose: string, location: string) {
     super(Priority.illegalOperation, `May not re-assign the ${purpose} '${name}'`, location);

@@ -929,12 +929,17 @@ main
   variable a set to ref p1 is ref p2
   variable b set to ref p1 + ref p2
   variable c set to - ref p1
+  variable d set to ref p1
+  set d to ref p3
 end main
 
 function p1() returns Int
   return 0
 end function
 function p2() returns Int
+  return 0
+end function
+function p3(a as Int) returns Float
   return 0
 end function`;
 
@@ -946,6 +951,8 @@ end function`;
       "Cannot do equality operations on Procedures or Functions",
       "Incompatible types. Expected: Float or Int Provided: Func<of  => Int>",
       "Incompatible types. Expected: Float or Int Provided: Func<of  => Int>",
+      "Incompatible types. Expected: Float or Int Provided: Func<of  => Int>",
+      "Incompatible types. Expected: Func<of  => Int> Provided: Func<of Int => Float>",
     ]);
   });
 

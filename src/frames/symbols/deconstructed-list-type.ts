@@ -1,5 +1,7 @@
 import { DeconstructedSymbolType } from "../interfaces/deconstructed-symbol-type";
 import { SymbolType } from "../interfaces/symbol-type";
+import { ArrayType } from "./array-type";
+import { ListType } from "./list-type";
 import { isGenericSymbolType } from "./symbol-helpers";
 import { UnknownType } from "./unknown-type";
 
@@ -25,26 +27,24 @@ export class DeconstructedListType implements DeconstructedSymbolType {
   private typeMap = {} as { [index: string]: SymbolType };
 
   get name() {
-    return `${this.headdId}:${this.tailId}`;
+    return this.tailId
+      ? this.tailType.name
+      : `${new ListType(this.headType).name} or ${new ArrayType(this.headType).name}`;
   }
 
   toString(): string {
-    return `${this.headdId}:${this.tailId}`;
+    return `${this.headdId ? this.headType.name : "_"}:${this.tailId ? this.tailType.name : "_"}`;
   }
 
   isAssignableFrom(otherType: SymbolType): boolean {
-    let ok = true;
-
-    if (isGenericSymbolType(this.tailType)) {
-      ok = this.headType.isAssignableFrom(this.tailType.ofType);
+    if (this.tailId) {
+      return this.tailType.isAssignableFrom(otherType);
     }
-
-    ok = ok && this.tailType.isAssignableFrom(otherType);
 
     if (isGenericSymbolType(otherType)) {
-      ok = ok && this.headType.isAssignableFrom(otherType.ofType);
+      return this.headType.isAssignableFrom(otherType.ofType);
     }
 
-    return ok;
+    return false;
   }
 }

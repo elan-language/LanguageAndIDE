@@ -762,8 +762,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: String Provided: Int",
-      "Incompatible types. Expected: Int Provided: String",
+      "Incompatible types. Expected: String, Int Provided: tuple(Int, String)",
     ]);
   });
 
@@ -785,7 +784,6 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: String Provided: Int",
       "Incompatible types. Expected: String, Unknown Provided: tuple(Int, String)",
       "'y' is not defined",
     ]);
@@ -829,7 +827,9 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: String Provided: Int"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: String, _ Provided: tuple(Int, String)",
+    ]);
   });
 
   test("Fail_DeconstructIntoExistingLetVariables", async () => {

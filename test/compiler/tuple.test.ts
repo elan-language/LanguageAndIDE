@@ -250,7 +250,9 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: String"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: _, Int Provided: tuple(Int, String)",
+    ]);
   });
 
   test("Fail_ImmutableSoCannotAssignAnItem", async () => {
@@ -282,7 +284,9 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: String"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: tuple(Int, String) Provided: tuple(String, String)",
+    ]);
   });
 
   test("Fail_DifferentSizeTuples1", async () => {
