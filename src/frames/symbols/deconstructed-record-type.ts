@@ -1,7 +1,6 @@
 import { Class } from "../interfaces/class";
 import { DeconstructedSymbolType } from "../interfaces/deconstructed-symbol-type";
 import { SymbolType } from "../interfaces/symbol-type";
-import { isAssignableFrom } from "./symbol-helpers";
 import { UnknownType } from "./unknown-type";
 
 export class DeconstructedRecordType implements DeconstructedSymbolType {
@@ -33,7 +32,7 @@ export class DeconstructedRecordType implements DeconstructedSymbolType {
     return `( ${this.record})`;
   }
 
-  isAssignableFrom(otherType: SymbolType): boolean {
-    return isAssignableFrom(this, otherType);
+  isAssignableFrom(_otherType: SymbolType): boolean {
+    return false;
   }
 }

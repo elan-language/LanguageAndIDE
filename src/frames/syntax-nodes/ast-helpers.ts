@@ -24,7 +24,6 @@ import { ProcedureType } from "../symbols/procedure-type";
 import { StringType } from "../symbols/string-type";
 import {
   isAnyDictionaryType,
-  isAssignableFrom,
   isClassTypeDef,
   parameterNamesWithTypes,
 } from "../symbols/symbol-helpers";
@@ -90,7 +89,7 @@ class TypeHolder implements SymbolType {
     public readonly ofTypes: SymbolType[],
   ) {}
   isAssignableFrom(otherType: SymbolType): boolean {
-    return isAssignableFrom(this, otherType);
+    return this.symbolType.isAssignableFrom(otherType);
   }
   isImmutable = false;
   name = "TypeHolder";

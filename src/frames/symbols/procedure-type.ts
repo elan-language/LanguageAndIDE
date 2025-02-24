@@ -1,5 +1,4 @@
 import { SymbolType } from "../interfaces/symbol-type";
-import { isAssignableFrom } from "./symbol-helpers";
 
 export class ProcedureType implements SymbolType {
   constructor(
@@ -21,7 +20,7 @@ export class ProcedureType implements SymbolType {
     return `Procedure`;
   }
 
-  isAssignableFrom(otherType: SymbolType): boolean {
-    return isAssignableFrom(this, otherType);
+  isAssignableFrom(_otherType: SymbolType): boolean {
+    return true;
   }
 }

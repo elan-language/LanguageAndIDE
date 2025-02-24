@@ -1,5 +1,4 @@
 import { SymbolType } from "../interfaces/symbol-type";
-import { isAssignableFrom } from "./symbol-helpers";
 
 export class EnumType implements SymbolType {
   constructor(public readonly name: string) {}
@@ -14,6 +13,10 @@ export class EnumType implements SymbolType {
   }
 
   isAssignableFrom(otherType: SymbolType): boolean {
-    return isAssignableFrom(this, otherType);
+    if (otherType instanceof EnumType) {
+      return this.name === otherType.name;
+    }
+
+    return false;
   }
 }

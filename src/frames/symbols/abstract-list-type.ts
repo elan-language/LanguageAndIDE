@@ -1,12 +1,9 @@
 import { IterableSymbolType } from "../interfaces/iterable-symbol-type";
 import { SymbolType } from "../interfaces/symbol-type";
-import { isAssignableFrom } from "./symbol-helpers";
 
 export abstract class AbstractListType implements IterableSymbolType {
   constructor(public readonly ofType: SymbolType) {}
-  isAssignableFrom(otherType: SymbolType): boolean {
-    return isAssignableFrom(this, otherType);
-  }
+
   isIterable = true;
 
   isImmutable = false;
@@ -21,5 +18,9 @@ export abstract class AbstractListType implements IterableSymbolType {
 
   toString(): string {
     return "AbstractList";
+  }
+
+  isAssignableFrom(_otherType: SymbolType): boolean {
+    return false;
   }
 }

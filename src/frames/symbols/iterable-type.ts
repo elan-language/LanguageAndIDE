@@ -1,7 +1,7 @@
 import { IterableSymbolType } from "../interfaces/iterable-symbol-type";
 import { ReifyableSymbolType } from "../interfaces/reifyable-symbol-type";
 import { SymbolType } from "../interfaces/symbol-type";
-import { isAssignableFrom, isReifyableSymbolType } from "./symbol-helpers";
+import { isInvariantType, isIterableType, isReifyableSymbolType } from "./symbol-helpers";
 import { UnknownType } from "./unknown-type";
 
 export class IterableType implements IterableSymbolType, ReifyableSymbolType {
@@ -31,6 +31,9 @@ export class IterableType implements IterableSymbolType, ReifyableSymbolType {
   }
 
   isAssignableFrom(otherType: SymbolType): boolean {
-    return isAssignableFrom(this, otherType);
+    if (isIterableType(otherType)) {
+      return isInvariantType(this.ofType, otherType.ofType, true);
+    }
+    return false;
   }
 }

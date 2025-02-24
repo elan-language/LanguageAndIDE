@@ -1,5 +1,4 @@
 import { SymbolType } from "../interfaces/symbol-type";
-import { isAssignableFrom } from "./symbol-helpers";
 
 export class GenericParameterType implements SymbolType {
   constructor(public id: string) {}
@@ -17,6 +16,9 @@ export class GenericParameterType implements SymbolType {
   }
 
   isAssignableFrom(otherType: SymbolType): boolean {
-    return isAssignableFrom(this, otherType);
+    if (otherType instanceof GenericParameterType) {
+      return this.name === otherType.name;
+    }
+    return false;
   }
 }

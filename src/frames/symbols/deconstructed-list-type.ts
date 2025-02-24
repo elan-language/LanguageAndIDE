@@ -1,6 +1,6 @@
 import { DeconstructedSymbolType } from "../interfaces/deconstructed-symbol-type";
 import { SymbolType } from "../interfaces/symbol-type";
-import { isAssignableFrom } from "./symbol-helpers";
+import { isGenericSymbolType } from "./symbol-helpers";
 import { UnknownType } from "./unknown-type";
 
 export class DeconstructedListType implements DeconstructedSymbolType {
@@ -33,6 +33,18 @@ export class DeconstructedListType implements DeconstructedSymbolType {
   }
 
   isAssignableFrom(otherType: SymbolType): boolean {
-    return isAssignableFrom(this, otherType);
+    let ok = true;
+
+    if (isGenericSymbolType(this.tailType)) {
+      ok = this.headType.isAssignableFrom(this.tailType.ofType);
+    }
+
+    ok = ok && this.tailType.isAssignableFrom(otherType);
+
+    if (isGenericSymbolType(otherType)) {
+      ok = ok && this.headType.isAssignableFrom(otherType.ofType);
+    }
+
+    return ok;
   }
 }

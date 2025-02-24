@@ -1,6 +1,5 @@
 import { GenericSymbolType } from "../interfaces/generic-symbol-type";
 import { SymbolType } from "../interfaces/symbol-type";
-import { isAssignableFrom } from "./symbol-helpers";
 
 export class LetType implements GenericSymbolType {
   constructor(public readonly ofType: SymbolType) {}
@@ -13,7 +12,7 @@ export class LetType implements GenericSymbolType {
     return `Let <${this.ofType.name}>`;
   }
 
-  isAssignableFrom(otherType: SymbolType): boolean {
-    return isAssignableFrom(this, otherType);
+  isAssignableFrom(_otherType: SymbolType): boolean {
+    return false;
   }
 }

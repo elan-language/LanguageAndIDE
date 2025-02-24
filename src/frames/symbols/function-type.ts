@@ -1,5 +1,4 @@
 import { SymbolType } from "../interfaces/symbol-type";
-import { isAssignableFrom } from "./symbol-helpers";
 
 export class FunctionType implements SymbolType {
   constructor(
@@ -25,6 +24,21 @@ export class FunctionType implements SymbolType {
   }
 
   isAssignableFrom(otherType: SymbolType): boolean {
-    return isAssignableFrom(this, otherType);
+    if (otherType instanceof FunctionType) {
+      if (this.parameterTypes.length !== otherType.parameterTypes.length) {
+        return false;
+      }
+
+      const rt = this.returnType.isAssignableFrom(otherType.returnType);
+
+      return (
+        rt &&
+        this.parameterTypes
+          .map((t, i) => t.isAssignableFrom(otherType.parameterTypes[i]))
+          .every((b) => b)
+      );
+    }
+
+    return false;
   }
 }
