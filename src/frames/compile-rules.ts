@@ -73,7 +73,6 @@ import { ListType } from "./symbols/list-type";
 import { ProcedureType } from "./symbols/procedure-type";
 import {
   isAnyDictionaryType,
-  isAssignableFrom,
   isClassTypeDef,
   isDeconstructedType,
   isGenericSymbolType,
@@ -796,11 +795,9 @@ export function mustBeAssignableType(
     return;
   }
 
-  if (isAssignableFrom(lhs, rhs)) {
-    return;
+  if (!lhs.isAssignableFrom(rhs)) {
+    FailNotAssignable(lhs, rhs, compileErrors, location);
   }
-
-  FailNotAssignable(lhs, rhs, compileErrors, location);
 }
 
 function mustBeCompatibleDeconstruction(
