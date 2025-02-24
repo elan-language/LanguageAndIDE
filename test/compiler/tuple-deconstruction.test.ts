@@ -786,6 +786,7 @@ end main
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "Incompatible types. Expected: String Provided: Int",
+      "Incompatible types. Expected: String, Unknown Provided: tuple(Int, String)",
       "'y' is not defined",
     ]);
   });

@@ -300,7 +300,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: (Int, String, Int) Provided: (Int, String)",
+      "Incompatible types. Expected: tuple(Int, String, Int) Provided: tuple(Int, String)",
     ]);
   });
 
@@ -319,7 +319,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: (Int, String) Provided: (Int, String, Int)",
+      "Incompatible types. Expected: tuple(Int, String) Provided: tuple(Int, String, Int)",
     ]);
   });
 });

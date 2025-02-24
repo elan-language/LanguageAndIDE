@@ -1,6 +1,6 @@
 import { DeconstructedSymbolType } from "../interfaces/deconstructed-symbol-type";
 import { SymbolType } from "../interfaces/symbol-type";
-import { isAssignableFrom } from "./symbol-helpers";
+import { TupleType } from "./tuple-type";
 import { UnknownType } from "./unknown-type";
 
 export class DeconstructedTupleType implements DeconstructedSymbolType {
@@ -24,7 +24,7 @@ export class DeconstructedTupleType implements DeconstructedSymbolType {
   private typeMap = {} as { [index: string]: SymbolType };
 
   get name() {
-    return `DeconstructedTuple <${this.ofTypes.map((t) => t.name).join(", ")}>`;
+    return `${this.ofTypes.map((t) => t.name).join(", ")}`;
   }
 
   toString(): string {
@@ -32,6 +32,14 @@ export class DeconstructedTupleType implements DeconstructedSymbolType {
   }
 
   isAssignableFrom(otherType: SymbolType): boolean {
-    return isAssignableFrom(this, otherType);
+    if (otherType instanceof TupleType) {
+      if (this.ofTypes.length !== otherType.ofTypes.length) {
+        return false;
+      }
+
+      return this.ofTypes.map((t, i) => t.isAssignableFrom(otherType.ofTypes[i])).every((b) => b);
+    }
+
+    return false;
   }
 }

@@ -34,7 +34,6 @@ import { AbstractListType } from "./abstract-list-type";
 import { ArrayType } from "./array-type";
 import { BooleanType } from "./boolean-type";
 import { ClassType } from "./class-type";
-import { DeconstructedTupleType } from "./deconstructed-tuple-type";
 import { DictionaryImmutableType } from "./dictionary-immutable-type";
 import { DictionaryType } from "./dictionary-type";
 import { EnumType } from "./enum-type";
@@ -50,7 +49,6 @@ import { ProcedureType } from "./procedure-type";
 import { RegExpType } from "./regexp-type";
 import { StringType } from "./string-type";
 import { SymbolScope } from "./symbol-scope";
-import { TupleType } from "./tuple-type";
 import { UnknownSymbol } from "./unknown-symbol";
 import { UnknownType } from "./unknown-type";
 
@@ -769,30 +767,6 @@ export function mostPreciseSymbol(lhs: SymbolType, rhs: SymbolType): SymbolType 
 }
 
 export function isAssignableFrom(lhs: SymbolType, rhs: SymbolType): boolean {
-  // if (
-  //   (lhs instanceof TupleType || lhs instanceof DeconstructedTupleType) &&
-  //   rhs instanceof TupleType
-  // ) {
-  //   if (lhs.ofTypes.length === rhs.ofTypes.length) {
-  //     mustBeCompatibleTypes(lhs.ofTypes, rhs.ofTypes, compileErrors, location);
-  //   } else {
-  //     if (lhs instanceof DeconstructedTupleType) {
-  //       compileErrors.push(
-  //         new SyntaxCompileError(`Wrong number of deconstructed variables`, location),
-  //       );
-  //     } else {
-  //       FailNotAssignable(lhs, rhs, compileErrors, location);
-  //     }
-  //   }
-  // }
-
-  if (
-    (lhs instanceof TupleType || lhs instanceof DeconstructedTupleType) &&
-    !(rhs instanceof TupleType)
-  ) {
-    return false;
-  }
-
   if (lhs instanceof IterableType && !isIterableType(rhs)) {
     return false;
   }
