@@ -108,6 +108,64 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "3hello");
   });
 
+  test("Pass_withFunctionMethods", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable f set to new Foo() with p1 set to 3, p2 set to "hello"
+  print f
+  print f.doubled()
+end main
+
+record Foo
+    property p1 as Float
+    property p2 as String
+
+    function asString() returns String
+      return property.p1.asString() + property.p2.asString()
+    end function
+
+    function doubled() returns Foo
+      return copy this with p1 set to property.p1*2
+    end function
+
+end record`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let f = await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.p1 = 3; _a.p2 = "hello"; return _a;})();
+  await system.printLine(f);
+  await system.printLine((await f.doubled()));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", ""]]);};
+  async _initialise() { return this; }
+  p1 = 0;
+
+  p2 = "";
+
+  async asString() {
+    return (await _stdlib.asString(this.p1)) + (await _stdlib.asString(this.p2));
+  }
+
+  async doubled() {
+    return await (async () => {const _a = {...this}; Object.setPrototypeOf(_a, Object.getPrototypeOf(this)); _a.p1 = this.p1 * 2; return _a;})();
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "3hello6hello");
+  });
+
   test("Fail_AbstractRecord", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 

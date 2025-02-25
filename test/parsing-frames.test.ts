@@ -375,19 +375,54 @@ end class
     fl.parseFrom(source);
     assert.equal(source.getRemainingCode(), "");
   });
-  test("record cannot contain any method", async () => {
+  test("record can contain a function method", async () => {
     const code = `# FFFF Elan Beta 8 valid
 
 record Card
   function foo() returns Int
     return 0
-  end procedure
+  end function
+
 end record
 `;
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(hash, new DefaultProfile(), transforms(), true);
     await await fl.parseFrom(source);
-    assert.equal(fl.parseError!.includes(`0 matches found at function foo()`), true);
+    assert.equal(source.getRemainingCode(), "");
+  });
+
+  test("record can use 'this' in a function method", async () => {
+    const code = `# FFFF Elan Beta 8 valid
+
+record Card
+  property value as Int
+
+  function doubled() returns Card
+    return copy this with x set to property.x * 2
+  end function
+
+end record
+`;
+    const source = new CodeSourceFromString(code);
+    const fl = new FileImpl(hash, new DefaultProfile(), transforms(), true);
+    await await fl.parseFrom(source);
+    assert.equal(source.getRemainingCode(), "");
+  });
+
+  test("record cannot contain a procedure", async () => {
+    const code = `# FFFF Elan Beta 8 valid
+
+record Card
+  procedure foo()
+    print
+  end procedure
+
+end record
+`;
+    const source = new CodeSourceFromString(code);
+    const fl = new FileImpl(hash, new DefaultProfile(), transforms(), true);
+    await await fl.parseFrom(source);
+    assert.equal(fl.parseError!.includes(`0 matches found at procedure foo()`), true);
   });
 
   test("#367 abstract class cannot contain constructor", async () => {

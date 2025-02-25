@@ -1,14 +1,14 @@
 import { copyKeyword } from "../keywords";
 import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
-import { IdentifierNode } from "./identifier-node";
+import { IdentifierOrThis } from "./identiferOrThis";
 import { KeywordNode } from "./keyword-node";
 import { Space } from "./parse-node-helpers";
 import { SpaceNode } from "./space-node";
 import { WithClause } from "./with-clause";
 
 export class CopyWith extends AbstractSequence {
-  original: IdentifierNode | undefined;
+  original: IdentifierOrThis;
   withClause: WithClause | undefined;
   tokenTypes = new Set([
     TokenType.id_let,
@@ -21,13 +21,13 @@ export class CopyWith extends AbstractSequence {
 
   constructor() {
     super();
+    this.original = new IdentifierOrThis();
   }
 
   parseText(text: string): void {
     if (text.trim().length > 0) {
       this.addElement(new KeywordNode(copyKeyword));
       this.addElement(new SpaceNode(Space.required));
-      this.original = new IdentifierNode(this.tokenTypes);
       this.addElement(this.original);
       this.withClause = new WithClause(() => this.original!.matchedText);
       this.addElement(this.withClause);

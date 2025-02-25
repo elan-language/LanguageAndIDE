@@ -64,7 +64,8 @@ export class MemberSelector extends AbstractSelector implements Member {
     } else if (this.class.isInterface) {
       result = keyword === commentMarker;
     } else if (this.class.isRecord) {
-      result = keyword === propertyKeyword || keyword === commentMarker;
+      result =
+        keyword === propertyKeyword || keyword === functionKeyword || keyword === commentMarker;
     } else if (keyword === constructorKeyword) {
       result = this.class.isConcrete && !this.getClass().getConstructor();
     } else {
