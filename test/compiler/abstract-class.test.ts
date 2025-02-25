@@ -1365,4 +1365,34 @@ end class`;
       "There must be only one abstract superclass, Foo, Foo1, Foo2 are abstract classes",
     ]);
   });
+
+  test("Fail_ReturnListOfMutableType", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+abstract class Foo
+  abstract function p1() returns List<of Array<of Int>>
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Immutable type cannot be of mutable type 'Array<of Int>'"]);
+  });
+
+  test("Fail_ParameterListOfMutableType", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+abstract class Foo
+  abstract function p1(a as List<of Array<of Int>>) returns Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Immutable type cannot be of mutable type 'Array<of Int>'"]);
+  });
 });
