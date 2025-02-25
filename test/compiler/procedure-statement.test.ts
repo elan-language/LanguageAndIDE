@@ -1402,4 +1402,19 @@ end procedure`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["'bar' is not defined for type 'Foo'"]);
   });
+
+  test("Fail_ParameterListOfMutableType", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+procedure p1(a as List<of Array<of Int>>)
+  
+end procedure`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Immutable type cannot be of mutable type 'Array<of Int>'"]);
+  });
 });
