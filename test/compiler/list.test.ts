@@ -63,7 +63,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "{{4, 5}, {6, 7, 8}}");
   });
 
-  test("Pass_literalListOfClass", async () => {
+  test("Pass_literalListOfRecord", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -72,15 +72,9 @@ main
   print b
 end main
 
-class Foo
-  constructor()
-  end constructor
+record Foo
 
-  function asString() returns String
-    return "foo"
-  end function
-
-end class`;
+end record`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
@@ -92,15 +86,7 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
-
-  async _initialise() {
-
-    return this;
-  }
-
-  async asString() {
-    return "foo";
-  }
+  async _initialise() { return this; }
 
 }
 return [main, _tests];}`;
@@ -111,7 +97,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{foo}");
+    await assertObjectCodeExecutes(fileImpl, "{a Foo}");
   });
 
   test("Pass_literalListOfValueId", async () => {
@@ -1029,6 +1015,54 @@ return [main, _tests];}`;
 
 main
     variable a set to empty List<of Foo>
+end main
+
+class Foo
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Immutable type cannot be of mutable type 'Foo'"]);
+  });
+
+  test("Fail_ListOfArray", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to empty List<of Array<of Int>>
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Immutable type cannot be of mutable type 'Array<of Int>'"]);
+  });
+
+  test("Fail_ListOfDictionary", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to empty List<of Dictionary<of Int, Int>>
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Immutable type cannot be of mutable type 'Dictionary<of Int, Int>'",
+    ]);
+  });
+
+  test("Fail_LiteralListOfMutableClass", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable f set to new Foo()
+  variable a set to {f}
 end main
 
 class Foo

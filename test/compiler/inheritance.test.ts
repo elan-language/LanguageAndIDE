@@ -1919,7 +1919,7 @@ end function
 
 main
   variable b set to new Bar()
-  variable lst set to {b}
+  variable lst set to [b]
   print fun(lst)
 end main
 
@@ -1933,8 +1933,8 @@ class Bar inherits Foo
   property p1 as Int
 end class
 
-function fun(l as List<of Foo>) returns Foo
-    return l.get(0)
+function fun(l as Array<of Foo>) returns Foo
+    return l[0]
 end function
 `;
 
@@ -1944,7 +1944,7 @@ end function
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: l (List<of Foo>) Provided: List<of Bar>",
+      "Argument types. Expected: l (Array<of Foo>) Provided: Array<of Bar>",
     ]);
   });
 

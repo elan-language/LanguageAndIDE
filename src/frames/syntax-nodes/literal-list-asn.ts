@@ -1,5 +1,5 @@
 import { CompileError } from "../compile-error";
-import { mustBeAssignableType } from "../compile-rules";
+import { mustBeAssignableType, mustBeImmutableGenericType } from "../compile-rules";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstNode } from "../interfaces/ast-node";
 import { ListType } from "../symbols/list-type";
@@ -29,6 +29,8 @@ export class LiteralListAsn extends AbstractAstNode implements AstCollectionNode
     for (const i of this.items) {
       mustBeAssignableType(ofType, i.symbolType(), this.compileErrors, this.fieldId);
     }
+
+    mustBeImmutableGenericType(ofType, this.compileErrors, this.fieldId);
 
     const it = this.items.map((p) => p.compile()).join(", ");
     return `system.list([${it}])`;

@@ -42,7 +42,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main 
-  variable a set to {[1,2], [3,4]}
+  variable a set to [[1,2], [3,4]]
   variable b set to a[1][1]
   print b
 end main`;
@@ -50,7 +50,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.list([system.literalArray([1, 2]), system.literalArray([3, 4])]);
+  let a = system.literalArray([system.literalArray([1, 2]), system.literalArray([3, 4])]);
   let b = system.safeIndex(system.safeIndex(a, 1), 1);
   await system.printLine(b);
 }
@@ -292,7 +292,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main 
-  variable f set to {new Foo()}
+  variable f set to [new Foo()]
   variable b set to 0
   set b to f[0].b.ff()
   print b
@@ -317,7 +317,7 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let f = system.list([system.initialise(await new Foo()._initialise())]);
+  let f = system.literalArray([system.initialise(await new Foo()._initialise())]);
   let b = 0;
   b = (await system.safeIndex(f, 0).b.ff());
   await system.printLine(b);
@@ -654,7 +654,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main 
-  variable a set to {[1,2], [3,4]}
+  variable a set to [[1,2], [3,4]]
   variable b set to ""
   set b to a[1][1]
   print b
