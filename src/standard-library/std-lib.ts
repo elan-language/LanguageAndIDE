@@ -848,108 +848,98 @@ export class StdLib {
   }
 
   @elanFunction(["prompt"], FunctionOptions.impureAsync, ElanString)
-  inputString(prompt: string): Promise<string> {
+  async inputString(prompt: string): Promise<string> {
     this.prompt(prompt);
-    return this.system.input();
+    return await this.system.input();
   }
 
   @elanFunction(["prompt", "minLength", "maxLength"], FunctionOptions.impureAsync, ElanString)
-  inputStringWithLimits(
+  async inputStringWithLimits(
     prompt: string,
     @elanIntType() minLength: number,
     @elanIntType() maxLength: number,
   ): Promise<string> {
-    this.prompt(prompt);
-    return this.system.input().then((s) => {
-      if (s.length < minLength) {
-        this.system.printLine(`minimum length ${minLength} characters`);
-      } else if (s.length > maxLength) {
-        this.system.printLine(`maximum length ${maxLength} characters`);
-      } else {
-        return s;
-      }
-      return this.inputStringWithLimits(prompt, minLength, maxLength);
-    });
+    const s = await this.inputString(prompt);
+
+    if (s.length < minLength) {
+      this.prompt(`minimum length ${minLength} characters`);
+    } else if (s.length > maxLength) {
+      this.prompt(`maximum length ${maxLength} characters`);
+    } else {
+      return s;
+    }
+    return await this.inputStringWithLimits(prompt, minLength, maxLength);
   }
 
   @elanFunction(["prompt", "options"], FunctionOptions.impureAsync, ElanString)
-  inputStringFromOptions(
+  async inputStringFromOptions(
     prompt: string,
     @elanArrayType(ElanString) options: string[],
   ): Promise<string> {
-    this.prompt(prompt);
-    return this.system.input().then((s) => {
-      if (options.includes(s)) {
-        return s;
-      } else {
-        this.system.printLine(`response must be one of ${options}`);
-      }
-      return this.inputStringFromOptions(prompt, options);
-    });
+    const s = await this.inputString(prompt);
+
+    if (options.includes(s)) {
+      return s;
+    }
+    this.prompt(`response must be one of ${options}`);
+    return await this.inputStringFromOptions(prompt, options);
   }
 
   @elanFunction(["prompt"], FunctionOptions.impureAsync, ElanInt)
-  inputInt(prompt: string): Promise<number> {
-    this.prompt(prompt);
-    return this.system.input().then((s) => {
-      const [b, i] = this.parseAsInt(s);
+  async inputInt(prompt: string): Promise<number> {
+    const s = await this.inputString(prompt);
+    const [b, i] = this.parseAsInt(s);
 
-      if (b && i.toString() === s) {
-        return i;
-      } else {
-        this.system.printLine("must be an integer");
-      }
+    if (b && i.toString() === s) {
+      return i;
+    }
 
-      return this.inputInt(prompt);
-    });
+    this.prompt("must be an integer");
+    return await this.inputInt(prompt);
   }
 
   @elanFunction(["prompt", "minValue", "maxValue"], FunctionOptions.impureAsync, ElanInt)
-  inputIntBetween(
+  async inputIntBetween(
     prompt: string,
     @elanIntType() min: number,
     @elanIntType() max: number,
   ): Promise<number> {
-    this.prompt(prompt);
-    return this.system.input().then((s) => {
-      const [b, i] = this.parseAsInt(s);
-      if (b && i.toString() === s && i >= min && i <= max) {
-        return i;
-      } else {
-        this.system.printLine(`must be an integer between ${min} and ${max} inclusive`);
-      }
-      return this.inputIntBetween(prompt, min, max);
-    });
+    const s = await this.inputString(prompt);
+    const [b, i] = this.parseAsInt(s);
+
+    if (b && i.toString() === s && i >= min && i <= max) {
+      return i;
+    }
+
+    this.prompt(`must be an integer between ${min} and ${max} inclusive`);
+
+    return await this.inputIntBetween(prompt, min, max);
   }
 
   @elanFunction(["prompt"], FunctionOptions.impureAsync, ElanFloat)
-  inputFloat(prompt: string): Promise<number> {
-    this.prompt(prompt);
-    return this.system.input().then((s) => {
-      const [b, i] = this.parseAsFloat(s);
+  async inputFloat(prompt: string): Promise<number> {
+    const s = await this.inputString(prompt);
+    const [b, i] = this.parseAsFloat(s);
 
-      if (b) {
-        return i;
-      } else {
-        this.system.printLine("not a number");
-      }
+    if (b) {
+      return i;
+    }
 
-      return this.inputFloat(prompt);
-    });
+    this.prompt("not a number");
+    return await this.inputFloat(prompt);
   }
 
   @elanFunction(["prompt", "minValue", "maxValue"], FunctionOptions.impureAsync, ElanFloat)
-  inputFloatBetween(prompt: string, min: number, max: number): Promise<number> {
-    this.prompt(prompt);
-    return this.system.input().then((s) => {
-      const [b, i] = this.parseAsFloat(s);
-      if (b && i >= min && i <= max) {
-        return i;
-      } else {
-        this.system.printLine(`must be a number between ${min} and ${max} inclusive`);
-      }
-      return this.inputFloatBetween(prompt, min, max);
-    });
+  async inputFloatBetween(prompt: string, min: number, max: number): Promise<number> {
+    const s = await this.inputString(prompt);
+
+    const [b, i] = this.parseAsFloat(s);
+    if (b && i >= min && i <= max) {
+      return i;
+    }
+
+    this.prompt(`must be a number between ${min} and ${max} inclusive`);
+    return await this.inputFloatBetween(prompt, min, max);
   }
   //Math
 
