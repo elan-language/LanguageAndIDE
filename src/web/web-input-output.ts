@@ -153,45 +153,53 @@ export class WebInputOutput implements ElanInputOutput {
       }
     });
   }
-  drawBlockGraphics(html: string): void {
+
+  drawBlockGraphics(html: string): Promise<void> {
     document.getElementById("block-graphics")!.innerHTML = html;
     this.display.focus();
-  }
-  clearBlockGraphics() {
-    this.clearKeyBuffer();
-    this.drawBlockGraphics("");
+    return Promise.resolve();
   }
 
-  drawVectorGraphics(html: string): void {
+  clearBlockGraphics(): Promise<void> {
+    this.clearKeyBuffer();
+    return this.drawBlockGraphics("");
+  }
+
+  drawVectorGraphics(html: string): Promise<void> {
     document.getElementById("vector-graphics")!.innerHTML = html;
     this.display.focus();
+    return Promise.resolve();
   }
-  clearVectorGraphics() {
+
+  clearVectorGraphics(): Promise<void> {
     this.clearKeyBuffer();
-    this.drawVectorGraphics("");
+    return this.drawVectorGraphics("");
   }
-  clearAllGraphics() {
+
+  async clearAllGraphics(): Promise<void> {
     this.clearKeyBuffer();
     this.clearPrintedText();
-    this.clearBlockGraphics();
-    this.clearVectorGraphics();
+    await this.clearBlockGraphics();
+    return this.clearVectorGraphics();
   }
 
   printedText: string = "";
   currentInterval?: any;
 
-  printLine(text: string) {
+  printLine(text: string): Promise<void> {
     this.print(`${text}\n`);
     const element = document.getElementById("printed-text")!;
     element.scrollTop = element.scrollHeight;
+    return Promise.resolve();
   }
 
-  print(text: string) {
+  print(text: string): Promise<void> {
     this.printedText = `${this.printedText}${text}`;
     this.renderPrintedText();
+    return Promise.resolve();
   }
 
-  printTab(position: number, text: string) {
+  printTab(position: number, text: string): Promise<void> {
     const lastNl = this.printedText.lastIndexOf("\n");
     const spaces =
       "                                                                                ";
@@ -199,13 +207,15 @@ export class WebInputOutput implements ElanInputOutput {
     const tab = spaces.substring(0, position - charsSinceNl + 1);
     this.printedText = `${this.printedText}${tab}${text}`;
     this.renderPrintedText();
+    return Promise.resolve();
   }
 
-  stopReading() {
+  stopReading(): Promise<void> {
     clearInterval(this.currentInterval);
     const inputOffset = this.printedText.indexOf("<input");
     this.printedText = `${this.printedText.slice(0, inputOffset)}`;
     this.display.focus();
+    return Promise.resolve();
   }
 
   readLine() {
@@ -259,21 +269,26 @@ export class WebInputOutput implements ElanInputOutput {
     return Promise.resolve(ks);
   }
 
-  clearKeyBuffer() {
+  clearKeyBuffer(): Promise<void> {
     this.keyBuffer = [];
+    return Promise.resolve();
   }
 
-  clearSystemInfo() {
+  clearSystemInfo(): Promise<void> {
     document.getElementById("system-info")!.innerHTML = "";
+    return Promise.resolve();
   }
 
-  renderPrintedText(): void {
+  renderPrintedText(): Promise<void> {
     const div = document.getElementById("printed-text")!;
     div.innerHTML = this.printedText;
     this.display.focus();
+    return Promise.resolve();
   }
-  clearPrintedText() {
+
+  clearPrintedText(): Promise<void> {
     this.printedText = "";
     this.renderPrintedText();
+    return Promise.resolve();
   }
 }

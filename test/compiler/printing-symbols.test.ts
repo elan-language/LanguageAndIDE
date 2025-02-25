@@ -64,7 +64,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  _stdlib.printTab(5, "Foo");
+  await _stdlib.printTab(5, "Foo");
 }
 return [main, _tests];}`;
 
@@ -88,7 +88,7 @@ end main`;
 const global = new class {};
 async function main() {
   await system.printLine("Foo");
-  _stdlib.clearPrintedText();
+  await _stdlib.clearPrintedText();
 }
 return [main, _tests];}`;
 

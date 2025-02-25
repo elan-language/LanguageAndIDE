@@ -1292,7 +1292,13 @@ async function handleWorkerIO(data: WebWorkerWriteMessage) {
       }
       break;
     default:
-      (elanInputOutput as any)[data.function](...data.parameters);
+      try {
+        await (elanInputOutput as any)[data.function](...data.parameters);
+        runWorker?.postMessage(readMsg(""));
+      } catch (e) {
+        runWorker?.postMessage(errorMsg(e));
+      }
+      break;
   }
 }
 

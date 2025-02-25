@@ -42,36 +42,148 @@ export class StubInputOutput implements ElanInputOutput {
     return { type: "write", function: func, parameters: parameters ?? [] } as WebWorkerWriteMessage;
   }
 
-  drawBlockGraphics(html: string): void {
-    postMessage(this.writeMsg("drawBlockGraphics", [html]));
+  drawBlockGraphics(html: string): Promise<void> {
+    return new Promise<void>((rs, rj) => {
+      onmessage = (e) => {
+        const data = e.data as WebWorkerMessage;
+
+        if (data.type === "read") {
+          rs();
+        }
+        if (data.type === "status" && data.status === "error") {
+          rj(data.error as string);
+        }
+      };
+      postMessage(this.writeMsg("drawBlockGraphics", [html]));
+    });
   }
-  clearBlockGraphics() {
-    postMessage(this.writeMsg("clearBlockGraphics"));
+
+  clearBlockGraphics(): Promise<void> {
+    return new Promise<void>((rs, rj) => {
+      onmessage = (e) => {
+        const data = e.data as WebWorkerMessage;
+
+        if (data.type === "read") {
+          rs();
+        }
+        if (data.type === "status" && data.status === "error") {
+          rj(data.error as string);
+        }
+      };
+      postMessage(this.writeMsg("clearBlockGraphics"));
+    });
   }
-  drawVectorGraphics(html: string): void {
-    postMessage(this.writeMsg("drawVectorGraphics", [html]));
+
+  drawVectorGraphics(html: string): Promise<void> {
+    return new Promise<void>((rs, rj) => {
+      onmessage = (e) => {
+        const data = e.data as WebWorkerMessage;
+
+        if (data.type === "read") {
+          rs();
+        }
+        if (data.type === "status" && data.status === "error") {
+          rj(data.error as string);
+        }
+      };
+      postMessage(this.writeMsg("drawVectorGraphics", [html]));
+    });
   }
-  clearVectorGraphics() {
-    postMessage(this.writeMsg("clearVectorGraphics"));
+
+  clearVectorGraphics(): Promise<void> {
+    return new Promise<void>((rs, rj) => {
+      onmessage = (e) => {
+        const data = e.data as WebWorkerMessage;
+
+        if (data.type === "read") {
+          rs();
+        }
+        if (data.type === "status" && data.status === "error") {
+          rj(data.error as string);
+        }
+      };
+      postMessage(this.writeMsg("clearVectorGraphics"));
+    });
   }
+
   clearAllGraphics() {
-    postMessage(this.writeMsg("clearAllGraphics"));
+    return new Promise<void>((rs, rj) => {
+      onmessage = (e) => {
+        const data = e.data as WebWorkerMessage;
+
+        if (data.type === "read") {
+          rs();
+        }
+        if (data.type === "status" && data.status === "error") {
+          rj(data.error as string);
+        }
+      };
+      postMessage(this.writeMsg("clearAllGraphics"));
+    });
   }
 
   printLine(text: string) {
-    postMessage(this.writeMsg("printLine", [text]));
+    return new Promise<void>((rs, rj) => {
+      onmessage = (e) => {
+        const data = e.data as WebWorkerMessage;
+
+        if (data.type === "read") {
+          rs();
+        }
+        if (data.type === "status" && data.status === "error") {
+          rj(data.error as string);
+        }
+      };
+      postMessage(this.writeMsg("printLine", [text]));
+    });
   }
 
   print(text: string) {
-    postMessage(this.writeMsg("print", [text]));
+    return new Promise<void>((rs, rj) => {
+      onmessage = (e) => {
+        const data = e.data as WebWorkerMessage;
+
+        if (data.type === "read") {
+          rs();
+        }
+        if (data.type === "status" && data.status === "error") {
+          rj(data.error as string);
+        }
+      };
+      postMessage(this.writeMsg("print", [text]));
+    });
   }
 
   printTab(position: number, text: string) {
-    postMessage(this.writeMsg("printTab", [position, text]));
+    return new Promise<void>((rs, rj) => {
+      onmessage = (e) => {
+        const data = e.data as WebWorkerMessage;
+
+        if (data.type === "read") {
+          rs();
+        }
+        if (data.type === "status" && data.status === "error") {
+          rj(data.error as string);
+        }
+      };
+      postMessage(this.writeMsg("printTab", [position, text]));
+    });
   }
 
   stopReading() {
-    postMessage(this.writeMsg("stopReading"));
+    return new Promise<void>((rs, rj) => {
+      onmessage = (e) => {
+        const data = e.data as WebWorkerMessage;
+
+        if (data.type === "read") {
+          rs();
+        }
+        if (data.type === "status" && data.status === "error") {
+          rj(data.error as string);
+        }
+      };
+      postMessage(this.writeMsg("stopReading"));
+    });
   }
 
   readLine() {
@@ -129,13 +241,50 @@ export class StubInputOutput implements ElanInputOutput {
   }
 
   clearKeyBuffer() {
-    postMessage(this.writeMsg("clearKeyBuffer"));
+    return new Promise<void>((rs, rj) => {
+      onmessage = (e) => {
+        const data = e.data as WebWorkerMessage;
+
+        if (data.type === "read") {
+          rs();
+        }
+        if (data.type === "status" && data.status === "error") {
+          rj(data.error as string);
+        }
+      };
+
+      postMessage(this.writeMsg("clearKeyBuffer"));
+    });
   }
 
   clearPrintedText() {
-    postMessage(this.writeMsg("clearPrintedText"));
+    return new Promise<void>((rs, rj) => {
+      onmessage = (e) => {
+        const data = e.data as WebWorkerMessage;
+
+        if (data.type === "read") {
+          rs();
+        }
+        if (data.type === "status" && data.status === "error") {
+          rj(data.error as string);
+        }
+      };
+      postMessage(this.writeMsg("clearPrintedText"));
+    });
   }
   clearSystemInfo() {
-    postMessage(this.writeMsg("clearSystemInfo"));
+    return new Promise<void>((rs, rj) => {
+      onmessage = (e) => {
+        const data = e.data as WebWorkerMessage;
+
+        if (data.type === "read") {
+          rs();
+        }
+        if (data.type === "status" && data.status === "error") {
+          rj(data.error as string);
+        }
+      };
+      postMessage(this.writeMsg("clearSystemInfo"));
+    });
   }
 }

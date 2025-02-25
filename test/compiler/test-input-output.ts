@@ -24,46 +24,59 @@ export class TestInputOutput implements ElanInputOutput {
     (t as unknown as hasHiddenType)._type = "Tuple";
     return  Promise.resolve(t);
   }
-  clearKeyBuffer(): void {}
+  clearKeyBuffer(): Promise<void> {
+    return Promise.resolve();
+  }
+
   printed: string = "";
   inputed: string = "";
   drawn: string = "";
 
-  drawBlockGraphics(html: string): void {
+  drawBlockGraphics(html: string): Promise<void> {
     this.drawn = html;
+    return Promise.resolve();
   }
-  clearBlockGraphics(): void {
+  clearBlockGraphics(): Promise<void> {
     this.drawn = "";
+    return Promise.resolve();
   }
-  drawVectorGraphics(html: string): void {
+  drawVectorGraphics(html: string): Promise<void> {
     this.drawn = html;
+    return Promise.resolve();
   }
-  clearVectorGraphics(): void {
+  clearVectorGraphics(): Promise<void> {
     this.drawn = "";
+    return Promise.resolve();
   }
-  clearAllGraphics(): void {
+  clearAllGraphics(): Promise<void> {
     this.drawn = "";
+    return Promise.resolve();
   }
-  print(line: string): void {
+  print(line: string): Promise<void> {
     this.printed = this.printed + line;
+    return Promise.resolve();
   }
-  printLine(line: string): void {
+  printLine(line: string): Promise<void> {
     this.print(line); //Currently, newline is not added for testing purposes
+    return Promise.resolve();
   }
-  printTab(position: number, text: string): void {
+  printTab(position: number, text: string): Promise<void> {
     const charsSinceNl = this.printed.length;
     const spaces =
       "                                                                                ";
     const tab = spaces.substring(0, position - charsSinceNl);
     this.print(`${tab}${text}`);
+    return Promise.resolve();
   }
   readLine(): Promise<string> {
     return Promise.resolve(this.inputed);
   }
-  clearPrintedText(): void {
+  clearPrintedText(): Promise<void> {
     this.printed = "";
+    return Promise.resolve();
   }
-  clearSystemInfo(): void {
+  clearSystemInfo(): Promise<void> {
     this.printed = "";
+    return Promise.resolve();
   }
 }

@@ -90,14 +90,13 @@ export class VectorGraphics {
   }
 
   @elanProcedure([], ProcedureOptions.async)
-  display(): Promise<void> {
+  async display(): Promise<void> {
     const html = this.asHtml();
-    this.system!.elanInputOutput.drawVectorGraphics(html);
-    return this.stdlib.pause(0);
+    return await this.system!.elanInputOutput.drawVectorGraphics(html);
   }
 
   @elanProcedure([], ProcedureOptions.async)
-  clearGraphics() {
-    this.system!.elanInputOutput.clearVectorGraphics();
+  async clearGraphics() {
+    await this.system!.elanInputOutput.clearVectorGraphics();
   }
 }

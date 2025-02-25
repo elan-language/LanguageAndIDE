@@ -194,11 +194,11 @@ export class System {
 
   async printLine(s: any) {
     const ss = await this._stdlib.asString(s);
-    this.elanInputOutput.printLine(ss);
+    await this.elanInputOutput.printLine(ss);
   }
 
   async input() {
-    return this.elanInputOutput.readLine();
+    return await this.elanInputOutput.readLine();
   }
 
   concat<T>(lhs: Array<T> | T, rhs: Array<T> | T) {

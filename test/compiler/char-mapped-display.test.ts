@@ -277,7 +277,7 @@ end main`;
 const global = new class {};
 async function main() {
   let gr = system.initialise(await new _stdlib.BlockGraphics()._initialise());
-  _stdlib.clearKeyBuffer(gr);
+  await _stdlib.clearKeyBuffer(gr);
 }
 return [main, _tests];}`;
 

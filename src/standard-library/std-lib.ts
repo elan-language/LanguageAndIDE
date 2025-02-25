@@ -778,24 +778,24 @@ export class StdLib {
     return this.system.tuple([false, 0]) as [boolean, number];
   }
 
-  @elanProcedure(["text"])
-  printLine(s: string) {
-    this.system.elanInputOutput.print(`${s}\n`);
+  @elanProcedure(["text"], ProcedureOptions.async)
+  async printLine(s: string) {
+    await this.system.elanInputOutput.print(`${s}\n`);
   }
 
-  @elanProcedure(["text"])
-  printNoLine(s: string) {
-    this.system.elanInputOutput.print(s);
+  @elanProcedure(["text"], ProcedureOptions.async)
+  async printNoLine(s: string) {
+    await this.system.elanInputOutput.print(s);
   }
 
-  @elanProcedure(["position", "text"])
-  printTab(@elanIntType() position: number, s: string) {
-    this.system.elanInputOutput.printTab(position, s);
+  @elanProcedure(["position", "text"], ProcedureOptions.async)
+  async printTab(@elanIntType() position: number, s: string) {
+    await this.system.elanInputOutput.printTab(position, s);
   }
 
-  @elanProcedure([])
-  clearPrintedText() {
-    this.system.elanInputOutput.clearPrintedText();
+  @elanProcedure([], ProcedureOptions.async)
+  async clearPrintedText() {
+    await this.system.elanInputOutput.clearPrintedText();
   }
 
   @elanFunction(["size", "initialValue"], FunctionOptions.pure, ElanArray(ElanT1))
@@ -843,13 +843,13 @@ export class StdLib {
   }
 
   //Input functions
-  private prompt(prompt: string) {
-    this.printLine(prompt);
+  private async prompt(prompt: string) {
+    await this.printLine(prompt);
   }
 
   @elanFunction(["prompt"], FunctionOptions.impureAsync, ElanString)
   async inputString(prompt: string): Promise<string> {
-    this.prompt(prompt);
+    await this.prompt(prompt);
     return await this.system.input();
   }
 
@@ -862,9 +862,9 @@ export class StdLib {
     const s = await this.inputString(prompt);
 
     if (s.length < minLength) {
-      this.prompt(`minimum length ${minLength} characters`);
+      await this.prompt(`minimum length ${minLength} characters`);
     } else if (s.length > maxLength) {
-      this.prompt(`maximum length ${maxLength} characters`);
+      await this.prompt(`maximum length ${maxLength} characters`);
     } else {
       return s;
     }
@@ -881,7 +881,7 @@ export class StdLib {
     if (options.includes(s)) {
       return s;
     }
-    this.prompt(`response must be one of ${options}`);
+    await this.prompt(`response must be one of ${options}`);
     return await this.inputStringFromOptions(prompt, options);
   }
 
@@ -894,7 +894,7 @@ export class StdLib {
       return i;
     }
 
-    this.prompt("must be an integer");
+    await this.prompt("must be an integer");
     return await this.inputInt(prompt);
   }
 
@@ -911,7 +911,7 @@ export class StdLib {
       return i;
     }
 
-    this.prompt(`must be an integer between ${min} and ${max} inclusive`);
+    await this.prompt(`must be an integer between ${min} and ${max} inclusive`);
 
     return await this.inputIntBetween(prompt, min, max);
   }
@@ -925,7 +925,7 @@ export class StdLib {
       return i;
     }
 
-    this.prompt("not a number");
+    await this.prompt("not a number");
     return await this.inputFloat(prompt);
   }
 
@@ -938,7 +938,7 @@ export class StdLib {
       return i;
     }
 
-    this.prompt(`must be a number between ${min} and ${max} inclusive`);
+    await this.prompt(`must be a number between ${min} and ${max} inclusive`);
     return await this.inputFloatBetween(prompt, min, max);
   }
   //Math
@@ -1132,22 +1132,22 @@ export class StdLib {
   // Graphics
 
   @elanProcedure([], ProcedureOptions.async)
-  waitForAnyKey() {
-    return this.system.elanInputOutput.waitForAnyKey();
+  async waitForAnyKey() {
+    return await this.system.elanInputOutput.waitForAnyKey();
   }
 
   @elanFunction([], FunctionOptions.impureAsync, ElanString)
-  getKey(): Promise<string> {
-    return this.system!.elanInputOutput.getKey();
+  async getKey(): Promise<string> {
+    return await this.system!.elanInputOutput.getKey();
   }
 
   @elanFunction([], FunctionOptions.impureAsync, ElanTuple([ElanString, ElanString]))
-  getKeyWithModifier(): Promise<[string, string]> {
-    return this.system!.elanInputOutput.getKeyWithModifier();
+  async getKeyWithModifier(): Promise<[string, string]> {
+    return await this.system!.elanInputOutput.getKeyWithModifier();
   }
 
-  @elanProcedure([], ProcedureOptions.extension)
-  clearKeyBuffer(@elanClassType(GraphicsBase) _g: GraphicsBase) {
-    this.system!.elanInputOutput.clearKeyBuffer();
+  @elanProcedure([], ProcedureOptions.asyncExtension)
+  async clearKeyBuffer(@elanClassType(GraphicsBase) _g: GraphicsBase) {
+    await this.system!.elanInputOutput.clearKeyBuffer();
   }
 }
