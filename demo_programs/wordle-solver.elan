@@ -1,4 +1,4 @@
-# FFFF Elan Beta 6 valid
+# 2ff07e466b45cb82d254aabbd2eaf09af31f0f13f6f7c3eadea27387e760ec4d Elan Beta 8 valid
 
 # Wordle Solver: in 'hard' mode (every attempt must be a valid possible answer)
 # Mark each letter of program's attempt word with:
@@ -186,7 +186,7 @@ test maxWordCountRemainingAfterAttempt
 end test
 
 function allRemainingWordCounts(possAnswers as List<of String>) returns List<of WordCount>
-  return possAnswers.map(lambda w as String => new WordCount(w, maxWordCountRemainingAfterAttempt(possAnswers, w)))
+  return possAnswers.map(lambda w as String => newWordCount(w, maxWordCountRemainingAfterAttempt(possAnswers, w)))
 end function
 
 function betterOf(wc1 as WordCount, wc2 as WordCount, possAnswers as List<of String>) returns WordCount
@@ -197,9 +197,9 @@ end function
 
 test betterOf
   let possAnswers be empty List<of String>
-  let b2 be new WordCount("B", 2)
-  let a3 be new WordCount("A", 3)
-  let a2 be new WordCount("A", 2)
+  let b2 be newWordCount("B", 2)
+  let a3 be newWordCount("A", 3)
+  let a2 be newWordCount("A", 2)
   assert betterOf(a3, b2, possAnswers) is b2
   assert betterOf(b2, a3, possAnswers) is b2
   assert betterOf(b2, a2, possAnswers) is b2
@@ -224,17 +224,16 @@ test bestAttempt
   assert bestAttempt(possAnswers2) is "BCDEA"
 end test
 
-class WordCount
-  constructor(word as String, count as Int)
-    set property.word to word
-    set property.count to count
-  end constructor
-
+record WordCount
   property word as String
 
   property count as Int
 
-end class
+end record
+
+function newWordCount(word as String, count as Int) returns WordCount
+  return new WordCount() with word set to word, count set to count
+end function
 
 constant letterPositions set to {0, 1, 2, 3, 4}
 

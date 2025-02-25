@@ -1,4 +1,4 @@
-# FFFF Elan Beta 6 valid
+# 57680673c22a7bcfa30645502e8ddbdba819d0c1b6ec70f59de268760a8cf265 Elan Beta 8 valid
 
 function bestFitLine(points as List<of Point>) returns (Float, Float)
   let sumX be points.reduce(0.0, lambda s as Float, p as Point => s + p.x)
@@ -11,20 +11,19 @@ function bestFitLine(points as List<of Point>) returns (Float, Float)
   return tuple(a, b)
 end function
 
-class Point
-  constructor(x as Float, y as Float)
-    set property.x to x
-    set property.y to y
-  end constructor
-
+record Point
   property x as Float
 
   property y as Float
 
-end class
+end record
+
+function newPoint(x as Float, y as Float) returns Point
+  return new Point() with x set to x, y set to y
+end function
 
 test 
-  let l1 be {new Point(0.71, 1.12), new Point(3.56, 5.36), new Point(7.83, 9.04)}
+  let l1 be {newPoint(0.71, 1.12), newPoint(3.56, 5.36), newPoint(7.83, 9.04)}
   let first, second be bestFitLine(l1)
   assert first.round(3) is 0.766
   assert second.round(3) is 1.093
