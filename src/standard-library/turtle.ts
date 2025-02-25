@@ -41,7 +41,7 @@ export class Turtle extends GraphicsBase {
     this.y = 37.5;
     this.heading = 0;
     this.pen = true;
-    this.shown = false;
+    this.shown = true;
     this.colour = 0;
     this.width = 1;
     this.vg = new VectorGraphics(); // replaced by initialised version in set system()
@@ -52,7 +52,7 @@ export class Turtle extends GraphicsBase {
     this.y = 37.5;
     this.heading = 0;
     this.pen = true;
-    this.shown = false;
+    this.shown = true;
     this.colour = 0;
     this.width = 1;
   }
