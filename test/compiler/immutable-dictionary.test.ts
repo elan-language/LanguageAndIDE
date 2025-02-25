@@ -650,4 +650,107 @@ end main`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Cannot invoke identifier 'a' as a method"]);
   });
+
+  test("Fail_DictionaryImmutableyOfMutableClass", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+    variable a set to empty DictionaryImmutable<of Int, Foo>
+end main
+
+class Foo
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Immutable type cannot be of mutable type 'Foo'"]);
+  });
+
+  test("Fail_DictionaryImmutableOfArray", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to empty DictionaryImmutable<of Int, Array<of Int>>
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Immutable type cannot be of mutable type 'Array<of Int>'"]);
+  });
+
+  test("Fail_DictionaryImmutableOfDictionary", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to empty DictionaryImmutable<of Int, Dictionary<of Int, Int>>
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Immutable type cannot be of mutable type 'Dictionary<of Int, Int>'",
+    ]);
+  });
+
+  test("Fail_LiteralDictionaryImmutableOfMutableClass", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable f set to new Foo()
+  variable a set to {1:f}
+end main
+
+class Foo
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Immutable type cannot be of mutable type 'Foo'"]);
+  });
+
+  test("Fail_LiteralDictionaryImmutableOfArray", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable f set to empty Array<of Int>
+  variable a set to {1:f}
+end main
+
+class Foo
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Immutable type cannot be of mutable type 'Array<of Int>'"]);
+  });
+
+  test("Fail_LiteralDictionaryImmutableOfDictionary", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable f set to ["a":1]
+  variable a set to {1:f}
+end main
+
+class Foo
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Immutable type cannot be of mutable type 'Dictionary<of String, Int>'",
+    ]);
+  });
 });

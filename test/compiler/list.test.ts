@@ -1074,4 +1074,42 @@ end class`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Immutable type cannot be of mutable type 'Foo'"]);
   });
+
+  test("Fail_LiteralListOfArray", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable f set to empty Array<of Int>
+  variable a set to {f}
+end main
+
+class Foo
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Immutable type cannot be of mutable type 'Array<of Int>'"]);
+  });
+
+  test("Fail_LiteralListOfDictionary", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable f set to ["a":1]
+  variable a set to {f}
+end main
+
+class Foo
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Immutable type cannot be of mutable type 'Dictionary<of String, Int>'",
+    ]);
+  });
 });
