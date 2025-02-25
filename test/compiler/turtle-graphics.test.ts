@@ -166,6 +166,8 @@ return [main, _tests];}`;
       fileImpl,
       `<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
   <line x1="50%" y1="50%" x2="60%" y2="50%" stroke="#ff0000" stroke-width="0.8999999999999999%" />
+  <circle cx="60%" cy="50%" r="2.25%" stroke="#000000" stroke-width="0%" fill="#008000" />
+  <line x1="60%" y1="50%" x2="62%" y2="50%" stroke="#000000" stroke-width="0.6%" />
 </svg>
 `,
     );
@@ -209,6 +211,8 @@ return [main, _tests];}`;
       `<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
   <line x1="50%" y1="50%" x2="60%" y2="50%" stroke="#000000" stroke-width="0.3%" />
   <line x1="65%" y1="50%" x2="75%" y2="50%" stroke="#000000" stroke-width="0.3%" />
+  <circle cx="75%" cy="50%" r="2.25%" stroke="#000000" stroke-width="0%" fill="#008000" />
+  <line x1="75%" y1="50%" x2="77%" y2="50%" stroke="#000000" stroke-width="0.6%" />
 </svg>
 `,
     );
