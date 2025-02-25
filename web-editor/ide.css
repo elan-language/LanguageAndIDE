@@ -386,7 +386,9 @@ button.plain:disabled, menu-item.button.plain:disabled {
   font-family: var(--ideTitleFont);
 }
 
-.elan-code:not( :focus-within) {
+.elan-code:not( :focus-within),
+#display:not( :focus-within),
+#system-info:not( :focus-within) {
   opacity: 0.75;
 }
 
