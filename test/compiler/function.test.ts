@@ -1075,4 +1075,19 @@ end function`;
 
     assertDoesNotParse(fileImpl);
   });
+
+  test("Fail_ReturnListOfMutableType", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+function p1() returns List<of Array<of Int>>
+  return p1()
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Immutable type cannot be of mutable type 'Array<of Int>'"]);
+  });
 });

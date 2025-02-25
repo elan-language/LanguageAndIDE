@@ -40,6 +40,8 @@ ${endKeyword} ${functionKeyword}\r
       this.htmlId,
     );
 
+    this.returnType.compile(transforms);
+
     const rt = this.symbolType(transforms).returnType;
 
     mustBeKnownSymbolType(rt, this.returnType.renderAsSource(), this.compileErrors, this.htmlId);

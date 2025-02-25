@@ -73,6 +73,8 @@ export class AbstractFunction extends AbstractFrame implements Member, ElanSymbo
     const name = this.name.compile(transforms);
     mustBeUniqueNameInScope(name, getClassScope(this), transforms, this.compileErrors, this.htmlId);
 
+    this.returnType.compile(transforms);
+
     if (name !== "asString") {
       return `${this.indent()}async ${name}(${this.params.compile(transforms)}) {\r
 ${this.indent()}${this.indent()}return ${this.returnType.compile(transforms)};\r
