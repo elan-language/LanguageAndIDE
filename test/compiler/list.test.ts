@@ -994,6 +994,7 @@ end main`;
       "Incompatible types. Expected: List<of Int> try converting with '.asList()' Provided: Array<of Int>",
     ]);
   });
+
   test("Pass_listOfListOfFloats", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
@@ -1021,5 +1022,22 @@ return [main, _tests];}`;
       fileImpl,
       "{{0, 0, 0, 0.16, 0, 0, 0.01}, {0.85, 0.04, -0.04, 0.85, 0, 1.6, 0.85}, {0.2, -0.26, 0.23, 0.22, 0, 1.6, 0.07}, {-0.15, 0.28, 0.26, 0.24, 0, 0.44, 0.07}}",
     );
+  });
+
+  test("Fail_ListOfMutableClass", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+    variable a set to empty List<of Foo>
+end main
+
+class Foo
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Immutable type cannot be of mutable type 'Foo'"]);
   });
 });

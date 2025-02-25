@@ -680,6 +680,18 @@ export function mustBeImmutableType(
   }
 }
 
+export function mustBeImmutableGenericType(
+  type: SymbolType,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  if (!type.isImmutable) {
+    compileErrors.push(
+      new SyntaxCompileError(`Immutable type cannot be of mutable type '${type.name}'`, location),
+    );
+  }
+}
+
 export function mustBeCompatibleType(
   lhs: SymbolType,
   rhs: SymbolType,

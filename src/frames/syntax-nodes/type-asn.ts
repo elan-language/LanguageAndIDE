@@ -1,5 +1,9 @@
 import { CompileError } from "../compile-error";
-import { mustBeKnownSymbolType, mustMatchGenericParameters } from "../compile-rules";
+import {
+  mustBeImmutableGenericType,
+  mustBeKnownSymbolType,
+  mustMatchGenericParameters,
+} from "../compile-rules";
 import { AstNode } from "../interfaces/ast-node";
 import { AstTypeNode } from "../interfaces/ast-type-node";
 import { Scope } from "../interfaces/scope";
@@ -7,7 +11,6 @@ import { ClassType } from "../symbols/class-type";
 import { DictionaryImmutableType } from "../symbols/dictionary-immutable-type";
 import { DictionaryType } from "../symbols/dictionary-type";
 import { FunctionType } from "../symbols/function-type";
-import { ListType } from "../symbols/list-type";
 import { StringType } from "../symbols/string-type";
 import {
   getGlobalScope,
@@ -72,6 +75,7 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
 
   compile(): string {
     this.compileErrors = [];
+
     const rootSt = this.rootSymbol().symbolType(transforms());
 
     mustBeKnownSymbolType(rootSt, this.id, this.compileErrors, this.fieldId);
@@ -87,11 +91,17 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
       gp.compile();
     }
 
-    if (isAnyDictionaryType(rootSt)) {
+    if (rootSt.isImmutable) {
+      for (const gp of this.genericParameters) {
+        mustBeImmutableGenericType(gp.symbolType(), this.compileErrors, this.fieldId);
+      }
+    }
+
+    if (this.id === "Dictionary" || this.id === "DictionaryImmutable") {
       return "Object";
     }
 
-    if (rootSt instanceof ListType) {
+    if (this.id === "List") {
       return "Array";
     }
 
@@ -100,6 +110,13 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
 
   compileToEmptyObjectCode(): string {
     const st = this.symbolType();
+
+    if (st.isImmutable) {
+      for (const gp of this.genericParameters) {
+        mustBeImmutableGenericType(gp.symbolType(), this.compileErrors, this.fieldId);
+      }
+    }
+
     return st.initialValue;
   }
 

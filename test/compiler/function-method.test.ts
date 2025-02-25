@@ -317,8 +317,8 @@ class Bar
 
   property p1 as Foo
 
-  function getTimes() returns List<of Qux>
-    variable x set to empty List<of Qux>
+  function getTimes() returns Array<of Qux>
+    variable x set to empty Array<of Qux>
     set x to property.p1.times(2)
     return x
   end function
@@ -332,8 +332,8 @@ class Foo
 
     property p1 as Float
 
-    function times(value as Float) returns List<of Qux>
-        return {new Qux()}
+    function times(value as Float) returns Array<of Qux>
+        return [new Qux()]
     end function
 
 end class
@@ -368,7 +368,7 @@ class Bar {
   }
 
   async getTimes() {
-    let x = system.emptyImmutableList();
+    let x = system.emptyArray();
     x = (await this.p1.times(2));
     return x;
   }
@@ -386,7 +386,7 @@ class Foo {
   p1 = 0;
 
   async times(value) {
-    return system.list([system.initialise(await new Qux()._initialise())]);
+    return system.literalArray([system.initialise(await new Qux()._initialise())]);
   }
 
 }
@@ -408,7 +408,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{a Qux}");
+    await assertObjectCodeExecutes(fileImpl, "[a Qux]");
   });
 
   test("Pass_FunctionMethodMayCallOtherClassFunctionViaProperty", async () => {

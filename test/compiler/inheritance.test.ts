@@ -292,7 +292,7 @@ return [main, _tests];}`;
 
 main
   variable b set to new Bar()
-  variable lst set to {b}
+  variable lst set to [b]
   print fun(lst)
 end main
 
@@ -306,7 +306,7 @@ class Bar inherits Foo
   property p1 as Int
 end class
 
-function fun(l as List<of Bar>) returns Bar
+function fun(l as Array<of Bar>) returns Bar
   return l[0]
 end function
 `;
@@ -315,7 +315,7 @@ end function
 const global = new class {};
 async function main() {
   let b = system.initialise(await new Bar()._initialise());
-  let lst = system.list([b]);
+  let lst = system.literalArray([b]);
   await system.printLine((await global.fun(lst)));
 }
 
@@ -1986,7 +1986,7 @@ end procedure
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable lst set to new DictionaryImmutable<of String, Bar>()
+  variable lst set to new Dictionary<of String, Bar>()
   print fun(lst)
 end main
 
@@ -2000,7 +2000,7 @@ class Bar inherits Foo
   property p1 as Int
 end class
 
-function fun(l as DictionaryImmutable<of String, Foo>) returns Foo
+function fun(l as Dictionary<of String, Foo>) returns Foo
     return l["id"]
 end function
 `;
@@ -2011,7 +2011,7 @@ end function
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: l (DictionaryImmutable<of String, Foo>) Provided: DictionaryImmutable<of String, Bar>",
+      "Argument types. Expected: l (Dictionary<of String, Foo>) Provided: Dictionary<of String, Bar>",
     ]);
   });
 
