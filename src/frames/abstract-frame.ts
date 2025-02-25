@@ -327,11 +327,17 @@ export abstract class AbstractFrame implements Frame {
         }
         break;
       }
+      case "m": {
+        if (!e.modKey.control) {
+          break;
+        }
+        // fall through
+      }
       case "ContextMenu": {
-        if (e.autocomplete) {
+        if (e.optionalData) {
           // This case is when user has selected an item FROM the context menu
           const map = this.getContextMenuItems();
-          map.get(e.autocomplete)![1]?.();
+          map.get(e.optionalData)![1]?.();
         } else {
           // Bringup the context menu
           if (!this.isSelected()) {

@@ -738,7 +738,7 @@ function getEditorMsg(
         key: key,
         modKey: modKey,
         selection: selection,
-        autocomplete: autocomplete,
+        optionalData: autocomplete,
       };
     case "click":
     case "dblclick":
@@ -757,7 +757,7 @@ function getEditorMsg(
         id: id,
         modKey: modKey,
         selection: selection,
-        autocomplete: autocomplete,
+        optionalData: autocomplete,
       };
   }
 }

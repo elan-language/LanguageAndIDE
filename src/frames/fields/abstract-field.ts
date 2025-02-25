@@ -161,7 +161,7 @@ export abstract class AbstractField implements Selectable, Field {
     this.codeHasChanged = false;
     const key = e.key;
     const textLen = this.text.length;
-    this.processAutocompleteText(e.autocomplete);
+    this.processAutocompleteText(e.optionalData);
     switch (key) {
       case "Home": {
         this.setSelection(0);
