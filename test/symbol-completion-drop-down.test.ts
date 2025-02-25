@@ -1885,6 +1885,7 @@ end main`;
     await assertSymbolCompletionWithString(fileImpl, "expr5", "range(1,4).ma", expected);
   });
 
+  // outstanding symbol completion bugs eg #1063
   ignore_test("Pass_listExtension2", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 

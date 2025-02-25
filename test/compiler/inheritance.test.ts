@@ -7,7 +7,6 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -723,7 +722,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "3344");
   });
 
-  ignore_test("Pass_SetInheritedProperty", async () => {
+  test("Pass_SetInheritedProperty", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -741,9 +740,9 @@ class Bar inherits Foo
   end constructor
 
   procedure testPrivate(a as Int)
-    print p1
+    print property.p1
     set property.p1 to a
-    print p1
+    print property.p1
   end procedure
 end class`;
 
@@ -758,12 +757,9 @@ class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
   p1 = 0;
 
-  async asString() {
-    return "empty Abstract Class Foo";
-  }
 }
 
-class Bar {
+class Bar extends Foo {
   static emptyInstance() { return system.emptyClass(Bar, []);};
 
   async _initialise() {

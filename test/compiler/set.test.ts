@@ -5,7 +5,6 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -84,7 +83,8 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "{2, 4, 6, 1, 9}");
   });
-  ignore_test("Pass_SetIntersection", async () => {
+
+  test("Pass_SetIntersection", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -116,7 +116,8 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "{4, 3}");
   });
-  ignore_test("Pass_SetDifference", async () => {
+
+  test("Pass_SetDifference", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -148,7 +149,8 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "{2, 6}");
   });
-  ignore_test("Pass_IsDisjointFrom", async () => {
+
+  test("Pass_IsDisjointFrom", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -182,7 +184,8 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "falsetruefalse");
   });
-  ignore_test("Pass_IsSubsetOfIsSupersetOf", async () => {
+
+  test("Pass_IsSubsetOfIsSupersetOf", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
