@@ -497,9 +497,9 @@ async function showError(err: Error, fileName: string, reset: boolean) {
 }
 
 function systemInfoPrintLine(text: string) {
-  const systemInfo = document.getElementById("system-info")!;
-  systemInfo.innerHTML = systemInfo.innerHTML + text + "\n";
-  systemInfo.scrollTop = systemInfo.scrollHeight;
+  systemInfoDiv.innerHTML = systemInfoDiv.innerHTML + text + "\n";
+  systemInfoDiv.scrollTop = systemInfoDiv.scrollHeight;
+  systemInfoDiv.focus();
 }
 
 async function refreshAndDisplay(compileIfParsed: boolean, editingField: boolean) {
@@ -1328,7 +1328,7 @@ async function handleRunWorkerPaused(data: WebWorkerBreakpointMessage): Promise<
   const pausedAt = document.getElementById(data.pausedAt);
   pausedAt?.classList.add("paused-at");
   pausedAt?.scrollIntoView();
-
+  systemInfoDiv.focus();
   updateDisplayValues();
 }
 
