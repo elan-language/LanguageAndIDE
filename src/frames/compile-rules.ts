@@ -682,12 +682,13 @@ export function mustBeImmutableType(
 
 export function mustBeImmutableGenericType(
   type: SymbolType,
+  ofType: SymbolType,
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (!type.isImmutable) {
+  if (!ofType.isImmutable) {
     compileErrors.push(
-      new SyntaxCompileError(`Immutable type cannot be of mutable type '${type.name}'`, location),
+      new SyntaxCompileError(`${type} cannot be of mutable type '${ofType.name}'`, location),
     );
   }
 }

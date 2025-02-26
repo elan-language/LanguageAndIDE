@@ -93,7 +93,7 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
 
     if (rootSt.isImmutable) {
       for (const gp of this.genericParameters) {
-        mustBeImmutableGenericType(gp.symbolType(), this.compileErrors, this.fieldId);
+        mustBeImmutableGenericType(rootSt, gp.symbolType(), this.compileErrors, this.fieldId);
       }
     }
 
@@ -113,7 +113,7 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
 
     if (st.isImmutable) {
       for (const gp of this.genericParameters) {
-        mustBeImmutableGenericType(gp.symbolType(), this.compileErrors, this.fieldId);
+        mustBeImmutableGenericType(st, gp.symbolType(), this.compileErrors, this.fieldId);
       }
     }
 

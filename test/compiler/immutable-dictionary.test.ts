@@ -665,7 +665,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Immutable type cannot be of mutable type 'Foo'"]);
+    assertDoesNotCompile(fileImpl, ["DictionaryImmutable cannot be of mutable type 'Foo'"]);
   });
 
   test("Fail_DictionaryImmutableOfMutableClassKey", async () => {
@@ -682,7 +682,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Immutable type cannot be of mutable type 'Foo'"]);
+    assertDoesNotCompile(fileImpl, ["DictionaryImmutable cannot be of mutable type 'Foo'"]);
   });
 
   test("Fail_DictionaryImmutableOfArrayValue", async () => {
@@ -696,7 +696,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Immutable type cannot be of mutable type 'Array<of Int>'"]);
+    assertDoesNotCompile(fileImpl, [
+      "DictionaryImmutable cannot be of mutable type 'Array<of Int>'",
+    ]);
   });
 
   test("Fail_DictionaryImmutableOfArrayKey", async () => {
@@ -710,7 +712,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Immutable type cannot be of mutable type 'Array<of Int>'"]);
+    assertDoesNotCompile(fileImpl, [
+      "DictionaryImmutable cannot be of mutable type 'Array<of Int>'",
+    ]);
   });
 
   test("Fail_DictionaryImmutableOfDictionaryValue", async () => {
@@ -725,7 +729,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Immutable type cannot be of mutable type 'Dictionary<of Int, Int>'",
+      "DictionaryImmutable cannot be of mutable type 'Dictionary<of Int, Int>'",
     ]);
   });
 
@@ -741,7 +745,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Immutable type cannot be of mutable type 'Dictionary<of Int, Int>'",
+      "DictionaryImmutable cannot be of mutable type 'Dictionary<of Int, Int>'",
     ]);
   });
 
@@ -760,7 +764,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Immutable type cannot be of mutable type 'Foo'"]);
+    assertDoesNotCompile(fileImpl, ["DictionaryImmutable cannot be of mutable type 'Foo'"]);
   });
 
   test("Fail_LiteralDictionaryImmutableOfMutableClassKey", async () => {
@@ -778,7 +782,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Immutable type cannot be of mutable type 'Foo'"]);
+    assertDoesNotCompile(fileImpl, ["DictionaryImmutable cannot be of mutable type 'Foo'"]);
   });
 
   test("Fail_LiteralDictionaryImmutableOfArrayValue", async () => {
@@ -796,7 +800,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Immutable type cannot be of mutable type 'Array<of Int>'"]);
+    assertDoesNotCompile(fileImpl, [
+      "DictionaryImmutable cannot be of mutable type 'Array<of Int>'",
+    ]);
   });
 
   test("Fail_LiteralDictionaryImmutableOfArrayKey", async () => {
@@ -814,7 +820,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Immutable type cannot be of mutable type 'Array<of Int>'"]);
+    assertDoesNotCompile(fileImpl, [
+      "DictionaryImmutable cannot be of mutable type 'Array<of Int>'",
+    ]);
   });
 
   test("Fail_LiteralDictionaryImmutableOfDictionaryValue", async () => {
@@ -833,7 +841,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Immutable type cannot be of mutable type 'Dictionary<of String, Int>'",
+      "DictionaryImmutable cannot be of mutable type 'Dictionary<of String, Int>'",
     ]);
   });
 
@@ -853,7 +861,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Immutable type cannot be of mutable type 'Dictionary<of String, Int>'",
+      "DictionaryImmutable cannot be of mutable type 'Dictionary<of String, Int>'",
     ]);
   });
 });

@@ -1024,7 +1024,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Immutable type cannot be of mutable type 'Foo'"]);
+    assertDoesNotCompile(fileImpl, ["List cannot be of mutable type 'Foo'"]);
   });
 
   test("Fail_ListOfArray", async () => {
@@ -1038,7 +1038,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Immutable type cannot be of mutable type 'Array<of Int>'"]);
+    assertDoesNotCompile(fileImpl, ["List cannot be of mutable type 'Array<of Int>'"]);
   });
 
   test("Fail_ListOfDictionary", async () => {
@@ -1052,9 +1052,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Immutable type cannot be of mutable type 'Dictionary<of Int, Int>'",
-    ]);
+    assertDoesNotCompile(fileImpl, ["List cannot be of mutable type 'Dictionary<of Int, Int>'"]);
   });
 
   test("Fail_LiteralListOfMutableClass", async () => {
@@ -1072,7 +1070,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Immutable type cannot be of mutable type 'Foo'"]);
+    assertDoesNotCompile(fileImpl, ["List cannot be of mutable type 'Foo'"]);
   });
 
   test("Fail_LiteralListOfArray", async () => {
@@ -1090,7 +1088,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Immutable type cannot be of mutable type 'Array<of Int>'"]);
+    assertDoesNotCompile(fileImpl, ["List cannot be of mutable type 'Array<of Int>'"]);
   });
 
   test("Fail_LiteralListOfDictionary", async () => {
@@ -1108,8 +1106,6 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Immutable type cannot be of mutable type 'Dictionary<of String, Int>'",
-    ]);
+    assertDoesNotCompile(fileImpl, ["List cannot be of mutable type 'Dictionary<of String, Int>'"]);
   });
 });

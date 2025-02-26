@@ -1205,7 +1205,7 @@ end interface`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Immutable type cannot be of mutable type 'Array<of Int>'"]);
+    assertDoesNotCompile(fileImpl, ["List cannot be of mutable type 'Array<of Int>'"]);
   });
 
   test("Fail_ParameterListOfMutableType", async () => {
@@ -1220,6 +1220,6 @@ end interface`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Immutable type cannot be of mutable type 'Array<of Int>'"]);
+    assertDoesNotCompile(fileImpl, ["List cannot be of mutable type 'Array<of Int>'"]);
   });
 });
