@@ -37,6 +37,20 @@ body {
   padding: 0;
 }
 
+#lhs {
+  width: 55%;
+  flex-grow: 0;
+  margin-left: 10px;
+  margin-right: 5px;
+}
+
+#rhs {
+  width: 45%;
+  flex-grow: 0;
+  margin-left: 5px;
+  margin-right: 10px;
+}
+
 #lhs,
 #rhs {
   display: flex;
@@ -45,14 +59,7 @@ body {
   margin-bottom: 10px;
 }
 
-#lhs {
-  margin-left: 10px;
-}
 
-#rhs {
-  flex-grow: 1;
-  margin-right: 10px;
-}
 
 #centre-bar {
   cursor: col-resize;

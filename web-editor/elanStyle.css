@@ -54,7 +54,7 @@ el-type {
 }
 el-lit {
     color: var(--string);
-    white-space: pre;
+    white-space: pre-wrap;
 }
 el-id {
     color: var(--namedValue);
