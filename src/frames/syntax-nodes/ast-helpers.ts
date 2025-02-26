@@ -18,6 +18,7 @@ import { DictionaryImmutableType } from "../symbols/dictionary-immutable-type";
 import { DictionaryType } from "../symbols/dictionary-type";
 import { FunctionType } from "../symbols/function-type";
 import { GenericParameterType } from "../symbols/generic-parameter-type";
+import { IntType } from "../symbols/int-type";
 import { IterableType } from "../symbols/iterable-type";
 import { ListType } from "../symbols/list-type";
 import { ProcedureType } from "../symbols/procedure-type";
@@ -25,6 +26,7 @@ import { StringType } from "../symbols/string-type";
 import {
   isAnyDictionaryType,
   isClassTypeDef,
+  isGenericSymbolType,
   parameterNamesWithTypes,
 } from "../symbols/symbol-helpers";
 import { TupleType } from "../symbols/tuple-type";
@@ -368,4 +370,16 @@ export function getIds(ast: AstNode) {
     return id.includes(",") ? id.split(",") : [id];
   }
   return [];
+}
+
+export function getIndexAndOfType(rootType: SymbolType): [SymbolType, SymbolType] {
+  if (isGenericSymbolType(rootType)) {
+    return [IntType.Instance, rootType.ofType];
+  }
+
+  if (isAnyDictionaryType(rootType)) {
+    return [rootType.keyType, rootType.valueType];
+  }
+
+  return [UnknownType.Instance, UnknownType.Instance];
 }

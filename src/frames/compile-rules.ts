@@ -279,7 +279,7 @@ export function mustNotBeNegativeIndex(compileErrors: CompileError[], location: 
   compileErrors.push(new SyntaxCompileError("Index cannot be negative", location));
 }
 
-export function mustBeIndexableSymbol(
+export function mustBeIndexableType(
   symbolId: string,
   symbolType: SymbolType,
   read: boolean,
@@ -293,7 +293,7 @@ export function mustBeIndexableSymbol(
   }
 }
 
-export function mustBeRangeableSymbol(
+export function mustBeRangeableType(
   symbolType: SymbolType,
   read: boolean,
   compileErrors: CompileError[],
