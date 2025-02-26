@@ -10,10 +10,10 @@ import { GenericSymbolType } from "../interfaces/generic-symbol-type";
 import { Parent } from "../interfaces/parent";
 import { Scope } from "../interfaces/scope";
 import { Statement } from "../interfaces/statement";
+import { Transforms } from "../interfaces/transforms";
 import { eachKeyword } from "../keywords";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { transforms } from "../syntax-nodes/ast-helpers";
-import { Transforms } from "../syntax-nodes/transforms";
 
 export class Each extends FrameWithStatements implements Statement {
   isStatement = true;

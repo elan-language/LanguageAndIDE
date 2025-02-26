@@ -6,8 +6,8 @@ import { Field } from "../interfaces/field";
 import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
+import { Transforms } from "../interfaces/transforms";
 import { commentMarker } from "../keywords";
-import { Transforms } from "../syntax-nodes/transforms";
 
 export class CommentStatement extends AbstractFrame implements Statement, Member {
   isStatement = true;

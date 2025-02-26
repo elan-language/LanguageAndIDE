@@ -1,9 +1,9 @@
 import { isGenericClass } from "../frame-helpers";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Scope } from "../interfaces/scope";
+import { Transforms } from "../interfaces/transforms";
 import { propertyKeyword } from "../keywords";
 import { KeywordCompletion } from "../symbol-completion-helpers";
-import { Transforms } from "../syntax-nodes/transforms";
 import {
   isAbstractTypeName,
   isCallStatement,

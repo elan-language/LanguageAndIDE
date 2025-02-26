@@ -5,9 +5,9 @@ import { FrameWithStatements } from "../frame-with-statements";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
+import { Transforms } from "../interfaces/transforms";
 import { repeatKeyword } from "../keywords";
 import { BooleanType } from "../symbols/boolean-type";
-import { Transforms } from "../syntax-nodes/transforms";
 
 export class Repeat extends FrameWithStatements implements Statement {
   isStatement: boolean = true;

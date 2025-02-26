@@ -1,8 +1,8 @@
 // TODO gradually move functions into here and refactor
 
 import { Profile } from "../frames/interfaces/profile";
+import { Transforms } from "../frames/interfaces/transforms";
 import { transform, transformMany } from "../frames/syntax-nodes/ast-visitor";
-import { Transforms } from "../frames/syntax-nodes/transforms";
 
 export async function hash(toHash: string) {
   const msgUint8 = new TextEncoder().encode(toHash); // encode as (utf-8) Uint8Array

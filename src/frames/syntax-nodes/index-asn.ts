@@ -6,6 +6,7 @@ import {
   mustNotBeNegativeIndex,
 } from "../compile-rules";
 import { AstNode } from "../interfaces/ast-node";
+import { ChainedAsn } from "../interfaces/chained-asn";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { ArrayType } from "../symbols/array-type";
@@ -14,7 +15,6 @@ import { ListType } from "../symbols/list-type";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { compileSimpleSubscript, getIndexAndOfType } from "./ast-helpers";
-import { ChainedAsn } from "./chained-asn";
 import { OperationSymbol } from "./operation-symbol";
 import { RangeAsn } from "./range-asn";
 import { UnaryExprAsn } from "./unary-expr-asn";

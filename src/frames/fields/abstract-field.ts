@@ -14,6 +14,7 @@ import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { Frame } from "../interfaces/frame";
 import { Selectable } from "../interfaces/selectable";
+import { Transforms } from "../interfaces/transforms";
 import { propertyKeyword } from "../keywords";
 import { Overtyper } from "../overtyper";
 import { CSV } from "../parse-nodes/csv";
@@ -30,7 +31,6 @@ import {
 import { SymbolWrapper } from "../symbols/symbol-wrapper";
 import { UnknownType } from "../symbols/unknown-type";
 import { EmptyAsn } from "../syntax-nodes/empty-asn";
-import { Transforms } from "../syntax-nodes/transforms";
 
 export abstract class AbstractField implements Selectable, Field {
   public isField: boolean = true;

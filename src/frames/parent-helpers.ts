@@ -3,8 +3,8 @@ import { CompileError } from "./compile-error";
 import { isSelector } from "./frame-helpers";
 import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
+import { Transforms } from "./interfaces/transforms";
 import { BreakpointEvent, CompileStatus, ParseStatus } from "./status-enums";
-import { Transforms } from "./syntax-nodes/transforms";
 
 export function worstParseStatus(prev: ParseStatus, cur: ParseStatus) {
   return cur < prev ? cur : prev;

@@ -10,6 +10,7 @@ import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
+import { Transforms } from "../interfaces/transforms";
 import {
   abstractFunctionKeywords,
   abstractKeyword,
@@ -19,7 +20,6 @@ import {
 import { FunctionType } from "../symbols/function-type";
 import { getClassScope } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
-import { Transforms } from "../syntax-nodes/transforms";
 
 export class AbstractFunction extends AbstractFrame implements Member, ElanSymbol {
   isAbstract = true;

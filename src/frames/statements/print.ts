@@ -4,8 +4,8 @@ import { ExpressionField } from "../fields/expression-field";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
+import { Transforms } from "../interfaces/transforms";
 import { printKeyword } from "../keywords";
-import { Transforms } from "../syntax-nodes/transforms";
 
 export class Print extends AbstractFrame implements Statement {
   isStatement = true;

@@ -1,10 +1,10 @@
 import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
 import { SymbolType } from "../interfaces/symbol-type";
+import { Transforms } from "../interfaces/transforms";
 import { InheritanceNode } from "../parse-nodes/inheritanceNode";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { isAstCollectionNode, transforms } from "../syntax-nodes/ast-helpers";
-import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractField } from "./abstract-field";
 
 export class InheritsFrom extends AbstractField {

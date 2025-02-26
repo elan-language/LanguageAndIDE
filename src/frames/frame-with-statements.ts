@@ -11,6 +11,7 @@ import { Parent } from "./interfaces/parent";
 import { Profile } from "./interfaces/profile";
 import { Scope } from "./interfaces/scope";
 import { StatementFactory } from "./interfaces/statement-factory";
+import { Transforms } from "./interfaces/transforms";
 import {
   compileStatements,
   parentHelper_addChildAfter,
@@ -39,7 +40,6 @@ import { AssertStatement } from "./statements/assert-statement";
 import { StatementSelector } from "./statements/statement-selector";
 import { BreakpointEvent } from "./status-enums";
 import { getIds, handleDeconstruction, isSymbol, symbolMatches } from "./symbols/symbol-helpers";
-import { Transforms } from "./syntax-nodes/transforms";
 
 export abstract class FrameWithStatements extends AbstractFrame implements Parent, Collapsible {
   isFrameWithStatements = true;

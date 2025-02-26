@@ -11,6 +11,7 @@ import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { Class } from "../interfaces/class";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
+import { Transforms } from "../interfaces/transforms";
 import { AbstractDictionaryType } from "../symbols/abstract-dictionary-type";
 import { ArrayType } from "../symbols/array-type";
 import { ClassType } from "../symbols/class-type";
@@ -37,7 +38,6 @@ import { DeconstructedTupleAsn } from "./deconstructed-tuple-asn";
 import { EmptyAsn } from "./empty-asn";
 import { IndexAsn } from "./index-asn";
 import { OperationSymbol } from "./operation-symbol";
-import { Transforms } from "./transforms";
 
 export function isAstQualifiedNode(n: AstNode): n is AstQualifiedNode {
   return !!n && "qualifier" in n;

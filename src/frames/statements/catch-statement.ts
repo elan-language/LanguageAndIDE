@@ -8,10 +8,10 @@ import { Parent } from "../interfaces/parent";
 import { Scope } from "../interfaces/scope";
 import { Statement } from "../interfaces/statement";
 import { SymbolType } from "../interfaces/symbol-type";
+import { Transforms } from "../interfaces/transforms";
 import { catchKeyword, exceptionKeyword, inKeyword } from "../keywords";
 import { StringType } from "../symbols/string-type";
 import { SymbolScope } from "../symbols/symbol-scope";
-import { Transforms } from "../syntax-nodes/transforms";
 
 export class CatchStatement extends FrameWithStatements implements Statement, ElanSymbol {
   isStatement = true;

@@ -5,9 +5,9 @@ import {
 } from "../compile-rules";
 import { GlobalFrame } from "../interfaces/global-frame";
 import { Parent } from "../interfaces/parent";
+import { Transforms } from "../interfaces/transforms";
 import { endKeyword, functionKeyword, returnsKeyword } from "../keywords";
 import { getGlobalScope } from "../symbols/symbol-helpers";
-import { Transforms } from "../syntax-nodes/transforms";
 import { FunctionFrame } from "./function-frame";
 
 export class GlobalFunction extends FunctionFrame implements GlobalFrame {

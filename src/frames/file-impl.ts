@@ -34,6 +34,7 @@ import { Profile } from "./interfaces/profile";
 import { Scope } from "./interfaces/scope";
 import { Selectable } from "./interfaces/selectable";
 import { StatementFactory } from "./interfaces/statement-factory";
+import { Transforms } from "./interfaces/transforms";
 import {
   parentHelper_addChildAfter,
   parentHelper_addChildBefore,
@@ -66,7 +67,6 @@ import {
 import { DuplicateSymbol } from "./symbols/duplicate-symbol";
 import { elanSymbols } from "./symbols/elan-symbols";
 import { isSymbol, symbolMatches } from "./symbols/symbol-helpers";
-import { Transforms } from "./syntax-nodes/transforms";
 
 // for web editor bundle
 export { CodeSourceFromString };

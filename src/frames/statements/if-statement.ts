@@ -6,10 +6,10 @@ import { Field } from "../interfaces/field";
 import { Frame } from "../interfaces/frame";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
+import { Transforms } from "../interfaces/transforms";
 import { endKeyword, ifKeyword, thenKeyword } from "../keywords";
 import { compileStatements } from "../parent-helpers";
 import { BooleanType } from "../symbols/boolean-type";
-import { Transforms } from "../syntax-nodes/transforms";
 import { Else } from "./else";
 
 export class IfStatement extends FrameWithStatements implements Statement {

@@ -2,6 +2,7 @@ import { mustBeInterfaceClass, mustBeKnownSymbolType } from "../compile-rules";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { SymbolType } from "../interfaces/symbol-type";
+import { Transforms } from "../interfaces/transforms";
 import { abstractClassKeywords, endKeyword, interfaceKeyword } from "../keywords";
 import {
   parentHelper_compileChildren,
@@ -9,7 +10,6 @@ import {
   parentHelper_renderChildrenAsSource,
 } from "../parent-helpers";
 import { ClassSubType, ClassType } from "../symbols/class-type";
-import { Transforms } from "../syntax-nodes/transforms";
 import { ClassFrame } from "./class-frame";
 
 export class InterfaceFrame extends ClassFrame {

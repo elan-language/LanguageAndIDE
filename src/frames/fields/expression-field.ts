@@ -1,13 +1,13 @@
 import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
 import { Scope } from "../interfaces/scope";
+import { Transforms } from "../interfaces/transforms";
 import { ArgListNode } from "../parse-nodes/arg-list-node";
 import { ExprNode } from "../parse-nodes/expr-node";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { parameterNames } from "../symbols/symbol-helpers";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { transforms } from "../syntax-nodes/ast-helpers";
-import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractField } from "./abstract-field";
 
 export class ExpressionField extends AbstractField {

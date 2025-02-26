@@ -2,8 +2,8 @@ import { CodeSource } from "../code-source";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
+import { Transforms } from "../interfaces/transforms";
 import { endKeyword, tryKeyword } from "../keywords";
-import { Transforms } from "../syntax-nodes/transforms";
 import { CatchStatement } from "./catch-statement";
 
 export class TryStatement extends FrameWithStatements {

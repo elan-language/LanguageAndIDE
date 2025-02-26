@@ -1,17 +1,19 @@
 import { CompileError } from "../compile-error";
+import { compilerAssert } from "../compile-rules";
+import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstNode } from "../interfaces/ast-node";
+import { ChainedAsn } from "../interfaces/chained-asn";
 import { Scope } from "../interfaces/scope";
 import { updateScopeInChain } from "../symbols/symbol-helpers";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { transforms } from "./ast-helpers";
-import { ChainedAsn } from "./chained-asn";
 import { CsvAsn } from "./csv-asn";
 
 export class CompositeAsn extends AbstractAstNode implements AstNode {
   constructor(
     private readonly expr1: AstNode,
-    private readonly expr2: AstNode,
+    private readonly expr2: AstCollectionNode,
     public readonly fieldId: string,
     private readonly scope: Scope,
   ) {
@@ -27,7 +29,9 @@ export class CompositeAsn extends AbstractAstNode implements AstNode {
   }
 
   setupNodes() {
-    const leafNodes = (this.expr2 as CsvAsn).items as ChainedAsn[];
+    const leafNodes = this.expr2.items as ChainedAsn[];
+
+    compilerAssert(leafNodes.length > 0, "No leaf nodes");
 
     if (!this.finalNode) {
       let previousNode = this.expr1;
@@ -98,7 +102,7 @@ export class CompositeAsn extends AbstractAstNode implements AstNode {
   toString() {
     const ss: string[] = [`${this.expr1}`];
 
-    const leafNodes = (this.expr2 as CsvAsn).items as ChainedAsn[];
+    const leafNodes = this.expr2.items;
 
     for (const ln of leafNodes) {
       ss.push(`${ln}`);

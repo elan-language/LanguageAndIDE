@@ -3,11 +3,11 @@ import { AstNode } from "../interfaces/ast-node";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
+import { Transforms } from "../interfaces/transforms";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { ParamDefAsn } from "./param-def-asn";
-import { Transforms } from "./transforms";
 
 export class LambdaSigAsn extends AbstractAstNode implements Scope, AstNode {
   constructor(

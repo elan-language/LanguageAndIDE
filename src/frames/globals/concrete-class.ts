@@ -4,6 +4,7 @@ import { isConstructor } from "../frame-helpers";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { SymbolType } from "../interfaces/symbol-type";
+import { Transforms } from "../interfaces/transforms";
 import { classKeyword, endKeyword } from "../keywords";
 import {
   parentHelper_compileChildren,
@@ -11,7 +12,6 @@ import {
   parentHelper_renderChildrenAsSource,
 } from "../parent-helpers";
 import { ClassSubType, ClassType } from "../symbols/class-type";
-import { Transforms } from "../syntax-nodes/transforms";
 import { ClassFrame } from "./class-frame";
 
 export class ConcreteClass extends ClassFrame {

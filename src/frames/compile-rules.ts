@@ -1,3 +1,4 @@
+import { ElanCompilerError } from "../elan-compiler-error";
 import { Property } from "./class-members/property";
 import {
   CannotCallAFunction,
@@ -56,6 +57,7 @@ import { ElanSymbol } from "./interfaces/elan-symbol";
 import { Parent } from "./interfaces/parent";
 import { Scope } from "./interfaces/scope";
 import { SymbolType } from "./interfaces/symbol-type";
+import { Transforms } from "./interfaces/transforms";
 import { allKeywords, reservedWords } from "./keywords";
 import { LetStatement } from "./statements/let-statement";
 import { ArrayType } from "./symbols/array-type";
@@ -94,7 +96,6 @@ import {
   transforms,
 } from "./syntax-nodes/ast-helpers";
 import { ThisAsn } from "./syntax-nodes/this-asn";
-import { Transforms } from "./syntax-nodes/transforms";
 
 export function mustBeOfSymbolType(
   exprType: SymbolType,
@@ -1050,4 +1051,12 @@ export function mustBeKnownCompilerDirective(
 
 export function mustNotBeTwoUnaryExpressions(compileErrors: CompileError[], location: string) {
   compileErrors.push(new SyntaxCompileError("Unsupported operation", location));
+}
+
+const compilerAssertions = true;
+
+export function compilerAssert(condition: boolean, message: string) {
+  if (compilerAssertions && !condition) {
+    throw new ElanCompilerError(message);
+  }
 }

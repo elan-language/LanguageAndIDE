@@ -8,11 +8,11 @@ import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { Scope } from "../interfaces/scope";
 import { Statement } from "../interfaces/statement";
+import { Transforms } from "../interfaces/transforms";
 import { forKeyword } from "../keywords";
 import { IntType } from "../symbols/int-type";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
-import { Transforms } from "../syntax-nodes/transforms";
 
 export class For extends FrameWithStatements implements Statement {
   isStatement: boolean = true;

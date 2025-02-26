@@ -10,12 +10,12 @@ import { File } from "../interfaces/file";
 import { Parent } from "../interfaces/parent";
 import { Profile } from "../interfaces/profile";
 import { Scope } from "../interfaces/scope";
+import { Transforms } from "../interfaces/transforms";
 import { endKeyword, functionKeyword, returnKeyword, returnsKeyword } from "../keywords";
 import { ReturnStatement } from "../statements/return-statement";
 import { FunctionType } from "../symbols/function-type";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
-import { Transforms } from "../syntax-nodes/transforms";
 
 export abstract class FunctionFrame extends FrameWithStatements implements Parent, ElanSymbol {
   public name: MethodNameField;

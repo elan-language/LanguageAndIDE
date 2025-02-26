@@ -20,6 +20,7 @@ import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
 import { Scope } from "./interfaces/scope";
 import { Selectable } from "./interfaces/selectable";
+import { Transforms } from "./interfaces/transforms";
 import {
   parentHelper_getAllSelectedChildren,
   parentHelper_getChildAfter,
@@ -36,7 +37,6 @@ import {
 import { allScopedSymbols, orderSymbol } from "./symbols/symbol-helpers";
 import { SymbolScope } from "./symbols/symbol-scope";
 import { UnknownType } from "./symbols/unknown-type";
-import { Transforms } from "./syntax-nodes/transforms";
 
 export abstract class AbstractFrame implements Frame {
   isFrame = true;

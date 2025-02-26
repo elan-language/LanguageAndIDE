@@ -32,6 +32,7 @@ import { Profile } from "../interfaces/profile";
 import { Scope } from "../interfaces/scope";
 import { StatementFactory } from "../interfaces/statement-factory";
 import { SymbolType } from "../interfaces/symbol-type";
+import { Transforms } from "../interfaces/transforms";
 import { classKeyword, constructorKeyword, thisKeyword } from "../keywords";
 import {
   parentHelper_addChildAfter,
@@ -61,7 +62,6 @@ import { getGlobalScope, isSymbol, symbolMatches } from "../symbols/symbol-helpe
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { isAstCollectionNode, isAstIdNode, transforms } from "../syntax-nodes/ast-helpers";
-import { Transforms } from "../syntax-nodes/transforms";
 
 export abstract class ClassFrame
   extends AbstractFrame

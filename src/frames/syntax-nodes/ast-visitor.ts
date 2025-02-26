@@ -397,7 +397,7 @@ export function transform(
 
   if (node instanceof TermChained) {
     const expr1 = transform(node.head, fieldId, scope) as AstNode;
-    const expr2 = transformMany(node.tail!, fieldId, scope) as AstNode;
+    const expr2 = transformMany(node.tail!, fieldId, scope);
     return new CompositeAsn(expr1, expr2, fieldId, scope);
   }
 
