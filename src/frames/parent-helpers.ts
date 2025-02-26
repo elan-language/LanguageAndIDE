@@ -1,5 +1,6 @@
 import { AbstractSelector } from "./abstract-selector";
 import { CompileError } from "./compile-error";
+import { isSelector } from "./frame-helpers";
 import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
 import { BreakpointEvent, CompileStatus, ParseStatus } from "./status-enums";
@@ -75,7 +76,7 @@ export function parentHelper_getChildRange(parent: Parent, first: Frame, last: F
 }
 
 export function parentHelper_getFirstSelectorAsDirectChild(parent: Parent): AbstractSelector {
-  return parent.getChildren().filter((g) => "isSelector" in g)[0] as AbstractSelector;
+  return parent.getChildren().filter((g) => isSelector(g))[0];
 }
 
 export function parentHelper_selectFirstChild(parent: Parent, multiSelect: boolean): boolean {
@@ -163,7 +164,7 @@ export function parentHelper_insertOrGotoChildSelector(
 
 function insertOrGotoChildSelectorBefore(parent: Parent, child: Frame) {
   const prev = parent.getChildBefore(child);
-  if ("isSelector" in prev) {
+  if (isSelector(prev)) {
     // if there is a selector before
     prev.select(true, false);
   } else {
@@ -175,7 +176,7 @@ function insertOrGotoChildSelectorBefore(parent: Parent, child: Frame) {
 
 function insertOrGotoChildSelectorAfter(parent: Parent, child: Frame) {
   const follow = parent.getChildAfter(child);
-  if ("isSelector" in follow) {
+  if (isSelector(follow)) {
     // if there is a selector before
     follow.select(true, false);
   } else {
