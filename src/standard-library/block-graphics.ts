@@ -210,14 +210,13 @@ export class BlockGraphics extends GraphicsBase {
   }
 
   @elanProcedure([], ProcedureOptions.async)
-  display(): Promise<void> {
+  async display(): Promise<void> {
     const html = this.asHtml();
-    this.system!.elanInputOutput.drawBlockGraphics(html);
-    return this.pause(0);
+    return await this.system!.elanInputOutput.drawBlockGraphics(html);
   }
 
   @elanProcedure([], ProcedureOptions.async)
-  clearGraphics() {
-    this.system!.elanInputOutput.clearBlockGraphics();
+  async clearGraphics() {
+    await this.system!.elanInputOutput.clearBlockGraphics();
   }
 }

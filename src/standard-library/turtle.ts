@@ -75,17 +75,17 @@ export class Turtle extends GraphicsBase {
   colour: number;
   width: number;
 
-  @elanProcedure([])
-  show() {
+  @elanProcedure([], ProcedureOptions.async)
+  async show() {
     if (!this.shown) {
       this.shown = true;
       this.addTurtleIfShown();
-      this.vg.display();
+      await this.vg.display();
     }
   }
 
-  @elanProcedure([])
-  clearAndReset() {
+  @elanProcedure([], ProcedureOptions.async)
+  async clearAndReset() {
     this.vg = this._system!.initialise(new VectorGraphics());
     this.x = 50;
     this.y = 37.5;
@@ -93,14 +93,14 @@ export class Turtle extends GraphicsBase {
     this.pen = true;
     this.colour = 0;
     this.width = 1;
-    this.vg.display();
+    await this.vg.display();
   }
 
-  @elanProcedure([])
-  hide() {
+  @elanProcedure([], ProcedureOptions.async)
+  async hide() {
     this.removeTurtleIfShown();
     this.shown = false;
-    this.vg.display();
+    await this.vg.display();
   }
 
   @elanProcedure([])
@@ -144,8 +144,8 @@ export class Turtle extends GraphicsBase {
     return [newX, newY];
   }
 
-  @elanProcedure([])
-  move(distance: number) {
+  @elanProcedure([], ProcedureOptions.async)
+  async move(distance: number) {
     this.removeTurtleIfShown();
     const [newX, newY] = this.getDestination(distance);
     if (this.pen) {
@@ -161,20 +161,20 @@ export class Turtle extends GraphicsBase {
     this.x = newX;
     this.y = newY;
     this.addTurtleIfShown();
-    this.vg.display();
+    await this.vg.display();
   }
 
-  @elanProcedure([])
-  turn(degrees: number) {
-    this.turnToHeading(this.heading + degrees);
+  @elanProcedure([], ProcedureOptions.async)
+  async turn(degrees: number) {
+    await this.turnToHeading(this.heading + degrees);
   }
 
-  @elanProcedure([])
-  turnToHeading(heading: number) {
+  @elanProcedure([], ProcedureOptions.async)
+  async turnToHeading(heading: number) {
     this.removeTurtleIfShown();
     this.heading = this.normaliseHeading(heading);
     this.addTurtleIfShown();
-    this.vg.display();
+    await this.vg.display();
   }
 
   private normaliseHeading(x: number): number {
@@ -187,6 +187,7 @@ export class Turtle extends GraphicsBase {
       setTimeout(() => resolve(), ms);
     });
   }
+
   @elanProcedure([])
   penColour(@elanIntType() colour: number) {
     this.colour = colour;
@@ -197,13 +198,13 @@ export class Turtle extends GraphicsBase {
     this.width = width > 0 ? width : 1;
   }
 
-  @elanProcedure([])
-  placeAt(x: number, y: number) {
+  @elanProcedure([], ProcedureOptions.async)
+  async placeAt(x: number, y: number) {
     this.removeTurtleIfShown();
     this.x = x;
     this.y = y;
     this.addTurtleIfShown();
-    this.vg.display();
+    await this.vg.display();
   }
 
   @elanFunction([], FunctionOptions.pure)

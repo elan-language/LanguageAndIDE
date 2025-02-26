@@ -738,7 +738,7 @@ function getEditorMsg(
         key: key,
         modKey: modKey,
         selection: selection,
-        autocomplete: autocomplete,
+        optionalData: autocomplete,
       };
     case "click":
     case "dblclick":
@@ -757,7 +757,7 @@ function getEditorMsg(
         id: id,
         modKey: modKey,
         selection: selection,
-        autocomplete: autocomplete,
+        optionalData: autocomplete,
       };
   }
 }
@@ -1292,7 +1292,13 @@ async function handleWorkerIO(data: WebWorkerWriteMessage) {
       }
       break;
     default:
-      (elanInputOutput as any)[data.function](...data.parameters);
+      try {
+        await (elanInputOutput as any)[data.function](...data.parameters);
+        runWorker?.postMessage(readMsg(""));
+      } catch (e) {
+        runWorker?.postMessage(errorMsg(e));
+      }
+      break;
   }
 }
 
