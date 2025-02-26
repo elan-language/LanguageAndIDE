@@ -26,45 +26,60 @@ export class CompositeAsn extends AbstractAstNode implements AstNode {
       .concat(this.expr2.aggregateCompileErrors());
   }
 
+  setupNodes() {
+    const leafNodes = (this.expr2 as CsvAsn).items as ChainedAsn[];
+
+    if (!this.finalNode) {
+      let previousNode = this.expr1;
+      let previousScope = updateScopeInChain(previousNode, transforms(), this.scope);
+
+      for (let i = 0; i < leafNodes.length; i++) {
+        const currentNode = leafNodes[i];
+
+        currentNode.updateScopeAndChain(previousScope, previousNode);
+
+        previousNode = new CompositeAsn(
+          previousNode,
+          new CsvAsn([currentNode], this.fieldId),
+          this.fieldId,
+          this.scope,
+        );
+
+        previousScope = updateScopeInChain(currentNode, transforms(), this.scope);
+
+        // last node in chain
+        if (i === leafNodes.length - 1) {
+          this.finalNode = currentNode;
+        }
+      }
+    }
+
+    return leafNodes;
+  }
+
   compile(): string {
     this.compileErrors = [];
 
     let code: string[] = [];
 
-    const leafNodes = (this.expr2 as CsvAsn).items as ChainedAsn[];
+    const leafNodes = this.setupNodes();
+    let previousCode = this.expr1.compile();
 
-    let previousNode = this.expr1;
-    let previousScope = updateScopeInChain(previousNode, transforms(), this.scope);
-    let previousCode = previousNode.compile();
-
-    for (let i = 0; i < leafNodes.length; i++) {
-      const currentNode = leafNodes[i];
-
-      currentNode.updateScopeAndChain(previousScope, previousNode);
-
+    for (const currentNode of leafNodes) {
       const currentCode = currentNode.compile();
 
-      if (!currentNode.showPreviousNode) {
-        code = [];
+      if (currentNode.showPreviousNode) {
+        code.push(`${previousCode}`);
       } else {
-        if (previousCode) {
-          code.push(`${previousCode}`);
-        }
+        // if any node doesn't show previous code clear everything
+        code = [];
       }
 
-      previousNode = new CompositeAsn(
-        previousNode,
-        new CsvAsn([currentNode], this.fieldId),
-        this.fieldId,
-        this.scope,
-      );
       previousCode = currentCode;
-      previousScope = updateScopeInChain(currentNode, transforms(), this.scope);
 
       // last node in chain
-      if (i === leafNodes.length - 1) {
+      if (currentNode === this.finalNode) {
         code.push(previousCode);
-        this.finalNode = currentNode;
       }
     }
 
@@ -76,7 +91,7 @@ export class CompositeAsn extends AbstractAstNode implements AstNode {
   }
 
   symbolType() {
-    this.compile();
+    this.setupNodes();
     return this.finalNode?.symbolType() ?? UnknownType.Instance;
   }
 
