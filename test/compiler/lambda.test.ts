@@ -288,6 +288,40 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "25");
   });
 
+  test("Pass_FuncOfMutableType", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable l set to getFunc(5)
+  print l([5])
+end main
+    
+function getFunc(x as Int) returns Func<of Array<of Int> => Array<of Int>>
+  return lambda y as Array<of Int> => [x * y[0]]
+end function`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let l = (await global.getFunc(5));
+  await system.printLine((await l(system.literalArray([5]))));
+}
+
+async function getFunc(x) {
+  return async (y) => system.literalArray([x * system.safeIndex(y, 0)]);
+}
+global["getFunc"] = getFunc;
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[25]");
+  });
+
   test("Fail_ImmediateInvoke", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 

@@ -13,7 +13,7 @@ export class FunctionType implements SymbolType {
     return `system.emptyFunc(${this.returnType.initialValue})`;
   }
 
-  isImmutable = true;
+  isImmutable = false; // so can have mutable type parameters
 
   get name() {
     return `Func<of ${this.parameterTypes.map((p) => p.name).join(", ")} => ${this.returnType.name}>`;
