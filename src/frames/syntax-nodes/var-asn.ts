@@ -1,7 +1,5 @@
 import { CompileError } from "../compile-error";
 import {
-  mustBeAssignableType,
-  mustBeIndexableType,
   mustBeKnownSymbol,
   mustBePropertyPrefixedOnMember,
   mustBePublicMember,
@@ -9,7 +7,6 @@ import {
 import { AstIndexableNode } from "../interfaces/ast-indexable-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { Scope } from "../interfaces/scope";
-import { SymbolType } from "../interfaces/symbol-type";
 import { NullScope } from "../symbols/null-scope";
 import {
   isDeconstructedType,
@@ -19,7 +16,7 @@ import {
 } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { getIndexAndOfType, isEmptyNode, transforms } from "./ast-helpers";
+import { compileSimpleSubscript, getIndexAndOfType, isEmptyNode, transforms } from "./ast-helpers";
 import { EmptyAsn } from "./empty-asn";
 import { IndexAsn } from "./index-asn";
 
@@ -46,24 +43,22 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
     return this.index instanceof IndexAsn && this.index.isSimpleSubscript();
   }
 
-  compileSimpleSubscript(
-    id: string,
-    rootType: SymbolType,
-    index: IndexAsn,
-    prefix: string,
-    postfix: string,
-  ) {
-    mustBeIndexableType(id, rootType, true, this.compileErrors, this.fieldId);
-    const [indexType] = getIndexAndOfType(rootType);
-    mustBeAssignableType(indexType, index.subscript.symbolType(), this.compileErrors, this.fieldId);
-
-    const code = `${prefix}${this.id}, ${postfix}`;
-    return `system.safeIndex(${code})`;
-  }
-
   getSymbol() {
     const currentScope = updateScope(this.qualifier, this.scope);
     return currentScope.resolveSymbol(this.id, transforms(), this.scope);
+  }
+
+  compileSimpleSubscript(id: string, prefix: string, postfix: string) {
+    return compileSimpleSubscript(
+      id,
+      this.rootSymbolType(),
+      this.index as IndexAsn,
+      prefix,
+      this.id,
+      postfix,
+      this.compileErrors,
+      this.fieldId,
+    );
   }
 
   compile(): string {
@@ -88,14 +83,9 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
         ? "[0]"
         : "";
 
+    // handles indexing within call statement
     return this.isSimpleSubscript()
-      ? this.compileSimpleSubscript(
-          symbol.symbolId,
-          this.rootSymbolType(),
-          this.index as IndexAsn,
-          prefix,
-          postfix,
-        )
+      ? this.compileSimpleSubscript(symbol.symbolId, prefix, postfix)
       : `${prefix}${this.id}${postfix}`;
   }
 

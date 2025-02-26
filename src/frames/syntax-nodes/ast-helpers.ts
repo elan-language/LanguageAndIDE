@@ -1,6 +1,6 @@
 import { ElanCompilerError } from "../../elan-compiler-error";
 import { CompileError } from "../compile-error";
-import { mustMatchParameters } from "../compile-rules";
+import { mustBeAssignableType, mustBeIndexableType, mustMatchParameters } from "../compile-rules";
 import { isFile, isFrame, isFunction } from "../frame-helpers";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstIdNode } from "../interfaces/ast-id-node";
@@ -35,6 +35,7 @@ import { transform, transformMany } from "./ast-visitor";
 import { DeconstructedListAsn } from "./deconstructed-list-asn";
 import { DeconstructedTupleAsn } from "./deconstructed-tuple-asn";
 import { EmptyAsn } from "./empty-asn";
+import { IndexAsn } from "./index-asn";
 import { OperationSymbol } from "./operation-symbol";
 import { Transforms } from "./transforms";
 
@@ -382,4 +383,25 @@ export function getIndexAndOfType(rootType: SymbolType): [SymbolType, SymbolType
   }
 
   return [UnknownType.Instance, UnknownType.Instance];
+}
+
+export function wrapSimpleSubscript(code: string): string {
+  return `system.safeIndex(${code})`;
+}
+
+export function compileSimpleSubscript(
+  id: string,
+  rootType: SymbolType,
+  index: IndexAsn,
+  prefix: string,
+  code: string,
+  postfix: string,
+  compileErrors: CompileError[],
+  fieldId: string,
+) {
+  mustBeIndexableType(id, rootType, true, compileErrors, fieldId);
+  const [indexType] = getIndexAndOfType(rootType);
+  mustBeAssignableType(indexType, index.subscript.symbolType(), compileErrors, fieldId);
+
+  return wrapSimpleSubscript(`${prefix}${code}, ${postfix}`);
 }

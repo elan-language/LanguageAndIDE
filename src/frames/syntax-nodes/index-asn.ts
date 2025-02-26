@@ -2,7 +2,6 @@ import { CompileError } from "../compile-error";
 import {
   getId,
   mustBeAssignableType,
-  mustBeIndexableType,
   mustBeRangeableType,
   mustNotBeNegativeIndex,
 } from "../compile-rules";
@@ -14,7 +13,7 @@ import { IntType } from "../symbols/int-type";
 import { ListType } from "../symbols/list-type";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { getIndexAndOfType } from "./ast-helpers";
+import { compileSimpleSubscript, getIndexAndOfType } from "./ast-helpers";
 import { ChainedAsn } from "./chained-asn";
 import { OperationSymbol } from "./operation-symbol";
 import { RangeAsn } from "./range-asn";
@@ -73,19 +72,21 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
     return code;
   }
 
-  wrapSimpleSubscript(code: string): string {
-    return `system.safeIndex(${code})`;
-  }
-
   wrapRange(code: string): string {
     return `system.safeSlice(${code})`;
   }
 
   compileSimpleSubscript(id: string, indexedType: SymbolType, indexed: string, subscript: string) {
-    mustBeIndexableType(id, indexedType, true, this.compileErrors, this.fieldId);
-    const [indexType] = getIndexAndOfType(indexedType);
-    mustBeAssignableType(indexType, this.subscript.symbolType(), this.compileErrors, this.fieldId);
-    return this.wrapSimpleSubscript(`${indexed}, ${subscript}`);
+    return compileSimpleSubscript(
+      id,
+      indexedType,
+      this,
+      "",
+      indexed,
+      subscript,
+      this.compileErrors,
+      this.fieldId,
+    );
   }
 
   compileRange(indexedType: SymbolType, indexed: string, subscript: string) {
