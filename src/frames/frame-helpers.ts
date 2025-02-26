@@ -1,5 +1,6 @@
 import { AbstractSelector } from "./abstract-selector";
 import { CompileError } from "./compile-error";
+import { MainFrame } from "./globals/main-frame";
 import { AstNode } from "./interfaces/ast-node";
 import { AstTypeNode } from "./interfaces/ast-type-node";
 import { Class } from "./interfaces/class";
@@ -17,6 +18,7 @@ import { Scope } from "./interfaces/scope";
 import { Selectable } from "./interfaces/selectable";
 import { Statement } from "./interfaces/statement";
 import { SymbolType } from "./interfaces/symbol-type";
+import { ReturnStatement } from "./statements/return-statement";
 import { CompileStatus, DisplayColour, ParseStatus, RunStatus, TestStatus } from "./status-enums";
 import { ArrayType } from "./symbols/array-type";
 import { ClassType } from "./symbols/class-type";
@@ -32,6 +34,10 @@ export function isCollapsible(f?: Selectable): f is Collapsible {
 
 export function isFile(f?: Scope): f is File {
   return !!f && "isFile" in f;
+}
+
+export function isMain(f?: Scope): f is MainFrame {
+  return !!f && "isMain" in f;
 }
 
 export function isClass(f?: ElanSymbol | Scope): f is Class {
@@ -84,6 +90,10 @@ export function isSelector(f?: Selectable): f is AbstractSelector {
 
 export function isGlobal(f?: Selectable | GlobalFrame): f is GlobalFrame {
   return !!f && "isGlobal" in f;
+}
+
+export function isReturnStatement(f?: Scope): f is ReturnStatement {
+  return !!f && "isReturnStatement" in f;
 }
 
 export function isScope(f?: ElanSymbol | Scope): f is Scope {

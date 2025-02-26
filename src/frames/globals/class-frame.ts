@@ -20,7 +20,7 @@ import {
 import { InheritsFrom } from "../fields/inheritsFrom";
 import { Regexes } from "../fields/regexes";
 import { TypeNameField } from "../fields/type-name-field";
-import { isMember } from "../frame-helpers";
+import { isConstructor, isMember } from "../frame-helpers";
 import { Class } from "../interfaces/class";
 import { Collapsible } from "../interfaces/collapsible";
 import { ElanSymbol } from "../interfaces/elan-symbol";
@@ -360,7 +360,7 @@ export abstract class ClassFrame
   }
 
   public getConstructor(): Constructor {
-    return this.getChildren().filter((m) => "isConstructor" in m)[0] as Constructor;
+    return this.getChildren().filter((m) => isConstructor(m))[0] as Constructor;
   }
   parseFrom(source: CodeSource): void {
     this.parseTop(source);

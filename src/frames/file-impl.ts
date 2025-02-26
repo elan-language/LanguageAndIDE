@@ -9,6 +9,7 @@ import {
   helper_compileStatusAsDisplayStatus,
   helper_parseStatusAsDisplayStatus,
   helper_testStatusAsDisplayStatus,
+  isMain,
   isSelector,
 } from "./frame-helpers";
 import { AbstractClass } from "./globals/abstract-class";
@@ -269,7 +270,7 @@ export class FileImpl implements File, Scope {
       }
 
       for (const frame of this._children.filter(
-        (g) => !("isSelector" in g || g instanceof Enum || g instanceof Constant),
+        (g) => !(isSelector(g) || g instanceof Enum || g instanceof Constant),
       )) {
         ss.push(frame.compile(this.transform));
       }
@@ -346,7 +347,7 @@ export class FileImpl implements File, Scope {
   }
 
   public getFirstSelectorAsDirectChild(): AbstractSelector {
-    return this.getChildren().filter((g) => "isSelector" in g)[0] as GlobalSelector;
+    return this.getChildren().filter((g) => isSelector(g))[0];
   }
 
   getChildNumber(n: number): Frame {
@@ -592,7 +593,7 @@ export class FileImpl implements File, Scope {
   getNextSelector(append?: boolean) {
     if (append) {
       const last = this.getLastChild();
-      if ("isSelector" in last) {
+      if (isSelector(last)) {
         return last as GlobalSelector;
       }
 
@@ -641,7 +642,7 @@ export class FileImpl implements File, Scope {
   }
 
   containsMain(): boolean {
-    const mains = this.getChildren().filter((g) => "isMain" in g);
+    const mains = this.getChildren().filter((g) => isMain(g));
     return mains.length > 0;
   }
 

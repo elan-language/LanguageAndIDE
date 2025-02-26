@@ -3,6 +3,7 @@ import { AbstractSelector } from "./abstract-selector";
 import { CodeSource } from "./code-source";
 import { CompileError } from "./compile-error";
 import { Regexes } from "./fields/regexes";
+import { isSelector } from "./frame-helpers";
 import { Collapsible } from "./interfaces/collapsible";
 import { ElanSymbol } from "./interfaces/elan-symbol";
 import { Frame } from "./interfaces/frame";
@@ -114,7 +115,7 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
 
   insertSelectorAfterLastField(): void {
     const firstChild = this._children[0];
-    if ("isSelector" in firstChild) {
+    if (isSelector(firstChild)) {
       firstChild.select(true, false);
     } else {
       const selector = this.newChildSelector();

@@ -1,4 +1,5 @@
 import { AbstractSelector } from "../abstract-selector";
+import { isGlobal } from "../frame-helpers";
 import { File } from "../interfaces/file";
 import { Frame } from "../interfaces/frame";
 import { GlobalFrame } from "../interfaces/global-frame";
@@ -70,7 +71,7 @@ export class GlobalSelector extends AbstractSelector implements GlobalFrame {
   }
 
   override canBePastedIn(frame: Frame): boolean {
-    if ("isGlobal" in frame) {
+    if (isGlobal(frame)) {
       return this.optionsMatchingUserInput(frame.initialKeywords()).length === 1;
     } else {
       return false;

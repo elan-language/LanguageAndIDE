@@ -2,6 +2,7 @@ import { CodeSource } from "../code-source";
 import { MethodNameField } from "../fields/method-name-field";
 import { ParamList } from "../fields/param-list";
 import { TypeField } from "../fields/type-field";
+import { isReturnStatement } from "../frame-helpers";
 import { FrameWithStatements } from "../frame-with-statements";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
@@ -92,7 +93,7 @@ ${this.renderChildrenAsHtml()}
     return result;
   }
   protected getReturnStatement(): ReturnStatement {
-    return this.getChildren().filter((s) => "isReturnStatement" in s)[0] as ReturnStatement;
+    return this.getChildren().filter((s) => isReturnStatement(s))[0];
   }
 
   resolveSymbol(id: string, transforms: Transforms, initialScope: Scope): ElanSymbol {
