@@ -68,6 +68,39 @@ return [main, _tests];}`;
     ]);
   });
 
+  test("Pass_BracketedExpression", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+end main
+
+test foo
+  assert (3 + 4) is 7
+end test
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+
+}
+
+_tests.push(["test3", async (_outcomes) => {
+  _outcomes.push(await system.assert(async () => (3 + 4), 7, "assert6", _stdlib, false));
+}]);
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertTestObjectCodeExecutes(fileImpl, [
+      ["test3", [new AssertOutcome(TestStatus.pass, "7", "7", "assert6")]],
+    ]);
+  });
+
   test("Pass_AssertTuple", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
