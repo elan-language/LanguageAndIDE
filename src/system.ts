@@ -345,6 +345,16 @@ export class System {
     }
   }
 
+  elanIndexOf<T1>(list: T1[], elem: T1) {
+    for (let i = 0; i < list.length; i++) {
+      const item = list[i];
+      if (this.equals(item, elem)) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
   async breakPoint(
     allScopedSymbols: [string, string][],
     id: string,
