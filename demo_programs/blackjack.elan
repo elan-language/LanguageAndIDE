@@ -1,7 +1,7 @@
-# FFFF Elan Beta 6 valid
+# 50d3fcfc1d1c5bb80a13287207afdbedc2bb18d7863f4791d0c9c21cde403f5c Elan Beta 8 valid
 
 main
-  call simulateGame()
+  call playGame()
 end main
 
 procedure playGame()
@@ -139,7 +139,7 @@ function dealCard(random as Float) returns Card
   let number be (random*52).floor()
   let rank be rankValue.keys()[number div 4]
   let suit be number mod 4
-  return new Card(rank, suit)
+  return new Card() with rank set to rank, suit set to suit
 end function
 
 interface Player
@@ -356,12 +356,7 @@ class Hand
 
 end class
 
-class Card
-  constructor(rank as String, suit as Int)
-    set property.rank to rank
-    set property.suit to suit
-  end constructor
-
+record Card
   property suit as Int
 
   property rank as String
@@ -381,7 +376,7 @@ class Card
     return "{property.rank}<span style='color: {colour}'>{tag}</span>"
   end function
 
-end class
+end record
 
 enum Action stand, draw
 
