@@ -4,9 +4,9 @@ import { ExpressionField } from "../fields/expression-field";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
+import { Transforms } from "../interfaces/transforms";
 import { endKeyword, whileKeyword } from "../keywords";
 import { BooleanType } from "../symbols/boolean-type";
-import { Transforms } from "../syntax-nodes/transforms";
 
 export class While extends FrameWithStatements {
   isStatement = true;

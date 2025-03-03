@@ -9,11 +9,11 @@ import { Frame } from "../interfaces/frame";
 import { Parent } from "../interfaces/parent";
 import { Scope } from "../interfaces/scope";
 import { Statement } from "../interfaces/statement";
+import { Transforms } from "../interfaces/transforms";
 import { elseKeyword, thenKeyword } from "../keywords";
 import { compileStatements } from "../parent-helpers";
 import { BooleanType } from "../symbols/boolean-type";
 import { getIds, handleDeconstruction, isSymbol, symbolMatches } from "../symbols/symbol-helpers";
-import { Transforms } from "../syntax-nodes/transforms";
 
 export class Else extends AbstractFrame implements Statement {
   isStatement: boolean = true;

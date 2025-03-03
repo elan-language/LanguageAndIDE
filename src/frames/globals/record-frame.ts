@@ -2,6 +2,7 @@ import { mustBeImmutableType } from "../compile-rules";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { SymbolType } from "../interfaces/symbol-type";
+import { Transforms } from "../interfaces/transforms";
 import { endKeyword, recordKeyword } from "../keywords";
 import {
   parentHelper_compileChildren,
@@ -10,7 +11,6 @@ import {
 } from "../parent-helpers";
 import { ClassSubType, ClassType } from "../symbols/class-type";
 import { SymbolScope } from "../symbols/symbol-scope";
-import { Transforms } from "../syntax-nodes/transforms";
 import { ClassFrame } from "./class-frame";
 
 export class RecordFrame extends ClassFrame {

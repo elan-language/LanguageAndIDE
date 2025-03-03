@@ -1,10 +1,10 @@
 import { CodeSource } from "../code-source";
 import { mustBeUniqueValueInScope, mustNotBeKeyword } from "../compile-rules";
 import { Frame } from "../interfaces/frame";
+import { Transforms } from "../interfaces/transforms";
 import { EnumValuesNode } from "../parse-nodes/enum-values-node";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { isAstCollectionNode, transforms } from "../syntax-nodes/ast-helpers";
-import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractField } from "./abstract-field";
 
 export class EnumValues extends AbstractField {

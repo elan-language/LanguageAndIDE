@@ -10,6 +10,7 @@ import {
 } from "../compile-rules";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstNode } from "../interfaces/ast-node";
+import { ChainedAsn } from "../interfaces/chained-asn";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
@@ -26,7 +27,6 @@ import {
   matchParametersAndTypes,
   transforms,
 } from "./ast-helpers";
-import { ChainedAsn } from "./chained-asn";
 import { EmptyAsn } from "./empty-asn";
 
 export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {

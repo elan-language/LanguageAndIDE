@@ -10,6 +10,7 @@ import {
 import { isClass } from "../frame-helpers";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstNode } from "../interfaces/ast-node";
+import { ChainedAsn } from "../interfaces/chained-asn";
 import { Scope } from "../interfaces/scope";
 import { AbstractDefinitionStatement } from "../statements/abstract-definition.statement";
 import { NullScope } from "../symbols/null-scope";
@@ -17,7 +18,6 @@ import { isDeconstructedType, isMemberOnFieldsClass, scopePrefix } from "../symb
 import { SymbolScope } from "../symbols/symbol-scope";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { transforms } from "./ast-helpers";
-import { ChainedAsn } from "./chained-asn";
 
 export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
   constructor(

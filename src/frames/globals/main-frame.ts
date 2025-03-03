@@ -4,9 +4,9 @@ import { FrameWithStatements } from "../frame-with-statements";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { GlobalFrame } from "../interfaces/global-frame";
+import { Transforms } from "../interfaces/transforms";
 import { mainKeyword } from "../keywords";
 import { DuplicateSymbol } from "../symbols/duplicate-symbol";
-import { Transforms } from "../syntax-nodes/transforms";
 
 export class MainFrame extends FrameWithStatements implements GlobalFrame {
   isMain = true;

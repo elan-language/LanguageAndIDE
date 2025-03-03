@@ -15,9 +15,9 @@ import { mapSymbolType } from "../frame-helpers";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
+import { Transforms } from "../interfaces/transforms";
 import { setKeyword, toKeyword } from "../keywords";
 import { getIds, wrapDeconstructionLhs, wrapDeconstructionRhs } from "../syntax-nodes/ast-helpers";
-import { Transforms } from "../syntax-nodes/transforms";
 
 export class SetStatement extends AbstractFrame implements Statement {
   isStatement = true;

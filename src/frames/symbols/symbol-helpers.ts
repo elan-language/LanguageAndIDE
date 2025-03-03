@@ -18,6 +18,7 @@ import { Parent } from "../interfaces/parent";
 import { ReifyableSymbolType } from "../interfaces/reifyable-symbol-type";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
+import { Transforms } from "../interfaces/transforms";
 import { globalKeyword, libraryKeyword } from "../keywords";
 import { DefinitionAdapter } from "../statements/definition-adapter";
 import { SymbolCompletionSpec, TokenType } from "../symbol-completion-helpers";
@@ -28,7 +29,6 @@ import {
   transforms,
 } from "../syntax-nodes/ast-helpers";
 import { EmptyAsn } from "../syntax-nodes/empty-asn";
-import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractDictionaryType } from "./abstract-dictionary-type";
 import { AbstractListType } from "./abstract-list-type";
 import { ArrayType } from "./array-type";

@@ -16,6 +16,7 @@ import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
+import { Transforms } from "../interfaces/transforms";
 import { callKeyword } from "../keywords";
 import { ProcedureType } from "../symbols/procedure-type";
 import {
@@ -32,7 +33,6 @@ import {
 } from "../syntax-nodes/ast-helpers";
 import { EmptyAsn } from "../syntax-nodes/empty-asn";
 import { QualifierAsn } from "../syntax-nodes/qualifier-asn";
-import { Transforms } from "../syntax-nodes/transforms";
 import { LetStatement } from "./let-statement";
 import { VariableStatement } from "./variable-statement";
 

@@ -7,11 +7,11 @@ import { Field } from "../interfaces/field";
 import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
 import { Scope } from "../interfaces/scope";
+import { Transforms } from "../interfaces/transforms";
 import { constructorKeyword } from "../keywords";
 import { ProcedureType } from "../symbols/procedure-type";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
-import { Transforms } from "../syntax-nodes/transforms";
 
 export class Constructor extends FrameWithStatements implements ElanSymbol, Member {
   isConstructor = true;

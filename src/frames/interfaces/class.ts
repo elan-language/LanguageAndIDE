@@ -1,8 +1,8 @@
-import { Transforms } from "../syntax-nodes/transforms";
 import { ClassSymbol } from "./class-symbol";
 import { ElanSymbol } from "./elan-symbol";
 import { Scope } from "./scope";
 import { SymbolType } from "./symbol-type";
+import { Transforms } from "./transforms";
 
 export interface Class extends Scope, ClassSymbol {
   genericParamMatches: Map<string, SymbolType>;

@@ -49,8 +49,6 @@ const testStatus = document.getElementById("test") as HTMLDivElement;
 const runStatus = document.getElementById("run-status") as HTMLDivElement;
 const codeControls = document.getElementById("code-controls") as HTMLDivElement;
 const demoFiles = document.getElementsByClassName("demo-file");
-const centreBar = document.getElementById("centre-bar");
-const lhs = document.getElementById("lhs");
 
 const inactivityTimeout = 2000;
 const stdlib = new StdLib();
@@ -79,28 +77,10 @@ let autoSaveFileHandle: FileSystemFileHandle | undefined = undefined;
 let singleStepping = false;
 let processingSingleStep = false;
 let debugMode = false;
-let dragging = false;
 
 autoSaveButton.hidden = !useChromeFileAPI();
 
 // add all the listeners
-
-centreBar?.addEventListener("mousedown", () => {
-  dragging = true;
-});
-
-document.addEventListener("mouseup", () => {
-  dragging = false;
-});
-
-document.addEventListener("mousemove", (event) => {
-  if (dragging) {
-    const x = event.screenX;
-    const width = document.getElementsByTagName("body")[0].scrollWidth;
-    const pp = ((x - 10) / width) * 100;
-    lhs?.setAttribute("style", `flex-basis: ${pp}%`);
-  }
-});
 
 undoButton.addEventListener("click", undo);
 

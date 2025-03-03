@@ -14,10 +14,10 @@ import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { Scope } from "../interfaces/scope";
 import { Statement } from "../interfaces/statement";
+import { Transforms } from "../interfaces/transforms";
 import { getDeconstructionIds, symbolMatches } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { getIds, wrapDeconstructionLhs, wrapDeconstructionRhs } from "../syntax-nodes/ast-helpers";
-import { Transforms } from "../syntax-nodes/transforms";
 import { DefinitionAdapter } from "./definition-adapter";
 
 export abstract class AbstractDefinitionStatement

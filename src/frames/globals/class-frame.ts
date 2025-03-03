@@ -20,7 +20,7 @@ import {
 import { InheritsFrom } from "../fields/inheritsFrom";
 import { Regexes } from "../fields/regexes";
 import { TypeNameField } from "../fields/type-name-field";
-import { isMember } from "../frame-helpers";
+import { isConstructor, isMember } from "../frame-helpers";
 import { Class } from "../interfaces/class";
 import { Collapsible } from "../interfaces/collapsible";
 import { ElanSymbol } from "../interfaces/elan-symbol";
@@ -32,6 +32,7 @@ import { Profile } from "../interfaces/profile";
 import { Scope } from "../interfaces/scope";
 import { StatementFactory } from "../interfaces/statement-factory";
 import { SymbolType } from "../interfaces/symbol-type";
+import { Transforms } from "../interfaces/transforms";
 import { classKeyword, constructorKeyword, thisKeyword } from "../keywords";
 import {
   parentHelper_addChildAfter,
@@ -61,7 +62,6 @@ import { getGlobalScope, isSymbol, symbolMatches } from "../symbols/symbol-helpe
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { isAstCollectionNode, isAstIdNode, transforms } from "../syntax-nodes/ast-helpers";
-import { Transforms } from "../syntax-nodes/transforms";
 
 export abstract class ClassFrame
   extends AbstractFrame
@@ -360,7 +360,7 @@ export abstract class ClassFrame
   }
 
   public getConstructor(): Constructor {
-    return this.getChildren().filter((m) => "isConstructor" in m)[0] as Constructor;
+    return this.getChildren().filter((m) => isConstructor(m))[0] as Constructor;
   }
   parseFrom(source: CodeSource): void {
     this.parseTop(source);

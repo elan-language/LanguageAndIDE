@@ -1,17 +1,19 @@
 import { CompileError } from "../compile-error";
+import { compilerAssert } from "../compile-rules";
+import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstNode } from "../interfaces/ast-node";
+import { ChainedAsn } from "../interfaces/chained-asn";
 import { Scope } from "../interfaces/scope";
 import { updateScopeInChain } from "../symbols/symbol-helpers";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { transforms } from "./ast-helpers";
-import { ChainedAsn } from "./chained-asn";
 import { CsvAsn } from "./csv-asn";
 
 export class CompositeAsn extends AbstractAstNode implements AstNode {
   constructor(
     private readonly expr1: AstNode,
-    private readonly expr2: AstNode,
+    private readonly expr2: AstCollectionNode,
     public readonly fieldId: string,
     private readonly scope: Scope,
   ) {
@@ -26,45 +28,62 @@ export class CompositeAsn extends AbstractAstNode implements AstNode {
       .concat(this.expr2.aggregateCompileErrors());
   }
 
+  setupNodes() {
+    const leafNodes = this.expr2.items as ChainedAsn[];
+
+    compilerAssert(leafNodes.length > 0, "No leaf nodes");
+
+    if (!this.finalNode) {
+      let previousNode = this.expr1;
+      let previousScope = updateScopeInChain(previousNode, transforms(), this.scope);
+
+      for (let i = 0; i < leafNodes.length; i++) {
+        const currentNode = leafNodes[i];
+
+        currentNode.updateScopeAndChain(previousScope, previousNode);
+
+        previousNode = new CompositeAsn(
+          previousNode,
+          new CsvAsn([currentNode], this.fieldId),
+          this.fieldId,
+          this.scope,
+        );
+
+        previousScope = updateScopeInChain(currentNode, transforms(), this.scope);
+
+        // last node in chain
+        if (i === leafNodes.length - 1) {
+          this.finalNode = currentNode;
+        }
+      }
+    }
+
+    return leafNodes;
+  }
+
   compile(): string {
     this.compileErrors = [];
 
     let code: string[] = [];
 
-    const leafNodes = (this.expr2 as CsvAsn).items as ChainedAsn[];
+    const leafNodes = this.setupNodes();
+    let previousCode = this.expr1.compile();
 
-    let previousNode = this.expr1;
-    let previousScope = updateScopeInChain(previousNode, transforms(), this.scope);
-    let previousCode = previousNode.compile();
-
-    for (let i = 0; i < leafNodes.length; i++) {
-      const currentNode = leafNodes[i];
-
-      currentNode.updateScopeAndChain(previousScope, previousNode);
-
+    for (const currentNode of leafNodes) {
       const currentCode = currentNode.compile();
 
-      if (!currentNode.showPreviousNode) {
-        code = [];
+      if (currentNode.showPreviousNode) {
+        code.push(`${previousCode}`);
       } else {
-        if (previousCode) {
-          code.push(`${previousCode}`);
-        }
+        // if any node doesn't show previous code clear everything
+        code = [];
       }
 
-      previousNode = new CompositeAsn(
-        previousNode,
-        new CsvAsn([currentNode], this.fieldId),
-        this.fieldId,
-        this.scope,
-      );
       previousCode = currentCode;
-      previousScope = updateScopeInChain(currentNode, transforms(), this.scope);
 
       // last node in chain
-      if (i === leafNodes.length - 1) {
+      if (currentNode === this.finalNode) {
         code.push(previousCode);
-        this.finalNode = currentNode;
       }
     }
 
@@ -76,14 +95,14 @@ export class CompositeAsn extends AbstractAstNode implements AstNode {
   }
 
   symbolType() {
-    this.compile();
+    this.setupNodes();
     return this.finalNode?.symbolType() ?? UnknownType.Instance;
   }
 
   toString() {
     const ss: string[] = [`${this.expr1}`];
 
-    const leafNodes = (this.expr2 as CsvAsn).items as ChainedAsn[];
+    const leafNodes = this.expr2.items;
 
     for (const ln of leafNodes) {
       ss.push(`${ln}`);

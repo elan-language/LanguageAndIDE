@@ -1,3 +1,4 @@
+import { ElanCompilerError } from "../../elan-compiler-error";
 import { CompileError } from "../compile-error";
 import {
   mustBeBooleanType,
@@ -31,6 +32,8 @@ export class UnaryExprAsn extends AbstractAstNode implements AstNode {
         return "!";
       case OperationSymbol.Minus:
         return "-";
+      default:
+        throw new ElanCompilerError(`No such unary op ${this.op}`);
     }
   }
 

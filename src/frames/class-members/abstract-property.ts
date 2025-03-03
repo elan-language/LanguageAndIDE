@@ -8,12 +8,12 @@ import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
+import { Transforms } from "../interfaces/transforms";
 import { abstractKeyword, abstractPropertyKeywords, asKeyword, propertyKeyword } from "../keywords";
 import { ClassType } from "../symbols/class-type";
 import { getClassScope } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { transforms } from "../syntax-nodes/ast-helpers";
-import { Transforms } from "../syntax-nodes/transforms";
 
 export class AbstractProperty extends AbstractFrame implements Member, ElanSymbol {
   isAbstract = true;

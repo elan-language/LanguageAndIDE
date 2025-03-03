@@ -12,10 +12,10 @@ import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Parent } from "../interfaces/parent";
 import { PossiblyPrivateMember } from "../interfaces/possibly-private-member";
 import { Scope } from "../interfaces/scope";
+import { Transforms } from "../interfaces/transforms";
 import { privateKeyword } from "../keywords";
 import { getClassScope } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
-import { Transforms } from "../syntax-nodes/transforms";
 
 export class ProcedureMethod extends ProcedureFrame implements PossiblyPrivateMember {
   isMember: boolean = true;

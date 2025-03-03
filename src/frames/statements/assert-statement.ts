@@ -8,9 +8,9 @@ import { TestFrame } from "../globals/test-frame";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
+import { Transforms } from "../interfaces/transforms";
 import { assertKeyword } from "../keywords";
 import { CompileStatus, DisplayColour, TestStatus } from "../status-enums";
-import { Transforms } from "../syntax-nodes/transforms";
 
 export class AssertStatement extends AbstractFrame implements Statement {
   isStatement = true;

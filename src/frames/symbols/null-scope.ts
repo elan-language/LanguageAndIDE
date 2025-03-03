@@ -1,6 +1,6 @@
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Scope } from "../interfaces/scope";
-import { Transforms } from "../syntax-nodes/transforms";
+import { Transforms } from "../interfaces/transforms";
 import { SymbolScope } from "./symbol-scope";
 import { UnknownSymbol } from "./unknown-symbol";
 import { UnknownType } from "./unknown-type";

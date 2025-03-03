@@ -1,12 +1,12 @@
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { SymbolType } from "../interfaces/symbol-type";
+import { Transforms } from "../interfaces/transforms";
 import {
   getDeconstructionIds,
   isLetStatement,
   isVariableStatement,
 } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
-import { Transforms } from "../syntax-nodes/transforms";
 
 export class DefinitionAdapter implements ElanSymbol {
   constructor(

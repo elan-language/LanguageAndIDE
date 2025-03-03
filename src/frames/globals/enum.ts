@@ -11,12 +11,12 @@ import { File } from "../interfaces/file";
 import { GlobalFrame } from "../interfaces/global-frame";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
+import { Transforms } from "../interfaces/transforms";
 import { enumKeyword } from "../keywords";
 import { EnumType } from "../symbols/enum-type";
 import { EnumValueType } from "../symbols/enum-value-type";
 import { getGlobalScope, symbolMatches } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
-import { Transforms } from "../syntax-nodes/transforms";
 
 export class Enum extends AbstractFrame implements ElanSymbol, GlobalFrame, Collapsible {
   isCollapsible: boolean = true;

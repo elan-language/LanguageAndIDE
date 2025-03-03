@@ -8,12 +8,12 @@ import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { Parent } from "../interfaces/parent";
 import { Scope } from "../interfaces/scope";
+import { Transforms } from "../interfaces/transforms";
 import { procedureKeyword } from "../keywords";
 import { ProcedureType } from "../symbols/procedure-type";
 import { getGlobalScope } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
-import { Transforms } from "../syntax-nodes/transforms";
 
 export abstract class ProcedureFrame extends FrameWithStatements implements ElanSymbol, Scope {
   public name: MethodNameField;

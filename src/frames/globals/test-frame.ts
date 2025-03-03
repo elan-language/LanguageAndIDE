@@ -10,11 +10,11 @@ import { editorEvent } from "../interfaces/editor-event";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { GlobalFrame } from "../interfaces/global-frame";
+import { Transforms } from "../interfaces/transforms";
 import { ignoreKeyword, testKeyword } from "../keywords";
 import { parentHelper_compileFrames } from "../parent-helpers";
 import { AssertStatement } from "../statements/assert-statement";
 import { BreakpointStatus, DisplayColour, TestStatus } from "../status-enums";
-import { Transforms } from "../syntax-nodes/transforms";
 
 export class TestFrame extends FrameWithStatements implements GlobalFrame {
   isTest = true;

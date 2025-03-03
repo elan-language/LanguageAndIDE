@@ -9,6 +9,7 @@ import {
   isCollapsible,
   isFrame,
   isParent,
+  isSelector,
   singleIndent,
 } from "./frame-helpers";
 import { editorEvent } from "./interfaces/editor-event";
@@ -19,6 +20,7 @@ import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
 import { Scope } from "./interfaces/scope";
 import { Selectable } from "./interfaces/selectable";
+import { Transforms } from "./interfaces/transforms";
 import {
   parentHelper_getAllSelectedChildren,
   parentHelper_getChildAfter,
@@ -35,7 +37,6 @@ import {
 import { allScopedSymbols, orderSymbol } from "./symbols/symbol-helpers";
 import { SymbolScope } from "./symbols/symbol-scope";
 import { UnknownType } from "./symbols/unknown-type";
-import { Transforms } from "./syntax-nodes/transforms";
 
 export abstract class AbstractFrame implements Frame {
   isFrame = true;
@@ -370,7 +371,7 @@ export abstract class AbstractFrame implements Frame {
     newFocus.select(true, false);
     const sp = this.getScratchPad();
     sp.addSnippet(selected);
-    if (!("isSelector" in newFocus) && !newFocus.getParent().minimumNumberOfChildrenExceeded()) {
+    if (!isSelector(newFocus) && !newFocus.getParent().minimumNumberOfChildrenExceeded()) {
       newFocus.insertPeerSelector(false);
     }
   };
@@ -413,8 +414,8 @@ export abstract class AbstractFrame implements Frame {
     const parent = this.getParent();
     let next = parent.getChildAfter(this);
     if (next === this) {
-      if (!("isFile" in parent)) {
-        next = parent as unknown as Frame;
+      if (isFrame(parent)) {
+        next = parent;
       }
     }
     next.select(true, false);
@@ -566,13 +567,13 @@ export abstract class AbstractFrame implements Frame {
   }
 
   collapse(): void {
-    if ("isCollapsible" in this) {
+    if (isCollapsible(this)) {
       this.collapsed = true;
     }
   }
 
   expand(): void {
-    if ("isCollapsible" in this) {
+    if (isCollapsible(this)) {
       this.collapsed = false;
     }
   }

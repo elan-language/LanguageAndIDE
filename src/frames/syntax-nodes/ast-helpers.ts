@@ -1,6 +1,6 @@
 import { ElanCompilerError } from "../../elan-compiler-error";
 import { CompileError } from "../compile-error";
-import { mustMatchParameters } from "../compile-rules";
+import { mustBeAssignableType, mustBeIndexableType, mustMatchParameters } from "../compile-rules";
 import { isFile, isFrame, isFunction } from "../frame-helpers";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstIdNode } from "../interfaces/ast-id-node";
@@ -11,6 +11,7 @@ import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { Class } from "../interfaces/class";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
+import { Transforms } from "../interfaces/transforms";
 import { AbstractDictionaryType } from "../symbols/abstract-dictionary-type";
 import { ArrayType } from "../symbols/array-type";
 import { ClassType } from "../symbols/class-type";
@@ -18,6 +19,7 @@ import { DictionaryImmutableType } from "../symbols/dictionary-immutable-type";
 import { DictionaryType } from "../symbols/dictionary-type";
 import { FunctionType } from "../symbols/function-type";
 import { GenericParameterType } from "../symbols/generic-parameter-type";
+import { IntType } from "../symbols/int-type";
 import { IterableType } from "../symbols/iterable-type";
 import { ListType } from "../symbols/list-type";
 import { ProcedureType } from "../symbols/procedure-type";
@@ -25,6 +27,7 @@ import { StringType } from "../symbols/string-type";
 import {
   isAnyDictionaryType,
   isClassTypeDef,
+  isGenericSymbolType,
   parameterNamesWithTypes,
 } from "../symbols/symbol-helpers";
 import { TupleType } from "../symbols/tuple-type";
@@ -33,8 +36,8 @@ import { transform, transformMany } from "./ast-visitor";
 import { DeconstructedListAsn } from "./deconstructed-list-asn";
 import { DeconstructedTupleAsn } from "./deconstructed-tuple-asn";
 import { EmptyAsn } from "./empty-asn";
+import { IndexAsn } from "./index-asn";
 import { OperationSymbol } from "./operation-symbol";
-import { Transforms } from "./transforms";
 
 export function isAstQualifiedNode(n: AstNode): n is AstQualifiedNode {
   return !!n && "qualifier" in n;
@@ -368,4 +371,37 @@ export function getIds(ast: AstNode) {
     return id.includes(",") ? id.split(",") : [id];
   }
   return [];
+}
+
+export function getIndexAndOfType(rootType: SymbolType): [SymbolType, SymbolType] {
+  if (isGenericSymbolType(rootType)) {
+    return [IntType.Instance, rootType.ofType];
+  }
+
+  if (isAnyDictionaryType(rootType)) {
+    return [rootType.keyType, rootType.valueType];
+  }
+
+  return [UnknownType.Instance, UnknownType.Instance];
+}
+
+export function wrapSimpleSubscript(code: string): string {
+  return `system.safeIndex(${code})`;
+}
+
+export function compileSimpleSubscript(
+  id: string,
+  rootType: SymbolType,
+  index: IndexAsn,
+  prefix: string,
+  code: string,
+  postfix: string,
+  compileErrors: CompileError[],
+  fieldId: string,
+) {
+  mustBeIndexableType(id, rootType, true, compileErrors, fieldId);
+  const [indexType] = getIndexAndOfType(rootType);
+  mustBeAssignableType(indexType, index.subscript.symbolType(), compileErrors, fieldId);
+
+  return wrapSimpleSubscript(`${prefix}${code}, ${postfix}`);
 }

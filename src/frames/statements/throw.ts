@@ -4,8 +4,8 @@ import { ExceptionMessage } from "../fields/exception-message";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
+import { Transforms } from "../interfaces/transforms";
 import { exceptionKeyword, throwKeyword } from "../keywords";
-import { Transforms } from "../syntax-nodes/transforms";
 
 export class Throw extends AbstractFrame implements Statement {
   isStatement = true;

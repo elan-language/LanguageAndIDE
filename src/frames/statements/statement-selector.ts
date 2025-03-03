@@ -55,19 +55,6 @@ export class StatementSelector extends AbstractSelector {
     return this.profile.statements.includes(keyword);
   }
 
-  otherwiseMaybeAdded(): boolean {
-    const peers = this.getParent().getChildren();
-    const noExistingOtherwise = peers.filter((p) => "isOtherwise" in p).length === 0;
-    const isLastInSwitch = this.getParent().getLastChild() === this;
-    return noExistingOtherwise && isLastInSwitch;
-  }
-
-  isAboveOtherwiseIfPresent(): boolean {
-    const peers = this.getParent().getChildren();
-    const existingOtherwise = peers.filter((p) => "isOtherwise" in p)[0];
-    return !existingOtherwise || peers.indexOf(this) < peers.indexOf(existingOtherwise);
-  }
-
   validWithinCurrentContext(keyword: string, _userEntry: boolean): boolean {
     const parent = this.getParent();
     let result = false;

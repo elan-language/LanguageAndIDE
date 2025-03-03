@@ -1,8 +1,10 @@
 import { Constructor } from "../class-members/constructor";
 import { mustBeDeclaredAbove, mustImplementSuperClasses } from "../compile-rules";
+import { isConstructor } from "../frame-helpers";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { SymbolType } from "../interfaces/symbol-type";
+import { Transforms } from "../interfaces/transforms";
 import { classKeyword, endKeyword } from "../keywords";
 import {
   parentHelper_compileChildren,
@@ -10,7 +12,6 @@ import {
   parentHelper_renderChildrenAsSource,
 } from "../parent-helpers";
 import { ClassSubType, ClassType } from "../symbols/class-type";
-import { Transforms } from "../syntax-nodes/transforms";
 import { ClassFrame } from "./class-frame";
 
 export class ConcreteClass extends ClassFrame {
@@ -97,7 +98,7 @@ end class\r\n`;
       this.htmlId,
     );
 
-    const emptyInitialise = this.getChildren().some((m) => "isConstructor" in m)
+    const emptyInitialise = this.getChildren().some((m) => isConstructor(m))
       ? ""
       : `  ${this.indent()}async _initialise() { return this; }`;
 
@@ -109,7 +110,7 @@ ${parentHelper_compileChildren(this, transforms)}\r
   }
 
   public getConstructor(): Constructor {
-    return this.getChildren().filter((m) => "isConstructor" in m)[0] as Constructor;
+    return this.getChildren().filter((m) => isConstructor(m))[0] as Constructor;
   }
 
   topKeywords(): string {
