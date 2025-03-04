@@ -115,6 +115,14 @@ export class ElanArrayImpl<T1> {
     return this.contents.length;
   }
 
+  @elanFunction(["item"], FunctionOptions.pure, ElanInt)
+  indexOfItem(
+    @elanGenericParamT1Type()
+    item: T1,
+  ): number {
+    return this.system!.elanIndexOf(this.contents, item);
+  }
+
   async asString() {
     return await this.system?.asString(this.contents);
   }

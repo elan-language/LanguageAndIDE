@@ -394,9 +394,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Array<of String> Provided: String",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'putAt' is not defined"]);
   });
 
   test("Fail_ComparisonOperators", async () => {

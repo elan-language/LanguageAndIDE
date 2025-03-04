@@ -60,7 +60,6 @@ import { SymbolType } from "./interfaces/symbol-type";
 import { Transforms } from "./interfaces/transforms";
 import { allKeywords, reservedWords } from "./keywords";
 import { LetStatement } from "./statements/let-statement";
-import { ArrayType } from "./symbols/array-type";
 import { BooleanType } from "./symbols/boolean-type";
 import { ClassSubType, ClassType } from "./symbols/class-type";
 import { DeconstructedTupleType } from "./symbols/deconstructed-tuple-type";
@@ -556,7 +555,7 @@ function FailNotAssignable(
 ) {
   let addInfo = "";
   // special case
-  if (lhs instanceof ListType && rhs instanceof ArrayType) {
+  if (lhs instanceof ListType && rhs.name.startsWith("Array")) {
     addInfo = " try converting with '.asList()'";
   }
 

@@ -475,7 +475,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable i set to [1,2]
+  variable i set to 1
   variable x set to head
   variable y set to i.x()
 end main`;

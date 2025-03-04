@@ -71,7 +71,7 @@ export class ClassType implements ReifyableSymbolType, Scope {
   isAssignableFrom(otherType: SymbolType): boolean {
     if (otherType instanceof ClassType) {
       if (otherType.className === this.className) {
-        return true;
+        return this.ofType.name === otherType.name;
       }
       return otherType.inheritsFrom.some((c) => this.isAssignableFrom(c));
     }

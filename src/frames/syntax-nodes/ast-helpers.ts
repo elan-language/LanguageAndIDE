@@ -106,7 +106,12 @@ class TypeHolder implements SymbolType {
 }
 
 export function flatten(p: SymbolType): SymbolType {
-  if (p instanceof ArrayType || p instanceof ListType || p instanceof IterableType) {
+  if (
+    p instanceof ArrayType ||
+    p instanceof ListType ||
+    p instanceof IterableType ||
+    (p instanceof ClassType && p.isIndexable)
+  ) {
     return new TypeHolder(p, [flatten(p.ofType)]);
   }
 
