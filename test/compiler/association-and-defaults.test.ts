@@ -231,7 +231,7 @@ async function main() {
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.emptyImmutableList()], ["ds", system.emptyDictionary()], ["dsi", system.emptyDictionaryImmutable()], ["ai", system.emptyArray()], ["t", system.emptyTuple([0, "", system.emptyImmutableList()])], ["ff", system.emptyFunc(0)], ["r", system.emptyRegExp()]]);};
+  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.emptyImmutableList()], ["ds", system.emptyDictionary()], ["dsi", system.emptyDictionaryImmutable()], ["ai", system.initialise(_stdlib.Array.emptyInstance())], ["t", system.emptyTuple([0, "", system.emptyImmutableList()])], ["ff", system.emptyFunc(0)], ["r", system.emptyRegExp()]]);};
 
   async _initialise() {
 
@@ -252,7 +252,7 @@ class Game {
 
   dsi = system.emptyDictionaryImmutable();
 
-  ai = system.emptyArray();
+  ai = system.initialise(_stdlib.Array.emptyInstance());
 
   t = system.emptyTuple([0, "", system.emptyImmutableList()]);
 
@@ -358,7 +358,7 @@ class Player {
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.emptyImmutableList()], ["ds", system.emptyDictionary()], ["dsi", system.emptyDictionaryImmutable()], ["ai", system.emptyArray()], ["t", system.emptyTuple([0, "", system.emptyImmutableList()])], ["r", system.emptyRegExp()]]);};
+  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.emptyImmutableList()], ["ds", system.emptyDictionary()], ["dsi", system.emptyDictionaryImmutable()], ["ai", system.initialise(_stdlib.Array.emptyInstance())], ["t", system.emptyTuple([0, "", system.emptyImmutableList()])], ["r", system.emptyRegExp()]]);};
 
   async _initialise() {
 
@@ -379,7 +379,7 @@ class Game {
 
   dsi = system.emptyDictionaryImmutable();
 
-  ai = system.emptyArray();
+  ai = system.initialise(_stdlib.Array.emptyInstance());
 
   t = system.emptyTuple([0, "", system.emptyImmutableList()]);
 
@@ -861,11 +861,11 @@ async function main() {
   await system.printLine(system.objectEquals(f.a, system.emptyImmutableList()));
   await system.printLine(f.b === "");
   await system.printLine(system.objectEquals(f.c, system.emptyDictionary()));
-  await system.printLine(system.objectEquals(f.d, system.emptyArray()));
+  await system.printLine(system.objectEquals(f.d, system.initialise(_stdlib.Array.emptyInstance())));
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["a", system.emptyImmutableList()], ["b", ""], ["c", system.emptyDictionary()], ["d", system.emptyArray()]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["a", system.emptyImmutableList()], ["b", ""], ["c", system.emptyDictionary()], ["d", system.initialise(_stdlib.Array.emptyInstance())]]);};
 
   async _initialise() {
 
@@ -878,7 +878,7 @@ class Foo {
 
   c = system.emptyDictionary();
 
-  d = system.emptyArray();
+  d = system.initialise(_stdlib.Array.emptyInstance());
 
   async asString() {
     return "A Foo";
@@ -1016,14 +1016,14 @@ async function main() {
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["p1", system.emptyArray()]]);};
+  static emptyInstance() { return system.emptyClass(Game, [["p1", system.initialise(_stdlib.Array.emptyInstance())]]);};
 
   async _initialise() {
     this.p1 = system.literalArray([1, 2, 3]);
     return this;
   }
 
-  p1 = system.emptyArray();
+  p1 = system.initialise(_stdlib.Array.emptyInstance());
 
   async something() {
     let a = 1;

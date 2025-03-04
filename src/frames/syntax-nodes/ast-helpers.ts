@@ -26,8 +26,10 @@ import { ProcedureType } from "../symbols/procedure-type";
 import { StringType } from "../symbols/string-type";
 import {
   isAnyDictionaryType,
+  isClassType,
   isClassTypeDef,
   isGenericSymbolType,
+  isReifyableSymbolType,
   parameterNamesWithTypes,
 } from "../symbols/symbol-helpers";
 import { TupleType } from "../symbols/tuple-type";
@@ -95,6 +97,7 @@ class TypeHolder implements SymbolType {
     return this.symbolType.isAssignableFrom(otherType);
   }
   isImmutable = false;
+  isIndexable = false;
   name = "TypeHolder";
   initialValue = "";
   toString() {
@@ -149,6 +152,11 @@ export function containsGenericType(type: SymbolType): boolean {
   if (type instanceof TupleType) {
     return type.ofTypes.some((t) => containsGenericType(t));
   }
+  if (type instanceof ClassType) {
+    if (isClassTypeDef(type.scope)) {
+      return type.scope.ofTypes.some((t) => containsGenericType(t));
+    }
+  }
 
   return false;
 }
@@ -163,6 +171,10 @@ export function generateType(
   // arbitary depth
   if (depth > 20) {
     return type;
+  }
+
+  if (isReifyableSymbolType(type)) {
+    return type.reify([generateType(type.ofType, matches, depth)]);
   }
 
   if (type instanceof GenericParameterType) {
@@ -213,6 +225,21 @@ export function generateType(
       type.isPure,
       type.isAsync,
     );
+  }
+
+  if (type instanceof ProcedureType) {
+    return new ProcedureType(
+      type.parameterNames,
+      type.parameterTypes.map((t) => generateType(t, matches, depth)),
+      type.isExtension,
+      type.isAsync,
+    );
+  }
+
+  if (type instanceof ClassType) {
+    if (isClassTypeDef(type.scope)) {
+      type.scope.genericParamMatches = matches;
+    }
   }
 
   return type;
@@ -374,6 +401,12 @@ export function getIds(ast: AstNode) {
 }
 
 export function getIndexAndOfType(rootType: SymbolType): [SymbolType, SymbolType] {
+  if (isClassType(rootType) && isClassTypeDef(rootType.scope)) {
+    if (rootType.scope.ofTypes.length > 0) {
+      return [IntType.Instance, rootType.scope.ofTypes[0]];
+    }
+  }
+
   if (isGenericSymbolType(rootType)) {
     return [IntType.Instance, rootType.ofType];
   }

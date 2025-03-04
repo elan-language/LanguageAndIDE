@@ -10,4 +10,5 @@ export interface Class extends Scope, ClassSymbol {
   resolveOwnSymbol(id: string, transforms: Transforms): ElanSymbol;
   ofTypes: SymbolType[];
   getDirectSuperClassesTypeAndName(transforms: Transforms): [SymbolType, string][];
+  updateOfTypes(ofTypes: SymbolType[]): Class;
 }

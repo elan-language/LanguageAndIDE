@@ -7,6 +7,8 @@ export class FloatType implements SymbolType {
 
   isImmutable = true;
 
+  isIndexable = false;
+
   static Instance: SymbolType = new FloatType();
   name = "Float";
 

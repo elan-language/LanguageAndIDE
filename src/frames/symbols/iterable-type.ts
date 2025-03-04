@@ -12,6 +12,8 @@ export class IterableType implements IterableSymbolType, ReifyableSymbolType {
 
   isImmutable = true;
 
+  isIndexable = false;
+
   get name() {
     return `Iterable<of ${this.ofType.name}>`;
   }

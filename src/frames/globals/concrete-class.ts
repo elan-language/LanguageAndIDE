@@ -37,6 +37,7 @@ export class ConcreteClass extends ClassFrame {
       ClassSubType.concrete,
       false,
       false,
+      false,
       cd ? [] : this.inheritance.symbolTypes(transforms),
       this,
     );

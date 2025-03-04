@@ -5,6 +5,8 @@ export class GenericParameterType implements SymbolType {
 
   isImmutable = false;
 
+  isIndexable = false;
+
   initialValue = "";
 
   get name() {

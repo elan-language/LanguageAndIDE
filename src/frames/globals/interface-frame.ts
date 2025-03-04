@@ -36,6 +36,7 @@ export class InterfaceFrame extends ClassFrame {
       ClassSubType.interface,
       false,
       false,
+      false,
       cd ? [] : this.inheritance.symbolTypes(transforms),
       this,
     );

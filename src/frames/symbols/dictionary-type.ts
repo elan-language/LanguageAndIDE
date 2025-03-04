@@ -11,6 +11,8 @@ export class DictionaryType implements DictionarySymbolType {
 
   initialValue = "system.emptyDictionary()";
 
+  isIndexable = true;
+
   factoryName = "system.dictionary";
 
   get name() {

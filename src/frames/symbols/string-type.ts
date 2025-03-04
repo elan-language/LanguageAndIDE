@@ -13,6 +13,8 @@ export class StringType implements IterableSymbolType {
 
   isImmutable = true;
 
+  isIndexable = true;
+
   static Instance: SymbolType = new StringType();
 
   name = "String";

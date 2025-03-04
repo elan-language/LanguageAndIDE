@@ -53,7 +53,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = _stdlib.createArray2D(3, 0, "");
-  await system.printLine(_stdlib.length(a));
+  await system.printLine(a.length());
 }
 return [main, _tests];}`;
 
@@ -481,14 +481,14 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.emptyArray();
-  let b = system.emptyArray();
+  let a = system.initialise(_stdlib.Array.emptyInstance());
+  let b = system.initialise(_stdlib.Array.emptyInstance());
   _stdlib.append(a, system.literalArray([3]));
   await system.printLine(a);
   await system.printLine(b);
   await system.printLine(system.objectEquals(a, b));
-  await system.printLine(system.objectEquals(a, system.emptyArray()));
-  await system.printLine(system.objectEquals(b, system.emptyArray()));
+  await system.printLine(system.objectEquals(a, system.initialise(_stdlib.Array.emptyInstance())));
+  await system.printLine(system.objectEquals(b, system.initialise(_stdlib.Array.emptyInstance())));
 }
 return [main, _tests];}`;
 

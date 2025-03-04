@@ -187,7 +187,7 @@ end class`;
 const global = new class {};
 async function main() {
   try {
-    let x = system.emptyArray();
+    let x = system.initialise(_stdlib.Array.emptyInstance());
     let y = system.safeIndex(x, 1);
     let z = y.p1;
     await system.printLine("not caught");

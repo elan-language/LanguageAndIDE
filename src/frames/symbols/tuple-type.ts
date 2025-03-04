@@ -5,6 +5,8 @@ export class TupleType implements SymbolType {
 
   isImmutable = true;
 
+  isIndexable = false;
+
   get initialValue() {
     const init = this.ofTypes.map((t) => t.initialValue).join(", ");
     return `system.emptyTuple([${init}])`;

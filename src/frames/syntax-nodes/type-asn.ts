@@ -20,7 +20,7 @@ import {
 import { TupleType } from "../symbols/tuple-type";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { matchClassGenericTypes, transforms } from "./ast-helpers";
+import { transforms } from "./ast-helpers";
 
 export class TypeAsn extends AbstractAstNode implements AstTypeNode {
   constructor(
@@ -147,13 +147,13 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
       return new FunctionType(pNames, pTypes, rType, false, true, true);
     }
 
-    if (st instanceof ClassType) {
-      if (isClassTypeDef(symbol) && this.genericParameters.length > 0) {
-        symbol.genericParamMatches = matchClassGenericTypes(symbol, this.genericParameters);
-      }
+    // if (st instanceof ClassType) {
+    //   if (isClassTypeDef(symbol) && this.genericParameters.length > 0) {
+    //     symbol.genericParamMatches = matchClassGenericTypes(symbol, this.genericParameters);
+    //   }
 
-      return st;
-    }
+    //   return st;
+    // }
 
     return st;
   }

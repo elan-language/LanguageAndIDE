@@ -90,6 +90,10 @@ export abstract class ClassFrame
   ofTypes: SymbolType[] = [];
   genericParamMatches: Map<string, SymbolType> = new Map<string, SymbolType>();
 
+  updateOfTypes(_ofTypes: SymbolType[]) {
+    return this;
+  }
+
   get subType(): ClassSubType {
     if (this.isInterface) {
       return ClassSubType.interface;

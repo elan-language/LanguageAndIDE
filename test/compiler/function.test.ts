@@ -93,7 +93,7 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.array(system.safeSlice((await global.foo(1, 2)), 0, 1));
+  let a = system.safeSlice((await global.foo(1, 2)), 0, 1);
   await system.printLine(a);
 }
 
@@ -209,7 +209,7 @@ async function main() {
 }
 
 async function foo(a, b) {
-  return system.emptyArray();
+  return system.initialise(_stdlib.Array.emptyInstance());
 }
 global["foo"] = foo;
 return [main, _tests];}`;

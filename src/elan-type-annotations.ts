@@ -62,6 +62,7 @@ export class ElanClassDescriptor implements ElanDescriptor {
   constructor(
     public readonly isImmutable: boolean = false,
     public readonly isAbstract: boolean = false,
+    public readonly isIndexable: boolean = false,
     public readonly ofTypes: TypeDescriptor[] = [],
     public readonly parameterNames: string[] = [],
     public readonly parameterTypes: TypeDescriptor[] = [],
@@ -236,7 +237,7 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
 
     tempMap.set(
       className,
-      new ClassType(className, ClassSubType.concrete, false, false, [], undefined!),
+      new ClassType(className, ClassSubType.concrete, false, false, false, [], undefined!),
     );
 
     for (let i = 0; i < names.length; i++) {
@@ -271,6 +272,7 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
       classMetadata.isAbstract,
       classMetadata.isAbstract,
       classMetadata.isImmutable,
+      classMetadata.isIndexable,
       [],
       [],
       [],
@@ -291,7 +293,8 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
       classTypeDef.inheritTypes.push(inherits.mapType());
     }
 
-    return classType;
+    //return classType;
+    return classTypeDef.symbolType();
   }
 }
 
@@ -387,10 +390,11 @@ export function elanClass(
   inherits?: ElanClassTypeDescriptor[],
   alias?: string,
 ) {
-  const [isImmutable, isAbstract] = mapClassOptions(options ?? ClassOptions.concrete);
+  const [isImmutable, isAbstract, isIndexable] = mapClassOptions(options ?? ClassOptions.concrete);
   const classDesc = new ElanClassDescriptor(
     isImmutable,
     isAbstract,
+    isIndexable,
     ofTypes ?? [],
     names ?? [],
     params ?? [],
@@ -466,9 +470,9 @@ export function ElanList(ofType: TypeDescriptor) {
   return new ElanValueTypeDescriptor("List", ofType);
 }
 
-export function ElanArray(ofType: TypeDescriptor) {
-  return new ElanValueTypeDescriptor("Array", ofType);
-}
+// export function ElanArray() {
+//   return new ElanClassTypeDescriptor(ElanArrayImpl);
+// }
 
 export function ElanIterable(ofType: TypeDescriptor) {
   return new ElanValueTypeDescriptor("Iterable", ofType);
@@ -530,9 +534,9 @@ export function elanListType(ofType: TypeDescriptor) {
   return elanType(ElanList(ofType));
 }
 
-export function elanArrayType(ofType: TypeDescriptor) {
-  return elanType(ElanArray(ofType));
-}
+// export function elanArrayType() {
+//   return elanType(ElanArray());
+// }
 
 export function elanIterableType(ofType: TypeDescriptor) {
   return elanType(ElanIterable(ofType));
@@ -588,6 +592,7 @@ export enum ClassOptions {
   concrete,
   abstract,
   record,
+  array,
 }
 
 function mapFunctionOptions(
@@ -627,14 +632,16 @@ function mapProcedureOptions(options: ProcedureOptions): [boolean, boolean] {
   }
 }
 
-function mapClassOptions(options: ClassOptions): [boolean, boolean] {
+function mapClassOptions(options: ClassOptions): [boolean, boolean, boolean] {
   switch (options) {
     case ClassOptions.concrete:
-      return [false, false];
+      return [false, false, false];
     case ClassOptions.abstract:
-      return [false, true];
+      return [false, true, false];
     case ClassOptions.record:
-      return [true, false];
+      return [true, false, false];
+    case ClassOptions.array:
+      return [false, false, true];
   }
 }
 

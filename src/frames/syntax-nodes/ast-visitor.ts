@@ -342,7 +342,7 @@ export function transform(
 
   if (node instanceof ArrayNode) {
     const items = transformMany(node.csv as CSV, fieldId, scope).items;
-    return new LiteralArrayAsn(items, fieldId);
+    return new LiteralArrayAsn(items, fieldId, scope);
   }
 
   if (node instanceof DictionaryNode) {

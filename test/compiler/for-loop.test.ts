@@ -232,7 +232,7 @@ async function main() {
 
 async function foo(arr) {
   for (let i = 0; i <= 10; i = i + 1) {
-    _stdlib.putAt(arr[0], i, 1);
+    arr[0].putAt(i, 1);
   }
   await system.printLine(system.safeIndex(arr[0], 0));
 }

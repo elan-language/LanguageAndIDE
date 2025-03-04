@@ -6,6 +6,8 @@ export class IntType implements SymbolType {
 
   isImmutable = true;
 
+  isIndexable = false;
+
   static Instance: SymbolType = new IntType();
 
   name = "Int";

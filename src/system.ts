@@ -3,6 +3,7 @@ import { ElanInputOutput } from "./elan-input-output";
 import { ElanRuntimeError } from "./elan-runtime-error";
 import { TestStatus } from "./frames/status-enums";
 import { hasHiddenType } from "./has-hidden-type";
+import { ElanArrayImpl } from "./standard-library/array";
 import { WebWorkerBreakpointMessage } from "./web/web-worker-messages";
 
 export class AssertOutcome {
@@ -85,7 +86,8 @@ export class System {
 
   literalArray(t: Array<any>) {
     (t as unknown as hasHiddenType)._type = "Array";
-    return t;
+
+    return this.initialise(new ElanArrayImpl(t));
   }
 
   iter(t: Array<any>) {
@@ -131,6 +133,10 @@ export class System {
   }
 
   safeIndex(indexable: any, index: any) {
+    if (typeof indexable !== "string" && "safeIndex" in indexable) {
+      return indexable.safeIndex(index);
+    }
+
     if (indexable === undefined) {
       throw new ElanRuntimeError(`Out of range index`);
     }
@@ -144,11 +150,11 @@ export class System {
     return r;
   }
 
-  safeSlice<T1>(
-    indexable: T1[] | undefined,
-    index1: number | undefined,
-    index2: number | undefined,
-  ) {
+  safeSlice(indexable: any, index1: number | undefined, index2: number | undefined) {
+    if (typeof indexable !== "string" && "safeSlice" in indexable) {
+      return indexable.safeSlice(index1, index2);
+    }
+
     if (indexable === undefined) {
       throw new ElanRuntimeError(`Out of range index`);
     }
@@ -353,6 +359,10 @@ export class System {
       }
     }
     return -1;
+  }
+
+  async asString(a: any) {
+    return await this._stdlib.asString(a);
   }
 
   async breakPoint(

@@ -161,7 +161,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.emptyArray();
+  let a = system.initialise(_stdlib.Array.emptyInstance());
   a = _stdlib.createArray2D(3, 0, "");
   _stdlib.putAt(a, 0, system.literalArray(["bar", "foo"]));
   _stdlib.putAt(system.safeIndex(a, 0), 1, "yon");
@@ -193,7 +193,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.emptyArray();
+  let a = system.initialise(_stdlib.Array.emptyInstance());
   a = _stdlib.createArray2D(3, 0, "");
   _stdlib.append(a, system.literalArray(["foo"]));
   _stdlib.append(a, system.literalArray(["yon"]));
@@ -225,7 +225,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.emptyArray();
+  let a = system.initialise(_stdlib.Array.emptyInstance());
   a = _stdlib.createArray2D(3, 0, "");
   _stdlib.append(system.safeIndex(a, 1), "foo");
   _stdlib.append(system.safeIndex(a, 2), "yon");
@@ -259,14 +259,14 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.emptyArray();
-  let b = system.emptyArray();
+  let a = system.initialise(_stdlib.Array.emptyInstance());
+  let b = system.initialise(_stdlib.Array.emptyInstance());
   _stdlib.append(a, system.literalArray([3]));
   await system.printLine(a);
   await system.printLine(b);
   await system.printLine(system.objectEquals(a, b));
-  await system.printLine(system.objectEquals(a, system.emptyArray()));
-  await system.printLine(system.objectEquals(b, system.emptyArray()));
+  await system.printLine(system.objectEquals(a, system.initialise(_stdlib.Array.emptyInstance())));
+  await system.printLine(system.objectEquals(b, system.initialise(_stdlib.Array.emptyInstance())));
 }
 return [main, _tests];}`;
 

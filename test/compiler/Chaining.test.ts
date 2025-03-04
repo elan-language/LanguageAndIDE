@@ -447,14 +447,14 @@ async function main() {
 }
 
 class Bar {
-  static emptyInstance() { return system.emptyClass(Bar, [["strArr", system.emptyArray()]]);};
+  static emptyInstance() { return system.emptyClass(Bar, [["strArr", system.initialise(_stdlib.Array.emptyInstance())]]);};
 
   async _initialise() {
     this.strArr = system.literalArray(["apple", "orange", "pair"]);
     return this;
   }
 
-  strArr = system.emptyArray();
+  strArr = system.initialise(_stdlib.Array.emptyInstance());
 
 }
 return [main, _tests];}`;
@@ -492,7 +492,7 @@ const global = new class {};
 async function main() {
   let aFoo = system.initialise(await new Foo()._initialise());
   let b = 0;
-  b = _stdlib.length(system.array(system.safeSlice((await aFoo.createArr(10)), 1, 5))) + 3;
+  b = system.safeSlice((await aFoo.createArr(10)), 1, 5).length() + 3;
   await system.printLine(b);
 }
 

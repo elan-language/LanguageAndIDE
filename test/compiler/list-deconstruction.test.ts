@@ -31,7 +31,7 @@ const global = new class {};
 async function main() {
   let a = system.literalArray([1, 2, 3]);
   let x = 1;
-  let y = system.emptyArray();
+  let y = system.initialise(_stdlib.Array.emptyInstance());
   [x, y] = system.deconstructList(a);
   await system.printLine(x);
   await system.printLine(y);
@@ -62,7 +62,7 @@ end main
 const global = new class {};
 async function main() {
   let a = system.literalArray([1, 2, 3]);
-  let y = system.emptyArray();
+  let y = system.initialise(_stdlib.Array.emptyInstance());
   [, y] = system.deconstructList(a);
   await system.printLine(y);
 }
@@ -154,8 +154,8 @@ end main
 const global = new class {};
 async function main() {
   let a = system.literalArray([system.literalArray([1, 2, 3]), system.literalArray([4, 5, 6]), system.literalArray([7, 8, 9])]);
-  let x = system.emptyArray();
-  let y = system.emptyArray();
+  let x = system.initialise(_stdlib.Array.emptyInstance());
+  let y = system.initialise(_stdlib.Array.emptyInstance());
   [x, y] = system.deconstructList(a);
   await system.printLine(x);
   await system.printLine(y);
@@ -249,7 +249,7 @@ const global = new class {};
 async function main() {
   let a = system.literalArray([1]);
   let x = 1;
-  let y = system.emptyArray();
+  let y = system.initialise(_stdlib.Array.emptyInstance());
   [x, y] = system.deconstructList(a);
   await system.printLine(x);
   await system.printLine(y);

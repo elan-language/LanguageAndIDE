@@ -8,6 +8,8 @@ export abstract class AbstractListType implements IterableSymbolType {
 
   isImmutable = false;
 
+  isIndexable = true;
+
   initialValue = "";
 
   factoryName = "";

@@ -4,9 +4,10 @@ import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../interfaces/transforms";
 import { constructorKeyword, thisKeyword } from "../keywords";
+import { generateType } from "../syntax-nodes/ast-helpers";
 import { ClassSubType, ClassType } from "./class-type";
 import { DuplicateSymbol } from "./duplicate-symbol";
-import { isSymbol, symbolMatches } from "./symbol-helpers";
+import { isProperty, isSymbol, symbolMatches } from "./symbol-helpers";
 import { SymbolScope } from "./symbol-scope";
 import { UnknownSymbol } from "./unknown-symbol";
 
@@ -16,13 +17,29 @@ export class StdLibClass implements Class {
     public readonly isAbstract: boolean,
     public readonly isNotInheritable: boolean,
     public readonly immutable: boolean,
+    public readonly indexable: boolean,
     public readonly children: ElanSymbol[],
-    public readonly ofTypes: SymbolType[],
+    public ofTypes: SymbolType[],
     public readonly inheritTypes: SymbolType[],
     private readonly scope: Scope,
   ) {
     this.symbolId = this.name;
   }
+
+  updateOfTypes(ofTypes: SymbolType[]) {
+    return new StdLibClass(
+      this.name,
+      this.isAbstract,
+      this.isNotInheritable,
+      this.immutable,
+      this.indexable,
+      this.children,
+      ofTypes,
+      this.inheritTypes,
+      this.scope,
+    );
+  }
+
   getDirectSuperClassesTypeAndName(): [SymbolType, string][] {
     return [];
   }
@@ -37,12 +54,17 @@ export class StdLibClass implements Class {
     return this.immutable;
   }
 
+  isIndexable() {
+    return this.indexable;
+  }
+
   symbolType(_transforms?: Transforms): SymbolType {
     return new ClassType(
       this.name,
       this.isAbstract ? ClassSubType.abstract : ClassSubType.concrete,
       this.isNotInheritable,
       this.immutable,
+      this.indexable,
       this.inheritTypes,
       this,
     );
@@ -84,6 +106,32 @@ export class StdLibClass implements Class {
 
     if (symbol instanceof UnknownSymbol) {
       return this.getParentScope().resolveSymbol(id, transforms, this);
+    }
+
+    if (!isProperty(symbol)) {
+      const st = symbol.symbolType();
+      const matches = new Map<string, SymbolType>();
+      matches.set("T1", this.ofTypes[0]);
+
+      const st1 = generateType(st, matches);
+
+      const newSymbol = {
+        symbolId: symbol.symbolId,
+        symbolType: () => st1,
+        symbolScope: symbol.symbolScope,
+      } as ElanSymbol;
+
+      if ("isMember" in symbol) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (newSymbol as any)["isMember"] = true;
+      }
+
+      if ("isProperty" in symbol) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (newSymbol as any)["isProperty"] = true;
+      }
+
+      return newSymbol;
     }
 
     return symbol;

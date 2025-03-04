@@ -435,7 +435,7 @@ async function main() {
 }
 
 _tests.push(["test3", async (_outcomes) => {
-  let arr = system.emptyArray();
+  let arr = system.initialise(_stdlib.Array.emptyInstance());
   _outcomes.push(await system.assert(async () => system.safeIndex(arr, 1), "Out of range index: 1 size: 0", "assert9", _stdlib, false));
 }]);
 return [main, _tests];}`;
@@ -480,7 +480,7 @@ async function main() {
 }
 
 _tests.push(["test3", async (_outcomes) => {
-  let arr = system.emptyArray();
+  let arr = system.initialise(_stdlib.Array.emptyInstance());
   _outcomes.push(await system.assert(async () => system.safeIndex(arr, 1), 0, "assert9", _stdlib, false));
 }]);
 return [main, _tests];}`;
@@ -518,7 +518,7 @@ async function main() {
 }
 
 _tests.push(["test3", async (_outcomes) => {
-  let arr = system.emptyArray();
+  let arr = system.initialise(_stdlib.Array.emptyInstance());
   let b = system.safeIndex(arr, 1);
   _outcomes.push(await system.assert(async () => b, 0, "assert12", _stdlib, false));
 }]);

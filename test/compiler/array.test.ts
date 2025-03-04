@@ -49,8 +49,8 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(system.array(new Array()));
-  await system.printLine(_stdlib.length(a));
+  let a = system.initialise(await new _stdlib.Array()._initialise());
+  await system.printLine(a.length());
 }
 return [main, _tests];}`;
 
@@ -135,7 +135,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.literalArray([1, 2, 3]);
-  _stdlib.putAt(a, 0, system.safeIndex(a, 1));
+  a.putAt(0, system.safeIndex(a, 1));
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -207,8 +207,8 @@ end main`;
 const global = new class {};
 async function main() {
   let a = _stdlib.createArray(3, "");
-  _stdlib.putAt(a, 0, "foo");
-  _stdlib.putAt(a, 2, "yon");
+  a.putAt(0, "foo");
+  a.putAt(2, "yon");
   await system.printLine(system.safeIndex(a, 0));
   await system.printLine(system.safeIndex(a, 2));
 }
@@ -236,7 +236,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.literalArray(["foo", "bar", "yon"]);
-  a = system.array(system.safeSlice(a, 1));
+  a = system.safeSlice(a, 1);
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -265,8 +265,8 @@ end main`;
 const global = new class {};
 async function main() {
   let a = _stdlib.createArray(3, "");
-  _stdlib.append(a, "foo");
-  _stdlib.append(a, "yon");
+  a.append("foo");
+  a.append("yon");
   await system.printLine(system.safeIndex(a, 3));
   await system.printLine(system.safeIndex(a, 4));
 }
@@ -300,8 +300,8 @@ end main`;
 const global = new class {};
 async function main() {
   let a = _stdlib.createArray(3, "");
-  _stdlib.append(a, "foo");
-  _stdlib.append(a, "yon");
+  a.append("foo");
+  a.append("yon");
   let c = "";
   let d = "";
   c = system.safeIndex(a, 3);
@@ -334,8 +334,8 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.literalArray(["one", "two", "three"]);
-  _stdlib.insertAt(a, 1, "foo");
-  _stdlib.insertAt(a, 3, "yon");
+  a.insertAt(1, "foo");
+  a.insertAt(3, "yon");
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -363,8 +363,8 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.literalArray(["one", "two", "three"]);
-  _stdlib.removeAt(a, 0);
-  _stdlib.removeAt(a, 1);
+  a.removeAt(0);
+  a.removeAt(1);
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -391,7 +391,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.literalArray(["one", "two", "three", "one", "two", "three"]);
-  _stdlib.removeFirst(a, "two");
+  a.removeFirst("two");
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -418,7 +418,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.literalArray(["one", "two", "three", "one", "two", "three"]);
-  _stdlib.removeAll(a, "two");
+  a.removeAll("two");
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -444,7 +444,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = _stdlib.asArray(system.list(["foo", "bar", "yon"]));
-  await system.printLine(_stdlib.length(a));
+  await system.printLine(a.length());
 }
 return [main, _tests];}`;
 
@@ -474,14 +474,14 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.emptyArray();
-  let b = system.emptyArray();
-  _stdlib.append(a, 3);
+  let a = system.initialise(_stdlib.Array.emptyInstance());
+  let b = system.initialise(_stdlib.Array.emptyInstance());
+  a.append(3);
   await system.printLine(a);
   await system.printLine(b);
   await system.printLine(system.objectEquals(a, b));
-  await system.printLine(system.objectEquals(a, system.emptyArray()));
-  await system.printLine(system.objectEquals(b, system.emptyArray()));
+  await system.printLine(system.objectEquals(a, system.initialise(_stdlib.Array.emptyInstance())));
+  await system.printLine(system.objectEquals(b, system.initialise(_stdlib.Array.emptyInstance())));
 }
 return [main, _tests];}`;
 
@@ -735,7 +735,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'get' is not defined"]);
+    assertDoesNotCompile(fileImpl, ["'get' is not defined for type 'Array'"]);
   });
 
   test("Fail_getRange", async () => {
@@ -751,7 +751,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'getRange' is not defined"]);
+    assertDoesNotCompile(fileImpl, ["'getRange' is not defined for type 'Array'"]);
   });
 
   test("Fail_put", async () => {
@@ -806,7 +806,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'withRemove' is not defined"]);
+    assertDoesNotCompile(fileImpl, ["'withRemove' is not defined for type 'Array'"]);
   });
 
   test("Fail_putAt_asFunction", async () => {

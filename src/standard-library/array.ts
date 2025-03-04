@@ -1,39 +1,45 @@
+import { ElanRuntimeError } from "../elan-runtime-error";
 import {
   ClassOptions,
-  elanArrayType,
   elanClass,
+  elanClassType,
+  elanFunction,
   elanGenericParamT1Type,
+  ElanInt,
   elanIntType,
   elanProcedure,
   ElanT1,
+  FunctionOptions,
 } from "../elan-type-annotations";
+import { hasHiddenType } from "../has-hidden-type";
 import { System } from "../system";
 
-@elanClass(ClassOptions.concrete, [ElanT1])
-export class ElanArray<T1> {
+@elanClass(ClassOptions.array, [ElanT1], [], [], [], "Array")
+export class ElanArrayImpl<T1> {
   // this must be implemented by hand on all stdlib classes
   static emptyInstance() {
-    return new ElanArray();
+    return new ElanArrayImpl();
   }
 
   async _initialise() {
     return this;
   }
 
-  constructor() {
-    this.contents = [];
+  constructor(arr?: T1[]) {
+    this.contents = arr ? [...arr] : [];
+    (this.contents as unknown as hasHiddenType)._type = "Array";
   }
 
   private contents: T1[];
 
   private system?: System;
 
-  @elanProcedure(["", "index", "value"])
+  @elanProcedure(["index", "value"])
   putAt(@elanIntType() index: number, @elanGenericParamT1Type() value: T1) {
     this.system!.safeArraySet(this.contents, index, value);
   }
 
-  @elanProcedure(["", "column", "row"])
+  @elanProcedure(["column", "row"])
   putAt2D(
     @elanIntType() col: number,
     @elanIntType() row: number,
@@ -42,17 +48,17 @@ export class ElanArray<T1> {
     this.system!.safeArraySet(this.contents[col] as T1[], row, value);
   }
 
-  @elanProcedure(["", "index", "value"])
+  @elanProcedure(["index", "value"])
   insertAt(@elanIntType() index: number, @elanGenericParamT1Type() value: T1) {
     this.contents.splice(index, 0, value);
   }
 
-  @elanProcedure(["", "index"])
+  @elanProcedure(["index"])
   removeAt(@elanIntType() index: number) {
     this.contents.splice(index, 1);
   }
 
-  @elanProcedure(["", "value"])
+  @elanProcedure(["value"])
   removeFirst(@elanGenericParamT1Type() value: T1) {
     const index = this.system!.elanIndexOf(this.contents, value);
     if (index > -1) {
@@ -60,7 +66,7 @@ export class ElanArray<T1> {
     }
   }
 
-  @elanProcedure(["", "value"])
+  @elanProcedure(["value"])
   removeAll(@elanGenericParamT1Type() value: T1) {
     let index = this.system!.elanIndexOf(this.contents, value);
     while (index > -1) {
@@ -69,23 +75,60 @@ export class ElanArray<T1> {
     }
   }
 
-  @elanProcedure(["", "value"])
+  @elanProcedure(["value"])
   append(@elanGenericParamT1Type() value: T1) {
     this.contents.push(value);
   }
 
-  @elanProcedure(["", "other"])
-  appendArray(@elanArrayType(ElanT1) listB: T1[]) {
-    this.contents.push(...listB);
+  @elanProcedure(["other"])
+  appendArray(@elanClassType(ElanArrayImpl) listB: ElanArrayImpl<T1>) {
+    this.contents.push(...listB.contents);
   }
 
-  @elanProcedure(["", "other"])
+  @elanProcedure(["other"])
   prepend(@elanGenericParamT1Type() value: T1) {
     this.contents.unshift(value);
   }
 
-  @elanProcedure(["", "other"])
-  prependArray(@elanArrayType(ElanT1) listB: T1[]) {
-    this.contents.unshift(...listB);
+  @elanProcedure(["other"])
+  prependArray(@elanClassType(ElanArrayImpl) listB: ElanArrayImpl<T1>) {
+    this.contents.unshift(...listB.contents);
+  }
+
+  @elanFunction([], FunctionOptions.pure, ElanInt)
+  length() {
+    return this.contents.length;
+  }
+
+  async asString() {
+    return await this.system?.asString(this.contents);
+  }
+
+  safeIndex(index: number) {
+    const r = this.contents[index];
+
+    if (r === undefined) {
+      this.system!.throwRangeError(this.contents, index);
+    }
+
+    return r;
+  }
+
+  safeSlice(index1: number | undefined, index2: number | undefined) {
+    if (index1 && index1 < 0) {
+      this.system!.throwRangeError(this, index1);
+    }
+
+    if (index2 && index2 < 0) {
+      this.system!.throwRangeError(this, index2);
+    }
+
+    const r = this.contents.slice(index1, index2);
+
+    if (r === undefined) {
+      throw new ElanRuntimeError(`Out of range index`);
+    }
+
+    return this.system?.initialise(new ElanArrayImpl(r));
   }
 }

@@ -4,6 +4,8 @@ export class EnumType implements SymbolType {
   constructor(public readonly name: string) {}
   isImmutable = true;
 
+  isIndexable = false;
+
   get initialValue() {
     return `${this.name}._default`;
   }

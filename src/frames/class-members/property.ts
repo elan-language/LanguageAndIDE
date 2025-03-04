@@ -10,6 +10,7 @@ import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { PossiblyPrivateMember } from "../interfaces/possibly-private-member";
+import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../interfaces/transforms";
 import { asKeyword, privateKeyword, propertyKeyword } from "../keywords";
 import { ClassType } from "../symbols/class-type";
@@ -63,6 +64,11 @@ export class Property extends AbstractFrame implements PossiblyPrivateMember, El
     return `${this.indent()}${this.modifierAsSource()}${propertyKeyword} ${this.name.renderAsSource()} ${asKeyword} ${this.type.renderAsSource()}\r\n`;
   }
 
+  isGlobalClass(st: SymbolType) {
+    // todo rework when tests working
+    return st instanceof ClassType && !st.isIndexable;
+  }
+
   compile(transforms: Transforms): string {
     this.compileErrors = [];
     const pName = this.name.compile(transforms);
@@ -78,7 +84,7 @@ export class Property extends AbstractFrame implements PossiblyPrivateMember, El
 
     mustBeKnownSymbolType(st, this.type.renderAsSource(), this.compileErrors, this.htmlId);
 
-    if (st instanceof ClassType) {
+    if (this.isGlobalClass(st)) {
       return `${this.indent()}_${pName};\r
 ${this.indent()}get ${pName}() {\r
 ${this.indent()}${this.indent()}return this._${pName} ??= ${this.type.compile(transforms)};\r
@@ -118,7 +124,7 @@ ${this.indent()}}\r\n`;
 
   public initCode() {
     const tst = this.symbolType(transforms());
-    if (!(tst instanceof ClassType)) {
+    if (!this.isGlobalClass(tst)) {
       return `["${this.name.text}", ${tst.initialValue}]`;
     }
     return "";

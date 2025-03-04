@@ -597,7 +597,7 @@ async function main() {
   let a = system.literalArray([1, 2]);
   let x = system.tuple([3, a]);
   let y = 0;
-  let z = system.emptyArray();
+  let z = system.initialise(_stdlib.Array.emptyInstance());
   [y, z] = x;
   await system.printLine(y);
   await system.printLine(z);

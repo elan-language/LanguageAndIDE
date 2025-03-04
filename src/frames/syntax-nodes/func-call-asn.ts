@@ -17,12 +17,13 @@ import { SymbolType } from "../interfaces/symbol-type";
 import { ClassType } from "../symbols/class-type";
 import { FunctionType } from "../symbols/function-type";
 import { NullScope } from "../symbols/null-scope";
-import { isMemberOnFieldsClass, scopePrefix } from "../symbols/symbol-helpers";
+import { isClassTypeDef, isMemberOnFieldsClass, scopePrefix } from "../symbols/symbol-helpers";
 import { AbstractAstNode } from "./abstract-ast-node";
 import {
   containsGenericType,
   generateType,
   isEmptyNode,
+  matchClassGenericTypes,
   matchGenericTypes,
   matchParametersAndTypes,
   transforms,
@@ -158,6 +159,10 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
 
         const st = this.precedingNode.symbolType();
         const cls = st instanceof ClassType ? st.scope : NullScope.Instance;
+
+        if (isClassTypeDef(cls)) {
+          cls.genericParamMatches = matchClassGenericTypes(cls, callParameters);
+        }
 
         const matches = matchGenericTypes(funcSymbolType, callParameters, cls);
         return generateType(returnType, matches);

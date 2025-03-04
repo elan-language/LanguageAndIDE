@@ -4,6 +4,8 @@ export class BooleanType implements SymbolType {
   private constructor() {}
   isImmutable = true;
 
+  isIndexable = false;
+
   initialValue = "false";
 
   static Instance: SymbolType = new BooleanType();

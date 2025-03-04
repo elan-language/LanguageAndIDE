@@ -2,14 +2,18 @@ import { CompileError } from "../compile-error";
 import { mustBeAssignableType } from "../compile-rules";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstNode } from "../interfaces/ast-node";
-import { ArrayType } from "../symbols/array-type";
+import { ReifyableSymbolType } from "../interfaces/reifyable-symbol-type";
+import { Scope } from "../interfaces/scope";
+import { getGlobalScope } from "../symbols/symbol-helpers";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
+import { transforms } from "./ast-helpers";
 
 export class LiteralArrayAsn extends AbstractAstNode implements AstCollectionNode {
   constructor(
     public readonly items: AstNode[],
     public readonly fieldId: string,
+    private readonly scope: Scope,
   ) {
     super();
   }
@@ -35,11 +39,11 @@ export class LiteralArrayAsn extends AbstractAstNode implements AstCollectionNod
   }
 
   symbolType() {
-    const ofType = this.items[0]?.symbolType();
-    if (ofType) {
-      return new ArrayType(ofType);
-    }
-    return new ArrayType(UnknownType.Instance);
+    const globalScope = getGlobalScope(this.scope);
+    const symbol = globalScope.resolveSymbol("Array", transforms(), this.scope);
+    const st = symbol.symbolType() as ReifyableSymbolType;
+
+    return st.reify([this.items[0]?.symbolType() ?? UnknownType.Instance]);
   }
 
   toString() {

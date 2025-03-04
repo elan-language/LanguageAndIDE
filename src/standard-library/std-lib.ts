@@ -3,12 +3,11 @@ import { ElanCompilerError } from "../elan-compiler-error";
 import { ElanRuntimeError } from "../elan-runtime-error";
 import {
   elanAbstractDictionaryType,
-  ElanArray,
-  elanArrayType,
   ElanBoolean,
   ElanClass,
   elanClassExport,
   elanClassType,
+  ElanClassTypeDescriptor,
   elanConstant,
   ElanDictionaryImmutable,
   elanDictionaryImmutableType,
@@ -48,6 +47,7 @@ import { TextFileReader } from "./text-file-reader";
 import { TextFileWriter } from "./text-file-writer";
 import { Turtle } from "./turtle";
 import { VectorGraphics } from "./vector-graphics";
+import { ElanArrayImpl } from "./array";
 
 async function getPivot<T1>(x: T1, y: T1, z: T1, compare: (a: T1, b: T1) => Promise<number>) {
   if ((await compare(x, y)) < 0) {
@@ -148,6 +148,9 @@ export class StdLib {
 
   @elanClassExport(RectangleVG)
   RectangleVG = RectangleVG;
+
+  @elanClassExport(ElanArrayImpl)
+  Array = ElanArrayImpl;
 
   // Standard colours
 
@@ -273,11 +276,11 @@ export class StdLib {
     return s.charCodeAt(0);
   }
 
-  @elanFunction([], FunctionOptions.pureExtension, ElanArray(ElanT1))
-  asArray<T1>(@elanIterableType(ElanT1) list: T1[]): T1[] {
+  @elanFunction([], FunctionOptions.pureExtension, new ElanClassTypeDescriptor(ElanArrayImpl))
+  asArray<T1>(@elanIterableType(ElanT1) list: T1[]): ElanArrayImpl<T1> {
     const arr = [...list];
     (arr as unknown as hasHiddenType)._type = "Array";
-    return arr;
+    return this.system.initialise(new ElanArrayImpl(arr));
   }
 
   @elanFunction([], FunctionOptions.pureExtension, ElanList(ElanT1))
@@ -423,26 +426,6 @@ export class StdLib {
     return newList;
   }
 
-  @elanProcedure(["", "index", "value"], ProcedureOptions.extension)
-  putAt<T1>(
-    @elanArrayType(ElanT1) list: T1[],
-    @elanIntType() index: number,
-    @elanGenericParamT1Type() value: T1,
-  ) {
-    this.system.safeArraySet(list, index, value);
-  }
-
-  @elanProcedure(["", "column", "row"], ProcedureOptions.extension)
-  putAt2D<T1>(
-    @elanArrayType(ElanArray(ElanT1))
-    list: T1[][],
-    @elanIntType() col: number,
-    @elanIntType() row: number,
-    @elanGenericParamT1Type() value: T1,
-  ) {
-    this.system.safeArraySet(list[col], row, value);
-  }
-
   @elanProcedure(["", "key", "value"], ProcedureOptions.extension)
   putAtKey<T1>(
     @elanDictionaryType(ElanT1, ElanT2)
@@ -463,15 +446,6 @@ export class StdLib {
     const newList = (list as any).toSpliced(index, 0, value);
     (newList as unknown as hasHiddenType)._type = "List";
     return newList;
-  }
-
-  @elanProcedure(["", "index", "value"], ProcedureOptions.extension)
-  insertAt<T1>(
-    @elanArrayType(ElanT1) list: T1[],
-    @elanIntType() index: number,
-    @elanGenericParamT1Type() value: T1,
-  ) {
-    list.splice(index, 0, value);
   }
 
   // custom impl
@@ -516,48 +490,6 @@ export class StdLib {
     }
     (newList as unknown as hasHiddenType)._type = "List";
     return newList;
-  }
-
-  @elanProcedure(["", "index"], ProcedureOptions.extension)
-  removeAt<T1>(@elanArrayType(ElanT1) list: T1[], @elanIntType() index: number) {
-    list.splice(index, 1);
-  }
-
-  @elanProcedure(["", "value"], ProcedureOptions.extension)
-  removeFirst<T1>(@elanArrayType(ElanT1) list: T1[], @elanGenericParamT1Type() value: T1) {
-    const index = this.elanIndexOf(list, value);
-    if (index > -1) {
-      list.splice(index, 1);
-    }
-  }
-
-  @elanProcedure(["", "value"], ProcedureOptions.extension)
-  removeAll<T1>(@elanArrayType(ElanT1) list: T1[], @elanGenericParamT1Type() value: T1) {
-    let index = this.elanIndexOf(list, value);
-    while (index > -1) {
-      list.splice(index, 1);
-      index = this.elanIndexOf(list, value);
-    }
-  }
-
-  @elanProcedure(["", "value"], ProcedureOptions.extension)
-  append<T1>(@elanArrayType(ElanT1) list: T1[], @elanGenericParamT1Type() value: T1) {
-    list.push(value);
-  }
-
-  @elanProcedure(["", "other"], ProcedureOptions.extension)
-  appendArray<T1>(@elanArrayType(ElanT1) list: T1[], @elanArrayType(ElanT1) listB: T1[]) {
-    list.push(...listB);
-  }
-
-  @elanProcedure(["", "other"], ProcedureOptions.extension)
-  prepend<T1>(@elanArrayType(ElanT1) list: T1[], @elanGenericParamT1Type() value: T1) {
-    list.unshift(value);
-  }
-
-  @elanProcedure(["", "other"], ProcedureOptions.extension)
-  prependArray<T1>(@elanArrayType(ElanT1) list: T1[], @elanArrayType(ElanT1) listB: T1[]) {
-    list.unshift(...listB);
   }
 
   @elanFunction(
@@ -798,26 +730,29 @@ export class StdLib {
     await this.system.elanInputOutput.clearPrintedText();
   }
 
-  @elanFunction(["size", "initialValue"], FunctionOptions.pure, ElanArray(ElanT1))
+  @elanFunction(
+    ["size", "initialValue"],
+    FunctionOptions.pure,
+    new ElanClassTypeDescriptor(ElanArrayImpl),
+  )
   createArray<T1>(@elanIntType() x: number, @elanGenericParamT1Type() value: T1) {
     if (!this.isValueType(value)) {
       throw new ElanRuntimeError(`Can only create array with simple value`);
     }
 
-    const toInit = this.system.array([]);
-    toInit.length = x;
+    const toInit = [];
 
     for (let i = 0; i < x; i++) {
       toInit[i] = value;
     }
 
-    return toInit;
+    return this.system.initialise(new ElanArrayImpl<T1>(toInit));
   }
 
   @elanFunction(
     ["columns", "rows", "initialValue"],
     FunctionOptions.pure,
-    ElanArray(ElanArray(ElanT1)),
+    new ElanClassTypeDescriptor(ElanArrayImpl),
   )
   createArray2D<T1>(
     @elanIntType() x: number,
@@ -828,8 +763,7 @@ export class StdLib {
       throw new ElanRuntimeError(`Can only initialise array with simple value`);
     }
 
-    const toInit = this.system.array([]);
-    toInit.length = x;
+    const toInit = this.system.initialise(new ElanArrayImpl<ElanArrayImpl<T1>>());
 
     for (let i = 0; i < x; i++) {
       const subArr = this.system.array([]);
@@ -837,8 +771,9 @@ export class StdLib {
       for (let j = 0; j < y; j++) {
         subArr[j] = value;
       }
-      toInit[i] = subArr;
+      toInit.appendArray(this.system.initialise(new ElanArrayImpl<ElanArrayImpl<T1>>(subArr)));
     }
+
     return toInit;
   }
 
@@ -874,7 +809,7 @@ export class StdLib {
   @elanFunction(["prompt", "options"], FunctionOptions.impureAsync, ElanString)
   async inputStringFromOptions(
     prompt: string,
-    @elanArrayType(ElanString) options: string[],
+    @elanClassType(ElanArrayImpl) options: string[],
   ): Promise<string> {
     const s = await this.inputString(prompt);
 

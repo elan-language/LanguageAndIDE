@@ -74,8 +74,8 @@ export function isListType(s?: SymbolType): s is AbstractListType {
   return s instanceof AbstractListType;
 }
 
-export function isIndexableType(s?: SymbolType): s is IterableSymbolType {
-  return isIterableType(s) && !(s instanceof IterableType);
+export function isIndexableType(s?: SymbolType): boolean {
+  return !!s?.isIndexable;
 }
 
 export function isSymbol(s?: Parent | Frame | ElanSymbol): s is ElanSymbol {
@@ -84,6 +84,10 @@ export function isSymbol(s?: Parent | Frame | ElanSymbol): s is ElanSymbol {
 
 export function isGenericSymbolType(s?: SymbolType | GenericSymbolType): s is GenericSymbolType {
   return !!s && "ofType" in s;
+}
+
+export function isClassType(s?: SymbolType): s is ClassType {
+  return !!s && "inheritsFrom" in s;
 }
 
 export function isReifyableSymbolType(
@@ -194,6 +198,14 @@ function internalUpdateScopeAndQualifier(
     );
     // replace scope with class scope
     currentScope = isScope(classSymbol) ? classSymbol : currentScope;
+
+    if (isClassTypeDef(currentScope)) {
+      if (isClass(qualifierScope.scope)) {
+        //currentScope.genericParamMatches = qualifierScope.scope.genericParamMatches;
+
+        currentScope = currentScope.updateOfTypes(qualifierScope.scope.ofTypes);
+      }
+    }
   } else if (isAstIdNode(value) && value.id === libraryKeyword) {
     currentScope = getGlobalScope(currentScope).libraryScope;
     qualifier = EmptyAsn.Instance;

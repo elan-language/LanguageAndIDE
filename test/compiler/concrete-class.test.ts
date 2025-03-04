@@ -358,14 +358,14 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["strArr", system.emptyArray()]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["strArr", system.initialise(_stdlib.Array.emptyInstance())]]);};
 
   async _initialise() {
     this.strArr = system.literalArray(["apple", "orange", "pair"]);
     return this;
   }
 
-  strArr = system.emptyArray();
+  strArr = system.initialise(_stdlib.Array.emptyInstance());
 
 }
 return [main, _tests];}`;

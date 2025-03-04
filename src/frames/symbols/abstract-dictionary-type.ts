@@ -10,6 +10,8 @@ export class AbstractDictionaryType implements DictionarySymbolType {
 
   isImmutable = false;
 
+  isIndexable = false;
+
   initialValue = "";
 
   factoryName = "";
