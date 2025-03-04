@@ -322,7 +322,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine((await _stdlib.maxBy(global.source, async (x) => system.nanCheck(x % 5))));
+  await system.printLine((await _stdlib.maxBy(global.source, async (x) => x % 5)));
 }
 return [main, _tests];}`;
 
@@ -457,7 +457,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine((await _stdlib.minBy(global.source, async (x) => system.nanCheck(x % 5))));
+  await system.printLine((await _stdlib.minBy(global.source, async (x) => x % 5)));
 }
 return [main, _tests];}`;
 
