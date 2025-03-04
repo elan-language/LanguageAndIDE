@@ -551,7 +551,7 @@ export class StdLib {
 
   @elanFunction(["number"], FunctionOptions.pureExtension, ElanBoolean)
   isInfinite(n: number) {
-    return n ===Number.POSITIVE_INFINITY || n === Number.NEGATIVE_INFINITY;
+    return n === Number.POSITIVE_INFINITY || n === Number.NEGATIVE_INFINITY;
   }
 
   @elanFunction(["number", "decimalPlaces"], FunctionOptions.pureExtension)
@@ -781,7 +781,7 @@ export class StdLib {
       for (let j = 0; j < y; j++) {
         subArr[j] = value;
       }
-      toInit.appendArray(this.system.initialise(new ElanArrayImpl<ElanArrayImpl<T1>>(subArr)));
+      toInit.append(this.system.initialise(new ElanArrayImpl<T1>(subArr)));
     }
 
     return toInit;

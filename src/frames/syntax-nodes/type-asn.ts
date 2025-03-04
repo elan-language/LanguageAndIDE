@@ -47,10 +47,6 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
       return 0;
     }
 
-    if (isListType(st) || isIterableType(st)) {
-      return 1;
-    }
-
     if (isAnyDictionaryType(st)) {
       return 2;
     }
@@ -65,6 +61,10 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
 
     if (st instanceof FunctionType) {
       return st.parameterTypes.length + 1;
+    }
+
+    if (isListType(st) || isIterableType(st)) {
+      return 1;
     }
 
     return 0;

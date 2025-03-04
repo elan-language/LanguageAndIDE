@@ -57,7 +57,7 @@ export function isDeconstructedType(s?: SymbolType): s is DeconstructedSymbolTyp
 }
 
 export function isIterableType(s?: SymbolType): s is IterableSymbolType {
-  return !!s && "isIterable" in s;
+  return !!s && ("isIterable" in s || s.isIndexable);
 }
 
 export function isAnyDictionaryType(s?: SymbolType): s is DictionarySymbolType {

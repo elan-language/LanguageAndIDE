@@ -34,6 +34,20 @@ export class ElanArrayImpl<T1> {
 
   private system?: System;
 
+  [Symbol.iterator]() {
+    let index = 0;
+
+    return {
+      next: () => {
+        if (index < this.contents.length) {
+          return { value: this.contents[index++], done: false };
+        } else {
+          return { done: true };
+        }
+      },
+    };
+  }
+
   @elanProcedure(["index", "value"])
   putAt(@elanIntType() index: number, @elanGenericParamT1Type() value: T1) {
     this.system!.safeArraySet(this.contents, index, value);

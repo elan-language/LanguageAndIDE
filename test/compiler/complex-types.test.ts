@@ -52,7 +52,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.dictionary({["a"] : system.literalArray([1, 2]), ["b"] : system.literalArray([3, 4, 5])});
-  _stdlib.putAt(system.safeIndex(a, "b"), 0, 2);
+  system.safeIndex(a, "b").putAt(0, 2);
   await system.printLine(system.safeIndex(system.safeIndex(a, "b"), 0));
 }
 return [main, _tests];}`;
