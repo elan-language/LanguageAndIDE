@@ -2,7 +2,6 @@ import { ClassSymbol } from "../interfaces/class-symbol";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../interfaces/transforms";
-import { ArrayType } from "./array-type";
 import { BooleanType } from "./boolean-type";
 import { DictionaryImmutableType } from "./dictionary-immutable-type";
 import { DictionaryType } from "./dictionary-type";
@@ -68,17 +67,17 @@ const regExpSymbol: ElanSymbol = {
 //   ofTypes: [new GenericParameterType("T")],
 // };
 
-const array2DSymbol: ClassSymbol = {
-  symbolId: "Array2D",
-  symbolType: function (_transforms?: Transforms): SymbolType {
-    return new ArrayType(new ArrayType(new GenericParameterType("T")));
-  },
-  symbolScope: SymbolScope.program,
-  isClass: true,
-  isAbstract: false,
-  isNotInheritable: false,
-  ofTypes: [new GenericParameterType("T")],
-};
+// const array2DSymbol: ClassSymbol = {
+//   symbolId: "Array2D",
+//   symbolType: function (_transforms?: Transforms): SymbolType {
+//     return new ArrayType(new ArrayType(new GenericParameterType("T")));
+//   },
+//   symbolScope: SymbolScope.program,
+//   isClass: true,
+//   isAbstract: false,
+//   isNotInheritable: false,
+//   ofTypes: [new GenericParameterType("T")],
+// };
 
 const tupleSymbol: ClassSymbol = {
   symbolId: "Tuple",
@@ -157,7 +156,6 @@ export const elanSymbols = [
   booleanSymbol,
   regExpSymbol,
   tupleSymbol,
-  array2DSymbol,
   listSymbol,
   funcSymbol,
   dictionarySymbol,

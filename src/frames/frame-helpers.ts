@@ -260,6 +260,10 @@ export function mapSymbolType(ids: string[], st: SymbolType) {
   if (ids.length === 2 && (st instanceof ArrayType || st instanceof ListType)) {
     return new DeconstructedListType(ids[0], ids[1], st.ofType, st);
   }
+
+  if (ids.length === 2 && st instanceof ClassType && st.isIndexable) {
+    return new DeconstructedListType(ids[0], ids[1], st.ofType, st);
+  }
   return st;
 }
 

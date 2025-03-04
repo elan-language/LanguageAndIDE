@@ -47,7 +47,7 @@ import { TextFileReader } from "./text-file-reader";
 import { TextFileWriter } from "./text-file-writer";
 import { Turtle } from "./turtle";
 import { VectorGraphics } from "./vector-graphics";
-import { ElanArrayImpl } from "./array";
+import { Elan2DArrayImpl, ElanArrayImpl } from "./array";
 
 async function getPivot<T1>(x: T1, y: T1, z: T1, compare: (a: T1, b: T1) => Promise<number>) {
   if ((await compare(x, y)) < 0) {
@@ -151,6 +151,9 @@ export class StdLib {
 
   @elanClassExport(ElanArrayImpl)
   Array = ElanArrayImpl;
+
+  @elanClassExport(Elan2DArrayImpl)
+  Array2D = Elan2DArrayImpl;
 
   // Standard colours
 
@@ -762,7 +765,7 @@ export class StdLib {
   @elanFunction(
     ["columns", "rows", "initialValue"],
     FunctionOptions.pure,
-    new ElanClassTypeDescriptor(ElanArrayImpl),
+    new ElanClassTypeDescriptor(Elan2DArrayImpl),
   )
   createArray2D<T1>(
     @elanIntType() x: number,
