@@ -119,7 +119,7 @@ ${compileStatements(transforms, this.compileChildren)}`;
 
   getOuterScope() {
     // need to get scope of IfStatement
-    return this.compileScope!.getParentScope();
+    return this.getCurrentScope().getParentScope();
   }
 
   getChildRange(initialScope: Scope) {

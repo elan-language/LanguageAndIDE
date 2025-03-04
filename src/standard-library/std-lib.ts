@@ -544,6 +544,16 @@ export class StdLib {
     return Math.floor(n);
   }
 
+  @elanFunction(["number"], FunctionOptions.pureExtension, ElanBoolean)
+  isNaN(n: number) {
+    return isNaN(n);
+  }
+
+  @elanFunction(["number"], FunctionOptions.pureExtension, ElanBoolean)
+  isInfinite(n: number) {
+    return n ===Number.POSITIVE_INFINITY || n === Number.NEGATIVE_INFINITY;
+  }
+
   @elanFunction(["number", "decimalPlaces"], FunctionOptions.pureExtension)
   round(n: number, @elanIntType() places: number): number {
     const shift = 10 ** places;
@@ -887,7 +897,7 @@ export class StdLib {
 
   @elanFunction(["value"])
   acos(x: number): number {
-    return this.system.nanCheck(Math.acos(x));
+    return Math.acos(x);
   }
   // Returns the arccosine of the input.
 
@@ -898,7 +908,7 @@ export class StdLib {
 
   @elanFunction(["value"])
   asin(x: number): number {
-    return this.system.nanCheck(Math.asin(x));
+    return Math.asin(x);
   }
   // Returns the arcsine of the input.
 
@@ -909,7 +919,7 @@ export class StdLib {
 
   @elanFunction(["value"])
   atan(x: number): number {
-    return this.system.nanCheck(Math.atan(x));
+    return Math.atan(x);
   }
   // Returns the arctangent of the input.
 
@@ -920,29 +930,29 @@ export class StdLib {
 
   @elanFunction(["radians"])
   cos(x: number): number {
-    return this.system.nanCheck(Math.cos(x));
+    return Math.cos(x);
   }
 
   @elanFunction(["degrees"])
   cosDeg(n: number): number {
-    return this.system.nanCheck(this.cos(this.degToRad(n)));
+    return this.cos(this.degToRad(n));
   }
 
   @elanFunction(["x"])
   exp(x: number): number {
-    return this.system.nanCheck(Math.exp(x));
+    return Math.exp(x);
   }
   // Returns ex, where x is the argument, and e is Euler's number (2.718…, the base of the natural logarithm).
 
   @elanFunction(["number"])
   logE(x: number): number {
-    return this.system.nanCheck(Math.log(x));
+    return Math.log(x);
   }
   // Returns the natural logarithm (㏒e; also, ㏑) of the input.
 
   @elanFunction(["number"])
   log10(x: number): number {
-    return this.system.nanCheck(Math.log10(x));
+    return Math.log10(x);
   }
   // Returns the base-10 logarithm of the input.
 
@@ -950,35 +960,35 @@ export class StdLib {
 
   @elanFunction(["number"])
   log2(x: number): number {
-    return this.system.nanCheck(Math.log2(x));
+    return Math.log2(x);
   }
 
   @elanFunction(["radians"])
   sin(x: number): number {
-    return this.system.nanCheck(Math.sin(x));
+    return Math.sin(x);
   }
   // Returns the sine of the input.
 
   @elanFunction(["degrees"])
   sinDeg(n: number): number {
-    return this.system.nanCheck(this.sin(this.degToRad(n)));
+    return this.sin(this.degToRad(n));
   }
 
   @elanFunction(["number"])
   sqrt(x: number): number {
-    return this.system.nanCheck(Math.sqrt(x));
+    return Math.sqrt(x);
   }
   // Returns the positive square root of the input.
 
   @elanFunction(["radians"])
   tan(x: number): number {
-    return this.system.nanCheck(Math.tan(x));
+    return Math.tan(x);
   }
   // Returns the tangent of the input.
 
   @elanFunction(["degrees"])
   tanDeg(n: number): number {
-    return this.system.nanCheck(this.tan(this.degToRad(n)));
+    return this.tan(this.degToRad(n));
   }
 
   @elanFunction(["degrees"])
