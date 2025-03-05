@@ -21,7 +21,6 @@ export class AbstractClass extends ClassFrame {
   }
 
   ofTypes: SymbolType[] = [];
-  genericParamMatches: Map<string, SymbolType> = new Map<string, SymbolType>();
 
   initialKeywords(): string {
     return abstractClassKeywords;

@@ -44,8 +44,6 @@ export class StdLibClass implements Class {
     return [];
   }
 
-  genericParamMatches: Map<string, SymbolType> = new Map<string, SymbolType>();
-
   isClass = true;
 
   symbolId: string;

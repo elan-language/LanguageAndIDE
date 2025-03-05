@@ -467,10 +467,6 @@ export function ElanList(ofType: TypeDescriptor) {
   return new ElanValueTypeDescriptor("List", ofType);
 }
 
-// export function ElanArray() {
-//   return new ElanClassTypeDescriptor(ElanArrayImpl);
-// }
-
 export function ElanIterable(ofType: TypeDescriptor) {
   return new ElanValueTypeDescriptor("Iterable", ofType);
 }
@@ -530,10 +526,6 @@ export function elanGenericParamT2Type() {
 export function elanListType(ofType: TypeDescriptor) {
   return elanType(ElanList(ofType));
 }
-
-// export function elanArrayType() {
-//   return elanType(ElanArray());
-// }
 
 export function elanIterableType(ofType: TypeDescriptor) {
   return elanType(ElanIterable(ofType));

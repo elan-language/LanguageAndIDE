@@ -35,14 +35,7 @@ export class ClassType implements ReifyableSymbolType, Scope {
 
   reify(gts: SymbolType[]): ReifyableSymbolType {
     if (isClassTypeDef(this.scope) && this.scope.ofTypes.length === 1 && gts.length === 1) {
-      //let cls: Class | undefined;
-
-      // if (isReifyableSymbolType(this.scope.ofTypes[0])) {
-      //   const t = this.scope.ofTypes[0].reify(gts);
-      //   cls = this.scope.updateOfTypes([t]);
-      // } else {
       const cls = this.scope.updateOfTypes([gts[0]]);
-      //}
 
       return new ClassType(
         this.className,

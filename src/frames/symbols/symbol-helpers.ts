@@ -124,7 +124,7 @@ export function isAssignable(s?: ElanSymbol): boolean {
 }
 
 export function isClassTypeDef(s?: ElanSymbol | Scope): s is Class {
-  return !!s && "genericParamMatches" in s;
+  return !!s && "updateOfTypes" in s;
 }
 
 export function isEnumValue(s?: ElanSymbol): boolean {
@@ -200,8 +200,6 @@ function internalUpdateScopeAndQualifier(
 
     if (isClassTypeDef(currentScope)) {
       if (isClass(qualifierScope.scope)) {
-        //currentScope.genericParamMatches = qualifierScope.scope.genericParamMatches;
-
         currentScope = currentScope.updateOfTypes(qualifierScope.scope.ofTypes);
       }
     }

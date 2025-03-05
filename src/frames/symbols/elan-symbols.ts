@@ -55,30 +55,6 @@ const regExpSymbol: ElanSymbol = {
   symbolScope: SymbolScope.program,
 };
 
-// const arraySymbol: ClassSymbol = {
-//   symbolId: "Array",
-//   symbolType: function (_transforms?: Transforms): SymbolType {
-//     return new ArrayType(new GenericParameterType("T"));
-//   },
-//   symbolScope: SymbolScope.program,
-//   isClass: true,
-//   isAbstract: false,
-//   isNotInheritable: false,
-//   ofTypes: [new GenericParameterType("T")],
-// };
-
-// const array2DSymbol: ClassSymbol = {
-//   symbolId: "Array2D",
-//   symbolType: function (_transforms?: Transforms): SymbolType {
-//     return new ArrayType(new ArrayType(new GenericParameterType("T")));
-//   },
-//   symbolScope: SymbolScope.program,
-//   isClass: true,
-//   isAbstract: false,
-//   isNotInheritable: false,
-//   ofTypes: [new GenericParameterType("T")],
-// };
-
 const tupleSymbol: ClassSymbol = {
   symbolId: "Tuple",
   symbolType: function (_transforms?: Transforms): SymbolType {

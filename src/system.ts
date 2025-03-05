@@ -216,7 +216,6 @@ export class System {
       return this.list(lhs.concat([rhs as T]));
     }
 
-    // if (Array.isArray(rhs)){
     return this.list([lhs as T].concat(rhs));
   }
 

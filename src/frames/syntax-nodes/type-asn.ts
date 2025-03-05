@@ -147,14 +147,6 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
       return new FunctionType(pNames, pTypes, rType, false, true, true);
     }
 
-    // if (st instanceof ClassType) {
-    //   if (isClassTypeDef(symbol) && this.genericParameters.length > 0) {
-    //     symbol.genericParamMatches = matchClassGenericTypes(symbol, this.genericParameters);
-    //   }
-
-    //   return st;
-    // }
-
     return st;
   }
 

@@ -236,12 +236,6 @@ export function generateType(
     );
   }
 
-  // if (type instanceof ClassType) {
-  //   if (isClassTypeDef(type.scope)) {
-  //     type.scope.genericParamMatches = matches;
-  //   }
-  // }
-
   return type;
 }
 
@@ -272,16 +266,8 @@ export function match(
   }
 }
 
-export function matchGenericTypes(
-  type: FunctionType | ProcedureType,
-  parameters: AstNode[],
-  cls: Scope,
-) {
+export function matchGenericTypes(type: FunctionType | ProcedureType, parameters: AstNode[]) {
   const matches = new Map<string, SymbolType>();
-
-  if (isClassTypeDef(cls) && cls.ofTypes.length > 0) {
-    return cls.genericParamMatches ?? matches;
-  }
 
   const flattened = type.parameterTypes.map((n) => flatten(n));
 
@@ -301,14 +287,13 @@ export function matchClassGenericTypes(type: Class, parameters: AstNode[]) {
 export function matchParametersAndTypes(
   funcSymbolType: FunctionType | ProcedureType,
   parameters: AstNode[],
-  classTypeDef: Scope,
   compileErrors: CompileError[],
   location: string,
 ) {
   let parameterTypes = funcSymbolType.parameterTypes;
 
   if (parameterTypes.some((pt) => containsGenericType(pt))) {
-    const matches = matchGenericTypes(funcSymbolType, parameters, classTypeDef);
+    const matches = matchGenericTypes(funcSymbolType, parameters);
     parameterTypes = parameterTypes.map((pt) => generateType(pt, matches));
   }
 

@@ -14,16 +14,14 @@ import { ChainedAsn } from "../interfaces/chained-asn";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
-import { ClassType } from "../symbols/class-type";
 import { FunctionType } from "../symbols/function-type";
 import { NullScope } from "../symbols/null-scope";
-import { isClassTypeDef, isMemberOnFieldsClass, scopePrefix } from "../symbols/symbol-helpers";
+import { isMemberOnFieldsClass, scopePrefix } from "../symbols/symbol-helpers";
 import { AbstractAstNode } from "./abstract-ast-node";
 import {
   containsGenericType,
   generateType,
   isEmptyNode,
-  matchClassGenericTypes,
   matchGenericTypes,
   matchParametersAndTypes,
   transforms,
@@ -112,10 +110,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
         parameters = [this.precedingNode].concat(parameters);
       }
 
-      const st = this.precedingNode.symbolType();
-      const cls = st instanceof ClassType ? st.scope : NullScope.Instance;
-
-      matchParametersAndTypes(funcSymbolType, parameters, cls, this.compileErrors, this.fieldId);
+      matchParametersAndTypes(funcSymbolType, parameters, this.compileErrors, this.fieldId);
 
       this.isAsync = funcSymbolType.isAsync;
     } else {
@@ -156,15 +151,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
         if (funcSymbolType.isExtension && !isEmptyNode(this.precedingNode)) {
           callParameters = [this.precedingNode].concat(callParameters);
         }
-
-        const st = this.precedingNode.symbolType();
-        const cls = st instanceof ClassType ? st.scope : NullScope.Instance;
-
-        if (isClassTypeDef(cls)) {
-          cls.genericParamMatches = matchClassGenericTypes(cls, callParameters);
-        }
-
-        const matches = matchGenericTypes(funcSymbolType, callParameters, cls);
+        const matches = matchGenericTypes(funcSymbolType, callParameters);
         return generateType(returnType, matches);
       }
       return returnType;
