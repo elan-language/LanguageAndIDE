@@ -198,8 +198,8 @@ end main`;
 const global = new class {};
 async function main() {
   let a = _stdlib.createArray2D(3, 0, "");
-  _stdlib.append(system.safeIndex(a, 1), "foo");
-  _stdlib.append(system.safeIndex(a, 2), "yon");
+  system.safeIndex(a, 1).append("foo");
+  system.safeIndex(a, 2).append("yon");
   await system.printLine(a);
 }
 return [main, _tests];}`;

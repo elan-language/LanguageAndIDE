@@ -5,7 +5,7 @@ import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../interfaces/transforms";
 import { NullScope } from "./null-scope";
-import { isClassTypeDef, isReifyableSymbolType, isSymbol, symbolMatches } from "./symbol-helpers";
+import { isClassTypeDef, isSymbol, symbolMatches } from "./symbol-helpers";
 import { SymbolScope } from "./symbol-scope";
 import { UnknownType } from "./unknown-type";
 
@@ -35,14 +35,14 @@ export class ClassType implements ReifyableSymbolType, Scope {
 
   reify(gts: SymbolType[]): ReifyableSymbolType {
     if (isClassTypeDef(this.scope) && this.scope.ofTypes.length === 1 && gts.length === 1) {
-      let cls: Class | undefined;
+      //let cls: Class | undefined;
 
-      if (isReifyableSymbolType(this.scope.ofTypes[0])) {
-        const t = this.scope.ofTypes[0].reify(gts);
-        cls = this.scope.updateOfTypes([t]);
-      } else {
-        cls = this.scope.updateOfTypes([gts[0]]);
-      }
+      // if (isReifyableSymbolType(this.scope.ofTypes[0])) {
+      //   const t = this.scope.ofTypes[0].reify(gts);
+      //   cls = this.scope.updateOfTypes([t]);
+      // } else {
+      const cls = this.scope.updateOfTypes([gts[0]]);
+      //}
 
       return new ClassType(
         this.className,
@@ -71,7 +71,10 @@ export class ClassType implements ReifyableSymbolType, Scope {
   isAssignableFrom(otherType: SymbolType): boolean {
     if (otherType instanceof ClassType) {
       if (otherType.className === this.className) {
-        return this.ofType.name === otherType.name;
+        if (this.ofType !== UnknownType.Instance) {
+          return otherType.ofType.name === this.ofType.name;
+        }
+        return true;
       }
       return otherType.inheritsFrom.some((c) => this.isAssignableFrom(c));
     }

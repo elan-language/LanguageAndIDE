@@ -241,11 +241,11 @@ export function generateType(
     );
   }
 
-  if (type instanceof ClassType) {
-    if (isClassTypeDef(type.scope)) {
-      type.scope.genericParamMatches = matches;
-    }
-  }
+  // if (type instanceof ClassType) {
+  //   if (isClassTypeDef(type.scope)) {
+  //     type.scope.genericParamMatches = matches;
+  //   }
+  // }
 
   return type;
 }
