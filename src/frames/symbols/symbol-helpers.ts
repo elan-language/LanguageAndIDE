@@ -31,7 +31,6 @@ import {
 import { EmptyAsn } from "../syntax-nodes/empty-asn";
 import { AbstractDictionaryType } from "./abstract-dictionary-type";
 import { AbstractListType } from "./abstract-list-type";
-import { ArrayType } from "./array-type";
 import { BooleanType } from "./boolean-type";
 import { ClassType } from "./class-type";
 import { DictionaryImmutableType } from "./dictionary-immutable-type";
@@ -308,9 +307,7 @@ function matchGenericTypes(actualType: SymbolType, paramType: SymbolType) {
 
   if (
     paramType instanceof IterableType &&
-    (actualType instanceof ListType ||
-      actualType instanceof ArrayType ||
-      actualType instanceof StringType)
+    (actualType instanceof ListType || actualType instanceof StringType)
   ) {
     return true;
   }

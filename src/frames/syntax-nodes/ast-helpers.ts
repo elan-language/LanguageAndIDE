@@ -13,7 +13,6 @@ import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../interfaces/transforms";
 import { AbstractDictionaryType } from "../symbols/abstract-dictionary-type";
-import { ArrayType } from "../symbols/array-type";
 import { ClassType } from "../symbols/class-type";
 import { DictionaryImmutableType } from "../symbols/dictionary-immutable-type";
 import { DictionaryType } from "../symbols/dictionary-type";
@@ -107,7 +106,6 @@ class TypeHolder implements SymbolType {
 
 export function flatten(p: SymbolType): SymbolType {
   if (
-    p instanceof ArrayType ||
     p instanceof ListType ||
     p instanceof IterableType ||
     (p instanceof ClassType && p.isIndexable)
@@ -148,7 +146,7 @@ export function containsGenericType(type: SymbolType): boolean {
   if (type instanceof GenericParameterType) {
     return true;
   }
-  if (type instanceof ArrayType || type instanceof ListType || type instanceof IterableType) {
+  if (type instanceof ListType || type instanceof IterableType) {
     return containsGenericType(type.ofType);
   }
   if (isAnyDictionaryType(type)) {
@@ -189,9 +187,6 @@ export function generateType(
     }
 
     return match ?? UnknownType.Instance;
-  }
-  if (type instanceof ArrayType) {
-    return new ArrayType(generateType(type.ofType, matches, depth));
   }
   if (type instanceof ListType) {
     return new ListType(generateType(type.ofType, matches, depth));

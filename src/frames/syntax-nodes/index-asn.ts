@@ -9,7 +9,6 @@ import { AstNode } from "../interfaces/ast-node";
 import { ChainedAsn } from "../interfaces/chained-asn";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
-import { ArrayType } from "../symbols/array-type";
 import { IntType } from "../symbols/int-type";
 import { ListType } from "../symbols/list-type";
 import { UnknownType } from "../symbols/unknown-type";
@@ -65,9 +64,6 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
   wrapListOrArray(rootType: SymbolType, code: string): string {
     if (rootType instanceof ListType) {
       return `system.list(${code})`;
-    }
-    if (rootType instanceof ArrayType) {
-      return `system.array(${code})`;
     }
     return code;
   }

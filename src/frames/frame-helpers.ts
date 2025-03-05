@@ -20,7 +20,6 @@ import { Statement } from "./interfaces/statement";
 import { SymbolType } from "./interfaces/symbol-type";
 import { ReturnStatement } from "./statements/return-statement";
 import { CompileStatus, DisplayColour, ParseStatus, RunStatus, TestStatus } from "./status-enums";
-import { ArrayType } from "./symbols/array-type";
 import { ClassType } from "./symbols/class-type";
 import { DeconstructedListType } from "./symbols/deconstructed-list-type";
 import { DeconstructedRecordType } from "./symbols/deconstructed-record-type";
@@ -257,7 +256,7 @@ export function mapSymbolType(ids: string[], st: SymbolType) {
     return new DeconstructedRecordType(ids, st.scope as Class);
   }
 
-  if (ids.length === 2 && (st instanceof ArrayType || st instanceof ListType)) {
+  if (ids.length === 2 && st instanceof ListType) {
     return new DeconstructedListType(ids[0], ids[1], st.ofType, st);
   }
 

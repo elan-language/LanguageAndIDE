@@ -14,7 +14,6 @@ import { ElanSymbol } from "./frames/interfaces/elan-symbol";
 import { Scope } from "./frames/interfaces/scope";
 import { SymbolType } from "./frames/interfaces/symbol-type";
 import { AbstractDictionaryType } from "./frames/symbols/abstract-dictionary-type";
-import { ArrayType } from "./frames/symbols/array-type";
 import { BooleanType } from "./frames/symbols/boolean-type";
 import { ClassSubType, ClassType } from "./frames/symbols/class-type";
 import { DictionaryImmutableType } from "./frames/symbols/dictionary-immutable-type";
@@ -145,8 +144,6 @@ export class ElanValueTypeDescriptor implements TypeDescriptor {
         return RegExpType.Instance;
       case "Iterable":
         return new IterableType(this.ofType!.mapType());
-      case "Array":
-        return new ArrayType(this.ofType!.mapType());
       case "List":
         return new ListType(this.ofType!.mapType());
       case "AbstractDictionary":
