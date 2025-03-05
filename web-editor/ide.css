@@ -400,6 +400,7 @@ button.plain:disabled, menu-item.button.plain:disabled {
 }
 
 #printed-text {
+  padding: 2px;
   overflow-y: auto;
 }
 
