@@ -10,11 +10,7 @@ import { Scope } from "../interfaces/scope";
 import { constructorKeyword } from "../keywords";
 import { ClassSubType, ClassType } from "../symbols/class-type";
 import { ProcedureType } from "../symbols/procedure-type";
-import {
-  isConcreteDictionaryType,
-  isListType,
-  parameterNamesWithTypes,
-} from "../symbols/symbol-helpers";
+import { isConcreteDictionaryType, parameterNamesWithTypes } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { transforms } from "./ast-helpers";
@@ -47,11 +43,6 @@ export class NewAsn extends AbstractAstNode implements AstNode {
     let libScope = false;
 
     mustBeKnownSymbolType(type, typeAsString, this.compileErrors, this.fieldId);
-
-    if (isListType(type)) {
-      mustMatchParameters(this.parameters, [], "", false, this.compileErrors, this.fieldId);
-      return `system.initialise(${type.factoryName}(new Array()))`;
-    }
 
     if (isConcreteDictionaryType(type)) {
       mustMatchParameters(this.parameters, [], "", false, this.compileErrors, this.fieldId);

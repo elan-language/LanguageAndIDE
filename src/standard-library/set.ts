@@ -8,14 +8,13 @@ import {
   elanFunction,
   elanGenericParamT1Type,
   ElanInt,
-  ElanList,
-  elanListType,
   ElanString,
   ElanT1,
   FunctionOptions,
 } from "../elan-type-annotations";
 import { System } from "../system";
 import { ElanArray } from "./elan-array";
+import { List } from "./list";
 import { StdLib } from "./std-lib";
 
 @elanClass(ClassOptions.concrete, [ElanT1], [], [], [], "Set")
@@ -72,16 +71,20 @@ export class ElanSet<T1> {
   }
 
   @elanFunction([], FunctionOptions.pure, ElanClass(ElanSet))
-  addFromList(@elanListType(ElanT1) list: T1[]): ElanSet<T1> {
+  addFromList(@elanClassType(List) list: List<T1>): ElanSet<T1> {
     const copy = this.copyOfThis();
-    list.forEach((item) => copy.contents.add(item));
+    for (const item of list) {
+      copy.contents.add(item as T1);
+    }
     return copy;
   }
 
   @elanFunction([], FunctionOptions.pure, ElanClass(ElanSet))
-  addFromArray(@elanClassType(ElanArray) list: T1[]): ElanSet<T1> {
+  addFromArray(@elanClassType(ElanArray) list: ElanArray<T1>): ElanSet<T1> {
     const copy = this.copyOfThis();
-    list.forEach((item) => copy.contents.add(item));
+    for (const item of list) {
+      copy.contents.add(item as T1);
+    }
     return copy;
   }
 
@@ -129,13 +132,13 @@ export class ElanSet<T1> {
   }
 
   @elanFunction([], FunctionOptions.pure, new ElanClassTypeDescriptor(ElanArray))
-  asArray(@elanClassType(ElanSet) _other: ElanSet<T1>): T1[] {
-    return Array.from(this.contents);
+  asArray(@elanClassType(ElanSet) _other: ElanSet<T1>): ElanArray<T1> {
+    return this.system.initialise(new ElanArray(Array.from(this.contents)));
   }
 
-  @elanFunction([], FunctionOptions.pure, ElanList(ElanT1))
-  asList(@elanClassType(ElanSet) _other: ElanSet<T1>): T1[] {
-    return Array.from(this.contents);
+  @elanFunction([], FunctionOptions.pure, new ElanClassTypeDescriptor(List))
+  asList(@elanClassType(ElanSet) _other: ElanSet<T1>): List<T1> {
+    return this.system.initialise(new List(Array.from(this.contents)));
   }
 
   @elanFunction([], FunctionOptions.pureAsync, ElanString)

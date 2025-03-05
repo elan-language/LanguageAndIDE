@@ -68,7 +68,6 @@ import { FloatType } from "./symbols/float-type";
 import { FunctionType } from "./symbols/function-type";
 import { IntType } from "./symbols/int-type";
 import { IterableType } from "./symbols/iterable-type";
-import { ListType } from "./symbols/list-type";
 import { ProcedureType } from "./symbols/procedure-type";
 import {
   isAnyDictionaryType,
@@ -76,7 +75,6 @@ import {
   isDeconstructedType,
   isIndexableType,
   isIterableType,
-  isListType,
   isNumber,
   isProperty,
   knownType,
@@ -555,11 +553,12 @@ function FailNotAssignable(
 ) {
   let addInfo = "";
   // special case
-  if (lhs instanceof ListType && rhs.name.startsWith("Array")) {
+  // todo fix
+  if (lhs.name.startsWith("List") && rhs.name.startsWith("Array")) {
     addInfo = " try converting with '.asList()'";
   }
 
-  if (isListType(lhs) && rhs instanceof IterableType) {
+  if (lhs.name.startsWith("List") && rhs instanceof IterableType) {
     addInfo = " try converting Iterable to a concrete type with e.g. '.asList()'";
   }
 

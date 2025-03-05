@@ -158,7 +158,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
-  let b = system.emptyImmutableList();
+  let b = system.initialise(_stdlib.List.emptyInstance());
   b = _stdlib.keys(a);
   await system.printLine(b);
 }
@@ -384,7 +384,7 @@ async function main() {
   _stdlib.putAtKey(a, "Foo", 1);
   _stdlib.putAtKey(a, "Bar", 3);
   let k = _stdlib.keys(a);
-  await system.printLine(_stdlib.length(k));
+  await system.printLine(k.length());
   await system.printLine(system.safeIndex(a, "Foo"));
   await system.printLine(system.safeIndex(a, "Bar"));
 }
@@ -421,7 +421,7 @@ async function main() {
   _stdlib.putAtKey(a, "Bar", system.initialise(system.dictionary(new Object())));
   _stdlib.putAtKey(system.safeIndex(a, "Bar"), "bb", 3);
   let k = _stdlib.keys(a);
-  await system.printLine(_stdlib.length(k));
+  await system.printLine(k.length());
   await system.printLine(system.safeIndex(a, "Foo"));
   await system.printLine(system.safeIndex(a, "Bar"));
 }
@@ -462,7 +462,7 @@ async function main() {
   _stdlib.putAtKey(a, Fruit.apple, 1);
   _stdlib.putAtKey(a, Fruit.orange, 3);
   let k = _stdlib.keys(a);
-  await system.printLine(_stdlib.length(k));
+  await system.printLine(k.length());
   await system.printLine(system.safeIndex(a, Fruit.apple));
   await system.printLine(system.safeIndex(a, Fruit.orange));
 }

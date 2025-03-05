@@ -4,6 +4,7 @@ import { ElanRuntimeError } from "./elan-runtime-error";
 import { TestStatus } from "./frames/status-enums";
 import { hasHiddenType } from "./has-hidden-type";
 import { ElanArray } from "./standard-library/elan-array";
+import { List } from "./standard-library/list";
 import { WebWorkerBreakpointMessage } from "./web/web-worker-messages";
 
 export class AssertOutcome {
@@ -26,7 +27,7 @@ export class System {
   }
 
   // constant immutables
-  emptyImmutableListSingleton = this.list([]);
+  emptyImmutableListSingleton = this.initialise(new ElanArray([]));
   emptyIterableSingleton = this.iter([]);
   emptyDictionaryImmutableSingleton = this.dictionaryImmutable({});
   emptyRegExpSingleton = /(?:)/;
@@ -70,8 +71,7 @@ export class System {
   }
 
   list(t: Array<any>) {
-    (t as unknown as hasHiddenType)._type = "List";
-    return t;
+    return this.initialise(new List(t));
   }
 
   dictionary(t: object) {
@@ -204,16 +204,22 @@ export class System {
     return await this.elanInputOutput.readLine();
   }
 
-  concat<T>(lhs: Array<T> | T, rhs: Array<T> | T) {
-    if (Array.isArray(lhs) && Array.isArray(rhs)) {
-      return this.list(lhs.concat(rhs));
+  concat<T>(lhs: List<T> | T, rhs: List<T> | T) {
+    if (lhs instanceof List && rhs instanceof List) {
+      let ret = lhs!;
+
+      for (const t of rhs) {
+        ret = ret.withAppend(t!)!;
+      }
+
+      return ret;
     }
 
-    if (Array.isArray(lhs)) {
-      return this.list(lhs.concat([rhs as T]));
+    if (lhs instanceof List) {
+      return lhs.withAppend(rhs as T);
     }
 
-    return this.list([lhs as T].concat(rhs));
+    return (rhs as List<T>).withPrepend(lhs);
   }
 
   equals(i1: any, i2: any) {
@@ -299,17 +305,8 @@ export class System {
     );
   }
 
-  deconstructList<T>(list: T[]): [T, any] {
-    const type = (list as unknown as hasHiddenType)._type;
-    const [hd, ...tl] = list;
-    (tl as unknown as hasHiddenType)._type = type;
-
-    //temp hack
-    if (list instanceof ElanArray) {
-      return [hd, this.initialise(new ElanArray(tl))];
-    }
-
-    return [hd, tl];
+  deconstructList<T>(list: ElanArray<T> | List<T>): [T, ElanArray<T> | List<T>] {
+    return list.deconstructList();
   }
 
   unhandledExpression(v: any) {

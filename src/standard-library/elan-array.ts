@@ -13,7 +13,7 @@ import {
 } from "../elan-type-annotations";
 import { System } from "../system";
 
-@elanClass(ClassOptions.array, [ElanT1], [], [], [], "Array")
+@elanClass(ClassOptions.vector, [ElanT1], [], [], [], "Array")
 export class ElanArray<T1> {
   // this must be implemented by hand on all stdlib classes
   static emptyInstance() {
@@ -155,5 +155,10 @@ export class ElanArray<T1> {
     }
 
     return this.system?.initialise(new ElanArray(r));
+  }
+
+  deconstructList(): [T1, ElanArray<T1>] {
+    const [hd, ...tl] = this.contents;
+    return [hd, this.system!.initialise(new ElanArray(tl))];
   }
 }

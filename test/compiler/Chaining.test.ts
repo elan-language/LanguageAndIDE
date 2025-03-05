@@ -92,14 +92,14 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["a", system.emptyImmutableList()]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["a", system.initialise(_stdlib.List.emptyInstance())]]);};
 
   async _initialise() {
     this.a = system.list([1]);
     return this;
   }
 
-  a = system.emptyImmutableList();
+  a = system.initialise(_stdlib.List.emptyInstance());
 
 }
 return [main, _tests];}`;

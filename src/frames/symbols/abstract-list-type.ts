@@ -1,28 +1,28 @@
-import { IterableSymbolType } from "../interfaces/iterable-symbol-type";
-import { SymbolType } from "../interfaces/symbol-type";
+// import { IterableSymbolType } from "../interfaces/iterable-symbol-type";
+// import { SymbolType } from "../interfaces/symbol-type";
 
-export abstract class AbstractListType implements IterableSymbolType {
-  constructor(public readonly ofType: SymbolType) {}
+// export abstract class AbstractListType implements IterableSymbolType {
+//   constructor(public readonly ofType: SymbolType) {}
 
-  isIterable = true;
+//   isIterable = true;
 
-  isImmutable = false;
+//   isImmutable = false;
 
-  isIndexable = true;
+//   isIndexable = true;
 
-  initialValue = "";
+//   initialValue = "";
 
-  factoryName = "";
+//   factoryName = "";
 
-  get name() {
-    return `AbstractList <${this.ofType.name}>`;
-  }
+//   get name() {
+//     return `AbstractList <${this.ofType.name}>`;
+//   }
 
-  toString(): string {
-    return "AbstractList";
-  }
+//   toString(): string {
+//     return "AbstractList";
+//   }
 
-  isAssignableFrom(_otherType: SymbolType): boolean {
-    return false;
-  }
-}
+//   isAssignableFrom(_otherType: SymbolType): boolean {
+//     return false;
+//   }
+// }

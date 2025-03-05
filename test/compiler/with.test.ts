@@ -633,7 +633,7 @@ const global = new class {};
 async function main() {
   let a = system.list([0, 2, 3]);
   let b = system.initialise(await new Foo()._initialise());
-  let c = await (async () => {const _a = {...b}; Object.setPrototypeOf(_a, Object.getPrototypeOf(b)); _a.b = _stdlib.length(a); return _a;})();
+  let c = await (async () => {const _a = {...b}; Object.setPrototypeOf(_a, Object.getPrototypeOf(b)); _a.b = a.length(); return _a;})();
   await system.printLine(b.b);
   await system.printLine(c.b);
 }

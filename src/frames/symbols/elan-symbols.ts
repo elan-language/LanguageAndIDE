@@ -9,7 +9,6 @@ import { FloatType } from "./float-type";
 import { FunctionType } from "./function-type";
 import { GenericParameterType } from "./generic-parameter-type";
 import { IntType } from "./int-type";
-import { ListType } from "./list-type";
 import { RegExpType } from "./regexp-type";
 import { StringType } from "./string-type";
 import { SymbolScope } from "./symbol-scope";
@@ -67,18 +66,6 @@ const tupleSymbol: ClassSymbol = {
   ofTypes: [new GenericParameterType("T1"), new GenericParameterType("T2")],
 };
 
-const listSymbol: ClassSymbol = {
-  symbolId: "List",
-  symbolType: function (_transforms?: Transforms): SymbolType {
-    return new ListType(new GenericParameterType("T"));
-  },
-  symbolScope: SymbolScope.program,
-  isClass: true,
-  isAbstract: false,
-  isNotInheritable: false,
-  ofTypes: [new GenericParameterType("T")],
-};
-
 const dictionarySymbol: ClassSymbol = {
   symbolId: "Dictionary",
   symbolType: function (_transforms?: Transforms): SymbolType {
@@ -132,7 +119,6 @@ export const elanSymbols = [
   booleanSymbol,
   regExpSymbol,
   tupleSymbol,
-  listSymbol,
   funcSymbol,
   dictionarySymbol,
   dictionaryImmutableSymbol,

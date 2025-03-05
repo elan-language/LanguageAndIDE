@@ -140,7 +140,7 @@ const global = new class {
 
 };
 async function main() {
-  let b = system.emptyImmutableList();
+  let b = system.initialise(_stdlib.List.emptyInstance());
   b = _stdlib.keys(global.a);
   await system.printLine(b);
 }
@@ -324,7 +324,7 @@ async function main() {
   let b = _stdlib.withPutAtKey(a, "Foo", 1);
   b = _stdlib.withPutAtKey(b, "Bar", 3);
   let k = _stdlib.keys(b);
-  await system.printLine(_stdlib.length(k));
+  await system.printLine(k.length());
   await system.printLine(system.safeIndex(b, "Foo"));
   await system.printLine(system.safeIndex(b, "Bar"));
 }
@@ -365,7 +365,7 @@ async function main() {
   let b = _stdlib.withPutAtKey(a, Fruit.apple, 1);
   b = _stdlib.withPutAtKey(b, Fruit.orange, 3);
   let k = _stdlib.keys(b);
-  await system.printLine(_stdlib.length(k));
+  await system.printLine(k.length());
   await system.printLine(system.safeIndex(b, Fruit.apple));
   await system.printLine(system.safeIndex(b, Fruit.orange));
 }

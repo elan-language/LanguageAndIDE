@@ -1,6 +1,5 @@
 import { DeconstructedSymbolType } from "../interfaces/deconstructed-symbol-type";
 import { SymbolType } from "../interfaces/symbol-type";
-import { ListType } from "./list-type";
 import { isGenericSymbolType } from "./symbol-helpers";
 import { UnknownType } from "./unknown-type";
 
@@ -30,7 +29,7 @@ export class DeconstructedListType implements DeconstructedSymbolType {
   get name() {
     return this.tailId
       ? this.tailType.name
-      : `${new ListType(this.headType).name} or Array<of ${this.headType}>`;
+      : `List<of ${this.headType} or Array<of ${this.headType}>`;
   }
 
   toString(): string {

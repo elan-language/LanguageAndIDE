@@ -24,7 +24,6 @@ import { ClassType } from "./symbols/class-type";
 import { DeconstructedListType } from "./symbols/deconstructed-list-type";
 import { DeconstructedRecordType } from "./symbols/deconstructed-record-type";
 import { DeconstructedTupleType } from "./symbols/deconstructed-tuple-type";
-import { ListType } from "./symbols/list-type";
 import { TupleType } from "./symbols/tuple-type";
 
 export function isCollapsible(f?: Selectable): f is Collapsible {
@@ -254,10 +253,6 @@ export function mapSymbolType(ids: string[], st: SymbolType) {
 
   if (ids.length > 1 && st instanceof ClassType && st.isImmutable) {
     return new DeconstructedRecordType(ids, st.scope as Class);
-  }
-
-  if (ids.length === 2 && st instanceof ListType) {
-    return new DeconstructedListType(ids[0], ids[1], st.ofType, st);
   }
 
   if (ids.length === 2 && st instanceof ClassType && st.isIndexable) {

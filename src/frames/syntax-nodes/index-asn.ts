@@ -10,7 +10,6 @@ import { ChainedAsn } from "../interfaces/chained-asn";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { IntType } from "../symbols/int-type";
-import { ListType } from "../symbols/list-type";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { compileSimpleSubscript, getIndexAndOfType } from "./ast-helpers";
@@ -61,13 +60,6 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
     return this.subscript.compile();
   }
 
-  wrapListOrArray(rootType: SymbolType, code: string): string {
-    if (rootType instanceof ListType) {
-      return `system.list(${code})`;
-    }
-    return code;
-  }
-
   wrapRange(code: string): string {
     return `system.safeSlice(${code})`;
   }
@@ -89,7 +81,7 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
     mustBeRangeableType(indexedType, true, this.compileErrors, this.fieldId);
     const [indexType] = getIndexAndOfType(indexedType);
     mustBeAssignableType(indexType, IntType.Instance, this.compileErrors, this.fieldId);
-    return this.wrapListOrArray(indexedType, this.wrapRange(`${indexed}, ${subscript}`));
+    return this.wrapRange(`${indexed}, ${subscript}`);
   }
 
   compile(): string {

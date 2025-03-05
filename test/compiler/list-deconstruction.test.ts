@@ -459,7 +459,7 @@ const global = new class {};
 async function main() {
   let a = system.list([1, 2, 3]);
   let x = 1;
-  let y = system.emptyImmutableList();
+  let y = system.initialise(_stdlib.List.emptyInstance());
   [x, y] = system.deconstructList(a);
   await system.printLine(x);
   await system.printLine(y);

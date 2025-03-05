@@ -117,8 +117,8 @@ async function foo() {
   let list = system.list([1, 2, 3, 4, 5]);
   for (let i = 0; i <= 3; i = i + 1) {
     const temp = system.safeIndex(list, i);
-    list = _stdlib.withPutAt(list, i, system.safeIndex(list, i + 1));
-    list = _stdlib.withPutAt(list, i + 1, temp);
+    list = list.withPutAt(i, system.safeIndex(list, i + 1));
+    list = list.withPutAt(i + 1, temp);
   }
   await system.printLine(list);
 }

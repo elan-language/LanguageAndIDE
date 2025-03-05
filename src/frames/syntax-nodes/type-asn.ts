@@ -7,14 +7,12 @@ import { ClassType } from "../symbols/class-type";
 import { DictionaryImmutableType } from "../symbols/dictionary-immutable-type";
 import { DictionaryType } from "../symbols/dictionary-type";
 import { FunctionType } from "../symbols/function-type";
-import { ListType } from "../symbols/list-type";
 import { StringType } from "../symbols/string-type";
 import {
   getGlobalScope,
   isAnyDictionaryType,
   isClassTypeDef,
   isIterableType,
-  isListType,
   isReifyableSymbolType,
 } from "../symbols/symbol-helpers";
 import { TupleType } from "../symbols/tuple-type";
@@ -63,7 +61,7 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
       return st.parameterTypes.length + 1;
     }
 
-    if (isListType(st) || isIterableType(st)) {
+    if (isIterableType(st)) {
       return 1;
     }
 
@@ -89,10 +87,6 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
 
     if (isAnyDictionaryType(rootSt)) {
       return "Object";
-    }
-
-    if (rootSt instanceof ListType) {
-      return "Array";
     }
 
     return this.id;

@@ -20,7 +20,6 @@ import { FunctionType } from "../symbols/function-type";
 import { GenericParameterType } from "../symbols/generic-parameter-type";
 import { IntType } from "../symbols/int-type";
 import { IterableType } from "../symbols/iterable-type";
-import { ListType } from "../symbols/list-type";
 import { ProcedureType } from "../symbols/procedure-type";
 import { StringType } from "../symbols/string-type";
 import {
@@ -105,11 +104,7 @@ class TypeHolder implements SymbolType {
 }
 
 export function flatten(p: SymbolType): SymbolType {
-  if (
-    p instanceof ListType ||
-    p instanceof IterableType ||
-    (p instanceof ClassType && p.isIndexable)
-  ) {
+  if (p instanceof IterableType || (p instanceof ClassType && p.isIndexable)) {
     return new TypeHolder(p, [flatten(p.ofType)]);
   }
 
@@ -146,7 +141,7 @@ export function containsGenericType(type: SymbolType): boolean {
   if (type instanceof GenericParameterType) {
     return true;
   }
-  if (type instanceof ListType || type instanceof IterableType) {
+  if (type instanceof IterableType) {
     return containsGenericType(type.ofType);
   }
   if (isAnyDictionaryType(type)) {
@@ -188,9 +183,7 @@ export function generateType(
 
     return match ?? UnknownType.Instance;
   }
-  if (type instanceof ListType) {
-    return new ListType(generateType(type.ofType, matches, depth));
-  }
+
   if (type instanceof IterableType) {
     return new IterableType(generateType(type.ofType, matches, depth));
   }

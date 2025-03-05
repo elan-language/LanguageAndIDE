@@ -30,7 +30,6 @@ import {
 } from "../syntax-nodes/ast-helpers";
 import { EmptyAsn } from "../syntax-nodes/empty-asn";
 import { AbstractDictionaryType } from "./abstract-dictionary-type";
-import { AbstractListType } from "./abstract-list-type";
 import { BooleanType } from "./boolean-type";
 import { ClassType } from "./class-type";
 import { DictionaryImmutableType } from "./dictionary-immutable-type";
@@ -42,7 +41,6 @@ import { FunctionType } from "./function-type";
 import { GenericParameterType } from "./generic-parameter-type";
 import { IntType } from "./int-type";
 import { IterableType } from "./iterable-type";
-import { ListType } from "./list-type";
 import { NullScope } from "./null-scope";
 import { ProcedureType } from "./procedure-type";
 import { RegExpType } from "./regexp-type";
@@ -69,8 +67,8 @@ export function isConcreteDictionaryType(
   return s instanceof DictionaryType || s instanceof DictionaryImmutableType;
 }
 
-export function isListType(s?: SymbolType): s is AbstractListType {
-  return s instanceof AbstractListType;
+export function isListType(s?: SymbolType): s is ClassType {
+  return !!s && s.name.startsWith("List");
 }
 
 export function isIndexableType(s?: SymbolType): boolean {
@@ -303,10 +301,7 @@ function matchGenericTypes(actualType: SymbolType, paramType: SymbolType) {
     return true;
   }
 
-  if (
-    paramType instanceof IterableType &&
-    (actualType instanceof ListType || actualType instanceof StringType)
-  ) {
+  if (paramType instanceof IterableType && actualType instanceof StringType) {
     return true;
   }
 

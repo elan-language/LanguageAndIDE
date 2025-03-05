@@ -23,7 +23,6 @@ import { FunctionType } from "./frames/symbols/function-type";
 import { GenericParameterType } from "./frames/symbols/generic-parameter-type";
 import { IntType } from "./frames/symbols/int-type";
 import { IterableType } from "./frames/symbols/iterable-type";
-import { ListType } from "./frames/symbols/list-type";
 import { ProcedureType } from "./frames/symbols/procedure-type";
 import { RegExpType } from "./frames/symbols/regexp-type";
 import { StdLibClass } from "./frames/symbols/stdlib-class";
@@ -144,8 +143,6 @@ export class ElanValueTypeDescriptor implements TypeDescriptor {
         return RegExpType.Instance;
       case "Iterable":
         return new IterableType(this.ofType!.mapType());
-      case "List":
-        return new ListType(this.ofType!.mapType());
       case "AbstractDictionary":
         return new AbstractDictionaryType(this.ofType!.mapType(), this.valueType!.mapType());
       case "DictionaryImmutable":
@@ -463,9 +460,9 @@ export const ElanRegExp: ElanValueTypeDescriptor = new ElanValueTypeDescriptor("
 export const ElanT1: ElanValueTypeDescriptor = new ElanGenericTypeDescriptor("T1");
 export const ElanT2: ElanValueTypeDescriptor = new ElanGenericTypeDescriptor("T2");
 
-export function ElanList(ofType: TypeDescriptor) {
-  return new ElanValueTypeDescriptor("List", ofType);
-}
+// export function ElanList(ofType: TypeDescriptor) {
+//   return new ElanValueTypeDescriptor("List", ofType);
+// }
 
 export function ElanIterable(ofType: TypeDescriptor) {
   return new ElanValueTypeDescriptor("Iterable", ofType);
@@ -523,9 +520,9 @@ export function elanGenericParamT2Type() {
   return elanType(ElanT2);
 }
 
-export function elanListType(ofType: TypeDescriptor) {
-  return elanType(ElanList(ofType));
-}
+// export function elanListType(ofType: TypeDescriptor) {
+//   return elanType(ElanList(ofType));
+// }
 
 export function elanIterableType(ofType: TypeDescriptor) {
   return elanType(ElanIterable(ofType));
@@ -581,7 +578,7 @@ export enum ClassOptions {
   concrete,
   abstract,
   record,
-  array,
+  vector,
 }
 
 function mapFunctionOptions(
@@ -629,7 +626,7 @@ function mapClassOptions(options: ClassOptions): [boolean, boolean, boolean] {
       return [false, true, false];
     case ClassOptions.record:
       return [true, false, false];
-    case ClassOptions.array:
+    case ClassOptions.vector:
       return [false, false, true];
   }
 }

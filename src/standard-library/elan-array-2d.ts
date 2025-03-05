@@ -13,7 +13,7 @@ import {
 import { System } from "../system";
 import { ElanArray } from "./elan-array";
 
-@elanClass(ClassOptions.array, [new ElanClassTypeDescriptor(ElanArray)], [], [], [], "Array2D")
+@elanClass(ClassOptions.vector, [new ElanClassTypeDescriptor(ElanArray)], [], [], [], "Array2D")
 export class ElanArray2D<T1> {
   // this must be implemented by hand on all stdlib classes
   static emptyInstance() {

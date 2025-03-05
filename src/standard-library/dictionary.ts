@@ -1,19 +1,20 @@
 import {
-  elanClass,
   ClassOptions,
-  ElanT1,
-  ElanDictionaryImmutable,
-  ElanT2,
-  elanGenericParamT1Type,
-  elanProcedure,
-  elanGenericParamT2Type,
   ElanBoolean,
-  ElanList,
+  ElanClassTypeDescriptor,
+  ElanDictionaryImmutable,
+  ElanT1,
+  ElanT2,
   FunctionOptions,
+  elanClass,
   elanFunction,
+  elanGenericParamT1Type,
+  elanGenericParamT2Type,
+  elanProcedure,
 } from "../elan-type-annotations";
 import { hasHiddenType } from "../has-hidden-type";
 import { System } from "../system";
+import { List } from "./list";
 
 @elanClass(ClassOptions.concrete, [ElanDictionaryImmutable(ElanT1, ElanT2)])
 export class Dictionary<_T1, T2> {
@@ -48,14 +49,14 @@ export class Dictionary<_T1, T2> {
     this.system!.safeDictionarySet(dict, key, value);
   }
 
-  @elanFunction([], FunctionOptions.pure, ElanList(ElanT1))
+  @elanFunction([], FunctionOptions.pure, new ElanClassTypeDescriptor(List))
   keys(): string[] {
     const lst = Object.getOwnPropertyNames(this.contents).filter((s) => s !== "_type");
     (lst as unknown as hasHiddenType)._type = "List";
     return lst;
   }
 
-  @elanFunction([], FunctionOptions.pure, ElanList(ElanT2))
+  @elanFunction([], FunctionOptions.pure, new ElanClassTypeDescriptor(List))
   values(): T2[] {
     const lst = this.keys().map((k) => this.contents[k]);
     (lst as unknown as hasHiddenType)._type = `List`;

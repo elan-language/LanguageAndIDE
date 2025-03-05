@@ -252,7 +252,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.list([4, 5, 6, 7, 8]);
-  await system.printLine(_stdlib.length(a));
+  await system.printLine(a.length());
 }
 return [main, _tests];}`;
 
@@ -276,8 +276,8 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(system.list(new Array()));
-  await system.printLine(_stdlib.length(a));
+  let a = system.initialise(await new _stdlib.List()._initialise());
+  await system.printLine(a.length());
 }
 return [main, _tests];}`;
 
@@ -330,8 +330,8 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.list(["one", "two", "three"]);
-  a = _stdlib.withPutAt(a, 1, "TWO");
-  let b = _stdlib.withPutAt(a, 0, "ONE");
+  a = a.withPutAt(1, "TWO");
+  let b = a.withPutAt(0, "ONE");
   await system.printLine(a);
   await system.printLine(b);
 }
@@ -361,8 +361,8 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.list(["one", "two", "three"]);
-  a = _stdlib.withInsertAt(a, 1, "TWO");
-  let b = _stdlib.withInsertAt(a, 0, "ONE");
+  a = a.withInsertAt(1, "TWO");
+  let b = a.withInsertAt(0, "ONE");
   await system.printLine(a);
   await system.printLine(b);
 }
@@ -392,8 +392,8 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.list(["one", "two", "three"]);
-  a = _stdlib.withRemoveAt(a, 1);
-  let b = _stdlib.withRemoveAt(a, 0);
+  a = a.withRemoveAt(1);
+  let b = a.withRemoveAt(0);
   await system.printLine(a);
   await system.printLine(b);
 }
@@ -421,7 +421,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.list(["one", "two", "three", "one", "two", "three"]);
-  a = _stdlib.withRemoveFirst(a, "two");
+  a = a.withRemoveFirst("two");
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -448,7 +448,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.list(["one", "two", "three", "one", "two", "three"]);
-  a = _stdlib.withRemoveAll(a, "two");
+  a = a.withRemoveAll("two");
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -476,9 +476,9 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.list([4, 5, 6, 7, 8]);
-  await system.printLine(system.list(system.safeSlice(a, 2, 5)));
-  await system.printLine(system.list(system.safeSlice(a, 1, 3)));
-  await system.printLine(system.list(system.safeSlice(a, 0, 2)));
+  await system.printLine(system.safeSlice(a, 2, 5));
+  await system.printLine(system.safeSlice(a, 1, 3));
+  await system.printLine(system.safeSlice(a, 0, 2));
 }
 return [main, _tests];}`;
 
@@ -653,7 +653,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(system.list(new Array()));
+  let a = system.initialise(await new _stdlib.List()._initialise());
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -694,14 +694,14 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["it", system.emptyImmutableList()]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["it", system.initialise(_stdlib.List.emptyInstance())]]);};
 
   async _initialise() {
 
     return this;
   }
 
-  it = system.emptyImmutableList();
+  it = system.initialise(_stdlib.List.emptyInstance());
 
   async asString() {
     return "A Foo";
@@ -736,14 +736,14 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.emptyImmutableList();
-  let b = system.emptyImmutableList();
+  let a = system.initialise(_stdlib.List.emptyInstance());
+  let b = system.initialise(_stdlib.List.emptyInstance());
   b = system.concat(a, 3);
   await system.printLine(a);
   await system.printLine(b);
   await system.printLine(system.objectEquals(a, b));
-  await system.printLine(system.objectEquals(a, system.emptyImmutableList()));
-  await system.printLine(system.objectEquals(b, system.emptyImmutableList()));
+  await system.printLine(system.objectEquals(a, system.initialise(_stdlib.List.emptyInstance())));
+  await system.printLine(system.objectEquals(b, system.initialise(_stdlib.List.emptyInstance())));
 }
 return [main, _tests];}`;
 
