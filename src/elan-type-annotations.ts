@@ -578,7 +578,8 @@ export enum ClassOptions {
   concrete,
   abstract,
   record,
-  vector,
+  array,
+  list,
 }
 
 function mapFunctionOptions(
@@ -618,6 +619,7 @@ function mapProcedureOptions(options: ProcedureOptions): [boolean, boolean] {
   }
 }
 
+// isImmutable, isAbstract, isIndexable
 function mapClassOptions(options: ClassOptions): [boolean, boolean, boolean] {
   switch (options) {
     case ClassOptions.concrete:
@@ -626,8 +628,10 @@ function mapClassOptions(options: ClassOptions): [boolean, boolean, boolean] {
       return [false, true, false];
     case ClassOptions.record:
       return [true, false, false];
-    case ClassOptions.vector:
+    case ClassOptions.array:
       return [false, false, true];
+    case ClassOptions.list:
+      return [true, false, true];
   }
 }
 

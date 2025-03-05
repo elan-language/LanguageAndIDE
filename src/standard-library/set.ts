@@ -4,7 +4,6 @@ import {
   ElanClass,
   elanClass,
   elanClassType,
-  ElanClassTypeDescriptor,
   elanFunction,
   elanGenericParamT1Type,
   ElanInt,
@@ -131,18 +130,18 @@ export class ElanSet<T1> {
     return this.contents.isSupersetOf(other.contents);
   }
 
-  @elanFunction([], FunctionOptions.pure, new ElanClassTypeDescriptor(ElanArray))
-  asArray(@elanClassType(ElanSet) _other: ElanSet<T1>): ElanArray<T1> {
+  @elanFunction([], FunctionOptions.pure, ElanClass(ElanArray))
+  asArray(): ElanArray<T1> {
     return this.system.initialise(new ElanArray(Array.from(this.contents)));
   }
 
-  @elanFunction([], FunctionOptions.pure, new ElanClassTypeDescriptor(List))
-  asList(@elanClassType(ElanSet) _other: ElanSet<T1>): List<T1> {
+  @elanFunction([], FunctionOptions.pure, ElanClass(List))
+  asList(): List<T1> {
     return this.system.initialise(new List(Array.from(this.contents)));
   }
 
   @elanFunction([], FunctionOptions.pureAsync, ElanString)
   async asString(): Promise<string> {
-    return await this.stdlib.asString(this.stdlib.asList(Array.from(this.contents)));
+    return await this.stdlib.asString(this.asList());
   }
 }

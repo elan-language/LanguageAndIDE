@@ -1,6 +1,7 @@
 import { ElanRuntimeError } from "../elan-runtime-error";
 import {
   ClassOptions,
+  ElanClass,
   elanClass,
   elanClassType,
   elanFunction,
@@ -12,8 +13,10 @@ import {
   FunctionOptions,
 } from "../elan-type-annotations";
 import { System } from "../system";
+import { List } from "./list";
+import { ElanSet } from "./set";
 
-@elanClass(ClassOptions.vector, [ElanT1], [], [], [], "Array")
+@elanClass(ClassOptions.array, [ElanT1], [], [], [], "Array")
 export class ElanArray<T1> {
   // this must be implemented by hand on all stdlib classes
   static emptyInstance() {
@@ -43,7 +46,7 @@ export class ElanArray<T1> {
           return { done: true };
         }
       },
-    };
+    } as { next: () => { value: T1; done: boolean } };
   }
 
   @elanProcedure(["index", "value"])
@@ -123,6 +126,18 @@ export class ElanArray<T1> {
   @elanFunction(["item"], FunctionOptions.pure)
   contains(@elanGenericParamT1Type() item: T1): boolean {
     return this.contents.includes(item);
+  }
+
+  @elanFunction([], FunctionOptions.pure, ElanClass(List))
+  asList(): List<T1> {
+    const list = [...this.contents];
+    return this.system!.initialise(new List<T1>(list));
+  }
+
+  @elanFunction([], FunctionOptions.pure, ElanClass(ElanSet))
+  asSet(): ElanSet<T1> {
+    const set = this.system!.initialise(new ElanSet<T1>());
+    return set.addFromArray(new ElanArray([...this.contents]));
   }
 
   async asString() {

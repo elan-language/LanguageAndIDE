@@ -35,8 +35,8 @@ const global = new class {
 };
 async function main() {
   let arr = system.literalArray(["three", "four"]);
-  await system.printLine(_stdlib.contains(global.lst, 1));
-  await system.printLine(_stdlib.contains(global.lst, 3));
+  await system.printLine(global.lst.contains(1));
+  await system.printLine(global.lst.contains(3));
   await system.printLine(arr.contains("four"));
   await system.printLine(arr.contains("five"));
   await system.printLine(_stdlib.contains("onetwo", "two"));
@@ -1009,8 +1009,8 @@ async function main() {
   const c = "Hello World!";
   await system.printLine(a.indexOfItem(9));
   await system.printLine(a.indexOfItem(5));
-  await system.printLine(_stdlib.indexOfItem(b, 2));
-  await system.printLine(_stdlib.indexOfItem(b, 7));
+  await system.printLine(b.indexOfItem(2));
+  await system.printLine(b.indexOfItem(7));
   await system.printLine(_stdlib.indexOfItem(c, "o"));
   await system.printLine(_stdlib.indexOfItem(c, "ll"));
   let i = 1;

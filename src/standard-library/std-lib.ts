@@ -7,7 +7,6 @@ import {
   ElanClass,
   elanClassExport,
   elanClassType,
-  ElanClassTypeDescriptor,
   elanConstant,
   ElanDictionaryImmutable,
   elanDictionaryImmutableType,
@@ -22,6 +21,7 @@ import {
   elanIterableType,
   elanProcedure,
   ElanString,
+  elanStringType,
   ElanT1,
   ElanT2,
   ElanTuple,
@@ -68,7 +68,7 @@ async function getPivot<T1>(x: T1, y: T1, z: T1, compare: (a: T1, b: T1) => Prom
 }
 
 // from github https://gist.github.com/kimamula/fa34190db624239111bbe0deba72a6ab
-async function quickSort<T1>(
+async function _quickSort<T1>(
   arr: T1[],
   compare: (a: T1, b: T1) => Promise<number>,
   left = 0,
@@ -96,8 +96,8 @@ async function quickSort<T1>(
       i++;
       j--;
     }
-    await quickSort(arr, compare, left, i - 1);
-    await quickSort(arr, compare, j + 1, right);
+    await _quickSort(arr, compare, left, i - 1);
+    await _quickSort(arr, compare, j + 1, right);
   }
   return arr;
 }
@@ -279,26 +279,17 @@ export class StdLib {
     return s.charCodeAt(0);
   }
 
-  @elanFunction([], FunctionOptions.pureExtension, new ElanClassTypeDescriptor(ElanArray))
-  asArray<T1>(@elanIterableType(ElanT1) list: T1[]): ElanArray<T1> {
-    const arr = [...list];
-    return this.system.initialise(new ElanArray(arr));
+  @elanFunction(["item"], FunctionOptions.pure, ElanInt)
+  indexOfItem(
+    @elanStringType()
+    s: string,
+    @elanStringType()
+    item: string,
+  ): number {
+    return s.indexOf(item);
   }
 
-  @elanFunction([], FunctionOptions.pureExtension, new ElanClassTypeDescriptor(List))
-  asList<T1>(@elanIterableType(ElanT1) arr: T1[]): T1[] {
-    const list = [...arr];
-    (list as unknown as hasHiddenType)._type = "List";
-    return list;
-  }
-
-  @elanFunction([], FunctionOptions.pureExtension, ElanClass(ElanSet))
-  asSet<T1>(@elanIterableType(ElanT1) arr: T1[]): ElanSet<T1> {
-    const set = this.system.initialise(new ElanSet<T1>());
-    return set.addFromArray(new ElanArray(arr));
-  }
-
-  @elanFunction(["start", "end"], FunctionOptions.pure, new ElanClassTypeDescriptor(List))
+  @elanFunction(["start", "end"], FunctionOptions.pure, ElanClass(List))
   range(@elanIntType() start: number, @elanIntType() end: number): number[] {
     const seq = [];
     for (let i = start; i <= end; i++) {
@@ -313,7 +304,7 @@ export class StdLib {
     return this.system.safeIndex(arr, 0);
   }
 
-  @elanFunction([], FunctionOptions.pureExtension, new ElanClassTypeDescriptor(List))
+  @elanFunction([], FunctionOptions.pureExtension, ElanClass(List))
   keys<T1>(
     @elanAbstractDictionaryType(ElanT1, ElanT2)
     dict: {
@@ -325,7 +316,7 @@ export class StdLib {
     return this.system.initialise(new List(lst));
   }
 
-  @elanFunction([], FunctionOptions.pureExtension, new ElanClassTypeDescriptor(List))
+  @elanFunction([], FunctionOptions.pureExtension, ElanClass(List))
   values<T1>(
     @elanAbstractDictionaryType(ElanT1, ElanT2)
     dict: {
@@ -465,9 +456,9 @@ export class StdLib {
     return s.trim();
   }
 
-  @elanFunction(["", "separator"], FunctionOptions.pureExtension, new ElanClassTypeDescriptor(List))
-  split(s: string, separator: string): string[] {
-    return this.asList(s.split(separator));
+  @elanFunction(["", "separator"], FunctionOptions.pureExtension, ElanClass(List))
+  split(s: string, separator: string): List<string> {
+    return this.system.initialise(new List(s.split(separator)));
   }
 
   @elanFunction(["", "separator"], FunctionOptions.pureExtension)
@@ -502,24 +493,16 @@ export class StdLib {
     return n > fl ? fl + 1 : fl;
   }
 
-  @elanFunction(
-    ["", "lambdaOrFunctionRef"],
-    FunctionOptions.pureAsyncExtension,
-    new ElanClassTypeDescriptor(List),
-  )
-  async filter<T1>(
-    @elanIterableType(ElanT1)
-    source: T1[] | string,
-    @elanFuncType([ElanT1], ElanBoolean)
-    predicate: (value: T1 | string) => Promise<boolean>,
-  ): Promise<(T1 | string)[]> {
-    const list = typeof source === "string" ? source.split("") : [...source];
-    //return this.asList(list.filter(predicate));
+  @elanFunction(["", "lambdaOrFunctionRef"], FunctionOptions.pureAsyncExtension, ElanClass(List))
+  async filter(
+    @elanStringType()
+    source: string,
+    @elanFuncType([ElanString], ElanBoolean)
+    predicate: (value: string) => Promise<boolean>,
+  ): Promise<string> {
+    const list = source.split("");
 
-    const asyncFilter = async (
-      list: string[] | T1[],
-      predicate: (value: T1 | string) => Promise<boolean>,
-    ) => {
+    const asyncFilter = async (list: string[], predicate: (value: string) => Promise<boolean>) => {
       const results = await Promise.all(list.map(predicate));
 
       return list.filter((_v, index) => results[index]);
@@ -527,14 +510,10 @@ export class StdLib {
 
     const result = await asyncFilter(list, predicate);
 
-    return this.asList(result);
+    return result.join();
   }
 
-  @elanFunction(
-    ["", "lambdaOrFunctionRef"],
-    FunctionOptions.pureAsyncExtension,
-    new ElanClassTypeDescriptor(List),
-  )
+  @elanFunction(["", "lambdaOrFunctionRef"], FunctionOptions.pureAsyncExtension, ElanClass(List))
   async map<T1, T2>(
     @elanIterableType(ElanT1)
     source: T1[] | string,
@@ -545,7 +524,7 @@ export class StdLib {
 
     const results = await Promise.all(list.map(predicate));
 
-    return this.asList(results);
+    return this.system.initialise(new List(results));
   }
 
   @elanFunction(
@@ -584,7 +563,7 @@ export class StdLib {
   ): Promise<T1> {
     const mm = await this.map(source, predicate as (value: string | T1) => Promise<number>);
     const max = Math.max(...mm);
-    const i = this.elanIndexOf(mm, max);
+    const i = mm.indexOfItem(max);
     return source[i];
   }
 
@@ -601,23 +580,19 @@ export class StdLib {
   ): Promise<T1> {
     const mm = await this.map(source, predicate as (value: string | T1) => Promise<number>);
     const min = Math.min(...mm);
-    const i = this.elanIndexOf(mm, min);
+    const i = mm.indexOfItem(min);
     return source[i];
   }
 
-  @elanFunction(
-    ["", "lambdaOrFunctionRef"],
-    FunctionOptions.pureAsyncExtension,
-    new ElanClassTypeDescriptor(List),
-  )
-  async sortBy<T1>(
-    @elanIterableType(ElanT1) source: T1[],
-    @elanFuncType([ElanT1, ElanT1], ElanInt)
-    predicate: (a: T1, b: T1) => Promise<number>,
-  ): Promise<T1[]> {
-    const clone = [...source];
-    return this.asList(await quickSort(clone, predicate));
-  }
+  // @elanFunction(["", "lambdaOrFunctionRef"], FunctionOptions.pureAsyncExtension, ElanClass(List))
+  // async sortBy<T1>(
+  //   @elanIterableType(ElanT1) source: T1[],
+  //   @elanFuncType([ElanT1, ElanT1], ElanInt)
+  //   predicate: (a: T1, b: T1) => Promise<number>,
+  // ): Promise<T1[]> {
+  //   const clone = [...source];
+  //   return this.asList(await quickSort(clone, predicate));
+  // }
 
   @elanFunction(["", "item"], FunctionOptions.pureExtension)
   contains<T1>(
@@ -688,11 +663,7 @@ export class StdLib {
     await this.system.elanInputOutput.clearPrintedText();
   }
 
-  @elanFunction(
-    ["size", "initialValue"],
-    FunctionOptions.pure,
-    new ElanClassTypeDescriptor(ElanArray),
-  )
+  @elanFunction(["size", "initialValue"], FunctionOptions.pure, ElanClass(ElanArray))
   createArray<T1>(@elanIntType() x: number, @elanGenericParamT1Type() value: T1) {
     if (!this.isValueType(value)) {
       throw new ElanRuntimeError(`Can only create array with simple value`);
@@ -707,11 +678,7 @@ export class StdLib {
     return this.system.initialise(new ElanArray<T1>(toInit));
   }
 
-  @elanFunction(
-    ["columns", "rows", "initialValue"],
-    FunctionOptions.pure,
-    new ElanClassTypeDescriptor(ElanArray2D),
-  )
+  @elanFunction(["columns", "rows", "initialValue"], FunctionOptions.pure, ElanClass(ElanArray2D))
   createArray2D<T1>(
     @elanIntType() x: number,
     @elanIntType() y: number,
