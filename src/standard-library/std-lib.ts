@@ -224,13 +224,10 @@ export class StdLib {
         case "Tuple":
           items = await convertList(v, this);
           return `tuple(${items})`;
-        case "Array":
-          items = await convertList(v, this);
-          return `[${items}]`;
         case "Iterable":
           return `an Iterable`;
         default:
-          return v.toString();
+          return await convertList(v, this);
       }
     }
 
@@ -283,7 +280,6 @@ export class StdLib {
   @elanFunction([], FunctionOptions.pureExtension, new ElanClassTypeDescriptor(ElanArray))
   asArray<T1>(@elanIterableType(ElanT1) list: T1[]): ElanArray<T1> {
     const arr = [...list];
-    (arr as unknown as hasHiddenType)._type = "Array";
     return this.system.initialise(new ElanArray(arr));
   }
 
@@ -780,7 +776,7 @@ export class StdLib {
     const toInit = this.system.initialise(new ElanArray<ElanArray<T1>>());
 
     for (let i = 0; i < x; i++) {
-      const subArr = this.system.array([]);
+      const subArr = [];
       subArr.length = y;
       for (let j = 0; j < y; j++) {
         subArr[j] = value;

@@ -10,7 +10,6 @@ import {
   elanProcedure,
   FunctionOptions,
 } from "../elan-type-annotations";
-import { hasHiddenType } from "../has-hidden-type";
 import { System } from "../system";
 import { ElanArray } from "./elan-array";
 
@@ -27,7 +26,6 @@ export class ElanArray2D<T1> {
 
   constructor(arr?: T1[]) {
     this.contents = arr ? [...arr] : [];
-    (this.contents as unknown as hasHiddenType)._type = "Array";
   }
 
   private contents: T1[];

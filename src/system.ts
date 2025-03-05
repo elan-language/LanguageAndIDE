@@ -85,8 +85,6 @@ export class System {
   }
 
   literalArray(t: Array<any>) {
-    (t as unknown as hasHiddenType)._type = "Array";
-
     return this.initialise(new ElanArray(t));
   }
 
@@ -96,8 +94,7 @@ export class System {
   }
 
   array(t: Array<any>) {
-    (t as unknown as hasHiddenType)._type = "Array";
-    return t;
+    return this.initialise(new ElanArray(t));
   }
 
   initialise<T>(toInit: T, toType?: () => any): T {

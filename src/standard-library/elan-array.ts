@@ -11,7 +11,6 @@ import {
   ElanT1,
   FunctionOptions,
 } from "../elan-type-annotations";
-import { hasHiddenType } from "../has-hidden-type";
 import { System } from "../system";
 
 @elanClass(ClassOptions.array, [ElanT1], [], [], [], "Array")
@@ -27,7 +26,6 @@ export class ElanArray<T1> {
 
   constructor(arr?: T1[]) {
     this.contents = arr ? [...arr] : [];
-    (this.contents as unknown as hasHiddenType)._type = "Array";
   }
 
   private contents: T1[];
@@ -128,7 +126,7 @@ export class ElanArray<T1> {
   }
 
   async asString() {
-    return await this.system?.asString(this.contents);
+    return `[${await this.system?.asString(this.contents)}]`;
   }
 
   safeIndex(index: number) {
