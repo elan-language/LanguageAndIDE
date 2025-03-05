@@ -15,7 +15,7 @@ import {
   FunctionOptions,
 } from "../elan-type-annotations";
 import { System } from "../system";
-import { ElanArrayImpl } from "./array";
+import { ElanArray } from "./elan-array";
 import { StdLib } from "./std-lib";
 
 @elanClass(ClassOptions.concrete, [ElanT1], [], [], [], "Set")
@@ -79,7 +79,7 @@ export class ElanSet<T1> {
   }
 
   @elanFunction([], FunctionOptions.pure, ElanClass(ElanSet))
-  addFromArray(@elanClassType(ElanArrayImpl) list: T1[]): ElanSet<T1> {
+  addFromArray(@elanClassType(ElanArray) list: T1[]): ElanSet<T1> {
     const copy = this.copyOfThis();
     list.forEach((item) => copy.contents.add(item));
     return copy;
@@ -128,7 +128,7 @@ export class ElanSet<T1> {
     return this.contents.isSupersetOf(other.contents);
   }
 
-  @elanFunction([], FunctionOptions.pure, new ElanClassTypeDescriptor(ElanArrayImpl))
+  @elanFunction([], FunctionOptions.pure, new ElanClassTypeDescriptor(ElanArray))
   asArray(@elanClassType(ElanSet) _other: ElanSet<T1>): T1[] {
     return Array.from(this.contents);
   }

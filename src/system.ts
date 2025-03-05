@@ -3,7 +3,7 @@ import { ElanInputOutput } from "./elan-input-output";
 import { ElanRuntimeError } from "./elan-runtime-error";
 import { TestStatus } from "./frames/status-enums";
 import { hasHiddenType } from "./has-hidden-type";
-import { ElanArrayImpl } from "./standard-library/array";
+import { ElanArray } from "./standard-library/elan-array";
 import { WebWorkerBreakpointMessage } from "./web/web-worker-messages";
 
 export class AssertOutcome {
@@ -87,7 +87,7 @@ export class System {
   literalArray(t: Array<any>) {
     (t as unknown as hasHiddenType)._type = "Array";
 
-    return this.initialise(new ElanArrayImpl(t));
+    return this.initialise(new ElanArray(t));
   }
 
   iter(t: Array<any>) {
@@ -308,8 +308,8 @@ export class System {
     (tl as unknown as hasHiddenType)._type = type;
 
     //temp hack
-    if (list instanceof ElanArrayImpl) {
-      return [hd, this.initialise(new ElanArrayImpl(tl))];
+    if (list instanceof ElanArray) {
+      return [hd, this.initialise(new ElanArray(tl))];
     }
 
     return [hd, tl];

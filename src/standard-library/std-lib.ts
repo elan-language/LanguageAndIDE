@@ -36,6 +36,8 @@ import { System } from "../system";
 import { BaseVG } from "./base-vg";
 import { BlockGraphics } from "./block-graphics";
 import { CircleVG } from "./circle-vg";
+import { ElanArray } from "./elan-array";
+import { ElanArray2D } from "./elan-array-2d";
 import { GraphicsBase } from "./graphics-base";
 import { LineVG } from "./line-vg";
 import { Queue } from "./queue";
@@ -47,7 +49,6 @@ import { TextFileReader } from "./text-file-reader";
 import { TextFileWriter } from "./text-file-writer";
 import { Turtle } from "./turtle";
 import { VectorGraphics } from "./vector-graphics";
-import { Elan2DArrayImpl, ElanArrayImpl } from "./array";
 
 async function getPivot<T1>(x: T1, y: T1, z: T1, compare: (a: T1, b: T1) => Promise<number>) {
   if ((await compare(x, y)) < 0) {
@@ -149,11 +150,11 @@ export class StdLib {
   @elanClassExport(RectangleVG)
   RectangleVG = RectangleVG;
 
-  @elanClassExport(ElanArrayImpl)
-  Array = ElanArrayImpl;
+  @elanClassExport(ElanArray)
+  Array = ElanArray;
 
-  @elanClassExport(Elan2DArrayImpl)
-  Array2D = Elan2DArrayImpl;
+  @elanClassExport(ElanArray2D)
+  Array2D = ElanArray2D;
 
   // Standard colours
 
@@ -279,11 +280,11 @@ export class StdLib {
     return s.charCodeAt(0);
   }
 
-  @elanFunction([], FunctionOptions.pureExtension, new ElanClassTypeDescriptor(ElanArrayImpl))
-  asArray<T1>(@elanIterableType(ElanT1) list: T1[]): ElanArrayImpl<T1> {
+  @elanFunction([], FunctionOptions.pureExtension, new ElanClassTypeDescriptor(ElanArray))
+  asArray<T1>(@elanIterableType(ElanT1) list: T1[]): ElanArray<T1> {
     const arr = [...list];
     (arr as unknown as hasHiddenType)._type = "Array";
-    return this.system.initialise(new ElanArrayImpl(arr));
+    return this.system.initialise(new ElanArray(arr));
   }
 
   @elanFunction([], FunctionOptions.pureExtension, ElanList(ElanT1))
@@ -746,7 +747,7 @@ export class StdLib {
   @elanFunction(
     ["size", "initialValue"],
     FunctionOptions.pure,
-    new ElanClassTypeDescriptor(ElanArrayImpl),
+    new ElanClassTypeDescriptor(ElanArray),
   )
   createArray<T1>(@elanIntType() x: number, @elanGenericParamT1Type() value: T1) {
     if (!this.isValueType(value)) {
@@ -759,13 +760,13 @@ export class StdLib {
       toInit[i] = value;
     }
 
-    return this.system.initialise(new ElanArrayImpl<T1>(toInit));
+    return this.system.initialise(new ElanArray<T1>(toInit));
   }
 
   @elanFunction(
     ["columns", "rows", "initialValue"],
     FunctionOptions.pure,
-    new ElanClassTypeDescriptor(Elan2DArrayImpl),
+    new ElanClassTypeDescriptor(ElanArray2D),
   )
   createArray2D<T1>(
     @elanIntType() x: number,
@@ -776,7 +777,7 @@ export class StdLib {
       throw new ElanRuntimeError(`Can only initialise array with simple value`);
     }
 
-    const toInit = this.system.initialise(new ElanArrayImpl<ElanArrayImpl<T1>>());
+    const toInit = this.system.initialise(new ElanArray<ElanArray<T1>>());
 
     for (let i = 0; i < x; i++) {
       const subArr = this.system.array([]);
@@ -784,7 +785,7 @@ export class StdLib {
       for (let j = 0; j < y; j++) {
         subArr[j] = value;
       }
-      toInit.append(this.system.initialise(new ElanArrayImpl<T1>(subArr)));
+      toInit.append(this.system.initialise(new ElanArray<T1>(subArr)));
     }
 
     return toInit;
@@ -822,7 +823,7 @@ export class StdLib {
   @elanFunction(["prompt", "options"], FunctionOptions.impureAsync, ElanString)
   async inputStringFromOptions(
     prompt: string,
-    @elanClassType(ElanArrayImpl) options: ElanArrayImpl<string>,
+    @elanClassType(ElanArray) options: ElanArray<string>,
   ): Promise<string> {
     const s = await this.inputString(prompt);
 
