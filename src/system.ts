@@ -303,10 +303,16 @@ export class System {
     );
   }
 
-  deconstructList<T>(list: T[]): [T, T[]] {
+  deconstructList<T>(list: T[]): [T, any] {
     const type = (list as unknown as hasHiddenType)._type;
     const [hd, ...tl] = list;
     (tl as unknown as hasHiddenType)._type = type;
+
+    //temp hack
+    if (list instanceof ElanArrayImpl) {
+      return [hd, this.initialise(new ElanArrayImpl(tl))];
+    }
+
     return [hd, tl];
   }
 

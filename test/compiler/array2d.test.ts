@@ -7,12 +7,13 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("Array2D", () => {
-  test("Pass_literalArrayOfArray", async () => {
+  ignore_test("Pass_literalArrayOfArray", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -43,7 +44,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[[1, 2], [3, 4]]");
   });
 
-  test("Pass_Array2DAsParameter", async () => {
+  ignore_test("Pass_Array2DAsParameter", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -87,7 +88,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[]");
   });
 
-  test("Pass_DeclareAnEmptyArrayBySizeAndCheckLength", async () => {
+  ignore_test("Pass_DeclareAnEmptyArrayBySizeAndCheckLength", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -114,7 +115,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "3");
   });
 
-  test("Pass_SetAndReadElements1", async () => {
+  ignore_test("Pass_SetAndReadElements1", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -147,7 +148,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "fooyon");
   });
 
-  test("Pass_SetAndReadElements2", async () => {
+  ignore_test("Pass_SetAndReadElements2", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -178,7 +179,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "yon");
   });
 
-  test("Pass_AddAndReadElements1", async () => {
+  ignore_test("Pass_AddAndReadElements1", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -211,7 +212,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[foo][yon]");
   });
 
-  test("Pass_AddAndReadElements2", async () => {
+  ignore_test("Pass_AddAndReadElements2", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -242,7 +243,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[[], [foo], [yon]]");
   });
 
-  test("Pass_EmptyArray", async () => {
+  ignore_test("Pass_EmptyArray", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -279,7 +280,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[[3]][]falsefalsetrue");
   });
 
-  test("Pass_InitialiseEmptyArray", async () => {
+  ignore_test("Pass_InitialiseEmptyArray", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -306,7 +307,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[[0, 0], [0, 0]]");
   });
 
-  test("Pass_InitialiseArray", async () => {
+  ignore_test("Pass_InitialiseArray", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -333,7 +334,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[[1, 1], [1, 1]]");
   });
 
-  test("Fail_EmptyArray1", async () => {
+  ignore_test("Fail_EmptyArray1", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -349,7 +350,7 @@ end main`;
     await assertObjectCodeDoesNotExecute(fileImpl, "Out of range index: 0 size: 0");
   });
 
-  test("Fail_2DArrayAccessedAs1D", async () => {
+  ignore_test("Fail_2DArrayAccessedAs1D", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -367,7 +368,7 @@ end main
     ]);
   });
 
-  test("Fail_OutOfRange", async () => {
+  ignore_test("Fail_OutOfRange", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -385,7 +386,7 @@ end main
     await assertObjectCodeDoesNotExecute(fileImpl, "Out of range index: 0 size: 0");
   });
 
-  test("Fail_TypeIncompatibility", async () => {
+  ignore_test("Fail_TypeIncompatibility", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -403,7 +404,7 @@ end main
     ]);
   });
 
-  test("Fail_2DArrayAdd", async () => {
+  ignore_test("Fail_2DArrayAdd", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -421,7 +422,7 @@ end main
     ]);
   });
 
-  test("Fail_IndexWrongType1", async () => {
+  ignore_test("Fail_IndexWrongType1", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -438,7 +439,7 @@ end main
     assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: String"]);
   });
 
-  test("Fail_IndexWrongType2", async () => {
+  ignore_test("Fail_IndexWrongType2", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main

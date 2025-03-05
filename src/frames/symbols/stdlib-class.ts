@@ -59,8 +59,9 @@ export class StdLibClass implements Class {
   }
 
   symbolType(_transforms?: Transforms): SymbolType {
+    // temp hack TODO fix
     return new ClassType(
-      this.name,
+      this.name === "Array2D" ? "Array" : this.name,
       this.isAbstract ? ClassSubType.abstract : ClassSubType.concrete,
       this.isNotInheritable,
       this.immutable,

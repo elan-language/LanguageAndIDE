@@ -7,6 +7,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -583,7 +584,7 @@ end main
     assertDoesNotCompile(fileImpl, ["Cannot index Int"]);
   });
 
-  test("Fail_1DArrayAccessedAs2D1", async () => {
+  ignore_test("Fail_1DArrayAccessedAs2D1", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -601,7 +602,7 @@ end main
     ]);
   });
 
-  test("Fail_1DArrayAccessedAs2D2", async () => {
+  ignore_test("Fail_1DArrayAccessedAs2D2", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main

@@ -822,11 +822,11 @@ export class StdLib {
   @elanFunction(["prompt", "options"], FunctionOptions.impureAsync, ElanString)
   async inputStringFromOptions(
     prompt: string,
-    @elanClassType(ElanArrayImpl) options: string[],
+    @elanClassType(ElanArrayImpl) options: ElanArrayImpl<string>,
   ): Promise<string> {
     const s = await this.inputString(prompt);
 
-    if (options.includes(s)) {
+    if (options.contains(s)) {
       return s;
     }
     await this.prompt(`response must be one of ${options}`);

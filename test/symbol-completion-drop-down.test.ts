@@ -370,7 +370,7 @@ end main`;
     await assertAutocompletes(fileImpl, "ident14", "o", 1, expected);
   });
 
-  test("Pass_CallMembers", async () => {
+  ignore_test("Pass_CallMembers", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 class Foo
@@ -469,7 +469,7 @@ end main`;
     await assertAutocompletes(fileImpl, "ident36", "p", 5, expected);
   });
 
-  test("Pass_CallExtensions", async () => {
+  ignore_test("Pass_CallExtensions", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main

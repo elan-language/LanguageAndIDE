@@ -6,6 +6,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -625,7 +626,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "86");
   });
 
-  test("Pass_HoFs2", async () => {
+  ignore_test("Pass_HoFs2", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main 

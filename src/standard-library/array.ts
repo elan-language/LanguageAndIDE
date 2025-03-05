@@ -123,6 +123,11 @@ export class ElanArrayImpl<T1> {
     return this.system!.elanIndexOf(this.contents, item);
   }
 
+  @elanFunction(["item"], FunctionOptions.pure)
+  contains(@elanGenericParamT1Type() item: T1): boolean {
+    return this.contents.includes(item);
+  }
+
   async asString() {
     return await this.system?.asString(this.contents);
   }
@@ -139,11 +144,11 @@ export class ElanArrayImpl<T1> {
 
   safeSlice(index1: number | undefined, index2: number | undefined) {
     if (index1 && index1 < 0) {
-      this.system!.throwRangeError(this, index1);
+      this.system!.throwRangeError(this.contents, index1);
     }
 
     if (index2 && index2 < 0) {
-      this.system!.throwRangeError(this, index2);
+      this.system!.throwRangeError(this.contents, index2);
     }
 
     const r = this.contents.slice(index1, index2);

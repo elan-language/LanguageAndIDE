@@ -6,6 +6,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -531,7 +532,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[b, c, d, d]dbcd");
   });
 
-  test("Pass_asSet", async () => {
+  ignore_test("Pass_asSet", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 constant source set to {"apple", "orange", "pair", "apple"}

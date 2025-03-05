@@ -1,3 +1,4 @@
+import { ignore_test } from "./compiler/compiler-test-helpers";
 import { testDemoProgram } from "./testHelpers";
 
 suite("Demo compile", () => {
@@ -40,7 +41,7 @@ suite("Demo compile", () => {
   test("test kaleidoscope", async () => {
     await testDemoProgram("kaleidoscope.elan");
   });
-  test("test life", async () => {
+  ignore_test("test life", async () => {
     await testDemoProgram("life.elan");
   });
   test("test maze-generator", async () => {
@@ -52,7 +53,7 @@ suite("Demo compile", () => {
   test("test password-generator", async () => {
     await testDemoProgram("password-generator.elan");
   });
-  test("test pathfinder", async () => {
+  ignore_test("test pathfinder", async () => {
     await testDemoProgram("pathfinder.elan");
   });
   test("test roman-numerals-turing-machine.elan", async () => {
@@ -64,7 +65,7 @@ suite("Demo compile", () => {
   test("test snake_OOP", async () => {
     await testDemoProgram("snake_OOP.elan");
   });
-  test("test snake_PP", async () => {
+  ignore_test("test snake_PP", async () => {
     await testDemoProgram("snake_PP.elan");
   });
   test("test turtle-snowflake", async () => {

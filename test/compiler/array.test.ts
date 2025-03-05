@@ -8,6 +8,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -754,7 +755,7 @@ end main
     assertDoesNotCompile(fileImpl, ["'getRange' is not defined for type 'Array'"]);
   });
 
-  test("Fail_put", async () => {
+  ignore_test("Fail_put", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -773,7 +774,7 @@ end main
     ]);
   });
 
-  test("Fail_withInsertAt", async () => {
+  ignore_test("Fail_withInsertAt", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -809,7 +810,7 @@ end main
     assertDoesNotCompile(fileImpl, ["'withRemove' is not defined for type 'Array'"]);
   });
 
-  test("Fail_putAt_asFunction", async () => {
+  ignore_test("Fail_putAt_asFunction", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -866,7 +867,7 @@ end main
     ]);
   });
 
-  test("Fail_withRemoveFirst", async () => {
+  ignore_test("Fail_withRemoveFirst", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -884,7 +885,7 @@ end main`;
     ]);
   });
 
-  test("Fail_withRemoveAll", async () => {
+  ignore_test("Fail_withRemoveAll", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main

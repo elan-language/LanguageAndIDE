@@ -179,7 +179,7 @@ end main`;
 const global = new class {};
 async function main() {
   let i = system.literalArray(["a", "b"]);
-  let x = _stdlib.contains(i, "b");
+  let x = i.contains("b");
   await system.printLine(x);
 }
 return [main, _tests];}`;
