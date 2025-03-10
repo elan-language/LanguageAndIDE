@@ -582,6 +582,7 @@ export enum ClassOptions {
   list,
 }
 
+// isExtension, isPure, isASync, retTYpe
 function mapFunctionOptions(
   options: FunctionOptions,
   retType?: TypeDescriptor,
@@ -592,7 +593,7 @@ function mapFunctionOptions(
     case FunctionOptions.pureExtension:
       return [true, true, false, retType];
     case FunctionOptions.pureAsync:
-      return [true, true, false, retType];
+      return [false, true, true, retType];
     case FunctionOptions.pureAsyncExtension:
       return [true, true, true, retType];
     case FunctionOptions.impure:

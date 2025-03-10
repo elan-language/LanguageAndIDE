@@ -613,7 +613,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.list([1, 2, 3, 4, 5, 6]);
-  await system.printLine((await _stdlib.reduce((await _stdlib.map((await _stdlib.filter(a, async (x) => x > 2)), async (x) => x * x)), 0, async (s, x) => s + x)));
+  await system.printLine((await a.filter(async (x) => x > 2).map(async (x) => x * x).reduce(0, async (s, x) => s + x)));
 }
 return [main, _tests];}`;
 
@@ -631,7 +631,7 @@ return [main, _tests];}`;
 
 main 
   variable a set to [1,2,3,4,5,6]
-  print a[..5].map(lambda x as Int => x * x).asArray()[2..].reduce(0, lambda s as Int, x as Int => s + x)
+  print a[..5].map(lambda x as Int => x * x).listAsArray()[2..].reduce(0, lambda s as Int, x as Int => s + x)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {

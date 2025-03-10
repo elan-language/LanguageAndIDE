@@ -126,7 +126,8 @@ export class ElanArray<T1> {
   }
 
   async asString() {
-    return `[${await this.system?.asString(this.contents)}]`;
+    const contents = await this.system?.asString(this.contents);
+    return `[${contents}]`;
   }
 
   safeIndex(index: number) {

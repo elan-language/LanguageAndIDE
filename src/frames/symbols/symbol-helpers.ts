@@ -68,7 +68,11 @@ export function isConcreteDictionaryType(
 }
 
 export function isListType(s?: SymbolType): s is ClassType {
-  return !!s && s.name.startsWith("List");
+  return !!s && s instanceof ClassType && s.className === "List";
+}
+
+export function isArrayType(s?: SymbolType): s is ClassType {
+  return !!s && s instanceof ClassType && s.className === "Array";
 }
 
 export function isIndexableType(s?: SymbolType): boolean {

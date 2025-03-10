@@ -279,14 +279,15 @@ export class StdLib {
     return s.charCodeAt(0);
   }
 
-  @elanFunction(["item"], FunctionOptions.pure, ElanInt)
+  @elanFunction(["", "item"], FunctionOptions.pureExtension, ElanInt)
   indexOfItem(
     @elanStringType()
     s: string,
     @elanStringType()
     item: string,
   ): number {
-    return s.indexOf(item);
+    const ss = s.split("");
+    return ss.indexOf(item);
   }
 
   @elanFunction(["start", "end"], FunctionOptions.pure, ElanClass(List))
@@ -499,7 +500,7 @@ export class StdLib {
     source: string,
     @elanFuncType([ElanString], ElanBoolean)
     predicate: (value: string) => Promise<boolean>,
-  ): Promise<string> {
+  ): Promise<List<string>> {
     const list = source.split("");
 
     const asyncFilter = async (list: string[], predicate: (value: string) => Promise<boolean>) => {
@@ -510,17 +511,17 @@ export class StdLib {
 
     const result = await asyncFilter(list, predicate);
 
-    return result.join();
+    return this.system.initialise(new List(result));
   }
 
   @elanFunction(["", "lambdaOrFunctionRef"], FunctionOptions.pureAsyncExtension, ElanClass(List))
-  async map<T1, T2>(
-    @elanIterableType(ElanT1)
-    source: T1[] | string,
-    @elanFuncType([ElanT1], ElanT2)
-    predicate: (value: T1 | string) => Promise<T2>,
+  async map(
+    @elanStringType()
+    source: string,
+    @elanFuncType([ElanString], ElanString)
+    predicate: (value: string) => Promise<string>,
   ) {
-    const list = typeof source === "string" ? source.split("") : [...source];
+    const list = source.split("");
 
     const results = await Promise.all(list.map(predicate));
 
@@ -532,12 +533,12 @@ export class StdLib {
     FunctionOptions.pureAsyncExtension,
     ElanT2,
   )
-  async reduce<T1, T2>(
-    @elanIterableType(ElanT1)
-    source: T1[] | string,
+  async reduce<T2>(
+    @elanStringType()
+    source: string,
     @elanGenericParamT2Type() initValue: T2,
-    @elanFuncType([ElanT2, ElanT1], ElanT2)
-    predicate: (s: T2, value: T1 | string) => Promise<T2>,
+    @elanFuncType([ElanT2, ElanString], ElanT2)
+    predicate: (s: T2, value: string) => Promise<T2>,
   ): Promise<T2> {
     const list = typeof source === "string" ? source.split("") : [...source];
 
@@ -555,34 +556,22 @@ export class StdLib {
     return Math.max(...source);
   }
 
-  @elanFunction(["", "lambdaOrFunctionRef"], FunctionOptions.pureAsyncExtension, ElanT1)
-  async maxBy<T1>(
-    @elanIterableType(ElanT1) source: T1[],
-    @elanFuncType([ElanT1], ElanFloat)
-    predicate: (value: T1) => Promise<number>,
-  ): Promise<T1> {
-    const mm = await this.map(source, predicate as (value: string | T1) => Promise<number>);
-    const max = Math.max(...mm);
-    const i = mm.indexOfItem(max);
-    return source[i];
-  }
-
   @elanFunction([], FunctionOptions.pureExtension)
   min(@elanIterableType(ElanFloat) source: number[]): number {
     return Math.min(...source);
   }
 
-  @elanFunction(["", "lambdaOrFunctionRef"], FunctionOptions.pureAsyncExtension, ElanT1)
-  async minBy<T1>(
-    @elanIterableType(ElanT1) source: T1[],
-    @elanFuncType([ElanT1], ElanFloat)
-    predicate: (value: T1) => Promise<number>,
-  ): Promise<T1> {
-    const mm = await this.map(source, predicate as (value: string | T1) => Promise<number>);
-    const min = Math.min(...mm);
-    const i = mm.indexOfItem(min);
-    return source[i];
-  }
+  // @elanFunction(["", "lambdaOrFunctionRef"], FunctionOptions.pureAsyncExtension, ElanT1)
+  // async minBy<T1>(
+  //   @elanIterableType(ElanT1) source: T1[],
+  //   @elanFuncType([ElanT1], ElanFloat)
+  //   predicate: (value: T1) => Promise<number>,
+  // ): Promise<T1> {
+  //   const mm = await this.map(source, predicate as (value: string | T1) => Promise<number>);
+  //   const min = Math.min(...mm);
+  //   const i = mm.indexOfItem(min);
+  //   return source[i];
+  // }
 
   // @elanFunction(["", "lambdaOrFunctionRef"], FunctionOptions.pureAsyncExtension, ElanClass(List))
   // async sortBy<T1>(
@@ -1014,14 +1003,26 @@ export class StdLib {
   // conversion
 
   @elanFunction([], FunctionOptions.pureExtension, ElanClass(List))
-  asList<T1>(@elanClassType(ElanArray) arr: ElanArray<T1>): List<T1> {
+  arrayAsList<T1>(@elanClassType(ElanArray) arr: ElanArray<T1>): List<T1> {
     const list = [...arr];
     return new List(list);
   }
 
   @elanFunction([], FunctionOptions.pureExtension, ElanClass(ElanSet))
-  asSet<T1>(@elanClassType(ElanArray) arr: ElanArray<T1>): ElanSet<T1> {
+  arrayAsSet<T1>(@elanClassType(ElanArray) arr: ElanArray<T1>): ElanSet<T1> {
     const set = this.system.initialise(new ElanSet<T1>());
     return set.addFromArray(arr);
+  }
+
+  @elanFunction([], FunctionOptions.pureExtension, ElanClass(ElanArray))
+  listAsArray<T1>(@elanClassType(List) list: List<T1>): ElanArray<T1> {
+    const newList = [...list];
+    return this.system.initialise(new ElanArray(newList));
+  }
+
+  @elanFunction([], FunctionOptions.pureExtension, ElanClass(ElanSet))
+  listAsSet<T1>(@elanClassType(ElanArray) arr: List<T1>): ElanSet<T1> {
+    const set = this.system.initialise(new ElanSet<T1>());
+    return set.addFromArray(this.listAsArray(arr));
   }
 }

@@ -135,7 +135,7 @@ const global = new class {
 
 };
 async function main() {
-  let t = (await _stdlib.reduce(global.a, system.tuple([1, 1]), async (i, j) => j));
+  let t = (await global.a.reduce(system.tuple([1, 1]), async (i, j) => j));
   const [fst, ] = t;
   await system.printLine(fst);
 }

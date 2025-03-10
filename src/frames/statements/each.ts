@@ -13,6 +13,7 @@ import { Statement } from "../interfaces/statement";
 import { Transforms } from "../interfaces/transforms";
 import { eachKeyword } from "../keywords";
 import { SymbolScope } from "../symbols/symbol-scope";
+import { UnknownType } from "../symbols/unknown-type";
 import { transforms } from "../syntax-nodes/ast-helpers";
 
 export class Each extends FrameWithStatements implements Statement {
@@ -83,7 +84,8 @@ ${this.indent()}}`;
     const v = this.variable.text;
 
     if (id === v) {
-      const st = (this.iter.symbolType(transforms) as GenericSymbolType).ofType;
+      const st =
+        (this.iter.symbolType(transforms) as GenericSymbolType).ofType ?? UnknownType.Instance;
       return {
         symbolId: id,
         symbolType: () => st,

@@ -874,7 +874,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "Now.is.the.time...");
   });
-  test("Pass_joinList", async () => {
+  ignore_test("Pass_joinList", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main

@@ -437,14 +437,14 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to {"foo","bar","yon"}.asArray()
+  variable a set to {"foo","bar","yon"}.listAsArray()
   print a.length()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.asArray(system.list(["foo", "bar", "yon"]));
+  let a = _stdlib.listAsArray(system.list(["foo", "bar", "yon"]));
   await system.printLine(a.length());
 }
 return [main, _tests];}`;

@@ -4,6 +4,7 @@ import {
   ElanBoolean,
   ElanClass,
   elanClass,
+  ElanFloat,
   elanFunction,
   elanFuncType,
   elanGenericParamT1Type,
@@ -169,6 +170,28 @@ export class List<T1> {
     }
 
     return acc;
+  }
+
+  @elanFunction(["lambdaOrFunctionRef"], FunctionOptions.pureAsync, ElanT1)
+  async maxBy(
+    @elanFuncType([ElanT1], ElanFloat)
+    predicate: (value: T1) => Promise<number>,
+  ): Promise<T1> {
+    const mm = await this.map(predicate);
+    const max = Math.max(...mm);
+    const i = mm.indexOfItem(max);
+    return this.contents[i];
+  }
+
+  @elanFunction(["lambdaOrFunctionRef"], FunctionOptions.pureAsync, ElanT1)
+  async minBy(
+    @elanFuncType([ElanT1], ElanFloat)
+    predicate: (value: T1) => Promise<number>,
+  ): Promise<T1> {
+    const mm = await this.map(predicate);
+    const max = Math.min(...mm);
+    const i = mm.indexOfItem(max);
+    return this.contents[i];
   }
 
   async asString() {

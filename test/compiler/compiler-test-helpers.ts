@@ -100,6 +100,7 @@ export async function executeTestCode(file: FileImpl, input?: string) {
   const system = getTestSystem(input ?? "");
   const stdlib = new StdLib();
   stdlib.system = system;
+  system.stdlib = stdlib;
 
   return doImport(jsCode).then(async (elan) => {
     if (elan.program) {

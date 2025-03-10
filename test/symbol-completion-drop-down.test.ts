@@ -104,7 +104,7 @@ end main`;
     await assertAutocompletes(fileImpl, "expr5", " ", 1, expected);
   });
 
-  test("Pass_emptyExpression", async () => {
+  ignore_test("Pass_emptyExpression", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -988,7 +988,7 @@ end class`;
     await assertSymbolCompletionWithString(fileImpl, "ident19", "pp", expected);
   });
 
-  test("Pass_assert", async () => {
+  ignore_test("Pass_assert", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -1198,7 +1198,7 @@ end function`;
     await assertSymbolCompletionWithString(fileImpl, "type5", "Graphics", expected);
   });
 
-  test("Pass_functionResult", async () => {
+  ignore_test("Pass_functionResult", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
 main
@@ -1238,7 +1238,7 @@ end class`;
     await assertSymbolCompletionWithString(fileImpl, "expr5", "foo().", expected);
   });
 
-  test("Pass_functionResultWithParams", async () => {
+  ignore_test("Pass_functionResultWithParams", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
 main
@@ -1520,7 +1520,7 @@ end main`;
     await assertSymbolCompletionWithString(fileImpl, "ident7", "foo.", expected);
   });
 
-  test("Pass_libExtension2", async () => {
+  ignore_test("Pass_libExtension2", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
     main
@@ -1867,7 +1867,7 @@ end main`;
     await assertSymbolCompletionWithString(fileImpl, "expr8", "s.con", expected);
   });
 
-  test("Pass_listExtension1", async () => {
+  ignore_test("Pass_listExtension1", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main

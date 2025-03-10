@@ -71,10 +71,12 @@ import { IterableType } from "./symbols/iterable-type";
 import { ProcedureType } from "./symbols/procedure-type";
 import {
   isAnyDictionaryType,
+  isArrayType,
   isClassTypeDef,
   isDeconstructedType,
   isIndexableType,
   isIterableType,
+  isListType,
   isNumber,
   isProperty,
   knownType,
@@ -554,11 +556,11 @@ function FailNotAssignable(
   let addInfo = "";
   // special case
   // todo fix
-  if (lhs.name.startsWith("List") && rhs.name.startsWith("Array")) {
+  if (isListType(lhs) && isArrayType(rhs)) {
     addInfo = " try converting with '.asList()'";
   }
 
-  if (lhs.name.startsWith("List") && rhs instanceof IterableType) {
+  if (isListType(lhs) && rhs instanceof IterableType) {
     addInfo = " try converting Iterable to a concrete type with e.g. '.asList()'";
   }
 

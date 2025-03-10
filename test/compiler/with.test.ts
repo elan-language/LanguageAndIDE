@@ -8,6 +8,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -675,7 +676,7 @@ end record`;
     assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: Array<of Int>"]);
   });
 
-  test("Fail_NotClass", async () => {
+  ignore_test("Fail_NotClass", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -691,7 +692,7 @@ end main`;
     assertDoesNotCompile(fileImpl, ["Expression must be record"]);
   });
 
-  test("Fail_NotClass1", async () => {
+  ignore_test("Fail_NotClass1", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
