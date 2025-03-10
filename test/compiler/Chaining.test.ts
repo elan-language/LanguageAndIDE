@@ -613,7 +613,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.list([1, 2, 3, 4, 5, 6]);
-  await system.printLine((await a.filter(async (x) => x > 2).map(async (x) => x * x).reduce(0, async (s, x) => s + x)));
+  await system.printLine((await (await (await a.filter(async (x) => x > 2)).map(async (x) => x * x)).reduce(0, async (s, x) => s + x)));
 }
 return [main, _tests];}`;
 

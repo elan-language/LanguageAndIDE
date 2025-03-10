@@ -61,6 +61,10 @@ export class CompositeAsn extends AbstractAstNode implements AstNode {
     return leafNodes;
   }
 
+  nestedAsyncs(depth: number): string {
+    return depth > 0 ? `(await ${this.nestedAsyncs(--depth)}` : "";
+  }
+
   compile(): string {
     this.compileErrors = [];
 
@@ -68,15 +72,25 @@ export class CompositeAsn extends AbstractAstNode implements AstNode {
 
     const leafNodes = this.setupNodes();
     let previousCode = this.expr1.compile();
+    let asyncCount = 0;
+    //let asyncIndices = [];
 
-    for (const currentNode of leafNodes) {
-      const currentCode = currentNode.compile();
+    for (let i = 0; i < leafNodes.length; i++) {
+      const currentNode = leafNodes[i];
+
+      let currentCode = currentNode.compile();
 
       if (currentNode.showPreviousNode) {
         code.push(`${previousCode}`);
+        if (currentNode.isAsync) {
+          asyncCount++;
+          currentCode = currentCode + ")";
+        }
       } else {
         // if any node doesn't show previous code clear everything
         code = [];
+        asyncCount = 0;
+        //asyncIndices = [];
       }
 
       previousCode = currentCode;
@@ -88,10 +102,16 @@ export class CompositeAsn extends AbstractAstNode implements AstNode {
     }
 
     const showAwait = this.finalNode!.isAsync && this.finalNode?.showPreviousNode;
-    const isAsyncStart = showAwait ? "(await " : "";
-    const isAsyncEnd = showAwait ? ")" : "";
+    const isAsyncStart = showAwait ? this.nestedAsyncs(asyncCount) : "";
+    //const isAsyncEnd = showAwait ? ")" : "";
 
-    return `${isAsyncStart}${code.join(".")}${isAsyncEnd}`;
+    // for (let i = 0; i < code.length; i++) {
+    //   if (asyncIndices.includes(i)) {
+    //     code[i] = `${code[i]})`;
+    //   }
+    // }
+
+    return `${isAsyncStart}${code.join(".")}`;
   }
 
   symbolType() {
