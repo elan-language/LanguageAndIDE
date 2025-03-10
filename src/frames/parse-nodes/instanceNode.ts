@@ -1,7 +1,7 @@
+import { Index } from ".";
 import { TokenType } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { IdentifierNode } from "./identifier-node";
-import { IndexSingle } from "./index-single";
 import { OptionalNode } from "./optional-node";
 import { allIds } from "./parse-node-helpers";
 
@@ -19,7 +19,7 @@ export class InstanceNode extends AbstractSequence {
   parseText(text: string): void {
     if (text.length > 0) {
       this.variable = new IdentifierNode(this.tokenTypes);
-      this.index = new OptionalNode(new IndexSingle());
+      this.index = new OptionalNode(new Index());
       this.addElement(this.variable);
       this.addElement(this.index);
       super.parseText(text);

@@ -619,7 +619,7 @@ export class StdLib {
 
   @elanFunction(["number"], FunctionOptions.pureExtension, ElanBoolean)
   isInfinite(n: number) {
-    return n ===Number.POSITIVE_INFINITY || n === Number.NEGATIVE_INFINITY;
+    return n === Number.POSITIVE_INFINITY || n === Number.NEGATIVE_INFINITY;
   }
 
   @elanFunction(["number", "decimalPlaces"], FunctionOptions.pureExtension)
