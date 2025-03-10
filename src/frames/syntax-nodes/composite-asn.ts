@@ -101,7 +101,7 @@ export class CompositeAsn extends AbstractAstNode implements AstNode {
       }
     }
 
-    const showAwait = this.finalNode!.isAsync && this.finalNode?.showPreviousNode;
+    const showAwait = asyncCount > 0;
     const isAsyncStart = showAwait ? this.nestedAsyncs(asyncCount) : "";
     //const isAsyncEnd = showAwait ? ")" : "";
 
