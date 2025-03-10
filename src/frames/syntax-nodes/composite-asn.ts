@@ -73,7 +73,6 @@ export class CompositeAsn extends AbstractAstNode implements AstNode {
     const leafNodes = this.setupNodes();
     let previousCode = this.expr1.compile();
     let asyncCount = 0;
-    //let asyncIndices = [];
 
     for (let i = 0; i < leafNodes.length; i++) {
       const currentNode = leafNodes[i];
@@ -90,7 +89,6 @@ export class CompositeAsn extends AbstractAstNode implements AstNode {
         // if any node doesn't show previous code clear everything
         code = [];
         asyncCount = 0;
-        //asyncIndices = [];
       }
 
       previousCode = currentCode;
@@ -103,13 +101,6 @@ export class CompositeAsn extends AbstractAstNode implements AstNode {
 
     const showAwait = asyncCount > 0;
     const isAsyncStart = showAwait ? this.nestedAsyncs(asyncCount) : "";
-    //const isAsyncEnd = showAwait ? ")" : "";
-
-    // for (let i = 0; i < code.length; i++) {
-    //   if (asyncIndices.includes(i)) {
-    //     code[i] = `${code[i]})`;
-    //   }
-    // }
 
     return `${isAsyncStart}${code.join(".")}`;
   }

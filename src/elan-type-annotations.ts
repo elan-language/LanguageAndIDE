@@ -287,7 +287,6 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
       classTypeDef.inheritTypes.push(inherits.mapType());
     }
 
-    //return classType;
     return classTypeDef.symbolType();
   }
 }
@@ -460,10 +459,6 @@ export const ElanRegExp: ElanValueTypeDescriptor = new ElanValueTypeDescriptor("
 export const ElanT1: ElanValueTypeDescriptor = new ElanGenericTypeDescriptor("T1");
 export const ElanT2: ElanValueTypeDescriptor = new ElanGenericTypeDescriptor("T2");
 
-// export function ElanList(ofType: TypeDescriptor) {
-//   return new ElanValueTypeDescriptor("List", ofType);
-// }
-
 export function ElanIterable(ofType: TypeDescriptor) {
   return new ElanValueTypeDescriptor("Iterable", ofType);
 }
@@ -519,10 +514,6 @@ export function elanGenericParamT1Type() {
 export function elanGenericParamT2Type() {
   return elanType(ElanT2);
 }
-
-// export function elanListType(ofType: TypeDescriptor) {
-//   return elanType(ElanList(ofType));
-// }
 
 export function elanIterableType(ofType: TypeDescriptor) {
   return elanType(ElanIterable(ofType));
