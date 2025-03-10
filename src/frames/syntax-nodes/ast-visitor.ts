@@ -5,6 +5,7 @@ import { AstNode } from "../interfaces/ast-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { Scope } from "../interfaces/scope";
 import { globalKeyword, libraryKeyword, propertyKeyword, thisKeyword } from "../keywords";
+import { Index } from "../parse-nodes";
 import { AbstractAlternatives } from "../parse-nodes/abstract-alternatives";
 import { ArgListNode } from "../parse-nodes/arg-list-node";
 import { ArrayNode } from "../parse-nodes/array-node";
@@ -25,7 +26,6 @@ import { FunctionRefNode } from "../parse-nodes/function-ref-node";
 import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { IfExpr } from "../parse-nodes/if-expr";
 import { DictionaryImmutableNode } from "../parse-nodes/immutable-dictionary-node";
-import { IndexSingle } from "../parse-nodes/index-single";
 import { InheritanceNode } from "../parse-nodes/inheritanceNode";
 import { InstanceNode } from "../parse-nodes/instanceNode";
 import { InstanceProcRef } from "../parse-nodes/instanceProcRef";
@@ -424,9 +424,10 @@ export function transform(
     return new RangeAsn(from, to, fieldId);
   }
 
-  if (node instanceof IndexSingle) {
-    const index = transform(node.contents, fieldId, scope) as AstNode;
-    return new IndexAsn(index, fieldId);
+  if (node instanceof Index) {
+    const indexes = transformMany(node.contents as CSV, fieldId, scope) as AstCollectionNode;
+    const singleIndex = indexes.items[0];
+    return new IndexAsn(singleIndex, fieldId);
   }
 
   if (node instanceof DotAfter) {

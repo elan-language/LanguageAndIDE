@@ -1,9 +1,10 @@
-# FFFF Elan Beta 6 valid
+# 09342ab3498655525481db07ba0c996e5566fc334c1b7e339783c3907ed64e18 Elan Beta 9 valid
 
 main
   let start be new Point(5, 5)
   let destination be new Point(34, 24)
   let percentRocks be inputIntBetween("Enter % rocks (0-100): ", 0, 100)
+  call clearPrintedText()
   variable rocks set to empty Array<of Point>
   variable nodes set to empty Array<of Node>
   call createRocksAndNodes(percentRocks, rocks, nodes, start, destination)
@@ -11,7 +12,13 @@ main
   call gr.display()
   variable solver set to new Solver(nodes, start, destination)
   while true
-    let option be inputString(algPrompt)
+    print algPrompt
+    call gr.clearKeyBuffer()
+    variable option set to ""
+    while (option isnt "a") and (option isnt "d") and (option isnt "h")
+      set option to getKey()
+    end while
+    call clearPrintedText()
     let alg be algFromLetter[option]
     call runSolver(gr, start, destination, rocks, solver, alg)
   end while
@@ -30,15 +37,15 @@ procedure runSolver(gr as BlockGraphics, start as Point, destination as Point, r
     let route, length be solver.getRouteAndLength()
     set gr2 to addRoute(gr2, route)
     call gr2.display()
-    print "Length of route: {length.round(2)}"
+    call printNoLine("Length of route: {length.round(2)} ")
   else
-    print "No route from start to destination found through these rocks."
+    call printNoLine("No path found. ")
   end if
 end procedure
 
 procedure createRocksAndNodes(percentRocks as Int, out rocks as Array<of Point>, out nodes as Array<of Node>, start as Point, dest as Point)
   for x from 0 to 39 step 1
-    for y from 0 to 29 step 1
+    for y from 1 to 29 step 1
       let p be new Point(x, y)
       if p is start then
         call nodes.append(new Node(p, 0, p.minDistTo(dest)))
@@ -266,7 +273,7 @@ constant infinity set to 2000.0
 
 constant algFromLetter set to {"a":Algorithm.aStar, "d":Algorithm.dijkstra, "h":Algorithm.heuristic}
 
-constant algPrompt set to "\n'a' for A-star \n'd' for Dijkstra \n'h' for Heuristic \nEnter option: "
+constant algPrompt set to "Press 'a' for A-star, 'd' for Dijkstra, 'h' for Heuristic"
 
 constant lightBlue set to 0x80abff
 

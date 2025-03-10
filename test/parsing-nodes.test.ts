@@ -1445,6 +1445,7 @@ suite("Parsing Nodes", () => {
     testNodeParse(new TermSimpleWithOptIndex(), `abc[1]`, ParseStatus.valid, "abc[1]", "");
     testNodeParse(new TermSimpleWithOptIndex(), `abc[1][2]`, ParseStatus.valid, "abc[1]", "[2]");
     testNodeParse(new TermSimpleWithOptIndex(), `abc[1..2]`, ParseStatus.valid, "abc[1..2]", "");
+    testNodeParse(new TermSimpleWithOptIndex(), `abc[1, 2]`, ParseStatus.valid, "abc[1, 2]", "");
     testNodeParse(
       new TermSimpleWithOptIndex(),
       `abc(def, ghi)[0]`,
