@@ -15,8 +15,6 @@ import {
   FunctionOptions,
 } from "../elan-type-annotations";
 import { System } from "../system";
-import { ElanArray } from "./elan-array";
-import { ElanSet } from "./set";
 
 @elanClass(ClassOptions.list, [ElanT1], [], [], [], "List")
 export class List<T1> {
@@ -124,18 +122,6 @@ export class List<T1> {
   @elanFunction(["item"], FunctionOptions.pure)
   contains(@elanGenericParamT1Type() item: T1): boolean {
     return this.contents.includes(item);
-  }
-
-  @elanFunction([], FunctionOptions.pure, ElanClass(ElanArray))
-  asArray(): ElanArray<T1> {
-    const list = [...this.contents];
-    return this.system!.initialise(new ElanArray<T1>(list));
-  }
-
-  @elanFunction([], FunctionOptions.pure, ElanClass(ElanSet))
-  asSet(): ElanSet<T1> {
-    const set = this.system!.initialise(new ElanSet<T1>());
-    return set.addFromArray(new ElanArray([...this.contents]));
   }
 
   @elanFunction(["lambdaOrFunctionRef"], FunctionOptions.pureAsync, ElanClass(List))

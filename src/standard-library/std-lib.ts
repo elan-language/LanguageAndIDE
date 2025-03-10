@@ -1010,4 +1010,18 @@ export class StdLib {
   async clearKeyBuffer(@elanClassType(GraphicsBase) _g: GraphicsBase) {
     await this.system!.elanInputOutput.clearKeyBuffer();
   }
+
+  // conversion
+
+  @elanFunction([], FunctionOptions.pureExtension, ElanClass(List))
+  asList<T1>(@elanClassType(ElanArray) arr: ElanArray<T1>): List<T1> {
+    const list = [...arr];
+    return new List(list);
+  }
+
+  @elanFunction([], FunctionOptions.pureExtension, ElanClass(ElanSet))
+  asSet<T1>(@elanClassType(ElanArray) arr: ElanArray<T1>): ElanSet<T1> {
+    const set = this.system.initialise(new ElanSet<T1>());
+    return set.addFromArray(arr);
+  }
 }

@@ -14,7 +14,6 @@ import {
 import { System } from "../system";
 import { ElanArray } from "./elan-array";
 import { List } from "./list";
-import { StdLib } from "./std-lib";
 
 @elanClass(ClassOptions.concrete, [ElanT1], [], [], [], "Set")
 export class ElanSet<T1> {
@@ -38,7 +37,8 @@ export class ElanSet<T1> {
     return this._system!;
   }
 
-  private stdlib!: StdLib; // injected
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private stdlib!: any; // injected
 
   constructor() {
     this.contents = new Set<T1>(); //Initialised in set system
