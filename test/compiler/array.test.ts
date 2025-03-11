@@ -8,7 +8,6 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -755,7 +754,7 @@ end main
     assertDoesNotCompile(fileImpl, ["'getRange' is not defined for type 'Array'"]);
   });
 
-  ignore_test("Fail_put", async () => {
+  test("Fail_withPutAt", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -769,12 +768,10 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Array<of String> Provided: List<of String>",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'withPutAt' is not defined for type 'Array'"]);
   });
 
-  ignore_test("Fail_withInsertAt", async () => {
+  test("Fail_withInsertAt", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -788,9 +785,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Array<of String> Provided: List<of String>",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'withInsertAt' is not defined for type 'Array'"]);
   });
 
   test("Fail_withRemove", async () => {
@@ -810,7 +805,7 @@ end main
     assertDoesNotCompile(fileImpl, ["'withRemove' is not defined for type 'Array'"]);
   });
 
-  ignore_test("Fail_putAt_asFunction", async () => {
+  test("Fail_putAt_asFunction", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -824,9 +819,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Array<of String> Provided: List<of String>",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'withPutAt' is not defined for type 'Array'"]);
   });
 
   test("Fail_appendWithPlus", async () => {
@@ -867,7 +860,7 @@ end main
     ]);
   });
 
-  ignore_test("Fail_withRemoveFirst", async () => {
+  test("Fail_withRemoveFirst", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -880,12 +873,10 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Array<of String> Provided: List<of String>",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'withRemoveFirst' is not defined for type 'Array'"]);
   });
 
-  ignore_test("Fail_withRemoveAll", async () => {
+  test("Fail_withRemoveAll", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -898,9 +889,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Array<of String> Provided: List<of String>",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'withRemoveAll' is not defined for type 'Array'"]);
   });
 
   test("Pass_listOfFunction", async () => {
