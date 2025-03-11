@@ -16,6 +16,7 @@ export class FunctionType implements SymbolType {
   isImmutable = true;
 
   isIndexable = false;
+  isDoubleIndexable = false;
 
   get name() {
     return `Func<of ${this.parameterTypes.map((p) => p.name).join(", ")} => ${this.returnType.name}>`;

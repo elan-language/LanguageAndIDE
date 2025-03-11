@@ -22,6 +22,7 @@ export class ClassType implements ReifyableSymbolType, Scope {
     public isNotInheritable: boolean,
     public isImmutable: boolean,
     public isIndexable: boolean,
+    public isDoubleIndexable: boolean,
     public inheritsFrom: SymbolType[],
     public scope: Class | NullScope,
   ) {}
@@ -43,6 +44,7 @@ export class ClassType implements ReifyableSymbolType, Scope {
         this.isNotInheritable,
         this.isImmutable,
         this.isIndexable,
+        this.isDoubleIndexable,
         this.inheritsFrom,
         cls,
       );
@@ -56,6 +58,7 @@ export class ClassType implements ReifyableSymbolType, Scope {
     this.isNotInheritable = other.isNotInheritable;
     this.isImmutable = other.isImmutable;
     this.isIndexable = other.isIndexable;
+    this.isDoubleIndexable = other.isDoubleIndexable;
     this.inheritsFrom = other.inheritsFrom;
     this.scope = other.scope;
     return this;

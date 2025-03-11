@@ -16,8 +16,9 @@ export class StdLibClass implements Class {
     private readonly name: string,
     public readonly isAbstract: boolean,
     public readonly isNotInheritable: boolean,
-    public readonly immutable: boolean,
-    public readonly indexable: boolean,
+    public readonly isImmutable: boolean,
+    public readonly isIndexable: boolean,
+    public readonly isDoubleIndexable: boolean,
     public readonly children: ElanSymbol[],
     public ofTypes: SymbolType[],
     public readonly inheritTypes: SymbolType[],
@@ -31,8 +32,9 @@ export class StdLibClass implements Class {
       this.name,
       this.isAbstract,
       this.isNotInheritable,
-      this.immutable,
-      this.indexable,
+      this.isImmutable,
+      this.isIndexable,
+      this.isDoubleIndexable,
       this.children,
       ofTypes,
       this.inheritTypes,
@@ -48,22 +50,15 @@ export class StdLibClass implements Class {
 
   symbolId: string;
 
-  isImmutable() {
-    return this.immutable;
-  }
-
-  isIndexable() {
-    return this.indexable;
-  }
-
   symbolType(_transforms?: Transforms): SymbolType {
     // temp hack TODO fix
     return new ClassType(
       this.name,
       this.isAbstract ? ClassSubType.abstract : ClassSubType.concrete,
       this.isNotInheritable,
-      this.immutable,
-      this.indexable,
+      this.isImmutable,
+      this.isIndexable,
+      this.isDoubleIndexable,
       this.inheritTypes,
       this,
     );

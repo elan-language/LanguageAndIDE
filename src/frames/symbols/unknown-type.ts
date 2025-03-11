@@ -7,6 +7,7 @@ export class UnknownType implements SymbolType {
   isImmutable = true;
 
   isIndexable = false;
+  isDoubleIndexable = false;
 
   static Instance: SymbolType = new UnknownType();
 

@@ -70,10 +70,10 @@ import { IntType } from "./symbols/int-type";
 import { IterableType } from "./symbols/iterable-type";
 import { ProcedureType } from "./symbols/procedure-type";
 import {
-  isAnyDictionaryType,
   isArrayType,
   isClassTypeDef,
   isDeconstructedType,
+  isDoubleIndexableType,
   isIndexableType,
   isIterableType,
   isListType,
@@ -288,8 +288,22 @@ export function mustBeIndexableType(
 ) {
   if (symbolType instanceof UnknownType) {
     compileErrors.push(new UndefinedSymbolCompileError(symbolId, "", location));
-  } else if (!(read && (isIndexableType(symbolType) || isAnyDictionaryType(symbolType)))) {
-    compileErrors.push(new NotIndexableCompileError(symbolType.name, location));
+  } else if (!(read && isIndexableType(symbolType))) {
+    compileErrors.push(new NotIndexableCompileError(symbolType.name, location, false));
+  }
+}
+
+export function mustBeDoubleIndexableType(
+  symbolId: string,
+  symbolType: SymbolType,
+  read: boolean,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  if (symbolType instanceof UnknownType) {
+    compileErrors.push(new UndefinedSymbolCompileError(symbolId, "", location));
+  } else if (!(read && isDoubleIndexableType(symbolType))) {
+    compileErrors.push(new NotIndexableCompileError(symbolType.name, location, true));
   }
 }
 

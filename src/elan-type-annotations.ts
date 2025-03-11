@@ -61,6 +61,7 @@ export class ElanClassDescriptor implements ElanDescriptor {
     public readonly isImmutable: boolean = false,
     public readonly isAbstract: boolean = false,
     public readonly isIndexable: boolean = false,
+    public readonly isDoubleIndexable: boolean = false,
     public readonly ofTypes: TypeDescriptor[] = [],
     public readonly parameterNames: string[] = [],
     public readonly parameterTypes: TypeDescriptor[] = [],
@@ -238,7 +239,7 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
 
     tempMap.set(
       classId,
-      new ClassType(className, ClassSubType.concrete, false, false, false, [], undefined!),
+      new ClassType(className, ClassSubType.concrete, false, false, false, false, [], undefined!),
     );
 
     for (let i = 0; i < names.length; i++) {
@@ -274,6 +275,7 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
       classMetadata.isAbstract,
       classMetadata.isImmutable,
       classMetadata.isIndexable,
+      classMetadata.isDoubleIndexable,
       [],
       [],
       [],
@@ -391,11 +393,14 @@ export function elanClass(
   inherits?: ElanClassTypeDescriptor[],
   alias?: string,
 ) {
-  const [isImmutable, isAbstract, isIndexable] = mapClassOptions(options ?? ClassOptions.concrete);
+  const [isImmutable, isAbstract, isIndexable, isDoubleIndexable] = mapClassOptions(
+    options ?? ClassOptions.concrete,
+  );
   const classDesc = new ElanClassDescriptor(
     isImmutable,
     isAbstract,
     isIndexable,
+    isDoubleIndexable,
     ofTypes ?? [],
     names ?? [],
     params ?? [],
@@ -623,21 +628,21 @@ function mapProcedureOptions(options: ProcedureOptions): [boolean, boolean] {
   }
 }
 
-// isImmutable, isAbstract, isIndexable
-function mapClassOptions(options: ClassOptions): [boolean, boolean, boolean] {
+// isImmutable, isAbstract, isIndexable, isDoubleIndexable
+function mapClassOptions(options: ClassOptions): [boolean, boolean, boolean, boolean] {
   switch (options) {
     case ClassOptions.concrete:
-      return [false, false, false];
+      return [false, false, false, false];
     case ClassOptions.abstract:
-      return [false, true, false];
+      return [false, true, false, false];
     case ClassOptions.record:
-      return [true, false, false];
+      return [true, false, false, false];
     case ClassOptions.array:
-      return [false, false, true];
+      return [false, false, true, false];
     case ClassOptions.array2D:
-      return [false, false, false];
+      return [false, false, false, true];
     case ClassOptions.list:
-      return [true, false, true];
+      return [true, false, true, false];
   }
 }
 

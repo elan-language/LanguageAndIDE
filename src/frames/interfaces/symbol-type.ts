@@ -4,4 +4,5 @@ export interface SymbolType {
   initialValue: string;
   isAssignableFrom(otherType: SymbolType): boolean;
   isIndexable: boolean;
+  isDoubleIndexable: boolean;
 }

@@ -16,6 +16,7 @@ export class DeconstructedTupleType implements DeconstructedSymbolType {
   initialValue = "";
 
   isIndexable = false;
+  isDoubleIndexable = false;
 
   symbolTypeFor(id: string) {
     return this.typeMap[id] ?? UnknownType.Instance;

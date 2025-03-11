@@ -79,6 +79,10 @@ export function isIndexableType(s?: SymbolType): boolean {
   return !!s?.isIndexable;
 }
 
+export function isDoubleIndexableType(s?: SymbolType): boolean {
+  return !!s?.isDoubleIndexable;
+}
+
 export function isSymbol(s?: Parent | Frame | ElanSymbol): s is ElanSymbol {
   return !!s && "symbolId" in s && "symbolType" in s;
 }

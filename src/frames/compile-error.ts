@@ -125,8 +125,9 @@ export class CannotCallAsAMethod extends CompileError {
 }
 
 export class NotIndexableCompileError extends CompileError {
-  constructor(type: string, location: string) {
-    super(Priority.illegalOperation, `Cannot index ${type}`, location);
+  constructor(type: string, location: string, double: boolean) {
+    const dbl = double ? "double " : "";
+    super(Priority.illegalOperation, `Cannot ${dbl}index ${type}`, location);
   }
 }
 

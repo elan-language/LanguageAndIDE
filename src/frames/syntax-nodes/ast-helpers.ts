@@ -1,6 +1,11 @@
 import { ElanCompilerError } from "../../elan-compiler-error";
 import { CompileError } from "../compile-error";
-import { mustBeAssignableType, mustBeIndexableType, mustMatchParameters } from "../compile-rules";
+import {
+  mustBeAssignableType,
+  mustBeDoubleIndexableType,
+  mustBeIndexableType,
+  mustMatchParameters,
+} from "../compile-rules";
 import { isFile, isFrame, isFunction } from "../frame-helpers";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstIdNode } from "../interfaces/ast-id-node";
@@ -96,6 +101,7 @@ class TypeHolder implements SymbolType {
   }
   isImmutable = false;
   isIndexable = false;
+  isDoubleIndexable = false;
   name = "TypeHolder";
   initialValue = "";
   toString() {
@@ -422,6 +428,7 @@ export function compileSimpleSubscript(
   fieldId: string,
 ) {
   if (postfix.includes(",")) {
+    mustBeDoubleIndexableType(id, rootType, true, compileErrors, fieldId);
   } else {
     mustBeIndexableType(id, rootType, true, compileErrors, fieldId);
   }

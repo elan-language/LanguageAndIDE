@@ -8,6 +8,7 @@ export class EnumValueType implements SymbolType {
   isImmutable = true;
 
   isIndexable = false;
+  isDoubleIndexable = false;
 
   initialValue = "";
 

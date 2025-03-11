@@ -15,6 +15,8 @@ export class StringType implements IterableSymbolType {
 
   isIndexable = true;
 
+  isDoubleIndexable = false;
+
   static Instance: SymbolType = new StringType();
 
   name = "String";

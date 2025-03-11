@@ -7,7 +7,6 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -557,12 +556,12 @@ end main
     assertDoesNotCompile(fileImpl, ["Cannot index Int"]);
   });
 
-  ignore_test("Fail_1DArrayAccessedAs2D1", async () => {
+  test("Fail_1DArrayAccessedAs2D1", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
   variable a set to createArray(3, "")
-  call a[0].putAt(0, "foo")
+  call a.putAt(0, 0, "foo")
 end main
 `;
 
@@ -570,17 +569,15 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Array<of String> Provided: String",
-    ]);
+    assertDoesNotCompile(fileImpl, ["Too many argument(s). Expected: index (Int), value (String)"]);
   });
 
-  ignore_test("Fail_1DArrayAccessedAs2D2", async () => {
+  test("Fail_1DArrayAccessedAs2D2", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
   variable a set to createArray(3, 0)
-  call a[0].putAt(0, 1)
+  print a[0, 0]
 end main
 `;
 
@@ -588,7 +585,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Array<of Int> Provided: Int"]);
+    assertDoesNotCompile(fileImpl, ["Cannot double index Array<of Int>"]);
   });
 
   test("Fail_2DArrayAccessedAs1D", async () => {

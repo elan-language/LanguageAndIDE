@@ -13,6 +13,8 @@ export class DictionaryType implements DictionarySymbolType {
 
   isIndexable = true;
 
+  isDoubleIndexable = false;
+
   factoryName = "system.dictionary";
 
   get name() {

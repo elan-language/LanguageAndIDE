@@ -11,6 +11,7 @@ export class ProcedureType implements SymbolType {
   isImmutable = true;
 
   isIndexable = false;
+  isDoubleIndexable = false;
 
   initialValue = "";
 
