@@ -93,7 +93,7 @@ end function`;
     ]);
   });
 
-  ignore_test("Pass_DeclareAnEmptyArrayBySizeAndCheckLength", async () => {
+  test("Pass_DeclareAnEmptyArrayBySizeAndCheckLength", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -105,9 +105,9 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(system.array(new Array()));
+  let a = system.initialise(await new _stdlib.Array2D()._initialise());
   a = _stdlib.createArray2D(3, 0, "");
-  await system.printLine(_stdlib.length(a));
+  await system.printLine(a.length());
 }
 return [main, _tests];}`;
 
@@ -120,27 +120,29 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "3");
   });
 
-  ignore_test("Pass_SetAndReadElements1", async () => {
+  test("Pass_SetAndReadElements1", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to new Array2D<of String>()
-  set a to [[""], [""], [""]]
-  call a.putAt(0, ["bar", "foo"])
-  call a.putAt(2, ["yon", "xan"])
-  print a[0][1]
-  print a[2][0]
+  variable a set to createArray2D(3, 2, "")
+  call a.putAt(0, 0, "bar")
+  call a.putAt(0, 1, "foo")
+  call a.putAt(2, 0, "yon")
+  call a.putAt(2, 1, "xan")
+  print a[0, 1]
+  print a[2, 0]
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(system.array(new Array()));
-  a = system.literalArray([system.literalArray([""]), system.literalArray([""]), system.literalArray([""])]);
-  _stdlib.putAt(a, 0, system.literalArray(["bar", "foo"]));
-  _stdlib.putAt(a, 2, system.literalArray(["yon", "xan"]));
-  await system.printLine(system.safeIndex(system.safeIndex(a, 0), 1));
-  await system.printLine(system.safeIndex(system.safeIndex(a, 2), 0));
+  let a = _stdlib.createArray2D(3, 2, "");
+  a.putAt(0, 0, "bar");
+  a.putAt(0, 1, "foo");
+  a.putAt(2, 0, "yon");
+  a.putAt(2, 1, "xan");
+  await system.printLine(system.safeIndex(a, 0, 1));
+  await system.printLine(system.safeIndex(a, 2, 0));
 }
 return [main, _tests];}`;
 
@@ -153,25 +155,25 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "fooyon");
   });
 
-  ignore_test("Pass_SetAndReadElements2", async () => {
+  test("Pass_SetAndReadElements2", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
   variable a set to empty Array2D<of String>
-  set a to createArray2D(3, 0, "")
-  call a.putAt(0, ["bar", "foo"])
-  call a[0].putAt(1, "yon")
-  print a[0][1]
+  set a to createArray2D(3, 2, "")
+  call a.putAt(0, 0, "bar")
+  call a.putAt(0, 1, "foo")
+  print a[0, 1]
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(_stdlib.Array.emptyInstance());
-  a = _stdlib.createArray2D(3, 0, "");
-  _stdlib.putAt(a, 0, system.literalArray(["bar", "foo"]));
-  _stdlib.putAt(system.safeIndex(a, 0), 1, "yon");
-  await system.printLine(system.safeIndex(system.safeIndex(a, 0), 1));
+  let a = system.initialise(_stdlib.Array2D.emptyInstance());
+  a = _stdlib.createArray2D(3, 2, "");
+  a.putAt(0, 0, "bar");
+  a.putAt(0, 1, "foo");
+  await system.printLine(system.safeIndex(a, 0, 1));
 }
 return [main, _tests];}`;
 
@@ -181,7 +183,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "yon");
+    await assertObjectCodeExecutes(fileImpl, "foo");
   });
 
   ignore_test("Pass_AddAndReadElements1", async () => {
@@ -461,5 +463,21 @@ end main
     assertDoesNotCompile(fileImpl, [
       "Argument types. Expected: index (Int), value (Int) Provided: String, Int",
     ]);
+  });
+
+  test("Fail_singleIndex2DArray", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to createArray2D(3, 0, "")
+  print a[0].length()
+  print a
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Cannot index Array2D<of String>"]);
   });
 });

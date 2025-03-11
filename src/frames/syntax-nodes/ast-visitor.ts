@@ -427,7 +427,8 @@ export function transform(
   if (node instanceof Index) {
     const indexes = transformMany(node.contents as CSV, fieldId, scope) as AstCollectionNode;
     const singleIndex = indexes.items[0];
-    return new IndexAsn(singleIndex, fieldId);
+    const secondIndex = indexes.items.length > 1 ? indexes.items[1] : undefined;
+    return new IndexAsn(singleIndex, secondIndex, fieldId);
   }
 
   if (node instanceof DotAfter) {

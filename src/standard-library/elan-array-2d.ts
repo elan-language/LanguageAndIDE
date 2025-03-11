@@ -1,19 +1,17 @@
-import { ElanRuntimeError } from "../elan-runtime-error";
 import {
   ClassOptions,
-  ElanClass,
   elanClass,
   elanFunction,
   elanGenericParamT1Type,
   ElanInt,
   elanIntType,
   elanProcedure,
+  ElanT1,
   FunctionOptions,
 } from "../elan-type-annotations";
 import { System } from "../system";
-import { ElanArray } from "./elan-array";
 
-@elanClass(ClassOptions.array, [ElanClass(ElanArray)], [], [], [], "Array2D")
+@elanClass(ClassOptions.array2D, [ElanT1], [], [], [], "Array2D")
 export class ElanArray2D<T1> {
   // this must be implemented by hand on all stdlib classes
   static emptyInstance() {
@@ -52,7 +50,7 @@ export class ElanArray2D<T1> {
   // }
 
   @elanProcedure(["column", "row"])
-  putAt2D(
+  putAt(
     @elanIntType() col: number,
     @elanIntType() row: number,
     @elanGenericParamT1Type() value: T1,
@@ -117,31 +115,26 @@ export class ElanArray2D<T1> {
     return `[${contents}]`;
   }
 
-  safeIndex(index: number) {
-    const r = this.contents[index];
+  safeIndex(index1: number, index2?: number) {
+    if (index2 === undefined) {
+      this.system!.throwRangeError(this.contents, index2);
+      return;
+    }
+
+    const r = this.contents[index1];
 
     if (r === undefined) {
-      this.system!.throwRangeError(this.contents, index);
+      this.system!.throwRangeError(this.contents, index1);
+      return;
     }
 
-    return r;
-  }
+    const r1 = r[index2];
 
-  safeSlice(index1: number | undefined, index2: number | undefined) {
-    if (index1 && index1 < 0) {
-      this.system!.throwRangeError(this, index1);
+    if (r1 === undefined) {
+      this.system!.throwRangeError(this.contents, index1);
+      return;
     }
 
-    if (index2 && index2 < 0) {
-      this.system!.throwRangeError(this, index2);
-    }
-
-    const r = this.contents.slice(index1, index2);
-
-    if (r === undefined) {
-      throw new ElanRuntimeError(`Out of range index`);
-    }
-
-    return this.system?.initialise(new ElanArray(r));
+    return r1 as T1;
   }
 }

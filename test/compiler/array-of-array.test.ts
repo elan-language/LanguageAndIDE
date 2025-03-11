@@ -67,33 +67,6 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "3");
   });
 
-  test("Pass_ConfirmStringElementsInitializedToEmptyArrayNotNull", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-  variable a set to createArray2D(3, 0, "")
-  print a[0].length()
-  print a
-end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let a = _stdlib.createArray2D(3, 0, "");
-  await system.printLine(system.safeIndex(a, 0).length());
-  await system.printLine(a);
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "0[[], [], []]");
-  });
-
   test("Pass_SetAndReadElements1", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
@@ -189,7 +162,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to createArray2D(3, 0, "")
+  variable a set to [[""], [""], [""]]
   call a[1].append("foo")
   call a[2].append("yon")
   print a
@@ -198,7 +171,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.createArray2D(3, 0, "");
+  let a = system.literalArray([system.literalArray([""]), system.literalArray([""]), system.literalArray([""])]);
   system.safeIndex(a, 1).append("foo");
   system.safeIndex(a, 2).append("yon");
   await system.printLine(a);
@@ -211,7 +184,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "[[], [foo], [yon]]");
+    await assertObjectCodeExecutes(fileImpl, "[[], [, foo], [, yon]]");
   });
 
   test("Pass_InsertElements1", async () => {
@@ -506,14 +479,14 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to createArray2D(2, 2, 0)
+  variable a set to [createArray(2, 0), createArray(2, 0), createArray(2, 0)]
   print a
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.createArray2D(2, 2, 0);
+  let a = system.literalArray([_stdlib.createArray(2, 0), _stdlib.createArray(2, 0), _stdlib.createArray(2, 0)]);
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -524,21 +497,21 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "[[0, 0], [0, 0]]");
+    await assertObjectCodeExecutes(fileImpl, "[[0, 0], [0, 0], [0, 0]]");
   });
 
   test("Pass_InitialiseArray", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to createArray2D(2, 2, 1)
+  variable a set to [createArray(2, 1), createArray(2, 1)]
   print a
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.createArray2D(2, 2, 1);
+  let a = system.literalArray([_stdlib.createArray(2, 1), _stdlib.createArray(2, 1)]);
   await system.printLine(a);
 }
 return [main, _tests];}`;

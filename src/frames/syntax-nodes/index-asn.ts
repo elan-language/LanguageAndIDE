@@ -19,7 +19,8 @@ import { UnaryExprAsn } from "./unary-expr-asn";
 
 export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
   constructor(
-    public readonly subscript: AstNode,
+    public readonly subscript1: AstNode,
+    public readonly subscript2: AstNode | undefined,
     public readonly fieldId: string,
   ) {
     super();
@@ -39,25 +40,34 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
 
   aggregateCompileErrors(): CompileError[] {
     const cc = this.precedingNode?.aggregateCompileErrors() ?? [];
-    return cc.concat(this.compileErrors).concat(this.subscript.aggregateCompileErrors());
+    return cc.concat(this.compileErrors).concat(this.subscript1.aggregateCompileErrors());
   }
 
   isRange() {
-    return this.subscript instanceof RangeAsn;
+    return this.subscript1 instanceof RangeAsn;
   }
 
   isSimpleSubscript() {
-    return !(this.subscript instanceof RangeAsn);
+    return !(this.subscript1 instanceof RangeAsn);
   }
 
   compileSubscript() {
-    if (this.subscript instanceof UnaryExprAsn) {
-      if (this.subscript.op === OperationSymbol.Minus) {
+    if (this.subscript1 instanceof UnaryExprAsn) {
+      if (this.subscript1.op === OperationSymbol.Minus) {
         mustNotBeNegativeIndex(this.compileErrors, this.fieldId);
       }
     }
 
-    return this.subscript.compile();
+    if (this.subscript2 instanceof UnaryExprAsn) {
+      if (this.subscript2.op === OperationSymbol.Minus) {
+        mustNotBeNegativeIndex(this.compileErrors, this.fieldId);
+      }
+    }
+
+    const s1c = this.subscript1.compile();
+    const s2c = this.subscript2 ? `, ${this.subscript2.compile()}` : "";
+
+    return `${s1c}${s2c}`;
   }
 
   wrapRange(code: string): string {
@@ -117,6 +127,6 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
 
   toString() {
     const pn = this.precedingNode ? `${this.precedingNode}` : "";
-    return `${pn}[${this.subscript}]`;
+    return `${pn}[${this.subscript1}]`;
   }
 }

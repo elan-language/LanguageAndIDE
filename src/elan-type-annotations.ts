@@ -581,10 +581,11 @@ export enum ClassOptions {
   abstract,
   record,
   array,
+  array2D,
   list,
 }
 
-// isExtension, isPure, isASync, retTYpe
+// isExtension, isPure, isASync, retType
 function mapFunctionOptions(
   options: FunctionOptions,
   retType?: TypeDescriptor,
@@ -633,6 +634,8 @@ function mapClassOptions(options: ClassOptions): [boolean, boolean, boolean] {
       return [true, false, false];
     case ClassOptions.array:
       return [false, false, true];
+    case ClassOptions.array2D:
+      return [false, false, false];
     case ClassOptions.list:
       return [true, false, true];
   }

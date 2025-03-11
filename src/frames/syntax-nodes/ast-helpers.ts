@@ -421,9 +421,12 @@ export function compileSimpleSubscript(
   compileErrors: CompileError[],
   fieldId: string,
 ) {
-  mustBeIndexableType(id, rootType, true, compileErrors, fieldId);
+  if (postfix.includes(",")) {
+  } else {
+    mustBeIndexableType(id, rootType, true, compileErrors, fieldId);
+  }
   const [indexType] = getIndexAndOfType(rootType);
-  mustBeAssignableType(indexType, index.subscript.symbolType(), compileErrors, fieldId);
+  mustBeAssignableType(indexType, index.subscript1.symbolType(), compileErrors, fieldId);
 
   return wrapSimpleSubscript(`${prefix}${code}, ${postfix}`);
 }

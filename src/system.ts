@@ -129,19 +129,19 @@ export class System {
     return t;
   }
 
-  safeIndex(indexable: any, index: any) {
+  safeIndex(indexable: any, index1: any, index2?: any | undefined) {
     if (typeof indexable !== "string" && "safeIndex" in indexable) {
-      return indexable.safeIndex(index);
+      return indexable.safeIndex(index1, index2);
     }
 
     if (indexable === undefined) {
       throw new ElanRuntimeError(`Out of range index`);
     }
 
-    const r = indexable[index];
+    const r = indexable[index1];
 
     if (r === undefined) {
-      this.throwRangeError(indexable, index);
+      this.throwRangeError(indexable, index1);
     }
 
     return r;

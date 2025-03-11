@@ -676,18 +676,19 @@ export class StdLib {
       throw new ElanRuntimeError(`Can only initialise array with simple value`);
     }
 
-    const toInit = this.system.initialise(new ElanArray<ElanArray<T1>>());
+    const toInit: T1[][] = [];
+    toInit.length = x;
 
     for (let i = 0; i < x; i++) {
-      const subArr = [];
+      const subArr: T1[] = [];
       subArr.length = y;
       for (let j = 0; j < y; j++) {
         subArr[j] = value;
       }
-      toInit.append(this.system.initialise(new ElanArray<T1>(subArr)));
+      toInit[i] = subArr;
     }
 
-    return toInit;
+    return this.system.initialise(new ElanArray2D<T1>(toInit));
   }
 
   //Input functions
