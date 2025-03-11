@@ -156,6 +156,17 @@ export function containsGenericType(type: SymbolType): boolean {
     }
   }
 
+  if (type instanceof FunctionType) {
+    if (containsGenericType(type.returnType)) {
+      return true;
+    }
+    return type.parameterTypes.some((t) => containsGenericType(t));
+  }
+
+  if (type instanceof ProcedureType) {
+    return type.parameterTypes.some((t) => containsGenericType(t));
+  }
+
   return false;
 }
 
@@ -181,7 +192,7 @@ export function generateType(
       return generateType(match.symbolType, matches, depth);
     }
 
-    return match ?? UnknownType.Instance;
+    return match ?? type;
   }
 
   if (type instanceof IterableType) {

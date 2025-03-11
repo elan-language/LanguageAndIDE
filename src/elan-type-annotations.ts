@@ -214,14 +214,20 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
 
   name = "Class";
 
+  classId(className: string, classMetadata: ElanClassDescriptor) {
+    const ofTypeNames = (this.ofTypes ?? classMetadata.ofTypes).map((td) => td.name).join("_");
+    return `${className}_${ofTypeNames}`;
+  }
+
   mapType(scope?: Scope): SymbolType {
     const classMetadata: ElanClassDescriptor =
       Reflect.getMetadata(elanMetadataKey, this.cls) ?? new ElanClassDescriptor();
 
     const className = classMetadata.alias ?? removeUnderscore(this.cls.name);
+    const classId = this.classId(className, classMetadata);
 
-    if (tempMap.has(className)) {
-      return tempMap.get(className)!;
+    if (tempMap.has(classId)) {
+      return tempMap.get(classId)!;
     }
 
     const names = Object.getOwnPropertyNames(this.cls.prototype).concat(
@@ -231,7 +237,7 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
     const children: [string, SymbolType, MemberType][] = [];
 
     tempMap.set(
-      className,
+      classId,
       new ClassType(className, ClassSubType.concrete, false, false, false, [], undefined!),
     );
 
@@ -259,8 +265,8 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
       }
     }
 
-    const classType = tempMap.get(className)!;
-    tempMap.delete(className);
+    const classType = tempMap.get(classId)!;
+    tempMap.delete(classId);
 
     const classTypeDef = new StdLibClass(
       className,

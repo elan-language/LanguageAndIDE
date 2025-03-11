@@ -143,7 +143,7 @@ export class List<T1> {
     return this.system!.initialise(new List(result));
   }
 
-  @elanFunction(["lambdaOrFunctionRef"], FunctionOptions.pureAsync, ElanClass(List))
+  @elanFunction(["lambdaOrFunctionRef"], FunctionOptions.pureAsync, ElanClass(List, [ElanT2]))
   async map<T2>(
     @elanFuncType([ElanT1], ElanT2)
     predicate: (value: T1) => Promise<T2>,

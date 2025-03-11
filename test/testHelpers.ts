@@ -503,6 +503,7 @@ export async function createTestRunner() {
   const system = getTestSystem("");
   const stdlib = new StdLib();
   stdlib.system = system;
+  system.stdlib = stdlib;
   return await getTestRunner(system, stdlib);
 }
 
