@@ -1,4 +1,4 @@
-# 09342ab3498655525481db07ba0c996e5566fc334c1b7e339783c3907ed64e18 Elan Beta 9 valid
+# 746b3067671910a2a8d822f4aa91abb234fef15d30c85e31e5b908ddc00408bf Elan Beta 9 valid
 
 main
   let start be new Point(5, 5)
@@ -148,7 +148,7 @@ class Solver
         set neighbours to neighbours + node
       end if
     end each
-    return neighbours.asArray()
+    return neighbours.listAsArray()
   end function
 
   function getNodeFor(p as Point) returns Node

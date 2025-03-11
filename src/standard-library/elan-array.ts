@@ -1,14 +1,19 @@
 import { ElanRuntimeError } from "../elan-runtime-error";
 import {
   ClassOptions,
+  ElanBoolean,
+  ElanClass,
   elanClass,
   elanClassType,
   elanFunction,
+  elanFuncType,
   elanGenericParamT1Type,
+  elanGenericParamT2Type,
   ElanInt,
   elanIntType,
   elanProcedure,
   ElanT1,
+  ElanT2,
   FunctionOptions,
 } from "../elan-type-annotations";
 import { System } from "../system";
@@ -123,6 +128,53 @@ export class ElanArray<T1> {
   @elanFunction(["item"], FunctionOptions.pure)
   contains(@elanGenericParamT1Type() item: T1): boolean {
     return this.contents.includes(item);
+  }
+
+  @elanFunction(["lambdaOrFunctionRef"], FunctionOptions.pureAsync, ElanClass(ElanArray))
+  async filter(
+    @elanFuncType([ElanT1], ElanBoolean)
+    predicate: (value: T1) => Promise<boolean>,
+  ): Promise<ElanArray<T1>> {
+    const list = [...this.contents];
+
+    const asyncFilter = async (list: T1[], predicate: (value: T1) => Promise<boolean>) => {
+      const results = await Promise.all(list.map(predicate));
+
+      return list.filter((_v, index) => results[index]);
+    };
+
+    const result = await asyncFilter(list, predicate);
+
+    return this.system!.initialise(new ElanArray(result));
+  }
+
+  @elanFunction(["lambdaOrFunctionRef"], FunctionOptions.pureAsync, ElanClass(ElanArray, [ElanT2]))
+  async map<T2>(
+    @elanFuncType([ElanT1], ElanT2)
+    predicate: (value: T1) => Promise<T2>,
+  ): Promise<ElanArray<T2>> {
+    const list = [...this.contents];
+
+    const results = await Promise.all(list.map(predicate));
+
+    return this.system!.initialise(new ElanArray<T2>(results));
+  }
+
+  @elanFunction(["initialValue", "lambdaOrFunctionRef"], FunctionOptions.pureAsync, ElanT2)
+  async reduce<T2>(
+    @elanGenericParamT2Type() initValue: T2,
+    @elanFuncType([ElanT2, ElanT1], ElanT2)
+    predicate: (s: T2, value: T1) => Promise<T2>,
+  ): Promise<T2> {
+    const list = [...this.contents];
+
+    let acc: T2 = initValue;
+
+    for (const i of list) {
+      acc = await predicate(acc, i);
+    }
+
+    return acc;
   }
 
   async asString() {

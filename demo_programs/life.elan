@@ -1,4 +1,4 @@
-# FFFF Elan Beta 6 valid
+# 9e250e8a0aa9011c9084a2562e44b0babd1d1c722feeec0ff5d9282168647da9 Elan Beta 9 valid
 
 main
   variable gr set to new BlockGraphics()
@@ -67,7 +67,7 @@ end function
 function nextGeneration(cells as Array<of Boolean>) returns Array<of Boolean>
   let cellRange be range(0, cells.length() - 1)
   let next be cellRange.map(lambda n as Int => nextCellValue(cells, n))
-  return next.asArray()
+  return next.listAsArray()
 end function
 
 constant black set to 0x000000
@@ -135,7 +135,7 @@ test
 end test
 
 test 
-  assert neighbourCells(90) is {49, 50, 51, 89, 91, 129, 130, 131}
+  assert neighbourCells(90) is [49, 50, 51, 89, 91, 129, 130, 131]
 end test
 
 test 
