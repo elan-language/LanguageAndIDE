@@ -1,4 +1,4 @@
-# a52eb8ab19536be88906f2b1d29b940051b89acfb2d13026f4f4ee845b7b33ca Elan Beta 8 valid
+# 4141e723391aa2ee322f66035217443cb2534e6f7c093a0c86000ef9400b9f6c Elan Beta 6 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -122,4 +122,4 @@ test overlaps
   assert overlaps(body, [2, 1]) is false
 end test
 
-# Test coverage: 48% (29/61 instructions)
+# Test coverage: 48% (29/61 frames)
