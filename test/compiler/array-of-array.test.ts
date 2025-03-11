@@ -98,7 +98,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to createArray2D(3, 0, "")
+  variable a set to [[""],[""],[""]]
   call a.putAt(0, ["bar", "foo"])
   call a.putAt(2, ["yon", "xan"])
   print a[0][1]
@@ -108,7 +108,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.createArray2D(3, 0, "");
+  let a = system.literalArray([system.literalArray([""]), system.literalArray([""]), system.literalArray([""])]);
   a.putAt(0, system.literalArray(["bar", "foo"]));
   a.putAt(2, system.literalArray(["yon", "xan"]));
   await system.printLine(system.safeIndex(system.safeIndex(a, 0), 1));
@@ -129,7 +129,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to createArray2D(3, 0, "")
+  variable a set to [["",""],["",""],["",""]]
   call a.putAt(0, ["bar", "foo"])
   call a[0].putAt(1, "yon")
   print a[0][1]
@@ -138,7 +138,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.createArray2D(3, 0, "");
+  let a = system.literalArray([system.literalArray(["", ""]), system.literalArray(["", ""]), system.literalArray(["", ""])]);
   a.putAt(0, system.literalArray(["bar", "foo"]));
   system.safeIndex(a, 0).putAt(1, "yon");
   await system.printLine(system.safeIndex(system.safeIndex(a, 0), 1));
@@ -158,7 +158,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to createArray2D(3, 0, "")
+  variable a set to [[""],[""],[""]]
   call a.append(["foo"])
   call a.append(["yon"])
   print a[3]
@@ -168,7 +168,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.createArray2D(3, 0, "");
+  let a = system.literalArray([system.literalArray([""]), system.literalArray([""]), system.literalArray([""])]);
   a.append(system.literalArray(["foo"]));
   a.append(system.literalArray(["yon"]));
   await system.printLine(system.safeIndex(a, 3));
@@ -640,7 +640,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to createArray2D(3, 0, "")
+  variable a set to [[""],[""]]
   call a.putAt(0, empty Array<of String>)
   variable b set to a[0][0]
 end main

@@ -13,24 +13,18 @@ import {
 } from "./compiler-test-helpers";
 
 suite("Array2D", () => {
-  ignore_test("Pass_literalArrayOfArray", async () => {
+  test("Pass_Array2D", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to [1,2]
-  variable b set to [3,4]
   variable c set to new Array2D<of Int>()
-  set c to [a,b]
   print c
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.literalArray([1, 2]);
-  let b = system.literalArray([3, 4]);
-  let c = system.initialise(system.array(new Array()));
-  c = system.literalArray([a, b]);
+  let c = system.initialise(await new _stdlib.Array2D()._initialise());
   await system.printLine(c);
 }
 return [main, _tests];}`;
@@ -41,37 +35,27 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "[[1, 2], [3, 4]]");
+    await assertObjectCodeExecutes(fileImpl, "[]");
   });
 
-  ignore_test("Pass_Array2DAsParameter", async () => {
+  test("Pass_Array2DAsParameter", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
   variable a set to new Array2D<of Int>()
-  print foo(a)
+  print bar(a)
 end main
-
-function foo(arr as Array<of Array<of Int>>) returns Array<of Array<of Int>>
-  return bar(arr)
-end function
 
 function bar(arr as Array2D<of Int>) returns Array2D<of Int>
   return arr
-end function
-`;
+end function`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(system.array(new Array()));
-  await system.printLine((await global.foo(a)));
+  let a = system.initialise(await new _stdlib.Array2D()._initialise());
+  await system.printLine((await global.bar(a)));
 }
-
-async function foo(arr) {
-  return (await global.bar(arr));
-}
-global["foo"] = foo;
 
 async function bar(arr) {
   return arr;
@@ -86,6 +70,27 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "[]");
+  });
+
+  test("Fail_Array2DAsParameter", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to new Array2D<of Int>()
+  print foo(a)
+end main
+
+function foo(arr as Array<of Array<of Int>>) returns Array<of Array<of Int>>
+  return bar(arr)
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types. Expected: arr (Array<of Array<of Int>>) Provided: Array2D<of Int>",
+    ]);
   });
 
   ignore_test("Pass_DeclareAnEmptyArrayBySizeAndCheckLength", async () => {

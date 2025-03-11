@@ -545,7 +545,7 @@ class Foo
   end constructor
 
   function create2DArr() returns Array<of Array<of Int>>
-    return createArray2D(3, 4, 8)
+    return [[8,8,8,8],[8,8,8,8],[8,8,8,8]]
   end function
 
 end class`;
@@ -586,7 +586,7 @@ class Foo {
   }
 
   async create2DArr() {
-    return _stdlib.createArray2D(3, 4, 8);
+    return system.literalArray([system.literalArray([8, 8, 8, 8]), system.literalArray([8, 8, 8, 8]), system.literalArray([8, 8, 8, 8])]);
   }
 
 }
