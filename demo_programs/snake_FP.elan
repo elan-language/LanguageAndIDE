@@ -1,4 +1,4 @@
-# 4076fd417a9553519baade42728251e1afc5bf544d9845ab97ada015055aa457 Elan Beta 6 valid
+# 77e3c07d41f26032eac3a39c86841cef6c5aeab5e2cefcd4e440e7ba8d0e78ed Elan Beta 8 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -260,4 +260,4 @@ test newGame
   assert game.isOn is true
 end test
 
-# Test coverage: 82% (54/66 frames)
+# Test coverage: 82% (54/66 instructions)
