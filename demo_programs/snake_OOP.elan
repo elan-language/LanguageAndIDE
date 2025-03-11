@@ -1,4 +1,4 @@
-# 34d6d6421a725f8734ea1b7b65e20a368ce4ba4058b6bf3a9edd1f151bb949de Elan Beta 6 valid
+# b78fa3fb717021b6e97ee92d568fc3a28f48c85b3e98b9a184680c501cc456cf Elan Beta 8 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -189,4 +189,4 @@ test square
   assert gr.getBackground(3, 4) is blue
 end test
 
-# Testcoverage: 45% (40/88 frames)
+# Testcoverage: 45% (40/88 instructionss)
