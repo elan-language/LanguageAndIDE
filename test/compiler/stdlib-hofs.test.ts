@@ -561,6 +561,60 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "{apple, orange, pair}{apple, orange, pair}");
   });
 
+  test("Pass_complexHof", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+constant numberChars set to "-.0123456789"
+main
+  print getTrailingNumber("aa1")
+end main
+
+function getTrailingNumber(s as String) returns String
+  return if s is "" then "" else s[last(range(0, s.length() -1).filter(lambda n as Int => not isnumberchar(s[n]))) + 1..s.length()]
+end function
+
+function isnumberchar(s as String) returns Boolean
+  return numberChars.contains(s)
+end function
+
+function last(l as List<of Int>) returns Int
+  return l[l.length() - 1]
+end function`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {
+  numberChars = "-.0123456789";
+
+};
+async function main() {
+  await system.printLine((await global.getTrailingNumber("aa1")));
+}
+
+async function getTrailingNumber(s) {
+  return s === "" ? "" : system.safeSlice(s, (await global.last((await _stdlib.range(0, _stdlib.length(s) - 1).filter(async (n) => !(await global.isnumberchar(system.safeIndex(s, n))))))) + 1, _stdlib.length(s));
+}
+global["getTrailingNumber"] = getTrailingNumber;
+
+async function isnumberchar(s) {
+  return _stdlib.contains(global.numberChars, s);
+}
+global["isnumberchar"] = isnumberchar;
+
+async function last(l) {
+  return system.safeIndex(l, l.length() - 1);
+}
+global["last"] = last;
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1");
+  });
+
   test("Fail_MaxOnNonNumeric", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 

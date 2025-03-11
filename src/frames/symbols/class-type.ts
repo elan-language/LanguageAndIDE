@@ -17,12 +17,12 @@ export enum ClassSubType {
 
 export class ClassType implements ReifyableSymbolType, Scope {
   constructor(
-    public readonly className: string,
-    public readonly subType: ClassSubType,
-    public readonly isNotInheritable: boolean,
-    public readonly isImmutable: boolean,
-    public readonly isIndexable: boolean,
-    public readonly inheritsFrom: SymbolType[],
+    public className: string,
+    public subType: ClassSubType,
+    public isNotInheritable: boolean,
+    public isImmutable: boolean,
+    public isIndexable: boolean,
+    public inheritsFrom: SymbolType[],
     public scope: Class | NullScope,
   ) {}
 
@@ -51,8 +51,14 @@ export class ClassType implements ReifyableSymbolType, Scope {
     return this;
   }
 
-  updateScope(scope: Class) {
-    this.scope = scope;
+  updateFrom(other: ClassType) {
+    this.className = other.className;
+    this.isNotInheritable = other.isNotInheritable;
+    this.isImmutable = other.isImmutable;
+    this.isIndexable = other.isIndexable;
+    this.inheritsFrom = other.inheritsFrom;
+    this.scope = other.scope;
+    return this;
   }
 
   symbolMatches(id: string, all: boolean): ElanSymbol[] {

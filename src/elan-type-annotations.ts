@@ -207,6 +207,7 @@ function removeUnderscore(name: string) {
 export class ElanClassTypeDescriptor implements TypeDescriptor {
   constructor(
     private readonly cls: { name: string; prototype: object; emptyInstance: () => object },
+    private readonly ofTypes?: TypeDescriptor[] | undefined,
   ) {}
 
   isClass = true;
@@ -273,13 +274,13 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
       scope!,
     );
 
-    classType.updateScope(classTypeDef);
-
     for (const c of children) {
       classTypeDef.children.push(getSymbol(c[0], c[1], SymbolScope.member, c[2]));
     }
 
-    for (const ot of classMetadata.ofTypes) {
+    const actualOfTypes = this.ofTypes ?? classMetadata.ofTypes;
+
+    for (const ot of actualOfTypes) {
       classTypeDef.ofTypes.push(ot.mapType());
     }
 
@@ -287,7 +288,8 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
       classTypeDef.inheritTypes.push(inherits.mapType());
     }
 
-    return classTypeDef.symbolType();
+    // update the classtype in the temp map
+    return classType.updateFrom(classTypeDef.symbolType() as ClassType);
   }
 }
 
@@ -467,8 +469,11 @@ export function ElanAbstractDictionary(keyType: TypeDescriptor, valueType: TypeD
   return new ElanValueTypeDescriptor("AbstractDictionary", keyType, valueType);
 }
 
-export function ElanClass(cls: { name: string; prototype: object; emptyInstance: () => object }) {
-  return new ElanClassTypeDescriptor(cls);
+export function ElanClass(
+  cls: { name: string; prototype: object; emptyInstance: () => object },
+  ofTypes?: TypeDescriptor[],
+) {
+  return new ElanClassTypeDescriptor(cls, ofTypes);
 }
 
 export function ElanDictionaryImmutable(keyType: TypeDescriptor, valueType: TypeDescriptor) {

@@ -290,14 +290,13 @@ export class StdLib {
     return ss.indexOf(item);
   }
 
-  @elanFunction(["start", "end"], FunctionOptions.pure, ElanClass(List))
-  range(@elanIntType() start: number, @elanIntType() end: number): number[] {
+  @elanFunction(["start", "end"], FunctionOptions.pure, ElanClass(List, [ElanInt]))
+  range(@elanIntType() start: number, @elanIntType() end: number): List<number> {
     const seq = [];
     for (let i = start; i <= end; i++) {
       seq.push(i);
     }
-    (seq as unknown as hasHiddenType)._type = "Iterable";
-    return seq;
+    return this.system.initialise(new List(seq));
   }
 
   @elanFunction([], FunctionOptions.pureExtension, ElanT1)

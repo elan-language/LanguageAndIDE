@@ -756,6 +756,43 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "{}{3}falsetruefalse");
   });
 
+  test("Pass_IndexFromHof", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to {new Point()}
+  variable b set to a.map(lambda p as Point => p)
+  print b[0]
+end main
+
+record Point
+end record
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.list([system.initialise(await new Point()._initialise())]);
+  let b = (await a.map(async (p) => p));
+  await system.printLine(system.safeIndex(b, 0));
+}
+
+class Point {
+  static emptyInstance() { return system.emptyClass(Point, []);};
+  async _initialise() { return this; }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "a Point");
+  });
+
   test("Fail_emptyLiteralList", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
