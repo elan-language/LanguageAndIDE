@@ -1,4 +1,4 @@
-# a52eb8ab19536be88906f2b1d29b940051b89acfb2d13026f4f4ee845b7b33ca Elan Beta 8 valid
+# 904cb36a1122f379db0c016b21ba61a255c58de3a2ea2a5a772e62359b5cbb95 Elan Beta 9 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -33,7 +33,7 @@ main
   print "Game Over! Score: {body.length() - 1}"
 end main
 
-procedure setAppleToRandomPosition(out apple as Array<of Int>, body as Array2D<of Int>)
+procedure setAppleToRandomPosition(out apple as Array<of Int>, body as Array<of Array<of Int>>)
   repeat
     set apple to [randomInt(0, 39), randomInt(0, 29)]
   end repeat when not overlaps(body, apple)
@@ -58,7 +58,7 @@ function getAdjacentSquare(sq as Array<of Int>, dir as String) returns Array<of 
   return [newX, newY]
 end function
 
-function overlaps(body as Array2D<of Int>, sq as Array<of Int>) returns Boolean
+function overlaps(body as Array<of Array<of Int>>, sq as Array<of Int>) returns Boolean
   variable result set to false
   each seg in body
     if (seg is sq) then
