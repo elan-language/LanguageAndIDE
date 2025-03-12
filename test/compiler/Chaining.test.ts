@@ -6,7 +6,6 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -626,19 +625,19 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "86");
   });
 
-  ignore_test("Pass_HoFs2", async () => {
+  test("Pass_HoFs2", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main 
   variable a set to [1,2,3,4,5,6]
-  print a[..5].map(lambda x as Int => x * x).listAsArray()[2..].reduce(0, lambda s as Int, x as Int => s + x)
+  print a[..5].map(lambda x as Int => x * x)[2..].reduce(0, lambda s as Int, x as Int => s + x)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = system.literalArray([1, 2, 3, 4, 5, 6]);
-  await system.printLine((await _stdlib.reduce(system.array(system.safeSlice(_stdlib.asArray((await _stdlib.map(system.array(system.safeSlice(a, 0, 5)), async (x) => x * x))), 2)), 0, async (s, x) => s + x)));
+  await system.printLine((await system.safeSlice((await system.safeSlice(a, 0, 5).map(async (x) => x * x)), 2).reduce(0, async (s, x) => s + x)));
 }
 return [main, _tests];}`;
 
