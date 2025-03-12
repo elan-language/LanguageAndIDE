@@ -56,15 +56,6 @@ export class ElanArray<T1> {
     this.system!.safeArraySet(this.contents, index, value);
   }
 
-  @elanProcedure(["column", "row"])
-  putAt2D(
-    @elanIntType() col: number,
-    @elanIntType() row: number,
-    @elanGenericParamT1Type() value: T1,
-  ) {
-    this.system!.safeArraySet(this.contents[col] as T1[], row, value);
-  }
-
   @elanProcedure(["index", "value"])
   insertAt(@elanIntType() index: number, @elanGenericParamT1Type() value: T1) {
     this.contents.splice(index, 0, value);

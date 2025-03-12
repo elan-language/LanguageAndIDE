@@ -176,10 +176,9 @@ async function doAsserts(f: FileImpl, fld : AbstractField, expected: [string, st
     assert.strictEqual(symbols.length, expected); 
     return;  
   }
+  const minLen = symbols.length > expected.length ? expected.length : symbols.length; 
 
-  assert.strictEqual(symbols.length, expected.length);
-
-  for (let i = 0; i < expected.length; i++) {
+  for (let i = 0; i < minLen; i++) {
     const s = symbols[i];
     const e = expected[i] as [string, string, string];
 
@@ -193,6 +192,8 @@ async function doAsserts(f: FileImpl, fld : AbstractField, expected: [string, st
       assert.strictEqual(s.insertedText, e[2]);
     }
   }
+
+  assert.strictEqual(symbols.length, expected.length);
 } 
 
 

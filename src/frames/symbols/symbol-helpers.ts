@@ -334,6 +334,10 @@ export function matchType(actualType: SymbolType, paramType: SymbolType): boolea
     return true;
   }
 
+  if (paramType instanceof ClassType) {
+    return paramType.isAssignableFrom(actualType);
+  }
+
   if (
     isGenericSymbolType(paramType) &&
     (isGenericSymbolType(actualType) || actualType instanceof StringType)
@@ -354,12 +358,6 @@ export function matchType(actualType: SymbolType, paramType: SymbolType): boolea
         matchType(actualType.valueType, paramType.valueType))
     );
   }
-
-  if (paramType instanceof ClassType) {
-    return paramType.isAssignableFrom(actualType);
-  }
-
-  // Todo when we have extensions on Class
 
   return false;
 }

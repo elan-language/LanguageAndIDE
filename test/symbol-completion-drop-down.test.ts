@@ -104,7 +104,7 @@ end main`;
     await assertAutocompletes(fileImpl, "expr5", " ", 1, expected);
   });
 
-  ignore_test("Pass_emptyExpression", async () => {
+  test("Pass_emptyExpression", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -370,7 +370,7 @@ end main`;
     await assertAutocompletes(fileImpl, "ident14", "o", 1, expected);
   });
 
-  ignore_test("Pass_CallMembers", async () => {
+  test("Pass_CallMembers", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 class Foo
@@ -469,7 +469,7 @@ end main`;
     await assertAutocompletes(fileImpl, "ident36", "p", 5, expected);
   });
 
-  ignore_test("Pass_CallExtensions", async () => {
+  test("Pass_CallExtensions", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -988,7 +988,7 @@ end class`;
     await assertSymbolCompletionWithString(fileImpl, "ident19", "pp", expected);
   });
 
-  ignore_test("Pass_assert", async () => {
+  test("Pass_assert", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -1198,7 +1198,7 @@ end function`;
     await assertSymbolCompletionWithString(fileImpl, "type5", "Graphics", expected);
   });
 
-  ignore_test("Pass_functionResult", async () => {
+  test("Pass_functionResult", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
 main
@@ -1238,7 +1238,7 @@ end class`;
     await assertSymbolCompletionWithString(fileImpl, "expr5", "foo().", expected);
   });
 
-  ignore_test("Pass_functionResultWithParams", async () => {
+  test("Pass_functionResultWithParams", async () => {
     const code = `# FFFF Elan Beta 3 valid
 
 main
@@ -1520,7 +1520,7 @@ end main`;
     await assertSymbolCompletionWithString(fileImpl, "ident7", "foo.", expected);
   });
 
-  ignore_test("Pass_libExtension2", async () => {
+  test("Pass_libExtension2", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
     main
@@ -1867,7 +1867,7 @@ end main`;
     await assertSymbolCompletionWithString(fileImpl, "expr8", "s.con", expected);
   });
 
-  ignore_test("Pass_listExtension1", async () => {
+  test("Pass_listExtension1", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -1879,6 +1879,7 @@ end main`;
 
     const expected = [
       ["map", "map", "map("],
+      ["max", "max", "max("],
       ["maxBy", "maxBy", "maxBy("],
     ] as [string, string, string][];
 
