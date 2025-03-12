@@ -8,7 +8,6 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -895,7 +894,7 @@ end main
     await assertObjectCodeDoesNotExecute(fileImpl, "Out of range index: 5 size: 5");
   });
 
-  ignore_test("Fail_CannotPutAt", async () => {
+  test("Fail_CannotPutAt", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -909,9 +908,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Array<of Int> Provided: List<of Int>",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'putAt' is not defined for type 'List'"]);
   });
 
   test("Fail_CannotSetIndex", async () => {
@@ -948,7 +945,7 @@ end main
     ]);
   });
 
-  ignore_test("Fail_add", async () => {
+  test("Fail_add", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -962,12 +959,10 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Array<of String> Provided: List<of String>",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'append' is not defined for type 'List'"]);
   });
 
-  ignore_test("Fail_insertAt", async () => {
+  test("Fail_insertAt", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -981,12 +976,10 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Array<of String> Provided: List<of String>",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'insertAt' is not defined for type 'List'"]);
   });
 
-  ignore_test("Fail_removeAt", async () => {
+  test("Fail_removeAt", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -1000,12 +993,10 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Array<of String> Provided: List<of String>",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'removeAt' is not defined for type 'List'"]);
   });
 
-  ignore_test("Fail_removeFirst", async () => {
+  test("Fail_removeFirst", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -1018,12 +1009,10 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Array<of String> Provided: List<of String>",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'removeFirst' is not defined for type 'List'"]);
   });
 
-  ignore_test("Fail_removeAll", async () => {
+  test("Fail_removeAll", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -1036,9 +1025,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Array<of String> Provided: List<of String>",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'removeAll' is not defined for type 'List'"]);
   });
 
   test("Fail_withoutGenericType", async () => {

@@ -6,7 +6,6 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -471,12 +470,12 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "5");
   });
 
-  ignore_test("Pass_sortBy", async () => {
+  test("Pass_sortBy", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
-  print source.sortBy(lambda x as Int, y as Int => if x is y then 0 else if x < y then 1 else -1).asArray()
+  print source.sortBy(lambda x as Int, y as Int => if x is y then 0 else if x < y then 1 else -1).listAsArray()
   print source
 end main`;
 
@@ -486,7 +485,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(_stdlib.asArray((await _stdlib.sortBy(global.source, async (x, y) => x === y ? 0 : x < y ? 1 : (-1)))));
+  await system.printLine(_stdlib.listAsArray((await global.source.sortBy(async (x, y) => x === y ? 0 : x < y ? 1 : (-1)))));
   await system.printLine(global.source);
 }
 return [main, _tests];}`;
@@ -503,12 +502,12 @@ return [main, _tests];}`;
     );
   });
 
-  ignore_test("Pass_sortByString", async () => {
+  test("Pass_sortByString", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 constant source set to "dbcd"
 main
-  print source.sortBy(lambda x as String, y as String => if x is y then 0 else if x.isAfter(y) then 1 else -1).asArray()
+  print source.sortBy(lambda x as String, y as String => if x is y then 0 else if x.isAfter(y) then 1 else -1).listAsArray()
   print source
 end main`;
 
@@ -518,7 +517,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(_stdlib.asArray((await _stdlib.sortBy(global.source, async (x, y) => x === y ? 0 : _stdlib.isAfter(x, y) ? 1 : (-1)))));
+  await system.printLine(_stdlib.listAsArray((await _stdlib.sortBy(global.source, async (x, y) => x === y ? 0 : _stdlib.isAfter(x, y) ? 1 : (-1)))));
   await system.printLine(global.source);
 }
 return [main, _tests];}`;
@@ -532,13 +531,13 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[b, c, d, d]dbcd");
   });
 
-  ignore_test("Pass_asSet", async () => {
+  test("Pass_asSet", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 constant source set to {"apple", "orange", "pair", "apple"}
 main
-  print source.asSet()
-  print source.asArray().asSet()
+  print source.listAsSet()
+  print source.listAsArray().arrayAsSet()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -547,8 +546,8 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(_stdlib.asSet(global.source));
-  await system.printLine(_stdlib.asSet(_stdlib.asArray(global.source)));
+  await system.printLine(_stdlib.listAsSet(global.source));
+  await system.printLine(_stdlib.arrayAsSet(_stdlib.listAsArray(global.source)));
 }
 return [main, _tests];}`;
 

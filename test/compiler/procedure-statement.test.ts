@@ -8,7 +8,6 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -1240,7 +1239,7 @@ end procedure`;
     ]);
   });
 
-  ignore_test("Fail_ProcedureInExpression", async () => {
+  test("Fail_ProcedureInExpression", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -1253,7 +1252,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Array<of Int> Provided: Procedure (Array<of Generic Parameter T1>, Generic Parameter T1)",
+      "Incompatible types. Expected: Array<of Int> Provided: Procedure (Int)",
       "Cannot call procedure 'append' within an expression",
     ]);
   });

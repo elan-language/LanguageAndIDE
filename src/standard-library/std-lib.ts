@@ -67,7 +67,7 @@ async function getPivot<T1>(x: T1, y: T1, z: T1, compare: (a: T1, b: T1) => Prom
 }
 
 // from github https://gist.github.com/kimamula/fa34190db624239111bbe0deba72a6ab
-async function _quickSort<T1>(
+async function quickSort<T1>(
   arr: T1[],
   compare: (a: T1, b: T1) => Promise<number>,
   left = 0,
@@ -95,8 +95,8 @@ async function _quickSort<T1>(
       i++;
       j--;
     }
-    await _quickSort(arr, compare, left, i - 1);
-    await _quickSort(arr, compare, j + 1, right);
+    await quickSort(arr, compare, left, i - 1);
+    await quickSort(arr, compare, j + 1, right);
   }
   return arr;
 }
@@ -555,15 +555,16 @@ export class StdLib {
   //   return source[i];
   // }
 
-  // @elanFunction(["", "lambdaOrFunctionRef"], FunctionOptions.pureAsyncExtension, ElanClass(List))
-  // async sortBy<T1>(
-  //   @elanIterableType(ElanT1) source: T1[],
-  //   @elanFuncType([ElanT1, ElanT1], ElanInt)
-  //   predicate: (a: T1, b: T1) => Promise<number>,
-  // ): Promise<T1[]> {
-  //   const clone = [...source];
-  //   return this.asList(await quickSort(clone, predicate));
-  // }
+  @elanFunction(["", "lambdaOrFunctionRef"], FunctionOptions.pureAsyncExtension, ElanClass(List))
+  async sortBy(
+    source: string,
+    @elanFuncType([ElanString, ElanString], ElanInt)
+    predicate: (a: string, b: string) => Promise<number>,
+  ): Promise<List<string>> {
+    const clone = [...source];
+    const results = await quickSort(clone, predicate);
+    return this.system!.initialise(new List<string>(results));
+  }
 
   @elanFunction(["", "item"], FunctionOptions.pureExtension)
   contains(source: string, item: string): boolean {
@@ -1001,7 +1002,7 @@ export class StdLib {
   }
 
   @elanFunction([], FunctionOptions.pureExtension, ElanClass(ElanSet))
-  listAsSet<T1>(@elanClassType(ElanArray) arr: List<T1>): ElanSet<T1> {
+  listAsSet<T1>(@elanClassType(List) arr: List<T1>): ElanSet<T1> {
     const set = this.system.initialise(new ElanSet<T1>());
     return set.addFromArray(this.listAsArray(arr));
   }

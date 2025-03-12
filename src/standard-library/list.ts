@@ -17,6 +17,59 @@ import {
 } from "../elan-type-annotations";
 import { System } from "../system";
 
+async function getPivot<T1>(x: T1, y: T1, z: T1, compare: (a: T1, b: T1) => Promise<number>) {
+  if ((await compare(x, y)) < 0) {
+    if ((await compare(y, z)) < 0) {
+      return y;
+    } else if ((await compare(z, x)) < 0) {
+      return x;
+    } else {
+      return z;
+    }
+  } else if ((await compare(y, z)) > 0) {
+    return y;
+  } else if ((await compare(z, x)) > 0) {
+    return x;
+  } else {
+    return z;
+  }
+}
+
+// from github https://gist.github.com/kimamula/fa34190db624239111bbe0deba72a6ab
+async function quickSort<T1>(
+  arr: T1[],
+  compare: (a: T1, b: T1) => Promise<number>,
+  left = 0,
+  right = arr.length - 1,
+) {
+  if (left < right) {
+    let i = left,
+      j = right,
+      tmp;
+    const pivot = await getPivot(arr[i], arr[i + Math.floor((j - i) / 2)], arr[j], compare);
+    while (true) {
+      while ((await compare(arr[i], pivot)) < 0) {
+        i++;
+      }
+      while ((await compare(pivot, arr[j])) < 0) {
+        j--;
+      }
+      if (i >= j) {
+        break;
+      }
+      tmp = arr[i];
+      arr[i] = arr[j];
+      arr[j] = tmp;
+
+      i++;
+      j--;
+    }
+    await quickSort(arr, compare, left, i - 1);
+    await quickSort(arr, compare, j + 1, right);
+  }
+  return arr;
+}
+
 @elanClass(ClassOptions.list, [ElanT1], [], [], [], "List")
 export class List<T1> {
   // this must be implemented by hand on all stdlib classes
@@ -192,6 +245,16 @@ export class List<T1> {
     const max = Math.min(...mm);
     const i = mm.indexOfItem(max);
     return this.contents[i];
+  }
+
+  @elanFunction(["lambdaOrFunctionRef"], FunctionOptions.pureAsync, ElanClass(List))
+  async sortBy(
+    @elanFuncType([ElanT1, ElanT1], ElanInt)
+    predicate: (a: T1, b: T1) => Promise<number>,
+  ): Promise<List<T1>> {
+    const clone = [...this.contents];
+    const results = await quickSort(clone, predicate);
+    return this.system!.initialise(new List<T1>(results));
   }
 
   @elanFunction([], FunctionOptions.pure, ElanT1)

@@ -5,7 +5,6 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -256,7 +255,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "{2, 4, 6, 3}{2, 4, 6, 3, 5}");
   });
-  ignore_test("Pass_AddFromArray", async () => {
+  test("Pass_AddFromArray", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
