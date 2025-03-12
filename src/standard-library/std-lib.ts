@@ -48,59 +48,6 @@ import { TextFileWriter } from "./text-file-writer";
 import { Turtle } from "./turtle";
 import { VectorGraphics } from "./vector-graphics";
 
-async function getPivot<T1>(x: T1, y: T1, z: T1, compare: (a: T1, b: T1) => Promise<number>) {
-  if ((await compare(x, y)) < 0) {
-    if ((await compare(y, z)) < 0) {
-      return y;
-    } else if ((await compare(z, x)) < 0) {
-      return x;
-    } else {
-      return z;
-    }
-  } else if ((await compare(y, z)) > 0) {
-    return y;
-  } else if ((await compare(z, x)) > 0) {
-    return x;
-  } else {
-    return z;
-  }
-}
-
-// from github https://gist.github.com/kimamula/fa34190db624239111bbe0deba72a6ab
-async function quickSort<T1>(
-  arr: T1[],
-  compare: (a: T1, b: T1) => Promise<number>,
-  left = 0,
-  right = arr.length - 1,
-) {
-  if (left < right) {
-    let i = left,
-      j = right,
-      tmp;
-    const pivot = await getPivot(arr[i], arr[i + Math.floor((j - i) / 2)], arr[j], compare);
-    while (true) {
-      while ((await compare(arr[i], pivot)) < 0) {
-        i++;
-      }
-      while ((await compare(pivot, arr[j])) < 0) {
-        j--;
-      }
-      if (i >= j) {
-        break;
-      }
-      tmp = arr[i];
-      arr[i] = arr[j];
-      arr[j] = tmp;
-
-      i++;
-      j--;
-    }
-    await quickSort(arr, compare, left, i - 1);
-    await quickSort(arr, compare, j + 1, right);
-  }
-  return arr;
-}
-
 export class StdLib {
   constructor() {
     this.system = new System(new StubInputOutput());
@@ -219,9 +166,6 @@ export class StdLib {
       let items: string = "";
 
       switch (type) {
-        case "List":
-          items = await convertList(v, this);
-          return `{${items}}`;
         case "Tuple":
           items = await convertList(v, this);
           return `tuple(${items})`;
@@ -304,7 +248,6 @@ export class StdLib {
     },
   ): List<T1> {
     const lst = Object.getOwnPropertyNames(dict).filter((s) => s !== "_type") as T1[];
-    (lst as unknown as hasHiddenType)._type = "List";
     return this.system.initialise(new List(lst));
   }
 
@@ -314,11 +257,10 @@ export class StdLib {
     dict: {
       [key: string]: T1;
     },
-  ): T1[] {
+  ): List<T1> {
     const keys = Object.getOwnPropertyNames(dict).filter((s) => s !== "_type") as T1[];
     const lst = keys.map((k) => dict[k as string]);
-    (lst as unknown as hasHiddenType)._type = `List`;
-    return lst;
+    return this.system.initialise(new List(lst));
   }
 
   @elanFunction(["key"], FunctionOptions.pureExtension, ElanBoolean)
@@ -548,18 +490,6 @@ export class StdLib {
     return Math.min(...source);
   }
 
-  // @elanFunction(["", "lambdaOrFunctionRef"], FunctionOptions.pureAsyncExtension, ElanT1)
-  // async minBy<T1>(
-  //   @elanIterableType(ElanT1) source: T1[],
-  //   @elanFuncType([ElanT1], ElanFloat)
-  //   predicate: (value: T1) => Promise<number>,
-  // ): Promise<T1> {
-  //   const mm = await this.map(source, predicate as (value: string | T1) => Promise<number>);
-  //   const min = Math.min(...mm);
-  //   const i = mm.indexOfItem(min);
-  //   return source[i];
-  // }
-
   @elanFunction(["", "lambdaOrFunctionRef"], FunctionOptions.pureAsyncExtension, ElanClass(List))
   async sortBy(
     source: string,
@@ -567,7 +497,7 @@ export class StdLib {
     predicate: (a: string, b: string) => Promise<number>,
   ): Promise<List<string>> {
     const clone = [...source];
-    const results = await quickSort(clone, predicate);
+    const results = await this.system.quickSort(clone, predicate);
     return this.system!.initialise(new List<string>(results));
   }
 

@@ -393,4 +393,57 @@ export class System {
       }, 1);
     });
   }
+
+  async getPivot<T1>(x: T1, y: T1, z: T1, compare: (a: T1, b: T1) => Promise<number>) {
+    if ((await compare(x, y)) < 0) {
+      if ((await compare(y, z)) < 0) {
+        return y;
+      } else if ((await compare(z, x)) < 0) {
+        return x;
+      } else {
+        return z;
+      }
+    } else if ((await compare(y, z)) > 0) {
+      return y;
+    } else if ((await compare(z, x)) > 0) {
+      return x;
+    } else {
+      return z;
+    }
+  }
+
+  // from github https://gist.github.com/kimamula/fa34190db624239111bbe0deba72a6ab
+  async quickSort<T1>(
+    arr: T1[],
+    compare: (a: T1, b: T1) => Promise<number>,
+    left = 0,
+    right = arr.length - 1,
+  ) {
+    if (left < right) {
+      let i = left,
+        j = right,
+        tmp;
+      const pivot = await this.getPivot(arr[i], arr[i + Math.floor((j - i) / 2)], arr[j], compare);
+      while (true) {
+        while ((await compare(arr[i], pivot)) < 0) {
+          i++;
+        }
+        while ((await compare(pivot, arr[j])) < 0) {
+          j--;
+        }
+        if (i >= j) {
+          break;
+        }
+        tmp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = tmp;
+
+        i++;
+        j--;
+      }
+      await this.quickSort(arr, compare, left, i - 1);
+      await this.quickSort(arr, compare, j + 1, right);
+    }
+    return arr;
+  }
 }

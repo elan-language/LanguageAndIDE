@@ -52,14 +52,12 @@ export class Dictionary<_T1, T2> {
   @elanFunction([], FunctionOptions.pure, ElanClass(List))
   keys(): string[] {
     const lst = Object.getOwnPropertyNames(this.contents).filter((s) => s !== "_type");
-    (lst as unknown as hasHiddenType)._type = "List";
     return lst;
   }
 
   @elanFunction([], FunctionOptions.pure, ElanClass(List))
   values(): T2[] {
     const lst = this.keys().map((k) => this.contents[k]);
-    (lst as unknown as hasHiddenType)._type = `List`;
     return lst;
   }
 

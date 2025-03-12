@@ -44,11 +44,6 @@ export class ElanArray2D<T1> {
     };
   }
 
-  // @elanProcedure(["index", "value"])
-  // putAt(@elanIntType() index: number, @elanGenericParamT1Type() value: T1) {
-  //   this.system!.safeArraySet(this.contents, index, value);
-  // }
-
   @elanProcedure(["column", "row", "value"])
   putAt(
     @elanIntType() col: number,
@@ -58,52 +53,6 @@ export class ElanArray2D<T1> {
     this.system!.safe2DArraySet(this.contents, col, row, value);
   }
 
-  // @elanProcedure(["index", "value"])
-  // insertAt(@elanIntType() index: number, @elanGenericParamT1Type() value: T1) {
-  //   this.contents.splice(index, 0, value);
-  // }
-
-  // @elanProcedure(["index"])
-  // removeAt(@elanIntType() index: number) {
-  //   this.contents.splice(index, 1);
-  // }
-
-  // @elanProcedure(["value"])
-  // removeFirst(@elanGenericParamT1Type() value: T1) {
-  //   const index = this.system!.elanIndexOf(this.contents, value);
-  //   if (index > -1) {
-  //     this.contents.splice(index, 1);
-  //   }
-  // }
-
-  // @elanProcedure(["value"])
-  // removeAll(@elanGenericParamT1Type() value: T1) {
-  //   let index = this.system!.elanIndexOf(this.contents, value);
-  //   while (index > -1) {
-  //     this.contents.splice(index, 1);
-  //     index = this.system!.elanIndexOf(this.contents, value);
-  //   }
-  // }
-
-  // @elanProcedure(["value"])
-  // append(@elanGenericParamT1Type() value: T1) {
-  //   this.contents.push(value);
-  // }
-
-  // @elanProcedure(["other"])
-  // appendArray(@elanClassType(ElanArrayImpl) listB: ElanArrayImpl<T1>) {
-  //   this.contents.push(...listB.contents);
-  // }
-
-  // @elanProcedure(["other"])
-  // prepend(@elanGenericParamT1Type() value: T1) {
-  //   this.contents.unshift(value);
-  // }
-
-  // @elanProcedure(["other"])
-  // prependArray(@elanClassType(ElanArrayImpl) listB: ElanArrayImpl<T1>) {
-  //   this.contents.unshift(...listB.contents);
-  // }
 
   @elanFunction([], FunctionOptions.pure, ElanInt)
   length() {
