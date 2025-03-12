@@ -1,8 +1,8 @@
-import { ClassOptions } from "./type-options";
+import { TypeOptions } from "./type-options";
 
 export interface SymbolType {
   name: string;
   initialValue: string;
   isAssignableFrom(otherType: SymbolType): boolean;
-  classOptions : ClassOptions;
+  classOptions: TypeOptions;
 }

@@ -1,10 +1,10 @@
 import { SymbolType } from "../interfaces/symbol-type";
-import { noClassOptions } from "../interfaces/type-options";
+import { noTypeOptions } from "../interfaces/type-options";
 
 export class GenericParameterType implements SymbolType {
   constructor(public id: string) {}
 
-  classOptions = noClassOptions;
+  classOptions = noTypeOptions;
 
   initialValue = "";
 

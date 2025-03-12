@@ -1,13 +1,13 @@
 import { ElanRuntimeError } from "../elan-runtime-error";
 import {
-    ClassOption,
-    elanClass,
-    elanFunction,
-    elanGenericParamT1Type,
-    ElanInt,
-    elanProcedure,
-    ElanT1,
-    FunctionOptions,
+  ClassOption,
+  elanClass,
+  elanFunction,
+  elanGenericParamT1Type,
+  ElanInt,
+  elanProcedure,
+  ElanT1,
+  FunctionOptions,
 } from "../elan-type-annotations";
 import { System } from "../system";
 

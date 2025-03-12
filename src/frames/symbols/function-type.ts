@@ -1,5 +1,5 @@
 import { SymbolType } from "../interfaces/symbol-type";
-import { ClassOptions, immutableTypeOptions, newTypeOptions } from "../interfaces/type-options";
+import { immutableTypeOptions } from "../interfaces/type-options";
 
 export class FunctionType implements SymbolType {
   constructor(

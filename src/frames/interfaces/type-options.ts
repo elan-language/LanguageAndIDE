@@ -1,30 +1,33 @@
-
-export interface ClassOptions {
-  isImmutable: boolean, isAbstract: boolean, isIndexable: boolean, isDoubleIndexable: boolean, isIterable: boolean
+export interface TypeOptions {
+  isImmutable: boolean;
+  isAbstract: boolean;
+  isIndexable: boolean;
+  isDoubleIndexable: boolean;
+  isIterable: boolean;
 }
 
-export const noClassOptions: ClassOptions = {
+export const noTypeOptions: TypeOptions = {
   isImmutable: false,
   isAbstract: false,
   isIndexable: false,
   isDoubleIndexable: false,
   isIterable: false,
-} as ClassOptions;
+} as TypeOptions;
 
-export const immutableTypeOptions: ClassOptions = {
-    isImmutable: true,
-    isAbstract: false,
-    isIndexable: false,
-    isDoubleIndexable: false,
-    isIterable: false,
-  } as ClassOptions;
+export const immutableTypeOptions: TypeOptions = {
+  isImmutable: true,
+  isAbstract: false,
+  isIndexable: false,
+  isDoubleIndexable: false,
+  isIterable: false,
+} as TypeOptions;
 
-export function newTypeOptions() : ClassOptions {
+export function getTypeOptions(): TypeOptions {
   return {
     isImmutable: false,
     isAbstract: false,
     isIndexable: false,
     isDoubleIndexable: false,
     isIterable: false,
-  }
+  };
 }

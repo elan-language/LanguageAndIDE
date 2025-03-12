@@ -5,7 +5,7 @@ import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../interfaces/transforms";
-import { noClassOptions } from "../interfaces/type-options";
+import { noTypeOptions } from "../interfaces/type-options";
 import { classKeyword, endKeyword } from "../keywords";
 import {
   parentHelper_compileChildren,
@@ -36,7 +36,7 @@ export class ConcreteClass extends ClassFrame {
       this.symbolId,
       ClassSubType.concrete,
       false,
-      noClassOptions,
+      noTypeOptions,
       cd ? [] : this.inheritance.symbolTypes(transforms),
       this,
     );

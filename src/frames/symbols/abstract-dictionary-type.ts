@@ -1,6 +1,6 @@
 import { DictionarySymbolType } from "../interfaces/dictionary-symbol-type";
 import { SymbolType } from "../interfaces/symbol-type";
-import { noClassOptions } from "../interfaces/type-options";
+import { noTypeOptions } from "../interfaces/type-options";
 import { isAnyDictionaryType, isInvariantType } from "./symbol-helpers";
 
 export class AbstractDictionaryType implements DictionarySymbolType {
@@ -9,7 +9,7 @@ export class AbstractDictionaryType implements DictionarySymbolType {
     public readonly valueType: SymbolType,
   ) {}
 
-  classOptions = noClassOptions;
+  classOptions = noTypeOptions;
 
   initialValue = "";
 

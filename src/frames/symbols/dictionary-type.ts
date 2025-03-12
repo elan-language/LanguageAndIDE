@@ -7,7 +7,7 @@ export class DictionaryType implements DictionarySymbolType {
     public readonly keyType: SymbolType,
     public readonly valueType: SymbolType,
   ) {}
-  
+
   initialValue = "system.emptyDictionary()";
 
   factoryName = "system.dictionary";
@@ -19,7 +19,7 @@ export class DictionaryType implements DictionarySymbolType {
       isIndexable: true,
       isDoubleIndexable: false,
       isIterable: false,
-    }
+    };
   }
 
   get name() {

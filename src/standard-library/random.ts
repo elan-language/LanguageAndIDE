@@ -1,14 +1,14 @@
 import {
-    ClassOption,
-    elanClass,
-    ElanClass,
-    ElanFloat,
-    elanFunction,
-    ElanInt,
-    elanIntType,
-    elanProcedure,
-    ElanTuple,
-    FunctionOptions,
+  ClassOption,
+  elanClass,
+  ElanClass,
+  ElanFloat,
+  elanFunction,
+  ElanInt,
+  elanIntType,
+  elanProcedure,
+  ElanTuple,
+  FunctionOptions,
 } from "../elan-type-annotations";
 import { System } from "../system";
 

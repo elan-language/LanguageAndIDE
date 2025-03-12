@@ -3,7 +3,7 @@ import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../interfaces/transforms";
-import { ClassOptions } from "../interfaces/type-options";
+import { TypeOptions } from "../interfaces/type-options";
 import { constructorKeyword, thisKeyword } from "../keywords";
 import { generateType } from "../syntax-nodes/ast-helpers";
 import { ClassSubType, ClassType } from "./class-type";
@@ -16,7 +16,7 @@ export class StdLibClass implements Class {
   constructor(
     private readonly name: string,
     public readonly isNotInheritable: boolean,
-    public readonly classOptions : ClassOptions,
+    public readonly classOptions: TypeOptions,
     public readonly children: ElanSymbol[],
     public ofTypes: SymbolType[],
     public readonly inheritTypes: SymbolType[],

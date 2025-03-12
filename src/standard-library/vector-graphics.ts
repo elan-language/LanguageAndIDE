@@ -1,13 +1,13 @@
 import {
-    ClassOption,
-    ElanClass,
-    ElanInt,
-    FunctionOptions,
-    ProcedureOptions,
-    elanClass,
-    elanClassType,
-    elanFunction,
-    elanProcedure,
+  ClassOption,
+  ElanClass,
+  ElanInt,
+  FunctionOptions,
+  ProcedureOptions,
+  elanClass,
+  elanClassType,
+  elanFunction,
+  elanProcedure,
 } from "../elan-type-annotations";
 import { System } from "../system";
 import { BaseVG } from "./base-vg";

@@ -1,11 +1,10 @@
-import { ClassOption } from "../../elan-type-annotations";
 import { Class } from "../interfaces/class";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { ReifyableSymbolType } from "../interfaces/reifyable-symbol-type";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../interfaces/transforms";
-import { ClassOptions } from "../interfaces/type-options";
+import { TypeOptions } from "../interfaces/type-options";
 import { FloatType } from "./float-type";
 import { IntType } from "./int-type";
 import { NullScope } from "./null-scope";
@@ -24,7 +23,7 @@ export class ClassType implements ReifyableSymbolType, Scope {
     public className: string,
     public subType: ClassSubType,
     public isNotInheritable: boolean,
-    public classOptions: ClassOptions,
+    public classOptions: TypeOptions,
     public inheritsFrom: SymbolType[],
     public scope: Class | NullScope,
   ) {}

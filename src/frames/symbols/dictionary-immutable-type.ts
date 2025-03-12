@@ -17,7 +17,7 @@ export class DictionaryImmutableType implements DictionarySymbolType {
       isIndexable: true,
       isDoubleIndexable: false,
       isIterable: false,
-    }
+    };
   }
 
   factoryName = "system.dictionaryImmutable";

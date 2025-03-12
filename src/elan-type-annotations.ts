@@ -13,7 +13,7 @@ import {
 import { ElanSymbol } from "./frames/interfaces/elan-symbol";
 import { Scope } from "./frames/interfaces/scope";
 import { SymbolType } from "./frames/interfaces/symbol-type";
-import { ClassOptions, noClassOptions } from "./frames/interfaces/type-options";
+import { getTypeOptions, noTypeOptions, TypeOptions } from "./frames/interfaces/type-options";
 import { AbstractDictionaryType } from "./frames/symbols/abstract-dictionary-type";
 import { BooleanType } from "./frames/symbols/boolean-type";
 import { ClassSubType, ClassType } from "./frames/symbols/class-type";
@@ -58,7 +58,7 @@ export class ElanProcedureDescriptor implements IElanProcedureDescriptor {
 
 export class ElanClassDescriptor implements ElanDescriptor {
   constructor(
-    public readonly classOptions : ClassOptions = noClassOptions,
+    public readonly classOptions: TypeOptions = noTypeOptions,
     public readonly ofTypes: TypeDescriptor[] = [],
     public readonly parameterNames: string[] = [],
     public readonly parameterTypes: TypeDescriptor[] = [],
@@ -234,14 +234,7 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
 
     tempMap.set(
       classId,
-      new ClassType(
-        className,
-        ClassSubType.concrete,
-        false,
-        noClassOptions,
-        [],
-        undefined!,
-      ),
+      new ClassType(className, ClassSubType.concrete, false, noTypeOptions, [], undefined!),
     );
 
     for (let i = 0; i < names.length; i++) {
@@ -392,9 +385,7 @@ export function elanClass(
   inherits?: ElanClassTypeDescriptor[],
   alias?: string,
 ) {
-  const classOptions = mapClassOptions(
-    options ?? ClassOption.concrete,
-  );
+  const classOptions = mapClassOptions(options ?? ClassOption.concrete);
   const classDesc = new ElanClassDescriptor(
     classOptions,
     ofTypes ?? [],
@@ -621,21 +612,15 @@ function mapProcedureOptions(options: ProcedureOptions): [boolean, boolean] {
 
 // TODO reork this into 'class flags' object
 // isImmutable, isAbstract, isIndexable, isDoubleIndexable isIterable
-function mapClassOptions(options: ClassOption): ClassOptions {
-  let opt = {
-    isImmutable: false,
-    isAbstract: false,
-    isIndexable: false,
-    isDoubleIndexable: false,
-    isIterable: false,
-  } as ClassOptions;
+function mapClassOptions(options: ClassOption): TypeOptions {
+  const opt = getTypeOptions();
 
   switch (options) {
     case ClassOption.concrete:
       return opt;
     case ClassOption.abstract:
       opt.isAbstract = true;
-      return opt
+      return opt;
     case ClassOption.record:
       opt.isImmutable = true;
       return opt;

@@ -1,15 +1,15 @@
 import {
-    ClassOption,
-    ElanBoolean,
-    ElanClass,
-    elanClass,
-    elanClassType,
-    elanFunction,
-    elanGenericParamT1Type,
-    ElanInt,
-    ElanString,
-    ElanT1,
-    FunctionOptions,
+  ClassOption,
+  ElanBoolean,
+  ElanClass,
+  elanClass,
+  elanClassType,
+  elanFunction,
+  elanGenericParamT1Type,
+  ElanInt,
+  ElanString,
+  ElanT1,
+  FunctionOptions,
 } from "../elan-type-annotations";
 import { System } from "../system";
 import { ElanArray } from "./elan-array";

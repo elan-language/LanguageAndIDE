@@ -3,7 +3,7 @@ import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../interfaces/transforms";
-import { noClassOptions } from "../interfaces/type-options";
+import { noTypeOptions } from "../interfaces/type-options";
 import { abstractClassKeywords, endKeyword, interfaceKeyword } from "../keywords";
 import {
   parentHelper_compileChildren,
@@ -35,7 +35,7 @@ export class InterfaceFrame extends ClassFrame {
       this.symbolId,
       ClassSubType.interface,
       false,
-      noClassOptions,
+      noTypeOptions,
       cd ? [] : this.inheritance.symbolTypes(transforms),
       this,
     );

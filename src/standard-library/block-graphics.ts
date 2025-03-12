@@ -1,14 +1,14 @@
 import { ElanRuntimeError } from "../elan-runtime-error";
 import {
-    ClassOption,
-    ElanClass,
-    ElanInt,
-    FunctionOptions,
-    ProcedureOptions,
-    elanClass,
-    elanFunction,
-    elanIntType,
-    elanProcedure,
+  ClassOption,
+  ElanClass,
+  ElanInt,
+  FunctionOptions,
+  ProcedureOptions,
+  elanClass,
+  elanFunction,
+  elanIntType,
+  elanProcedure,
 } from "../elan-type-annotations";
 import { System } from "../system";
 import { GraphicsBase } from "./graphics-base";

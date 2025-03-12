@@ -17,7 +17,7 @@ import { Class } from "../interfaces/class";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../interfaces/transforms";
-import { noClassOptions } from "../interfaces/type-options";
+import { noTypeOptions } from "../interfaces/type-options";
 import { AbstractDictionaryType } from "../symbols/abstract-dictionary-type";
 import { ClassType } from "../symbols/class-type";
 import { DictionaryImmutableType } from "../symbols/dictionary-immutable-type";
@@ -99,7 +99,7 @@ class TypeHolder implements SymbolType {
   isAssignableFrom(otherType: SymbolType): boolean {
     return this.symbolType.isAssignableFrom(otherType);
   }
-  classOptions= noClassOptions;
+  classOptions = noTypeOptions;
 
   name = "TypeHolder";
   initialValue = "";

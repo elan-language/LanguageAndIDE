@@ -16,7 +16,7 @@ export class StringType implements SymbolType {
       isIndexable: true,
       isDoubleIndexable: false,
       isIterable: true,
-    }
+    };
   }
 
   static Instance: SymbolType = new StringType();

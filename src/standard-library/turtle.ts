@@ -1,14 +1,14 @@
 import {
-    ClassOption,
-    elanClass,
-    ElanClass,
-    elanFloatType,
-    elanFunction,
-    elanIntType,
-    elanProcedure,
-    elanProperty,
-    FunctionOptions,
-    ProcedureOptions,
+  ClassOption,
+  elanClass,
+  ElanClass,
+  elanFloatType,
+  elanFunction,
+  elanIntType,
+  elanProcedure,
+  elanProperty,
+  FunctionOptions,
+  ProcedureOptions,
 } from "../elan-type-annotations";
 import { System } from "../system";
 import { CircleVG } from "./circle-vg";
