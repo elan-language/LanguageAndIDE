@@ -1,19 +1,19 @@
 import {
-  ClassOptions,
-  elanClass,
-  ElanClass,
-  ElanFloat,
-  elanFunction,
-  ElanInt,
-  elanIntType,
-  elanProcedure,
-  ElanTuple,
-  FunctionOptions,
+    ClassOption,
+    elanClass,
+    ElanClass,
+    ElanFloat,
+    elanFunction,
+    ElanInt,
+    elanIntType,
+    elanProcedure,
+    ElanTuple,
+    FunctionOptions,
 } from "../elan-type-annotations";
 import { System } from "../system";
 
 // Credit for source of algorithm: https://www.codeproject.com/Articles/25172/Simple-Random-Number-Generation
-@elanClass(ClassOptions.record)
+@elanClass(ClassOption.record)
 export class Random {
   // this must be implemented by hand on all stdlib classes
   static emptyInstance() {

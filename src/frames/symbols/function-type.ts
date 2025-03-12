@@ -1,4 +1,5 @@
 import { SymbolType } from "../interfaces/symbol-type";
+import { ClassOptions, immutableTypeOptions, newTypeOptions } from "../interfaces/type-options";
 
 export class FunctionType implements SymbolType {
   constructor(
@@ -9,15 +10,12 @@ export class FunctionType implements SymbolType {
     public readonly isPure: boolean,
     public readonly isAsync: boolean,
   ) {}
+
   get initialValue() {
     return `system.emptyFunc(${this.returnType.initialValue})`;
   }
 
-  isImmutable = true;
-
-  isIndexable = false;
-  isDoubleIndexable = false;
-  isIterable = false;
+  classOptions = immutableTypeOptions;
 
   get name() {
     return `Func<of ${this.parameterTypes.map((p) => p.name).join(", ")} => ${this.returnType.name}>`;

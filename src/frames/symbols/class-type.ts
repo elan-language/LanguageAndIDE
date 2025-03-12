@@ -1,9 +1,11 @@
+import { ClassOption } from "../../elan-type-annotations";
 import { Class } from "../interfaces/class";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { ReifyableSymbolType } from "../interfaces/reifyable-symbol-type";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../interfaces/transforms";
+import { ClassOptions } from "../interfaces/type-options";
 import { FloatType } from "./float-type";
 import { IntType } from "./int-type";
 import { NullScope } from "./null-scope";
@@ -22,10 +24,7 @@ export class ClassType implements ReifyableSymbolType, Scope {
     public className: string,
     public subType: ClassSubType,
     public isNotInheritable: boolean,
-    public isImmutable: boolean,
-    public isIndexable: boolean,
-    public isDoubleIndexable: boolean,
-    public isIterable: boolean,
+    public classOptions: ClassOptions,
     public inheritsFrom: SymbolType[],
     public scope: Class | NullScope,
   ) {}
@@ -45,10 +44,7 @@ export class ClassType implements ReifyableSymbolType, Scope {
         this.className,
         this.subType,
         this.isNotInheritable,
-        this.isImmutable,
-        this.isIndexable,
-        this.isDoubleIndexable,
-        this.isIterable,
+        this.classOptions,
         this.inheritsFrom,
         cls,
       );
@@ -60,10 +56,7 @@ export class ClassType implements ReifyableSymbolType, Scope {
   updateFrom(other: ClassType) {
     this.className = other.className;
     this.isNotInheritable = other.isNotInheritable;
-    this.isImmutable = other.isImmutable;
-    this.isIndexable = other.isIndexable;
-    this.isDoubleIndexable = other.isDoubleIndexable;
-    this.isIterable = other.isIterable;
+    this.classOptions = other.classOptions;
     this.inheritsFrom = other.inheritsFrom;
     this.scope = other.scope;
     return this;

@@ -1,12 +1,11 @@
 import { SymbolType } from "../interfaces/symbol-type";
+import { immutableTypeOptions } from "../interfaces/type-options";
 
 export class EnumType implements SymbolType {
   constructor(public readonly name: string) {}
-  isImmutable = true;
+ 
 
-  isIndexable = false;
-  isDoubleIndexable = false;
-  isIterable = false;
+  classOptions = immutableTypeOptions;
 
   get initialValue() {
     return `${this.name}._default`;

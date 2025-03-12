@@ -1,5 +1,5 @@
 import {
-  ClassOptions,
+  ClassOption,
   ElanBoolean,
   ElanClass,
   ElanDictionaryImmutable,
@@ -15,7 +15,7 @@ import {
 import { System } from "../system";
 import { List } from "./list";
 
-@elanClass(ClassOptions.concrete, [ElanDictionaryImmutable(ElanT1, ElanT2)])
+@elanClass(ClassOption.concrete, [ElanDictionaryImmutable(ElanT1, ElanT2)])
 export class Dictionary<_T1, T2> {
   // this must be implemented by hand on all stdlib classes
   static emptyInstance() {

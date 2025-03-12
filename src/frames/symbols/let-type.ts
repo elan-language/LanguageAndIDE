@@ -1,14 +1,11 @@
 import { GenericSymbolType } from "../interfaces/generic-symbol-type";
 import { SymbolType } from "../interfaces/symbol-type";
+import { immutableTypeOptions } from "../interfaces/type-options";
 
 export class LetType implements GenericSymbolType {
   constructor(public readonly ofType: SymbolType) {}
 
-  isImmutable = true;
-
-  isIndexable = false;
-  isDoubleIndexable = false;
-  isIterable = false;
+  classOptions = immutableTypeOptions;
 
   initialValue = "";
 

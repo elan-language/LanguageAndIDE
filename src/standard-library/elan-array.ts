@@ -1,6 +1,6 @@
 import { ElanRuntimeError } from "../elan-runtime-error";
 import {
-  ClassOptions,
+  ClassOption,
   ElanBoolean,
   ElanClass,
   elanClass,
@@ -18,7 +18,7 @@ import {
 } from "../elan-type-annotations";
 import { System } from "../system";
 
-@elanClass(ClassOptions.array, [ElanT1], [], [], [], "Array")
+@elanClass(ClassOption.array, [ElanT1], [], [], [], "Array")
 export class ElanArray<T1> {
   // this must be implemented by hand on all stdlib classes
   static emptyInstance() {

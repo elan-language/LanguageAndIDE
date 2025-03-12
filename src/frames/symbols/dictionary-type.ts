@@ -7,16 +7,20 @@ export class DictionaryType implements DictionarySymbolType {
     public readonly keyType: SymbolType,
     public readonly valueType: SymbolType,
   ) {}
-  isImmutable = false;
-
+  
   initialValue = "system.emptyDictionary()";
 
-  isIndexable = true;
-
-  isDoubleIndexable = false;
-  isIterable = false;
-
   factoryName = "system.dictionary";
+
+  get classOptions() {
+    return {
+      isImmutable: false,
+      isAbstract: false,
+      isIndexable: true,
+      isDoubleIndexable: false,
+      isIterable: false,
+    }
+  }
 
   get name() {
     return `Dictionary<of ${this.keyType.name}, ${this.valueType.name}>`;

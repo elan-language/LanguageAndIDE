@@ -1,6 +1,7 @@
 import { Class } from "../interfaces/class";
 import { DeconstructedSymbolType } from "../interfaces/deconstructed-symbol-type";
 import { SymbolType } from "../interfaces/symbol-type";
+import { immutableTypeOptions } from "../interfaces/type-options";
 import { UnknownType } from "./unknown-type";
 
 export class DeconstructedRecordType implements DeconstructedSymbolType {
@@ -16,15 +17,11 @@ export class DeconstructedRecordType implements DeconstructedSymbolType {
 
   initialValue = "";
 
-  isIndexable = false;
-  isDoubleIndexable = false;
-  isIterable = false;
+  classOptions = immutableTypeOptions;
 
   symbolTypeFor(id: string) {
     return this.typeMap[id] ?? UnknownType.Instance;
   }
-
-  isImmutable = true;
 
   private typeMap = {} as { [index: string]: SymbolType };
 

@@ -1,9 +1,8 @@
+import { ClassOptions } from "./type-options";
+
 export interface SymbolType {
   name: string;
-  isImmutable: boolean;
   initialValue: string;
   isAssignableFrom(otherType: SymbolType): boolean;
-  isIndexable: boolean;
-  isDoubleIndexable: boolean;
-  isIterable: boolean;
+  classOptions : ClassOptions;
 }

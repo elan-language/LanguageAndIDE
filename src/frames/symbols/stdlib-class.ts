@@ -3,6 +3,7 @@ import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../interfaces/transforms";
+import { ClassOptions } from "../interfaces/type-options";
 import { constructorKeyword, thisKeyword } from "../keywords";
 import { generateType } from "../syntax-nodes/ast-helpers";
 import { ClassSubType, ClassType } from "./class-type";
@@ -14,12 +15,8 @@ import { UnknownSymbol } from "./unknown-symbol";
 export class StdLibClass implements Class {
   constructor(
     private readonly name: string,
-    public readonly isAbstract: boolean,
     public readonly isNotInheritable: boolean,
-    public readonly isImmutable: boolean,
-    public readonly isIndexable: boolean,
-    public readonly isDoubleIndexable: boolean,
-    public readonly isIterable: boolean,
+    public readonly classOptions : ClassOptions,
     public readonly children: ElanSymbol[],
     public ofTypes: SymbolType[],
     public readonly inheritTypes: SymbolType[],
@@ -28,15 +25,15 @@ export class StdLibClass implements Class {
     this.symbolId = this.name;
   }
 
+  get isAbstract() {
+    return this.classOptions.isAbstract;
+  }
+
   updateOfTypes(ofTypes: SymbolType[]) {
     return new StdLibClass(
       this.name,
-      this.isAbstract,
       this.isNotInheritable,
-      this.isImmutable,
-      this.isIndexable,
-      this.isDoubleIndexable,
-      this.isIterable,
+      this.classOptions,
       this.children,
       ofTypes,
       this.inheritTypes,
@@ -56,12 +53,9 @@ export class StdLibClass implements Class {
     // temp hack TODO fix
     return new ClassType(
       this.name,
-      this.isAbstract ? ClassSubType.abstract : ClassSubType.concrete,
+      this.classOptions.isAbstract ? ClassSubType.abstract : ClassSubType.concrete,
       this.isNotInheritable,
-      this.isImmutable,
-      this.isIndexable,
-      this.isDoubleIndexable,
-      this.isIterable,
+      this.classOptions,
       this.inheritTypes,
       this,
     );

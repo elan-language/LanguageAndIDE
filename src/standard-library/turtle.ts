@@ -1,14 +1,14 @@
 import {
-  ClassOptions,
-  elanClass,
-  ElanClass,
-  elanFloatType,
-  elanFunction,
-  elanIntType,
-  elanProcedure,
-  elanProperty,
-  FunctionOptions,
-  ProcedureOptions,
+    ClassOption,
+    elanClass,
+    ElanClass,
+    elanFloatType,
+    elanFunction,
+    elanIntType,
+    elanProcedure,
+    elanProperty,
+    FunctionOptions,
+    ProcedureOptions,
 } from "../elan-type-annotations";
 import { System } from "../system";
 import { CircleVG } from "./circle-vg";
@@ -17,7 +17,7 @@ import { LineVG } from "./line-vg";
 import { StdLib } from "./std-lib";
 import { VectorGraphics } from "./vector-graphics";
 
-@elanClass(ClassOptions.concrete, [], [], [], [ElanClass(GraphicsBase)])
+@elanClass(ClassOption.concrete, [], [], [], [ElanClass(GraphicsBase)])
 export class Turtle extends GraphicsBase {
   // this must = implemented by hand on all stdlib classes
   static emptyInstance() {

@@ -1,20 +1,20 @@
 import {
-  ClassOptions,
-  ElanClass,
-  ElanInt,
-  FunctionOptions,
-  ProcedureOptions,
-  elanClass,
-  elanClassType,
-  elanFunction,
-  elanProcedure,
+    ClassOption,
+    ElanClass,
+    ElanInt,
+    FunctionOptions,
+    ProcedureOptions,
+    elanClass,
+    elanClassType,
+    elanFunction,
+    elanProcedure,
 } from "../elan-type-annotations";
 import { System } from "../system";
 import { BaseVG } from "./base-vg";
 import { GraphicsBase } from "./graphics-base";
 import { StdLib } from "./std-lib";
 
-@elanClass(ClassOptions.record, [], [], [], [ElanClass(GraphicsBase)])
+@elanClass(ClassOption.record, [], [], [], [ElanClass(GraphicsBase)])
 export class VectorGraphics {
   // this must be implemented by hand on all stdlib classes
   static emptyInstance() {

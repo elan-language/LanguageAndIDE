@@ -251,11 +251,11 @@ export function mapSymbolType(ids: string[], st: SymbolType) {
     return new DeconstructedTupleType(ids, st.ofTypes);
   }
 
-  if (ids.length > 1 && st instanceof ClassType && st.isImmutable) {
+  if (ids.length > 1 && st instanceof ClassType && st.classOptions.isImmutable) {
     return new DeconstructedRecordType(ids, st.scope as Class);
   }
 
-  if (ids.length === 2 && st instanceof ClassType && st.isIndexable) {
+  if (ids.length === 2 && st instanceof ClassType && st.classOptions.isIndexable) {
     return new DeconstructedListType(ids[0], ids[1], st.ofType, st);
   }
   return st;

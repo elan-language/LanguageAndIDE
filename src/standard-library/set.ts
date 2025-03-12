@@ -1,21 +1,21 @@
 import {
-  ClassOptions,
-  ElanBoolean,
-  ElanClass,
-  elanClass,
-  elanClassType,
-  elanFunction,
-  elanGenericParamT1Type,
-  ElanInt,
-  ElanString,
-  ElanT1,
-  FunctionOptions,
+    ClassOption,
+    ElanBoolean,
+    ElanClass,
+    elanClass,
+    elanClassType,
+    elanFunction,
+    elanGenericParamT1Type,
+    ElanInt,
+    ElanString,
+    ElanT1,
+    FunctionOptions,
 } from "../elan-type-annotations";
 import { System } from "../system";
 import { ElanArray } from "./elan-array";
 import { List } from "./list";
 
-@elanClass(ClassOptions.concrete, [ElanT1], [], [], [], "Set")
+@elanClass(ClassOption.concrete, [ElanT1], [], [], [], "Set")
 export class ElanSet<T1> {
   // this must be implemented by hand on all stdlib classes
   static emptyInstance() {

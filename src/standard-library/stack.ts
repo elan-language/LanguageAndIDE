@@ -1,17 +1,17 @@
 import { ElanRuntimeError } from "../elan-runtime-error";
 import {
-  ClassOptions,
-  elanClass,
-  elanFunction,
-  elanGenericParamT1Type,
-  ElanInt,
-  elanProcedure,
-  ElanT1,
-  FunctionOptions,
+    ClassOption,
+    elanClass,
+    elanFunction,
+    elanGenericParamT1Type,
+    ElanInt,
+    elanProcedure,
+    ElanT1,
+    FunctionOptions,
 } from "../elan-type-annotations";
 import { System } from "../system";
 
-@elanClass(ClassOptions.concrete, [ElanT1])
+@elanClass(ClassOption.concrete, [ElanT1])
 export class Stack<T1> {
   // this must be implemented by hand on all stdlib classes
   static emptyInstance() {

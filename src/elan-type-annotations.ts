@@ -13,6 +13,7 @@ import {
 import { ElanSymbol } from "./frames/interfaces/elan-symbol";
 import { Scope } from "./frames/interfaces/scope";
 import { SymbolType } from "./frames/interfaces/symbol-type";
+import { ClassOptions, noClassOptions } from "./frames/interfaces/type-options";
 import { AbstractDictionaryType } from "./frames/symbols/abstract-dictionary-type";
 import { BooleanType } from "./frames/symbols/boolean-type";
 import { ClassSubType, ClassType } from "./frames/symbols/class-type";
@@ -57,11 +58,7 @@ export class ElanProcedureDescriptor implements IElanProcedureDescriptor {
 
 export class ElanClassDescriptor implements ElanDescriptor {
   constructor(
-    public readonly isImmutable: boolean = false,
-    public readonly isAbstract: boolean = false,
-    public readonly isIndexable: boolean = false,
-    public readonly isDoubleIndexable: boolean = false,
-    public readonly isIterable: boolean = false,
+    public readonly classOptions : ClassOptions = noClassOptions,
     public readonly ofTypes: TypeDescriptor[] = [],
     public readonly parameterNames: string[] = [],
     public readonly parameterTypes: TypeDescriptor[] = [],
@@ -241,10 +238,7 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
         className,
         ClassSubType.concrete,
         false,
-        false,
-        false,
-        false,
-        false,
+        noClassOptions,
         [],
         undefined!,
       ),
@@ -279,12 +273,8 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
 
     const classTypeDef = new StdLibClass(
       className,
-      classMetadata.isAbstract,
-      classMetadata.isAbstract,
-      classMetadata.isImmutable,
-      classMetadata.isIndexable,
-      classMetadata.isDoubleIndexable,
-      classMetadata.isIterable,
+      classMetadata.classOptions.isAbstract,
+      classMetadata.classOptions,
       [],
       [],
       [],
@@ -395,22 +385,18 @@ export function elanMethod(parameterNames: string[], elanDesc: ElanMethodDescrip
 }
 
 export function elanClass(
-  options?: ClassOptions,
+  options?: ClassOption,
   ofTypes?: TypeDescriptor[],
   names?: string[],
   params?: TypeDescriptor[],
   inherits?: ElanClassTypeDescriptor[],
   alias?: string,
 ) {
-  const [isImmutable, isAbstract, isIndexable, isDoubleIndexable, isIterable] = mapClassOptions(
-    options ?? ClassOptions.concrete,
+  const classOptions = mapClassOptions(
+    options ?? ClassOption.concrete,
   );
   const classDesc = new ElanClassDescriptor(
-    isImmutable,
-    isAbstract,
-    isIndexable,
-    isDoubleIndexable,
-    isIterable,
+    classOptions,
     ofTypes ?? [],
     names ?? [],
     params ?? [],
@@ -586,7 +572,7 @@ export enum ProcedureOptions {
   asyncExtension,
 }
 
-export enum ClassOptions {
+export enum ClassOption {
   concrete,
   abstract,
   record,
@@ -635,20 +621,33 @@ function mapProcedureOptions(options: ProcedureOptions): [boolean, boolean] {
 
 // TODO reork this into 'class flags' object
 // isImmutable, isAbstract, isIndexable, isDoubleIndexable isIterable
-function mapClassOptions(options: ClassOptions): [boolean, boolean, boolean, boolean, boolean] {
+function mapClassOptions(options: ClassOption): ClassOptions {
+  let opt = {
+    isImmutable: false,
+    isAbstract: false,
+    isIndexable: false,
+    isDoubleIndexable: false,
+    isIterable: false,
+  } as ClassOptions;
+
   switch (options) {
-    case ClassOptions.concrete:
-      return [false, false, false, false, false];
-    case ClassOptions.abstract:
-      return [false, true, false, false, false];
-    case ClassOptions.record:
-      return [true, false, false, false, false];
-    case ClassOptions.array:
-      return [false, false, true, false, true];
-    case ClassOptions.array2D:
-      return [false, false, false, true, false];
-    case ClassOptions.list:
-      return [true, false, true, false, true];
+    case ClassOption.concrete:
+      return opt;
+    case ClassOption.abstract:
+      opt.isAbstract = true;
+      return opt
+    case ClassOption.record:
+      opt.isImmutable = true;
+      return opt;
+    case ClassOption.array:
+      opt.isIndexable = opt.isIterable = true;
+      return opt;
+    case ClassOption.array2D:
+      opt.isDoubleIndexable = true;
+      return opt;
+    case ClassOption.list:
+      opt.isImmutable = opt.isIndexable = opt.isIterable = true;
+      return opt;
   }
 }
 

@@ -1,5 +1,5 @@
 import {
-  ClassOptions,
+  ClassOption,
   elanClass,
   elanFunction,
   elanGenericParamT1Type,
@@ -11,7 +11,7 @@ import {
 } from "../elan-type-annotations";
 import { System } from "../system";
 
-@elanClass(ClassOptions.array2D, [ElanT1], [], [], [], "Array2D")
+@elanClass(ClassOption.array2D, [ElanT1], [], [], [], "Array2D")
 export class ElanArray2D<T1> {
   // this must be implemented by hand on all stdlib classes
   static emptyInstance() {

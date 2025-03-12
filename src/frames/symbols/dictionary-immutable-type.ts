@@ -10,12 +10,15 @@ export class DictionaryImmutableType implements DictionarySymbolType {
 
   initialValue = "system.emptyDictionaryImmutable()";
 
-  isImmutable = true;
-
-  isIndexable = true;
-
-  isDoubleIndexable = false;
-  isIterable = false;
+  get classOptions() {
+    return {
+      isImmutable: true,
+      isAbstract: false,
+      isIndexable: true,
+      isDoubleIndexable: false,
+      isIterable: false,
+    }
+  }
 
   factoryName = "system.dictionaryImmutable";
 

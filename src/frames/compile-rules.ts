@@ -185,7 +185,7 @@ export function mustBeRecord(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (knownType(symbolType) && !symbolType.isImmutable) {
+  if (knownType(symbolType) && !symbolType.classOptions.isImmutable) {
     compileErrors.push(new MustBeRecordCompileError(symbolType.name, location));
   }
 }
@@ -244,10 +244,10 @@ export function mustBeCallable(
 function isRecord(st: SymbolType) {
   return (
     st instanceof ClassType &&
-    st.isImmutable &&
-    !st.isIndexable &&
-    !st.isDoubleIndexable &&
-    !st.isIterable
+    st.classOptions.isImmutable &&
+    !st.classOptions.isIndexable &&
+    !st.classOptions.isDoubleIndexable &&
+    !st.classOptions.isIterable
   );
 }
 
@@ -682,7 +682,7 @@ export function mustBeCompatibleMutableType(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (lhs.isImmutable !== rhs.isImmutable) {
+  if (lhs.classOptions.isImmutable !== rhs.classOptions.isImmutable) {
     FailNotAssignable(lhs, rhs, compileErrors, location);
   }
 }
@@ -693,7 +693,7 @@ export function mustBeImmutableType(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (!type.isImmutable) {
+  if (!type.classOptions.isImmutable) {
     compileErrors.push(
       new SyntaxCompileError(`Property ${name} is not of an immutable type.`, location),
     );
@@ -781,7 +781,7 @@ export function mustBeCompatibleDefinitionNode(
   const rst = rhs.symbolType();
 
   if (lst instanceof DeconstructedTupleType) {
-    if (rst instanceof ClassType && rst.isImmutable) {
+    if (rst instanceof ClassType && rst.classOptions.isImmutable) {
       mustBeCompatibleDeconstruction(lhs, rhs, scope, compileErrors, location);
     }
     if (rst instanceof TupleType && lst.ofTypes.length !== rst.ofTypes.length) {
@@ -803,7 +803,7 @@ export function mustBeCompatibleNode(
   const rst = rhs.symbolType();
 
   if (lst instanceof DeconstructedTupleType && rst instanceof ClassType) {
-    if (rst.isImmutable) {
+    if (rst.classOptions.isImmutable) {
       mustBeCompatibleDeconstruction(lhs, rhs, scope, compileErrors, location);
       return;
     }

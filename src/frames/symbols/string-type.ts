@@ -1,7 +1,6 @@
-import { IterableSymbolType } from "../interfaces/iterable-symbol-type";
 import { SymbolType } from "../interfaces/symbol-type";
 
-export class StringType implements IterableSymbolType {
+export class StringType implements SymbolType {
   private constructor() {}
 
   get ofType() {
@@ -10,10 +9,15 @@ export class StringType implements IterableSymbolType {
 
   initialValue = '""';
 
-  isImmutable = true;
-  isIndexable = true;
-  isDoubleIndexable = false;
-  isIterable = true;
+  get classOptions() {
+    return {
+      isImmutable: true,
+      isAbstract: false,
+      isIndexable: true,
+      isDoubleIndexable: false,
+      isIterable: true,
+    }
+  }
 
   static Instance: SymbolType = new StringType();
 
