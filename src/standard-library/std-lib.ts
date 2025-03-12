@@ -444,10 +444,15 @@ export class StdLib {
     return this.system.initialise(new List(s.split(separator)));
   }
 
-  // @elanFunction(["", "separator"], FunctionOptions.pureExtension)
-  // join(@elanIterableType(ElanString) list: string[], separator: string): string {
-  //   return list.join(separator);
-  // }
+  @elanFunction(["", "separator"], FunctionOptions.pureExtension)
+  join(@elanClassType(List, [ElanString]) list: List<string>, separator: string): string {
+    return [...list].join(separator);
+  }
+
+  @elanFunction(["", "separator"], FunctionOptions.pureExtension)
+  joinArray(@elanClassType(ElanArray, [ElanString]) list: List<string>, separator: string): string {
+    return [...list].join(separator);
+  }
 
   @elanFunction(["number"], FunctionOptions.pureExtension, ElanInt)
   floor(n: number) {

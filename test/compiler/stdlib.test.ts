@@ -8,7 +8,6 @@ import {
   assertParses,
   assertStatusIsValid,
   assertTestObjectCodeExecutes,
-  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -654,14 +653,14 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "1101 11110 1100 11111 10011 -1110 110100 11");
   });
-  ignore_test("Pass_2DArrays", async () => {
+  test("Pass_2DArrays", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
   variable oxoBoard set to createArray2D(3,3,"")
-  call oxoBoard.putAt2D(0, 0, "o")
-  call oxoBoard.putAt2D(2, 2, "o")
-  call oxoBoard.putAt2D(1, 1, "x")
+  call oxoBoard.putAt(0, 0, "o")
+  call oxoBoard.putAt(2, 2, "o")
+  call oxoBoard.putAt(1, 1, "x")
   print oxoBoard
 end main`;
 
@@ -669,9 +668,9 @@ end main`;
 const global = new class {};
 async function main() {
   let oxoBoard = _stdlib.createArray2D(3, 3, "");
-  _stdlib.putAt2D(oxoBoard, 0, 0, "o");
-  _stdlib.putAt2D(oxoBoard, 2, 2, "o");
-  _stdlib.putAt2D(oxoBoard, 1, 1, "x");
+  oxoBoard.putAt(0, 0, "o");
+  oxoBoard.putAt(2, 2, "o");
+  oxoBoard.putAt(1, 1, "x");
   await system.printLine(oxoBoard);
 }
 return [main, _tests];}`;
@@ -848,12 +847,12 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "{Now, is, the, time...}");
   });
-  ignore_test("Pass_joinArray", async () => {
+  test("Pass_joinArray", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
   let words be ["Now", "is","the","time..."]
-  let s be words.join(".")
+  let s be words.joinArray(".")
   print s
 end main`;
 
@@ -861,7 +860,7 @@ end main`;
 const global = new class {};
 async function main() {
   const words = system.literalArray(["Now", "is", "the", "time..."]);
-  const s = _stdlib.join(words, ".");
+  const s = _stdlib.joinArray(words, ".");
   await system.printLine(s);
 }
 return [main, _tests];}`;
@@ -874,7 +873,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "Now.is.the.time...");
   });
-  ignore_test("Pass_joinList", async () => {
+  test("Pass_joinList", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
