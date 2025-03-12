@@ -225,8 +225,6 @@ export class StdLib {
         case "Tuple":
           items = await convertList(v, this);
           return `tuple(${items})`;
-        case "Iterable":
-          return `an Iterable`;
         default:
           return await convertList(v, this);
       }

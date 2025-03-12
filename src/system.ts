@@ -28,16 +28,11 @@ export class System {
 
   // constant immutables
   emptyImmutableListSingleton = this.initialise(new ElanArray([]));
-  emptyIterableSingleton = this.iter([]);
   emptyDictionaryImmutableSingleton = this.dictionaryImmutable({});
   emptyRegExpSingleton = /(?:)/;
 
   emptyRegExp() {
     return this.emptyRegExpSingleton;
-  }
-
-  emptyIter() {
-    return this.emptyIterableSingleton;
   }
 
   emptyArray() {
@@ -86,11 +81,6 @@ export class System {
 
   literalArray(t: Array<any>) {
     return this.initialise(new ElanArray(t));
-  }
-
-  iter(t: Array<any>) {
-    (t as unknown as hasHiddenType)._type = "Iterable";
-    return t;
   }
 
   array(t: Array<any>) {
