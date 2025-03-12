@@ -3,6 +3,8 @@ import { ElanInputOutput } from "./elan-input-output";
 import { ElanRuntimeError } from "./elan-runtime-error";
 import { TestStatus } from "./frames/status-enums";
 import { hasHiddenType } from "./has-hidden-type";
+import { Dictionary } from "./standard-library/dictionary";
+import { DictionaryImmutable } from "./standard-library/dictionary-immutable";
 import { ElanArray } from "./standard-library/elan-array";
 import { List } from "./standard-library/list";
 import { WebWorkerBreakpointMessage } from "./web/web-worker-messages";
@@ -70,13 +72,11 @@ export class System {
   }
 
   dictionary(t: object) {
-    (t as unknown as hasHiddenType)._type = "Dictionary";
-    return t;
+    return this.initialise(new Dictionary(t as any));
   }
 
   dictionaryImmutable(t: object) {
-    (t as unknown as hasHiddenType)._type = "DictionaryImmutable";
-    return t;
+    return this.initialise(new DictionaryImmutable(t as any));
   }
 
   literalArray(t: Array<any>) {

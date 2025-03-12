@@ -2,15 +2,19 @@ import { CompileError } from "../compile-error";
 import { mustBeAssignableType, mustHaveUniqueKeys } from "../compile-rules";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstNode } from "../interfaces/ast-node";
-import { DictionaryImmutableType } from "../symbols/dictionary-immutable-type";
+import { ReifyableSymbolType } from "../interfaces/reifyable-symbol-type";
+import { Scope } from "../interfaces/scope";
+import { getGlobalScope } from "../symbols/symbol-helpers";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
+import { transforms } from "./ast-helpers";
 import { KvpAsn } from "./kvp-asn";
 
 export class LiteralDictionaryImmutableAsn extends AbstractAstNode implements AstNode {
   constructor(
     private readonly list: AstCollectionNode,
     public readonly fieldId: string,
+    private readonly scope: Scope,
   ) {
     super();
   }
@@ -41,11 +45,16 @@ export class LiteralDictionaryImmutableAsn extends AbstractAstNode implements As
   }
 
   symbolType() {
+    const globalScope = getGlobalScope(this.scope);
+    const symbol = globalScope.resolveSymbol("DictionaryImmutable", transforms(), this.scope);
+    const st = symbol.symbolType() as ReifyableSymbolType;
+
     const first = this.list.items[0] as KvpAsn | undefined;
     if (first) {
-      return new DictionaryImmutableType(first.keySymbolType(), first.symbolType());
+      return st.reify([first.keySymbolType(), first.symbolType()]);
     }
-    return new DictionaryImmutableType(UnknownType.Instance, UnknownType.Instance);
+
+    return st.reify([UnknownType.Instance, UnknownType.Instance]);
   }
 
   toString() {

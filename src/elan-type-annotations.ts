@@ -570,6 +570,8 @@ export enum ClassOption {
   array,
   array2D,
   list,
+  dictionary,
+  dictionaryImmutable,
 }
 
 // isExtension, isPure, isASync, retType
@@ -610,8 +612,6 @@ function mapProcedureOptions(options: ProcedureOptions): [boolean, boolean] {
   }
 }
 
-// TODO reork this into 'class flags' object
-// isImmutable, isAbstract, isIndexable, isDoubleIndexable isIterable
 function mapClassOption(options: ClassOption): TypeOptions {
   const opt = getTypeOptions();
 
@@ -632,6 +632,12 @@ function mapClassOption(options: ClassOption): TypeOptions {
       return opt;
     case ClassOption.list:
       opt.isImmutable = opt.isIndexable = opt.isIterable = true;
+      return opt;
+    case ClassOption.dictionary:
+      opt.isIndexable = true;
+      return opt;
+    case ClassOption.dictionaryImmutable:
+      opt.isImmutable = opt.isIndexable = true;
       return opt;
   }
 }

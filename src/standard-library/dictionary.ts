@@ -15,7 +15,7 @@ import {
 import { System } from "../system";
 import { List } from "./list";
 
-@elanClass(ClassOption.concrete, [ElanDictionaryImmutable(ElanT1, ElanT2)])
+@elanClass(ClassOption.dictionary, [ElanDictionaryImmutable(ElanT1, ElanT2)])
 export class Dictionary<_T1, T2> {
   // this must be implemented by hand on all stdlib classes
   static emptyInstance() {
@@ -26,8 +26,8 @@ export class Dictionary<_T1, T2> {
     return this;
   }
 
-  constructor() {
-    this.contents = {};
+  constructor(dict?: { [key: string]: T2 }) {
+    this.contents = dict ?? {};
   }
 
   private contents: { [key: string]: T2 };
@@ -39,29 +39,27 @@ export class Dictionary<_T1, T2> {
     delete this.contents[key];
   }
 
-  @elanProcedure(["", "key", "value"])
-  putAtKey(
-    dict: { [key: string]: T2 },
-    @elanGenericParamT1Type() key: string,
-    @elanGenericParamT2Type() value: T2,
-  ) {
-    this.system!.safeDictionarySet(dict, key, value);
+  @elanProcedure(["key", "value"])
+  putAtKey(@elanGenericParamT1Type() key: string, @elanGenericParamT2Type() value: T2) {
+    this.system!.safeDictionarySet(this.contents, key, value);
   }
 
   @elanFunction([], FunctionOptions.pure, ElanClass(List))
-  keys(): string[] {
+  keys(): List<string> {
     const lst = Object.getOwnPropertyNames(this.contents).filter((s) => s !== "_type");
-    return lst;
+    return this.system!.initialise(new List<string>(lst));
   }
 
   @elanFunction([], FunctionOptions.pure, ElanClass(List))
-  values(): T2[] {
-    const lst = this.keys().map((k) => this.contents[k]);
-    return lst;
+  values(): List<T2> {
+    const lst = Object.getOwnPropertyNames(this.contents)
+      .filter((s) => s !== "_type")
+      .map((k) => this.contents[k]);
+    return this.system!.initialise(new List<T2>(lst));
   }
 
   @elanFunction(["key"], FunctionOptions.pure, ElanBoolean)
   hasKey(@elanGenericParamT1Type() key: string): boolean {
-    return this.keys().includes(key);
+    return this.keys().contains(key);
   }
 }

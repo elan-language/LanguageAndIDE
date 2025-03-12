@@ -4,8 +4,6 @@ import { AstNode } from "../interfaces/ast-node";
 import { AstTypeNode } from "../interfaces/ast-type-node";
 import { Scope } from "../interfaces/scope";
 import { ClassType } from "../symbols/class-type";
-import { DictionaryImmutableType } from "../symbols/dictionary-immutable-type";
-import { DictionaryType } from "../symbols/dictionary-type";
 import { FunctionType } from "../symbols/function-type";
 import { StringType } from "../symbols/string-type";
 import {
@@ -97,8 +95,8 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
     return st.initialValue;
   }
 
-  safeGetGenericParameterSymbolType(index: number) {
-    return this.genericParameters[index]?.symbolType() ?? UnknownType.Instance;
+  safeGetGenericParameterSymbolType() {
+    return this.genericParameters.map((gp) => gp.symbolType());
   }
 
   rootSymbol() {
@@ -111,25 +109,11 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
     const st = symbol.symbolType(transforms());
 
     if (isReifyableSymbolType(st)) {
-      return st.reify([this.safeGetGenericParameterSymbolType(0)]);
-    }
-
-    if (st instanceof DictionaryType) {
-      return new DictionaryType(
-        this.safeGetGenericParameterSymbolType(0),
-        this.safeGetGenericParameterSymbolType(1),
-      );
-    }
-
-    if (st instanceof DictionaryImmutableType) {
-      return new DictionaryImmutableType(
-        this.safeGetGenericParameterSymbolType(0),
-        this.safeGetGenericParameterSymbolType(1),
-      );
+      return st.reify(this.safeGetGenericParameterSymbolType());
     }
 
     if (st instanceof TupleType) {
-      return new TupleType(this.genericParameters.map((p) => p.symbolType()));
+      return new TupleType(this.safeGetGenericParameterSymbolType());
     }
 
     if (st instanceof FunctionType) {

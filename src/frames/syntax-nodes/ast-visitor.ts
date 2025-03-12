@@ -347,12 +347,12 @@ export function transform(
 
   if (node instanceof DictionaryNode) {
     const items = transformMany(node.csv!, fieldId, scope);
-    return new LiteralDictionaryAsn(items, fieldId);
+    return new LiteralDictionaryAsn(items, fieldId, scope);
   }
 
   if (node instanceof DictionaryImmutableNode) {
     const items = transformMany(node.csv!, fieldId, scope);
-    return new LiteralDictionaryImmutableAsn(items, fieldId);
+    return new LiteralDictionaryImmutableAsn(items, fieldId, scope);
   }
 
   if (node instanceof TupleNode) {

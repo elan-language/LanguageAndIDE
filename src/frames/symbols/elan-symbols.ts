@@ -3,8 +3,6 @@ import { ElanSymbol } from "../interfaces/elan-symbol";
 import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../interfaces/transforms";
 import { BooleanType } from "./boolean-type";
-import { DictionaryImmutableType } from "./dictionary-immutable-type";
-import { DictionaryType } from "./dictionary-type";
 import { FloatType } from "./float-type";
 import { FunctionType } from "./function-type";
 import { GenericParameterType } from "./generic-parameter-type";
@@ -66,33 +64,6 @@ const tupleSymbol: ClassSymbol = {
   ofTypes: [new GenericParameterType("T1"), new GenericParameterType("T2")],
 };
 
-const dictionarySymbol: ClassSymbol = {
-  symbolId: "Dictionary",
-  symbolType: function (_transforms?: Transforms): SymbolType {
-    return new DictionaryType(new GenericParameterType("T1"), new GenericParameterType("T2"));
-  },
-  symbolScope: SymbolScope.program,
-  isClass: true,
-  isAbstract: false,
-  isNotInheritable: false,
-  ofTypes: [new GenericParameterType("T1"), new GenericParameterType("T2")],
-};
-
-const dictionaryImmutableSymbol: ClassSymbol = {
-  symbolId: "DictionaryImmutable",
-  symbolType: function (_transforms?: Transforms): SymbolType {
-    return new DictionaryImmutableType(
-      new GenericParameterType("T1"),
-      new GenericParameterType("T2"),
-    );
-  },
-  symbolScope: SymbolScope.program,
-  isClass: true,
-  isAbstract: false,
-  isNotInheritable: false,
-  ofTypes: [new GenericParameterType("T1"), new GenericParameterType("T2")],
-};
-
 const funcSymbol: ClassSymbol = {
   symbolId: "Func",
   symbolType: function (_transforms?: Transforms): SymbolType {
@@ -120,6 +91,4 @@ export const elanSymbols = [
   regExpSymbol,
   tupleSymbol,
   funcSymbol,
-  dictionarySymbol,
-  dictionaryImmutableSymbol,
 ];
