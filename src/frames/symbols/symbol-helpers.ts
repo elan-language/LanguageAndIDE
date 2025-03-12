@@ -70,15 +70,15 @@ export function isArrayType(s?: SymbolType): s is ClassType {
 }
 
 export function isIndexableType(s?: SymbolType): boolean {
-  return !!s?.classOptions.isIndexable;
+  return !!s?.typeOptions.isIndexable;
 }
 
 export function isDoubleIndexableType(s?: SymbolType): boolean {
-  return !!s?.classOptions.isDoubleIndexable;
+  return !!s?.typeOptions.isDoubleIndexable;
 }
 
 export function isIterableType(s?: SymbolType): boolean {
-  return !!s?.classOptions.isIterable;
+  return !!s?.typeOptions.isIterable;
 }
 
 export function isSymbol(s?: Parent | Frame | ElanSymbol): s is ElanSymbol {

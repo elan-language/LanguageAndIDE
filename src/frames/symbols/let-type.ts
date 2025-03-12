@@ -5,7 +5,7 @@ import { immutableTypeOptions } from "../interfaces/type-options";
 export class LetType implements GenericSymbolType {
   constructor(public readonly ofType: SymbolType) {}
 
-  classOptions = immutableTypeOptions;
+  typeOptions = immutableTypeOptions;
 
   initialValue = "";
 

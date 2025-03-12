@@ -17,7 +17,7 @@ export class DeconstructedRecordType implements DeconstructedSymbolType {
 
   initialValue = "";
 
-  classOptions = immutableTypeOptions;
+  typeOptions = immutableTypeOptions;
 
   symbolTypeFor(id: string) {
     return this.typeMap[id] ?? UnknownType.Instance;

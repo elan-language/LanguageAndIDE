@@ -21,7 +21,7 @@ export class DeconstructedListType implements DeconstructedSymbolType {
     return this.typeMap[id] ?? UnknownType.Instance;
   }
 
-  classOptions = immutableTypeOptions;
+  typeOptions = immutableTypeOptions;
 
   private typeMap = {} as { [index: string]: SymbolType };
 

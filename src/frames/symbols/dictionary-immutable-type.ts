@@ -10,7 +10,7 @@ export class DictionaryImmutableType implements DictionarySymbolType {
 
   initialValue = "system.emptyDictionaryImmutable()";
 
-  get classOptions() {
+  get typeOptions() {
     return {
       isImmutable: true,
       isAbstract: false,

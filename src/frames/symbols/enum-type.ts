@@ -4,7 +4,7 @@ import { immutableTypeOptions } from "../interfaces/type-options";
 export class EnumType implements SymbolType {
   constructor(public readonly name: string) {}
 
-  classOptions = immutableTypeOptions;
+  typeOptions = immutableTypeOptions;
 
   get initialValue() {
     return `${this.name}._default`;

@@ -9,7 +9,7 @@ export class StringType implements SymbolType {
 
   initialValue = '""';
 
-  get classOptions() {
+  get typeOptions() {
     return {
       isImmutable: true,
       isAbstract: false,

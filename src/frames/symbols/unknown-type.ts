@@ -5,7 +5,7 @@ export class UnknownType implements SymbolType {
   private constructor() {}
   initialValue = "";
 
-  classOptions = immutableTypeOptions;
+  typeOptions = immutableTypeOptions;
 
   static Instance: SymbolType = new UnknownType();
 

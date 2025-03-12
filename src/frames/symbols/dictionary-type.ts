@@ -12,7 +12,7 @@ export class DictionaryType implements DictionarySymbolType {
 
   factoryName = "system.dictionary";
 
-  get classOptions() {
+  get typeOptions() {
     return {
       isImmutable: false,
       isAbstract: false,

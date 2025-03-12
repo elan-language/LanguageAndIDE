@@ -66,7 +66,7 @@ export class Property extends AbstractFrame implements PossiblyPrivateMember, El
 
   isGlobalClass(st: SymbolType) {
     // todo rework when tests working
-    return st instanceof ClassType && !st.classOptions.isIndexable;
+    return st instanceof ClassType && !st.typeOptions.isIndexable;
   }
 
   compile(transforms: Transforms): string {

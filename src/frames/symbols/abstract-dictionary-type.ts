@@ -9,7 +9,7 @@ export class AbstractDictionaryType implements DictionarySymbolType {
     public readonly valueType: SymbolType,
   ) {}
 
-  classOptions = noTypeOptions;
+  typeOptions = noTypeOptions;
 
   initialValue = "";
 

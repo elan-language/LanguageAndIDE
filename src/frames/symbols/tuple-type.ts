@@ -4,7 +4,7 @@ import { immutableTypeOptions } from "../interfaces/type-options";
 export class TupleType implements SymbolType {
   constructor(public readonly ofTypes: SymbolType[]) {}
 
-  classOptions = immutableTypeOptions;
+  typeOptions = immutableTypeOptions;
 
   get initialValue() {
     const init = this.ofTypes.map((t) => t.initialValue).join(", ");

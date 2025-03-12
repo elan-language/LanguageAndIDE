@@ -6,7 +6,7 @@ export class RegExpType implements SymbolType {
 
   initialValue = "system.emptyRegExp()";
 
-  classOptions = immutableTypeOptions;
+  typeOptions = immutableTypeOptions;
 
   static Instance: SymbolType = new RegExpType();
 

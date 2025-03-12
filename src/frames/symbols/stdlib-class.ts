@@ -16,7 +16,7 @@ export class StdLibClass implements Class {
   constructor(
     private readonly name: string,
     public readonly isNotInheritable: boolean,
-    public readonly classOptions: TypeOptions,
+    public readonly typeOptions: TypeOptions,
     public readonly children: ElanSymbol[],
     public ofTypes: SymbolType[],
     public readonly inheritTypes: SymbolType[],
@@ -26,14 +26,14 @@ export class StdLibClass implements Class {
   }
 
   get isAbstract() {
-    return this.classOptions.isAbstract;
+    return this.typeOptions.isAbstract;
   }
 
   updateOfTypes(ofTypes: SymbolType[]) {
     return new StdLibClass(
       this.name,
       this.isNotInheritable,
-      this.classOptions,
+      this.typeOptions,
       this.children,
       ofTypes,
       this.inheritTypes,
@@ -53,9 +53,9 @@ export class StdLibClass implements Class {
     // temp hack TODO fix
     return new ClassType(
       this.name,
-      this.classOptions.isAbstract ? ClassSubType.abstract : ClassSubType.concrete,
+      this.typeOptions.isAbstract ? ClassSubType.abstract : ClassSubType.concrete,
       this.isNotInheritable,
-      this.classOptions,
+      this.typeOptions,
       this.inheritTypes,
       this,
     );

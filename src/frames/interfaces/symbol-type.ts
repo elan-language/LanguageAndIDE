@@ -4,5 +4,5 @@ export interface SymbolType {
   name: string;
   initialValue: string;
   isAssignableFrom(otherType: SymbolType): boolean;
-  classOptions: TypeOptions;
+  typeOptions: TypeOptions;
 }

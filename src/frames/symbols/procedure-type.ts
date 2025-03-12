@@ -9,7 +9,7 @@ export class ProcedureType implements SymbolType {
     public readonly isAsync: boolean,
   ) {}
 
-  classOptions = immutableTypeOptions;
+  typeOptions = immutableTypeOptions;
 
   initialValue = "";
 

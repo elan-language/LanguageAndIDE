@@ -4,7 +4,7 @@ import { noTypeOptions } from "../interfaces/type-options";
 export class GenericParameterType implements SymbolType {
   constructor(public id: string) {}
 
-  classOptions = noTypeOptions;
+  typeOptions = noTypeOptions;
 
   initialValue = "";
 

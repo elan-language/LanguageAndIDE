@@ -6,7 +6,7 @@ export class FloatType implements SymbolType {
   private constructor() {}
   initialValue = "0";
 
-  classOptions = immutableTypeOptions;
+  typeOptions = immutableTypeOptions;
 
   static Instance: SymbolType = new FloatType();
   name = "Float";

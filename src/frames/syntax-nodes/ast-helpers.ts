@@ -99,7 +99,7 @@ class TypeHolder implements SymbolType {
   isAssignableFrom(otherType: SymbolType): boolean {
     return this.symbolType.isAssignableFrom(otherType);
   }
-  classOptions = noTypeOptions;
+  typeOptions = noTypeOptions;
 
   name = "TypeHolder";
   initialValue = "";
@@ -109,7 +109,7 @@ class TypeHolder implements SymbolType {
 }
 
 export function flatten(p: SymbolType): SymbolType {
-  if (p instanceof ClassType && p.classOptions.isIndexable) {
+  if (p instanceof ClassType && p.typeOptions.isIndexable) {
     return new TypeHolder(p, [flatten(p.ofType)]);
   }
 

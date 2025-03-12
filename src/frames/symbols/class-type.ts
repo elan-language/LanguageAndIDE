@@ -23,7 +23,7 @@ export class ClassType implements ReifyableSymbolType, Scope {
     public className: string,
     public subType: ClassSubType,
     public isNotInheritable: boolean,
-    public classOptions: TypeOptions,
+    public typeOptions: TypeOptions,
     public inheritsFrom: SymbolType[],
     public scope: Class | NullScope,
   ) {}
@@ -43,7 +43,7 @@ export class ClassType implements ReifyableSymbolType, Scope {
         this.className,
         this.subType,
         this.isNotInheritable,
-        this.classOptions,
+        this.typeOptions,
         this.inheritsFrom,
         cls,
       );
@@ -55,7 +55,7 @@ export class ClassType implements ReifyableSymbolType, Scope {
   updateFrom(other: ClassType) {
     this.className = other.className;
     this.isNotInheritable = other.isNotInheritable;
-    this.classOptions = other.classOptions;
+    this.typeOptions = other.typeOptions;
     this.inheritsFrom = other.inheritsFrom;
     this.scope = other.scope;
     return this;

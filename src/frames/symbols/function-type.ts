@@ -15,7 +15,7 @@ export class FunctionType implements SymbolType {
     return `system.emptyFunc(${this.returnType.initialValue})`;
   }
 
-  classOptions = immutableTypeOptions;
+  typeOptions = immutableTypeOptions;
 
   get name() {
     return `Func<of ${this.parameterTypes.map((p) => p.name).join(", ")} => ${this.returnType.name}>`;

@@ -6,7 +6,7 @@ export class EnumValueType implements SymbolType {
     public readonly owner: string,
     public readonly name: string,
   ) {}
-  classOptions = immutableTypeOptions;
+  typeOptions = immutableTypeOptions;
 
   initialValue = "";
 

@@ -5,7 +5,7 @@ export class IntType implements SymbolType {
   private constructor() {}
   initialValue = "0";
 
-  classOptions = immutableTypeOptions;
+  typeOptions = immutableTypeOptions;
 
   static Instance: SymbolType = new IntType();
 

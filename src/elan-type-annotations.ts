@@ -58,7 +58,7 @@ export class ElanProcedureDescriptor implements IElanProcedureDescriptor {
 
 export class ElanClassDescriptor implements ElanDescriptor {
   constructor(
-    public readonly classOptions: TypeOptions = noTypeOptions,
+    public readonly typeOptions: TypeOptions = noTypeOptions,
     public readonly ofTypes: TypeDescriptor[] = [],
     public readonly parameterNames: string[] = [],
     public readonly parameterTypes: TypeDescriptor[] = [],
@@ -266,8 +266,8 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
 
     const classTypeDef = new StdLibClass(
       className,
-      classMetadata.classOptions.isAbstract,
-      classMetadata.classOptions,
+      classMetadata.typeOptions.isAbstract,
+      classMetadata.typeOptions,
       [],
       [],
       [],
@@ -378,16 +378,16 @@ export function elanMethod(parameterNames: string[], elanDesc: ElanMethodDescrip
 }
 
 export function elanClass(
-  options?: ClassOption,
+  option?: ClassOption,
   ofTypes?: TypeDescriptor[],
   names?: string[],
   params?: TypeDescriptor[],
   inherits?: ElanClassTypeDescriptor[],
   alias?: string,
 ) {
-  const classOptions = mapClassOptions(options ?? ClassOption.concrete);
+  const typeOptions = mapClassOption(option ?? ClassOption.concrete);
   const classDesc = new ElanClassDescriptor(
-    classOptions,
+    typeOptions,
     ofTypes ?? [],
     names ?? [],
     params ?? [],
@@ -612,7 +612,7 @@ function mapProcedureOptions(options: ProcedureOptions): [boolean, boolean] {
 
 // TODO reork this into 'class flags' object
 // isImmutable, isAbstract, isIndexable, isDoubleIndexable isIterable
-function mapClassOptions(options: ClassOption): TypeOptions {
+function mapClassOption(options: ClassOption): TypeOptions {
   const opt = getTypeOptions();
 
   switch (options) {
