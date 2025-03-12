@@ -122,7 +122,7 @@ export class List<T1> {
 
   @elanFunction(["item"], FunctionOptions.pure)
   contains(@elanGenericParamT1Type() item: T1): boolean {
-    return this.contents.includes(item);
+    return this.indexOfItem(item) !== -1;
   }
 
   @elanFunction(["lambdaOrFunctionRef"], FunctionOptions.pureAsync, ElanClass(List))

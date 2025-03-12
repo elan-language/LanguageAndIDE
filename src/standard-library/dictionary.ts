@@ -12,7 +12,6 @@ import {
   elanGenericParamT2Type,
   elanProcedure,
 } from "../elan-type-annotations";
-import { hasHiddenType } from "../has-hidden-type";
 import { System } from "../system";
 import { List } from "./list";
 

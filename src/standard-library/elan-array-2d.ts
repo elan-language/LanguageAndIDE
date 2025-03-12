@@ -53,7 +53,6 @@ export class ElanArray2D<T1> {
     this.system!.safe2DArraySet(this.contents, col, row, value);
   }
 
-
   @elanFunction([], FunctionOptions.pure, ElanInt)
   length() {
     return this.contents.length;
