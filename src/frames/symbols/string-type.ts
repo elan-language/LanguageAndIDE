@@ -3,7 +3,6 @@ import { SymbolType } from "../interfaces/symbol-type";
 
 export class StringType implements IterableSymbolType {
   private constructor() {}
-  isIterable = true;
 
   get ofType() {
     return StringType.Instance;
@@ -12,10 +11,9 @@ export class StringType implements IterableSymbolType {
   initialValue = '""';
 
   isImmutable = true;
-
   isIndexable = true;
-
   isDoubleIndexable = false;
+  isIterable = true;
 
   static Instance: SymbolType = new StringType();
 

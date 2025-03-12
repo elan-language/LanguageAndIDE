@@ -6,6 +6,7 @@ export class BooleanType implements SymbolType {
 
   isIndexable = false;
   isDoubleIndexable = false;
+  isIterable = false;
 
   initialValue = "false";
 

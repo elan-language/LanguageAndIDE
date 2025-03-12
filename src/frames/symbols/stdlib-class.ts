@@ -19,6 +19,7 @@ export class StdLibClass implements Class {
     public readonly isImmutable: boolean,
     public readonly isIndexable: boolean,
     public readonly isDoubleIndexable: boolean,
+    public readonly isIterable: boolean,
     public readonly children: ElanSymbol[],
     public ofTypes: SymbolType[],
     public readonly inheritTypes: SymbolType[],
@@ -35,6 +36,7 @@ export class StdLibClass implements Class {
       this.isImmutable,
       this.isIndexable,
       this.isDoubleIndexable,
+      this.isIterable,
       this.children,
       ofTypes,
       this.inheritTypes,
@@ -59,6 +61,7 @@ export class StdLibClass implements Class {
       this.isImmutable,
       this.isIndexable,
       this.isDoubleIndexable,
+      this.isIterable,
       this.inheritTypes,
       this,
     );

@@ -9,6 +9,7 @@ export class RegExpType implements SymbolType {
 
   isIndexable = false;
   isDoubleIndexable = false;
+  isIterable = false;
 
   static Instance: SymbolType = new RegExpType();
 

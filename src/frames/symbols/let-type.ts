@@ -8,6 +8,7 @@ export class LetType implements GenericSymbolType {
 
   isIndexable = false;
   isDoubleIndexable = false;
+  isIterable = false;
 
   initialValue = "";
 

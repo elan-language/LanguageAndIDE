@@ -1,42 +1,41 @@
-import { IterableSymbolType } from "../interfaces/iterable-symbol-type";
-import { ReifyableSymbolType } from "../interfaces/reifyable-symbol-type";
-import { SymbolType } from "../interfaces/symbol-type";
-import { isInvariantType, isIterableType, isReifyableSymbolType } from "./symbol-helpers";
-import { UnknownType } from "./unknown-type";
+// import { IterableSymbolType } from "../interfaces/iterable-symbol-type";
+// import { ReifyableSymbolType } from "../interfaces/reifyable-symbol-type";
+// import { SymbolType } from "../interfaces/symbol-type";
+// import { isInvariantType, isIterableType, isReifyableSymbolType } from "./symbol-helpers";
+// import { UnknownType } from "./unknown-type";
 
-export class IterableType implements IterableSymbolType, ReifyableSymbolType {
-  constructor(public readonly ofType: SymbolType) {}
-  isIterable = true;
+// export class IterableType implements IterableSymbolType, ReifyableSymbolType {
+//   constructor(public readonly ofType: SymbolType) {}
 
-  initialValue = "system.emptyIter()";
+//   initialValue = "system.emptyIter()";
 
-  isImmutable = true;
+//   isImmutable = true;
+//   isIndexable = false;
+//   isDoubleIndexable = false;
+//   isIterable = true;
 
-  isIndexable = false;
-  isDoubleIndexable = false;
+//   get name() {
+//     return `Iterable<of ${this.ofType.name}>`;
+//   }
 
-  get name() {
-    return `Iterable<of ${this.ofType.name}>`;
-  }
+//   toString(): string {
+//     return "Iterable";
+//   }
 
-  toString(): string {
-    return "Iterable";
-  }
+//   reify(gts: SymbolType[]): ReifyableSymbolType {
+//     if (isReifyableSymbolType(this.ofType)) {
+//       return new IterableType(this.ofType.reify(gts));
+//     }
 
-  reify(gts: SymbolType[]): ReifyableSymbolType {
-    if (isReifyableSymbolType(this.ofType)) {
-      return new IterableType(this.ofType.reify(gts));
-    }
+//     const gt = gts && gts.length >= 1 ? gts[0] : UnknownType.Instance;
 
-    const gt = gts && gts.length >= 1 ? gts[0] : UnknownType.Instance;
+//     return new IterableType(gt);
+//   }
 
-    return new IterableType(gt);
-  }
-
-  isAssignableFrom(otherType: SymbolType): boolean {
-    if (isIterableType(otherType)) {
-      return isInvariantType(this.ofType, otherType.ofType, true);
-    }
-    return false;
-  }
-}
+//   isAssignableFrom(otherType: SymbolType): boolean {
+//     if (isIterableType(otherType)) {
+//       return isInvariantType(this.ofType, otherType.ofType, true);
+//     }
+//     return false;
+//   }
+// }

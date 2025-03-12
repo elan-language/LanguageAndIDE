@@ -67,7 +67,6 @@ import { DuplicateSymbol } from "./symbols/duplicate-symbol";
 import { FloatType } from "./symbols/float-type";
 import { FunctionType } from "./symbols/function-type";
 import { IntType } from "./symbols/int-type";
-import { IterableType } from "./symbols/iterable-type";
 import { ProcedureType } from "./symbols/procedure-type";
 import {
   isArrayType,
@@ -313,7 +312,7 @@ export function mustBeRangeableType(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (knownType(symbolType) && !(read && isIndexableType(symbolType))) {
+  if (knownType(symbolType) && !(read && isIterableType(symbolType))) {
     compileErrors.push(new NotRangeableCompileError(symbolType.name, location));
   }
 }
@@ -572,10 +571,6 @@ function FailNotAssignable(
   // todo fix
   if (isListType(lhs) && isArrayType(rhs)) {
     addInfo = " try converting with '.asList()'";
-  }
-
-  if (isListType(lhs) && rhs instanceof IterableType) {
-    addInfo = " try converting Iterable to a concrete type with e.g. '.asList()'";
   }
 
   if (knownType(lhs) && knownType(rhs)) {

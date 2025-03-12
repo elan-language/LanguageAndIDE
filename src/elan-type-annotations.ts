@@ -22,7 +22,6 @@ import { FloatType } from "./frames/symbols/float-type";
 import { FunctionType } from "./frames/symbols/function-type";
 import { GenericParameterType } from "./frames/symbols/generic-parameter-type";
 import { IntType } from "./frames/symbols/int-type";
-import { IterableType } from "./frames/symbols/iterable-type";
 import { ProcedureType } from "./frames/symbols/procedure-type";
 import { RegExpType } from "./frames/symbols/regexp-type";
 import { StdLibClass } from "./frames/symbols/stdlib-class";
@@ -62,6 +61,7 @@ export class ElanClassDescriptor implements ElanDescriptor {
     public readonly isAbstract: boolean = false,
     public readonly isIndexable: boolean = false,
     public readonly isDoubleIndexable: boolean = false,
+    public readonly isIterable: boolean = false,
     public readonly ofTypes: TypeDescriptor[] = [],
     public readonly parameterNames: string[] = [],
     public readonly parameterTypes: TypeDescriptor[] = [],
@@ -142,8 +142,6 @@ export class ElanValueTypeDescriptor implements TypeDescriptor {
         return BooleanType.Instance;
       case "RegExp":
         return RegExpType.Instance;
-      case "Iterable":
-        return new IterableType(this.ofType!.mapType());
       case "AbstractDictionary":
         return new AbstractDictionaryType(this.ofType!.mapType(), this.valueType!.mapType());
       case "DictionaryImmutable":
@@ -239,7 +237,17 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
 
     tempMap.set(
       classId,
-      new ClassType(className, ClassSubType.concrete, false, false, false, false, [], undefined!),
+      new ClassType(
+        className,
+        ClassSubType.concrete,
+        false,
+        false,
+        false,
+        false,
+        false,
+        [],
+        undefined!,
+      ),
     );
 
     for (let i = 0; i < names.length; i++) {
@@ -276,6 +284,7 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
       classMetadata.isImmutable,
       classMetadata.isIndexable,
       classMetadata.isDoubleIndexable,
+      classMetadata.isIterable,
       [],
       [],
       [],
@@ -393,7 +402,7 @@ export function elanClass(
   inherits?: ElanClassTypeDescriptor[],
   alias?: string,
 ) {
-  const [isImmutable, isAbstract, isIndexable, isDoubleIndexable] = mapClassOptions(
+  const [isImmutable, isAbstract, isIndexable, isDoubleIndexable, isIterable] = mapClassOptions(
     options ?? ClassOptions.concrete,
   );
   const classDesc = new ElanClassDescriptor(
@@ -401,6 +410,7 @@ export function elanClass(
     isAbstract,
     isIndexable,
     isDoubleIndexable,
+    isIterable,
     ofTypes ?? [],
     names ?? [],
     params ?? [],
@@ -472,10 +482,6 @@ export const ElanRegExp: ElanValueTypeDescriptor = new ElanValueTypeDescriptor("
 export const ElanT1: ElanValueTypeDescriptor = new ElanGenericTypeDescriptor("T1");
 export const ElanT2: ElanValueTypeDescriptor = new ElanGenericTypeDescriptor("T2");
 
-export function ElanIterable(ofType: TypeDescriptor) {
-  return new ElanValueTypeDescriptor("Iterable", ofType);
-}
-
 export function ElanAbstractDictionary(keyType: TypeDescriptor, valueType: TypeDescriptor) {
   return new ElanValueTypeDescriptor("AbstractDictionary", keyType, valueType);
 }
@@ -531,10 +537,6 @@ export function elanGenericParamT2Type() {
   return elanType(ElanT2);
 }
 
-export function elanIterableType(ofType: TypeDescriptor) {
-  return elanType(ElanIterable(ofType));
-}
-
 export function elanAbstractDictionaryType(keyType: TypeDescriptor, valueType: TypeDescriptor) {
   return elanType(ElanAbstractDictionary(keyType, valueType));
 }
@@ -555,12 +557,15 @@ export function elanFuncType(parameters: TypeDescriptor[], returnType: TypeDescr
   return elanType(ElanFunc(parameters, returnType));
 }
 
-export function elanClassType(cls: {
-  name: string;
-  prototype: object;
-  emptyInstance: () => object;
-}) {
-  return elanType(ElanClass(cls));
+export function elanClassType(
+  cls: {
+    name: string;
+    prototype: object;
+    emptyInstance: () => object;
+  },
+  ofTypes?: TypeDescriptor[],
+) {
+  return elanType(ElanClass(cls, ofTypes));
 }
 
 export enum FunctionOptions {
@@ -628,21 +633,22 @@ function mapProcedureOptions(options: ProcedureOptions): [boolean, boolean] {
   }
 }
 
-// isImmutable, isAbstract, isIndexable, isDoubleIndexable
-function mapClassOptions(options: ClassOptions): [boolean, boolean, boolean, boolean] {
+// TODO reork this into 'class flags' object
+// isImmutable, isAbstract, isIndexable, isDoubleIndexable isIterable
+function mapClassOptions(options: ClassOptions): [boolean, boolean, boolean, boolean, boolean] {
   switch (options) {
     case ClassOptions.concrete:
-      return [false, false, false, false];
+      return [false, false, false, false, false];
     case ClassOptions.abstract:
-      return [false, true, false, false];
+      return [false, true, false, false, false];
     case ClassOptions.record:
-      return [true, false, false, false];
+      return [true, false, false, false, false];
     case ClassOptions.array:
-      return [false, false, true, false];
+      return [false, false, true, false, true];
     case ClassOptions.array2D:
-      return [false, false, false, true];
+      return [false, false, false, true, false];
     case ClassOptions.list:
-      return [true, false, true, false];
+      return [true, false, true, false, true];
   }
 }
 

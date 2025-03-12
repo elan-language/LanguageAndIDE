@@ -7,6 +7,7 @@ export class GenericParameterType implements SymbolType {
 
   isIndexable = false;
   isDoubleIndexable = false;
+  isIterable = false;
 
   initialValue = "";
 

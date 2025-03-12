@@ -12,7 +12,6 @@ import { ElanSymbol } from "../interfaces/elan-symbol";
 import { File } from "../interfaces/file";
 import { Frame } from "../interfaces/frame";
 import { GenericSymbolType } from "../interfaces/generic-symbol-type";
-import { IterableSymbolType } from "../interfaces/iterable-symbol-type";
 import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
 import { ReifyableSymbolType } from "../interfaces/reifyable-symbol-type";
@@ -40,7 +39,6 @@ import { FloatType } from "./float-type";
 import { FunctionType } from "./function-type";
 import { GenericParameterType } from "./generic-parameter-type";
 import { IntType } from "./int-type";
-import { IterableType } from "./iterable-type";
 import { NullScope } from "./null-scope";
 import { ProcedureType } from "./procedure-type";
 import { RegExpType } from "./regexp-type";
@@ -51,10 +49,6 @@ import { UnknownType } from "./unknown-type";
 
 export function isDeconstructedType(s?: SymbolType): s is DeconstructedSymbolType {
   return !!s && "symbolTypeFor" in s;
-}
-
-export function isIterableType(s?: SymbolType): s is IterableSymbolType {
-  return !!s && ("isIterable" in s || s.isIndexable);
 }
 
 export function isAnyDictionaryType(s?: SymbolType): s is DictionarySymbolType {
@@ -81,6 +75,10 @@ export function isIndexableType(s?: SymbolType): boolean {
 
 export function isDoubleIndexableType(s?: SymbolType): boolean {
   return !!s?.isDoubleIndexable;
+}
+
+export function isIterableType(s?: SymbolType): boolean {
+  return !!s?.isIterable;
 }
 
 export function isSymbol(s?: Parent | Frame | ElanSymbol): s is ElanSymbol {
@@ -306,10 +304,6 @@ export function isValueType(type: SymbolType) {
 
 function matchGenericTypes(actualType: SymbolType, paramType: SymbolType) {
   if (paramType.constructor.name === actualType.constructor.name) {
-    return true;
-  }
-
-  if (paramType instanceof IterableType && actualType instanceof StringType) {
     return true;
   }
 

@@ -194,6 +194,11 @@ export class List<T1> {
     return this.contents[i];
   }
 
+  @elanFunction([], FunctionOptions.pure, ElanT1)
+  head(): T1 {
+    return this.safeIndex(0);
+  }
+
   async asString() {
     return `{${await this.system?.asString(this.contents)}}`;
   }

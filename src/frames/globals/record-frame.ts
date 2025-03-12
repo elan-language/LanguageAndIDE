@@ -32,7 +32,17 @@ export class RecordFrame extends ClassFrame {
     return this.name.text;
   }
   symbolType(_transforms?: Transforms) {
-    return new ClassType(this.symbolId, ClassSubType.concrete, false, true, false, false, [], this);
+    return new ClassType(
+      this.symbolId,
+      ClassSubType.concrete,
+      false,
+      true,
+      false,
+      false,
+      false,
+      [],
+      this,
+    );
   }
   get symbolScope() {
     return SymbolScope.program;

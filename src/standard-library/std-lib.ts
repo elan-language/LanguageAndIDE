@@ -18,7 +18,6 @@ import {
   elanGenericParamT2Type,
   ElanInt,
   elanIntType,
-  elanIterableType,
   elanProcedure,
   ElanString,
   elanStringType,
@@ -299,11 +298,6 @@ export class StdLib {
     return this.system.initialise(new List(seq));
   }
 
-  @elanFunction([], FunctionOptions.pureExtension, ElanT1)
-  head<T1>(@elanIterableType(ElanT1) arr: T1[]): T1 {
-    return this.system.safeIndex(arr, 0);
-  }
-
   @elanFunction([], FunctionOptions.pureExtension, ElanClass(List))
   keys<T1>(
     @elanAbstractDictionaryType(ElanT1, ElanT2)
@@ -365,17 +359,8 @@ export class StdLib {
   }
 
   @elanFunction([], FunctionOptions.pureExtension, ElanInt)
-  length<T1>(
-    @elanIterableType(ElanT1)
-    coll: string | T1[] | { [key: string]: T1 },
-  ) {
-    if (typeof coll === "string") {
-      return coll.length;
-    }
-    if (Array.isArray(coll)) {
-      return coll.length;
-    }
-    return this.keys(coll).length();
+  length(coll: string) {
+    return coll.length;
   }
 
   @elanFunction([], FunctionOptions.pureExtension)
@@ -461,10 +446,10 @@ export class StdLib {
     return this.system.initialise(new List(s.split(separator)));
   }
 
-  @elanFunction(["", "separator"], FunctionOptions.pureExtension)
-  join(@elanIterableType(ElanString) list: string[], separator: string): string {
-    return list.join(separator);
-  }
+  // @elanFunction(["", "separator"], FunctionOptions.pureExtension)
+  // join(@elanIterableType(ElanString) list: string[], separator: string): string {
+  //   return list.join(separator);
+  // }
 
   @elanFunction(["number"], FunctionOptions.pureExtension, ElanInt)
   floor(n: number) {
@@ -551,12 +536,12 @@ export class StdLib {
   }
 
   @elanFunction([], FunctionOptions.pureExtension)
-  max(@elanIterableType(ElanFloat) source: number[]): number {
+  max(@elanClassType(List, [ElanFloat]) source: List<number>): number {
     return Math.max(...source);
   }
 
   @elanFunction([], FunctionOptions.pureExtension)
-  min(@elanIterableType(ElanFloat) source: number[]): number {
+  min(@elanClassType(List, [ElanFloat]) source: List<number>): number {
     return Math.min(...source);
   }
 
@@ -583,10 +568,7 @@ export class StdLib {
   // }
 
   @elanFunction(["", "item"], FunctionOptions.pureExtension)
-  contains<T1>(
-    @elanIterableType(ElanT1) source: T1[],
-    @elanGenericParamT1Type() item: T1,
-  ): boolean {
+  contains(source: string, item: string): boolean {
     return source.includes(item);
   }
 

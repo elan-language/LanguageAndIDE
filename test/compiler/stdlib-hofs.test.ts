@@ -628,7 +628,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Iterable<of Float> Provided: List<of String>",
+      "Incompatible types. Expected: List<of Float> Provided: List<of String>",
     ]);
   });
 

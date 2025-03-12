@@ -14,6 +14,7 @@ export class DictionaryType implements DictionarySymbolType {
   isIndexable = true;
 
   isDoubleIndexable = false;
+  isIterable = false;
 
   factoryName = "system.dictionary";
 

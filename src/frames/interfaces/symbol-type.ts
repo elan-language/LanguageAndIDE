@@ -5,4 +5,5 @@ export interface SymbolType {
   isAssignableFrom(otherType: SymbolType): boolean;
   isIndexable: boolean;
   isDoubleIndexable: boolean;
+  isIterable: boolean;
 }

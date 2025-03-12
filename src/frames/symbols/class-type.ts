@@ -4,6 +4,8 @@ import { ReifyableSymbolType } from "../interfaces/reifyable-symbol-type";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../interfaces/transforms";
+import { FloatType } from "./float-type";
+import { IntType } from "./int-type";
 import { NullScope } from "./null-scope";
 import { isClassTypeDef, isSymbol, symbolMatches } from "./symbol-helpers";
 import { SymbolScope } from "./symbol-scope";
@@ -23,6 +25,7 @@ export class ClassType implements ReifyableSymbolType, Scope {
     public isImmutable: boolean,
     public isIndexable: boolean,
     public isDoubleIndexable: boolean,
+    public isIterable: boolean,
     public inheritsFrom: SymbolType[],
     public scope: Class | NullScope,
   ) {}
@@ -45,6 +48,7 @@ export class ClassType implements ReifyableSymbolType, Scope {
         this.isImmutable,
         this.isIndexable,
         this.isDoubleIndexable,
+        this.isIterable,
         this.inheritsFrom,
         cls,
       );
@@ -59,6 +63,7 @@ export class ClassType implements ReifyableSymbolType, Scope {
     this.isImmutable = other.isImmutable;
     this.isIndexable = other.isIndexable;
     this.isDoubleIndexable = other.isDoubleIndexable;
+    this.isIterable = other.isIterable;
     this.inheritsFrom = other.inheritsFrom;
     this.scope = other.scope;
     return this;
@@ -74,6 +79,11 @@ export class ClassType implements ReifyableSymbolType, Scope {
     if (otherType instanceof ClassType) {
       if (otherType.className === this.className) {
         if (this.ofType !== UnknownType.Instance) {
+          // special case
+          if (this.ofType instanceof FloatType && otherType.ofType instanceof IntType) {
+            return true;
+          }
+
           return otherType.ofType.name === this.ofType.name;
         }
         return true;

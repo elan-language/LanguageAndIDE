@@ -7,6 +7,7 @@ export class TupleType implements SymbolType {
 
   isIndexable = false;
   isDoubleIndexable = false;
+  isIterable = false;
 
   get initialValue() {
     const init = this.ofTypes.map((t) => t.initialValue).join(", ");

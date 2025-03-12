@@ -38,6 +38,7 @@ export class AbstractClass extends ClassFrame {
       false,
       false,
       false,
+      false,
       cd ? [] : this.inheritance.symbolTypes(transforms),
       this,
     );

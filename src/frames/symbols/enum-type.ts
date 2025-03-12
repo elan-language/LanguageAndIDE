@@ -6,6 +6,7 @@ export class EnumType implements SymbolType {
 
   isIndexable = false;
   isDoubleIndexable = false;
+  isIterable = false;
 
   get initialValue() {
     return `${this.name}._default`;

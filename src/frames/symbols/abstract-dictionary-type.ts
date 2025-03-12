@@ -12,6 +12,7 @@ export class AbstractDictionaryType implements DictionarySymbolType {
 
   isIndexable = false;
   isDoubleIndexable = false;
+  isIterable = false;
 
   initialValue = "";
 

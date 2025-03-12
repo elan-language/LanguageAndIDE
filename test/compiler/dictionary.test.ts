@@ -7,7 +7,6 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -772,7 +771,7 @@ end main
     ]);
   });
 
-  ignore_test("Fail_Range", async () => {
+  test("Fail_Range", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main

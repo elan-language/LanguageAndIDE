@@ -9,6 +9,7 @@ export class FloatType implements SymbolType {
 
   isIndexable = false;
   isDoubleIndexable = false;
+  isIterable = false;
 
   static Instance: SymbolType = new FloatType();
   name = "Float";

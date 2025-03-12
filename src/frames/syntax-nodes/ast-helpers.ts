@@ -24,7 +24,6 @@ import { DictionaryType } from "../symbols/dictionary-type";
 import { FunctionType } from "../symbols/function-type";
 import { GenericParameterType } from "../symbols/generic-parameter-type";
 import { IntType } from "../symbols/int-type";
-import { IterableType } from "../symbols/iterable-type";
 import { ProcedureType } from "../symbols/procedure-type";
 import { StringType } from "../symbols/string-type";
 import {
@@ -102,6 +101,7 @@ class TypeHolder implements SymbolType {
   isImmutable = false;
   isIndexable = false;
   isDoubleIndexable = false;
+  isIterable = false;
   name = "TypeHolder";
   initialValue = "";
   toString() {
@@ -110,7 +110,7 @@ class TypeHolder implements SymbolType {
 }
 
 export function flatten(p: SymbolType): SymbolType {
-  if (p instanceof IterableType || (p instanceof ClassType && p.isIndexable)) {
+  if (p instanceof ClassType && p.isIndexable) {
     return new TypeHolder(p, [flatten(p.ofType)]);
   }
 
@@ -146,9 +146,6 @@ export function flatten(p: SymbolType): SymbolType {
 export function containsGenericType(type: SymbolType): boolean {
   if (type instanceof GenericParameterType) {
     return true;
-  }
-  if (type instanceof IterableType) {
-    return containsGenericType(type.ofType);
   }
   if (isAnyDictionaryType(type)) {
     return containsGenericType(type.keyType) || containsGenericType(type.valueType);
@@ -199,10 +196,6 @@ export function generateType(
     }
 
     return match ?? type;
-  }
-
-  if (type instanceof IterableType) {
-    return new IterableType(generateType(type.ofType, matches, depth));
   }
   if (type instanceof DictionaryType) {
     return new DictionaryType(

@@ -177,6 +177,11 @@ export class ElanArray<T1> {
     return acc;
   }
 
+  @elanFunction([], FunctionOptions.pure, ElanT1)
+  head(): T1 {
+    return this.safeIndex(0);
+  }
+
   async asString() {
     const contents = await this.system?.asString(this.contents);
     return `[${contents}]`;

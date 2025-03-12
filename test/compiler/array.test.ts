@@ -1063,7 +1063,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-    variable body set to [ref head]
+    variable body set to [ref getKey]
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -1071,7 +1071,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Library or class function 'head' cannot be preceded by by 'ref'",
+      "Library or class function 'getKey' cannot be preceded by by 'ref'",
     ]);
   });
 

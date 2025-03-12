@@ -459,8 +459,8 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable i set to [1,2]
-  variable x set to head
+  variable i set to {1,2}
+  variable x set to listAsArray
   variable y set to x(i)
 end main`;
 
@@ -476,7 +476,7 @@ end main`;
 
 main
   variable i set to 1
-  variable x set to head
+  variable x set to listAsArray
   variable y set to i.x()
 end main`;
 

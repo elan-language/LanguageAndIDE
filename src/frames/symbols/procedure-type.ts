@@ -12,6 +12,7 @@ export class ProcedureType implements SymbolType {
 
   isIndexable = false;
   isDoubleIndexable = false;
+  isIterable = false;
 
   initialValue = "";
 
