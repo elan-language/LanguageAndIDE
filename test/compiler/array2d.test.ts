@@ -201,14 +201,13 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(_stdlib.Array.emptyInstance());
-  let b = system.initialise(_stdlib.Array.emptyInstance());
-  _stdlib.append(a, system.literalArray([3]));
+  let a = system.initialise(_stdlib.Array2D.emptyInstance());
+  let b = system.initialise(_stdlib.Array2D.emptyInstance());
   await system.printLine(a);
   await system.printLine(b);
   await system.printLine(system.objectEquals(a, b));
-  await system.printLine(system.objectEquals(a, system.initialise(_stdlib.Array.emptyInstance())));
-  await system.printLine(system.objectEquals(b, system.initialise(_stdlib.Array.emptyInstance())));
+  await system.printLine(system.objectEquals(a, system.initialise(_stdlib.Array2D.emptyInstance())));
+  await system.printLine(system.objectEquals(b, system.initialise(_stdlib.Array2D.emptyInstance())));
 }
 return [main, _tests];}`;
 
@@ -218,7 +217,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "[[3]][]falsefalsetrue");
+    await assertObjectCodeExecutes(fileImpl, "[][]truetruetrue");
   });
 
   test("Pass_InitialiseEmptyArray", async () => {
@@ -305,7 +304,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Missing argument(s). Expected: column (Int), row (Int), parameter2 (String)",
+      "Missing argument(s). Expected: column (Int), row (Int), value (String)",
     ]);
   });
 
@@ -314,8 +313,7 @@ end main
 
 main
   variable a set to new Array2D<of String>()
-  call a.putAt(0, 0, "")
-  variable b set to a[0][0]
+  variable b set to a[0, 0]
 end main
 `;
 
@@ -341,7 +339,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: index (Int), value (Array<of String>) Provided: Int, Boolean",
+      "Argument types. Expected: column (Int), row (Int), value (String) Provided: Int, Int, Boolean",
     ]);
   });
 

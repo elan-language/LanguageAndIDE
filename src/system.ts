@@ -195,6 +195,15 @@ export class System {
     toIndex[index] = value;
   }
 
+  safe2DArraySet<T>(toIndex: T[][], col: number, row: number, value: T) {
+    const size = toIndex.length;
+    if (col >= size) {
+      throw new ElanRuntimeError(`Out of range index: ${col} size: ${size}`);
+    }
+
+    this.safeArraySet(toIndex[col], row, value);
+  }
+
   async printLine(s: any) {
     const ss = await this._stdlib.asString(s);
     await this.elanInputOutput.printLine(ss);

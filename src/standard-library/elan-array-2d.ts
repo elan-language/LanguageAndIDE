@@ -23,7 +23,7 @@ export class ElanArray2D<T1> {
   }
 
   constructor(arr?: T1[][]) {
-    this.contents = arr ? [...arr] : [[]];
+    this.contents = arr ? [...arr] : [];
   }
 
   private contents: T1[][];
@@ -49,13 +49,13 @@ export class ElanArray2D<T1> {
   //   this.system!.safeArraySet(this.contents, index, value);
   // }
 
-  @elanProcedure(["column", "row"])
+  @elanProcedure(["column", "row", "value"])
   putAt(
     @elanIntType() col: number,
     @elanIntType() row: number,
     @elanGenericParamT1Type() value: T1,
   ) {
-    this.system!.safeArraySet(this.contents[col] as T1[], row, value);
+    this.system!.safe2DArraySet(this.contents, col, row, value);
   }
 
   // @elanProcedure(["index", "value"])
@@ -111,8 +111,13 @@ export class ElanArray2D<T1> {
   }
 
   async asString() {
-    const contents = await this.system?.asString(this.contents);
-    return `[${contents}]`;
+    const strContents = [];
+
+    for (const c of this.contents) {
+      strContents.push(await this.system?.asString(c));
+    }
+
+    return `[${strContents.map((s) => `[${s}]`).join(", ")}]`;
   }
 
   safeIndex(index1: number, index2?: number) {
