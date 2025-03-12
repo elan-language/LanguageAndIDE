@@ -241,12 +241,22 @@ export function mustBeCallable(
   }
 }
 
+function isRecord(st: SymbolType) {
+  return (
+    st instanceof ClassType &&
+    st.isImmutable &&
+    !st.isIndexable &&
+    !st.isDoubleIndexable &&
+    !st.isIterable
+  );
+}
+
 export function mustBeRecordType(
   symbolType: SymbolType,
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (knownType(symbolType) && !(symbolType instanceof ClassType)) {
+  if (knownType(symbolType) && !isRecord(symbolType)) {
     compileErrors.push(new TypeCompileError("record", location));
   }
 }
