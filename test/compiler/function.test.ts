@@ -326,14 +326,14 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "bar");
   });
 
-  ignore_test("Fail_ExtensionParameterCount", async () => {
+  test("Fail_ExtensionParameterCount", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
-constant a set to {"a":1}
+constant a set to ""
 
 main
-  variable b set to a.withPutAtKey()
-  variable c set to a.withPutAtKey("a", 1, 2)
+  variable b set to a.contains()
+  variable c set to a.contains("a", 1, 2)
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -341,8 +341,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Missing argument(s). Expected: key (String), value (Int)",
-      "Too many argument(s). Expected: key (String), value (Int)",
+      "Missing argument(s). Expected: item (String)",
+      "Too many argument(s). Expected: item (String)",
     ]);
   });
 
