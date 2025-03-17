@@ -1,4 +1,4 @@
-# 746b3067671910a2a8d822f4aa91abb234fef15d30c85e31e5b908ddc00408bf Elan Beta 9 valid
+# FFFF Elan Beta 9 valid
 
 main
   let start be newPoint(5, 5)
@@ -150,8 +150,7 @@ class Solver
         call property.currentNeighbours.append(node)
       end if
     end each
-    return neighbours.listAsArray()
-  end function
+  end procedure
 
   function getNodeFor(p as Point) returns Node
     let matches be property.nodes.filter(lambda n as Node => n.point is p)
