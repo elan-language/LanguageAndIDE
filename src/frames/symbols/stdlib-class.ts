@@ -125,11 +125,6 @@ export class StdLibClass implements Class {
         (newSymbol as any)["isMember"] = true;
       }
 
-      if ("isProperty" in symbol) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (newSymbol as any)["isProperty"] = true;
-      }
-
       return newSymbol;
     }
 

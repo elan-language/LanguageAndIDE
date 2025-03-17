@@ -43,10 +43,6 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
     return cc.concat(this.compileErrors).concat(this.subscript1.aggregateCompileErrors());
   }
 
-  isRange() {
-    return this.subscript1 instanceof RangeAsn;
-  }
-
   isSimpleSubscript() {
     return !(this.subscript1 instanceof RangeAsn);
   }

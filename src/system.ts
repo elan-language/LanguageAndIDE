@@ -38,22 +38,6 @@ export class System {
     return this.emptyRegExpSingleton;
   }
 
-  emptyArray() {
-    return this.literalArray([]);
-  }
-
-  emptyDictionary() {
-    return this.dictionary({});
-  }
-
-  emptyDictionaryImmutable() {
-    return this.emptyDictionaryImmutableSingleton;
-  }
-
-  emptyImmutableList() {
-    return this.emptyImmutableListSingleton;
-  }
-
   emptyTuple(toInit: any[]) {
     const t = [...toInit];
     return this.tuple(t);
@@ -81,10 +65,6 @@ export class System {
   }
 
   literalArray(t: Array<any>) {
-    return this.initialise(new ElanArray(t));
-  }
-
-  array(t: Array<any>) {
     return this.initialise(new ElanArray(t));
   }
 
@@ -162,11 +142,6 @@ export class System {
     }
 
     return r;
-  }
-
-  safeDictionarySet(toIndex: any, index: any, value: any) {
-    const d = this.dictionary(toIndex ?? {}) as any;
-    d[index] = value;
   }
 
   throwRangeError(toIndex: any, index: any) {

@@ -110,10 +110,6 @@ export function isParameter(s?: ElanSymbol): boolean {
   return !!s && s.symbolScope === SymbolScope.parameter;
 }
 
-export function isAssignable(s?: ElanSymbol): boolean {
-  return !!s && (isVariableStatement(s) || isProperty(s) || isOutParameter(s));
-}
-
 export function isClassTypeDef(s?: ElanSymbol | Scope): s is Class {
   return !!s && "updateOfTypes" in s;
 }
@@ -138,10 +134,6 @@ export function isMemberOnFieldsClass(s: ElanSymbol, transforms: Transforms, sco
 
 export function isInsideClass(scope: Scope) {
   return getClassScope(scope) !== NullScope.Instance;
-}
-
-export function isPrivateMember(s: ElanSymbol | Member): boolean {
-  return isMember(s) && s.private;
 }
 
 export function isPublicMember(s: ElanSymbol | Member): boolean {
@@ -340,18 +332,6 @@ export function isSystemFunction(s: ElanSymbol, transforms: Transforms) {
 
 export function isFunctionType(s: SymbolType): s is FunctionType {
   return !!s && s instanceof FunctionType;
-}
-
-export function isProcedureType(s: SymbolType): s is FunctionType {
-  return !!s && s instanceof ProcedureType;
-}
-
-export function isIdOrProcedure(s: ElanSymbol, transforms: Transforms) {
-  return isProcedure(s, transforms) || isVariableStatement(s);
-}
-
-export function isExpression(s: ElanSymbol, transforms: Transforms) {
-  return !isProcedure(s, transforms);
 }
 
 export function firstCharIsUpper(s: string) {
@@ -713,15 +693,6 @@ export function mostPreciseSymbol(lhs: SymbolType, rhs: SymbolType): SymbolType 
 
 export function isNumber(st: SymbolType) {
   return st instanceof IntType || st instanceof FloatType;
-}
-
-export function isInvariantType(lhs: SymbolType, rhs: SymbolType, immutable: boolean) {
-  if (lhs instanceof FloatType && immutable && isNumber(rhs)) {
-    // OK Float/Int -> Float on immutable
-    return true;
-  }
-
-  return lhs.name === rhs.name;
 }
 
 export function knownType(symbolType: SymbolType) {

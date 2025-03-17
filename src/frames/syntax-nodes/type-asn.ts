@@ -6,12 +6,7 @@ import { Scope } from "../interfaces/scope";
 import { ClassType } from "../symbols/class-type";
 import { FunctionType } from "../symbols/function-type";
 import { StringType } from "../symbols/string-type";
-import {
-  getGlobalScope,
-  isClassTypeDef,
-  isIterableType,
-  isReifyableSymbolType,
-} from "../symbols/symbol-helpers";
+import { getGlobalScope, isClassTypeDef, isReifyableSymbolType } from "../symbols/symbol-helpers";
 import { TupleType } from "../symbols/tuple-type";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
@@ -52,10 +47,6 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
 
     if (st instanceof FunctionType) {
       return st.parameterTypes.length + 1;
-    }
-
-    if (isIterableType(st)) {
-      return 1;
     }
 
     return 0;

@@ -676,17 +676,6 @@ export function mustBeIntegerType(
   mustBeAssignableType(IntType.Instance, rhs, compileErrors, location);
 }
 
-export function mustBeCompatibleMutableType(
-  lhs: SymbolType,
-  rhs: SymbolType,
-  compileErrors: CompileError[],
-  location: string,
-) {
-  if (lhs.typeOptions.isImmutable !== rhs.typeOptions.isImmutable) {
-    FailNotAssignable(lhs, rhs, compileErrors, location);
-  }
-}
-
 export function mustBeImmutableType(
   name: string,
   type: SymbolType,
@@ -867,14 +856,6 @@ export function mustNotBeParameter(
       }
     }
   }
-}
-
-export function cannotCallOnParameter(
-  assignable: AstNode,
-  compileErrors: CompileError[],
-  location: string,
-) {
-  compileErrors.push(new MutateCompileError(getId(assignable), "parameter", location));
 }
 
 export function mustNotBeCounter(

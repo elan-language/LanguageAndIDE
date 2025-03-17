@@ -1,3 +1,3 @@
 export interface hasHiddenType {
-  _type: "Tuple" | "Dictionary" | "DictionaryImmutable";
+  _type: "Tuple";
 }

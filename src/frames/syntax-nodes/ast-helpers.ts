@@ -12,8 +12,6 @@ import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstIndexableNode } from "../interfaces/ast-indexable-node";
 import { AstNode } from "../interfaces/ast-node";
 import { AstQualifiedNode } from "../interfaces/ast-qualified-node";
-import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
-import { Class } from "../interfaces/class";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../interfaces/transforms";
@@ -48,10 +46,6 @@ export function isAstQualifiedNode(n: AstNode): n is AstQualifiedNode {
 
 export function isAstIndexableNode(n: AstNode): n is AstIndexableNode {
   return !!n && "rootSymbolType" in n;
-}
-
-export function isAstQualifierNode(n: AstNode): n is AstQualifierNode {
-  return !!n && "value" in n;
 }
 
 export function isAstCollectionNode(n: AstNode): n is AstCollectionNode {
@@ -252,14 +246,6 @@ export function matchGenericTypes(type: FunctionType | ProcedureType, parameters
 
   const flattened = type.parameterTypes.map((n) => flatten(n));
 
-  const pTypes = parameters.map((p) => flatten(p.symbolType()));
-  match(flattened, pTypes, matches);
-  return matches;
-}
-
-export function matchClassGenericTypes(type: Class, parameters: AstNode[]) {
-  const matches = new Map<string, SymbolType>();
-  const flattened = type.ofTypes.map((n) => flatten(n));
   const pTypes = parameters.map((p) => flatten(p.symbolType()));
   match(flattened, pTypes, matches);
   return matches;
