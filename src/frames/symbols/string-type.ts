@@ -1,10 +1,11 @@
+import { GenericSymbolType } from "../interfaces/generic-symbol-type";
 import { SymbolType } from "../interfaces/symbol-type";
 
-export class StringType implements SymbolType {
+export class StringType implements GenericSymbolType {
   private constructor() {}
 
-  get ofType() {
-    return StringType.Instance;
+  get ofTypes() {
+    return [StringType.Instance];
   }
 
   initialValue = '""';

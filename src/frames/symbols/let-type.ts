@@ -1,19 +1,19 @@
-import { GenericSymbolType } from "../interfaces/generic-symbol-type";
-import { SymbolType } from "../interfaces/symbol-type";
-import { immutableTypeOptions } from "../interfaces/type-options";
+// import { GenericSymbolType } from "../interfaces/generic-symbol-type";
+// import { SymbolType } from "../interfaces/symbol-type";
+// import { immutableTypeOptions } from "../interfaces/type-options";
 
-export class LetType implements GenericSymbolType {
-  constructor(public readonly ofType: SymbolType) {}
+// export class LetType implements GenericSymbolType {
+//   constructor(public readonly ofTypes: SymbolType[]) {}
 
-  typeOptions = immutableTypeOptions;
+//   typeOptions = immutableTypeOptions;
 
-  initialValue = "";
+//   initialValue = "";
 
-  get name() {
-    return `Let <${this.ofType.name}>`;
-  }
+//   get name() {
+//     return `Let <${this.ofTypes[0].name}>`;
+//   }
 
-  isAssignableFrom(_otherType: SymbolType): boolean {
-    return false;
-  }
-}
+//   isAssignableFrom(_otherType: SymbolType): boolean {
+//     return false;
+//   }
+// }

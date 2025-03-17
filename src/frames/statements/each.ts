@@ -6,12 +6,12 @@ import { FrameWithStatements } from "../frame-with-statements";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
-import { GenericSymbolType } from "../interfaces/generic-symbol-type";
 import { Parent } from "../interfaces/parent";
 import { Scope } from "../interfaces/scope";
 import { Statement } from "../interfaces/statement";
 import { Transforms } from "../interfaces/transforms";
 import { eachKeyword } from "../keywords";
+import { isGenericSymbolType } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownType } from "../symbols/unknown-type";
 import { transforms } from "../syntax-nodes/ast-helpers";
@@ -84,8 +84,8 @@ ${this.indent()}}`;
     const v = this.variable.text;
 
     if (id === v) {
-      const st =
-        (this.iter.symbolType(transforms) as GenericSymbolType).ofType ?? UnknownType.Instance;
+      const iterSt = this.iter.symbolType(transforms);
+      const st = isGenericSymbolType(iterSt) ? iterSt.ofTypes[0] : UnknownType.Instance;
       return {
         symbolId: id,
         symbolType: () => st,
@@ -115,7 +115,8 @@ ${this.indent()}}`;
     const v = this.variable.text;
 
     if (id === v || all) {
-      const st = (this.iter.symbolType(transforms()) as GenericSymbolType).ofType;
+      const iterSt = this.iter.symbolType(transforms());
+      const st = isGenericSymbolType(iterSt) ? iterSt.ofTypes[0] : UnknownType.Instance;
       const counter = {
         symbolId: v,
         symbolType: () => st,

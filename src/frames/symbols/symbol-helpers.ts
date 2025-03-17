@@ -83,7 +83,7 @@ export function isSymbol(s?: Parent | Frame | ElanSymbol): s is ElanSymbol {
 }
 
 export function isGenericSymbolType(s?: SymbolType | GenericSymbolType): s is GenericSymbolType {
-  return !!s && "ofType" in s;
+  return !!s && "ofTypes" in s;
 }
 
 export function isClassType(s?: SymbolType): s is ClassType {
@@ -299,28 +299,28 @@ export function isValueType(type: SymbolType) {
   );
 }
 
-function matchGenericTypes(actualType: SymbolType, paramType: SymbolType) {
-  if (paramType.constructor.name === actualType.constructor.name) {
-    return true;
-  }
+// function _matchGenericTypes(actualType: SymbolType, paramType: SymbolType) {
+//   if (paramType.constructor.name === actualType.constructor.name) {
+//     return true;
+//   }
 
-  return false;
-}
+//   return false;
+// }
 
-function _matchDictionaryTypes(actualType: SymbolType, paramType: SymbolType) {
-  if (paramType.constructor.name === actualType.constructor.name) {
-    return true;
-  }
+// function _matchDictionaryTypes(actualType: SymbolType, paramType: SymbolType) {
+//   if (paramType.constructor.name === actualType.constructor.name) {
+//     return true;
+//   }
 
-  // if (
-  //   paramType instanceof AbstractDictionaryType &&
-  //   (actualType instanceof DictionaryType || actualType instanceof DictionaryImmutableType)
-  // ) {
-  //   return true;
-  // }
+//   // if (
+//   //   paramType instanceof AbstractDictionaryType &&
+//   //   (actualType instanceof DictionaryType || actualType instanceof DictionaryImmutableType)
+//   // ) {
+//   //   return true;
+//   // }
 
-  return false;
-}
+//   return false;
+// }
 
 export function matchType(actualType: SymbolType, paramType: SymbolType): boolean {
   if (paramType.name === actualType.name) {
@@ -335,16 +335,16 @@ export function matchType(actualType: SymbolType, paramType: SymbolType): boolea
     return paramType.isAssignableFrom(actualType);
   }
 
-  if (
-    isGenericSymbolType(paramType) &&
-    (isGenericSymbolType(actualType) || actualType instanceof StringType)
-  ) {
-    return (
-      matchGenericTypes(actualType, paramType) &&
-      (paramType.ofType instanceof GenericParameterType ||
-        matchType(actualType.ofType, paramType.ofType))
-    );
-  }
+  // if (
+  //   isGenericSymbolType(paramType) &&
+  //   (isGenericSymbolType(actualType) || actualType instanceof StringType)
+  // ) {
+  //   return (
+  //     matchGenericTypes(actualType, paramType) &&
+  //     (paramType.ofType instanceof GenericParameterType ||
+  //       matchType(actualType.ofTypes, paramType.ofTypes))
+  //   );
+  // }
 
   // if (isAnyDictionaryType(paramType) && isAnyDictionaryType(actualType)) {
   //   return (

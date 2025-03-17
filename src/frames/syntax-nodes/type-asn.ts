@@ -47,7 +47,7 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
     }
 
     if (st instanceof ClassType && isClassTypeDef(st.scope)) {
-      return st.scope.ofTypes.length ?? 0;
+      return st.scope.ofTypes.length;
     }
 
     if (st instanceof FunctionType) {
@@ -90,7 +90,7 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
     return st.initialValue;
   }
 
-  safeGetGenericParameterSymbolType() {
+  getGenericParameterSymbolTypes() {
     return this.genericParameters.map((gp) => gp.symbolType());
   }
 
@@ -104,11 +104,11 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
     const st = symbol.symbolType(transforms());
 
     if (isReifyableSymbolType(st)) {
-      return st.reify(this.safeGetGenericParameterSymbolType());
+      return st.reify(this.getGenericParameterSymbolTypes());
     }
 
     if (st instanceof TupleType) {
-      return new TupleType(this.safeGetGenericParameterSymbolType());
+      return new TupleType(this.getGenericParameterSymbolTypes());
     }
 
     if (st instanceof FunctionType) {

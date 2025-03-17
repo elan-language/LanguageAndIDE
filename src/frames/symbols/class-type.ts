@@ -1,5 +1,6 @@
 import { Class } from "../interfaces/class";
 import { ElanSymbol } from "../interfaces/elan-symbol";
+import { GenericSymbolType } from "../interfaces/generic-symbol-type";
 import { ReifyableSymbolType } from "../interfaces/reifyable-symbol-type";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
@@ -17,7 +18,7 @@ export enum ClassSubType {
   interface,
 }
 
-export class ClassType implements ReifyableSymbolType, Scope {
+export class ClassType implements ReifyableSymbolType, Scope, GenericSymbolType {
   constructor(
     public className: string,
     public subType: ClassSubType,

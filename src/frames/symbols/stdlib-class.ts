@@ -30,12 +30,19 @@ export class StdLibClass implements Class {
   }
 
   updateOfTypes(ofTypes: SymbolType[]) {
+    const newOfTypes: SymbolType[] = [...this.ofTypes];
+    const lessOf = newOfTypes.length > ofTypes.length ? ofTypes.length : newOfTypes.length;
+
+    for (let i = 0; i < lessOf; i++) {
+      newOfTypes[i] = ofTypes[i];
+    }
+
     return new StdLibClass(
       this.name,
       this.isNotInheritable,
       this.typeOptions,
       this.children,
-      ofTypes,
+      newOfTypes,
       this.inheritTypes,
       this.scope,
     );
@@ -102,6 +109,9 @@ export class StdLibClass implements Class {
     if (!isProperty(symbol)) {
       const st = symbol.symbolType();
       const matches = new Map<string, SymbolType>();
+
+      //this.ofTypes.forEach((t, i) => matches.set(`T${i}`, t));
+
       matches.set("T1", this.ofTypes[0]);
 
       const st1 = generateType(st, matches);

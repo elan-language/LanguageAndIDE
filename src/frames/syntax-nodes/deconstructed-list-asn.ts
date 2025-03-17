@@ -28,7 +28,7 @@ export class DeconstructedListAsn extends AbstractAstNode implements AstIdNode {
     const st = this.symbolType();
 
     if (isGenericSymbolType(st.tailType)) {
-      mustBeAssignableType(st.headType, st.tailType.ofType, this.compileErrors, this.fieldId);
+      mustBeAssignableType(st.headType, st.tailType.ofTypes[0], this.compileErrors, this.fieldId);
     }
 
     return `${this.head.compile()}, ${this.tail.compile()}`;

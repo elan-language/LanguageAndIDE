@@ -41,7 +41,7 @@ export class DeconstructedListType implements DeconstructedSymbolType {
     }
 
     if (isGenericSymbolType(otherType)) {
-      return this.headType.isAssignableFrom(otherType.ofType);
+      return this.headType.isAssignableFrom(otherType.ofTypes[0]);
     }
 
     return false;

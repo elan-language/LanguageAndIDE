@@ -408,7 +408,7 @@ export function getIndexAndOfType(rootType: SymbolType): [SymbolType, SymbolType
   }
 
   if (isGenericSymbolType(rootType)) {
-    return [IntType.Instance, rootType.ofType];
+    return [IntType.Instance, rootType.ofTypes[0]];
   }
 
   // if (isAnyDictionaryType(rootType)) {
