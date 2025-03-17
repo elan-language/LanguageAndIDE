@@ -114,6 +114,10 @@ export class StdLibClass implements Class {
 
       matches.set("T1", this.ofTypes[0]);
 
+      if (this.ofTypes.length === 2) {
+        matches.set("T2", this.ofTypes[1]);
+      }
+
       const st1 = generateType(st, matches);
 
       const newSymbol = {
