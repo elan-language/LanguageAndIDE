@@ -110,13 +110,7 @@ export class StdLibClass implements Class {
       const st = symbol.symbolType();
       const matches = new Map<string, SymbolType>();
 
-      //this.ofTypes.forEach((t, i) => matches.set(`T${i}`, t));
-
-      matches.set("T1", this.ofTypes[0]);
-
-      if (this.ofTypes.length === 2) {
-        matches.set("T2", this.ofTypes[1]);
-      }
+      this.ofTypes.forEach((t, i) => matches.set(`T${i + 1}`, t));
 
       const st1 = generateType(st, matches);
 

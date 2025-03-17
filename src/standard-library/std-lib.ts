@@ -240,59 +240,6 @@ export class StdLib {
     return this.system.initialise(new List(seq));
   }
 
-  // @elanFunction([], FunctionOptions.pureExtension, ElanClass(List))
-  // keys<T1>(
-  //   @elanAbstractDictionaryType(ElanT1, ElanT2)
-  //   dict: {
-  //     [key: string]: T1;
-  //   },
-  // ): List<T1> {
-  //   const lst = Object.getOwnPropertyNames(dict).filter((s) => s !== "_type") as T1[];
-  //   return this.system.initialise(new List(lst));
-  // }
-
-  // @elanFunction([], FunctionOptions.pureExtension, ElanClass(List))
-  // values<T1>(
-  //   @elanAbstractDictionaryType(ElanT1, ElanT2)
-  //   dict: {
-  //     [key: string]: T1;
-  //   },
-  // ): List<T1> {
-  //   const keys = Object.getOwnPropertyNames(dict).filter((s) => s !== "_type") as T1[];
-  //   const lst = keys.map((k) => dict[k as string]);
-  //   return this.system.initialise(new List(lst));
-  // }
-
-  // @elanFunction(["key"], FunctionOptions.pureExtension, ElanBoolean)
-  // hasKey<T1>(
-  //   @elanAbstractDictionaryType(ElanT1, ElanT2)
-  //   dict: { [key: string]: T1 },
-  //   @elanGenericParamT1Type() key: string,
-  // ): boolean {
-  //   return this.keys(dict).contains(key as T1);
-  // }
-
-  // @elanFunction(["key"], FunctionOptions.pureExtension, ElanDictionaryImmutable(ElanT1, ElanT2))
-  // withRemoveAtKey<T1>(
-  //   @elanDictionaryImmutableType(ElanT1, ElanT2)
-  //   dict: { [key: string]: T1 },
-  //   @elanGenericParamT1Type() key: string,
-  // ) {
-  //   const newDict = { ...dict };
-  //   (newDict as unknown as hasHiddenType)._type = (dict as unknown as hasHiddenType)._type;
-  //   delete newDict[key];
-  //   return newDict;
-  // }
-
-  // @elanProcedure(["key"], ProcedureOptions.extension)
-  // removeAtKey<T1>(
-  //   @elanDictionaryType(ElanT1, ElanT2)
-  //   dict: { [key: string]: T1 },
-  //   @elanGenericParamT1Type() key: string,
-  // ) {
-  //   delete dict[key];
-  // }
-
   @elanFunction(["match", "replacement"], FunctionOptions.pureExtension)
   replace(s1: string, match: string, replacement: string): string {
     return s1.replaceAll(match, replacement);
@@ -332,44 +279,6 @@ export class StdLib {
   isBeforeOrSameAs(s1: string, s2: string): boolean {
     return s1 < s2 || s1 === s2;
   }
-
-  // @elanProcedure(["", "key", "value"], ProcedureOptions.extension)
-  // putAtKey<T1>(
-  //   @elanDictionaryType(ElanT1, ElanT2)
-  //   dict: { [key: string]: T1 },
-  //   @elanGenericParamT1Type() key: string,
-  //   @elanGenericParamT2Type() value: T1,
-  // ) {
-  //   this.system.safeDictionarySet(dict, key, value);
-  // }
-
-  // custom impl
-  private elanIndexOf<T1>(list: T1[], elem: T1) {
-    for (let i = 0; i < list.length; i++) {
-      const item = list[i];
-      if (this.system.equals(item, elem)) {
-        return i;
-      }
-    }
-    return -1;
-  }
-
-  // @elanFunction(
-  //   ["", "key", "value"],
-  //   FunctionOptions.pureExtension,
-  //   ElanDictionaryImmutable(ElanT1, ElanT2),
-  // )
-  // withPutAtKey<T1>(
-  //   @elanDictionaryImmutableType(ElanT1, ElanT2)
-  //   dict: { [key: string]: T1 },
-  //   @elanGenericParamT1Type() key: string,
-  //   @elanGenericParamT2Type() value: T1,
-  // ) {
-  //   const newDict = { ...dict };
-  //   newDict[key] = value;
-  //   (newDict as unknown as hasHiddenType)._type = "DictionaryImmutable";
-  //   return newDict;
-  // }
 
   @elanFunction(["", "targetString"], FunctionOptions.pureExtension, ElanInt)
   indexOf(s1: string, s2: string): number {

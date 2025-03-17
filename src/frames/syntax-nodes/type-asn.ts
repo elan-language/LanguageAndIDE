@@ -78,10 +78,6 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
       gp.compile();
     }
 
-    // if (isAnyDictionaryType(rootSt)) {
-    //   return "Object";
-    // }
-
     return this.id;
   }
 

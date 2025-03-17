@@ -44,11 +44,6 @@ export class NewAsn extends AbstractAstNode implements AstNode {
 
     mustBeKnownSymbolType(type, typeAsString, this.compileErrors, this.fieldId);
 
-    // if (isConcreteDictionaryType(type)) {
-    //   mustMatchParameters(this.parameters, [], "", false, this.compileErrors, this.fieldId);
-    //   return `system.initialise(${type.factoryName}(new Object()))`;
-    // }
-
     if (type instanceof ClassType) {
       mustBeConcreteClass(type, this.compileErrors, this.fieldId);
 

@@ -48,16 +48,6 @@ export function isDeconstructedType(s?: SymbolType): s is DeconstructedSymbolTyp
   return !!s && "symbolTypeFor" in s;
 }
 
-// export function isAnyDictionaryType(s?: SymbolType): s is DictionarySymbolType {
-//   return !!s && "keyType" in s && "valueType" in s;
-// }
-
-// export function isConcreteDictionaryType(
-//   s?: SymbolType,
-// ): s is DictionaryType | DictionaryImmutableType {
-//   return s instanceof DictionaryType || s instanceof DictionaryImmutableType;
-// }
-
 export function isListType(s?: SymbolType): s is ClassType {
   return !!s && s instanceof ClassType && s.className === "List";
 }
@@ -299,29 +289,6 @@ export function isValueType(type: SymbolType) {
   );
 }
 
-// function _matchGenericTypes(actualType: SymbolType, paramType: SymbolType) {
-//   if (paramType.constructor.name === actualType.constructor.name) {
-//     return true;
-//   }
-
-//   return false;
-// }
-
-// function _matchDictionaryTypes(actualType: SymbolType, paramType: SymbolType) {
-//   if (paramType.constructor.name === actualType.constructor.name) {
-//     return true;
-//   }
-
-//   // if (
-//   //   paramType instanceof AbstractDictionaryType &&
-//   //   (actualType instanceof DictionaryType || actualType instanceof DictionaryImmutableType)
-//   // ) {
-//   //   return true;
-//   // }
-
-//   return false;
-// }
-
 export function matchType(actualType: SymbolType, paramType: SymbolType): boolean {
   if (paramType.name === actualType.name) {
     return true;
@@ -334,27 +301,6 @@ export function matchType(actualType: SymbolType, paramType: SymbolType): boolea
   if (paramType instanceof ClassType) {
     return paramType.isAssignableFrom(actualType);
   }
-
-  // if (
-  //   isGenericSymbolType(paramType) &&
-  //   (isGenericSymbolType(actualType) || actualType instanceof StringType)
-  // ) {
-  //   return (
-  //     matchGenericTypes(actualType, paramType) &&
-  //     (paramType.ofType instanceof GenericParameterType ||
-  //       matchType(actualType.ofTypes, paramType.ofTypes))
-  //   );
-  // }
-
-  // if (isAnyDictionaryType(paramType) && isAnyDictionaryType(actualType)) {
-  //   return (
-  //     matchDictionaryTypes(actualType, paramType) &&
-  //     (paramType.keyType instanceof GenericParameterType ||
-  //       matchType(actualType.keyType, paramType.keyType)) &&
-  //     (paramType.valueType instanceof GenericParameterType ||
-  //       matchType(actualType.valueType, paramType.valueType))
-  //   );
-  // }
 
   return false;
 }
