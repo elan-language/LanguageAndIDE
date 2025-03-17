@@ -368,7 +368,7 @@ class Bar {
   }
 
   async getTimes() {
-    let x = system.initialise(_stdlib.List.emptyInstance());
+    let x = system.initialise(_stdlib.Array.emptyInstance());
     x = (await this.p1.times(2));
     return x;
   }

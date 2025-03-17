@@ -695,7 +695,7 @@ export function mustBeImmutableGenericType(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (!ofType.isImmutable) {
+  if (!ofType.typeOptions.isImmutable) {
     compileErrors.push(
       new SyntaxCompileError(`${type} cannot be of mutable type '${ofType.name}'`, location),
     );
