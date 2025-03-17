@@ -46,7 +46,7 @@ end procedure
 procedure createRocksAndNodes(percentRocks as Int, out rocks as Array<of Point>, out nodes as Array<of Node>, start as Point, dest as Point)
   for x from 0 to 39 step 1
     for y from 1 to 29 step 1
-      let p be new Point(x, y)
+      let p be newPoint(x, y)
       if p is start then
         call nodes.append(new Node(p, 0, p.minDistTo(dest)))
       else if p is dest then
