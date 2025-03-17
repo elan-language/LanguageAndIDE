@@ -34,10 +34,10 @@ const global = new class {
 };
 async function main() {
   let arr = system.literalArray(["three", "four"]);
-  await system.printLine(_stdlib.contains(global.lst, 1));
-  await system.printLine(_stdlib.contains(global.lst, 3));
-  await system.printLine(_stdlib.contains(arr, "four"));
-  await system.printLine(_stdlib.contains(arr, "five"));
+  await system.printLine(global.lst.contains(1));
+  await system.printLine(global.lst.contains(3));
+  await system.printLine(arr.contains("four"));
+  await system.printLine(arr.contains("five"));
   await system.printLine(_stdlib.contains("onetwo", "two"));
   await system.printLine(_stdlib.contains("onetwo", "three"));
 }
@@ -108,7 +108,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "true");
   });
 
-  test("Pass_random", async () => {
+  test("Pass_random1", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -372,14 +372,14 @@ _tests.push(["test1", async (_outcomes) => {
   _outcomes.push(await system.assert(async () => _stdlib.round(_stdlib.acos(0.5), 3), 1.047, "assert10", _stdlib, false));
   _outcomes.push(await system.assert(async () => _stdlib.round(_stdlib.asin(0.5), 3), 0.524, "assert13", _stdlib, false));
   _outcomes.push(await system.assert(async () => _stdlib.round(_stdlib.atan(1), 2), 0.79, "assert16", _stdlib, false));
-  _outcomes.push(await system.assert(async () => _stdlib.round(_stdlib.cos(system.nanCheck(_stdlib.pi / 4)), 3), 0.707, "assert19", _stdlib, false));
+  _outcomes.push(await system.assert(async () => _stdlib.round(_stdlib.cos(_stdlib.pi / 4), 3), 0.707, "assert19", _stdlib, false));
   _outcomes.push(await system.assert(async () => _stdlib.round(_stdlib.exp(2), 3), 7.389, "assert22", _stdlib, false));
   _outcomes.push(await system.assert(async () => _stdlib.round(_stdlib.logE(7.398), 2), 2, "assert25", _stdlib, false));
   _outcomes.push(await system.assert(async () => _stdlib.log10(1000), 3, "assert28", _stdlib, false));
   _outcomes.push(await system.assert(async () => _stdlib.log2(65536), 16, "assert31", _stdlib, false));
-  _outcomes.push(await system.assert(async () => _stdlib.round(_stdlib.sin(system.nanCheck(_stdlib.pi / 6)), 2), 0.5, "assert34", _stdlib, false));
+  _outcomes.push(await system.assert(async () => _stdlib.round(_stdlib.sin(_stdlib.pi / 6), 2), 0.5, "assert34", _stdlib, false));
   _outcomes.push(await system.assert(async () => _stdlib.round(_stdlib.sqrt(2), 3), 1.414, "assert37", _stdlib, false));
-  _outcomes.push(await system.assert(async () => _stdlib.round(_stdlib.tan(system.nanCheck(_stdlib.pi / 4)), 2), 1, "assert40", _stdlib, false));
+  _outcomes.push(await system.assert(async () => _stdlib.round(_stdlib.tan(_stdlib.pi / 4), 2), 1, "assert40", _stdlib, false));
   _outcomes.push(await system.assert(async () => _stdlib.round(_stdlib.sinDeg(30), 2), 0.5, "assert43", _stdlib, false));
   _outcomes.push(await system.assert(async () => _stdlib.round(_stdlib.asinDeg(0.5), 2), 30, "assert46", _stdlib, false));
   _outcomes.push(await system.assert(async () => _stdlib.round(_stdlib.cosDeg(60), 2), 0.5, "assert49", _stdlib, false));
@@ -430,7 +430,7 @@ return [main, _tests];}`;
       ],
     ]);
   });
-  test("Pass_Random", async () => {
+  test("Pass_Random2", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -452,10 +452,10 @@ async function main() {
   let results = system.literalArray([0, 0, 0, 0, 0, 0, 0]);
   for (let i = 1; i <= 10000; i = i + 1) {
     let r = _stdlib.randomInt(3, 5);
-    _stdlib.putAt(results, r, system.safeIndex(results, r) + 1);
+    results.putAt(r, system.safeIndex(results, r) + 1);
   }
   for (let i = 0; i <= 6; i = i + 1) {
-    let r = _stdlib.round((system.nanCheck(system.safeIndex(results, i) / 10000)), 1);
+    let r = _stdlib.round((system.safeIndex(results, i) / 10000), 1);
     await system.printLine(r);
     await system.printLine(", ");
   }
@@ -499,10 +499,10 @@ async function main() {
   rnd.initialiseFromClock();
   for (let i = 1; i <= 10000; i = i + 1) {
     [val, rnd] = rnd.nextInt(3, 5);
-    _stdlib.putAt(results, val, system.safeIndex(results, val) + 1);
+    results.putAt(val, system.safeIndex(results, val) + 1);
   }
   for (let i = 0; i <= 6; i = i + 1) {
-    let r = _stdlib.round((system.nanCheck(system.safeIndex(results, i) / 10000)), 1);
+    let r = _stdlib.round((system.safeIndex(results, i) / 10000), 1);
     await system.printLine(r);
     await system.printLine(", ");
   }
@@ -543,7 +543,7 @@ async function main() {
   let val = 0;
   for (let i = 1; i <= 10000; i = i + 1) {
     [val, rnd] = rnd.nextInt(3, 5);
-    _stdlib.putAt(results, val, system.safeIndex(results, val) + 1);
+    results.putAt(val, system.safeIndex(results, val) + 1);
   }
   for (let i = 0; i <= 6; i = i + 1) {
     let r = system.safeIndex(results, i);
@@ -591,7 +591,7 @@ async function main() {
   let dice = 0;
   for (let i = 1; i <= 10000; i = i + 1) {
     [dice, rnd] = (await global.rollDice(rnd));
-    _stdlib.putAt(results, dice, system.safeIndex(results, dice) + 1);
+    results.putAt(dice, system.safeIndex(results, dice) + 1);
   }
   for (let i = 0; i <= 6; i = i + 1) {
     let r = system.safeIndex(results, i);
@@ -653,14 +653,14 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "1101 11110 1100 11111 10011 -1110 110100 11");
   });
-  test("2D arrays", async () => {
+  test("Pass_2DArrays", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
   variable oxoBoard set to createArray2D(3,3,"")
-  call oxoBoard.putAt2D(0, 0, "o")
-  call oxoBoard.putAt2D(2, 2, "o")
-  call oxoBoard.putAt2D(1, 1, "x")
+  call oxoBoard.putAt(0, 0, "o")
+  call oxoBoard.putAt(2, 2, "o")
+  call oxoBoard.putAt(1, 1, "x")
   print oxoBoard
 end main`;
 
@@ -668,9 +668,9 @@ end main`;
 const global = new class {};
 async function main() {
   let oxoBoard = _stdlib.createArray2D(3, 3, "");
-  _stdlib.putAt2D(oxoBoard, 0, 0, "o");
-  _stdlib.putAt2D(oxoBoard, 2, 2, "o");
-  _stdlib.putAt2D(oxoBoard, 1, 1, "x");
+  oxoBoard.putAt(0, 0, "o");
+  oxoBoard.putAt(2, 2, "o");
+  oxoBoard.putAt(1, 1, "x");
   await system.printLine(oxoBoard);
 }
 return [main, _tests];}`;
@@ -746,7 +746,7 @@ const global = new class {};
 async function main() {
   let a = system.literalArray([1, 2]);
   let b = system.literalArray([3, 4]);
-  _stdlib.appendArray(a, b);
+  a.appendArray(b);
   await system.printLine(a);
   await system.printLine(b);
 }
@@ -777,7 +777,7 @@ const global = new class {};
 async function main() {
   let a = system.literalArray([1, 2]);
   let b = system.literalArray([3, 4]);
-  _stdlib.prependArray(a, b);
+  a.prependArray(b);
   await system.printLine(a);
   await system.printLine(b);
 }
@@ -807,7 +807,7 @@ const global = new class {};
 async function main() {
   let a = system.literalArray([1, 2]);
   let b = 3;
-  _stdlib.prepend(a, b);
+  a.prepend(b);
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -852,7 +852,7 @@ return [main, _tests];}`;
 
 main
   let words be ["Now", "is","the","time..."]
-  let s be words.join(".")
+  let s be words.joinArray(".")
   print s
 end main`;
 
@@ -860,7 +860,7 @@ end main`;
 const global = new class {};
 async function main() {
   const words = system.literalArray(["Now", "is", "the", "time..."]);
-  const s = _stdlib.join(words, ".");
+  const s = _stdlib.joinArray(words, ".");
   await system.printLine(s);
 }
 return [main, _tests];}`;
@@ -1006,14 +1006,14 @@ async function main() {
   const a = system.literalArray([1, 3, 5, 7, 9]);
   const b = system.list([2, 4, 6, 8]);
   const c = "Hello World!";
-  await system.printLine(_stdlib.indexOfItem(a, 9));
-  await system.printLine(_stdlib.indexOfItem(a, 5));
-  await system.printLine(_stdlib.indexOfItem(b, 2));
-  await system.printLine(_stdlib.indexOfItem(b, 7));
+  await system.printLine(a.indexOfItem(9));
+  await system.printLine(a.indexOfItem(5));
+  await system.printLine(b.indexOfItem(2));
+  await system.printLine(b.indexOfItem(7));
   await system.printLine(_stdlib.indexOfItem(c, "o"));
   await system.printLine(_stdlib.indexOfItem(c, "ll"));
   let i = 1;
-  i = _stdlib.indexOfItem(a, 9);
+  i = a.indexOfItem(9);
 }
 return [main, _tests];}`;
 
@@ -1050,5 +1050,57 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "65");
+  });
+  test("Pass_isNaN", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  print sqrt(-1).isNaN()
+  print sqrt(2).isNaN()
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await system.printLine(_stdlib.isNaN(_stdlib.sqrt((-1))));
+  await system.printLine(_stdlib.isNaN(_stdlib.sqrt(2)));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "truefalse");
+  });
+  test("Pass_isInfinite", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  print (1/0).isInfinite()
+  print (-1/0).isInfinite()
+  print (1/1).isInfinite()
+  print sqrt(-1).isInfinite()
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await system.printLine(_stdlib.isInfinite((1 / 0)));
+  await system.printLine(_stdlib.isInfinite(((-1) / 0)));
+  await system.printLine(_stdlib.isInfinite((1 / 1)));
+  await system.printLine(_stdlib.isInfinite(_stdlib.sqrt((-1))));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "truetruefalsefalse");
   });
 });

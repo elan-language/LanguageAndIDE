@@ -77,12 +77,6 @@ export class TernaryCompileError extends CompileError {
   }
 }
 
-export class ArraySizeCompileError extends CompileError {
-  constructor(location: string) {
-    super(Priority.illegalOperation, `Array requires 1 or 2 parameters`, location);
-  }
-}
-
 export class SyntaxCompileError extends CompileError {
   constructor(message: string, location: string) {
     super(Priority.illegalOperation, message, location);
@@ -125,8 +119,9 @@ export class CannotCallAsAMethod extends CompileError {
 }
 
 export class NotIndexableCompileError extends CompileError {
-  constructor(type: string, location: string) {
-    super(Priority.illegalOperation, `Cannot index ${type}`, location);
+  constructor(type: string, location: string, double: boolean) {
+    const dbl = double ? "double " : "";
+    super(Priority.illegalOperation, `Cannot ${dbl}index ${type}`, location);
   }
 }
 
@@ -287,25 +282,9 @@ export class RedefinedCompileError extends CompileError {
   }
 }
 
-export class IndexCompileError extends CompileError {
-  constructor(thing: string, location: string) {
-    super(
-      Priority.illegalOperation,
-      `May not set an indexed value in a function: ${thing}`,
-      location,
-    );
-  }
-}
-
 export class DuplicateKeyCompileError extends CompileError {
   constructor(location: string) {
     super(Priority.typeError, `Duplicate Dictionary key(s)`, location);
-  }
-}
-
-export class DuplicateIdsCompileError extends CompileError {
-  constructor(ids: string[], location: string) {
-    super(Priority.typeError, `Duplicate inherited ids: ${ids.join(", ")}`, location);
   }
 }
 

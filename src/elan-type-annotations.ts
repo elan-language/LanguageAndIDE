@@ -13,18 +13,13 @@ import {
 import { ElanSymbol } from "./frames/interfaces/elan-symbol";
 import { Scope } from "./frames/interfaces/scope";
 import { SymbolType } from "./frames/interfaces/symbol-type";
-import { AbstractDictionaryType } from "./frames/symbols/abstract-dictionary-type";
-import { ArrayType } from "./frames/symbols/array-type";
+import { getTypeOptions, noTypeOptions, TypeOptions } from "./frames/interfaces/type-options";
 import { BooleanType } from "./frames/symbols/boolean-type";
 import { ClassSubType, ClassType } from "./frames/symbols/class-type";
-import { DictionaryImmutableType } from "./frames/symbols/dictionary-immutable-type";
-import { DictionaryType } from "./frames/symbols/dictionary-type";
 import { FloatType } from "./frames/symbols/float-type";
 import { FunctionType } from "./frames/symbols/function-type";
 import { GenericParameterType } from "./frames/symbols/generic-parameter-type";
 import { IntType } from "./frames/symbols/int-type";
-import { IterableType } from "./frames/symbols/iterable-type";
-import { ListType } from "./frames/symbols/list-type";
 import { ProcedureType } from "./frames/symbols/procedure-type";
 import { RegExpType } from "./frames/symbols/regexp-type";
 import { StdLibClass } from "./frames/symbols/stdlib-class";
@@ -60,8 +55,7 @@ export class ElanProcedureDescriptor implements IElanProcedureDescriptor {
 
 export class ElanClassDescriptor implements ElanDescriptor {
   constructor(
-    public readonly isImmutable: boolean = false,
-    public readonly isAbstract: boolean = false,
+    public readonly typeOptions: TypeOptions = noTypeOptions,
     public readonly ofTypes: TypeDescriptor[] = [],
     public readonly parameterNames: string[] = [],
     public readonly parameterTypes: TypeDescriptor[] = [],
@@ -142,18 +136,6 @@ export class ElanValueTypeDescriptor implements TypeDescriptor {
         return BooleanType.Instance;
       case "RegExp":
         return RegExpType.Instance;
-      case "Iterable":
-        return new IterableType(this.ofType!.mapType());
-      case "Array":
-        return new ArrayType(this.ofType!.mapType());
-      case "List":
-        return new ListType(this.ofType!.mapType());
-      case "AbstractDictionary":
-        return new AbstractDictionaryType(this.ofType!.mapType(), this.valueType!.mapType());
-      case "DictionaryImmutable":
-        return new DictionaryImmutableType(this.ofType!.mapType(), this.valueType!.mapType());
-      case "Dictionary":
-        return new DictionaryType(this.ofType!.mapType(), this.valueType!.mapType());
     }
     throw new Error("NotImplemented: " + this.name);
   }
@@ -212,20 +194,27 @@ function removeUnderscore(name: string) {
 export class ElanClassTypeDescriptor implements TypeDescriptor {
   constructor(
     private readonly cls: { name: string; prototype: object; emptyInstance: () => object },
+    private readonly ofTypes?: TypeDescriptor[] | undefined,
   ) {}
 
   isClass = true;
 
   name = "Class";
 
+  classId(className: string, classMetadata: ElanClassDescriptor) {
+    const ofTypeNames = (this.ofTypes ?? classMetadata.ofTypes).map((td) => td.name).join("_");
+    return `${className}_${ofTypeNames}`;
+  }
+
   mapType(scope?: Scope): SymbolType {
     const classMetadata: ElanClassDescriptor =
       Reflect.getMetadata(elanMetadataKey, this.cls) ?? new ElanClassDescriptor();
 
     const className = classMetadata.alias ?? removeUnderscore(this.cls.name);
+    const classId = this.classId(className, classMetadata);
 
-    if (tempMap.has(className)) {
-      return tempMap.get(className)!;
+    if (tempMap.has(classId)) {
+      return tempMap.get(classId)!;
     }
 
     const names = Object.getOwnPropertyNames(this.cls.prototype).concat(
@@ -235,8 +224,8 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
     const children: [string, SymbolType, MemberType][] = [];
 
     tempMap.set(
-      className,
-      new ClassType(className, ClassSubType.concrete, false, false, [], undefined!),
+      classId,
+      new ClassType(className, ClassSubType.concrete, false, noTypeOptions, [], undefined!),
     );
 
     for (let i = 0; i < names.length; i++) {
@@ -263,27 +252,26 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
       }
     }
 
-    const classType = tempMap.get(className)!;
-    tempMap.delete(className);
+    const classType = tempMap.get(classId)!;
+    tempMap.delete(classId);
 
     const classTypeDef = new StdLibClass(
       className,
-      classMetadata.isAbstract,
-      classMetadata.isAbstract,
-      classMetadata.isImmutable,
+      classMetadata.typeOptions.isAbstract,
+      classMetadata.typeOptions,
       [],
       [],
       [],
       scope!,
     );
 
-    classType.updateScope(classTypeDef);
-
     for (const c of children) {
       classTypeDef.children.push(getSymbol(c[0], c[1], SymbolScope.member, c[2]));
     }
 
-    for (const ot of classMetadata.ofTypes) {
+    const actualOfTypes = this.ofTypes ?? classMetadata.ofTypes;
+
+    for (const ot of actualOfTypes) {
       classTypeDef.ofTypes.push(ot.mapType());
     }
 
@@ -291,7 +279,8 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
       classTypeDef.inheritTypes.push(inherits.mapType());
     }
 
-    return classType;
+    // update the classtype in the temp map
+    return classType.updateFrom(classTypeDef.symbolType() as ClassType);
   }
 }
 
@@ -380,17 +369,16 @@ export function elanMethod(parameterNames: string[], elanDesc: ElanMethodDescrip
 }
 
 export function elanClass(
-  options?: ClassOptions,
+  option?: ClassOption,
   ofTypes?: TypeDescriptor[],
   names?: string[],
   params?: TypeDescriptor[],
   inherits?: ElanClassTypeDescriptor[],
   alias?: string,
 ) {
-  const [isImmutable, isAbstract] = mapClassOptions(options ?? ClassOptions.concrete);
+  const typeOptions = mapClassOption(option ?? ClassOption.concrete);
   const classDesc = new ElanClassDescriptor(
-    isImmutable,
-    isAbstract,
+    typeOptions,
     ofTypes ?? [],
     names ?? [],
     params ?? [],
@@ -462,32 +450,11 @@ export const ElanRegExp: ElanValueTypeDescriptor = new ElanValueTypeDescriptor("
 export const ElanT1: ElanValueTypeDescriptor = new ElanGenericTypeDescriptor("T1");
 export const ElanT2: ElanValueTypeDescriptor = new ElanGenericTypeDescriptor("T2");
 
-export function ElanList(ofType: TypeDescriptor) {
-  return new ElanValueTypeDescriptor("List", ofType);
-}
-
-export function ElanArray(ofType: TypeDescriptor) {
-  return new ElanValueTypeDescriptor("Array", ofType);
-}
-
-export function ElanIterable(ofType: TypeDescriptor) {
-  return new ElanValueTypeDescriptor("Iterable", ofType);
-}
-
-export function ElanAbstractDictionary(keyType: TypeDescriptor, valueType: TypeDescriptor) {
-  return new ElanValueTypeDescriptor("AbstractDictionary", keyType, valueType);
-}
-
-export function ElanClass(cls: { name: string; prototype: object; emptyInstance: () => object }) {
-  return new ElanClassTypeDescriptor(cls);
-}
-
-export function ElanDictionaryImmutable(keyType: TypeDescriptor, valueType: TypeDescriptor) {
-  return new ElanValueTypeDescriptor("DictionaryImmutable", keyType, valueType);
-}
-
-export function ElanDictionary(keyType: TypeDescriptor, valueType: TypeDescriptor) {
-  return new ElanValueTypeDescriptor("Dictionary", keyType, valueType);
+export function ElanClass(
+  cls: { name: string; prototype: object; emptyInstance: () => object },
+  ofTypes?: TypeDescriptor[],
+) {
+  return new ElanClassTypeDescriptor(cls, ofTypes);
 }
 
 export function ElanTuple(ofTypes: TypeDescriptor[]) {
@@ -526,30 +493,6 @@ export function elanGenericParamT2Type() {
   return elanType(ElanT2);
 }
 
-export function elanListType(ofType: TypeDescriptor) {
-  return elanType(ElanList(ofType));
-}
-
-export function elanArrayType(ofType: TypeDescriptor) {
-  return elanType(ElanArray(ofType));
-}
-
-export function elanIterableType(ofType: TypeDescriptor) {
-  return elanType(ElanIterable(ofType));
-}
-
-export function elanAbstractDictionaryType(keyType: TypeDescriptor, valueType: TypeDescriptor) {
-  return elanType(ElanAbstractDictionary(keyType, valueType));
-}
-
-export function elanDictionaryImmutableType(keyType: TypeDescriptor, valueType: TypeDescriptor) {
-  return elanType(ElanDictionaryImmutable(keyType, valueType));
-}
-
-export function elanDictionaryType(keyType: TypeDescriptor, valueType: TypeDescriptor) {
-  return elanType(ElanDictionary(keyType, valueType));
-}
-
 export function elanTupleType(ofTypes: TypeDescriptor[]) {
   return elanType(ElanTuple(ofTypes));
 }
@@ -558,12 +501,15 @@ export function elanFuncType(parameters: TypeDescriptor[], returnType: TypeDescr
   return elanType(ElanFunc(parameters, returnType));
 }
 
-export function elanClassType(cls: {
-  name: string;
-  prototype: object;
-  emptyInstance: () => object;
-}) {
-  return elanType(ElanClass(cls));
+export function elanClassType(
+  cls: {
+    name: string;
+    prototype: object;
+    emptyInstance: () => object;
+  },
+  ofTypes?: TypeDescriptor[],
+) {
+  return elanType(ElanClass(cls, ofTypes));
 }
 
 export enum FunctionOptions {
@@ -584,12 +530,18 @@ export enum ProcedureOptions {
   asyncExtension,
 }
 
-export enum ClassOptions {
+export enum ClassOption {
   concrete,
   abstract,
   record,
+  array,
+  array2D,
+  list,
+  dictionary,
+  dictionaryImmutable,
 }
 
+// isExtension, isPure, isASync, retType
 function mapFunctionOptions(
   options: FunctionOptions,
   retType?: TypeDescriptor,
@@ -600,7 +552,7 @@ function mapFunctionOptions(
     case FunctionOptions.pureExtension:
       return [true, true, false, retType];
     case FunctionOptions.pureAsync:
-      return [true, true, false, retType];
+      return [false, true, true, retType];
     case FunctionOptions.pureAsyncExtension:
       return [true, true, true, retType];
     case FunctionOptions.impure:
@@ -627,14 +579,33 @@ function mapProcedureOptions(options: ProcedureOptions): [boolean, boolean] {
   }
 }
 
-function mapClassOptions(options: ClassOptions): [boolean, boolean] {
+function mapClassOption(options: ClassOption): TypeOptions {
+  const opt = getTypeOptions();
+
   switch (options) {
-    case ClassOptions.concrete:
-      return [false, false];
-    case ClassOptions.abstract:
-      return [false, true];
-    case ClassOptions.record:
-      return [true, false];
+    case ClassOption.concrete:
+      return opt;
+    case ClassOption.abstract:
+      opt.isAbstract = true;
+      return opt;
+    case ClassOption.record:
+      opt.isImmutable = true;
+      return opt;
+    case ClassOption.array:
+      opt.isIndexable = opt.isIterable = true;
+      return opt;
+    case ClassOption.array2D:
+      opt.isDoubleIndexable = true;
+      return opt;
+    case ClassOption.list:
+      opt.isImmutable = opt.isIndexable = opt.isIterable = true;
+      return opt;
+    case ClassOption.dictionary:
+      opt.isIndexable = true;
+      return opt;
+    case ClassOption.dictionaryImmutable:
+      opt.isImmutable = opt.isIndexable = true;
+      return opt;
   }
 }
 

@@ -5,6 +5,7 @@ import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../interfaces/transforms";
+import { noTypeOptions } from "../interfaces/type-options";
 import { classKeyword, endKeyword } from "../keywords";
 import {
   parentHelper_compileChildren,
@@ -21,7 +22,6 @@ export class ConcreteClass extends ClassFrame {
   }
 
   ofTypes: SymbolType[] = [];
-  genericParamMatches: Map<string, SymbolType> = new Map<string, SymbolType>();
 
   initialKeywords(): string {
     return classKeyword;
@@ -36,7 +36,7 @@ export class ConcreteClass extends ClassFrame {
       this.symbolId,
       ClassSubType.concrete,
       false,
-      false,
+      noTypeOptions,
       cd ? [] : this.inheritance.symbolTypes(transforms),
       this,
     );

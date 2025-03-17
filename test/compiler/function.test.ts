@@ -7,6 +7,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -93,7 +94,7 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.array(system.safeSlice((await global.foo(1, 2)), 0, 1));
+  let a = system.safeSlice((await global.foo(1, 2)), 0, 1);
   await system.printLine(a);
 }
 
@@ -209,7 +210,7 @@ async function main() {
 }
 
 async function foo(a, b) {
-  return system.emptyArray();
+  return system.initialise(_stdlib.Array.emptyInstance());
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -328,11 +329,11 @@ return [main, _tests];}`;
   test("Fail_ExtensionParameterCount", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
-constant a set to {"a":1}
+constant a set to ""
 
 main
-  variable b set to a.withPutAtKey()
-  variable c set to a.withPutAtKey("a", 1, 2)
+  variable b set to a.contains()
+  variable c set to a.contains("a", 1, 2)
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -340,8 +341,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Missing argument(s). Expected: key (String), value (Int)",
-      "Too many argument(s). Expected: key (String), value (Int)",
+      "Missing argument(s). Expected: item (String)",
+      "Too many argument(s). Expected: item (String)",
     ]);
   });
 

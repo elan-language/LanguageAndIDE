@@ -8,22 +8,13 @@ import { AstNode } from "../interfaces/ast-node";
 import { AstTypeNode } from "../interfaces/ast-type-node";
 import { Scope } from "../interfaces/scope";
 import { ClassType } from "../symbols/class-type";
-import { DictionaryImmutableType } from "../symbols/dictionary-immutable-type";
-import { DictionaryType } from "../symbols/dictionary-type";
 import { FunctionType } from "../symbols/function-type";
 import { StringType } from "../symbols/string-type";
-import {
-  getGlobalScope,
-  isAnyDictionaryType,
-  isClassTypeDef,
-  isIterableType,
-  isListType,
-  isReifyableSymbolType,
-} from "../symbols/symbol-helpers";
+import { getGlobalScope, isClassTypeDef, isReifyableSymbolType } from "../symbols/symbol-helpers";
 import { TupleType } from "../symbols/tuple-type";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { matchClassGenericTypes, transforms } from "./ast-helpers";
+import { transforms } from "./ast-helpers";
 
 export class TypeAsn extends AbstractAstNode implements AstTypeNode {
   constructor(
@@ -50,20 +41,12 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
       return 0;
     }
 
-    if (isListType(st) || isIterableType(st)) {
-      return 1;
-    }
-
-    if (isAnyDictionaryType(st)) {
-      return 2;
-    }
-
     if (st instanceof TupleType) {
       return st.ofTypes.length;
     }
 
     if (st instanceof ClassType && isClassTypeDef(st.scope)) {
-      return st.scope.ofTypes.length ?? 0;
+      return st.scope.ofTypes.length;
     }
 
     if (st instanceof FunctionType) {
@@ -91,20 +74,6 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
       gp.compile();
     }
 
-    if (rootSt.isImmutable) {
-      for (const gp of this.genericParameters) {
-        mustBeImmutableGenericType(rootSt, gp.symbolType(), this.compileErrors, this.fieldId);
-      }
-    }
-
-    if (this.id === "Dictionary" || this.id === "DictionaryImmutable") {
-      return "Object";
-    }
-
-    if (this.id === "List") {
-      return "Array";
-    }
-
     return this.id;
   }
 
@@ -120,8 +89,8 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
     return st.initialValue;
   }
 
-  safeGetGenericParameterSymbolType(index: number) {
-    return this.genericParameters[index]?.symbolType() ?? UnknownType.Instance;
+  getGenericParameterSymbolTypes() {
+    return this.genericParameters.map((gp) => gp.symbolType());
   }
 
   rootSymbol() {
@@ -134,25 +103,11 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
     const st = symbol.symbolType(transforms());
 
     if (isReifyableSymbolType(st)) {
-      return st.reify([this.safeGetGenericParameterSymbolType(0)]);
-    }
-
-    if (st instanceof DictionaryType) {
-      return new DictionaryType(
-        this.safeGetGenericParameterSymbolType(0),
-        this.safeGetGenericParameterSymbolType(1),
-      );
-    }
-
-    if (st instanceof DictionaryImmutableType) {
-      return new DictionaryImmutableType(
-        this.safeGetGenericParameterSymbolType(0),
-        this.safeGetGenericParameterSymbolType(1),
-      );
+      return st.reify(this.getGenericParameterSymbolTypes());
     }
 
     if (st instanceof TupleType) {
-      return new TupleType(this.genericParameters.map((p) => p.symbolType()));
+      return new TupleType(this.getGenericParameterSymbolTypes());
     }
 
     if (st instanceof FunctionType) {
@@ -162,14 +117,6 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
       const pTypes = types.slice(0, -1);
       const rType = types[types.length - 1] ?? UnknownType.Instance;
       return new FunctionType(pNames, pTypes, rType, false, true, true);
-    }
-
-    if (st instanceof ClassType) {
-      if (isClassTypeDef(symbol) && this.genericParameters.length > 0) {
-        symbol.genericParamMatches = matchClassGenericTypes(symbol, this.genericParameters);
-      }
-
-      return st;
     }
 
     return st;

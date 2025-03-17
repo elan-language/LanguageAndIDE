@@ -53,7 +53,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = _stdlib.createArray2D(3, 0, "");
-  await system.printLine(_stdlib.length(a));
+  await system.printLine(a.length());
 }
 return [main, _tests];}`;
 
@@ -66,38 +66,11 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "3");
   });
 
-  test("Pass_ConfirmStringElementsInitializedToEmptyArrayNotNull", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-  variable a set to createArray2D(3, 0, "")
-  print a[0].length()
-  print a
-end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let a = _stdlib.createArray2D(3, 0, "");
-  await system.printLine(_stdlib.length(system.safeIndex(a, 0)));
-  await system.printLine(a);
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "0[[], [], []]");
-  });
-
   test("Pass_SetAndReadElements1", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to createArray2D(3, 0, "")
+  variable a set to [[""],[""],[""]]
   call a.putAt(0, ["bar", "foo"])
   call a.putAt(2, ["yon", "xan"])
   print a[0][1]
@@ -107,9 +80,9 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.createArray2D(3, 0, "");
-  _stdlib.putAt(a, 0, system.literalArray(["bar", "foo"]));
-  _stdlib.putAt(a, 2, system.literalArray(["yon", "xan"]));
+  let a = system.literalArray([system.literalArray([""]), system.literalArray([""]), system.literalArray([""])]);
+  a.putAt(0, system.literalArray(["bar", "foo"]));
+  a.putAt(2, system.literalArray(["yon", "xan"]));
   await system.printLine(system.safeIndex(system.safeIndex(a, 0), 1));
   await system.printLine(system.safeIndex(system.safeIndex(a, 2), 0));
 }
@@ -128,7 +101,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to createArray2D(3, 0, "")
+  variable a set to [["",""],["",""],["",""]]
   call a.putAt(0, ["bar", "foo"])
   call a[0].putAt(1, "yon")
   print a[0][1]
@@ -137,9 +110,9 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.createArray2D(3, 0, "");
-  _stdlib.putAt(a, 0, system.literalArray(["bar", "foo"]));
-  _stdlib.putAt(system.safeIndex(a, 0), 1, "yon");
+  let a = system.literalArray([system.literalArray(["", ""]), system.literalArray(["", ""]), system.literalArray(["", ""])]);
+  a.putAt(0, system.literalArray(["bar", "foo"]));
+  system.safeIndex(a, 0).putAt(1, "yon");
   await system.printLine(system.safeIndex(system.safeIndex(a, 0), 1));
 }
 return [main, _tests];}`;
@@ -157,7 +130,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to createArray2D(3, 0, "")
+  variable a set to [[""],[""],[""]]
   call a.append(["foo"])
   call a.append(["yon"])
   print a[3]
@@ -167,9 +140,9 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.createArray2D(3, 0, "");
-  _stdlib.append(a, system.literalArray(["foo"]));
-  _stdlib.append(a, system.literalArray(["yon"]));
+  let a = system.literalArray([system.literalArray([""]), system.literalArray([""]), system.literalArray([""])]);
+  a.append(system.literalArray(["foo"]));
+  a.append(system.literalArray(["yon"]));
   await system.printLine(system.safeIndex(a, 3));
   await system.printLine(system.safeIndex(a, 4));
 }
@@ -188,7 +161,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to createArray2D(3, 0, "")
+  variable a set to [[""], [""], [""]]
   call a[1].append("foo")
   call a[2].append("yon")
   print a
@@ -197,9 +170,9 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.createArray2D(3, 0, "");
-  _stdlib.append(system.safeIndex(a, 1), "foo");
-  _stdlib.append(system.safeIndex(a, 2), "yon");
+  let a = system.literalArray([system.literalArray([""]), system.literalArray([""]), system.literalArray([""])]);
+  system.safeIndex(a, 1).append("foo");
+  system.safeIndex(a, 2).append("yon");
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -210,7 +183,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "[[], [foo], [yon]]");
+    await assertObjectCodeExecutes(fileImpl, "[[], [, foo], [, yon]]");
   });
 
   test("Pass_InsertElements1", async () => {
@@ -227,8 +200,8 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.literalArray([system.literalArray(["one"]), system.literalArray(["two"]), system.literalArray(["three"])]);
-  _stdlib.insertAt(a, 1, system.literalArray(["foo"]));
-  _stdlib.insertAt(a, 3, system.literalArray(["yon"]));
+  a.insertAt(1, system.literalArray(["foo"]));
+  a.insertAt(3, system.literalArray(["yon"]));
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -256,8 +229,8 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.literalArray([system.literalArray(["one"]), system.literalArray(["two"]), system.literalArray(["three"])]);
-  _stdlib.insertAt(system.safeIndex(a, 0), 0, "foo");
-  _stdlib.insertAt(system.safeIndex(a, 2), 1, "yon");
+  system.safeIndex(a, 0).insertAt(0, "foo");
+  system.safeIndex(a, 2).insertAt(1, "yon");
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -285,8 +258,8 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.literalArray([system.literalArray(["one"]), system.literalArray(["two"]), system.literalArray(["three"])]);
-  _stdlib.removeAt(a, 0);
-  _stdlib.removeAt(a, 1);
+  a.removeAt(0);
+  a.removeAt(1);
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -314,8 +287,8 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.literalArray([system.literalArray(["one"]), system.literalArray(["two"]), system.literalArray(["three"])]);
-  _stdlib.removeAt(system.safeIndex(a, 0), 0);
-  _stdlib.removeAt(system.safeIndex(a, 2), 0);
+  system.safeIndex(a, 0).removeAt(0);
+  system.safeIndex(a, 2).removeAt(0);
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -342,7 +315,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.literalArray([system.literalArray(["one"]), system.literalArray(["two"]), system.literalArray(["three"]), system.literalArray(["one"]), system.literalArray(["two"]), system.literalArray(["three"])]);
-  _stdlib.removeFirst(a, system.literalArray(["two"]));
+  a.removeFirst(system.literalArray(["two"]));
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -369,7 +342,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.literalArray([system.literalArray(["one"]), system.literalArray(["two"]), system.literalArray(["three"]), system.literalArray(["one"]), system.literalArray(["two"]), system.literalArray(["three"])]);
-  _stdlib.removeFirst(system.safeIndex(a, 1), "two");
+  system.safeIndex(a, 1).removeFirst("two");
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -396,7 +369,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.literalArray([system.literalArray(["one"]), system.literalArray(["two"]), system.literalArray(["three"]), system.literalArray(["one"]), system.literalArray(["two"]), system.literalArray(["three"])]);
-  _stdlib.removeAll(a, system.literalArray(["two"]));
+  a.removeAll(system.literalArray(["two"]));
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -423,7 +396,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.literalArray([system.literalArray(["one"]), system.literalArray(["two", "two"]), system.literalArray(["three"]), system.literalArray(["one"]), system.literalArray(["two"]), system.literalArray(["three"])]);
-  _stdlib.removeAll(system.safeIndex(a, 1), "two");
+  system.safeIndex(a, 1).removeAll("two");
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -441,7 +414,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to {{"foo"},{"bar","yon"}}.asArray()
+  variable a set to {{"foo"},{"bar","yon"}}.listAsArray()
   print a.length()
   print a
 end main`;
@@ -449,8 +422,8 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.asArray(system.list([system.list(["foo"]), system.list(["bar", "yon"])]));
-  await system.printLine(_stdlib.length(a));
+  let a = _stdlib.listAsArray(system.list([system.list(["foo"]), system.list(["bar", "yon"])]));
+  await system.printLine(a.length());
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -481,14 +454,14 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.emptyArray();
-  let b = system.emptyArray();
-  _stdlib.append(a, system.literalArray([3]));
+  let a = system.initialise(_stdlib.Array.emptyInstance());
+  let b = system.initialise(_stdlib.Array.emptyInstance());
+  a.append(system.literalArray([3]));
   await system.printLine(a);
   await system.printLine(b);
   await system.printLine(system.objectEquals(a, b));
-  await system.printLine(system.objectEquals(a, system.emptyArray()));
-  await system.printLine(system.objectEquals(b, system.emptyArray()));
+  await system.printLine(system.objectEquals(a, system.initialise(_stdlib.Array.emptyInstance())));
+  await system.printLine(system.objectEquals(b, system.initialise(_stdlib.Array.emptyInstance())));
 }
 return [main, _tests];}`;
 
@@ -505,14 +478,14 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to createArray2D(2, 2, 0)
+  variable a set to [createArray(2, 0), createArray(2, 0), createArray(2, 0)]
   print a
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.createArray2D(2, 2, 0);
+  let a = system.literalArray([_stdlib.createArray(2, 0), _stdlib.createArray(2, 0), _stdlib.createArray(2, 0)]);
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -523,21 +496,21 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "[[0, 0], [0, 0]]");
+    await assertObjectCodeExecutes(fileImpl, "[[0, 0], [0, 0], [0, 0]]");
   });
 
   test("Pass_InitialiseArray", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to createArray2D(2, 2, 1)
+  variable a set to [createArray(2, 1), createArray(2, 1)]
   print a
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.createArray2D(2, 2, 1);
+  let a = system.literalArray([_stdlib.createArray(2, 1), _stdlib.createArray(2, 1)]);
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -588,7 +561,7 @@ end main
 
 main
   variable a set to createArray(3, "")
-  call a[0].putAt(0, "foo")
+  call a.putAt(0, 0, "foo")
 end main
 `;
 
@@ -596,9 +569,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Array<of String> Provided: String",
-    ]);
+    assertDoesNotCompile(fileImpl, ["Too many argument(s). Expected: index (Int), value (String)"]);
   });
 
   test("Fail_1DArrayAccessedAs2D2", async () => {
@@ -606,7 +577,7 @@ end main
 
 main
   variable a set to createArray(3, 0)
-  call a[0].putAt(0, 1)
+  print a[0, 0]
 end main
 `;
 
@@ -614,7 +585,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Array<of Int> Provided: Int"]);
+    assertDoesNotCompile(fileImpl, ["Cannot double index Array<of Int>"]);
   });
 
   test("Fail_2DArrayAccessedAs1D", async () => {
@@ -639,7 +610,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to createArray2D(3, 0, "")
+  variable a set to [[""],[""]]
   call a.putAt(0, empty Array<of String>)
   variable b set to a[0][0]
 end main

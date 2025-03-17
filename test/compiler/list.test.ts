@@ -237,7 +237,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.list([4, 5, 6, 7, 8]);
-  await system.printLine(_stdlib.length(a));
+  await system.printLine(a.length());
 }
 return [main, _tests];}`;
 
@@ -261,8 +261,8 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(system.list(new Array()));
-  await system.printLine(_stdlib.length(a));
+  let a = system.initialise(await new _stdlib.List()._initialise());
+  await system.printLine(a.length());
 }
 return [main, _tests];}`;
 
@@ -315,8 +315,8 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.list(["one", "two", "three"]);
-  a = _stdlib.withPutAt(a, 1, "TWO");
-  let b = _stdlib.withPutAt(a, 0, "ONE");
+  a = a.withPutAt(1, "TWO");
+  let b = a.withPutAt(0, "ONE");
   await system.printLine(a);
   await system.printLine(b);
 }
@@ -346,8 +346,8 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.list(["one", "two", "three"]);
-  a = _stdlib.withInsertAt(a, 1, "TWO");
-  let b = _stdlib.withInsertAt(a, 0, "ONE");
+  a = a.withInsertAt(1, "TWO");
+  let b = a.withInsertAt(0, "ONE");
   await system.printLine(a);
   await system.printLine(b);
 }
@@ -377,8 +377,8 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.list(["one", "two", "three"]);
-  a = _stdlib.withRemoveAt(a, 1);
-  let b = _stdlib.withRemoveAt(a, 0);
+  a = a.withRemoveAt(1);
+  let b = a.withRemoveAt(0);
   await system.printLine(a);
   await system.printLine(b);
 }
@@ -406,7 +406,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.list(["one", "two", "three", "one", "two", "three"]);
-  a = _stdlib.withRemoveFirst(a, "two");
+  a = a.withRemoveFirst("two");
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -433,7 +433,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.list(["one", "two", "three", "one", "two", "three"]);
-  a = _stdlib.withRemoveAll(a, "two");
+  a = a.withRemoveAll("two");
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -461,9 +461,9 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.list([4, 5, 6, 7, 8]);
-  await system.printLine(system.list(system.safeSlice(a, 2, 5)));
-  await system.printLine(system.list(system.safeSlice(a, 1, 3)));
-  await system.printLine(system.list(system.safeSlice(a, 0, 2)));
+  await system.printLine(system.safeSlice(a, 2, 5));
+  await system.printLine(system.safeSlice(a, 1, 3));
+  await system.printLine(system.safeSlice(a, 0, 2));
 }
 return [main, _tests];}`;
 
@@ -638,7 +638,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(system.list(new Array()));
+  let a = system.initialise(await new _stdlib.List()._initialise());
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -679,14 +679,14 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["it", system.emptyImmutableList()]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["it", system.initialise(_stdlib.List.emptyInstance())]]);};
 
   async _initialise() {
 
     return this;
   }
 
-  it = system.emptyImmutableList();
+  it = system.initialise(_stdlib.List.emptyInstance());
 
   async asString() {
     return "A Foo";
@@ -721,14 +721,14 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.emptyImmutableList();
-  let b = system.emptyImmutableList();
+  let a = system.initialise(_stdlib.List.emptyInstance());
+  let b = system.initialise(_stdlib.List.emptyInstance());
   b = system.concat(a, 3);
   await system.printLine(a);
   await system.printLine(b);
   await system.printLine(system.objectEquals(a, b));
-  await system.printLine(system.objectEquals(a, system.emptyImmutableList()));
-  await system.printLine(system.objectEquals(b, system.emptyImmutableList()));
+  await system.printLine(system.objectEquals(a, system.initialise(_stdlib.List.emptyInstance())));
+  await system.printLine(system.objectEquals(b, system.initialise(_stdlib.List.emptyInstance())));
 }
 return [main, _tests];}`;
 
@@ -739,6 +739,84 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "{}{3}falsetruefalse");
+  });
+
+  test("Pass_IndexFromHof", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to {new Point()}
+  variable b set to a.map(lambda p as Point => p)
+  print b[0]
+end main
+
+record Point
+end record
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.list([system.initialise(await new Point()._initialise())]);
+  let b = (await a.map(async (p) => p));
+  await system.printLine(system.safeIndex(b, 0));
+}
+
+class Point {
+  static emptyInstance() { return system.emptyClass(Point, []);};
+  async _initialise() { return this; }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "a Point");
+  });
+
+  test("Pass_ReturnTypeFromHof", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  print ff({"s"})
+end main
+
+function ff(ll as List<of String>) returns List<of Point>
+  return ll.map(lambda l as String => new Point())
+end function
+
+record Point
+end record`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await system.printLine((await global.ff(system.list(["s"]))));
+}
+
+async function ff(ll) {
+  return (await ll.map(async (l) => system.initialise(await new Point()._initialise())));
+}
+global["ff"] = ff;
+
+class Point {
+  static emptyInstance() { return system.emptyClass(Point, []);};
+  async _initialise() { return this; }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "{a Point}");
   });
 
   test("Fail_emptyLiteralList", async () => {
@@ -816,9 +894,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Array<of Int> Provided: List<of Int>",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'putAt' is not defined for type 'List'"]);
   });
 
   test("Fail_CannotSetIndex", async () => {
@@ -850,9 +926,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: List<of String> Provided: DictionaryImmutable<of String, String>",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'withPutAtKey' is not defined for type 'List'"]);
   });
 
   test("Fail_add", async () => {
@@ -869,9 +943,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Array<of String> Provided: List<of String>",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'append' is not defined for type 'List'"]);
   });
 
   test("Fail_insertAt", async () => {
@@ -888,9 +960,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Array<of String> Provided: List<of String>",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'insertAt' is not defined for type 'List'"]);
   });
 
   test("Fail_removeAt", async () => {
@@ -907,9 +977,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Array<of String> Provided: List<of String>",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'removeAt' is not defined for type 'List'"]);
   });
 
   test("Fail_removeFirst", async () => {
@@ -925,9 +993,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Array<of String> Provided: List<of String>",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'removeFirst' is not defined for type 'List'"]);
   });
 
   test("Fail_removeAll", async () => {
@@ -943,9 +1009,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Array<of String> Provided: List<of String>",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'removeAll' is not defined for type 'List'"]);
   });
 
   test("Fail_withoutGenericType", async () => {

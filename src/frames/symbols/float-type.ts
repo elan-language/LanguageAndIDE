@@ -1,11 +1,12 @@
 import { SymbolType } from "../interfaces/symbol-type";
+import { immutableTypeOptions } from "../interfaces/type-options";
 import { isNumber } from "./symbol-helpers";
 
 export class FloatType implements SymbolType {
   private constructor() {}
   initialValue = "0";
 
-  isImmutable = true;
+  typeOptions = immutableTypeOptions;
 
   static Instance: SymbolType = new FloatType();
   name = "Float";

@@ -1,7 +1,7 @@
 import { ElanRuntimeError } from "../elan-runtime-error";
-import { ClassOptions, ElanInt, elanClass, elanProperty } from "../elan-type-annotations";
+import { ClassOption, ElanInt, elanClass, elanProperty } from "../elan-type-annotations";
 
-@elanClass(ClassOptions.abstract)
+@elanClass(ClassOption.abstract)
 export class BaseVG {
   // this must be implemented by hand on all stdlib classes
   static emptyInstance() {

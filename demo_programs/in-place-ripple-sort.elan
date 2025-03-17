@@ -1,7 +1,7 @@
-# f2d3a76153f63596b62e736aeecf3dd6e22b5fa0f0a68cfc32286ea722403c03 Elan Beta 6 valid
+# 8d85973b6491bbc9c20d0531e45d8c055c5ff1f4e53f4206a0591d83b380326a Elan Beta 9 valid
 
 main
-  variable li set to example.asArray()
+  variable li set to example.listAsArray()
   call inPlaceRippleSort(li)
   print li
 end main

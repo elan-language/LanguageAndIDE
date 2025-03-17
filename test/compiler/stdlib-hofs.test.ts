@@ -16,9 +16,9 @@ suite("StdLib HOFs", () => {
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
-  print source.filter(lambda x as Int => x > 20).asArray()
-  print source.filter(lambda x as Int => x > 20).asArray()
-  print source.filter(lambda x as Int => (x < 3) or (x > 35)).asArray()
+  print source.filter(lambda x as Int => x > 20).listAsArray()
+  print source.filter(lambda x as Int => x > 20).listAsArray()
+  print source.filter(lambda x as Int => (x < 3) or (x > 35)).listAsArray()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -27,9 +27,9 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(_stdlib.asArray((await _stdlib.filter(global.source, async (x) => x > 20))));
-  await system.printLine(_stdlib.asArray((await _stdlib.filter(global.source, async (x) => x > 20))));
-  await system.printLine(_stdlib.asArray((await _stdlib.filter(global.source, async (x) => (x < 3) || (x > 35)))));
+  await system.printLine(_stdlib.listAsArray((await global.source.filter(async (x) => x > 20))));
+  await system.printLine(_stdlib.listAsArray((await global.source.filter(async (x) => x > 20))));
+  await system.printLine(_stdlib.listAsArray((await global.source.filter(async (x) => (x < 3) || (x > 35)))));
 }
 return [main, _tests];}`;
 
@@ -47,7 +47,7 @@ return [main, _tests];}`;
 
 constant source set to "onetwo"
 main
-  print source.filter(lambda x as String => x is "o").asArray()
+  print source.filter(lambda x as String => x is "o").listAsArray()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -56,7 +56,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(_stdlib.asArray((await _stdlib.filter(global.source, async (x) => x === "o"))));
+  await system.printLine(_stdlib.listAsArray((await _stdlib.filter(global.source, async (x) => x === "o"))));
 }
 return [main, _tests];}`;
 
@@ -78,7 +78,7 @@ main
 end main
 
 function filterIt(tofilter as List<of Int>) returns List<of Int>
-    return tofilter.filter(lambda x as Int => x > 20).asList()
+    return tofilter.filter(lambda x as Int => x > 20)
 end function
 `;
 
@@ -92,7 +92,7 @@ async function main() {
 }
 
 async function filterIt(tofilter) {
-  return _stdlib.asList((await _stdlib.filter(tofilter, async (x) => x > 20)));
+  return (await tofilter.filter(async (x) => x > 20));
 }
 global["filterIt"] = filterIt;
 return [main, _tests];}`;
@@ -111,8 +111,8 @@ return [main, _tests];}`;
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
-  print source.map(lambda x as Int => x + 1).asArray()
-  print source.map(lambda x as Int => x.asString() + "*").asArray()
+  print source.map(lambda x as Int => x + 1).listAsArray()
+  print source.map(lambda x as Int => x.asString() + "*").listAsArray()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -121,8 +121,8 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(_stdlib.asArray((await _stdlib.map(global.source, async (x) => x + 1))));
-  await system.printLine(_stdlib.asArray((await _stdlib.map(global.source, async (x) => (await _stdlib.asString(x)) + "*"))));
+  await system.printLine(_stdlib.listAsArray((await global.source.map(async (x) => x + 1))));
+  await system.printLine(_stdlib.listAsArray((await global.source.map(async (x) => (await _stdlib.asString(x)) + "*"))));
 }
 return [main, _tests];}`;
 
@@ -143,7 +143,7 @@ return [main, _tests];}`;
 
 constant source set to "onetwo"
 main
-  print source.map(lambda x as String => x + "*").asArray()
+  print source.map(lambda x as String => x + "*").listAsArray()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -152,7 +152,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(_stdlib.asArray((await _stdlib.map(global.source, async (x) => x + "*"))));
+  await system.printLine(_stdlib.listAsArray((await _stdlib.map(global.source, async (x) => x + "*"))));
 }
 return [main, _tests];}`;
 
@@ -171,15 +171,15 @@ return [main, _tests];}`;
 main
   variable source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
   set source to source.map(lambda x as Int => x + 1)
-  print source.asArray()
+  print source.listAsArray()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
-  source = (await _stdlib.map(source, async (x) => x + 1));
-  await system.printLine(_stdlib.asArray(source));
+  source = (await source.map(async (x) => x + 1));
+  await system.printLine(_stdlib.listAsArray(source));
 }
 return [main, _tests];}`;
 
@@ -208,9 +208,9 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine((await _stdlib.reduce(global.source, 0, async (s, x) => s + x)));
-  await system.printLine((await _stdlib.reduce(global.source, 100, async (s, x) => s + x)));
-  await system.printLine((await _stdlib.reduce(global.source, "Concat:", async (s, x) => s + (await _stdlib.asString(x)))));
+  await system.printLine((await global.source.reduce(0, async (s, x) => s + x)));
+  await system.printLine((await global.source.reduce(100, async (s, x) => s + x)));
+  await system.printLine((await global.source.reduce("Concat:", async (s, x) => s + (await _stdlib.asString(x)))));
 }
 return [main, _tests];}`;
 
@@ -267,7 +267,7 @@ const global = new class {
 };
 async function main() {
   let ed = system.dictionaryImmutable({["one"] : 1, ["two"] : 2});
-  ed = (await _stdlib.reduce(global.source, ed, async (d, x) => _stdlib.withPutAtKey(d, x, 1)));
+  ed = (await global.source.reduce(ed, async (d, x) => d.withPutAtKey(x, 1)));
   await system.printLine(ed);
 }
 return [main, _tests];}`;
@@ -322,7 +322,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine((await _stdlib.maxBy(global.source, async (x) => system.nanCheck(x % 5))));
+  await system.printLine((await global.source.maxBy(async (x) => x % 5)));
 }
 return [main, _tests];}`;
 
@@ -349,7 +349,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine((await _stdlib.maxBy(global.source, async (x) => _stdlib.length(x))));
+  await system.printLine((await global.source.maxBy(async (x) => x.length())));
 }
 return [main, _tests];}`;
 
@@ -376,7 +376,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine((await _stdlib.maxBy(global.source, async (t) => _stdlib.length(t))));
+  await system.printLine((await global.source.maxBy(async (t) => _stdlib.length(t))));
 }
 return [main, _tests];}`;
 
@@ -403,7 +403,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(_stdlib.length(global.source));
+  await system.printLine(global.source.length());
 }
 return [main, _tests];}`;
 
@@ -457,7 +457,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine((await _stdlib.minBy(global.source, async (x) => system.nanCheck(x % 5))));
+  await system.printLine((await global.source.minBy(async (x) => x % 5)));
 }
 return [main, _tests];}`;
 
@@ -475,7 +475,7 @@ return [main, _tests];}`;
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
-  print source.sortBy(lambda x as Int, y as Int => if x is y then 0 else if x < y then 1 else -1).asArray()
+  print source.sortBy(lambda x as Int, y as Int => if x is y then 0 else if x < y then 1 else -1).listAsArray()
   print source
 end main`;
 
@@ -485,7 +485,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(_stdlib.asArray((await _stdlib.sortBy(global.source, async (x, y) => x === y ? 0 : x < y ? 1 : (-1)))));
+  await system.printLine(_stdlib.listAsArray((await global.source.sortBy(async (x, y) => x === y ? 0 : x < y ? 1 : (-1)))));
   await system.printLine(global.source);
 }
 return [main, _tests];}`;
@@ -507,7 +507,7 @@ return [main, _tests];}`;
 
 constant source set to "dbcd"
 main
-  print source.sortBy(lambda x as String, y as String => if x is y then 0 else if x.isAfter(y) then 1 else -1).asArray()
+  print source.sortBy(lambda x as String, y as String => if x is y then 0 else if x.isAfter(y) then 1 else -1).listAsArray()
   print source
 end main`;
 
@@ -517,7 +517,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(_stdlib.asArray((await _stdlib.sortBy(global.source, async (x, y) => x === y ? 0 : _stdlib.isAfter(x, y) ? 1 : (-1)))));
+  await system.printLine(_stdlib.listAsArray((await _stdlib.sortBy(global.source, async (x, y) => x === y ? 0 : _stdlib.isAfter(x, y) ? 1 : (-1)))));
   await system.printLine(global.source);
 }
 return [main, _tests];}`;
@@ -536,8 +536,8 @@ return [main, _tests];}`;
 
 constant source set to {"apple", "orange", "pair", "apple"}
 main
-  print source.asSet()
-  print source.asArray().asSet()
+  print source.listAsSet()
+  print source.listAsArray().arrayAsSet()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -546,8 +546,8 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(_stdlib.asSet(global.source));
-  await system.printLine(_stdlib.asSet(_stdlib.asArray(global.source)));
+  await system.printLine(_stdlib.listAsSet(global.source));
+  await system.printLine(_stdlib.arrayAsSet(_stdlib.listAsArray(global.source)));
 }
 return [main, _tests];}`;
 
@@ -558,6 +558,60 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "{apple, orange, pair}{apple, orange, pair}");
+  });
+
+  test("Pass_complexHof", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+constant numberChars set to "-.0123456789"
+main
+  print getTrailingNumber("aa1")
+end main
+
+function getTrailingNumber(s as String) returns String
+  return if s is "" then "" else s[last(range(0, s.length() -1).filter(lambda n as Int => not isnumberchar(s[n]))) + 1..s.length()]
+end function
+
+function isnumberchar(s as String) returns Boolean
+  return numberChars.contains(s)
+end function
+
+function last(l as List<of Int>) returns Int
+  return l[l.length() - 1]
+end function`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {
+  numberChars = "-.0123456789";
+
+};
+async function main() {
+  await system.printLine((await global.getTrailingNumber("aa1")));
+}
+
+async function getTrailingNumber(s) {
+  return s === "" ? "" : system.safeSlice(s, (await global.last((await _stdlib.range(0, _stdlib.length(s) - 1).filter(async (n) => !(await global.isnumberchar(system.safeIndex(s, n))))))) + 1, _stdlib.length(s));
+}
+global["getTrailingNumber"] = getTrailingNumber;
+
+async function isnumberchar(s) {
+  return _stdlib.contains(global.numberChars, s);
+}
+global["isnumberchar"] = isnumberchar;
+
+async function last(l) {
+  return system.safeIndex(l, l.length() - 1);
+}
+global["last"] = last;
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1");
   });
 
   test("Fail_MaxOnNonNumeric", async () => {
@@ -573,7 +627,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Iterable<of Float> Provided: List<of String>",
+      "Incompatible types. Expected: List<of Float> Provided: List<of String>",
     ]);
   });
 

@@ -1,7 +1,6 @@
 import { DeconstructedSymbolType } from "../interfaces/deconstructed-symbol-type";
 import { SymbolType } from "../interfaces/symbol-type";
-import { ArrayType } from "./array-type";
-import { ListType } from "./list-type";
+import { immutableTypeOptions } from "../interfaces/type-options";
 import { isGenericSymbolType } from "./symbol-helpers";
 import { UnknownType } from "./unknown-type";
 
@@ -22,14 +21,14 @@ export class DeconstructedListType implements DeconstructedSymbolType {
     return this.typeMap[id] ?? UnknownType.Instance;
   }
 
-  isImmutable = true;
+  typeOptions = immutableTypeOptions;
 
   private typeMap = {} as { [index: string]: SymbolType };
 
   get name() {
     return this.tailId
       ? this.tailType.name
-      : `${new ListType(this.headType).name} or ${new ArrayType(this.headType).name}`;
+      : `List<of ${this.headType}> or Array<of ${this.headType}>`;
   }
 
   toString(): string {
@@ -42,7 +41,7 @@ export class DeconstructedListType implements DeconstructedSymbolType {
     }
 
     if (isGenericSymbolType(otherType)) {
-      return this.headType.isAssignableFrom(otherType.ofType);
+      return this.headType.isAssignableFrom(otherType.ofTypes[0]);
     }
 
     return false;

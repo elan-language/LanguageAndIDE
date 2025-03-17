@@ -1,8 +1,10 @@
 import { SymbolType } from "../interfaces/symbol-type";
+import { immutableTypeOptions } from "../interfaces/type-options";
 
 export class BooleanType implements SymbolType {
   private constructor() {}
-  isImmutable = true;
+
+  typeOptions = immutableTypeOptions;
 
   initialValue = "false";
 

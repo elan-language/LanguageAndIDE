@@ -1,7 +1,7 @@
-# cf3426e5a8967a50b961b1ec5ed97cc7b81ea73f3fd5fc6d3ea1d01ee77498ca Elan Beta 6 valid
+# f458d3c4c68c103af7eb2efbbbe400f01b16056a0a329b25998451d8475efbe5 Elan Beta 9 valid
 
 main
-  let fruit be example.asArray()
+  let fruit be example.listAsArray()
   variable exit set to false
   while not exit
     let wanted be inputString("What type of fruit do you want ('x' to exit)? ")

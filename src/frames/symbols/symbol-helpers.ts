@@ -7,12 +7,10 @@ import { AstNode } from "../interfaces/ast-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { Class } from "../interfaces/class";
 import { DeconstructedSymbolType } from "../interfaces/deconstructed-symbol-type";
-import { DictionarySymbolType } from "../interfaces/dictionary-symbol-type";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { File } from "../interfaces/file";
 import { Frame } from "../interfaces/frame";
 import { GenericSymbolType } from "../interfaces/generic-symbol-type";
-import { IterableSymbolType } from "../interfaces/iterable-symbol-type";
 import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
 import { ReifyableSymbolType } from "../interfaces/reifyable-symbol-type";
@@ -29,21 +27,15 @@ import {
   transforms,
 } from "../syntax-nodes/ast-helpers";
 import { EmptyAsn } from "../syntax-nodes/empty-asn";
-import { AbstractDictionaryType } from "./abstract-dictionary-type";
-import { AbstractListType } from "./abstract-list-type";
-import { ArrayType } from "./array-type";
+
 import { BooleanType } from "./boolean-type";
 import { ClassType } from "./class-type";
-import { DictionaryImmutableType } from "./dictionary-immutable-type";
-import { DictionaryType } from "./dictionary-type";
 import { EnumType } from "./enum-type";
 import { EnumValueType } from "./enum-value-type";
 import { FloatType } from "./float-type";
 import { FunctionType } from "./function-type";
 import { GenericParameterType } from "./generic-parameter-type";
 import { IntType } from "./int-type";
-import { IterableType } from "./iterable-type";
-import { ListType } from "./list-type";
 import { NullScope } from "./null-scope";
 import { ProcedureType } from "./procedure-type";
 import { RegExpType } from "./regexp-type";
@@ -56,26 +48,24 @@ export function isDeconstructedType(s?: SymbolType): s is DeconstructedSymbolTyp
   return !!s && "symbolTypeFor" in s;
 }
 
-export function isIterableType(s?: SymbolType): s is IterableSymbolType {
-  return !!s && "isIterable" in s;
+export function isListType(s?: SymbolType): s is ClassType {
+  return !!s && s instanceof ClassType && s.className === "List";
 }
 
-export function isAnyDictionaryType(s?: SymbolType): s is DictionarySymbolType {
-  return !!s && "keyType" in s && "valueType" in s;
+export function isArrayType(s?: SymbolType): s is ClassType {
+  return !!s && s instanceof ClassType && s.className === "Array";
 }
 
-export function isConcreteDictionaryType(
-  s?: SymbolType,
-): s is DictionaryType | DictionaryImmutableType {
-  return s instanceof DictionaryType || s instanceof DictionaryImmutableType;
+export function isIndexableType(s?: SymbolType): boolean {
+  return !!s?.typeOptions.isIndexable;
 }
 
-export function isListType(s?: SymbolType): s is AbstractListType {
-  return s instanceof AbstractListType;
+export function isDoubleIndexableType(s?: SymbolType): boolean {
+  return !!s?.typeOptions.isDoubleIndexable;
 }
 
-export function isIndexableType(s?: SymbolType): s is IterableSymbolType {
-  return isIterableType(s) && !(s instanceof IterableType);
+export function isIterableType(s?: SymbolType): boolean {
+  return !!s?.typeOptions.isIterable;
 }
 
 export function isSymbol(s?: Parent | Frame | ElanSymbol): s is ElanSymbol {
@@ -83,7 +73,11 @@ export function isSymbol(s?: Parent | Frame | ElanSymbol): s is ElanSymbol {
 }
 
 export function isGenericSymbolType(s?: SymbolType | GenericSymbolType): s is GenericSymbolType {
-  return !!s && "ofType" in s;
+  return !!s && "ofTypes" in s;
+}
+
+export function isClassType(s?: SymbolType): s is ClassType {
+  return !!s && "inheritsFrom" in s;
 }
 
 export function isReifyableSymbolType(
@@ -116,12 +110,8 @@ export function isParameter(s?: ElanSymbol): boolean {
   return !!s && s.symbolScope === SymbolScope.parameter;
 }
 
-export function isAssignable(s?: ElanSymbol): boolean {
-  return !!s && (isVariableStatement(s) || isProperty(s) || isOutParameter(s));
-}
-
 export function isClassTypeDef(s?: ElanSymbol | Scope): s is Class {
-  return !!s && "genericParamMatches" in s;
+  return !!s && "updateOfTypes" in s;
 }
 
 export function isEnumValue(s?: ElanSymbol): boolean {
@@ -144,10 +134,6 @@ export function isMemberOnFieldsClass(s: ElanSymbol, transforms: Transforms, sco
 
 export function isInsideClass(scope: Scope) {
   return getClassScope(scope) !== NullScope.Instance;
-}
-
-export function isPrivateMember(s: ElanSymbol | Member): boolean {
-  return isMember(s) && s.private;
 }
 
 export function isPublicMember(s: ElanSymbol | Member): boolean {
@@ -194,6 +180,12 @@ function internalUpdateScopeAndQualifier(
     );
     // replace scope with class scope
     currentScope = isScope(classSymbol) ? classSymbol : currentScope;
+
+    if (isClassTypeDef(currentScope)) {
+      if (isClass(qualifierScope.scope)) {
+        currentScope = currentScope.updateOfTypes(qualifierScope.scope.ofTypes);
+      }
+    }
   } else if (isAstIdNode(value) && value.id === libraryKeyword) {
     currentScope = getGlobalScope(currentScope).libraryScope;
     qualifier = EmptyAsn.Instance;
@@ -289,38 +281,6 @@ export function isValueType(type: SymbolType) {
   );
 }
 
-function matchGenericTypes(actualType: SymbolType, paramType: SymbolType) {
-  if (paramType.constructor.name === actualType.constructor.name) {
-    return true;
-  }
-
-  if (
-    paramType instanceof IterableType &&
-    (actualType instanceof ListType ||
-      actualType instanceof ArrayType ||
-      actualType instanceof StringType)
-  ) {
-    return true;
-  }
-
-  return false;
-}
-
-function matchDictionaryTypes(actualType: SymbolType, paramType: SymbolType) {
-  if (paramType.constructor.name === actualType.constructor.name) {
-    return true;
-  }
-
-  if (
-    paramType instanceof AbstractDictionaryType &&
-    (actualType instanceof DictionaryType || actualType instanceof DictionaryImmutableType)
-  ) {
-    return true;
-  }
-
-  return false;
-}
-
 export function matchType(actualType: SymbolType, paramType: SymbolType): boolean {
   if (paramType.name === actualType.name) {
     return true;
@@ -330,32 +290,9 @@ export function matchType(actualType: SymbolType, paramType: SymbolType): boolea
     return true;
   }
 
-  if (
-    isGenericSymbolType(paramType) &&
-    (isGenericSymbolType(actualType) || actualType instanceof StringType)
-  ) {
-    return (
-      matchGenericTypes(actualType, paramType) &&
-      (paramType.ofType instanceof GenericParameterType ||
-        matchType(actualType.ofType, paramType.ofType))
-    );
-  }
-
-  if (isAnyDictionaryType(paramType) && isAnyDictionaryType(actualType)) {
-    return (
-      matchDictionaryTypes(actualType, paramType) &&
-      (paramType.keyType instanceof GenericParameterType ||
-        matchType(actualType.keyType, paramType.keyType)) &&
-      (paramType.valueType instanceof GenericParameterType ||
-        matchType(actualType.valueType, paramType.valueType))
-    );
-  }
-
   if (paramType instanceof ClassType) {
     return paramType.isAssignableFrom(actualType);
   }
-
-  // Todo when we have extensions on Class
 
   return false;
 }
@@ -395,18 +332,6 @@ export function isSystemFunction(s: ElanSymbol, transforms: Transforms) {
 
 export function isFunctionType(s: SymbolType): s is FunctionType {
   return !!s && s instanceof FunctionType;
-}
-
-export function isProcedureType(s: SymbolType): s is FunctionType {
-  return !!s && s instanceof ProcedureType;
-}
-
-export function isIdOrProcedure(s: ElanSymbol, transforms: Transforms) {
-  return isProcedure(s, transforms) || isVariableStatement(s);
-}
-
-export function isExpression(s: ElanSymbol, transforms: Transforms) {
-  return !isProcedure(s, transforms);
 }
 
 export function firstCharIsUpper(s: string) {
@@ -768,15 +693,6 @@ export function mostPreciseSymbol(lhs: SymbolType, rhs: SymbolType): SymbolType 
 
 export function isNumber(st: SymbolType) {
   return st instanceof IntType || st instanceof FloatType;
-}
-
-export function isInvariantType(lhs: SymbolType, rhs: SymbolType, immutable: boolean) {
-  if (lhs instanceof FloatType && immutable && isNumber(rhs)) {
-    // OK Float/Int -> Float on immutable
-    return true;
-  }
-
-  return lhs.name === rhs.name;
 }
 
 export function knownType(symbolType: SymbolType) {

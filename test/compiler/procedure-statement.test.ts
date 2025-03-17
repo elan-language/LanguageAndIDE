@@ -181,7 +181,7 @@ async function main() {
 }
 
 async function changeFirst(a) {
-  _stdlib.putAt(a[0], 0, 5);
+  a[0].putAt(0, 5);
 }
 global["changeFirst"] = changeFirst;
 return [main, _tests];}`;
@@ -1252,7 +1252,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Array<of Int> Provided: Procedure (Array<of Generic Parameter T1>, Generic Parameter T1)",
+      "Incompatible types. Expected: Array<of Int> Provided: Procedure (Int)",
       "Cannot call procedure 'append' within an expression",
     ]);
   });

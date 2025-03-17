@@ -3,6 +3,7 @@ import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../interfaces/transforms";
+import { noTypeOptions } from "../interfaces/type-options";
 import { abstractClassKeywords, endKeyword, interfaceKeyword } from "../keywords";
 import {
   parentHelper_compileChildren,
@@ -20,7 +21,6 @@ export class InterfaceFrame extends ClassFrame {
   }
 
   ofTypes: SymbolType[] = [];
-  genericParamMatches: Map<string, SymbolType> = new Map<string, SymbolType>();
 
   initialKeywords(): string {
     return abstractClassKeywords;
@@ -35,7 +35,7 @@ export class InterfaceFrame extends ClassFrame {
       this.symbolId,
       ClassSubType.interface,
       false,
-      false,
+      noTypeOptions,
       cd ? [] : this.inheritance.symbolTypes(transforms),
       this,
     );

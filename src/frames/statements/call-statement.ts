@@ -173,13 +173,7 @@ export class CallStatement extends AbstractFrame implements Statement {
           qualifier = EmptyAsn.Instance;
         }
 
-        matchParametersAndTypes(
-          procSymbolType,
-          callParameters,
-          currentScope,
-          this.compileErrors,
-          this.htmlId,
-        );
+        matchParametersAndTypes(procSymbolType, callParameters, this.compileErrors, this.htmlId);
 
         isAsync = procSymbolType.isAsync;
       }

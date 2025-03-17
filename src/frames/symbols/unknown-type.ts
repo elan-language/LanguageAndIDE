@@ -1,10 +1,11 @@
 import { SymbolType } from "../interfaces/symbol-type";
+import { immutableTypeOptions } from "../interfaces/type-options";
 
 export class UnknownType implements SymbolType {
   private constructor() {}
   initialValue = "";
 
-  isImmutable = true;
+  typeOptions = immutableTypeOptions;
 
   static Instance: SymbolType = new UnknownType();
 

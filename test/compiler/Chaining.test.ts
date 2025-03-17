@@ -91,14 +91,14 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["a", system.emptyImmutableList()]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["a", system.initialise(_stdlib.List.emptyInstance())]]);};
 
   async _initialise() {
     this.a = system.list([1]);
     return this;
   }
 
-  a = system.emptyImmutableList();
+  a = system.initialise(_stdlib.List.emptyInstance());
 
 }
 return [main, _tests];}`;
@@ -447,14 +447,14 @@ async function main() {
 }
 
 class Bar {
-  static emptyInstance() { return system.emptyClass(Bar, [["strArr", system.emptyArray()]]);};
+  static emptyInstance() { return system.emptyClass(Bar, [["strArr", system.initialise(_stdlib.Array.emptyInstance())]]);};
 
   async _initialise() {
     this.strArr = system.literalArray(["apple", "orange", "pair"]);
     return this;
   }
 
-  strArr = system.emptyArray();
+  strArr = system.initialise(_stdlib.Array.emptyInstance());
 
 }
 return [main, _tests];}`;
@@ -492,7 +492,7 @@ const global = new class {};
 async function main() {
   let aFoo = system.initialise(await new Foo()._initialise());
   let b = 0;
-  b = _stdlib.length(system.array(system.safeSlice((await aFoo.createArr(10)), 1, 5))) + 3;
+  b = system.safeSlice((await aFoo.createArr(10)), 1, 5).length() + 3;
   await system.printLine(b);
 }
 
@@ -544,7 +544,7 @@ class Foo
   end constructor
 
   function create2DArr() returns Array<of Array<of Int>>
-    return createArray2D(3, 4, 8)
+    return [[8,8,8,8],[8,8,8,8],[8,8,8,8]]
   end function
 
 end class`;
@@ -585,7 +585,7 @@ class Foo {
   }
 
   async create2DArr() {
-    return _stdlib.createArray2D(3, 4, 8);
+    return system.literalArray([system.literalArray([8, 8, 8, 8]), system.literalArray([8, 8, 8, 8]), system.literalArray([8, 8, 8, 8])]);
   }
 
 }
@@ -612,7 +612,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.list([1, 2, 3, 4, 5, 6]);
-  await system.printLine((await _stdlib.reduce((await _stdlib.map((await _stdlib.filter(a, async (x) => x > 2)), async (x) => x * x)), 0, async (s, x) => s + x)));
+  await system.printLine((await (await (await a.filter(async (x) => x > 2)).map(async (x) => x * x)).reduce(0, async (s, x) => s + x)));
 }
 return [main, _tests];}`;
 
@@ -630,14 +630,14 @@ return [main, _tests];}`;
 
 main 
   variable a set to [1,2,3,4,5,6]
-  print a[..5].map(lambda x as Int => x * x).asArray()[2..].reduce(0, lambda s as Int, x as Int => s + x)
+  print a[..5].map(lambda x as Int => x * x)[2..].reduce(0, lambda s as Int, x as Int => s + x)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = system.literalArray([1, 2, 3, 4, 5, 6]);
-  await system.printLine((await _stdlib.reduce(system.array(system.safeSlice(_stdlib.asArray((await _stdlib.map(system.array(system.safeSlice(a, 0, 5)), async (x) => x * x))), 2)), 0, async (s, x) => s + x)));
+  await system.printLine((await system.safeSlice((await system.safeSlice(a, 0, 5).map(async (x) => x * x)), 2).reduce(0, async (s, x) => s + x)));
 }
 return [main, _tests];}`;
 

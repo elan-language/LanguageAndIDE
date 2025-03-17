@@ -1,7 +1,7 @@
+import { Index } from ".";
 import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
 import { DottedTerm } from "./dotted-term";
-import { IndexSingle } from "./index-single";
 import { Multiple } from "./multiple";
 import { Qualifier } from "./qualifier";
 import { TermSimple } from "./term-simple";
@@ -16,7 +16,7 @@ export class TermChained extends AbstractSequence {
       const qualifier = () => new Qualifier();
       this.head = new Alternatives([qualifier, termSimple]);
       const dottedTerm = () => new DottedTerm();
-      const index = () => new IndexSingle();
+      const index = () => new Index();
       const dottedSymbolOrIndex = () => new Alternatives([dottedTerm, index]);
       this.tail = new Multiple(dottedSymbolOrIndex, 1);
       this.addElement(this.head);

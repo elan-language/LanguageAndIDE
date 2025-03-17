@@ -1,6 +1,6 @@
 import { ElanRuntimeError } from "../elan-runtime-error";
 import {
-  ClassOptions,
+  ClassOption,
   ElanClass,
   ElanInt,
   FunctionOptions,
@@ -13,7 +13,7 @@ import {
 import { System } from "../system";
 import { GraphicsBase } from "./graphics-base";
 
-@elanClass(ClassOptions.record, [], [], [], [ElanClass(GraphicsBase)])
+@elanClass(ClassOption.record, [], [], [], [ElanClass(GraphicsBase)])
 export class BlockGraphics extends GraphicsBase {
   // this must be implemented by hand on all stdlib classes
   static emptyInstance() {

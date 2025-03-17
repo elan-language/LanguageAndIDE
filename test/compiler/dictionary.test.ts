@@ -157,8 +157,8 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
-  let b = system.emptyImmutableList();
-  b = _stdlib.keys(a);
+  let b = system.initialise(_stdlib.List.emptyInstance());
+  b = a.keys();
   await system.printLine(b);
 }
 return [main, _tests];}`;
@@ -185,8 +185,8 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
-  await system.printLine(_stdlib.hasKey(a, "b"));
-  await system.printLine(_stdlib.hasKey(a, "d"));
+  await system.printLine(a.hasKey("b"));
+  await system.printLine(a.hasKey("d"));
 }
 return [main, _tests];}`;
 
@@ -211,7 +211,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
-  await system.printLine(_stdlib.values(a));
+  await system.printLine(a.values());
 }
 return [main, _tests];}`;
 
@@ -238,8 +238,8 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
-  _stdlib.putAtKey(a, "b", 4);
-  _stdlib.putAtKey(a, "d", 2);
+  a.putAtKey("b", 4);
+  a.putAtKey("d", 2);
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -267,8 +267,8 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.dictionary({["a"] : system.dictionary({["a"] : 1}), ["b"] : system.dictionary({["b"] : 3, ["z"] : 10})});
-  _stdlib.putAtKey(a, "b", system.dictionary({["c"] : 4}));
-  _stdlib.putAtKey(system.safeIndex(a, "a"), "x", 2);
+  a.putAtKey("b", system.dictionary({["c"] : 4}));
+  system.safeIndex(a, "a").putAtKey("x", 2);
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -295,7 +295,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
-  _stdlib.removeAtKey(a, "b");
+  a.removeAtKey("b");
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -322,7 +322,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.dictionary({["a"] : system.dictionary({["a"] : 1}), ["b"] : system.dictionary({["b"] : 3, ["z"] : 10})});
-  _stdlib.removeAtKey(system.safeIndex(a, "b"), "b");
+  system.safeIndex(a, "b").removeAtKey("b");
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -349,7 +349,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
-  _stdlib.removeAtKey(a, "c");
+  a.removeAtKey("c");
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -379,11 +379,11 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(system.dictionary(new Object()));
-  _stdlib.putAtKey(a, "Foo", 1);
-  _stdlib.putAtKey(a, "Bar", 3);
-  let k = _stdlib.keys(a);
-  await system.printLine(_stdlib.length(k));
+  let a = system.initialise(await new _stdlib.Dictionary()._initialise());
+  a.putAtKey("Foo", 1);
+  a.putAtKey("Bar", 3);
+  let k = a.keys();
+  await system.printLine(k.length());
   await system.printLine(system.safeIndex(a, "Foo"));
   await system.printLine(system.safeIndex(a, "Bar"));
 }
@@ -415,12 +415,12 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(system.dictionary(new Object()));
-  _stdlib.putAtKey(a, "Foo", system.dictionary({["ff"] : 1}));
-  _stdlib.putAtKey(a, "Bar", system.initialise(system.dictionary(new Object())));
-  _stdlib.putAtKey(system.safeIndex(a, "Bar"), "bb", 3);
-  let k = _stdlib.keys(a);
-  await system.printLine(_stdlib.length(k));
+  let a = system.initialise(await new _stdlib.Dictionary()._initialise());
+  a.putAtKey("Foo", system.dictionary({["ff"] : 1}));
+  a.putAtKey("Bar", system.initialise(await new _stdlib.Dictionary()._initialise()));
+  system.safeIndex(a, "Bar").putAtKey("bb", 3);
+  let k = a.keys();
+  await system.printLine(k.length());
   await system.printLine(system.safeIndex(a, "Foo"));
   await system.printLine(system.safeIndex(a, "Bar"));
 }
@@ -457,11 +457,11 @@ const Fruit = {
 
 const global = new class {};
 async function main() {
-  let a = system.initialise(system.dictionary(new Object()));
-  _stdlib.putAtKey(a, Fruit.apple, 1);
-  _stdlib.putAtKey(a, Fruit.orange, 3);
-  let k = _stdlib.keys(a);
-  await system.printLine(_stdlib.length(k));
+  let a = system.initialise(await new _stdlib.Dictionary()._initialise());
+  a.putAtKey(Fruit.apple, 1);
+  a.putAtKey(Fruit.orange, 3);
+  let k = a.keys();
+  await system.printLine(k.length());
   await system.printLine(system.safeIndex(a, Fruit.apple));
   await system.printLine(system.safeIndex(a, Fruit.orange));
 }
@@ -493,14 +493,14 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.emptyDictionary();
-  let b = system.emptyDictionary();
-  _stdlib.putAtKey(a, "a", 3);
+  let a = system.initialise(_stdlib.Dictionary.emptyInstance());
+  let b = system.initialise(_stdlib.Dictionary.emptyInstance());
+  a.putAtKey("a", 3);
   await system.printLine(a);
   await system.printLine(b);
   await system.printLine(system.objectEquals(a, b));
-  await system.printLine(system.objectEquals(a, system.emptyDictionary()));
-  await system.printLine(system.objectEquals(b, system.emptyDictionary()));
+  await system.printLine(system.objectEquals(a, system.initialise(_stdlib.Dictionary.emptyInstance())));
+  await system.printLine(system.objectEquals(b, system.initialise(_stdlib.Dictionary.emptyInstance())));
 }
 return [main, _tests];}`;
 
@@ -530,14 +530,14 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.emptyDictionary();
-  let b = system.emptyDictionary();
-  _stdlib.putAtKey(a, "a", system.dictionary({["a"] : 1}));
+  let a = system.initialise(_stdlib.Dictionary.emptyInstance());
+  let b = system.initialise(_stdlib.Dictionary.emptyInstance());
+  a.putAtKey("a", system.dictionary({["a"] : 1}));
   await system.printLine(a);
   await system.printLine(b);
   await system.printLine(system.objectEquals(a, b));
-  await system.printLine(system.objectEquals(a, system.emptyDictionary()));
-  await system.printLine(system.objectEquals(b, system.emptyDictionary()));
+  await system.printLine(system.objectEquals(a, system.initialise(_stdlib.Dictionary.emptyInstance())));
+  await system.printLine(system.objectEquals(b, system.initialise(_stdlib.Dictionary.emptyInstance())));
 }
 return [main, _tests];}`;
 
@@ -627,7 +627,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Argument types. Expected: parameter1 (String) Provided: Int"]);
+    assertDoesNotCompile(fileImpl, ["Argument types. Expected: key (String) Provided: Int"]);
   });
 
   test("Fail_SetInvalidKeyType", async () => {
@@ -648,7 +648,7 @@ end main
     ]);
   });
 
-  test("Fail_putAtKey", async () => {
+  test("Fail_withPutAtKey", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -662,9 +662,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Dictionary<of String, Int> Provided: DictionaryImmutable<of String, Int>",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'withPutAtKey' is not defined for type 'Dictionary'"]);
   });
 
   test("Fail_SetInvalidValueType", async () => {
@@ -699,9 +697,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: DictionaryImmutable<of String, Int> Provided: Dictionary<of String, Int>",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'withRemoveAtKey' is not defined for type 'Dictionary'"]);
   });
 
   test("Fail_withoutGenericType", async () => {

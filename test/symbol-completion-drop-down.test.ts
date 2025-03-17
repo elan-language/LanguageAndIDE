@@ -1879,6 +1879,7 @@ end main`;
 
     const expected = [
       ["map", "map", "map("],
+      ["max", "max", "max("],
       ["maxBy", "maxBy", "maxBy("],
     ] as [string, string, string][];
 

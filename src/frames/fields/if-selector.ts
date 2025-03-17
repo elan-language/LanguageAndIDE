@@ -6,7 +6,6 @@ import { OptionalNode } from "../parse-nodes/optional-node";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { Else } from "../statements/else";
 import { ParseStatus } from "../status-enums";
-import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
 import { Regexes } from "./regexes";
 
@@ -65,6 +64,6 @@ export class IfSelector extends AbstractField {
   }
 
   symbolCompletion(): string {
-    return this.symbolCompletionAsHtml(transforms());
+    return ""; //Because *syntax* completion kicks in as soon as you type 'i' and symbol completion is confusing (and causes problems)
   }
 }

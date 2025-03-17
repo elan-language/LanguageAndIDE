@@ -1,4 +1,5 @@
 import { SymbolType } from "../interfaces/symbol-type";
+import { immutableTypeOptions } from "../interfaces/type-options";
 
 export class ProcedureType implements SymbolType {
   constructor(
@@ -8,7 +9,7 @@ export class ProcedureType implements SymbolType {
     public readonly isAsync: boolean,
   ) {}
 
-  isImmutable = true;
+  typeOptions = immutableTypeOptions;
 
   initialValue = "";
 

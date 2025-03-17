@@ -3,6 +3,10 @@ import { ElanInputOutput } from "./elan-input-output";
 import { ElanRuntimeError } from "./elan-runtime-error";
 import { TestStatus } from "./frames/status-enums";
 import { hasHiddenType } from "./has-hidden-type";
+import { Dictionary } from "./standard-library/dictionary";
+import { DictionaryImmutable } from "./standard-library/dictionary-immutable";
+import { ElanArray } from "./standard-library/elan-array";
+import { List } from "./standard-library/list";
 import { WebWorkerBreakpointMessage } from "./web/web-worker-messages";
 
 export class AssertOutcome {
@@ -25,33 +29,13 @@ export class System {
   }
 
   // constant immutables
-  emptyImmutableListSingleton = this.list([]);
-  emptyIterableSingleton = this.iter([]);
+  emptyImmutableListSingleton = this.initialise(new ElanArray([]));
   emptyDictionaryImmutableSingleton = this.dictionaryImmutable({});
+
   emptyRegExpSingleton = /(?:)/;
 
   emptyRegExp() {
     return this.emptyRegExpSingleton;
-  }
-
-  emptyIter() {
-    return this.emptyIterableSingleton;
-  }
-
-  emptyArray() {
-    return this.literalArray([]);
-  }
-
-  emptyDictionary() {
-    return this.dictionary({});
-  }
-
-  emptyDictionaryImmutable() {
-    return this.emptyDictionaryImmutableSingleton;
-  }
-
-  emptyImmutableList() {
-    return this.emptyImmutableListSingleton;
   }
 
   emptyTuple(toInit: any[]) {
@@ -69,33 +53,19 @@ export class System {
   }
 
   list(t: Array<any>) {
-    (t as unknown as hasHiddenType)._type = "List";
-    return t;
+    return this.initialise(new List(t));
   }
 
   dictionary(t: object) {
-    (t as unknown as hasHiddenType)._type = "Dictionary";
-    return t;
+    return this.initialise(new Dictionary(t as any));
   }
 
   dictionaryImmutable(t: object) {
-    (t as unknown as hasHiddenType)._type = "DictionaryImmutable";
-    return t;
+    return this.initialise(new DictionaryImmutable(t as any));
   }
 
   literalArray(t: Array<any>) {
-    (t as unknown as hasHiddenType)._type = "Array";
-    return t;
-  }
-
-  iter(t: Array<any>) {
-    (t as unknown as hasHiddenType)._type = "Iterable";
-    return t;
-  }
-
-  array(t: Array<any>) {
-    (t as unknown as hasHiddenType)._type = "Array";
-    return t;
+    return this.initialise(new ElanArray(t));
   }
 
   initialise<T>(toInit: T, toType?: () => any): T {
@@ -130,25 +100,29 @@ export class System {
     return t;
   }
 
-  safeIndex(indexable: any, index: any) {
+  safeIndex(indexable: any, index1: any, index2?: any | undefined) {
+    if (typeof indexable !== "string" && "safeIndex" in indexable) {
+      return indexable.safeIndex(index1, index2);
+    }
+
     if (indexable === undefined) {
       throw new ElanRuntimeError(`Out of range index`);
     }
 
-    const r = indexable[index];
+    const r = indexable[index1];
 
     if (r === undefined) {
-      this.throwRangeError(indexable, index);
+      this.throwRangeError(indexable, index1);
     }
 
     return r;
   }
 
-  safeSlice<T1>(
-    indexable: T1[] | undefined,
-    index1: number | undefined,
-    index2: number | undefined,
-  ) {
+  safeSlice(indexable: any, index1: number | undefined, index2: number | undefined) {
+    if (typeof indexable !== "string" && "safeSlice" in indexable) {
+      return indexable.safeSlice(index1, index2);
+    }
+
     if (indexable === undefined) {
       throw new ElanRuntimeError(`Out of range index`);
     }
@@ -170,11 +144,6 @@ export class System {
     return r;
   }
 
-  safeDictionarySet(toIndex: any, index: any, value: any) {
-    const d = this.dictionary(toIndex ?? {}) as any;
-    d[index] = value;
-  }
-
   throwRangeError(toIndex: any, index: any) {
     const size = toIndex.length;
     if (size !== undefined) {
@@ -192,6 +161,15 @@ export class System {
     toIndex[index] = value;
   }
 
+  safe2DArraySet<T>(toIndex: T[][], col: number, row: number, value: T) {
+    const size = toIndex.length;
+    if (col >= size) {
+      throw new ElanRuntimeError(`Out of range index: ${col} size: ${size}`);
+    }
+
+    this.safeArraySet(toIndex[col], row, value);
+  }
+
   async printLine(s: any) {
     const ss = await this._stdlib.asString(s);
     await this.elanInputOutput.printLine(ss);
@@ -201,24 +179,22 @@ export class System {
     return await this.elanInputOutput.readLine();
   }
 
-  concat<T>(lhs: Array<T> | T, rhs: Array<T> | T) {
-    if (Array.isArray(lhs) && Array.isArray(rhs)) {
-      return this.list(lhs.concat(rhs));
+  concat<T>(lhs: List<T> | T, rhs: List<T> | T) {
+    if (lhs instanceof List && rhs instanceof List) {
+      let ret = lhs!;
+
+      for (const t of rhs) {
+        ret = ret.withAppend(t!)!;
+      }
+
+      return ret;
     }
 
-    if (Array.isArray(lhs)) {
-      return this.list(lhs.concat([rhs as T]));
+    if (lhs instanceof List) {
+      return lhs.withAppend(rhs as T);
     }
 
-    // if (Array.isArray(rhs)){
-    return this.list([lhs as T].concat(rhs));
-  }
-
-  nanCheck(num: number) {
-    if (isFinite(num)) {
-      return num;
-    }
-    throw new ElanRuntimeError(`Not a valid numeric result`);
+    return (rhs as List<T>).withPrepend(lhs);
   }
 
   equals(i1: any, i2: any) {
@@ -304,11 +280,8 @@ export class System {
     );
   }
 
-  deconstructList<T>(list: T[]): [T, T[]] {
-    const type = (list as unknown as hasHiddenType)._type;
-    const [hd, ...tl] = list;
-    (tl as unknown as hasHiddenType)._type = type;
-    return [hd, tl];
+  deconstructList<T>(list: ElanArray<T> | List<T>): [T, ElanArray<T> | List<T>] {
+    return list.deconstructList();
   }
 
   unhandledExpression(v: any) {
@@ -343,6 +316,20 @@ export class System {
     } catch (_e) {
       return "error resolving";
     }
+  }
+
+  elanIndexOf<T1>(list: T1[], elem: T1) {
+    for (let i = 0; i < list.length; i++) {
+      const item = list[i];
+      if (this.equals(item, elem)) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  async asString(a: any) {
+    return await this._stdlib.asString(a);
   }
 
   async breakPoint(
@@ -381,5 +368,58 @@ export class System {
         }
       }, 1);
     });
+  }
+
+  async getPivot<T1>(x: T1, y: T1, z: T1, compare: (a: T1, b: T1) => Promise<number>) {
+    if ((await compare(x, y)) < 0) {
+      if ((await compare(y, z)) < 0) {
+        return y;
+      } else if ((await compare(z, x)) < 0) {
+        return x;
+      } else {
+        return z;
+      }
+    } else if ((await compare(y, z)) > 0) {
+      return y;
+    } else if ((await compare(z, x)) > 0) {
+      return x;
+    } else {
+      return z;
+    }
+  }
+
+  // from github https://gist.github.com/kimamula/fa34190db624239111bbe0deba72a6ab
+  async quickSort<T1>(
+    arr: T1[],
+    compare: (a: T1, b: T1) => Promise<number>,
+    left = 0,
+    right = arr.length - 1,
+  ) {
+    if (left < right) {
+      let i = left,
+        j = right,
+        tmp;
+      const pivot = await this.getPivot(arr[i], arr[i + Math.floor((j - i) / 2)], arr[j], compare);
+      while (true) {
+        while ((await compare(arr[i], pivot)) < 0) {
+          i++;
+        }
+        while ((await compare(pivot, arr[j])) < 0) {
+          j--;
+        }
+        if (i >= j) {
+          break;
+        }
+        tmp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = tmp;
+
+        i++;
+        j--;
+      }
+      await this.quickSort(arr, compare, left, i - 1);
+      await this.quickSort(arr, compare, j + 1, right);
+    }
+    return arr;
   }
 }

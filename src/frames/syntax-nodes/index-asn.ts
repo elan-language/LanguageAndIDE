@@ -9,9 +9,7 @@ import { AstNode } from "../interfaces/ast-node";
 import { ChainedAsn } from "../interfaces/chained-asn";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
-import { ArrayType } from "../symbols/array-type";
 import { IntType } from "../symbols/int-type";
-import { ListType } from "../symbols/list-type";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { compileSimpleSubscript, getIndexAndOfType } from "./ast-helpers";
@@ -21,7 +19,8 @@ import { UnaryExprAsn } from "./unary-expr-asn";
 
 export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
   constructor(
-    public readonly subscript: AstNode,
+    public readonly subscript1: AstNode,
+    public readonly subscript2: AstNode | undefined,
     public readonly fieldId: string,
   ) {
     super();
@@ -41,35 +40,30 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
 
   aggregateCompileErrors(): CompileError[] {
     const cc = this.precedingNode?.aggregateCompileErrors() ?? [];
-    return cc.concat(this.compileErrors).concat(this.subscript.aggregateCompileErrors());
-  }
-
-  isRange() {
-    return this.subscript instanceof RangeAsn;
+    return cc.concat(this.compileErrors).concat(this.subscript1.aggregateCompileErrors());
   }
 
   isSimpleSubscript() {
-    return !(this.subscript instanceof RangeAsn);
+    return !(this.subscript1 instanceof RangeAsn);
   }
 
   compileSubscript() {
-    if (this.subscript instanceof UnaryExprAsn) {
-      if (this.subscript.op === OperationSymbol.Minus) {
+    if (this.subscript1 instanceof UnaryExprAsn) {
+      if (this.subscript1.op === OperationSymbol.Minus) {
         mustNotBeNegativeIndex(this.compileErrors, this.fieldId);
       }
     }
 
-    return this.subscript.compile();
-  }
+    if (this.subscript2 instanceof UnaryExprAsn) {
+      if (this.subscript2.op === OperationSymbol.Minus) {
+        mustNotBeNegativeIndex(this.compileErrors, this.fieldId);
+      }
+    }
 
-  wrapListOrArray(rootType: SymbolType, code: string): string {
-    if (rootType instanceof ListType) {
-      return `system.list(${code})`;
-    }
-    if (rootType instanceof ArrayType) {
-      return `system.array(${code})`;
-    }
-    return code;
+    const s1c = this.subscript1.compile();
+    const s2c = this.subscript2 ? `, ${this.subscript2.compile()}` : "";
+
+    return `${s1c}${s2c}`;
   }
 
   wrapRange(code: string): string {
@@ -93,7 +87,7 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
     mustBeRangeableType(indexedType, true, this.compileErrors, this.fieldId);
     const [indexType] = getIndexAndOfType(indexedType);
     mustBeAssignableType(indexType, IntType.Instance, this.compileErrors, this.fieldId);
-    return this.wrapListOrArray(indexedType, this.wrapRange(`${indexed}, ${subscript}`));
+    return this.wrapRange(`${indexed}, ${subscript}`);
   }
 
   compile(): string {
@@ -129,6 +123,6 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
 
   toString() {
     const pn = this.precedingNode ? `${this.precedingNode}` : "";
-    return `${pn}[${this.subscript}]`;
+    return `${pn}[${this.subscript1}]`;
   }
 }

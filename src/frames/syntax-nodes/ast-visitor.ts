@@ -5,6 +5,7 @@ import { AstNode } from "../interfaces/ast-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { Scope } from "../interfaces/scope";
 import { globalKeyword, libraryKeyword, propertyKeyword, thisKeyword } from "../keywords";
+import { Index } from "../parse-nodes";
 import { AbstractAlternatives } from "../parse-nodes/abstract-alternatives";
 import { ArgListNode } from "../parse-nodes/arg-list-node";
 import { ArrayNode } from "../parse-nodes/array-node";
@@ -25,7 +26,6 @@ import { FunctionRefNode } from "../parse-nodes/function-ref-node";
 import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { IfExpr } from "../parse-nodes/if-expr";
 import { DictionaryImmutableNode } from "../parse-nodes/immutable-dictionary-node";
-import { IndexSingle } from "../parse-nodes/index-single";
 import { InheritanceNode } from "../parse-nodes/inheritanceNode";
 import { InstanceNode } from "../parse-nodes/instanceNode";
 import { InstanceProcRef } from "../parse-nodes/instanceProcRef";
@@ -87,7 +87,7 @@ import { InterpolatedAsn } from "./interpolated-asn";
 import { KvpAsn } from "./kvp-asn";
 import { LambdaAsn } from "./lambda-asn";
 import { LambdaSigAsn } from "./lambda-sig-asn";
-import { LiteralArrayAsn } from "./literal-array-list-asn";
+import { LiteralArrayAsn } from "./literal-array-asn";
 import { LiteralDictionaryAsn } from "./literal-dictionary-asn";
 import { LiteralEnumAsn } from "./literal-enum-asn";
 import { LiteralFloatAsn } from "./literal-float-asn";
@@ -337,22 +337,22 @@ export function transform(
 
   if (node instanceof ListNode) {
     const items = transformMany(node.csv as CSV, fieldId, scope).items;
-    return new LiteralListAsn(items, fieldId);
+    return new LiteralListAsn(items, fieldId, scope);
   }
 
   if (node instanceof ArrayNode) {
     const items = transformMany(node.csv as CSV, fieldId, scope).items;
-    return new LiteralArrayAsn(items, fieldId);
+    return new LiteralArrayAsn(items, fieldId, scope);
   }
 
   if (node instanceof DictionaryNode) {
     const items = transformMany(node.csv!, fieldId, scope);
-    return new LiteralDictionaryAsn(items, fieldId);
+    return new LiteralDictionaryAsn(items, fieldId, scope);
   }
 
   if (node instanceof DictionaryImmutableNode) {
     const items = transformMany(node.csv!, fieldId, scope);
-    return new LiteralDictionaryImmutableAsn(items, fieldId);
+    return new LiteralDictionaryImmutableAsn(items, fieldId, scope);
   }
 
   if (node instanceof TupleNode) {
@@ -424,9 +424,11 @@ export function transform(
     return new RangeAsn(from, to, fieldId);
   }
 
-  if (node instanceof IndexSingle) {
-    const index = transform(node.contents, fieldId, scope) as AstNode;
-    return new IndexAsn(index, fieldId);
+  if (node instanceof Index) {
+    const indexes = transformMany(node.contents as CSV, fieldId, scope) as AstCollectionNode;
+    const singleIndex = indexes.items[0];
+    const secondIndex = indexes.items.length > 1 ? indexes.items[1] : undefined;
+    return new IndexAsn(singleIndex, secondIndex, fieldId);
   }
 
   if (node instanceof DotAfter) {

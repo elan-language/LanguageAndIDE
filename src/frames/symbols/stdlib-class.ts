@@ -3,46 +3,66 @@ import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../interfaces/transforms";
+import { TypeOptions } from "../interfaces/type-options";
 import { constructorKeyword, thisKeyword } from "../keywords";
+import { generateType } from "../syntax-nodes/ast-helpers";
 import { ClassSubType, ClassType } from "./class-type";
 import { DuplicateSymbol } from "./duplicate-symbol";
-import { isSymbol, symbolMatches } from "./symbol-helpers";
+import { isProperty, isSymbol, symbolMatches } from "./symbol-helpers";
 import { SymbolScope } from "./symbol-scope";
 import { UnknownSymbol } from "./unknown-symbol";
 
 export class StdLibClass implements Class {
   constructor(
     private readonly name: string,
-    public readonly isAbstract: boolean,
     public readonly isNotInheritable: boolean,
-    public readonly immutable: boolean,
+    public readonly typeOptions: TypeOptions,
     public readonly children: ElanSymbol[],
-    public readonly ofTypes: SymbolType[],
+    public ofTypes: SymbolType[],
     public readonly inheritTypes: SymbolType[],
     private readonly scope: Scope,
   ) {
     this.symbolId = this.name;
   }
+
+  get isAbstract() {
+    return this.typeOptions.isAbstract;
+  }
+
+  updateOfTypes(ofTypes: SymbolType[]) {
+    const newOfTypes: SymbolType[] = [...this.ofTypes];
+    const lessOf = newOfTypes.length > ofTypes.length ? ofTypes.length : newOfTypes.length;
+
+    for (let i = 0; i < lessOf; i++) {
+      newOfTypes[i] = ofTypes[i];
+    }
+
+    return new StdLibClass(
+      this.name,
+      this.isNotInheritable,
+      this.typeOptions,
+      this.children,
+      newOfTypes,
+      this.inheritTypes,
+      this.scope,
+    );
+  }
+
   getDirectSuperClassesTypeAndName(): [SymbolType, string][] {
     return [];
   }
-
-  genericParamMatches: Map<string, SymbolType> = new Map<string, SymbolType>();
 
   isClass = true;
 
   symbolId: string;
 
-  isImmutable() {
-    return this.immutable;
-  }
-
   symbolType(_transforms?: Transforms): SymbolType {
+    // temp hack TODO fix
     return new ClassType(
       this.name,
-      this.isAbstract ? ClassSubType.abstract : ClassSubType.concrete,
+      this.typeOptions.isAbstract ? ClassSubType.abstract : ClassSubType.concrete,
       this.isNotInheritable,
-      this.immutable,
+      this.typeOptions,
       this.inheritTypes,
       this,
     );
@@ -84,6 +104,28 @@ export class StdLibClass implements Class {
 
     if (symbol instanceof UnknownSymbol) {
       return this.getParentScope().resolveSymbol(id, transforms, this);
+    }
+
+    if (!isProperty(symbol)) {
+      const st = symbol.symbolType();
+      const matches = new Map<string, SymbolType>();
+
+      this.ofTypes.forEach((t, i) => matches.set(`T${i + 1}`, t));
+
+      const st1 = generateType(st, matches);
+
+      const newSymbol = {
+        symbolId: symbol.symbolId,
+        symbolType: () => st1,
+        symbolScope: symbol.symbolScope,
+      } as ElanSymbol;
+
+      if ("isMember" in symbol) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (newSymbol as any)["isMember"] = true;
+      }
+
+      return newSymbol;
     }
 
     return symbol;

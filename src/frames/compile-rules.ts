@@ -60,7 +60,6 @@ import { SymbolType } from "./interfaces/symbol-type";
 import { Transforms } from "./interfaces/transforms";
 import { allKeywords, reservedWords } from "./keywords";
 import { LetStatement } from "./statements/let-statement";
-import { ArrayType } from "./symbols/array-type";
 import { BooleanType } from "./symbols/boolean-type";
 import { ClassSubType, ClassType } from "./symbols/class-type";
 import { DeconstructedTupleType } from "./symbols/deconstructed-tuple-type";
@@ -68,13 +67,12 @@ import { DuplicateSymbol } from "./symbols/duplicate-symbol";
 import { FloatType } from "./symbols/float-type";
 import { FunctionType } from "./symbols/function-type";
 import { IntType } from "./symbols/int-type";
-import { IterableType } from "./symbols/iterable-type";
-import { ListType } from "./symbols/list-type";
 import { ProcedureType } from "./symbols/procedure-type";
 import {
-  isAnyDictionaryType,
+  isArrayType,
   isClassTypeDef,
   isDeconstructedType,
+  isDoubleIndexableType,
   isIndexableType,
   isIterableType,
   isListType,
@@ -187,7 +185,7 @@ export function mustBeRecord(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (knownType(symbolType) && !symbolType.isImmutable) {
+  if (knownType(symbolType) && !symbolType.typeOptions.isImmutable) {
     compileErrors.push(new MustBeRecordCompileError(symbolType.name, location));
   }
 }
@@ -243,12 +241,22 @@ export function mustBeCallable(
   }
 }
 
+function isRecord(st: SymbolType) {
+  return (
+    st instanceof ClassType &&
+    st.typeOptions.isImmutable &&
+    !st.typeOptions.isIndexable &&
+    !st.typeOptions.isDoubleIndexable &&
+    !st.typeOptions.isIterable
+  );
+}
+
 export function mustBeRecordType(
   symbolType: SymbolType,
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (knownType(symbolType) && !(symbolType instanceof ClassType)) {
+  if (knownType(symbolType) && !isRecord(symbolType)) {
     compileErrors.push(new TypeCompileError("record", location));
   }
 }
@@ -289,8 +297,22 @@ export function mustBeIndexableType(
 ) {
   if (symbolType instanceof UnknownType) {
     compileErrors.push(new UndefinedSymbolCompileError(symbolId, "", location));
-  } else if (!(read && (isIndexableType(symbolType) || isAnyDictionaryType(symbolType)))) {
-    compileErrors.push(new NotIndexableCompileError(symbolType.name, location));
+  } else if (!(read && isIndexableType(symbolType))) {
+    compileErrors.push(new NotIndexableCompileError(symbolType.name, location, false));
+  }
+}
+
+export function mustBeDoubleIndexableType(
+  symbolId: string,
+  symbolType: SymbolType,
+  read: boolean,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  if (symbolType instanceof UnknownType) {
+    compileErrors.push(new UndefinedSymbolCompileError(symbolId, "", location));
+  } else if (!(read && isDoubleIndexableType(symbolType))) {
+    compileErrors.push(new NotIndexableCompileError(symbolType.name, location, true));
   }
 }
 
@@ -300,7 +322,7 @@ export function mustBeRangeableType(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (knownType(symbolType) && !(read && isIndexableType(symbolType))) {
+  if (knownType(symbolType) && !(read && isIterableType(symbolType))) {
     compileErrors.push(new NotRangeableCompileError(symbolType.name, location));
   }
 }
@@ -556,12 +578,9 @@ function FailNotAssignable(
 ) {
   let addInfo = "";
   // special case
-  if (lhs instanceof ListType && rhs instanceof ArrayType) {
+  // todo fix
+  if (isListType(lhs) && isArrayType(rhs)) {
     addInfo = " try converting with '.asList()'";
-  }
-
-  if (isListType(lhs) && rhs instanceof IterableType) {
-    addInfo = " try converting Iterable to a concrete type with e.g. '.asList()'";
   }
 
   if (knownType(lhs) && knownType(rhs)) {
@@ -657,24 +676,13 @@ export function mustBeIntegerType(
   mustBeAssignableType(IntType.Instance, rhs, compileErrors, location);
 }
 
-export function mustBeCompatibleMutableType(
-  lhs: SymbolType,
-  rhs: SymbolType,
-  compileErrors: CompileError[],
-  location: string,
-) {
-  if (lhs.isImmutable !== rhs.isImmutable) {
-    FailNotAssignable(lhs, rhs, compileErrors, location);
-  }
-}
-
 export function mustBeImmutableType(
   name: string,
   type: SymbolType,
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (!type.isImmutable) {
+  if (!type.typeOptions.isImmutable) {
     compileErrors.push(
       new SyntaxCompileError(`Property ${name} is not of an immutable type.`, location),
     );
@@ -775,7 +783,7 @@ export function mustBeCompatibleDefinitionNode(
   const rst = rhs.symbolType();
 
   if (lst instanceof DeconstructedTupleType) {
-    if (rst instanceof ClassType && rst.isImmutable) {
+    if (rst instanceof ClassType && rst.typeOptions.isImmutable) {
       mustBeCompatibleDeconstruction(lhs, rhs, scope, compileErrors, location);
     }
     if (rst instanceof TupleType && lst.ofTypes.length !== rst.ofTypes.length) {
@@ -797,7 +805,7 @@ export function mustBeCompatibleNode(
   const rst = rhs.symbolType();
 
   if (lst instanceof DeconstructedTupleType && rst instanceof ClassType) {
-    if (rst.isImmutable) {
+    if (rst.typeOptions.isImmutable) {
       mustBeCompatibleDeconstruction(lhs, rhs, scope, compileErrors, location);
       return;
     }
@@ -861,14 +869,6 @@ export function mustNotBeParameter(
       }
     }
   }
-}
-
-export function cannotCallOnParameter(
-  assignable: AstNode,
-  compileErrors: CompileError[],
-  location: string,
-) {
-  compileErrors.push(new MutateCompileError(getId(assignable), "parameter", location));
 }
 
 export function mustNotBeCounter(

@@ -3,6 +3,7 @@ import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../interfaces/transforms";
+import { immutableTypeOptions } from "../interfaces/type-options";
 import { endKeyword, recordKeyword } from "../keywords";
 import {
   parentHelper_compileChildren,
@@ -23,7 +24,6 @@ export class RecordFrame extends ClassFrame {
   }
 
   ofTypes: SymbolType[] = [];
-  genericParamMatches: Map<string, SymbolType> = new Map<string, SymbolType>();
 
   initialKeywords(): string {
     return recordKeyword;
@@ -33,7 +33,14 @@ export class RecordFrame extends ClassFrame {
     return this.name.text;
   }
   symbolType(_transforms?: Transforms) {
-    return new ClassType(this.symbolId, ClassSubType.concrete, false, true, [], this);
+    return new ClassType(
+      this.symbolId,
+      ClassSubType.concrete,
+      false,
+      immutableTypeOptions,
+      [],
+      this,
+    );
   }
   get symbolScope() {
     return SymbolScope.program;

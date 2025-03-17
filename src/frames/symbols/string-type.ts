@@ -1,17 +1,24 @@
-import { IterableSymbolType } from "../interfaces/iterable-symbol-type";
+import { GenericSymbolType } from "../interfaces/generic-symbol-type";
 import { SymbolType } from "../interfaces/symbol-type";
 
-export class StringType implements IterableSymbolType {
+export class StringType implements GenericSymbolType {
   private constructor() {}
-  isIterable = true;
 
-  get ofType() {
-    return StringType.Instance;
+  get ofTypes() {
+    return [StringType.Instance];
   }
 
   initialValue = '""';
 
-  isImmutable = true;
+  get typeOptions() {
+    return {
+      isImmutable: true,
+      isAbstract: false,
+      isIndexable: true,
+      isDoubleIndexable: false,
+      isIterable: true,
+    };
+  }
 
   static Instance: SymbolType = new StringType();
 

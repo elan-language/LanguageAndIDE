@@ -1,10 +1,11 @@
 import { SymbolType } from "../interfaces/symbol-type";
+import { immutableTypeOptions } from "../interfaces/type-options";
 
 export class IntType implements SymbolType {
   private constructor() {}
   initialValue = "0";
 
-  isImmutable = true;
+  typeOptions = immutableTypeOptions;
 
   static Instance: SymbolType = new IntType();
 

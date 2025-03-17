@@ -178,7 +178,7 @@ async function main() {
   let f = 3 === 4;
   let g = 3 !== 4;
   let h = !_stdlib.false;
-  let k = system.nanCheck(4 / 3);
+  let k = 4 / 3;
   await system.printLine(a);
   await system.printLine(b);
   await system.printLine(c);
@@ -246,7 +246,7 @@ const global = new class {
 
 };
 async function main() {
-  let b = (await _stdlib.map(global.a, async (x) => x));
+  let b = (await global.a.map(async (x) => x));
   b = system.list([1, 2]);
   await system.printLine(b);
 }
@@ -459,8 +459,8 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable i set to [1,2]
-  variable x set to head
+  variable i set to {1,2}
+  variable x set to listAsArray
   variable y set to x(i)
 end main`;
 
@@ -475,8 +475,8 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable i set to [1,2]
-  variable x set to head
+  variable i set to 1
+  variable x set to listAsArray
   variable y set to i.x()
 end main`;
 

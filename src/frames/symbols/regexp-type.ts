@@ -1,11 +1,12 @@
 import { SymbolType } from "../interfaces/symbol-type";
+import { immutableTypeOptions } from "../interfaces/type-options";
 
 export class RegExpType implements SymbolType {
   private constructor() {}
 
   initialValue = "system.emptyRegExp()";
 
-  isImmutable = true;
+  typeOptions = immutableTypeOptions;
 
   static Instance: SymbolType = new RegExpType();
 

@@ -1,5 +1,6 @@
 import { DeconstructedSymbolType } from "../interfaces/deconstructed-symbol-type";
 import { SymbolType } from "../interfaces/symbol-type";
+import { immutableTypeOptions } from "../interfaces/type-options";
 import { TupleType } from "./tuple-type";
 import { UnknownType } from "./unknown-type";
 
@@ -15,11 +16,11 @@ export class DeconstructedTupleType implements DeconstructedSymbolType {
 
   initialValue = "";
 
+  typeOptions = immutableTypeOptions;
+
   symbolTypeFor(id: string) {
     return this.typeMap[id] ?? UnknownType.Instance;
   }
-
-  isImmutable = true;
 
   private typeMap = {} as { [index: string]: SymbolType };
 

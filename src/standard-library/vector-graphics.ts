@@ -1,5 +1,5 @@
 import {
-  ClassOptions,
+  ClassOption,
   ElanClass,
   ElanInt,
   FunctionOptions,
@@ -14,7 +14,7 @@ import { BaseVG } from "./base-vg";
 import { GraphicsBase } from "./graphics-base";
 import { StdLib } from "./std-lib";
 
-@elanClass(ClassOptions.record, [], [], [], [ElanClass(GraphicsBase)])
+@elanClass(ClassOption.record, [], [], [], [ElanClass(GraphicsBase)])
 export class VectorGraphics {
   // this must be implemented by hand on all stdlib classes
   static emptyInstance() {

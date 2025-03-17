@@ -1,7 +1,5 @@
 import {
-  ClassOptions,
-  ElanArray,
-  elanArrayType,
+  ClassOption,
   ElanBoolean,
   ElanClass,
   elanClass,
@@ -9,16 +7,15 @@ import {
   elanFunction,
   elanGenericParamT1Type,
   ElanInt,
-  ElanList,
-  elanListType,
   ElanString,
   ElanT1,
   FunctionOptions,
 } from "../elan-type-annotations";
 import { System } from "../system";
-import { StdLib } from "./std-lib";
+import { ElanArray } from "./elan-array";
+import { List } from "./list";
 
-@elanClass(ClassOptions.concrete, [ElanT1], [], [], [], "Set")
+@elanClass(ClassOption.concrete, [ElanT1], [], [], [], "Set")
 export class ElanSet<T1> {
   // this must be implemented by hand on all stdlib classes
   static emptyInstance() {
@@ -40,7 +37,8 @@ export class ElanSet<T1> {
     return this._system!;
   }
 
-  private stdlib!: StdLib; // injected
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private stdlib!: any; // injected
 
   constructor() {
     this.contents = new Set<T1>(); //Initialised in set system
@@ -72,16 +70,20 @@ export class ElanSet<T1> {
   }
 
   @elanFunction([], FunctionOptions.pure, ElanClass(ElanSet))
-  addFromList(@elanListType(ElanT1) list: T1[]): ElanSet<T1> {
+  addFromList(@elanClassType(List) list: List<T1>): ElanSet<T1> {
     const copy = this.copyOfThis();
-    list.forEach((item) => copy.contents.add(item));
+    for (const item of list) {
+      copy.contents.add(item as T1);
+    }
     return copy;
   }
 
   @elanFunction([], FunctionOptions.pure, ElanClass(ElanSet))
-  addFromArray(@elanArrayType(ElanT1) list: T1[]): ElanSet<T1> {
+  addFromArray(@elanClassType(ElanArray) list: ElanArray<T1>): ElanSet<T1> {
     const copy = this.copyOfThis();
-    list.forEach((item) => copy.contents.add(item));
+    for (const item of list) {
+      copy.contents.add(item as T1);
+    }
     return copy;
   }
 
@@ -128,18 +130,18 @@ export class ElanSet<T1> {
     return this.contents.isSupersetOf(other.contents);
   }
 
-  @elanFunction([], FunctionOptions.pure, ElanArray(ElanT1))
-  asArray(@elanClassType(ElanSet) _other: ElanSet<T1>): T1[] {
-    return Array.from(this.contents);
+  @elanFunction([], FunctionOptions.pure, ElanClass(ElanArray))
+  asArray(): ElanArray<T1> {
+    return this.system.initialise(new ElanArray(Array.from(this.contents)));
   }
 
-  @elanFunction([], FunctionOptions.pure, ElanList(ElanT1))
-  asList(@elanClassType(ElanSet) _other: ElanSet<T1>): T1[] {
-    return Array.from(this.contents);
+  @elanFunction([], FunctionOptions.pure, ElanClass(List))
+  asList(): List<T1> {
+    return this.system.initialise(new List(Array.from(this.contents)));
   }
 
   @elanFunction([], FunctionOptions.pureAsync, ElanString)
   async asString(): Promise<string> {
-    return await this.stdlib.asString(this.stdlib.asList(Array.from(this.contents)));
+    return await this.stdlib.asString(this.asList());
   }
 }

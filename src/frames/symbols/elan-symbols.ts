@@ -2,15 +2,11 @@ import { ClassSymbol } from "../interfaces/class-symbol";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../interfaces/transforms";
-import { ArrayType } from "./array-type";
 import { BooleanType } from "./boolean-type";
-import { DictionaryImmutableType } from "./dictionary-immutable-type";
-import { DictionaryType } from "./dictionary-type";
 import { FloatType } from "./float-type";
 import { FunctionType } from "./function-type";
 import { GenericParameterType } from "./generic-parameter-type";
 import { IntType } from "./int-type";
-import { ListType } from "./list-type";
 import { RegExpType } from "./regexp-type";
 import { StringType } from "./string-type";
 import { SymbolScope } from "./symbol-scope";
@@ -56,30 +52,6 @@ const regExpSymbol: ElanSymbol = {
   symbolScope: SymbolScope.program,
 };
 
-const arraySymbol: ClassSymbol = {
-  symbolId: "Array",
-  symbolType: function (_transforms?: Transforms): SymbolType {
-    return new ArrayType(new GenericParameterType("T"));
-  },
-  symbolScope: SymbolScope.program,
-  isClass: true,
-  isAbstract: false,
-  isNotInheritable: false,
-  ofTypes: [new GenericParameterType("T")],
-};
-
-const array2DSymbol: ClassSymbol = {
-  symbolId: "Array2D",
-  symbolType: function (_transforms?: Transforms): SymbolType {
-    return new ArrayType(new ArrayType(new GenericParameterType("T")));
-  },
-  symbolScope: SymbolScope.program,
-  isClass: true,
-  isAbstract: false,
-  isNotInheritable: false,
-  ofTypes: [new GenericParameterType("T")],
-};
-
 const tupleSymbol: ClassSymbol = {
   symbolId: "Tuple",
   symbolType: function (_transforms?: Transforms): SymbolType {
@@ -89,45 +61,6 @@ const tupleSymbol: ClassSymbol = {
   isClass: true,
   isAbstract: true,
   isNotInheritable: true,
-  ofTypes: [new GenericParameterType("T1"), new GenericParameterType("T2")],
-};
-
-const listSymbol: ClassSymbol = {
-  symbolId: "List",
-  symbolType: function (_transforms?: Transforms): SymbolType {
-    return new ListType(new GenericParameterType("T"));
-  },
-  symbolScope: SymbolScope.program,
-  isClass: true,
-  isAbstract: false,
-  isNotInheritable: false,
-  ofTypes: [new GenericParameterType("T")],
-};
-
-const dictionarySymbol: ClassSymbol = {
-  symbolId: "Dictionary",
-  symbolType: function (_transforms?: Transforms): SymbolType {
-    return new DictionaryType(new GenericParameterType("T1"), new GenericParameterType("T2"));
-  },
-  symbolScope: SymbolScope.program,
-  isClass: true,
-  isAbstract: false,
-  isNotInheritable: false,
-  ofTypes: [new GenericParameterType("T1"), new GenericParameterType("T2")],
-};
-
-const dictionaryImmutableSymbol: ClassSymbol = {
-  symbolId: "DictionaryImmutable",
-  symbolType: function (_transforms?: Transforms): SymbolType {
-    return new DictionaryImmutableType(
-      new GenericParameterType("T1"),
-      new GenericParameterType("T2"),
-    );
-  },
-  symbolScope: SymbolScope.program,
-  isClass: true,
-  isAbstract: false,
-  isNotInheritable: false,
   ofTypes: [new GenericParameterType("T1"), new GenericParameterType("T2")],
 };
 
@@ -157,10 +90,5 @@ export const elanSymbols = [
   booleanSymbol,
   regExpSymbol,
   tupleSymbol,
-  arraySymbol,
-  array2DSymbol,
-  listSymbol,
   funcSymbol,
-  dictionarySymbol,
-  dictionaryImmutableSymbol,
 ];

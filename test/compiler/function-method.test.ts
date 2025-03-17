@@ -171,7 +171,7 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(await new Foo()._initialise());
-  let x = system.emptyImmutableList();
+  let x = system.initialise(_stdlib.List.emptyInstance());
   x = (await f.times(2));
   await system.printLine(x);
 }
@@ -268,7 +268,7 @@ class Bar {
   }
 
   async getTimes() {
-    let x = system.emptyImmutableList();
+    let x = system.initialise(_stdlib.List.emptyInstance());
     x = (await this.p1.times(2));
     return x;
   }
@@ -368,7 +368,7 @@ class Bar {
   }
 
   async getTimes() {
-    let x = system.emptyArray();
+    let x = system.initialise(_stdlib.List.emptyInstance());
     x = (await this.p1.times(2));
     return x;
   }

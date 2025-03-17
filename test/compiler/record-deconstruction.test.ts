@@ -298,7 +298,7 @@ const global = new class {};
 async function main() {
   let x = await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.a = system.list([1, 2]); _a.b = "fred"; return _a;})();
   let {a, b} = x;
-  let y = system.emptyImmutableList();
+  let y = system.initialise(_stdlib.List.emptyInstance());
   let z = "";
   y = a;
   z = b;
@@ -307,9 +307,9 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["a", system.emptyImmutableList()], ["b", ""]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["a", system.initialise(_stdlib.List.emptyInstance())], ["b", ""]]);};
   async _initialise() { return this; }
-  a = system.emptyImmutableList();
+  a = system.initialise(_stdlib.List.emptyInstance());
 
   b = "";
 
@@ -350,9 +350,9 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["a", system.emptyImmutableList()], ["b", ""]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["a", system.initialise(_stdlib.List.emptyInstance())], ["b", ""]]);};
   async _initialise() { return this; }
-  a = system.emptyImmutableList();
+  a = system.initialise(_stdlib.List.emptyInstance());
 
   b = "";
 
@@ -393,9 +393,9 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["a", system.emptyImmutableList()], ["b", ""]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["a", system.initialise(_stdlib.List.emptyInstance())], ["b", ""]]);};
   async _initialise() { return this; }
-  a = system.emptyImmutableList();
+  a = system.initialise(_stdlib.List.emptyInstance());
 
   b = "";
 
@@ -443,9 +443,9 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["a", system.emptyImmutableList()], ["b", ""]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["a", system.initialise(_stdlib.List.emptyInstance())], ["b", ""]]);};
   async _initialise() { return this; }
-  a = system.emptyImmutableList();
+  a = system.initialise(_stdlib.List.emptyInstance());
 
   b = "";
 
@@ -508,9 +508,9 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["a", system.emptyImmutableList()], ["b", ""]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["a", system.initialise(_stdlib.List.emptyInstance())], ["b", ""]]);};
   async _initialise() { return this; }
-  a = system.emptyImmutableList();
+  a = system.initialise(_stdlib.List.emptyInstance());
 
   b = "";
 
@@ -563,7 +563,7 @@ end record`;
 const global = new class {};
 async function main() {
   let x = await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.a = system.list([1, 2]); _a.b = "fred"; return _a;})();
-  let a = system.emptyImmutableList();
+  let a = system.initialise(_stdlib.List.emptyInstance());
   let b = "";
   ({a, b} = x);
   await system.printLine(a);
@@ -571,9 +571,9 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["a", system.emptyImmutableList()], ["b", ""]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["a", system.initialise(_stdlib.List.emptyInstance())], ["b", ""]]);};
   async _initialise() { return this; }
-  a = system.emptyImmutableList();
+  a = system.initialise(_stdlib.List.emptyInstance());
 
   b = "";
 
@@ -625,9 +625,9 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["a", system.emptyImmutableList()], ["b", ""]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["a", system.initialise(_stdlib.List.emptyInstance())], ["b", ""]]);};
   async _initialise() { return this; }
-  a = system.emptyImmutableList();
+  a = system.initialise(_stdlib.List.emptyInstance());
 
   b = "";
 
@@ -694,9 +694,9 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["a", system.emptyImmutableList()], ["b", ""]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["a", system.initialise(_stdlib.List.emptyInstance())], ["b", ""]]);};
   async _initialise() { return this; }
-  a = system.emptyImmutableList();
+  a = system.initialise(_stdlib.List.emptyInstance());
 
   b = "";
 

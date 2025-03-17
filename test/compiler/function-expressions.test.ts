@@ -46,7 +46,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = _stdlib.sin(system.nanCheck(_stdlib.pi / 180 * 30));
+  let x = _stdlib.sin(_stdlib.pi / 180 * 30);
   await system.printLine(x);
 }
 return [main, _tests];}`;
@@ -72,7 +72,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = system.nanCheck(_stdlib.pi / 180 * 30);
+  let x = _stdlib.pi / 180 * 30;
   let y = _stdlib.sin(x);
   await system.printLine(y);
 }
@@ -99,7 +99,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = system.nanCheck(_stdlib.pi / 180 * 30);
+  let x = _stdlib.pi / 180 * 30;
   let y = _stdlib.sin(x) + _stdlib.cos(x);
   await system.printLine(y);
 }
@@ -127,7 +127,7 @@ end main`;
 const global = new class {};
 async function main() {
   let x = 0.7;
-  let y = system.nanCheck(_stdlib.sin(x) ** 2 + system.nanCheck(_stdlib.cos(x) ** 2));
+  let y = _stdlib.sin(x) ** 2 + _stdlib.cos(x) ** 2;
   await system.printLine(y);
 }
 return [main, _tests];}`;
@@ -179,7 +179,7 @@ end main`;
 const global = new class {};
 async function main() {
   let i = system.literalArray(["a", "b"]);
-  let x = _stdlib.contains(i, "b");
+  let x = i.contains("b");
   await system.printLine(x);
 }
 return [main, _tests];}`;
@@ -205,7 +205,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Iterable<of Float> Provided: String",
+      "Incompatible types. Expected: List<of Float> Provided: String",
     ]);
   });
 

@@ -1,5 +1,5 @@
 import {
-  ClassOptions,
+  ClassOption,
   elanClass,
   ElanClass,
   elanFloatType,
@@ -17,7 +17,7 @@ import { LineVG } from "./line-vg";
 import { StdLib } from "./std-lib";
 import { VectorGraphics } from "./vector-graphics";
 
-@elanClass(ClassOptions.concrete, [], [], [], [ElanClass(GraphicsBase)])
+@elanClass(ClassOption.concrete, [], [], [], [ElanClass(GraphicsBase)])
 export class Turtle extends GraphicsBase {
   // this must = implemented by hand on all stdlib classes
   static emptyInstance() {

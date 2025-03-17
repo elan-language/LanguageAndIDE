@@ -1,7 +1,7 @@
-import { ClassOptions, ElanClass, elanClass, elanProperty } from "../elan-type-annotations";
+import { ClassOption, ElanClass, elanClass, elanProperty } from "../elan-type-annotations";
 import { BaseVG } from "./base-vg";
 
-@elanClass(ClassOptions.record, [], [], [], [ElanClass(BaseVG)])
+@elanClass(ClassOption.record, [], [], [], [ElanClass(BaseVG)])
 export class LineVG extends BaseVG {
   static emptyInstance() {
     return new LineVG();
