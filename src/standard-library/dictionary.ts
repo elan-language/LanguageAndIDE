@@ -2,7 +2,6 @@ import {
   ClassOption,
   ElanBoolean,
   ElanClass,
-  ElanDictionaryImmutable,
   ElanT1,
   ElanT2,
   FunctionOptions,
@@ -15,7 +14,7 @@ import {
 import { System } from "../system";
 import { List } from "./list";
 
-@elanClass(ClassOption.dictionary, [ElanDictionaryImmutable(ElanT1, ElanT2)])
+@elanClass(ClassOption.dictionary, [ElanT1, ElanT2])
 export class Dictionary<_T1, T2> {
   // this must be implemented by hand on all stdlib classes
   static emptyInstance() {
@@ -41,7 +40,7 @@ export class Dictionary<_T1, T2> {
 
   @elanProcedure(["key", "value"])
   putAtKey(@elanGenericParamT1Type() key: string, @elanGenericParamT2Type() value: T2) {
-    this.system!.safeDictionarySet(this.contents, key, value);
+    this.contents[key] = value;
   }
 
   @elanFunction([], FunctionOptions.pure, ElanClass(List))
@@ -61,5 +60,21 @@ export class Dictionary<_T1, T2> {
   @elanFunction(["key"], FunctionOptions.pure, ElanBoolean)
   hasKey(@elanGenericParamT1Type() key: string): boolean {
     return this.keys().contains(key);
+  }
+
+  async asString() {
+    const contents = await this.system?.asString(this.contents);
+    return `[${contents}]`;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  safeIndex(index: any) {
+    const r = this.contents[index];
+
+    if (r === undefined) {
+      this.system!.throwRangeError(this.contents, index);
+    }
+
+    return r;
   }
 }

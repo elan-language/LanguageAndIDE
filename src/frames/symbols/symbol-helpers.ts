@@ -7,7 +7,6 @@ import { AstNode } from "../interfaces/ast-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { Class } from "../interfaces/class";
 import { DeconstructedSymbolType } from "../interfaces/deconstructed-symbol-type";
-import { DictionarySymbolType } from "../interfaces/dictionary-symbol-type";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { File } from "../interfaces/file";
 import { Frame } from "../interfaces/frame";
@@ -28,11 +27,9 @@ import {
   transforms,
 } from "../syntax-nodes/ast-helpers";
 import { EmptyAsn } from "../syntax-nodes/empty-asn";
-import { AbstractDictionaryType } from "./abstract-dictionary-type";
+
 import { BooleanType } from "./boolean-type";
 import { ClassType } from "./class-type";
-import { DictionaryImmutableType } from "./dictionary-immutable-type";
-import { DictionaryType } from "./dictionary-type";
 import { EnumType } from "./enum-type";
 import { EnumValueType } from "./enum-value-type";
 import { FloatType } from "./float-type";
@@ -51,15 +48,15 @@ export function isDeconstructedType(s?: SymbolType): s is DeconstructedSymbolTyp
   return !!s && "symbolTypeFor" in s;
 }
 
-export function isAnyDictionaryType(s?: SymbolType): s is DictionarySymbolType {
-  return !!s && "keyType" in s && "valueType" in s;
-}
+// export function isAnyDictionaryType(s?: SymbolType): s is DictionarySymbolType {
+//   return !!s && "keyType" in s && "valueType" in s;
+// }
 
-export function isConcreteDictionaryType(
-  s?: SymbolType,
-): s is DictionaryType | DictionaryImmutableType {
-  return s instanceof DictionaryType || s instanceof DictionaryImmutableType;
-}
+// export function isConcreteDictionaryType(
+//   s?: SymbolType,
+// ): s is DictionaryType | DictionaryImmutableType {
+//   return s instanceof DictionaryType || s instanceof DictionaryImmutableType;
+// }
 
 export function isListType(s?: SymbolType): s is ClassType {
   return !!s && s instanceof ClassType && s.className === "List";
@@ -310,17 +307,17 @@ function matchGenericTypes(actualType: SymbolType, paramType: SymbolType) {
   return false;
 }
 
-function matchDictionaryTypes(actualType: SymbolType, paramType: SymbolType) {
+function _matchDictionaryTypes(actualType: SymbolType, paramType: SymbolType) {
   if (paramType.constructor.name === actualType.constructor.name) {
     return true;
   }
 
-  if (
-    paramType instanceof AbstractDictionaryType &&
-    (actualType instanceof DictionaryType || actualType instanceof DictionaryImmutableType)
-  ) {
-    return true;
-  }
+  // if (
+  //   paramType instanceof AbstractDictionaryType &&
+  //   (actualType instanceof DictionaryType || actualType instanceof DictionaryImmutableType)
+  // ) {
+  //   return true;
+  // }
 
   return false;
 }
@@ -349,15 +346,15 @@ export function matchType(actualType: SymbolType, paramType: SymbolType): boolea
     );
   }
 
-  if (isAnyDictionaryType(paramType) && isAnyDictionaryType(actualType)) {
-    return (
-      matchDictionaryTypes(actualType, paramType) &&
-      (paramType.keyType instanceof GenericParameterType ||
-        matchType(actualType.keyType, paramType.keyType)) &&
-      (paramType.valueType instanceof GenericParameterType ||
-        matchType(actualType.valueType, paramType.valueType))
-    );
-  }
+  // if (isAnyDictionaryType(paramType) && isAnyDictionaryType(actualType)) {
+  //   return (
+  //     matchDictionaryTypes(actualType, paramType) &&
+  //     (paramType.keyType instanceof GenericParameterType ||
+  //       matchType(actualType.keyType, paramType.keyType)) &&
+  //     (paramType.valueType instanceof GenericParameterType ||
+  //       matchType(actualType.valueType, paramType.valueType))
+  //   );
+  // }
 
   return false;
 }

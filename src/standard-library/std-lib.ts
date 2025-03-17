@@ -193,13 +193,10 @@ export class StdLib {
     }
 
     if (typeof v === "object" && v.constructor.name === "Object") {
-      const type = (v as unknown as hasHiddenType)._type;
-      const [pf, sf] = type === "Dictionary" ? ["[", "]"] : ["{", "}"];
-
       const items = Object.getOwnPropertyNames(v).filter((s) => s !== "_type");
       const o = v as { [key: string]: object };
       const dict = await convertDict(o, items, this);
-      return `${pf}${dict}${sf}`;
+      return `${dict}`;
     }
 
     if (typeof v === "object") {

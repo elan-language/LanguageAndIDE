@@ -10,7 +10,6 @@ import { IntType } from "./int-type";
 import { NullScope } from "./null-scope";
 import { isClassTypeDef, isSymbol, symbolMatches } from "./symbol-helpers";
 import { SymbolScope } from "./symbol-scope";
-import { UnknownType } from "./unknown-type";
 
 export enum ClassSubType {
   concrete,
@@ -28,16 +27,13 @@ export class ClassType implements ReifyableSymbolType, Scope {
     public scope: Class | NullScope,
   ) {}
 
-  get ofType() {
-    if (isClassTypeDef(this.scope) && this.scope.ofTypes.length === 1) {
-      return this.scope.ofTypes[0];
-    }
-    return UnknownType.Instance;
+  get ofTypes() {
+    return isClassTypeDef(this.scope) ? this.scope.ofTypes : [];
   }
 
   reify(gts: SymbolType[]): ReifyableSymbolType {
-    if (isClassTypeDef(this.scope) && this.scope.ofTypes.length === 1 && gts.length === 1) {
-      const cls = this.scope.updateOfTypes([gts[0]]);
+    if (isClassTypeDef(this.scope)) {
+      const cls = this.scope.updateOfTypes(gts);
 
       return new ClassType(
         this.className,
@@ -67,18 +63,23 @@ export class ClassType implements ReifyableSymbolType, Scope {
     return symbolMatches(id, all, symbols);
   }
 
+  typeMatch(t1: SymbolType, t2: SymbolType) {
+    if (t1 instanceof FloatType && t2 instanceof IntType) {
+      return true;
+    }
+
+    return t1.name === t2.name;
+  }
+
   isAssignableFrom(otherType: SymbolType): boolean {
     if (otherType instanceof ClassType) {
       if (otherType.className === this.className) {
-        if (this.ofType !== UnknownType.Instance) {
-          // special case
-          if (this.ofType instanceof FloatType && otherType.ofType instanceof IntType) {
-            return true;
-          }
-
-          return otherType.ofType.name === this.ofType.name;
+        if (this.ofTypes.length === otherType.ofTypes.length) {
+          return this.ofTypes.length === 0
+            ? true
+            : this.ofTypes.every((t, i) => this.typeMatch(t, otherType.ofTypes[i]));
         }
-        return true;
+        return false;
       }
       return otherType.inheritsFrom.some((c) => this.isAssignableFrom(c));
     }
@@ -98,9 +99,11 @@ export class ClassType implements ReifyableSymbolType, Scope {
   }
 
   get name() {
-    const ofType = this.ofType;
-    if (ofType !== UnknownType.Instance) {
-      return `${this.className.trim()}<of ${ofType.name}>`;
+    if (this.ofTypes.length === 1) {
+      return `${this.className.trim()}<of ${this.ofTypes[0].name}>`;
+    }
+    if (this.ofTypes.length === 2) {
+      return `${this.className.trim()}<of ${this.ofTypes[0].name}, ${this.ofTypes[1].name}>`;
     }
 
     return `${this.className.trim()}`;

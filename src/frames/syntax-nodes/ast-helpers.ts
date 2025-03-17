@@ -18,17 +18,15 @@ import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../interfaces/transforms";
 import { noTypeOptions } from "../interfaces/type-options";
-import { AbstractDictionaryType } from "../symbols/abstract-dictionary-type";
+
 import { ClassType } from "../symbols/class-type";
-import { DictionaryImmutableType } from "../symbols/dictionary-immutable-type";
-import { DictionaryType } from "../symbols/dictionary-type";
+
 import { FunctionType } from "../symbols/function-type";
 import { GenericParameterType } from "../symbols/generic-parameter-type";
 import { IntType } from "../symbols/int-type";
 import { ProcedureType } from "../symbols/procedure-type";
 import { StringType } from "../symbols/string-type";
 import {
-  isAnyDictionaryType,
   isClassType,
   isClassTypeDef,
   isGenericSymbolType,
@@ -109,13 +107,17 @@ class TypeHolder implements SymbolType {
 }
 
 export function flatten(p: SymbolType): SymbolType {
-  if (p instanceof ClassType && p.typeOptions.isIndexable) {
-    return new TypeHolder(p, [flatten(p.ofType)]);
+  if (p instanceof ClassType && p.typeOptions.isIndexable && p.ofTypes.length === 1) {
+    return new TypeHolder(p, [flatten(p.ofTypes[0])]);
   }
 
-  if (isAnyDictionaryType(p)) {
-    return new TypeHolder(p, [flatten(p.keyType), flatten(p.valueType)]);
+  if (p instanceof ClassType && p.typeOptions.isIndexable && p.ofTypes.length === 2) {
+    return new TypeHolder(p, [flatten(p.ofTypes[0]), flatten(p.ofTypes[1])]);
   }
+
+  // if (isAnyDictionaryType(p)) {
+  //   return new TypeHolder(p, [flatten(p.keyType), flatten(p.valueType)]);
+  // }
 
   if (p instanceof TupleType) {
     let flattened = [] as SymbolType[];
@@ -146,9 +148,9 @@ export function containsGenericType(type: SymbolType): boolean {
   if (type instanceof GenericParameterType) {
     return true;
   }
-  if (isAnyDictionaryType(type)) {
-    return containsGenericType(type.keyType) || containsGenericType(type.valueType);
-  }
+  // if (isAnyDictionaryType(type)) {
+  //   return containsGenericType(type.keyType) || containsGenericType(type.valueType);
+  // }
   if (type instanceof TupleType) {
     return type.ofTypes.some((t) => containsGenericType(t));
   }
@@ -185,7 +187,14 @@ export function generateType(
   }
 
   if (isReifyableSymbolType(type)) {
-    return type.reify([generateType(type.ofType, matches, depth)]);
+    // if (type.ofTypes.length === 1) {
+    //   return type.reify([generateType(type.ofTypes[0], matches, depth)]);
+    // }
+    // if (type.ofTypes.length === 2) {
+    //   return type.reify([generateType(type.ofType, matches, depth), generateType(type.ofType, matches, depth)]);
+    // }
+
+    return type.reify(type.ofTypes.map((t) => generateType(t, matches, depth)));
   }
 
   if (type instanceof GenericParameterType) {
@@ -196,24 +205,24 @@ export function generateType(
 
     return match ?? type;
   }
-  if (type instanceof DictionaryType) {
-    return new DictionaryType(
-      generateType(type.keyType, matches, depth),
-      generateType(type.valueType, matches, depth),
-    );
-  }
-  if (type instanceof DictionaryImmutableType) {
-    return new DictionaryImmutableType(
-      generateType(type.keyType, matches, depth),
-      generateType(type.valueType, matches, depth),
-    );
-  }
-  if (type instanceof AbstractDictionaryType) {
-    return new AbstractDictionaryType(
-      generateType(type.keyType, matches, depth),
-      generateType(type.valueType, matches, depth),
-    );
-  }
+  // if (type instanceof DictionaryType) {
+  //   return new DictionaryType(
+  //     generateType(type.keyType, matches, depth),
+  //     generateType(type.valueType, matches, depth),
+  //   );
+  // }
+  // if (type instanceof DictionaryImmutableType) {
+  //   return new DictionaryImmutableType(
+  //     generateType(type.keyType, matches, depth),
+  //     generateType(type.valueType, matches, depth),
+  //   );
+  // }
+  // if (type instanceof AbstractDictionaryType) {
+  //   return new AbstractDictionaryType(
+  //     generateType(type.keyType, matches, depth),
+  //     generateType(type.valueType, matches, depth),
+  //   );
+  // }
   if (type instanceof TupleType) {
     return new TupleType(type.ofTypes.map((t) => generateType(t, matches, depth)));
   }
@@ -389,8 +398,12 @@ export function getIds(ast: AstNode) {
 
 export function getIndexAndOfType(rootType: SymbolType): [SymbolType, SymbolType] {
   if (isClassType(rootType) && isClassTypeDef(rootType.scope)) {
-    if (rootType.scope.ofTypes.length > 0) {
+    if (rootType.scope.ofTypes.length === 1) {
       return [IntType.Instance, rootType.scope.ofTypes[0]];
+    }
+
+    if (rootType.scope.ofTypes.length === 2) {
+      return [rootType.scope.ofTypes[0], rootType.scope.ofTypes[1]];
     }
   }
 
@@ -398,9 +411,9 @@ export function getIndexAndOfType(rootType: SymbolType): [SymbolType, SymbolType
     return [IntType.Instance, rootType.ofType];
   }
 
-  if (isAnyDictionaryType(rootType)) {
-    return [rootType.keyType, rootType.valueType];
-  }
+  // if (isAnyDictionaryType(rootType)) {
+  //   return [rootType.keyType, rootType.valueType];
+  // }
 
   return [UnknownType.Instance, UnknownType.Instance];
 }

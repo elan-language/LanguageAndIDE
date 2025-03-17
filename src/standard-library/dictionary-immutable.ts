@@ -3,8 +3,6 @@ import {
   ElanBoolean,
   ElanClass,
   elanClass,
-  ElanDictionaryImmutable,
-  elanDictionaryImmutableType,
   elanFunction,
   elanGenericParamT1Type,
   elanGenericParamT2Type,
@@ -15,7 +13,7 @@ import {
 import { System } from "../system";
 import { List } from "./list";
 
-@elanClass(ClassOption.dictionaryImmutable, [ElanDictionaryImmutable(ElanT1, ElanT2)])
+@elanClass(ClassOption.dictionaryImmutable, [ElanT1, ElanT2])
 export class DictionaryImmutable<_T1, T2> {
   // this must be implemented by hand on all stdlib classes
   static emptyInstance() {
@@ -34,16 +32,14 @@ export class DictionaryImmutable<_T1, T2> {
 
   private system?: System;
 
-  @elanFunction(["key"], FunctionOptions.pure, ElanDictionaryImmutable(ElanT1, ElanT2))
-  withRemoveAtKey(
-    @elanDictionaryImmutableType(ElanT1, ElanT2) @elanGenericParamT1Type() key: string,
-  ) {
+  @elanFunction(["key"], FunctionOptions.pure, ElanClass(DictionaryImmutable))
+  withRemoveAtKey(@elanGenericParamT1Type() key: string) {
     const newDict = { ...this.contents };
     delete newDict[key];
     return this.system!.initialise(new DictionaryImmutable<string, T2>(newDict));
   }
 
-  @elanFunction(["key", "value"], FunctionOptions.pure, ElanDictionaryImmutable(ElanT1, ElanT2))
+  @elanFunction(["key", "value"], FunctionOptions.pure, ElanClass(DictionaryImmutable))
   withPutAtKey(@elanGenericParamT1Type() key: string, @elanGenericParamT2Type() value: T2) {
     const newDict = { ...this.contents };
     newDict[key] = value;
@@ -68,5 +64,21 @@ export class DictionaryImmutable<_T1, T2> {
   @elanFunction(["key"], FunctionOptions.pure, ElanBoolean)
   hasKey(@elanGenericParamT1Type() key: string): boolean {
     return this.keys().contains(key);
+  }
+
+  async asString() {
+    const contents = await this.system?.asString(this.contents);
+    return `{${contents}}`;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  safeIndex(index: any) {
+    const r = this.contents[index];
+
+    if (r === undefined) {
+      this.system!.throwRangeError(this.contents, index);
+    }
+
+    return r;
   }
 }

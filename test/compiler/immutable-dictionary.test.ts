@@ -141,7 +141,7 @@ const global = new class {
 };
 async function main() {
   let b = system.initialise(_stdlib.List.emptyInstance());
-  b = _stdlib.keys(global.a);
+  b = global.a.keys();
   await system.printLine(b);
 }
 return [main, _tests];}`;
@@ -170,8 +170,8 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(_stdlib.hasKey(global.a, "b"));
-  await system.printLine(_stdlib.hasKey(global.a, "d"));
+  await system.printLine(global.a.hasKey("b"));
+  await system.printLine(global.a.hasKey("d"));
 }
 return [main, _tests];}`;
 
@@ -198,7 +198,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(_stdlib.values(global.a));
+  await system.printLine(global.a.values());
 }
 return [main, _tests];}`;
 
@@ -211,7 +211,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "{1, 3, 10}");
   });
 
-  test("Pass_putAtKey", async () => {
+  test("Pass_withPutAtKey", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 constant a set to {"a":1, "b":3, "z":10}
@@ -228,8 +228,8 @@ const global = new class {
 
 };
 async function main() {
-  let b = _stdlib.withPutAtKey(global.a, "b", 4);
-  let c = _stdlib.withPutAtKey(b, "d", 2);
+  let b = global.a.withPutAtKey("b", 4);
+  let c = b.withPutAtKey("d", 2);
   await system.printLine(global.a);
   await system.printLine(c);
 }
@@ -260,7 +260,7 @@ const global = new class {
 
 };
 async function main() {
-  let b = _stdlib.withRemoveAtKey(global.a, "b");
+  let b = global.a.withRemoveAtKey("b");
   await system.printLine(global.a);
   await system.printLine(b);
 }
@@ -290,7 +290,7 @@ const global = new class {
 
 };
 async function main() {
-  let b = _stdlib.withRemoveAtKey(global.a, "c");
+  let b = global.a.withRemoveAtKey("c");
   await system.printLine(b);
 }
 return [main, _tests];}`;
@@ -320,10 +320,10 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(system.dictionaryImmutable(new Object()));
-  let b = _stdlib.withPutAtKey(a, "Foo", 1);
-  b = _stdlib.withPutAtKey(b, "Bar", 3);
-  let k = _stdlib.keys(b);
+  let a = system.initialise(await new _stdlib.DictionaryImmutable()._initialise());
+  let b = a.withPutAtKey("Foo", 1);
+  b = b.withPutAtKey("Bar", 3);
+  let k = b.keys();
   await system.printLine(k.length());
   await system.printLine(system.safeIndex(b, "Foo"));
   await system.printLine(system.safeIndex(b, "Bar"));
@@ -361,10 +361,10 @@ const Fruit = {
 
 const global = new class {};
 async function main() {
-  let a = system.initialise(system.dictionaryImmutable(new Object()));
-  let b = _stdlib.withPutAtKey(a, Fruit.apple, 1);
-  b = _stdlib.withPutAtKey(b, Fruit.orange, 3);
-  let k = _stdlib.keys(b);
+  let a = system.initialise(await new _stdlib.DictionaryImmutable()._initialise());
+  let b = a.withPutAtKey(Fruit.apple, 1);
+  b = b.withPutAtKey(Fruit.orange, 3);
+  let k = b.keys();
   await system.printLine(k.length());
   await system.printLine(system.safeIndex(b, Fruit.apple));
   await system.printLine(system.safeIndex(b, Fruit.orange));
@@ -397,14 +397,14 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.emptyDictionaryImmutable();
-  let b = system.emptyDictionaryImmutable();
-  b = _stdlib.withPutAtKey(a, "a", 1);
+  let a = system.initialise(_stdlib.DictionaryImmutable.emptyInstance());
+  let b = system.initialise(_stdlib.DictionaryImmutable.emptyInstance());
+  b = a.withPutAtKey("a", 1);
   await system.printLine(a);
   await system.printLine(b);
   await system.printLine(system.objectEquals(a, b));
-  await system.printLine(system.objectEquals(a, system.emptyDictionaryImmutable()));
-  await system.printLine(system.objectEquals(b, system.emptyDictionaryImmutable()));
+  await system.printLine(system.objectEquals(a, system.initialise(_stdlib.DictionaryImmutable.emptyInstance())));
+  await system.printLine(system.objectEquals(b, system.initialise(_stdlib.DictionaryImmutable.emptyInstance())));
 }
 return [main, _tests];}`;
 
@@ -494,7 +494,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Argument types. Expected: parameter1 (String) Provided: Int"]);
+    assertDoesNotCompile(fileImpl, ["Argument types. Expected: key (String) Provided: Int"]);
   });
 
   test("Fail_SetInvalidKeyType", async () => {
@@ -562,9 +562,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Dictionary<of String, Int> Provided: DictionaryImmutable<of String, Int>",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'putAtKey' is not defined for type 'DictionaryImmutable'"]);
   });
 
   test("Fail_removeKey", async () => {
@@ -581,9 +579,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Dictionary<of String, Int> Provided: DictionaryImmutable<of String, Int>",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'removeAtKey' is not defined for type 'DictionaryImmutable'"]);
   });
 
   test("Fail_undefined", async () => {

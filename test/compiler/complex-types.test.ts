@@ -25,7 +25,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.literalArray([system.dictionary({["a"] : 1}), system.dictionary({["b"] : 3, ["z"] : 10})]);
-  _stdlib.putAtKey(system.safeIndex(a, 0), "b", 2);
+  system.safeIndex(a, 0).putAtKey("b", 2);
   await system.printLine(system.safeIndex(system.safeIndex(a, 0), "b"));
 }
 return [main, _tests];}`;

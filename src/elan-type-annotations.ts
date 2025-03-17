@@ -14,11 +14,9 @@ import { ElanSymbol } from "./frames/interfaces/elan-symbol";
 import { Scope } from "./frames/interfaces/scope";
 import { SymbolType } from "./frames/interfaces/symbol-type";
 import { getTypeOptions, noTypeOptions, TypeOptions } from "./frames/interfaces/type-options";
-import { AbstractDictionaryType } from "./frames/symbols/abstract-dictionary-type";
+
 import { BooleanType } from "./frames/symbols/boolean-type";
 import { ClassSubType, ClassType } from "./frames/symbols/class-type";
-import { DictionaryImmutableType } from "./frames/symbols/dictionary-immutable-type";
-import { DictionaryType } from "./frames/symbols/dictionary-type";
 import { FloatType } from "./frames/symbols/float-type";
 import { FunctionType } from "./frames/symbols/function-type";
 import { GenericParameterType } from "./frames/symbols/generic-parameter-type";
@@ -139,12 +137,12 @@ export class ElanValueTypeDescriptor implements TypeDescriptor {
         return BooleanType.Instance;
       case "RegExp":
         return RegExpType.Instance;
-      case "AbstractDictionary":
-        return new AbstractDictionaryType(this.ofType!.mapType(), this.valueType!.mapType());
-      case "DictionaryImmutable":
-        return new DictionaryImmutableType(this.ofType!.mapType(), this.valueType!.mapType());
-      case "Dictionary":
-        return new DictionaryType(this.ofType!.mapType(), this.valueType!.mapType());
+      // case "AbstractDictionary":
+      //   return new AbstractDictionaryType(this.ofType!.mapType(), this.valueType!.mapType());
+      // case "DictionaryImmutable":
+      //   return new DictionaryImmutableType(this.ofType!.mapType(), this.valueType!.mapType());
+      // case "Dictionary":
+      //   return new DictionaryType(this.ofType!.mapType(), this.valueType!.mapType());
     }
     throw new Error("NotImplemented: " + this.name);
   }
@@ -459,9 +457,9 @@ export const ElanRegExp: ElanValueTypeDescriptor = new ElanValueTypeDescriptor("
 export const ElanT1: ElanValueTypeDescriptor = new ElanGenericTypeDescriptor("T1");
 export const ElanT2: ElanValueTypeDescriptor = new ElanGenericTypeDescriptor("T2");
 
-export function ElanAbstractDictionary(keyType: TypeDescriptor, valueType: TypeDescriptor) {
-  return new ElanValueTypeDescriptor("AbstractDictionary", keyType, valueType);
-}
+// export function ElanAbstractDictionary(keyType: TypeDescriptor, valueType: TypeDescriptor) {
+//   return new ElanValueTypeDescriptor("AbstractDictionary", keyType, valueType);
+// }
 
 export function ElanClass(
   cls: { name: string; prototype: object; emptyInstance: () => object },
@@ -470,13 +468,13 @@ export function ElanClass(
   return new ElanClassTypeDescriptor(cls, ofTypes);
 }
 
-export function ElanDictionaryImmutable(keyType: TypeDescriptor, valueType: TypeDescriptor) {
-  return new ElanValueTypeDescriptor("DictionaryImmutable", keyType, valueType);
-}
+// export function ElanDictionaryImmutable(keyType: TypeDescriptor, valueType: TypeDescriptor) {
+//   return new ElanValueTypeDescriptor("DictionaryImmutable", keyType, valueType);
+// }
 
-export function ElanDictionary(keyType: TypeDescriptor, valueType: TypeDescriptor) {
-  return new ElanValueTypeDescriptor("Dictionary", keyType, valueType);
-}
+// export function ElanDictionary(keyType: TypeDescriptor, valueType: TypeDescriptor) {
+//   return new ElanValueTypeDescriptor("Dictionary", keyType, valueType);
+// }
 
 export function ElanTuple(ofTypes: TypeDescriptor[]) {
   return new ElanTupleTypeDescriptor(ofTypes);
@@ -514,17 +512,17 @@ export function elanGenericParamT2Type() {
   return elanType(ElanT2);
 }
 
-export function elanAbstractDictionaryType(keyType: TypeDescriptor, valueType: TypeDescriptor) {
-  return elanType(ElanAbstractDictionary(keyType, valueType));
-}
+// export function elanAbstractDictionaryType(keyType: TypeDescriptor, valueType: TypeDescriptor) {
+//   return elanType(ElanAbstractDictionary(keyType, valueType));
+// }
 
-export function elanDictionaryImmutableType(keyType: TypeDescriptor, valueType: TypeDescriptor) {
-  return elanType(ElanDictionaryImmutable(keyType, valueType));
-}
+// export function elanDictionaryImmutableType(keyType: TypeDescriptor, valueType: TypeDescriptor) {
+//   return elanType(ElanDictionaryImmutable(keyType, valueType));
+// }
 
-export function elanDictionaryType(keyType: TypeDescriptor, valueType: TypeDescriptor) {
-  return elanType(ElanDictionary(keyType, valueType));
-}
+// export function elanDictionaryType(keyType: TypeDescriptor, valueType: TypeDescriptor) {
+//   return elanType(ElanDictionary(keyType, valueType));
+// }
 
 export function elanTupleType(ofTypes: TypeDescriptor[]) {
   return elanType(ElanTuple(ofTypes));

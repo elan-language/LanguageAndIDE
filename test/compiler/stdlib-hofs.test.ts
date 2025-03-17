@@ -267,7 +267,7 @@ const global = new class {
 };
 async function main() {
   let ed = system.dictionaryImmutable({["one"] : 1, ["two"] : 2});
-  ed = (await global.source.reduce(ed, async (d, x) => _stdlib.withPutAtKey(d, x, 1)));
+  ed = (await global.source.reduce(ed, async (d, x) => d.withPutAtKey(x, 1)));
   await system.printLine(ed);
 }
 return [main, _tests];}`;

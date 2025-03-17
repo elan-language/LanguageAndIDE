@@ -940,9 +940,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: List<of String> Provided: DictionaryImmutable<of String, String>",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'withPutAtKey' is not defined for type 'List'"]);
   });
 
   test("Fail_add", async () => {

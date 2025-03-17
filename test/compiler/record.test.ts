@@ -265,7 +265,7 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", 0], ["p3", ""], ["p4", false], ["p5", system.emptyRegExp()], ["p6", system.initialise(_stdlib.List.emptyInstance())], ["p7", system.emptyDictionaryImmutable()]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", 0], ["p3", ""], ["p4", false], ["p5", system.emptyRegExp()], ["p6", system.initialise(_stdlib.List.emptyInstance())], ["p7", system.initialise(_stdlib.DictionaryImmutable.emptyInstance())]]);};
   async _initialise() { return this; }
   p1 = 0;
 
@@ -279,7 +279,7 @@ class Foo {
 
   p6 = system.initialise(_stdlib.List.emptyInstance());
 
-  p7 = system.emptyDictionaryImmutable();
+  p7 = system.initialise(_stdlib.DictionaryImmutable.emptyInstance());
 
   _p8;
   get p8() {

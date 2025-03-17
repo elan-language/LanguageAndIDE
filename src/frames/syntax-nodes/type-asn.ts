@@ -8,7 +8,6 @@ import { FunctionType } from "../symbols/function-type";
 import { StringType } from "../symbols/string-type";
 import {
   getGlobalScope,
-  isAnyDictionaryType,
   isClassTypeDef,
   isIterableType,
   isReifyableSymbolType,
@@ -41,10 +40,6 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
 
     if (st instanceof StringType) {
       return 0;
-    }
-
-    if (isAnyDictionaryType(st)) {
-      return 2;
     }
 
     if (st instanceof TupleType) {
@@ -83,9 +78,9 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
       gp.compile();
     }
 
-    if (isAnyDictionaryType(rootSt)) {
-      return "Object";
-    }
+    // if (isAnyDictionaryType(rootSt)) {
+    //   return "Object";
+    // }
 
     return this.id;
   }

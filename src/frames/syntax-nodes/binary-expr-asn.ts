@@ -135,9 +135,9 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
       if (isListType(lst) && isListType(rst)) {
         mustBeAssignableType(lst, rst, this.compileErrors, this.fieldId);
       } else if (isListType(lst)) {
-        mustBeAssignableType(lst.ofType, rst, this.compileErrors, this.fieldId);
+        mustBeAssignableType(lst.ofTypes[0], rst, this.compileErrors, this.fieldId);
       } else if (isListType(rst)) {
-        mustBeAssignableType(lst, rst.ofType, this.compileErrors, this.fieldId);
+        mustBeAssignableType(lst, rst.ofTypes[0], this.compileErrors, this.fieldId);
       }
       return `system.concat(${lhsCode}, ${rhsCode})`;
     }

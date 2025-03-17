@@ -31,6 +31,7 @@ export class System {
   // constant immutables
   emptyImmutableListSingleton = this.initialise(new ElanArray([]));
   emptyDictionaryImmutableSingleton = this.dictionaryImmutable({});
+
   emptyRegExpSingleton = /(?:)/;
 
   emptyRegExp() {
