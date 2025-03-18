@@ -1,3 +1,4 @@
+import { ElanRuntimeError } from "../elan-runtime-error";
 import {
   ClassOption,
   elanClass,
@@ -26,9 +27,9 @@ export class ElanArray2D<T1> {
   }
 
   async _initialise(x: number, y: number, value: T1) {
-    // if (!this.system!.stdlib.isValueType(value)) {
-    //   throw new ElanRuntimeError(`Can only initialise array with simple value`);
-    // }
+    if (!(typeof value === "boolean" || typeof value === "string" || typeof value === "number")) {
+      throw new ElanRuntimeError(`Can only initialise Array2D with simple value`);
+    }
 
     const toInit: T1[][] = [];
     toInit.length = x;
