@@ -658,9 +658,9 @@ return [main, _tests];}`;
 
 main
   variable oxoBoard set to new Array2D<of String>(3,3,"")
-  call oxoBoard.putAt(0, 0, "o")
-  call oxoBoard.putAt(2, 2, "o")
-  call oxoBoard.putAt(1, 1, "x")
+  call oxoBoard.put(0, 0, "o")
+  call oxoBoard.put(2, 2, "o")
+  call oxoBoard.put(1, 1, "x")
   print oxoBoard
 end main`;
 
@@ -668,9 +668,9 @@ end main`;
 const global = new class {};
 async function main() {
   let oxoBoard = system.initialise(await new _stdlib.Array2D()._initialise(3, 3, ""));
-  oxoBoard.putAt(0, 0, "o");
-  oxoBoard.putAt(2, 2, "o");
-  oxoBoard.putAt(1, 1, "x");
+  oxoBoard.put(0, 0, "o");
+  oxoBoard.put(2, 2, "o");
+  oxoBoard.put(1, 1, "x");
   await system.printLine(oxoBoard);
 }
 return [main, _tests];}`;

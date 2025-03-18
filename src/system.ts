@@ -336,6 +336,19 @@ export class System {
     return -1;
   }
 
+  elan2DIndexOf<T1>(list: T1[][], elem: T1): [number, number] {
+    for (let i = 0; i < list.length; i++) {
+      const subArr = list[i];
+      for (let j = 0; j < subArr.length; j++) {
+        const item = subArr[j];
+        if (this.equals(item, elem)) {
+          return [i, j];
+        }
+      }
+    }
+    return [-1, -1];
+  }
+
   async asString(a: any) {
     return await this._stdlib.asString(a);
   }

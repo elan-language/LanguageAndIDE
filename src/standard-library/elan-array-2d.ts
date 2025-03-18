@@ -1,6 +1,7 @@
 import { ElanRuntimeError } from "../elan-runtime-error";
 import {
   ClassOption,
+  ElanClass,
   elanClass,
   elanFunction,
   elanGenericParamT1Type,
@@ -47,8 +48,8 @@ export class ElanArray2D<T1> {
     return this;
   }
 
-  constructor() {
-    this.contents = [];
+  constructor(arr?: T1[][]) {
+    this.contents = arr ? [...arr] : [];
   }
 
   private contents: T1[][];
@@ -70,17 +71,39 @@ export class ElanArray2D<T1> {
   }
 
   @elanProcedure(["column", "row", "value"])
-  putAt(
+  put(@elanIntType() col: number, @elanIntType() row: number, @elanGenericParamT1Type() value: T1) {
+    this.system!.safe2DArraySet(this.contents, col, row, value);
+  }
+
+  @elanFunction(["column", "row", "value"], FunctionOptions.pure, ElanClass(ElanArray2D))
+  withPut(
     @elanIntType() col: number,
     @elanIntType() row: number,
     @elanGenericParamT1Type() value: T1,
-  ) {
-    this.system!.safe2DArraySet(this.contents, col, row, value);
+  ): ElanArray2D<T1> {
+    const newList = [...this.contents];
+    this.system!.safe2DArraySet(newList, col, row, value);
+
+    return this.system!.initialise(new ElanArray2D(newList));
   }
 
   @elanFunction([], FunctionOptions.pure, ElanInt)
   length() {
     return this.contents.length;
+  }
+
+  @elanFunction(["item"], FunctionOptions.pure, ElanInt)
+  indexOf(
+    @elanGenericParamT1Type()
+    item: T1,
+  ): [number, number] {
+    return this.system!.elan2DIndexOf(this.contents, item);
+  }
+
+  @elanFunction(["item"], FunctionOptions.pure)
+  contains(@elanGenericParamT1Type() item: T1): boolean {
+    const [i, _] = this.system!.elan2DIndexOf(this.contents, item);
+    return i !== -1;
   }
 
   async asString() {
