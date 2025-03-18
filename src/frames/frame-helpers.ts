@@ -18,6 +18,7 @@ import { Scope } from "./interfaces/scope";
 import { Selectable } from "./interfaces/selectable";
 import { Statement } from "./interfaces/statement";
 import { SymbolType } from "./interfaces/symbol-type";
+import { isRecord } from "./interfaces/type-options";
 import { ReturnStatement } from "./statements/return-statement";
 import { CompileStatus, DisplayColour, ParseStatus, RunStatus, TestStatus } from "./status-enums";
 import { ClassType } from "./symbols/class-type";
@@ -251,18 +252,14 @@ export function mapSymbolType(ids: string[], st: SymbolType) {
     return new DeconstructedTupleType(ids, st.ofTypes);
   }
 
-  if (
-    ids.length > 1 &&
-    st instanceof ClassType &&
-    st.typeOptions.isImmutable &&
-    !st.typeOptions.isIndexable
-  ) {
+  if (ids.length > 1 && st instanceof ClassType && isRecord(st.typeOptions)) {
     return new DeconstructedRecordType(ids, st.scope as Class);
   }
 
   if (ids.length === 2 && st instanceof ClassType && st.typeOptions.isIterable) {
     return new DeconstructedListType(ids[0], ids[1], st.ofTypes[0], st);
   }
+
   return st;
 }
 

@@ -782,4 +782,107 @@ end main
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Cannot range Dictionary<of Int, Int>"]);
   });
+
+  test("Fail_LiteralDictionaryOfDictionaryKey", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable f set to ["a":1]
+  variable a set to [f:1]
+end main
+
+class Foo
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Dictionary cannot be of mutable type 'Dictionary<of String, Int>'",
+    ]);
+  });
+
+  test("Fail_LiteralDictionaryOfArrayKey", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable f set to empty Array<of Int>
+  variable a set to [f:1]
+end main
+
+class Foo
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Dictionary cannot be of mutable type 'Array<of Int>'"]);
+  });
+
+  test("Fail_LiteralDictionaryOfMutableClassKey", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable f set to new Foo()
+  variable a set to [f:1]
+end main
+
+class Foo
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Dictionary cannot be of mutable type 'Foo'"]);
+  });
+
+  test("Fail_DictionaryOfDictionaryKey", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to empty Dictionary<of Dictionary<of Int, Int>, Int>
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Dictionary cannot be of mutable type 'Dictionary<of Int, Int>'",
+    ]);
+  });
+
+  test("Fail_DictionaryOfArrayKey", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to empty Dictionary<of Array<of Int>, Int>
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Dictionary cannot be of mutable type 'Array<of Int>'"]);
+  });
+
+  test("Fail_DictionaryOfMutableClassKey", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+    variable a set to empty Dictionary<of Foo, Int>
+end main
+
+class Foo
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Dictionary cannot be of mutable type 'Foo'"]);
+  });
 });

@@ -7,6 +7,8 @@ import {
 import { AstNode } from "../interfaces/ast-node";
 import { AstTypeNode } from "../interfaces/ast-type-node";
 import { Scope } from "../interfaces/scope";
+import { SymbolType } from "../interfaces/symbol-type";
+import { isDictionary } from "../interfaces/type-options";
 import { ClassType } from "../symbols/class-type";
 import { FunctionType } from "../symbols/function-type";
 import { StringType } from "../symbols/string-type";
@@ -56,6 +58,23 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
     return 0;
   }
 
+  checkForImmutableTypes(rootSt: SymbolType) {
+    if (rootSt.typeOptions.isImmutable) {
+      for (const gp of this.genericParameters) {
+        mustBeImmutableGenericType(rootSt, gp.symbolType(), this.compileErrors, this.fieldId);
+      }
+    }
+
+    if (isDictionary(rootSt.typeOptions) && this.genericParameters.length > 0) {
+      mustBeImmutableGenericType(
+        rootSt,
+        this.genericParameters[0].symbolType(),
+        this.compileErrors,
+        this.fieldId,
+      );
+    }
+  }
+
   compile(): string {
     this.compileErrors = [];
 
@@ -74,24 +93,14 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
       gp.compile();
     }
 
-    if (rootSt.typeOptions.isImmutable) {
-      for (const gp of this.genericParameters) {
-        mustBeImmutableGenericType(rootSt, gp.symbolType(), this.compileErrors, this.fieldId);
-      }
-    }
+    this.checkForImmutableTypes(rootSt);
 
     return this.id;
   }
 
   compileToEmptyObjectCode(): string {
     const st = this.symbolType();
-
-    if (st.typeOptions.isImmutable) {
-      for (const gp of this.genericParameters) {
-        mustBeImmutableGenericType(st, gp.symbolType(), this.compileErrors, this.fieldId);
-      }
-    }
-
+    this.checkForImmutableTypes(st);
     return st.initialValue;
   }
 

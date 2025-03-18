@@ -58,6 +58,7 @@ import { Parent } from "./interfaces/parent";
 import { Scope } from "./interfaces/scope";
 import { SymbolType } from "./interfaces/symbol-type";
 import { Transforms } from "./interfaces/transforms";
+import { isRecord } from "./interfaces/type-options";
 import { allKeywords, reservedWords } from "./keywords";
 import { LetStatement } from "./statements/let-statement";
 import { BooleanType } from "./symbols/boolean-type";
@@ -185,7 +186,7 @@ export function mustBeRecord(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (knownType(symbolType) && !symbolType.typeOptions.isImmutable) {
+  if (knownType(symbolType) && !isRecordType(symbolType)) {
     compileErrors.push(new MustBeRecordCompileError(symbolType.name, location));
   }
 }
@@ -241,14 +242,8 @@ export function mustBeCallable(
   }
 }
 
-function isRecord(st: SymbolType) {
-  return (
-    st instanceof ClassType &&
-    st.typeOptions.isImmutable &&
-    !st.typeOptions.isIndexable &&
-    !st.typeOptions.isDoubleIndexable &&
-    !st.typeOptions.isIterable
-  );
+function isRecordType(st: SymbolType) {
+  return st instanceof ClassType && isRecord(st.typeOptions);
 }
 
 export function mustBeRecordType(
@@ -256,7 +251,7 @@ export function mustBeRecordType(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (knownType(symbolType) && !isRecord(symbolType)) {
+  if (knownType(symbolType) && !isRecordType(symbolType)) {
     compileErrors.push(new TypeCompileError("record", location));
   }
 }

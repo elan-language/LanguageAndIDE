@@ -31,3 +31,27 @@ export function getTypeOptions(): TypeOptions {
     isIterable: false,
   };
 }
+
+export function isArray(t: TypeOptions) {
+  return !t.isImmutable && t.isIndexable && t.isIterable;
+}
+
+export function is2DArray(t: TypeOptions) {
+  return !t.isImmutable && !t.isIndexable && t.isDoubleIndexable && !t.isIterable;
+}
+
+export function isList(t: TypeOptions) {
+  return t.isImmutable && t.isIndexable && t.isIterable;
+}
+
+export function isDictionary(t: TypeOptions) {
+  return !t.isImmutable && t.isIndexable && !t.isIterable;
+}
+
+export function isImmutableDictionary(t: TypeOptions) {
+  return t.isImmutable && t.isIndexable && !t.isIterable;
+}
+
+export function isRecord(t: TypeOptions) {
+  return t.isImmutable && !t.isIndexable && !t.isIterable;
+}
