@@ -476,6 +476,61 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "213");
   });
 
+  test("Pass_RecordKey", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to new Dictionary<of Point, Int>()
+  let r1 be new Point() with x set to 1, y set to 2
+  let r2 be new Point() with x set to 2, y set to 1
+  let r3 be new Point() with x set to 1, y set to 2
+
+  call a.putAtKey(r1, 1)
+  call a.putAtKey(r2, 2)
+  
+  print a[r1]
+  print a[r2]
+  print a[r3]
+end main
+
+record Point
+  property x as Int
+  property y as Int
+end record`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.initialise(await new _stdlib.Dictionary()._initialise());
+  const r1 = await (async () => {const _a = {...system.initialise(await new Point()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Point()._initialise()))); _a.x = 1; _a.y = 2; return _a;})();
+  const r2 = await (async () => {const _a = {...system.initialise(await new Point()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Point()._initialise()))); _a.x = 2; _a.y = 1; return _a;})();
+  const r3 = await (async () => {const _a = {...system.initialise(await new Point()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Point()._initialise()))); _a.x = 1; _a.y = 2; return _a;})();
+  a.putAtKey(r1, 1);
+  a.putAtKey(r2, 2);
+  await system.printLine(system.safeIndex(a, r1));
+  await system.printLine(system.safeIndex(a, r2));
+  await system.printLine(system.safeIndex(a, r3));
+}
+
+class Point {
+  static emptyInstance() { return system.emptyClass(Point, [["x", 0], ["y", 0]]);};
+  async _initialise() { return this; }
+  x = 0;
+
+  y = 0;
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "121");
+  });
+
   test("Pass_EmptyDictionary", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 

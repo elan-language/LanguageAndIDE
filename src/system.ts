@@ -152,6 +152,10 @@ export class System {
     throw new ElanRuntimeError(`No such key: ${index}`);
   }
 
+  throwKeyError(index: any) {
+    throw new ElanRuntimeError(`No such key: ${index}`);
+  }
+
   safeArraySet<T>(toIndex: T[], index: number, value: T) {
     const size = toIndex.length;
     if (index >= size) {
@@ -425,5 +429,26 @@ export class System {
       await this.quickSort(arr, compare, j + 1, right);
     }
     return arr;
+  }
+
+  convert(o: { [key: string]: object }, names: string[]): string {
+    const items: string[] = [];
+
+    for (const n of names) {
+      const s = this.asValueKey(o[n]);
+      items.push(`${n}_${s}`);
+    }
+
+    return items.join("_");
+  }
+
+  asValueKey(v: any): string {
+    if (typeof v === "object") {
+      const items = Object.getOwnPropertyNames(v).filter((s) => s !== "_type");
+      const o = v as { [key: string]: object };
+      return this.convert(o, items);
+    }
+
+    return v.toString();
   }
 }

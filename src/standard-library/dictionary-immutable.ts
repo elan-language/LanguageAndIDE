@@ -32,17 +32,29 @@ export class DictionaryImmutable<T1, T2> {
 
   private system?: System;
 
+  findRealKey(key: T1) {
+    for (const rk of this.contents.keys()) {
+      if (this.system?.equals(key, rk)) {
+        return rk;
+      }
+    }
+
+    return key;
+  }
+
   @elanFunction(["key"], FunctionOptions.pure, ElanClass(DictionaryImmutable))
   withRemoveAtKey(@elanGenericParamT1Type() key: T1) {
+    const rk = this.findRealKey(key);
     const newDict = new Map<T1, T2>(this.contents);
-    newDict.delete(key);
+    newDict.delete(rk);
     return this.system!.initialise(new DictionaryImmutable<T1, T2>([...newDict.entries()]));
   }
 
   @elanFunction(["key", "value"], FunctionOptions.pure, ElanClass(DictionaryImmutable))
   withPutAtKey(@elanGenericParamT1Type() key: T1, @elanGenericParamT2Type() value: T2) {
+    const rk = this.findRealKey(key);
     const newDict = new Map<T1, T2>(this.contents);
-    newDict.set(key, value);
+    newDict.set(rk, value);
     return this.system!.initialise(new DictionaryImmutable<T1, T2>([...newDict.entries()]));
   }
 
@@ -60,7 +72,8 @@ export class DictionaryImmutable<T1, T2> {
 
   @elanFunction(["key"], FunctionOptions.pure, ElanBoolean)
   hasKey(@elanGenericParamT1Type() key: T1): boolean {
-    return this.contents.has(key);
+    const rk = this.findRealKey(key);
+    return this.contents.has(rk);
   }
 
   async asString() {
@@ -74,11 +87,12 @@ export class DictionaryImmutable<T1, T2> {
   }
 
   safeIndex(key: T1) {
-    if (!this.contents.has(key)) {
-      this.system!.throwRangeError(this.contents, key);
+    const rk = this.findRealKey(key);
+    if (!this.contents.has(rk)) {
+      this.system!.throwKeyError(key);
     }
 
-    return this.contents.get(key);
+    return this.contents.get(rk);
   }
 
   equals(other: unknown) {

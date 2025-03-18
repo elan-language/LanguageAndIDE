@@ -33,14 +33,26 @@ export class Dictionary<T1, T2> {
 
   private system?: System;
 
+  findRealKey(key: T1) {
+    for (const rk of this.contents.keys()) {
+      if (this.system?.equals(key, rk)) {
+        return rk;
+      }
+    }
+
+    return key;
+  }
+
   @elanProcedure(["key"])
   removeAtKey(@elanGenericParamT1Type() key: T1) {
-    this.contents.delete(key);
+    const rk = this.findRealKey(key);
+    this.contents.delete(rk);
   }
 
   @elanProcedure(["key", "value"])
   putAtKey(@elanGenericParamT1Type() key: T1, @elanGenericParamT2Type() value: T2) {
-    this.contents.set(key, value);
+    const rk = this.findRealKey(key);
+    this.contents.set(rk, value);
   }
 
   @elanFunction([], FunctionOptions.pure, ElanClass(List))
@@ -57,7 +69,8 @@ export class Dictionary<T1, T2> {
 
   @elanFunction(["key"], FunctionOptions.pure, ElanBoolean)
   hasKey(@elanGenericParamT1Type() key: T1): boolean {
-    return this.contents.has(key);
+    const rk = this.findRealKey(key);
+    return this.contents.has(rk);
   }
 
   async asString() {
@@ -71,11 +84,12 @@ export class Dictionary<T1, T2> {
   }
 
   safeIndex(key: T1) {
-    if (!this.contents.has(key)) {
-      this.system!.throwRangeError(this.contents, key);
+    const rk = this.findRealKey(key);
+    if (!this.contents.has(rk)) {
+      this.system!.throwKeyError(key);
     }
 
-    return this.contents.get(key);
+    return this.contents.get(rk);
   }
 
   equals(other: unknown) {
