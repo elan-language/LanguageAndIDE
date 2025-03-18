@@ -45,14 +45,14 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to createArray2D(3, 0, "")
+  variable a set to createArray(0, "")
   print a.length()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.createArray2D(3, 0, "");
+  let a = _stdlib.createArray(0, "");
   await system.printLine(a.length());
 }
 return [main, _tests];}`;
@@ -63,7 +63,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "3");
+    await assertObjectCodeExecutes(fileImpl, "0");
   });
 
   test("Pass_SetAndReadElements1", async () => {

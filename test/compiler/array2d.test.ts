@@ -16,14 +16,14 @@ suite("Array2D", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable c set to new Array2D<of Int>()
+  variable c set to new Array2D<of Int>(0, 0, 0)
   print c
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let c = system.initialise(await new _stdlib.Array2D()._initialise());
+  let c = system.initialise(await new _stdlib.Array2D()._initialise(0, 0, 0));
   await system.printLine(c);
 }
 return [main, _tests];}`;
@@ -41,7 +41,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to new Array2D<of Int>()
+  variable a set to new Array2D<of Int>(0, 0, 0)
   print bar(a)
 end main
 
@@ -52,7 +52,7 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(await new _stdlib.Array2D()._initialise());
+  let a = system.initialise(await new _stdlib.Array2D()._initialise(0, 0, 0));
   await system.printLine((await global.bar(a)));
 }
 
@@ -75,7 +75,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to new Array2D<of Int>()
+  variable a set to new Array2D<of Int>(0, 0, 0)
   print foo(a)
 end main
 
@@ -96,16 +96,14 @@ end function`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to new Array2D<of String>()
-  set a to createArray2D(3, 0, "")
+  variable a set to new Array2D<of String>(3, 0, "")
   print a.length()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(await new _stdlib.Array2D()._initialise());
-  a = _stdlib.createArray2D(3, 0, "");
+  let a = system.initialise(await new _stdlib.Array2D()._initialise(3, 0, ""));
   await system.printLine(a.length());
 }
 return [main, _tests];}`;
@@ -123,7 +121,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to createArray2D(3, 2, "")
+  variable a set to new Array2D<of String>(3, 2, "")
   call a.putAt(0, 0, "bar")
   call a.putAt(0, 1, "foo")
   call a.putAt(2, 0, "yon")
@@ -135,7 +133,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.createArray2D(3, 2, "");
+  let a = system.initialise(await new _stdlib.Array2D()._initialise(3, 2, ""));
   a.putAt(0, 0, "bar");
   a.putAt(0, 1, "foo");
   a.putAt(2, 0, "yon");
@@ -159,7 +157,7 @@ return [main, _tests];}`;
 
 main
   variable a set to empty Array2D<of String>
-  set a to createArray2D(3, 2, "")
+  set a to new Array2D<of String>(3, 2, "")
   call a.putAt(0, 0, "bar")
   call a.putAt(0, 1, "foo")
   print a[0, 1]
@@ -169,7 +167,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.initialise(_stdlib.Array2D.emptyInstance());
-  a = _stdlib.createArray2D(3, 2, "");
+  a = system.initialise(await new _stdlib.Array2D()._initialise(3, 2, ""));
   a.putAt(0, 0, "bar");
   a.putAt(0, 1, "foo");
   await system.printLine(system.safeIndex(a, 0, 1));
@@ -224,16 +222,14 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to new Array2D<of Int>()
-  set a to createArray2D(2, 2, 0)
+  variable a set to new Array2D<of Int>(2, 2, 0)
   print a
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(await new _stdlib.Array2D()._initialise());
-  a = _stdlib.createArray2D(2, 2, 0);
+  let a = system.initialise(await new _stdlib.Array2D()._initialise(2, 2, 0));
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -251,16 +247,14 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to new Array2D<of Int>()
-  set a to createArray2D(2, 2, 1)
+  variable a set to new Array2D<of Int>(2, 2, 1)
   print a
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(await new _stdlib.Array2D()._initialise());
-  a = _stdlib.createArray2D(2, 2, 1);
+  let a = system.initialise(await new _stdlib.Array2D()._initialise(2, 2, 1));
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -294,7 +288,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to new Array2D<of String>()
+  variable a set to new Array2D<of String>(1, 1, "")
   call a.putAt(0, "foo")
 end main
 `;
@@ -312,7 +306,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to new Array2D<of String>()
+  variable a set to new Array2D<of String>(0, 0, "")
   variable b set to a[0, 0]
 end main
 `;
@@ -329,7 +323,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to new Array2D<of String>()
+  variable a set to new Array2D<of String>(1, 1, "")
   call a.putAt(0, 0, true)
 end main
 `;
@@ -347,7 +341,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to createArray2D(3, 0, "")
+  variable a set to new Array2D<of String>(3, 0, "")
   print a[0].length()
   print a
 end main`;
@@ -357,5 +351,23 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Cannot index Array2D<of String>"]);
+  });
+
+  test("Fail_missingGenericParameter", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to new Array2D(3, 0, "")
+  print a
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types. Expected: columns (Int), rows (Int), initialValue (Generic Parameter T1) Provided: Int, Int, String",
+      "<of Type(s)> Expected: 1 Provided: 0",
+    ]);
   });
 });

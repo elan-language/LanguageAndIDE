@@ -11,19 +11,43 @@ import {
 } from "../elan-type-annotations";
 import { System } from "../system";
 
-@elanClass(ClassOption.array2D, [ElanT1], [], [], [], "Array2D")
+@elanClass(
+  ClassOption.array2D,
+  [ElanT1],
+  ["columns", "rows", "initialValue"],
+  [ElanInt, ElanInt, ElanT1],
+  [],
+  "Array2D",
+)
 export class ElanArray2D<T1> {
   // this must be implemented by hand on all stdlib classes
   static emptyInstance() {
     return new ElanArray2D();
   }
 
-  async _initialise() {
+  async _initialise(x: number, y: number, value: T1) {
+    // if (!this.system!.stdlib.isValueType(value)) {
+    //   throw new ElanRuntimeError(`Can only initialise array with simple value`);
+    // }
+
+    const toInit: T1[][] = [];
+    toInit.length = x;
+
+    for (let i = 0; i < x; i++) {
+      const subArr: T1[] = [];
+      subArr.length = y;
+      for (let j = 0; j < y; j++) {
+        subArr[j] = value;
+      }
+      toInit[i] = subArr;
+    }
+
+    this.contents = toInit;
     return this;
   }
 
-  constructor(arr?: T1[][]) {
-    this.contents = arr ? [...arr] : [];
+  constructor() {
+    this.contents = [];
   }
 
   private contents: T1[][];

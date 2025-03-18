@@ -491,31 +491,6 @@ export class StdLib {
     return this.system.initialise(new ElanArray<T1>(toInit));
   }
 
-  @elanFunction(["columns", "rows", "initialValue"], FunctionOptions.pure, ElanClass(ElanArray2D))
-  createArray2D<T1>(
-    @elanIntType() x: number,
-    @elanIntType() y: number,
-    @elanGenericParamT1Type() value: T1,
-  ) {
-    if (!this.isValueType(value)) {
-      throw new ElanRuntimeError(`Can only initialise array with simple value`);
-    }
-
-    const toInit: T1[][] = [];
-    toInit.length = x;
-
-    for (let i = 0; i < x; i++) {
-      const subArr: T1[] = [];
-      subArr.length = y;
-      for (let j = 0; j < y; j++) {
-        subArr[j] = value;
-      }
-      toInit[i] = subArr;
-    }
-
-    return this.system.initialise(new ElanArray2D<T1>(toInit));
-  }
-
   //Input functions
   private async prompt(prompt: string) {
     await this.printLine(prompt);
