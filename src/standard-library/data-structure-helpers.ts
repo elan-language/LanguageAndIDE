@@ -19,14 +19,10 @@ export function withInsertAtHelper(contents: never[], index: number, value: neve
 
 export function withRemoveAtHelper(contents: never[], index: number): never[] {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return(contents as any).toSpliced(index, 1);
+  return (contents as any).toSpliced(index, 1);
 }
 
-export function withRemoveFirstHelper(
-  contents: never[],
-  value: never,
-  system: System
-): never[] {
+export function withRemoveFirstHelper(contents: never[], value: never, system: System): never[] {
   let newList = [...contents];
   const index = system.elanIndexOf(newList, value);
   if (index > -1) {
@@ -36,11 +32,7 @@ export function withRemoveFirstHelper(
   return newList;
 }
 
-export function withRemoveAllHelper(
-  contents: never[],
-  value: never,
-  system: System
-): never[] {
+export function withRemoveAllHelper(contents: never[], value: never, system: System): never[] {
   let newList = [...contents];
   let index = system.elanIndexOf(newList, value);
   while (index > -1) {
@@ -50,7 +42,6 @@ export function withRemoveAllHelper(
   }
   return newList;
 }
-
 
 export async function filterHelper(
   contents: never[],
@@ -91,7 +82,7 @@ export async function reduceHelper(
 export async function maxByHelper(
   contents: never[],
   predicate: (value: never) => Promise<never>,
-  system: System
+  system: System,
 ): Promise<never> {
   const mm = await mapHelper(contents, predicate);
   const max = Math.max(...mm);
@@ -102,9 +93,9 @@ export async function maxByHelper(
 export async function minByHelper(
   contents: never[],
   predicate: (value: never) => Promise<never>,
-  system: System
+  system: System,
 ): Promise<never> {
-  const mm = await mapHelper(contents,predicate);
+  const mm = await mapHelper(contents, predicate);
   const min = Math.min(...mm);
   const i = system.elanIndexOf(mm, min);
   return contents[i];
@@ -113,7 +104,7 @@ export async function minByHelper(
 export async function sortByHelper(
   contents: never[],
   predicate: (a: never, b: never) => Promise<number>,
-  system: System
+  system: System,
 ): Promise<never[]> {
   const clone = [...contents];
   return await system.quickSort(clone, predicate);

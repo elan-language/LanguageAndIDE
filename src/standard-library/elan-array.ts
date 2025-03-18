@@ -5,6 +5,7 @@ import {
   ElanClass,
   elanClass,
   elanClassType,
+  ElanFloat,
   elanFunction,
   elanFuncType,
   elanGenericParamT1Type,
@@ -19,6 +20,11 @@ import {
 import { System } from "../system";
 import {
   filterHelper,
+  mapHelper,
+  maxByHelper,
+  minByHelper,
+  reduceHelper,
+  sortByHelper,
   withAppendHelper,
   withInsertAtHelper,
   withPutAtHelper,
@@ -135,7 +141,9 @@ export class ElanArray<T1> {
     @elanFuncType([ElanT1], ElanBoolean)
     predicate: (value: T1) => Promise<boolean>,
   ): Promise<ElanArray<T1>> {
-    return this.system!.initialise(new ElanArray(await filterHelper(this.contents as never[], predicate )));
+    return this.system!.initialise(
+      new ElanArray(await filterHelper(this.contents as never[], predicate)),
+    );
   }
 
   @elanFunction(["lambdaOrFunctionRef"], FunctionOptions.pureAsync, ElanClass(ElanArray, [ElanT2]))
@@ -143,11 +151,14 @@ export class ElanArray<T1> {
     @elanFuncType([ElanT1], ElanT2)
     predicate: (value: T1) => Promise<T2>,
   ): Promise<ElanArray<T2>> {
-    const list = [...this.contents];
-
-    const results = await Promise.all(list.map(predicate));
-
-    return this.system!.initialise(new ElanArray<T2>(results));
+    return this.system!.initialise(
+      new ElanArray<T2>(
+        await mapHelper(
+          this.contents as never[],
+          predicate as unknown as (value: never) => Promise<never>,
+        ),
+      ),
+    );
   }
 
   @elanFunction(["initialValue", "lambdaOrFunctionRef"], FunctionOptions.pureAsync, ElanT2)
@@ -156,15 +167,45 @@ export class ElanArray<T1> {
     @elanFuncType([ElanT2, ElanT1], ElanT2)
     predicate: (s: T2, value: T1) => Promise<T2>,
   ): Promise<T2> {
-    const list = [...this.contents];
+    return reduceHelper(
+      this.contents as never[],
+      initValue as never,
+      predicate as unknown as (s: never, value: never) => Promise<never>,
+    );
+  }
 
-    let acc: T2 = initValue;
+  @elanFunction(["lambdaOrFunctionRef"], FunctionOptions.pureAsync, ElanT1)
+  async maxBy(
+    @elanFuncType([ElanT1], ElanFloat)
+    predicate: (value: T1) => Promise<number>,
+  ): Promise<T1> {
+    return maxByHelper(
+      this.contents as never[],
+      predicate as unknown as (value: never) => Promise<never>,
+      this.system!,
+    );
+  }
 
-    for (const i of list) {
-      acc = await predicate(acc, i);
-    }
+  @elanFunction(["lambdaOrFunctionRef"], FunctionOptions.pureAsync, ElanT1)
+  async minBy(
+    @elanFuncType([ElanT1], ElanFloat)
+    predicate: (value: T1) => Promise<number>,
+  ): Promise<T1> {
+    return minByHelper(
+      this.contents as never[],
+      predicate as unknown as (value: never) => Promise<never>,
+      this.system!,
+    );
+  }
 
-    return acc;
+  @elanFunction(["lambdaOrFunctionRef"], FunctionOptions.pureAsync, ElanClass(ElanArray))
+  async sortBy(
+    @elanFuncType([ElanT1, ElanT1], ElanInt)
+    predicate: (a: T1, b: T1) => Promise<number>,
+  ): Promise<ElanArray<T1>> {
+    return sortByHelper(this.contents as never[], predicate, this.system!) as unknown as Promise<
+      ElanArray<T1>
+    >;
   }
 
   @elanFunction([], FunctionOptions.pure, ElanT1)
@@ -253,18 +294,14 @@ export class ElanArray<T1> {
   @elanFunction(["value"], FunctionOptions.pure, ElanClass(ElanArray))
   withRemoveFirst(@elanGenericParamT1Type() value: T1): ElanArray<T1> {
     return this.system!.initialise(
-      new ElanArray(
-        withRemoveFirstHelper(this.contents as [], value as never, this.system!),
-      ),
+      new ElanArray(withRemoveFirstHelper(this.contents as [], value as never, this.system!)),
     );
   }
 
   @elanFunction(["value"], FunctionOptions.pure, ElanClass(ElanArray))
   withRemoveAll(@elanGenericParamT1Type() value: T1): ElanArray<T1> {
     return this.system!.initialise(
-      new ElanArray(
-        withRemoveAllHelper(this.contents as [], value as never, this.system!),
-      ),
+      new ElanArray(withRemoveAllHelper(this.contents as [], value as never, this.system!)),
     );
   }
 }
