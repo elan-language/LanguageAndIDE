@@ -9,6 +9,7 @@ import {
   elanIntType,
   elanProcedure,
   ElanT1,
+  ElanTuple,
   FunctionOptions,
 } from "../elan-type-annotations";
 import { System } from "../system";
@@ -28,6 +29,10 @@ export class ElanArray2D<T1> {
   }
 
   async _initialise(x: number, y: number, value: T1) {
+    if (x <= 0 || y <= 0) {
+      throw new ElanRuntimeError(`Can only initialise Array2D with non zero, positive values`);
+    }
+
     if (!(typeof value === "boolean" || typeof value === "string" || typeof value === "number")) {
       throw new ElanRuntimeError(`Can only initialise Array2D with simple value`);
     }
@@ -92,12 +97,12 @@ export class ElanArray2D<T1> {
     return this.contents.length;
   }
 
-  @elanFunction(["item"], FunctionOptions.pure, ElanInt)
+  @elanFunction(["item"], FunctionOptions.pure, ElanTuple([ElanInt, ElanInt]))
   indexOf(
     @elanGenericParamT1Type()
     item: T1,
   ): [number, number] {
-    return this.system!.elan2DIndexOf(this.contents, item);
+    return this.system?.tuple(this.system!.elan2DIndexOf(this.contents, item)) as [number, number];
   }
 
   @elanFunction(["item"], FunctionOptions.pure)
@@ -132,7 +137,7 @@ export class ElanArray2D<T1> {
     const r1 = r[index2];
 
     if (r1 === undefined) {
-      this.system!.throwRangeError(this.contents, index1);
+      this.system!.throwRangeError(r, index2);
       return;
     }
 
