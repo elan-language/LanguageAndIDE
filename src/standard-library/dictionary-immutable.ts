@@ -14,7 +14,7 @@ import { System } from "../system";
 import { List } from "./list";
 
 @elanClass(ClassOption.dictionaryImmutable, [ElanT1, ElanT2])
-export class DictionaryImmutable<_T1, T2> {
+export class DictionaryImmutable<T1, T2> {
   // this must be implemented by hand on all stdlib classes
   static emptyInstance() {
     return new DictionaryImmutable();
@@ -24,61 +24,71 @@ export class DictionaryImmutable<_T1, T2> {
     return this;
   }
 
-  constructor(dict?: { [key: string]: T2 }) {
-    this.contents = dict ?? {};
+  constructor(dict?: [T1, T2][]) {
+    this.contents = dict ? new Map<T1, T2>(dict) : new Map<T1, T2>();
   }
 
-  private contents: { [key: string]: T2 };
+  private contents: Map<T1, T2>;
 
   private system?: System;
 
   @elanFunction(["key"], FunctionOptions.pure, ElanClass(DictionaryImmutable))
-  withRemoveAtKey(@elanGenericParamT1Type() key: string) {
-    const newDict = { ...this.contents };
-    delete newDict[key];
-    return this.system!.initialise(new DictionaryImmutable<string, T2>(newDict));
+  withRemoveAtKey(@elanGenericParamT1Type() key: T1) {
+    const newDict = new Map<T1, T2>(this.contents);
+    newDict.delete(key);
+    return this.system!.initialise(new DictionaryImmutable<T1, T2>([...newDict.entries()]));
   }
 
   @elanFunction(["key", "value"], FunctionOptions.pure, ElanClass(DictionaryImmutable))
-  withPutAtKey(@elanGenericParamT1Type() key: string, @elanGenericParamT2Type() value: T2) {
-    const newDict = { ...this.contents };
-    newDict[key] = value;
-
-    return this.system!.initialise(new DictionaryImmutable<string, T2>(newDict));
+  withPutAtKey(@elanGenericParamT1Type() key: T1, @elanGenericParamT2Type() value: T2) {
+    const newDict = new Map<T1, T2>(this.contents);
+    newDict.set(key, value);
+    return this.system!.initialise(new DictionaryImmutable<T1, T2>([...newDict.entries()]));
   }
 
   @elanFunction([], FunctionOptions.pure, ElanClass(List))
-  keys(): List<string> {
-    const lst = Object.getOwnPropertyNames(this.contents).filter((s) => s !== "_type");
-    return this.system!.initialise(new List<string>(lst));
+  keys(): List<T1> {
+    const lst = [...this.contents.keys()];
+    return this.system!.initialise(new List<T1>(lst));
   }
 
   @elanFunction([], FunctionOptions.pure, ElanClass(List))
   values(): List<T2> {
-    const lst = Object.getOwnPropertyNames(this.contents)
-      .filter((s) => s !== "_type")
-      .map((k) => this.contents[k]);
+    const lst = [...this.contents.values()];
     return this.system!.initialise(new List<T2>(lst));
   }
 
   @elanFunction(["key"], FunctionOptions.pure, ElanBoolean)
-  hasKey(@elanGenericParamT1Type() key: string): boolean {
-    return this.keys().contains(key);
+  hasKey(@elanGenericParamT1Type() key: T1): boolean {
+    return this.contents.has(key);
   }
 
   async asString() {
-    const contents = await this.system?.asString(this.contents);
-    return `{${contents}}`;
+    const items: string[] = [];
+    for (const k of this.contents.keys()) {
+      const kStr = await this.system?.asString(k);
+      const vStr = await this.system?.asString(this.contents.get(k));
+      items.push(`${kStr}:${vStr}`);
+    }
+    return `{${items.join(", ")}}`;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  safeIndex(index: any) {
-    const r = this.contents[index];
-
-    if (r === undefined) {
-      this.system!.throwRangeError(this.contents, index);
+  safeIndex(key: T1) {
+    if (!this.contents.has(key)) {
+      this.system!.throwRangeError(this.contents, key);
     }
 
-    return r;
+    return this.contents.get(key);
+  }
+
+  equals(other: unknown) {
+    if (other instanceof DictionaryImmutable) {
+      if (this.contents.size === other.contents.size) {
+        return this.contents
+          .keys()
+          .every((k) => this.system?.equals(this.contents.get(k), other.contents.get(k)));
+      }
+    }
+    return false;
   }
 }

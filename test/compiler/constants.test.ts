@@ -570,7 +570,7 @@ end main
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
-  a = system.dictionaryImmutable({[_stdlib.openBrace] : _stdlib.blue, [_stdlib.closeBrace] : _stdlib.red});
+  a = system.dictionaryImmutable([[_stdlib.openBrace, _stdlib.blue], [_stdlib.closeBrace, _stdlib.red]]);
 
 };
 async function main() {

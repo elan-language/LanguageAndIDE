@@ -48,8 +48,8 @@ export class LiteralDictionaryImmutableAsn extends AbstractAstNode implements As
     mustBeImmutableGenericType(st, ofKeyType, this.compileErrors, this.fieldId);
     mustBeImmutableGenericType(st, ofValueType, this.compileErrors, this.fieldId);
 
-    const itemList = this.list.items.map((p) => `${p.compile()}`).join(", ");
-    return `system.dictionaryImmutable({${itemList}})`;
+    const itemList = this.list.items.map((p) => p.compile()).join(", ");
+    return `system.dictionaryImmutable([${itemList}])`;
   }
 
   symbolType() {

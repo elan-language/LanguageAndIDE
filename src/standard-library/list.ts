@@ -245,4 +245,13 @@ export class List<T1> {
     const [hd, ...tl] = this.contents;
     return [hd, this.system!.initialise(new List(tl))];
   }
+
+  equals(other: unknown) {
+    if (other instanceof List) {
+      if (this.contents.length === other.contents.length) {
+        return this.contents.every((c, i) => this.system?.equals(c, other.contents[i]));
+      }
+    }
+    return false;
+  }
 }

@@ -30,7 +30,7 @@ export class System {
 
   // constant immutables
   emptyImmutableListSingleton = this.initialise(new ElanArray([]));
-  emptyDictionaryImmutableSingleton = this.dictionaryImmutable({});
+  emptyDictionaryImmutableSingleton = this.dictionaryImmutable([]);
 
   emptyRegExpSingleton = /(?:)/;
 
@@ -56,12 +56,12 @@ export class System {
     return this.initialise(new List(t));
   }
 
-  dictionary(t: object) {
-    return this.initialise(new Dictionary(t as any));
+  dictionary(t: []) {
+    return this.initialise(new Dictionary(t));
   }
 
-  dictionaryImmutable(t: object) {
-    return this.initialise(new DictionaryImmutable(t as any));
+  dictionaryImmutable(t: []) {
+    return this.initialise(new DictionaryImmutable(t));
   }
 
   literalArray(t: Array<any>) {
@@ -218,6 +218,10 @@ export class System {
 
     if (o1?.constructor?.name === o2?.constructor?.name && o2?.constructor?.name === "Function") {
       return false;
+    }
+
+    if ("equals" in o1) {
+      return o1.equals(o2);
     }
 
     const o1items = Object.getOwnPropertyNames(o1);

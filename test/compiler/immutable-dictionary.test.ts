@@ -23,7 +23,7 @@ end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
-  a = system.dictionaryImmutable({["a"] : 1, ["b"] : 3, ["z"] : 10});
+  a = system.dictionaryImmutable([["a", 1], ["b", 3], ["z", 10]]);
 
 };
 async function main() {
@@ -55,7 +55,7 @@ const Fruit = {
 };
 
 const global = new class {
-  a = system.dictionaryImmutable({[Fruit.apple] : 1, [Fruit.orange] : 3, [Fruit.pear] : 10});
+  a = system.dictionaryImmutable([[Fruit.apple, 1], [Fruit.orange, 3], [Fruit.pear, 10]]);
 
 };
 async function main() {
@@ -83,7 +83,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.dictionaryImmutable({["a"] : 1, ["b"] : 3, ["z"] : 10});
+  let a = system.dictionaryImmutable([["a", 1], ["b", 3], ["z", 10]]);
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -107,7 +107,7 @@ end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
-  a = system.dictionaryImmutable({["a"] : 1, ["b"] : 3, ["z"] : 10});
+  a = system.dictionaryImmutable([["a", 1], ["b", 3], ["z", 10]]);
 
 };
 async function main() {
@@ -136,7 +136,7 @@ end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
-  a = system.dictionaryImmutable({["a"] : 1, ["b"] : 3, ["z"] : 10});
+  a = system.dictionaryImmutable([["a", 1], ["b", 3], ["z", 10]]);
 
 };
 async function main() {
@@ -166,7 +166,7 @@ end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
-  a = system.dictionaryImmutable({["a"] : 1, ["b"] : 3, ["z"] : 10});
+  a = system.dictionaryImmutable([["a", 1], ["b", 3], ["z", 10]]);
 
 };
 async function main() {
@@ -194,7 +194,7 @@ end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
-  a = system.dictionaryImmutable({["a"] : 1, ["b"] : 3, ["z"] : 10});
+  a = system.dictionaryImmutable([["a", 1], ["b", 3], ["z", 10]]);
 
 };
 async function main() {
@@ -224,7 +224,7 @@ end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
-  a = system.dictionaryImmutable({["a"] : 1, ["b"] : 3, ["z"] : 10});
+  a = system.dictionaryImmutable([["a", 1], ["b", 3], ["z", 10]]);
 
 };
 async function main() {
@@ -256,7 +256,7 @@ end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
-  a = system.dictionaryImmutable({["a"] : 1, ["b"] : 3, ["z"] : 10});
+  a = system.dictionaryImmutable([["a", 1], ["b", 3], ["z", 10]]);
 
 };
 async function main() {
@@ -286,7 +286,7 @@ end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
-  a = system.dictionaryImmutable({["a"] : 1, ["b"] : 3, ["z"] : 10});
+  a = system.dictionaryImmutable([["a", 1], ["b", 3], ["z", 10]]);
 
 };
 async function main() {

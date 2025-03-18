@@ -24,7 +24,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.literalArray([system.dictionary({["a"] : 1}), system.dictionary({["b"] : 3, ["z"] : 10})]);
+  let a = system.literalArray([system.dictionary([["a", 1]]), system.dictionary([["b", 3], ["z", 10]])]);
   system.safeIndex(a, 0).putAtKey("b", 2);
   await system.printLine(system.safeIndex(system.safeIndex(a, 0), "b"));
 }
@@ -51,7 +51,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.dictionary({["a"] : system.literalArray([1, 2]), ["b"] : system.literalArray([3, 4, 5])});
+  let a = system.dictionary([["a", system.literalArray([1, 2])], ["b", system.literalArray([3, 4, 5])]]);
   system.safeIndex(a, "b").putAt(0, 2);
   await system.printLine(system.safeIndex(system.safeIndex(a, "b"), 0));
 }

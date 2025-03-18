@@ -607,8 +607,8 @@ _tests.push(["test3", async (_outcomes) => {
 }]);
 
 _tests.push(["test15", async (_outcomes) => {
-  let a = system.dictionary({[3] : "a", [2] : "b", [4] : "c"});
-  let b = system.dictionary({[3] : "a", [2] : "b", [4] : "c"});
+  let a = system.dictionary([[3, "a"], [2, "b"], [4, "c"]]);
+  let b = system.dictionary([[3, "a"], [2, "b"], [4, "c"]]);
   _outcomes.push(await system.assert(async () => a, b, "assert24", _stdlib, false));
 }]);
 
@@ -664,7 +664,7 @@ return [main, _tests];}`;
       ["test3", [new AssertOutcome(TestStatus.pass, "{3, 2, 4, 0}", "{3, 2, 4, 0}", "assert12")]],
       [
         "test15",
-        [new AssertOutcome(TestStatus.pass, "[2:b, 3:a, 4:c]", "[2:b, 3:a, 4:c]", "assert24")],
+        [new AssertOutcome(TestStatus.pass, "[3:a, 2:b, 4:c]", "[3:a, 2:b, 4:c]", "assert24")],
       ],
       ["test27", [new AssertOutcome(TestStatus.pass, "Hello World", "Hello World", "assert36")]],
       ["test39", [new AssertOutcome(TestStatus.pass, "0", "0", "assert48")]],

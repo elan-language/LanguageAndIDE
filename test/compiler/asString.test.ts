@@ -350,7 +350,7 @@ async function main() {
   let a = _stdlib.listAsArray(system.list([1, 2, 3]));
   let sa = (await _stdlib.asString(a));
   await system.printLine(sa);
-  let d = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
+  let d = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
   let sd = (await _stdlib.asString(d));
   await system.printLine(sd);
 }

@@ -71,8 +71,8 @@ const global = new class {};
 async function main() {
   let a = system.literalArray([1, 2]);
   let b = system.list([3, 4]);
-  let c = system.dictionary({["a"] : _stdlib.true, ["b"] : _stdlib.false});
-  let d = system.dictionaryImmutable({["a"] : _stdlib.true, ["b"] : _stdlib.false});
+  let c = system.dictionary([["a", _stdlib.true], ["b", _stdlib.false]]);
+  let d = system.dictionaryImmutable([["a", _stdlib.true], ["b", _stdlib.false]]);
   await foo(a, b, c, d);
 }
 

@@ -210,4 +210,13 @@ export class ElanArray<T1> {
     const [hd, ...tl] = this.contents;
     return [hd, this.system!.initialise(new ElanArray(tl))];
   }
+
+  equals(other: unknown) {
+    if (other instanceof ElanArray) {
+      if (this.contents.length === other.contents.length) {
+        return this.contents.every((c, i) => this.system?.equals(c, other.contents[i]));
+      }
+    }
+    return false;
+  }
 }

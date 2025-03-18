@@ -277,6 +277,7 @@ export function isValueType(type: SymbolType) {
     type instanceof FloatType ||
     type instanceof BooleanType ||
     type instanceof StringType ||
+    type instanceof EnumType ||
     type instanceof RegExpType
   );
 }

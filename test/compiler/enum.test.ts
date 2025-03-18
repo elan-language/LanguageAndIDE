@@ -269,7 +269,7 @@ async function main() {
 }
 
 async function isFavourite(f) {
-  return system.objectEquals(f, Fruit.pear);
+  return f === Fruit.pear;
 }
 global["isFavourite"] = isFavourite;
 return [main, _tests];}`;
@@ -304,7 +304,7 @@ const Fruit = {
 
 const global = new class {};
 async function main() {
-  await system.printLine(system.objectEquals((await global.firstFruit()), Fruit.apple));
+  await system.printLine((await global.firstFruit()) === Fruit.apple);
 }
 
 async function firstFruit() {
@@ -341,8 +341,8 @@ const Fruit = {
 const global = new class {};
 async function main() {
   let x = Fruit.apple;
-  await system.printLine(system.objectEquals(x, Fruit.apple));
-  await system.printLine(system.objectEquals(x, Fruit.pear));
+  await system.printLine(x === Fruit.apple);
+  await system.printLine(x === Fruit.pear);
 }
 return [main, _tests];}`;
 
