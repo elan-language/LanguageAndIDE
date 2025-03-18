@@ -17,6 +17,14 @@ import {
   FunctionOptions,
 } from "../elan-type-annotations";
 import { System } from "../system";
+import {
+  withAppendHelper,
+  withInsertAtHelper,
+  withPutAtHelper,
+  withRemoveAllHelper,
+  withRemoveAtHelper,
+  withRemoveFirstHelper,
+} from "./data-structure-helpers";
 
 @elanClass(ClassOption.array, [ElanT1], [], [], [], "Array")
 export class ElanArray<T1> {
@@ -218,5 +226,54 @@ export class ElanArray<T1> {
       }
     }
     return false;
+  }
+
+  @elanFunction(["index", "value"], FunctionOptions.pure, ElanClass(ElanArray))
+  withAppend(@elanGenericParamT1Type() value: T1): ElanArray<T1> {
+    return this.system!.initialise(
+      new ElanArray(withAppendHelper(this.contents as [], value as never)),
+    );
+  }
+
+  @elanFunction(["index", "value"], FunctionOptions.pure, ElanClass(ElanArray))
+  withPrepend(@elanGenericParamT1Type() value: T1): ElanArray<T1> {
+    return this.withInsertAt(0, value);
+  }
+
+  @elanFunction(["index", "value"], FunctionOptions.pure, ElanClass(ElanArray))
+  withPutAt(@elanIntType() index: number, @elanGenericParamT1Type() value: T1): ElanArray<T1> {
+    return this.system!.initialise(
+      new ElanArray(withPutAtHelper(this.contents as [], index, value as never)),
+    );
+  }
+
+  @elanFunction(["index", "value"], FunctionOptions.pure, ElanClass(ElanArray))
+  withInsertAt(@elanIntType() index: number, @elanGenericParamT1Type() value: T1): ElanArray<T1> {
+    return this.system!.initialise(
+      new ElanArray(withInsertAtHelper(this.contents as [], index, value as never)),
+    );
+  }
+
+  @elanFunction(["index"], FunctionOptions.pure, ElanClass(ElanArray))
+  withRemoveAt(@elanIntType() index: number): ElanArray<T1> {
+    return this.system!.initialise(new ElanArray(withRemoveAtHelper(this.contents as [], index)));
+  }
+
+  @elanFunction(["value"], FunctionOptions.pure, ElanClass(ElanArray))
+  withRemoveFirst(@elanGenericParamT1Type() value: T1): ElanArray<T1> {
+    return this.system!.initialise(
+      new ElanArray(
+        withRemoveFirstHelper(this.contents as [], value as never, this.system!),
+      ),
+    );
+  }
+
+  @elanFunction(["value"], FunctionOptions.pure, ElanClass(ElanArray))
+  withRemoveAll(@elanGenericParamT1Type() value: T1): ElanArray<T1> {
+    return this.system!.initialise(
+      new ElanArray(
+        withRemoveAllHelper(this.contents as [], value as never, this.system!),
+      ),
+    );
   }
 }

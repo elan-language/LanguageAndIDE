@@ -16,6 +16,14 @@ import {
   FunctionOptions,
 } from "../elan-type-annotations";
 import { System } from "../system";
+import {
+  withAppendHelper,
+  withInsertAtHelper,
+  withPutAtHelper,
+  withRemoveAllHelper,
+  withRemoveAtHelper,
+  withRemoveFirstHelper,
+} from "./data-structure-helpers";
 
 @elanClass(ClassOption.list, [ElanT1], [], [], [], "List")
 export class List<T1> {
@@ -52,9 +60,7 @@ export class List<T1> {
 
   @elanFunction(["index", "value"], FunctionOptions.pure, ElanClass(List))
   withAppend(@elanGenericParamT1Type() value: T1): List<T1> {
-    const newList = [...this.contents];
-    newList.push(value);
-    return this.system!.initialise(new List(newList));
+    return this.system!.initialise(new List(withAppendHelper(this.contents as [], value as never)));
   }
 
   @elanFunction(["index", "value"], FunctionOptions.pure, ElanClass(List))
@@ -64,47 +70,37 @@ export class List<T1> {
 
   @elanFunction(["index", "value"], FunctionOptions.pure, ElanClass(List))
   withPutAt(@elanIntType() index: number, @elanGenericParamT1Type() value: T1): List<T1> {
-    const newList = [...this.contents];
-    newList[index] = value;
-
-    return this.system!.initialise(new List(newList));
+    return this.system!.initialise(
+      new List(withPutAtHelper(this.contents as [], index, value as never)),
+    );
   }
 
   @elanFunction(["index", "value"], FunctionOptions.pure, ElanClass(List))
   withInsertAt(@elanIntType() index: number, @elanGenericParamT1Type() value: T1): List<T1> {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const newList = (this.contents as any).toSpliced(index, 0, value);
-    return this.system!.initialise(new List(newList));
+    return this.system!.initialise(
+      new List(withInsertAtHelper(this.contents as [], index, value as never)),
+    );
   }
 
   @elanFunction(["index"], FunctionOptions.pure, ElanClass(List))
   withRemoveAt(@elanIntType() index: number): List<T1> {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const newList = (this.contents as any).toSpliced(index, 1);
-    return this.system!.initialise(new List(newList));
+    return this.system!.initialise(new List(withRemoveAtHelper(this.contents as [], index)));
   }
 
   @elanFunction(["value"], FunctionOptions.pure, ElanClass(List))
   withRemoveFirst(@elanGenericParamT1Type() value: T1): List<T1> {
-    let newList = [...this.contents];
-    const index = this.system!.elanIndexOf(newList, value);
-    if (index > -1) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      newList = (newList as any).toSpliced(index, 1);
-    }
-    return this.system!.initialise(new List(newList));
+    return this.system!.initialise(
+      new List(
+        withRemoveFirstHelper(this.contents as [], value as never, this.system!),
+      ),
+    );
   }
 
   @elanFunction(["value"], FunctionOptions.pure, ElanClass(List))
   withRemoveAll(@elanGenericParamT1Type() value: T1): List<T1> {
-    let newList = [...this.contents];
-    let index = this.system!.elanIndexOf(newList, value);
-    while (index > -1) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      newList = (newList as any).toSpliced(index, 1);
-      index = this.system!.elanIndexOf(newList, value);
-    }
-    return this.system!.initialise(new List(newList));
+    return this.system!.initialise(
+      new List(withRemoveAllHelper(this.contents as [], value as never, this.system!)),
+    );
   }
 
   @elanFunction([], FunctionOptions.pure, ElanInt)

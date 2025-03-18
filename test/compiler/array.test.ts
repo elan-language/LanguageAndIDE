@@ -795,38 +795,66 @@ end main
     assertDoesNotCompile(fileImpl, ["'getRange' is not defined for type 'Array'"]);
   });
 
-  test("Fail_withPutAt", async () => {
+  test("Pass_withPutAt", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to ["one", "two", "three"]
-  set a to a.withPutAt(1, "TWO")
-  print a
-end main
-`;
+    variable a set to ["one", "two", "three"]
+    set a to a.withPutAt(1, "TWO")
+    variable b set to a.withPutAt(0, "ONE")
+    print a
+    print b
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.literalArray(["one", "two", "three"]);
+  a = a.withPutAt(1, "TWO");
+  let b = a.withPutAt(0, "ONE");
+  await system.printLine(a);
+  await system.printLine(b);
+}
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'withPutAt' is not defined for type 'Array'"]);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[one, TWO, three][ONE, TWO, three]");
   });
 
-  test("Fail_withInsertAt", async () => {
+  test("Pass_withInsertAt", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to ["one", "two", "three"]
-  set a to a.withInsertAt(1, "TWO")
-  print a
-end main
-`;
+    variable a set to ["one", "two", "three"]
+    set a to a.withInsertAt(1, "TWO")
+    variable b set to a.withInsertAt(0, "ONE")
+    print a
+    print b
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.literalArray(["one", "two", "three"]);
+  a = a.withInsertAt(1, "TWO");
+  let b = a.withInsertAt(0, "ONE");
+  await system.printLine(a);
+  await system.printLine(b);
+}
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'withInsertAt' is not defined for type 'Array'"]);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[one, TWO, two, three][ONE, one, TWO, two, three]");
   });
 
   test("Fail_withRemove", async () => {
@@ -844,23 +872,6 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["'withRemove' is not defined for type 'Array'"]);
-  });
-
-  test("Fail_putAt_asFunction", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-  variable a set to ["one", "two", "three"]
-  set a to a.withPutAt(1, "TWO")
-  print a
-end main
-`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'withPutAt' is not defined for type 'Array'"]);
   });
 
   test("Fail_appendWithPlus", async () => {
@@ -901,7 +912,7 @@ end main
     ]);
   });
 
-  test("Fail_withRemoveFirst", async () => {
+  test("Pass_withRemoveFirst", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -910,14 +921,25 @@ main
     print a
 end main`;
 
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.literalArray(["one", "two", "three", "one", "two", "three"]);
+  a = a.withRemoveFirst("two");
+  await system.printLine(a);
+}
+return [main, _tests];}`;
+
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'withRemoveFirst' is not defined for type 'Array'"]);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[one, three, one, two, three]");
   });
 
-  test("Fail_withRemoveAll", async () => {
+  test("Pass_withRemoveAll", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -926,11 +948,22 @@ main
     print a
 end main`;
 
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.literalArray(["one", "two", "three", "one", "two", "three"]);
+  a = a.withRemoveAll("two");
+  await system.printLine(a);
+}
+return [main, _tests];}`;
+
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'withRemoveAll' is not defined for type 'Array'"]);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[one, three, one, three]");
   });
 
   test("Pass_listOfFunction", async () => {
