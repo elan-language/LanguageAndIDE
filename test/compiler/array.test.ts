@@ -633,6 +633,22 @@ end main
     ]);
   });
 
+  test("Fail_DoubleIndex", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to new Array<of Int>()
+  print a[0, 0]
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Cannot double index Array<of Int>"]);
+  });
+
   test("Fail_IndexTypeIncompatibility", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 

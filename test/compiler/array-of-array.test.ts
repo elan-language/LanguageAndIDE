@@ -576,7 +576,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to createArray(3, 0)
+  variable a set to [[1],[1]]
   print a[0, 0]
 end main
 `;
@@ -585,7 +585,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot double index Array<of Int>"]);
+    assertDoesNotCompile(fileImpl, ["Cannot double index Array<of Array<of Int>>"]);
   });
 
   test("Fail_2DArrayAccessedAs1D", async () => {
