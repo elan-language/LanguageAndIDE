@@ -102,4 +102,20 @@ export class Dictionary<T1, T2> {
     }
     return false;
   }
+
+  @elanFunction(["key"], FunctionOptions.pure, ElanClass(Dictionary))
+  withRemoveAtKey(@elanGenericParamT1Type() key: T1) {
+    const rk = this.findRealKey(key);
+    const newDict = new Map<T1, T2>(this.contents);
+    newDict.delete(rk);
+    return this.system!.initialise(new Dictionary<T1, T2>([...newDict.entries()]));
+  }
+
+  @elanFunction(["key", "value"], FunctionOptions.pure, ElanClass(Dictionary))
+  withPutAtKey(@elanGenericParamT1Type() key: T1, @elanGenericParamT2Type() value: T2) {
+    const rk = this.findRealKey(key);
+    const newDict = new Map<T1, T2>(this.contents);
+    newDict.set(rk, value);
+    return this.system!.initialise(new Dictionary<T1, T2>([...newDict.entries()]));
+  }
 }

@@ -670,6 +670,8 @@ end main`;
       ["hasKey", "*", "*"],
       ["keys", "*", "*"],
       ["values", "*", "*"],
+      ["withPutAtKey", "*", "*"],
+      ["withRemoveAtKey", "*", "*"],
     ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "expr8", ".", 3, expected);

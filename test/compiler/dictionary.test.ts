@@ -760,21 +760,64 @@ end main
     ]);
   });
 
-  test("Fail_withPutAtKey", async () => {
+  test("Pass_withPutAtKey", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to ["a":1, "b":3, "z":10]
-  set a to a.withPutAtKey("a", 2)
+  let a be ["a":1, "b":3, "z":10]
+  variable b set to a.withPutAtKey("b", 4)
+  variable c set to b.withPutAtKey("d", 2)
   print a
-end main
-`;
+  print c
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  const a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
+  let b = a.withPutAtKey("b", 4);
+  let c = b.withPutAtKey("d", 2);
+  await system.printLine(a);
+  await system.printLine(c);
+}
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'withPutAtKey' is not defined for type 'Dictionary'"]);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[a:1, b:3, z:10][a:1, b:4, z:10, d:2]");
+  });
+
+  test("Pass_withRemoveAtKey", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  let a be ["a":1, "b":3, "z":10]
+  variable b set to a.withRemoveAtKey("b")
+  print a
+  print b
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  const a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
+  let b = a.withRemoveAtKey("b");
+  await system.printLine(a);
+  await system.printLine(b);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[a:1, b:3, z:10][a:1, z:10]");
   });
 
   test("Fail_SetInvalidValueType", async () => {
@@ -793,23 +836,6 @@ end main
     assertDoesNotCompile(fileImpl, [
       "Argument types. Expected: key (String), value (Int) Provided: String, Float",
     ]);
-  });
-
-  test("Fail_withRemoveAtKey", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-  variable a set to ["a":1, "b":3, "z":10]
-  variable b set to a.withRemoveAtKey("b")
-  print a
-  print b
-end main`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'withRemoveAtKey' is not defined for type 'Dictionary'"]);
   });
 
   test("Fail_withoutGenericType", async () => {
