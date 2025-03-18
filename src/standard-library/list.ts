@@ -17,6 +17,12 @@ import {
 } from "../elan-type-annotations";
 import { System } from "../system";
 import {
+  filterHelper,
+  mapHelper,
+  maxByHelper,
+  minByHelper,
+  reduceHelper,
+  sortByHelper,
   withAppendHelper,
   withInsertAtHelper,
   withPutAtHelper,
@@ -126,17 +132,7 @@ export class List<T1> {
     @elanFuncType([ElanT1], ElanBoolean)
     predicate: (value: T1) => Promise<boolean>,
   ): Promise<List<T1>> {
-    const list = [...this.contents];
-
-    const asyncFilter = async (list: T1[], predicate: (value: T1) => Promise<boolean>) => {
-      const results = await Promise.all(list.map(predicate));
-
-      return list.filter((_v, index) => results[index]);
-    };
-
-    const result = await asyncFilter(list, predicate);
-
-    return this.system!.initialise(new List(result));
+    return this.system!.initialise(new List(await filterHelper(this.contents as never[], predicate )));
   }
 
   @elanFunction(["lambdaOrFunctionRef"], FunctionOptions.pureAsync, ElanClass(List, [ElanT2]))
@@ -144,11 +140,7 @@ export class List<T1> {
     @elanFuncType([ElanT1], ElanT2)
     predicate: (value: T1) => Promise<T2>,
   ): Promise<List<T2>> {
-    const list = [...this.contents];
-
-    const results = await Promise.all(list.map(predicate));
-
-    return this.system!.initialise(new List<T2>(results));
+    return this.system!.initialise(new List<T2>(await mapHelper(this.contents as never[], predicate as unknown as (value: never) => Promise<never>)));
   }
 
   @elanFunction(["initialValue", "lambdaOrFunctionRef"], FunctionOptions.pureAsync, ElanT2)
@@ -157,15 +149,7 @@ export class List<T1> {
     @elanFuncType([ElanT2, ElanT1], ElanT2)
     predicate: (s: T2, value: T1) => Promise<T2>,
   ): Promise<T2> {
-    const list = [...this.contents];
-
-    let acc: T2 = initValue;
-
-    for (const i of list) {
-      acc = await predicate(acc, i);
-    }
-
-    return acc;
+    return reduceHelper(this.contents as never[], initValue as never, predicate as unknown as (s: never, value: never) => Promise<never>);
   }
 
   @elanFunction(["lambdaOrFunctionRef"], FunctionOptions.pureAsync, ElanT1)
@@ -173,10 +157,7 @@ export class List<T1> {
     @elanFuncType([ElanT1], ElanFloat)
     predicate: (value: T1) => Promise<number>,
   ): Promise<T1> {
-    const mm = await this.map(predicate);
-    const max = Math.max(...mm);
-    const i = mm.indexOfItem(max);
-    return this.contents[i];
+    return maxByHelper(this.contents as never[], predicate as unknown as (value: never) => Promise<never>, this.system!);
   }
 
   @elanFunction(["lambdaOrFunctionRef"], FunctionOptions.pureAsync, ElanT1)
@@ -184,10 +165,7 @@ export class List<T1> {
     @elanFuncType([ElanT1], ElanFloat)
     predicate: (value: T1) => Promise<number>,
   ): Promise<T1> {
-    const mm = await this.map(predicate);
-    const max = Math.min(...mm);
-    const i = mm.indexOfItem(max);
-    return this.contents[i];
+    return minByHelper(this.contents as never[], predicate as unknown as (value: never) => Promise<never>, this.system!);
   }
 
   @elanFunction(["lambdaOrFunctionRef"], FunctionOptions.pureAsync, ElanClass(List))
@@ -195,9 +173,7 @@ export class List<T1> {
     @elanFuncType([ElanT1, ElanT1], ElanInt)
     predicate: (a: T1, b: T1) => Promise<number>,
   ): Promise<List<T1>> {
-    const clone = [...this.contents];
-    const results = await this.system!.quickSort(clone, predicate);
-    return this.system!.initialise(new List<T1>(results));
+    return sortByHelper(this.contents as never[], predicate, this.system!) as unknown as Promise<List<T1>>;
   }
 
   @elanFunction([], FunctionOptions.pure, ElanT1)
@@ -215,7 +191,6 @@ export class List<T1> {
     if (r === undefined) {
       this.system!.throwRangeError(this.contents, index);
     }
-
     return r;
   }
 

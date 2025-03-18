@@ -18,6 +18,7 @@ import {
 } from "../elan-type-annotations";
 import { System } from "../system";
 import {
+  filterHelper,
   withAppendHelper,
   withInsertAtHelper,
   withPutAtHelper,
@@ -134,17 +135,7 @@ export class ElanArray<T1> {
     @elanFuncType([ElanT1], ElanBoolean)
     predicate: (value: T1) => Promise<boolean>,
   ): Promise<ElanArray<T1>> {
-    const list = [...this.contents];
-
-    const asyncFilter = async (list: T1[], predicate: (value: T1) => Promise<boolean>) => {
-      const results = await Promise.all(list.map(predicate));
-
-      return list.filter((_v, index) => results[index]);
-    };
-
-    const result = await asyncFilter(list, predicate);
-
-    return this.system!.initialise(new ElanArray(result));
+    return this.system!.initialise(new ElanArray(await filterHelper(this.contents as never[], predicate )));
   }
 
   @elanFunction(["lambdaOrFunctionRef"], FunctionOptions.pureAsync, ElanClass(ElanArray, [ElanT2]))
