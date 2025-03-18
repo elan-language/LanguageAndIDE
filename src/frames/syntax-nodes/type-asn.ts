@@ -2,13 +2,14 @@ import { CompileError } from "../compile-error";
 import {
   mustBeImmutableGenericType,
   mustBeKnownSymbolType,
+  mustBeValidKeyType,
   mustMatchGenericParameters,
 } from "../compile-rules";
 import { AstNode } from "../interfaces/ast-node";
 import { AstTypeNode } from "../interfaces/ast-type-node";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
-import { isDictionary } from "../interfaces/type-options";
+import { isAnyDictionary } from "../interfaces/type-options";
 import { ClassType } from "../symbols/class-type";
 import { FunctionType } from "../symbols/function-type";
 import { StringType } from "../symbols/string-type";
@@ -59,19 +60,19 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
   }
 
   checkForImmutableTypes(rootSt: SymbolType) {
-    if (rootSt.typeOptions.isImmutable) {
-      for (const gp of this.genericParameters) {
-        mustBeImmutableGenericType(rootSt, gp.symbolType(), this.compileErrors, this.fieldId);
-      }
-    }
-
-    if (isDictionary(rootSt.typeOptions) && this.genericParameters.length > 0) {
-      mustBeImmutableGenericType(
+    if (isAnyDictionary(rootSt.typeOptions) && this.genericParameters.length > 0) {
+      mustBeValidKeyType(
         rootSt,
         this.genericParameters[0].symbolType(),
         this.compileErrors,
         this.fieldId,
       );
+    }
+
+    if (rootSt.typeOptions.isImmutable) {
+      for (const gp of this.genericParameters) {
+        mustBeImmutableGenericType(rootSt, gp.symbolType(), this.compileErrors, this.fieldId);
+      }
     }
   }
 

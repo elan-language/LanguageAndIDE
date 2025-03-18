@@ -697,6 +697,23 @@ export function mustBeImmutableGenericType(
   }
 }
 
+export function mustBeValidKeyType(
+  type: SymbolType,
+  ofType: SymbolType,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  if (
+    !ofType.typeOptions.isImmutable ||
+    (ofType instanceof ClassType &&
+      (ofType.typeOptions.isIndexable || ofType.typeOptions.isIterable))
+  ) {
+    compileErrors.push(
+      new SyntaxCompileError(`${type} cannot have key of type '${ofType.name}'`, location),
+    );
+  }
+}
+
 export function mustBeCompatibleType(
   lhs: SymbolType,
   rhs: SymbolType,

@@ -733,7 +733,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["DictionaryImmutable cannot be of mutable type 'Foo'"]);
+    assertDoesNotCompile(fileImpl, ["DictionaryImmutable cannot have key of type 'Foo'"]);
   });
 
   test("Fail_DictionaryImmutableOfArrayValue", async () => {
@@ -763,9 +763,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "DictionaryImmutable cannot be of mutable type 'Array<of Int>'",
-    ]);
+    assertDoesNotCompile(fileImpl, ["DictionaryImmutable cannot have key of type 'Array<of Int>'"]);
   });
 
   test("Fail_DictionaryImmutableOfDictionaryValue", async () => {
@@ -796,7 +794,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "DictionaryImmutable cannot be of mutable type 'Dictionary<of Int, Int>'",
+      "DictionaryImmutable cannot have key of type 'Dictionary<of Int, Int>'",
     ]);
   });
 
@@ -833,7 +831,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["DictionaryImmutable cannot be of mutable type 'Foo'"]);
+    assertDoesNotCompile(fileImpl, ["DictionaryImmutable cannot have key of type 'Foo'"]);
   });
 
   test("Fail_LiteralDictionaryImmutableOfArrayValue", async () => {
@@ -871,9 +869,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "DictionaryImmutable cannot be of mutable type 'Array<of Int>'",
-    ]);
+    assertDoesNotCompile(fileImpl, ["DictionaryImmutable cannot have key of type 'Array<of Int>'"]);
   });
 
   test("Fail_LiteralDictionaryImmutableOfDictionaryValue", async () => {
@@ -912,7 +908,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "DictionaryImmutable cannot be of mutable type 'Dictionary<of String, Int>'",
+      "DictionaryImmutable cannot have key of type 'Dictionary<of String, Int>'",
     ]);
   });
 });

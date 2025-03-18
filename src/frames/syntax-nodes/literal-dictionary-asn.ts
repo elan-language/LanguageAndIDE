@@ -1,9 +1,5 @@
 import { CompileError } from "../compile-error";
-import {
-  mustBeAssignableType,
-  mustBeImmutableGenericType,
-  mustHaveUniqueKeys,
-} from "../compile-rules";
+import { mustBeAssignableType, mustBeValidKeyType, mustHaveUniqueKeys } from "../compile-rules";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstNode } from "../interfaces/ast-node";
 import { ReifyableSymbolType } from "../interfaces/reifyable-symbol-type";
@@ -45,7 +41,7 @@ export class LiteralDictionaryAsn extends AbstractAstNode implements AstNode {
     }
 
     const st = this.symbolType();
-    mustBeImmutableGenericType(st, ofKeyType, this.compileErrors, this.fieldId);
+    mustBeValidKeyType(st, ofKeyType, this.compileErrors, this.fieldId);
 
     const itemList = this.list.items.map((p) => p.compile()).join(", ");
     return `system.dictionary([${itemList}])`;

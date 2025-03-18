@@ -854,7 +854,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Dictionary cannot be of mutable type 'Dictionary<of String, Int>'",
+      "Dictionary cannot have key of type 'Dictionary<of String, Int>'",
     ]);
   });
 
@@ -873,7 +873,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Dictionary cannot be of mutable type 'Array<of Int>'"]);
+    assertDoesNotCompile(fileImpl, ["Dictionary cannot have key of type 'Array<of Int>'"]);
   });
 
   test("Fail_LiteralDictionaryOfMutableClassKey", async () => {
@@ -891,7 +891,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Dictionary cannot be of mutable type 'Foo'"]);
+    assertDoesNotCompile(fileImpl, ["Dictionary cannot have key of type 'Foo'"]);
   });
 
   test("Fail_DictionaryOfDictionaryKey", async () => {
@@ -906,7 +906,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Dictionary cannot be of mutable type 'Dictionary<of Int, Int>'",
+      "Dictionary cannot have key of type 'Dictionary<of Int, Int>'",
     ]);
   });
 
@@ -921,7 +921,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Dictionary cannot be of mutable type 'Array<of Int>'"]);
+    assertDoesNotCompile(fileImpl, ["Dictionary cannot have key of type 'Array<of Int>'"]);
   });
 
   test("Fail_DictionaryOfMutableClassKey", async () => {
@@ -938,6 +938,6 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Dictionary cannot be of mutable type 'Foo'"]);
+    assertDoesNotCompile(fileImpl, ["Dictionary cannot have key of type 'Foo'"]);
   });
 });
