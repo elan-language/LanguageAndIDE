@@ -122,10 +122,10 @@ return [main, _tests];}`;
 
 main
   variable a set to new Array2D<of String>(3, 2, "")
-  call a.putAt(0, 0, "bar")
-  call a.putAt(0, 1, "foo")
-  call a.putAt(2, 0, "yon")
-  call a.putAt(2, 1, "xan")
+  call a.put(0, 0, "bar")
+  call a.put(0, 1, "foo")
+  call a.put(2, 0, "yon")
+  call a.put(2, 1, "xan")
   print a[0, 1]
   print a[2, 0]
 end main`;
@@ -134,10 +134,10 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.initialise(await new _stdlib.Array2D()._initialise(3, 2, ""));
-  a.putAt(0, 0, "bar");
-  a.putAt(0, 1, "foo");
-  a.putAt(2, 0, "yon");
-  a.putAt(2, 1, "xan");
+  a.put(0, 0, "bar");
+  a.put(0, 1, "foo");
+  a.put(2, 0, "yon");
+  a.put(2, 1, "xan");
   await system.printLine(system.safeIndex(a, 0, 1));
   await system.printLine(system.safeIndex(a, 2, 0));
 }
@@ -158,8 +158,8 @@ return [main, _tests];}`;
 main
   variable a set to empty Array2D<of String>
   set a to new Array2D<of String>(3, 2, "")
-  call a.putAt(0, 0, "bar")
-  call a.putAt(0, 1, "foo")
+  call a.put(0, 0, "bar")
+  call a.put(0, 1, "foo")
   print a[0, 1]
 end main`;
 
@@ -168,8 +168,74 @@ const global = new class {};
 async function main() {
   let a = system.initialise(_stdlib.Array2D.emptyInstance());
   a = system.initialise(await new _stdlib.Array2D()._initialise(3, 2, ""));
-  a.putAt(0, 0, "bar");
-  a.putAt(0, 1, "foo");
+  a.put(0, 0, "bar");
+  a.put(0, 1, "foo");
+  await system.printLine(system.safeIndex(a, 0, 1));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "foo");
+  });
+
+  test("Pass_WithSetAndReadElements1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to new Array2D<of String>(3, 2, "")
+  set a to a.withPut(0, 0, "bar")
+  set a to a.withPut(0, 1, "foo")
+  set a to a.withPut(2, 0, "yon")
+  set a to a.withPut(2, 1, "xan")
+  print a[0, 1]
+  print a[2, 0]
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.initialise(await new _stdlib.Array2D()._initialise(3, 2, ""));
+  a = a.withPut(0, 0, "bar");
+  a = a.withPut(0, 1, "foo");
+  a = a.withPut(2, 0, "yon");
+  a = a.withPut(2, 1, "xan");
+  await system.printLine(system.safeIndex(a, 0, 1));
+  await system.printLine(system.safeIndex(a, 2, 0));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "fooyon");
+  });
+
+  test("Pass_WithSetAndReadElements2", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to empty Array2D<of String>
+  set a to new Array2D<of String>(3, 2, "")
+  set a to a.withPut(0, 0, "bar")
+  set a to a.withPut(0, 1, "foo")
+  print a[0, 1]
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.initialise(_stdlib.Array2D.emptyInstance());
+  a = system.initialise(await new _stdlib.Array2D()._initialise(3, 2, ""));
+  a = a.withPut(0, 0, "bar");
+  a = a.withPut(0, 1, "foo");
   await system.printLine(system.safeIndex(a, 0, 1));
 }
 return [main, _tests];}`;
@@ -268,12 +334,66 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[[1, 1], [1, 1]]");
   });
 
+  test("Pass_Contains1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to new Array2D<of String>(2, 2, "")
+  call a.put(0, 1, "foo")
+  print a.contains("foo")
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.initialise(await new _stdlib.Array2D()._initialise(2, 2, ""));
+  a.put(0, 1, "foo");
+  await system.printLine(a.contains("foo"));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "true");
+  });
+
+  test("Pass_Contains2", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to new Array2D<of String>(2, 2, "")
+  call a.put(0, 1, "bar")
+  print a.contains("foo")
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.initialise(await new _stdlib.Array2D()._initialise(2, 2, ""));
+  a.put(0, 1, "bar");
+  await system.printLine(a.contains("foo"));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "false");
+  });
+
   test("Fail_EmptyArray1", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
   variable a set to empty Array2D<of Int>
-  call a.putAt(0, 0, 3)
+  call a.put(0, 0, 3)
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -289,7 +409,7 @@ end main`;
 
 main
   variable a set to new Array2D<of String>(1, 1, "")
-  call a.putAt(0, "foo")
+  call a.put(0, "foo")
 end main
 `;
 
@@ -324,7 +444,7 @@ end main
 
 main
   variable a set to new Array2D<of String>(1, 1, "")
-  call a.putAt(0, 0, true)
+  call a.put(0, 0, true)
 end main
 `;
 
