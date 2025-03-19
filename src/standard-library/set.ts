@@ -12,7 +12,7 @@ import {
   FunctionOptions,
 } from "../elan-type-annotations";
 import { System } from "../system";
-import { ElanArray } from "./elan-array";
+import { List } from "./list";
 import { ListImmutable } from "./list-immutable";
 
 @elanClass(ClassOption.concrete, [ElanT1], [], [], [], "Set")
@@ -79,7 +79,7 @@ export class ElanSet<T1> {
   }
 
   @elanFunction([], FunctionOptions.pure, ElanClass(ElanSet))
-  addFromArray(@elanClassType(ElanArray) list: ElanArray<T1>): ElanSet<T1> {
+  addFromArray(@elanClassType(List) list: List<T1>): ElanSet<T1> {
     const copy = this.copyOfThis();
     for (const item of list) {
       copy.contents.add(item as T1);
@@ -130,9 +130,9 @@ export class ElanSet<T1> {
     return this.contents.isSupersetOf(other.contents);
   }
 
-  @elanFunction([], FunctionOptions.pure, ElanClass(ElanArray))
-  asArray(): ElanArray<T1> {
-    return this.system.initialise(new ElanArray(Array.from(this.contents)));
+  @elanFunction([], FunctionOptions.pure, ElanClass(List))
+  asArray(): List<T1> {
+    return this.system.initialise(new List(Array.from(this.contents)));
   }
 
   @elanFunction([], FunctionOptions.pure, ElanClass(ListImmutable))
