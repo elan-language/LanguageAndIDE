@@ -1,4 +1,4 @@
-# 904cb36a1122f379db0c016b21ba61a255c58de3a2ea2a5a772e62359b5cbb95 Elan Beta 9 valid
+# 558aead0410b4ade00e9dba12d2ef6980f7c32b1fb6b4c10fcffb80fdf633d91 Elan Beta 9 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -33,7 +33,7 @@ main
   print "Game Over! Score: {body.length() - 1}"
 end main
 
-procedure setAppleToRandomPosition(out apple as Array<of Int>, body as Array<of Array<of Int>>)
+procedure setAppleToRandomPosition(out apple as List<of Int>, body as List<of List<of Int>>)
   repeat
     set apple to [randomInt(0, 39), randomInt(0, 29)]
   end repeat when not overlaps(body, apple)
@@ -43,7 +43,7 @@ function hasHitEdge(headX as Int, headY as Int) returns Boolean
   return (headX < 0) or (headY < 0) or (headX > 39) or (headY > 29)
 end function
 
-function getAdjacentSquare(sq as Array<of Int>, dir as String) returns Array<of Int>
+function getAdjacentSquare(sq as List<of Int>, dir as String) returns List<of Int>
   variable newX set to sq[0]
   variable newY set to sq[1]
   if dir is "left" then
@@ -58,7 +58,7 @@ function getAdjacentSquare(sq as Array<of Int>, dir as String) returns Array<of 
   return [newX, newY]
 end function
 
-function overlaps(body as Array<of Array<of Int>>, sq as Array<of Int>) returns Boolean
+function overlaps(body as List<of List<of Int>>, sq as List<of Int>) returns Boolean
   variable result set to false
   each seg in body
     if (seg is sq) then

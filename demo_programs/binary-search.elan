@@ -1,7 +1,7 @@
-# f458d3c4c68c103af7eb2efbbbe400f01b16056a0a329b25998451d8475efbe5 Elan Beta 9 valid
+# 1be197037188d2b36b01ffe6b3d99aaa4c7960b4226bae2b08d875a8b96577fe Elan Beta 9 valid
 
 main
-  let fruit be example.listAsArray()
+  let fruit be example.listImmutableAsList()
   variable exit set to false
   while not exit
     let wanted be inputString("What type of fruit do you want ('x' to exit)? ")
@@ -18,7 +18,7 @@ main
   end while
 end main
 
-function binarySearch(list as Array<of String>, item as String) returns Boolean
+function binarySearch(list as List<of String>, item as String) returns Boolean
   variable result set to false
   if list.length() > 0 then
     let mid be list.length() div 2
@@ -47,7 +47,7 @@ test
   let li3 be ["lemon"]
   assert binarySearch(li3, "lemon") is true
   assert binarySearch(li3, "lime") is false
-  let li4 be empty Array<of String>
+  let li4 be empty List<of String>
   assert binarySearch(li4, "pear") is false
 end test
 

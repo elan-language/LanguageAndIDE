@@ -1,4 +1,4 @@
-# FFFF Elan Beta 6 valid
+# c5c2e6f251a244dab1ba0f94b142bc4894f899f3b581d80a90940b488923e6e6 Elan Beta 9 valid
 
 # A program to investigate the Collatz Conjecture
 # https://en.wikipedia.org/wiki/Collatz_conjecture
@@ -36,7 +36,7 @@ main
 end main
 
 # scale x.  We pass in p just to get its length
-function scx(i as Int, p as Array<of Int>) returns Float
+function scx(i as Int, p as List<of Int>) returns Float
   return i*100/p.length()
 end function
 

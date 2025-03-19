@@ -1,4 +1,4 @@
-# 8c35596bf78a2ce82094fbb18414723cefebd8fde612d851789197bc105749bf Elan Beta 9 valid
+# d9fde127faa2c037d4926781aefceee1624d20b2e30d769d364f2a3d10212183 Elan Beta 9 valid
 
 # Wordle Solver: in 'hard' mode (every attempt must be a valid possible answer)
 # Mark each letter of program's attempt word with:
@@ -60,8 +60,8 @@ test setTargetIfGreen
   assert setTargetIfGreen("ABCDE", "AACDE", 0) is ".ACDE"
 end test
 
-function evaluateGreens(attempt as String, target as String) returns List<of String>
-  return letterPositions.reduce({attempt, target}, lambda a as List<of String>, x as Int => {setAttemptIfGreen(a[0], a[1], x), setTargetIfGreen(a[0], a[1], x)})
+function evaluateGreens(attempt as String, target as String) returns ListImmutable<of String>
+  return letterPositions.reduce({attempt, target}, lambda a as ListImmutable<of String>, x as Int => {setAttemptIfGreen(a[0], a[1], x), setTargetIfGreen(a[0], a[1], x)})
 end function
 
 test evaluateGreens
@@ -121,8 +121,8 @@ test setTargetIfYellow
   assert setTargetIfYellow("*BCDE", "*BCDA", 4) is "*BCDA"
 end test
 
-function evaluateYellows(attempt as String, target as String) returns List<of String>
-  return letterPositions.reduce({attempt, target}, lambda a as List<of String>, x as Int => {setAttemptIfYellow(a[0], a[1], x), setTargetIfYellow(a[0], a[1], x)})
+function evaluateYellows(attempt as String, target as String) returns ListImmutable<of String>
+  return letterPositions.reduce({attempt, target}, lambda a as ListImmutable<of String>, x as Int => {setAttemptIfYellow(a[0], a[1], x), setTargetIfYellow(a[0], a[1], x)})
 end function
 
 test evaluateYellows
@@ -151,7 +151,7 @@ test markAttempt
   assert markAttempt("COLON", "GLORY") is "_++__"
 end test
 
-function possibleAnswersAfterAttempt(prior as List<of String>, attempt as String, mark as String) returns List<of String>
+function possibleAnswersAfterAttempt(prior as ListImmutable<of String>, attempt as String, mark as String) returns ListImmutable<of String>
   return prior.filter(lambda w as String => markAttempt(attempt, w) is mark)
 end function
 
@@ -162,7 +162,7 @@ test possibleAnswersAfterAttempt
   assert possibleAnswersAfterAttempt(prior, "AXXBX", "+__+_") is {"BCDEA", "CDEAB", "EABCD"}
 end test
 
-function maxWordCountRemainingAfterAttempt(possAnswers as List<of String>, attempt as String) returns Int
+function maxWordCountRemainingAfterAttempt(possAnswers as ListImmutable<of String>, attempt as String) returns Int
   let d be empty DictionaryImmutable<of String, Int>
   let d2 be possAnswers.reduce(d, lambda dd as DictionaryImmutable<of String, Int>, answer as String => incrementCount(dd, answer, attempt))
   let keys be d2.keys()
@@ -185,18 +185,18 @@ test maxWordCountRemainingAfterAttempt
   assert maxWordCountRemainingAfterAttempt(prior, "XXXXX") is 5
 end test
 
-function allRemainingWordCounts(possAnswers as List<of String>) returns List<of WordCount>
+function allRemainingWordCounts(possAnswers as ListImmutable<of String>) returns ListImmutable<of WordCount>
   return possAnswers.map(lambda w as String => newWordCount(w, maxWordCountRemainingAfterAttempt(possAnswers, w)))
 end function
 
-function betterOf(wc1 as WordCount, wc2 as WordCount, possAnswers as List<of String>) returns WordCount
+function betterOf(wc1 as WordCount, wc2 as WordCount, possAnswers as ListImmutable<of String>) returns WordCount
   let isBetter be wc2.count < wc1.count
   let isEqualAndPossAnswer be (wc2.count is wc1.count) and possAnswers.contains(wc2.word)
   return if isBetter or isEqualAndPossAnswer then wc2 else wc1
 end function
 
 test betterOf
-  let possAnswers be empty List<of String>
+  let possAnswers be empty ListImmutable<of String>
   let b2 be newWordCount("B", 2)
   let a3 be newWordCount("A", 3)
   let a2 be newWordCount("A", 2)
@@ -211,7 +211,7 @@ test betterOf
   assert betterOf(b2, a2, possAnswers3) is a2
 end test
 
-function bestAttempt(possAnswers as List<of String>) returns String
+function bestAttempt(possAnswers as ListImmutable<of String>) returns String
   let wordCounts be allRemainingWordCounts(possAnswers)
   let best be wordCounts.reduce(wordCounts.head(), lambda bestSoFar as WordCount, newWord as WordCount => betterOf(bestSoFar, newWord, possAnswers))
   return best.word

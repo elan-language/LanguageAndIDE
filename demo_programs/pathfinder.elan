@@ -1,12 +1,12 @@
-# FFFF Elan Beta 9 valid
+# 9839984ff6b9e2d8b71288cb51d5b597bbd226ed99573b5783c7eb52e2dae047 Elan Beta 9 valid
 
 main
   let start be newPoint(5, 5)
   let destination be newPoint(34, 24)
   let percentRocks be inputIntBetween("Enter % rocks (0-100): ", 0, 100)
   call clearPrintedText()
-  variable rocks set to empty Array<of Point>
-  variable nodes set to empty Array<of Node>
+  variable rocks set to empty List<of Point>
+  variable nodes set to empty List<of Node>
   call createRocksAndNodes(percentRocks, rocks, nodes, start, destination)
   variable gr set to initialiseGraphics(start, destination, rocks)
   call gr.display()
@@ -24,7 +24,7 @@ main
   end while
 end main
 
-procedure runSolver(gr as BlockGraphics, start as Point, destination as Point, rocks as Array<of Point>, out solver as Solver, alg as Algorithm)
+procedure runSolver(gr as BlockGraphics, start as Point, destination as Point, rocks as List<of Point>, out solver as Solver, alg as Algorithm)
   call solver.initialise(alg)
   variable gr2 set to initialiseGraphics(start, destination, rocks)
   while solver.running
@@ -43,7 +43,7 @@ procedure runSolver(gr as BlockGraphics, start as Point, destination as Point, r
   end if
 end procedure
 
-procedure createRocksAndNodes(percentRocks as Int, out rocks as Array<of Point>, out nodes as Array<of Node>, start as Point, dest as Point)
+procedure createRocksAndNodes(percentRocks as Int, out rocks as List<of Point>, out nodes as List<of Node>, start as Point, dest as Point)
   for x from 0 to 39 step 1
     for y from 1 to 29 step 1
       let p be newPoint(x, y)
@@ -60,7 +60,7 @@ procedure createRocksAndNodes(percentRocks as Int, out rocks as Array<of Point>,
   end for
 end procedure
 
-function initialiseGraphics(start as Point, dest as Point, rocks as Array<of Point>) returns BlockGraphics
+function initialiseGraphics(start as Point, dest as Point, rocks as List<of Point>) returns BlockGraphics
   variable gr set to new BlockGraphics()
   each rock in rocks
     set gr to gr.withBlock(rock.x, rock.y, black)
@@ -74,7 +74,7 @@ function addVisited(gr as BlockGraphics, visited as Point) returns BlockGraphics
   return gr.withBlock(visited.x, visited.y, lightBlue)
 end function
 
-function addRoute(gr as BlockGraphics, route as List<of Point>) returns BlockGraphics
+function addRoute(gr as BlockGraphics, route as ListImmutable<of Point>) returns BlockGraphics
   variable gr2 set to gr
   each p in route
     set gr2 to gr2.withBlock(p.x, p.y, orange)
@@ -87,13 +87,13 @@ function addRoute(gr as BlockGraphics, route as List<of Point>) returns BlockGra
 end function
 
 class Solver
-  constructor(nodes as Array<of Node>, start as Point, destination as Point)
+  constructor(nodes as List<of Node>, start as Point, destination as Point)
     set property.nodes to nodes
     set property.start to start
     set property.destination to destination
   end constructor
 
-  property nodes as Array<of Node>
+  property nodes as List<of Node>
 
   property start as Point
 
@@ -101,7 +101,7 @@ class Solver
 
   property current as Node
 
-  property currentNeighbours as Array<of Node>
+  property currentNeighbours as List<of Node>
 
   property alg as Algorithm
 
@@ -141,7 +141,7 @@ class Solver
   end procedure
 
   procedure determineCurrentNeighbours()
-    set property.currentNeighbours to empty Array<of Node>
+    set property.currentNeighbours to empty List<of Node>
     let currentPoint be property.current.point
     each p in currentPoint.neighbouringPoints()
       let node be getNodeFor(p)
@@ -189,7 +189,7 @@ class Solver
     return cost
   end function
 
-  function getRouteAndLength() returns (List<of Point>, Float)
+  function getRouteAndLength() returns (ListImmutable<of Point>, Float)
     variable route set to {property.destination}
     variable length set to 0.0
     variable node set to getNodeFor(property.destination)
@@ -254,7 +254,7 @@ record Point
   end function
 
   # Returns the 8 theoretically-neighbouring points, whether or not within bounds
-  function neighbouringPoints() returns List<of Point>
+  function neighbouringPoints() returns ListImmutable<of Point>
     return {newPoint(property.x - 1, property.y - 1), newPoint(property.x, property.y - 1), newPoint(property.x + 1, property.y - 1), newPoint(property.x - 1, property.y), newPoint(property.x + 1, property.y), newPoint(property.x - 1, property.y + 1), newPoint(property.x, property.y + 1), newPoint(property.x + 1, property.y + 1)}
   end function
 

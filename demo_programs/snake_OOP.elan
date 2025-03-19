@@ -1,4 +1,4 @@
-# 42e84f4bdf0a9a9b6ececd96574e619b831fff59730e36596615edeb08109d7f Elan Beta 8 valid
+# 601d429e173d37f1d63f89972727b1fb64003081c58ced801a1021dd3d173874 Elan Beta 9 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -29,7 +29,7 @@ class Snake
 
   private property head as Square
 
-  private property body as Array<of Square>
+  private property body as List<of Square>
 
   private property priorTail as Square
 

@@ -1,4 +1,4 @@
-# FFFF Elan Beta 5 valid
+# 53cfc100fe55a5be86e2674ef54a885481d622bd2fc45821d14cc6753c88275d Elan Beta 9 valid
 
 # https://en.wikipedia.org/wiki/Barnsley_fern
 # Draws a fractal image
@@ -47,11 +47,10 @@ function onestep(x as Float, y as Float, r as Float) returns (Float, Float)
   variable ny set to 0.0
   each pp in params
     set cumuprob to cumuprob + pp[6]
-    if (not done) and (r < cumuprob)
-      then
-        set nx to x*pp[0] + y*pp[1] + pp[4]
-        set ny to x*pp[2] + y*pp[3] + pp[5]
-        set done to true
+    if (not done) and (r < cumuprob) then
+      set nx to x*pp[0] + y*pp[1] + pp[4]
+      set ny to x*pp[2] + y*pp[3] + pp[5]
+      set done to true
     end if
   end each
   return tuple(nx, ny)
@@ -68,7 +67,7 @@ function roundtuple1(n as (Float, Float)) returns (Float, Float)
   return tuple(a.round(8), b.round(8))
 end function
 
-function roundtuple2(n as (Float, Float)) returns List<of Float>
+function roundtuple2(n as (Float, Float)) returns ListImmutable<of Float>
   let a, b be n
   return {a, b}.map(lambda x as Float => x.round(8))
 end function

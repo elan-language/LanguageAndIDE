@@ -1,4 +1,4 @@
-# 77e3c07d41f26032eac3a39c86841cef6c5aeab5e2cefcd4e440e7ba8d0e78ed Elan Beta 8 valid
+# 8d287a0055fc812fe7d50ac17c7bb1417085174f05001847a547957ba9330af5 Elan Beta 9 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -81,7 +81,7 @@ end function
 record Game
   property head as Square
 
-  property body as List<of Square>
+  property body as ListImmutable<of Square>
 
   property priorTail as Square
 

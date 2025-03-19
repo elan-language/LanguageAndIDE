@@ -1,4 +1,4 @@
-# FFFF Elan Beta 8 valid
+# 8e9637b9d86a7eb14df4da1a1bb14ef562135f93ff9bcf1f8938e2169e15e9b0 Elan Beta 9 valid
 
 main
   variable g set to new BlockGraphics()
@@ -119,7 +119,7 @@ record Point
   property isNotEmpty as Boolean
 
   # Returns the 8 theoretically-neighbouring points, whether or not within bounds
-  function neighbouringPoints() returns List<of Point>
+  function neighbouringPoints() returns ListImmutable<of Point>
     return {newPoint(property.x - 1, property.y - 1), newPoint(property.x, property.y - 1), newPoint(property.x + 1, property.y - 1), newPoint(property.x - 1, property.y), newPoint(property.x + 1, property.y), newPoint(property.x - 1, property.y + 1), newPoint(property.x, property.y + 1), newPoint(property.x + 1, property.y + 1)}
   end function
 

@@ -1,4 +1,4 @@
-# e525b272ee5e8c8ba5f87971bd17847d68c8da53e9b3293ba617aeec70b61cbe Elan Beta 8 valid
+# a2026ed11fb034a7fa9742d0e2c43c637269af9a3e17b9aa37b04f15ada26f91 Elan Beta 9 valid
 
 # Turing Machine that converts a Year from decimal to roman numerals
 # Run the program, enter the number to convert and watch the machine in action.
@@ -32,7 +32,7 @@ class TuringMachine
   constructor(initialState as String, haltState as String)
     set property.initialState to initialState
     set property.haltState to haltState
-    set property.rules to empty List<of Rule>
+    set property.rules to empty ListImmutable<of Rule>
     set property.currentState to initialState
     set property.headPosition to 0
   end constructor
@@ -45,7 +45,7 @@ class TuringMachine
 
   property haltState as String
 
-  property rules as List<of Rule>
+  property rules as ListImmutable<of Rule>
 
   property tape as String
 

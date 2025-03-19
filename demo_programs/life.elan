@@ -1,8 +1,8 @@
-# 9e250e8a0aa9011c9084a2562e44b0babd1d1c722feeec0ff5d9282168647da9 Elan Beta 9 valid
+# d123a466611f42ca82026464a7342db2ad2afbb0ae8cbb0b6108733d597fdb2e Elan Beta 9 valid
 
 main
   variable gr set to new BlockGraphics()
-  variable grid set to empty Array<of Boolean>
+  variable grid set to empty List<of Boolean>
   call fillRandom(grid)
   while true
     set gr to updateGraphics(grid, gr)
@@ -12,13 +12,13 @@ main
   end while
 end main
 
-procedure fillRandom(out starter as Array<of Boolean>)
+procedure fillRandom(out starter as List<of Boolean>)
   for i from 0 to 1199 step 1
     call starter.append(random() > 0.5)
   end for
 end procedure
 
-function updateGraphics(grid as Array<of Boolean>, gr as BlockGraphics) returns BlockGraphics
+function updateGraphics(grid as List<of Boolean>, gr as BlockGraphics) returns BlockGraphics
   variable gr2 set to gr
   for row from 0 to 29 step 1
     for col from 0 to 39 step 1
@@ -46,11 +46,11 @@ function west(c as Int) returns Int
   return if (c mod 40) > 0 then c - 1 else c + 39
 end function
 
-function neighbourCells(c as Int) returns Array<of Int>
+function neighbourCells(c as Int) returns List<of Int>
   return [north(west(c)), north(c), north(east(c)), west(c), east(c), south(west(c)), south(c), south(east(c))]
 end function
 
-function liveNeighbours(cells as Array<of Boolean>, c as Int) returns Int
+function liveNeighbours(cells as List<of Boolean>, c as Int) returns Int
   let neighbours be neighbourCells(c)
   let live be neighbours.filter(lambda i as Int => cells[i])
   return live.length()
@@ -60,14 +60,14 @@ function willLive(currentlyAlive as Boolean, live as Int) returns Boolean
   return if currentlyAlive then (live > 1) and (live < 4) else live is 3
 end function
 
-function nextCellValue(cells as Array<of Boolean>, c as Int) returns Boolean
+function nextCellValue(cells as List<of Boolean>, c as Int) returns Boolean
   return willLive(cells[c], liveNeighbours(cells, c))
 end function
 
-function nextGeneration(cells as Array<of Boolean>) returns Array<of Boolean>
+function nextGeneration(cells as List<of Boolean>) returns List<of Boolean>
   let cellRange be range(0, cells.length() - 1)
   let next be cellRange.map(lambda n as Int => nextCellValue(cells, n))
-  return next.listAsArray()
+  return next.listImmutableAsList()
 end function
 
 constant black set to 0x000000

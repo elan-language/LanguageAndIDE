@@ -1,12 +1,12 @@
-# 8d85973b6491bbc9c20d0531e45d8c055c5ff1f4e53f4206a0591d83b380326a Elan Beta 9 valid
+# 43e4695537577f012097845346a32081133e6ebea16bbffeeac66456fa7f9bfa Elan Beta 9 valid
 
 main
-  variable li set to example.listAsArray()
+  variable li set to example.listImmutableAsList()
   call inPlaceRippleSort(li)
   print li
 end main
 
-procedure inPlaceRippleSort(out arr as Array<of Int>)
+procedure inPlaceRippleSort(out arr as List<of Int>)
   variable changes set to true
   variable lastComp set to arr.length() - 2
   repeat

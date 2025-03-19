@@ -1,4 +1,4 @@
-# 50d3fcfc1d1c5bb80a13287207afdbedc2bb18d7863f4791d0c9c21cde403f5c Elan Beta 8 valid
+# 7f6466c2441d5981c7803a5ce204a9e1daacf46b8787d3f922bf3d96a9744b61 Elan Beta 9 valid
 
 main
   call playGame()
@@ -279,7 +279,7 @@ end class
 class Hand
   property softAce as Boolean
 
-  property cards as List<of Card>
+  property cards as ListImmutable<of Card>
 
   property count as Int
 

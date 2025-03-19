@@ -1,4 +1,4 @@
-# FFFF Elan Beta 6 valid
+# c1f6be80fac06e62ab0b22692c6c0d5ed59480ea14e676d89e3efa51dccdec85 Elan Beta 9 valid
 
 # Program to sxtract the parameters for the Barnsley Fern from the Wikipedia page
 # https://en.wikipedia.org/wiki/Barnsley_fern
@@ -82,7 +82,7 @@ end function
 
 # return the last element in a list of Int
 # a separate function so it can be applied to a complicated argument
-function last(l as List<of Int>) returns Int
+function last(l as ListImmutable<of Int>) returns Int
   return l[l.length() - 1]
 end function
 

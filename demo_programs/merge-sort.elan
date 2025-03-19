@@ -1,4 +1,4 @@
-# FFFF Elan Beta 6 valid
+# f31a3d59e4d0b53c8384a195ad3bb18b16b24595fa5527e209447ca74fafcae8 Elan Beta 9 valid
 
 # Demo shows one way to implement a mergeSort function - using recursion
 # Since merge sort is always an 'out of place' sort, we have chosen to use immutable lists
@@ -7,7 +7,7 @@ main
   print mergeSort(fruit)
 end main
 
-function mergeSort(li as List<of String>) returns List<of String>
+function mergeSort(li as ListImmutable<of String>) returns ListImmutable<of String>
   variable result set to li
   let len be li.length()
   if len > 1 then
@@ -19,8 +19,8 @@ function mergeSort(li as List<of String>) returns List<of String>
   return result
 end function
 
-function merge(a as List<of String>, b as List<of String>) returns List<of String>
-  variable result set to empty List<of String>
+function merge(a as ListImmutable<of String>, b as ListImmutable<of String>) returns ListImmutable<of String>
+  variable result set to empty ListImmutable<of String>
   let aLen be a.length()
   let bLen be b.length()
   if a.length() is 0 then
@@ -36,7 +36,7 @@ function merge(a as List<of String>, b as List<of String>) returns List<of Strin
 end function
 
 test mergeSort
-  let li1 be empty List<of String>
+  let li1 be empty ListImmutable<of String>
   assert mergeSort(li1) is li1
   let li2 be {"plum"}
   assert mergeSort(li2) is li2

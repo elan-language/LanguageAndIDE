@@ -1,8 +1,8 @@
-# 4775e5ef6c31f0dccc35f16a5b682813a7718954146a748b194504a153d79862 Elan Beta 6 valid
+# 5fd5cf525cabde19c7a289c59e05fd56553f931d60ac2fe821c90e629dc8305c Elan Beta 9 valid
 
 main
   variable vg set to new VectorGraphics()
-  let bubbles be empty Array<of CircleVG>
+  let bubbles be empty List<of CircleVG>
   for i from 0 to 19 step 1
     let b be new CircleVG() with cx set to i*5 + 2, cy set to 75, r set to 1, fill set to -1, stroke set to white
     call bubbles.append(b)
@@ -14,7 +14,7 @@ main
   end while
 end main
 
-procedure refresh(bubbles as Array<of CircleVG>, out vg as VectorGraphics)
+procedure refresh(bubbles as List<of CircleVG>, out vg as VectorGraphics)
   for i from 0 to 19 step 1
     let b be bubbles[i]
     variable b2 set to copy b with cy set to b.cy - 1, r set to b.r + 0.2
