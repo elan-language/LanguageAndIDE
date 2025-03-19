@@ -104,7 +104,7 @@ export class List<T1> {
   }
 
   @elanProcedure(["other"])
-  appendArray(@elanClassType(List) listB: List<T1>) {
+  appendList(@elanClassType(List) listB: List<T1>) {
     this.contents.push(...listB.contents);
   }
 
@@ -114,7 +114,7 @@ export class List<T1> {
   }
 
   @elanProcedure(["other"])
-  prependArray(@elanClassType(List) listB: List<T1>) {
+  prependList(@elanClassType(List) listB: List<T1>) {
     this.contents.unshift(...listB.contents);
   }
 

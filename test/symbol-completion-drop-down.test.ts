@@ -482,10 +482,10 @@ end main`;
 
     const expected = [
       ["append", "*", "*"],
-      ["appendArray", "*", "*"],
+      ["appendList", "*", "*"],
       ["insertAt", "*", "*"],
       ["prepend", "*", "*"],
-      ["prependArray", "*", "*"],
+      ["prependList", "*", "*"],
       ["putAt", "*", "*"],
       ["removeAll", "*", "*"],
       ["removeAt", "*", "*"],
@@ -508,7 +508,7 @@ end main`;
 
     const expected = [
       ["append", "*", "*"],
-      ["appendArray", "*", "*"],
+      ["appendList", "*", "*"],
     ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "ident7", "p", 5, expected);

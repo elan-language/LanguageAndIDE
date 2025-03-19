@@ -875,7 +875,7 @@ export function mustNotBeParameter(
     if (isInsideFunctionOrConstructor(parent)) {
       compileErrors.push(new MutateCompileError(getId(assignable), "parameter", location));
     } else {
-      // only mutate indexed Array
+      // only mutate indexed List
       if (!isIndexed(assignable)) {
         compileErrors.push(new MutateCompileError(getId(assignable), "parameter", location));
       }

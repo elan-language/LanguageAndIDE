@@ -11,8 +11,8 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("Array of Array", () => {
-  test("Pass_literalArrayOfArray", async () => {
+suite("List-of-List", () => {
+  test("Pass_literalListOfList", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -41,7 +41,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[[1, 2], [3, 4]]");
   });
 
-  test("Pass_DeclareAnEmptyArrayBySizeAndCheckLength", async () => {
+  test("Pass_DeclareAnEmptyListBySizeAndCheckLength", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -410,7 +410,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[[one], [], [three], [one], [two], [three]]");
   });
 
-  test("Pass_InitializeAnArrayFromAList", async () => {
+  test("Pass_InitializeAnListFromAList", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -437,7 +437,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "2[{foo}, {bar, yon}]");
   });
 
-  test("Pass_EmptyArray", async () => {
+  test("Pass_EmptyList", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -474,7 +474,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[[3]][]falsefalsetrue");
   });
 
-  test("Pass_InitialiseEmptyArray", async () => {
+  test("Pass_InitialiseEmptyList", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -499,7 +499,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[[0, 0], [0, 0], [0, 0]]");
   });
 
-  test("Pass_InitialiseArray", async () => {
+  test("Pass_InitialiseList", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -524,7 +524,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[[1, 1], [1, 1]]");
   });
 
-  test("Fail_EmptyArray1", async () => {
+  test("Fail_EmptyList1", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -556,7 +556,7 @@ end main
     assertDoesNotCompile(fileImpl, ["Cannot index Int"]);
   });
 
-  test("Fail_1DArrayAccessedAs2D1", async () => {
+  test("Fail_1DListAccessedAs2D1", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -572,7 +572,7 @@ end main
     assertDoesNotCompile(fileImpl, ["Too many argument(s). Expected: index (Int), value (String)"]);
   });
 
-  test("Fail_1DArrayAccessedAs2D2", async () => {
+  test("Fail_1DListAccessedAs2D2", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -588,7 +588,7 @@ end main
     assertDoesNotCompile(fileImpl, ["Cannot double index List<of List<of Int>>"]);
   });
 
-  test("Fail_2DArrayAccessedAs1D", async () => {
+  test("Fail_2DListAccessedAs1D", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -642,7 +642,7 @@ end main
     ]);
   });
 
-  test("Fail_2DArrayAdd", async () => {
+  test("Fail_2DListAdd", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
