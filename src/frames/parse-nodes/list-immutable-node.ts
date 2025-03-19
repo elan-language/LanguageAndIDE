@@ -6,7 +6,7 @@ import { Space } from "./parse-node-helpers";
 import { PunctuationNode } from "./punctuation-node";
 import { SpaceNode } from "./space-node";
 
-export class ListNode extends AbstractSequence {
+export class ListImmutableNode extends AbstractSequence {
   csv: CSV | undefined;
   elementConstructor: () => ParseNode;
 

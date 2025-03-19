@@ -20,7 +20,7 @@ import { InstanceProcRef } from "../src/frames/parse-nodes/instanceProcRef";
 import { KeywordNode } from "../src/frames/parse-nodes/keyword-node";
 import { KVPnode } from "../src/frames/parse-nodes/kvp-node";
 import { Lambda } from "../src/frames/parse-nodes/lambda";
-import { ListNode } from "../src/frames/parse-nodes/list-node";
+import { ListImmutableNode } from "../src/frames/parse-nodes/list-immutable-node";
 import { LitFloat } from "../src/frames/parse-nodes/lit-float";
 import { LitInt } from "../src/frames/parse-nodes/lit-int";
 import { LitRegExp } from "../src/frames/parse-nodes/lit-regExp";
@@ -672,9 +672,9 @@ suite("Parsing Nodes", () => {
     testNodeParse(new MethodCallNode(), `isBefore(b[0])`, ParseStatus.valid, ``, "", "");
   });
   test("Lists", () => {
-    testNodeParse(new ListNode(() => new LitInt()), ``, ParseStatus.empty, ``, "", "");
+    testNodeParse(new ListImmutableNode(() => new LitInt()), ``, ParseStatus.empty, ``, "", "");
     testNodeParse(
-      new ListNode(() => new LitInt()),
+      new ListImmutableNode(() => new LitInt()),
       `{1, 2, 3, 4, 5}`,
       ParseStatus.valid,
       ``,
@@ -682,10 +682,24 @@ suite("Parsing Nodes", () => {
       "{1, 2, 3, 4, 5}",
       "",
     );
-    testNodeParse(new ListNode(() => new LitInt()), `{}`, ParseStatus.invalid, ``, "{}", "");
-    testNodeParse(new ListNode(() => new LitInt()), `{`, ParseStatus.incomplete, `{`, "", "");
     testNodeParse(
-      new ListNode(() => new LitInt()),
+      new ListImmutableNode(() => new LitInt()),
+      `{}`,
+      ParseStatus.invalid,
+      ``,
+      "{}",
+      "",
+    );
+    testNodeParse(
+      new ListImmutableNode(() => new LitInt()),
+      `{`,
+      ParseStatus.incomplete,
+      `{`,
+      "",
+      "",
+    );
+    testNodeParse(
+      new ListImmutableNode(() => new LitInt()),
       `{1,2,3.1}`,
       ParseStatus.invalid,
       ``,
@@ -694,7 +708,7 @@ suite("Parsing Nodes", () => {
     );
     // list of list
     testNodeParse(
-      new ListNode(() => new ListNode(() => new LitInt())),
+      new ListImmutableNode(() => new ListImmutableNode(() => new LitInt())),
       ``,
       ParseStatus.empty,
       ``,
@@ -702,7 +716,7 @@ suite("Parsing Nodes", () => {
       "",
     );
     testNodeParse(
-      new ListNode(() => new ListNode(() => new LitInt())),
+      new ListImmutableNode(() => new ListImmutableNode(() => new LitInt())),
       `{{}, {}, {}}`,
       ParseStatus.invalid,
       ``,
@@ -710,7 +724,7 @@ suite("Parsing Nodes", () => {
       "",
     );
     testNodeParse(
-      new ListNode(() => new ListNode(() => new LitInt())),
+      new ListImmutableNode(() => new ListImmutableNode(() => new LitInt())),
       `{{1,2}, {3,4}}`,
       ParseStatus.valid,
       ``,
@@ -719,7 +733,7 @@ suite("Parsing Nodes", () => {
       "",
     );
     testNodeParse(
-      new ListNode(() => new ListNode(() => new LitInt())),
+      new ListImmutableNode(() => new ListImmutableNode(() => new LitInt())),
       `{{1,2}, {3,4}`,
       ParseStatus.incomplete,
       `{{1,2}, {3,4}`,
@@ -727,7 +741,7 @@ suite("Parsing Nodes", () => {
       "",
     );
     testNodeParse(
-      new ListNode(() => new ListNode(() => new LitInt())),
+      new ListImmutableNode(() => new ListImmutableNode(() => new LitInt())),
       `{{1,2, {}}`,
       ParseStatus.invalid,
       ``,
@@ -737,7 +751,7 @@ suite("Parsing Nodes", () => {
     );
 
     testNodeParse(
-      new ListNode(() => new LitString()),
+      new ListImmutableNode(() => new LitString()),
       `{"apple", "pear"}`,
       ParseStatus.valid,
       "",
@@ -746,7 +760,7 @@ suite("Parsing Nodes", () => {
       `{"<el-lit>apple</el-lit>", "<el-lit>pear</el-lit>"}`,
     );
     testNodeParse(
-      new ListNode(() => new LiteralNode()),
+      new ListImmutableNode(() => new LiteralNode()),
       `{"apple", "pear"}`,
       ParseStatus.valid,
       "",
@@ -757,7 +771,7 @@ suite("Parsing Nodes", () => {
   });
   test("List of expressions", () => {
     testNodeParse(
-      new ListNode(() => new ExprNode()),
+      new ListImmutableNode(() => new ExprNode()),
       `{a, 3 + 4, func(a, 3)- 1, new Foo()}`,
       ParseStatus.valid,
       "{a, 3 + 4, func(a, 3)- 1, new Foo()}",
@@ -765,7 +779,7 @@ suite("Parsing Nodes", () => {
       "",
     );
     testNodeParse(
-      new ListNode(() => new ExprNode()),
+      new ListImmutableNode(() => new ExprNode()),
       `{a, 3+ 4, foo(a, 3) - 1}`,
       ParseStatus.valid,
       "",

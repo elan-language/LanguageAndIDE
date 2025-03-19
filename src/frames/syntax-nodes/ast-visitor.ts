@@ -32,7 +32,7 @@ import { InstanceProcRef } from "../parse-nodes/instanceProcRef";
 import { KeywordNode } from "../parse-nodes/keyword-node";
 import { KVPnode } from "../parse-nodes/kvp-node";
 import { Lambda } from "../parse-nodes/lambda";
-import { ListNode } from "../parse-nodes/list-node";
+import { ListImmutableNode } from "../parse-nodes/list-immutable-node";
 import { LitFloat } from "../parse-nodes/lit-float";
 import { LitInt } from "../parse-nodes/lit-int";
 import { LitRegExp } from "../parse-nodes/lit-regExp";
@@ -87,12 +87,12 @@ import { InterpolatedAsn } from "./interpolated-asn";
 import { KvpAsn } from "./kvp-asn";
 import { LambdaAsn } from "./lambda-asn";
 import { LambdaSigAsn } from "./lambda-sig-asn";
-import { LiteralListAsn } from "./literal-list-asn";
 import { LiteralDictionaryAsn } from "./literal-dictionary-asn";
+import { LiteralDictionaryImmutableAsn } from "./literal-dictionary-immutable-asn";
 import { LiteralEnumAsn } from "./literal-enum-asn";
 import { LiteralFloatAsn } from "./literal-float-asn";
-import { LiteralDictionaryImmutableAsn } from "./literal-dictionary-immutable-asn";
 import { LiteralIntAsn } from "./literal-int-asn";
+import { LiteralListAsn } from "./literal-list-asn";
 import { LiteralListImmutableAsn } from "./literal-list-immutable-asn";
 import { LiteralRegExAsn } from "./literal-regex-asn";
 import { LiteralStringAsn } from "./literal-string-asn";
@@ -335,7 +335,7 @@ export function transform(
     return EmptyAsn.Instance;
   }
 
-  if (node instanceof ListNode) {
+  if (node instanceof ListImmutableNode) {
     const items = transformMany(node.csv as CSV, fieldId, scope).items;
     return new LiteralListImmutableAsn(items, fieldId, scope);
   }
