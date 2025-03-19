@@ -41,6 +41,7 @@ const saveButton = document.getElementById("save") as HTMLButtonElement;
 const autoSaveButton = document.getElementById("auto-save") as HTMLButtonElement;
 const undoButton = document.getElementById("undo") as HTMLButtonElement;
 const redoButton = document.getElementById("redo") as HTMLButtonElement;
+const fileButton = document.getElementById("file") as HTMLButtonElement;
 
 const codeTitle = document.getElementById("code-title") as HTMLDivElement;
 const parseStatus = document.getElementById("parse") as HTMLDivElement;
@@ -616,6 +617,7 @@ function updateDisplayValues() {
         redoButton,
         clearGraphicsButton,
         clearSystemInfoButton,
+        fileButton,
       ],
       msg,
     );
@@ -627,6 +629,7 @@ function updateDisplayValues() {
 
     disable([stopButton, pauseButton, stepButton], "Program is not running");
 
+    enable(fileButton, "File actions");
     enable(loadButton, "Load code from a file");
     enable(appendButton, "Append code from a file onto the end of the existing code");
     enable(newButton, "Clear the current code and start afresh");
