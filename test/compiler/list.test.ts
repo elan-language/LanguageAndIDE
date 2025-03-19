@@ -1,15 +1,15 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeDoesNotExecute,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeDoesNotExecute,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("List", () => {
@@ -350,8 +350,8 @@ return [main, _tests];}`;
 
 main
   variable a set to ["one", "two", "three"]
-  call a.insertAt(1, "foo")
-  call a.insertAt(3, "yon")
+  call a.insert(1, "foo")
+  call a.insert(3, "yon")
   print a
 end main`;
 
@@ -359,8 +359,8 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.literalList(["one", "two", "three"]);
-  a.insertAt(1, "foo");
-  a.insertAt(3, "yon");
+  a.insert(1, "foo");
+  a.insert(3, "yon");
   await system.printLine(a);
 }
 return [main, _tests];}`;

@@ -1,14 +1,14 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
-  assertDoesNotCompile,
-  assertObjectCodeDoesNotExecute,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  transforms,
+    assertDoesNotCompile,
+    assertObjectCodeDoesNotExecute,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("List-of-List", () => {
@@ -191,8 +191,8 @@ return [main, _tests];}`;
 
 main
   variable a set to [["one"], ["two"], ["three"]]
-  call a.insertAt(1, ["foo"])
-  call a.insertAt(3, ["yon"])
+  call a.insert(1, ["foo"])
+  call a.insert(3, ["yon"])
   print a
 end main`;
 
@@ -200,8 +200,8 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.literalList([system.literalList(["one"]), system.literalList(["two"]), system.literalList(["three"])]);
-  a.insertAt(1, system.literalList(["foo"]));
-  a.insertAt(3, system.literalList(["yon"]));
+  a.insert(1, system.literalList(["foo"]));
+  a.insert(3, system.literalList(["yon"]));
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -220,8 +220,8 @@ return [main, _tests];}`;
 
 main
   variable a set to [["one"], ["two"], ["three"]]
-  call a[0].insertAt(0, "foo")
-  call a[2].insertAt(1, "yon")
+  call a[0].insert(0, "foo")
+  call a[2].insert(1, "yon")
   print a
 end main`;
 
@@ -229,8 +229,8 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.literalList([system.literalList(["one"]), system.literalList(["two"]), system.literalList(["three"])]);
-  system.safeIndex(a, 0).insertAt(0, "foo");
-  system.safeIndex(a, 2).insertAt(1, "yon");
+  system.safeIndex(a, 0).insert(0, "foo");
+  system.safeIndex(a, 2).insert(1, "yon");
   await system.printLine(a);
 }
 return [main, _tests];}`;

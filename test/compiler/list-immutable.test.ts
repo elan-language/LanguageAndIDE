@@ -1,15 +1,15 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeDoesNotExecute,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeDoesNotExecute,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("ListImmutable", () => {
@@ -946,12 +946,12 @@ end main
     assertDoesNotCompile(fileImpl, ["'append' is not defined for type 'ListImmutable'"]);
   });
 
-  test("Fail_insertAt", async () => {
+  test("Fail_insert", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
   variable a set to {"one", "two", "three"}
-  call a.insertAt(1, "four")
+  call a.insert(1, "four")
   print a
 end main
 `;
@@ -960,7 +960,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'insertAt' is not defined for type 'ListImmutable'"]);
+    assertDoesNotCompile(fileImpl, ["'insert' is not defined for type 'ListImmutable'"]);
   });
 
   test("Fail_removeAt", async () => {

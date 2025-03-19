@@ -72,7 +72,7 @@ export class List<T1> {
   }
 
   @elanProcedure(["index", "value"])
-  insertAt(@elanIntType() index: number, @elanGenericParamT1Type() value: T1) {
+  insert(@elanIntType() index: number, @elanGenericParamT1Type() value: T1) {
     this.contents.splice(index, 0, value);
   }
 
