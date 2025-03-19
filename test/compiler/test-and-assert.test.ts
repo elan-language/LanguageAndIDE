@@ -758,7 +758,7 @@ main
 end main
 
 procedure square(x as Int, out y as List<of Int>)
-  call y.putAt(0,  x ^ 2)
+  call y.put(0,  x ^ 2)
 end procedure
 
 test square

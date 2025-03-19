@@ -67,7 +67,7 @@ export class List<T1> {
   }
 
   @elanProcedure(["index", "value"])
-  putAt(@elanIntType() index: number, @elanGenericParamT1Type() value: T1) {
+  put(@elanIntType() index: number, @elanGenericParamT1Type() value: T1) {
     this.system!.safeListSet(this.contents, index, value);
   }
 

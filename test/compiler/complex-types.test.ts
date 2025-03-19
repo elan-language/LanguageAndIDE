@@ -17,7 +17,7 @@ suite("Complex Types", () => {
 
 main 
   variable a set to [["a":1], ["b":3, "z":10]]
-  call a[0].putAtKey("b", 2)
+  call a[0].put("b", 2)
   print a[0]["b"]
 end main`;
 
@@ -25,7 +25,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.literalList([system.dictionary([["a", 1]]), system.dictionary([["b", 3], ["z", 10]])]);
-  system.safeIndex(a, 0).putAtKey("b", 2);
+  system.safeIndex(a, 0).put("b", 2);
   await system.printLine(system.safeIndex(system.safeIndex(a, 0), "b"));
 }
 return [main, _tests];}`;
@@ -44,7 +44,7 @@ return [main, _tests];}`;
 
 main 
   variable a set to ["a":[1,2], "b":[3,4,5]]
-  call a["b"].putAt(0, 2)
+  call a["b"].put(0, 2)
   print a["b"][0]
 end main`;
 
@@ -52,7 +52,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.dictionary([["a", system.literalList([1, 2])], ["b", system.literalList([3, 4, 5])]]);
-  system.safeIndex(a, "b").putAt(0, 2);
+  system.safeIndex(a, "b").put(0, 2);
   await system.printLine(system.safeIndex(system.safeIndex(a, "b"), 0));
 }
 return [main, _tests];}`;
@@ -71,7 +71,7 @@ return [main, _tests];}`;
 
 main 
   variable a set to [["a":1], ["b":3, "z":10]]
-  call a.putAt("b", ["b":2])
+  call a.put("b", ["b":2])
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -89,7 +89,7 @@ end main`;
 
 main 
   variable a set to [["a":1], ["b":3, "z":10]]
-  call a[0].putAtKey(0, 2)
+  call a[0].put(0, 2)
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -107,7 +107,7 @@ end main`;
 
 main 
   variable a set to ["a":[1,2], "b":[3,4,5]]
-  call a.putAtKey(0, [2,2])
+  call a.put(0, [2,2])
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -125,7 +125,7 @@ end main`;
 
 main 
   variable a set to ["a":[1,2], "b":[3,4,5]]
-  call a["b"].putAt("b", 2)
+  call a["b"].put("b", 2)
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);

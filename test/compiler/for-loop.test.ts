@@ -216,7 +216,7 @@ end main
 
 procedure foo(out arr as List<of Int>)
   for i from 0 to 10 step 1
-    call arr.putAt(i, 1)
+    call arr.put(i, 1)
   end for
   print arr[0]
 end procedure`;
@@ -232,7 +232,7 @@ async function main() {
 
 async function foo(arr) {
   for (let i = 0; i <= 10; i = i + 1) {
-    arr[0].putAt(i, 1);
+    arr[0].put(i, 1);
   }
   await system.printLine(system.safeIndex(arr[0], 0));
 }

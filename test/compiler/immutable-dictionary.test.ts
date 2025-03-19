@@ -665,7 +665,7 @@ end main
 
 main
   variable a set to {"a":4, "b":5, "c":6, "d":7, "e":8}
-  call a.putAtKey("a", 0)
+  call a.put("a", 0)
 end main
 `;
 
@@ -674,7 +674,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'putAtKey' is not defined for type 'DictionaryImmutable'"]);
+    assertDoesNotCompile(fileImpl, ["'put' is not defined for type 'DictionaryImmutable'"]);
   });
 
   test("Fail_removeKey", async () => {

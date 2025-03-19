@@ -1,15 +1,15 @@
 import {
-  ClassOption,
-  ElanBoolean,
-  ElanClass,
-  ElanT1,
-  ElanT2,
-  FunctionOptions,
-  elanClass,
-  elanFunction,
-  elanGenericParamT1Type,
-  elanGenericParamT2Type,
-  elanProcedure,
+    ClassOption,
+    ElanBoolean,
+    ElanClass,
+    ElanT1,
+    ElanT2,
+    FunctionOptions,
+    elanClass,
+    elanFunction,
+    elanGenericParamT1Type,
+    elanGenericParamT2Type,
+    elanProcedure,
 } from "../elan-type-annotations";
 import { System } from "../system";
 import { ListImmutable } from "./list-immutable";
@@ -50,7 +50,7 @@ export class Dictionary<T1, T2> {
   }
 
   @elanProcedure(["key", "value"])
-  putAtKey(@elanGenericParamT1Type() key: T1, @elanGenericParamT2Type() value: T2) {
+  put(@elanGenericParamT1Type() key: T1, @elanGenericParamT2Type() value: T2) {
     const rk = this.findRealKey(key);
     this.contents.set(rk, value);
   }

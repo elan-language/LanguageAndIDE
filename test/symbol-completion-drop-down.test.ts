@@ -486,7 +486,7 @@ end main`;
       ["insertAt", "*", "*"],
       ["prepend", "*", "*"],
       ["prependList", "*", "*"],
-      ["putAt", "*", "*"],
+      ["put", "*", "*"],
       ["removeAll", "*", "*"],
       ["removeAt", "*", "*"],
       ["removeFirst", "*", "*"],
@@ -647,7 +647,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["putAtKey", "*", "*"],
+      ["put", "*", "*"],
       ["removeAtKey", "*", "*"],
     ] as [string, string, string][];
 
@@ -1679,7 +1679,7 @@ end record`;
 
 main
   variable bubbles set to empty List<of CircleVG>
-  call bubbles.putAt(0, new CircleVG())
+  call bubbles.put(0, new CircleVG())
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
