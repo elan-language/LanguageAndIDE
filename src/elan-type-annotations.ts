@@ -534,9 +534,9 @@ export enum ClassOption {
   concrete,
   abstract,
   record,
-  array,
-  array2D,
   list,
+  array2D,
+  listImmutable,
   dictionary,
   dictionaryImmutable,
 }
@@ -591,13 +591,13 @@ function mapClassOption(options: ClassOption): TypeOptions {
     case ClassOption.record:
       opt.isImmutable = true;
       return opt;
-    case ClassOption.array:
+    case ClassOption.list:
       opt.isIndexable = opt.isIterable = true;
       return opt;
     case ClassOption.array2D:
       opt.isDoubleIndexable = true;
       return opt;
-    case ClassOption.list:
+    case ClassOption.listImmutable:
       opt.isImmutable = opt.isIndexable = opt.isIterable = true;
       return opt;
     case ClassOption.dictionary:

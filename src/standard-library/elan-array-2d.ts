@@ -77,7 +77,7 @@ export class ElanArray2D<T1> {
 
   @elanProcedure(["column", "row", "value"])
   put(@elanIntType() col: number, @elanIntType() row: number, @elanGenericParamT1Type() value: T1) {
-    this.system!.safe2DArraySet(this.contents, col, row, value);
+    this.system!.safeArray2DSet(this.contents, col, row, value);
   }
 
   @elanFunction(["column", "row", "value"], FunctionOptions.pure, ElanClass(ElanArray2D))
@@ -87,7 +87,7 @@ export class ElanArray2D<T1> {
     @elanGenericParamT1Type() value: T1,
   ): ElanArray2D<T1> {
     const newList = [...this.contents];
-    this.system!.safe2DArraySet(newList, col, row, value);
+    this.system!.safeArray2DSet(newList, col, row, value);
 
     return this.system!.initialise(new ElanArray2D(newList));
   }
