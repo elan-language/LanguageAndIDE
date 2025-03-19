@@ -630,7 +630,7 @@ main
 end main
 
 function foo(a as List<of Int>) returns Int
-    call a.putAt(0, 1)
+    call a.put(0, 1)
     return a[0]
 end function`;
 

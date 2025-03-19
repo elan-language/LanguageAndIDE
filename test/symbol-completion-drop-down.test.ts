@@ -483,10 +483,10 @@ end main`;
     const expected = [
       ["append", "*", "*"],
       ["appendList", "*", "*"],
-      ["insertAt", "*", "*"],
+      ["insert", "*", "*"],
       ["prepend", "*", "*"],
       ["prependList", "*", "*"],
-      ["putAt", "*", "*"],
+      ["put", "*", "*"],
       ["removeAll", "*", "*"],
       ["removeAt", "*", "*"],
       ["removeFirst", "*", "*"],
@@ -591,8 +591,8 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["withPutAtKey", "*", "*"],
-      ["withRemoveAtKey", "*", "*"],
+      ["withPut", "*", "*"],
+      ["withRemoveAt", "*", "*"],
     ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "expr8", "i", 5, expected);
@@ -612,8 +612,6 @@ end main`;
     const expected = [
       ["keys", "*", "*"],
       ["hasKey", "*", "*"],
-      ["withPutAtKey", "*", "*"],
-      ["withRemoveAtKey", "*", "*"],
     ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "expr8", "e", 5, expected);
@@ -647,8 +645,8 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["putAtKey", "*", "*"],
-      ["removeAtKey", "*", "*"],
+      ["put", "*", "*"],
+      ["removeAt", "*", "*"],
     ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "ident7", ".", 3, expected);
@@ -670,8 +668,8 @@ end main`;
       ["hasKey", "*", "*"],
       ["keys", "*", "*"],
       ["values", "*", "*"],
-      ["withPutAtKey", "*", "*"],
-      ["withRemoveAtKey", "*", "*"],
+      ["withPut", "*", "*"],
+      ["withRemoveAt", "*", "*"],
     ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "expr8", ".", 3, expected);
@@ -693,8 +691,8 @@ end main`;
       ["hasKey", "*", "*"],
       ["keys", "*", "*"],
       ["values", "*", "*"],
-      ["withPutAtKey", "*", "*"],
-      ["withRemoveAtKey", "*", "*"],
+      ["withPut", "*", "*"],
+      ["withRemoveAt", "*", "*"],
     ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "expr8", ".", 3, expected);
@@ -1679,7 +1677,7 @@ end record`;
 
 main
   variable bubbles set to empty List<of CircleVG>
-  call bubbles.putAt(0, new CircleVG())
+  call bubbles.put(0, new CircleVG())
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);

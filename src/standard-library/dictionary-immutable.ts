@@ -43,7 +43,7 @@ export class DictionaryImmutable<T1, T2> {
   }
 
   @elanFunction(["key"], FunctionOptions.pure, ElanClass(DictionaryImmutable))
-  withRemoveAtKey(@elanGenericParamT1Type() key: T1) {
+  withRemoveAt(@elanGenericParamT1Type() key: T1) {
     const rk = this.findRealKey(key);
     const newDict = new Map<T1, T2>(this.contents);
     newDict.delete(rk);
@@ -51,7 +51,7 @@ export class DictionaryImmutable<T1, T2> {
   }
 
   @elanFunction(["key", "value"], FunctionOptions.pure, ElanClass(DictionaryImmutable))
-  withPutAtKey(@elanGenericParamT1Type() key: T1, @elanGenericParamT2Type() value: T2) {
+  withPut(@elanGenericParamT1Type() key: T1, @elanGenericParamT2Type() value: T2) {
     const rk = this.findRealKey(key);
     const newDict = new Map<T1, T2>(this.contents);
     newDict.set(rk, value);

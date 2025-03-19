@@ -37,7 +37,7 @@ end class`;
 
 class Foo
     constructor(a as List<of Float>)
-        call a.putAt(0, 4)
+        call a.put(0, 4)
     end constructor
 
     function asString() returns String

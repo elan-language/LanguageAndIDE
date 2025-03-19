@@ -885,7 +885,7 @@ end main
 
 main
   variable a set to {4, 5, 6, 7, 8}
-  call a.putAt(0, 0)
+  call a.put(0, 0)
 end main
 `;
 
@@ -894,7 +894,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'putAt' is not defined for type 'ListImmutable'"]);
+    assertDoesNotCompile(fileImpl, ["'put' is not defined for type 'ListImmutable'"]);
   });
 
   test("Fail_CannotSetIndex", async () => {
@@ -912,12 +912,12 @@ end main
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_putAtKey", async () => {
+  test("Fail_put", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
   variable a set to {"one", "two", "three"}
-  set a to a.withPutAtKey(1, "TWO")
+  set a to a.put(1, "TWO")
   print a
 end main
 `;
@@ -926,7 +926,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'withPutAtKey' is not defined for type 'ListImmutable'"]);
+    assertDoesNotCompile(fileImpl, ["'put' is not defined for type 'ListImmutable'"]);
   });
 
   test("Fail_add", async () => {
@@ -946,12 +946,12 @@ end main
     assertDoesNotCompile(fileImpl, ["'append' is not defined for type 'ListImmutable'"]);
   });
 
-  test("Fail_insertAt", async () => {
+  test("Fail_insert", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
   variable a set to {"one", "two", "three"}
-  call a.insertAt(1, "four")
+  call a.insert(1, "four")
   print a
 end main
 `;
@@ -960,7 +960,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'insertAt' is not defined for type 'ListImmutable'"]);
+    assertDoesNotCompile(fileImpl, ["'insert' is not defined for type 'ListImmutable'"]);
   });
 
   test("Fail_removeAt", async () => {

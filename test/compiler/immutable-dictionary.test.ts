@@ -164,8 +164,8 @@ main
   let r2 be new Point() with x set to 2, y set to 1
   let r3 be new Point() with x set to 1, y set to 2
 
-  set a to a.withPutAtKey(r1, 1)
-  set a to a.withPutAtKey(r2, 2)
+  set a to a.withPut(r1, 1)
+  set a to a.withPut(r2, 2)
   
   print a[r1]
   print a[r2]
@@ -184,8 +184,8 @@ async function main() {
   const r1 = await (async () => {const _a = {...system.initialise(await new Point()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Point()._initialise()))); _a.x = 1; _a.y = 2; return _a;})();
   const r2 = await (async () => {const _a = {...system.initialise(await new Point()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Point()._initialise()))); _a.x = 2; _a.y = 1; return _a;})();
   const r3 = await (async () => {const _a = {...system.initialise(await new Point()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Point()._initialise()))); _a.x = 1; _a.y = 2; return _a;})();
-  a = a.withPutAtKey(r1, 1);
-  a = a.withPutAtKey(r2, 2);
+  a = a.withPut(r1, 1);
+  a = a.withPut(r2, 2);
   await system.printLine(system.safeIndex(a, r1));
   await system.printLine(system.safeIndex(a, r2));
   await system.printLine(system.safeIndex(a, r3));
@@ -266,13 +266,13 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "{1, 3, 10}");
   });
 
-  test("Pass_withPutAtKey", async () => {
+  test("Pass_withPutAt", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 constant a set to {"a":1, "b":3, "z":10}
 main
-  variable b set to a.withPutAtKey("b", 4)
-  variable c set to b.withPutAtKey("d", 2)
+  variable b set to a.withPut("b", 4)
+  variable c set to b.withPut("d", 2)
   print a
   print c
 end main`;
@@ -283,8 +283,8 @@ const global = new class {
 
 };
 async function main() {
-  let b = global.a.withPutAtKey("b", 4);
-  let c = b.withPutAtKey("d", 2);
+  let b = global.a.withPut("b", 4);
+  let c = b.withPut("d", 2);
   await system.printLine(global.a);
   await system.printLine(c);
 }
@@ -299,12 +299,12 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "{a:1, b:3, z:10}{a:1, b:4, z:10, d:2}");
   });
 
-  test("Pass_withRemoveAtKey", async () => {
+  test("Pass_withRemoveAt", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 constant a set to {"a":1, "b":3, "z":10}
 main
-  variable b set to a.withRemoveAtKey("b")
+  variable b set to a.withRemoveAt("b")
   print a
   print b
 end main`;
@@ -315,7 +315,7 @@ const global = new class {
 
 };
 async function main() {
-  let b = global.a.withRemoveAtKey("b");
+  let b = global.a.withRemoveAt("b");
   await system.printLine(global.a);
   await system.printLine(b);
 }
@@ -335,7 +335,7 @@ return [main, _tests];}`;
 
 constant a set to {"a":1, "b":3, "z":10}
 main
-  variable b set to a.withRemoveAtKey("c")
+  variable b set to a.withRemoveAt("c")
   print b
 end main`;
 
@@ -345,7 +345,7 @@ const global = new class {
 
 };
 async function main() {
-  let b = global.a.withRemoveAtKey("c");
+  let b = global.a.withRemoveAt("c");
   await system.printLine(b);
 }
 return [main, _tests];}`;
@@ -364,8 +364,8 @@ return [main, _tests];}`;
 
 main
   variable a set to new DictionaryImmutable<of String, Int>()
-  variable b set to a.withPutAtKey("Foo", 1)
-  set b to b.withPutAtKey("Bar", 3)
+  variable b set to a.withPut("Foo", 1)
+  set b to b.withPut("Bar", 3)
   variable k set to b.keys()
   print k.length()
   print b["Foo"]
@@ -376,8 +376,8 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.initialise(await new _stdlib.DictionaryImmutable()._initialise());
-  let b = a.withPutAtKey("Foo", 1);
-  b = b.withPutAtKey("Bar", 3);
+  let b = a.withPut("Foo", 1);
+  b = b.withPut("Bar", 3);
   let k = b.keys();
   await system.printLine(k.length());
   await system.printLine(system.safeIndex(b, "Foo"));
@@ -401,8 +401,8 @@ enum Fruit apple, orange, pear
 
 main
   variable a set to new DictionaryImmutable<of Fruit, Int>()
-  variable b set to a.withPutAtKey(Fruit.apple, 1)
-  set b to b.withPutAtKey(Fruit.orange, 3)
+  variable b set to a.withPut(Fruit.apple, 1)
+  set b to b.withPut(Fruit.orange, 3)
   variable k set to b.keys()
   print k.length()
   print b[Fruit.apple]
@@ -417,8 +417,8 @@ const Fruit = {
 const global = new class {};
 async function main() {
   let a = system.initialise(await new _stdlib.DictionaryImmutable()._initialise());
-  let b = a.withPutAtKey(Fruit.apple, 1);
-  b = b.withPutAtKey(Fruit.orange, 3);
+  let b = a.withPut(Fruit.apple, 1);
+  b = b.withPut(Fruit.orange, 3);
   let k = b.keys();
   await system.printLine(k.length());
   await system.printLine(system.safeIndex(b, Fruit.apple));
@@ -441,7 +441,7 @@ return [main, _tests];}`;
 main
   variable a set to empty DictionaryImmutable<of String, Int>
   variable b set to empty DictionaryImmutable<of String, Int>
-  set b to a.withPutAtKey("a", 1)
+  set b to a.withPut("a", 1)
   print a
   print b
   print a is b
@@ -454,7 +454,7 @@ const global = new class {};
 async function main() {
   let a = system.initialise(_stdlib.DictionaryImmutable.emptyInstance());
   let b = system.initialise(_stdlib.DictionaryImmutable.emptyInstance());
-  b = a.withPutAtKey("a", 1);
+  b = a.withPut("a", 1);
   await system.printLine(a);
   await system.printLine(b);
   await system.printLine(system.objectEquals(a, b));
@@ -480,13 +480,13 @@ main
   let r1 be new Point() with x set to 1, y set to 2
   let r2 be new Point() with x set to 1, y set to 2
 
-  set a to a.withPutAtKey(r1, 1)
-  set a to a.withPutAtKey(r2, 2)
+  set a to a.withPut(r1, 1)
+  set a to a.withPut(r2, 2)
   
   print a[r1]
   print a.keys().length()
 
-  set a to a.withRemoveAtKey(r1)
+  set a to a.withRemoveAt(r1)
 
   print a.keys().length()
 end main
@@ -502,11 +502,11 @@ async function main() {
   let a = system.initialise(await new _stdlib.DictionaryImmutable()._initialise());
   const r1 = await (async () => {const _a = {...system.initialise(await new Point()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Point()._initialise()))); _a.x = 1; _a.y = 2; return _a;})();
   const r2 = await (async () => {const _a = {...system.initialise(await new Point()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Point()._initialise()))); _a.x = 1; _a.y = 2; return _a;})();
-  a = a.withPutAtKey(r1, 1);
-  a = a.withPutAtKey(r2, 2);
+  a = a.withPut(r1, 1);
+  a = a.withPut(r2, 2);
   await system.printLine(system.safeIndex(a, r1));
   await system.printLine(a.keys().length());
-  a = a.withRemoveAtKey(r1);
+  a = a.withRemoveAt(r1);
   await system.printLine(a.keys().length());
 }
 
@@ -598,7 +598,7 @@ end main
 
 constant a set to {"a":1, "b":3, "z":10}
 main
-  variable b set to a.withRemoveAtKey(10)
+  variable b set to a.withRemoveAt(10)
 end main
 `;
 
@@ -614,7 +614,7 @@ end main
 
 constant a set to {"a":1, "b":3, "z":10}
 main
-  variable b set to a.withPutAtKey(10, 4)
+  variable b set to a.withPut(10, 4)
 end main
 `;
 
@@ -632,7 +632,7 @@ end main
 
 constant a set to {"a":1, "b":3, "z":10}
 main
-  variable b set to a.withPutAtKey("b", 3.1)
+  variable b set to a.withPut("b", 3.1)
 end main
 `;
 
@@ -665,7 +665,7 @@ end main
 
 main
   variable a set to {"a":4, "b":5, "c":6, "d":7, "e":8}
-  call a.putAtKey("a", 0)
+  call a.put("a", 0)
 end main
 `;
 
@@ -674,7 +674,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'putAtKey' is not defined for type 'DictionaryImmutable'"]);
+    assertDoesNotCompile(fileImpl, ["'put' is not defined for type 'DictionaryImmutable'"]);
   });
 
   test("Fail_removeKey", async () => {
@@ -682,7 +682,7 @@ end main
 
 main
   variable a set to {"a":1, "b":3, "z":10}
-  call a.removeAtKey("b")
+  call a.removeAt("b")
   print a
 end main`;
 
@@ -691,14 +691,14 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'removeAtKey' is not defined for type 'DictionaryImmutable'"]);
+    assertDoesNotCompile(fileImpl, ["'removeAt' is not defined for type 'DictionaryImmutable'"]);
   });
 
   test("Fail_undefined", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to a.withPutAtKey("a", 1)
+  variable a set to a.withPut("a", 1)
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);

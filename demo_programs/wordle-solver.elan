@@ -173,7 +173,7 @@ function incrementCount(dd as DictionaryImmutable<of String, Int>, possAnswer as
   let mark be markAttempt(attempt, possAnswer)
   let keys be dd.keys()
   let count be if keys.contains(mark) then dd[mark] else 0
-  let dd2 be dd.withPutAtKey(mark, count + 1)
+  let dd2 be dd.withPut(mark, count + 1)
   return dd2
 end function
 

@@ -152,7 +152,7 @@ return [main, _tests];}`;
 
 main
   variable a set to [1,2,3]
-  call a.putAt(0, a[1])
+  call a.put(0, a[1])
   print a
 end main`;
 
@@ -160,7 +160,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.literalList([1, 2, 3]);
-  a.putAt(0, system.safeIndex(a, 1));
+  a.put(0, system.safeIndex(a, 1));
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -222,8 +222,8 @@ end main`;
 
 main
   variable a set to createList(3, "")
-  call a.putAt(0, "foo")
-  call a.putAt(2, "yon")
+  call a.put(0, "foo")
+  call a.put(2, "yon")
   print a[0]
   print a[2]
 end main`;
@@ -232,8 +232,8 @@ end main`;
 const global = new class {};
 async function main() {
   let a = _stdlib.createList(3, "");
-  a.putAt(0, "foo");
-  a.putAt(2, "yon");
+  a.put(0, "foo");
+  a.put(2, "yon");
   await system.printLine(system.safeIndex(a, 0));
   await system.printLine(system.safeIndex(a, 2));
 }
@@ -350,8 +350,8 @@ return [main, _tests];}`;
 
 main
   variable a set to ["one", "two", "three"]
-  call a.insertAt(1, "foo")
-  call a.insertAt(3, "yon")
+  call a.insert(1, "foo")
+  call a.insert(3, "yon")
   print a
 end main`;
 
@@ -359,8 +359,8 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.literalList(["one", "two", "three"]);
-  a.insertAt(1, "foo");
-  a.insertAt(3, "yon");
+  a.insert(1, "foo");
+  a.insert(3, "yon");
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -524,7 +524,7 @@ return [main, _tests];}`;
 
 main
   variable a set to empty List<of Int>
-  call a.putAt(0, 3)
+  call a.put(0, 3)
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -620,7 +620,7 @@ end main
 
 main
   variable a set to createList(3, "")
-  call a.putAt(0, true)
+  call a.put(0, true)
 end main
 `;
 
@@ -654,8 +654,8 @@ end main
 
 main
   variable a set to new List<of String>()
-  call a.putAt(0, "fred")
-  call a.putAt(1, "bill")
+  call a.put(0, "fred")
+  call a.put(1, "bill")
   variable b set to 0
   set b to a[0]
 end main
@@ -704,7 +704,7 @@ end main
 
 main
   variable a set to new List<of String>()
-  call a.putAt("b", "fred")
+  call a.put("b", "fred")
 end main
 `;
 

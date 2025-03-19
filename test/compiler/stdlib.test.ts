@@ -437,7 +437,7 @@ main
   variable results set to [0, 0, 0, 0, 0, 0, 0]
   for i from 1 to 10000 step 1
     variable r set to randomInt(3, 5)
-    call results.putAt(r, results[r] + 1)
+    call results.put(r, results[r] + 1)
   end for
   for i from 0 to 6 step 1
     variable r set to (results[i]/10000).round(1)
@@ -452,7 +452,7 @@ async function main() {
   let results = system.literalList([0, 0, 0, 0, 0, 0, 0]);
   for (let i = 1; i <= 10000; i = i + 1) {
     let r = _stdlib.randomInt(3, 5);
-    results.putAt(r, system.safeIndex(results, r) + 1);
+    results.put(r, system.safeIndex(results, r) + 1);
   }
   for (let i = 0; i <= 6; i = i + 1) {
     let r = _stdlib.round((system.safeIndex(results, i) / 10000), 1);
@@ -481,7 +481,7 @@ main
   call rnd.initialiseFromClock()
   for i from 1 to 10000 step 1
     set val, rnd to rnd.nextInt(3, 5)
-    call results.putAt(val, results[val] + 1)
+    call results.put(val, results[val] + 1)
   end for
   for i from 0 to 6 step 1
     variable r set to (results[i]/10000).round(1)
@@ -499,7 +499,7 @@ async function main() {
   rnd.initialiseFromClock();
   for (let i = 1; i <= 10000; i = i + 1) {
     [val, rnd] = rnd.nextInt(3, 5);
-    results.putAt(val, system.safeIndex(results, val) + 1);
+    results.put(val, system.safeIndex(results, val) + 1);
   }
   for (let i = 0; i <= 6; i = i + 1) {
     let r = _stdlib.round((system.safeIndex(results, i) / 10000), 1);
@@ -526,7 +526,7 @@ main
   variable val set to 0
   for i from 1 to 10000 step 1
     set val, rnd to rnd.nextInt(3, 5)
-    call results.putAt(val, results[val] + 1)
+    call results.put(val, results[val] + 1)
   end for
   for i from 0 to 6 step 1
     variable r set to results[i]
@@ -543,7 +543,7 @@ async function main() {
   let val = 0;
   for (let i = 1; i <= 10000; i = i + 1) {
     [val, rnd] = rnd.nextInt(3, 5);
-    results.putAt(val, system.safeIndex(results, val) + 1);
+    results.put(val, system.safeIndex(results, val) + 1);
   }
   for (let i = 0; i <= 6; i = i + 1) {
     let r = system.safeIndex(results, i);
@@ -570,7 +570,7 @@ main
   variable dice set to 0
   for i from 1 to 10000 step 1
     set dice, rnd to rollDice(rnd)
-    call results.putAt(dice, results[dice] + 1)
+    call results.put(dice, results[dice] + 1)
   end for
   for i from 0 to 6 step 1
     variable r set to results[i]
@@ -591,7 +591,7 @@ async function main() {
   let dice = 0;
   for (let i = 1; i <= 10000; i = i + 1) {
     [dice, rnd] = (await global.rollDice(rnd));
-    results.putAt(dice, system.safeIndex(results, dice) + 1);
+    results.put(dice, system.safeIndex(results, dice) + 1);
   }
   for (let i = 0; i <= 6; i = i + 1) {
     let r = system.safeIndex(results, i);

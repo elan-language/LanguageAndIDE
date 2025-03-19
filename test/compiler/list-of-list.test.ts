@@ -71,8 +71,8 @@ return [main, _tests];}`;
 
 main
   variable a set to [[""],[""],[""]]
-  call a.putAt(0, ["bar", "foo"])
-  call a.putAt(2, ["yon", "xan"])
+  call a.put(0, ["bar", "foo"])
+  call a.put(2, ["yon", "xan"])
   print a[0][1]
   print a[2][0]
 end main`;
@@ -81,8 +81,8 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.literalList([system.literalList([""]), system.literalList([""]), system.literalList([""])]);
-  a.putAt(0, system.literalList(["bar", "foo"]));
-  a.putAt(2, system.literalList(["yon", "xan"]));
+  a.put(0, system.literalList(["bar", "foo"]));
+  a.put(2, system.literalList(["yon", "xan"]));
   await system.printLine(system.safeIndex(system.safeIndex(a, 0), 1));
   await system.printLine(system.safeIndex(system.safeIndex(a, 2), 0));
 }
@@ -102,8 +102,8 @@ return [main, _tests];}`;
 
 main
   variable a set to [["",""],["",""],["",""]]
-  call a.putAt(0, ["bar", "foo"])
-  call a[0].putAt(1, "yon")
+  call a.put(0, ["bar", "foo"])
+  call a[0].put(1, "yon")
   print a[0][1]
 end main`;
 
@@ -111,8 +111,8 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.literalList([system.literalList(["", ""]), system.literalList(["", ""]), system.literalList(["", ""])]);
-  a.putAt(0, system.literalList(["bar", "foo"]));
-  system.safeIndex(a, 0).putAt(1, "yon");
+  a.put(0, system.literalList(["bar", "foo"]));
+  system.safeIndex(a, 0).put(1, "yon");
   await system.printLine(system.safeIndex(system.safeIndex(a, 0), 1));
 }
 return [main, _tests];}`;
@@ -191,8 +191,8 @@ return [main, _tests];}`;
 
 main
   variable a set to [["one"], ["two"], ["three"]]
-  call a.insertAt(1, ["foo"])
-  call a.insertAt(3, ["yon"])
+  call a.insert(1, ["foo"])
+  call a.insert(3, ["yon"])
   print a
 end main`;
 
@@ -200,8 +200,8 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.literalList([system.literalList(["one"]), system.literalList(["two"]), system.literalList(["three"])]);
-  a.insertAt(1, system.literalList(["foo"]));
-  a.insertAt(3, system.literalList(["yon"]));
+  a.insert(1, system.literalList(["foo"]));
+  a.insert(3, system.literalList(["yon"]));
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -220,8 +220,8 @@ return [main, _tests];}`;
 
 main
   variable a set to [["one"], ["two"], ["three"]]
-  call a[0].insertAt(0, "foo")
-  call a[2].insertAt(1, "yon")
+  call a[0].insert(0, "foo")
+  call a[2].insert(1, "yon")
   print a
 end main`;
 
@@ -229,8 +229,8 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.literalList([system.literalList(["one"]), system.literalList(["two"]), system.literalList(["three"])]);
-  system.safeIndex(a, 0).insertAt(0, "foo");
-  system.safeIndex(a, 2).insertAt(1, "yon");
+  system.safeIndex(a, 0).insert(0, "foo");
+  system.safeIndex(a, 2).insert(1, "yon");
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -529,7 +529,7 @@ return [main, _tests];}`;
 
 main
   variable a set to empty List<of List<of Int>>
-  call a[0].putAt(0, 3)
+  call a[0].put(0, 3)
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -561,7 +561,7 @@ end main
 
 main
   variable a set to createList(3, "")
-  call a.putAt(0, 0, "foo")
+  call a.put(0, 0, "foo")
 end main
 `;
 
@@ -593,7 +593,7 @@ end main
 
 main
   variable a set to createList(3, empty List<of String>)
-  call a.putAt(0, "foo")
+  call a.put(0, "foo")
 end main
 `;
 
@@ -611,7 +611,7 @@ end main
 
 main
   variable a set to [[""],[""]]
-  call a.putAt(0, empty List<of String>)
+  call a.put(0, empty List<of String>)
   variable b set to a[0][0]
 end main
 `;
@@ -629,7 +629,7 @@ end main
 
 main
   variable a set to createList(3, empty List<of String>)
-  call a.putAt(0, true)
+  call a.put(0, true)
 end main
 `;
 
@@ -665,7 +665,7 @@ end main
 
 main
   variable a set to [[1,2],[3,4]]
-  call a["b"].putAt(0, 5)
+  call a["b"].put(0, 5)
 end main
 `;
 
@@ -681,7 +681,7 @@ end main
 
 main
   variable a set to [[1,2],[3,4]]
-  call a[0].putAt("b", 5)
+  call a[0].put("b", 5)
 end main
 `;
 

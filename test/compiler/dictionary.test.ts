@@ -229,8 +229,8 @@ return [main, _tests];}`;
 
 main
   variable a set to ["a":1, "b":3, "z":10]
-  call a.putAtKey("b", 4)
-  call a.putAtKey("d", 2)
+  call a.put("b", 4)
+  call a.put("d", 2)
   print a
 end main`;
 
@@ -238,8 +238,8 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
-  a.putAtKey("b", 4);
-  a.putAtKey("d", 2);
+  a.put("b", 4);
+  a.put("d", 2);
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -258,8 +258,8 @@ return [main, _tests];}`;
 
 main
   variable a set to ["a":["a":1], "b":["b":3, "z":10]]
-  call a.putAtKey("b", ["c":4])
-  call a["a"].putAtKey("x", 2)
+  call a.put("b", ["c":4])
+  call a["a"].put("x", 2)
   print a
 end main`;
 
@@ -267,8 +267,8 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.dictionary([["a", system.dictionary([["a", 1]])], ["b", system.dictionary([["b", 3], ["z", 10]])]]);
-  a.putAtKey("b", system.dictionary([["c", 4]]));
-  system.safeIndex(a, "a").putAtKey("x", 2);
+  a.put("b", system.dictionary([["c", 4]]));
+  system.safeIndex(a, "a").put("x", 2);
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -287,7 +287,7 @@ return [main, _tests];}`;
 
 main
   variable a set to ["a":1, "b":3, "z":10]
-  call a.removeAtKey("b")
+  call a.removeAt("b")
   print a
 end main`;
 
@@ -295,7 +295,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
-  a.removeAtKey("b");
+  a.removeAt("b");
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -314,7 +314,7 @@ return [main, _tests];}`;
 
 main
   variable a set to ["a":["a":1], "b":["b":3, "z":10]]
-  call a["b"].removeAtKey("b")
+  call a["b"].removeAt("b")
   print a
 end main`;
 
@@ -322,7 +322,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.dictionary([["a", system.dictionary([["a", 1]])], ["b", system.dictionary([["b", 3], ["z", 10]])]]);
-  system.safeIndex(a, "b").removeAtKey("b");
+  system.safeIndex(a, "b").removeAt("b");
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -341,7 +341,7 @@ return [main, _tests];}`;
 
 main
   variable a set to ["a":1, "b":3, "z":10]
-  call a.removeAtKey("c")
+  call a.removeAt("c")
   print a
 end main`;
 
@@ -349,7 +349,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
-  a.removeAtKey("c");
+  a.removeAt("c");
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -368,8 +368,8 @@ return [main, _tests];}`;
 
 main
   variable a set to new Dictionary<of String, Int>()
-  call a.putAtKey("Foo", 1)
-  call a.putAtKey("Bar", 3)
+  call a.put("Foo", 1)
+  call a.put("Bar", 3)
   variable k set to a.keys()
   print k.length()
   print a["Foo"]
@@ -380,8 +380,8 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.initialise(await new _stdlib.Dictionary()._initialise());
-  a.putAtKey("Foo", 1);
-  a.putAtKey("Bar", 3);
+  a.put("Foo", 1);
+  a.put("Bar", 3);
   let k = a.keys();
   await system.printLine(k.length());
   await system.printLine(system.safeIndex(a, "Foo"));
@@ -403,9 +403,9 @@ return [main, _tests];}`;
 
 main
   variable a set to new Dictionary<of String, Dictionary<of String, Int>>()
-  call a.putAtKey("Foo", ["ff":1])
-  call a.putAtKey("Bar", new Dictionary<of String, Int>())
-  call a["Bar"].putAtKey("bb", 3)
+  call a.put("Foo", ["ff":1])
+  call a.put("Bar", new Dictionary<of String, Int>())
+  call a["Bar"].put("bb", 3)
   variable k set to a.keys()
   print k.length()
   print a["Foo"]
@@ -416,9 +416,9 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.initialise(await new _stdlib.Dictionary()._initialise());
-  a.putAtKey("Foo", system.dictionary([["ff", 1]]));
-  a.putAtKey("Bar", system.initialise(await new _stdlib.Dictionary()._initialise()));
-  system.safeIndex(a, "Bar").putAtKey("bb", 3);
+  a.put("Foo", system.dictionary([["ff", 1]]));
+  a.put("Bar", system.initialise(await new _stdlib.Dictionary()._initialise()));
+  system.safeIndex(a, "Bar").put("bb", 3);
   let k = a.keys();
   await system.printLine(k.length());
   await system.printLine(system.safeIndex(a, "Foo"));
@@ -442,8 +442,8 @@ return [main, _tests];}`;
 
 main
   variable a set to new Dictionary<of Fruit, Int>()
-  call a.putAtKey(Fruit.apple, 1)
-  call a.putAtKey(Fruit.orange, 3)
+  call a.put(Fruit.apple, 1)
+  call a.put(Fruit.orange, 3)
   variable k set to a.keys()
   print k.length()
   print a[Fruit.apple]
@@ -458,8 +458,8 @@ const Fruit = {
 const global = new class {};
 async function main() {
   let a = system.initialise(await new _stdlib.Dictionary()._initialise());
-  a.putAtKey(Fruit.apple, 1);
-  a.putAtKey(Fruit.orange, 3);
+  a.put(Fruit.apple, 1);
+  a.put(Fruit.orange, 3);
   let k = a.keys();
   await system.printLine(k.length());
   await system.printLine(system.safeIndex(a, Fruit.apple));
@@ -485,8 +485,8 @@ main
   let r2 be new Point() with x set to 2, y set to 1
   let r3 be new Point() with x set to 1, y set to 2
 
-  call a.putAtKey(r1, 1)
-  call a.putAtKey(r2, 2)
+  call a.put(r1, 1)
+  call a.put(r2, 2)
   
   print a[r1]
   print a[r2]
@@ -505,8 +505,8 @@ async function main() {
   const r1 = await (async () => {const _a = {...system.initialise(await new Point()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Point()._initialise()))); _a.x = 1; _a.y = 2; return _a;})();
   const r2 = await (async () => {const _a = {...system.initialise(await new Point()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Point()._initialise()))); _a.x = 2; _a.y = 1; return _a;})();
   const r3 = await (async () => {const _a = {...system.initialise(await new Point()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Point()._initialise()))); _a.x = 1; _a.y = 2; return _a;})();
-  a.putAtKey(r1, 1);
-  a.putAtKey(r2, 2);
+  a.put(r1, 1);
+  a.put(r2, 2);
   await system.printLine(system.safeIndex(a, r1));
   await system.printLine(system.safeIndex(a, r2));
   await system.printLine(system.safeIndex(a, r3));
@@ -539,13 +539,13 @@ main
   let r1 be new Point() with x set to 1, y set to 2
   let r2 be new Point() with x set to 1, y set to 2
 
-  call a.putAtKey(r1, 1)
-  call a.putAtKey(r2, 2)
+  call a.put(r1, 1)
+  call a.put(r2, 2)
   
   print a[r1]
   print a.keys().length()
 
-  call a.removeAtKey(r1)
+  call a.removeAt(r1)
 
   print a.keys().length()
 end main
@@ -561,11 +561,11 @@ async function main() {
   let a = system.initialise(await new _stdlib.Dictionary()._initialise());
   const r1 = await (async () => {const _a = {...system.initialise(await new Point()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Point()._initialise()))); _a.x = 1; _a.y = 2; return _a;})();
   const r2 = await (async () => {const _a = {...system.initialise(await new Point()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Point()._initialise()))); _a.x = 1; _a.y = 2; return _a;})();
-  a.putAtKey(r1, 1);
-  a.putAtKey(r2, 2);
+  a.put(r1, 1);
+  a.put(r2, 2);
   await system.printLine(system.safeIndex(a, r1));
   await system.printLine(a.keys().length());
-  a.removeAtKey(r1);
+  a.removeAt(r1);
   await system.printLine(a.keys().length());
 }
 
@@ -594,7 +594,7 @@ return [main, _tests];}`;
 main
   variable a set to empty Dictionary<of String, Int>
   variable b set to empty Dictionary<of String, Int>
-  call a.putAtKey("a", 3)
+  call a.put("a", 3)
   print a
   print b
   print a is b
@@ -607,7 +607,7 @@ const global = new class {};
 async function main() {
   let a = system.initialise(_stdlib.Dictionary.emptyInstance());
   let b = system.initialise(_stdlib.Dictionary.emptyInstance());
-  a.putAtKey("a", 3);
+  a.put("a", 3);
   await system.printLine(a);
   await system.printLine(b);
   await system.printLine(system.objectEquals(a, b));
@@ -631,7 +631,7 @@ return [main, _tests];}`;
 main
   variable a set to empty Dictionary<of String, Dictionary<of String, Int>>
   variable b set to empty Dictionary<of String, Dictionary<of String, Int>>
-  call a.putAtKey("a", ["a":1])
+  call a.put("a", ["a":1])
   print a
   print b
   print a is b
@@ -644,7 +644,7 @@ const global = new class {};
 async function main() {
   let a = system.initialise(_stdlib.Dictionary.emptyInstance());
   let b = system.initialise(_stdlib.Dictionary.emptyInstance());
-  a.putAtKey("a", system.dictionary([["a", 1]]));
+  a.put("a", system.dictionary([["a", 1]]));
   await system.printLine(a);
   await system.printLine(b);
   await system.printLine(system.objectEquals(a, b));
@@ -731,7 +731,7 @@ end main
 
 main
   variable a set to ["a":1, "b":3, "z":10]
-  call a.removeAtKey(10)
+  call a.removeAt(10)
 end main
 `;
 
@@ -747,7 +747,7 @@ end main
 
 main
   variable a set to ["a":1, "b":3, "z":10]
-  call a.putAtKey(10, 4)
+  call a.put(10, 4)
 end main
 `;
 
@@ -760,13 +760,13 @@ end main
     ]);
   });
 
-  test("Pass_withPutAtKey", async () => {
+  test("Pass_withPutAt", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
   let a be ["a":1, "b":3, "z":10]
-  variable b set to a.withPutAtKey("b", 4)
-  variable c set to b.withPutAtKey("d", 2)
+  variable b set to a.withPut("b", 4)
+  variable c set to b.withPut("d", 2)
   print a
   print c
 end main`;
@@ -775,8 +775,8 @@ end main`;
 const global = new class {};
 async function main() {
   const a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
-  let b = a.withPutAtKey("b", 4);
-  let c = b.withPutAtKey("d", 2);
+  let b = a.withPut("b", 4);
+  let c = b.withPut("d", 2);
   await system.printLine(a);
   await system.printLine(c);
 }
@@ -791,12 +791,12 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[a:1, b:3, z:10][a:1, b:4, z:10, d:2]");
   });
 
-  test("Pass_withRemoveAtKey", async () => {
+  test("Pass_withRemoveAt", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
   let a be ["a":1, "b":3, "z":10]
-  variable b set to a.withRemoveAtKey("b")
+  variable b set to a.withRemoveAt("b")
   print a
   print b
 end main`;
@@ -805,7 +805,7 @@ end main`;
 const global = new class {};
 async function main() {
   const a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
-  let b = a.withRemoveAtKey("b");
+  let b = a.withRemoveAt("b");
   await system.printLine(a);
   await system.printLine(b);
 }
@@ -825,7 +825,7 @@ return [main, _tests];}`;
 
 main
   variable a set to ["a":1, "b":3, "z":10]
-  call a.putAtKey("b", 3.1)
+  call a.put("b", 3.1)
 end main
 `;
 
@@ -858,7 +858,7 @@ end main`;
 
 main
   variable a set to ["a":1, "d":2]
-  call a.putAtKey(1, 1)
+  call a.put(1, 1)
 end main
 `;
 
@@ -876,7 +876,7 @@ end main
 
 main
   variable a set to ["a":["a":1, "d":2]]
-  call a[0].putAtKey("a", 1)
+  call a[0].put("a", 1)
 end main
 `;
 
@@ -892,7 +892,7 @@ end main
 
 main
   variable a set to ["a":["a":1, "d":2]]
-  call a["a"].putAtKey(1, 1)
+  call a["a"].put(1, 1)
 end main
 `;
 

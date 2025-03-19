@@ -22,7 +22,7 @@ procedure refresh(bubbles as List<of CircleVG>, out vg as VectorGraphics)
       set b2 to copy b2 with cx set to randomInt(0, 99), r set to 1, cy set to 75, stroke set to randomInt(0, maxColour)
     end if
     set vg to vg.replace(b, b2)
-    call bubbles.putAt(i, b2)
+    call bubbles.put(i, b2)
     call vg.display()
   end for
 end procedure

@@ -27,7 +27,7 @@ import {
   sortByHelper,
   withAppendHelper,
   withInsertAtHelper,
-  withPutAtHelper,
+  withPutAtHelper as withPutHelper,
   withRemoveAllHelper,
   withRemoveAtHelper,
   withRemoveFirstHelper,
@@ -67,12 +67,12 @@ export class List<T1> {
   }
 
   @elanProcedure(["index", "value"])
-  putAt(@elanIntType() index: number, @elanGenericParamT1Type() value: T1) {
+  put(@elanIntType() index: number, @elanGenericParamT1Type() value: T1) {
     this.system!.safeListSet(this.contents, index, value);
   }
 
   @elanProcedure(["index", "value"])
-  insertAt(@elanIntType() index: number, @elanGenericParamT1Type() value: T1) {
+  insert(@elanIntType() index: number, @elanGenericParamT1Type() value: T1) {
     this.contents.splice(index, 0, value);
   }
 
@@ -273,7 +273,7 @@ export class List<T1> {
   @elanFunction(["index", "value"], FunctionOptions.pure, ElanClass(List))
   withPut(@elanIntType() index: number, @elanGenericParamT1Type() value: T1): List<T1> {
     return this.system!.initialise(
-      new List(withPutAtHelper(this.contents as [], index, value as never)),
+      new List(withPutHelper(this.contents as [], index, value as never)),
     );
   }
 

@@ -384,7 +384,7 @@ end main
 
 main
   variable a set to "abcde"
-  call a.putAt(0, "b")
+  call a.put(0, "b")
   print a
 end main
 `;
@@ -394,7 +394,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'putAt' is not defined"]);
+    assertDoesNotCompile(fileImpl, ["'put' is not defined"]);
   });
 
   test("Fail_ComparisonOperators", async () => {

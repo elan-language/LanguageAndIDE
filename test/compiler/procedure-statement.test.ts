@@ -167,7 +167,7 @@ main
 end main
 
 procedure changeFirst(out a as List<of Int>)
-    call a.putAt(0, 5)
+    call a.put(0, 5)
 end procedure`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -181,7 +181,7 @@ async function main() {
 }
 
 async function changeFirst(a) {
-  a[0].putAt(0, 5);
+  a[0].put(0, 5);
 }
 global["changeFirst"] = changeFirst;
 return [main, _tests];}`;
