@@ -13,7 +13,7 @@ import {
 } from "../elan-type-annotations";
 import { System } from "../system";
 import { ElanArray } from "./elan-array";
-import { List } from "./list";
+import { ListImmutable } from "./list-immutable";
 
 @elanClass(ClassOption.concrete, [ElanT1], [], [], [], "Set")
 export class ElanSet<T1> {
@@ -70,7 +70,7 @@ export class ElanSet<T1> {
   }
 
   @elanFunction([], FunctionOptions.pure, ElanClass(ElanSet))
-  addFromList(@elanClassType(List) list: List<T1>): ElanSet<T1> {
+  addFromList(@elanClassType(ListImmutable) list: ListImmutable<T1>): ElanSet<T1> {
     const copy = this.copyOfThis();
     for (const item of list) {
       copy.contents.add(item as T1);
@@ -135,9 +135,9 @@ export class ElanSet<T1> {
     return this.system.initialise(new ElanArray(Array.from(this.contents)));
   }
 
-  @elanFunction([], FunctionOptions.pure, ElanClass(List))
-  asList(): List<T1> {
-    return this.system.initialise(new List(Array.from(this.contents)));
+  @elanFunction([], FunctionOptions.pure, ElanClass(ListImmutable))
+  asList(): ListImmutable<T1> {
+    return this.system.initialise(new ListImmutable(Array.from(this.contents)));
   }
 
   @elanFunction([], FunctionOptions.pureAsync, ElanString)

@@ -1,41 +1,41 @@
 import { ElanRuntimeError } from "../elan-runtime-error";
 import {
-    ClassOption,
-    ElanBoolean,
-    ElanClass,
-    elanClass,
-    ElanFloat,
-    elanFunction,
-    elanFuncType,
-    elanGenericParamT1Type,
-    elanGenericParamT2Type,
-    ElanInt,
-    elanIntType,
-    ElanT1,
-    ElanT2,
-    FunctionOptions,
+  ClassOption,
+  ElanBoolean,
+  ElanClass,
+  elanClass,
+  ElanFloat,
+  elanFunction,
+  elanFuncType,
+  elanGenericParamT1Type,
+  elanGenericParamT2Type,
+  ElanInt,
+  elanIntType,
+  ElanT1,
+  ElanT2,
+  FunctionOptions,
 } from "../elan-type-annotations";
 import { System } from "../system";
 import {
-    filterHelper,
-    mapHelper,
-    maxByHelper,
-    minByHelper,
-    reduceHelper,
-    sortByHelper,
-    withAppendHelper,
-    withInsertAtHelper,
-    withPutAtHelper,
-    withRemoveAllHelper,
-    withRemoveAtHelper,
-    withRemoveFirstHelper,
+  filterHelper,
+  mapHelper,
+  maxByHelper,
+  minByHelper,
+  reduceHelper,
+  sortByHelper,
+  withAppendHelper,
+  withInsertAtHelper,
+  withPutAtHelper,
+  withRemoveAllHelper,
+  withRemoveAtHelper,
+  withRemoveFirstHelper,
 } from "./data-structure-helpers";
 
 @elanClass(ClassOption.list, [ElanT1], [], [], [], "List")
-export class List<T1> {
+export class ListImmutable<T1> {
   // this must be implemented by hand on all stdlib classes
   static emptyInstance() {
-    return new List();
+    return new ListImmutable();
   }
 
   async _initialise() {
@@ -64,46 +64,50 @@ export class List<T1> {
     } as { next: () => { value: T1; done: boolean } };
   }
 
-  @elanFunction(["index", "value"], FunctionOptions.pure, ElanClass(List))
-  withAppend(@elanGenericParamT1Type() value: T1): List<T1> {
-    return this.system!.initialise(new List(withAppendHelper(this.contents as [], value as never)));
+  @elanFunction(["index", "value"], FunctionOptions.pure, ElanClass(ListImmutable))
+  withAppend(@elanGenericParamT1Type() value: T1): ListImmutable<T1> {
+    return this.system!.initialise(
+      new ListImmutable(withAppendHelper(this.contents as [], value as never)),
+    );
   }
 
-  @elanFunction(["index", "value"], FunctionOptions.pure, ElanClass(List))
-  withPrepend(@elanGenericParamT1Type() value: T1): List<T1> {
+  @elanFunction(["index", "value"], FunctionOptions.pure, ElanClass(ListImmutable))
+  withPrepend(@elanGenericParamT1Type() value: T1): ListImmutable<T1> {
     return this.withInsert(0, value);
   }
 
-  @elanFunction(["index", "value"], FunctionOptions.pure, ElanClass(List))
-  withPut(@elanIntType() index: number, @elanGenericParamT1Type() value: T1): List<T1> {
+  @elanFunction(["index", "value"], FunctionOptions.pure, ElanClass(ListImmutable))
+  withPut(@elanIntType() index: number, @elanGenericParamT1Type() value: T1): ListImmutable<T1> {
     return this.system!.initialise(
-      new List(withPutAtHelper(this.contents as [], index, value as never)),
+      new ListImmutable(withPutAtHelper(this.contents as [], index, value as never)),
     );
   }
 
-  @elanFunction(["index", "value"], FunctionOptions.pure, ElanClass(List))
-  withInsert(@elanIntType() index: number, @elanGenericParamT1Type() value: T1): List<T1> {
+  @elanFunction(["index", "value"], FunctionOptions.pure, ElanClass(ListImmutable))
+  withInsert(@elanIntType() index: number, @elanGenericParamT1Type() value: T1): ListImmutable<T1> {
     return this.system!.initialise(
-      new List(withInsertAtHelper(this.contents as [], index, value as never)),
+      new ListImmutable(withInsertAtHelper(this.contents as [], index, value as never)),
     );
   }
 
-  @elanFunction(["index"], FunctionOptions.pure, ElanClass(List))
-  withRemoveAt(@elanIntType() index: number): List<T1> {
-    return this.system!.initialise(new List(withRemoveAtHelper(this.contents as [], index)));
-  }
-
-  @elanFunction(["value"], FunctionOptions.pure, ElanClass(List))
-  withRemoveFirst(@elanGenericParamT1Type() value: T1): List<T1> {
+  @elanFunction(["index"], FunctionOptions.pure, ElanClass(ListImmutable))
+  withRemoveAt(@elanIntType() index: number): ListImmutable<T1> {
     return this.system!.initialise(
-      new List(withRemoveFirstHelper(this.contents as [], value as never, this.system!)),
+      new ListImmutable(withRemoveAtHelper(this.contents as [], index)),
     );
   }
 
-  @elanFunction(["value"], FunctionOptions.pure, ElanClass(List))
-  withRemoveAll(@elanGenericParamT1Type() value: T1): List<T1> {
+  @elanFunction(["value"], FunctionOptions.pure, ElanClass(ListImmutable))
+  withRemoveFirst(@elanGenericParamT1Type() value: T1): ListImmutable<T1> {
     return this.system!.initialise(
-      new List(withRemoveAllHelper(this.contents as [], value as never, this.system!)),
+      new ListImmutable(withRemoveFirstHelper(this.contents as [], value as never, this.system!)),
+    );
+  }
+
+  @elanFunction(["value"], FunctionOptions.pure, ElanClass(ListImmutable))
+  withRemoveAll(@elanGenericParamT1Type() value: T1): ListImmutable<T1> {
+    return this.system!.initialise(
+      new ListImmutable(withRemoveAllHelper(this.contents as [], value as never, this.system!)),
     );
   }
 
@@ -125,23 +129,27 @@ export class List<T1> {
     return this.indexOfItem(item) !== -1;
   }
 
-  @elanFunction(["lambdaOrFunctionRef"], FunctionOptions.pureAsync, ElanClass(List))
+  @elanFunction(["lambdaOrFunctionRef"], FunctionOptions.pureAsync, ElanClass(ListImmutable))
   async filter(
     @elanFuncType([ElanT1], ElanBoolean)
     predicate: (value: T1) => Promise<boolean>,
-  ): Promise<List<T1>> {
+  ): Promise<ListImmutable<T1>> {
     return this.system!.initialise(
-      new List(await filterHelper(this.contents as never[], predicate)),
+      new ListImmutable(await filterHelper(this.contents as never[], predicate)),
     );
   }
 
-  @elanFunction(["lambdaOrFunctionRef"], FunctionOptions.pureAsync, ElanClass(List, [ElanT2]))
+  @elanFunction(
+    ["lambdaOrFunctionRef"],
+    FunctionOptions.pureAsync,
+    ElanClass(ListImmutable, [ElanT2]),
+  )
   async map<T2>(
     @elanFuncType([ElanT1], ElanT2)
     predicate: (value: T1) => Promise<T2>,
-  ): Promise<List<T2>> {
+  ): Promise<ListImmutable<T2>> {
     return this.system!.initialise(
-      new List<T2>(
+      new ListImmutable<T2>(
         await mapHelper(
           this.contents as never[],
           predicate as unknown as (value: never) => Promise<never>,
@@ -187,13 +195,13 @@ export class List<T1> {
     );
   }
 
-  @elanFunction(["lambdaOrFunctionRef"], FunctionOptions.pureAsync, ElanClass(List))
+  @elanFunction(["lambdaOrFunctionRef"], FunctionOptions.pureAsync, ElanClass(ListImmutable))
   async sortBy(
     @elanFuncType([ElanT1, ElanT1], ElanInt)
     predicate: (a: T1, b: T1) => Promise<number>,
-  ): Promise<List<T1>> {
+  ): Promise<ListImmutable<T1>> {
     return sortByHelper(this.contents as never[], predicate, this.system!) as unknown as Promise<
-      List<T1>
+      ListImmutable<T1>
     >;
   }
 
@@ -230,16 +238,16 @@ export class List<T1> {
       throw new ElanRuntimeError(`Out of range index`);
     }
 
-    return this.system?.initialise(new List(r));
+    return this.system?.initialise(new ListImmutable(r));
   }
 
-  deconstructList(): [T1, List<T1>] {
+  deconstructList(): [T1, ListImmutable<T1>] {
     const [hd, ...tl] = this.contents;
-    return [hd, this.system!.initialise(new List(tl))];
+    return [hd, this.system!.initialise(new ListImmutable(tl))];
   }
 
   equals(other: unknown) {
-    if (other instanceof List) {
+    if (other instanceof ListImmutable) {
       if (this.contents.length === other.contents.length) {
         return this.contents.every((c, i) => this.system?.equals(c, other.contents[i]));
       }

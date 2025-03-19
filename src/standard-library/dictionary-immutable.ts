@@ -11,7 +11,7 @@ import {
   FunctionOptions,
 } from "../elan-type-annotations";
 import { System } from "../system";
-import { List } from "./list";
+import { ListImmutable } from "./list-immutable";
 
 @elanClass(ClassOption.dictionaryImmutable, [ElanT1, ElanT2])
 export class DictionaryImmutable<T1, T2> {
@@ -58,16 +58,16 @@ export class DictionaryImmutable<T1, T2> {
     return this.system!.initialise(new DictionaryImmutable<T1, T2>([...newDict.entries()]));
   }
 
-  @elanFunction([], FunctionOptions.pure, ElanClass(List))
-  keys(): List<T1> {
+  @elanFunction([], FunctionOptions.pure, ElanClass(ListImmutable))
+  keys(): ListImmutable<T1> {
     const lst = [...this.contents.keys()];
-    return this.system!.initialise(new List<T1>(lst));
+    return this.system!.initialise(new ListImmutable<T1>(lst));
   }
 
-  @elanFunction([], FunctionOptions.pure, ElanClass(List))
-  values(): List<T2> {
+  @elanFunction([], FunctionOptions.pure, ElanClass(ListImmutable))
+  values(): ListImmutable<T2> {
     const lst = [...this.contents.values()];
-    return this.system!.initialise(new List<T2>(lst));
+    return this.system!.initialise(new ListImmutable<T2>(lst));
   }
 
   @elanFunction(["key"], FunctionOptions.pure, ElanBoolean)
