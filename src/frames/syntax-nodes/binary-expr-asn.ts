@@ -12,7 +12,7 @@ import { BooleanType } from "../symbols/boolean-type";
 import { FloatType } from "../symbols/float-type";
 import { IntType } from "../symbols/int-type";
 import { StringType } from "../symbols/string-type";
-import { isListType, isValueType, mostPreciseSymbol } from "../symbols/symbol-helpers";
+import { isListImmutableType, isValueType, mostPreciseSymbol } from "../symbols/symbol-helpers";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { mapOperationSymbol } from "./ast-helpers";
 import { OperationSymbol } from "./operation-symbol";
@@ -131,12 +131,12 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
     const lst = this.lhs.symbolType();
     const rst = this.rhs.symbolType();
 
-    if (this.op === OperationSymbol.Add && (isListType(lst) || isListType(rst))) {
-      if (isListType(lst) && isListType(rst)) {
+    if (this.op === OperationSymbol.Add && (isListImmutableType(lst) || isListImmutableType(rst))) {
+      if (isListImmutableType(lst) && isListImmutableType(rst)) {
         mustBeAssignableType(lst, rst, this.compileErrors, this.fieldId);
-      } else if (isListType(lst)) {
+      } else if (isListImmutableType(lst)) {
         mustBeAssignableType(lst.ofTypes[0], rst, this.compileErrors, this.fieldId);
-      } else if (isListType(rst)) {
+      } else if (isListImmutableType(rst)) {
         mustBeAssignableType(lst, rst.ofTypes[0], this.compileErrors, this.fieldId);
       }
       return `system.concat(${lhsCode}, ${rhsCode})`;
