@@ -37,7 +37,7 @@ export class LiteralListAsn extends AbstractAstNode implements AstCollectionNode
     mustBeImmutableGenericType(this.symbolType(), ofType, this.compileErrors, this.fieldId);
 
     const it = this.items.map((p) => p.compile()).join(", ");
-    return `system.list([${it}])`;
+    return `system.listImmutable([${it}])`;
   }
 
   symbolType() {

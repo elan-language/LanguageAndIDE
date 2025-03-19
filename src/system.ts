@@ -52,7 +52,7 @@ export class System {
     return t;
   }
 
-  list(t: Array<any>) {
+  listImmutable(t: Array<any>) {
     return this.initialise(new ListImmutable(t));
   }
 

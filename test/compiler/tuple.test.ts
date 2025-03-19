@@ -131,7 +131,7 @@ constant a set to {tuple(1,2)}`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
-  a = system.list([system.tuple([1, 2])]);
+  a = system.listImmutable([system.tuple([1, 2])]);
 
 };
 async function main() {

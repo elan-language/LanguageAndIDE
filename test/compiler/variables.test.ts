@@ -242,12 +242,12 @@ end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
-  a = system.list([1, 2]);
+  a = system.listImmutable([1, 2]);
 
 };
 async function main() {
   let b = (await global.a.map(async (x) => x));
-  b = system.list([1, 2]);
+  b = system.listImmutable([1, 2]);
   await system.printLine(b);
 }
 return [main, _tests];}`;

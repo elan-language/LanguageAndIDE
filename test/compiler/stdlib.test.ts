@@ -29,7 +29,7 @@ end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
-  lst = system.list([1, 2]);
+  lst = system.listImmutable([1, 2]);
 
 };
 async function main() {
@@ -885,7 +885,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const words = system.list(["Now", "is", "the", "time..."]);
+  const words = system.listImmutable(["Now", "is", "the", "time..."]);
   const s = _stdlib.join(words, ".");
   await system.printLine(s);
 }
@@ -1004,7 +1004,7 @@ end main`;
 const global = new class {};
 async function main() {
   const a = system.literalArray([1, 3, 5, 7, 9]);
-  const b = system.list([2, 4, 6, 8]);
+  const b = system.listImmutable([2, 4, 6, 8]);
   const c = "Hello World!";
   await system.printLine(a.indexOfItem(9));
   await system.printLine(a.indexOfItem(5));

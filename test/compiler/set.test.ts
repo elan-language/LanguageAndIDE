@@ -240,9 +240,9 @@ end main`;
 const global = new class {};
 async function main() {
   const st0 = system.initialise(await new _stdlib.Set()._initialise());
-  const st1 = st0.addFromListImmutable(system.list([2, 4, 6, 3]));
+  const st1 = st0.addFromListImmutable(system.listImmutable([2, 4, 6, 3]));
   await system.printLine(st1);
-  const st2 = st1.addFromListImmutable(system.list([2, 5, 6]));
+  const st2 = st1.addFromListImmutable(system.listImmutable([2, 5, 6]));
   await system.printLine(st2);
 }
 return [main, _tests];}`;

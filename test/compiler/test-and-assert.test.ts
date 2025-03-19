@@ -601,8 +601,8 @@ async function main() {
 }
 
 _tests.push(["test3", async (_outcomes) => {
-  let a = system.list([3, 2, 4, 0]);
-  let b = system.list([3, 2, 4, 0]);
+  let a = system.listImmutable([3, 2, 4, 0]);
+  let b = system.listImmutable([3, 2, 4, 0]);
   _outcomes.push(await system.assert(async () => a, b, "assert12", _stdlib, false));
 }]);
 

@@ -67,7 +67,7 @@ class Game {
   async _initialise() {
     this.p2 = system.initialise(await new Player()._initialise("Chloe"));
     this.p1 = system.initialise(await new Player()._initialise("Joe"));
-    this.previousScores = system.list([5, 2, 4]);
+    this.previousScores = system.listImmutable([5, 2, 4]);
     return this;
   }
 

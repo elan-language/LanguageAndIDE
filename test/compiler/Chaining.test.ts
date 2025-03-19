@@ -23,7 +23,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.list([system.list([1, 2]), system.list([3, 4])]);
+  let a = system.listImmutable([system.listImmutable([1, 2]), system.listImmutable([3, 4])]);
   let b = system.safeIndex(system.safeIndex(a, 1), 1);
   await system.printLine(b);
 }
@@ -94,7 +94,7 @@ class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["a", system.initialise(_stdlib.List.emptyInstance())]]);};
 
   async _initialise() {
-    this.a = system.list([1]);
+    this.a = system.listImmutable([1]);
     return this;
   }
 
@@ -611,7 +611,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.list([1, 2, 3, 4, 5, 6]);
+  let a = system.listImmutable([1, 2, 3, 4, 5, 6]);
   await system.printLine((await (await (await a.filter(async (x) => x > 2)).map(async (x) => x * x)).reduce(0, async (s, x) => s + x)));
 }
 return [main, _tests];}`;

@@ -49,7 +49,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.literalArray([system.list([4]), system.list([5])]);
+  let a = system.literalArray([system.listImmutable([4]), system.listImmutable([5])]);
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -468,7 +468,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.listImmutableAsArray(system.list(["foo", "bar", "yon"]));
+  let a = _stdlib.listImmutableAsArray(system.listImmutable(["foo", "bar", "yon"]));
   await system.printLine(a.length());
 }
 return [main, _tests];}`;

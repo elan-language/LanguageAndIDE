@@ -279,7 +279,7 @@ end main
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.list([1, 2, 3]);
+  let a = system.listImmutable([1, 2, 3]);
   const [x, y] = system.deconstructList(a);
   await system.printLine(x);
   await system.printLine(y);
@@ -308,7 +308,7 @@ end main
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.list([1, 2, 3]);
+  let a = system.listImmutable([1, 2, 3]);
   const [x, ] = system.deconstructList(a);
   await system.printLine(x);
 }
@@ -336,7 +336,7 @@ end main
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.list([1, 2, 3]);
+  let a = system.listImmutable([1, 2, 3]);
   const [, y] = system.deconstructList(a);
   await system.printLine(y);
 }
@@ -425,7 +425,7 @@ end main
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.list([1, 2, 3]);
+  let a = system.listImmutable([1, 2, 3]);
   let [x, y] = system.deconstructList(a);
   await system.printLine(x);
   await system.printLine(y);
@@ -457,7 +457,7 @@ end main
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.list([1, 2, 3]);
+  let a = system.listImmutable([1, 2, 3]);
   let x = 1;
   let y = system.initialise(_stdlib.List.emptyInstance());
   [x, y] = system.deconstructList(a);
@@ -489,7 +489,7 @@ end main
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.list([1, 2, 3]);
+  let a = system.listImmutable([1, 2, 3]);
   let [x, y] = system.deconstructList(a);
   x = x;
   y = y;
