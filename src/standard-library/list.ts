@@ -26,6 +26,7 @@ import {
   reduceHelper,
   sortByHelper,
   withAppendHelper,
+  withAppendListHelper,
   withInsertAtHelper,
   withPutAtHelper as withPutHelper,
   withRemoveAllHelper,
@@ -265,9 +266,21 @@ export class List<T1> {
     return this.system!.initialise(new List(withAppendHelper(this.contents as [], value as never)));
   }
 
+  @elanFunction(["toAppend"], FunctionOptions.pure, ElanClass(List))
+  withAppendList(@elanClassType(List) toAppend: List<T1>): List<T1> {
+    return this.system!.initialise(
+      new List(withAppendListHelper(this.contents as never[], toAppend as unknown as never[])),
+    );
+  }
+
   @elanFunction(["index", "value"], FunctionOptions.pure, ElanClass(List))
   withPrepend(@elanGenericParamT1Type() value: T1): List<T1> {
     return this.withInsert(0, value);
+  }
+
+  @elanFunction(["toPrepend"], FunctionOptions.pure, ElanClass(List))
+  withPrependList(@elanClassType(List) toPrepend: List<T1>): List<T1> {
+    return toPrepend.withAppendList(this);
   }
 
   @elanFunction(["index", "value"], FunctionOptions.pure, ElanClass(List))
