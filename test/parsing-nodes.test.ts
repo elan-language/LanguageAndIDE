@@ -110,9 +110,9 @@ suite("Parsing Nodes", () => {
     );
     testNodeParse(
       new ExprNode(),
-      "reduce(0.0, lambda s as String, p as List<of String> => s + p[0] * p[0])",
+      "reduce(0.0, lambda s as String, p as ListImmutable<of String> => s + p[0] * p[0])",
       ParseStatus.valid,
-      "reduce(0.0, lambda s as String, p as List<of String> => s + p[0] * p[0])",
+      "reduce(0.0, lambda s as String, p as ListImmutable<of String> => s + p[0] * p[0])",
       "",
       "",
     );
@@ -146,12 +146,12 @@ suite("Parsing Nodes", () => {
     );
     testNodeParse(
       new ExprNode(),
-      "empty List<of Int>",
+      "empty ListImmutable<of Int>",
       ParseStatus.valid,
-      "empty List<of Int>",
+      "empty ListImmutable<of Int>",
       "",
       "",
-      "<el-kw>empty</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;",
+      "<el-kw>empty</el-kw> <el-type>ListImmutable</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;",
     );
     testNodeParse(
       new ExprNode(),
@@ -811,12 +811,12 @@ suite("Parsing Nodes", () => {
     );
     testNodeParse(
       new TypeSimpleOrGeneric(),
-      `Foo<of List<of Bar>>`,
+      `Foo<of ListImmutable<of Bar>>`,
       ParseStatus.valid,
-      "Foo<of List<of Bar>>",
+      "Foo<of ListImmutable<of Bar>>",
       "",
       "",
-      "<el-type>Foo</el-type>&lt;<el-kw>of</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Bar</el-type>&gt;&gt;",
+      "<el-type>Foo</el-type>&lt;<el-kw>of</el-kw> <el-type>ListImmutable</el-type>&lt;<el-kw>of</el-kw> <el-type>Bar</el-type>&gt;&gt;",
     );
     testNodeParse(
       new TypeSimpleOrGeneric(),
@@ -829,20 +829,20 @@ suite("Parsing Nodes", () => {
     );
     testNodeParse(
       new TypeSimpleOrGeneric(),
-      `List<of (Bar, Yon)>`,
+      `ListImmutable<of (Bar, Yon)>`,
       ParseStatus.valid,
-      "List<of (Bar, Yon)>",
+      "ListImmutable<of (Bar, Yon)>",
       "",
       "",
-      "<el-type>List</el-type>&lt;<el-kw>of</el-kw> (<el-type>Bar</el-type>, <el-type>Yon</el-type>)&gt;",
+      "<el-type>ListImmutable</el-type>&lt;<el-kw>of</el-kw> (<el-type>Bar</el-type>, <el-type>Yon</el-type>)&gt;",
     );
   });
   test("TypeNode", () => {
     testNodeParse(
       new TypeNode(),
-      `Foo<of List<of Bar>>`,
+      `Foo<of ListImmutable<of Bar>>`,
       ParseStatus.valid,
-      "Foo<of List<of Bar>>",
+      "Foo<of ListImmutable<of Bar>>",
       "",
       "",
     ); //Single
@@ -874,9 +874,9 @@ suite("Parsing Nodes", () => {
     );
     testNodeParse(
       new TypeNode(),
-      `Foo<of List<of (Bar, Qux)>>`,
+      `Foo<of ListImmutable<of (Bar, Qux)>>`,
       ParseStatus.valid,
-      "Foo<of List<of (Bar, Qux)>>",
+      "Foo<of ListImmutable<of (Bar, Qux)>>",
       "",
       "",
     );
@@ -986,7 +986,7 @@ suite("Parsing Nodes", () => {
     );
     testNodeParse(
       new Lambda(),
-      `lambda s as Int, p as List<of Int> => s + p[0]`,
+      `lambda s as Int, p as ListImmutable<of Int> => s + p[0]`,
       ParseStatus.valid,
       "",
       "",

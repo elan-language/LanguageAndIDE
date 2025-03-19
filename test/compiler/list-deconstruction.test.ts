@@ -447,7 +447,7 @@ return [main, _tests];}`;
 main
   variable a set to {1,2,3}
   variable x set to 1
-  variable y set to empty List<of Int>
+  variable y set to empty ListImmutable<of Int>
   set x:y to a
   print x
   print y
@@ -459,7 +459,7 @@ const global = new class {};
 async function main() {
   let a = system.list([1, 2, 3]);
   let x = 1;
-  let y = system.initialise(_stdlib.List.emptyInstance());
+  let y = system.initialise(_stdlib.ListImmutable.emptyInstance());
   [x, y] = system.deconstructList(a);
   await system.printLine(x);
   await system.printLine(y);
@@ -610,7 +610,7 @@ end main
 main
   variable a set to [1,2]
   variable x set to 0
-  variable y set to empty List<of Int>
+  variable y set to empty ListImmutable<of Int>
   set x:y to a
 end main
 `;
@@ -621,7 +621,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: List<of Int> Provided: Array<of Int>",
+      "Incompatible types. Expected: ListImmutable<of Int> Provided: Array<of Int>",
     ]);
   });
 
@@ -641,7 +641,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: List<of String> or Array<of String> Provided: Array<of Int>",
+      "Incompatible types. Expected: ListImmutable<of String> or Array<of String> Provided: Array<of Int>",
     ]);
   });
 

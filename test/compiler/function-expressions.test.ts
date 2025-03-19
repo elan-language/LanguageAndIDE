@@ -205,7 +205,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: List<of Float> Provided: String",
+      "Incompatible types. Expected: ListImmutable<of Float> Provided: String",
     ]);
   });
 

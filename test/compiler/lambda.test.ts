@@ -439,7 +439,7 @@ end procedure`;
   test("Fail_LambdaWithListOfMutableType1", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
-procedure printModified(i as Int, f as Func<of => List<of Array<of Int>>>)
+procedure printModified(i as Int, f as Func<of => ListImmutable<of Array<of Int>>>)
   
 end procedure`;
 
@@ -447,13 +447,13 @@ end procedure`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["List cannot be of mutable type 'Array<of Int>'"]);
+    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'Array<of Int>'"]);
   });
 
   test("Fail_LambdaWithListOfMutableType2", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
-procedure printModified(i as Int, f as Func<of List<of Array<of Int>> => Int>)
+procedure printModified(i as Int, f as Func<of ListImmutable<of Array<of Int>> => Int>)
   
 end procedure`;
 
@@ -461,6 +461,6 @@ end procedure`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["List cannot be of mutable type 'Array<of Int>'"]);
+    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'Array<of Int>'"]);
   });
 });

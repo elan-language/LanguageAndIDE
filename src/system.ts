@@ -29,7 +29,7 @@ export class System {
   }
 
   // constant immutables
-  emptyImmutableListSingleton = this.initialise(new List([]));
+  emptyImmutableListSingleton = this.initialise(new ListImmutable([]));
   emptyDictionaryImmutableSingleton = this.dictionaryImmutable([]);
 
   emptyRegExpSingleton = /(?:)/;

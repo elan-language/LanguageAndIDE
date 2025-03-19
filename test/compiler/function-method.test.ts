@@ -145,7 +145,7 @@ return [main, _tests];}`;
 
 main
   variable f set to new Foo()
-  variable x set to empty List<of Float>
+  variable x set to empty ListImmutable<of Float>
   set x to f.times(2)
   print x
 end main
@@ -157,7 +157,7 @@ class Foo
 
     property p1 as Float
 
-    function times(value as Float) returns List<of Float>
+    function times(value as Float) returns ListImmutable<of Float>
         return {property.p1 * value}
     end function
 
@@ -171,7 +171,7 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(await new Foo()._initialise());
-  let x = system.initialise(_stdlib.List.emptyInstance());
+  let x = system.initialise(_stdlib.ListImmutable.emptyInstance());
   x = (await f.times(2));
   await system.printLine(x);
 }
@@ -222,8 +222,8 @@ class Bar
 
   property p1 as Foo
 
-  function getTimes() returns List<of Float>
-    variable x set to empty List<of Float>
+  function getTimes() returns ListImmutable<of Float>
+    variable x set to empty ListImmutable<of Float>
     set x to property.p1.times(2)
     return x
   end function
@@ -237,7 +237,7 @@ class Foo
 
     property p1 as Float
 
-    function times(value as Float) returns List<of Float>
+    function times(value as Float) returns ListImmutable<of Float>
         return {property.p1 * value}
     end function
 
@@ -268,7 +268,7 @@ class Bar {
   }
 
   async getTimes() {
-    let x = system.initialise(_stdlib.List.emptyInstance());
+    let x = system.initialise(_stdlib.ListImmutable.emptyInstance());
     x = (await this.p1.times(2));
     return x;
   }
@@ -1013,7 +1013,7 @@ end function`;
     const code = `# FFFF Elan v1.0.0 valid
 
 class Foo
-  function p1() returns List<of Array<of Int>>
+  function p1() returns ListImmutable<of Array<of Int>>
     return p1()
   end function
 end class`;
@@ -1023,14 +1023,14 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["List cannot be of mutable type 'Array<of Int>'"]);
+    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'Array<of Int>'"]);
   });
 
   test("Fail_ParameterListOfMutableType", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 class Foo
-  function p1(a as List<of Array<of Int>>) returns Int
+  function p1(a as ListImmutable<of Array<of Int>>) returns Int
     return 0
   end function
 end class`;
@@ -1040,6 +1040,6 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["List cannot be of mutable type 'Array<of Int>'"]);
+    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'Array<of Int>'"]);
   });
 });

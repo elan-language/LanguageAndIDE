@@ -28,7 +28,7 @@ export class DeconstructedListType implements DeconstructedSymbolType {
   get name() {
     return this.tailId
       ? this.tailType.name
-      : `List<of ${this.headType}> or Array<of ${this.headType}>`;
+      : `ListImmutable<of ${this.headType}> or Array<of ${this.headType}>`;
   }
 
   toString(): string {

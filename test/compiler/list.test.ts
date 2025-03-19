@@ -254,14 +254,14 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-    variable a set to new List<of Int>()
+    variable a set to new ListImmutable<of Int>()
     print a.length()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(await new _stdlib.List()._initialise());
+  let a = system.initialise(await new _stdlib.ListImmutable()._initialise());
   await system.printLine(a.length());
 }
 return [main, _tests];}`;
@@ -631,14 +631,14 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to new List<of Int>()
+  variable a set to new ListImmutable<of Int>()
   print a
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(await new _stdlib.List()._initialise());
+  let a = system.initialise(await new _stdlib.ListImmutable()._initialise());
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -664,7 +664,7 @@ class Foo
   constructor()
   end constructor
   
-  property it as List<of Int>
+  property it as ListImmutable<of Int>
   
   function asString() returns String
     return "A Foo"
@@ -679,14 +679,14 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["it", system.initialise(_stdlib.List.emptyInstance())]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["it", system.initialise(_stdlib.ListImmutable.emptyInstance())]]);};
 
   async _initialise() {
 
     return this;
   }
 
-  it = system.initialise(_stdlib.List.emptyInstance());
+  it = system.initialise(_stdlib.ListImmutable.emptyInstance());
 
   async asString() {
     return "A Foo";
@@ -708,27 +708,27 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to empty List<of Int>
-  variable b set to empty List<of Int>
+  variable a set to empty ListImmutable<of Int>
+  variable b set to empty ListImmutable<of Int>
   set b to a + 3
   print a
   print b
   print a is b
-  print a is empty List<of Int>
-  print b is empty List<of Int>
+  print a is empty ListImmutable<of Int>
+  print b is empty ListImmutable<of Int>
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(_stdlib.List.emptyInstance());
-  let b = system.initialise(_stdlib.List.emptyInstance());
+  let a = system.initialise(_stdlib.ListImmutable.emptyInstance());
+  let b = system.initialise(_stdlib.ListImmutable.emptyInstance());
   b = system.concat(a, 3);
   await system.printLine(a);
   await system.printLine(b);
   await system.printLine(system.objectEquals(a, b));
-  await system.printLine(system.objectEquals(a, system.initialise(_stdlib.List.emptyInstance())));
-  await system.printLine(system.objectEquals(b, system.initialise(_stdlib.List.emptyInstance())));
+  await system.printLine(system.objectEquals(a, system.initialise(_stdlib.ListImmutable.emptyInstance())));
+  await system.printLine(system.objectEquals(b, system.initialise(_stdlib.ListImmutable.emptyInstance())));
 }
 return [main, _tests];}`;
 
@@ -785,7 +785,7 @@ main
   print ff({"s"})
 end main
 
-function ff(ll as List<of String>) returns List<of Point>
+function ff(ll as ListImmutable<of String>) returns ListImmutable<of Point>
   return ll.map(lambda l as String => new Point())
 end function
 
@@ -894,7 +894,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'putAt' is not defined for type 'List'"]);
+    assertDoesNotCompile(fileImpl, ["'putAt' is not defined for type 'ListImmutable'"]);
   });
 
   test("Fail_CannotSetIndex", async () => {
@@ -926,7 +926,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'withPutAtKey' is not defined for type 'List'"]);
+    assertDoesNotCompile(fileImpl, ["'withPutAtKey' is not defined for type 'ListImmutable'"]);
   });
 
   test("Fail_add", async () => {
@@ -943,7 +943,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'append' is not defined for type 'List'"]);
+    assertDoesNotCompile(fileImpl, ["'append' is not defined for type 'ListImmutable'"]);
   });
 
   test("Fail_insertAt", async () => {
@@ -960,7 +960,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'insertAt' is not defined for type 'List'"]);
+    assertDoesNotCompile(fileImpl, ["'insertAt' is not defined for type 'ListImmutable'"]);
   });
 
   test("Fail_removeAt", async () => {
@@ -977,7 +977,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'removeAt' is not defined for type 'List'"]);
+    assertDoesNotCompile(fileImpl, ["'removeAt' is not defined for type 'ListImmutable'"]);
   });
 
   test("Fail_removeFirst", async () => {
@@ -993,7 +993,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'removeFirst' is not defined for type 'List'"]);
+    assertDoesNotCompile(fileImpl, ["'removeFirst' is not defined for type 'ListImmutable'"]);
   });
 
   test("Fail_removeAll", async () => {
@@ -1009,14 +1009,14 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'removeAll' is not defined for type 'List'"]);
+    assertDoesNotCompile(fileImpl, ["'removeAll' is not defined for type 'ListImmutable'"]);
   });
 
   test("Fail_withoutGenericType", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-    variable a set to new List()
+    variable a set to new ListImmutable()
     print a
 end main`;
 
@@ -1032,7 +1032,7 @@ end main`;
 
 main
     variable a set to empty Array<of Int>
-    variable b set to empty List<of Int>
+    variable b set to empty ListImmutable<of Int>
     set b to a
 end main`;
 
@@ -1041,7 +1041,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: List<of Int> try converting with '.asList()' Provided: Array<of Int>",
+      "Incompatible types. Expected: ListImmutable<of Int> try converting with '.asList()' Provided: Array<of Int>",
     ]);
   });
 
@@ -1078,7 +1078,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-    variable a set to empty List<of Foo>
+    variable a set to empty ListImmutable<of Foo>
 end main
 
 class Foo
@@ -1088,35 +1088,37 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["List cannot be of mutable type 'Foo'"]);
+    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'Foo'"]);
   });
 
   test("Fail_ListOfArray", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to empty List<of Array<of Int>>
+  variable a set to empty ListImmutable<of Array<of Int>>
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["List cannot be of mutable type 'Array<of Int>'"]);
+    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'Array<of Int>'"]);
   });
 
   test("Fail_ListOfDictionary", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to empty List<of Dictionary<of Int, Int>>
+  variable a set to empty ListImmutable<of Dictionary<of Int, Int>>
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["List cannot be of mutable type 'Dictionary<of Int, Int>'"]);
+    assertDoesNotCompile(fileImpl, [
+      "ListImmutable cannot be of mutable type 'Dictionary<of Int, Int>'",
+    ]);
   });
 
   test("Fail_LiteralListOfMutableClass", async () => {
@@ -1134,7 +1136,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["List cannot be of mutable type 'Foo'"]);
+    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'Foo'"]);
   });
 
   test("Fail_LiteralListOfArray", async () => {
@@ -1152,7 +1154,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["List cannot be of mutable type 'Array<of Int>'"]);
+    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'Array<of Int>'"]);
   });
 
   test("Fail_LiteralListOfDictionary", async () => {
@@ -1170,7 +1172,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["List cannot be of mutable type 'Dictionary<of String, Int>'"]);
+    assertDoesNotCompile(fileImpl, [
+      "ListImmutable cannot be of mutable type 'Dictionary<of String, Int>'",
+    ]);
   });
 
   test("Fail_LiteralListOfEmptyUnknownClass", async () => {
@@ -1191,7 +1195,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable f set to empty List
+  variable f set to empty ListImmutable
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);

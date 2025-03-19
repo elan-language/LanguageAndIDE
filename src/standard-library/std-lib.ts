@@ -99,7 +99,7 @@ export class StdLib {
   Array2D = ElanArray2D;
 
   @elanClassExport(ListImmutable)
-  List = ListImmutable;
+  ListImmutable = ListImmutable;
 
   @elanClassExport(Dictionary)
   Dictionary = Dictionary;

@@ -306,7 +306,7 @@ record Foo
   property p3 as String
   property p4 as Boolean
   property p5 as RegExp
-  property p6 as List<of Int>
+  property p6 as ListImmutable<of Int>
   property p7 as DictionaryImmutable<of String, Int>
   property p8 as Bar
 end record
@@ -323,7 +323,7 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", 0], ["p3", ""], ["p4", false], ["p5", system.emptyRegExp()], ["p6", system.initialise(_stdlib.List.emptyInstance())], ["p7", system.initialise(_stdlib.DictionaryImmutable.emptyInstance())]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", 0], ["p3", ""], ["p4", false], ["p5", system.emptyRegExp()], ["p6", system.initialise(_stdlib.ListImmutable.emptyInstance())], ["p7", system.initialise(_stdlib.DictionaryImmutable.emptyInstance())]]);};
   async _initialise() { return this; }
   p1 = 0;
 
@@ -335,7 +335,7 @@ class Foo {
 
   p5 = system.emptyRegExp();
 
-  p6 = system.initialise(_stdlib.List.emptyInstance());
+  p6 = system.initialise(_stdlib.ListImmutable.emptyInstance());
 
   p7 = system.initialise(_stdlib.DictionaryImmutable.emptyInstance());
 

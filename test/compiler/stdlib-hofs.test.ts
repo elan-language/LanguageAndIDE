@@ -77,7 +77,7 @@ main
   print filterIt(source)
 end main
 
-function filterIt(tofilter as List<of Int>) returns List<of Int>
+function filterIt(tofilter as ListImmutable<of Int>) returns ListImmutable<of Int>
     return tofilter.filter(lambda x as Int => x > 20)
 end function
 `;
@@ -340,7 +340,7 @@ return [main, _tests];}`;
 
 constant source set to {{1}, {2, 2}}
 main
-  print source.maxBy(lambda x as List<of Int> => x.length())
+  print source.maxBy(lambda x as ListImmutable<of Int> => x.length())
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -576,7 +576,7 @@ function isnumberchar(s as String) returns Boolean
   return numberChars.contains(s)
 end function
 
-function last(l as List<of Int>) returns Int
+function last(l as ListImmutable<of Int>) returns Int
   return l[l.length() - 1]
 end function`;
 
@@ -627,7 +627,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: List<of Float> Provided: List<of String>",
+      "Incompatible types. Expected: ListImmutable<of Float> Provided: ListImmutable<of String>",
     ]);
   });
 

@@ -31,7 +31,7 @@ class Game
     property p1 as Player
     property p2 as Player
 
-    property previousScores as List<of Int>
+    property previousScores as ListImmutable<of Int>
 
     function asString() returns String
         return "A game"
@@ -62,7 +62,7 @@ async function main() {
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["previousScores", system.initialise(_stdlib.List.emptyInstance())]]);};
+  static emptyInstance() { return system.emptyClass(Game, [["previousScores", system.initialise(_stdlib.ListImmutable.emptyInstance())]]);};
 
   async _initialise() {
     this.p2 = system.initialise(await new Player()._initialise("Chloe"));
@@ -87,7 +87,7 @@ class Game {
     this._p2 = p2;
   }
 
-  previousScores = system.initialise(_stdlib.List.emptyInstance());
+  previousScores = system.initialise(_stdlib.ListImmutable.emptyInstance());
 
   async asString() {
     return "A game";
@@ -199,11 +199,11 @@ class Game
     property f as Float
     property b as Boolean
     property s as String
-    property li as List<of Int>
+    property li as ListImmutable<of Int>
     property ds as Dictionary<of String, Int>
     property dsi as DictionaryImmutable<of String, Int>
     property ai as Array<of Int>
-    property t as Tuple<of Int, String, List<of Int>>
+    property t as Tuple<of Int, String, ListImmutable<of Int>>
     property ff as Func<of String, String => Int>
     property r as RegExp
 
@@ -231,7 +231,7 @@ async function main() {
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.initialise(_stdlib.List.emptyInstance())], ["ds", system.initialise(_stdlib.Dictionary.emptyInstance())], ["dsi", system.initialise(_stdlib.DictionaryImmutable.emptyInstance())], ["ai", system.initialise(_stdlib.Array.emptyInstance())], ["t", system.emptyTuple([0, "", system.initialise(_stdlib.List.emptyInstance())])], ["ff", system.emptyFunc(0)], ["r", system.emptyRegExp()]]);};
+  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.initialise(_stdlib.ListImmutable.emptyInstance())], ["ds", system.initialise(_stdlib.Dictionary.emptyInstance())], ["dsi", system.initialise(_stdlib.DictionaryImmutable.emptyInstance())], ["ai", system.initialise(_stdlib.Array.emptyInstance())], ["t", system.emptyTuple([0, "", system.initialise(_stdlib.ListImmutable.emptyInstance())])], ["ff", system.emptyFunc(0)], ["r", system.emptyRegExp()]]);};
 
   async _initialise() {
 
@@ -246,7 +246,7 @@ class Game {
 
   s = "";
 
-  li = system.initialise(_stdlib.List.emptyInstance());
+  li = system.initialise(_stdlib.ListImmutable.emptyInstance());
 
   ds = system.initialise(_stdlib.Dictionary.emptyInstance());
 
@@ -254,7 +254,7 @@ class Game {
 
   ai = system.initialise(_stdlib.Array.emptyInstance());
 
-  t = system.emptyTuple([0, "", system.initialise(_stdlib.List.emptyInstance())]);
+  t = system.emptyTuple([0, "", system.initialise(_stdlib.ListImmutable.emptyInstance())]);
 
   ff = system.emptyFunc(0);
 
@@ -309,11 +309,11 @@ class Game
     property f as Float
     property b as Boolean
     property s as String
-    property li as List<of Int>
+    property li as ListImmutable<of Int>
     property ds as Dictionary<of String, Int>
     property dsi as DictionaryImmutable<of String, Int>
     property ai as Array<of Int>
-    property t as Tuple<of Int, String, List<of Int>>
+    property t as Tuple<of Int, String, ListImmutable<of Int>>
     property r as RegExp
 
     function asString() returns String
@@ -358,7 +358,7 @@ class Player {
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.initialise(_stdlib.List.emptyInstance())], ["ds", system.initialise(_stdlib.Dictionary.emptyInstance())], ["dsi", system.initialise(_stdlib.DictionaryImmutable.emptyInstance())], ["ai", system.initialise(_stdlib.Array.emptyInstance())], ["t", system.emptyTuple([0, "", system.initialise(_stdlib.List.emptyInstance())])], ["r", system.emptyRegExp()]]);};
+  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.initialise(_stdlib.ListImmutable.emptyInstance())], ["ds", system.initialise(_stdlib.Dictionary.emptyInstance())], ["dsi", system.initialise(_stdlib.DictionaryImmutable.emptyInstance())], ["ai", system.initialise(_stdlib.Array.emptyInstance())], ["t", system.emptyTuple([0, "", system.initialise(_stdlib.ListImmutable.emptyInstance())])], ["r", system.emptyRegExp()]]);};
 
   async _initialise() {
 
@@ -373,7 +373,7 @@ class Game {
 
   s = "";
 
-  li = system.initialise(_stdlib.List.emptyInstance());
+  li = system.initialise(_stdlib.ListImmutable.emptyInstance());
 
   ds = system.initialise(_stdlib.Dictionary.emptyInstance());
 
@@ -381,7 +381,7 @@ class Game {
 
   ai = system.initialise(_stdlib.Array.emptyInstance());
 
-  t = system.emptyTuple([0, "", system.initialise(_stdlib.List.emptyInstance())]);
+  t = system.emptyTuple([0, "", system.initialise(_stdlib.ListImmutable.emptyInstance())]);
 
   r = system.emptyRegExp();
 
@@ -562,7 +562,7 @@ main
   print g.p1 is empty Player
   print g.p2 is empty Player
   print g.previousGame is empty Game
-  print g.previousScores is empty List<of Int>
+  print g.previousScores is empty ListImmutable<of Int>
   print g.score is empty Int
   print g.best is empty Int
   print g.r is empty RegExp
@@ -581,7 +581,7 @@ class Game
 
   property previousGame as Game
 
-  property previousScores as List<of Int>
+  property previousScores as ListImmutable<of Int>
 
   property r as RegExp
 
@@ -611,14 +611,14 @@ async function main() {
   await system.printLine(system.objectEquals(g.p1, Player.emptyInstance()));
   await system.printLine(system.objectEquals(g.p2, Player.emptyInstance()));
   await system.printLine(system.objectEquals(g.previousGame, Game.emptyInstance()));
-  await system.printLine(system.objectEquals(g.previousScores, system.initialise(_stdlib.List.emptyInstance())));
+  await system.printLine(system.objectEquals(g.previousScores, system.initialise(_stdlib.ListImmutable.emptyInstance())));
   await system.printLine(g.score === 0);
   await system.printLine(g.best === 0);
   await system.printLine(g.r === system.emptyRegExp());
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["score", 0], ["best", 0], ["previousScores", system.initialise(_stdlib.List.emptyInstance())], ["r", system.emptyRegExp()]]);};
+  static emptyInstance() { return system.emptyClass(Game, [["score", 0], ["best", 0], ["previousScores", system.initialise(_stdlib.ListImmutable.emptyInstance())], ["r", system.emptyRegExp()]]);};
 
   async _initialise() {
     this.score = 1;
@@ -653,7 +653,7 @@ class Game {
     this._previousGame = previousGame;
   }
 
-  previousScores = system.initialise(_stdlib.List.emptyInstance());
+  previousScores = system.initialise(_stdlib.ListImmutable.emptyInstance());
 
   r = system.emptyRegExp();
 
@@ -716,7 +716,7 @@ class Game
 
   property previousGame as Game
 
-  property previousScores as List<of Int>
+  property previousScores as ListImmutable<of Int>
 
   function asString() returns String
     return "A game"
@@ -747,7 +747,7 @@ async function main() {
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["score", 0], ["best", 0], ["previousScores", system.initialise(_stdlib.List.emptyInstance())]]);};
+  static emptyInstance() { return system.emptyClass(Game, [["score", 0], ["best", 0], ["previousScores", system.initialise(_stdlib.ListImmutable.emptyInstance())]]);};
 
   async _initialise() {
     this.score = 10;
@@ -786,7 +786,7 @@ class Game {
     this._previousGame = previousGame;
   }
 
-  previousScores = system.initialise(_stdlib.List.emptyInstance());
+  previousScores = system.initialise(_stdlib.ListImmutable.emptyInstance());
 
   async asString() {
     return "A game";
@@ -829,7 +829,7 @@ main
   print f.b
   print f.c
   print f.d
-  print f.a is empty List<of Int>
+  print f.a is empty ListImmutable<of Int>
   print f.b is empty String
   print f.c is empty Dictionary<of String,Int>
   print f.d is empty Array<of Int>
@@ -839,7 +839,7 @@ class Foo
   constructor()
   end constructor
 
-  property a as List<of Int>
+  property a as ListImmutable<of Int>
   property b as String
   property c as Dictionary<of String, Int>
   property d as Array<of Int>
@@ -858,21 +858,21 @@ async function main() {
   await system.printLine(f.b);
   await system.printLine(f.c);
   await system.printLine(f.d);
-  await system.printLine(system.objectEquals(f.a, system.initialise(_stdlib.List.emptyInstance())));
+  await system.printLine(system.objectEquals(f.a, system.initialise(_stdlib.ListImmutable.emptyInstance())));
   await system.printLine(f.b === "");
   await system.printLine(system.objectEquals(f.c, system.initialise(_stdlib.Dictionary.emptyInstance())));
   await system.printLine(system.objectEquals(f.d, system.initialise(_stdlib.Array.emptyInstance())));
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["a", system.initialise(_stdlib.List.emptyInstance())], ["b", ""], ["c", system.initialise(_stdlib.Dictionary.emptyInstance())], ["d", system.initialise(_stdlib.Array.emptyInstance())]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["a", system.initialise(_stdlib.ListImmutable.emptyInstance())], ["b", ""], ["c", system.initialise(_stdlib.Dictionary.emptyInstance())], ["d", system.initialise(_stdlib.Array.emptyInstance())]]);};
 
   async _initialise() {
 
     return this;
   }
 
-  a = system.initialise(_stdlib.List.emptyInstance());
+  a = system.initialise(_stdlib.ListImmutable.emptyInstance());
 
   b = "";
 

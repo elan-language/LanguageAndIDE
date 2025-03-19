@@ -405,7 +405,7 @@ end main`;
       "Incompatible types. Expected: Int Provided: Boolean",
     ]);
     assertDoesNotCompileWithId(fileImpl, "set28", [
-      "Incompatible types. Expected: String Provided: List<of Float>",
+      "Incompatible types. Expected: String Provided: ListImmutable<of Float>",
     ]);
     assertDoesNotCompileWithId(fileImpl, "set31", [
       "Incompatible types. Expected: Int Provided: Float",
@@ -429,15 +429,15 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompileWithId(fileImpl, "set12", [
-      "Incompatible types. Expected: Array<of String> Provided: List<of Float>",
+      "Incompatible types. Expected: Array<of String> Provided: ListImmutable<of Float>",
     ]);
 
     assertDoesNotCompileWithId(fileImpl, "set15", [
-      "Incompatible types. Expected: List<of Float> try converting with '.asList()' Provided: Array<of String>",
+      "Incompatible types. Expected: ListImmutable<of Float> try converting with '.asList()' Provided: Array<of String>",
     ]);
 
     assertDoesNotCompileWithId(fileImpl, "set18", [
-      "Incompatible types. Expected: Dictionary<of String, Float> Provided: List<of Float>",
+      "Incompatible types. Expected: Dictionary<of String, Float> Provided: ListImmutable<of Float>",
     ]);
   });
 

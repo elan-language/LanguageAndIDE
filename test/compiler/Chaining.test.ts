@@ -79,7 +79,7 @@ class Foo
     set property.a to {1}
   end constructor
   
-  property a as List<of Int>
+  property a as ListImmutable<of Int>
 end class`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -91,14 +91,14 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["a", system.initialise(_stdlib.List.emptyInstance())]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["a", system.initialise(_stdlib.ListImmutable.emptyInstance())]]);};
 
   async _initialise() {
     this.a = system.list([1]);
     return this;
   }
 
-  a = system.initialise(_stdlib.List.emptyInstance());
+  a = system.initialise(_stdlib.ListImmutable.emptyInstance());
 
 }
 return [main, _tests];}`;

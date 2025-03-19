@@ -129,7 +129,7 @@ return [main, _tests];}`;
 
 constant a set to {"a":1, "b":3, "z":10}
 main
-  variable b set to empty List<of String>
+  variable b set to empty ListImmutable<of String>
   set b to a.keys()
   print b
 end main`;
@@ -140,7 +140,7 @@ const global = new class {
 
 };
 async function main() {
-  let b = system.initialise(_stdlib.List.emptyInstance());
+  let b = system.initialise(_stdlib.ListImmutable.emptyInstance());
   b = global.a.keys();
   await system.printLine(b);
 }
@@ -933,7 +933,7 @@ end class`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable f set to empty List<of Int>
+  variable f set to empty ListImmutable<of Int>
   variable a set to {f:1}
 end main
 
@@ -944,7 +944,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["DictionaryImmutable cannot have key of type 'List<of Int>'"]);
+    assertDoesNotCompile(fileImpl, [
+      "DictionaryImmutable cannot have key of type 'ListImmutable<of Int>'",
+    ]);
   });
 
   test("Fail_LiteralDictionaryImmutableOfDictionaryValue", async () => {

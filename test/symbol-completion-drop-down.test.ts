@@ -1063,6 +1063,7 @@ end function`;
     const expected = [
       ["Int", "*", "*"],
       ["DictionaryImmutable", "*", "*"],
+      ["ListImmutable", "*", "*"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "params6", "a as I", expected);
@@ -1136,6 +1137,7 @@ end function`;
     const expected = [
       ["Int", "*", "*"],
       ["DictionaryImmutable", "*", "*"],
+      ["ListImmutable", "*", "*"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "params6", "a as Set<of I", expected);
@@ -1587,7 +1589,7 @@ end main`;
       ["Float", "*", "*"],
       ["Int", "*", "*"],
       ["LineVG", "*", "*"],
-      ["List", "*", "List<of "],
+      ["ListImmutable", "*", "ListImmutable<of "],
       ["Queue", "*", "*"],
       ["Random", "*", "*"],
       ["RectangleVG", "*", "*"],
@@ -1728,7 +1730,7 @@ end main`;
       ["Float", "*", "*"],
       ["Int", "*", "*"],
       ["LineVG", "*", "*"],
-      ["List", "*", "*"],
+      ["ListImmutable", "*", "*"],
       ["Queue", "*", "*"],
       ["Random", "*", "*"],
       ["RectangleVG", "*", "*"],
@@ -1896,7 +1898,7 @@ main
   variable a set to range(1,4)
 end main
 
-function last(l as List<of Int>) returns Int
+function last(l as ListImmutable<of Int>) returns Int
   return l[l.length() - 1]
 end function`;
 

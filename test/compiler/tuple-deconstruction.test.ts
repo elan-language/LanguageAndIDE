@@ -142,7 +142,7 @@ main
   print b
 end main
 
-function foo() returns (List<of Float>, Int)
+function foo() returns (ListImmutable<of Float>, Int)
   return tuple({0.0}, 0)
 end function`;
 

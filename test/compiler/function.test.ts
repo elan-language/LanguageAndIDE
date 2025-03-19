@@ -7,7 +7,6 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -1080,7 +1079,7 @@ end function`;
   test("Fail_ReturnListOfMutableType", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
-function p1() returns List<of Array<of Int>>
+function p1() returns ListImmutable<of Array<of Int>>
   return p1()
 end function`;
 
@@ -1089,13 +1088,13 @@ end function`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["List cannot be of mutable type 'Array<of Int>'"]);
+    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'Array<of Int>'"]);
   });
 
   test("Fail_ParameterListOfMutableType", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
-function p1(a as List<of Array<of Int>>) returns Int
+function p1(a as ListImmutable<of Array<of Int>>) returns Int
   return 0
 end function`;
 
@@ -1104,6 +1103,6 @@ end function`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["List cannot be of mutable type 'Array<of Int>'"]);
+    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'Array<of Int>'"]);
   });
 });

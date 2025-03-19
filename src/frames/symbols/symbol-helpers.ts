@@ -48,11 +48,11 @@ export function isDeconstructedType(s?: SymbolType): s is DeconstructedSymbolTyp
   return !!s && "symbolTypeFor" in s;
 }
 
-export function isListType(s?: SymbolType): s is ClassType {
-  return !!s && s instanceof ClassType && s.className === "List";
+export function isListImmutableType(s?: SymbolType): s is ClassType {
+  return !!s && s instanceof ClassType && s.className === "ListImmutable";
 }
 
-export function isArrayType(s?: SymbolType): s is ClassType {
+export function isListType(s?: SymbolType): s is ClassType {
   return !!s && s instanceof ClassType && s.className === "Array";
 }
 

@@ -70,12 +70,12 @@ import { FunctionType } from "./symbols/function-type";
 import { IntType } from "./symbols/int-type";
 import { ProcedureType } from "./symbols/procedure-type";
 import {
-  isArrayType,
   isClassTypeDef,
   isDeconstructedType,
   isDoubleIndexableType,
   isIndexableType,
   isIterableType,
+  isListImmutableType,
   isListType,
   isNumber,
   isProperty,
@@ -574,7 +574,7 @@ function FailNotAssignable(
   let addInfo = "";
   // special case
   // todo fix
-  if (isListType(lhs) && isArrayType(rhs)) {
+  if (isListImmutableType(lhs) && isListType(rhs)) {
     addInfo = " try converting with '.asList()'";
   }
 
