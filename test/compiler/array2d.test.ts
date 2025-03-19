@@ -421,7 +421,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "tuple(5, 7)tuple(8, 2)tuple(-1, -1)");
   });
 
-  test("Fail_EmptyArray1", async () => {
+  test("Fail_EmptyArray2D1", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main

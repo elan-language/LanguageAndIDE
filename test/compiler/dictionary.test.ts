@@ -941,7 +941,7 @@ end class`;
     ]);
   });
 
-  test("Fail_LiteralDictionaryOfArrayKey", async () => {
+  test("Fail_LiteralDictionaryOfListKey", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -1009,7 +1009,7 @@ end main`;
     ]);
   });
 
-  test("Fail_DictionaryOfArrayKey", async () => {
+  test("Fail_DictionaryOfListKey", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main

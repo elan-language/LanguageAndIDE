@@ -1041,7 +1041,7 @@ end procedure`;
     assertDoesNotCompile(fileImpl, ["May not re-assign the parameter 'a'"]);
   });
 
-  test("Fail_ArrayParamMayNotBeReassigned", async () => {
+  test("Fai_ListParamMayNotBeReassigned", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main

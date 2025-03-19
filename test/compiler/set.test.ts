@@ -255,7 +255,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "{2, 4, 6, 3}{2, 4, 6, 3, 5}");
   });
-  test("Pass_AddFromArray", async () => {
+  test("Pass_AddFromList", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main

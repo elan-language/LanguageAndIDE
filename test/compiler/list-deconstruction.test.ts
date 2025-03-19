@@ -137,7 +137,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "1[2, 3]");
   });
 
-  test("Pass_DeconstructArrayOfArrayIntoExistingVariables", async () => {
+  test("Pass_DeconstructListOfListIntoExistingVariables", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -171,7 +171,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[1, 2, 3][[4, 5, 6], [7, 8, 9]]");
   });
 
-  test("Pass_DeconstructArrayOfArrayIntoNewVariables", async () => {
+  test("Pass_DeconstructListOfListIntoNewVariables", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -201,7 +201,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[1, 2, 3][[4, 5, 6], [7, 8, 9]]");
   });
 
-  test("Pass_DeconstructArrayOfArrayIntoNewLetVariables", async () => {
+  test("Pass_DeconstructListOfListIntoNewLetVariables", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -771,7 +771,7 @@ end main
     assertDoesNotCompile(fileImpl, ["Expression must be able to be deconstructed"]);
   });
 
-  test("Fail_DeconstructEmptyArray1", async () => {
+  test("Fail_DeconstructEmptyList1", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -790,7 +790,7 @@ end main
     await assertObjectCodeDoesNotExecute(fileImpl, "Out of range error");
   });
 
-  test("Fail_DeconstructEmptyArray2", async () => {
+  test("Fail_DeconstructEmptyList2", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main

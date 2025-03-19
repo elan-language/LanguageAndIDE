@@ -623,7 +623,7 @@ end function`;
     assertDoesNotCompile(fileImpl, ["May not re-assign the parameter 'a'"]);
   });
 
-  test("Fail_CannotUpdateArray", async () => {
+  test("Fail_CannotUpdateList", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -640,7 +640,7 @@ end function`;
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_CannotPassInArrayMultipleParameters", async () => {
+  test("Fail_CannotPassInListMultipleParameters", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main

@@ -45,7 +45,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "24");
   });
 
-  test("Pass_Array", async () => {
+  test("Pass_List", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main

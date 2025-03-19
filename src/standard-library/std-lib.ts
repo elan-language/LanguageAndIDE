@@ -304,7 +304,7 @@ export class StdLib {
   }
 
   @elanFunction(["", "separator"], FunctionOptions.pureExtension)
-  joinArray(
+  joinList(
     @elanClassType(List, [ElanString]) list: ListImmutable<string>,
     separator: string,
   ): string {

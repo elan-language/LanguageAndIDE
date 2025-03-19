@@ -1091,7 +1091,7 @@ end class`;
     assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'Foo'"]);
   });
 
-  test("Fail_ListOfArray", async () => {
+  test("Fail_ListImmutableOfList", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -1139,7 +1139,7 @@ end class`;
     assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'Foo'"]);
   });
 
-  test("Fail_LiteralListImmutableOfArray", async () => {
+  test("Fail_LiteralListImmutableOfList", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main

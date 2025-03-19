@@ -146,7 +146,7 @@ end record`;
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_Array1", async () => {
+  test("Fail_List1", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 constant k set to [1, 2, 3]
@@ -161,7 +161,7 @@ end main`;
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_Array2", async () => {
+  test("Fail_List2", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 constant k set to new List<of Int>()
@@ -176,7 +176,7 @@ end main`;
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_Array3", async () => {
+  test("Fail_List3", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 constant k set to empty List<of Int>

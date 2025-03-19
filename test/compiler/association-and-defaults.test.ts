@@ -985,7 +985,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "");
   });
 
-  test("Pass_PropertyOfArrayType", async () => {
+  test("Pass_PropertyOfListType", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main

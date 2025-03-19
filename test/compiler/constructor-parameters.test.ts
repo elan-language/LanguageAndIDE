@@ -32,7 +32,7 @@ end class`;
     assertDoesNotCompile(fileImpl, ["May not re-assign the parameter 'p_1'"]);
   });
 
-  test("Fail_MutatingArrayParam", async () => {
+  test("Fail_MutatingListParam", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 class Foo

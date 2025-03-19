@@ -467,13 +467,13 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "A");
   });
-  test("Pass_CreateArray", async () => {
+  test("Pass_CreateList", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main 
   variable aFoo set to new Foo()
   variable b set to 0
-  set b to aFoo.createArr(10)[1..5].length() + 3
+  set b to aFoo.createLst(10)[1..5].length() + 3
   print b
 end main
 
@@ -481,7 +481,7 @@ class Foo
   constructor()
   end constructor
 
-  function createArr(n as Int) returns List<of Int>
+  function createLst(n as Int) returns List<of Int>
     return createList(n, 7)
   end function
 
@@ -492,7 +492,7 @@ const global = new class {};
 async function main() {
   let aFoo = system.initialise(await new Foo()._initialise());
   let b = 0;
-  b = system.safeSlice((await aFoo.createArr(10)), 1, 5).length() + 3;
+  b = system.safeSlice((await aFoo.createLst(10)), 1, 5).length() + 3;
   await system.printLine(b);
 }
 
@@ -504,7 +504,7 @@ class Foo {
     return this;
   }
 
-  async createArr(n) {
+  async createLst(n) {
     return _stdlib.createList(n, 7);
   }
 
@@ -520,13 +520,13 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "7");
   });
 
-  test("Pass_CreateArray1", async () => {
+  test("Pass_CreateList1", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main 
   variable aBar set to new Bar()
   variable b set to 0
-  set b to 5 + aBar.foo.create2DArr()[2][1] - 2
+  set b to 5 + aBar.foo.create2DList()[2][1] - 2
   print b
 end main
 
@@ -543,7 +543,7 @@ class Foo
   constructor()
   end constructor
 
-  function create2DArr() returns List<of List<of Int>>
+  function create2DList() returns List<of List<of Int>>
     return [[8,8,8,8],[8,8,8,8],[8,8,8,8]]
   end function
 
@@ -554,7 +554,7 @@ const global = new class {};
 async function main() {
   let aBar = system.initialise(await new Bar()._initialise());
   let b = 0;
-  b = 5 + system.safeIndex(system.safeIndex((await aBar.foo.create2DArr()), 2), 1) - 2;
+  b = 5 + system.safeIndex(system.safeIndex((await aBar.foo.create2DList()), 2), 1) - 2;
   await system.printLine(b);
 }
 
@@ -584,7 +584,7 @@ class Foo {
     return this;
   }
 
-  async create2DArr() {
+  async create2DList() {
     return system.literalList([system.literalList([8, 8, 8, 8]), system.literalList([8, 8, 8, 8]), system.literalList([8, 8, 8, 8])]);
   }
 

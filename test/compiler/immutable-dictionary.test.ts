@@ -793,7 +793,7 @@ end class`;
     assertDoesNotCompile(fileImpl, ["DictionaryImmutable cannot have key of type 'Foo'"]);
   });
 
-  test("Fail_DictionaryImmutableOfArrayValue", async () => {
+  test("Fail_DictionaryImmutableOfListValue", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -809,7 +809,7 @@ end main`;
     ]);
   });
 
-  test("Fail_DictionaryImmutableOfArrayKey", async () => {
+  test("Fail_DictionaryImmutableOfListKey", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -891,7 +891,7 @@ end class`;
     assertDoesNotCompile(fileImpl, ["DictionaryImmutable cannot have key of type 'Foo'"]);
   });
 
-  test("Fail_LiteralDictionaryImmutableOfArrayValue", async () => {
+  test("Fail_LiteralDictionaryImmutableOfListValue", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -911,7 +911,7 @@ end class`;
     ]);
   });
 
-  test("Fail_LiteralDictionaryImmutableOfArrayKey", async () => {
+  test("Fail_LiteralDictionaryImmutableOfListKey", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main

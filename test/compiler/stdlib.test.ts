@@ -847,12 +847,12 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "{Now, is, the, time...}");
   });
-  test("Pass_joinArray", async () => {
+  test("Pass_joinList", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
   let words be ["Now", "is","the","time..."]
-  let s be words.joinArray(".")
+  let s be words.joinList(".")
   print s
 end main`;
 
@@ -860,7 +860,7 @@ end main`;
 const global = new class {};
 async function main() {
   const words = system.literalList(["Now", "is", "the", "time..."]);
-  const s = _stdlib.joinArray(words, ".");
+  const s = _stdlib.joinList(words, ".");
   await system.printLine(s);
 }
 return [main, _tests];}`;

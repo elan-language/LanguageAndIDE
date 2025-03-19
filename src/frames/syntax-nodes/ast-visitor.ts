@@ -87,11 +87,11 @@ import { InterpolatedAsn } from "./interpolated-asn";
 import { KvpAsn } from "./kvp-asn";
 import { LambdaAsn } from "./lambda-asn";
 import { LambdaSigAsn } from "./lambda-sig-asn";
-import { LiteralArrayAsn } from "./literal-array-asn";
+import { LiteralListAsn } from "./literal-list-asn";
 import { LiteralDictionaryAsn } from "./literal-dictionary-asn";
 import { LiteralEnumAsn } from "./literal-enum-asn";
 import { LiteralFloatAsn } from "./literal-float-asn";
-import { LiteralDictionaryImmutableAsn } from "./literal-immutable-dictionary-asn";
+import { LiteralDictionaryImmutableAsn } from "./literal-dictionary-immutable-asn";
 import { LiteralIntAsn } from "./literal-int-asn";
 import { LiteralListImmutableAsn } from "./literal-list-immutable-asn";
 import { LiteralRegExAsn } from "./literal-regex-asn";
@@ -342,7 +342,7 @@ export function transform(
 
   if (node instanceof ArrayNode) {
     const items = transformMany(node.csv as CSV, fieldId, scope).items;
-    return new LiteralArrayAsn(items, fieldId, scope);
+    return new LiteralListAsn(items, fieldId, scope);
   }
 
   if (node instanceof DictionaryNode) {

@@ -9,7 +9,7 @@ import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { transforms } from "./ast-helpers";
 
-export class LiteralArrayAsn extends AbstractAstNode implements AstCollectionNode {
+export class LiteralListAsn extends AbstractAstNode implements AstCollectionNode {
   constructor(
     public readonly items: AstNode[],
     public readonly fieldId: string,

@@ -12,7 +12,7 @@ import {
 } from "./compiler-test-helpers";
 
 suite("Complex Types", () => {
-  test("Pass_ArrayOfDictionary", async () => {
+  test("Pass_ListOfDictionary", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main 
@@ -39,7 +39,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "2");
   });
 
-  test("Pass_DictionaryOfArray", async () => {
+  test("Pass_DictionaryOfList", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main 

@@ -248,7 +248,7 @@ end class`;
     assertDoesNotCompile(fileImpl, ["Cannot do equality operations on Procedures or Functions"]);
   });
 
-  test("Pass_ArrayEquality", async () => {
+  test("Pass_ListEquality", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
