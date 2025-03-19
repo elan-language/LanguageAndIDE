@@ -34,10 +34,10 @@ import {
 } from "./data-structure-helpers";
 
 @elanClass(ClassOption.array, [ElanT1], [], [], [], "Array")
-export class ElanArray<T1> {
+export class List<T1> {
   // this must be implemented by hand on all stdlib classes
   static emptyInstance() {
-    return new ElanArray();
+    return new List();
   }
 
   async _initialise() {
@@ -104,7 +104,7 @@ export class ElanArray<T1> {
   }
 
   @elanProcedure(["other"])
-  appendArray(@elanClassType(ElanArray) listB: ElanArray<T1>) {
+  appendArray(@elanClassType(List) listB: List<T1>) {
     this.contents.push(...listB.contents);
   }
 
@@ -114,7 +114,7 @@ export class ElanArray<T1> {
   }
 
   @elanProcedure(["other"])
-  prependArray(@elanClassType(ElanArray) listB: ElanArray<T1>) {
+  prependArray(@elanClassType(List) listB: List<T1>) {
     this.contents.unshift(...listB.contents);
   }
 
@@ -136,23 +136,23 @@ export class ElanArray<T1> {
     return this.indexOfItem(item) !== -1;
   }
 
-  @elanFunction(["lambdaOrFunctionRef"], FunctionOptions.pureAsync, ElanClass(ElanArray))
+  @elanFunction(["lambdaOrFunctionRef"], FunctionOptions.pureAsync, ElanClass(List))
   async filter(
     @elanFuncType([ElanT1], ElanBoolean)
     predicate: (value: T1) => Promise<boolean>,
-  ): Promise<ElanArray<T1>> {
+  ): Promise<List<T1>> {
     return this.system!.initialise(
-      new ElanArray(await filterHelper(this.contents as never[], predicate)),
+      new List(await filterHelper(this.contents as never[], predicate)),
     );
   }
 
-  @elanFunction(["lambdaOrFunctionRef"], FunctionOptions.pureAsync, ElanClass(ElanArray, [ElanT2]))
+  @elanFunction(["lambdaOrFunctionRef"], FunctionOptions.pureAsync, ElanClass(List, [ElanT2]))
   async map<T2>(
     @elanFuncType([ElanT1], ElanT2)
     predicate: (value: T1) => Promise<T2>,
-  ): Promise<ElanArray<T2>> {
+  ): Promise<List<T2>> {
     return this.system!.initialise(
-      new ElanArray<T2>(
+      new List<T2>(
         await mapHelper(
           this.contents as never[],
           predicate as unknown as (value: never) => Promise<never>,
@@ -198,13 +198,13 @@ export class ElanArray<T1> {
     );
   }
 
-  @elanFunction(["lambdaOrFunctionRef"], FunctionOptions.pureAsync, ElanClass(ElanArray))
+  @elanFunction(["lambdaOrFunctionRef"], FunctionOptions.pureAsync, ElanClass(List))
   async sortBy(
     @elanFuncType([ElanT1, ElanT1], ElanInt)
     predicate: (a: T1, b: T1) => Promise<number>,
-  ): Promise<ElanArray<T1>> {
+  ): Promise<List<T1>> {
     return sortByHelper(this.contents as never[], predicate, this.system!) as unknown as Promise<
-      ElanArray<T1>
+      List<T1>
     >;
   }
 
@@ -243,16 +243,16 @@ export class ElanArray<T1> {
       throw new ElanRuntimeError(`Out of range index`);
     }
 
-    return this.system?.initialise(new ElanArray(r));
+    return this.system?.initialise(new List(r));
   }
 
-  deconstructList(): [T1, ElanArray<T1>] {
+  deconstructList(): [T1, List<T1>] {
     const [hd, ...tl] = this.contents;
-    return [hd, this.system!.initialise(new ElanArray(tl))];
+    return [hd, this.system!.initialise(new List(tl))];
   }
 
   equals(other: unknown) {
-    if (other instanceof ElanArray) {
+    if (other instanceof List) {
       if (this.contents.length === other.contents.length) {
         return this.contents.every((c, i) => this.system?.equals(c, other.contents[i]));
       }
@@ -260,48 +260,46 @@ export class ElanArray<T1> {
     return false;
   }
 
-  @elanFunction(["index", "value"], FunctionOptions.pure, ElanClass(ElanArray))
-  withAppend(@elanGenericParamT1Type() value: T1): ElanArray<T1> {
-    return this.system!.initialise(
-      new ElanArray(withAppendHelper(this.contents as [], value as never)),
-    );
+  @elanFunction(["index", "value"], FunctionOptions.pure, ElanClass(List))
+  withAppend(@elanGenericParamT1Type() value: T1): List<T1> {
+    return this.system!.initialise(new List(withAppendHelper(this.contents as [], value as never)));
   }
 
-  @elanFunction(["index", "value"], FunctionOptions.pure, ElanClass(ElanArray))
-  withPrepend(@elanGenericParamT1Type() value: T1): ElanArray<T1> {
+  @elanFunction(["index", "value"], FunctionOptions.pure, ElanClass(List))
+  withPrepend(@elanGenericParamT1Type() value: T1): List<T1> {
     return this.withInsert(0, value);
   }
 
-  @elanFunction(["index", "value"], FunctionOptions.pure, ElanClass(ElanArray))
-  withPut(@elanIntType() index: number, @elanGenericParamT1Type() value: T1): ElanArray<T1> {
+  @elanFunction(["index", "value"], FunctionOptions.pure, ElanClass(List))
+  withPut(@elanIntType() index: number, @elanGenericParamT1Type() value: T1): List<T1> {
     return this.system!.initialise(
-      new ElanArray(withPutAtHelper(this.contents as [], index, value as never)),
+      new List(withPutAtHelper(this.contents as [], index, value as never)),
     );
   }
 
-  @elanFunction(["index", "value"], FunctionOptions.pure, ElanClass(ElanArray))
-  withInsert(@elanIntType() index: number, @elanGenericParamT1Type() value: T1): ElanArray<T1> {
+  @elanFunction(["index", "value"], FunctionOptions.pure, ElanClass(List))
+  withInsert(@elanIntType() index: number, @elanGenericParamT1Type() value: T1): List<T1> {
     return this.system!.initialise(
-      new ElanArray(withInsertAtHelper(this.contents as [], index, value as never)),
+      new List(withInsertAtHelper(this.contents as [], index, value as never)),
     );
   }
 
-  @elanFunction(["index"], FunctionOptions.pure, ElanClass(ElanArray))
-  withRemoveAt(@elanIntType() index: number): ElanArray<T1> {
-    return this.system!.initialise(new ElanArray(withRemoveAtHelper(this.contents as [], index)));
+  @elanFunction(["index"], FunctionOptions.pure, ElanClass(List))
+  withRemoveAt(@elanIntType() index: number): List<T1> {
+    return this.system!.initialise(new List(withRemoveAtHelper(this.contents as [], index)));
   }
 
-  @elanFunction(["value"], FunctionOptions.pure, ElanClass(ElanArray))
-  withRemoveFirst(@elanGenericParamT1Type() value: T1): ElanArray<T1> {
+  @elanFunction(["value"], FunctionOptions.pure, ElanClass(List))
+  withRemoveFirst(@elanGenericParamT1Type() value: T1): List<T1> {
     return this.system!.initialise(
-      new ElanArray(withRemoveFirstHelper(this.contents as [], value as never, this.system!)),
+      new List(withRemoveFirstHelper(this.contents as [], value as never, this.system!)),
     );
   }
 
-  @elanFunction(["value"], FunctionOptions.pure, ElanClass(ElanArray))
-  withRemoveAll(@elanGenericParamT1Type() value: T1): ElanArray<T1> {
+  @elanFunction(["value"], FunctionOptions.pure, ElanClass(List))
+  withRemoveAll(@elanGenericParamT1Type() value: T1): List<T1> {
     return this.system!.initialise(
-      new ElanArray(withRemoveAllHelper(this.contents as [], value as never, this.system!)),
+      new List(withRemoveAllHelper(this.contents as [], value as never, this.system!)),
     );
   }
 }

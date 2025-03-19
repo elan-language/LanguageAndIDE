@@ -5,7 +5,7 @@ import { TestStatus } from "./frames/status-enums";
 import { hasHiddenType } from "./has-hidden-type";
 import { Dictionary } from "./standard-library/dictionary";
 import { DictionaryImmutable } from "./standard-library/dictionary-immutable";
-import { ElanArray } from "./standard-library/elan-array";
+import { List } from "./standard-library/list";
 import { ListImmutable } from "./standard-library/list-immutable";
 import { WebWorkerBreakpointMessage } from "./web/web-worker-messages";
 
@@ -29,7 +29,7 @@ export class System {
   }
 
   // constant immutables
-  emptyImmutableListSingleton = this.initialise(new ElanArray([]));
+  emptyImmutableListSingleton = this.initialise(new List([]));
   emptyDictionaryImmutableSingleton = this.dictionaryImmutable([]);
 
   emptyRegExpSingleton = /(?:)/;
@@ -65,7 +65,7 @@ export class System {
   }
 
   literalArray(t: Array<any>) {
-    return this.initialise(new ElanArray(t));
+    return this.initialise(new List(t));
   }
 
   initialise<T>(toInit: T, toType?: () => any): T {
@@ -288,7 +288,7 @@ export class System {
     );
   }
 
-  deconstructList<T>(list: ElanArray<T> | ListImmutable<T>): [T, ElanArray<T> | ListImmutable<T>] {
+  deconstructList<T>(list: List<T> | ListImmutable<T>): [T, List<T> | ListImmutable<T>] {
     return list.deconstructList();
   }
 

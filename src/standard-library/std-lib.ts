@@ -30,10 +30,10 @@ import { BlockGraphics } from "./block-graphics";
 import { CircleVG } from "./circle-vg";
 import { Dictionary } from "./dictionary";
 import { DictionaryImmutable } from "./dictionary-immutable";
-import { ElanArray } from "./elan-array";
 import { ElanArray2D } from "./elan-array-2d";
 import { GraphicsBase } from "./graphics-base";
 import { LineVG } from "./line-vg";
+import { List } from "./list";
 import { ListImmutable } from "./list-immutable";
 import { Queue } from "./queue";
 import { Random } from "./random";
@@ -92,8 +92,8 @@ export class StdLib {
   @elanClassExport(RectangleVG)
   RectangleVG = RectangleVG;
 
-  @elanClassExport(ElanArray)
-  Array = ElanArray;
+  @elanClassExport(List)
+  Array = List;
 
   @elanClassExport(ElanArray2D)
   Array2D = ElanArray2D;
@@ -305,7 +305,7 @@ export class StdLib {
 
   @elanFunction(["", "separator"], FunctionOptions.pureExtension)
   joinArray(
-    @elanClassType(ElanArray, [ElanString]) list: ListImmutable<string>,
+    @elanClassType(List, [ElanString]) list: ListImmutable<string>,
     separator: string,
   ): string {
     return [...list].join(separator);
@@ -494,7 +494,7 @@ export class StdLib {
     await this.system.elanInputOutput.clearPrintedText();
   }
 
-  @elanFunction(["size", "initialValue"], FunctionOptions.pure, ElanClass(ElanArray))
+  @elanFunction(["size", "initialValue"], FunctionOptions.pure, ElanClass(List))
   createArray<T1>(@elanIntType() x: number, @elanGenericParamT1Type() value: T1) {
     if (!this.isValueType(value)) {
       throw new ElanRuntimeError(`Can only create array with simple value`);
@@ -506,7 +506,7 @@ export class StdLib {
       toInit[i] = value;
     }
 
-    return this.system.initialise(new ElanArray<T1>(toInit));
+    return this.system.initialise(new List<T1>(toInit));
   }
 
   //Input functions
@@ -541,7 +541,7 @@ export class StdLib {
   @elanFunction(["prompt", "options"], FunctionOptions.impureAsync, ElanString)
   async inputStringFromOptions(
     prompt: string,
-    @elanClassType(ElanArray) options: ElanArray<string>,
+    @elanClassType(List) options: List<string>,
   ): Promise<string> {
     const s = await this.inputString(prompt);
 
@@ -821,21 +821,21 @@ export class StdLib {
   // conversion
 
   @elanFunction([], FunctionOptions.pureExtension, ElanClass(ListImmutable))
-  arrayAsList<T1>(@elanClassType(ElanArray) arr: ElanArray<T1>): ListImmutable<T1> {
+  arrayAsList<T1>(@elanClassType(List) arr: List<T1>): ListImmutable<T1> {
     const list = [...arr];
     return new ListImmutable(list);
   }
 
   @elanFunction([], FunctionOptions.pureExtension, ElanClass(ElanSet))
-  arrayAsSet<T1>(@elanClassType(ElanArray) arr: ElanArray<T1>): ElanSet<T1> {
+  arrayAsSet<T1>(@elanClassType(List) arr: List<T1>): ElanSet<T1> {
     const set = this.system.initialise(new ElanSet<T1>());
     return set.addFromArray(arr);
   }
 
-  @elanFunction([], FunctionOptions.pureExtension, ElanClass(ElanArray))
-  listAsArray<T1>(@elanClassType(ListImmutable) list: ListImmutable<T1>): ElanArray<T1> {
+  @elanFunction([], FunctionOptions.pureExtension, ElanClass(List))
+  listAsArray<T1>(@elanClassType(ListImmutable) list: ListImmutable<T1>): List<T1> {
     const newList = [...list];
-    return this.system.initialise(new ElanArray(newList));
+    return this.system.initialise(new List(newList));
   }
 
   @elanFunction([], FunctionOptions.pureExtension, ElanClass(ElanSet))
