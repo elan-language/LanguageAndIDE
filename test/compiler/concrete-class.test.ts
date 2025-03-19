@@ -361,7 +361,7 @@ class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["strArr", system.initialise(_stdlib.Array.emptyInstance())]]);};
 
   async _initialise() {
-    this.strArr = system.literalArray(["apple", "orange", "pair"]);
+    this.strArr = system.list(["apple", "orange", "pair"]);
     return this;
   }
 

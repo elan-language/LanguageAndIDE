@@ -7,7 +7,6 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -65,7 +64,7 @@ async function main() {
 }
 
 async function foo(a, b) {
-  return system.literalArray([a, b]);
+  return system.list([a, b]);
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -99,7 +98,7 @@ async function main() {
 }
 
 async function foo(a, b) {
-  return system.literalArray([a, b]);
+  return system.list([a, b]);
 }
 global["foo"] = foo;
 return [main, _tests];}`;
