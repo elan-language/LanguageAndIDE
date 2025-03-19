@@ -439,7 +439,7 @@ end class`;
     const code = `# FFFF Elan v1.0.0 valid
 
 class Foo
-  procedure p1(a as ListImmutable<of Array<of Int>>)
+  procedure p1(a as ListImmutable<of List<of Int>>)
     
   end procedure
 end class`;
@@ -449,6 +449,6 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'Array<of Int>'"]);
+    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'List<of Int>'"]);
   });
 });

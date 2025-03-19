@@ -524,7 +524,7 @@ main
   print c.d
 end main
 
-function doIndex(arr as Array<of Int>, i as Int) returns Int 
+function doIndex(arr as List<of Int>, i as Int) returns Int 
   return arr[i]
 end function
 
@@ -672,7 +672,7 @@ end record`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: Array<of Int>"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: List<of Int>"]);
   });
 
   test("Fail_NotClass", async () => {

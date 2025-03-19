@@ -166,7 +166,7 @@ return [main, _tests];}`;
 
 main
   try
-    variable x set to empty Array<of Foo>
+    variable x set to empty List<of Foo>
     variable y set to x[1]
     variable z set to y.p1
     print "not caught"
@@ -187,7 +187,7 @@ end class`;
 const global = new class {};
 async function main() {
   try {
-    let x = system.initialise(_stdlib.Array.emptyInstance());
+    let x = system.initialise(_stdlib.List.emptyInstance());
     let y = system.safeIndex(x, 1);
     let z = y.p1;
     await system.printLine("not caught");

@@ -429,11 +429,11 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompileWithId(fileImpl, "set12", [
-      "Incompatible types. Expected: Array<of String> Provided: ListImmutable<of Float>",
+      "Incompatible types. Expected: List<of String> Provided: ListImmutable<of Float>",
     ]);
 
     assertDoesNotCompileWithId(fileImpl, "set15", [
-      "Incompatible types. Expected: ListImmutable<of Float> try converting with '.asListImmutable()' Provided: Array<of String>",
+      "Incompatible types. Expected: ListImmutable<of Float> try converting with '.asListImmutable()' Provided: List<of String>",
     ]);
 
     assertDoesNotCompileWithId(fileImpl, "set18", [

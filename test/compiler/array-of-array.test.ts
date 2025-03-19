@@ -441,27 +441,27 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to empty Array<of Array<of Int>>
-  variable b set to empty Array<of Array<of Int>>
+  variable a set to empty List<of List<of Int>>
+  variable b set to empty List<of List<of Int>>
   call a.append([3])
   print a
   print b
   print a is b
-  print a is empty Array<of Array<of Int>>
-  print b is empty Array<of Array<of Int>>
+  print a is empty List<of List<of Int>>
+  print b is empty List<of List<of Int>>
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(_stdlib.Array.emptyInstance());
-  let b = system.initialise(_stdlib.Array.emptyInstance());
+  let a = system.initialise(_stdlib.List.emptyInstance());
+  let b = system.initialise(_stdlib.List.emptyInstance());
   a.append(system.literalArray([3]));
   await system.printLine(a);
   await system.printLine(b);
   await system.printLine(system.objectEquals(a, b));
-  await system.printLine(system.objectEquals(a, system.initialise(_stdlib.Array.emptyInstance())));
-  await system.printLine(system.objectEquals(b, system.initialise(_stdlib.Array.emptyInstance())));
+  await system.printLine(system.objectEquals(a, system.initialise(_stdlib.List.emptyInstance())));
+  await system.printLine(system.objectEquals(b, system.initialise(_stdlib.List.emptyInstance())));
 }
 return [main, _tests];}`;
 
@@ -528,7 +528,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to empty Array<of Array<of Int>>
+  variable a set to empty List<of List<of Int>>
   call a[0].putAt(0, 3)
 end main`;
 
@@ -585,14 +585,14 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot double index Array<of Array<of Int>>"]);
+    assertDoesNotCompile(fileImpl, ["Cannot double index List<of List<of Int>>"]);
   });
 
   test("Fail_2DArrayAccessedAs1D", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to createArray(3, empty Array<of String>)
+  variable a set to createArray(3, empty List<of String>)
   call a.putAt(0, "foo")
 end main
 `;
@@ -602,7 +602,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: index (Int), value (Array<of String>) Provided: Int, String",
+      "Argument types. Expected: index (Int), value (List<of String>) Provided: Int, String",
     ]);
   });
 
@@ -611,7 +611,7 @@ end main
 
 main
   variable a set to [[""],[""]]
-  call a.putAt(0, empty Array<of String>)
+  call a.putAt(0, empty List<of String>)
   variable b set to a[0][0]
 end main
 `;
@@ -628,7 +628,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to createArray(3, empty Array<of String>)
+  variable a set to createArray(3, empty List<of String>)
   call a.putAt(0, true)
 end main
 `;
@@ -638,7 +638,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: index (Int), value (Array<of String>) Provided: Int, Boolean",
+      "Argument types. Expected: index (Int), value (List<of String>) Provided: Int, Boolean",
     ]);
   });
 
@@ -646,7 +646,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to new Array<of Array<of String>>()
+  variable a set to new List<of List<of String>>()
   call a.append("foo")
 end main
 `;
@@ -656,7 +656,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: value (Array<of String>) Provided: String",
+      "Argument types. Expected: value (List<of String>) Provided: String",
     ]);
   });
 

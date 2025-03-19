@@ -1197,7 +1197,7 @@ end class`;
     const code = `# FFFF Elan v1.0.0 valid
 
 interface Foo
-  abstract function p1() returns ListImmutable<of Array<of Int>>
+  abstract function p1() returns ListImmutable<of List<of Int>>
 end interface`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -1205,14 +1205,14 @@ end interface`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'Array<of Int>'"]);
+    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'List<of Int>'"]);
   });
 
   test("Fail_ParameterListOfMutableType", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 interface Foo
-  abstract function p1(a as ListImmutable<of Array<of Int>>) returns Int
+  abstract function p1(a as ListImmutable<of List<of Int>>) returns Int
 end interface`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -1220,6 +1220,6 @@ end interface`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'Array<of Int>'"]);
+    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'List<of Int>'"]);
   });
 });

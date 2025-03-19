@@ -306,7 +306,7 @@ class Bar inherits Foo
   property p1 as Int
 end class
 
-function fun(l as Array<of Bar>) returns Bar
+function fun(l as List<of Bar>) returns Bar
   return l[0]
 end function
 `;
@@ -1933,7 +1933,7 @@ class Bar inherits Foo
   property p1 as Int
 end class
 
-function fun(l as Array<of Foo>) returns Foo
+function fun(l as List<of Foo>) returns Foo
     return l[0]
 end function
 `;
@@ -1944,7 +1944,7 @@ end function
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: l (Array<of Foo>) Provided: Array<of Bar>",
+      "Argument types. Expected: l (List<of Foo>) Provided: List<of Bar>",
     ]);
   });
 
@@ -1967,7 +1967,7 @@ class Bar inherits Foo
   property p1 as Int
 end class
 
-procedure fun(l as Array<of Foo>)
+procedure fun(l as List<of Foo>)
   print l[0]
 end procedure
 `;
@@ -1978,7 +1978,7 @@ end procedure
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: l (Array<of Foo>) Provided: Array<of Bar>",
+      "Argument types. Expected: l (List<of Foo>) Provided: List<of Bar>",
     ]);
   });
 

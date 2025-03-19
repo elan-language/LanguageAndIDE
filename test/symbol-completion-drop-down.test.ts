@@ -1579,7 +1579,6 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["Array", "*", "Array<of "],
       ["Array2D", "*", "Array2D<of "],
       ["BlockGraphics", "*", "*"],
       ["Boolean", "*", "*"],
@@ -1589,6 +1588,7 @@ end main`;
       ["Float", "*", "*"],
       ["Int", "*", "*"],
       ["LineVG", "*", "*"],
+      ["List", "*", "List<of "],
       ["ListImmutable", "*", "ListImmutable<of "],
       ["Queue", "*", "*"],
       ["Random", "*", "*"],
@@ -1678,7 +1678,7 @@ end record`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable bubbles set to empty Array<of CircleVG>
+  variable bubbles set to empty List<of CircleVG>
   call bubbles.putAt(0, new CircleVG())
 end main`;
 
@@ -1720,7 +1720,6 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["Array", "*", "*"],
       ["Array2D", "*", "Array2D<of "],
       ["BlockGraphics", "*", "*"],
       ["Boolean", "*", "*"],
@@ -1730,6 +1729,7 @@ end main`;
       ["Float", "*", "*"],
       ["Int", "*", "*"],
       ["LineVG", "*", "*"],
+      ["List", "*", "*"],
       ["ListImmutable", "*", "*"],
       ["Queue", "*", "*"],
       ["Random", "*", "*"],

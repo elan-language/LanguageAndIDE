@@ -434,7 +434,7 @@ class Bar
     set property.strArr to ["apple", "orange", "pair"]
   end constructor
 
-  property strArr as Array<of String>
+  property strArr as List<of String>
 
 end class`;
 
@@ -447,14 +447,14 @@ async function main() {
 }
 
 class Bar {
-  static emptyInstance() { return system.emptyClass(Bar, [["strArr", system.initialise(_stdlib.Array.emptyInstance())]]);};
+  static emptyInstance() { return system.emptyClass(Bar, [["strArr", system.initialise(_stdlib.List.emptyInstance())]]);};
 
   async _initialise() {
     this.strArr = system.literalArray(["apple", "orange", "pair"]);
     return this;
   }
 
-  strArr = system.initialise(_stdlib.Array.emptyInstance());
+  strArr = system.initialise(_stdlib.List.emptyInstance());
 
 }
 return [main, _tests];}`;
@@ -481,7 +481,7 @@ class Foo
   constructor()
   end constructor
 
-  function createArr(n as Int) returns Array<of Int>
+  function createArr(n as Int) returns List<of Int>
     return createArray(n, 7)
   end function
 
@@ -543,7 +543,7 @@ class Foo
   constructor()
   end constructor
 
-  function create2DArr() returns Array<of Array<of Int>>
+  function create2DArr() returns List<of List<of Int>>
     return [[8,8,8,8],[8,8,8,8],[8,8,8,8]]
   end function
 

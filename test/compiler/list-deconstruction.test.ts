@@ -19,7 +19,7 @@ suite("List Deconstruction", () => {
 main
   variable a set to [1,2,3]
   variable x set to 1
-  variable y set to empty Array<of Int>
+  variable y set to empty List<of Int>
   set x:y to a
   print x
   print y
@@ -31,7 +31,7 @@ const global = new class {};
 async function main() {
   let a = system.literalArray([1, 2, 3]);
   let x = 1;
-  let y = system.initialise(_stdlib.Array.emptyInstance());
+  let y = system.initialise(_stdlib.List.emptyInstance());
   [x, y] = system.deconstructList(a);
   await system.printLine(x);
   await system.printLine(y);
@@ -52,7 +52,7 @@ return [main, _tests];}`;
 
 main
   variable a set to [1,2,3]
-  variable y set to empty Array<of Int>
+  variable y set to empty List<of Int>
   set _:y to a
   print y
 end main
@@ -62,7 +62,7 @@ end main
 const global = new class {};
 async function main() {
   let a = system.literalArray([1, 2, 3]);
-  let y = system.initialise(_stdlib.Array.emptyInstance());
+  let y = system.initialise(_stdlib.List.emptyInstance());
   [, y] = system.deconstructList(a);
   await system.printLine(y);
 }
@@ -142,8 +142,8 @@ return [main, _tests];}`;
 
 main
   variable a set to [[1,2,3], [4,5,6], [7,8,9]]
-  variable x set to empty Array<of Int>
-  variable y set to empty Array<of Array<of Int>>
+  variable x set to empty List<of Int>
+  variable y set to empty List<of List<of Int>>
   set x:y to a
   print x
   print y
@@ -154,8 +154,8 @@ end main
 const global = new class {};
 async function main() {
   let a = system.literalArray([system.literalArray([1, 2, 3]), system.literalArray([4, 5, 6]), system.literalArray([7, 8, 9])]);
-  let x = system.initialise(_stdlib.Array.emptyInstance());
-  let y = system.initialise(_stdlib.Array.emptyInstance());
+  let x = system.initialise(_stdlib.List.emptyInstance());
+  let y = system.initialise(_stdlib.List.emptyInstance());
   [x, y] = system.deconstructList(a);
   await system.printLine(x);
   await system.printLine(y);
@@ -237,7 +237,7 @@ return [main, _tests];}`;
 main
   variable a set to [1]
   variable x set to 1
-  variable y set to empty Array<of Int>
+  variable y set to empty List<of Int>
   set x:y to a
   print x
   print y
@@ -249,7 +249,7 @@ const global = new class {};
 async function main() {
   let a = system.literalArray([1]);
   let x = 1;
-  let y = system.initialise(_stdlib.Array.emptyInstance());
+  let y = system.initialise(_stdlib.List.emptyInstance());
   [x, y] = system.deconstructList(a);
   await system.printLine(x);
   await system.printLine(y);
@@ -511,7 +511,7 @@ return [main, _tests];}`;
 main
   variable a set to [1,2]
   variable x set to ""
-  variable y set to empty Array<of Int>
+  variable y set to empty List<of Int>
   set x:y to a
 end main
 `;
@@ -530,7 +530,7 @@ end main
 main
   variable a set to [1,2]
   variable x set to 0
-  variable y set to empty Array<of String>
+  variable y set to empty List<of String>
   set x:y to a
 end main
 `;
@@ -541,7 +541,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Array<of String> Provided: Array<of Int>",
+      "Incompatible types. Expected: List<of String> Provided: List<of Int>",
     ]);
   });
 
@@ -551,7 +551,7 @@ end main
 main
   variable a set to [1,2]
   variable x set to ""
-  variable y set to empty Array<of String>
+  variable y set to empty List<of String>
   set x:y to a
 end main
 `;
@@ -562,7 +562,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Array<of String> Provided: Array<of Int>",
+      "Incompatible types. Expected: List<of String> Provided: List<of Int>",
     ]);
   });
 
@@ -582,7 +582,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: Array<of Int>"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: List<of Int>"]);
   });
 
   test("Fail_DeconstructIntoWrongType5", async () => {
@@ -590,8 +590,8 @@ end main
 
 main
   variable a set to [1,2]
-  variable x set to empty Array<of Int>
-  variable y set to empty Array<of Int>
+  variable x set to empty List<of Int>
+  variable y set to empty List<of Int>
   set x:y to a
 end main
 `;
@@ -601,7 +601,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Array<of Int> Provided: Int"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: List<of Int> Provided: Int"]);
   });
 
   test("Fail_DeconstructIntoWrongType6", async () => {
@@ -621,7 +621,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: ListImmutable<of Int> Provided: Array<of Int>",
+      "Incompatible types. Expected: ListImmutable<of Int> Provided: List<of Int>",
     ]);
   });
 
@@ -641,7 +641,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: ListImmutable<of String> or Array<of String> Provided: Array<of Int>",
+      "Incompatible types. Expected: ListImmutable<of String> or List<of String> Provided: List<of Int>",
     ]);
   });
 
@@ -650,7 +650,7 @@ end main
 
 main
   variable a set to [1,2]
-  variable y set to empty Array<of String>
+  variable y set to empty List<of String>
   set _:y to a
 end main
 `;
@@ -661,7 +661,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Array<of String> Provided: Array<of Int>",
+      "Incompatible types. Expected: List<of String> Provided: List<of Int>",
     ]);
   });
 
@@ -739,7 +739,7 @@ end main
 main
   variable a set to {1:1}
   variable x set to 0
-  variable y set to empty Array<of Int>
+  variable y set to empty List<of Int>
   set x:y to a
 end main
 `;
@@ -758,7 +758,7 @@ end main
 main
   variable a set to 1
   variable x set to 0
-  variable y set to empty Array<of Int>
+  variable y set to empty List<of Int>
   set x:y to a
 end main
 `;
@@ -775,7 +775,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to empty Array<of Int>
+  variable a set to empty List<of Int>
   variable x:y set to a
   print x
   print y
@@ -794,9 +794,9 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to empty Array<of Int>
+  variable a set to empty List<of Int>
   variable x set to 0
-  variable y set to empty Array<of Int>
+  variable y set to empty List<of Int>
   set x:y to a
   print x
   print y
@@ -817,7 +817,7 @@ end main
 main
   variable a set to [1,2,3]
   let x be 1
-  let y be empty Array<of Int>
+  let y be empty List<of Int>
   set x:y to a
   print x
   print y

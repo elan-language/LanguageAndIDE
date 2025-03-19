@@ -36,7 +36,7 @@ end class`;
     const code = `# FFFF Elan v1.0.0 valid
 
 class Foo
-    constructor(a as Array<of Float>)
+    constructor(a as List<of Float>)
         call a.putAt(0, 4)
     end constructor
 

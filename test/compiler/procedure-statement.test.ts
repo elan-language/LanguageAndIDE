@@ -59,7 +59,7 @@ main
   call foo(a, b, c, d)
 end main
 
-procedure foo(x as Array<of Int>, y as ListImmutable<of Int>, z as Dictionary<of String, Boolean>, t as DictionaryImmutable<of String, Boolean>)
+procedure foo(x as List<of Int>, y as ListImmutable<of Int>, z as Dictionary<of String, Boolean>, t as DictionaryImmutable<of String, Boolean>)
   print x
   print y
   print z
@@ -166,7 +166,7 @@ main
   print a
 end main
 
-procedure changeFirst(out a as Array<of Int>)
+procedure changeFirst(out a as List<of Int>)
     call a.putAt(0, 5)
 end procedure`;
 
@@ -1050,7 +1050,7 @@ main
   print a
 end main
 
-procedure changeAll(a as Array<of Int>)
+procedure changeAll(a as List<of Int>)
     set a to [1, 2, 3]
 end procedure`;
 
@@ -1252,7 +1252,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Array<of Int> Provided: Procedure (Int)",
+      "Incompatible types. Expected: List<of Int> Provided: Procedure (Int)",
       "Cannot call procedure 'append' within an expression",
     ]);
   });
@@ -1406,7 +1406,7 @@ end procedure`;
   test("Fail_ParameterListOfMutableType", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
-procedure p1(a as ListImmutable<of Array<of Int>>)
+procedure p1(a as ListImmutable<of List<of Int>>)
   
 end procedure`;
 
@@ -1415,6 +1415,6 @@ end procedure`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'Array<of Int>'"]);
+    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'List<of Int>'"]);
   });
 });

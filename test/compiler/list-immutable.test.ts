@@ -1031,7 +1031,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-    variable a set to empty Array<of Int>
+    variable a set to empty List<of Int>
     variable b set to empty ListImmutable<of Int>
     set b to a
 end main`;
@@ -1041,7 +1041,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: ListImmutable<of Int> try converting with '.asListImmutable()' Provided: Array<of Int>",
+      "Incompatible types. Expected: ListImmutable<of Int> try converting with '.asListImmutable()' Provided: List<of Int>",
     ]);
   });
 
@@ -1095,14 +1095,14 @@ end class`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to empty ListImmutable<of Array<of Int>>
+  variable a set to empty ListImmutable<of List<of Int>>
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'Array<of Int>'"]);
+    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'List<of Int>'"]);
   });
 
   test("Fail_ListOfDictionary", async () => {
@@ -1143,7 +1143,7 @@ end class`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable f set to empty Array<of Int>
+  variable f set to empty List<of Int>
   variable a set to {f}
 end main
 
@@ -1154,7 +1154,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'Array<of Int>'"]);
+    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'List<of Int>'"]);
   });
 
   test("Fail_LiteralListImmutableOfDictionary", async () => {

@@ -202,7 +202,7 @@ class Game
     property li as ListImmutable<of Int>
     property ds as Dictionary<of String, Int>
     property dsi as DictionaryImmutable<of String, Int>
-    property ai as Array<of Int>
+    property ai as List<of Int>
     property t as Tuple<of Int, String, ListImmutable<of Int>>
     property ff as Func<of String, String => Int>
     property r as RegExp
@@ -231,7 +231,7 @@ async function main() {
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.initialise(_stdlib.ListImmutable.emptyInstance())], ["ds", system.initialise(_stdlib.Dictionary.emptyInstance())], ["dsi", system.initialise(_stdlib.DictionaryImmutable.emptyInstance())], ["ai", system.initialise(_stdlib.Array.emptyInstance())], ["t", system.emptyTuple([0, "", system.initialise(_stdlib.ListImmutable.emptyInstance())])], ["ff", system.emptyFunc(0)], ["r", system.emptyRegExp()]]);};
+  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.initialise(_stdlib.ListImmutable.emptyInstance())], ["ds", system.initialise(_stdlib.Dictionary.emptyInstance())], ["dsi", system.initialise(_stdlib.DictionaryImmutable.emptyInstance())], ["ai", system.initialise(_stdlib.List.emptyInstance())], ["t", system.emptyTuple([0, "", system.initialise(_stdlib.ListImmutable.emptyInstance())])], ["ff", system.emptyFunc(0)], ["r", system.emptyRegExp()]]);};
 
   async _initialise() {
 
@@ -252,7 +252,7 @@ class Game {
 
   dsi = system.initialise(_stdlib.DictionaryImmutable.emptyInstance());
 
-  ai = system.initialise(_stdlib.Array.emptyInstance());
+  ai = system.initialise(_stdlib.List.emptyInstance());
 
   t = system.emptyTuple([0, "", system.initialise(_stdlib.ListImmutable.emptyInstance())]);
 
@@ -312,7 +312,7 @@ class Game
     property li as ListImmutable<of Int>
     property ds as Dictionary<of String, Int>
     property dsi as DictionaryImmutable<of String, Int>
-    property ai as Array<of Int>
+    property ai as List<of Int>
     property t as Tuple<of Int, String, ListImmutable<of Int>>
     property r as RegExp
 
@@ -358,7 +358,7 @@ class Player {
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.initialise(_stdlib.ListImmutable.emptyInstance())], ["ds", system.initialise(_stdlib.Dictionary.emptyInstance())], ["dsi", system.initialise(_stdlib.DictionaryImmutable.emptyInstance())], ["ai", system.initialise(_stdlib.Array.emptyInstance())], ["t", system.emptyTuple([0, "", system.initialise(_stdlib.ListImmutable.emptyInstance())])], ["r", system.emptyRegExp()]]);};
+  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.initialise(_stdlib.ListImmutable.emptyInstance())], ["ds", system.initialise(_stdlib.Dictionary.emptyInstance())], ["dsi", system.initialise(_stdlib.DictionaryImmutable.emptyInstance())], ["ai", system.initialise(_stdlib.List.emptyInstance())], ["t", system.emptyTuple([0, "", system.initialise(_stdlib.ListImmutable.emptyInstance())])], ["r", system.emptyRegExp()]]);};
 
   async _initialise() {
 
@@ -379,7 +379,7 @@ class Game {
 
   dsi = system.initialise(_stdlib.DictionaryImmutable.emptyInstance());
 
-  ai = system.initialise(_stdlib.Array.emptyInstance());
+  ai = system.initialise(_stdlib.List.emptyInstance());
 
   t = system.emptyTuple([0, "", system.initialise(_stdlib.ListImmutable.emptyInstance())]);
 
@@ -832,7 +832,7 @@ main
   print f.a is empty ListImmutable<of Int>
   print f.b is empty String
   print f.c is empty Dictionary<of String,Int>
-  print f.d is empty Array<of Int>
+  print f.d is empty List<of Int>
 end main
 
 class Foo
@@ -842,7 +842,7 @@ class Foo
   property a as ListImmutable<of Int>
   property b as String
   property c as Dictionary<of String, Int>
-  property d as Array<of Int>
+  property d as List<of Int>
 
   function asString() returns String
     return "A Foo"
@@ -861,11 +861,11 @@ async function main() {
   await system.printLine(system.objectEquals(f.a, system.initialise(_stdlib.ListImmutable.emptyInstance())));
   await system.printLine(f.b === "");
   await system.printLine(system.objectEquals(f.c, system.initialise(_stdlib.Dictionary.emptyInstance())));
-  await system.printLine(system.objectEquals(f.d, system.initialise(_stdlib.Array.emptyInstance())));
+  await system.printLine(system.objectEquals(f.d, system.initialise(_stdlib.List.emptyInstance())));
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["a", system.initialise(_stdlib.ListImmutable.emptyInstance())], ["b", ""], ["c", system.initialise(_stdlib.Dictionary.emptyInstance())], ["d", system.initialise(_stdlib.Array.emptyInstance())]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["a", system.initialise(_stdlib.ListImmutable.emptyInstance())], ["b", ""], ["c", system.initialise(_stdlib.Dictionary.emptyInstance())], ["d", system.initialise(_stdlib.List.emptyInstance())]]);};
 
   async _initialise() {
 
@@ -878,7 +878,7 @@ class Foo {
 
   c = system.initialise(_stdlib.Dictionary.emptyInstance());
 
-  d = system.initialise(_stdlib.Array.emptyInstance());
+  d = system.initialise(_stdlib.List.emptyInstance());
 
   async asString() {
     return "A Foo";
@@ -998,7 +998,7 @@ class Game
     set property.p1 to [1,2,3]
   end constructor
 
-  property p1 as Array<of Int>
+  property p1 as List<of Int>
 
   procedure something()
     variable a set to 1
@@ -1016,14 +1016,14 @@ async function main() {
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["p1", system.initialise(_stdlib.Array.emptyInstance())]]);};
+  static emptyInstance() { return system.emptyClass(Game, [["p1", system.initialise(_stdlib.List.emptyInstance())]]);};
 
   async _initialise() {
     this.p1 = system.literalArray([1, 2, 3]);
     return this;
   }
 
-  p1 = system.initialise(_stdlib.Array.emptyInstance());
+  p1 = system.initialise(_stdlib.List.emptyInstance());
 
   async something() {
     let a = 1;
@@ -1203,7 +1203,7 @@ class Foo
   end constructor
 
   property p1 as Int
-  property p2 as Array<of Int>
+  property p2 as List<of Int>
 
 end class`;
 
@@ -1226,7 +1226,7 @@ class Foo
   end constructor
 
   property p1 as Int
-  property p2 as Array<of Int>
+  property p2 as List<of Int>
 
   procedure foo()
     if property.p1 is 0 then
@@ -1255,7 +1255,7 @@ class Foo
   end constructor
 
   property p1 as Int
-  property p2 as Array<of Int>
+  property p2 as List<of Int>
 
   procedure foo()
     set property.p2 to [0]

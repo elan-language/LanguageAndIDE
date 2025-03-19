@@ -116,7 +116,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: key (String), value (Array<of Int>) Provided: Int, Array<of Int>",
+      "Argument types. Expected: key (String), value (List<of Int>) Provided: Int, List<of Int>",
     ]);
   });
 
@@ -142,7 +142,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  let a be new Array<of Foo>()
+  let a be new List<of Foo>()
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -157,7 +157,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  let a be new Array<of Array<of Foo>>()
+  let a be new List<of List<of Foo>>()
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -173,7 +173,7 @@ end main`;
 
 main
   let t be 1
-  let a be new Array<of t>()
+  let a be new List<of t>()
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);

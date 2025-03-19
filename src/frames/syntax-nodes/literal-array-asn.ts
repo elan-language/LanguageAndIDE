@@ -40,7 +40,7 @@ export class LiteralArrayAsn extends AbstractAstNode implements AstCollectionNod
 
   symbolType() {
     const globalScope = getGlobalScope(this.scope);
-    const symbol = globalScope.resolveSymbol("Array", transforms(), this.scope);
+    const symbol = globalScope.resolveSymbol("List", transforms(), this.scope);
     const st = symbol.symbolType() as ReifyableSymbolType;
 
     return st.reify([this.items[0]?.symbolType() ?? UnknownType.Instance]);

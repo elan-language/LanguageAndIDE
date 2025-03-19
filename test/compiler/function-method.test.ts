@@ -317,8 +317,8 @@ class Bar
 
   property p1 as Foo
 
-  function getTimes() returns Array<of Qux>
-    variable x set to empty Array<of Qux>
+  function getTimes() returns List<of Qux>
+    variable x set to empty List<of Qux>
     set x to property.p1.times(2)
     return x
   end function
@@ -332,7 +332,7 @@ class Foo
 
     property p1 as Float
 
-    function times(value as Float) returns Array<of Qux>
+    function times(value as Float) returns List<of Qux>
         return [new Qux()]
     end function
 
@@ -368,7 +368,7 @@ class Bar {
   }
 
   async getTimes() {
-    let x = system.initialise(_stdlib.Array.emptyInstance());
+    let x = system.initialise(_stdlib.List.emptyInstance());
     x = (await this.p1.times(2));
     return x;
   }
@@ -1013,7 +1013,7 @@ end function`;
     const code = `# FFFF Elan v1.0.0 valid
 
 class Foo
-  function p1() returns ListImmutable<of Array<of Int>>
+  function p1() returns ListImmutable<of List<of Int>>
     return p1()
   end function
 end class`;
@@ -1023,14 +1023,14 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'Array<of Int>'"]);
+    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'List<of Int>'"]);
   });
 
   test("Fail_ParameterListOfMutableType", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 class Foo
-  function p1(a as ListImmutable<of Array<of Int>>) returns Int
+  function p1(a as ListImmutable<of List<of Int>>) returns Int
     return 0
   end function
 end class`;
@@ -1040,6 +1040,6 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'Array<of Int>'"]);
+    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'List<of Int>'"]);
   });
 });

@@ -93,7 +93,7 @@ export class StdLib {
   RectangleVG = RectangleVG;
 
   @elanClassExport(List)
-  Array = List;
+  List = List;
 
   @elanClassExport(ElanArray2D)
   Array2D = ElanArray2D;

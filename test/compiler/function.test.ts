@@ -52,7 +52,7 @@ main
   print a
 end main
 
-function foo(a as Int, b as Int) returns Array<of Int>
+function foo(a as Int, b as Int) returns List<of Int>
   return [a, b]
 end function`;
 
@@ -86,7 +86,7 @@ main
   print a
 end main
 
-function foo(a as Int, b as Int) returns Array<of Int>
+function foo(a as Int, b as Int) returns List<of Int>
   return [a, b]
 end function`;
 
@@ -198,8 +198,8 @@ main
     print foo(3,4)
 end main
 
-function foo(a as Int, b as Int) returns Array<of Int>
-    return empty Array<of Int>
+function foo(a as Int, b as Int) returns List<of Int>
+    return empty List<of Int>
 end function`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -209,7 +209,7 @@ async function main() {
 }
 
 async function foo(a, b) {
-  return system.initialise(_stdlib.Array.emptyInstance());
+  return system.initialise(_stdlib.List.emptyInstance());
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -629,7 +629,7 @@ end function`;
 main
 end main
 
-function foo(a as Array<of Int>) returns Int
+function foo(a as List<of Int>) returns Int
     call a.putAt(0, 1)
     return a[0]
 end function`;
@@ -646,7 +646,7 @@ end function`;
 main
 end main
 
-function foo(b as Int, a as Array<of Int>) returns Int
+function foo(b as Int, a as List<of Int>) returns Int
     call a.setAt(0, 0)
     return a[0]
 end function`;
@@ -741,7 +741,7 @@ main
  
 end main
 
-function foo(a as Array<of Int>, b as Dictionary<of String, Int>, c as Foo) returns Int
+function foo(a as List<of Int>, b as Dictionary<of String, Int>, c as Foo) returns Int
   call b.setAtKey("key", 1)
   return 1
 end function
@@ -1079,7 +1079,7 @@ end function`;
   test("Fail_ReturnListOfMutableType", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
-function p1() returns ListImmutable<of Array<of Int>>
+function p1() returns ListImmutable<of List<of Int>>
   return p1()
 end function`;
 
@@ -1088,13 +1088,13 @@ end function`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'Array<of Int>'"]);
+    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'List<of Int>'"]);
   });
 
   test("Fail_ParameterListOfMutableType", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
-function p1(a as ListImmutable<of Array<of Int>>) returns Int
+function p1(a as ListImmutable<of List<of Int>>) returns Int
   return 0
 end function`;
 
@@ -1103,6 +1103,6 @@ end function`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'Array<of Int>'"]);
+    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'List<of Int>'"]);
   });
 });

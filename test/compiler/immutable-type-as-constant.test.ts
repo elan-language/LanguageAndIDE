@@ -164,7 +164,7 @@ end main`;
   test("Fail_Array2", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
-constant k set to new Array<of Int>()
+constant k set to new List<of Int>()
 
 main 
   print k
@@ -179,7 +179,7 @@ end main`;
   test("Fail_Array3", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
-constant k set to empty Array<of Int>
+constant k set to empty List<of Int>
 
 main 
   print k

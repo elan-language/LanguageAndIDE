@@ -797,7 +797,7 @@ end class`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to empty DictionaryImmutable<of Int, Array<of Int>>
+  variable a set to empty DictionaryImmutable<of Int, List<of Int>>
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -805,7 +805,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "DictionaryImmutable cannot be of mutable type 'Array<of Int>'",
+      "DictionaryImmutable cannot be of mutable type 'List<of Int>'",
     ]);
   });
 
@@ -813,14 +813,14 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to empty DictionaryImmutable<of Array<of Int>, Int>
+  variable a set to empty DictionaryImmutable<of List<of Int>, Int>
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["DictionaryImmutable cannot have key of type 'Array<of Int>'"]);
+    assertDoesNotCompile(fileImpl, ["DictionaryImmutable cannot have key of type 'List<of Int>'"]);
   });
 
   test("Fail_DictionaryImmutableOfDictionaryValue", async () => {
@@ -895,7 +895,7 @@ end class`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable f set to empty Array<of Int>
+  variable f set to empty List<of Int>
   variable a set to {1:f}
 end main
 
@@ -907,7 +907,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "DictionaryImmutable cannot be of mutable type 'Array<of Int>'",
+      "DictionaryImmutable cannot be of mutable type 'List<of Int>'",
     ]);
   });
 
@@ -915,7 +915,7 @@ end class`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable f set to empty Array<of Int>
+  variable f set to empty List<of Int>
   variable a set to {f:1}
 end main
 
@@ -926,7 +926,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["DictionaryImmutable cannot have key of type 'Array<of Int>'"]);
+    assertDoesNotCompile(fileImpl, ["DictionaryImmutable cannot have key of type 'List<of Int>'"]);
   });
 
   test("Fail_LiteralDictionaryImmutableOfListKey", async () => {

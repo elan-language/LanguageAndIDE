@@ -94,9 +94,9 @@ suite("Parsing Nodes", () => {
     testNodeParse(new ExprNode(), "3* foo(5)", ParseStatus.valid, "", "", "3*foo(5)", "");
     testNodeParse(
       new ExprNode(),
-      "new Array<of String>()",
+      "new List<of String>()",
       ParseStatus.valid,
-      "new Array<of String>()",
+      "new List<of String>()",
       "",
     );
     testNodeParse(
@@ -137,12 +137,12 @@ suite("Parsing Nodes", () => {
     // empty data structures
     testNodeParse(
       new ExprNode(),
-      "empty Array<of Int>",
+      "empty List<of Int>",
       ParseStatus.valid,
-      "empty Array<of Int>",
+      "empty List<of Int>",
       "",
       "",
-      "<el-kw>empty</el-kw> <el-type>Array</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;",
+      "<el-kw>empty</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;",
     );
     testNodeParse(
       new ExprNode(),
@@ -1330,9 +1330,9 @@ suite("Parsing Nodes", () => {
     testNodeParse(new NewInstance(), `newFoo()`, ParseStatus.invalid, "", "newFoo()", "", "");
     testNodeParse(
       new NewInstance(),
-      "new Array<of String>()",
+      "new List<of String>()",
       ParseStatus.valid,
-      "new Array<of String>()",
+      "new List<of String>()",
       "",
     );
   });

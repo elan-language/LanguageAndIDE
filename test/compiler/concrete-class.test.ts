@@ -345,7 +345,7 @@ class Foo
     set property.strArr to ["apple", "orange", "pair"]
   end constructor
 
-  property strArr as Array<of String>
+  property strArr as List<of String>
 
 end class`;
 
@@ -358,14 +358,14 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["strArr", system.initialise(_stdlib.Array.emptyInstance())]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["strArr", system.initialise(_stdlib.List.emptyInstance())]]);};
 
   async _initialise() {
     this.strArr = system.literalArray(["apple", "orange", "pair"]);
     return this;
   }
 
-  strArr = system.initialise(_stdlib.Array.emptyInstance());
+  strArr = system.initialise(_stdlib.List.emptyInstance());
 
 }
 return [main, _tests];}`;

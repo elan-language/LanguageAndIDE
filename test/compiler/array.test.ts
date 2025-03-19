@@ -67,14 +67,14 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to new Array<of String>()
+  variable a set to new List<of String>()
   print a.length()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(await new _stdlib.Array()._initialise());
+  let a = system.initialise(await new _stdlib.List()._initialise());
   await system.printLine(a.length());
 }
 return [main, _tests];}`;
@@ -205,7 +205,7 @@ end class
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to createArray(3, empty Array<of Int>)
+  variable a set to createArray(3, empty List<of Int>)
   print a
 end main`;
 
@@ -486,27 +486,27 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to empty Array<of Int>
-  variable b set to empty Array<of Int>
+  variable a set to empty List<of Int>
+  variable b set to empty List<of Int>
   call a.append(3)
   print a
   print b
   print a is b
-  print a is empty Array<of Int>
-  print b is empty Array<of Int>
+  print a is empty List<of Int>
+  print b is empty List<of Int>
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(_stdlib.Array.emptyInstance());
-  let b = system.initialise(_stdlib.Array.emptyInstance());
+  let a = system.initialise(_stdlib.List.emptyInstance());
+  let b = system.initialise(_stdlib.List.emptyInstance());
   a.append(3);
   await system.printLine(a);
   await system.printLine(b);
   await system.printLine(system.objectEquals(a, b));
-  await system.printLine(system.objectEquals(a, system.initialise(_stdlib.Array.emptyInstance())));
-  await system.printLine(system.objectEquals(b, system.initialise(_stdlib.Array.emptyInstance())));
+  await system.printLine(system.objectEquals(a, system.initialise(_stdlib.List.emptyInstance())));
+  await system.printLine(system.objectEquals(b, system.initialise(_stdlib.List.emptyInstance())));
 }
 return [main, _tests];}`;
 
@@ -523,7 +523,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to empty Array<of Int>
+  variable a set to empty List<of Int>
   call a.putAt(0, 3)
 end main`;
 
@@ -586,7 +586,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to new Array<of String>[3][4]
+  variable a set to new List<of String>[3][4]
   print a[0, 0]
   print a[2, 3]
 end main
@@ -637,7 +637,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to new Array<of Int>()
+  variable a set to new List<of Int>()
   print a[0, 0]
 end main
 `;
@@ -646,14 +646,14 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot double index Array<of Int>"]);
+    assertDoesNotCompile(fileImpl, ["Cannot double index List<of Int>"]);
   });
 
   test("Fail_IndexTypeIncompatibility", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to new Array<of String>()
+  variable a set to new List<of String>()
   call a.putAt(0, "fred")
   call a.putAt(1, "bill")
   variable b set to 0
@@ -672,7 +672,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to new Array<of String>()
+  variable a set to new List<of String>()
   call a.append(1)
 end main
 `;
@@ -703,7 +703,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to new Array<of String>()
+  variable a set to new List<of String>()
   call a.putAt("b", "fred")
 end main
 `;
@@ -738,7 +738,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to new Array<of String>[3]
+  variable a set to new List<of String>[3]
 end main
 `;
 
@@ -753,7 +753,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to new Array<of String>() {"foo","bar","yon"}
+  variable a set to new List<of String>() {"foo","bar","yon"}
 end main
 `;
 
@@ -776,7 +776,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'get' is not defined for type 'Array'"]);
+    assertDoesNotCompile(fileImpl, ["'get' is not defined for type 'List'"]);
   });
 
   test("Fail_getRange", async () => {
@@ -792,7 +792,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'getRange' is not defined for type 'Array'"]);
+    assertDoesNotCompile(fileImpl, ["'getRange' is not defined for type 'List'"]);
   });
 
   test("Pass_withPutAt", async () => {
@@ -871,7 +871,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'withRemove' is not defined for type 'Array'"]);
+    assertDoesNotCompile(fileImpl, ["'withRemove' is not defined for type 'List'"]);
   });
 
   test("Fail_appendWithPlus", async () => {
@@ -889,7 +889,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int Provided: Array<of String>",
+      "Incompatible types. Expected: Float or Int Provided: List<of String>",
     ]);
   });
 
@@ -908,7 +908,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Array<of String> Provided: String",
+      "Incompatible types. Expected: List<of String> Provided: String",
     ]);
   });
 
@@ -1008,7 +1008,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-    variable a set to new Array()
+    variable a set to new List()
     print a
 end main`;
 
@@ -1188,7 +1188,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable f set to empty Array
+  variable f set to empty List
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);

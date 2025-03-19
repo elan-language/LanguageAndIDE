@@ -79,7 +79,7 @@ main
   print foo(a)
 end main
 
-function foo(arr as Array<of Array<of Int>>) returns Array<of Array<of Int>>
+function foo(arr as List<of List<of Int>>) returns List<of List<of Int>>
   return bar(arr)
 end function`;
 
@@ -88,7 +88,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: arr (Array<of Array<of Int>>) Provided: Array2D<of Int>",
+      "Argument types. Expected: arr (List<of List<of Int>>) Provided: Array2D<of Int>",
     ]);
   });
 

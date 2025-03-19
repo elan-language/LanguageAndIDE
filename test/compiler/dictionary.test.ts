@@ -945,7 +945,7 @@ end class`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable f set to empty Array<of Int>
+  variable f set to empty List<of Int>
   variable a set to [f:1]
 end main
 
@@ -956,7 +956,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Dictionary cannot have key of type 'Array<of Int>'"]);
+    assertDoesNotCompile(fileImpl, ["Dictionary cannot have key of type 'List<of Int>'"]);
   });
 
   test("Fail_LiteralDictionaryOfMutableClassKey", async () => {
@@ -1013,14 +1013,14 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to empty Dictionary<of Array<of Int>, Int>
+  variable a set to empty Dictionary<of List<of Int>, Int>
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Dictionary cannot have key of type 'Array<of Int>'"]);
+    assertDoesNotCompile(fileImpl, ["Dictionary cannot have key of type 'List<of Int>'"]);
   });
 
   test("Fail_DictionaryOfListKey", async () => {

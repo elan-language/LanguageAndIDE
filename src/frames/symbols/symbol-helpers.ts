@@ -53,7 +53,7 @@ export function isListImmutableType(s?: SymbolType): s is ClassType {
 }
 
 export function isListType(s?: SymbolType): s is ClassType {
-  return !!s && s instanceof ClassType && s.className === "Array";
+  return !!s && s instanceof ClassType && s.className === "List";
 }
 
 export function isIndexableType(s?: SymbolType): boolean {

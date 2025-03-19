@@ -584,7 +584,7 @@ main
   variable a set to [1,2]
   variable x set to tuple(3, a)
   variable y set to 0
-  variable z set to empty Array<of Int>
+  variable z set to empty List<of Int>
   set y, z to x
   print y
   print z
@@ -597,7 +597,7 @@ async function main() {
   let a = system.literalArray([1, 2]);
   let x = system.tuple([3, a]);
   let y = 0;
-  let z = system.initialise(_stdlib.Array.emptyInstance());
+  let z = system.initialise(_stdlib.List.emptyInstance());
   [y, z] = x;
   await system.printLine(y);
   await system.printLine(z);

@@ -296,8 +296,8 @@ main
   print l([5])
 end main
     
-function getFunc(x as Int) returns Func<of Array<of Int> => Array<of Int>>
-  return lambda y as Array<of Int> => [x * y[0]]
+function getFunc(x as Int) returns Func<of List<of Int> => List<of Int>>
+  return lambda y as List<of Int> => [x * y[0]]
 end function`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -439,7 +439,7 @@ end procedure`;
   test("Fail_LambdaWithListOfMutableType1", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
-procedure printModified(i as Int, f as Func<of => ListImmutable<of Array<of Int>>>)
+procedure printModified(i as Int, f as Func<of => ListImmutable<of List<of Int>>>)
   
 end procedure`;
 
@@ -447,13 +447,13 @@ end procedure`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'Array<of Int>'"]);
+    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'List<of Int>'"]);
   });
 
   test("Fail_LambdaWithListOfMutableType2", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
-procedure printModified(i as Int, f as Func<of ListImmutable<of Array<of Int>> => Int>)
+procedure printModified(i as Int, f as Func<of ListImmutable<of List<of Int>> => Int>)
   
 end procedure`;
 
@@ -461,6 +461,6 @@ end procedure`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'Array<of Int>'"]);
+    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'List<of Int>'"]);
   });
 });
