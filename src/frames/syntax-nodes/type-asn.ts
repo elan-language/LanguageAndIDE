@@ -101,6 +101,8 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
 
   compileToEmptyObjectCode(): string {
     const st = this.symbolType();
+
+    mustBeKnownSymbolType(st, this.id, this.compileErrors, this.fieldId);
     this.checkForImmutableTypes(st);
     return st.initialValue;
   }

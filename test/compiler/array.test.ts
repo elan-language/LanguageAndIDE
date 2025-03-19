@@ -1169,4 +1169,18 @@ end class`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["To evaluate function 'bar' add brackets."]);
   });
+
+  test("Fail_LiteralArrayOfEmptyUnknownClass", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable f set to [empty Foo]
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'Foo' is not defined"]);
+  });
 });
