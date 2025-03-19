@@ -136,12 +136,12 @@ export class ElanSet<T1> {
   }
 
   @elanFunction([], FunctionOptions.pure, ElanClass(ListImmutable))
-  asList(): ListImmutable<T1> {
+  asListImmutable(): ListImmutable<T1> {
     return this.system.initialise(new ListImmutable(Array.from(this.contents)));
   }
 
   @elanFunction([], FunctionOptions.pureAsync, ElanString)
   async asString(): Promise<string> {
-    return await this.stdlib.asString(this.asList());
+    return await this.stdlib.asString(this.asListImmutable());
   }
 }

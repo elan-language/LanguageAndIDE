@@ -575,7 +575,7 @@ function FailNotAssignable(
   // special case
   // todo fix
   if (isListImmutableType(lhs) && isListType(rhs)) {
-    addInfo = " try converting with '.asList()'";
+    addInfo = " try converting with '.asListImmutable()'";
   }
 
   if (knownType(lhs) && knownType(rhs)) {

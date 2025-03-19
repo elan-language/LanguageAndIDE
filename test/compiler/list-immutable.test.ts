@@ -12,8 +12,8 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("List", () => {
-  test("Pass_literalList", async () => {
+suite("ListImmutable", () => {
+  test("Pass_literalListImmutable", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -38,7 +38,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "{4, 5, 6, 7, 8}");
   });
 
-  test("Pass_literalListofList", async () => {
+  test("Pass_literalListImmutableofListImmutable", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -63,7 +63,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "{{4, 5}, {6, 7, 8}}");
   });
 
-  test("Pass_literalListOfRecord", async () => {
+  test("Pass_literalListImmutableOfRecord", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -100,7 +100,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "{a Foo}");
   });
 
-  test("Pass_literalListOfValueId", async () => {
+  test("Pass_lImmutableOfValueId", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -175,7 +175,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "{1}{1.1}{c}{d}{true}");
   });
 
-  test("Pass_literalListOfString", async () => {
+  test("Pass_literalListImmutableOfString", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -200,7 +200,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "{Foo, Bar}");
   });
 
-  test("Pass_literalListWithCoercion", async () => {
+  test("Pass_literalListImmutableWithCoercion", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -250,7 +250,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "5");
   });
 
-  test("Pass_emptyList", async () => {
+  test("Pass_emptyListImmutable", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -476,7 +476,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "{6, 7, 8}{5, 6}{4, 5}");
   });
 
-  test("Pass_addElementToList", async () => {
+  test("Pass_addElementToListImmutable", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -704,7 +704,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "{}");
   });
 
-  test("Pass_EmptyImmutableList", async () => {
+  test("Pass_EmptyListImmutable", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -819,7 +819,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "{a Point}");
   });
 
-  test("Fail_emptyLiteralList", async () => {
+  test("Fail_emptyLiteralListImmutable", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -833,7 +833,7 @@ end main
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_literalListInconsistentTypes1", async () => {
+  test("Fail_literalListImmutableInconsistentTypes1", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -848,7 +848,7 @@ end main
     assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: String"]);
   });
 
-  test("Fail_literalListInconsistentTypes2", async () => {
+  test("Fail_literalListImmutableInconsistentTypes2", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -1041,7 +1041,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: ListImmutable<of Int> try converting with '.asList()' Provided: Array<of Int>",
+      "Incompatible types. Expected: ListImmutable<of Int> try converting with '.asListImmutable()' Provided: Array<of Int>",
     ]);
   });
 
@@ -1121,7 +1121,7 @@ end main`;
     ]);
   });
 
-  test("Fail_LiteralListOfMutableClass", async () => {
+  test("Fail_ListImmutableOfMutableClass", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -1139,7 +1139,7 @@ end class`;
     assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'Foo'"]);
   });
 
-  test("Fail_LiteralListOfArray", async () => {
+  test("Fail_LiteralListImmutableOfArray", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -1157,7 +1157,7 @@ end class`;
     assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'Array<of Int>'"]);
   });
 
-  test("Fail_LiteralListOfDictionary", async () => {
+  test("Fail_LiteralListImmutableOfDictionary", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -1177,7 +1177,7 @@ end class`;
     ]);
   });
 
-  test("Fail_LiteralListOfEmptyUnknownClass", async () => {
+  test("Fail_LiteralListImmutableOfEmptyUnknownClass", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main

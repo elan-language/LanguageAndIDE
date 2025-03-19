@@ -433,7 +433,7 @@ end main`;
     ]);
 
     assertDoesNotCompileWithId(fileImpl, "set15", [
-      "Incompatible types. Expected: ListImmutable<of Float> try converting with '.asList()' Provided: Array<of String>",
+      "Incompatible types. Expected: ListImmutable<of Float> try converting with '.asListImmutable()' Provided: Array<of String>",
     ]);
 
     assertDoesNotCompileWithId(fileImpl, "set18", [
