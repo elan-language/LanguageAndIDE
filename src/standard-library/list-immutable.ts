@@ -31,7 +31,7 @@ import {
   withRemoveFirstHelper,
 } from "./data-structure-helpers";
 
-@elanClass(ClassOption.listImmutable, [ElanT1], [], [], [], "ListImmutable")
+@elanClass(ClassOption.listImmutable, [ElanT1], [], [], [])
 export class ListImmutable<T1> {
   // this must be implemented by hand on all stdlib classes
   static emptyInstance() {

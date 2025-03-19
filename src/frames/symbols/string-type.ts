@@ -26,7 +26,7 @@ export class StringType implements GenericSymbolType {
   name = StringName;
 
   toString(): string {
-    return `String`;
+    return this.name;
   }
 
   isAssignableFrom(otherType: SymbolType): boolean {

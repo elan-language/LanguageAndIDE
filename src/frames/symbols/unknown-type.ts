@@ -12,7 +12,7 @@ export class UnknownType implements SymbolType {
   name = "Unknown";
 
   toString(): string {
-    return `Unknown`;
+    return this.name;
   }
 
   isAssignableFrom(_otherType: SymbolType): boolean {

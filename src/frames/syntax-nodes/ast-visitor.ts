@@ -63,6 +63,7 @@ import { TypeTupleNode } from "../parse-nodes/type-tuple-node";
 import { UnaryExpression } from "../parse-nodes/unary-expression";
 import { WithClause } from "../parse-nodes/with-clause";
 import { SetStatement } from "../statements/set-statement";
+import { FuncName, TupleName } from "../symbols/elan-type-names";
 import { EnumType } from "../symbols/enum-type";
 import { wrapScopeInScope } from "../symbols/symbol-helpers";
 import { isAstIdNode, mapOperation } from "./ast-helpers";
@@ -245,15 +246,13 @@ export function transform(
   }
 
   if (node instanceof TypeFuncNode) {
-    const type = "Func";
-
     const inp = node.inputTypes?.matchedNode
       ? transformMany(node.inputTypes.matchedNode as CSV, fieldId, scope).items
       : [];
 
     const oup = node.returnType ? [transform(node.returnType, fieldId, scope)!] : [];
 
-    return new TypeAsn(type, inp.concat(oup), fieldId, scope);
+    return new TypeAsn(FuncName, inp.concat(oup), fieldId, scope);
   }
 
   if (node instanceof TypeSimpleNode) {
@@ -413,7 +412,7 @@ export function transform(
 
   if (node instanceof TypeTupleNode) {
     const gp = transformMany(node.types as CSV, fieldId, scope).items;
-    return new TypeAsn("Tuple", gp, fieldId, scope);
+    return new TypeAsn(TupleName, gp, fieldId, scope);
   }
 
   if (node instanceof RangeNode) {

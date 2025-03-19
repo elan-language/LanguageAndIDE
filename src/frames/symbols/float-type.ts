@@ -13,7 +13,7 @@ export class FloatType implements SymbolType {
   name = FloatName;
 
   toString(): string {
-    return `Float`;
+    return this.name;
   }
 
   isAssignableFrom(otherType: SymbolType): boolean {

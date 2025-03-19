@@ -3,6 +3,7 @@ import { ElanSymbol } from "../interfaces/elan-symbol";
 import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../interfaces/transforms";
 import { BooleanType } from "./boolean-type";
+import { FuncName, TupleName } from "./elan-type-names";
 import { FloatType } from "./float-type";
 import { FunctionType } from "./function-type";
 import { GenericParameterType } from "./generic-parameter-type";
@@ -53,7 +54,7 @@ const regExpSymbol: ElanSymbol = {
 };
 
 const tupleSymbol: ClassSymbol = {
-  symbolId: "Tuple",
+  symbolId: TupleName,
   symbolType: function (_transforms?: Transforms): SymbolType {
     return new TupleType([new GenericParameterType("T1"), new GenericParameterType("T2")]);
   },
@@ -65,7 +66,7 @@ const tupleSymbol: ClassSymbol = {
 };
 
 const funcSymbol: ClassSymbol = {
-  symbolId: "Func",
+  symbolId: FuncName,
   symbolType: function (_transforms?: Transforms): SymbolType {
     return new FunctionType(
       ["T"],

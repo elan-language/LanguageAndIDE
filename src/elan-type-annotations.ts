@@ -18,10 +18,13 @@ import { BooleanType } from "./frames/symbols/boolean-type";
 import { ClassSubType, ClassType } from "./frames/symbols/class-type";
 import {
   BooleanName,
+  ClassName,
   FloatName,
+  FuncName,
   IntName,
   RegExpName,
   StringName,
+  TupleName,
 } from "./frames/symbols/elan-type-names";
 import { FloatType } from "./frames/symbols/float-type";
 import { FunctionType } from "./frames/symbols/function-type";
@@ -166,7 +169,7 @@ export class ElanFuncTypeDescriptor implements TypeDescriptor {
 
   isConstant = true;
 
-  name = "Func";
+  name = FuncName;
 
   mapType(): SymbolType {
     return new FunctionType(
@@ -183,7 +186,7 @@ export class ElanFuncTypeDescriptor implements TypeDescriptor {
 export class ElanTupleTypeDescriptor implements TypeDescriptor {
   constructor(public readonly parameters: TypeDescriptor[]) {}
 
-  name = "Tuple";
+  name = TupleName;
 
   isConstant = true;
 
@@ -206,7 +209,7 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
 
   isClass = true;
 
-  name = "Class";
+  name = ClassName;
 
   classId(className: string, classMetadata: ElanClassDescriptor) {
     const ofTypeNames = (this.ofTypes ?? classMetadata.ofTypes).map((td) => td.name).join("_");

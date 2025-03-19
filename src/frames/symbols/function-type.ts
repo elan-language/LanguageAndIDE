@@ -1,5 +1,6 @@
 import { SymbolType } from "../interfaces/symbol-type";
 import { noTypeOptions } from "../interfaces/type-options";
+import { FuncName } from "./elan-type-names";
 
 export class FunctionType implements SymbolType {
   constructor(
@@ -23,7 +24,7 @@ export class FunctionType implements SymbolType {
   }
 
   toString(): string {
-    return "Func";
+    return FuncName;
   }
 
   isAssignableFrom(otherType: SymbolType): boolean {
