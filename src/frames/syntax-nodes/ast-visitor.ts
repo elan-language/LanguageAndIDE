@@ -8,7 +8,6 @@ import { globalKeyword, libraryKeyword, propertyKeyword, thisKeyword } from "../
 import { Index } from "../parse-nodes";
 import { AbstractAlternatives } from "../parse-nodes/abstract-alternatives";
 import { ArgListNode } from "../parse-nodes/arg-list-node";
-import { ArrayNode } from "../parse-nodes/array-node";
 import { BinaryExpression } from "../parse-nodes/binary-expression";
 import { BracketedExpression } from "../parse-nodes/bracketed-expression";
 import { CommaNode } from "../parse-nodes/comma-node";
@@ -33,6 +32,7 @@ import { KeywordNode } from "../parse-nodes/keyword-node";
 import { KVPnode } from "../parse-nodes/kvp-node";
 import { Lambda } from "../parse-nodes/lambda";
 import { ListImmutableNode } from "../parse-nodes/list-immutable-node";
+import { ListNode } from "../parse-nodes/list-node";
 import { LitFloat } from "../parse-nodes/lit-float";
 import { LitInt } from "../parse-nodes/lit-int";
 import { LitRegExp } from "../parse-nodes/lit-regExp";
@@ -340,7 +340,7 @@ export function transform(
     return new LiteralListImmutableAsn(items, fieldId, scope);
   }
 
-  if (node instanceof ArrayNode) {
+  if (node instanceof ListNode) {
     const items = transformMany(node.csv as CSV, fieldId, scope).items;
     return new LiteralListAsn(items, fieldId, scope);
   }
