@@ -16,6 +16,13 @@ import { SymbolType } from "./frames/interfaces/symbol-type";
 import { getTypeOptions, noTypeOptions, TypeOptions } from "./frames/interfaces/type-options";
 import { BooleanType } from "./frames/symbols/boolean-type";
 import { ClassSubType, ClassType } from "./frames/symbols/class-type";
+import {
+  BooleanName,
+  FloatName,
+  IntName,
+  RegExpName,
+  StringName,
+} from "./frames/symbols/elan-type-names";
 import { FloatType } from "./frames/symbols/float-type";
 import { FunctionType } from "./frames/symbols/function-type";
 import { GenericParameterType } from "./frames/symbols/generic-parameter-type";
@@ -126,15 +133,15 @@ export class ElanValueTypeDescriptor implements TypeDescriptor {
 
   mapType(): SymbolType {
     switch (this.name) {
-      case "Float":
+      case FloatName:
         return FloatType.Instance;
-      case "String":
+      case StringName:
         return StringType.Instance;
-      case "Int":
+      case IntName:
         return IntType.Instance;
-      case "Boolean":
+      case BooleanName:
         return BooleanType.Instance;
-      case "RegExp":
+      case RegExpName:
         return RegExpType.Instance;
     }
     throw new Error("NotImplemented: " + this.name);
@@ -441,11 +448,11 @@ export function elanType(eType: TypeDescriptor) {
   };
 }
 
-export const ElanInt: ElanValueTypeDescriptor = new ElanValueTypeDescriptor("Int");
-export const ElanFloat: ElanValueTypeDescriptor = new ElanValueTypeDescriptor("Float");
-export const ElanString: ElanValueTypeDescriptor = new ElanValueTypeDescriptor("String");
-export const ElanBoolean: ElanValueTypeDescriptor = new ElanValueTypeDescriptor("Boolean");
-export const ElanRegExp: ElanValueTypeDescriptor = new ElanValueTypeDescriptor("RegExp");
+export const ElanInt: ElanValueTypeDescriptor = new ElanValueTypeDescriptor(IntName);
+export const ElanFloat: ElanValueTypeDescriptor = new ElanValueTypeDescriptor(FloatName);
+export const ElanString: ElanValueTypeDescriptor = new ElanValueTypeDescriptor(StringName);
+export const ElanBoolean: ElanValueTypeDescriptor = new ElanValueTypeDescriptor(BooleanName);
+export const ElanRegExp: ElanValueTypeDescriptor = new ElanValueTypeDescriptor(RegExpName);
 
 export const ElanT1: ElanValueTypeDescriptor = new ElanGenericTypeDescriptor("T1");
 export const ElanT2: ElanValueTypeDescriptor = new ElanGenericTypeDescriptor("T2");

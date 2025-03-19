@@ -33,7 +33,7 @@ import {
   withRemoveFirstHelper,
 } from "./data-structure-helpers";
 
-@elanClass(ClassOption.list, [ElanT1], [], [], [], "List")
+@elanClass(ClassOption.list, [ElanT1], [], [], [])
 export class List<T1> {
   // this must be implemented by hand on all stdlib classes
   static emptyInstance() {

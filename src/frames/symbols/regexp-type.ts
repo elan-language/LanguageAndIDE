@@ -1,5 +1,6 @@
 import { SymbolType } from "../interfaces/symbol-type";
 import { immutableTypeOptions } from "../interfaces/type-options";
+import { RegExpName } from "./elan-type-names";
 
 export class RegExpType implements SymbolType {
   private constructor() {}
@@ -10,7 +11,7 @@ export class RegExpType implements SymbolType {
 
   static Instance: SymbolType = new RegExpType();
 
-  name = "RegExp";
+  name = RegExpName;
 
   toString(): string {
     return `RegExp`;

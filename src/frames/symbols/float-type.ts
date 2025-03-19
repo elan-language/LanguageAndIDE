@@ -1,5 +1,6 @@
 import { SymbolType } from "../interfaces/symbol-type";
 import { immutableTypeOptions } from "../interfaces/type-options";
+import { FloatName } from "./elan-type-names";
 import { isNumber } from "./symbol-helpers";
 
 export class FloatType implements SymbolType {
@@ -9,7 +10,7 @@ export class FloatType implements SymbolType {
   typeOptions = immutableTypeOptions;
 
   static Instance: SymbolType = new FloatType();
-  name = "Float";
+  name = FloatName;
 
   toString(): string {
     return `Float`;

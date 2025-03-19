@@ -1,5 +1,6 @@
 import { GenericSymbolType } from "../interfaces/generic-symbol-type";
 import { SymbolType } from "../interfaces/symbol-type";
+import { StringName } from "./elan-type-names";
 
 export class StringType implements GenericSymbolType {
   private constructor() {}
@@ -22,7 +23,7 @@ export class StringType implements GenericSymbolType {
 
   static Instance: SymbolType = new StringType();
 
-  name = "String";
+  name = StringName;
 
   toString(): string {
     return `String`;
