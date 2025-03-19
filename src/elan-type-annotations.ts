@@ -10,6 +10,7 @@ import {
   isProcedureDescriptor,
   TypeDescriptor,
 } from "./elan-type-interfaces";
+import { Class } from "./frames/interfaces/class";
 import { ElanSymbol } from "./frames/interfaces/elan-symbol";
 import { Scope } from "./frames/interfaces/scope";
 import { SymbolType } from "./frames/interfaces/symbol-type";
@@ -276,7 +277,7 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
     );
 
     for (const c of children) {
-      classTypeDef.children.push(getSymbol(c[0], c[1], SymbolScope.member, c[2]));
+      classTypeDef.children.push(getSymbol(c[0], c[1], SymbolScope.member, c[2], classTypeDef));
     }
 
     const actualOfTypes = this.ofTypes ?? classMetadata.ofTypes;
@@ -630,20 +631,30 @@ export function getSymbol(
   st: SymbolType,
   ss: SymbolScope,
   mt?: MemberType,
+  cls?: Class,
 ): ElanSymbol {
   if (st instanceof ClassType) {
     return st.scope!;
   }
 
-  const symbol = {
-    symbolId: id,
-    symbolType: () => st,
-    symbolScope: ss,
-  } as ElanSymbol;
+  let symbol: ElanSymbol;
 
   if (ss === SymbolScope.member) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (symbol as any)["isMember"] = true;
+    symbol = {
+      symbolId: id,
+      symbolType: () => st,
+      symbolScope: ss,
+      isMember: true,
+      private: false,
+      isAbstract: false,
+      getClass: () => cls,
+    } as ElanSymbol;
+  } else {
+    symbol = {
+      symbolId: id,
+      symbolType: () => st,
+      symbolScope: ss,
+    } as ElanSymbol;
   }
 
   if (mt === MemberType.property) {

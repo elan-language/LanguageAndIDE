@@ -566,6 +566,52 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "0");
   });
 
+  test("Pass_ProcedureNameMatchesCalledProcedureName", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  let f be new Foo()
+  call f.append()
+end main
+
+class Foo
+  property p1 as List<of Int>
+
+  procedure append()
+    call property.p1.append(1)
+    print property.p1
+  end procedure
+end class`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  const f = system.initialise(await new Foo()._initialise());
+  await f.append();
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", system.initialise(_stdlib.List.emptyInstance())]]);};
+  async _initialise() { return this; }
+  p1 = system.initialise(_stdlib.List.emptyInstance());
+
+  async append() {
+    this.p1.append(1);
+    await system.printLine(this.p1);
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[1]");
+  });
+
   test("Fail_InitialisePropertyInLine", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 

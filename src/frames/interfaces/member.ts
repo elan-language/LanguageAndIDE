@@ -1,8 +1,8 @@
-import { ClassFrame } from "../globals/class-frame";
+import { Class } from "./class";
 
 export interface Member {
   isMember: boolean;
   private: boolean;
   isAbstract: boolean;
-  getClass(): ClassFrame;
+  getClass(): Class;
 }

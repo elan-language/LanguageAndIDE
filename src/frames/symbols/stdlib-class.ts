@@ -1,3 +1,4 @@
+import { isMember } from "../frame-helpers";
 import { Class } from "../interfaces/class";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Scope } from "../interfaces/scope";
@@ -113,19 +114,27 @@ export class StdLibClass implements Class {
       this.ofTypes.forEach((t, i) => matches.set(`T${i + 1}`, t));
 
       const st1 = generateType(st, matches);
+      let reifiedSymbol: ElanSymbol;
 
-      const newSymbol = {
-        symbolId: symbol.symbolId,
-        symbolType: () => st1,
-        symbolScope: symbol.symbolScope,
-      } as ElanSymbol;
-
-      if ("isMember" in symbol) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (newSymbol as any)["isMember"] = true;
+      if (isMember(symbol)) {
+        reifiedSymbol = {
+          symbolId: symbol.symbolId,
+          symbolType: () => st1,
+          symbolScope: symbol.symbolScope,
+          isMember: symbol.isMember,
+          private: symbol.private,
+          isAbstract: symbol.isAbstract,
+          getClass: symbol.getClass,
+        } as ElanSymbol;
+      } else {
+        reifiedSymbol = {
+          symbolId: symbol.symbolId,
+          symbolType: () => st1,
+          symbolScope: symbol.symbolScope,
+        } as ElanSymbol;
       }
 
-      return newSymbol;
+      return reifiedSymbol;
     }
 
     return symbol;
