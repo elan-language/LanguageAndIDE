@@ -28,11 +28,13 @@ import { System } from "../system";
 import { BaseVG } from "./base-vg";
 import { BlockGraphics } from "./block-graphics";
 import { CircleVG } from "./circle-vg";
+import { Dictionary } from "./dictionary";
+import { DictionaryImmutable } from "./dictionary-immutable";
 import { ElanArray } from "./elan-array";
 import { ElanArray2D } from "./elan-array-2d";
 import { GraphicsBase } from "./graphics-base";
 import { LineVG } from "./line-vg";
-import { List } from "./list";
+import { ListImmutable } from "./list-immutable";
 import { Queue } from "./queue";
 import { Random } from "./random";
 import { RectangleVG } from "./rectangle-vg";
@@ -42,8 +44,6 @@ import { TextFileReader } from "./text-file-reader";
 import { TextFileWriter } from "./text-file-writer";
 import { Turtle } from "./turtle";
 import { VectorGraphics } from "./vector-graphics";
-import { Dictionary } from "./dictionary";
-import { DictionaryImmutable } from "./dictionary-immutable";
 
 export class StdLib {
   constructor() {
@@ -98,8 +98,8 @@ export class StdLib {
   @elanClassExport(ElanArray2D)
   Array2D = ElanArray2D;
 
-  @elanClassExport(List)
-  List = List;
+  @elanClassExport(ListImmutable)
+  List = ListImmutable;
 
   @elanClassExport(Dictionary)
   Dictionary = Dictionary;
@@ -231,13 +231,13 @@ export class StdLib {
     return ss.indexOf(item);
   }
 
-  @elanFunction(["start", "end"], FunctionOptions.pure, ElanClass(List, [ElanInt]))
-  range(@elanIntType() start: number, @elanIntType() end: number): List<number> {
+  @elanFunction(["start", "end"], FunctionOptions.pure, ElanClass(ListImmutable, [ElanInt]))
+  range(@elanIntType() start: number, @elanIntType() end: number): ListImmutable<number> {
     const seq = [];
     for (let i = start; i <= end; i++) {
       seq.push(i);
     }
-    return this.system.initialise(new List(seq));
+    return this.system.initialise(new ListImmutable(seq));
   }
 
   @elanFunction(["match", "replacement"], FunctionOptions.pureExtension)
@@ -290,18 +290,24 @@ export class StdLib {
     return s.trim();
   }
 
-  @elanFunction(["", "separator"], FunctionOptions.pureExtension, ElanClass(List))
-  split(s: string, separator: string): List<string> {
-    return this.system.initialise(new List(s.split(separator)));
+  @elanFunction(["", "separator"], FunctionOptions.pureExtension, ElanClass(ListImmutable))
+  split(s: string, separator: string): ListImmutable<string> {
+    return this.system.initialise(new ListImmutable(s.split(separator)));
   }
 
   @elanFunction(["", "separator"], FunctionOptions.pureExtension)
-  join(@elanClassType(List, [ElanString]) list: List<string>, separator: string): string {
+  join(
+    @elanClassType(ListImmutable, [ElanString]) list: ListImmutable<string>,
+    separator: string,
+  ): string {
     return [...list].join(separator);
   }
 
   @elanFunction(["", "separator"], FunctionOptions.pureExtension)
-  joinArray(@elanClassType(ElanArray, [ElanString]) list: List<string>, separator: string): string {
+  joinArray(
+    @elanClassType(ElanArray, [ElanString]) list: ListImmutable<string>,
+    separator: string,
+  ): string {
     return [...list].join(separator);
   }
 
@@ -332,13 +338,17 @@ export class StdLib {
     return n > fl ? fl + 1 : fl;
   }
 
-  @elanFunction(["", "lambdaOrFunctionRef"], FunctionOptions.pureAsyncExtension, ElanClass(List))
+  @elanFunction(
+    ["", "lambdaOrFunctionRef"],
+    FunctionOptions.pureAsyncExtension,
+    ElanClass(ListImmutable),
+  )
   async filter(
     @elanStringType()
     source: string,
     @elanFuncType([ElanString], ElanBoolean)
     predicate: (value: string) => Promise<boolean>,
-  ): Promise<List<string>> {
+  ): Promise<ListImmutable<string>> {
     const list = source.split("");
 
     const asyncFilter = async (list: string[], predicate: (value: string) => Promise<boolean>) => {
@@ -349,10 +359,14 @@ export class StdLib {
 
     const result = await asyncFilter(list, predicate);
 
-    return this.system.initialise(new List(result));
+    return this.system.initialise(new ListImmutable(result));
   }
 
-  @elanFunction(["", "lambdaOrFunctionRef"], FunctionOptions.pureAsyncExtension, ElanClass(List))
+  @elanFunction(
+    ["", "lambdaOrFunctionRef"],
+    FunctionOptions.pureAsyncExtension,
+    ElanClass(ListImmutable),
+  )
   async map(
     @elanStringType()
     source: string,
@@ -363,7 +377,7 @@ export class StdLib {
 
     const results = await Promise.all(list.map(predicate));
 
-    return this.system.initialise(new List(results));
+    return this.system.initialise(new ListImmutable(results));
   }
 
   @elanFunction(
@@ -390,24 +404,28 @@ export class StdLib {
   }
 
   @elanFunction([], FunctionOptions.pureExtension)
-  max(@elanClassType(List, [ElanFloat]) source: List<number>): number {
+  max(@elanClassType(ListImmutable, [ElanFloat]) source: ListImmutable<number>): number {
     return Math.max(...source);
   }
 
   @elanFunction([], FunctionOptions.pureExtension)
-  min(@elanClassType(List, [ElanFloat]) source: List<number>): number {
+  min(@elanClassType(ListImmutable, [ElanFloat]) source: ListImmutable<number>): number {
     return Math.min(...source);
   }
 
-  @elanFunction(["", "lambdaOrFunctionRef"], FunctionOptions.pureAsyncExtension, ElanClass(List))
+  @elanFunction(
+    ["", "lambdaOrFunctionRef"],
+    FunctionOptions.pureAsyncExtension,
+    ElanClass(ListImmutable),
+  )
   async sortBy(
     source: string,
     @elanFuncType([ElanString, ElanString], ElanInt)
     predicate: (a: string, b: string) => Promise<number>,
-  ): Promise<List<string>> {
+  ): Promise<ListImmutable<string>> {
     const clone = [...source];
     const results = await this.system.quickSort(clone, predicate);
-    return this.system!.initialise(new List<string>(results));
+    return this.system!.initialise(new ListImmutable<string>(results));
   }
 
   @elanFunction(["", "item"], FunctionOptions.pureExtension)
@@ -802,10 +820,10 @@ export class StdLib {
 
   // conversion
 
-  @elanFunction([], FunctionOptions.pureExtension, ElanClass(List))
-  arrayAsList<T1>(@elanClassType(ElanArray) arr: ElanArray<T1>): List<T1> {
+  @elanFunction([], FunctionOptions.pureExtension, ElanClass(ListImmutable))
+  arrayAsList<T1>(@elanClassType(ElanArray) arr: ElanArray<T1>): ListImmutable<T1> {
     const list = [...arr];
-    return new List(list);
+    return new ListImmutable(list);
   }
 
   @elanFunction([], FunctionOptions.pureExtension, ElanClass(ElanSet))
@@ -815,13 +833,13 @@ export class StdLib {
   }
 
   @elanFunction([], FunctionOptions.pureExtension, ElanClass(ElanArray))
-  listAsArray<T1>(@elanClassType(List) list: List<T1>): ElanArray<T1> {
+  listAsArray<T1>(@elanClassType(ListImmutable) list: ListImmutable<T1>): ElanArray<T1> {
     const newList = [...list];
     return this.system.initialise(new ElanArray(newList));
   }
 
   @elanFunction([], FunctionOptions.pureExtension, ElanClass(ElanSet))
-  listAsSet<T1>(@elanClassType(List) arr: List<T1>): ElanSet<T1> {
+  listAsSet<T1>(@elanClassType(ListImmutable) arr: ListImmutable<T1>): ElanSet<T1> {
     const set = this.system.initialise(new ElanSet<T1>());
     return set.addFromArray(this.listAsArray(arr));
   }

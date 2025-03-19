@@ -6,7 +6,7 @@ import { hasHiddenType } from "./has-hidden-type";
 import { Dictionary } from "./standard-library/dictionary";
 import { DictionaryImmutable } from "./standard-library/dictionary-immutable";
 import { ElanArray } from "./standard-library/elan-array";
-import { List } from "./standard-library/list";
+import { ListImmutable } from "./standard-library/list-immutable";
 import { WebWorkerBreakpointMessage } from "./web/web-worker-messages";
 
 export class AssertOutcome {
@@ -53,7 +53,7 @@ export class System {
   }
 
   list(t: Array<any>) {
-    return this.initialise(new List(t));
+    return this.initialise(new ListImmutable(t));
   }
 
   dictionary(t: []) {
@@ -183,8 +183,8 @@ export class System {
     return await this.elanInputOutput.readLine();
   }
 
-  concat<T>(lhs: List<T> | T, rhs: List<T> | T) {
-    if (lhs instanceof List && rhs instanceof List) {
+  concat<T>(lhs: ListImmutable<T> | T, rhs: ListImmutable<T> | T) {
+    if (lhs instanceof ListImmutable && rhs instanceof ListImmutable) {
       let ret = lhs!;
 
       for (const t of rhs) {
@@ -194,11 +194,11 @@ export class System {
       return ret;
     }
 
-    if (lhs instanceof List) {
+    if (lhs instanceof ListImmutable) {
       return lhs.withAppend(rhs as T);
     }
 
-    return (rhs as List<T>).withPrepend(lhs);
+    return (rhs as ListImmutable<T>).withPrepend(lhs);
   }
 
   equals(i1: any, i2: any) {
@@ -288,7 +288,7 @@ export class System {
     );
   }
 
-  deconstructList<T>(list: ElanArray<T> | List<T>): [T, ElanArray<T> | List<T>] {
+  deconstructList<T>(list: ElanArray<T> | ListImmutable<T>): [T, ElanArray<T> | ListImmutable<T>] {
     return list.deconstructList();
   }
 
