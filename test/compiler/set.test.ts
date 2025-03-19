@@ -230,9 +230,9 @@ return [main, _tests];}`;
 
 main
   let st0 be new Set<of Int>()
-  let st1 be st0.addFromList({2,4,6,3})
+  let st1 be st0.addFromListImmutable({2,4,6,3})
   print st1
-  let st2 be st1.addFromList({2,5,6})
+  let st2 be st1.addFromListImmutable({2,5,6})
   print st2
 end main`;
 
@@ -240,9 +240,9 @@ end main`;
 const global = new class {};
 async function main() {
   const st0 = system.initialise(await new _stdlib.Set()._initialise());
-  const st1 = st0.addFromList(system.listImmutable([2, 4, 6, 3]));
+  const st1 = st0.addFromListImmutable(system.listImmutable([2, 4, 6, 3]));
   await system.printLine(st1);
-  const st2 = st1.addFromList(system.listImmutable([2, 5, 6]));
+  const st2 = st1.addFromListImmutable(system.listImmutable([2, 5, 6]));
   await system.printLine(st2);
 }
 return [main, _tests];}`;
@@ -260,9 +260,9 @@ return [main, _tests];}`;
 
 main
   let st0 be new Set<of Int>()
-  let st1 be st0.addFromArray([2,4,6,3])
+  let st1 be st0.addFromList([2,4,6,3])
   print st1
-  let st2 be st1.addFromArray([2,5,6])
+  let st2 be st1.addFromList([2,5,6])
   print st2
 end main`;
 
@@ -270,9 +270,9 @@ end main`;
 const global = new class {};
 async function main() {
   const st0 = system.initialise(await new _stdlib.Set()._initialise());
-  const st1 = st0.addFromArray(system.literalList([2, 4, 6, 3]));
+  const st1 = st0.addFromList(system.literalList([2, 4, 6, 3]));
   await system.printLine(st1);
-  const st2 = st1.addFromArray(system.literalList([2, 5, 6]));
+  const st2 = st1.addFromList(system.literalList([2, 5, 6]));
   await system.printLine(st2);
 }
 return [main, _tests];}`;

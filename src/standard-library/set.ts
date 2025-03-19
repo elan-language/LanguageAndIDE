@@ -70,7 +70,7 @@ export class ElanSet<T1> {
   }
 
   @elanFunction([], FunctionOptions.pure, ElanClass(ElanSet))
-  addFromList(@elanClassType(ListImmutable) list: ListImmutable<T1>): ElanSet<T1> {
+  addFromListImmutable(@elanClassType(ListImmutable) list: ListImmutable<T1>): ElanSet<T1> {
     const copy = this.copyOfThis();
     for (const item of list) {
       copy.contents.add(item as T1);
@@ -79,7 +79,7 @@ export class ElanSet<T1> {
   }
 
   @elanFunction([], FunctionOptions.pure, ElanClass(ElanSet))
-  addFromArray(@elanClassType(List) list: List<T1>): ElanSet<T1> {
+  addFromList(@elanClassType(List) list: List<T1>): ElanSet<T1> {
     const copy = this.copyOfThis();
     for (const item of list) {
       copy.contents.add(item as T1);

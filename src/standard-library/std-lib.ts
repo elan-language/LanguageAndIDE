@@ -829,7 +829,7 @@ export class StdLib {
   @elanFunction([], FunctionOptions.pureExtension, ElanClass(ElanSet))
   listAsSet<T1>(@elanClassType(List) arr: List<T1>): ElanSet<T1> {
     const set = this.system.initialise(new ElanSet<T1>());
-    return set.addFromArray(arr);
+    return set.addFromList(arr);
   }
 
   @elanFunction([], FunctionOptions.pureExtension, ElanClass(List))
@@ -841,6 +841,6 @@ export class StdLib {
   @elanFunction([], FunctionOptions.pureExtension, ElanClass(ElanSet))
   listImmutableAsSet<T1>(@elanClassType(ListImmutable) arr: ListImmutable<T1>): ElanSet<T1> {
     const set = this.system.initialise(new ElanSet<T1>());
-    return set.addFromArray(this.listImmutableAsList(arr));
+    return set.addFromList(this.listImmutableAsList(arr));
   }
 }
