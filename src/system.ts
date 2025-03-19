@@ -156,7 +156,7 @@ export class System {
     throw new ElanRuntimeError(`No such key: ${index}`);
   }
 
-  safeArraySet<T>(toIndex: T[], index: number, value: T) {
+  safeListSet<T>(toIndex: T[], index: number, value: T) {
     const size = toIndex.length;
     if (index >= size) {
       throw new ElanRuntimeError(`Out of range index: ${index} size: ${size}`);
@@ -171,7 +171,7 @@ export class System {
       throw new ElanRuntimeError(`Out of range index: ${col} size: ${size}`);
     }
 
-    this.safeArraySet(toIndex[col], row, value);
+    this.safeListSet(toIndex[col], row, value);
   }
 
   async printLine(s: any) {

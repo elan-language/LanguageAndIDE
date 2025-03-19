@@ -309,7 +309,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[[0, 0], [0, 0]]");
   });
 
-  test("Pass_InitialiseArray", async () => {
+  test("Pass_InitialiseArray2D", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -437,7 +437,7 @@ end main`;
     await assertObjectCodeDoesNotExecute(fileImpl, "Out of range index: 0 size: 0");
   });
 
-  test("Fail_2DArrayAccessedAs1D", async () => {
+  test("Fail_Array2DAccessedAs1D", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -507,7 +507,7 @@ end main
     ]);
   });
 
-  test("Fail_singleIndex2DArray", async () => {
+  test("Fail_singleIndexArray2D", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
