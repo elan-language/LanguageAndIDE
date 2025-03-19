@@ -256,7 +256,7 @@ return [main, _tests];}`;
 constant source set to {"three", "four"}
 main
   variable ed set to {"one":1, "two":2}
-  set ed to source.reduce(ed, lambda d as DictionaryImmutable<of String, Int>, x as String => d.withPutAtKey(x, 1))
+  set ed to source.reduce(ed, lambda d as DictionaryImmutable<of String, Int>, x as String => d.withPut(x, 1))
   print ed
 end main`;
 
@@ -267,7 +267,7 @@ const global = new class {
 };
 async function main() {
   let ed = system.dictionaryImmutable([["one", 1], ["two", 2]]);
-  ed = (await global.source.reduce(ed, async (d, x) => d.withPutAtKey(x, 1)));
+  ed = (await global.source.reduce(ed, async (d, x) => d.withPut(x, 1)));
   await system.printLine(ed);
 }
 return [main, _tests];}`;

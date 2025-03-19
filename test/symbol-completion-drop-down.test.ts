@@ -591,8 +591,8 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["withPutAtKey", "*", "*"],
-      ["withRemoveAtKey", "*", "*"],
+      ["withPut", "*", "*"],
+      ["withRemoveAt", "*", "*"],
     ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "expr8", "i", 5, expected);
@@ -612,8 +612,6 @@ end main`;
     const expected = [
       ["keys", "*", "*"],
       ["hasKey", "*", "*"],
-      ["withPutAtKey", "*", "*"],
-      ["withRemoveAtKey", "*", "*"],
     ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "expr8", "e", 5, expected);
@@ -648,7 +646,7 @@ end main`;
 
     const expected = [
       ["put", "*", "*"],
-      ["removeAtKey", "*", "*"],
+      ["removeAt", "*", "*"],
     ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "ident7", ".", 3, expected);
@@ -670,8 +668,8 @@ end main`;
       ["hasKey", "*", "*"],
       ["keys", "*", "*"],
       ["values", "*", "*"],
-      ["withPutAtKey", "*", "*"],
-      ["withRemoveAtKey", "*", "*"],
+      ["withPut", "*", "*"],
+      ["withRemoveAt", "*", "*"],
     ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "expr8", ".", 3, expected);
@@ -693,8 +691,8 @@ end main`;
       ["hasKey", "*", "*"],
       ["keys", "*", "*"],
       ["values", "*", "*"],
-      ["withPutAtKey", "*", "*"],
-      ["withRemoveAtKey", "*", "*"],
+      ["withPut", "*", "*"],
+      ["withRemoveAt", "*", "*"],
     ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "expr8", ".", 3, expected);

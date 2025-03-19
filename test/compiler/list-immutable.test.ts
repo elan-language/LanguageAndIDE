@@ -1,15 +1,15 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
-    assertDoesNotCompile,
-    assertDoesNotParse,
-    assertObjectCodeDoesNotExecute,
-    assertObjectCodeExecutes,
-    assertObjectCodeIs,
-    assertParses,
-    assertStatusIsValid,
-    testHash,
-    transforms,
+  assertDoesNotCompile,
+  assertDoesNotParse,
+  assertObjectCodeDoesNotExecute,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  testHash,
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("ListImmutable", () => {
@@ -917,7 +917,7 @@ end main
 
 main
   variable a set to {"one", "two", "three"}
-  set a to a.withPutAtKey(1, "TWO")
+  set a to a.put(1, "TWO")
   print a
 end main
 `;
@@ -926,7 +926,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'withPutAtKey' is not defined for type 'ListImmutable'"]);
+    assertDoesNotCompile(fileImpl, ["'put' is not defined for type 'ListImmutable'"]);
   });
 
   test("Fail_add", async () => {

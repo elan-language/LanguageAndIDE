@@ -287,7 +287,7 @@ return [main, _tests];}`;
 
 main
   variable a set to ["a":1, "b":3, "z":10]
-  call a.removeAtKey("b")
+  call a.removeAt("b")
   print a
 end main`;
 
@@ -295,7 +295,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
-  a.removeAtKey("b");
+  a.removeAt("b");
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -314,7 +314,7 @@ return [main, _tests];}`;
 
 main
   variable a set to ["a":["a":1], "b":["b":3, "z":10]]
-  call a["b"].removeAtKey("b")
+  call a["b"].removeAt("b")
   print a
 end main`;
 
@@ -322,7 +322,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.dictionary([["a", system.dictionary([["a", 1]])], ["b", system.dictionary([["b", 3], ["z", 10]])]]);
-  system.safeIndex(a, "b").removeAtKey("b");
+  system.safeIndex(a, "b").removeAt("b");
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -341,7 +341,7 @@ return [main, _tests];}`;
 
 main
   variable a set to ["a":1, "b":3, "z":10]
-  call a.removeAtKey("c")
+  call a.removeAt("c")
   print a
 end main`;
 
@@ -349,7 +349,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
-  a.removeAtKey("c");
+  a.removeAt("c");
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -545,7 +545,7 @@ main
   print a[r1]
   print a.keys().length()
 
-  call a.removeAtKey(r1)
+  call a.removeAt(r1)
 
   print a.keys().length()
 end main
@@ -565,7 +565,7 @@ async function main() {
   a.put(r2, 2);
   await system.printLine(system.safeIndex(a, r1));
   await system.printLine(a.keys().length());
-  a.removeAtKey(r1);
+  a.removeAt(r1);
   await system.printLine(a.keys().length());
 }
 
@@ -731,7 +731,7 @@ end main
 
 main
   variable a set to ["a":1, "b":3, "z":10]
-  call a.removeAtKey(10)
+  call a.removeAt(10)
 end main
 `;
 
@@ -760,13 +760,13 @@ end main
     ]);
   });
 
-  test("Pass_withPutAtKey", async () => {
+  test("Pass_withPutAt", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
   let a be ["a":1, "b":3, "z":10]
-  variable b set to a.withPutAtKey("b", 4)
-  variable c set to b.withPutAtKey("d", 2)
+  variable b set to a.withPut("b", 4)
+  variable c set to b.withPut("d", 2)
   print a
   print c
 end main`;
@@ -775,8 +775,8 @@ end main`;
 const global = new class {};
 async function main() {
   const a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
-  let b = a.withPutAtKey("b", 4);
-  let c = b.withPutAtKey("d", 2);
+  let b = a.withPut("b", 4);
+  let c = b.withPut("d", 2);
   await system.printLine(a);
   await system.printLine(c);
 }
@@ -791,12 +791,12 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[a:1, b:3, z:10][a:1, b:4, z:10, d:2]");
   });
 
-  test("Pass_withRemoveAtKey", async () => {
+  test("Pass_withRemoveAt", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
   let a be ["a":1, "b":3, "z":10]
-  variable b set to a.withRemoveAtKey("b")
+  variable b set to a.withRemoveAt("b")
   print a
   print b
 end main`;
@@ -805,7 +805,7 @@ end main`;
 const global = new class {};
 async function main() {
   const a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
-  let b = a.withRemoveAtKey("b");
+  let b = a.withRemoveAt("b");
   await system.printLine(a);
   await system.printLine(b);
 }
