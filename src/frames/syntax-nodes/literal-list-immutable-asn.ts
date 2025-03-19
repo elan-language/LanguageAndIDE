@@ -9,7 +9,7 @@ import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { transforms } from "./ast-helpers";
 
-export class LiteralListAsn extends AbstractAstNode implements AstCollectionNode {
+export class LiteralListImmutableAsn extends AbstractAstNode implements AstCollectionNode {
   constructor(
     public readonly items: AstNode[],
     public readonly fieldId: string,
@@ -37,7 +37,7 @@ export class LiteralListAsn extends AbstractAstNode implements AstCollectionNode
     mustBeImmutableGenericType(this.symbolType(), ofType, this.compileErrors, this.fieldId);
 
     const it = this.items.map((p) => p.compile()).join(", ");
-    return `system.list([${it}])`;
+    return `system.listImmutable([${it}])`;
   }
 
   symbolType() {

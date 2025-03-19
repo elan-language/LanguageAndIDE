@@ -52,7 +52,7 @@ export class System {
     return t;
   }
 
-  list(t: Array<any>) {
+  listImmutable(t: Array<any>) {
     return this.initialise(new ListImmutable(t));
   }
 
@@ -64,7 +64,7 @@ export class System {
     return this.initialise(new DictionaryImmutable(t));
   }
 
-  literalArray(t: Array<any>) {
+  literalList(t: Array<any>) {
     return this.initialise(new List(t));
   }
 

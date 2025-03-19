@@ -35,7 +35,7 @@ export class LiteralArrayAsn extends AbstractAstNode implements AstCollectionNod
     }
 
     const it = this.items.map((p) => p.compile()).join(", ");
-    return `system.literalArray([${it}])`;
+    return `system.literalList([${it}])`;
   }
 
   symbolType() {

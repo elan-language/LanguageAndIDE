@@ -495,9 +495,9 @@ export class StdLib {
   }
 
   @elanFunction(["size", "initialValue"], FunctionOptions.pure, ElanClass(List))
-  createArray<T1>(@elanIntType() x: number, @elanGenericParamT1Type() value: T1) {
+  createList<T1>(@elanIntType() x: number, @elanGenericParamT1Type() value: T1) {
     if (!this.isValueType(value)) {
-      throw new ElanRuntimeError(`Can only create array with simple value`);
+      throw new ElanRuntimeError(`Can only create List with simple value`);
     }
 
     const toInit = [];

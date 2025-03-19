@@ -210,7 +210,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to createArray(11, 0)
+  variable a set to createList(11, 0)
   call foo(a)
 end main
 
@@ -224,7 +224,7 @@ end procedure`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.createArray(11, 0);
+  let a = _stdlib.createList(11, 0);
   let _a24 = [a];
   await foo(_a24);
   a = _a24[0];

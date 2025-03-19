@@ -601,8 +601,8 @@ async function main() {
 }
 
 _tests.push(["test3", async (_outcomes) => {
-  let a = system.list([3, 2, 4, 0]);
-  let b = system.list([3, 2, 4, 0]);
+  let a = system.listImmutable([3, 2, 4, 0]);
+  let b = system.listImmutable([3, 2, 4, 0]);
   _outcomes.push(await system.assert(async () => a, b, "assert12", _stdlib, false));
 }]);
 
@@ -762,7 +762,7 @@ procedure square(x as Int, out y as List<of Int>)
 end procedure
 
 test square
-  variable arr set to createArray(1, 0)
+  variable arr set to createList(1, 0)
   call square(3, arr)
   assert arr[0] is 9
 end test

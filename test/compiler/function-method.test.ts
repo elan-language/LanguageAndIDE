@@ -187,7 +187,7 @@ class Foo {
   p1 = 0;
 
   async times(value) {
-    return system.list([this.p1 * value]);
+    return system.listImmutable([this.p1 * value]);
   }
 
   async asString() {
@@ -286,7 +286,7 @@ class Foo {
   p1 = 0;
 
   async times(value) {
-    return system.list([this.p1 * value]);
+    return system.listImmutable([this.p1 * value]);
   }
 
 }
@@ -386,7 +386,7 @@ class Foo {
   p1 = 0;
 
   async times(value) {
-    return system.literalArray([system.initialise(await new Qux()._initialise())]);
+    return system.literalList([system.initialise(await new Qux()._initialise())]);
   }
 
 }

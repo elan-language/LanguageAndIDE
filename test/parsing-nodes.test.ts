@@ -1428,9 +1428,9 @@ suite("Parsing Nodes", () => {
   // test("#339 call dot function on a literal", () => {
   //   testNodeParse(new MethodCallNode(), `length(bar)`, ParseStatus.valid, "", "");
   //   testNodeParse(new MethodCallNode(), `bar.length()`, ParseStatus.valid, "", "");
-  //   testNodeParse(new MethodCallNode(), `bar.asArray()`, ParseStatus.valid, "", "");
+  //   testNodeParse(new MethodCallNode(), `bar.asList()`, ParseStatus.valid, "", "");
   //   testNodeParse(new LiteralNode(), `{1,2,3,4,5}`, ParseStatus.valid, "", "");
-  //   testNodeParse(new MethodCallNode(), `{1,2,3,4,5}.asArray()`, ParseStatus.valid, "", "");
+  //   testNodeParse(new MethodCallNode(), `{1,2,3,4,5}.asList()`, ParseStatus.valid, "", "");
   //   testNodeParse(new MethodCallNode(), `"Hello World".length()`, ParseStatus.valid, "", "");
   //   testNodeParse(new MethodCallNode(), `12.3.asString()`, ParseStatus.valid, "", "");
   //   testNodeParse(new MethodCallNode(), `bar.`, ParseStatus.incomplete, "", "");

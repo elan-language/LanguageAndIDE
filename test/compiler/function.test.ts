@@ -64,7 +64,7 @@ async function main() {
 }
 
 async function foo(a, b) {
-  return system.literalArray([a, b]);
+  return system.literalList([a, b]);
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -98,7 +98,7 @@ async function main() {
 }
 
 async function foo(a, b) {
-  return system.literalArray([a, b]);
+  return system.literalList([a, b]);
 }
 global["foo"] = foo;
 return [main, _tests];}`;

@@ -131,7 +131,7 @@ export class ElanSet<T1> {
   }
 
   @elanFunction([], FunctionOptions.pure, ElanClass(List))
-  asArray(): List<T1> {
+  asList(): List<T1> {
     return this.system.initialise(new List(Array.from(this.contents)));
   }
 

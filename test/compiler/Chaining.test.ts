@@ -23,7 +23,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.list([system.list([1, 2]), system.list([3, 4])]);
+  let a = system.listImmutable([system.listImmutable([1, 2]), system.listImmutable([3, 4])]);
   let b = system.safeIndex(system.safeIndex(a, 1), 1);
   await system.printLine(b);
 }
@@ -50,7 +50,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.literalArray([system.literalArray([1, 2]), system.literalArray([3, 4])]);
+  let a = system.literalList([system.literalList([1, 2]), system.literalList([3, 4])]);
   let b = system.safeIndex(system.safeIndex(a, 1), 1);
   await system.printLine(b);
 }
@@ -94,7 +94,7 @@ class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["a", system.initialise(_stdlib.ListImmutable.emptyInstance())]]);};
 
   async _initialise() {
-    this.a = system.list([1]);
+    this.a = system.listImmutable([1]);
     return this;
   }
 
@@ -240,7 +240,7 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let f = system.literalArray([system.initialise(await new Foo()._initialise())]);
+  let f = system.literalList([system.initialise(await new Foo()._initialise())]);
   let b = 0;
   b = (await system.safeIndex(f, 0).b.ff());
   await system.printLine(b);
@@ -317,7 +317,7 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let f = system.literalArray([system.initialise(await new Foo()._initialise())]);
+  let f = system.literalList([system.initialise(await new Foo()._initialise())]);
   let b = 0;
   b = (await system.safeIndex(f, 0).b.ff());
   await system.printLine(b);
@@ -450,7 +450,7 @@ class Bar {
   static emptyInstance() { return system.emptyClass(Bar, [["strArr", system.initialise(_stdlib.List.emptyInstance())]]);};
 
   async _initialise() {
-    this.strArr = system.literalArray(["apple", "orange", "pair"]);
+    this.strArr = system.literalList(["apple", "orange", "pair"]);
     return this;
   }
 
@@ -482,7 +482,7 @@ class Foo
   end constructor
 
   function createArr(n as Int) returns List<of Int>
-    return createArray(n, 7)
+    return createList(n, 7)
   end function
 
 end class`;
@@ -505,7 +505,7 @@ class Foo {
   }
 
   async createArr(n) {
-    return _stdlib.createArray(n, 7);
+    return _stdlib.createList(n, 7);
   }
 
 }
@@ -585,7 +585,7 @@ class Foo {
   }
 
   async create2DArr() {
-    return system.literalArray([system.literalArray([8, 8, 8, 8]), system.literalArray([8, 8, 8, 8]), system.literalArray([8, 8, 8, 8])]);
+    return system.literalList([system.literalList([8, 8, 8, 8]), system.literalList([8, 8, 8, 8]), system.literalList([8, 8, 8, 8])]);
   }
 
 }
@@ -611,7 +611,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.list([1, 2, 3, 4, 5, 6]);
+  let a = system.listImmutable([1, 2, 3, 4, 5, 6]);
   await system.printLine((await (await (await a.filter(async (x) => x > 2)).map(async (x) => x * x)).reduce(0, async (s, x) => s + x)));
 }
 return [main, _tests];}`;
@@ -636,7 +636,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.literalArray([1, 2, 3, 4, 5, 6]);
+  let a = system.literalList([1, 2, 3, 4, 5, 6]);
   await system.printLine((await system.safeSlice((await system.safeSlice(a, 0, 5).map(async (x) => x * x)), 2).reduce(0, async (s, x) => s + x)));
 }
 return [main, _tests];}`;

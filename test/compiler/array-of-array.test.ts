@@ -25,9 +25,9 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.literalArray([1, 2]);
-  let b = system.literalArray([3, 4]);
-  let c = system.literalArray([a, b]);
+  let a = system.literalList([1, 2]);
+  let b = system.literalList([3, 4]);
+  let c = system.literalList([a, b]);
   await system.printLine(c);
 }
 return [main, _tests];}`;
@@ -45,14 +45,14 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to createArray(0, "")
+  variable a set to createList(0, "")
   print a.length()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.createArray(0, "");
+  let a = _stdlib.createList(0, "");
   await system.printLine(a.length());
 }
 return [main, _tests];}`;
@@ -80,9 +80,9 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.literalArray([system.literalArray([""]), system.literalArray([""]), system.literalArray([""])]);
-  a.putAt(0, system.literalArray(["bar", "foo"]));
-  a.putAt(2, system.literalArray(["yon", "xan"]));
+  let a = system.literalList([system.literalList([""]), system.literalList([""]), system.literalList([""])]);
+  a.putAt(0, system.literalList(["bar", "foo"]));
+  a.putAt(2, system.literalList(["yon", "xan"]));
   await system.printLine(system.safeIndex(system.safeIndex(a, 0), 1));
   await system.printLine(system.safeIndex(system.safeIndex(a, 2), 0));
 }
@@ -110,8 +110,8 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.literalArray([system.literalArray(["", ""]), system.literalArray(["", ""]), system.literalArray(["", ""])]);
-  a.putAt(0, system.literalArray(["bar", "foo"]));
+  let a = system.literalList([system.literalList(["", ""]), system.literalList(["", ""]), system.literalList(["", ""])]);
+  a.putAt(0, system.literalList(["bar", "foo"]));
   system.safeIndex(a, 0).putAt(1, "yon");
   await system.printLine(system.safeIndex(system.safeIndex(a, 0), 1));
 }
@@ -140,9 +140,9 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.literalArray([system.literalArray([""]), system.literalArray([""]), system.literalArray([""])]);
-  a.append(system.literalArray(["foo"]));
-  a.append(system.literalArray(["yon"]));
+  let a = system.literalList([system.literalList([""]), system.literalList([""]), system.literalList([""])]);
+  a.append(system.literalList(["foo"]));
+  a.append(system.literalList(["yon"]));
   await system.printLine(system.safeIndex(a, 3));
   await system.printLine(system.safeIndex(a, 4));
 }
@@ -170,7 +170,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.literalArray([system.literalArray([""]), system.literalArray([""]), system.literalArray([""])]);
+  let a = system.literalList([system.literalList([""]), system.literalList([""]), system.literalList([""])]);
   system.safeIndex(a, 1).append("foo");
   system.safeIndex(a, 2).append("yon");
   await system.printLine(a);
@@ -199,9 +199,9 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.literalArray([system.literalArray(["one"]), system.literalArray(["two"]), system.literalArray(["three"])]);
-  a.insertAt(1, system.literalArray(["foo"]));
-  a.insertAt(3, system.literalArray(["yon"]));
+  let a = system.literalList([system.literalList(["one"]), system.literalList(["two"]), system.literalList(["three"])]);
+  a.insertAt(1, system.literalList(["foo"]));
+  a.insertAt(3, system.literalList(["yon"]));
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -228,7 +228,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.literalArray([system.literalArray(["one"]), system.literalArray(["two"]), system.literalArray(["three"])]);
+  let a = system.literalList([system.literalList(["one"]), system.literalList(["two"]), system.literalList(["three"])]);
   system.safeIndex(a, 0).insertAt(0, "foo");
   system.safeIndex(a, 2).insertAt(1, "yon");
   await system.printLine(a);
@@ -257,7 +257,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.literalArray([system.literalArray(["one"]), system.literalArray(["two"]), system.literalArray(["three"])]);
+  let a = system.literalList([system.literalList(["one"]), system.literalList(["two"]), system.literalList(["three"])]);
   a.removeAt(0);
   a.removeAt(1);
   await system.printLine(a);
@@ -286,7 +286,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.literalArray([system.literalArray(["one"]), system.literalArray(["two"]), system.literalArray(["three"])]);
+  let a = system.literalList([system.literalList(["one"]), system.literalList(["two"]), system.literalList(["three"])]);
   system.safeIndex(a, 0).removeAt(0);
   system.safeIndex(a, 2).removeAt(0);
   await system.printLine(a);
@@ -314,8 +314,8 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.literalArray([system.literalArray(["one"]), system.literalArray(["two"]), system.literalArray(["three"]), system.literalArray(["one"]), system.literalArray(["two"]), system.literalArray(["three"])]);
-  a.removeFirst(system.literalArray(["two"]));
+  let a = system.literalList([system.literalList(["one"]), system.literalList(["two"]), system.literalList(["three"]), system.literalList(["one"]), system.literalList(["two"]), system.literalList(["three"])]);
+  a.removeFirst(system.literalList(["two"]));
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -341,7 +341,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.literalArray([system.literalArray(["one"]), system.literalArray(["two"]), system.literalArray(["three"]), system.literalArray(["one"]), system.literalArray(["two"]), system.literalArray(["three"])]);
+  let a = system.literalList([system.literalList(["one"]), system.literalList(["two"]), system.literalList(["three"]), system.literalList(["one"]), system.literalList(["two"]), system.literalList(["three"])]);
   system.safeIndex(a, 1).removeFirst("two");
   await system.printLine(a);
 }
@@ -368,8 +368,8 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.literalArray([system.literalArray(["one"]), system.literalArray(["two"]), system.literalArray(["three"]), system.literalArray(["one"]), system.literalArray(["two"]), system.literalArray(["three"])]);
-  a.removeAll(system.literalArray(["two"]));
+  let a = system.literalList([system.literalList(["one"]), system.literalList(["two"]), system.literalList(["three"]), system.literalList(["one"]), system.literalList(["two"]), system.literalList(["three"])]);
+  a.removeAll(system.literalList(["two"]));
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -395,7 +395,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.literalArray([system.literalArray(["one"]), system.literalArray(["two", "two"]), system.literalArray(["three"]), system.literalArray(["one"]), system.literalArray(["two"]), system.literalArray(["three"])]);
+  let a = system.literalList([system.literalList(["one"]), system.literalList(["two", "two"]), system.literalList(["three"]), system.literalList(["one"]), system.literalList(["two"]), system.literalList(["three"])]);
   system.safeIndex(a, 1).removeAll("two");
   await system.printLine(a);
 }
@@ -422,7 +422,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.listAsArray(system.list([system.list(["foo"]), system.list(["bar", "yon"])]));
+  let a = _stdlib.listAsArray(system.listImmutable([system.listImmutable(["foo"]), system.listImmutable(["bar", "yon"])]));
   await system.printLine(a.length());
   await system.printLine(a);
 }
@@ -456,7 +456,7 @@ const global = new class {};
 async function main() {
   let a = system.initialise(_stdlib.List.emptyInstance());
   let b = system.initialise(_stdlib.List.emptyInstance());
-  a.append(system.literalArray([3]));
+  a.append(system.literalList([3]));
   await system.printLine(a);
   await system.printLine(b);
   await system.printLine(system.objectEquals(a, b));
@@ -478,14 +478,14 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to [createArray(2, 0), createArray(2, 0), createArray(2, 0)]
+  variable a set to [createList(2, 0), createList(2, 0), createList(2, 0)]
   print a
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.literalArray([_stdlib.createArray(2, 0), _stdlib.createArray(2, 0), _stdlib.createArray(2, 0)]);
+  let a = system.literalList([_stdlib.createList(2, 0), _stdlib.createList(2, 0), _stdlib.createList(2, 0)]);
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -503,14 +503,14 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to [createArray(2, 1), createArray(2, 1)]
+  variable a set to [createList(2, 1), createList(2, 1)]
   print a
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.literalArray([_stdlib.createArray(2, 1), _stdlib.createArray(2, 1)]);
+  let a = system.literalList([_stdlib.createList(2, 1), _stdlib.createList(2, 1)]);
   await system.printLine(a);
 }
 return [main, _tests];}`;
@@ -560,7 +560,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to createArray(3, "")
+  variable a set to createList(3, "")
   call a.putAt(0, 0, "foo")
 end main
 `;
@@ -592,7 +592,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to createArray(3, empty List<of String>)
+  variable a set to createList(3, empty List<of String>)
   call a.putAt(0, "foo")
 end main
 `;
@@ -628,7 +628,7 @@ end main
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to createArray(3, empty List<of String>)
+  variable a set to createList(3, empty List<of String>)
   call a.putAt(0, true)
 end main
 `;

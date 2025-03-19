@@ -69,8 +69,8 @@ end procedure`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.literalArray([1, 2]);
-  let b = system.list([3, 4]);
+  let a = system.literalList([1, 2]);
+  let b = system.listImmutable([3, 4]);
   let c = system.dictionary([["a", _stdlib.true], ["b", _stdlib.false]]);
   let d = system.dictionaryImmutable([["a", _stdlib.true], ["b", _stdlib.false]]);
   await foo(a, b, c, d);
@@ -173,7 +173,7 @@ end procedure`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.literalArray([2, 3]);
+  let a = system.literalList([2, 3]);
   let _a18 = [a];
   await changeFirst(_a18);
   a = _a18[0];

@@ -176,7 +176,7 @@ class Foo {
   p1 = 0;
 
   async bar() {
-    let lst = system.literalArray([1, 2]);
+    let lst = system.literalList([1, 2]);
     return system.safeIndex(lst, this.p1);
   }
 

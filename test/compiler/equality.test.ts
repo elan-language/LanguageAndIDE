@@ -286,12 +286,12 @@ const global = new class {};
 async function main() {
   let f1 = system.initialise(await new Foo()._initialise(1));
   let f2 = system.initialise(await new Foo()._initialise(2));
-  const l1 = system.literalArray([f1, f2]);
-  const l2 = system.literalArray([f1, f2]);
+  const l1 = system.literalList([f1, f2]);
+  const l2 = system.literalList([f1, f2]);
   await system.printLine(system.objectEquals(l1, l2));
-  const l3 = system.literalArray([f2, f1]);
+  const l3 = system.literalList([f2, f1]);
   await system.printLine(system.objectEquals(l1, l3));
-  const l4 = system.literalArray([system.initialise(await new Foo()._initialise(1)), system.initialise(await new Foo()._initialise(2))]);
+  const l4 = system.literalList([system.initialise(await new Foo()._initialise(1)), system.initialise(await new Foo()._initialise(2))]);
   await system.printLine(system.objectEquals(l4, l1));
   await system.safeIndex(l4, 0).setP(3);
   await system.printLine(system.objectEquals(l4, l1));
@@ -348,12 +348,12 @@ const global = new class {};
 async function main() {
   let f1 = await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.p = 1; return _a;})();
   let f2 = await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.p = 2; return _a;})();
-  const l1 = system.list([f1, f2]);
-  const l2 = system.list([f1, f2]);
+  const l1 = system.listImmutable([f1, f2]);
+  const l2 = system.listImmutable([f1, f2]);
   await system.printLine(system.objectEquals(l1, l2));
-  const l3 = system.list([f2, f1]);
+  const l3 = system.listImmutable([f2, f1]);
   await system.printLine(system.objectEquals(l1, l3));
-  const l4 = system.list([await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.p = 1; return _a;})(), await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.p = 2; return _a;})()]);
+  const l4 = system.listImmutable([await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.p = 1; return _a;})(), await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.p = 2; return _a;})()]);
   await system.printLine(system.objectEquals(l4, l1));
 }
 

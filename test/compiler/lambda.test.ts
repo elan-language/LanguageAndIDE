@@ -304,11 +304,11 @@ end function`;
 const global = new class {};
 async function main() {
   let l = (await global.getFunc(5));
-  await system.printLine((await l(system.literalArray([5]))));
+  await system.printLine((await l(system.literalList([5]))));
 }
 
 async function getFunc(x) {
-  return async (y) => system.literalArray([x * system.safeIndex(y, 0)]);
+  return async (y) => system.literalList([x * system.safeIndex(y, 0)]);
 }
 global["getFunc"] = getFunc;
 return [main, _tests];}`;

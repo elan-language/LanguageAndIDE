@@ -93,7 +93,7 @@ import { LiteralEnumAsn } from "./literal-enum-asn";
 import { LiteralFloatAsn } from "./literal-float-asn";
 import { LiteralDictionaryImmutableAsn } from "./literal-immutable-dictionary-asn";
 import { LiteralIntAsn } from "./literal-int-asn";
-import { LiteralListAsn } from "./literal-list-asn";
+import { LiteralListImmutableAsn } from "./literal-list-immutable-asn";
 import { LiteralRegExAsn } from "./literal-regex-asn";
 import { LiteralStringAsn } from "./literal-string-asn";
 import { LiteralTupleAsn } from "./literal-tuple-asn";
@@ -337,7 +337,7 @@ export function transform(
 
   if (node instanceof ListNode) {
     const items = transformMany(node.csv as CSV, fieldId, scope).items;
-    return new LiteralListAsn(items, fieldId, scope);
+    return new LiteralListImmutableAsn(items, fieldId, scope);
   }
 
   if (node instanceof ArrayNode) {

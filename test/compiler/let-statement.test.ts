@@ -65,7 +65,7 @@ end procedure`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
-  list = system.list([1, 2, 3, 4, 5]);
+  list = system.listImmutable([1, 2, 3, 4, 5]);
 
 };
 async function main() {
@@ -114,7 +114,7 @@ async function main() {
 }
 
 async function foo() {
-  let list = system.list([1, 2, 3, 4, 5]);
+  let list = system.listImmutable([1, 2, 3, 4, 5]);
   for (let i = 0; i <= 3; i = i + 1) {
     const temp = system.safeIndex(list, i);
     list = list.withPut(i, system.safeIndex(list, i + 1));

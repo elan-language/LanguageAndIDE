@@ -344,10 +344,10 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let l = system.list([1, 2, 3]);
+  let l = system.listImmutable([1, 2, 3]);
   let sl = (await _stdlib.asString(l));
   await system.printLine(sl);
-  let a = _stdlib.listAsArray(system.list([1, 2, 3]));
+  let a = _stdlib.listAsArray(system.listImmutable([1, 2, 3]));
   let sa = (await _stdlib.asString(a));
   await system.printLine(sa);
   let d = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
