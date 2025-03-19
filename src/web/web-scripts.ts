@@ -614,6 +614,8 @@ function updateDisplayValues() {
         expandCollapseButton,
         undoButton,
         redoButton,
+        clearGraphicsButton,
+        clearSystemInfoButton,
       ],
       msg,
     );
@@ -631,6 +633,9 @@ function updateDisplayValues() {
     enable(demosButton, "Load a demonstration program");
     enable(trimButton, "Remove all 'newCode' selectors that can be removed (shortcut: Alt-t)");
     enable(expandCollapseButton, "Expand / Collapse all code regions");
+
+    enable(clearGraphicsButton, "Clear display");
+    enable(clearSystemInfoButton, "Clear display");
 
     for (const elem of demoFiles) {
       elem.removeAttribute("hidden");
