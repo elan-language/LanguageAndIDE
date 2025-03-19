@@ -1,4 +1,4 @@
-# cb6f0bc61b5cbc8b881690c4d9839eace025ca8b878e389f6e6e410e5a4b1d14 Elan Beta 9 valid
+# a591149671c80c9717bd4a6fac3ffb29fce75f9fd170870dd1164699e988a427 Elan Beta 9 valid
 
 main
   variable g set to new BlockGraphics()
@@ -132,6 +132,6 @@ end function
 test neighbouringPoints
   let p be newPoint(0, 0)
   let n be p.neighbouringPoints()
-  let expected be {newPoint(-1, -1), newPoint(0, -1), newPoint(1, -1), newPoint(-1, 0), newPoint(1, 0), newPoint(-1, 1), newPoint(0, 1), newPoint(1, 1)}
+  let expected be [newPoint(-1, -1), newPoint(0, -1), newPoint(1, -1), newPoint(-1, 0), newPoint(1, 0), newPoint(-1, 1), newPoint(0, 1), newPoint(1, 1)]
   assert n is expected
 end test
