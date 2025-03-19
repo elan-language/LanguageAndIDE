@@ -8,7 +8,6 @@ import {
 import { AstNode } from "../interfaces/ast-node";
 import { AstTypeNode } from "../interfaces/ast-type-node";
 import { Scope } from "../interfaces/scope";
-import { SymbolType } from "../interfaces/symbol-type";
 import { isAnyDictionary } from "../interfaces/type-options";
 import { ClassType } from "../symbols/class-type";
 import { FunctionType } from "../symbols/function-type";
@@ -59,7 +58,23 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
     return 0;
   }
 
-  checkForImmutableTypes(rootSt: SymbolType) {
+  commonCompile() {
+    this.compileErrors = [];
+    const rootSt = this.rootSymbol().symbolType(transforms());
+
+    mustBeKnownSymbolType(rootSt, this.id, this.compileErrors, this.fieldId);
+
+    mustMatchGenericParameters(
+      this.genericParameters,
+      this.expectedMinimumGenericParameters(),
+      this.compileErrors,
+      this.fieldId,
+    );
+
+    for (const gp of this.genericParameters) {
+      gp.compile();
+    }
+
     if (isAnyDictionary(rootSt.typeOptions) && this.genericParameters.length > 0) {
       mustBeValidKeyType(
         rootSt,
@@ -77,34 +92,13 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
   }
 
   compile(): string {
-    this.compileErrors = [];
-
-    const rootSt = this.rootSymbol().symbolType(transforms());
-
-    mustBeKnownSymbolType(rootSt, this.id, this.compileErrors, this.fieldId);
-
-    mustMatchGenericParameters(
-      this.genericParameters,
-      this.expectedMinimumGenericParameters(),
-      this.compileErrors,
-      this.fieldId,
-    );
-
-    for (const gp of this.genericParameters) {
-      gp.compile();
-    }
-
-    this.checkForImmutableTypes(rootSt);
-
+    this.commonCompile();
     return this.id;
   }
 
   compileToEmptyObjectCode(): string {
-    const st = this.symbolType();
-
-    mustBeKnownSymbolType(st, this.id, this.compileErrors, this.fieldId);
-    this.checkForImmutableTypes(st);
-    return st.initialValue;
+    this.commonCompile();
+    return this.symbolType().initialValue;
   }
 
   getGenericParameterSymbolTypes() {

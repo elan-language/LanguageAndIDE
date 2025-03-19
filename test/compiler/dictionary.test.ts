@@ -1053,4 +1053,46 @@ end class`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Dictionary cannot have key of type 'Foo'"]);
   });
+
+  test("Fail_LiteralDictionyOfEmptyUnknownClass1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable f set to [empty Foo:1]
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'Foo' is not defined"]);
+  });
+
+  test("Fail_LiteralDictionyOfEmptyUnknownClass2", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable f set to [1:empty Foo]
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'Foo' is not defined"]);
+  });
+
+  test("Fail_EmptyGenericType", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable f set to empty Dictionary
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["<of Type(s)> Expected: 2 Provided: 0"]);
+  });
 });

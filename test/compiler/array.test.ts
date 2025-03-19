@@ -1183,4 +1183,18 @@ end main`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["'Foo' is not defined"]);
   });
+
+  test("Fail_EmptyGenericType", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable f set to empty Array
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["<of Type(s)> Expected: 1 Provided: 0"]);
+  });
 });
