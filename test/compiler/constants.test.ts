@@ -34,9 +34,6 @@ return [main, _tests];}`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    //const symbols not yet implemented
-    //const varConst = fileImpl.getChildFloat(0);
-    //assertIsSymbol(varConst, "a", "Int");
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
@@ -581,9 +578,6 @@ return [main, _tests];}`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    //const symbols not yet implemented
-    //const varConst = fileImpl.getChildFloat(0);
-    //assertIsSymbol(varConst, "a", "Int");
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);

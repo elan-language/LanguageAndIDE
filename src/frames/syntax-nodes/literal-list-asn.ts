@@ -4,6 +4,7 @@ import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstNode } from "../interfaces/ast-node";
 import { ReifyableSymbolType } from "../interfaces/reifyable-symbol-type";
 import { Scope } from "../interfaces/scope";
+import { ListName } from "../symbols/elan-type-names";
 import { getGlobalScope } from "../symbols/symbol-helpers";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
@@ -40,7 +41,7 @@ export class LiteralListAsn extends AbstractAstNode implements AstCollectionNode
 
   symbolType() {
     const globalScope = getGlobalScope(this.scope);
-    const symbol = globalScope.resolveSymbol("List", transforms(), this.scope);
+    const symbol = globalScope.resolveSymbol(ListName, transforms(), this.scope);
     const st = symbol.symbolType() as ReifyableSymbolType;
 
     return st.reify([this.items[0]?.symbolType() ?? UnknownType.Instance]);

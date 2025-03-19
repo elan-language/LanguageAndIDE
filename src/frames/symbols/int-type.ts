@@ -1,5 +1,6 @@
 import { SymbolType } from "../interfaces/symbol-type";
 import { immutableTypeOptions } from "../interfaces/type-options";
+import { IntName } from "./elan-type-names";
 
 export class IntType implements SymbolType {
   private constructor() {}
@@ -9,10 +10,10 @@ export class IntType implements SymbolType {
 
   static Instance: SymbolType = new IntType();
 
-  name = "Int";
+  name = IntName;
 
   toString(): string {
-    return "Int";
+    return this.name;
   }
 
   isAssignableFrom(otherType: SymbolType): boolean {

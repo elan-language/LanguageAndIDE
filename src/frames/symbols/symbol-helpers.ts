@@ -30,6 +30,7 @@ import { EmptyAsn } from "../syntax-nodes/empty-asn";
 
 import { BooleanType } from "./boolean-type";
 import { ClassType } from "./class-type";
+import { ListImmutableName, ListName } from "./elan-type-names";
 import { EnumType } from "./enum-type";
 import { EnumValueType } from "./enum-value-type";
 import { FloatType } from "./float-type";
@@ -49,11 +50,11 @@ export function isDeconstructedType(s?: SymbolType): s is DeconstructedSymbolTyp
 }
 
 export function isListImmutableType(s?: SymbolType): s is ClassType {
-  return !!s && s instanceof ClassType && s.className === "ListImmutable";
+  return !!s && s instanceof ClassType && s.className === ListImmutableName;
 }
 
 export function isListType(s?: SymbolType): s is ClassType {
-  return !!s && s instanceof ClassType && s.className === "List";
+  return !!s && s instanceof ClassType && s.className === ListName;
 }
 
 export function isIndexableType(s?: SymbolType): boolean {
