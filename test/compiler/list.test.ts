@@ -305,8 +305,8 @@ return [main, _tests];}`;
 
 main
     variable a set to {"one", "two", "three"}
-    set a to a.withPutAt(1, "TWO")
-    variable b set to a.withPutAt(0, "ONE")
+    set a to a.withPut(1, "TWO")
+    variable b set to a.withPut(0, "ONE")
     print a
     print b
 end main`;
@@ -315,8 +315,8 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.list(["one", "two", "three"]);
-  a = a.withPutAt(1, "TWO");
-  let b = a.withPutAt(0, "ONE");
+  a = a.withPut(1, "TWO");
+  let b = a.withPut(0, "ONE");
   await system.printLine(a);
   await system.printLine(b);
 }
@@ -336,8 +336,8 @@ return [main, _tests];}`;
 
 main
     variable a set to {"one", "two", "three"}
-    set a to a.withInsertAt(1, "TWO")
-    variable b set to a.withInsertAt(0, "ONE")
+    set a to a.withInsert(1, "TWO")
+    variable b set to a.withInsert(0, "ONE")
     print a
     print b
 end main`;
@@ -346,8 +346,8 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.list(["one", "two", "three"]);
-  a = a.withInsertAt(1, "TWO");
-  let b = a.withInsertAt(0, "ONE");
+  a = a.withInsert(1, "TWO");
+  let b = a.withInsert(0, "ONE");
   await system.printLine(a);
   await system.printLine(b);
 }

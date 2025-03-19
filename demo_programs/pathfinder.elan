@@ -197,7 +197,7 @@ class Solver
       let previous be node.via
       let p be node.point
       set length to length + p.minDistTo(previous)
-      set route to route.withInsertAt(0, previous)
+      set route to route.withInsert(0, previous)
       set node to getNodeFor(previous)
     end repeat when node.point is property.start
     return tuple(route, length)

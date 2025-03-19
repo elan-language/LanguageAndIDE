@@ -1,34 +1,34 @@
 import { ElanRuntimeError } from "../elan-runtime-error";
 import {
-  ClassOption,
-  ElanBoolean,
-  ElanClass,
-  elanClass,
-  ElanFloat,
-  elanFunction,
-  elanFuncType,
-  elanGenericParamT1Type,
-  elanGenericParamT2Type,
-  ElanInt,
-  elanIntType,
-  ElanT1,
-  ElanT2,
-  FunctionOptions,
+    ClassOption,
+    ElanBoolean,
+    ElanClass,
+    elanClass,
+    ElanFloat,
+    elanFunction,
+    elanFuncType,
+    elanGenericParamT1Type,
+    elanGenericParamT2Type,
+    ElanInt,
+    elanIntType,
+    ElanT1,
+    ElanT2,
+    FunctionOptions,
 } from "../elan-type-annotations";
 import { System } from "../system";
 import {
-  filterHelper,
-  mapHelper,
-  maxByHelper,
-  minByHelper,
-  reduceHelper,
-  sortByHelper,
-  withAppendHelper,
-  withInsertAtHelper,
-  withPutAtHelper,
-  withRemoveAllHelper,
-  withRemoveAtHelper,
-  withRemoveFirstHelper,
+    filterHelper,
+    mapHelper,
+    maxByHelper,
+    minByHelper,
+    reduceHelper,
+    sortByHelper,
+    withAppendHelper,
+    withInsertAtHelper,
+    withPutAtHelper,
+    withRemoveAllHelper,
+    withRemoveAtHelper,
+    withRemoveFirstHelper,
 } from "./data-structure-helpers";
 
 @elanClass(ClassOption.list, [ElanT1], [], [], [], "List")
@@ -71,18 +71,18 @@ export class List<T1> {
 
   @elanFunction(["index", "value"], FunctionOptions.pure, ElanClass(List))
   withPrepend(@elanGenericParamT1Type() value: T1): List<T1> {
-    return this.withInsertAt(0, value);
+    return this.withInsert(0, value);
   }
 
   @elanFunction(["index", "value"], FunctionOptions.pure, ElanClass(List))
-  withPutAt(@elanIntType() index: number, @elanGenericParamT1Type() value: T1): List<T1> {
+  withPut(@elanIntType() index: number, @elanGenericParamT1Type() value: T1): List<T1> {
     return this.system!.initialise(
       new List(withPutAtHelper(this.contents as [], index, value as never)),
     );
   }
 
   @elanFunction(["index", "value"], FunctionOptions.pure, ElanClass(List))
-  withInsertAt(@elanIntType() index: number, @elanGenericParamT1Type() value: T1): List<T1> {
+  withInsert(@elanIntType() index: number, @elanGenericParamT1Type() value: T1): List<T1> {
     return this.system!.initialise(
       new List(withInsertAtHelper(this.contents as [], index, value as never)),
     );

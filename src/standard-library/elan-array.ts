@@ -1,36 +1,36 @@
 import { ElanRuntimeError } from "../elan-runtime-error";
 import {
-  ClassOption,
-  ElanBoolean,
-  ElanClass,
-  elanClass,
-  elanClassType,
-  ElanFloat,
-  elanFunction,
-  elanFuncType,
-  elanGenericParamT1Type,
-  elanGenericParamT2Type,
-  ElanInt,
-  elanIntType,
-  elanProcedure,
-  ElanT1,
-  ElanT2,
-  FunctionOptions,
+    ClassOption,
+    ElanBoolean,
+    ElanClass,
+    elanClass,
+    elanClassType,
+    ElanFloat,
+    elanFunction,
+    elanFuncType,
+    elanGenericParamT1Type,
+    elanGenericParamT2Type,
+    ElanInt,
+    elanIntType,
+    elanProcedure,
+    ElanT1,
+    ElanT2,
+    FunctionOptions,
 } from "../elan-type-annotations";
 import { System } from "../system";
 import {
-  filterHelper,
-  mapHelper,
-  maxByHelper,
-  minByHelper,
-  reduceHelper,
-  sortByHelper,
-  withAppendHelper,
-  withInsertAtHelper,
-  withPutAtHelper,
-  withRemoveAllHelper,
-  withRemoveAtHelper,
-  withRemoveFirstHelper,
+    filterHelper,
+    mapHelper,
+    maxByHelper,
+    minByHelper,
+    reduceHelper,
+    sortByHelper,
+    withAppendHelper,
+    withInsertAtHelper,
+    withPutAtHelper,
+    withRemoveAllHelper,
+    withRemoveAtHelper,
+    withRemoveFirstHelper,
 } from "./data-structure-helpers";
 
 @elanClass(ClassOption.array, [ElanT1], [], [], [], "Array")
@@ -269,18 +269,18 @@ export class ElanArray<T1> {
 
   @elanFunction(["index", "value"], FunctionOptions.pure, ElanClass(ElanArray))
   withPrepend(@elanGenericParamT1Type() value: T1): ElanArray<T1> {
-    return this.withInsertAt(0, value);
+    return this.withInsert(0, value);
   }
 
   @elanFunction(["index", "value"], FunctionOptions.pure, ElanClass(ElanArray))
-  withPutAt(@elanIntType() index: number, @elanGenericParamT1Type() value: T1): ElanArray<T1> {
+  withPut(@elanIntType() index: number, @elanGenericParamT1Type() value: T1): ElanArray<T1> {
     return this.system!.initialise(
       new ElanArray(withPutAtHelper(this.contents as [], index, value as never)),
     );
   }
 
   @elanFunction(["index", "value"], FunctionOptions.pure, ElanClass(ElanArray))
-  withInsertAt(@elanIntType() index: number, @elanGenericParamT1Type() value: T1): ElanArray<T1> {
+  withInsert(@elanIntType() index: number, @elanGenericParamT1Type() value: T1): ElanArray<T1> {
     return this.system!.initialise(
       new ElanArray(withInsertAtHelper(this.contents as [], index, value as never)),
     );
