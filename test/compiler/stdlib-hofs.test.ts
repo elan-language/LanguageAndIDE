@@ -16,9 +16,9 @@ suite("StdLib HOFs", () => {
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
-  print source.filter(lambda x as Int => x > 20).listAsArray()
-  print source.filter(lambda x as Int => x > 20).listAsArray()
-  print source.filter(lambda x as Int => (x < 3) or (x > 35)).listAsArray()
+  print source.filter(lambda x as Int => x > 20).listImmutableAsList()
+  print source.filter(lambda x as Int => x > 20).listImmutableAsList()
+  print source.filter(lambda x as Int => (x < 3) or (x > 35)).listImmutableAsList()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -27,9 +27,9 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(_stdlib.listAsArray((await global.source.filter(async (x) => x > 20))));
-  await system.printLine(_stdlib.listAsArray((await global.source.filter(async (x) => x > 20))));
-  await system.printLine(_stdlib.listAsArray((await global.source.filter(async (x) => (x < 3) || (x > 35)))));
+  await system.printLine(_stdlib.listImmutableAsList((await global.source.filter(async (x) => x > 20))));
+  await system.printLine(_stdlib.listImmutableAsList((await global.source.filter(async (x) => x > 20))));
+  await system.printLine(_stdlib.listImmutableAsList((await global.source.filter(async (x) => (x < 3) || (x > 35)))));
 }
 return [main, _tests];}`;
 
@@ -47,7 +47,7 @@ return [main, _tests];}`;
 
 constant source set to "onetwo"
 main
-  print source.filter(lambda x as String => x is "o").listAsArray()
+  print source.filter(lambda x as String => x is "o").listImmutableAsList()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -56,7 +56,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(_stdlib.listAsArray((await _stdlib.filter(global.source, async (x) => x === "o"))));
+  await system.printLine(_stdlib.listImmutableAsList((await _stdlib.filter(global.source, async (x) => x === "o"))));
 }
 return [main, _tests];}`;
 
@@ -111,8 +111,8 @@ return [main, _tests];}`;
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
-  print source.map(lambda x as Int => x + 1).listAsArray()
-  print source.map(lambda x as Int => x.asString() + "*").listAsArray()
+  print source.map(lambda x as Int => x + 1).listImmutableAsList()
+  print source.map(lambda x as Int => x.asString() + "*").listImmutableAsList()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -121,8 +121,8 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(_stdlib.listAsArray((await global.source.map(async (x) => x + 1))));
-  await system.printLine(_stdlib.listAsArray((await global.source.map(async (x) => (await _stdlib.asString(x)) + "*"))));
+  await system.printLine(_stdlib.listImmutableAsList((await global.source.map(async (x) => x + 1))));
+  await system.printLine(_stdlib.listImmutableAsList((await global.source.map(async (x) => (await _stdlib.asString(x)) + "*"))));
 }
 return [main, _tests];}`;
 
@@ -143,7 +143,7 @@ return [main, _tests];}`;
 
 constant source set to "onetwo"
 main
-  print source.map(lambda x as String => x + "*").listAsArray()
+  print source.map(lambda x as String => x + "*").listImmutableAsList()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -152,7 +152,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(_stdlib.listAsArray((await _stdlib.map(global.source, async (x) => x + "*"))));
+  await system.printLine(_stdlib.listImmutableAsList((await _stdlib.map(global.source, async (x) => x + "*"))));
 }
 return [main, _tests];}`;
 
@@ -171,7 +171,7 @@ return [main, _tests];}`;
 main
   variable source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
   set source to source.map(lambda x as Int => x + 1)
-  print source.listAsArray()
+  print source.listImmutableAsList()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -179,7 +179,7 @@ const global = new class {};
 async function main() {
   let source = system.listImmutable([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
   source = (await source.map(async (x) => x + 1));
-  await system.printLine(_stdlib.listAsArray(source));
+  await system.printLine(_stdlib.listImmutableAsList(source));
 }
 return [main, _tests];}`;
 
@@ -475,7 +475,7 @@ return [main, _tests];}`;
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
-  print source.sortBy(lambda x as Int, y as Int => if x is y then 0 else if x < y then 1 else -1).listAsArray()
+  print source.sortBy(lambda x as Int, y as Int => if x is y then 0 else if x < y then 1 else -1).listImmutableAsList()
   print source
 end main`;
 
@@ -485,7 +485,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(_stdlib.listAsArray((await global.source.sortBy(async (x, y) => x === y ? 0 : x < y ? 1 : (-1)))));
+  await system.printLine(_stdlib.listImmutableAsList((await global.source.sortBy(async (x, y) => x === y ? 0 : x < y ? 1 : (-1)))));
   await system.printLine(global.source);
 }
 return [main, _tests];}`;
@@ -507,7 +507,7 @@ return [main, _tests];}`;
 
 constant source set to "dbcd"
 main
-  print source.sortBy(lambda x as String, y as String => if x is y then 0 else if x.isAfter(y) then 1 else -1).listAsArray()
+  print source.sortBy(lambda x as String, y as String => if x is y then 0 else if x.isAfter(y) then 1 else -1).listImmutableAsList()
   print source
 end main`;
 
@@ -517,7 +517,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(_stdlib.listAsArray((await _stdlib.sortBy(global.source, async (x, y) => x === y ? 0 : _stdlib.isAfter(x, y) ? 1 : (-1)))));
+  await system.printLine(_stdlib.listImmutableAsList((await _stdlib.sortBy(global.source, async (x, y) => x === y ? 0 : _stdlib.isAfter(x, y) ? 1 : (-1)))));
   await system.printLine(global.source);
 }
 return [main, _tests];}`;
@@ -536,8 +536,8 @@ return [main, _tests];}`;
 
 constant source set to {"apple", "orange", "pair", "apple"}
 main
-  print source.listAsSet()
-  print source.listAsArray().arrayAsSet()
+  print source.listImmutableAsSet()
+  print source.listImmutableAsList().listAsSet()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -546,8 +546,8 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(_stdlib.listAsSet(global.source));
-  await system.printLine(_stdlib.arrayAsSet(_stdlib.listAsArray(global.source)));
+  await system.printLine(_stdlib.listImmutableAsSet(global.source));
+  await system.printLine(_stdlib.listAsSet(_stdlib.listImmutableAsList(global.source)));
 }
 return [main, _tests];}`;
 

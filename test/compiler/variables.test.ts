@@ -460,7 +460,7 @@ end main`;
 
 main
   variable i set to {1,2}
-  variable x set to listAsArray
+  variable x set to listImmutableAsList
   variable y set to x(i)
 end main`;
 
@@ -476,7 +476,7 @@ end main`;
 
 main
   variable i set to 1
-  variable x set to listAsArray
+  variable x set to listImmutableAsList
   variable y set to i.x()
 end main`;
 

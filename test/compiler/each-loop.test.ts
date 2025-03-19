@@ -49,7 +49,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to {7,8,9}.listAsArray()
+  variable a set to {7,8,9}.listImmutableAsList()
   variable n set to 0
   each x in a
     set n to n + x
@@ -60,7 +60,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.listAsArray(system.listImmutable([7, 8, 9]));
+  let a = _stdlib.listImmutableAsList(system.listImmutable([7, 8, 9]));
   let n = 0;
   for (const x of a) {
     n = n + x;

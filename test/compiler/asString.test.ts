@@ -333,7 +333,7 @@ main
     variable l set to {1,2,3}
     variable sl set to l.asString()
     print sl
-    variable a set to {1,2,3}.listAsArray()
+    variable a set to {1,2,3}.listImmutableAsList()
     variable sa set to a.asString()
     print sa
     variable d set to ["a":1, "b":3, "z":10]
@@ -347,7 +347,7 @@ async function main() {
   let l = system.listImmutable([1, 2, 3]);
   let sl = (await _stdlib.asString(l));
   await system.printLine(sl);
-  let a = _stdlib.listAsArray(system.listImmutable([1, 2, 3]));
+  let a = _stdlib.listImmutableAsList(system.listImmutable([1, 2, 3]));
   let sa = (await _stdlib.asString(a));
   await system.printLine(sa);
   let d = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
