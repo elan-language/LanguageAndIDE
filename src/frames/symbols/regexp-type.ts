@@ -14,7 +14,7 @@ export class RegExpType implements SymbolType {
   name = RegExpName;
 
   toString(): string {
-    return `RegExp`;
+    return this.name;
   }
 
   isAssignableFrom(otherType: SymbolType): boolean {

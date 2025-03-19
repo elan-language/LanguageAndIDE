@@ -1,6 +1,7 @@
 import { DeconstructedSymbolType } from "../interfaces/deconstructed-symbol-type";
 import { SymbolType } from "../interfaces/symbol-type";
 import { immutableTypeOptions } from "../interfaces/type-options";
+import { ListImmutableName, ListName } from "./elan-type-names";
 import { isGenericSymbolType } from "./symbol-helpers";
 import { UnknownType } from "./unknown-type";
 
@@ -28,7 +29,7 @@ export class DeconstructedListType implements DeconstructedSymbolType {
   get name() {
     return this.tailId
       ? this.tailType.name
-      : `ListImmutable<of ${this.headType}> or List<of ${this.headType}>`;
+      : `${ListImmutableName}<of ${this.headType}> or ${ListName}<of ${this.headType}>`;
   }
 
   toString(): string {

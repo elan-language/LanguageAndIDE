@@ -9,6 +9,7 @@ import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstNode } from "../interfaces/ast-node";
 import { ReifyableSymbolType } from "../interfaces/reifyable-symbol-type";
 import { Scope } from "../interfaces/scope";
+import { DictionaryImmutableName } from "../symbols/elan-type-names";
 import { getGlobalScope } from "../symbols/symbol-helpers";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
@@ -55,7 +56,7 @@ export class LiteralDictionaryImmutableAsn extends AbstractAstNode implements As
 
   symbolType() {
     const globalScope = getGlobalScope(this.scope);
-    const symbol = globalScope.resolveSymbol("DictionaryImmutable", transforms(), this.scope);
+    const symbol = globalScope.resolveSymbol(DictionaryImmutableName, transforms(), this.scope);
     const st = symbol.symbolType() as ReifyableSymbolType;
 
     const first = this.list.items[0] as KvpAsn | undefined;
