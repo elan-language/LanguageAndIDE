@@ -32,18 +32,6 @@ export function getTypeOptions(): TypeOptions {
   };
 }
 
-export function isArray(t: TypeOptions) {
-  return !t.isImmutable && t.isIndexable && t.isIterable;
-}
-
-export function is2DArray(t: TypeOptions) {
-  return !t.isImmutable && !t.isIndexable && t.isDoubleIndexable && !t.isIterable;
-}
-
-export function isList(t: TypeOptions) {
-  return t.isImmutable && t.isIndexable && t.isIterable;
-}
-
 export function isDictionary(t: TypeOptions) {
   return !t.isImmutable && t.isIndexable && !t.isIterable;
 }
