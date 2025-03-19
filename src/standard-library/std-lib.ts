@@ -181,24 +181,6 @@ export class StdLib {
       return await (v.asString as () => Promise<string>)();
     }
 
-    async function convertDict(o: { [key: string]: object }, names: string[], stdlib: StdLib) {
-      const items: string[] = [];
-
-      for (const n of names) {
-        const s = await stdlib.asString(o[n]);
-        items.push(`${n}:${s}`);
-      }
-
-      return items.join(", ");
-    }
-
-    if (typeof v === "object" && v.constructor.name === "Object") {
-      const items = Object.getOwnPropertyNames(v).filter((s) => s !== "_type");
-      const o = v as { [key: string]: object };
-      const dict = await convertDict(o, items, this);
-      return `${dict}`;
-    }
-
     if (typeof v === "object") {
       return `a ${v.constructor.name}`;
     }
