@@ -101,8 +101,8 @@ procedure foo()
   variable list set to {1,2,3,4,5}
   for i from 0 to 3 step 1
     let temp be list[i]
-    set list to list.withPutAt(i, list[i + 1])
-    set list to list.withPutAt(i + 1, temp)
+    set list to list.withPut(i, list[i + 1])
+    set list to list.withPut(i + 1, temp)
   end for
   print list
 end procedure`;
@@ -117,8 +117,8 @@ async function foo() {
   let list = system.list([1, 2, 3, 4, 5]);
   for (let i = 0; i <= 3; i = i + 1) {
     const temp = system.safeIndex(list, i);
-    list = list.withPutAt(i, system.safeIndex(list, i + 1));
-    list = list.withPutAt(i + 1, temp);
+    list = list.withPut(i, system.safeIndex(list, i + 1));
+    list = list.withPut(i + 1, temp);
   }
   await system.printLine(list);
 }
