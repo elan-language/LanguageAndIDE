@@ -67,7 +67,7 @@ end function
 function nextGeneration(cells as Array<of Boolean>) returns Array<of Boolean>
   let cellRange be range(0, cells.length() - 1)
   let next be cellRange.map(lambda n as Int => nextCellValue(cells, n))
-  return next.listAsArray()
+  return next.listImmutableAsArray()
 end function
 
 constant black set to 0x000000

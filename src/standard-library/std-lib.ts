@@ -821,7 +821,7 @@ export class StdLib {
   // conversion
 
   @elanFunction([], FunctionOptions.pureExtension, ElanClass(ListImmutable))
-  arrayAsList<T1>(@elanClassType(ElanArray) arr: ElanArray<T1>): ListImmutable<T1> {
+  arrayAsListImmutable<T1>(@elanClassType(ElanArray) arr: ElanArray<T1>): ListImmutable<T1> {
     const list = [...arr];
     return new ListImmutable(list);
   }
@@ -833,14 +833,14 @@ export class StdLib {
   }
 
   @elanFunction([], FunctionOptions.pureExtension, ElanClass(ElanArray))
-  listAsArray<T1>(@elanClassType(ListImmutable) list: ListImmutable<T1>): ElanArray<T1> {
+  listImmutableAsArray<T1>(@elanClassType(ListImmutable) list: ListImmutable<T1>): ElanArray<T1> {
     const newList = [...list];
     return this.system.initialise(new ElanArray(newList));
   }
 
   @elanFunction([], FunctionOptions.pureExtension, ElanClass(ElanSet))
-  listAsSet<T1>(@elanClassType(ListImmutable) arr: ListImmutable<T1>): ElanSet<T1> {
+  listImmutableAsSet<T1>(@elanClassType(ListImmutable) arr: ListImmutable<T1>): ElanSet<T1> {
     const set = this.system.initialise(new ElanSet<T1>());
-    return set.addFromArray(this.listAsArray(arr));
+    return set.addFromArray(this.listImmutableAsArray(arr));
   }
 }

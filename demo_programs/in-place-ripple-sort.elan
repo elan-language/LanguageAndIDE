@@ -1,7 +1,7 @@
 # 8d85973b6491bbc9c20d0531e45d8c055c5ff1f4e53f4206a0591d83b380326a Elan Beta 9 valid
 
 main
-  variable li set to example.listAsArray()
+  variable li set to example.listImmutableAsArray()
   call inPlaceRippleSort(li)
   print li
 end main
