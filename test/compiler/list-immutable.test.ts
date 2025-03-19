@@ -12,7 +12,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("List", () => {
+suite("ListImmutable", () => {
   test("Pass_literalList", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
