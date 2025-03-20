@@ -30,6 +30,7 @@ import { BlockGraphics } from "./block-graphics";
 import { CircleVG } from "./circle-vg";
 import { Dictionary } from "./dictionary";
 import { DictionaryImmutable } from "./dictionary-immutable";
+import { ElanArray } from "./elan-array";
 import { ElanArray2D } from "./elan-array-2d";
 import { GraphicsBase } from "./graphics-base";
 import { LineVG } from "./line-vg";
@@ -44,7 +45,6 @@ import { TextFileReader } from "./text-file-reader";
 import { TextFileWriter } from "./text-file-writer";
 import { Turtle } from "./turtle";
 import { VectorGraphics } from "./vector-graphics";
-import { ElanArray } from "./elan-array";
 
 export class StdLib {
   constructor() {
@@ -207,7 +207,7 @@ export class StdLib {
   }
 
   @elanFunction(["", "item"], FunctionOptions.pureExtension, ElanInt)
-  indexOfItem(
+  indexOf(
     @elanStringType()
     s: string,
     @elanStringType()
@@ -264,11 +264,6 @@ export class StdLib {
   @elanFunction(["", "other"], FunctionOptions.pureExtension)
   isBeforeOrSameAs(s1: string, s2: string): boolean {
     return s1 < s2 || s1 === s2;
-  }
-
-  @elanFunction(["", "targetString"], FunctionOptions.pureExtension, ElanInt)
-  indexOf(s1: string, s2: string): number {
-    return s1.indexOf(s2);
   }
 
   @elanFunction([], FunctionOptions.pureExtension)

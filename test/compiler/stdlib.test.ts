@@ -983,21 +983,21 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "A RegExp");
   });
-  test("Pass_indexOfItem", async () => {
+  test("Pass_indexOf", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
   let a be [1, 3, 5, 7, 9]
   let b be {2, 4, 6, 8}
   let c be "Hello World!"
-  print a.indexOfItem(9)
-  print a.indexOfItem(5)
-  print b.indexOfItem(2)
-  print b.indexOfItem(7)
-  print c.indexOfItem("o")
-  print c.indexOfItem("ll")
+  print a.indexOf(9)
+  print a.indexOf(5)
+  print b.indexOf(2)
+  print b.indexOf(7)
+  print c.indexOf("o")
+  print c.indexOf("ll")
   variable i set to 1
-  set i to a.indexOfItem(9)
+  set i to a.indexOf(9)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -1006,14 +1006,14 @@ async function main() {
   const a = system.literalList([1, 3, 5, 7, 9]);
   const b = system.listImmutable([2, 4, 6, 8]);
   const c = "Hello World!";
-  await system.printLine(a.indexOfItem(9));
-  await system.printLine(a.indexOfItem(5));
-  await system.printLine(b.indexOfItem(2));
-  await system.printLine(b.indexOfItem(7));
-  await system.printLine(_stdlib.indexOfItem(c, "o"));
-  await system.printLine(_stdlib.indexOfItem(c, "ll"));
+  await system.printLine(a.indexOf(9));
+  await system.printLine(a.indexOf(5));
+  await system.printLine(b.indexOf(2));
+  await system.printLine(b.indexOf(7));
+  await system.printLine(_stdlib.indexOf(c, "o"));
+  await system.printLine(_stdlib.indexOf(c, "ll"));
   let i = 1;
-  i = a.indexOfItem(9);
+  i = a.indexOf(9);
 }
 return [main, _tests];}`;
 
