@@ -44,6 +44,7 @@ import { TextFileReader } from "./text-file-reader";
 import { TextFileWriter } from "./text-file-writer";
 import { Turtle } from "./turtle";
 import { VectorGraphics } from "./vector-graphics";
+import { ElanArray } from "./elan-array";
 
 export class StdLib {
   constructor() {
@@ -94,6 +95,9 @@ export class StdLib {
 
   @elanClassExport(List)
   List = List;
+
+  @elanClassExport(ElanArray)
+  Array = ElanArray;
 
   @elanClassExport(ElanArray2D)
   Array2D = ElanArray2D;
@@ -812,6 +816,16 @@ export class StdLib {
   listAsSet<T1>(@elanClassType(List) arr: List<T1>): ElanSet<T1> {
     const set = this.system.initialise(new ElanSet<T1>());
     return set.addFromList(arr);
+  }
+
+  @elanFunction([], FunctionOptions.pureExtension, ElanClass(ElanSet))
+  listAsArray<T1>(@elanClassType(List) li: List<T1>): ElanArray<T1> {
+    throw new Error(`Not implemented yet for ${li}`);
+  }
+
+  @elanFunction([], FunctionOptions.pureExtension, ElanClass(ElanSet))
+  arrayAsList<T1>(@elanClassType(List) arr: ElanArray<T1>): List<T1> {
+    throw new Error(`Not implemented yet for ${arr}`);
   }
 
   @elanFunction([], FunctionOptions.pureExtension, ElanClass(List))

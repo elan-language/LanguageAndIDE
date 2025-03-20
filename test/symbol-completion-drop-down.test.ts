@@ -1577,6 +1577,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
+      ["Array", "*", "Array<of "],
       ["Array2D", "*", "Array2D<of "],
       ["BlockGraphics", "*", "*"],
       ["Boolean", "*", "*"],
@@ -1718,6 +1719,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
+      ["Array", "*", "Array<of "],
       ["Array2D", "*", "Array2D<of "],
       ["BlockGraphics", "*", "*"],
       ["Boolean", "*", "*"],

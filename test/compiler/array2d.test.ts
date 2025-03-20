@@ -556,7 +556,7 @@ end main`;
     assertStatusIsValid(fileImpl);
     await assertObjectCodeDoesNotExecute(
       fileImpl,
-      "Can only initialise Array2D with non zero, positive values",
+      "Each dimension of Array2D must be non zero, positive value",
     );
   });
 
@@ -575,7 +575,7 @@ end main`;
     assertStatusIsValid(fileImpl);
     await assertObjectCodeDoesNotExecute(
       fileImpl,
-      "Can only initialise Array2D with non zero, positive values",
+      "Each dimension of Array2D must be non zero, positive value",
     );
   });
 });

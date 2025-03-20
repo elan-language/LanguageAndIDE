@@ -30,11 +30,11 @@ export class ElanArray2D<T1> {
 
   async _initialise(x: number, y: number, value: T1) {
     if (x <= 0 || y <= 0) {
-      throw new ElanRuntimeError(`Can only initialise Array2D with non zero, positive values`);
+      throw new ElanRuntimeError(`Each dimension of Array2D must be non zero, positive value`);
     }
 
     if (!(typeof value === "boolean" || typeof value === "string" || typeof value === "number")) {
-      throw new ElanRuntimeError(`Can only initialise Array2D with simple value`);
+      throw new ElanRuntimeError(`Array2D must be of Type: Int, Float, String, or Boolean, with matching initial value`);
     }
 
     const toInit: T1[][] = [];
