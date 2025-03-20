@@ -276,22 +276,6 @@ export class StdLib {
     return this.system.initialise(new ListImmutable(s.split(separator)));
   }
 
-  @elanFunction(["", "separator"], FunctionOptions.pureExtension)
-  join(
-    @elanClassType(ListImmutable, [ElanString]) list: ListImmutable<string>,
-    separator: string,
-  ): string {
-    return [...list].join(separator);
-  }
-
-  @elanFunction(["", "separator"], FunctionOptions.pureExtension)
-  joinList(
-    @elanClassType(List, [ElanString]) list: ListImmutable<string>,
-    separator: string,
-  ): string {
-    return [...list].join(separator);
-  }
-
   @elanFunction(["number"], FunctionOptions.pureExtension, ElanInt)
   floor(n: number) {
     return Math.floor(n);

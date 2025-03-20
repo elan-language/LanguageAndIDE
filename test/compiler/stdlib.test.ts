@@ -3,6 +3,7 @@ import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import { TestStatus } from "../../src/frames/status-enums";
 import { AssertOutcome } from "../../src/system";
 import {
+  assertDoesNotCompile,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
@@ -847,12 +848,12 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "{Now, is, the, time...}");
   });
-  test("Pass_joinList", async () => {
+  test("Pass_joinListOfString", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
   let words be ["Now", "is","the","time..."]
-  let s be words.joinList(".")
+  let s be words.join(".")
   print s
 end main`;
 
@@ -860,7 +861,7 @@ end main`;
 const global = new class {};
 async function main() {
   const words = system.literalList(["Now", "is", "the", "time..."]);
-  const s = _stdlib.joinList(words, ".");
+  const s = words.join(".");
   await system.printLine(s);
 }
 return [main, _tests];}`;
@@ -873,7 +874,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "Now.is.the.time...");
   });
-  test("Pass_joinList", async () => {
+  test("Pass_joinImmutableListOfString", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -886,7 +887,7 @@ end main`;
 const global = new class {};
 async function main() {
   const words = system.listImmutable(["Now", "is", "the", "time..."]);
-  const s = _stdlib.join(words, ".");
+  const s = words.join(".");
   await system.printLine(s);
 }
 return [main, _tests];}`;
@@ -898,6 +899,47 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "Now.is.the.time...");
+  });
+  test("Pass_joinImmutableListOfInt", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  let words be {1,2,3,4}
+  let s be words.join("")
+  print s
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  const words = system.listImmutable([1, 2, 3, 4]);
+  const s = words.join("");
+  await system.printLine(s);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1234");
+  });
+  test("Fail_joinArrayOfString", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  let words be ["Now", "is","the","time..."].listAsArray()
+  let s be words.join(".")
+  print s
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, []);
   });
   test("Pass_replace", async () => {
     const code = `# FFFF Elan v1.0.0 valid

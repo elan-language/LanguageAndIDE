@@ -270,4 +270,11 @@ export class ListImmutable<T1> {
     }
     return false;
   }
+
+  @elanFunction(["separator"], FunctionOptions.pure)
+  join(
+    separator: string,
+  ): string {
+    return this.contents.join(separator);
+  }
 }

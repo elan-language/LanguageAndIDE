@@ -13,6 +13,7 @@ import {
   ElanInt,
   elanIntType,
   elanProcedure,
+  ElanString,
   ElanT1,
   ElanT2,
   FunctionOptions,
@@ -314,5 +315,12 @@ export class List<T1> {
     return this.system!.initialise(
       new List(withRemoveAllHelper(this.contents as [], value as never, this.system!)),
     );
+  }
+
+  @elanFunction(["separator"], FunctionOptions.pure)
+  join(
+    separator: string,
+  ): string {
+    return this.contents.join(separator);
   }
 }
