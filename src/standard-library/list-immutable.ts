@@ -4,6 +4,7 @@ import {
   ElanBoolean,
   ElanClass,
   elanClass,
+  elanClassType,
   ElanFloat,
   elanFunction,
   elanFuncType,
@@ -24,8 +25,9 @@ import {
   reduceHelper,
   sortByHelper,
   withAppendHelper,
-  withInsertAtHelper,
-  withPutAtHelper,
+  withAppendListHelper,
+  withInsertHelper,
+  withPutHelper,
   withRemoveAllHelper,
   withRemoveAtHelper,
   withRemoveFirstHelper,
@@ -64,29 +66,43 @@ export class ListImmutable<T1> {
     } as { next: () => { value: T1; done: boolean } };
   }
 
-  @elanFunction(["index", "value"], FunctionOptions.pure, ElanClass(ListImmutable))
+  @elanFunction(["value"], FunctionOptions.pure, ElanClass(ListImmutable))
   withAppend(@elanGenericParamT1Type() value: T1): ListImmutable<T1> {
     return this.system!.initialise(
       new ListImmutable(withAppendHelper(this.contents as [], value as never)),
     );
   }
 
-  @elanFunction(["index", "value"], FunctionOptions.pure, ElanClass(ListImmutable))
+  @elanFunction(["toAppend"], FunctionOptions.pure, ElanClass(ListImmutable))
+  withAppendList(@elanClassType(ListImmutable) toAppend: ListImmutable<T1>): ListImmutable<T1> {
+    return this.system!.initialise(
+      new ListImmutable(
+        withAppendListHelper(this.contents as never[], toAppend as unknown as never[]),
+      ),
+    );
+  }
+
+  @elanFunction(["value"], FunctionOptions.pure, ElanClass(ListImmutable))
   withPrepend(@elanGenericParamT1Type() value: T1): ListImmutable<T1> {
     return this.withInsert(0, value);
+  }
+
+  @elanFunction(["toPrepend"], FunctionOptions.pure, ElanClass(ListImmutable))
+  withPrependList(@elanClassType(ListImmutable) toPrepend: ListImmutable<T1>): ListImmutable<T1> {
+    return toPrepend.withAppendList(this);
   }
 
   @elanFunction(["index", "value"], FunctionOptions.pure, ElanClass(ListImmutable))
   withPut(@elanIntType() index: number, @elanGenericParamT1Type() value: T1): ListImmutable<T1> {
     return this.system!.initialise(
-      new ListImmutable(withPutAtHelper(this.contents as [], index, value as never)),
+      new ListImmutable(withPutHelper(this.contents as [], index, value as never)),
     );
   }
 
   @elanFunction(["index", "value"], FunctionOptions.pure, ElanClass(ListImmutable))
   withInsert(@elanIntType() index: number, @elanGenericParamT1Type() value: T1): ListImmutable<T1> {
     return this.system!.initialise(
-      new ListImmutable(withInsertAtHelper(this.contents as [], index, value as never)),
+      new ListImmutable(withInsertHelper(this.contents as [], index, value as never)),
     );
   }
 

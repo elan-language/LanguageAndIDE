@@ -38,6 +38,83 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[4, 5, 6, 7, 8]");
   });
 
+  test("Pass_appendList", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to [4,5,6,7,8]
+  let b be [9,10,11]
+  call a.appendList(b)
+  print a
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.literalList([4, 5, 6, 7, 8]);
+  const b = system.literalList([9, 10, 11]);
+  a.appendList(b);
+  await system.printLine(a);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[4, 5, 6, 7, 8, 9, 10, 11]");
+  });
+
+  test("Fail_appendValueAsList", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to [4,5,6,7,8]
+  let b be 9
+  call a.appendList(b)
+  print a
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types. Expected: other (List<of Int>) Provided: Int",
+    ]);
+  });
+
+  test("Pass_prependList", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to [4,5,6,7,8]
+  let b be [9,10,11]
+  call a.prependList(b)
+  print a
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.literalList([4, 5, 6, 7, 8]);
+  const b = system.literalList([9, 10, 11]);
+  a.prependList(b);
+  await system.printLine(a);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[9, 10, 11, 4, 5, 6, 7, 8]");
+  });
+
   test("Pass_literalListOfList", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 

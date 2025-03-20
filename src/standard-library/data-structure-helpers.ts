@@ -6,13 +6,19 @@ export function withAppendHelper(contents: never[], value: never): never[] {
   return newList;
 }
 
-export function withPutAtHelper(contents: never[], index: number, value: never): never[] {
+export function withAppendListHelper(contents: never[], listB: never[]): never[] {
+  const newList = [...contents];
+  newList.push(...listB);
+  return newList;
+}
+
+export function withPutHelper(contents: never[], index: number, value: never): never[] {
   const newList = [...contents];
   newList[index] = value;
   return newList;
 }
 
-export function withInsertAtHelper(contents: never[], index: number, value: never): never[] {
+export function withInsertHelper(contents: never[], index: number, value: never): never[] {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (contents as any).toSpliced(index, 0, value);
 }

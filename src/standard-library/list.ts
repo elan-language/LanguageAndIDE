@@ -27,8 +27,8 @@ import {
   sortByHelper,
   withAppendHelper,
   withAppendListHelper,
-  withInsertAtHelper,
-  withPutAtHelper as withPutHelper,
+  withInsertHelper,
+  withPutHelper,
   withRemoveAllHelper,
   withRemoveAtHelper,
   withRemoveFirstHelper,
@@ -293,7 +293,7 @@ export class List<T1> {
   @elanFunction(["index", "value"], FunctionOptions.pure, ElanClass(List))
   withInsert(@elanIntType() index: number, @elanGenericParamT1Type() value: T1): List<T1> {
     return this.system!.initialise(
-      new List(withInsertAtHelper(this.contents as [], index, value as never)),
+      new List(withInsertHelper(this.contents as [], index, value as never)),
     );
   }
 
@@ -315,4 +315,5 @@ export class List<T1> {
       new List(withRemoveAllHelper(this.contents as [], value as never, this.system!)),
     );
   }
+
 }
