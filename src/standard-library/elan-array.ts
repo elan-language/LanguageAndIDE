@@ -14,7 +14,7 @@ import {
 import { System } from "../system";
 import { withPutHelper } from "./data-structure-helpers";
 
-@elanClass(ClassOption.array2D, [ElanT1], ["size", "initialValue"], [ElanInt, ElanT1], [], "Array")
+@elanClass(ClassOption.array, [ElanT1], ["size", "initialValue"], [ElanInt, ElanT1], [], "Array")
 export class ElanArray<T1> {
   // this must be implemented by hand on all stdlib classes
   static emptyInstance() {
@@ -23,11 +23,13 @@ export class ElanArray<T1> {
 
   async _initialise(size: number, value: T1) {
     if (size <= 0) {
-      throw new ElanRuntimeError(`Size of Array must non zero, positive value`);
+      throw new ElanRuntimeError(`Size of Array must be non zero, positive value`);
     }
 
     if (!(typeof value === "boolean" || typeof value === "string" || typeof value === "number")) {
-      throw new ElanRuntimeError(`Array must be of Type: Int, Float, String, or Boolean, with matching initial value`);
+      throw new ElanRuntimeError(
+        `Array must be of Type: Int, Float, String, or Boolean, with matching initial value`,
+      );
     }
 
     const toInit: T1[] = [];

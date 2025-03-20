@@ -34,7 +34,9 @@ export class ElanArray2D<T1> {
     }
 
     if (!(typeof value === "boolean" || typeof value === "string" || typeof value === "number")) {
-      throw new ElanRuntimeError(`Array2D must be of Type: Int, Float, String, or Boolean, with matching initial value`);
+      throw new ElanRuntimeError(
+        `Array2D must be of Type: Int, Float, String, or Boolean, with matching initial value`,
+      );
     }
 
     const toInit: T1[][] = [];

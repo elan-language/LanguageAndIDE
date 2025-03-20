@@ -546,6 +546,7 @@ export enum ClassOption {
   abstract,
   record,
   list,
+  array,
   array2D,
   listImmutable,
   dictionary,
@@ -605,6 +606,9 @@ function mapClassOption(options: ClassOption): TypeOptions {
     case ClassOption.list:
       opt.isIndexable = opt.isIterable = true;
       return opt;
+    case ClassOption.array:
+        opt.isIndexable = opt.isIterable = true;
+        return opt;
     case ClassOption.array2D:
       opt.isDoubleIndexable = true;
       return opt;
