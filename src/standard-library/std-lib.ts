@@ -797,14 +797,14 @@ export class StdLib {
     return set.addFromList(arr);
   }
 
-  @elanFunction([], FunctionOptions.pureExtension, ElanClass(ElanSet))
+  @elanFunction([], FunctionOptions.pureExtension, ElanClass(ElanArray))
   listAsArray<T1>(@elanClassType(List) li: List<T1>): ElanArray<T1> {
-    throw new Error(`Not implemented yet for ${li}`);
+    throw new ElanRuntimeError(`Not implemented yet for ${li}`);
   }
 
-  @elanFunction([], FunctionOptions.pureExtension, ElanClass(ElanSet))
+  @elanFunction([], FunctionOptions.pureExtension, ElanClass(List))
   arrayAsList<T1>(@elanClassType(List) arr: ElanArray<T1>): List<T1> {
-    throw new Error(`Not implemented yet for ${arr}`);
+    throw new ElanRuntimeError(`Not implemented yet for ${arr}`);
   }
 
   @elanFunction([], FunctionOptions.pureExtension, ElanClass(List))

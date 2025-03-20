@@ -94,6 +94,7 @@ export class ListImmutable<T1> {
 
   @elanFunction(["index", "value"], FunctionOptions.pure, ElanClass(ListImmutable))
   withPut(@elanIntType() index: number, @elanGenericParamT1Type() value: T1): ListImmutable<T1> {
+    this.safeIndex(index);
     return this.system!.initialise(
       new ListImmutable(withPutHelper(this.contents as [], index, value as never)),
     );
@@ -272,9 +273,7 @@ export class ListImmutable<T1> {
   }
 
   @elanFunction(["separator"], FunctionOptions.pure)
-  join(
-    separator: string,
-  ): string {
+  join(separator: string): string {
     return this.contents.join(separator);
   }
 }

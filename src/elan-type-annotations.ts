@@ -607,8 +607,8 @@ function mapClassOption(options: ClassOption): TypeOptions {
       opt.isIndexable = opt.isIterable = true;
       return opt;
     case ClassOption.array:
-        opt.isIndexable = opt.isIterable = true;
-        return opt;
+      opt.isIndexable = opt.isIterable = true;
+      return opt;
     case ClassOption.array2D:
       opt.isDoubleIndexable = true;
       return opt;

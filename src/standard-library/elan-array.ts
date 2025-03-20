@@ -71,6 +71,7 @@ export class ElanArray<T1> {
 
   @elanFunction(["index", "value"], FunctionOptions.pure, ElanClass(ElanArray))
   withPut(@elanIntType() index: number, @elanGenericParamT1Type() value: T1): ElanArray<T1> {
+    this.safeIndex(index);
     return this.system!.initialise(
       new ElanArray(withPutHelper(this.contents as [], index, value as never)),
     );

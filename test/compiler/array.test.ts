@@ -179,6 +179,37 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "barxan");
   });
 
+  test("Fail_WithPutOutOfRange", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to new Array<of String>(3, "")
+  set a to a.withPut(0, "bar")
+  set a to a.withPut(3, "xan")
+  print a[0]
+  print a[2]
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.initialise(await new _stdlib.Array()._initialise(3, ""));
+  a = a.withPut(0, "bar");
+  a = a.withPut(3, "xan");
+  await system.printLine(system.safeIndex(a, 0));
+  await system.printLine(system.safeIndex(a, 2));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeDoesNotExecute(fileImpl, "Out of range index: 3 size: 3");
+  });
+
   test("Pass_EmptyArray", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 

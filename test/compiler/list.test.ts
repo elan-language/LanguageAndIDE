@@ -872,7 +872,7 @@ end main
     assertDoesNotCompile(fileImpl, ["'getRange' is not defined for type 'List'"]);
   });
 
-  test("Pass_withPutAt", async () => {
+  test("Pass_withPut", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -901,6 +901,33 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "[one, TWO, three][ONE, TWO, three]");
+  });
+
+  test("Fail_withPutOutOfRange", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+    variable a set to ["one", "two", "three"]
+    set a to a.withPut(3, "THREE")
+    print a
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.literalList(["one", "two", "three"]);
+  a = a.withPut(3, "THREE");
+  await system.printLine(a);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeDoesNotExecute(fileImpl, "Out of range index: 3 size: 3");
   });
 
   test("Pass_withInsertAt", async () => {
