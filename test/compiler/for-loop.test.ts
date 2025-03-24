@@ -393,4 +393,40 @@ end main
 
     assertDoesNotParse(fileImpl);
   });
+
+  test("Fail_duplicateId1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable ids set to 10
+  for id from id to 11 step 1
+    print id
+  end for
+  print ids
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'id' is not defined"]);
+  });
+
+  test("Fail_duplicateId2", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable ids set to 10
+  for id from 0 to id step 1
+    print id
+  end for
+  print ids
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'id' is not defined"]);
+  });
 });
