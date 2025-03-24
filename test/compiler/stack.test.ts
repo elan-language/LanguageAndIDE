@@ -16,15 +16,16 @@ suite("Stack", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  let st be new Stack<of String>()
+  variable st set to new Stack<of String>()
   print st.length()
-  call st.push("apple")
-  call st.push("pear")
+  set st to st.push("apple")
+  set st to st.push("pear")
   print st.length()
   print st.peek()
-  variable fruit set to st.pop()
+  variable fruit set to ""
+  set fruit, st to st.pop()
   print fruit
-  set fruit to st.pop()
+  set fruit, st to st.pop()
   print fruit
   print st.length()
 end main`;
@@ -32,15 +33,16 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const st = system.initialise(await new _stdlib.Stack()._initialise());
+  let st = system.initialise(await new _stdlib.Stack()._initialise());
   await system.printLine(st.length());
-  st.push("apple");
-  st.push("pear");
+  st = st.push("apple");
+  st = st.push("pear");
   await system.printLine(st.length());
   await system.printLine(st.peek());
-  let fruit = st.pop();
+  let fruit = "";
+  [fruit, st] = st.pop();
   await system.printLine(fruit);
-  fruit = st.pop();
+  [fruit, st] = st.pop();
   await system.printLine(fruit);
   await system.printLine(st.length());
 }
@@ -59,9 +61,9 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  let st be new Stack<of String>()
-  call st.push("apple")
-  call st.push(3)
+  variable st set to new Stack<of String>()
+  set st to st.push("apple")
+  set st to st.push(3)
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -76,8 +78,8 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  let st be new Stack<of String>()
-  call st.push(3)
+  variable st set to new Stack<of String>()
+  set st to st.push(3)
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -92,8 +94,8 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  let st be new Stack<of String>()
-  call st.push("apple")
+  variable st set to new Stack<of String>()
+  set st to st.push("apple")
   variable a set to 1
   set a to st.peek()
 end main`;
