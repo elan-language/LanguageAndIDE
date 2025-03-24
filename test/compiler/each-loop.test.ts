@@ -12,7 +12,7 @@ import {
 } from "./compiler-test-helpers";
 
 suite("Each Loop", () => {
-  test("Pass_List", async () => {
+  test("Pass_List1", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -45,11 +45,11 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "24");
   });
 
-  test("Pass_List", async () => {
+  test("Pass_List2", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to {7,8,9}.listImmutableAsList()
+  variable a set to {7,8,9}.asList()
   variable n set to 0
   each x in a
     set n to n + x
@@ -60,7 +60,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.listImmutableAsList(system.listImmutable([7, 8, 9]));
+  let a = system.listImmutable([7, 8, 9]).asList();
   let n = 0;
   for (const x of a) {
     n = n + x;

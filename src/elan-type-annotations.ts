@@ -37,6 +37,12 @@ import { StdLibClass } from "./frames/symbols/stdlib-class";
 import { StringType } from "./frames/symbols/string-type";
 import { SymbolScope } from "./frames/symbols/symbol-scope";
 import { TupleType } from "./frames/symbols/tuple-type";
+import { UnknownType } from "./frames/symbols/unknown-type";
+
+export const nameToTypeMap = new Map<
+  string,
+  { name: string; prototype: object; emptyInstance: () => object }
+>();
 
 export class ElanProcedureDescriptor implements IElanProcedureDescriptor {
   constructor(
@@ -295,6 +301,26 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
   }
 }
 
+export class ElanClassNameTypeDescriptor implements TypeDescriptor {
+  constructor(
+    public readonly className: string,
+    private readonly ofTypes?: TypeDescriptor[] | undefined,
+  ) {}
+
+  isClass = true;
+
+  name = ClassName;
+
+  mapType(scope?: Scope): SymbolType {
+    const cls = nameToTypeMap.get(this.className);
+    if (cls) {
+      const td = new ElanClassTypeDescriptor(cls, this.ofTypes);
+      return td.mapType(scope);
+    }
+    return UnknownType.Instance;
+  }
+}
+
 export class TypescriptTypeDescriptor implements TypeDescriptor {
   constructor(public readonly name: string) {}
 
@@ -466,6 +492,10 @@ export function ElanClass(
   ofTypes?: TypeDescriptor[],
 ) {
   return new ElanClassTypeDescriptor(cls, ofTypes);
+}
+
+export function ElanClassName(className: string, _ofTypes?: TypeDescriptor[]) {
+  return new ElanClassNameTypeDescriptor(className);
 }
 
 export function ElanTuple(ofTypes: TypeDescriptor[]) {

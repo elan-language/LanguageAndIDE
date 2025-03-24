@@ -414,7 +414,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to {{"foo"},{"bar","yon"}}.listImmutableAsList()
+  variable a set to {{"foo"},{"bar","yon"}}.asList()
   print a.length()
   print a
 end main`;
@@ -422,7 +422,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.listImmutableAsList(system.listImmutable([system.listImmutable(["foo"]), system.listImmutable(["bar", "yon"])]));
+  let a = system.listImmutable([system.listImmutable(["foo"]), system.listImmutable(["bar", "yon"])]).asList();
   await system.printLine(a.length());
   await system.printLine(a);
 }

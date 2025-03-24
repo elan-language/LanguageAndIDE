@@ -538,14 +538,14 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to {"foo","bar","yon"}.listImmutableAsList()
+  variable a set to {"foo","bar","yon"}.asList()
   print a.length()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.listImmutableAsList(system.listImmutable(["foo", "bar", "yon"]));
+  let a = system.listImmutable(["foo", "bar", "yon"]).asList();
   await system.printLine(a.length());
 }
 return [main, _tests];}`;
@@ -959,6 +959,35 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "[one, TWO, two, three][ONE, one, TWO, two, three]");
+  });
+
+  test("Pass_Conversions", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+    variable a set to ["one", "two", "three"]
+    let b be a.asListImmutable()
+    print a
+    print b
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.literalList(["one", "two", "three"]);
+  const b = a.asListImmutable();
+  await system.printLine(a);
+  await system.printLine(b);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[one, two, three]{one, two, three}");
   });
 
   test("Fail_withRemove", async () => {

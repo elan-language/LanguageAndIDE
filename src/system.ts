@@ -7,6 +7,7 @@ import { Dictionary } from "./standard-library/dictionary";
 import { DictionaryImmutable } from "./standard-library/dictionary-immutable";
 import { List } from "./standard-library/list";
 import { ListImmutable } from "./standard-library/list-immutable";
+import { ElanSet } from "./standard-library/set";
 import { WebWorkerBreakpointMessage } from "./web/web-worker-messages";
 
 export class AssertOutcome {
@@ -445,5 +446,25 @@ export class System {
     }
 
     return v.toString();
+  }
+
+  listImmutableAsList<T1>(list: ListImmutable<T1>): List<T1> {
+    const newList = [...list];
+    return this.initialise(new List(newList));
+  }
+
+  listAsListImmutable<T1>(list: List<T1>): ListImmutable<T1> {
+    const newList = [...list];
+    return this.initialise(new ListImmutable(newList));
+  }
+
+  listImmutableAsSet<T1>(arr: ListImmutable<T1>): ElanSet<T1> {
+    const set = this.initialise(new ElanSet<T1>());
+    return set.addFromList(arr.asList()!);
+  }
+
+  listAsSet<T1>(arr: List<T1>): ElanSet<T1> {
+    const set = this.initialise(new ElanSet<T1>());
+    return set.addFromList(arr);
   }
 }

@@ -1,4 +1,4 @@
-# d123a466611f42ca82026464a7342db2ad2afbb0ae8cbb0b6108733d597fdb2e Elan Beta 9 valid
+# 59903f65176cdc064d8e09d2d4777e1015f308822b0c712d285dc039c825ab59 Elan Beta 9 valid
 
 main
   variable gr set to new BlockGraphics()
@@ -67,7 +67,7 @@ end function
 function nextGeneration(cells as List<of Boolean>) returns List<of Boolean>
   let cellRange be range(0, cells.length() - 1)
   let next be cellRange.map(lambda n as Int => nextCellValue(cells, n))
-  return next.listImmutableAsList()
+  return next.asList()
 end function
 
 constant black set to 0x000000

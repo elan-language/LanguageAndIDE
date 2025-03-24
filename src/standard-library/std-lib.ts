@@ -20,6 +20,7 @@ import {
   ElanT2,
   ElanTuple,
   FunctionOptions,
+  nameToTypeMap,
   ProcedureOptions,
 } from "../elan-type-annotations";
 import { Regexes } from "../frames/fields/regexes";
@@ -50,6 +51,9 @@ import { VectorGraphics } from "./vector-graphics";
 export class StdLib {
   constructor() {
     this.system = new System(new StubInputOutput());
+    nameToTypeMap.set("List", List);
+    nameToTypeMap.set("ListImmutable", ListImmutable);
+    nameToTypeMap.set("ElanSet", ElanSet);
   }
 
   system: System;
@@ -423,7 +427,6 @@ export class StdLib {
 
   @elanFunction(["string"], FunctionOptions.pure, ElanTuple([ElanBoolean, ElanFloat]))
   parseAsFloat(s: string): [boolean, number] {
-
     if (Regexes.negatableLitFloatOnly.test(s)) {
       const f = parseFloat(s);
       if (Number.isFinite(f)) {
@@ -435,13 +438,13 @@ export class StdLib {
 
   @elanFunction(["string"], FunctionOptions.pure, ElanTuple([ElanBoolean, ElanInt]))
   parseAsInt(s: string): [boolean, number] {
-    if (Regexes.negatableLitIntOnly.test(s) ) {
+    if (Regexes.negatableLitIntOnly.test(s)) {
       const i = parseInt(s);
       if (isFinite(i)) {
         return this.system.tuple([true, i]) as [boolean, number];
       }
     }
-      return this.system.tuple([false, 0]) as [boolean, number];
+    return this.system.tuple([false, 0]) as [boolean, number];
   }
 
   @elanProcedure(["text"], ProcedureOptions.async)
@@ -790,18 +793,6 @@ export class StdLib {
 
   // conversion
 
-  @elanFunction([], FunctionOptions.pureExtension, ElanClass(ListImmutable))
-  listAsListImmutable<T1>(@elanClassType(List) arr: List<T1>): ListImmutable<T1> {
-    const list = [...arr];
-    return new ListImmutable(list);
-  }
-
-  @elanFunction([], FunctionOptions.pureExtension, ElanClass(ElanSet))
-  listAsSet<T1>(@elanClassType(List) arr: List<T1>): ElanSet<T1> {
-    const set = this.system.initialise(new ElanSet<T1>());
-    return set.addFromList(arr);
-  }
-
   @elanFunction([], FunctionOptions.pureExtension, ElanClass(ElanArray))
   listAsArray<T1>(@elanClassType(List) li: List<T1>): ElanArray<T1> {
     throw new ElanRuntimeError(`Not implemented yet for ${li}`);
@@ -810,17 +801,5 @@ export class StdLib {
   @elanFunction([], FunctionOptions.pureExtension, ElanClass(List))
   arrayAsList<T1>(@elanClassType(List) arr: ElanArray<T1>): List<T1> {
     throw new ElanRuntimeError(`Not implemented yet for ${arr}`);
-  }
-
-  @elanFunction([], FunctionOptions.pureExtension, ElanClass(List))
-  listImmutableAsList<T1>(@elanClassType(ListImmutable) list: ListImmutable<T1>): List<T1> {
-    const newList = [...list];
-    return this.system.initialise(new List(newList));
-  }
-
-  @elanFunction([], FunctionOptions.pureExtension, ElanClass(ElanSet))
-  listImmutableAsSet<T1>(@elanClassType(ListImmutable) arr: ListImmutable<T1>): ElanSet<T1> {
-    const set = this.system.initialise(new ElanSet<T1>());
-    return set.addFromList(this.listImmutableAsList(arr));
   }
 }

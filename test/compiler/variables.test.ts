@@ -1,6 +1,7 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
+  assertDoesNotCompile,
   assertDoesNotCompileWithId,
   assertDoesNotParse,
   assertObjectCodeExecutes,
@@ -459,16 +460,15 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable i set to {1,2}
-  variable x set to listImmutableAsList
-  variable y set to x(i)
+  variable x set to ref createFileForWriting
+  variable y set to x("")
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "expr11", ["Cannot call extension method directly"]);
+    assertDoesNotCompile(fileImpl, ["Cannot call extension method directly"]);
   });
 
   test("Fail_referenceToExtensionFunction1", async () => {
@@ -476,7 +476,7 @@ end main`;
 
 main
   variable i set to 1
-  variable x set to listImmutableAsList
+  variable x set to asList
   variable y set to i.x()
 end main`;
 

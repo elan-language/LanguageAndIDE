@@ -107,11 +107,11 @@ export async function minByHelper(
   return contents[i];
 }
 
-export async function sortByHelper(
-  contents: never[],
-  predicate: (a: never, b: never) => Promise<number>,
+export async function sortByHelper<T1>(
+  contents: T1[],
+  predicate: (a: T1, b: T1) => Promise<number>,
   system: System,
-): Promise<never[]> {
+): Promise<T1[]> {
   const clone = [...contents];
   return await system.quickSort(clone, predicate);
 }

@@ -4,6 +4,7 @@ import {
   ElanBoolean,
   ElanClass,
   elanClass,
+  ElanClassName,
   elanClassType,
   ElanFloat,
   elanFunction,
@@ -15,6 +16,7 @@ import {
   ElanT1,
   ElanT2,
   FunctionOptions,
+  nameToTypeMap,
 } from "../elan-type-annotations";
 import { System } from "../system";
 import {
@@ -217,9 +219,8 @@ export class ListImmutable<T1> {
     @elanFuncType([ElanT1, ElanT1], ElanInt)
     predicate: (a: T1, b: T1) => Promise<number>,
   ): Promise<ListImmutable<T1>> {
-    return sortByHelper(this.contents as never[], predicate, this.system!) as unknown as Promise<
-      ListImmutable<T1>
-    >;
+    const arr = await sortByHelper(this.contents, predicate, this.system!);
+    return this.system!.initialise(new ListImmutable<T1>(arr));
   }
 
   @elanFunction([], FunctionOptions.pure, ElanT1)
@@ -276,4 +277,16 @@ export class ListImmutable<T1> {
   join(separator: string): string {
     return this.contents.join(separator);
   }
+
+  @elanFunction([], FunctionOptions.pure, ElanClassName("List"))
+  asList() {
+    return this.system?.listImmutableAsList(this);
+  }
+
+  @elanFunction([], FunctionOptions.pure, ElanClassName("ElanSet"))
+  asSet() {
+    return this.system?.listImmutableAsSet(this);
+  }
 }
+
+nameToTypeMap.set("ListImmutable", ListImmutable);

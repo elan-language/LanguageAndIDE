@@ -1,7 +1,7 @@
-# 1be197037188d2b36b01ffe6b3d99aaa4c7960b4226bae2b08d875a8b96577fe Elan Beta 9 valid
+# 07a2ff7502c3c7ae5c6fca6d69841c9e95c0b35d496f7287cb28a66127dde0db Elan Beta 9 valid
 
 main
-  let fruit be example.listImmutableAsList()
+  let fruit be example.asList()
   variable exit set to false
   while not exit
     let wanted be inputString("What type of fruit do you want ('x' to exit)? ")

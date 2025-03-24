@@ -4,6 +4,7 @@ import {
   ElanBoolean,
   ElanClass,
   elanClass,
+  ElanClassName,
   elanClassType,
   ElanFloat,
   elanFunction,
@@ -16,6 +17,7 @@ import {
   ElanT1,
   ElanT2,
   FunctionOptions,
+  nameToTypeMap,
 } from "../elan-type-annotations";
 import { System } from "../system";
 import {
@@ -321,4 +323,16 @@ export class List<T1> {
   join(separator: string): string {
     return this.contents.join(separator);
   }
+
+  @elanFunction([], FunctionOptions.pure, ElanClassName("ListImmutable"))
+  asListImmutable() {
+    return this.system?.listAsListImmutable(this);
+  }
+
+  @elanFunction([], FunctionOptions.pure, ElanClassName("ElanSet"))
+  asSet() {
+    return this.system?.listAsSet(this);
+  }
 }
+
+nameToTypeMap.set("List", List);
