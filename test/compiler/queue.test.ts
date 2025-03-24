@@ -16,33 +16,35 @@ suite("Queue", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  let st be new Queue<of String>()
-  print st.length()
-  call st.enqueue("apple")
-  call st.enqueue("pear")
-  print st.length()
-  print st.peek()
-  variable fruit set to st.dequeue()
+  variable q set to new Queue<of String>()
+  print q.length()
+  set q to q.enqueue("apple")
+  set q to q.enqueue("pear")
+  print q.length()
+  print q.peek()
+  variable fruit set to ""
+  set fruit, q to q.dequeue()
   print fruit
-  set fruit to st.dequeue()
+  set fruit, q to q.dequeue()
   print fruit
-  print st.length()
+  print q.length()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const st = system.initialise(await new _stdlib.Queue()._initialise());
-  await system.printLine(st.length());
-  st.enqueue("apple");
-  st.enqueue("pear");
-  await system.printLine(st.length());
-  await system.printLine(st.peek());
-  let fruit = st.dequeue();
+  let q = system.initialise(await new _stdlib.Queue()._initialise());
+  await system.printLine(q.length());
+  q = q.enqueue("apple");
+  q = q.enqueue("pear");
+  await system.printLine(q.length());
+  await system.printLine(q.peek());
+  let fruit = "";
+  [fruit, q] = q.dequeue();
   await system.printLine(fruit);
-  fruit = st.dequeue();
+  [fruit, q] = q.dequeue();
   await system.printLine(fruit);
-  await system.printLine(st.length());
+  await system.printLine(q.length());
 }
 return [main, _tests];}`;
 
@@ -59,9 +61,9 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  let st be new Queue<of String>()
-  call st.enqueue("apple")
-  call st.enqueue(3)
+  variable q set to new Queue<of String>()
+  set q to q.enqueue("apple")
+  set q to q.enqueue(3)
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -76,8 +78,8 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  let st be new Queue<of String>()
-  call st.enqueue(3)
+  variable q set to new Queue<of String>()
+  set q to q.enqueue(3)
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -92,15 +94,15 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  let st be new Queue<of String>()
-  print st.peek()
+  let q be new Queue<of String>()
+  print q.peek()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const st = system.initialise(await new _stdlib.Queue()._initialise());
-  await system.printLine(st.peek());
+  const q = system.initialise(await new _stdlib.Queue()._initialise());
+  await system.printLine(q.peek());
 }
 return [main, _tests];}`;
 
@@ -120,15 +122,15 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  let st be new Queue<of String>()
-  print st.dequeue()
+  let q be new Queue<of String>()
+  print q.dequeue()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const st = system.initialise(await new _stdlib.Queue()._initialise());
-  await system.printLine(st.dequeue());
+  const q = system.initialise(await new _stdlib.Queue()._initialise());
+  await system.printLine(q.dequeue());
 }
 return [main, _tests];}`;
 
@@ -148,7 +150,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  let st be new Queue()
+  let q be new Queue()
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
