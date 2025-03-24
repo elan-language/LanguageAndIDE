@@ -1301,4 +1301,40 @@ end main`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["<of Type(s)> Expected: 1 Provided: 0"]);
   });
+
+  test("Fail_appendTuple1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable points set to empty List<of Tuple<of Int, Int>>
+  set points to points + tuple(1, 2)
+  print points
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Float or Int Provided: List<of tuple(Int, Int)>",
+    ]);
+  });
+
+  test("Fail_appendTuple2", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable points set to empty List<of Tuple<of Int, Int>>
+  set points to points.appendList(tuple(1, 2))
+  print points
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: List<of tuple(Int, Int)> Provided: Procedure (List<of tuple(Int, Int)>)",
+    ]);
+  });
 });
