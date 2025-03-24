@@ -820,6 +820,45 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[a:1, b:3, z:10][a:1, z:10]");
   });
 
+  test("Pass_checkKeys(#1196)", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable di set to empty Dictionary<of Int, Int>
+  variable ds set to empty Dictionary<of String, Int>
+  variable i42 set to 42
+  variable s42 set to "42"
+  call di.put(i42, 99)
+  call ds.put(s42, 98)
+  print "{di.hasKey(i42)} {di[i42]} {ds.hasKey(s42)} {ds[s42]}"
+  print "{di} {ds}"
+  print "{di.keys()} {di.keys().contains(42)}"
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let di = system.initialise(_stdlib.Dictionary.emptyInstance());
+  let ds = system.initialise(_stdlib.Dictionary.emptyInstance());
+  let i42 = 42;
+  let s42 = "42";
+  di.put(i42, 99);
+  ds.put(s42, 98);
+  await system.printLine(\`\${await _stdlib.asString(di.hasKey(i42))} \${await _stdlib.asString(system.safeIndex(di, i42))} \${await _stdlib.asString(ds.hasKey(s42))} \${await _stdlib.asString(system.safeIndex(ds, s42))}\`);
+  await system.printLine(\`\${await _stdlib.asString(di)} \${await _stdlib.asString(ds)}\`);
+  await system.printLine(\`\${await _stdlib.asString(di.keys())} \${await _stdlib.asString(di.keys().contains(42))}\`);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "true 99 true 98[42:99] [42:98]{42} true");
+  });
+
   test("Fail_SetInvalidValueType", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
