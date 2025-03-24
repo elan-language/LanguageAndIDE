@@ -508,7 +508,7 @@ return [main, _tests];}`;
 
 main
   variable a set to {4,5,6,7,8}
-  variable b set to a + 9
+  variable b set to a.withAppend(9)
   print a
   print b
 end main`;
@@ -517,7 +517,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.listImmutable([4, 5, 6, 7, 8]);
-  let b = system.concat(a, 9);
+  let b = a.withAppend(9);
   await system.printLine(a);
   await system.printLine(b);
 }
@@ -532,7 +532,27 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "{4, 5, 6, 7, 8}{4, 5, 6, 7, 8, 9}");
   });
 
-  test("Pass_addListToElement", async () => {
+  test("Fail_addElementToListImmutableWithPlus", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to {4,5,6,7,8}
+  variable b set to a + 9
+  print a
+  print b
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Float or Int Provided: ListImmutable<of Int>",
+    ]);
+  });
+
+  test("Fail_addListToElement", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -557,11 +577,12 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{4, 5, 6, 7, 8}{9, 4, 5, 6, 7, 8}");
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Float or Int Provided: ListImmutable<of Int>",
+    ]);
   });
 
-  test("Pass_addListToListUsingPlus", async () => {
+  test("Fail_addListToListUsingPlus", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -573,28 +594,17 @@ main
     print c
 end main`;
 
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let a = system.listImmutable([4, 5, 6, 7, 8]);
-  let b = system.listImmutable([1, 2, 3]);
-  let c = system.concat(a, b);
-  await system.printLine(a);
-  await system.printLine(b);
-  await system.printLine(c);
-}
-return [main, _tests];}`;
-
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{4, 5, 6, 7, 8}{1, 2, 3}{4, 5, 6, 7, 8, 1, 2, 3}");
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Float or Int Provided: ListImmutable<of Int>",
+    ]);
   });
 
-  test("Pass_addListToListUsingPlus1", async () => {
+  test("Fail_addListToListUsingPlus1", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -606,25 +616,14 @@ main
     print c
 end main`;
 
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let a = system.listImmutable(["a", "b"]);
-  let b = "cd";
-  let c = system.concat(a, system.safeIndex(b, 0));
-  await system.printLine(a);
-  await system.printLine(b);
-  await system.printLine(c);
-}
-return [main, _tests];}`;
-
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{a, b}cd{a, b, c}");
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Float or Int Provided: ListImmutable<of String>",
+    ]);
   });
 
   test("Pass_constantLists", async () => {
@@ -737,7 +736,7 @@ return [main, _tests];}`;
 main
   variable a set to empty ListImmutable<of Int>
   variable b set to empty ListImmutable<of Int>
-  set b to a + 3
+  set b to a.withAppend(3)
   print a
   print b
   print a is b
@@ -750,7 +749,7 @@ const global = new class {};
 async function main() {
   let a = system.initialise(_stdlib.ListImmutable.emptyInstance());
   let b = system.initialise(_stdlib.ListImmutable.emptyInstance());
-  b = system.concat(a, 3);
+  b = a.withAppend(3);
   await system.printLine(a);
   await system.printLine(b);
   await system.printLine(system.objectEquals(a, b));

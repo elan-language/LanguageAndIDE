@@ -183,24 +183,6 @@ export class System {
     return await this.elanInputOutput.readLine();
   }
 
-  concat<T>(lhs: ListImmutable<T> | T, rhs: ListImmutable<T> | T) {
-    if (lhs instanceof ListImmutable && rhs instanceof ListImmutable) {
-      let ret = lhs!;
-
-      for (const t of rhs) {
-        ret = ret.withAppend(t!)!;
-      }
-
-      return ret;
-    }
-
-    if (lhs instanceof ListImmutable) {
-      return lhs.withAppend(rhs as T);
-    }
-
-    return (rhs as ListImmutable<T>).withPrepend(lhs);
-  }
-
   equals(i1: any, i2: any) {
     const t = typeof i1;
 

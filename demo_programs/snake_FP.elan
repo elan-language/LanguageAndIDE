@@ -1,4 +1,4 @@
-# 8d287a0055fc812fe7d50ac17c7bb1417085174f05001847a547957ba9330af5 Elan Beta 9 valid
+# e7a27275830f9977497579db8f358b9300bb5e6572660e9d0376e0a108c24f6a Elan Beta 9 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -48,7 +48,7 @@ function moveSnake(g as Game) returns Game
   let x, y be g.head
   let newX be if k is "a" then x - 1 else if k is "d" then x + 1 else x
   let newY be if k is "w" then y - 1 else if k is "s" then y + 1 else y
-  return copy g with body set to g.body + g.head, head set to newSquare(newX, newY)
+  return copy g with body set to g.body.withAppend(g.head), head set to newSquare(newX, newY)
 end function
 
 function eatAppleIfPoss(g as Game) returns Game

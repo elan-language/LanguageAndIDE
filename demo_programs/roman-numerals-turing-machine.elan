@@ -1,4 +1,4 @@
-# a2026ed11fb034a7fa9742d0e2c43c637269af9a3e17b9aa37b04f15ada26f91 Elan Beta 9 valid
+# 0ce66e938d509b6026bbf7489b525b9049311416fa565663a7bbfe578003fff5 Elan Beta 9 valid
 
 # Turing Machine that converts a Year from decimal to roman numerals
 # Run the program, enter the number to convert and watch the machine in action.
@@ -54,7 +54,7 @@ class TuringMachine
   end procedure
 
   procedure append(rule as Rule)
-    set property.rules to property.rules + rule
+    set property.rules to property.rules.withAppend(rule)
   end procedure
 
   procedure singleStep()
