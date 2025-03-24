@@ -626,9 +626,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: ListImmutable<of Float> Provided: ListImmutable<of String>",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'max' is not defined for type 'ListImmutable<of String>'"]);
   });
 
   test("Fail_MaxLambdaReturningNonNumeric", async () => {

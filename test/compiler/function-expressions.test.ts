@@ -204,9 +204,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: ListImmutable<of Float> Provided: String",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'max' is not defined for type 'String'"]);
   });
 
   test("Fail_UnconsumedExpressionResult1", async () => {

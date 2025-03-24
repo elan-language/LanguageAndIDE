@@ -1105,4 +1105,36 @@ end function`;
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'List<of Int>'"]);
   });
+
+  test("Fail_noMatchingExtension1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  let s be "hello"
+  let s1 be s.asBinary()
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'asBinary' is not defined for type 'String'"]);
+  });
+
+  test("Fail_noMatchingExtension2", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  let s be "hello"
+  let s1 be s.reverse()
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'reverse' is not defined for type 'String'"]);
+  });
 });

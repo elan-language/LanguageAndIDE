@@ -79,7 +79,13 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
     let parameters = [...this.parameters];
     const [funcSymbol, funcSymbolType] = this.getSymbolAndType();
 
-    mustBeKnownSymbol(funcSymbol, this.updatedScope, this.compileErrors, this.fieldId);
+    mustBeKnownSymbol(
+      funcSymbol,
+      this.updatedScope,
+      this.precedingNode.symbolType(),
+      this.compileErrors,
+      this.fieldId,
+    );
 
     if (!isMemberOnFieldsClass(funcSymbol, transforms(), this.scope)) {
       mustBePublicMember(funcSymbol, this.compileErrors, this.fieldId);
@@ -110,7 +116,13 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
         parameters = [this.precedingNode].concat(parameters);
       }
 
-      matchParametersAndTypes(funcSymbolType, parameters, this.compileErrors, this.fieldId);
+      matchParametersAndTypes(
+        funcSymbol.symbolId,
+        funcSymbolType,
+        parameters,
+        this.compileErrors,
+        this.fieldId,
+      );
 
       this.isAsync = funcSymbolType.isAsync;
     } else {

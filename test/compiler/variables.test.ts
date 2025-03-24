@@ -484,7 +484,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "expr11", ["'x' is not defined"]);
+    assertDoesNotCompileWithId(fileImpl, "expr11", ["'x' is not defined for type 'Int'"]);
   });
 
   test("Pass_Redefine", async () => {

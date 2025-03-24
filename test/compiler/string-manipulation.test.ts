@@ -394,7 +394,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'put' is not defined"]);
+    assertDoesNotCompile(fileImpl, ["'put' is not defined for type 'String'"]);
   });
 
   test("Fail_ComparisonOperators", async () => {

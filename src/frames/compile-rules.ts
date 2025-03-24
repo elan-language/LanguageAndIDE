@@ -161,13 +161,23 @@ export function mustNotHaveConditionalAfterUnconditionalElse(
 export function mustBeKnownSymbol(
   symbol: ElanSymbol,
   scope: Scope,
+  onType: SymbolType,
   compileErrors: CompileError[],
   location: string,
 ) {
   if (symbol instanceof UnknownSymbol) {
-    const type = isClass(scope) ? scope.symbolId : "";
+    const type = isClass(scope) ? scope.symbolId : onType instanceof UnknownType ? "" : onType.name;
     compileErrors.push(new UndefinedSymbolCompileError(symbol.symbolId, type, location));
   }
+}
+
+export function mustBeKnownExtension(
+  id: string,
+  type: string,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  compileErrors.push(new UndefinedSymbolCompileError(id, type, location));
 }
 
 export function mustBeKnownSymbolType(
@@ -508,6 +518,7 @@ export function mustCallMemberViaQualifier(
 }
 
 export function mustMatchParameters(
+  id: string,
   parms: AstNode[],
   ofType: SymbolType[],
   description: string,
@@ -533,7 +544,11 @@ export function mustMatchParameters(
   }
 
   if (extensionParm && extensionOfType) {
-    mustBeAssignableType(extensionOfType, extensionParm.symbolType(), compileErrors, location);
+    const parmType = extensionParm.symbolType();
+    if (!extensionOfType.isAssignableFrom(parmType)) {
+      mustBeKnownExtension(id, parmType.name, compileErrors, location);
+      return;
+    }
   }
 
   const maxLen = parms.length > ofType.length ? parms.length : ofType.length;

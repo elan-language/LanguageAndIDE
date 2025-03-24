@@ -138,7 +138,13 @@ export class CallStatement extends AbstractFrame implements Statement {
 
     const procSymbol = currentScope.resolveSymbol(id, transforms, this);
 
-    mustBeKnownSymbol(procSymbol, currentScope, this.compileErrors, this.htmlId);
+    mustBeKnownSymbol(
+      procSymbol,
+      currentScope,
+      qualifier.symbolType(),
+      this.compileErrors,
+      this.htmlId,
+    );
     mustBeProcedure(
       procSymbol.symbolId,
       procSymbol.symbolType(transforms),
@@ -173,7 +179,13 @@ export class CallStatement extends AbstractFrame implements Statement {
           qualifier = EmptyAsn.Instance;
         }
 
-        matchParametersAndTypes(procSymbolType, callParameters, this.compileErrors, this.htmlId);
+        matchParametersAndTypes(
+          id,
+          procSymbolType,
+          callParameters,
+          this.compileErrors,
+          this.htmlId,
+        );
 
         isAsync = procSymbolType.isAsync;
       }

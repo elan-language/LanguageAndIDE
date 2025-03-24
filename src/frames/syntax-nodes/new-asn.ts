@@ -61,6 +61,7 @@ export class NewAsn extends AbstractAstNode implements AstNode {
           constructorType instanceof ProcedureType ? constructorType.parameterTypes : [];
 
         mustMatchParameters(
+          typeAsString,
           this.parameters,
           parameterTypes,
           parameterNamesWithTypes(constructorType).join(", "),

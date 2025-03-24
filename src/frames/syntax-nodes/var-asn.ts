@@ -15,6 +15,7 @@ import {
   updateScope,
 } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
+import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { compileSimpleSubscript, getIndexAndOfType, isEmptyNode, transforms } from "./ast-helpers";
 import { EmptyAsn } from "./empty-asn";
@@ -70,7 +71,13 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
       mustBePublicMember(symbol, this.compileErrors, this.fieldId);
     }
 
-    mustBeKnownSymbol(symbol, NullScope.Instance, this.compileErrors, this.fieldId);
+    mustBeKnownSymbol(
+      symbol,
+      NullScope.Instance,
+      UnknownType.Instance,
+      this.compileErrors,
+      this.fieldId,
+    );
 
     if (symbol.symbolScope === SymbolScope.member && isEmptyNode(this.qualifier)) {
       mustBePropertyPrefixedOnMember(this.compileErrors, this.fieldId);

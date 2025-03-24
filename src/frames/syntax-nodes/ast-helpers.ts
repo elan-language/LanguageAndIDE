@@ -252,23 +252,25 @@ export function matchGenericTypes(type: FunctionType | ProcedureType, parameters
 }
 
 export function matchParametersAndTypes(
-  funcSymbolType: FunctionType | ProcedureType,
+  id: string,
+  methodSymbolType: FunctionType | ProcedureType,
   parameters: AstNode[],
   compileErrors: CompileError[],
   location: string,
 ) {
-  let parameterTypes = funcSymbolType.parameterTypes;
+  let parameterTypes = methodSymbolType.parameterTypes;
 
   if (parameterTypes.some((pt) => containsGenericType(pt))) {
-    const matches = matchGenericTypes(funcSymbolType, parameters);
+    const matches = matchGenericTypes(methodSymbolType, parameters);
     parameterTypes = parameterTypes.map((pt) => generateType(pt, matches));
   }
 
   mustMatchParameters(
+    id,
     parameters,
     parameterTypes,
-    parameterNamesWithTypes(funcSymbolType, parameterTypes).join(", "),
-    funcSymbolType.isExtension,
+    parameterNamesWithTypes(methodSymbolType, parameterTypes).join(", "),
+    methodSymbolType.isExtension,
     compileErrors,
     location,
   );

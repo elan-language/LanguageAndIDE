@@ -19,6 +19,7 @@ import { For } from "../statements/for";
 import { NullScope } from "../symbols/null-scope";
 import { isDeconstructedType, isMemberOnFieldsClass, scopePrefix } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
+import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { transforms } from "./ast-helpers";
 
@@ -74,7 +75,13 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
     const symbol = this.getSymbol();
 
     mustNotBeKeyword(this.id, this.compileErrors, this.fieldId);
-    mustBeKnownSymbol(symbol, this.updatedScope, this.compileErrors, this.fieldId);
+    mustBeKnownSymbol(
+      symbol,
+      this.updatedScope,
+      UnknownType.Instance,
+      this.compileErrors,
+      this.fieldId,
+    );
 
     if (!isMemberOnFieldsClass(symbol, transforms(), this.scope)) {
       mustBePublicMember(symbol, this.compileErrors, this.fieldId);
