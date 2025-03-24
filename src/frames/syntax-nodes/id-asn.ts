@@ -11,8 +11,11 @@ import { isClass } from "../frame-helpers";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstNode } from "../interfaces/ast-node";
 import { ChainedAsn } from "../interfaces/chained-asn";
+import { Frame } from "../interfaces/frame";
 import { Scope } from "../interfaces/scope";
 import { AbstractDefinitionStatement } from "../statements/abstract-definition.statement";
+import { Each } from "../statements/each";
+import { For } from "../statements/for";
 import { NullScope } from "../symbols/null-scope";
 import { isDeconstructedType, isMemberOnFieldsClass, scopePrefix } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
@@ -45,13 +48,17 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
     return this.compileErrors;
   }
 
+  isDefinitionStatement(s: Scope): boolean {
+    return s instanceof AbstractDefinitionStatement || s instanceof Each || s instanceof For;
+  }
+
   getSymbol() {
     let searchScope = this.updatedScope === NullScope.Instance ? this.scope : this.updatedScope;
     if (isClass(searchScope)) {
       return searchScope.resolveOwnSymbol(this.id, transforms());
     }
-    if (this.scope instanceof AbstractDefinitionStatement) {
-      searchScope = this.scope.getParent();
+    if (this.isDefinitionStatement(this.scope)) {
+      searchScope = (this.scope as Frame).getParent();
     }
 
     return searchScope.resolveSymbol(this.id, transforms(), this.scope);
