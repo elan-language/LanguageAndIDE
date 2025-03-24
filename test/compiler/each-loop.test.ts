@@ -215,6 +215,25 @@ end main
     assertDoesNotCompile(fileImpl, ["'x' is not defined"]);
   });
 
+  test("Fail_duplicateId", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable ids set to {7, 8, 9}
+  each id in id
+    print id
+  end each
+  print ids
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'id' is not defined"]);
+  });
+
   test("Fail_NoEndeach", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 

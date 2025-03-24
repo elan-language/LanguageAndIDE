@@ -13,6 +13,7 @@ import { AstNode } from "../interfaces/ast-node";
 import { ChainedAsn } from "../interfaces/chained-asn";
 import { Scope } from "../interfaces/scope";
 import { AbstractDefinitionStatement } from "../statements/abstract-definition.statement";
+import { Each } from "../statements/each";
 import { NullScope } from "../symbols/null-scope";
 import { isDeconstructedType, isMemberOnFieldsClass, scopePrefix } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
@@ -50,7 +51,7 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
     if (isClass(searchScope)) {
       return searchScope.resolveOwnSymbol(this.id, transforms());
     }
-    if (this.scope instanceof AbstractDefinitionStatement) {
+    if (this.scope instanceof AbstractDefinitionStatement || this.scope instanceof Each) {
       searchScope = this.scope.getParent();
     }
 
