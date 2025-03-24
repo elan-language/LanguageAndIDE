@@ -22,6 +22,7 @@ import {
   FunctionOptions,
   ProcedureOptions,
 } from "../elan-type-annotations";
+import { Regexes } from "../frames/fields/regexes";
 import { hasHiddenType } from "../has-hidden-type";
 import { StubInputOutput } from "../stub-input-output";
 import { System } from "../system";
@@ -422,21 +423,25 @@ export class StdLib {
 
   @elanFunction(["string"], FunctionOptions.pure, ElanTuple([ElanBoolean, ElanFloat]))
   parseAsFloat(s: string): [boolean, number] {
-    const f = parseFloat(s);
-    if (Number.isFinite(f)) {
-      return this.system.tuple([true, f]) as [boolean, number];
+
+    if (Regexes.negatableLitFloatOnly.test(s)) {
+      const f = parseFloat(s);
+      if (Number.isFinite(f)) {
+        return this.system.tuple([true, f]) as [boolean, number];
+      }
     }
     return this.system.tuple([false, 0]) as [boolean, number];
   }
 
   @elanFunction(["string"], FunctionOptions.pure, ElanTuple([ElanBoolean, ElanInt]))
   parseAsInt(s: string): [boolean, number] {
-    const [b, f] = this.parseAsFloat(s);
-    const i = Math.floor(f);
-    if (b && f === i) {
-      return this.system.tuple([b, i]) as [boolean, number];
+    if (Regexes.negatableLitIntOnly.test(s) ) {
+      const i = parseInt(s);
+      if (isFinite(i)) {
+        return this.system.tuple([true, i]) as [boolean, number];
+      }
     }
-    return this.system.tuple([false, 0]) as [boolean, number];
+      return this.system.tuple([false, 0]) as [boolean, number];
   }
 
   @elanProcedure(["text"], ProcedureOptions.async)

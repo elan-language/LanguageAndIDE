@@ -9,7 +9,6 @@ import {
   assertParses,
   assertStatusIsValid,
   assertTestObjectCodeExecutes,
-  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -189,7 +188,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "tuple(false, 0)");
   });
 
-  ignore_test("Pass_parseAsFloat3", async () => {
+  test("Pass_parseAsFloat3", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -214,7 +213,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "tuple(false, 0)");
   });
 
-  ignore_test("Pass_parseAsInt0", async () => {
+  test("Pass_parseAsInt0", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
