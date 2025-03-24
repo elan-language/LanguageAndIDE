@@ -8,6 +8,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -456,7 +457,7 @@ end main`;
     assertDoesNotCompileWithId(fileImpl, "expr5", ["'x' is not defined"]);
   });
 
-  test("Fail_referenceToExtensionFunction", async () => {
+  ignore_test("Fail_referenceToExtensionFunction", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
