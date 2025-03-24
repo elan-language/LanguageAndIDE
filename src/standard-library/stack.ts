@@ -1,12 +1,13 @@
 import { ElanRuntimeError } from "../elan-runtime-error";
 import {
   ClassOption,
+  ElanClass,
   elanClass,
   elanFunction,
   elanGenericParamT1Type,
   ElanInt,
-  elanProcedure,
   ElanT1,
+  ElanTuple,
   FunctionOptions,
 } from "../elan-type-annotations";
 import { System } from "../system";
@@ -22,8 +23,8 @@ export class Stack<T1> {
     return this;
   }
 
-  constructor() {
-    this.contents = [];
+  constructor(arr?: T1[]) {
+    this.contents = arr ? [...arr] : [];
   }
 
   private contents: T1[];
@@ -43,18 +44,21 @@ export class Stack<T1> {
     return this.contents.length;
   }
 
-  @elanProcedure([])
+  @elanFunction([], FunctionOptions.pure, ElanClass(Stack))
   push(@elanGenericParamT1Type() item: T1) {
-    this.contents.unshift(item);
+    const newContents = [...this.contents];
+    newContents.unshift(item);
+    return this.system?.initialise(new Stack(newContents));
   }
 
-  @elanFunction([], FunctionOptions.impure, ElanT1)
-  pop(): T1 {
+  @elanFunction([], FunctionOptions.impure, ElanTuple([ElanT1, ElanClass(Stack)]))
+  pop(): [typeof ElanT1, typeof Stack] {
     if (this.contents.length === 0) {
       throw new ElanRuntimeError(`Cannot pop an empty Stack - check using length()`);
     }
-    const result = this.contents[0];
-    this.contents.splice(0, 1);
-    return result;
+    const newContents = [...this.contents];
+    const item = newContents.shift();
+    const newStack = this.system?.initialise(new Stack(newContents));
+    return this.system!.tuple([item, newStack]) as [typeof ElanT1, typeof Stack];
   }
 }
