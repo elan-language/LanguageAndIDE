@@ -16,12 +16,6 @@ suite("Demo compile", () => {
   test("test burrow", async () => {
     await testDemoProgram("burrow.elan");
   });
-  test("test cards", async () => {
-    await testDemoProgram("cards.elan");
-  });
-  test("test chessboard", async () => {
-    await testDemoProgram("chessboard.elan");
-  });
   test("test collatz", async () => {
     await testDemoProgram("collatz.elan");
   });

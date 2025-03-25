@@ -270,14 +270,14 @@ return [main, _tests];}`;
 
 main
   variable gr set to new BlockGraphics()
-  call gr.clearKeyBuffer()
+  call clearKeyBuffer()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let gr = system.initialise(await new _stdlib.BlockGraphics()._initialise());
-  await _stdlib.clearKeyBuffer(gr);
+  await _stdlib.clearKeyBuffer();
 }
 return [main, _tests];}`;
 

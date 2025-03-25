@@ -425,7 +425,6 @@ end main`;
 
     const expected = [
       ["clearGraphics", "clearGraphics", "clearGraphics"],
-      ["clearKeyBuffer", "clearKeyBuffer", "clearKeyBuffer"],
       ["display", "display", "display"],
     ] as [string, string, string][];
 
@@ -1515,7 +1514,6 @@ end main`;
 
     const expected = [
       ["clearGraphics", "*", "*"],
-      ["clearKeyBuffer", "*", "*"],
       ["display", "*", "*"],
     ] as [string, string, string][];
 

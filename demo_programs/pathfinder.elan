@@ -1,4 +1,4 @@
-# 5acb9669cf9f0e8f0a75b3a258c47e3b5329a476084b907e1952889d3dcd2a84 Elan Beta 9 valid
+# 6cff642cc6c869e9c25676581612f0a5876a3b136e03f4722f864a305513eaac Elan Beta 9 valid
 
 main
   let start be newPoint(5, 5)
@@ -101,8 +101,6 @@ class Solver
 
   property current as Node
 
-  property currentNeighbours as List<of Node>
-
   property alg as Algorithm
 
   property running as Boolean
@@ -130,7 +128,7 @@ class Solver
 
   procedure updateNeighbours()
     let distToCurrent be property.current.distFromStart
-    each neighbour in property.currentNeighbours
+    each neighbour in currentNeighbours()
       let currentPoint be property.current.point
       let distViaCurrent be distToCurrent + currentPoint.minDistTo(neighbour.point)
       if distViaCurrent < neighbour.distFromStart then
@@ -140,17 +138,18 @@ class Solver
     end each
   end procedure
 
-  procedure determineCurrentNeighbours()
-    set property.currentNeighbours to empty List<of Node>
+  function currentNeighbours() returns List<of Node>
+    variable neighbours set to new List<of Node>()
     let currentPoint be property.current.point
     each p in currentPoint.neighbouringPoints()
       let node be getNodeFor(p)
       let point be node.point
       if point.isNotEmpty then
-        call property.currentNeighbours.append(node)
+        set neighbours to neighbours.withAppend(node)
       end if
     end each
-  end procedure
+    return neighbours
+  end function
 
   function getNodeFor(p as Point) returns Node
     let matches be property.nodes.filter(lambda n as Node => n.point is p)
@@ -236,6 +235,10 @@ class Node
     set property.via to p
   end procedure
 
+  function asString() returns String
+    return "[{property.point.asString()} {property.visited} {property.distFromStart}]"
+  end function
+
 end class
 
 record Point
@@ -256,6 +259,10 @@ record Point
   # Returns the 8 theoretically-neighbouring points, whether or not within bounds
   function neighbouringPoints() returns ListImmutable<of Point>
     return {newPoint(property.x - 1, property.y - 1), newPoint(property.x, property.y - 1), newPoint(property.x + 1, property.y - 1), newPoint(property.x - 1, property.y), newPoint(property.x + 1, property.y), newPoint(property.x - 1, property.y + 1), newPoint(property.x, property.y + 1), newPoint(property.x + 1, property.y + 1)}
+  end function
+
+  function asString() returns String
+    return "{property.x},{property.y}"
   end function
 
 end record
