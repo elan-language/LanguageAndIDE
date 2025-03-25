@@ -1116,7 +1116,7 @@ end class`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to new BlockGraphics<of String>()
+  variable x set to new Random<of String>()
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);

@@ -27,7 +27,6 @@ import { hasHiddenType } from "../has-hidden-type";
 import { StubInputOutput } from "../stub-input-output";
 import { System } from "../system";
 import { BaseVG } from "./base-vg";
-import { BlockGraphics } from "./block-graphics";
 import { CircleVG } from "./circle-vg";
 import { Dictionary } from "./dictionary";
 import { DictionaryImmutable } from "./dictionary-immutable";
@@ -71,9 +70,6 @@ export class StdLib {
 
   @elanClassExport(ElanSet)
   Set = ElanSet;
-
-  @elanClassExport(BlockGraphics)
-  BlockGraphics = BlockGraphics;
 
   @elanClassExport(Turtle)
   Turtle = Turtle;
