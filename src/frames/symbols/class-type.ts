@@ -49,7 +49,7 @@ export class ClassType implements ReifyableSymbolType, Scope, GenericSymbolType 
     return this;
   }
 
-  updateFrom(other: ClassType) {
+  updateFrom(other: ClassType): ClassType {
     this.className = other.className;
     this.isNotInheritable = other.isNotInheritable;
     this.typeOptions = other.typeOptions;

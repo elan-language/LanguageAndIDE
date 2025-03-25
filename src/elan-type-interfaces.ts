@@ -17,17 +17,17 @@ export interface IElanFunctionDescriptor extends ElanMethodDescriptor {
   returnType?: TypeDescriptor;
 
   isFunction: boolean;
-  mapType(): SymbolType;
+  mapType(scope: Scope): SymbolType;
 }
 
 export interface IElanProcedureDescriptor extends ElanMethodDescriptor {
   isProcedure: boolean;
-  mapType(): SymbolType;
+  mapType(scope: Scope): SymbolType;
 }
 
 export interface TypeDescriptor extends ElanDescriptor {
   name: string;
-  mapType(scope?: Scope): SymbolType;
+  mapType(scope: Scope): SymbolType;
 }
 
 export function isFunctionDescriptor(d: ElanDescriptor | undefined): d is IElanFunctionDescriptor {

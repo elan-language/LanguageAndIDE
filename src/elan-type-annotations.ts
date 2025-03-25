@@ -44,6 +44,18 @@ export const nameToTypeMap = new Map<
   { name: string; prototype: object; emptyInstance: () => object }
 >();
 
+const StdLibClassCache = new Map<string, StdLibClass>();
+
+export function stdlibClassUniqueId(name: string, ofTypes?: TypeDescriptor[]) {
+  const fullName = [name];
+
+  for (const st of ofTypes ?? []) {
+    fullName.push(st.name);
+  }
+
+  return fullName.join("_");
+}
+
 export class ElanProcedureDescriptor implements IElanProcedureDescriptor {
   constructor(
     public readonly isExtension: boolean = false,
@@ -58,12 +70,12 @@ export class ElanProcedureDescriptor implements IElanProcedureDescriptor {
 
   parameterNames: string[] = [];
 
-  mapType(): SymbolType {
+  mapType(scope: Scope): SymbolType {
     const parameterTypes = this.parameterTypes;
 
     return new ProcedureType(
       this.parameterNames,
-      parameterTypes.map((t) => t.mapType()),
+      parameterTypes.map((t) => t.mapType(scope)),
       this.isExtension,
       this.isAsync,
     );
@@ -80,12 +92,12 @@ export class ElanClassDescriptor implements ElanDescriptor {
     public readonly alias?: string,
   ) {}
 
-  mapType(): SymbolType {
+  mapType(scope: Scope): SymbolType {
     const parameterTypes = this.parameterTypes;
 
     return new ProcedureType(
       this.parameterNames,
-      parameterTypes.map((t) => t.mapType()),
+      parameterTypes.map((t) => t.mapType(scope)),
       false,
       false,
     );
@@ -106,14 +118,14 @@ export class ElanFunctionDescriptor implements IElanFunctionDescriptor {
 
   parameterNames: string[] = [];
 
-  mapType(): SymbolType {
+  mapType(scope: Scope): SymbolType {
     const retType = this.returnType!;
     const parameterTypes = this.parameterTypes;
 
     return new FunctionType(
       this.parameterNames,
-      parameterTypes.map((t) => t.mapType()),
-      retType.mapType(),
+      parameterTypes.map((t) => t.mapType(scope)),
+      retType.mapType(scope),
       this.isExtension,
       this.isPure,
       this.isAsync,
@@ -178,11 +190,11 @@ export class ElanFuncTypeDescriptor implements TypeDescriptor {
 
   name = FuncName;
 
-  mapType(): SymbolType {
+  mapType(scope: Scope): SymbolType {
     return new FunctionType(
       this.parameters.map((t) => t.name),
-      this.parameters.map((p) => p.mapType()),
-      this.returnType.mapType(),
+      this.parameters.map((p) => p.mapType(scope)),
+      this.returnType.mapType(scope),
       false,
       true,
       false,
@@ -197,8 +209,8 @@ export class ElanTupleTypeDescriptor implements TypeDescriptor {
 
   isConstant = true;
 
-  mapType(): SymbolType {
-    return new TupleType(this.parameters.map((p) => p.mapType()));
+  mapType(scope: Scope): SymbolType {
+    return new TupleType(this.parameters.map((p) => p.mapType(scope)));
   }
 }
 
@@ -223,27 +235,12 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
     return `${className}_${ofTypeNames}`;
   }
 
-  mapType(scope?: Scope): SymbolType {
-    const classMetadata: ElanClassDescriptor =
-      Reflect.getMetadata(elanMetadataKey, this.cls) ?? new ElanClassDescriptor();
-
-    const className = classMetadata.alias ?? removeUnderscore(this.cls.name);
-    const classId = this.classId(className, classMetadata);
-
-    if (tempMap.has(classId)) {
-      return tempMap.get(classId)!;
-    }
-
+  getNewClassTypeDef(classMetadata: ElanClassDescriptor, className: string, scope: Scope) {
     const names = Object.getOwnPropertyNames(this.cls.prototype).concat(
       Object.getOwnPropertyNames(this.cls.emptyInstance()),
     );
 
     const children: [string, SymbolType, MemberType][] = [];
-
-    tempMap.set(
-      classId,
-      new ClassType(className, ClassSubType.concrete, false, noTypeOptions, [], undefined!),
-    );
 
     for (let i = 0; i < names.length; i++) {
       const name = names[i];
@@ -253,24 +250,21 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
         | undefined;
 
       if (name === "constructor") {
-        children.push([name, classMetadata.mapType(), MemberType.procedure]);
+        children.push([name, classMetadata.mapType(scope), MemberType.procedure]);
       }
 
       if (isFunctionDescriptor(metadata)) {
-        children.push([name, metadata.mapType(), MemberType.function]);
+        children.push([name, metadata.mapType(scope), MemberType.function]);
       }
 
       if (isProcedureDescriptor(metadata)) {
-        children.push([name, metadata.mapType(), MemberType.procedure]);
+        children.push([name, metadata.mapType(scope), MemberType.procedure]);
       }
 
       if (isConstantDescriptor(metadata)) {
-        children.push([name, metadata.mapType(), MemberType.property]);
+        children.push([name, metadata.mapType(scope), MemberType.property]);
       }
     }
-
-    const classType = tempMap.get(classId)!;
-    tempMap.delete(classId);
 
     const classTypeDef = new StdLibClass(
       className,
@@ -289,12 +283,41 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
     const actualOfTypes = this.ofTypes ?? classMetadata.ofTypes;
 
     for (const ot of actualOfTypes) {
-      classTypeDef.ofTypes.push(ot.mapType());
+      classTypeDef.ofTypes.push(ot.mapType(scope));
     }
 
     for (const inherits of classMetadata.inherits) {
       classTypeDef.inheritTypes.push(inherits.mapType());
     }
+
+    // cache classTypeDef
+    StdLibClassCache.set(stdlibClassUniqueId(className, this.ofTypes), classTypeDef);
+
+    return classTypeDef;
+  }
+
+  mapType(scope?: Scope): SymbolType {
+    const classMetadata: ElanClassDescriptor =
+      Reflect.getMetadata(elanMetadataKey, this.cls) ?? new ElanClassDescriptor();
+
+    const className = classMetadata.alias ?? removeUnderscore(this.cls.name);
+    const classId = this.classId(className, classMetadata);
+
+    if (tempMap.has(classId)) {
+      return tempMap.get(classId)!;
+    }
+
+    tempMap.set(
+      classId,
+      new ClassType(className, ClassSubType.concrete, false, noTypeOptions, [], undefined!),
+    );
+
+    const classTypeDef =
+      StdLibClassCache.get(stdlibClassUniqueId(className, this.ofTypes)) ??
+      this.getNewClassTypeDef(classMetadata, className, scope!);
+
+    const classType = tempMap.get(classId)!;
+    tempMap.delete(classId);
 
     // update the classtype in the temp map
     return classType.updateFrom(classTypeDef.symbolType() as ClassType);
