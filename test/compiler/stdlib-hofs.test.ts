@@ -371,7 +371,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "{one:1, two:2, three:1, four:1}");
   });
 
-  test("Pass_max", async () => {
+  test("Pass_maxImmutableList", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
@@ -398,7 +398,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "37");
   });
 
-  test("Pass_maxBy", async () => {
+  test("Pass_maxByImmutableList", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
@@ -413,6 +413,31 @@ const global = new class {
 };
 async function main() {
   await system.printLine((await global.source.maxBy(async (x) => x % 5)));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "19");
+  });
+
+  test("Pass_maxByList", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
+  print source.maxBy(lambda x as Int => x mod 5)
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let source = system.literalList([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
+  await system.printLine((await source.maxBy(async (x) => x % 5)));
 }
 return [main, _tests];}`;
 
@@ -479,7 +504,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "orange");
   });
 
-  test("Pass_length", async () => {
+  test("Pass_lengthImmutableList", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
@@ -494,6 +519,31 @@ const global = new class {
 };
 async function main() {
   await system.printLine(global.source.length());
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "12");
+  });
+
+  test("Pass_lengthList", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
+  print source.length()
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let source = system.literalList([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
+  await system.printLine(source.length());
 }
 return [main, _tests];}`;
 
@@ -533,7 +583,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "2");
   });
 
-  test("Pass_minBy", async () => {
+  test("Pass_minByImmutableList", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
@@ -560,12 +610,37 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "5");
   });
 
-  test("Pass_sortBy", async () => {
+  test("Pass_minByList", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
+  print source.minBy(lambda x as Int => x mod 5)
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let source = system.literalList([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
+  await system.printLine((await source.minBy(async (x) => x % 5)));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "5");
+  });
+
+  test("Pass_sortByImmutableList", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
-  print source.sortBy(lambda x as Int, y as Int => if x is y then 0 else if x < y then 1 else -1).asList()
+  print source.sortBy(lambda x as Int, y as Int => if x is y then 0 else if x < y then 1 else -1)
   print source
 end main`;
 
@@ -575,7 +650,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine((await global.source.sortBy(async (x, y) => x === y ? 0 : x < y ? 1 : (-1))).asList());
+  await system.printLine((await global.source.sortBy(async (x, y) => x === y ? 0 : x < y ? 1 : (-1))));
   await system.printLine(global.source);
 }
 return [main, _tests];}`;
@@ -588,7 +663,37 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "[37, 31, 27, 23, 19, 17, 13, 11, 7, 5, 3, 2]{2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}",
+      "{37, 31, 27, 23, 19, 17, 13, 11, 7, 5, 3, 2}{2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}",
+    );
+  });
+
+  test("Pass_sortByList", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
+  print source.sortBy(lambda x as Int, y as Int => if x is y then 0 else if x < y then 1 else -1)
+  print source
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let source = system.literalList([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
+  await system.printLine((await source.sortBy(async (x, y) => x === y ? 0 : x < y ? 1 : (-1))));
+  await system.printLine(source);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "[37, 31, 27, 23, 19, 17, 13, 11, 7, 5, 3, 2][2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]",
     );
   });
 
