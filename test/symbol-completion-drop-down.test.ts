@@ -416,18 +416,14 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable foo set to new BlockGraphics()
+  variable foo set to new Array<of Int>()
   call foo()
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [
-      ["clearGraphics", "clearGraphics", "clearGraphics"],
-      ["clearKeyBuffer", "clearKeyBuffer", "clearKeyBuffer"],
-      ["display", "display", "display"],
-    ] as [string, string, string][];
+    const expected = [["put", "put", "put"]] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "ident7", ".", 3, expected);
   });
@@ -1083,7 +1079,6 @@ end function`;
 
     const expected = [
       ["BaseVG", "*", "*"],
-      ["BlockGraphics", "*", "*"],
       ["Boolean", "*", "*"],
     ] as [string, string, string][];
 
@@ -1111,7 +1106,6 @@ end function`;
 
     const expected = [
       ["BaseVG", "*", "*"],
-      ["BlockGraphics", "*", "*"],
       ["Boolean", "*", "*"],
     ] as [string, string, string][];
 
@@ -1155,10 +1149,7 @@ end function`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [
-      ["BlockGraphics", "*", "*"],
-      ["VectorGraphics", "*", "*"],
-    ] as [string, string, string][];
+    const expected = [["VectorGraphics", "*", "*"]] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "params6", "a as Graphics", expected);
   });
@@ -1192,10 +1183,7 @@ end function`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [
-      ["BlockGraphics", "*", "*"],
-      ["VectorGraphics", "*", "*"],
-    ] as [string, string, string][];
+    const expected = [["VectorGraphics", "*", "*"]] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "type5", "Graphics", expected);
   });
@@ -1506,43 +1494,20 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
     main
-      variable foo set to new BlockGraphics()
-      call foo()
+      variable foo set to 1.1
+      let a be foo
     end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["clearGraphics", "*", "*"],
-      ["clearKeyBuffer", "*", "*"],
-      ["display", "*", "*"],
-    ] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "ident7", "foo.", expected);
-  });
-
-  test("Pass_libExtension2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-    main
-      variable foo set to new BlockGraphics()
-      variable a set to foo
-    end main`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["asHtml", "*", "*"],
       ["asString", "*", "*"],
-      ["getBackground", "*", "*"],
-      ["getChar", "*", "*"],
-      ["getForeground", "*", "*"],
-      ["withBackground", "*", "*"],
-      ["withBlock", "*", "*"],
-      ["withText", "*", "*"],
-      ["withUnicode", "*", "*"],
+      ["ceiling", "*", "*"],
+      ["floor", "*", "*"],
+      ["isInfinite", "*", "*"],
+      ["isNaN", "*", "*"],
+      ["round", "*", "*"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "expr8", "foo.", expected);
@@ -1552,16 +1517,14 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  let foo be new BlockGraphics()
-end main`;
+  let foo be new CircleVG()
+end main
+`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [
-      ["BlockGraphics", "*", "*"],
-      ["Boolean", "*", "*"],
-    ] as [string, string, string][];
+    const expected = [["Boolean", "*", "*"]] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "expr5", "new B", expected);
   });
@@ -1570,7 +1533,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  let foo be new BlockGraphics()
+  let foo be new Array<of Int>()
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -1579,7 +1542,6 @@ end main`;
     const expected = [
       ["Array", "*", "Array<of "],
       ["Array2D", "*", "Array2D<of "],
-      ["BlockGraphics", "*", "*"],
       ["Boolean", "*", "*"],
       ["CircleVG", "*", "*"],
       ["Dictionary", "*", "*"],
@@ -1721,7 +1683,6 @@ end main`;
     const expected = [
       ["Array", "*", "Array<of "],
       ["Array2D", "*", "Array2D<of "],
-      ["BlockGraphics", "*", "*"],
       ["Boolean", "*", "*"],
       ["CircleVG", "*", "*"],
       ["Dictionary", "*", "*"],

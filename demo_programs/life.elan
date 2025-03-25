@@ -1,160 +1,164 @@
-# 59903f65176cdc064d8e09d2d4777e1015f308822b0c712d285dc039c825ab59 Elan Beta 9 valid
+# a5e247b1f4df9dfc8c8308f9f14d9b9903fc092168047731a90bbcc9f75f9515 Elan Beta 9 valid
 
 main
-  variable gr set to new BlockGraphics()
-  variable grid set to empty List<of Boolean>
+  variable grid set to new Array2D<of Int>(40, 30, white)
   call fillRandom(grid)
   while true
-    set gr to updateGraphics(grid, gr)
-    call gr.display()
-    set grid to nextGeneration(grid)
+    call displayBlocks(grid)
+    call nextGeneration(grid)
     call pause(50)
   end while
 end main
 
-procedure fillRandom(out starter as List<of Boolean>)
-  for i from 0 to 1199 step 1
-    call starter.append(random() > 0.5)
+procedure fillRandom(grid as Array2D<of Int>)
+  for col from 0 to 39 step 1
+    for row from 0 to 29 step 1
+      let cell be if random() > 0.5 then black else white
+      call grid.put(col, row, cell)
+    end for
   end for
 end procedure
 
-function updateGraphics(grid as List<of Boolean>, gr as BlockGraphics) returns BlockGraphics
-  variable gr2 set to gr
-  for row from 0 to 29 step 1
-    for col from 0 to 39 step 1
-      let cell be grid[row*40 + col]
-      let colour be if cell then black else white
-      set gr2 to gr2.withBlock(col, row, colour)
-    end for
-  end for
-  return gr2
+function north(cell as (Int, Int)) returns (Int, Int)
+  let x, y be cell
+  let y2 be if y is 0 then 29 else y - 1
+  return tuple(x, y2)
 end function
 
-function north(c as Int) returns Int
-  return if c > 39 then c - 40 else c + 1160
+function south(cell as (Int, Int)) returns (Int, Int)
+  let x, y be cell
+  let y2 be if y is 29 then 0 else y + 1
+  return tuple(x, y2)
 end function
 
-function south(c as Int) returns Int
-  return if c < 1160 then c + 40 else c - 1160
+function east(cell as (Int, Int)) returns (Int, Int)
+  let x, y be cell
+  let x2 be if x is 39 then 0 else x + 1
+  return tuple(x2, y)
 end function
 
-function east(c as Int) returns Int
-  return if (c mod 40) < 39 then c + 1 else c - 39
+function west(cell as (Int, Int)) returns (Int, Int)
+  let x, y be cell
+  let x2 be if x is 0 then 39 else x - 1
+  return tuple(x2, y)
 end function
 
-function west(c as Int) returns Int
-  return if (c mod 40) > 0 then c - 1 else c + 39
-end function
-
-function neighbourCells(c as Int) returns List<of Int>
+function neighbourCells(x as Int, y as Int) returns List<of (Int, Int)>
+  let c be tuple(x, y)
   return [north(west(c)), north(c), north(east(c)), west(c), east(c), south(west(c)), south(c), south(east(c))]
 end function
 
-function liveNeighbours(cells as List<of Boolean>, c as Int) returns Int
-  let neighbours be neighbourCells(c)
-  let live be neighbours.filter(lambda i as Int => cells[i])
-  return live.length()
+function liveNeighbours(grid as Array2D<of Int>, x as Int, y as Int) returns Int
+  variable count set to 0
+  each cell in neighbourCells(x, y)
+    let cx, cy be cell
+    set count to if grid[cx, cy] is black then count + 1 else count
+  end each
+  return count
 end function
 
-function willLive(currentlyAlive as Boolean, live as Int) returns Boolean
-  return if currentlyAlive then (live > 1) and (live < 4) else live is 3
+function willLive(cell as Int, liveNeighbours as Int) returns Boolean
+  return if cell is black then (liveNeighbours > 1) and (liveNeighbours < 4) else liveNeighbours is 3
 end function
 
-function nextCellValue(cells as List<of Boolean>, c as Int) returns Boolean
-  return willLive(cells[c], liveNeighbours(cells, c))
+function nextCellValue(grid as Array2D<of Int>, x as Int, y as Int) returns Boolean
+  return willLive(grid[x, y], liveNeighbours(grid, x, y))
 end function
 
-function nextGeneration(cells as List<of Boolean>) returns List<of Boolean>
-  let cellRange be range(0, cells.length() - 1)
-  let next be cellRange.map(lambda n as Int => nextCellValue(cells, n))
-  return next.asList()
-end function
+procedure nextGeneration(grid as Array2D<of Int>)
+  for x from 0 to 39 step 1
+    for y from 0 to 29 step 1
+      let colour be if nextCellValue(grid, x, y) then black else white
+      call grid.put(x, y, colour)
+    end for
+  end for
+end procedure
 
 constant black set to 0x000000
 
 constant white set to 0xffffff
 
 test north
-  assert north(90) is 50
-  assert north(39) is 1199
-  assert north(0) is 1160
-  assert north(40) is 0
+  assert north(tuple(3, 4)) is tuple(3, 3)
+  assert north(tuple(39, 0)) is tuple(39, 29)
+  assert north(tuple(0, 29)) is tuple(0, 28)
+  assert north(tuple(39, 29)) is tuple(39, 28)
 end test
 
 test south
-  assert south(90) is 130
-  assert south(39) is 79
-  assert south(1160) is 0
-  assert south(1199) is 39
+  assert south(tuple(3, 4)) is tuple(3, 5)
+  assert south(tuple(39, 0)) is tuple(39, 1)
+  assert south(tuple(0, 29)) is tuple(0, 0)
+  assert south(tuple(39, 29)) is tuple(39, 0)
 end test
 
 test east
-  assert east(90) is 91
-  assert east(39) is 0
-  assert east(40) is 41
-  assert east(1199) is 1160
+  assert east(tuple(10, 2)) is tuple(11, 2)
+  assert east(tuple(39, 0)) is tuple(0, 0)
+  assert east(tuple(0, 1)) is tuple(1, 1)
+  assert east(tuple(39, 29)) is tuple(0, 29)
 end test
 
 test 
-  assert west(90) is 89
-  assert west(39) is 38
-  assert west(0) is 39
-  assert west(1160) is 1199
+  assert west(tuple(3, 4)) is tuple(2, 4)
+  assert west(tuple(39, 0)) is tuple(38, 0)
+  assert west(tuple(0, 0)) is tuple(39, 0)
+  assert west(tuple(0, 29)) is tuple(39, 29)
 end test
 
 test north_east
-  assert north(east(90)) is 51
-  assert north(east(0)) is 1161
-  assert north(east(39)) is 1160
-  assert north(east(1160)) is 1121
-  assert north(east(1199)) is 1120
+  assert north(east(tuple(3, 4))) is tuple(4, 3)
+  assert north(east(tuple(0, 0))) is tuple(1, 29)
+  assert north(east(tuple(39, 0))) is tuple(0, 29)
+  assert north(east(tuple(0, 29))) is tuple(1, 28)
+  assert north(east(tuple(39, 29))) is tuple(0, 28)
 end test
 
 test 
-  assert south(east(90)) is 131
-  assert south(east(0)) is 41
-  assert south(east(39)) is 40
-  assert south(east(1160)) is 1
-  assert south(east(1199)) is 0
+  assert south(east(tuple(3, 4))) is tuple(4, 5)
+  assert south(east(tuple(0, 0))) is tuple(1, 1)
+  assert south(east(tuple(39, 0))) is tuple(0, 1)
+  assert south(east(tuple(0, 29))) is tuple(1, 0)
+  assert south(east(tuple(39, 29))) is tuple(0, 0)
 end test
 
 test 
-  assert north(west(90)) is 49
-  assert north(west(0)) is 1199
-  assert north(west(39)) is 1198
-  assert north(west(1160)) is 1159
-  assert north(west(1199)) is 1158
+  assert north(west(tuple(3, 4))) is tuple(2, 3)
+  assert north(west(tuple(0, 0))) is tuple(39, 29)
+  assert north(west(tuple(39, 0))) is tuple(38, 29)
+  assert north(west(tuple(0, 29))) is tuple(39, 28)
+  assert north(west(tuple(39, 29))) is tuple(38, 28)
 end test
 
 test 
-  assert south(west(90)) is 129
-  assert south(west(0)) is 79
-  assert south(west(39)) is 78
-  assert south(west(1160)) is 39
-  assert south(west(1199)) is 38
+  assert south(west(tuple(3, 4))) is tuple(2, 5)
+  assert south(west(tuple(0, 0))) is tuple(39, 1)
+  assert south(west(tuple(39, 0))) is tuple(38, 1)
+  assert south(west(tuple(0, 29))) is tuple(39, 0)
+  assert south(west(tuple(39, 29))) is tuple(38, 0)
 end test
 
 test 
-  assert neighbourCells(90) is [49, 50, 51, 89, 91, 129, 130, 131]
+  assert neighbourCells(3, 4) is [tuple(2, 3), tuple(3, 3), tuple(4, 3), tuple(2, 4), tuple(4, 4), tuple(2, 5), tuple(3, 5), tuple(4, 5)]
 end test
 
 test 
-  assert willLive(false, 0) is false
-  assert willLive(false, 1) is false
-  assert willLive(false, 2) is false
-  assert willLive(false, 3) is true
-  assert willLive(false, 4) is false
-  assert willLive(false, 5) is false
-  assert willLive(false, 6) is false
-  assert willLive(false, 7) is false
-  assert willLive(false, 8) is false
-  assert willLive(true, 0) is false
-  assert willLive(true, 1) is false
-  assert willLive(true, 2) is true
-  assert willLive(true, 3) is true
-  assert willLive(true, 4) is false
-  assert willLive(true, 5) is false
-  assert willLive(true, 6) is false
-  assert willLive(true, 7) is false
-  assert willLive(true, 8) is false
+  assert willLive(white, 0) is false
+  assert willLive(white, 1) is false
+  assert willLive(white, 2) is false
+  assert willLive(white, 3) is true
+  assert willLive(white, 4) is false
+  assert willLive(white, 5) is false
+  assert willLive(white, 6) is false
+  assert willLive(white, 7) is false
+  assert willLive(white, 8) is false
+  assert willLive(black, 0) is false
+  assert willLive(black, 1) is false
+  assert willLive(black, 2) is true
+  assert willLive(black, 3) is true
+  assert willLive(black, 4) is false
+  assert willLive(black, 5) is false
+  assert willLive(black, 6) is false
+  assert willLive(black, 7) is false
+  assert willLive(black, 8) is false
 end test

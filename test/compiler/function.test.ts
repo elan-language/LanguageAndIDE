@@ -1014,8 +1014,8 @@ end function`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  let g be new BlockGraphics()
-  let g2 be g.withBlock
+  let g be new VectorGraphics()
+  let g2 be g.count
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -1023,7 +1023,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["To evaluate function 'withBlock' add brackets."]);
+    assertDoesNotCompile(fileImpl, ["To evaluate function 'count' add brackets."]);
   });
 
   test("Fail_LibFunctionWithoutRefKeyword", async () => {

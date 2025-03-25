@@ -97,14 +97,14 @@ end function`;
 
 main
   variable a set to empty Array2D<of String>
-  print a.length()
+  print a.columns()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = system.initialise(_stdlib.Array2D.emptyInstance());
-  await system.printLine(a.length());
+  await system.printLine(a.columns());
 }
 return [main, _tests];}`;
 

@@ -1,7 +1,6 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
-  assertDoesNotParse,
   assertGraphicsContains,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
@@ -16,15 +15,15 @@ suite("Char Mapped Display", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable g set to new BlockGraphics()
-  call g.display()
+  variable g set to new Array2D<of Int>(40, 30, white)
+  call displayBlocks(g)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let g = system.initialise(await new _stdlib.BlockGraphics()._initialise());
-  await g.display();
+  let g = system.initialise(await new _stdlib.Array2D()._initialise(40, 30, _stdlib.white));
+  await _stdlib.displayBlocks(g);
 }
 return [main, _tests];}`;
 
@@ -34,28 +33,24 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertGraphicsContains(
-      fileImpl,
-      0,
-      '<div style="color:#000000;background-color:#ffffff;">',
-    );
+    await assertGraphicsContains(fileImpl, 0, '<div style="background-color:#ffffff;">');
   });
 
-  test("Pass_WithUnicode", async () => {
+  test("Pass_withPut", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable g set to new BlockGraphics()
-  set g to g.withUnicode(0, 0, 90, black, white)
-  call g.display()
+  variable g set to new Array2D<of Int>(40, 30, white)
+  set g to g.withPut(1, 0, 4)
+  call displayBlocks(g)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let g = system.initialise(await new _stdlib.BlockGraphics()._initialise());
-  g = g.withUnicode(0, 0, 90, _stdlib.black, _stdlib.white);
-  await g.display();
+  let g = system.initialise(await new _stdlib.Array2D()._initialise(40, 30, _stdlib.white));
+  g = g.withPut(1, 0, 4);
+  await _stdlib.displayBlocks(g);
 }
 return [main, _tests];}`;
 
@@ -65,140 +60,24 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertGraphicsContains(
-      fileImpl,
-      0,
-      '<div style="color:#000000;background-color:#ffffff;">Z',
-    );
+    await assertGraphicsContains(fileImpl, 1, '<div style="background-color:#000004;">');
   });
 
-  test("Pass_GetChar", async () => {
+  test("Pass_ClearBlocks", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable g set to new BlockGraphics()
-  set g to g.withText(10, 20, "a", 1, 2)
-  print g.getChar(10, 20)
+  variable g set to new Array2D<of Int>(40, 30, white)
+  call displayBlocks(g)
+  call clearBlocks()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let g = system.initialise(await new _stdlib.BlockGraphics()._initialise());
-  g = g.withText(10, 20, "a", 1, 2);
-  await system.printLine(g.getChar(10, 20));
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "a");
-  });
-
-  test("Pass_GetForeground", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-  variable g set to new BlockGraphics()
-  set g to g.withText(10, 20, "a", 1, 2)
-  print g.getForeground(10, 20)
-end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let g = system.initialise(await new _stdlib.BlockGraphics()._initialise());
-  g = g.withText(10, 20, "a", 1, 2);
-  await system.printLine(g.getForeground(10, 20));
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "1");
-  });
-
-  test("Pass_PutBackground", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-  variable g set to new BlockGraphics()
-  set g to g.withBlock(1, 0, 4)
-  call g.display()
-end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let g = system.initialise(await new _stdlib.BlockGraphics()._initialise());
-  g = g.withBlock(1, 0, 4);
-  await g.display();
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertGraphicsContains(
-      fileImpl,
-      1,
-      '<div style="color:#000000;background-color:#000004;">',
-    );
-  });
-
-  test("Pass_GetBackground", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-  variable g set to new BlockGraphics()
-  set g to g.withText(10, 20, "a", 1, 2)
-  print g.getBackground(10, 20)
-end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let g = system.initialise(await new _stdlib.BlockGraphics()._initialise());
-  g = g.withText(10, 20, "a", 1, 2);
-  await system.printLine(g.getBackground(10, 20));
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "2");
-  });
-
-  test("Pass_ClearGraphics", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-  variable g set to new BlockGraphics()
-  call g.display()
-  call g.clearGraphics()
-end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let g = system.initialise(await new _stdlib.BlockGraphics()._initialise());
-  await g.display();
-  await g.clearGraphics();
+  let g = system.initialise(await new _stdlib.Array2D()._initialise(40, 30, _stdlib.white));
+  await _stdlib.displayBlocks(g);
+  await _stdlib.clearBlocks();
 }
 return [main, _tests];}`;
 
@@ -215,7 +94,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable gr set to new BlockGraphics()
+  variable gr set to new Array2D<of Int>(40, 30, white)
   variable a set to getKey()
   print a
 end main`;
@@ -223,7 +102,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let gr = system.initialise(await new _stdlib.BlockGraphics()._initialise());
+  let gr = system.initialise(await new _stdlib.Array2D()._initialise(40, 30, _stdlib.white));
   let a = (await _stdlib.getKey());
   await system.printLine(a);
 }
@@ -242,7 +121,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable gr set to new BlockGraphics()
+  variable gr set to new Array2D<of Int>(40, 30, white)
   variable a set to getKeyWithModifier()
   print a
 end main`;
@@ -250,7 +129,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let gr = system.initialise(await new _stdlib.BlockGraphics()._initialise());
+  let gr = system.initialise(await new _stdlib.Array2D()._initialise(40, 30, _stdlib.white));
   let a = (await _stdlib.getKeyWithModifier());
   await system.printLine(a);
 }
@@ -269,15 +148,15 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable gr set to new BlockGraphics()
-  call gr.clearKeyBuffer()
+  variable gr set to new Array2D<of Int>(40, 30, white)
+  call clearKeyBuffer()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let gr = system.initialise(await new _stdlib.BlockGraphics()._initialise());
-  await _stdlib.clearKeyBuffer(gr);
+  let gr = system.initialise(await new _stdlib.Array2D()._initialise(40, 30, _stdlib.white));
+  await _stdlib.clearKeyBuffer();
 }
 return [main, _tests];}`;
 
@@ -294,13 +173,13 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to new BlockGraphics()
+  variable a set to new Array2D<of Int>(40, 30, white)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(await new _stdlib.BlockGraphics()._initialise());
+  let a = system.initialise(await new _stdlib.Array2D()._initialise(40, 30, _stdlib.white));
 }
 return [main, _tests];}`;
 
@@ -326,7 +205,7 @@ class Foo
   constructor()
   end constructor
 
-  property p as BlockGraphics
+  property p as List<of Int>
 end class`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -338,20 +217,14 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, []);};
+  static emptyInstance() { return system.emptyClass(Foo, [["p", system.initialise(_stdlib.List.emptyInstance())]]);};
 
   async _initialise() {
 
     return this;
   }
 
-  _p;
-  get p() {
-    return this._p ??= system.initialise(_stdlib.BlockGraphics.emptyInstance());
-  }
-  set p(p) {
-    this._p = p;
-  }
+  p = system.initialise(_stdlib.List.emptyInstance());
 
 }
 return [main, _tests];}`;
@@ -362,92 +235,6 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "a BlockGraphics");
-  });
-
-  test("Fail_emptyGraphics", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-  variable a set to empty BlockGraphics()
-  set a to initialisedGraphics()
-end main`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertDoesNotParse(fileImpl);
-  });
-
-  test("Pass_putString", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-  variable g set to new BlockGraphics()
-  set g to g.withText(0, 0, "Hello", 1, 2)
-  call g.display()
-end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let g = system.initialise(await new _stdlib.BlockGraphics()._initialise());
-  g = g.withText(0, 0, "Hello", 1, 2);
-  await g.display();
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertGraphicsContains(
-      fileImpl,
-      0,
-      '<div style="color:#000001;background-color:#000002;">H',
-    );
-    await assertGraphicsContains(
-      fileImpl,
-      1,
-      '<div style="color:#000001;background-color:#000002;">e',
-    );
-  });
-
-  test("Pass_putString overrunning both limits", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-  variable g set to new BlockGraphics()
-  set g to g.withText(39, 29, "Hello", 1, 2)
-  call g.display()
-end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let g = system.initialise(await new _stdlib.BlockGraphics()._initialise());
-  g = g.withText(39, 29, "Hello", 1, 2);
-  await g.display();
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertGraphicsContains(
-      fileImpl,
-      1199,
-      '<div style="color:#000001;background-color:#000002;">H',
-    );
-    await assertGraphicsContains(
-      fileImpl,
-      0,
-      '<div style="color:#000001;background-color:#000002;">e',
-    );
+    await assertObjectCodeExecutes(fileImpl, "[]");
   });
 });
