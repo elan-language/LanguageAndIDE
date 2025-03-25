@@ -3,6 +3,7 @@ import {
   ClassOption,
   ElanClass,
   elanClass,
+  ElanClassName,
   elanFunction,
   elanGenericParamT1Type,
   ElanInt,
@@ -10,6 +11,7 @@ import {
   elanProcedure,
   ElanT1,
   FunctionOptions,
+  nameToTypeMap,
 } from "../elan-type-annotations";
 import { System } from "../system";
 import { withPutHelper } from "./data-structure-helpers";
@@ -137,4 +139,21 @@ export class ElanArray<T1> {
     }
     return false;
   }
+
+  @elanFunction([], FunctionOptions.pure, ElanClassName("ListImmutable"))
+  asListImmutable() {
+    return this.system!.arrayAsListImmutable(this);
+  }
+
+  @elanFunction([], FunctionOptions.pure, ElanClassName("ElanSet"))
+  asSet() {
+    return this.system!.arrayAsSet(this);
+  }
+
+  @elanFunction([], FunctionOptions.pure, ElanClassName("List"))
+  asList() {
+    return this.system!.arrayAsList(this);
+  }
 }
+
+nameToTypeMap.set("ElanArray", ElanArray);

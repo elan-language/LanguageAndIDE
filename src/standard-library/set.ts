@@ -10,6 +10,7 @@ import {
   ElanString,
   ElanT1,
   FunctionOptions,
+  nameToTypeMap,
 } from "../elan-type-annotations";
 import { System } from "../system";
 import { List } from "./list";
@@ -30,7 +31,6 @@ export class ElanSet<T1> {
 
   set system(value: System) {
     this._system = value;
-    this.contents = this._system!.initialise(new Set<T1>());
   }
 
   get system(): System {
@@ -40,8 +40,8 @@ export class ElanSet<T1> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private stdlib!: any; // injected
 
-  constructor() {
-    this.contents = new Set<T1>(); //Initialised in set system
+  constructor(arr?: T1[]) {
+    this.contents = arr ? new Set<T1>(arr) : new Set<T1>(); //Initialised in set system
   }
 
   private contents: Set<T1>;
@@ -145,3 +145,5 @@ export class ElanSet<T1> {
     return await this.stdlib.asString(this.asListImmutable());
   }
 }
+
+nameToTypeMap.set("ElanSet", ElanSet);

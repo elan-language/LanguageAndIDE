@@ -303,6 +303,11 @@ export class List<T1> {
   asSet() {
     return this.system!.listAsSet(this);
   }
+
+  @elanFunction([], FunctionOptions.pure, ElanClassName("ElanArray"))
+  asArray() {
+    return this.system!.listAsArray(this);
+  }
 }
 
 nameToTypeMap.set("List", List);

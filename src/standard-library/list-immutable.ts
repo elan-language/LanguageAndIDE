@@ -253,6 +253,11 @@ export class ListImmutable<T1> {
   asSet() {
     return this.system!.listImmutableAsSet(this);
   }
+
+  @elanFunction([], FunctionOptions.pure, ElanClassName("ElanArray"))
+  asArray() {
+    return this.system!.listImmutableAsArray(this);
+  }
 }
 
 nameToTypeMap.set("ListImmutable", ListImmutable);
