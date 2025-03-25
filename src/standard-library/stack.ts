@@ -12,7 +12,7 @@ import {
 } from "../elan-type-annotations";
 import { System } from "../system";
 
-@elanClass(ClassOption.concrete, [ElanT1])
+@elanClass(ClassOption.record, [ElanT1])
 export class Stack<T1> {
   // this must be implemented by hand on all stdlib classes
   static emptyInstance() {

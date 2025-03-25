@@ -160,4 +160,22 @@ end main`;
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["<of Type(s)> Expected: 1 Provided: 0"]);
   });
+
+  test("Fail_QueueOfMutable", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable st set to new Queue<of Foo>()
+end main
+
+class Foo
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Queue cannot be of mutable type 'Foo'"]);
+  });
 });

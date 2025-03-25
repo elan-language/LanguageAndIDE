@@ -15,7 +15,7 @@ import { System } from "../system";
 import { List } from "./list";
 import { ListImmutable } from "./list-immutable";
 
-@elanClass(ClassOption.concrete, [ElanT1], [], [], [], "Set")
+@elanClass(ClassOption.record, [ElanT1], [], [], [], "Set")
 export class ElanSet<T1> {
   // this must be implemented by hand on all stdlib classes
   static emptyInstance() {
