@@ -10,7 +10,6 @@ import {
   ElanString,
   ElanT1,
   FunctionOptions,
-  nameToTypeMap,
 } from "../elan-type-annotations";
 import { System } from "../system";
 import { List } from "./list";
@@ -145,5 +144,3 @@ export class ElanSet<T1> {
     return await this.stdlib.asString(this.asListImmutable());
   }
 }
-
-nameToTypeMap.set("ElanSet", ElanSet);

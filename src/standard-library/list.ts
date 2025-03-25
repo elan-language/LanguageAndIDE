@@ -17,7 +17,6 @@ import {
   ElanT1,
   ElanT2,
   FunctionOptions,
-  nameToTypeMap,
 } from "../elan-type-annotations";
 import { System } from "../system";
 import {
@@ -309,5 +308,3 @@ export class List<T1> {
     return this.system!.listAsArray(this);
   }
 }
-
-nameToTypeMap.set("List", List);

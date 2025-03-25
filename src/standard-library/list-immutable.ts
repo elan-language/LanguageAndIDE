@@ -16,7 +16,6 @@ import {
   ElanT1,
   ElanT2,
   FunctionOptions,
-  nameToTypeMap,
 } from "../elan-type-annotations";
 import { System } from "../system";
 import {
@@ -259,5 +258,3 @@ export class ListImmutable<T1> {
     return this.system!.listImmutableAsArray(this);
   }
 }
-
-nameToTypeMap.set("ListImmutable", ListImmutable);

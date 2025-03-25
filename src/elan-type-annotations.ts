@@ -456,6 +456,7 @@ export function elanClassExport(cls: {
   prototype: object;
   emptyInstance: () => object;
 }) {
+  nameToTypeMap.set(cls.name, cls);
   let elanDesc = ElanClass(cls) as TypeDescriptor;
   return function (target: object, propertyKey: string) {
     const typeMetadata = Reflect.getMetadata("design:type", target, propertyKey);

@@ -11,7 +11,6 @@ import {
   elanProcedure,
   ElanT1,
   FunctionOptions,
-  nameToTypeMap,
 } from "../elan-type-annotations";
 import { System } from "../system";
 import { withPutHelper } from "./data-structure-helpers";
@@ -155,5 +154,3 @@ export class ElanArray<T1> {
     return this.system!.arrayAsList(this);
   }
 }
-
-nameToTypeMap.set("ElanArray", ElanArray);
