@@ -912,7 +912,7 @@ end main`;
 const global = new class {};
 async function main() {
   const words = system.literalList(["Now", "is", "the", "time..."]);
-  const s = words.join(".");
+  const s = (await words.join("."));
   await system.printLine(s);
 }
 return [main, _tests];}`;
@@ -938,7 +938,7 @@ end main`;
 const global = new class {};
 async function main() {
   const words = system.listImmutable(["Now", "is", "the", "time..."]);
-  const s = words.join(".");
+  const s = (await words.join("."));
   await system.printLine(s);
 }
 return [main, _tests];}`;
@@ -951,6 +951,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "Now.is.the.time...");
   });
+
   test("Pass_joinImmutableListOfInt", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
@@ -964,7 +965,7 @@ end main`;
 const global = new class {};
 async function main() {
   const words = system.listImmutable([1, 2, 3, 4]);
-  const s = words.join("");
+  const s = (await words.join(""));
   await system.printLine(s);
 }
 return [main, _tests];}`;
@@ -977,11 +978,84 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "1234");
   });
+
+  test("Pass_joinImmutableListOfRecord", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  let words be {new Point(), new Point()}
+  let s be words.join(",")
+  print s
+end main
+
+record Point
+end record`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  const words = system.listImmutable([system.initialise(await new Point()._initialise()), system.initialise(await new Point()._initialise())]);
+  const s = (await words.join(","));
+  await system.printLine(s);
+}
+
+class Point {
+  static emptyInstance() { return system.emptyClass(Point, []);};
+  async _initialise() { return this; }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "a Point,a Point");
+  });
+
+  test("Pass_joinListOfRecord", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  let words be [new Point(), new Point()]
+  let s be words.join(",")
+  print s
+end main
+
+record Point
+end record`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  const words = system.literalList([system.initialise(await new Point()._initialise()), system.initialise(await new Point()._initialise())]);
+  const s = (await words.join(","));
+  await system.printLine(s);
+}
+
+class Point {
+  static emptyInstance() { return system.emptyClass(Point, []);};
+  async _initialise() { return this; }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "a Point,a Point");
+  });
+
   test("Fail_joinArrayOfString", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  let words be ["Now", "is","the","time..."].listAsArray()
+  let words be ["Now", "is","the","time..."].asArray()
   let s be words.join(".")
   print s
 end main`;
@@ -990,8 +1064,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, []);
+    assertDoesNotCompile(fileImpl, ["'join' is not defined for type 'Array'"]);
   });
+
   test("Pass_replace", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 

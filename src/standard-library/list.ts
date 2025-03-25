@@ -14,6 +14,7 @@ import {
   ElanInt,
   elanIntType,
   elanProcedure,
+  ElanString,
   ElanT1,
   ElanT2,
   FunctionOptions,
@@ -288,9 +289,13 @@ export class List<T1> {
     return this.newList(withRemoveAllHelper(this.contents, value, this.system!));
   }
 
-  @elanFunction(["separator"], FunctionOptions.pure)
-  join(separator: string): string {
-    return this.contents.join(separator);
+  @elanFunction(["separator"], FunctionOptions.pureAsync, ElanString)
+  async join(separator: string): Promise<string> {
+    const asStrings: string[] = await mapHelper(
+      this.contents,
+      async (i) => await this.system!.asString(i),
+    );
+    return asStrings.join(separator);
   }
 
   @elanFunction([], FunctionOptions.pure, ElanClassName("ListImmutable"))

@@ -13,6 +13,7 @@ import {
   elanGenericParamT2Type,
   ElanInt,
   elanIntType,
+  ElanString,
   ElanT1,
   ElanT2,
   FunctionOptions,
@@ -238,9 +239,13 @@ export class ListImmutable<T1> {
     return false;
   }
 
-  @elanFunction(["separator"], FunctionOptions.pure)
-  join(separator: string): string {
-    return this.contents.join(separator);
+  @elanFunction(["separator"], FunctionOptions.pureAsync, ElanString)
+  async join(separator: string): Promise<string> {
+    const asStrings: string[] = await mapHelper(
+      this.contents,
+      async (i) => await this.system!.asString(i),
+    );
+    return asStrings.join(separator);
   }
 
   @elanFunction([], FunctionOptions.pure, ElanClassName("List"))
