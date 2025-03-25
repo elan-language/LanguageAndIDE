@@ -285,4 +285,49 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "{2, 4, 6, 3}{2, 4, 6, 3, 5}");
   });
+
+  test("Pass_Conversions", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  let a be ["one", "two", "three"].asSet()
+  let b be a.asListImmutable()
+  let c be a.asList()
+  variable aa set to empty Set<of String>
+  variable bb set to empty ListImmutable<of String>
+  variable cc set to empty List<of String>
+  set aa to a
+  set bb to b
+  set cc to c
+  print aa
+  print bb
+  print cc
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  const a = system.literalList(["one", "two", "three"]).asSet();
+  const b = a.asListImmutable();
+  const c = a.asList();
+  let aa = system.initialise(_stdlib.Set.emptyInstance());
+  let bb = system.initialise(_stdlib.ListImmutable.emptyInstance());
+  let cc = system.initialise(_stdlib.List.emptyInstance());
+  aa = a;
+  bb = b;
+  cc = c;
+  await system.printLine(aa);
+  await system.printLine(bb);
+  await system.printLine(cc);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "{one, two, three}{one, two, three}[one, two, three]");
+  });
 });

@@ -965,19 +965,43 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-    variable a set to ["one", "two", "three"]
-    let b be a.asListImmutable()
-    print a
-    print b
+  let a be ["one", "two", "three"]
+  let b be a.asListImmutable()
+  let c be a.asArray()
+  let d be a.asSet()
+  variable aa set to empty List<of String>
+  variable bb set to empty ListImmutable<of String>
+  variable cc set to empty Array<of String>
+  variable dd set to empty Set<of String>
+  set aa to a
+  set bb to b
+  set cc to c
+  set dd to d
+  print aa
+  print bb
+  print cc
+  print dd
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.literalList(["one", "two", "three"]);
+  const a = system.literalList(["one", "two", "three"]);
   const b = a.asListImmutable();
-  await system.printLine(a);
-  await system.printLine(b);
+  const c = a.asArray();
+  const d = a.asSet();
+  let aa = system.initialise(_stdlib.List.emptyInstance());
+  let bb = system.initialise(_stdlib.ListImmutable.emptyInstance());
+  let cc = system.initialise(_stdlib.Array.emptyInstance());
+  let dd = system.initialise(_stdlib.Set.emptyInstance());
+  aa = a;
+  bb = b;
+  cc = c;
+  dd = d;
+  await system.printLine(aa);
+  await system.printLine(bb);
+  await system.printLine(cc);
+  await system.printLine(dd);
 }
 return [main, _tests];}`;
 
@@ -987,7 +1011,10 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "[one, two, three]{one, two, three}");
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "[one, two, three]{one, two, three}[one, two, three]{one, two, three}",
+    );
   });
 
   test("Fail_withRemove", async () => {

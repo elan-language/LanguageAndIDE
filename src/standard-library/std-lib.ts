@@ -50,9 +50,6 @@ import { VectorGraphics } from "./vector-graphics";
 export class StdLib {
   constructor() {
     this.system = new System(new StubInputOutput());
-    // nameToTypeMap.set("List", List);
-    // nameToTypeMap.set("ListImmutable", ListImmutable);
-    // nameToTypeMap.set("ElanSet", ElanSet);
   }
 
   system: System;
