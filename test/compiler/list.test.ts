@@ -1231,7 +1231,7 @@ return [main, _tests];}`;
 
 main
   variable a set to [4,5,6,7,8]
-  variable b set to [4,5,6,7,8]
+  variable b set to [1,2,3,4,5]
   variable c set to a.withAppendList(b)
   print a
   print c
@@ -1241,7 +1241,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.literalList([4, 5, 6, 7, 8]);
-  let b = system.literalList([4, 5, 6, 7, 8]);
+  let b = system.literalList([1, 2, 3, 4, 5]);
   let c = a.withAppendList(b);
   await system.printLine(a);
   await system.printLine(c);
@@ -1254,7 +1254,67 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "[4, 5, 6, 7, 8][4, 5, 6, 7, 8, 4, 5, 6, 7, 8]");
+    await assertObjectCodeExecutes(fileImpl, "[4, 5, 6, 7, 8][4, 5, 6, 7, 8, 1, 2, 3, 4, 5]");
+  });
+
+  test("Pass_prependElementToList", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to [4,5,6,7,8]
+  variable b set to a.withPrepend(9)
+  print a
+  print b
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.literalList([4, 5, 6, 7, 8]);
+  let b = a.withPrepend(9);
+  await system.printLine(a);
+  await system.printLine(b);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[4, 5, 6, 7, 8][9, 4, 5, 6, 7, 8]");
+  });
+
+  test("Pass_prependListToList", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to [4,5,6,7,8]
+  variable b set to [1,2,3,4,5]
+  variable c set to a.withPrependList(b)
+  print a
+  print c
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.literalList([4, 5, 6, 7, 8]);
+  let b = system.literalList([1, 2, 3, 4, 5]);
+  let c = a.withPrependList(b);
+  await system.printLine(a);
+  await system.printLine(c);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[4, 5, 6, 7, 8][1, 2, 3, 4, 5, 4, 5, 6, 7, 8]");
   });
 
   test("Fail_withoutGenericType", async () => {
