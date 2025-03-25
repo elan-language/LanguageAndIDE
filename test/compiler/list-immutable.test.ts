@@ -389,7 +389,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "{one, TWO, two, three}{ONE, one, TWO, two, three}");
   });
 
-  test("Pass_withRemove", async () => {
+  test("Pass_withRemoveAt", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -796,6 +796,35 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "{4, 5, 6, 7, 8}{4, 5, 6, 7, 8, 1, 2, 3, 4, 5}");
+  });
+
+  test("Pass_head", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+    variable a set to {"one", "two", "three"}
+    variable b set to ""
+    set b to a.head()
+    print b
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.listImmutable(["one", "two", "three"]);
+  let b = "";
+  b = a.head();
+  await system.printLine(b);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "one");
   });
 
   test("Pass_prependElementToList", async () => {
