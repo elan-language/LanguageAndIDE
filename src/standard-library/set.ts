@@ -15,7 +15,7 @@ import { System } from "../system";
 import { List } from "./list";
 import { ListImmutable } from "./list-immutable";
 
-@elanClass(ClassOption.concrete, [ElanT1], [], [], [], "Set")
+@elanClass(ClassOption.record, [ElanT1], [], [], [], "Set")
 export class ElanSet<T1> {
   // this must be implemented by hand on all stdlib classes
   static emptyInstance() {
@@ -30,7 +30,6 @@ export class ElanSet<T1> {
 
   set system(value: System) {
     this._system = value;
-    this.contents = this._system!.initialise(new Set<T1>());
   }
 
   get system(): System {
@@ -40,8 +39,8 @@ export class ElanSet<T1> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private stdlib!: any; // injected
 
-  constructor() {
-    this.contents = new Set<T1>(); //Initialised in set system
+  constructor(arr?: T1[]) {
+    this.contents = arr ? new Set<T1>(arr) : new Set<T1>(); //Initialised in set system
   }
 
   private contents: Set<T1>;

@@ -12,7 +12,7 @@ import {
 } from "../elan-type-annotations";
 import { System } from "../system";
 
-@elanClass(ClassOption.concrete, [ElanT1])
+@elanClass(ClassOption.record, [ElanT1])
 export class Queue<T1> {
   // this must be implemented by hand on all stdlib classes
   static emptyInstance() {
@@ -48,7 +48,7 @@ export class Queue<T1> {
   enqueue(@elanGenericParamT1Type() item: T1) {
     const newContents = [...this.contents];
     newContents.push(item);
-    return this.system?.initialise(new Queue(newContents));
+    return this.system!.initialise(new Queue(newContents));
   }
 
   @elanFunction([], FunctionOptions.impure, ElanTuple([ElanT1, ElanClass(Queue)]))
@@ -58,7 +58,7 @@ export class Queue<T1> {
     }
     const newContents = [...this.contents];
     const item = newContents.shift();
-    const newQueue = this.system?.initialise(new Queue(newContents));
+    const newQueue = this.system!.initialise(new Queue(newContents));
     return this.system!.tuple([item, newQueue]) as [typeof ElanT1, typeof Queue];
   }
 }

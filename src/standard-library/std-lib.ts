@@ -20,7 +20,6 @@ import {
   ElanT2,
   ElanTuple,
   FunctionOptions,
-  nameToTypeMap,
   ProcedureOptions,
 } from "../elan-type-annotations";
 import { Regexes } from "../frames/fields/regexes";
@@ -50,9 +49,6 @@ import { VectorGraphics } from "./vector-graphics";
 export class StdLib {
   constructor() {
     this.system = new System(new StubInputOutput());
-    nameToTypeMap.set("List", List);
-    nameToTypeMap.set("ListImmutable", ListImmutable);
-    nameToTypeMap.set("ElanSet", ElanSet);
   }
 
   system: System;
@@ -789,19 +785,6 @@ export class StdLib {
   async clearKeyBuffer() {
     await this.system!.elanInputOutput.clearKeyBuffer();
   }
-
-  // conversion
-
-  @elanFunction([], FunctionOptions.pureExtension, ElanClass(ElanArray))
-  listAsArray<T1>(@elanClassType(List) li: List<T1>): ElanArray<T1> {
-    throw new ElanRuntimeError(`Not implemented yet for ${li}`);
-  }
-
-  @elanFunction([], FunctionOptions.pureExtension, ElanClass(List))
-  arrayAsList<T1>(@elanClassType(List) arr: ElanArray<T1>): List<T1> {
-    throw new ElanRuntimeError(`Not implemented yet for ${arr}`);
-  }
-
   //Block graphics
   private blocksAsHtml(blocks: ElanArray2D<number>): string {
     let rendered = ``;

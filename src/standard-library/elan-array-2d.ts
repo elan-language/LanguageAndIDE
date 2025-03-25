@@ -113,7 +113,7 @@ export class ElanArray2D<T1> {
     @elanGenericParamT1Type()
     item: T1,
   ): [number, number] {
-    return this.system?.tuple(this.system!.elan2DIndexOf(this.contents, item)) as [number, number];
+    return this.system!.tuple(this.system!.elan2DIndexOf(this.contents, item)) as [number, number];
   }
 
   @elanFunction(["item"], FunctionOptions.pure)
@@ -126,7 +126,7 @@ export class ElanArray2D<T1> {
     const strContents = [];
 
     for (const c of this.contents) {
-      strContents.push(await this.system?.asString(c));
+      strContents.push(await this.system!.asString(c));
     }
 
     return `[${strContents.map((s) => `[${s}]`).join(", ")}]`;

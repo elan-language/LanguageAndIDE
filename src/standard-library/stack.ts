@@ -12,7 +12,7 @@ import {
 } from "../elan-type-annotations";
 import { System } from "../system";
 
-@elanClass(ClassOption.concrete, [ElanT1])
+@elanClass(ClassOption.record, [ElanT1])
 export class Stack<T1> {
   // this must be implemented by hand on all stdlib classes
   static emptyInstance() {
@@ -48,7 +48,7 @@ export class Stack<T1> {
   push(@elanGenericParamT1Type() item: T1) {
     const newContents = [...this.contents];
     newContents.unshift(item);
-    return this.system?.initialise(new Stack(newContents));
+    return this.system!.initialise(new Stack(newContents));
   }
 
   @elanFunction([], FunctionOptions.impure, ElanTuple([ElanT1, ElanClass(Stack)]))
@@ -58,7 +58,7 @@ export class Stack<T1> {
     }
     const newContents = [...this.contents];
     const item = newContents.shift();
-    const newStack = this.system?.initialise(new Stack(newContents));
+    const newStack = this.system!.initialise(new Stack(newContents));
     return this.system!.tuple([item, newStack]) as [typeof ElanT1, typeof Stack];
   }
 }

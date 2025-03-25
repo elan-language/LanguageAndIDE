@@ -47,15 +47,15 @@ export class StdLibSymbols implements Scope {
         | undefined;
 
       if (isFunctionDescriptor(metadata)) {
-        this.symbols.set(name, getSymbol(name, metadata.mapType(), SymbolScope.stdlib));
+        this.symbols.set(name, getSymbol(name, metadata.mapType(this), SymbolScope.stdlib));
       }
 
       if (isProcedureDescriptor(metadata)) {
-        this.symbols.set(name, getSymbol(name, metadata.mapType(), SymbolScope.stdlib));
+        this.symbols.set(name, getSymbol(name, metadata.mapType(this), SymbolScope.stdlib));
       }
 
       if (isConstantDescriptor(metadata)) {
-        this.symbols.set(name, getConstantSymbol(name, metadata.mapType(), SymbolScope.stdlib));
+        this.symbols.set(name, getConstantSymbol(name, metadata.mapType(this), SymbolScope.stdlib));
       }
 
       if (isClassDescriptor(metadata)) {

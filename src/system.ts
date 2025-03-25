@@ -5,6 +5,7 @@ import { TestStatus } from "./frames/status-enums";
 import { hasHiddenType } from "./has-hidden-type";
 import { Dictionary } from "./standard-library/dictionary";
 import { DictionaryImmutable } from "./standard-library/dictionary-immutable";
+import { ElanArray } from "./standard-library/elan-array";
 import { List } from "./standard-library/list";
 import { ListImmutable } from "./standard-library/list-immutable";
 import { ElanSet } from "./standard-library/set";
@@ -453,18 +454,43 @@ export class System {
     return this.initialise(new List(newList));
   }
 
+  listImmutableAsSet<T1>(list: ListImmutable<T1>): ElanSet<T1> {
+    const newList = [...list];
+    return this.initialise(new ElanSet<T1>(newList));
+  }
+
+  listImmutableAsArray<T1>(list: ListImmutable<T1>): ElanArray<T1> {
+    const newList = [...list];
+    return this.initialise(new ElanArray(newList));
+  }
+
   listAsListImmutable<T1>(list: List<T1>): ListImmutable<T1> {
     const newList = [...list];
     return this.initialise(new ListImmutable(newList));
   }
 
-  listImmutableAsSet<T1>(arr: ListImmutable<T1>): ElanSet<T1> {
-    const set = this.initialise(new ElanSet<T1>());
-    return set.addFromList(arr.asList()!);
+  listAsSet<T1>(list: List<T1>): ElanSet<T1> {
+    const newList = [...list];
+    return this.initialise(new ElanSet<T1>(newList));
   }
 
-  listAsSet<T1>(arr: List<T1>): ElanSet<T1> {
-    const set = this.initialise(new ElanSet<T1>());
-    return set.addFromList(arr);
+  listAsArray<T1>(list: List<T1>): ElanArray<T1> {
+    const newList = [...list];
+    return this.initialise(new ElanArray(newList));
+  }
+
+  arrayAsListImmutable<T1>(list: ElanArray<T1>): ListImmutable<T1> {
+    const newList = [...list];
+    return this.initialise(new ListImmutable(newList));
+  }
+
+  arrayAsSet<T1>(list: ElanArray<T1>): ElanSet<T1> {
+    const newList = [...list];
+    return this.initialise(new ElanSet<T1>(newList));
+  }
+
+  arrayAsList<T1>(list: ElanArray<T1>): List<T1> {
+    const newList = [...list];
+    return this.initialise(new List(newList));
   }
 }

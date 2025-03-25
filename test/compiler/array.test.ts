@@ -179,6 +179,62 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "barxan");
   });
 
+  test("Pass_Conversions", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  let a be ["one", "two", "three"].asArray()
+  let b be a.asListImmutable()
+  let c be a.asList()
+  let d be a.asSet()
+  variable aa set to empty Array<of String>
+  variable bb set to empty ListImmutable<of String>
+  variable cc set to empty List<of String>
+  variable dd set to empty Set<of String>
+  set aa to a
+  set bb to b
+  set cc to c
+  set dd to d
+  print aa
+  print bb
+  print cc
+  print dd
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  const a = system.literalList(["one", "two", "three"]).asArray();
+  const b = a.asListImmutable();
+  const c = a.asList();
+  const d = a.asSet();
+  let aa = system.initialise(_stdlib.Array.emptyInstance());
+  let bb = system.initialise(_stdlib.ListImmutable.emptyInstance());
+  let cc = system.initialise(_stdlib.List.emptyInstance());
+  let dd = system.initialise(_stdlib.Set.emptyInstance());
+  aa = a;
+  bb = b;
+  cc = c;
+  dd = d;
+  await system.printLine(aa);
+  await system.printLine(bb);
+  await system.printLine(cc);
+  await system.printLine(dd);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "[one, two, three]{one, two, three}[one, two, three]{one, two, three}",
+    );
+  });
+
   test("Fail_WithPutOutOfRange", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
