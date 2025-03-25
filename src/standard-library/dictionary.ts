@@ -35,7 +35,7 @@ export class Dictionary<T1, T2> {
 
   findRealKey(key: T1) {
     for (const rk of this.contents.keys()) {
-      if (this.system?.equals(key, rk)) {
+      if (this.system!.equals(key, rk)) {
         return rk;
       }
     }
@@ -76,8 +76,8 @@ export class Dictionary<T1, T2> {
   async asString() {
     const items: string[] = [];
     for (const k of this.contents.keys()) {
-      const kStr = await this.system?.asString(k);
-      const vStr = await this.system?.asString(this.contents.get(k));
+      const kStr = await this.system!.asString(k);
+      const vStr = await this.system!.asString(this.contents.get(k));
       items.push(`${kStr}:${vStr}`);
     }
     return `[${items.join(", ")}]`;
@@ -97,7 +97,7 @@ export class Dictionary<T1, T2> {
       if (this.contents.size === other.contents.size) {
         return this.contents
           .keys()
-          .every((k) => this.system?.equals(this.contents.get(k), other.contents.get(k)));
+          .every((k) => this.system!.equals(this.contents.get(k), other.contents.get(k)));
       }
     }
     return false;

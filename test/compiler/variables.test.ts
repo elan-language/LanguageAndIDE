@@ -457,7 +457,7 @@ end main`;
     assertDoesNotCompileWithId(fileImpl, "expr5", ["'x' is not defined"]);
   });
 
-  ignore_test("Fail_referenceToExtensionFunction", async () => {
+  test("Fail_referenceToExtensionFunction", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -469,7 +469,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot call extension method directly"]);
+    assertDoesNotCompile(fileImpl, [
+      "Library or class function 'createFileForWriting' cannot be preceded by by 'ref'",
+    ]);
   });
 
   test("Fail_referenceToExtensionFunction1", async () => {

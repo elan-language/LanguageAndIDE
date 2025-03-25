@@ -64,6 +64,10 @@ export class ElanArray<T1> {
     } as { next: () => { value: T1; done: boolean } };
   }
 
+  newArray<T>(newContents: T[]) {
+    return this.system!.initialise(new ElanArray(newContents));
+  }
+
   @elanProcedure(["index", "value"])
   put(@elanIntType() index: number, @elanGenericParamT1Type() value: T1) {
     this.system!.safeListSet(this.contents, index, value);
@@ -71,10 +75,7 @@ export class ElanArray<T1> {
 
   @elanFunction(["index", "value"], FunctionOptions.pure, ElanClass(ElanArray))
   withPut(@elanIntType() index: number, @elanGenericParamT1Type() value: T1): ElanArray<T1> {
-    this.safeIndex(index);
-    return this.system!.initialise(
-      new ElanArray(withPutHelper(this.contents as [], index, value as never)),
-    );
+    return this.newArray(withPutHelper(this.contents, index, value));
   }
 
   @elanFunction([], FunctionOptions.pure, ElanInt)
@@ -96,7 +97,7 @@ export class ElanArray<T1> {
   }
 
   async asString() {
-    const contents = await this.system?.asString(this.contents);
+    const contents = await this.system!.asString(this.contents);
     return `[${contents}]`;
   }
 
@@ -125,13 +126,13 @@ export class ElanArray<T1> {
       throw new ElanRuntimeError(`Out of range index`);
     }
 
-    return this.system?.initialise(new ElanArray(r));
+    return this.system!.initialise(new ElanArray(r));
   }
 
   equals(other: unknown) {
     if (other instanceof ElanArray) {
       if (this.contents.length === other.contents.length) {
-        return this.contents.every((c, i) => this.system?.equals(c, other.contents[i]));
+        return this.contents.every((c, i) => this.system!.equals(c, other.contents[i]));
       }
     }
     return false;
