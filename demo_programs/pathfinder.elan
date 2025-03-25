@@ -1,4 +1,4 @@
-# 9839984ff6b9e2d8b71288cb51d5b597bbd226ed99573b5783c7eb52e2dae047 Elan Beta 9 valid
+# 5acb9669cf9f0e8f0a75b3a258c47e3b5329a476084b907e1952889d3dcd2a84 Elan Beta 9 valid
 
 main
   let start be newPoint(5, 5)
@@ -9,11 +9,11 @@ main
   variable nodes set to empty List<of Node>
   call createRocksAndNodes(percentRocks, rocks, nodes, start, destination)
   variable gr set to initialiseGraphics(start, destination, rocks)
-  call gr.display()
+  call displayBlocks(gr)
   variable solver set to new Solver(nodes, start, destination)
   while true
     print algPrompt
-    call gr.clearKeyBuffer()
+    call clearKeyBuffer()
     variable option set to ""
     while (option isnt "a") and (option isnt "d") and (option isnt "h")
       set option to getKey()
@@ -24,19 +24,19 @@ main
   end while
 end main
 
-procedure runSolver(gr as BlockGraphics, start as Point, destination as Point, rocks as List<of Point>, out solver as Solver, alg as Algorithm)
+procedure runSolver(gr as Array2D<of Int>, start as Point, destination as Point, rocks as List<of Point>, out solver as Solver, alg as Algorithm)
   call solver.initialise(alg)
   variable gr2 set to initialiseGraphics(start, destination, rocks)
   while solver.running
     call solver.visitNextPoint()
     set gr2 to addVisited(gr2, solver.getLastVisited())
-    call gr2.display()
+    call displayBlocks(gr2)
     call pause(0)
   end while
   if solver.getLastVisited() is destination then
     let route, length be solver.getRouteAndLength()
     set gr2 to addRoute(gr2, route)
-    call gr2.display()
+    call displayBlocks(gr2)
     call printNoLine("Length of route: {length.round(2)} ")
   else
     call printNoLine("No path found. ")
@@ -60,29 +60,29 @@ procedure createRocksAndNodes(percentRocks as Int, out rocks as List<of Point>, 
   end for
 end procedure
 
-function initialiseGraphics(start as Point, dest as Point, rocks as List<of Point>) returns BlockGraphics
-  variable gr set to new BlockGraphics()
+function initialiseGraphics(start as Point, dest as Point, rocks as List<of Point>) returns Array2D<of Int>
+  variable gr set to new Array2D<of Int>(40, 30, white)
   each rock in rocks
-    set gr to gr.withBlock(rock.x, rock.y, black)
+    set gr to gr.withPut(rock.x, rock.y, black)
   end each
-  set gr to gr.withBlock(start.x, start.y, green)
-  set gr to gr.withBlock(dest.x, dest.y, red)
+  set gr to gr.withPut(start.x, start.y, green)
+  set gr to gr.withPut(dest.x, dest.y, red)
   return gr
 end function
 
-function addVisited(gr as BlockGraphics, visited as Point) returns BlockGraphics
-  return gr.withBlock(visited.x, visited.y, lightBlue)
+function addVisited(gr as Array2D<of Int>, visited as Point) returns Array2D<of Int>
+  return gr.withPut(visited.x, visited.y, lightBlue)
 end function
 
-function addRoute(gr as BlockGraphics, route as ListImmutable<of Point>) returns BlockGraphics
+function addRoute(gr as Array2D<of Int>, route as ListImmutable<of Point>) returns Array2D<of Int>
   variable gr2 set to gr
   each p in route
-    set gr2 to gr2.withBlock(p.x, p.y, orange)
+    set gr2 to gr2.withPut(p.x, p.y, orange)
   end each
   let start be route[0]
   let dest be route[route.length() - 1]
-  set gr2 to gr2.withBlock(start.x, start.y, green)
-  set gr2 to gr2.withBlock(dest.x, dest.y, red)
+  set gr2 to gr2.withPut(start.x, start.y, green)
+  set gr2 to gr2.withPut(dest.x, dest.y, red)
   return gr2
 end function
 

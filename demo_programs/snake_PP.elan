@@ -1,8 +1,8 @@
-# 558aead0410b4ade00e9dba12d2ef6980f7c32b1fb6b4c10fcffb80fdf633d91 Elan Beta 9 valid
+# c7aa0d5255cb8bc9fcfec1ced682f706b8f73767f2e3d10f7c7ceb09450c285d Elan Beta 9 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
-  variable gr set to new BlockGraphics()
+  variable blocks set to new Array2D<of Int>(40, 30, white)
   variable head set to [20, 15]
   variable tail set to head
   variable body set to [head]
@@ -11,13 +11,14 @@ main
   variable apple set to [0, 0]
   call setAppleToRandomPosition(apple, body)
   while gameOn
-    variable gr2 set to gr.withBlock(head[0], head[1], green)
+    call blocks.put(head[0], head[1], green)
     variable paintTail set to white
     if body[0] is tail then
       set paintTail to green
     end if
-    set gr2 to gr2.withBlock(tail[0], tail[1], paintTail).withBlock(apple[0], apple[1], red)
-    call gr.display()
+    call blocks.put(tail[0], tail[1], paintTail)
+    call blocks.put(apple[0], apple[1], red)
+    call displayBlocks(blocks)
     set currentDir to directionByKey(currentDir, getKey())
     set tail to body[0]
     call body.append(head)

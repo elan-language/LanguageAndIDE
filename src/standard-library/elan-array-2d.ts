@@ -61,6 +61,10 @@ export class ElanArray2D<T1> {
 
   private contents: T1[][];
 
+  public read(x: number, y: number): T1 {
+    return this.contents[x][y];
+  }
+
   private system?: System;
 
   [Symbol.iterator]() {
@@ -95,8 +99,13 @@ export class ElanArray2D<T1> {
   }
 
   @elanFunction([], FunctionOptions.pure, ElanInt)
-  length() {
+  columns() {
     return this.contents.length;
+  }
+
+  @elanFunction([], FunctionOptions.pure, ElanInt)
+  rows() {
+    return this.contents[0].length;
   }
 
   @elanFunction(["item"], FunctionOptions.pure, ElanTuple([ElanInt, ElanInt]))

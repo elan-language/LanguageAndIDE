@@ -34,7 +34,6 @@ import { Dictionary } from "./dictionary";
 import { DictionaryImmutable } from "./dictionary-immutable";
 import { ElanArray } from "./elan-array";
 import { ElanArray2D } from "./elan-array-2d";
-import { GraphicsBase } from "./graphics-base";
 import { LineVG } from "./line-vg";
 import { List } from "./list";
 import { ListImmutable } from "./list-immutable";
@@ -786,8 +785,8 @@ export class StdLib {
     return await this.system!.elanInputOutput.getKeyWithModifier();
   }
 
-  @elanProcedure([], ProcedureOptions.asyncExtension)
-  async clearKeyBuffer(@elanClassType(GraphicsBase) _g: GraphicsBase) {
+  @elanProcedure([], ProcedureOptions.async)
+  async clearKeyBuffer() {
     await this.system!.elanInputOutput.clearKeyBuffer();
   }
 
@@ -801,5 +800,40 @@ export class StdLib {
   @elanFunction([], FunctionOptions.pureExtension, ElanClass(List))
   arrayAsList<T1>(@elanClassType(List) arr: ElanArray<T1>): List<T1> {
     throw new ElanRuntimeError(`Not implemented yet for ${arr}`);
+  }
+
+  //Block graphics
+  private blocksAsHtml(blocks: ElanArray2D<number>): string {
+    let rendered = ``;
+
+    for (let y = 0; y < 30; y++) {
+      for (let x = 0; x < 40; x++) {
+        const colour = blocks.read(x, y);
+        rendered = `${rendered}<div style="background-color:${this.asHex(colour)};"></div>`;
+      }
+    }
+    return rendered;
+  }
+
+  private asHex(n: number): string {
+    const h = "000000" + n.toString(16);
+    const h6 = h.substring(h.length - 6);
+    return `#${h6}`;
+  }
+
+  @elanProcedure(["blocks"], ProcedureOptions.async)
+  async displayBlocks(
+    @elanClassType(ElanArray2D, [ElanInt]) blocks: ElanArray2D<number>,
+  ): Promise<void> {
+    if (blocks.columns() !== 40 || blocks.rows() !== 30) {
+      throw new ElanRuntimeError(`argument must be Array2D<of Int> with dimensions 40 x 30`);
+    }
+    const html = this.blocksAsHtml(blocks);
+    return await this.system!.elanInputOutput.drawBlockGraphics(html);
+  }
+
+  @elanProcedure([], ProcedureOptions.async)
+  async clearBlocks() {
+    await this.system!.elanInputOutput.clearBlockGraphics();
   }
 }
