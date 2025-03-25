@@ -11,14 +11,14 @@ import {
 } from "./compiler-test-helpers";
 
 suite("StdLib HOFs", () => {
-  test("Pass_filter", async () => {
+  test("Pass_filterImmutableList", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
-  print source.filter(lambda x as Int => x > 20).asList()
-  print source.filter(lambda x as Int => x > 20).asList()
-  print source.filter(lambda x as Int => (x < 3) or (x > 35)).asList()
+  print source.filter(lambda x as Int => x > 20)
+  print source.filter(lambda x as Int => x > 20)
+  print source.filter(lambda x as Int => (x < 3) or (x > 35))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -27,9 +27,38 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine((await global.source.filter(async (x) => x > 20)).asList());
-  await system.printLine((await global.source.filter(async (x) => x > 20)).asList());
-  await system.printLine((await global.source.filter(async (x) => (x < 3) || (x > 35))).asList());
+  await system.printLine((await global.source.filter(async (x) => x > 20)));
+  await system.printLine((await global.source.filter(async (x) => x > 20)));
+  await system.printLine((await global.source.filter(async (x) => (x < 3) || (x > 35))));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "{23, 27, 31, 37}{23, 27, 31, 37}{2, 37}");
+  });
+
+  test("Pass_filterList", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
+  print source.filter(lambda x as Int => x > 20)
+  print source.filter(lambda x as Int => x > 20)
+  print source.filter(lambda x as Int => (x < 3) or (x > 35))
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let source = system.literalList([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
+  await system.printLine((await source.filter(async (x) => x > 20)));
+  await system.printLine((await source.filter(async (x) => x > 20)));
+  await system.printLine((await source.filter(async (x) => (x < 3) || (x > 35))));
 }
 return [main, _tests];}`;
 
@@ -106,13 +135,13 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "{23, 27, 31, 37}");
   });
 
-  test("Pass_map", async () => {
+  test("Pass_mapImmutableList", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
-  print source.map(lambda x as Int => x + 1).asList()
-  print source.map(lambda x as Int => x.asString() + "*").asList()
+  print source.map(lambda x as Int => x + 1)
+  print source.map(lambda x as Int => x.asString() + "*")
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -121,8 +150,39 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine((await global.source.map(async (x) => x + 1)).asList());
-  await system.printLine((await global.source.map(async (x) => (await _stdlib.asString(x)) + "*")).asList());
+  await system.printLine((await global.source.map(async (x) => x + 1)));
+  await system.printLine((await global.source.map(async (x) => (await _stdlib.asString(x)) + "*")));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "{3, 4, 6, 8, 12, 14, 18, 20, 24, 28, 32, 38}{2*, 3*, 5*, 7*, 11*, 13*, 17*, 19*, 23*, 27*, 31*, 37*}",
+    );
+  });
+
+  test("Pass_mapList", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+
+main
+  variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
+  print source.map(lambda x as Int => x + 1)
+  print source.map(lambda x as Int => x.asString() + "*")
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let source = system.literalList([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
+  await system.printLine((await source.map(async (x) => x + 1)));
+  await system.printLine((await source.map(async (x) => (await _stdlib.asString(x)) + "*")));
 }
 return [main, _tests];}`;
 
@@ -192,7 +252,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[3, 4, 6, 8, 12, 14, 18, 20, 24, 28, 32, 38]");
   });
 
-  test("Pass_reduce", async () => {
+  test("Pass_reduceImmutableList", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
@@ -211,6 +271,36 @@ async function main() {
   await system.printLine((await global.source.reduce(0, async (s, x) => s + x)));
   await system.printLine((await global.source.reduce(100, async (s, x) => s + x)));
   await system.printLine((await global.source.reduce("Concat:", async (s, x) => s + (await _stdlib.asString(x)))));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "195295Concat:23571113171923273137");
+  });
+
+  test("Pass_reduceList", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+
+main
+  variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
+  print source.reduce(0, lambda s as Int, x as Int => s + x)
+  print source.reduce(100, lambda s as Int, x as Int => s + x)
+  print source.reduce("Concat:", lambda s as String, x as Int => s + x.asString())
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let source = system.literalList([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
+  await system.printLine((await source.reduce(0, async (s, x) => s + x)));
+  await system.printLine((await source.reduce(100, async (s, x) => s + x)));
+  await system.printLine((await source.reduce("Concat:", async (s, x) => s + (await _stdlib.asString(x)))));
 }
 return [main, _tests];}`;
 

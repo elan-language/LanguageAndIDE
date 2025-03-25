@@ -251,6 +251,39 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[2, 2, 3]");
   });
 
+  test("Pass_Range", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to [4,5,6,7,8]
+  variable b set to empty List<of Int>
+  set b to a[2..5]
+  print b
+  print a[1..3]
+  print a[0..2]
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.literalList([4, 5, 6, 7, 8]);
+  let b = system.initialise(_stdlib.List.emptyInstance());
+  b = system.safeSlice(a, 2, 5);
+  await system.printLine(b);
+  await system.printLine(system.safeSlice(a, 1, 3));
+  await system.printLine(system.safeSlice(a, 0, 2));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[6, 7, 8][5, 6][4, 5]");
+  });
+
   test("Fail_CannotinitialiseToReferenceType1", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
@@ -1392,5 +1425,49 @@ end main`;
     assertDoesNotCompile(fileImpl, [
       "Incompatible types. Expected: List<of tuple(Int, Int)> Provided: Procedure (List<of tuple(Int, Int)>)",
     ]);
+  });
+
+  test("Fail_withPutOutOfRange", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+    variable a set to ["one", "two", "three"]
+    variable b set to a.withPut(3, "THREE")
+    print b
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.literalList(["one", "two", "three"]);
+  let b = a.withPut(3, "THREE");
+  await system.printLine(b);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeDoesNotExecute(fileImpl, "Out of range index: 3 size: 3");
+  });
+
+  test("Fail_OutOfRange", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to [4, 5, 6, 7, 8]
+  variable b set to a[5]
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    await assertObjectCodeDoesNotExecute(fileImpl, "Out of range index: 5 size: 5");
   });
 });
