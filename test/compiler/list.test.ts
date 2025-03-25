@@ -1159,6 +1159,66 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[one, three, one, three]");
   });
 
+  test("Pass_withRemoveAt", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+    variable a set to ["one", "two", "three"]
+    set a to a.withRemoveAt(1)
+    variable b set to a.withRemoveAt(0)
+    print a
+    print b
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.literalList(["one", "two", "three"]);
+  a = a.withRemoveAt(1);
+  let b = a.withRemoveAt(0);
+  await system.printLine(a);
+  await system.printLine(b);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[one, three][three]");
+  });
+
+  test("Pass_head", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+    variable a set to ["one", "two", "three"]
+    variable b set to ""
+    set b to a.head()
+    print b
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.literalList(["one", "two", "three"]);
+  let b = "";
+  b = a.head();
+  await system.printLine(b);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "one");
+  });
+
   test("Pass_listOfFunction", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
@@ -1195,6 +1255,126 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "1");
+  });
+
+  test("Pass_addElementToList", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to [4,5,6,7,8]
+  variable b set to a.withAppend(9)
+  print a
+  print b
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.literalList([4, 5, 6, 7, 8]);
+  let b = a.withAppend(9);
+  await system.printLine(a);
+  await system.printLine(b);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[4, 5, 6, 7, 8][4, 5, 6, 7, 8, 9]");
+  });
+
+  test("Pass_addListToList", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to [4,5,6,7,8]
+  variable b set to [1,2,3,4,5]
+  variable c set to a.withAppendList(b)
+  print a
+  print c
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.literalList([4, 5, 6, 7, 8]);
+  let b = system.literalList([1, 2, 3, 4, 5]);
+  let c = a.withAppendList(b);
+  await system.printLine(a);
+  await system.printLine(c);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[4, 5, 6, 7, 8][4, 5, 6, 7, 8, 1, 2, 3, 4, 5]");
+  });
+
+  test("Pass_prependElementToList", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to [4,5,6,7,8]
+  variable b set to a.withPrepend(9)
+  print a
+  print b
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.literalList([4, 5, 6, 7, 8]);
+  let b = a.withPrepend(9);
+  await system.printLine(a);
+  await system.printLine(b);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[4, 5, 6, 7, 8][9, 4, 5, 6, 7, 8]");
+  });
+
+  test("Pass_prependListToList", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to [4,5,6,7,8]
+  variable b set to [1,2,3,4,5]
+  variable c set to a.withPrependList(b)
+  print a
+  print c
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.literalList([4, 5, 6, 7, 8]);
+  let b = system.literalList([1, 2, 3, 4, 5]);
+  let c = a.withPrependList(b);
+  await system.printLine(a);
+  await system.printLine(c);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[4, 5, 6, 7, 8][1, 2, 3, 4, 5, 4, 5, 6, 7, 8]");
   });
 
   test("Fail_withoutGenericType", async () => {
