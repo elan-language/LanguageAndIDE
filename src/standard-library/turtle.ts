@@ -116,8 +116,8 @@ export class Turtle extends GraphicsBase {
   private addTurtleIfShown() {
     if (this.shown) {
       const turtle = new CircleVG();
-      turtle.cx = this.x;
-      turtle.cy = this.y;
+      turtle.centreX = this.x;
+      turtle.centreY = this.y;
       turtle.r = 2;
       turtle.fill = 0x008000;
       turtle.strokeWidth = 0;
