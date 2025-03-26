@@ -16,7 +16,7 @@ suite("VectorGraphics", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable svg set to new BaseVG()
+  variable svg set to new VectorGraphic()
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -24,7 +24,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["BaseVG must be concrete to new"]);
+    assertDoesNotCompile(fileImpl, ["VectorGraphic must be concrete to new"]);
   });
 
   test("Pass_VectorGraphicsEmpty", async () => {

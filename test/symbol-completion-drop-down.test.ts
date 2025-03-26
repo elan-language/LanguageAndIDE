@@ -1078,7 +1078,6 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["BaseVG", "*", "*"],
       ["Boolean", "*", "*"],
     ] as [string, string, string][];
 
@@ -1105,7 +1104,6 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["BaseVG", "*", "*"],
       ["Boolean", "*", "*"],
     ] as [string, string, string][];
 
@@ -1662,8 +1660,8 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["cx", "cx", "cx"],
-      ["cy", "cy", "cy"],
+      ["centreX", "centreX", "centreX"],
+      ["centreY", "centreY", "centreY"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "expr5", "new CircleVG() with c", expected);

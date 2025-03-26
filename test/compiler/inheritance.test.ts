@@ -2552,7 +2552,7 @@ end class`;
   test("Fail_StdLibSuperClass", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
-class Bar inherits BaseVG
+class Bar inherits VectorGraphic
   constructor()
   end constructor
 
