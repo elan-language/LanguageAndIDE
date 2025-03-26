@@ -153,7 +153,7 @@ export class ElanValueTypeDescriptor implements TypeDescriptor {
 
   isConstant = true;
 
-  mapType(): SymbolType {
+  mapType(_scope: Scope): SymbolType {
     switch (this.name) {
       case FloatName:
         return FloatType.Instance;
@@ -175,7 +175,7 @@ export class ElanGenericTypeDescriptor implements TypeDescriptor {
 
   isConstant = true;
 
-  mapType(): SymbolType {
+  mapType(_scope: Scope): SymbolType {
     return new GenericParameterType(this.name);
   }
 }
@@ -287,7 +287,7 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
     }
 
     for (const inherits of classMetadata.inherits) {
-      classTypeDef.inheritTypes.push(inherits.mapType());
+      classTypeDef.inheritTypes.push(inherits.mapType(scope));
     }
 
     // cache classTypeDef
@@ -296,7 +296,7 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
     return classTypeDef;
   }
 
-  mapType(scope?: Scope): SymbolType {
+  mapType(scope: Scope): SymbolType {
     const classMetadata: ElanClassDescriptor =
       Reflect.getMetadata(elanMetadataKey, this.cls) ?? new ElanClassDescriptor();
 
@@ -334,7 +334,7 @@ export class ElanClassNameTypeDescriptor implements TypeDescriptor {
 
   name = ClassName;
 
-  mapType(scope?: Scope): SymbolType {
+  mapType(scope: Scope): SymbolType {
     const cls = nameToTypeMap.get(this.className);
     if (cls) {
       const td = new ElanClassTypeDescriptor(cls, this.ofTypes);
@@ -349,7 +349,7 @@ export class TypescriptTypeDescriptor implements TypeDescriptor {
 
   isConstant = true;
 
-  mapType(): SymbolType {
+  mapType(_scope: Scope): SymbolType {
     switch (this.name) {
       case "Number":
         return FloatType.Instance;
