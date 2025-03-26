@@ -67,20 +67,6 @@ export class ElanArray2D<T1> {
 
   private system?: System;
 
-  [Symbol.iterator]() {
-    let index = 0;
-
-    return {
-      next: () => {
-        if (index < this.contents.length) {
-          return { value: this.contents[index++], done: false };
-        } else {
-          return { done: true };
-        }
-      },
-    };
-  }
-
   @elanProcedure(["column", "row", "value"])
   put(@elanIntType() col: number, @elanIntType() row: number, @elanGenericParamT1Type() value: T1) {
     this.system!.safeArray2DSet(this.contents, col, row, value);

@@ -578,4 +578,25 @@ end main`;
       "Each dimension of Array2D must be non zero, positive value",
     );
   });
+
+  test("Fail_InvalidType", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to new Array2D<of Point>(2, 2, new Point())
+end main
+
+record Point
+end record`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    await assertObjectCodeDoesNotExecute(
+      fileImpl,
+      "Array2D must be of Type: Int, Float, String, or Boolean, with matching initial value",
+    );
+  });
 });

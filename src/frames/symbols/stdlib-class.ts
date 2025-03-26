@@ -50,6 +50,14 @@ export class StdLibClass implements Class {
   }
 
   getDirectSuperClassesTypeAndName(): [SymbolType, string][] {
+    if (this.inheritTypes.length > 0) {
+      const typeAndName: [SymbolType, string][] = this.inheritTypes
+        .filter((c) => c instanceof ClassType)
+        .map((c) => [c, c.className]);
+
+      return typeAndName;
+    }
+
     return [];
   }
 
@@ -143,6 +151,7 @@ export class StdLibClass implements Class {
           getClass: symbol.getClass,
         } as ElanSymbol;
       } else {
+        // should never get here
         reifiedSymbol = {
           symbolId: symbol.symbolId,
           symbolType: () => st1,
