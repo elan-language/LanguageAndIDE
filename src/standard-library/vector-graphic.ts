@@ -1,5 +1,11 @@
 import { ElanRuntimeError } from "../elan-runtime-error";
-import { ClassOption, ElanInt, elanClass, elanProperty } from "../elan-type-annotations";
+import {
+  ClassOption,
+  ElanInt,
+  elanClass,
+  elanProcedure,
+  elanProperty,
+} from "../elan-type-annotations";
 
 @elanClass(ClassOption.abstract)
 export class VectorGraphic {
@@ -23,6 +29,7 @@ export class VectorGraphic {
   @elanProperty(ElanInt)
   fillColour: number = 0;
 
+  @elanProcedure(["fillColour"])
   asHtml(): string {
     return "";
   }
@@ -36,7 +43,7 @@ export class VectorGraphic {
     return `#${rgb}`;
   }
 
-  strokeAsColour(): string {
+  private strokeColourAsHex(): string {
     if (this.strokeColour < 0) {
       throw new ElanRuntimeError(
         `stroke (colour) cannot be negative because a stroke cannot be transparent`,
@@ -44,7 +51,7 @@ export class VectorGraphic {
     }
     return this.asColour(this.strokeColour);
   }
-  fillAsColour(): string {
+  private fillColourAsHex(): string {
     let colour = "";
     if (this.fillColour < 0) {
       colour = "none";
@@ -54,7 +61,11 @@ export class VectorGraphic {
     return colour;
   }
 
-  strokeWidthPC(): number {
+  private strokeWidthScaled(): number {
     return this.strokeWidth * 0.3;
+  }
+
+  strokeAndFill(): string {
+    return `stroke="${this.strokeColourAsHex()}" stroke-width="${this.strokeWidthScaled()}%" fill="${this.fillColourAsHex()}`;
   }
 }

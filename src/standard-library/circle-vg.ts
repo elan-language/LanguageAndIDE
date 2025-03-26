@@ -84,7 +84,41 @@ export class CircleVG extends VectorGraphic {
     return copy;
   }
 
+  @elanProcedure(["fillColour"])
+  setFillColour(fillColour: number) {
+    this.fillColour = fillColour;
+  }
+
+  @elanFunction(["colour"], FunctionOptions.pure, ElanClass(CircleVG))
+  withFillColour(fillColour: number): CircleVG {
+    const copy = this.system!.initialise(new CircleVG(this));
+    copy.fillColour = fillColour;
+    return copy;
+  }
+
+  @elanProcedure(["colour"])
+  setStrokeColour(strokeColour: number) {
+    this.strokeColour = strokeColour;
+  }
+  @elanFunction(["colour"], FunctionOptions.pure, ElanClass(CircleVG))
+  withStrokeColour(strokeColour: number): CircleVG {
+    const copy = this.system!.initialise(new CircleVG(this));
+    copy.strokeColour = strokeColour;
+    return copy;
+  }
+
+  @elanProcedure(["strokeWidth"])
+  setStrokeWidth(strokeWidth: number) {
+    this.strokeWidth = strokeWidth;
+  }
+  @elanFunction(["width"], FunctionOptions.pure, ElanClass(CircleVG))
+  withStrokeWidth(strokeWidth: number): CircleVG {
+    const copy = this.system!.initialise(new CircleVG(this));
+    copy.strokeWidth = strokeWidth;
+    return copy;
+  }
+
   asHtml(): string {
-    return `<circle cx="${this.centreX}%" cy="${this.centreY / 0.75}%" r="${this.radius * 1.125}%" stroke="${this.strokeAsColour()}" stroke-width="${this.strokeWidthPC()}%" fill="${this.fillAsColour()}" />`;
+    return `<circle cx="${this.centreX}%" cy="${this.centreY / 0.75}%" r="${this.radius * 1.125}%" ${this.strokeAndFill()}" />`;
   }
 }

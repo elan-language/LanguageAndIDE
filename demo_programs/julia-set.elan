@@ -1,32 +1,33 @@
-# FFFF Elan Beta 6 valid
+# 6d03807ab67164c72c5b453c85e48d45104b9243acb51a641757847e1f76b3d7 Elan Beta 9 valid
 
 # Acknowledgements:
 # https://mathworld.wolfram.com/JuliaSet.html
 # Implemented in Elan by Charles Wicksteed
 main
-  variable vg set to new VectorGraphics()
   print "Press z to zoom in, x to zoom out"
   print "Arrow keys to pan"
   print "g, j and y, h to change shape"
   # Julia Set parameters
   variable p set to new Coords()
   while true
-    set vg to allpoints(new VectorGraphics(), p)
-    call vg.display()
+    let vg be allpoints(p)
+    call displayVectorGraphics(vg)
     call p.checkkeys()
     print "x = {p.jx} y = {p.jy}"
   end while
 end main
 
-function allpoints(vg as VectorGraphics, p as Coords) returns VectorGraphics
-  variable vg2 set to vg
+function allpoints(p as Coords) returns List<of VectorGraphic>
+  variable vg2 set to new List<of VectorGraphic>()
   for xp from 0 to width step 1
     for yp from 0 to height step 1
       # scale and centre
       let n be onepoint((xp - width/2)/p.scale - p.xoff, (yp - height/2)/p.scale - p.yoff, nmax, p)
       # colour depends on how many iterations were done for that point
       let col be if n is nmax then 0xffffff else ((n*0x010201) mod 0xffffff)
-      set vg2 to vg2.add(new RectangleVG() with x set to xp/2, y set to yp/2, height set to 0.5, width set to 0.5, fill set to col, stroke set to col, strokeWidth set to 0.25)
+      variable rect set to new RectangleVG(xp/2, yp/2, 0.5, 0.5)
+      set rect to rect.withFillColour(col).withStrokeColour(col).withStrokeWidth(0.5)
+      set vg2 to vg2.withAppend(rect)
     end for
   end for
   return vg2
