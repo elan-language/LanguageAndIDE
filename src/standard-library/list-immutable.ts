@@ -1,4 +1,3 @@
-import { ElanRuntimeError } from "../elan-runtime-error";
 import {
   ClassOption,
   ElanBoolean,
@@ -222,10 +221,6 @@ export class ListImmutable<T1> {
     }
 
     const r = this.contents.slice(index1, index2);
-
-    if (r === undefined) {
-      throw new ElanRuntimeError(`Out of range index`);
-    }
 
     return this.system!.initialise(new ListImmutable(r));
   }

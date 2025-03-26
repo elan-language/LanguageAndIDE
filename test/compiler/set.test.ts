@@ -332,6 +332,60 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "{one, two, three}{one, two, three}[one, two, three]");
   });
 
+  test("Pass_Contains1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to new Set<of String>()
+  set a to a.add("foo")
+  print a.contains("foo")
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.initialise(await new _stdlib.Set()._initialise());
+  a = a.add("foo");
+  await system.printLine(a.contains("foo"));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "true");
+  });
+
+  test("Pass_Contains2", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to new Set<of String>()
+  set a to a.add("bar")
+  print a.contains("foo")
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.initialise(await new _stdlib.Set()._initialise());
+  a = a.add("bar");
+  await system.printLine(a.contains("foo"));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "false");
+  });
+
   test("Fail_SetOfMutable", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 

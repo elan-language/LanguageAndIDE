@@ -119,12 +119,17 @@ export class System {
   }
 
   safeSlice(indexable: any, index1: number | undefined, index2: number | undefined) {
+    if (indexable === undefined) {
+      throw new ElanRuntimeError(`Out of range index`);
+    }
+
     if (typeof indexable !== "string" && "safeSlice" in indexable) {
       return indexable.safeSlice(index1, index2);
     }
 
-    if (indexable === undefined) {
+    if (typeof indexable !== "string") {
       throw new ElanRuntimeError(`Out of range index`);
+      return;
     }
 
     if (index1 && index1 < 0) {
@@ -136,10 +141,6 @@ export class System {
     }
 
     const r = indexable.slice(index1, index2);
-
-    if (r === undefined) {
-      throw new ElanRuntimeError(`Out of range index`);
-    }
 
     return r;
   }
