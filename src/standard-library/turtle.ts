@@ -119,7 +119,7 @@ export class Turtle extends GraphicsBase {
       turtle.centreX = this.x;
       turtle.centreY = this.y;
       turtle.radius = 2;
-      turtle.fill = 0x008000;
+      turtle.fillColour = 0x008000;
       turtle.strokeWidth = 0;
       const [x2, y2] = this.getDestination(2);
       const pointer = new LineVG();
@@ -154,7 +154,7 @@ export class Turtle extends GraphicsBase {
       line.y1 = this.y;
       line.x2 = newX;
       line.y2 = newY;
-      line.stroke = this.colour;
+      line.strokeColour = this.colour;
       line.strokeWidth = this.width;
       this.vg = this.vg.add(line);
     }

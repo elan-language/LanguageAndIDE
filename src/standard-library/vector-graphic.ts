@@ -9,19 +9,19 @@ export class VectorGraphic {
   }
 
   constructor(copy?: VectorGraphic) {
-    this.fill = copy ? copy.fill : 0xffff00;
-    this.stroke = copy ? copy.stroke : 0;
+    this.fillColour = copy ? copy.fillColour : 0xffff00;
+    this.strokeColour = copy ? copy.strokeColour : 0;
     this.strokeWidth = copy ? copy.strokeWidth : 1;
   }
 
   @elanProperty(ElanInt)
-  stroke: number = 0;
+  strokeColour: number = 0;
 
   @elanProperty()
   strokeWidth: number = 0;
 
   @elanProperty(ElanInt)
-  fill: number = 0;
+  fillColour: number = 0;
 
   asHtml(): string {
     return "";
@@ -37,19 +37,19 @@ export class VectorGraphic {
   }
 
   strokeAsColour(): string {
-    if (this.stroke < 0) {
+    if (this.strokeColour < 0) {
       throw new ElanRuntimeError(
         `stroke (colour) cannot be negative because a stroke cannot be transparent`,
       );
     }
-    return this.asColour(this.stroke);
+    return this.asColour(this.strokeColour);
   }
   fillAsColour(): string {
     let colour = "";
-    if (this.fill < 0) {
+    if (this.fillColour < 0) {
       colour = "none";
     } else {
-      colour = this.asColour(this.fill);
+      colour = this.asColour(this.fillColour);
     }
     return colour;
   }

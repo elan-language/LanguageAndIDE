@@ -17,7 +17,7 @@ export class RectangleVG extends VectorGraphic {
     this.y = 40;
     this.width = 20;
     this.height = 10;
-    this.fill = 0x0000ff;
+    this.fillColour = 0x0000ff;
   }
 
   @elanProperty()
