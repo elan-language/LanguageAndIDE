@@ -859,6 +859,35 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "true 99 true 98[42:99] [42:98]{42} true");
   });
 
+  test("Pass_asDictionaryImmutable", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  let a be ["a":1, "b":3, "z":10]
+  let b be a.asDictionaryImmutable()
+  print a
+  print b
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  const a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
+  const b = a.asDictionaryImmutable();
+  await system.printLine(a);
+  await system.printLine(b);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[a:1, b:3, z:10]{a:1, b:3, z:10}");
+  });
+
   test("Fail_SetInvalidValueType", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
