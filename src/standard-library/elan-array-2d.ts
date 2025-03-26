@@ -123,13 +123,20 @@ export class ElanArray2D<T1> {
   }
 
   async asString() {
-    const strContents = [];
+    const columns = [];
 
-    for (const c of this.contents) {
-      strContents.push(await this.system!.asString(c));
+    for (const column of this.contents) {
+      const rows = [];
+
+      for (const row of column) {
+        const s = await this.system!.asString(row);
+        rows.push(s);
+      }
+
+      columns.push(`[${rows.join(", ")}]`);
     }
 
-    return `[${strContents.map((s) => `[${s}]`).join(", ")}]`;
+    return `[${columns.join(", ")}]`;
   }
 
   safeIndex(index1: number, index2?: number) {

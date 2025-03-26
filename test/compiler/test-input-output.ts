@@ -1,5 +1,4 @@
 import { ElanInputOutput } from "../../src/elan-input-output";
-import { hasHiddenType } from "../../src/has-hidden-type";
 
 export class TestInputOutput implements ElanInputOutput {
   waitForAnyKey(): Promise<void> {
@@ -21,7 +20,6 @@ export class TestInputOutput implements ElanInputOutput {
 
   getKeyWithModifier(): Promise<[string, string]> {
     const t = ["", ""] as [string, string];
-    (t as unknown as hasHiddenType)._type = "Tuple";
     return  Promise.resolve(t);
   }
   clearKeyBuffer(): Promise<void> {

@@ -195,7 +195,12 @@ export class ListImmutable<T1> {
   }
 
   async asString() {
-    return `{${await this.system!.asString(this.contents)}}`;
+    const items: string[] = [];
+    for (const i of this.contents) {
+      const s = await this.system!.asString(i);
+      items.push(s);
+    }
+    return `{${items.join(", ")}}`;
   }
 
   safeIndex(index: number) {

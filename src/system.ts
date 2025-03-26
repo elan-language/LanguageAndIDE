@@ -2,7 +2,6 @@
 import { ElanInputOutput } from "./elan-input-output";
 import { ElanRuntimeError } from "./elan-runtime-error";
 import { TestStatus } from "./frames/status-enums";
-import { hasHiddenType } from "./has-hidden-type";
 import { Dictionary } from "./standard-library/dictionary";
 import { DictionaryImmutable } from "./standard-library/dictionary-immutable";
 import { ElanArray } from "./standard-library/elan-array";
@@ -50,7 +49,6 @@ export class System {
   }
 
   tuple(t: Array<any>) {
-    (t as unknown as hasHiddenType)._type = "Tuple";
     return t;
   }
 

@@ -1,5 +1,4 @@
 import { ElanInputOutput } from "./elan-input-output";
-import { hasHiddenType } from "./has-hidden-type";
 import { WebWorkerMessage, WebWorkerWriteMessage } from "./web/web-worker-messages";
 
 export class StubInputOutput implements ElanInputOutput {
@@ -231,8 +230,6 @@ export class StubInputOutput implements ElanInputOutput {
         const data = e.data as WebWorkerMessage;
 
         if (data.type === "read") {
-          const t = data.value;
-          (t as unknown as hasHiddenType)._type = "Tuple";
           rs(data.value as [string, string]);
         }
       };
