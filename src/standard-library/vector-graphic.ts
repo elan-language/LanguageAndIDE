@@ -15,7 +15,7 @@ export class VectorGraphic {
   }
 
   constructor(copy?: VectorGraphic) {
-    this.fillColour = copy ? copy.fillColour : 0xffff00;
+    this.fillColour = copy ? copy.fillColour : 0;
     this.strokeColour = copy ? copy.strokeColour : 0;
     this.strokeWidth = copy ? copy.strokeWidth : 1;
   }

@@ -34,7 +34,7 @@ export class RectangleVG extends VectorGraphic {
   private system?: System;
 
   constructor(copy?: RectangleVG) {
-    super();
+    super(copy);
     this.x = copy ? copy.x : 0;
     this.y = copy ? copy.y : 0;
     this.width = copy ? copy.width : 0;

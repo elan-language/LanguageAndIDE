@@ -34,7 +34,7 @@ export class LineVG extends VectorGraphic {
   private system?: System;
 
   constructor(copy?: LineVG) {
-    super();
+    super(copy);
     this.x1 = copy ? copy.x1 : 0;
     this.y1 = copy ? copy.y1 : 0;
     this.x2 = copy ? copy.x2 : 0;
