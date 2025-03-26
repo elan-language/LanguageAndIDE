@@ -2,16 +2,16 @@ import { ElanRuntimeError } from "../elan-runtime-error";
 import { ClassOption, ElanInt, elanClass, elanProperty } from "../elan-type-annotations";
 
 @elanClass(ClassOption.abstract)
-export class BaseVG {
+export class VectorGraphic {
   // this must be implemented by hand on all stdlib classes
   static emptyInstance() {
-    return new BaseVG();
+    return new VectorGraphic();
   }
 
-  constructor() {
-    this.fill = 0xffff00;
-    this.stroke = 0;
-    this.strokeWidth = 1;
+  constructor(copy?: VectorGraphic) {
+    this.fill = copy ? copy.fill : 0xffff00;
+    this.stroke = copy ? copy.stroke : 0;
+    this.strokeWidth = copy ? copy.strokeWidth : 1;
   }
 
   @elanProperty(ElanInt)

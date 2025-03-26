@@ -10,9 +10,9 @@ import {
   elanProcedure,
 } from "../elan-type-annotations";
 import { System } from "../system";
-import { BaseVG } from "./base-vg";
 import { GraphicsBase } from "./graphics-base";
 import { StdLib } from "./std-lib";
+import { VectorGraphic } from "./vector-graphic";
 
 @elanClass(ClassOption.record, [], [], [], [ElanClass(GraphicsBase)])
 export class VectorGraphics {
@@ -31,7 +31,7 @@ export class VectorGraphics {
 
   private system?: System;
 
-  private internalRep: BaseVG[] = [];
+  private internalRep: VectorGraphic[] = [];
 
   @elanFunction([], FunctionOptions.pure, ElanInt)
   count(): number {
@@ -39,7 +39,7 @@ export class VectorGraphics {
   }
 
   @elanFunction([], FunctionOptions.pure, ElanClass(VectorGraphics))
-  add(@elanClassType(BaseVG) obj: BaseVG): VectorGraphics {
+  add(@elanClassType(VectorGraphic) obj: VectorGraphic): VectorGraphics {
     const copy = this.system!.initialise(new VectorGraphics());
     copy.internalRep = this.internalRep;
     copy.internalRep.push(obj);
@@ -47,7 +47,7 @@ export class VectorGraphics {
   }
 
   @elanFunction([], FunctionOptions.pure, ElanClass(VectorGraphics))
-  remove(@elanClassType(BaseVG) existing: BaseVG): VectorGraphics {
+  remove(@elanClassType(VectorGraphic) existing: VectorGraphic): VectorGraphics {
     const copy = this.system!.initialise(new VectorGraphics());
     copy.internalRep = this.internalRep;
     if (copy.internalRep.includes(existing)) {
@@ -67,8 +67,8 @@ export class VectorGraphics {
 
   @elanFunction([], FunctionOptions.pure, ElanClass(VectorGraphics))
   replace(
-    @elanClassType(BaseVG) existing: BaseVG,
-    @elanClassType(BaseVG) replacement: BaseVG,
+    @elanClassType(VectorGraphic) existing: VectorGraphic,
+    @elanClassType(VectorGraphic) replacement: VectorGraphic,
   ): VectorGraphics {
     const copy = this.system!.initialise(new VectorGraphics());
     copy.internalRep = this.internalRep;

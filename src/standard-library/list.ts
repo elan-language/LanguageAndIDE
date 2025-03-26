@@ -69,6 +69,10 @@ export class List<T1> {
     } as { next: () => { value: T1; done: boolean } };
   }
 
+  public read(index: number): T1 {
+    return this.contents[index];
+  }
+
   @elanProcedure(["index", "value"])
   put(@elanIntType() index: number, @elanGenericParamT1Type() value: T1) {
     this.system!.safeListSet(this.contents, index, value);

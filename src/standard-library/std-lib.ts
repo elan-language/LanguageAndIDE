@@ -23,7 +23,6 @@ import { Regexes } from "../frames/fields/regexes";
 import { hasHiddenType } from "../has-hidden-type";
 import { StubInputOutput } from "../stub-input-output";
 import { System } from "../system";
-import { BaseVG } from "./base-vg";
 import { CircleVG } from "./circle-vg";
 import { Dictionary } from "./dictionary";
 import { DictionaryImmutable } from "./dictionary-immutable";
@@ -40,6 +39,7 @@ import { Stack } from "./stack";
 import { TextFileReader } from "./text-file-reader";
 import { TextFileWriter } from "./text-file-writer";
 import { Turtle } from "./turtle";
+import { VectorGraphic } from "./vector-graphic";
 import { VectorGraphics } from "./vector-graphics";
 
 export class StdLib {
@@ -74,8 +74,8 @@ export class StdLib {
   @elanClassExport(VectorGraphics)
   VectorGraphics = VectorGraphics;
 
-  @elanClassExport(BaseVG)
-  BaseVG = BaseVG;
+  @elanClassExport(VectorGraphic)
+  VectorGraphic = VectorGraphic;
 
   @elanClassExport(CircleVG)
   CircleVG = CircleVG;
@@ -741,5 +741,28 @@ export class StdLib {
   @elanProcedure([], ProcedureOptions.async)
   async clearBlocks() {
     await this.system!.elanInputOutput.clearBlockGraphics();
+  }
+
+  private vectorGraphicsasHtml(vgs: List<VectorGraphic>): string {
+    let content = ``;
+    for (let i = 0; i < vgs.length(); i++) {
+      const vg = vgs.read(i);
+      content = content + vg.asHtml() + "\n";
+    }
+    const html = `<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">\n${content}</svg>\n`;
+    return html;
+  }
+
+  @elanProcedure(["listOfVGs"], ProcedureOptions.async)
+  async displayVectorGraphics(
+    @elanClassType(List, [ElanClass(VectorGraphic)]) vgs: List<VectorGraphic>,
+  ): Promise<void> {
+    const html = this.vectorGraphicsasHtml(vgs);
+    return await this.system!.elanInputOutput.drawVectorGraphics(html);
+  }
+
+  @elanProcedure([], ProcedureOptions.async)
+  async clearVectorGraphics() {
+    await this.system!.elanInputOutput.clearVectorGraphics();
   }
 }
