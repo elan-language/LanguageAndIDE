@@ -2,6 +2,7 @@ import {
   ClassOption,
   ElanBoolean,
   ElanClass,
+  ElanClassName,
   ElanT1,
   ElanT2,
   FunctionOptions,
@@ -29,7 +30,7 @@ export class Dictionary<T1, T2> {
     this.contents = dict ? new Map<T1, T2>(dict) : new Map<T1, T2>();
   }
 
-  private contents: Map<T1, T2>;
+  contents: Map<T1, T2>;
 
   private system?: System;
 
@@ -117,5 +118,10 @@ export class Dictionary<T1, T2> {
     const newDict = new Map<T1, T2>(this.contents);
     newDict.set(rk, value);
     return this.system!.initialise(new Dictionary<T1, T2>([...newDict.entries()]));
+  }
+
+  @elanFunction([], FunctionOptions.pure, ElanClassName("DictionaryImmutable"))
+  asDictionaryImmutable() {
+    return this.system!.dictionaryAsDictionaryImmutable(this);
   }
 }

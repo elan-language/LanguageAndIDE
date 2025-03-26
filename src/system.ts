@@ -491,4 +491,16 @@ export class System {
     const newList = [...list];
     return this.initialise(new List(newList));
   }
+
+  dictionaryAsDictionaryImmutable<T1, T2>(
+    dictionary: Dictionary<T1, T2>,
+  ): DictionaryImmutable<T1, T2> {
+    return this.initialise(new DictionaryImmutable([...dictionary.contents.entries()]));
+  }
+
+  dictionaryImmutableAsDictionary<T1, T2>(
+    dictionary: DictionaryImmutable<T1, T2>,
+  ): Dictionary<T1, T2> {
+    return this.initialise(new Dictionary([...dictionary.contents.entries()]));
+  }
 }

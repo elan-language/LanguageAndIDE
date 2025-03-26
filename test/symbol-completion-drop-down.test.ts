@@ -660,6 +660,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
+      ["asDictionaryImmutable", "*", "*"],
       ["asString", "*", "*"],
       ["hasKey", "*", "*"],
       ["keys", "*", "*"],
@@ -683,6 +684,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
+      ["asDictionary", "*", "*"],
       ["asString", "*", "*"],
       ["hasKey", "*", "*"],
       ["keys", "*", "*"],
