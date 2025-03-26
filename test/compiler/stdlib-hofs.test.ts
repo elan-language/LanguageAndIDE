@@ -602,6 +602,56 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "2");
   });
 
+  test("Pass_maxInt", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  let source be [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
+  print maxInt(source)
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  const source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
+  await system.printLine(_stdlib.maxInt(source));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "37");
+  });
+
+  test("Pass_maxFloat", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  let source be [2.0, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
+  print maxFloat(source)
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  const source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
+  await system.printLine(_stdlib.maxFloat(source));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "37");
+  });
+
   test("Fail_minIntAppliedToFloatList", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 

@@ -68,17 +68,7 @@ export class System {
     return this.initialise(new List(t));
   }
 
-  initialise<T>(toInit: T, toType?: () => any): T {
-    if (toType && Array.isArray(toInit) && toInit.length > 0) {
-      for (let i = 0; i < toInit.length; i++) {
-        if (Array.isArray(toInit[i])) {
-          this.initialise(toInit[i], toType);
-        } else {
-          toInit[i] = toType();
-        }
-      }
-    }
-
+  initialise<T>(toInit: T): T {
     if ("system" in (toInit as object)) {
       (toInit as any).system = this;
     }
@@ -129,7 +119,6 @@ export class System {
 
     if (typeof indexable !== "string") {
       throw new ElanRuntimeError(`Out of range index`);
-      return;
     }
 
     if (index1 && index1 < 0) {
@@ -140,9 +129,7 @@ export class System {
       this.throwRangeError(indexable, index2);
     }
 
-    const r = indexable.slice(index1, index2);
-
-    return r;
+    return indexable.slice(index1, index2);
   }
 
   throwRangeError(toIndex: any, index: any) {
@@ -425,27 +412,6 @@ export class System {
       await this.quickSort(arr, compare, j + 1, right);
     }
     return arr;
-  }
-
-  convert(o: { [key: string]: object }, names: string[]): string {
-    const items: string[] = [];
-
-    for (const n of names) {
-      const s = this.asValueKey(o[n]);
-      items.push(`${n}_${s}`);
-    }
-
-    return items.join("_");
-  }
-
-  asValueKey(v: any): string {
-    if (typeof v === "object") {
-      const items = Object.getOwnPropertyNames(v).filter((s) => s !== "_type");
-      const o = v as { [key: string]: object };
-      return this.convert(o, items);
-    }
-
-    return v.toString();
   }
 
   listImmutableAsList<T1>(list: ListImmutable<T1>): List<T1> {
