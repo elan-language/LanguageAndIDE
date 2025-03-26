@@ -204,7 +204,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const a = system.literalList(["one", "two", "three"]).asArray();
+  const a = system.list(["one", "two", "three"]).asArray();
   const b = a.asListImmutable();
   const c = a.asList();
   const d = a.asSet();

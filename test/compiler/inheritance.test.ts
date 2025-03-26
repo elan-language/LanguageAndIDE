@@ -315,7 +315,7 @@ end function
 const global = new class {};
 async function main() {
   let b = system.initialise(await new Bar()._initialise());
-  let lst = system.literalList([b]);
+  let lst = system.list([b]);
   await system.printLine((await global.fun(lst)));
 }
 

@@ -271,9 +271,9 @@ end main`;
 const global = new class {};
 async function main() {
   const st0 = system.initialise(await new _stdlib.Set()._initialise());
-  const st1 = st0.addFromList(system.literalList([2, 4, 6, 3]));
+  const st1 = st0.addFromList(system.list([2, 4, 6, 3]));
   await system.printLine(st1);
-  const st2 = st1.addFromList(system.literalList([2, 5, 6]));
+  const st2 = st1.addFromList(system.list([2, 5, 6]));
   await system.printLine(st2);
 }
 return [main, _tests];}`;
@@ -308,7 +308,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const a = system.literalList(["one", "two", "three"]).asSet();
+  const a = system.list(["one", "two", "three"]).asSet();
   const b = a.asListImmutable();
   const c = a.asList();
   let aa = system.initialise(_stdlib.Set.emptyInstance());

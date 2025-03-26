@@ -55,7 +55,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let source = system.literalList([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
+  let source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
   await system.printLine((await source.filter(async (x) => x > 20)));
   await system.printLine((await source.filter(async (x) => x > 20)));
   await system.printLine((await source.filter(async (x) => (x < 3) || (x > 35))));
@@ -182,7 +182,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let source = system.literalList([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
+  let source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
   await system.printLine((await source.map(async (x) => x + 1)));
   await system.printLine((await source.map(async (x) => (await _stdlib.asString(x)) + "*")));
 }
@@ -301,7 +301,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let source = system.literalList([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
+  let source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
   await system.printLine((await source.reduce(0, async (s, x) => s + x)));
   await system.printLine((await source.reduce(100, async (s, x) => s + x)));
   await system.printLine((await source.reduce("Concat:", async (s, x) => s + (await _stdlib.asString(x)))));
@@ -432,7 +432,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let source = system.literalList([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
+  let source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
   await system.printLine((await source.maxBy(async (x) => x % 5)));
 }
 return [main, _tests];}`;
@@ -538,7 +538,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let source = system.literalList([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
+  let source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
   await system.printLine(source.length());
 }
 return [main, _tests];}`;
@@ -563,7 +563,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const source = system.literalList([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
+  const source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
   await system.printLine(_stdlib.minInt(source));
 }
 return [main, _tests];}`;
@@ -588,7 +588,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const source = system.literalList([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
+  const source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
   await system.printLine(_stdlib.minFloat(source));
 }
 return [main, _tests];}`;
@@ -657,7 +657,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let source = system.literalList([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
+  let source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
   await system.printLine((await source.minBy(async (x) => x % 5)));
 }
 return [main, _tests];}`;
@@ -715,7 +715,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let source = system.literalList([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
+  let source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
   await system.printLine((await source.sortBy(async (x, y) => x === y ? 0 : x < y ? 1 : (-1))));
   await system.printLine(source);
 }

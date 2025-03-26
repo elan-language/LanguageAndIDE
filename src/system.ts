@@ -64,7 +64,7 @@ export class System {
     return this.initialise(new DictionaryImmutable(t));
   }
 
-  literalList(t: Array<any>) {
+  list(t: Array<any>) {
     return this.initialise(new List(t));
   }
 

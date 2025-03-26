@@ -1019,7 +1019,7 @@ class Game {
   static emptyInstance() { return system.emptyClass(Game, [["p1", system.initialise(_stdlib.List.emptyInstance())]]);};
 
   async _initialise() {
-    this.p1 = system.literalList([1, 2, 3]);
+    this.p1 = system.list([1, 2, 3]);
     return this;
   }
 

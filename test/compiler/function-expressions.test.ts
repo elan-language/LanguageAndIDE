@@ -152,7 +152,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = _stdlib.minFloat(system.literalList([3.1, 3]));
+  let x = _stdlib.minFloat(system.list([3.1, 3]));
   await system.printLine(x);
 }
 return [main, _tests];}`;
@@ -178,7 +178,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let i = system.literalList(["a", "b"]);
+  let i = system.list(["a", "b"]);
   let x = i.contains("b");
   await system.printLine(x);
 }

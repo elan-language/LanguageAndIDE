@@ -528,7 +528,7 @@ end main
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.literalList([1, 2]);
+  let a = system.list([1, 2]);
   let x = system.tuple([3, a]);
   let [y, z] = x;
   await system.printLine(y);
@@ -560,7 +560,7 @@ end main
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.literalList([1, 2]);
+  let a = system.list([1, 2]);
   let x = system.tuple([3, a]);
   const [y, z] = x;
   await system.printLine(y);
@@ -594,7 +594,7 @@ end main
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.literalList([1, 2]);
+  let a = system.list([1, 2]);
   let x = system.tuple([3, a]);
   let y = 0;
   let z = system.initialise(_stdlib.List.emptyInstance());
