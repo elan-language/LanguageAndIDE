@@ -145,14 +145,14 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable x set to {3.1, 3}.min()
+  variable x set to minFloat([3.1, 3])
   print x
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = _stdlib.min(system.listImmutable([3.1, 3]));
+  let x = _stdlib.minFloat(system.literalList([3.1, 3]));
   await system.printLine(x);
 }
 return [main, _tests];}`;
@@ -239,7 +239,7 @@ end main`;
 
 main
   variable a set to [1,2]
-  call a.max()
+  call maxInt(a)
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);

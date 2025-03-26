@@ -83,7 +83,7 @@ export async function assertGeneratesHtmlandSameSourceNew(sourceFile: string, ht
     } else {
       throw e;
     }
-    
+
   }
 }
 
@@ -168,15 +168,15 @@ function getEvent(char: string) {
   } as editorEvent;
 }
 
-async function doAsserts(f: FileImpl, fld : AbstractField, expected: [string, string, string][] | number) {
+async function doAsserts(f: FileImpl, fld: AbstractField, expected: [string, string, string][] | number) {
   await f.renderAsHtml();
   const symbols = fld.autocompleteSymbols;
 
   if (typeof expected === "number") {
-    assert.strictEqual(symbols.length, expected); 
-    return;  
+    assert.strictEqual(symbols.length, expected);
+    return;
   }
-  const minLen = symbols.length > expected.length ? expected.length : symbols.length; 
+  const minLen = symbols.length > expected.length ? expected.length : symbols.length;
 
   for (let i = 0; i < minLen; i++) {
     const s = symbols[i];
@@ -194,7 +194,7 @@ async function doAsserts(f: FileImpl, fld : AbstractField, expected: [string, st
   }
 
   assert.strictEqual(symbols.length, expected.length);
-} 
+}
 
 
 export async function assertAutocompletes(
@@ -203,10 +203,10 @@ export async function assertAutocompletes(
   char: string,
   at: number,
   expected: [string, string, string][],
-  clear? : boolean
+  clear?: boolean
 ): Promise<void> {
   assertParses(f);
-  
+
   const fld = f.getById(id) as AbstractField;
 
   if (clear) {
@@ -219,12 +219,12 @@ export async function assertAutocompletes(
   await doAsserts(f, fld, expected);
 }
 
-function dump(v : [string, string][]) {
+function dump(v: [string, string][]) {
   return v.map(t => `${t[0]}:${t[1]}`).join(", ")
 }
 
 function assertData(variables: [string, string][], expected: [string, string][]) {
-  
+
   assert.strictEqual(variables.length, expected.length, `Provided: ${dump(variables)} expected: ${dump(expected)}`)
 
   for (let i = 0; i < variables.length; i++) {
@@ -236,11 +236,11 @@ function assertData(variables: [string, string][], expected: [string, string][])
   }
 }
 
-function handleBreakPoint (runWorker : Worker) {
+function handleBreakPoint(runWorker: Worker) {
   return new Promise<[string, string][]>((rs, rj) => {
     runWorker.addEventListener("message", (e: MessageEvent<WebWorkerMessage>) => {
       const data = e.data;
-  
+
       switch (data.type) {
         case "breakpoint":
           rs(data.value)
@@ -252,13 +252,13 @@ function handleBreakPoint (runWorker : Worker) {
           rj(`unexpected response '${data.type}'`)
       }
     });
-  
+
     runWorker.addEventListener("error", (ev: ErrorEvent) => {
-     
+
 
       rj(`unexpected error ${ev}`);
     });
-  
+
     runWorker.postMessage({ type: "start" } as WebWorkerMessage);
   });
 }
@@ -270,7 +270,7 @@ export async function assertDebugBreakPoint(
   expected: [string, string][],
 ): Promise<void> {
   assertParses(f);
-  
+
   const fld = f.getById(id) as AbstractFrame;
 
   fld.breakpointStatus = BreakpointStatus.active;
@@ -298,17 +298,17 @@ export async function assertSymbolCompletionWithString(
   assertParses(f);
   const fld = f.getById(id) as AbstractField;
 
-  assert.notStrictEqual(fld, undefined, `${id} not found`)
+  assert.notStrictEqual(fld, undefined, `${id} not found`);
 
   fld.text = "";
-  
+
   fld.select();
   fld.cursorPos = 0;
 
-  for(const c of text) {
+  for (const c of text) {
     fld.processKey(getEvent(c));
   }
-  
+
   await doAsserts(f, fld, expected);
 }
 
@@ -469,9 +469,8 @@ export function testActiveNodeAndDone(
 }
 
 export function testSymbolCompletionSpec(node: ParseNode, text: string, status: ParseStatus, activeNode: string,
-  toMatch = "", tokenTypes: TokenType[], keywords: string[] = [], constrainingId: string = "")
-  {
-  node.parseText(text); 
+  toMatch = "", tokenTypes: TokenType[], keywords: string[] = [], constrainingId: string = "") {
+  node.parseText(text);
   assert.equal(node.status, status);
   const active = node.getActiveNode();
   const cls = active.constructor.name;
@@ -508,7 +507,7 @@ export async function createTestRunner() {
   return await getTestRunner(system, stdlib);
 }
 
-export async function testDemoProgram(program : string) {
+export async function testDemoProgram(program: string) {
   const f = await loadFileAsModelNew(`${__dirname}\\..\\..\\demo_programs\\${program}`);
   const runner = await createTestRunner();
   f.refreshParseAndCompileStatuses(false);

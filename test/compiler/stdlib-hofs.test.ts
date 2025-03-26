@@ -71,12 +71,13 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[23, 27, 31, 37][23, 27, 31, 37][2, 37]");
   });
 
-  test("Pass_filterString", async () => {
+  test("Pass_filterStringViaSplit", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 constant source set to "onetwo"
 main
-  print source.filter(lambda x as String => x is "o").asList()
+  let li be source.split("")
+  print li.filter(lambda x as String => x is "o")
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -85,7 +86,8 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine((await _stdlib.filter(global.source, async (x) => x === "o")).asList());
+  const li = _stdlib.split(global.source, "");
+  await system.printLine((await li.filter(async (x) => x === "o")));
 }
 return [main, _tests];}`;
 
@@ -198,12 +200,13 @@ return [main, _tests];}`;
     );
   });
 
-  test("Pass_mapString", async () => {
+  test("Pass_mapStringViaSplit", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 constant source set to "onetwo"
 main
-  print source.map(lambda x as String => x + "*").asList()
+  let li be source.split("")
+  print li.map(lambda x as String => x + "*")
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -212,7 +215,8 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine((await _stdlib.map(global.source, async (x) => x + "*")).asList());
+  const li = _stdlib.split(global.source, "");
+  await system.printLine((await li.map(async (x) => x + "*")));
 }
 return [main, _tests];}`;
 
@@ -318,7 +322,8 @@ return [main, _tests];}`;
 
 constant source set to "onetwo"
 main
-  print source.reduce("Concat:", lambda s as String, x as String => s + "*" + x)
+  let li be source.split("")
+  print li.reduce("Concat:", lambda s as String, x as String => s + "*" + x)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -327,7 +332,8 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine((await _stdlib.reduce(global.source, "Concat:", async (s, x) => s + "*" + x)));
+  const li = _stdlib.split(global.source, "");
+  await system.printLine((await li.reduce("Concat:", async (s, x) => s + "*" + x)));
 }
 return [main, _tests];}`;
 
@@ -371,31 +377,21 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "{one:1, two:2, three:1, four:1}");
   });
 
-  test("Pass_maxImmutableList", async () => {
+  test("Fail_maxImmutableList", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
-  print source.max()
+  print maxInt(source)
 end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {
-  source = system.listImmutable([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
-
-};
-async function main() {
-  await system.printLine(_stdlib.max(global.source));
-}
-return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "37");
+    assertDoesNotCompile(fileImpl, [
+      "Argument types. Expected: listOfInt (List<of Int>) Provided: ListImmutable<of Int>",
+    ]);
   });
 
   test("Pass_maxByImmutableList", async () => {
@@ -556,21 +552,19 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "12");
   });
 
-  test("Pass_min", async () => {
+  test("Pass_minInt", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
-constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
-  print source.min()
+  let source be [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
+  print minInt(source)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {
-  source = system.listImmutable([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
-
-};
+const global = new class {};
 async function main() {
-  await system.printLine(_stdlib.min(global.source));
+  const source = system.literalList([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
+  await system.printLine(_stdlib.minInt(source));
 }
 return [main, _tests];}`;
 
@@ -581,6 +575,48 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "2");
+  });
+
+  test("Pass_minFloat", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  let source be [2.0, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
+  print minFloat(source)
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  const source = system.literalList([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
+  await system.printLine(_stdlib.minFloat(source));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "2");
+  });
+
+  test("Fail_minIntAppliedToFloatList", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  let source be [2.0, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
+  print minInt(source)
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types. Expected: listOfInt (List<of Int>) Provided: List<of Float>",
+    ]);
   });
 
   test("Pass_minByImmutableList", async () => {
@@ -697,35 +733,6 @@ return [main, _tests];}`;
     );
   });
 
-  test("Pass_sortByString", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-constant source set to "dbcd"
-main
-  print source.sortBy(lambda x as String, y as String => if x is y then 0 else if x.isAfter(y) then 1 else -1).asList()
-  print source
-end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {
-  source = "dbcd";
-
-};
-async function main() {
-  await system.printLine((await _stdlib.sortBy(global.source, async (x, y) => x === y ? 0 : _stdlib.isAfter(x, y) ? 1 : (-1))).asList());
-  await system.printLine(global.source);
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "[b, c, d, d]dbcd");
-  });
-
   test("Pass_asSet", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
@@ -812,16 +819,18 @@ return [main, _tests];}`;
   test("Fail_MaxOnNonNumeric", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
-constant source set to {"apple", "orange", "pair"}
 main
-  print source.max()
+  let source be ["apple", "orange", "pair"]
+  print maxInt(source)
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'max' is not defined for type 'ListImmutable<of String>'"]);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types. Expected: listOfInt (List<of Int>) Provided: List<of String>",
+    ]);
   });
 
   test("Fail_MaxLambdaReturningNonNumeric", async () => {

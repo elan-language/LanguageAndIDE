@@ -9,15 +9,12 @@ import {
   elanConstant,
   ElanFloat,
   elanFunction,
-  elanFuncType,
   elanGenericParamT1Type,
-  elanGenericParamT2Type,
   ElanInt,
   elanIntType,
   elanProcedure,
   ElanString,
   elanStringType,
-  ElanT2,
   ElanTuple,
   FunctionOptions,
   ProcedureOptions,
@@ -260,9 +257,9 @@ export class StdLib {
     return s.trim();
   }
 
-  @elanFunction(["", "separator"], FunctionOptions.pureExtension, ElanClass(ListImmutable))
-  split(s: string, separator: string): ListImmutable<string> {
-    return this.system.initialise(new ListImmutable(s.split(separator)));
+  @elanFunction(["", "separator"], FunctionOptions.pureExtension, ElanClass(List))
+  split(s: string, separator: string): List<string> {
+    return this.system.initialise(new List(s.split(separator)));
   }
 
   @elanFunction(["number"], FunctionOptions.pureExtension, ElanInt)
@@ -292,94 +289,24 @@ export class StdLib {
     return n > fl ? fl + 1 : fl;
   }
 
-  @elanFunction(
-    ["", "lambdaOrFunctionRef"],
-    FunctionOptions.pureAsyncExtension,
-    ElanClass(ListImmutable),
-  )
-  async filter(
-    @elanStringType()
-    source: string,
-    @elanFuncType([ElanString], ElanBoolean)
-    predicate: (value: string) => Promise<boolean>,
-  ): Promise<ListImmutable<string>> {
-    const list = source.split("");
-
-    const asyncFilter = async (list: string[], predicate: (value: string) => Promise<boolean>) => {
-      const results = await Promise.all(list.map(predicate));
-
-      return list.filter((_v, index) => results[index]);
-    };
-
-    const result = await asyncFilter(list, predicate);
-
-    return this.system.initialise(new ListImmutable(result));
-  }
-
-  @elanFunction(
-    ["", "lambdaOrFunctionRef"],
-    FunctionOptions.pureAsyncExtension,
-    ElanClass(ListImmutable),
-  )
-  async map(
-    @elanStringType()
-    source: string,
-    @elanFuncType([ElanString], ElanString)
-    predicate: (value: string) => Promise<string>,
-  ) {
-    const list = source.split("");
-
-    const results = await Promise.all(list.map(predicate));
-
-    return this.system.initialise(new ListImmutable(results));
-  }
-
-  @elanFunction(
-    ["", "initialValue", "lambdaOrFunctionRef"],
-    FunctionOptions.pureAsyncExtension,
-    ElanT2,
-  )
-  async reduce<T2>(
-    @elanStringType()
-    source: string,
-    @elanGenericParamT2Type() initValue: T2,
-    @elanFuncType([ElanT2, ElanString], ElanT2)
-    predicate: (s: T2, value: string) => Promise<T2>,
-  ): Promise<T2> {
-    const list = typeof source === "string" ? source.split("") : [...source];
-
-    let acc: T2 = initValue;
-
-    for (const i of list) {
-      acc = await predicate(acc, i);
-    }
-
-    return acc;
-  }
-
-  @elanFunction([], FunctionOptions.pureExtension)
-  max(@elanClassType(ListImmutable, [ElanFloat]) source: ListImmutable<number>): number {
+  @elanFunction(["listOfFloat"], FunctionOptions.pure, ElanFloat)
+  maxFloat(@elanClassType(List, [ElanFloat]) source: List<number>): number {
     return Math.max(...source);
   }
 
-  @elanFunction([], FunctionOptions.pureExtension)
-  min(@elanClassType(ListImmutable, [ElanFloat]) source: ListImmutable<number>): number {
+  @elanFunction(["listOfInt"], FunctionOptions.pure, ElanInt)
+  maxInt(@elanClassType(List, [ElanInt]) source: List<number>): number {
+    return Math.max(...source);
+  }
+
+  @elanFunction(["listOfFloat"], FunctionOptions.pure, ElanFloat)
+  minFloat(@elanClassType(List, [ElanFloat]) source: List<number>): number {
     return Math.min(...source);
   }
 
-  @elanFunction(
-    ["", "lambdaOrFunctionRef"],
-    FunctionOptions.pureAsyncExtension,
-    ElanClass(ListImmutable),
-  )
-  async sortBy(
-    source: string,
-    @elanFuncType([ElanString, ElanString], ElanInt)
-    predicate: (a: string, b: string) => Promise<number>,
-  ): Promise<ListImmutable<string>> {
-    const clone = [...source];
-    const results = await this.system.quickSort(clone, predicate);
-    return this.system!.initialise(new ListImmutable<string>(results));
+  @elanFunction(["listOfInt"], FunctionOptions.pure, ElanInt)
+  minInt(@elanClassType(List, [ElanInt]) source: List<number>): number {
+    return Math.min(...source);
   }
 
   @elanFunction(["", "item"], FunctionOptions.pureExtension)
