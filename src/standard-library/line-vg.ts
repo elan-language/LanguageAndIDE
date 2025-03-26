@@ -14,8 +14,8 @@ import { VectorGraphic } from "./vector-graphic";
 @elanClass(
   ClassOption.record,
   [],
-  ["x1", "y1", "x2", "y2"],
-  [ElanFloat, ElanFloat, ElanFloat, ElanFloat],
+  ["x1", "y1", "x2", "y2", "fillColour", "strokeColour", "strokeWidth"],
+  [ElanFloat, ElanFloat, ElanFloat, ElanFloat, ElanFloat, ElanFloat, ElanFloat],
   [ElanClass(VectorGraphic)],
 )
 export class LineVG extends VectorGraphic {
@@ -23,7 +23,18 @@ export class LineVG extends VectorGraphic {
     return new LineVG();
   }
 
-  async _initialise(x1: number, y1: number, x2: number, y2: number) {
+  async _initialise(
+    x1: number,
+    y1: number,
+    x2: number,
+    y2: number,
+    fillColour: number,
+    strokeColour: number,
+    strokeWidth: number,
+  ) {
+    this.fillColour = fillColour;
+    this.strokeColour = strokeColour;
+    this.strokeWidth = strokeWidth;
     this.x1 = x1;
     this.y1 = y1;
     this.x2 = x2;

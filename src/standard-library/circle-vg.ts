@@ -14,8 +14,8 @@ import { VectorGraphic } from "./vector-graphic";
 @elanClass(
   ClassOption.concrete,
   [],
-  ["centreX", "centreY", "radius"],
-  [ElanFloat, ElanFloat, ElanFloat],
+  ["centreX", "centreY", "radius", "fillColour", "strokeColour", "strokeWidth"],
+  [ElanFloat, ElanFloat, ElanFloat, ElanFloat, ElanFloat, ElanFloat],
   [ElanClass(VectorGraphic)],
 )
 export class CircleVG extends VectorGraphic {
@@ -23,7 +23,17 @@ export class CircleVG extends VectorGraphic {
     return new CircleVG();
   }
 
-  async _initialise(centreX: number, centreY: number, radius: number) {
+  async _initialise(
+    centreX: number,
+    centreY: number,
+    radius: number,
+    fillColour: number,
+    strokeColour: number,
+    strokeWidth: number,
+  ) {
+    this.fillColour = fillColour;
+    this.strokeColour = strokeColour;
+    this.strokeWidth = strokeWidth;
     this.centreX = centreX;
     this.centreY = centreY;
     this.radius = radius;

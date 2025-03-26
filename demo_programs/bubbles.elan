@@ -1,17 +1,17 @@
-# 2cee296dd648100d4b17d1fb8d0b979508ddb831bc6f83d3c534d3279e046471 Elan Beta 9 valid
+# b9fbc9761a192c5e71916331588b9b69d064b0e19e6b79dca5d423bb129f3101 Elan Beta 9 valid
 
 main
   variable bubbles set to new List<of CircleVG>()
+  # create 20 small bubbles at the bottom
   for i from 1 to 20 step 1
-    let b be new CircleVG(i*5 + 2, 75, 1)
-    call b.setFillColour(-1)
-    call b.setStrokeColour(randomInt(0, white - 1))
+    let randomColour be randomInt(0, white)
+    let b be new CircleVG(i*5 + 2, 75, 1, -1, randomColour, 1)
     call bubbles.append(b)
   end for
   while true
     each b in bubbles
       if random() < 0.05 then
-        # bubble bursts' & replaced by new one is created at bottom
+        # 1/20 chance bubble bursts' & replaced by new one at the bottom
         call b.setCentreY(75)
         call b.setRadius(1)
       else
@@ -20,12 +20,12 @@ main
         call b.setCentreY(b.centreY - 1)
       end if
     end each
-    # create a List<of VectorGraphic> from the List<of CircleVG>
-    let vgs be new List<of VectorGraphic>()
+    # create a List<of VectorGraphic> from the bubbles (List<of CircleVG>)
+    let vgList be new List<of VectorGraphic>()
     each b in bubbles
-      call vgs.append(b)
+      call vgList.append(b)
     end each
-    call displayVectorGraphics(vgs)
+    call displayVectorGraphics(vgList)
     call pause(50)
   end while
 end main

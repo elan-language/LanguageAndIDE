@@ -14,8 +14,8 @@ import { VectorGraphic } from "./vector-graphic";
 @elanClass(
   ClassOption.record,
   [],
-  ["x", "y", "width", "height"],
-  [ElanFloat, ElanFloat, ElanFloat, ElanFloat],
+  ["x", "y", "width", "height", "fillColour", "strokeColour", "strokeWidth"],
+  [ElanFloat, ElanFloat, ElanFloat, ElanFloat, ElanFloat, ElanFloat, ElanFloat],
   [ElanClass(VectorGraphic)],
 )
 export class RectangleVG extends VectorGraphic {
@@ -23,7 +23,18 @@ export class RectangleVG extends VectorGraphic {
     return new RectangleVG();
   }
 
-  async _initialise(x: number, y: number, width: number, height: number) {
+  async _initialise(
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+    fillColour: number,
+    strokeColour: number,
+    strokeWidth: number,
+  ) {
+    this.fillColour = fillColour;
+    this.strokeColour = strokeColour;
+    this.strokeWidth = strokeWidth;
     this.x = x;
     this.y = y;
     this.width = width;

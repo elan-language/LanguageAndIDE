@@ -1,4 +1,4 @@
-# 6d03807ab67164c72c5b453c85e48d45104b9243acb51a641757847e1f76b3d7 Elan Beta 9 valid
+# 2844b33f501723e9dba80b0c7860c2b3d4ca1554affb309d0a4c45dc3cbb6c38 Elan Beta 9 valid
 
 # Acknowledgements:
 # https://mathworld.wolfram.com/JuliaSet.html
@@ -7,6 +7,7 @@ main
   print "Press z to zoom in, x to zoom out"
   print "Arrow keys to pan"
   print "g, j and y, h to change shape"
+  print "Please be patient ... it takes several seconds to generate each image"
   # Julia Set parameters
   variable p set to new Coords()
   while true
@@ -25,8 +26,7 @@ function allpoints(p as Coords) returns List<of VectorGraphic>
       let n be onepoint((xp - width/2)/p.scale - p.xoff, (yp - height/2)/p.scale - p.yoff, nmax, p)
       # colour depends on how many iterations were done for that point
       let col be if n is nmax then 0xffffff else ((n*0x010201) mod 0xffffff)
-      variable rect set to new RectangleVG(xp/2, yp/2, 0.5, 0.5)
-      set rect to rect.withFillColour(col).withStrokeColour(col).withStrokeWidth(0.5)
+      variable rect set to new RectangleVG(xp/2, yp/2, 0.5, 0.5, col, col, 0.25)
       set vg2 to vg2.withAppend(rect)
     end for
   end for
