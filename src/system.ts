@@ -2,7 +2,6 @@
 import { ElanInputOutput } from "./elan-input-output";
 import { ElanRuntimeError } from "./elan-runtime-error";
 import { TestStatus } from "./frames/status-enums";
-import { hasHiddenType } from "./has-hidden-type";
 import { Dictionary } from "./standard-library/dictionary";
 import { DictionaryImmutable } from "./standard-library/dictionary-immutable";
 import { ElanArray } from "./standard-library/elan-array";
@@ -50,7 +49,6 @@ export class System {
   }
 
   tuple(t: Array<any>) {
-    (t as unknown as hasHiddenType)._type = "Tuple";
     return t;
   }
 
@@ -66,21 +64,11 @@ export class System {
     return this.initialise(new DictionaryImmutable(t));
   }
 
-  literalList(t: Array<any>) {
+  list(t: Array<any>) {
     return this.initialise(new List(t));
   }
 
-  initialise<T>(toInit: T, toType?: () => any): T {
-    if (toType && Array.isArray(toInit) && toInit.length > 0) {
-      for (let i = 0; i < toInit.length; i++) {
-        if (Array.isArray(toInit[i])) {
-          this.initialise(toInit[i], toType);
-        } else {
-          toInit[i] = toType();
-        }
-      }
-    }
-
+  initialise<T>(toInit: T): T {
     if ("system" in (toInit as object)) {
       (toInit as any).system = this;
     }
@@ -121,11 +109,15 @@ export class System {
   }
 
   safeSlice(indexable: any, index1: number | undefined, index2: number | undefined) {
+    if (indexable === undefined) {
+      throw new ElanRuntimeError(`Out of range index`);
+    }
+
     if (typeof indexable !== "string" && "safeSlice" in indexable) {
       return indexable.safeSlice(index1, index2);
     }
 
-    if (indexable === undefined) {
+    if (typeof indexable !== "string") {
       throw new ElanRuntimeError(`Out of range index`);
     }
 
@@ -137,13 +129,7 @@ export class System {
       this.throwRangeError(indexable, index2);
     }
 
-    const r = indexable.slice(index1, index2);
-
-    if (r === undefined) {
-      throw new ElanRuntimeError(`Out of range index`);
-    }
-
-    return r;
+    return indexable.slice(index1, index2);
   }
 
   throwRangeError(toIndex: any, index: any) {
@@ -428,27 +414,6 @@ export class System {
     return arr;
   }
 
-  convert(o: { [key: string]: object }, names: string[]): string {
-    const items: string[] = [];
-
-    for (const n of names) {
-      const s = this.asValueKey(o[n]);
-      items.push(`${n}_${s}`);
-    }
-
-    return items.join("_");
-  }
-
-  asValueKey(v: any): string {
-    if (typeof v === "object") {
-      const items = Object.getOwnPropertyNames(v).filter((s) => s !== "_type");
-      const o = v as { [key: string]: object };
-      return this.convert(o, items);
-    }
-
-    return v.toString();
-  }
-
   listImmutableAsList<T1>(list: ListImmutable<T1>): List<T1> {
     const newList = [...list];
     return this.initialise(new List(newList));
@@ -492,5 +457,17 @@ export class System {
   arrayAsList<T1>(list: ElanArray<T1>): List<T1> {
     const newList = [...list];
     return this.initialise(new List(newList));
+  }
+
+  dictionaryAsDictionaryImmutable<T1, T2>(
+    dictionary: Dictionary<T1, T2>,
+  ): DictionaryImmutable<T1, T2> {
+    return this.initialise(new DictionaryImmutable([...dictionary.contents.entries()]));
+  }
+
+  dictionaryImmutableAsDictionary<T1, T2>(
+    dictionary: DictionaryImmutable<T1, T2>,
+  ): Dictionary<T1, T2> {
+    return this.initialise(new Dictionary([...dictionary.contents.entries()]));
   }
 }

@@ -1,4 +1,3 @@
-import { ElanRuntimeError } from "../elan-runtime-error";
 import {
   ClassOption,
   ElanBoolean,
@@ -202,8 +201,12 @@ export class List<T1> {
   }
 
   async asString() {
-    const contents = await this.system!.asString(this.contents);
-    return `[${contents}]`;
+    const items: string[] = [];
+    for (const i of this.contents) {
+      const s = await this.system!.asString(i);
+      items.push(s);
+    }
+    return `[${items.join(", ")}]`;
   }
 
   safeIndex(index: number) {
@@ -226,10 +229,6 @@ export class List<T1> {
     }
 
     const r = this.contents.slice(index1, index2);
-
-    if (r === undefined) {
-      throw new ElanRuntimeError(`Out of range index`);
-    }
 
     return this.system!.initialise(new List(r));
   }

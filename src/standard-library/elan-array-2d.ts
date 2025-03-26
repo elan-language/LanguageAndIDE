@@ -67,20 +67,6 @@ export class ElanArray2D<T1> {
 
   private system?: System;
 
-  [Symbol.iterator]() {
-    let index = 0;
-
-    return {
-      next: () => {
-        if (index < this.contents.length) {
-          return { value: this.contents[index++], done: false };
-        } else {
-          return { done: true };
-        }
-      },
-    };
-  }
-
   @elanProcedure(["column", "row", "value"])
   put(@elanIntType() col: number, @elanIntType() row: number, @elanGenericParamT1Type() value: T1) {
     this.system!.safeArray2DSet(this.contents, col, row, value);
@@ -123,13 +109,20 @@ export class ElanArray2D<T1> {
   }
 
   async asString() {
-    const strContents = [];
+    const columns = [];
 
-    for (const c of this.contents) {
-      strContents.push(await this.system!.asString(c));
+    for (const column of this.contents) {
+      const rows = [];
+
+      for (const row of column) {
+        const s = await this.system!.asString(row);
+        rows.push(s);
+      }
+
+      columns.push(`[${rows.join(", ")}]`);
     }
 
-    return `[${strContents.map((s) => `[${s}]`).join(", ")}]`;
+    return `[${columns.join(", ")}]`;
   }
 
   safeIndex(index1: number, index2?: number) {

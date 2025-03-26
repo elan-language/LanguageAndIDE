@@ -3,6 +3,7 @@ import {
   ElanBoolean,
   ElanClass,
   elanClass,
+  ElanClassName,
   elanFunction,
   elanGenericParamT1Type,
   elanGenericParamT2Type,
@@ -28,7 +29,7 @@ export class DictionaryImmutable<T1, T2> {
     this.contents = dict ? new Map<T1, T2>(dict) : new Map<T1, T2>();
   }
 
-  private contents: Map<T1, T2>;
+  contents: Map<T1, T2>;
 
   private system?: System;
 
@@ -74,6 +75,11 @@ export class DictionaryImmutable<T1, T2> {
   hasKey(@elanGenericParamT1Type() key: T1): boolean {
     const rk = this.findRealKey(key);
     return this.contents.has(rk);
+  }
+
+  @elanFunction([], FunctionOptions.pure, ElanClassName("DictionaryImmutable"))
+  asDictionary() {
+    return this.system!.dictionaryImmutableAsDictionary(this);
   }
 
   async asString() {

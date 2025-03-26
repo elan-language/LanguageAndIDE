@@ -286,12 +286,12 @@ const global = new class {};
 async function main() {
   let f1 = system.initialise(await new Foo()._initialise(1));
   let f2 = system.initialise(await new Foo()._initialise(2));
-  const l1 = system.literalList([f1, f2]);
-  const l2 = system.literalList([f1, f2]);
+  const l1 = system.list([f1, f2]);
+  const l2 = system.list([f1, f2]);
   await system.printLine(system.objectEquals(l1, l2));
-  const l3 = system.literalList([f2, f1]);
+  const l3 = system.list([f2, f1]);
   await system.printLine(system.objectEquals(l1, l3));
-  const l4 = system.literalList([system.initialise(await new Foo()._initialise(1)), system.initialise(await new Foo()._initialise(2))]);
+  const l4 = system.list([system.initialise(await new Foo()._initialise(1)), system.initialise(await new Foo()._initialise(2))]);
   await system.printLine(system.objectEquals(l4, l1));
   await system.safeIndex(l4, 0).setP(3);
   await system.printLine(system.objectEquals(l4, l1));

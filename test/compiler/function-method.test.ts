@@ -386,7 +386,7 @@ class Foo {
   p1 = 0;
 
   async times(value) {
-    return system.literalList([system.initialise(await new Qux()._initialise())]);
+    return system.list([system.initialise(await new Qux()._initialise())]);
   }
 
 }

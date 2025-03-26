@@ -50,6 +50,14 @@ export class StdLibClass implements Class {
   }
 
   getDirectSuperClassesTypeAndName(): [SymbolType, string][] {
+    if (this.inheritTypes.length > 0) {
+      const typeAndName: [SymbolType, string][] = this.inheritTypes
+        .filter((c) => c instanceof ClassType)
+        .map((c) => [c, c.className]);
+
+      return typeAndName;
+    }
+
     return [];
   }
 
@@ -75,7 +83,7 @@ export class StdLibClass implements Class {
     return this.children;
   }
 
-  resolveOwnSymbol(id: string, _transforms: Transforms): ElanSymbol {
+  resolveOwnSymbol(id: string, transforms: Transforms): ElanSymbol {
     if (id === thisKeyword) {
       return this;
     }
@@ -89,6 +97,22 @@ export class StdLibClass implements Class {
     const matches = this.getChildren().filter(
       (f) => isSymbol(f) && f.symbolId === id,
     ) as ElanSymbol[];
+
+    if (matches.length === 1) {
+      return matches[0];
+    }
+    if (matches.length > 1) {
+      return new DuplicateSymbol(matches);
+    }
+
+    const types = this.inheritTypes.filter((t) => t instanceof ClassType);
+
+    for (const ct of types) {
+      const s = ct.scope!.resolveOwnSymbol(id, transforms);
+      if (isMember(s)) {
+        matches.push(s);
+      }
+    }
 
     if (matches.length === 1) {
       return matches[0];
@@ -127,6 +151,7 @@ export class StdLibClass implements Class {
           getClass: symbol.getClass,
         } as ElanSymbol;
       } else {
+        // should never get here
         reifiedSymbol = {
           symbolId: symbol.symbolId,
           symbolType: () => st1,
@@ -145,7 +170,14 @@ export class StdLibClass implements Class {
   }
 
   symbolMatches(id: string, all: boolean, _initialScope: Scope): ElanSymbol[] {
-    const otherMatches = this.getParentScope().symbolMatches(id, all, this);
+    let otherMatches = this.getParentScope().symbolMatches(id, all, this);
+
+    for (const inherited of this.inheritTypes) {
+      if (inherited instanceof ClassType) {
+        const m = inherited.symbolMatches(id, all);
+        otherMatches = otherMatches.concat(m);
+      }
+    }
 
     const symbols = this.getChildren().filter(
       (f) => f.symbolId !== constructorKeyword && isSymbol(f),

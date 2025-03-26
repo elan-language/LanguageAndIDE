@@ -34,7 +34,7 @@ const global = new class {
 
 };
 async function main() {
-  let arr = system.literalList(["three", "four"]);
+  let arr = system.list(["three", "four"]);
   await system.printLine(global.lst.contains(1));
   await system.printLine(global.lst.contains(3));
   await system.printLine(arr.contains("four"));
@@ -501,7 +501,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let results = system.literalList([0, 0, 0, 0, 0, 0, 0]);
+  let results = system.list([0, 0, 0, 0, 0, 0, 0]);
   for (let i = 1; i <= 10000; i = i + 1) {
     let r = _stdlib.randomInt(3, 5);
     results.put(r, system.safeIndex(results, r) + 1);
@@ -545,7 +545,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let results = system.literalList([0, 0, 0, 0, 0, 0, 0]);
+  let results = system.list([0, 0, 0, 0, 0, 0, 0]);
   let rnd = system.initialise(await new _stdlib.Random()._initialise());
   let val = 0;
   rnd.initialiseFromClock();
@@ -590,7 +590,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let results = system.literalList([0, 0, 0, 0, 0, 0, 0]);
+  let results = system.list([0, 0, 0, 0, 0, 0, 0]);
   let rnd = system.initialise(await new _stdlib.Random()._initialise());
   let val = 0;
   for (let i = 1; i <= 10000; i = i + 1) {
@@ -638,7 +638,7 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let results = system.literalList([0, 0, 0, 0, 0, 0, 0]);
+  let results = system.list([0, 0, 0, 0, 0, 0, 0]);
   let rnd = system.initialise(await new _stdlib.Random()._initialise());
   let dice = 0;
   for (let i = 1; i <= 10000; i = i + 1) {
@@ -796,8 +796,8 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.literalList([1, 2]);
-  let b = system.literalList([3, 4]);
+  let a = system.list([1, 2]);
+  let b = system.list([3, 4]);
   a.appendList(b);
   await system.printLine(a);
   await system.printLine(b);
@@ -827,8 +827,8 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.literalList([1, 2]);
-  let b = system.literalList([3, 4]);
+  let a = system.list([1, 2]);
+  let b = system.list([3, 4]);
   a.prependList(b);
   await system.printLine(a);
   await system.printLine(b);
@@ -857,7 +857,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.literalList([1, 2]);
+  let a = system.list([1, 2]);
   let b = 3;
   a.prepend(b);
   await system.printLine(a);
@@ -911,7 +911,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const words = system.literalList(["Now", "is", "the", "time..."]);
+  const words = system.list(["Now", "is", "the", "time..."]);
   const s = (await words.join("."));
   await system.printLine(s);
 }
@@ -1030,7 +1030,7 @@ end record`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const words = system.literalList([system.initialise(await new Point()._initialise()), system.initialise(await new Point()._initialise())]);
+  const words = system.list([system.initialise(await new Point()._initialise()), system.initialise(await new Point()._initialise())]);
   const s = (await words.join(","));
   await system.printLine(s);
 }
@@ -1171,7 +1171,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const a = system.literalList([1, 3, 5, 7, 9]);
+  const a = system.list([1, 3, 5, 7, 9]);
   const b = system.listImmutable([2, 4, 6, 8]);
   const c = "Hello World!";
   await system.printLine(a.indexOf(9));

@@ -271,9 +271,9 @@ end main`;
 const global = new class {};
 async function main() {
   const st0 = system.initialise(await new _stdlib.Set()._initialise());
-  const st1 = st0.addFromList(system.literalList([2, 4, 6, 3]));
+  const st1 = st0.addFromList(system.list([2, 4, 6, 3]));
   await system.printLine(st1);
-  const st2 = st1.addFromList(system.literalList([2, 5, 6]));
+  const st2 = st1.addFromList(system.list([2, 5, 6]));
   await system.printLine(st2);
 }
 return [main, _tests];}`;
@@ -308,7 +308,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const a = system.literalList(["one", "two", "three"]).asSet();
+  const a = system.list(["one", "two", "three"]).asSet();
   const b = a.asListImmutable();
   const c = a.asList();
   let aa = system.initialise(_stdlib.Set.emptyInstance());
@@ -330,6 +330,60 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "{one, two, three}{one, two, three}[one, two, three]");
+  });
+
+  test("Pass_Contains1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to new Set<of String>()
+  set a to a.add("foo")
+  print a.contains("foo")
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.initialise(await new _stdlib.Set()._initialise());
+  a = a.add("foo");
+  await system.printLine(a.contains("foo"));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "true");
+  });
+
+  test("Pass_Contains2", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to new Set<of String>()
+  set a to a.add("bar")
+  print a.contains("foo")
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.initialise(await new _stdlib.Set()._initialise());
+  a = a.add("bar");
+  await system.printLine(a.contains("foo"));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "false");
   });
 
   test("Fail_SetOfMutable", async () => {

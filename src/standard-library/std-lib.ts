@@ -20,7 +20,6 @@ import {
   ProcedureOptions,
 } from "../elan-type-annotations";
 import { Regexes } from "../frames/fields/regexes";
-import { hasHiddenType } from "../has-hidden-type";
 import { StubInputOutput } from "../stub-input-output";
 import { System } from "../system";
 import { CircleVG } from "./circle-vg";
@@ -150,28 +149,22 @@ export class StdLib {
       return "A RegExp";
     }
 
-    async function convertList<T>(v: T[], stdlib: StdLib) {
+    if (Array.isArray(v)) {
+      // tuple
       const items: string[] = [];
 
       for (const i of v) {
-        const s = await stdlib.asString(i);
+        const s = await this.asString(i);
         items.push(s);
       }
-
-      return items.join(", ");
-    }
-
-    if (Array.isArray(v)) {
-      const type = (v as unknown as hasHiddenType)._type;
-      let items: string = "";
-
-      switch (type) {
-        case "Tuple":
-          items = await convertList(v, this);
-          return `tuple(${items})`;
-        default:
-          return await convertList(v, this);
+      if (items.length < 2) {
+        // TODO fix
+        // this handles case of outParameter wrapped in array
+        // need better fix but for moment just return value;
+        return items.join("");
       }
+
+      return `tuple(${items.join(", ")})`;
     }
 
     if (typeof v === "object" && "asString" in v) {
