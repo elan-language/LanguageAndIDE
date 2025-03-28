@@ -93,33 +93,17 @@ export class CircleVG extends VectorGraphic {
     copy.radius = r;
     return copy;
   }
-
-  @elanProcedure(["fillColour"])
-  setFillColour(fillColour: number) {
-    this.fillColour = fillColour;
-  }
-
   @elanFunction(["colour"], FunctionOptions.pure, ElanClass(CircleVG))
   withFillColour(fillColour: number): CircleVG {
     const copy = this.system!.initialise(new CircleVG(this));
     copy.fillColour = fillColour;
     return copy;
   }
-
-  @elanProcedure(["colour"])
-  setStrokeColour(strokeColour: number) {
-    this.strokeColour = strokeColour;
-  }
   @elanFunction(["colour"], FunctionOptions.pure, ElanClass(CircleVG))
   withStrokeColour(strokeColour: number): CircleVG {
     const copy = this.system!.initialise(new CircleVG(this));
     copy.strokeColour = strokeColour;
     return copy;
-  }
-
-  @elanProcedure(["strokeWidth"])
-  setStrokeWidth(strokeWidth: number) {
-    this.strokeWidth = strokeWidth;
   }
   @elanFunction(["width"], FunctionOptions.pure, ElanClass(CircleVG))
   withStrokeWidth(strokeWidth: number): CircleVG {

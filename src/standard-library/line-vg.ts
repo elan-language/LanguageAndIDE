@@ -93,7 +93,7 @@ export class LineVG extends VectorGraphic {
   @elanFunction(["x2"], FunctionOptions.pure, ElanClass(LineVG))
   withX2(x2: number): LineVG {
     const copy = this.system!.initialise(new LineVG(this));
-    copy.x1 = x2;
+    copy.x2 = x2;
     return copy;
   }
 

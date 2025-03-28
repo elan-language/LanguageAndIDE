@@ -23,11 +23,26 @@ export class VectorGraphic {
   @elanProperty(ElanInt)
   strokeColour: number = 0;
 
+  @elanProcedure(["colour"])
+  setStrokeColour(strokeColour: number) {
+    this.strokeColour = strokeColour;
+  }
+
   @elanProperty()
   strokeWidth: number = 0;
 
+  @elanProcedure(["strokeWidth"])
+  setStrokeWidth(strokeWidth: number) {
+    this.strokeWidth = strokeWidth;
+  }
+
   @elanProperty(ElanInt)
   fillColour: number = 0;
+
+  @elanProcedure(["fillColour"])
+  setFillColour(fillColour: number) {
+    this.fillColour = fillColour;
+  }
 
   @elanProcedure(["fillColour"])
   asHtml(): string {
