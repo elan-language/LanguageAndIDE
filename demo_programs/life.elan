@@ -1,4 +1,4 @@
-# a5e247b1f4df9dfc8c8308f9f14d9b9903fc092168047731a90bbcc9f75f9515 Elan Beta 9 valid
+# 6d1b55124925a866f70c7281f1766caf3086fc1be3ac2624ac308d2748611a67 Elan Beta 9 valid
 
 main
   variable grid set to new Array2D<of Int>(40, 30, white)
@@ -65,13 +65,15 @@ function nextCellValue(grid as Array2D<of Int>, x as Int, y as Int) returns Bool
   return willLive(grid[x, y], liveNeighbours(grid, x, y))
 end function
 
-procedure nextGeneration(grid as Array2D<of Int>)
+procedure nextGeneration(out grid as Array2D<of Int>)
+  let next be new Array2D<of Int>(40, 30, white)
   for x from 0 to 39 step 1
     for y from 0 to 29 step 1
       let colour be if nextCellValue(grid, x, y) then black else white
-      call grid.put(x, y, colour)
+      call next.put(x, y, colour)
     end for
   end for
+  set grid to next
 end procedure
 
 constant black set to 0x000000

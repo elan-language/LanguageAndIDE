@@ -1,4 +1,4 @@
-# FFFF Elan Beta 9 valid
+# 0e83b462c2ed084bbaa21cad0f44e05ebc7cb8679102d76eb6efedcf6e19938c Elan Beta 9 valid
 
 main
   variable bubbles set to new List<of CircleVG>()
@@ -11,13 +11,13 @@ main
   while true
     each b in bubbles
       if random() < 0.05 then
-        # 1/20 chance bubble bursts' & replaced by new one at the bottom
+        # 1/20 chance bubble 'bursts', and is replaced by new one at the bottom
         call b.setCentreY(75)
         call b.setRadius(1)
       else
         # bubble rises and grows
-        call b.setRadius(b.radius + 0.2)
         call b.setCentreY(b.centreY - 1)
+        call b.setRadius(b.radius + 0.2)
       end if
     end each
     # create a List<of VectorGraphic> from the bubbles (List<of CircleVG>)

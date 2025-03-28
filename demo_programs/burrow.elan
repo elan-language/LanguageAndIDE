@@ -1,4 +1,4 @@
-# 89f2f546218b9e8360db93477a17b7551eed78e93ef8a0b64fa16e4907b38554 Elan Beta 9 valid
+# 21326e9945dff8d4a927fd4829553ef0cfdae4c6ba9ee759e5b87f4924be402f Elan Beta 9 valid
 
 main
   variable blocks set to new Array2D<of Int>(40, 30, white)
@@ -9,41 +9,15 @@ main
     call displayBlocks(blocks)
     call pause(100)
     call blocks.put(x, y, black)
-    let dir be randomInt(0, 3)
-    call updateXY(x, y, dir)
+    let direction be randomInt(0, 3)
+    if direction is 0 then
+      set x to minInt([x + 1, 40])
+    else if direction is 1 then
+      set x to maxInt([x - 1, 0])
+    else if direction is 2 then
+      set y to minInt([y + 1, 30])
+    else if direction is 3 then
+      set y to maxInt([y - 1, 0])
+    end if
   end while
 end main
-
-procedure updateXY(out x as Int, out y as Int, dir as Int)
-  if dir is 0 then
-    set x to lesserOf(x + 1, 40)
-  else if dir is 1 then
-    set x to greaterOf(x - 1, 0)
-  else if dir is 2 then
-    set y to lesserOf(y + 1, 30)
-  else if dir is 3 then
-    set y to greaterOf(y - 1, 0)
-  end if
-end procedure
-
-function lesserOf(value1 as Int, value2 as Int) returns Int
-  return if value1 < value2 then value1 else value2
-end function
-
-function greaterOf(value1 as Int, value2 as Int) returns Int
-  return if value1 > value2 then value1 else value2
-end function
-
-test lesserOf
-  assert lesserOf(5, 10) is 5
-  assert lesserOf(10, 10) is 10
-  assert lesserOf(11, 10) is 10
-  assert lesserOf(-1, 10) is -1
-end test
-
-test greaterOf
-  assert greaterOf(7, 3) is 7
-  assert greaterOf(3, 3) is 3
-  assert greaterOf(2, 3) is 3
-  assert greaterOf(-1, 0) is 0
-end test

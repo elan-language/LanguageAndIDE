@@ -1,14 +1,14 @@
-# 2844b33f501723e9dba80b0c7860c2b3d4ca1554affb309d0a4c45dc3cbb6c38 Elan Beta 9 valid
+# c503b5e02299c5f775ecf8bcbbf1a8dccccf6468019d753b2d764e4bbfcdfa7c Elan Beta 9 valid
 
+# After image is displayed, press: 
+# - z to zoom in, x to zoom out
+# - arrow keys to pan
+# - g, j and y, h to change shape
+# 
 # Acknowledgements:
 # https://mathworld.wolfram.com/JuliaSet.html
 # Implemented in Elan by Charles Wicksteed
 main
-  print "Press z to zoom in, x to zoom out"
-  print "Arrow keys to pan"
-  print "g, j and y, h to change shape"
-  print "Please be patient ... it takes several seconds to generate each image"
-  # Julia Set parameters
   variable p set to new Coords()
   while true
     let vg be allpoints(p)
