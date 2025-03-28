@@ -65,7 +65,11 @@ export class VectorGraphic {
     return this.strokeWidth * 0.3;
   }
 
-  strokeAndFill(): string {
-    return `stroke="${this.strokeColourAsHex()}" stroke-width="${this.strokeWidthScaled()}%" fill="${this.fillColourAsHex()}`;
+  strokeAsHtml(): string {
+    return `stroke="${this.strokeColourAsHex()}" stroke-width="${this.strokeWidthScaled()}%"`;
+  }
+
+  fillAsHtml(): string {
+    return `fill="${this.fillColourAsHex()}"`;
   }
 }

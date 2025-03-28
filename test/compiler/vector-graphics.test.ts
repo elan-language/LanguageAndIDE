@@ -27,36 +27,6 @@ end main`;
     assertDoesNotCompile(fileImpl, ["VectorGraphic must be concrete to new"]);
   });
 
-  test("Pass_VectorGraphicsEmpty", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-  let vg be new VectorGraphics()
-  print vg.asHtml()
-end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  const vg = system.initialise(await new _stdlib.VectorGraphics()._initialise());
-  await system.printLine(vg.asHtml());
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      `<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-</svg>
-`,
-    );
-  });
-
   test("Pass_AppendUsingFunction", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
@@ -86,7 +56,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(
       fileImpl,
       `<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-<circle cx="50%" cy="66.66666666666667%" r="11.25%" stroke="#000000" stroke-width="0.3%" fill="#ff0000" />
+<circle cx="50%" cy="66.66666666666667%" r="11.25%" stroke="#000000" stroke-width="0.3%" fill="#ff0000"/>
 </svg>
 `,
     );
@@ -121,7 +91,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(
       fileImpl,
       `<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-<circle cx="50%" cy="66.66666666666667%" r="11.25%" stroke="#000000" stroke-width="0.3%" fill="#ff0000" />
+<circle cx="50%" cy="66.66666666666667%" r="11.25%" stroke="#000000" stroke-width="0.3%" fill="#ff0000"/>
 </svg>
 `,
     );
@@ -158,7 +128,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(
       fileImpl,
       `<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-<circle cx="50%" cy="66.66666666666667%" r="22.5%" stroke="#000000" stroke-width="0.3%" fill="#ff0000" />
+<circle cx="50%" cy="66.66666666666667%" r="22.5%" stroke="#000000" stroke-width="0.3%" fill="#ff0000"/>
 </svg>
 `,
     );
@@ -199,7 +169,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(
       fileImpl,
       `<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-<circle cx="50%" cy="66.66666666666667%" r="11.25%" stroke="#000000" stroke-width="0.3%" fill="#0000ff" />
+<circle cx="50%" cy="66.66666666666667%" r="11.25%" stroke="#000000" stroke-width="0.3%" fill="#0000ff"/>
 </svg>
 `,
     );
@@ -258,7 +228,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(
       fileImpl,
       `<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-<circle cx="50%" cy="66.66666666666667%" r="11.25%" stroke="#000000" stroke-width="0.3%" fill="none" />
+<circle cx="50%" cy="66.66666666666667%" r="11.25%" stroke="#000000" stroke-width="0.3%" fill="none"/>
 </svg>
 `,
     );

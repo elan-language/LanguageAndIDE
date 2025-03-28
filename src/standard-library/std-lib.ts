@@ -39,7 +39,6 @@ import { TextFileReader } from "./text-file-reader";
 import { TextFileWriter } from "./text-file-writer";
 import { Turtle } from "./turtle";
 import { VectorGraphic } from "./vector-graphic";
-import { VectorGraphics } from "./vector-graphics";
 
 export class StdLib {
   constructor() {
@@ -69,9 +68,6 @@ export class StdLib {
 
   @elanClassExport(Turtle)
   Turtle = Turtle;
-
-  @elanClassExport(VectorGraphics)
-  VectorGraphics = VectorGraphics;
 
   @elanClassExport(VectorGraphic)
   VectorGraphic = VectorGraphic;
@@ -739,7 +735,9 @@ export class StdLib {
   }
 
   @elanFunction([""], FunctionOptions.pureExtension)
-  vectorGraphicsAsHtml(@elanClassType(List, [ElanClass(VectorGraphic)]) vgs: List<VectorGraphic>): string {
+  vectorGraphicsAsHtml(
+    @elanClassType(List, [ElanClass(VectorGraphic)]) vgs: List<VectorGraphic>,
+  ): string {
     let content = ``;
     for (let i = 0; i < vgs.length(); i++) {
       const vg = vgs.read(i);

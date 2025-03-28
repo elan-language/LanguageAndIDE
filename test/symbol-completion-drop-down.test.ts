@@ -1145,9 +1145,13 @@ end function`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [["VectorGraphics", "*", "*"]] as [string, string, string][];
+    const expected = [
+      ["CircleVG", "*", "*"],
+      ["LineVG", "*", "*"],
+      ["RectangleVG", "*", "*"],
+    ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "params6", "a as Graphics", expected);
+    await assertSymbolCompletionWithString(fileImpl, "params6", "a as VG", expected);
   });
 
   test("Pass_returnType1", async () => {
@@ -1179,9 +1183,9 @@ end function`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [["VectorGraphics", "*", "*"]] as [string, string, string][];
+    const expected = [["CircleVG", "*", "*"]] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "type5", "Graphics", expected);
+    await assertSymbolCompletionWithString(fileImpl, "type5", "Circle", expected);
   });
 
   test("Pass_functionResult", async () => {
@@ -1557,7 +1561,6 @@ end main`;
       ["TextFileReader", "*", "*"],
       ["TextFileWriter", "*", "*"],
       ["Turtle", "*", "*"],
-      ["VectorGraphics", "*", "*"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "expr5", "new ", expected);
@@ -1677,8 +1680,8 @@ end record
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  let vg be new VectorGraphics()
-  let vg2 be vg.add(new CircleVG())
+  let vg be new List<of VectorGraphic>()
+  let vg2 be vg.withAppend(new CircleVG())
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -1706,10 +1709,9 @@ end main`;
       ["TextFileReader", "*", "*"],
       ["TextFileWriter", "*", "*"],
       ["Turtle", "*", "*"],
-      ["VectorGraphics", "*", "*"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "expr8", "vg.add(new ", expected);
+    await assertSymbolCompletionWithString(fileImpl, "expr8", "vg.withAppend(new ", expected);
   });
 
   test("Pass_EnumType", async () => {

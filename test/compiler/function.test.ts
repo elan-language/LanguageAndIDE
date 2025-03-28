@@ -1014,8 +1014,8 @@ end function`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  let g be new VectorGraphics()
-  let g2 be g.count
+  let g be "xxx"
+  let g2 be g.length
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -1023,7 +1023,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["To evaluate function 'count' add brackets."]);
+    assertDoesNotCompile(fileImpl, ["To evaluate function 'length' add brackets."]);
   });
 
   test("Fail_LibFunctionWithoutRefKeyword", async () => {

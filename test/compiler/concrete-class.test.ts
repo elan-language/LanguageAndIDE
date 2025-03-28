@@ -1168,7 +1168,7 @@ class Foo
     constructor()
     end constructor
 
-    property vg as VectorGraphics
+    property vg as CircleVG
 
     procedure bar()
       set property.vg to property.vg.noSuch
@@ -1180,7 +1180,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'noSuch' is not defined for type 'VectorGraphics'"]);
+    assertDoesNotCompile(fileImpl, ["'noSuch' is not defined for type 'CircleVG'"]);
   });
 
   test("Fail_InheritSelf", async () => {

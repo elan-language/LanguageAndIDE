@@ -134,6 +134,6 @@ export class RectangleVG extends VectorGraphic {
   }
 
   asHtml(): string {
-    return `<rect x="${this.x}%" y="${this.y / 0.75}%" width="${this.width}%" height="${this.height / 0.75}%" ${this.strokeAndFill()}" />`;
+    return `<rect x="${this.x}%" y="${this.y / 0.75}%" width="${this.width}%" height="${this.height / 0.75}%" ${this.strokeAsHtml()} ${this.fillAsHtml()}/>`;
   }
 }
