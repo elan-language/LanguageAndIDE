@@ -138,6 +138,7 @@ export const allKeywords = [
 export const reservedWords = [
   "action",
   "arguments",
+  "async",
   "await",
   "boolean",
   "break",
@@ -174,6 +175,7 @@ export const reservedWords = [
   "native",
   "null",
   "on",
+  "optional",
   "otherwise",
   "package",
   "partial",

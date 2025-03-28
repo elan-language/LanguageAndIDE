@@ -110,13 +110,12 @@ main
   call circ.setFillColour(blue)
   call circ.setStrokeColour(yellow)
   call circ.setStrokeWidth(2)
-  let line be new LineVG(0, 0, 0, 0, 0, 0, 0)
+  let line be new LineVG(0, 0, 0, 0, 0, 0)
   call vg.append(line)
   call line.setX1(10)
   call line.setY1(15)
   call line.setX2(20)
   call line.setY2(30)
-  call line.setFillColour(green)
   call line.setStrokeColour(blue)
   call line.setStrokeWidth(3)
   let rect be new RectangleVG(0, 0, 0, 0, 0, 0, 0)
@@ -143,13 +142,12 @@ async function main() {
   circ.setFillColour(_stdlib.blue);
   circ.setStrokeColour(_stdlib.yellow);
   circ.setStrokeWidth(2);
-  const line = system.initialise(await new _stdlib.LineVG()._initialise(0, 0, 0, 0, 0, 0, 0));
+  const line = system.initialise(await new _stdlib.LineVG()._initialise(0, 0, 0, 0, 0, 0));
   vg.append(line);
   line.setX1(10);
   line.setY1(15);
   line.setX2(20);
   line.setY2(30);
-  line.setFillColour(_stdlib.green);
   line.setStrokeColour(_stdlib.blue);
   line.setStrokeWidth(3);
   const rect = system.initialise(await new _stdlib.RectangleVG()._initialise(0, 0, 0, 0, 0, 0, 0));
@@ -195,12 +193,11 @@ main
   set circ to circ.withStrokeColour(yellow)
   set circ to circ.withStrokeWidth(2)
   set vg to vg.withAppend(circ)
-  variable line set to new LineVG(0, 0, 0, 0, 0, 0, 0)
+  variable line set to new LineVG(0, 0, 0, 0, 0, 0)
   set line to line.withX1(10)
   set line to line.withY1(15)
   set line to line.withX2(20)
   set line to line.withY2(30)
-  set line to line.withFillColour(green)
   set line to line.withStrokeColour(blue)
   set line to line.withStrokeWidth(3)
   set vg to vg.withAppend(line)
@@ -228,12 +225,11 @@ async function main() {
   circ = circ.withStrokeColour(_stdlib.yellow);
   circ = circ.withStrokeWidth(2);
   vg = vg.withAppend(circ);
-  let line = system.initialise(await new _stdlib.LineVG()._initialise(0, 0, 0, 0, 0, 0, 0));
+  let line = system.initialise(await new _stdlib.LineVG()._initialise(0, 0, 0, 0, 0, 0));
   line = line.withX1(10);
   line = line.withY1(15);
   line = line.withX2(20);
   line = line.withY2(30);
-  line = line.withFillColour(_stdlib.green);
   line = line.withStrokeColour(_stdlib.blue);
   line = line.withStrokeWidth(3);
   vg = vg.withAppend(line);
