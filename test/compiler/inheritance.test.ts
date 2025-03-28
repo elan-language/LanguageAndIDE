@@ -2564,7 +2564,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Superclass 'BaseVG' must be inheritable class"]);
+    assertDoesNotCompile(fileImpl, ["Superclass 'VectorGraphic' must be inheritable class"]);
   });
 
   test("Fail_UnknownSuperClass", async () => {

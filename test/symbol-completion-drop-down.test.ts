@@ -114,7 +114,7 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    await assertSymbolCompletionWithString(fileImpl, "expr5", " ", 74);
+    await assertSymbolCompletionWithString(fileImpl, "expr5", " ", 75);
   });
 
   test("Pass_LocalVarsCaseInsensitive1", async () => {
@@ -1079,9 +1079,7 @@ end function`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [
-      ["Boolean", "*", "*"],
-    ] as [string, string, string][];
+    const expected = [["Boolean", "*", "*"]] as [string, string, string][];
 
     await assertSymbolCompletionWithString(
       fileImpl,
@@ -1105,9 +1103,7 @@ end function`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [
-      ["Boolean", "*", "*"],
-    ] as [string, string, string][];
+    const expected = [["Boolean", "*", "*"]] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "params6", "a as Int, b as B", expected);
   });
@@ -1655,18 +1651,26 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  let c be new CircleVG() with cx set to 1
-end main`;
+  let c be new Foo() with x set to 1
+end main
+
+record Foo
+  property x1 as Int
+
+  property x2 as Int
+
+end record
+`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["centreX", "centreX", "centreX"],
-      ["centreY", "centreY", "centreY"],
+      ["x1", "x1", "x1"],
+      ["x2", "x2", "x2"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "expr5", "new CircleVG() with c", expected);
+    await assertSymbolCompletionWithString(fileImpl, "expr5", "new Foo() with x", expected);
   });
 
   test("Pass_newConcreteType #897", async () => {

@@ -1,11 +1,11 @@
-# b9fbc9761a192c5e71916331588b9b69d064b0e19e6b79dca5d423bb129f3101 Elan Beta 9 valid
+# FFFF Elan Beta 9 valid
 
 main
   variable bubbles set to new List<of CircleVG>()
   # create 20 small bubbles at the bottom
   for i from 1 to 20 step 1
     let randomColour be randomInt(0, white)
-    let b be new CircleVG(i*5 + 2, 75, 1, -1, randomColour, 1)
+    let b be new CircleVG(i*5 + 2, 75, 1, transparent, randomColour, 1)
     call bubbles.append(b)
   end for
   while true

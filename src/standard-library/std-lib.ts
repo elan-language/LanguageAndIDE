@@ -113,6 +113,7 @@ export class StdLib {
   @elanConstant(ElanInt) blue = 0x0000ff;
   @elanConstant(ElanInt) yellow = 0xffff00;
   @elanConstant(ElanInt) brown = 0xa52a2a;
+  @elanConstant(ElanInt) transparent = -1;
 
   @elanConstant(ElanBoolean) true = true;
   @elanConstant(ElanBoolean) false = false;
@@ -702,7 +703,8 @@ export class StdLib {
     await this.system!.elanInputOutput.clearKeyBuffer();
   }
   //Block graphics
-  private blocksAsHtml(blocks: ElanArray2D<number>): string {
+  @elanFunction([""], FunctionOptions.pureExtension)
+  blocksAsHtml(@elanClassType(ElanArray2D, [ElanInt]) blocks: ElanArray2D<number>): string {
     let rendered = ``;
 
     for (let y = 0; y < 30; y++) {
@@ -736,7 +738,8 @@ export class StdLib {
     await this.system!.elanInputOutput.clearBlockGraphics();
   }
 
-  private vectorGraphicsasHtml(vgs: List<VectorGraphic>): string {
+  @elanFunction([""], FunctionOptions.pureExtension)
+  vectorGraphicsAsHtml(@elanClassType(List, [ElanClass(VectorGraphic)]) vgs: List<VectorGraphic>): string {
     let content = ``;
     for (let i = 0; i < vgs.length(); i++) {
       const vg = vgs.read(i);
@@ -750,7 +753,7 @@ export class StdLib {
   async displayVectorGraphics(
     @elanClassType(List, [ElanClass(VectorGraphic)]) vgs: List<VectorGraphic>,
   ): Promise<void> {
-    const html = this.vectorGraphicsasHtml(vgs);
+    const html = this.vectorGraphicsAsHtml(vgs);
     return await this.system!.elanInputOutput.drawVectorGraphics(html);
   }
 
