@@ -1,15 +1,15 @@
-# FFFF Elan Beta 6 valid
+# 46900198013b1a19b5b0a1d34fd26cd42fedf314bfe294bb7ad6c47f3fc9a90e Elan Beta 9 valid
 
 main
-  variable gr set to new BlockGraphics()
+  variable blocks set to new Array2D<of Int>(40, 30, white)
   while true
     let x be randomInt(0, 19)
     let y be randomInt(0, 14)
     let colour be randomInt(0, 2^24 - 1)
-    set gr to gr.withBlock(20 + x, 15 - y, colour)
-    set gr to gr.withBlock(20 + x, 15 + y, colour)
-    set gr to gr.withBlock(20 - x, 15 - y, colour)
-    set gr to gr.withBlock(20 - x, 15 + y, colour)
-    call gr.display()
+    call blocks.put(20 + x, 15 - y, colour)
+    call blocks.put(20 + x, 15 + y, colour)
+    call blocks.put(20 - x, 15 - y, colour)
+    call blocks.put(20 - x, 15 + y, colour)
+    call displayBlocks(blocks)
   end while
 end main

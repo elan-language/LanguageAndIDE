@@ -27,10 +27,10 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(add());
+  await system.printLine((await global.add()));
 }
 
-function add() {
+async function add() {
   const x = 3;
   const y = x + 3;
   return x + y;
@@ -65,7 +65,7 @@ end procedure`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
-  list = system.list([1, 2, 3, 4, 5]);
+  list = system.listImmutable([1, 2, 3, 4, 5]);
 
 };
 async function main() {
@@ -75,7 +75,7 @@ async function main() {
 async function foo() {
   for (let i = 0; i <= 4; i = i + 1) {
     const temp = system.safeIndex(global.list, i);
-    system.printLine(temp);
+    await system.printLine(temp);
   }
 }
 global["foo"] = foo;
@@ -101,8 +101,8 @@ procedure foo()
   variable list set to {1,2,3,4,5}
   for i from 0 to 3 step 1
     let temp be list[i]
-    set list to list.withPutAt(i, list[i + 1])
-    set list to list.withPutAt(i + 1, temp)
+    set list to list.withPut(i, list[i + 1])
+    set list to list.withPut(i + 1, temp)
   end for
   print list
 end procedure`;
@@ -114,13 +114,13 @@ async function main() {
 }
 
 async function foo() {
-  let list = system.list([1, 2, 3, 4, 5]);
+  let list = system.listImmutable([1, 2, 3, 4, 5]);
   for (let i = 0; i <= 3; i = i + 1) {
     const temp = system.safeIndex(list, i);
-    list = _stdlib.withPutAt(list, i, system.safeIndex(list, i + 1));
-    list = _stdlib.withPutAt(list, i + 1, temp);
+    list = list.withPut(i, system.safeIndex(list, i + 1));
+    list = list.withPut(i + 1, temp);
   }
-  system.printLine(list);
+  await system.printLine(list);
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -152,10 +152,10 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(foo());
+  await system.printLine((await global.foo()));
 }
 
-function foo() {
+async function foo() {
   if (_stdlib.true) {
     let i = 0;
   }
@@ -275,10 +275,10 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const [a, length] = foo();
+  const [a, length] = (await global.foo());
 }
 
-function foo() {
+async function foo() {
   return system.tuple([0, 0]);
 }
 global["foo"] = foo;

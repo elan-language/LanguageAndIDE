@@ -1,26 +1,31 @@
 import { CodeSource } from "../code-source";
 import {
-  mustBeCompatibleType,
+  mustBeAssignableType,
   mustBeKnownSymbolType,
   mustBeUniqueNameInScope,
 } from "../compile-rules";
-import { privateHelp, processTogglePrivate, singleIndent } from "../frame-helpers";
+import {
+  addPrivateToggleToContextMenu,
+  processTogglePrivate,
+  singleIndent,
+} from "../frame-helpers";
 import { ConcreteClass } from "../globals/concrete-class";
 import { FunctionFrame } from "../globals/function-frame";
 import { editorEvent } from "../interfaces/editor-event";
 import { ElanSymbol } from "../interfaces/elan-symbol";
-import { Frame } from "../interfaces/frame";
-import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
+import { PossiblyPrivateMember } from "../interfaces/possibly-private-member";
+import { Scope } from "../interfaces/scope";
+import { Transforms } from "../interfaces/transforms";
 import { endKeyword, functionKeyword, privateKeyword, returnsKeyword } from "../keywords";
 import { getClassScope } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
-import { Transforms } from "../syntax-nodes/transforms";
 
-export class FunctionMethod extends FunctionFrame implements Member {
+export class FunctionMethod extends FunctionFrame implements PossiblyPrivateMember {
   isMember: boolean = true;
   private: boolean;
   isAbstract = false;
+  hrefForFrameHelp: string = "LangRef.html#function_method";
 
   constructor(parent: Parent, priv = false) {
     super(parent);
@@ -50,8 +55,8 @@ ${this.indent()}${endKeyword} ${functionKeyword}\r
 `;
   }
   public renderAsHtml(): string {
-    return `<el-func class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.privateHelp()}>
-<el-top><el-expand>+</el-expand>${this.modifierAsHtml()}<el-kw>${functionKeyword} </el-kw><el-method>${this.name.renderAsHtml()}</el-method>(${this.params.renderAsHtml()})<el-kw> ${returnsKeyword} </el-kw>${this.returnType.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
+    return `<el-func class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.toolTip()}>
+<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>${this.modifierAsHtml()}<el-kw>${functionKeyword} </el-kw><el-method>${this.name.renderAsHtml()}</el-method>(${this.params.renderAsHtml()})<el-kw> ${returnsKeyword} </el-kw>${this.returnType.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
 <el-kw>${endKeyword} ${functionKeyword}</el-kw>
 </el-func>`;
@@ -62,6 +67,8 @@ ${this.renderChildrenAsHtml()}
     const name = this.name.compile(transforms);
     mustBeUniqueNameInScope(name, getClassScope(this), transforms, this.compileErrors, this.htmlId);
 
+    this.returnType.compile(transforms);
+
     const rt = this.symbolType(transforms).returnType;
 
     mustBeKnownSymbolType(rt, this.returnType.renderAsSource(), this.compileErrors, this.htmlId);
@@ -69,8 +76,8 @@ ${this.renderChildrenAsHtml()}
     const returnStatement = this.getReturnStatement().expr.getOrTransformAstNode(transforms);
     const rst = returnStatement.symbolType();
 
-    mustBeCompatibleType(rt, rst, this.compileErrors, returnStatement!.fieldId);
-    return `${this.indent()}${super.compile(transforms)}\r
+    mustBeAssignableType(rt, rst, this.compileErrors, returnStatement!.fieldId);
+    return `${this.indent()}async ${super.compile(transforms)}\r
 ${this.indent()}}\r
 `;
   }
@@ -87,7 +94,7 @@ ${this.indent()}}\r
     return super.parseBottom(source);
   }
 
-  resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
+  resolveSymbol(id: string, transforms: Transforms, initialScope: Scope): ElanSymbol {
     if (this.name.text === id) {
       return this;
     }
@@ -109,7 +116,16 @@ ${this.indent()}}\r
     return result;
   }
 
-  privateHelp(): string {
-    return privateHelp(this, functionKeyword);
+  makePublic = () => {
+    this.private = false;
+  };
+  makePrivate = () => {
+    this.private = true;
+  };
+
+  getContextMenuItems() {
+    const map = super.getContextMenuItems();
+    addPrivateToggleToContextMenu(this, map);
+    return map;
   }
 }

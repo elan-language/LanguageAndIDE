@@ -1,10 +1,16 @@
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Scope } from "../interfaces/scope";
-import { Transforms } from "../syntax-nodes/transforms";
+import { Transforms } from "../interfaces/transforms";
+import { SymbolScope } from "./symbol-scope";
 import { UnknownSymbol } from "./unknown-symbol";
+import { UnknownType } from "./unknown-type";
 
 export class NullScope implements Scope {
-  resolveSymbol(_id: string | undefined, _transforms: Transforms, _scope: Scope): ElanSymbol {
+  resolveSymbol(_id: string, _transforms: Transforms, _scope: Scope): ElanSymbol {
+    return new UnknownSymbol();
+  }
+
+  resolveOwnSymbol(_id: string, _transforms: Transforms): ElanSymbol {
     return new UnknownSymbol();
   }
 
@@ -12,9 +18,17 @@ export class NullScope implements Scope {
     return NullScope.Instance;
   }
 
-  symbolMatches(_id: string, _all: boolean, _initialScope?: Scope): ElanSymbol[] {
+  symbolMatches(_id: string, _all: boolean, _initialScope: Scope): ElanSymbol[] {
     return [];
   }
+
+  getChildren(): ElanSymbol[] {
+    return [];
+  }
+
+  symbolId = "";
+  symbolType = () => UnknownType.Instance;
+  symbolScope = SymbolScope.unknown;
 
   static Instance: Scope = new NullScope();
 }

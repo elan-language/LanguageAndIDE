@@ -4,6 +4,8 @@ import { isScope } from "../frame-helpers";
 import { AstNode } from "../interfaces/ast-node";
 import { Scope } from "../interfaces/scope";
 import { EnumType } from "../symbols/enum-type";
+import { NullScope } from "../symbols/null-scope";
+import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { transforms } from "./ast-helpers";
 
@@ -26,11 +28,23 @@ export class LiteralEnumAsn extends AbstractAstNode implements AstNode {
 
     const symbol = this.scope.resolveSymbol(this.type.name, transforms(), this.scope);
 
-    mustBeKnownSymbol(symbol, undefined, this.compileErrors, this.fieldId);
+    mustBeKnownSymbol(
+      symbol,
+      NullScope.Instance,
+      UnknownType.Instance,
+      this.compileErrors,
+      this.fieldId,
+    );
 
     if (isScope(symbol)) {
       const value = symbol.resolveSymbol(this.value, transforms(), this.scope);
-      mustBeKnownSymbol(value, undefined, this.compileErrors, this.fieldId);
+      mustBeKnownSymbol(
+        value,
+        NullScope.Instance,
+        UnknownType.Instance,
+        this.compileErrors,
+        this.fieldId,
+      );
     }
 
     return `${this.type.name}.${this.value}`;

@@ -4,12 +4,13 @@ import { ExpressionField } from "../fields/expression-field";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
+import { Transforms } from "../interfaces/transforms";
 import { printKeyword } from "../keywords";
-import { Transforms } from "../syntax-nodes/transforms";
 
 export class Print extends AbstractFrame implements Statement {
   isStatement = true;
   expr: ExpressionField;
+  hrefForFrameHelp: string = "LangRef.html#print";
 
   constructor(parent: Parent) {
     super(parent);
@@ -34,7 +35,7 @@ export class Print extends AbstractFrame implements Statement {
   }
 
   renderAsHtml(): string {
-    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><el-kw>print </el-kw>${this.expr.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-statement>`;
+    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.toolTip()}>${this.contextMenu()}${this.bpAsHtml()}<el-kw>print </el-kw>${this.expr.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-statement>`;
   }
 
   renderAsSource(): string {
@@ -45,6 +46,6 @@ export class Print extends AbstractFrame implements Statement {
     this.compileErrors = [];
 
     const toPrint = this.expr.compile(transforms) || '""';
-    return `${this.indent()}system.printLine(${toPrint});`;
+    return `${this.indent()}${this.breakPoint(this.debugSymbols())}await system.printLine(${toPrint});`;
   }
 }

@@ -1,31 +1,38 @@
-import { AbstractFrame } from "../abstract-frame";
 import { CodeSource } from "../code-source";
 import { IdentifierField } from "../fields/identifier-field";
+import { singleIndent } from "../frame-helpers";
+import { FrameWithStatements } from "../frame-with-statements";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
-import { Frame } from "../interfaces/frame";
 import { Parent } from "../interfaces/parent";
+import { Scope } from "../interfaces/scope";
 import { Statement } from "../interfaces/statement";
 import { SymbolType } from "../interfaces/symbol-type";
+import { Transforms } from "../interfaces/transforms";
 import { catchKeyword, exceptionKeyword, inKeyword } from "../keywords";
 import { StringType } from "../symbols/string-type";
 import { SymbolScope } from "../symbols/symbol-scope";
-import { Transforms } from "../syntax-nodes/transforms";
 
-export class CatchStatement extends AbstractFrame implements Statement, ElanSymbol {
+export class CatchStatement extends FrameWithStatements implements Statement, ElanSymbol {
   isStatement = true;
   isCatch = true;
   variable: IdentifierField;
+  hrefForFrameHelp: string = "LangRef.html#catch";
 
   constructor(parent: Parent) {
     super(parent);
     this.variable = new IdentifierField(this);
     this.variable.setPlaceholder("<i>variableName</i>");
     this.variable.setFieldToKnownValidText("e");
+    this.movable = false;
   }
 
   override deleteIfPermissible(): void {
     // does nothing - catch can't be deleted
+  }
+
+  canInsertAfter(): boolean {
+    return false;
   }
 
   protected setClasses() {
@@ -62,38 +69,70 @@ export class CatchStatement extends AbstractFrame implements Statement, ElanSymb
   }
 
   parentIndent(): string {
-    return this.getParent()?.indent();
+    return this.getParent().indent();
   }
 
   keywords = `${catchKeyword} ${exceptionKeyword} ${inKeyword} `;
 
   renderAsHtml(): string {
-    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><el-top><el-expand>+</el-expand><el-kw>${this.keywords}</el-kw>${this.variable.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top></el-statement>`;
+    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>${this.keywords}</el-kw>${this.variable.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
+${this.renderChildrenAsHtml()}        
+</el-statement>`;
   }
 
   renderAsSource(): string {
-    return `${this.indent()}${this.keywords}${this.variable.renderAsSource()}`;
+    return `${this.indent()}${this.keywords}${this.variable.renderAsSource()}\r
+${this.renderChildrenAsSource()}`;
   }
 
-  parseFrom(source: CodeSource): void {
+  parseTop(source: CodeSource): void {
     source.removeIndent();
     source.remove(this.keywords);
     this.variable.parseFrom(source);
-    source.removeNewLine();
+  }
+  parseBottom(source: CodeSource): boolean {
+    return this.parseStandardEnding(source, "end try");
   }
 
   compile(transforms: Transforms): string {
     this.compileErrors = [];
     const vid = this.variable.compile(transforms);
     return `${this.parentIndent()}} catch (_${vid}) {\r
-${this.indent()}  let ${vid} = _${vid}.message;\r`;
+${this.indent()}${singleIndent()}let ${vid} = _${vid}.message;
+${this.compileChildren(transforms)}\r`;
   }
 
-  resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
+  override getParentScope(): Scope {
+    return this.getParent().getParentScope();
+  }
+
+  override getCurrentScope(): Scope {
+    return this.getParent();
+  }
+
+  resolveSymbol(id: string, transforms: Transforms, initialScope: Scope): ElanSymbol {
     if (this.variable.text === id) {
       return this;
     }
 
     return super.resolveSymbol(id, transforms, initialScope);
+  }
+
+  symbolMatches(id: string, all: boolean, _initialScope: Scope): ElanSymbol[] {
+    const matches = super.symbolMatches(id, all, _initialScope);
+    const localMatches: ElanSymbol[] = [];
+
+    const v = this.variable.text;
+
+    if (id === v || all) {
+      const counter = {
+        symbolId: v,
+        symbolType: () => StringType.Instance,
+        symbolScope: SymbolScope.parameter,
+      };
+      localMatches.push(counter);
+    }
+
+    return localMatches.concat(matches);
   }
 }

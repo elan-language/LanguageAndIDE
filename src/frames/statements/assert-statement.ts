@@ -8,15 +8,16 @@ import { TestFrame } from "../globals/test-frame";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
+import { Transforms } from "../interfaces/transforms";
 import { assertKeyword } from "../keywords";
-import { CompileStatus, DisplayStatus, TestStatus } from "../status-enums";
-import { Transforms } from "../syntax-nodes/transforms";
+import { CompileStatus, DisplayColour, TestStatus } from "../status-enums";
 
 export class AssertStatement extends AbstractFrame implements Statement {
   isStatement = true;
   actual: AssertActualField;
   expected: AssertActualField;
   outcome?: AssertOutcome;
+  hrefForFrameHelp: string = "LangRef.html#assert";
 
   constructor(parent: Parent) {
     super(parent);
@@ -46,7 +47,7 @@ export class AssertStatement extends AbstractFrame implements Statement {
   }
 
   renderAsHtml(): string {
-    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><el-kw>assert </el-kw>${this.actual.renderAsHtml()}<el-kw> is </el-kw>${this.expected.renderAsHtml()}${this.compileOrTestMsgAsHtml()}${this.getFrNo()}</el-statement>`;
+    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.toolTip()}>${this.bpAsHtml()}<el-kw>assert </el-kw>${this.actual.renderAsHtml()}<el-kw> is </el-kw>${this.expected.renderAsHtml()}${this.compileOrTestMsgAsHtml()}${this.getFrNo()}</el-statement>`;
   }
 
   renderAsSource(): string {
@@ -59,8 +60,8 @@ export class AssertStatement extends AbstractFrame implements Statement {
     const ignored = test.ignored;
     const expected = this.expected.compile(transforms);
     const actual = this.actual.compile(transforms);
-    const actualFunc = `() => ${actual}`;
-    return `${this.indent()}_outcomes.push(system.assert(${ignored ? `""` : actualFunc}, ${ignored ? `""` : expected}, "${this.htmlId}", _stdlib, ${ignored}));`;
+    const actualFunc = `async () => ${actual}`;
+    return `${this.indent()}_outcomes.push(await system.assert(${ignored ? `""` : actualFunc}, ${ignored ? `""` : expected}, "${this.htmlId}", _stdlib, ${ignored}));`;
   }
 
   setOutcome(outcome: AssertOutcome) {
@@ -85,13 +86,13 @@ export class AssertStatement extends AbstractFrame implements Statement {
     let cls = "";
     let msg = "";
     if (!this.outcome || this.outcome.status === TestStatus.ignored) {
-      cls = DisplayStatus[DisplayStatus.warning];
+      cls = DisplayColour[DisplayColour.warning];
       msg = `not run`;
     } else if (this.outcome.status === TestStatus.fail) {
-      cls = DisplayStatus[DisplayStatus.error];
+      cls = DisplayColour[DisplayColour.error];
       msg = `actual: ${this.outcome!.actual}`;
     } else if (this.outcome.status === TestStatus.pass) {
-      cls = DisplayStatus[DisplayStatus.ok];
+      cls = DisplayColour[DisplayColour.ok];
       msg = `pass`;
     }
     return ` <el-msg class="${cls}">${msg}</el-msg>`;

@@ -9,11 +9,11 @@ import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
+import { Transforms } from "../interfaces/transforms";
 import { abstractProcedureKeywords } from "../keywords";
 import { ProcedureType } from "../symbols/procedure-type";
 import { getClassScope } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
-import { Transforms } from "../syntax-nodes/transforms";
 
 export class AbstractProcedure extends AbstractFrame implements Member, ElanSymbol {
   isAbstract = true;
@@ -21,6 +21,7 @@ export class AbstractProcedure extends AbstractFrame implements Member, ElanSymb
   private = false;
   public name: IdentifierField;
   public params: ParamList;
+  hrefForFrameHelp: string = "LangRef.html#Abstract_procedure";
 
   constructor(parent: Parent) {
     super(parent);
@@ -48,8 +49,8 @@ export class AbstractProcedure extends AbstractFrame implements Member, ElanSymb
   }
 
   renderAsHtml(): string {
-    return `<el-proc class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<el-top><el-kw>abstract procedure </el-kw><el-method>${this.name.renderAsHtml()}</el-method>(${this.params.renderAsHtml()})</el-top>${this.compileMsgAsHtml()}${this.getFrNo()}</el-proc>
+    return `<el-proc class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.toolTip()}>
+<el-top>${this.bpAsHtml()}<el-kw>abstract procedure </el-kw><el-method>${this.name.renderAsHtml()}</el-method>(${this.params.renderAsHtml()})</el-top>${this.compileMsgAsHtml()}${this.getFrNo()}</el-proc>
 `;
   }
 

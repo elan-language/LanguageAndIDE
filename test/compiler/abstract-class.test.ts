@@ -46,15 +46,15 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = system.initialise(new Bar());
-  system.printLine(x.prop);
-  system.printLine(x.func());
+  let x = system.initialise(await new Bar()._initialise());
+  await system.printLine(x.prop);
+  await system.printLine((await x.func()));
   await x.proc();
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["prop", 0]]);};
-  func() {
+  async func() {
     return 0;
   }
 
@@ -71,17 +71,18 @@ class Foo {
 
 class Bar extends Foo {
   static emptyInstance() { return system.emptyClass(Bar, [["prop", 0]]);};
-  constructor() {
-    super();
+
+  async _initialise() {
     this.prop = 3;
+    return this;
   }
 
-  func() {
+  async func() {
     return 1;
   }
 
   async proc() {
-    system.printLine(2);
+    await system.printLine(2);
   }
 
   prop = 0;
@@ -129,20 +130,20 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = system.initialise(new Bar());
-  system.printLine(x.prop);
-  system.printLine(x.func());
+  let x = system.initialise(await new Bar()._initialise());
+  await system.printLine(x.prop);
+  await system.printLine((await x.func()));
   await x.proc();
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["prop", 0]]);};
-  func() {
+  async func() {
     return 1;
   }
 
   async proc() {
-    system.printLine(2);
+    await system.printLine(2);
   }
 
   prop = 0;
@@ -151,9 +152,10 @@ class Foo {
 
 class Bar extends Foo {
   static emptyInstance() { return system.emptyClass(Bar, []);};
-  constructor() {
-    super();
+
+  async _initialise() {
     this.prop = 3;
+    return this;
   }
 
 }
@@ -197,18 +199,18 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = system.initialise(new Bar());
+  let x = system.initialise(await new Bar()._initialise());
   await x.proc();
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["prop", 0]]);};
-  func() {
+  async func() {
     return this.prop;
   }
 
   async proc() {
-    system.printLine(this.func());
+    await system.printLine((await this.func()));
   }
 
   prop = 0;
@@ -217,9 +219,10 @@ class Foo {
 
 class Bar extends Foo {
   static emptyInstance() { return system.emptyClass(Bar, []);};
-  constructor() {
-    super();
+
+  async _initialise() {
     this.prop = 3;
+    return this;
   }
 
 }
@@ -265,18 +268,18 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = system.initialise(new Bar());
+  let x = system.initialise(await new Bar()._initialise());
   await x.proc();
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["prop", 0]]);};
-  func() {
+  async func() {
     return 0;
   }
 
   async proc() {
-    system.printLine(this.func());
+    await system.printLine((await this.func()));
   }
 
   prop = 0;
@@ -285,12 +288,13 @@ class Foo {
 
 class Bar extends Foo {
   static emptyInstance() { return system.emptyClass(Bar, []);};
-  constructor() {
-    super();
+
+  async _initialise() {
     this.prop = 3;
+    return this;
   }
 
-  func() {
+  async func() {
     return this.prop;
   }
 
@@ -347,15 +351,15 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = system.initialise(new Bar());
-  system.printLine(x.prop);
-  system.printLine(x.func());
+  let x = system.initialise(await new Bar()._initialise());
+  await system.printLine(x.prop);
+  await system.printLine((await x.func()));
   await x.proc();
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
-  func() {
+  async func() {
     return 0;
   }
 
@@ -380,17 +384,18 @@ class Foo2 extends Foo1 {
 
 class Bar extends Foo2 {
   static emptyInstance() { return system.emptyClass(Bar, [["prop", 0]]);};
-  constructor() {
-    super();
+
+  async _initialise() {
     this.prop = 3;
+    return this;
   }
 
-  func() {
+  async func() {
     return 1;
   }
 
   async proc() {
-    system.printLine(2);
+    await system.printLine(2);
   }
 
   prop = 0;
@@ -448,15 +453,15 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = system.initialise(new Bar());
-  system.printLine(x.prop);
-  system.printLine(x.func());
+  let x = system.initialise(await new Bar()._initialise());
+  await system.printLine(x.prop);
+  await system.printLine((await x.func()));
   await x.proc();
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
-  func() {
+  async func() {
     return 0;
   }
 
@@ -481,17 +486,18 @@ class Foo2 extends Foo1 {
 
 class Bar extends Foo2 {
   static emptyInstance() { return system.emptyClass(Bar, [["prop", 0]]);};
-  constructor() {
-    super();
+
+  async _initialise() {
     this.prop = 3;
+    return this;
   }
 
-  func() {
+  async func() {
     return 1;
   }
 
   async proc() {
-    system.printLine(2);
+    await system.printLine(2);
   }
 
   prop = 0;
@@ -550,24 +556,24 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = system.initialise(new Bar());
-  system.printLine(func1(x));
-  system.printLine(func2(x));
+  let x = system.initialise(await new Bar()._initialise());
+  await system.printLine((await global.func1(x)));
+  await system.printLine((await global.func2(x)));
 }
 
-function func1(f) {
-  return f.ff1();
+async function func1(f) {
+  return (await f.ff1());
 }
 global["func1"] = func1;
 
-function func2(f) {
-  return f.ff2();
+async function func2(f) {
+  return (await f.ff2());
 }
 global["func2"] = func2;
 
 class Foo1 {
   static emptyInstance() { return system.emptyClass(Foo1, []);};
-  ff1() {
+  async ff1() {
     return 0;
   }
 
@@ -575,7 +581,7 @@ class Foo1 {
 
 class Foo2 extends Foo1 {
   static emptyInstance() { return system.emptyClass(Foo2, []);};
-  ff2() {
+  async ff2() {
     return 0;
   }
 
@@ -583,16 +589,17 @@ class Foo2 extends Foo1 {
 
 class Bar extends Foo2 {
   static emptyInstance() { return system.emptyClass(Bar, []);};
-  constructor() {
-    super();
 
+  async _initialise() {
+
+    return this;
   }
 
-  ff1() {
+  async ff1() {
     return 1;
   }
 
-  ff2() {
+  async ff2() {
     return 2;
   }
 
@@ -650,24 +657,24 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = system.initialise(new Bar());
-  system.printLine(func1(x));
-  system.printLine(func2(x));
+  let x = system.initialise(await new Bar()._initialise());
+  await system.printLine((await global.func1(x)));
+  await system.printLine((await global.func2(x)));
 }
 
-function func1(f) {
-  return f.ff1();
+async function func1(f) {
+  return (await f.ff1());
 }
 global["func1"] = func1;
 
-function func2(f) {
-  return f.ff1();
+async function func2(f) {
+  return (await f.ff1());
 }
 global["func2"] = func2;
 
 class Foo1 {
   static emptyInstance() { return system.emptyClass(Foo1, []);};
-  ff1() {
+  async ff1() {
     return 0;
   }
 
@@ -675,7 +682,7 @@ class Foo1 {
 
 class Foo2 extends Foo1 {
   static emptyInstance() { return system.emptyClass(Foo2, []);};
-  ff2() {
+  async ff2() {
     return 0;
   }
 
@@ -683,16 +690,17 @@ class Foo2 extends Foo1 {
 
 class Bar extends Foo2 {
   static emptyInstance() { return system.emptyClass(Bar, []);};
-  constructor() {
-    super();
 
+  async _initialise() {
+
+    return this;
   }
 
-  ff1() {
+  async ff1() {
     return 1;
   }
 
-  ff2() {
+  async ff2() {
     return 2;
   }
 
@@ -736,9 +744,9 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = system.initialise(new Bar());
-  system.printLine(x.foo);
-  system.printLine(x.foo.f);
+  let x = system.initialise(await new Bar()._initialise());
+  await system.printLine(x.foo);
+  await system.printLine(x.foo.f);
 }
 
 class Foo {
@@ -763,8 +771,10 @@ class Foo2 {
 
 class Bar {
   static emptyInstance() { return system.emptyClass(Bar, []);};
-  constructor() {
 
+  async _initialise() {
+
+    return this;
   }
 
   _foo;
@@ -1354,5 +1364,35 @@ end class`;
     assertDoesNotCompile(fileImpl, [
       "There must be only one abstract superclass, Foo, Foo1, Foo2 are abstract classes",
     ]);
+  });
+
+  test("Fail_ReturnListOfMutableType", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+abstract class Foo
+  abstract function p1() returns ListImmutable<of List<of Int>>
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'List<of Int>'"]);
+  });
+
+  test("Fail_ParameterListOfMutableType", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+abstract class Foo
+  abstract function p1(a as ListImmutable<of List<of Int>>) returns Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'List<of Int>'"]);
   });
 });

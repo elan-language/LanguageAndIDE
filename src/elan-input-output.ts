@@ -1,17 +1,22 @@
 export interface ElanInputOutput {
-  print(text: string): void;
+  print(text: string): Promise<void>;
 
-  printLine(text: string): void;
+  printLine(text: string): Promise<void>;
 
-  printTab(position: number, text: string): void;
+  printTab(position: number, text: string): Promise<void>;
 
   readLine(): Promise<string>;
 
-  clearConsole(): void;
+  clearPrintedText(): Promise<void>;
+  clearSystemInfo(): Promise<void>;
 
-  clearGraphics(): void;
+  drawBlockGraphics(html: string): Promise<void>;
+  clearBlockGraphics(): Promise<void>;
 
-  drawGraphics(html: string): void;
+  drawVectorGraphics(html: string): Promise<void>;
+  clearVectorGraphics(): Promise<void>;
+
+  clearAllGraphics(): Promise<void>;
 
   waitForAnyKey(): Promise<void>;
 
@@ -19,7 +24,7 @@ export interface ElanInputOutput {
 
   getKeyWithModifier(): Promise<[string, string]>;
 
-  clearKeyBuffer(): void;
+  clearKeyBuffer(): Promise<void>;
 
   readFile(): Promise<string>;
 

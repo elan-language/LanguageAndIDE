@@ -1,3 +1,4 @@
+import { transforms } from "../../web/web-helpers";
 import { AbstractFrame } from "../abstract-frame";
 import { CodeSource } from "../code-source";
 import { CommentField } from "../fields/comment-field";
@@ -10,6 +11,7 @@ export class GlobalComment extends AbstractFrame implements GlobalFrame {
   isGlobal = true;
   public text: CommentField;
   file: File;
+  hrefForFrameHelp: string = "LangRef.html#Comment";
 
   constructor(parent: File) {
     super(parent);
@@ -27,7 +29,7 @@ export class GlobalComment extends AbstractFrame implements GlobalFrame {
     return "com";
   }
   renderAsHtml(): string {
-    return `<el-global><el-comment class="${this.cls()}" id='${this.htmlId}' tabindex="0"><el-top># ${this.text.renderAsHtml()}</el-top></el-comment></el-global>`;
+    return `<el-global><el-comment class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.toolTip()}><el-top>${this.bpAsHtml()}# ${this.text.renderAsHtml()}</el-top></el-comment></el-global>`;
   }
 
   indent(): string {
@@ -39,6 +41,7 @@ export class GlobalComment extends AbstractFrame implements GlobalFrame {
 
   compile(): string {
     this.compileErrors = [];
+    this.text.compile(transforms());
     return "";
   }
 

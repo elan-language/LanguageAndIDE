@@ -1,12 +1,12 @@
 import { CompileError } from "../compile-error";
-import { CompileStatus, ParseStatus } from "../status-enums";
-import { Transforms } from "../syntax-nodes/transforms";
+import { BreakpointEvent, CompileStatus, ParseStatus } from "../status-enums";
 import { ElanSymbol } from "./elan-symbol";
 import { Field } from "./field";
 import { File } from "./file";
 import { Parent } from "./parent";
 import { Scope } from "./scope";
 import { Selectable } from "./selectable";
+import { Transforms } from "./transforms";
 
 export interface Frame extends Selectable, Scope, ElanSymbol {
   isFrame: boolean;
@@ -56,4 +56,8 @@ export interface Frame extends Selectable, Scope, ElanSymbol {
   setParent(parent: Parent): void;
 
   deleteIfPermissible(): void;
+
+  updateBreakpoints(event: BreakpointEvent): void;
+
+  setCompileScope(s: Scope): void;
 }

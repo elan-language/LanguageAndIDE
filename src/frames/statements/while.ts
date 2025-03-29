@@ -4,13 +4,14 @@ import { ExpressionField } from "../fields/expression-field";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
+import { Transforms } from "../interfaces/transforms";
 import { endKeyword, whileKeyword } from "../keywords";
 import { BooleanType } from "../symbols/boolean-type";
-import { Transforms } from "../syntax-nodes/transforms";
 
 export class While extends FrameWithStatements {
   isStatement = true;
   condition: ExpressionField;
+  hrefForFrameHelp: string = "LangRef.html#while";
 
   constructor(parent: Parent) {
     super(parent);
@@ -28,8 +29,8 @@ export class While extends FrameWithStatements {
     return "while";
   }
   renderAsHtml(): string {
-    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>while </el-kw>${this.condition.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
+    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.toolTip()}>
+<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>while </el-kw>${this.condition.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
 <el-kw>end while</el-kw>
 </el-statement>`;
@@ -49,8 +50,8 @@ ${this.indent()}end while`;
       this.htmlId,
     );
 
-    return `${this.indent()}while (${this.condition.compile(transforms)}) {\r
-${this.compileStatements(transforms)}\r
+    return `${this.indent()}${this.breakPoint(this.debugSymbols())}while (${this.condition.compile(transforms)}) {\r
+${this.compileChildren(transforms)}\r
 ${this.indent()}}`;
   }
 

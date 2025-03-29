@@ -1,6 +1,7 @@
 import { CompileError } from "../compile-error";
 import {
   mustBeFunctionRefIfFunction,
+  mustBeGlobalFunctionIfRef,
   mustBeKnownSymbol,
   mustBePropertyPrefixedOnMember,
   mustBePublicMember,
@@ -9,12 +10,18 @@ import {
 import { isClass } from "../frame-helpers";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstNode } from "../interfaces/ast-node";
+import { ChainedAsn } from "../interfaces/chained-asn";
+import { Frame } from "../interfaces/frame";
 import { Scope } from "../interfaces/scope";
+import { AbstractDefinitionStatement } from "../statements/abstract-definition.statement";
+import { Each } from "../statements/each";
+import { For } from "../statements/for";
+import { NullScope } from "../symbols/null-scope";
 import { isDeconstructedType, isMemberOnFieldsClass, scopePrefix } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
+import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { transforms } from "./ast-helpers";
-import { ChainedAsn } from "./chained-asn";
 
 export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
   constructor(
@@ -26,7 +33,7 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
     super();
   }
 
-  private updatedScope?: Scope;
+  private updatedScope: Scope = NullScope.Instance;
 
   updateScopeAndChain(s: Scope, _ast: AstNode) {
     this.updatedScope = s;
@@ -42,10 +49,17 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
     return this.compileErrors;
   }
 
+  isDefinitionStatement(s: Scope): boolean {
+    return s instanceof AbstractDefinitionStatement || s instanceof Each || s instanceof For;
+  }
+
   getSymbol() {
-    const searchScope = this.updatedScope ?? this.scope.getParentScope();
+    let searchScope = this.updatedScope === NullScope.Instance ? this.scope : this.updatedScope;
     if (isClass(searchScope)) {
       return searchScope.resolveOwnSymbol(this.id, transforms());
+    }
+    if (this.isDefinitionStatement(this.scope)) {
+      searchScope = (this.scope as Frame).getParent();
     }
 
     return searchScope.resolveSymbol(this.id, transforms(), this.scope);
@@ -61,23 +75,32 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
     const symbol = this.getSymbol();
 
     mustNotBeKeyword(this.id, this.compileErrors, this.fieldId);
-    mustBeKnownSymbol(symbol, this.updatedScope, this.compileErrors, this.fieldId);
+    mustBeKnownSymbol(
+      symbol,
+      this.updatedScope,
+      UnknownType.Instance,
+      this.compileErrors,
+      this.fieldId,
+    );
 
     if (!isMemberOnFieldsClass(symbol, transforms(), this.scope)) {
       mustBePublicMember(symbol, this.compileErrors, this.fieldId);
     }
 
-    if (symbol.symbolScope === SymbolScope.member && !this.updatedScope) {
+    if (symbol.symbolScope === SymbolScope.member && this.updatedScope === NullScope.Instance) {
       mustBePropertyPrefixedOnMember(this.compileErrors, this.fieldId);
     }
 
     if (!this.isFuncRef) {
       mustBeFunctionRefIfFunction(symbol, this.compileErrors, this.fieldId);
+    } else {
+      mustBeGlobalFunctionIfRef(symbol, this.compileErrors, this.fieldId);
     }
 
-    const prefix = this.updatedScope
-      ? ""
-      : scopePrefix(symbol, this.compileErrors, this.scope, this.fieldId);
+    const prefix =
+      this.updatedScope !== NullScope.Instance
+        ? ""
+        : scopePrefix(symbol, this.compileErrors, this.scope, this.fieldId);
 
     const postfix = symbol.symbolScope === SymbolScope.outParameter ? "[0]" : "";
 

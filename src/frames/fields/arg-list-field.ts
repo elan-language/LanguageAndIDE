@@ -2,14 +2,14 @@ import { CodeSource } from "../code-source";
 import { currentParameterIndex } from "../frame-helpers";
 import { Frame } from "../interfaces/frame";
 import { Scope } from "../interfaces/scope";
+import { Transforms } from "../interfaces/transforms";
 import { ArgListNode } from "../parse-nodes/arg-list-node";
 import { ParseNode } from "../parse-nodes/parse-node";
-import { removeUnmatchedClosingBracket } from "../parse-nodes/parse-node-helpers";
 import { CallStatement } from "../statements/call-statement";
+import { ParseStatus } from "../status-enums";
 import { parameterNames } from "../symbols/symbol-helpers";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { transforms } from "../syntax-nodes/ast-helpers";
-import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractField } from "./abstract-field";
 
 export class ArgListField extends AbstractField {
@@ -80,7 +80,10 @@ export class ArgListField extends AbstractField {
   }
 
   override parseCurrentText(): void {
-    this.text = removeUnmatchedClosingBracket(this.text);
     super.parseCurrentText();
+    if (this.readParseStatus() === ParseStatus.invalid && this.text.endsWith(")")) {
+      this.text = this.text.slice(0, this.text.length - 1);
+      super.parseCurrentText();
+    }
   }
 }

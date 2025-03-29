@@ -1,6 +1,6 @@
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { SymbolType } from "../interfaces/symbol-type";
-import { Transforms } from "../syntax-nodes/transforms";
+import { Transforms } from "../interfaces/transforms";
 
 export class DuplicateSymbol implements ElanSymbol {
   constructor(public readonly duplicates: ElanSymbol[]) {}

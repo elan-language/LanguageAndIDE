@@ -4,15 +4,14 @@ import { FrameWithStatements } from "../frame-with-statements";
 import { ConcreteClass } from "../globals/concrete-class";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
-import { Frame } from "../interfaces/frame";
 import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
+import { Scope } from "../interfaces/scope";
+import { Transforms } from "../interfaces/transforms";
 import { constructorKeyword } from "../keywords";
-import { ClassSubType, ClassType } from "../symbols/class-type";
 import { ProcedureType } from "../symbols/procedure-type";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
-import { Transforms } from "../syntax-nodes/transforms";
 
 export class Constructor extends FrameWithStatements implements ElanSymbol, Member {
   isConstructor = true;
@@ -20,6 +19,7 @@ export class Constructor extends FrameWithStatements implements ElanSymbol, Memb
   isAbstract = false;
   private = false;
   public params: ParamList;
+  hrefForFrameHelp: string = "LangRef.html#constructor";
 
   constructor(parent: Parent) {
     super(parent);
@@ -43,8 +43,8 @@ export class Constructor extends FrameWithStatements implements ElanSymbol, Memb
   }
 
   public renderAsHtml(): string {
-    return `<el-constructor class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>constructor</el-kw>(${this.params.renderAsHtml()})${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
+    return `<el-constructor class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.toolTip()}>
+<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>constructor</el-kw>(${this.params.renderAsHtml()})${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
 <el-kw>end constructor</el-kw>
 </el-constructor>`;
@@ -59,19 +59,10 @@ ${this.indent()}end constructor\r
 
   public compile(transforms: Transforms): string {
     this.compileErrors = [];
-    const parentClass = this.getParent() as ConcreteClass;
 
-    const typeAndName = parentClass.getDirectSuperClassesTypeAndName(transforms);
-    let superConstructor = "";
-
-    for (const [st] of typeAndName) {
-      if (st instanceof ClassType && st.subType === ClassSubType.abstract) {
-        superConstructor = `${this.indent()}${this.indent()}super();\n`;
-      }
-    }
-
-    return `${this.indent()}constructor(${this.params.compile(transforms)}) {\r
-${superConstructor}${this.compileStatements(transforms)}\r
+    return `${this.indent()}async _initialise(${this.params.compile(transforms)}) {\r
+${this.breakPoint(this.debugSymbols())}${this.compileChildren(transforms)}\r
+${this.indent()}${this.indent()}return this;\r
 ${this.indent()}}\r
 `;
   }
@@ -86,12 +77,12 @@ ${this.indent()}}\r
     return this.parseStandardEnding(source, "end constructor");
   }
 
-  resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
+  resolveSymbol(id: string, transforms: Transforms, initialScope: Scope): ElanSymbol {
     const s = this.params.resolveSymbol(id, transforms, this);
     return s instanceof UnknownSymbol ? super.resolveSymbol(id, transforms, initialScope) : s;
   }
 
-  public override symbolMatches(id: string, all: boolean, initialScope?: Frame): ElanSymbol[] {
+  public override symbolMatches(id: string, all: boolean, initialScope: Scope): ElanSymbol[] {
     const matches = super.symbolMatches(id, all, initialScope);
     const localMatches = this.params.symbolMatches(id, all, initialScope);
     return localMatches.concat(matches);

@@ -6,7 +6,6 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -32,7 +31,7 @@ class Game
     property p1 as Player
     property p2 as Player
 
-    property previousScores as List<of Int>
+    property previousScores as ListImmutable<of Int>
 
     function asString() returns String
         return "A game"
@@ -56,18 +55,20 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let g = system.initialise(new Game());
-  system.printLine(g.p2);
-  system.printLine(g.p1);
-  system.printLine(g.previousScores);
+  let g = system.initialise(await new Game()._initialise());
+  await system.printLine(g.p2);
+  await system.printLine(g.p1);
+  await system.printLine(g.previousScores);
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["previousScores", system.emptyImmutableList()]]);};
-  constructor() {
-    this.p2 = system.initialise(new Player("Chloe"));
-    this.p1 = system.initialise(new Player("Joe"));
-    this.previousScores = system.list([5, 2, 4]);
+  static emptyInstance() { return system.emptyClass(Game, [["previousScores", system.initialise(_stdlib.ListImmutable.emptyInstance())]]);};
+
+  async _initialise() {
+    this.p2 = system.initialise(await new Player()._initialise("Chloe"));
+    this.p1 = system.initialise(await new Player()._initialise("Joe"));
+    this.previousScores = system.listImmutable([5, 2, 4]);
+    return this;
   }
 
   _p1;
@@ -86,9 +87,9 @@ class Game {
     this._p2 = p2;
   }
 
-  previousScores = system.emptyImmutableList();
+  previousScores = system.initialise(_stdlib.ListImmutable.emptyInstance());
 
-  asString() {
+  async asString() {
     return "A game";
   }
 
@@ -96,13 +97,15 @@ class Game {
 
 class Player {
   static emptyInstance() { return system.emptyClass(Player, [["name", ""]]);};
-  constructor(name) {
+
+  async _initialise(name) {
     this.name = name;
+    return this;
   }
 
   name = "";
 
-  asString() {
+  async asString() {
     return this.name;
   }
 
@@ -140,16 +143,18 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let g = system.initialise(new Foo());
-  system.printLine(g.p1);
-  system.printLine(g.p2);
+  let g = system.initialise(await new Foo()._initialise());
+  await system.printLine(g.p1);
+  await system.printLine(g.p2);
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", 0]]);};
-  constructor() {
+
+  async _initialise() {
     this.p2 = 1;
     this.p1 = this.p2;
+    return this;
   }
 
   p1 = 0;
@@ -194,11 +199,11 @@ class Game
     property f as Float
     property b as Boolean
     property s as String
-    property li as List<of Int>
+    property li as ListImmutable<of Int>
     property ds as Dictionary<of String, Int>
     property dsi as DictionaryImmutable<of String, Int>
-    property ai as Array<of Int>
-    property t as Tuple<of Int, String, List<of Int>>
+    property ai as List<of Int>
+    property t as Tuple<of Int, String, ListImmutable<of Int>>
     property ff as Func<of String, String => Int>
     property r as RegExp
 
@@ -211,24 +216,26 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let g = system.initialise(new Game());
-  system.printLine(g.i);
-  system.printLine(g.f);
-  system.printLine(g.b);
-  system.printLine(g.s);
-  system.printLine(g.li);
-  system.printLine(g.ds);
-  system.printLine(g.dsi);
-  system.printLine(g.ai);
-  system.printLine(g.t);
-  system.printLine(g.ff("a", "b"));
-  system.printLine(_stdlib.matchesRegExp("aa", g.r));
+  let g = system.initialise(await new Game()._initialise());
+  await system.printLine(g.i);
+  await system.printLine(g.f);
+  await system.printLine(g.b);
+  await system.printLine(g.s);
+  await system.printLine(g.li);
+  await system.printLine(g.ds);
+  await system.printLine(g.dsi);
+  await system.printLine(g.ai);
+  await system.printLine(g.t);
+  await system.printLine((await g.ff("a", "b")));
+  await system.printLine(_stdlib.matchesRegExp("aa", g.r));
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.emptyImmutableList()], ["ds", system.emptyDictionary()], ["dsi", system.emptyDictionaryImmutable()], ["ai", system.emptyArray()], ["t", system.emptyTuple([0, "", system.emptyImmutableList()])], ["ff", system.emptyFunc(0)], ["r", system.emptyRegExp()]]);};
-  constructor() {
+  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.initialise(_stdlib.ListImmutable.emptyInstance())], ["ds", system.initialise(_stdlib.Dictionary.emptyInstance())], ["dsi", system.initialise(_stdlib.DictionaryImmutable.emptyInstance())], ["ai", system.initialise(_stdlib.List.emptyInstance())], ["t", system.emptyTuple([0, "", system.initialise(_stdlib.ListImmutable.emptyInstance())])], ["ff", system.emptyFunc(0)], ["r", system.emptyRegExp()]]);};
 
+  async _initialise() {
+
+    return this;
   }
 
   i = 0;
@@ -239,21 +246,21 @@ class Game {
 
   s = "";
 
-  li = system.emptyImmutableList();
+  li = system.initialise(_stdlib.ListImmutable.emptyInstance());
 
-  ds = system.emptyDictionary();
+  ds = system.initialise(_stdlib.Dictionary.emptyInstance());
 
-  dsi = system.emptyDictionaryImmutable();
+  dsi = system.initialise(_stdlib.DictionaryImmutable.emptyInstance());
 
-  ai = system.emptyArray();
+  ai = system.initialise(_stdlib.List.emptyInstance());
 
-  t = system.emptyTuple([0, "", system.emptyImmutableList()]);
+  t = system.emptyTuple([0, "", system.initialise(_stdlib.ListImmutable.emptyInstance())]);
 
   ff = system.emptyFunc(0);
 
   r = system.emptyRegExp();
 
-  asString() {
+  async asString() {
     return "A game";
   }
 
@@ -266,7 +273,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "00false{}[]{}[](0, , {})0true");
+    await assertObjectCodeExecutes(fileImpl, "00false{}[]{}[]tuple(0, , {})0true");
   });
 
   test("Pass_DefaultValuesOnEmptyClass", async () => {
@@ -302,11 +309,11 @@ class Game
     property f as Float
     property b as Boolean
     property s as String
-    property li as List<of Int>
+    property li as ListImmutable<of Int>
     property ds as Dictionary<of String, Int>
     property dsi as DictionaryImmutable<of String, Int>
-    property ai as Array<of Int>
-    property t as Tuple<of Int, String, List<of Int>>
+    property ai as List<of Int>
+    property t as Tuple<of Int, String, ListImmutable<of Int>>
     property r as RegExp
 
     function asString() returns String
@@ -318,24 +325,26 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let p = system.initialise(new Player());
+  let p = system.initialise(await new Player()._initialise());
   let g = p.g;
-  system.printLine(g.i);
-  system.printLine(g.f);
-  system.printLine(g.b);
-  system.printLine(g.s);
-  system.printLine(g.li);
-  system.printLine(g.ds);
-  system.printLine(g.dsi);
-  system.printLine(g.ai);
-  system.printLine(g.t);
-  system.printLine(g.r);
+  await system.printLine(g.i);
+  await system.printLine(g.f);
+  await system.printLine(g.b);
+  await system.printLine(g.s);
+  await system.printLine(g.li);
+  await system.printLine(g.ds);
+  await system.printLine(g.dsi);
+  await system.printLine(g.ai);
+  await system.printLine(g.t);
+  await system.printLine(g.r);
 }
 
 class Player {
   static emptyInstance() { return system.emptyClass(Player, []);};
-  constructor() {
 
+  async _initialise() {
+
+    return this;
   }
 
   _g;
@@ -349,9 +358,11 @@ class Player {
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.emptyImmutableList()], ["ds", system.emptyDictionary()], ["dsi", system.emptyDictionaryImmutable()], ["ai", system.emptyArray()], ["t", system.emptyTuple([0, "", system.emptyImmutableList()])], ["r", system.emptyRegExp()]]);};
-  constructor() {
+  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.initialise(_stdlib.ListImmutable.emptyInstance())], ["ds", system.initialise(_stdlib.Dictionary.emptyInstance())], ["dsi", system.initialise(_stdlib.DictionaryImmutable.emptyInstance())], ["ai", system.initialise(_stdlib.List.emptyInstance())], ["t", system.emptyTuple([0, "", system.initialise(_stdlib.ListImmutable.emptyInstance())])], ["r", system.emptyRegExp()]]);};
 
+  async _initialise() {
+
+    return this;
   }
 
   i = 0;
@@ -362,19 +373,19 @@ class Game {
 
   s = "";
 
-  li = system.emptyImmutableList();
+  li = system.initialise(_stdlib.ListImmutable.emptyInstance());
 
-  ds = system.emptyDictionary();
+  ds = system.initialise(_stdlib.Dictionary.emptyInstance());
 
-  dsi = system.emptyDictionaryImmutable();
+  dsi = system.initialise(_stdlib.DictionaryImmutable.emptyInstance());
 
-  ai = system.emptyArray();
+  ai = system.initialise(_stdlib.List.emptyInstance());
 
-  t = system.emptyTuple([0, "", system.emptyImmutableList()]);
+  t = system.emptyTuple([0, "", system.initialise(_stdlib.ListImmutable.emptyInstance())]);
 
   r = system.emptyRegExp();
 
-  asString() {
+  async asString() {
     return "A game";
   }
 
@@ -387,7 +398,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "00false{}[]{}[](0, , {})A RegExp");
+    await assertObjectCodeExecutes(fileImpl, "00false{}[]{}[]tuple(0, , {})A RegExp");
   });
 
   test("Pass_DefaultValuesNotPickedUpFromDefaultConstructor", async () => {
@@ -415,18 +426,20 @@ end class`;
 const global = new class {};
 async function main() {
   let g = Game.emptyInstance();
-  system.printLine(g.i);
+  await system.printLine(g.i);
 }
 
 class Game {
   static emptyInstance() { return system.emptyClass(Game, [["i", 0]]);};
-  constructor() {
+
+  async _initialise() {
     this.i = 100;
+    return this;
   }
 
   i = 0;
 
-  asString() {
+  async asString() {
     return "A game";
   }
 
@@ -480,15 +493,17 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let g = system.initialise(new Game());
-  system.printLine(g.p1);
-  system.printLine(g.previousGame);
+  let g = system.initialise(await new Game()._initialise());
+  await system.printLine(g.p1);
+  await system.printLine(g.previousGame);
 }
 
 class Game {
   static emptyInstance() { return system.emptyClass(Game, []);};
-  constructor() {
 
+  async _initialise() {
+
+    return this;
   }
 
   _p1;
@@ -507,7 +522,7 @@ class Game {
     this._previousGame = previousGame;
   }
 
-  asString() {
+  async asString() {
     return "A game";
   }
 
@@ -515,13 +530,15 @@ class Game {
 
 class Player {
   static emptyInstance() { return system.emptyClass(Player, [["name", ""]]);};
-  constructor(name) {
+
+  async _initialise(name) {
     this.name = name;
+    return this;
   }
 
   name = "";
 
-  asString() {
+  async asString() {
     return this.name;
   }
 
@@ -545,7 +562,7 @@ main
   print g.p1 is empty Player
   print g.p2 is empty Player
   print g.previousGame is empty Game
-  print g.previousScores is empty List<of Int>
+  print g.previousScores is empty ListImmutable<of Int>
   print g.score is empty Int
   print g.best is empty Int
   print g.r is empty RegExp
@@ -564,7 +581,7 @@ class Game
 
   property previousGame as Game
 
-  property previousScores as List<of Int>
+  property previousScores as ListImmutable<of Int>
 
   property r as RegExp
 
@@ -590,20 +607,22 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let g = system.initialise(new Game());
-  system.printLine(system.objectEquals(g.p1, Player.emptyInstance()));
-  system.printLine(system.objectEquals(g.p2, Player.emptyInstance()));
-  system.printLine(system.objectEquals(g.previousGame, Game.emptyInstance()));
-  system.printLine(system.objectEquals(g.previousScores, system.emptyImmutableList()));
-  system.printLine(g.score === 0);
-  system.printLine(g.best === 0);
-  system.printLine(g.r === system.emptyRegExp());
+  let g = system.initialise(await new Game()._initialise());
+  await system.printLine(system.objectEquals(g.p1, Player.emptyInstance()));
+  await system.printLine(system.objectEquals(g.p2, Player.emptyInstance()));
+  await system.printLine(system.objectEquals(g.previousGame, Game.emptyInstance()));
+  await system.printLine(system.objectEquals(g.previousScores, system.initialise(_stdlib.ListImmutable.emptyInstance())));
+  await system.printLine(g.score === 0);
+  await system.printLine(g.best === 0);
+  await system.printLine(g.r === system.emptyRegExp());
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["score", 0], ["best", 0], ["previousScores", system.emptyImmutableList()], ["r", system.emptyRegExp()]]);};
-  constructor() {
+  static emptyInstance() { return system.emptyClass(Game, [["score", 0], ["best", 0], ["previousScores", system.initialise(_stdlib.ListImmutable.emptyInstance())], ["r", system.emptyRegExp()]]);};
+
+  async _initialise() {
     this.score = 1;
+    return this;
   }
 
   score = 0;
@@ -634,11 +653,11 @@ class Game {
     this._previousGame = previousGame;
   }
 
-  previousScores = system.emptyImmutableList();
+  previousScores = system.initialise(_stdlib.ListImmutable.emptyInstance());
 
   r = system.emptyRegExp();
 
-  asString() {
+  async asString() {
     return "A game";
   }
 
@@ -646,13 +665,15 @@ class Game {
 
 class Player {
   static emptyInstance() { return system.emptyClass(Player, [["name", ""]]);};
-  constructor(name) {
+
+  async _initialise(name) {
     this.name = name;
+    return this;
   }
 
   name = "";
 
-  asString() {
+  async asString() {
     return this.name;
   }
 
@@ -695,7 +716,7 @@ class Game
 
   property previousGame as Game
 
-  property previousScores as List<of Int>
+  property previousScores as ListImmutable<of Int>
 
   function asString() returns String
     return "A game"
@@ -719,16 +740,18 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let g = system.initialise(new Game());
-  system.printLine(g.score);
+  let g = system.initialise(await new Game()._initialise());
+  await system.printLine(g.score);
   await g.setScore(0);
-  system.printLine(g.score);
+  await system.printLine(g.score);
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["score", 0], ["best", 0], ["previousScores", system.emptyImmutableList()]]);};
-  constructor() {
+  static emptyInstance() { return system.emptyClass(Game, [["score", 0], ["best", 0], ["previousScores", system.initialise(_stdlib.ListImmutable.emptyInstance())]]);};
+
+  async _initialise() {
     this.score = 10;
+    return this;
   }
 
   score = 0;
@@ -763,9 +786,9 @@ class Game {
     this._previousGame = previousGame;
   }
 
-  previousScores = system.emptyImmutableList();
+  previousScores = system.initialise(_stdlib.ListImmutable.emptyInstance());
 
-  asString() {
+  async asString() {
     return "A game";
   }
 
@@ -773,13 +796,15 @@ class Game {
 
 class Player {
   static emptyInstance() { return system.emptyClass(Player, [["name", ""]]);};
-  constructor(name) {
+
+  async _initialise(name) {
     this.name = name;
+    return this;
   }
 
   name = "";
 
-  asString() {
+  async asString() {
     return this.name;
   }
 
@@ -804,20 +829,20 @@ main
   print f.b
   print f.c
   print f.d
-  print f.a is empty List<of Int>
+  print f.a is empty ListImmutable<of Int>
   print f.b is empty String
   print f.c is empty Dictionary<of String,Int>
-  print f.d is empty Array<of Int>
+  print f.d is empty List<of Int>
 end main
 
 class Foo
   constructor()
   end constructor
 
-  property a as List<of Int>
+  property a as ListImmutable<of Int>
   property b as String
   property c as Dictionary<of String, Int>
-  property d as Array<of Int>
+  property d as List<of Int>
 
   function asString() returns String
     return "A Foo"
@@ -828,32 +853,34 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let f = system.initialise(new Foo());
-  system.printLine(f.a);
-  system.printLine(f.b);
-  system.printLine(f.c);
-  system.printLine(f.d);
-  system.printLine(system.objectEquals(f.a, system.emptyImmutableList()));
-  system.printLine(f.b === "");
-  system.printLine(system.objectEquals(f.c, system.emptyDictionary()));
-  system.printLine(system.objectEquals(f.d, system.emptyArray()));
+  let f = system.initialise(await new Foo()._initialise());
+  await system.printLine(f.a);
+  await system.printLine(f.b);
+  await system.printLine(f.c);
+  await system.printLine(f.d);
+  await system.printLine(system.objectEquals(f.a, system.initialise(_stdlib.ListImmutable.emptyInstance())));
+  await system.printLine(f.b === "");
+  await system.printLine(system.objectEquals(f.c, system.initialise(_stdlib.Dictionary.emptyInstance())));
+  await system.printLine(system.objectEquals(f.d, system.initialise(_stdlib.List.emptyInstance())));
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["a", system.emptyImmutableList()], ["b", ""], ["c", system.emptyDictionary()], ["d", system.emptyArray()]]);};
-  constructor() {
+  static emptyInstance() { return system.emptyClass(Foo, [["a", system.initialise(_stdlib.ListImmutable.emptyInstance())], ["b", ""], ["c", system.initialise(_stdlib.Dictionary.emptyInstance())], ["d", system.initialise(_stdlib.List.emptyInstance())]]);};
 
+  async _initialise() {
+
+    return this;
   }
 
-  a = system.emptyImmutableList();
+  a = system.initialise(_stdlib.ListImmutable.emptyInstance());
 
   b = "";
 
-  c = system.emptyDictionary();
+  c = system.initialise(_stdlib.Dictionary.emptyInstance());
 
-  d = system.emptyArray();
+  d = system.initialise(_stdlib.List.emptyInstance());
 
-  asString() {
+  async asString() {
     return "A Foo";
   }
 
@@ -899,15 +926,17 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let g = system.initialise(new Game());
+  let g = system.initialise(await new Game()._initialise());
   let p = g.p1;
-  system.printLine(p.ucName());
+  await system.printLine((await p.ucName()));
 }
 
 class Game {
   static emptyInstance() { return system.emptyClass(Game, []);};
-  constructor() {
 
+  async _initialise() {
+
+    return this;
   }
 
   _p1;
@@ -926,7 +955,7 @@ class Game {
     this._p2 = p2;
   }
 
-  asString() {
+  async asString() {
     return "A game";
   }
 
@@ -940,7 +969,7 @@ class Player {
   set name(name) {
   }
 
-  ucName() {
+  async ucName() {
     return "";
   }
 
@@ -956,7 +985,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "");
   });
 
-  test("Pass_PropertyOfArrayType", async () => {
+  test("Pass_PropertyOfListType", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -969,7 +998,7 @@ class Game
     set property.p1 to [1,2,3]
   end constructor
 
-  property p1 as Array<of Int>
+  property p1 as List<of Int>
 
   procedure something()
     variable a set to 1
@@ -982,22 +1011,24 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let g = system.initialise(new Game());
+  let g = system.initialise(await new Game()._initialise());
   await g.something();
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["p1", system.emptyArray()]]);};
-  constructor() {
-    this.p1 = system.literalArray([1, 2, 3]);
+  static emptyInstance() { return system.emptyClass(Game, [["p1", system.initialise(_stdlib.List.emptyInstance())]]);};
+
+  async _initialise() {
+    this.p1 = system.list([1, 2, 3]);
+    return this;
   }
 
-  p1 = system.emptyArray();
+  p1 = system.initialise(_stdlib.List.emptyInstance());
 
   async something() {
     let a = 1;
     a = system.safeIndex(this.p1, 0);
-    system.printLine(a);
+    await system.printLine(a);
   }
 
 }
@@ -1043,22 +1074,25 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let bar = system.initialise(new Bar());
+  let bar = system.initialise(await new Bar()._initialise());
   await bar.p();
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
+  async _initialise() { return this; }
   async pp() {
-    system.printLine(1);
+    await system.printLine(1);
   }
 
 }
 
 class Bar {
   static emptyInstance() { return system.emptyClass(Bar, []);};
-  constructor() {
-    this.p1 = system.initialise(new Foo());
+
+  async _initialise() {
+    this.p1 = system.initialise(await new Foo()._initialise());
+    return this;
   }
 
   async p() {
@@ -1169,7 +1203,7 @@ class Foo
   end constructor
 
   property p1 as Int
-  property p2 as Array<of Int>
+  property p2 as List<of Int>
 
 end class`;
 
@@ -1192,7 +1226,7 @@ class Foo
   end constructor
 
   property p1 as Int
-  property p2 as Array<of Int>
+  property p2 as List<of Int>
 
   procedure foo()
     if property.p1 is 0 then
@@ -1221,7 +1255,7 @@ class Foo
   end constructor
 
   property p1 as Int
-  property p2 as Array<of Int>
+  property p2 as List<of Int>
 
   procedure foo()
     set property.p2 to [0]
@@ -1339,34 +1373,6 @@ class Bar
 
   property p1 as Foo
   property p2 as Boolean
-end class`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["referencing a property requires a prefix"]);
-  });
-
-  ignore_test("Fail_CannotCall", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-  variable bar set to new Bar()
-  call bar.p()
-end main
-
-class Foo
-
-end class
-
-class Bar
-
-  procedure p()
-    call property.p1()
-  end procedure
-
-  property p1 as Foo
 end class`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);

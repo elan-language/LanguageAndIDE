@@ -20,7 +20,7 @@ export class LitFloat extends AbstractSequence {
       this.addElement(new RegExMatchNode(Regexes.literalInt));
       const exponent = new OptionalNode(
         new Sequence([
-          () => new RegExMatchNode(/e/),
+          () => new RegExMatchNode(/e|E/),
           () => new RegExMatchNode(Regexes.negatableLitInt),
         ]),
       );

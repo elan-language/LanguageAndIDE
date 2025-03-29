@@ -14,12 +14,13 @@
     "Education"
   ],
   "scripts": {
+    "compile-test-api": "esbuild ./src/standard-library/std-lib.ts --bundle --format=esm --outfile=out/test/elan-api.js",
     "compile-api": "esbuild ./src/standard-library/std-lib.ts --bundle --format=esm --outfile=web-editor/elan-api.js",
     "compile-test": "tsc -p ./test && npm run format-test",
     "compile-src": "tsc -p ./ && esbuild ./out/src/web/web-scripts.js --bundle --outfile=web-editor/web-scripts.js",
     "compile": "npm run compile-src && npm run compile-api && npm run format-src && npm run lint",
     "watch": "tsc -watch -p ./",
-    "pretest": "npm run compile-src && npm run compile-test && cpr ./test/files ./out/test/files -o",
+    "pretest": "npm run compile-src && npm run compile-test && npm run compile-test-api && cpr ./test/files ./out/test/files -o",
     "lint": "eslint src",
     "test": "npm run pretest && mocha --timeout 10000 out/test/**/*.test.js",
     "test-coverage": "npm run pretest && nyc --reporter=lcov mocha out/test/**/*.test.js",
@@ -47,6 +48,7 @@
     "nyc": "^17.0.0",
     "prettier": "^3.4.2",
     "source-map-support": "^0.5.21",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.2",
+    "web-worker": "^1.5.0"
   }
 }

@@ -2,6 +2,8 @@
 import assert from "assert";
 import { readFileSync, writeFileSync } from "fs";
 import * as jsdom from "jsdom";
+import Worker from 'web-worker';
+import { AbstractFrame } from "../src/frames/abstract-frame";
 import { CodeSourceFromString } from "../src/frames/code-source";
 import { DefaultProfile } from "../src/frames/default-profile";
 import { AbstractField } from "../src/frames/fields/abstract-field";
@@ -10,8 +12,8 @@ import { MainFrame } from "../src/frames/globals/main-frame";
 import { editorEvent } from "../src/frames/interfaces/editor-event";
 import { File } from "../src/frames/interfaces/file";
 import { ParseNode } from "../src/frames/parse-nodes/parse-node";
-import { VarStatement } from "../src/frames/statements/var-statement";
-import { CompileStatus, ParseStatus, TestStatus } from "../src/frames/status-enums";
+import { VariableStatement } from "../src/frames/statements/variable-statement";
+import { BreakpointStatus, CompileStatus, ParseStatus, TestStatus } from "../src/frames/status-enums";
 import { TokenType } from "../src/frames/symbol-completion-helpers";
 import { BooleanType } from "../src/frames/symbols/boolean-type";
 import { FloatType } from "../src/frames/symbols/float-type";
@@ -21,8 +23,10 @@ import { UnknownType } from "../src/frames/symbols/unknown-type";
 import { getTestRunner } from "../src/runner";
 import { StdLib } from "../src/standard-library/std-lib";
 import { hash } from "../src/util";
+import { WebWorkerMessage } from "../src/web/web-worker-messages";
 import { assertParses, transforms } from "./compiler/compiler-test-helpers";
 import { getTestSystem } from "./compiler/test-system";
+
 
 // flag to update test file
 const updateTestFiles = false;
@@ -79,7 +83,7 @@ export async function assertGeneratesHtmlandSameSourceNew(sourceFile: string, ht
     } else {
       throw e;
     }
-    
+
   }
 }
 
@@ -164,18 +168,17 @@ function getEvent(char: string) {
   } as editorEvent;
 }
 
-async function doAsserts(f: FileImpl, fld : AbstractField, expected: [string, string, string][] | number) {
+async function doAsserts(f: FileImpl, fld: AbstractField, expected: [string, string, string][] | number) {
   await f.renderAsHtml();
   const symbols = fld.autocompleteSymbols;
 
   if (typeof expected === "number") {
-    assert.strictEqual(symbols.length, expected); 
-    return;  
+    assert.strictEqual(symbols.length, expected);
+    return;
   }
+  const minLen = symbols.length > expected.length ? expected.length : symbols.length;
 
-  assert.strictEqual(symbols.length, expected.length);
-
-  for (let i = 0; i < expected.length; i++) {
+  for (let i = 0; i < minLen; i++) {
     const s = symbols[i];
     const e = expected[i] as [string, string, string];
 
@@ -189,7 +192,9 @@ async function doAsserts(f: FileImpl, fld : AbstractField, expected: [string, st
       assert.strictEqual(s.insertedText, e[2]);
     }
   }
-} 
+
+  assert.strictEqual(symbols.length, expected.length);
+}
 
 
 export async function assertAutocompletes(
@@ -198,10 +203,10 @@ export async function assertAutocompletes(
   char: string,
   at: number,
   expected: [string, string, string][],
-  clear? : boolean
+  clear?: boolean
 ): Promise<void> {
   assertParses(f);
-  
+
   const fld = f.getById(id) as AbstractField;
 
   if (clear) {
@@ -214,6 +219,76 @@ export async function assertAutocompletes(
   await doAsserts(f, fld, expected);
 }
 
+function dump(v: [string, string][]) {
+  return v.map(t => `${t[0]}:${t[1]}`).join(", ")
+}
+
+function assertData(variables: [string, string][], expected: [string, string][]) {
+
+  assert.strictEqual(variables.length, expected.length, `Provided: ${dump(variables)} expected: ${dump(expected)}`)
+
+  for (let i = 0; i < variables.length; i++) {
+    const v = variables[i];
+    const e = expected[i];
+
+    assert.strictEqual(v[0], e[0]);
+    assert.strictEqual(v[1], e[1]);
+  }
+}
+
+function handleBreakPoint(runWorker: Worker) {
+  return new Promise<[string, string][]>((rs, rj) => {
+    runWorker.addEventListener("message", (e: MessageEvent<WebWorkerMessage>) => {
+      const data = e.data;
+
+      switch (data.type) {
+        case "breakpoint":
+          rs(data.value)
+          break;
+        case "singlestep":
+          runWorker.postMessage({ type: "resume" } as WebWorkerMessage);
+          break;
+        default:
+          rj(`unexpected response '${data.type}'`)
+      }
+    });
+
+    runWorker.addEventListener("error", (ev: ErrorEvent) => {
+
+
+      rj(`unexpected error ${ev}`);
+    });
+
+    runWorker.postMessage({ type: "start" } as WebWorkerMessage);
+  });
+}
+
+
+export async function assertDebugBreakPoint(
+  f: FileImpl,
+  id: string,
+  expected: [string, string][],
+): Promise<void> {
+  assertParses(f);
+
+  const fld = f.getById(id) as AbstractFrame;
+
+  fld.breakpointStatus = BreakpointStatus.active;
+
+  const dir = __dirname.replaceAll("\\", "/");
+  const jsCode = f.compileAsWorker(`file:///${dir}`, true);
+  const asUrl = "data:text/javascript;base64," + btoa(jsCode);
+
+  const runWorker = new Worker(asUrl, { type: "module" });
+
+  const data = await handleBreakPoint(runWorker);
+  runWorker.terminate();
+
+  assertData(data, expected);
+
+
+}
+
 export async function assertSymbolCompletionWithString(
   f: FileImpl,
   id: string,
@@ -223,17 +298,17 @@ export async function assertSymbolCompletionWithString(
   assertParses(f);
   const fld = f.getById(id) as AbstractField;
 
-  assert.notStrictEqual(fld, undefined, `${id} not found`)
+  assert.notStrictEqual(fld, undefined, `${id} not found`);
 
   fld.text = "";
-  
+
   fld.select();
   fld.cursorPos = 0;
 
-  for(const c of text) {
+  for (const c of text) {
     fld.processKey(getEvent(c));
   }
-  
+
   await doAsserts(f, fld, expected);
 }
 
@@ -370,7 +445,7 @@ export function testNodeParse(
 
 export function testExtractContextForExpression(text: string, context: string) {
   const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
-  const v = new VarStatement(main);
+  const v = new VariableStatement(main);
   const expr = v.expr;
   expr.setFieldToKnownValidText(text);
   expr.parseCurrentText();
@@ -394,9 +469,8 @@ export function testActiveNodeAndDone(
 }
 
 export function testSymbolCompletionSpec(node: ParseNode, text: string, status: ParseStatus, activeNode: string,
-  toMatch = "", tokenTypes: TokenType[], keywords: string[] = [], constrainingId: string = "")
-  {
-  node.parseText(text); 
+  toMatch = "", tokenTypes: TokenType[], keywords: string[] = [], constrainingId: string = "") {
+  node.parseText(text);
   assert.equal(node.status, status);
   const active = node.getActiveNode();
   const cls = active.constructor.name;
@@ -429,10 +503,11 @@ export async function createTestRunner() {
   const system = getTestSystem("");
   const stdlib = new StdLib();
   stdlib.system = system;
+  system.stdlib = stdlib;
   return await getTestRunner(system, stdlib);
 }
 
-export async function testDemoProgram(program : string) {
+export async function testDemoProgram(program: string) {
   const f = await loadFileAsModelNew(`${__dirname}\\..\\..\\demo_programs\\${program}`);
   const runner = await createTestRunner();
   f.refreshParseAndCompileStatuses(false);

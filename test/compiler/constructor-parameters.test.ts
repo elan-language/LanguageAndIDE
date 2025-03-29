@@ -32,12 +32,12 @@ end class`;
     assertDoesNotCompile(fileImpl, ["May not re-assign the parameter 'p_1'"]);
   });
 
-  test("Fail_MutatingArrayParam", async () => {
+  test("Fail_MutatingListParam", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 class Foo
-    constructor(a as Array<of Float>)
-        call a.putAt(0, 4)
+    constructor(a as List<of Float>)
+        call a.put(0, 4)
     end constructor
 
     function asString() returns String

@@ -2,17 +2,18 @@
     --defaultBackground: white;
     --defaultText: black;
     --reverseText: white;
+    --help: rgb(68, 114, 196);
+    
     --selection:rgb(173, 214, 255);
     --ok: rgb(169, 247, 169); 
     --warning: rgb(246, 193, 94);
-    --error:  rgb(248, 74, 74);
+    --error:  rgb(255, 90, 90);
     --optional:  lightgrey;
-    --help: rgb(68, 114, 196);
 
     --keyword: rgb(56,0,255);
     --method: rgb(152, 118, 49);
     --type:  rgb(38,127,153);
     --string:  rgb(165, 2, 2);
     --comment: rgb(1, 106, 1);
-    --namedValue: rgb(139, 3, 173);
+    --namedValue: rgba(144, 4, 225, 0.769);
 }

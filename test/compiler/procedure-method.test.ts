@@ -37,16 +37,18 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let f = system.initialise(new Foo());
-  system.printLine(f.p1);
+  let f = system.initialise(await new Foo()._initialise());
+  await system.printLine(f.p1);
   await f.setP1(7);
-  system.printLine(f.p1);
+  await system.printLine(f.p1);
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
-  constructor() {
+
+  async _initialise() {
     this.p1 = 5;
+    return this;
   }
 
   p1 = 0;
@@ -55,7 +57,7 @@ class Foo {
     this.p1 = value;
   }
 
-  asString() {
+  async asString() {
     return "";
   }
 
@@ -99,23 +101,25 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let f = system.initialise(new Foo());
+  let f = system.initialise(await new Foo()._initialise());
   await f.display();
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
-  constructor() {
+
+  async _initialise() {
     this.p1 = 5;
+    return this;
   }
 
   p1 = 0;
 
   async display() {
-    system.printLine(this.p1);
+    await system.printLine(this.p1);
   }
 
-  asString() {
+  async asString() {
     return "";
   }
 
@@ -184,17 +188,19 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let f = system.initialise(new Foo());
-  let b = system.initialise(new Bar());
-  let _b = [b];
-  await f.times(_b);
-  b = _b[0];
+  let f = system.initialise(await new Foo()._initialise());
+  let b = system.initialise(await new Bar()._initialise());
+  let _b81 = [b];
+  await f.times(_b81);
+  b = _b81[0];
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
-  constructor() {
+
+  async _initialise() {
     this.p1 = 5;
+    return this;
   }
 
   p1 = 0;
@@ -203,14 +209,14 @@ class Foo {
     await b[0].p1PlusOne();
     await this.p1PlusOne();
     this.p1 = this.p1 + b[0].p1;
-    system.printLine(this.p1);
+    await system.printLine(this.p1);
   }
 
   async p1PlusOne() {
     this.p1 = this.p1 + 1;
   }
 
-  asString() {
+  async asString() {
     return "";
   }
 
@@ -218,8 +224,10 @@ class Foo {
 
 class Bar {
   static emptyInstance() { return system.emptyClass(Bar, [["p1", 0]]);};
-  constructor() {
+
+  async _initialise() {
     this.p1 = 1;
+    return this;
   }
 
   p1 = 0;
@@ -228,7 +236,7 @@ class Bar {
     this.p1 = this.p1 + 1;
   }
 
-  asString() {
+  async asString() {
     return "";
   }
 
@@ -425,5 +433,22 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["referencing a property requires a prefix"]);
+  });
+
+  test("Fail_ParameterListOfMutableType", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+class Foo
+  procedure p1(a as ListImmutable<of List<of Int>>)
+    
+  end procedure
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'List<of Int>'"]);
   });
 });

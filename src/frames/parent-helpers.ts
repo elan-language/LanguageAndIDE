@@ -1,9 +1,10 @@
 import { AbstractSelector } from "./abstract-selector";
 import { CompileError } from "./compile-error";
+import { isSelector } from "./frame-helpers";
 import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
-import { CompileStatus, ParseStatus } from "./status-enums";
-import { Transforms } from "./syntax-nodes/transforms";
+import { Transforms } from "./interfaces/transforms";
+import { BreakpointEvent, CompileStatus, ParseStatus } from "./status-enums";
 
 export function worstParseStatus(prev: ParseStatus, cur: ParseStatus) {
   return cur < prev ? cur : prev;
@@ -75,7 +76,7 @@ export function parentHelper_getChildRange(parent: Parent, first: Frame, last: F
 }
 
 export function parentHelper_getFirstSelectorAsDirectChild(parent: Parent): AbstractSelector {
-  return parent.getChildren().filter((g) => "isSelector" in g)[0] as AbstractSelector;
+  return parent.getChildren().filter((g) => isSelector(g))[0];
 }
 
 export function parentHelper_selectFirstChild(parent: Parent, multiSelect: boolean): boolean {
@@ -107,6 +108,18 @@ export function parentHelper_renderChildrenAsHtml(parent: Parent): string {
 
 export function isNotSelectorFrame(f: Frame) {
   return !!f && !("isSelector" in f);
+}
+
+export function compileStatements(transforms: Transforms, statements: Frame[]): string {
+  let result = "";
+  if (statements.length > 0) {
+    const ss: Array<string> = [];
+    for (const frame of statements.filter(isNotSelectorFrame)) {
+      ss.push(frame.compile(transforms));
+    }
+    result = ss.join("\r\n");
+  }
+  return result;
 }
 
 export function parentHelper_renderChildrenAsSource(parent: Parent): string {
@@ -151,7 +164,7 @@ export function parentHelper_insertOrGotoChildSelector(
 
 function insertOrGotoChildSelectorBefore(parent: Parent, child: Frame) {
   const prev = parent.getChildBefore(child);
-  if ("isSelector" in prev) {
+  if (isSelector(prev)) {
     // if there is a selector before
     prev.select(true, false);
   } else {
@@ -163,7 +176,7 @@ function insertOrGotoChildSelectorBefore(parent: Parent, child: Frame) {
 
 function insertOrGotoChildSelectorAfter(parent: Parent, child: Frame) {
   const follow = parent.getChildAfter(child);
-  if ("isSelector" in follow) {
+  if (isSelector(follow)) {
     // if there is a selector before
     follow.select(true, false);
   } else {
@@ -223,4 +236,10 @@ function moveUpOne(parent: Parent, child: Frame): boolean {
     result = true;
   }
   return result;
+}
+
+export function parentHelper_updateBreakpoints(parent: Parent, event: BreakpointEvent) {
+  for (const frame of parent.getChildren()) {
+    frame.updateBreakpoints(event);
+  }
 }

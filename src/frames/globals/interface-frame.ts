@@ -2,6 +2,8 @@ import { mustBeInterfaceClass, mustBeKnownSymbolType } from "../compile-rules";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { SymbolType } from "../interfaces/symbol-type";
+import { Transforms } from "../interfaces/transforms";
+import { noTypeOptions } from "../interfaces/type-options";
 import { abstractClassKeywords, endKeyword, interfaceKeyword } from "../keywords";
 import {
   parentHelper_compileChildren,
@@ -9,7 +11,6 @@ import {
   parentHelper_renderChildrenAsSource,
 } from "../parent-helpers";
 import { ClassSubType, ClassType } from "../symbols/class-type";
-import { Transforms } from "../syntax-nodes/transforms";
 import { ClassFrame } from "./class-frame";
 
 export class InterfaceFrame extends ClassFrame {
@@ -20,7 +21,6 @@ export class InterfaceFrame extends ClassFrame {
   }
 
   ofTypes: SymbolType[] = [];
-  genericParamMatches: Map<string, SymbolType> = new Map<string, SymbolType>();
 
   initialKeywords(): string {
     return abstractClassKeywords;
@@ -35,7 +35,7 @@ export class InterfaceFrame extends ClassFrame {
       this.symbolId,
       ClassSubType.interface,
       false,
-      false,
+      noTypeOptions,
       cd ? [] : this.inheritance.symbolTypes(transforms),
       this,
     );
@@ -54,8 +54,8 @@ export class InterfaceFrame extends ClassFrame {
   }
 
   public renderAsHtml(): string {
-    return `<el-class class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>${interfaceKeyword} </el-kw>${this.name.renderAsHtml()}${this.inheritanceAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
+    return `<el-class class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.toolTip()}>
+<el-top>${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>${interfaceKeyword} </el-kw>${this.name.renderAsHtml()}${this.inheritanceAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
 ${parentHelper_renderChildrenAsHtml(this)}
 <el-kw>${endKeyword} ${interfaceKeyword}</el-kw>
 </el-class>`;

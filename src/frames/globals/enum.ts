@@ -8,15 +8,15 @@ import { Collapsible } from "../interfaces/collapsible";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
-import { Frame } from "../interfaces/frame";
 import { GlobalFrame } from "../interfaces/global-frame";
+import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
+import { Transforms } from "../interfaces/transforms";
 import { enumKeyword } from "../keywords";
 import { EnumType } from "../symbols/enum-type";
 import { EnumValueType } from "../symbols/enum-value-type";
 import { getGlobalScope, symbolMatches } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
-import { Transforms } from "../syntax-nodes/transforms";
 
 export class Enum extends AbstractFrame implements ElanSymbol, GlobalFrame, Collapsible {
   isCollapsible: boolean = true;
@@ -24,6 +24,7 @@ export class Enum extends AbstractFrame implements ElanSymbol, GlobalFrame, Coll
   name: TypeNameField;
   values: EnumValues;
   file: File;
+  hrefForFrameHelp: string = "LangRef.html#enum";
 
   constructor(parent: File) {
     super(parent);
@@ -59,10 +60,10 @@ export class Enum extends AbstractFrame implements ElanSymbol, GlobalFrame, Coll
     return "enum";
   }
   renderAsHtml(): string {
-    return `<el-enum class="${this.cls()}" id='${this.htmlId}' tabindex="0"><el-top><el-expand>+</el-expand><el-kw>enum </el-kw>${this.name.renderAsHtml()}</el-top> ${this.values.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-enum>`;
+    return `<el-enum class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.toolTip()}><el-top>${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>enum </el-kw>${this.name.renderAsHtml()}</el-top> ${this.values.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-enum>`;
   }
 
-  //`<el-const class="${this.cls()}" id='${this.htmlId}' tabindex="0"><el-top><el-expand>+</el-expand><el-kw>constant </el-kw>${this.name.renderAsHtml()}</el-top><el-kw> set to </el-kw>${this.value.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-const>`;
+  //`<el-const class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.toolTip()}><el-top>${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>constant </el-kw>${this.name.renderAsHtml()}</el-top><el-kw> set to </el-kw>${this.value.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-const>`;
 
   indent(): string {
     return "";
@@ -109,7 +110,7 @@ ${singleIndent()}${this.values.compile(transforms)}\r
     }));
   }
 
-  resolveSymbol(id: string, transforms: Transforms, _initialScope: Frame): ElanSymbol {
+  resolveSymbol(id: string, transforms: Transforms, _initialScope: Scope): ElanSymbol {
     for (const n of this.enumValueSymbols()) {
       if (n.symbolId === id) {
         return n;
@@ -119,7 +120,7 @@ ${singleIndent()}${this.values.compile(transforms)}\r
     return this.getParent().resolveSymbol(id, transforms, this);
   }
 
-  symbolMatches(id: string, all: boolean, _initialScope?: Frame | undefined): ElanSymbol[] {
+  symbolMatches(id: string, all: boolean, _initialScope: Scope): ElanSymbol[] {
     const otherMatches = this.getParent().symbolMatches(id, all, this);
     const symbols = this.enumValueSymbols();
     const matches = symbolMatches(id, all, symbols);

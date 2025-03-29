@@ -9,11 +9,11 @@ import {
 } from "../elan-type-interfaces";
 import { ElanSymbol } from "../frames/interfaces/elan-symbol";
 import { Scope } from "../frames/interfaces/scope";
+import { Transforms } from "../frames/interfaces/transforms";
 import { NullScope } from "../frames/symbols/null-scope";
 import { symbolMatches } from "../frames/symbols/symbol-helpers";
 import { SymbolScope } from "../frames/symbols/symbol-scope";
 import { UnknownSymbol } from "../frames/symbols/unknown-symbol";
-import { Transforms } from "../frames/syntax-nodes/transforms";
 import { StdLib } from "./std-lib";
 
 export class StdLibSymbols implements Scope {
@@ -47,15 +47,15 @@ export class StdLibSymbols implements Scope {
         | undefined;
 
       if (isFunctionDescriptor(metadata)) {
-        this.symbols.set(name, getSymbol(name, metadata.mapType(), SymbolScope.stdlib));
+        this.symbols.set(name, getSymbol(name, metadata.mapType(this), SymbolScope.stdlib));
       }
 
       if (isProcedureDescriptor(metadata)) {
-        this.symbols.set(name, getSymbol(name, metadata.mapType(), SymbolScope.stdlib));
+        this.symbols.set(name, getSymbol(name, metadata.mapType(this), SymbolScope.stdlib));
       }
 
       if (isConstantDescriptor(metadata)) {
-        this.symbols.set(name, getConstantSymbol(name, metadata.mapType(), SymbolScope.stdlib));
+        this.symbols.set(name, getConstantSymbol(name, metadata.mapType(this), SymbolScope.stdlib));
       }
 
       if (isClassDescriptor(metadata)) {
@@ -72,7 +72,7 @@ export class StdLibSymbols implements Scope {
     return NullScope.Instance;
   }
 
-  resolveSymbol(id: string | undefined, _transforms: Transforms, _scope: Scope): ElanSymbol {
+  resolveSymbol(id: string, _transforms: Transforms, _scope: Scope): ElanSymbol {
     return id ? (this.symbols.get(id) ?? new UnknownSymbol(id)) : new UnknownSymbol();
   }
 }

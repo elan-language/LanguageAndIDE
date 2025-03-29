@@ -1,25 +1,30 @@
 import { ElanRuntimeError } from "../elan-runtime-error";
 import {
-  ClassOptions,
+  ClassOption,
+  ElanClass,
   elanClass,
   elanFunction,
   elanGenericParamT1Type,
   ElanInt,
-  elanProcedure,
   ElanT1,
+  ElanTuple,
   FunctionOptions,
 } from "../elan-type-annotations";
 import { System } from "../system";
 
-@elanClass(ClassOptions.concrete, [ElanT1])
+@elanClass(ClassOption.record, [ElanT1])
 export class Queue<T1> {
   // this must be implemented by hand on all stdlib classes
   static emptyInstance() {
     return new Queue();
   }
 
-  constructor() {
-    this.contents = [];
+  async _initialise() {
+    return this;
+  }
+
+  constructor(arr?: T1[]) {
+    this.contents = arr ? [...arr] : [];
   }
 
   private contents: T1[];
@@ -39,28 +44,21 @@ export class Queue<T1> {
     return this.contents.length;
   }
 
-  @elanProcedure([])
+  @elanFunction([], FunctionOptions.pure, ElanClass(Queue))
   enqueue(@elanGenericParamT1Type() item: T1) {
-    if (this.contents.length > 0) {
-      const itemT = typeof item;
-      const queueT = typeof this.contents[0];
-      // TODO: This check can be removed when the class has generic type
-      if (itemT !== queueT) {
-        throw new ElanRuntimeError(
-          `Attempting to push an incompatible type onto a non-empty Queue`,
-        );
-      }
-    }
-    this.contents.push(item);
+    const newContents = [...this.contents];
+    newContents.push(item);
+    return this.system!.initialise(new Queue(newContents));
   }
 
-  @elanFunction([], FunctionOptions.impure, ElanT1)
-  dequeue(): T1 {
+  @elanFunction([], FunctionOptions.impure, ElanTuple([ElanT1, ElanClass(Queue)]))
+  dequeue(): [typeof ElanT1, typeof Queue] {
     if (this.contents.length === 0) {
       throw new ElanRuntimeError(`Cannot dequeue an empty Queue - check using length()`);
     }
-    const result = this.contents[0];
-    this.contents.splice(0, 1);
-    return result;
+    const newContents = [...this.contents];
+    const item = newContents.shift();
+    const newQueue = this.system!.initialise(new Queue(newContents));
+    return this.system!.tuple([item, newQueue]) as [typeof ElanT1, typeof Queue];
   }
 }

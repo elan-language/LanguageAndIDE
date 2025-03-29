@@ -1,5 +1,5 @@
 import {
-  ClassOptions,
+  ClassOption,
   elanClass,
   ElanClass,
   ElanFloat,
@@ -13,11 +13,15 @@ import {
 import { System } from "../system";
 
 // Credit for source of algorithm: https://www.codeproject.com/Articles/25172/Simple-Random-Number-Generation
-@elanClass(ClassOptions.record)
+@elanClass(ClassOption.record)
 export class Random {
   // this must be implemented by hand on all stdlib classes
   static emptyInstance() {
     return new Random();
+  }
+
+  async _initialise() {
+    return this;
   }
 
   constructor() {

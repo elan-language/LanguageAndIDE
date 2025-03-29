@@ -12,6 +12,7 @@ import { StdLib } from "../standard-library/std-lib";
 import { fetchProfile, hash, transforms } from "./web-helpers";
 import { WebInputOutput } from "./web-input-output";
 import {
+  WebWorkerBreakpointMessage,
   WebWorkerMessage,
   WebWorkerReadMessage,
   WebWorkerStatusMessage,
@@ -20,24 +21,27 @@ import {
 } from "./web-worker-messages";
 
 // static html elements
-const codeContainer = document.querySelector(".elan-code");
+const codeContainer = document.querySelector(".elan-code") as HTMLDivElement;
 const runButton = document.getElementById("run-button") as HTMLButtonElement;
+const runDebugButton = document.getElementById("run-debug-button") as HTMLButtonElement;
 const stopButton = document.getElementById("stop") as HTMLButtonElement;
-const _pauseButton = document.getElementById("pause") as HTMLButtonElement;
-const clearConsoleButton = document.getElementById("clear-console") as HTMLButtonElement;
-const clearGraphicsButton = document.getElementById("clear-graphics") as HTMLButtonElement;
+const pauseButton = document.getElementById("pause") as HTMLButtonElement;
+const stepButton = document.getElementById("step") as HTMLButtonElement;
+const clearSystemInfoButton = document.getElementById("clear-system-info") as HTMLButtonElement;
+const clearGraphicsButton = document.getElementById("clear-display") as HTMLButtonElement;
 const expandCollapseButton = document.getElementById("expand-collapse") as HTMLButtonElement;
 const newButton = document.getElementById("new") as HTMLButtonElement;
 const demosButton = document.getElementById("demos") as HTMLButtonElement;
 const trimButton = document.getElementById("trim") as HTMLButtonElement;
-const consoleDiv = document.getElementById("console") as HTMLDivElement;
-const graphicsDiv = document.getElementById("graphics") as HTMLDivElement;
+const systemInfoDiv = document.getElementById("system-info") as HTMLDivElement;
+const displayDiv = document.getElementById("display") as HTMLDivElement;
 const loadButton = document.getElementById("load") as HTMLButtonElement;
-const appendButton = document.getElementById("add") as HTMLButtonElement;
+const appendButton = document.getElementById("append") as HTMLButtonElement;
 const saveButton = document.getElementById("save") as HTMLButtonElement;
 const autoSaveButton = document.getElementById("auto-save") as HTMLButtonElement;
 const undoButton = document.getElementById("undo") as HTMLButtonElement;
 const redoButton = document.getElementById("redo") as HTMLButtonElement;
+const fileButton = document.getElementById("file") as HTMLButtonElement;
 
 const codeTitle = document.getElementById("code-title") as HTMLDivElement;
 const parseStatus = document.getElementById("parse") as HTMLDivElement;
@@ -55,7 +59,7 @@ system.stdlib = stdlib; // to allow injection
 // well known ids
 const lastDirId = "elan-files";
 
-const elanInputOutput = new WebInputOutput(consoleDiv, graphicsDiv);
+const elanInputOutput = new WebInputOutput();
 let undoRedoFiles: string[] = [];
 let previousFileIndex: number = -1;
 let currentFileIndex: number = -1;
@@ -71,6 +75,9 @@ let runWorker: Worker | undefined;
 let testWorker: Worker | undefined;
 let inactivityTimer: any | undefined = undefined;
 let autoSaveFileHandle: FileSystemFileHandle | undefined = undefined;
+let singleStepping = false;
+let processingSingleStep = false;
+let debugMode = false;
 
 autoSaveButton.hidden = !useChromeFileAPI();
 
@@ -80,8 +87,8 @@ undoButton.addEventListener("click", undo);
 
 redoButton.addEventListener("click", redo);
 
-consoleDiv.addEventListener("click", () => {
-  consoleDiv.getElementsByTagName("input")?.[0]?.focus();
+displayDiv.addEventListener("click", () => {
+  displayDiv.getElementsByTagName("input")?.[0]?.focus();
 });
 
 trimButton.addEventListener("click", async () => {
@@ -89,8 +96,26 @@ trimButton.addEventListener("click", async () => {
   await renderAsHtml(false);
 });
 
-runButton?.addEventListener("click", () => {
+function resumeProgram() {
+  pendingBreakpoints = [];
+  if (singleStepping) {
+    runWorker!.postMessage({ type: "pause" } as WebWorkerMessage);
+  }
+
+  runWorker!.postMessage({ type: "resume" } as WebWorkerMessage);
+
+  clearPaused();
+  file.setRunStatus(RunStatus.running);
+  updateDisplayValues();
+}
+
+function runProgram() {
   try {
+    if (file.readRunStatus() === RunStatus.paused && runWorker && debugMode) {
+      resumeProgram();
+      return;
+    }
+
     clearDisplays();
     file.setRunStatus(RunStatus.running);
     updateDisplayValues();
@@ -98,7 +123,7 @@ runButton?.addEventListener("click", () => {
       "/index.html",
       "",
     );
-    const jsCode = file.compileAsWorker(path);
+    const jsCode = file.compileAsWorker(path, debugMode);
     const asUrl = "data:text/javascript;base64," + btoa(jsCode);
 
     runWorker = new Worker(asUrl, { type: "module" });
@@ -109,6 +134,23 @@ runButton?.addEventListener("click", () => {
       switch (data.type) {
         case "write":
           await handleWorkerIO(data);
+          break;
+        case "breakpoint":
+          if (isPausedState()) {
+            pendingBreakpoints.push(data);
+          } else {
+            pendingBreakpoints = [];
+            await handleRunWorkerPaused(data);
+          }
+          break;
+        case "singlestep":
+          if (processingSingleStep) {
+            pendingBreakpoints.push(data);
+          } else {
+            processingSingleStep = true;
+            pendingBreakpoints = [];
+            await handleRunWorkerSingleStep(data);
+          }
           break;
         case "status":
           switch (data.status) {
@@ -135,27 +177,59 @@ runButton?.addEventListener("click", () => {
     file.setRunStatus(RunStatus.error);
     updateDisplayValues();
   }
+}
+
+runButton?.addEventListener("click", () => {
+  debugMode = singleStepping = processingSingleStep = false;
+  runProgram();
+});
+
+runDebugButton?.addEventListener("click", () => {
+  debugMode = true;
+  singleStepping = processingSingleStep = false;
+  runProgram();
+});
+
+stepButton?.addEventListener("click", async () => {
+  singleStepping = true;
+
+  if (pendingBreakpoints.length > 0) {
+    const next = pendingBreakpoints[0];
+    pendingBreakpoints = pendingBreakpoints.slice(1);
+    await handleRunWorkerPaused(next);
+    return;
+  }
+
+  processingSingleStep = false;
+  if (file.readRunStatus() === RunStatus.paused && runWorker) {
+    resumeProgram();
+    return;
+  }
+});
+
+pauseButton?.addEventListener("click", () => {
+  singleStepping = true;
+  runWorker!.postMessage({ type: "pause" } as WebWorkerMessage);
 });
 
 stopButton?.addEventListener("click", () => {
+  debugMode = singleStepping = false;
   if (runWorker) {
-    runWorker.terminate();
-    runWorker = undefined;
-    file.setRunStatus(RunStatus.default);
+    handleRunWorkerFinished();
   }
   if (testWorker) {
     endTests();
     file.setTestStatus(TestStatus.default);
+    updateDisplayValues();
   }
-  updateDisplayValues();
 });
 
-clearConsoleButton?.addEventListener("click", () => {
-  elanInputOutput.clearConsole();
+clearSystemInfoButton?.addEventListener("click", () => {
+  systemInfoDiv.innerHTML = "";
 });
 
 clearGraphicsButton?.addEventListener("click", () => {
-  elanInputOutput.clearGraphics();
+  elanInputOutput.clearAllGraphics();
 });
 
 expandCollapseButton?.addEventListener("click", async () => {
@@ -305,20 +379,28 @@ if (okToContinue) {
     });
 } else {
   const msg = "Require Chrome";
-  disable(runButton, msg);
-  disable(stopButton, msg);
-  disable(loadButton, msg);
-  disable(appendButton, msg);
-  disable(saveButton, msg);
-  disable(autoSaveButton, msg);
-  disable(newButton, msg);
-  disable(demosButton, msg);
-  disable(trimButton, msg);
-  disable(expandCollapseButton, msg);
-  disable(undoButton, msg);
-  disable(redoButton, msg);
-  disable(clearConsoleButton, msg);
-  disable(clearGraphicsButton, msg);
+  disable(
+    [
+      runButton,
+      runDebugButton,
+      stopButton,
+      pauseButton,
+      stepButton,
+      loadButton,
+      appendButton,
+      saveButton,
+      autoSaveButton,
+      newButton,
+      demosButton,
+      trimButton,
+      expandCollapseButton,
+      undoButton,
+      redoButton,
+      clearSystemInfoButton,
+      clearGraphicsButton,
+    ],
+    msg,
+  );
   for (const elem of demoFiles) {
     elem.setAttribute("hidden", "");
   }
@@ -347,8 +429,8 @@ async function renderAsHtml(editingField: boolean) {
 }
 
 function clearDisplays() {
-  elanInputOutput.clearConsole();
-  elanInputOutput.clearGraphics();
+  systemInfoDiv.innerHTML = "";
+  elanInputOutput.clearAllGraphics();
 }
 
 function clearUndoRedoAndAutoSave() {
@@ -375,7 +457,7 @@ async function showError(err: Error, fileName: string, reset: boolean) {
   file.fileName = fileName;
 
   if (err.message === cannotLoadFile) {
-    elanInputOutput.printLine(err.message);
+    systemInfoPrintLine(err.message);
   } else if (err.stack) {
     let msg = "";
     let stack = "";
@@ -387,12 +469,18 @@ async function showError(err: Error, fileName: string, reset: boolean) {
         "An unexpected error has occurred; please email whole-screen snapshot to rpawson@nakedobjects.org\nTo continue, try clicking the Refresh icon on the browser.";
       stack = err.stack;
     }
-    elanInputOutput.printLine(msg);
-    elanInputOutput.printLine(stack);
+    systemInfoPrintLine(msg);
+    systemInfoPrintLine(stack);
   } else {
-    elanInputOutput.printLine(err.message ?? "Unknown error parsing file");
+    systemInfoPrintLine(err.message ?? "Unknown error parsing file");
   }
   cursorDefault();
+}
+
+function systemInfoPrintLine(text: string) {
+  systemInfoDiv.innerHTML = systemInfoDiv.innerHTML + text + "\n";
+  systemInfoDiv.scrollTop = systemInfoDiv.scrollHeight;
+  systemInfoDiv.focus();
 }
 
 async function refreshAndDisplay(compileIfParsed: boolean, editingField: boolean) {
@@ -454,119 +542,164 @@ function canUndo() {
   return (isParsing && previousFileIndex > -1) || (!isParsing && currentFileIndex > -1);
 }
 
-function setStatus(html: HTMLDivElement, status: string, showTooltip = true): void {
-  html.setAttribute("class", status);
+function setStatus(html: HTMLDivElement, colour: string, label: string, showTooltip = true): void {
+  html.setAttribute("class", colour);
   const tooltip =
-    showTooltip && (status === "error" || status === "warning")
+    showTooltip && (colour === "error" || colour === "warning")
       ? "Click to navigate to first issue in (expanded) code"
       : "";
   html.setAttribute("title", tooltip);
-  html.innerText = status === "default" ? "" : status;
+  html.innerText = label;
+}
+
+function isRunningState() {
+  return file.readRunStatus() === RunStatus.running || file.readRunStatus() === RunStatus.paused;
+}
+
+function isPausedState() {
+  return file.readRunStatus() === RunStatus.paused;
+}
+
+function setPauseButtonState(waitingForUserInput?: boolean) {
+  if (isRunningState() && debugMode && !isPausedState() && !waitingForUserInput) {
+    enable(pauseButton, "Pause the program");
+  } else {
+    disable([pauseButton], "Can only pause a program running in Debug mode");
+  }
 }
 
 function updateDisplayValues() {
   updateNameAndSavedStatus();
-  setStatus(parseStatus, file.readParseStatusForDashboard());
-  setStatus(compileStatus, file.readCompileStatusForDashboard());
-  setStatus(testStatus, file.readTestStatusForDashboard());
-  setStatus(runStatus, file.readRunStatusForDashboard(), false);
+  setStatus(parseStatus, file.getParseStatusColour(), file.getParseStatusLabel());
+  setStatus(compileStatus, file.getCompileStatusColour(), file.getCompileStatusLabel());
+  setStatus(testStatus, file.getTestStatusColour(), file.getTestStatusLabel());
+  setStatus(runStatus, file.getRunStatusColour(), file.getRunStatusLabel(), false);
   // Button control
   const isEmpty = file.readParseStatus() === ParseStatus.default;
   const isParsing = file.readParseStatus() === ParseStatus.valid;
   const isCompiling = file.readCompileStatus() === CompileStatus.ok;
-  const isRunning = file.readRunStatus() === RunStatus.running;
+  const isRunning = isRunningState();
+  const isPaused = isPausedState();
   const isTestRunning = file.readTestStatus() === TestStatus.running;
 
   saveButton.hidden = !!autoSaveFileHandle;
 
   if (isRunning || isTestRunning) {
     codeContainer?.classList.add("running");
-    disable(runButton, isRunning ? "Program is already running" : "Tests are running");
+
+    if (isPaused) {
+      enable(runDebugButton, "Resume the program");
+      enable(stepButton, "Single step the program");
+    } else {
+      disable(
+        [runButton, runDebugButton, stepButton],
+        isRunning ? "Program is already running" : "Tests are running",
+      );
+    }
+
     enable(stopButton, isRunning ? "Stop the program" : "Stop the Tests");
+
+    setPauseButtonState();
+
     const msg = isRunning ? "Program is running" : "Tests are running";
-    disable(loadButton, msg);
-    disable(appendButton, msg);
-    disable(saveButton, msg);
-    disable(autoSaveButton, msg);
-    disable(newButton, msg);
-    disable(demosButton, msg);
-    disable(trimButton, msg);
-    disable(expandCollapseButton, msg);
-    disable(undoButton, msg);
-    disable(redoButton, msg);
+    disable(
+      [
+        runButton,
+        loadButton,
+        appendButton,
+        saveButton,
+        autoSaveButton,
+        newButton,
+        demosButton,
+        trimButton,
+        expandCollapseButton,
+        undoButton,
+        redoButton,
+        clearGraphicsButton,
+        clearSystemInfoButton,
+        fileButton,
+      ],
+      msg,
+    );
     for (const elem of demoFiles) {
       elem.setAttribute("hidden", "");
     }
   } else {
     codeContainer?.classList.remove("running");
-    const msg = "Program is not running";
-    disable(stopButton, msg);
-    //disable(pauseButton, msg);
 
+    disable([stopButton, pauseButton, stepButton], "Program is not running");
+
+    enable(fileButton, "File actions");
     enable(loadButton, "Load code from a file");
-    enable(appendButton, "Add code from a file onto the end of the existing code");
+    enable(appendButton, "Append code from a file onto the end of the existing code");
     enable(newButton, "Clear the current code and start afresh");
     enable(demosButton, "Load a demonstration program");
     enable(trimButton, "Remove all 'newCode' selectors that can be removed (shortcut: Alt-t)");
     enable(expandCollapseButton, "Expand / Collapse all code regions");
+
+    enable(clearGraphicsButton, "Clear display");
+    enable(clearSystemInfoButton, "Clear display");
 
     for (const elem of demoFiles) {
       elem.removeAttribute("hidden");
     }
 
     if (isEmpty) {
-      disable(saveButton, "Some code must be added in order to save");
+      disable([saveButton], "Some code must be added in order to save");
     } else if (!isParsing) {
-      disable(saveButton, "Code must be parsing in order to save");
+      disable([saveButton], "Code must be parsing in order to save");
     } else {
       enable(saveButton, "Save the code into a file");
     }
 
     if (!file.containsMain()) {
-      disable(runButton, "Code must have a 'main' routine to be run");
+      disable([runButton, runDebugButton], "Code must have a 'main' routine to be run");
     } else if (!isCompiling) {
       disable(
-        runButton,
+        [runButton, runDebugButton],
         "Program is not yet compiled. If you have just edited a field, press Enter or Tab to complete.",
       );
     } else {
       enable(runButton, "Run the program");
+      enable(runDebugButton, "Debug the program");
     }
 
     if (canUndo()) {
       enable(undoButton, "Undo last change (Ctrl + z)");
     } else {
-      disable(undoButton, "Nothing to undo");
+      disable([undoButton], "Nothing to undo");
     }
 
     if (nextFileIndex === -1) {
-      disable(redoButton, "Nothing to redo");
+      disable([redoButton], "Nothing to redo");
     } else {
       enable(redoButton, "Redo last change (Ctrl + y");
     }
 
     if (autoSaveFileHandle) {
-      autoSaveButton.innerText = "Auto-off";
+      autoSaveButton.innerText = "Cancel Auto Save";
       autoSaveButton.setAttribute("title", "Click to turn auto-save off and resume manual saving.");
     } else {
       if (useChromeFileAPI()) {
-        autoSaveButton.innerText = "Auto";
+        autoSaveButton.innerText = "Auto Save";
         if (isParsing) {
           enable(
             autoSaveButton,
             "Save to file now and then auto-save to same file whenever code is changed and parses",
           );
         } else {
-          disable(autoSaveButton, "Code must be parsing in order to save");
+          disable([autoSaveButton], "Code must be parsing in order to save");
         }
       }
     }
   }
 }
 
-function disable(button: HTMLButtonElement, msg = "") {
-  button.setAttribute("disabled", "");
-  button.setAttribute("title", msg);
+function disable(buttons: HTMLButtonElement[], msg = "") {
+  for (const button of buttons) {
+    button.setAttribute("disabled", "");
+    button.setAttribute("title", msg);
+  }
 }
 
 function enable(button: HTMLButtonElement, msg = "") {
@@ -593,7 +726,7 @@ function getEditorMsg(
         key: key,
         modKey: modKey,
         selection: selection,
-        autocomplete: autocomplete,
+        optionalData: autocomplete,
       };
     case "click":
     case "dblclick":
@@ -612,7 +745,7 @@ function getEditorMsg(
         id: id,
         modKey: modKey,
         selection: selection,
-        autocomplete: autocomplete,
+        optionalData: autocomplete,
       };
   }
 }
@@ -662,6 +795,15 @@ function handleCutAndPaste(event: Event, msg: editorEvent) {
   return false;
 }
 
+function handleEscape(e: editorEvent) {
+  if (e.key === "Escape") {
+    demosButton.focus();
+    return true;
+  }
+
+  return false;
+}
+
 async function handleUndoAndRedo(event: Event, msg: editorEvent) {
   if (msg.modKey.control) {
     switch (msg.key) {
@@ -695,6 +837,7 @@ function isSupportedKey(evt: editorEvent) {
     case "ArrowDown":
     case "Backspace":
     case "Delete":
+    case "Escape":
     case "ContextMenu":
       return true;
     default:
@@ -712,10 +855,20 @@ async function handleEditorEvent(
   selection?: [number, number] | undefined,
   autocomplete?: string | undefined,
 ) {
+  if (isRunningState()) {
+    event?.preventDefault();
+    event.stopPropagation();
+    return;
+  }
+
   const msg = getEditorMsg(type, target, id, key, modKey, selection, autocomplete);
 
   if (!isSupportedKey(msg)) {
     // discard
+    return;
+  }
+
+  if (handleEscape(msg)) {
     return;
   }
 
@@ -796,17 +949,34 @@ async function updateContent(text: string, editingField: boolean) {
     });
   }
 
-  const input = document.querySelector(".focused input") as HTMLInputElement;
-  const focused = getFocused();
-  const elanCode = document.querySelector(".elan-code") as HTMLDivElement;
+  function getInput() {
+    return document.querySelector(".focused input") as HTMLInputElement;
+  }
 
-  elanCode?.addEventListener("click", () => {
+  const input = getInput();
+  const focused = getFocused();
+
+  codeContainer?.addEventListener("click", (event) => {
+    if (isRunningState()) {
+      event.preventDefault();
+      event.stopPropagation();
+      return;
+    }
+
     const focused = getFocused();
     if (focused) {
       focused.focus();
     } else {
       file.getFirstChild().select();
       getFocused()?.focus();
+    }
+  });
+
+  codeContainer.addEventListener("mousedown", (event) => {
+    // to prevent codeContainer taking focus on a click
+    if (isRunningState()) {
+      event.preventDefault();
+      event.stopPropagation();
     }
   });
 
@@ -819,17 +989,22 @@ async function updateContent(text: string, editingField: boolean) {
         const tgt = ke.target as HTMLDivElement;
         const id = tgt.dataset.id;
         const func = tgt.dataset.func;
+        const href = tgt.dataset.href;
 
-        handleEditorEvent(
-          event,
-          "contextmenu",
-          "frame",
-          getModKey(ke),
-          id,
-          "ContextMenu",
-          undefined,
-          func,
-        );
+        if (href) {
+          window.open(`documentation/${href}`, "_blank")?.focus();
+        } else {
+          handleEditorEvent(
+            event,
+            "contextmenu",
+            "frame",
+            getModKey(ke),
+            id,
+            "ContextMenu",
+            undefined,
+            func,
+          );
+        }
       });
     }
   }
@@ -847,7 +1022,7 @@ async function updateContent(text: string, editingField: boolean) {
   } else if (focused) {
     focused.focus();
   } else {
-    elanCode.focus();
+    codeContainer.focus();
   }
 
   if (document.querySelector(".autocomplete-popup")) {
@@ -969,8 +1144,7 @@ async function replaceCode(indexToUse: number, msg: string) {
   updateIndexes(indexToUse);
   const code = localStorage.getItem(id);
   if (code) {
-    disable(undoButton, msg);
-    disable(redoButton, msg);
+    disable([undoButton, redoButton], msg);
     cursorWait();
     undoRedoing = true;
     const fn = file.fileName;
@@ -1008,11 +1182,6 @@ async function inactivityRefresh() {
 async function handleKeyAndRender(e: editorEvent) {
   if (file.readRunStatus() === RunStatus.running) {
     // no change while running
-    return;
-  }
-
-  if (e.key === "Escape") {
-    demosButton.focus();
     return;
   }
 
@@ -1057,7 +1226,7 @@ async function handleKeyAndRender(e: editorEvent) {
     }
   } catch (e) {
     if (e instanceof ElanCutCopyPasteError) {
-      elanInputOutput.printLine(e.message);
+      systemInfoPrintLine(e.message);
       await renderAsHtml(false);
       return;
     }
@@ -1077,7 +1246,9 @@ function errorMsg(value: unknown) {
 async function handleWorkerIO(data: WebWorkerWriteMessage) {
   switch (data.function) {
     case "readLine":
+      setPauseButtonState(true);
       const line = await elanInputOutput.readLine();
+      setPauseButtonState(false);
       runWorker?.postMessage(readMsg(line));
       break;
     case "waitForAnyKey":
@@ -1109,7 +1280,21 @@ async function handleWorkerIO(data: WebWorkerWriteMessage) {
       }
       break;
     default:
-      (elanInputOutput as any)[data.function](...data.parameters);
+      try {
+        await (elanInputOutput as any)[data.function](...data.parameters);
+        runWorker?.postMessage(readMsg(""));
+      } catch (e) {
+        runWorker?.postMessage(errorMsg(e));
+      }
+      break;
+  }
+}
+
+function clearPaused() {
+  const pausedAt = document.getElementsByClassName("paused-at");
+
+  for (const e of pausedAt) {
+    e.classList.remove("paused-at");
   }
 }
 
@@ -1118,7 +1303,33 @@ function handleRunWorkerFinished() {
   runWorker = undefined;
   console.info("elan program completed OK");
   file.setRunStatus(RunStatus.default);
+  clearPaused();
   updateDisplayValues();
+}
+
+let pendingBreakpoints: WebWorkerBreakpointMessage[] = [];
+
+async function handleRunWorkerPaused(data: WebWorkerBreakpointMessage): Promise<void> {
+  file.setRunStatus(RunStatus.paused);
+  console.info("elan program paused");
+  const variables = data.value;
+  systemInfoDiv.innerHTML = "";
+
+  for (const v of variables) {
+    systemInfoPrintLine(`${v[0]} : ${v[1]}`);
+  }
+
+  const pausedAt = document.getElementById(data.pausedAt);
+  pausedAt?.classList.add("paused-at");
+  pausedAt?.scrollIntoView();
+  systemInfoDiv.focus();
+  updateDisplayValues();
+}
+
+async function handleRunWorkerSingleStep(data: WebWorkerBreakpointMessage): Promise<void> {
+  if (singleStepping) {
+    handleRunWorkerPaused(data);
+  }
 }
 
 async function handleRunWorkerError(data: WebWorkerStatusMessage) {
@@ -1128,6 +1339,7 @@ async function handleRunWorkerError(data: WebWorkerStatusMessage) {
   const err = e instanceof ElanRuntimeError ? e : new ElanRuntimeError(e as any);
   await showError(err, file.fileName, false);
   file.setRunStatus(RunStatus.error);
+  clearPaused();
   updateDisplayValues();
 }
 
@@ -1391,7 +1603,7 @@ async function handleTestWorkerError(data: WebWorkerStatusMessage) {
 function handleTestAbort() {
   endTests();
   file.setTestStatus(TestStatus.error);
-  elanInputOutput.printLine("Tests timed out and were aborted");
+  systemInfoPrintLine("Tests timed out and were aborted");
   updateDisplayValues();
 }
 
@@ -1428,6 +1640,7 @@ function runTestsInner() {
   try {
     clearDisplays();
     file.setTestStatus(TestStatus.running);
+
     updateDisplayValues();
     const path = `${document.location.origin}${document.location.pathname}`.replace(
       "/index.html",

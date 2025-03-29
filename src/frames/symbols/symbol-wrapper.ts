@@ -1,9 +1,9 @@
 import { isGenericClass } from "../frame-helpers";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Scope } from "../interfaces/scope";
+import { Transforms } from "../interfaces/transforms";
 import { propertyKeyword } from "../keywords";
 import { KeywordCompletion } from "../symbol-completion-helpers";
-import { Transforms } from "../syntax-nodes/transforms";
 import {
   isAbstractTypeName,
   isCallStatement,
@@ -11,6 +11,7 @@ import {
   isFunction,
   isId,
   isMemberOnFieldsClass,
+  isNotInheritableClass,
   isProcedure,
   isProperty,
 } from "./symbol-helpers";
@@ -57,7 +58,7 @@ export class SymbolWrapper {
 
     // order is important
 
-    if (isConcreteTypeName(symbol) || isAbstractTypeName(symbol)) {
+    if (isConcreteTypeName(symbol) || isAbstractTypeName(symbol) || isNotInheritableClass(symbol)) {
       return " type";
     }
 

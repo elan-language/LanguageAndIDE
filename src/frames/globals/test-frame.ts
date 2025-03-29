@@ -10,11 +10,11 @@ import { editorEvent } from "../interfaces/editor-event";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { GlobalFrame } from "../interfaces/global-frame";
+import { Transforms } from "../interfaces/transforms";
 import { ignoreKeyword, testKeyword } from "../keywords";
 import { parentHelper_compileFrames } from "../parent-helpers";
 import { AssertStatement } from "../statements/assert-statement";
-import { DisplayStatus, TestStatus } from "../status-enums";
-import { Transforms } from "../syntax-nodes/transforms";
+import { BreakpointStatus, DisplayColour, TestStatus } from "../status-enums";
 
 export class TestFrame extends FrameWithStatements implements GlobalFrame {
   isTest = true;
@@ -23,6 +23,7 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
   file: File;
   private _testStatus: TestStatus;
   public ignored = false;
+  hrefForFrameHelp: string = "LangRef.html#test";
 
   constructor(parent: File) {
     super(parent);
@@ -34,10 +35,10 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
     this._testStatus = TestStatus.default;
   }
 
-  override readDisplayStatus(): DisplayStatus {
-    let overall = DisplayStatus.error;
+  override readDisplayStatus(): DisplayColour {
+    let overall = DisplayColour.error;
     const parseCompile = helper_CompileOrParseAsDisplayStatus(this);
-    if (parseCompile !== DisplayStatus.ok) {
+    if (parseCompile !== DisplayColour.ok) {
       overall = parseCompile;
     } else {
       overall = helper_testStatusAsDisplayStatus(this._testStatus);
@@ -75,8 +76,8 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
     return "test";
   }
   public renderAsHtml(): string {
-    return `<el-test class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.ignoreHelp()}>
-<el-top><el-expand>+</el-expand><el-kw>${this.ignoreKw()}test </el-kw>${this.testDescription.renderAsHtml()}${this.compileOrTestMsgAsHtml()}${this.getFrNo()}</el-top>
+    return `<el-test class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.toolTip()}>
+<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>${this.ignoreKw()}test </el-kw>${this.testDescription.renderAsHtml()}${this.compileOrTestMsgAsHtml()}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
 <el-kw>end test</el-kw>
 </el-test>`;
@@ -148,7 +149,7 @@ ${this.compileTestBody(transforms)}\r
   }
 
   testMsgAsHtml(): string {
-    return ` <el-msg class="${DisplayStatus[DisplayStatus.error]}">failed to run</el-msg>`;
+    return ` <el-msg class="${DisplayColour[DisplayColour.error]}">failed to run</el-msg>`;
   }
 
   processKey(e: editorEvent): boolean {
@@ -163,9 +164,26 @@ ${this.compileTestBody(transforms)}\r
     return this.ignored ? `${ignoreKeyword} ` : ``;
   }
 
-  ignoreHelp() {
-    return this.ignored
-      ? `title="To un-ignore, select 'test' frame then Ctrl-i."`
-      : `title="To ignore, select 'test' frame then Ctrl-i"`;
+  ignore = () => {
+    this.ignored = true;
+  };
+
+  unignore = () => {
+    this.ignored = false;
+  };
+
+  getContextMenuItems() {
+    const map = new Map<string, [string, () => void, string]>(); //Normally: = super.getContextMenuItems()
+    // Must be arrow functions for this binding
+    if (this.ignored) {
+      map.set("unignore", ["un-ignore test (Ctrl-i)", this.unignore, ""]);
+    } else {
+      map.set("ignore", ["ignore test (Ctrl-i)", this.ignore, ""]);
+    }
+    return map;
   }
+
+  clearBreakPoint = () => {
+    this.breakpointStatus = BreakpointStatus.none;
+  };
 }

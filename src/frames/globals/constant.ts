@@ -7,12 +7,12 @@ import { Collapsible } from "../interfaces/collapsible";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
-import { Frame } from "../interfaces/frame";
 import { GlobalFrame } from "../interfaces/global-frame";
+import { Scope } from "../interfaces/scope";
+import { Transforms } from "../interfaces/transforms";
 import { constantKeyword } from "../keywords";
 import { getGlobalScope } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
-import { Transforms } from "../syntax-nodes/transforms";
 
 export class Constant extends AbstractFrame implements ElanSymbol, GlobalFrame, Collapsible {
   isCollapsible: boolean = true;
@@ -21,6 +21,7 @@ export class Constant extends AbstractFrame implements ElanSymbol, GlobalFrame, 
   value: ConstantValueField;
   file: File;
   isConstant = true;
+  hrefForFrameHelp: string = "LangRef.html#constant";
 
   constructor(parent: File) {
     super(parent);
@@ -52,7 +53,7 @@ export class Constant extends AbstractFrame implements ElanSymbol, GlobalFrame, 
     return "const";
   }
   renderAsHtml(): string {
-    return `<el-const class="${this.cls()}" id='${this.htmlId}' tabindex="0"><el-top><el-expand>+</el-expand><el-kw>constant </el-kw>${this.name.renderAsHtml()}</el-top><el-kw> set to </el-kw>${this.value.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-const>`;
+    return `<el-const class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.toolTip()}><el-top>${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>constant </el-kw>${this.name.renderAsHtml()}</el-top><el-kw> set to </el-kw>${this.value.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-const>`;
   }
 
   indent(): string {
@@ -90,7 +91,7 @@ export class Constant extends AbstractFrame implements ElanSymbol, GlobalFrame, 
     return SymbolScope.program;
   }
 
-  resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
+  resolveSymbol(id: string, transforms: Transforms, initialScope: Scope): ElanSymbol {
     if (id === this.symbolId) {
       return this;
     }

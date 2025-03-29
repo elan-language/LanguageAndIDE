@@ -176,11 +176,16 @@ suite("Symbol Completion Spec", () => {
   test("Expression4", () => {
     testSymbolCompletionSpec(
       new ExprNode(),
-      "empty Array<of I",
+      "empty List<of I",
       ParseStatus.incomplete,
       TypeNode.name,
       "I",
-      [TokenType.type_concrete],
+      [
+        TokenType.type_concrete,
+        TokenType.type_abstract,
+        TokenType.type_enum,
+        TokenType.type_notInheritable,
+      ],
       [],
     );
   });
@@ -539,7 +544,7 @@ suite("Symbol Completion Spec", () => {
       "",
     );
   });
-  test("#909 Array 1", () => {
+  test("#909 List 1", () => {
     testSymbolCompletionSpec(
       new ExprNode(),
       "[",
@@ -551,7 +556,7 @@ suite("Symbol Completion Spec", () => {
       "",
     );
   });
-  test("#909 Array 2", () => {
+  test("#909 List 2", () => {
     testSymbolCompletionSpec(
       new ExprNode(),
       "[a",
@@ -563,7 +568,7 @@ suite("Symbol Completion Spec", () => {
       "",
     );
   });
-  test("#909 Array 3", () => {
+  test("#909 List 3", () => {
     testSymbolCompletionSpec(
       new ExprNode(),
       "[a, a",

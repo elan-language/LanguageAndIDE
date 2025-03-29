@@ -9,6 +9,7 @@ import {
   isCollapsible,
   isFrame,
   isParent,
+  isSelector,
   singleIndent,
 } from "./frame-helpers";
 import { editorEvent } from "./interfaces/editor-event";
@@ -19,16 +20,23 @@ import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
 import { Scope } from "./interfaces/scope";
 import { Selectable } from "./interfaces/selectable";
+import { Transforms } from "./interfaces/transforms";
 import {
   parentHelper_getAllSelectedChildren,
   parentHelper_getChildAfter,
   parentHelper_removeAllSelectedChildren,
 } from "./parent-helpers";
 import { ScratchPad } from "./scratch-pad";
-import { CompileStatus, DisplayStatus, ParseStatus } from "./status-enums";
+import {
+  BreakpointEvent,
+  BreakpointStatus,
+  CompileStatus,
+  DisplayColour,
+  ParseStatus,
+} from "./status-enums";
+import { allScopedSymbols, orderSymbol } from "./symbols/symbol-helpers";
 import { SymbolScope } from "./symbols/symbol-scope";
 import { UnknownType } from "./symbols/unknown-type";
-import { Transforms } from "./syntax-nodes/transforms";
 
 export abstract class AbstractFrame implements Frame {
   isFrame = true;
@@ -43,8 +51,11 @@ export abstract class AbstractFrame implements Frame {
   protected movable: boolean = true;
   private _parseStatus: ParseStatus = ParseStatus.default;
   private _compileStatus: CompileStatus = CompileStatus.default;
+  abstract hrefForFrameHelp: string;
 
   protected showContextMenu = false;
+  breakpointStatus: BreakpointStatus = BreakpointStatus.none;
+  protected paused = false;
 
   constructor(parent: Parent) {
     this._parent = parent;
@@ -54,6 +65,21 @@ export abstract class AbstractFrame implements Frame {
     map.set(this.htmlId, this);
     this.setMap(map);
   }
+
+  compileScope: Scope | undefined;
+
+  setCompileScope(s: Scope): void {
+    this.compileScope = s;
+  }
+
+  getCurrentScope(): Scope {
+    return this;
+  }
+
+  getParentScope(): Scope {
+    return this.compileScope ?? this.getParent();
+  }
+
   hasBeenAddedTo(): void {
     this.isNew = false;
   }
@@ -92,12 +118,12 @@ export abstract class AbstractFrame implements Frame {
     return this.getFile().getFrNo();
   }
 
-  resolveSymbol(id: string | undefined, transforms: Transforms, _initialScope: Frame): ElanSymbol {
-    return this.getParent().resolveSymbol(id, transforms, this);
+  resolveSymbol(id: string, transforms: Transforms, _initialScope: Scope): ElanSymbol {
+    return this.getParentScope().resolveSymbol(id, transforms, this);
   }
 
-  symbolMatches(id: string, all: boolean, _initialScope?: Scope): ElanSymbol[] {
-    return this.getParent().symbolMatches(id, all, this);
+  symbolMatches(id: string, all: boolean, _initialScope: Scope): ElanSymbol[] {
+    return this.getParentScope().symbolMatches(id, all, this);
   }
 
   compile(_transforms: Transforms): string {
@@ -221,20 +247,20 @@ export abstract class AbstractFrame implements Frame {
       case "o": {
         if (e.modKey.control && isCollapsible(this)) {
           this.expandCollapse();
-          break;
         }
+        break;
       }
       case "O": {
         if (e.modKey.control) {
           this.expandCollapseAll();
-          break;
         }
+        break;
       }
       case "t": {
         if (e.modKey.alt) {
           this.getFile().removeAllSelectorsThatCanBe();
-          break;
         }
+        break;
       }
       case "ArrowUp": {
         if (e.modKey.control && this.movable) {
@@ -269,17 +295,17 @@ export abstract class AbstractFrame implements Frame {
       }
       case "Delete": {
         if (e.modKey.control) {
-          this.getParent().deleteSelectedChildren();
+          this.deleteSelected();
           codeHasChanged = true;
         }
         break;
       }
       case "d": {
         if (e.modKey.control) {
-          this.getParent().deleteSelectedChildren();
+          this.deleteSelected();
           codeHasChanged = true;
-          break;
         }
+        break;
       }
       case "Backspace": {
         if (this.isNew) {
@@ -288,20 +314,36 @@ export abstract class AbstractFrame implements Frame {
         }
         break;
       }
-
       case "x": {
         if (e.modKey.control) {
           this.cut();
           codeHasChanged = true;
+        }
+        break;
+      }
+      case "b": {
+        if (e.modKey.control) {
+          this.toggleBreakPoint();
+          codeHasChanged = true;
+        }
+        break;
+      }
+      case "m": {
+        if (!e.modKey.control) {
           break;
         }
+        // fall through
       }
       case "ContextMenu": {
-        // todo renamethis to data say
-        if (e.autocomplete) {
+        if (e.optionalData) {
+          // This case is when user has selected an item FROM the context menu
           const map = this.getContextMenuItems();
-          map.get(e.autocomplete)![1]?.();
+          map.get(e.optionalData)![1]?.();
         } else {
+          // Bringup the context menu
+          if (!this.isSelected()) {
+            this.select(true, false);
+          }
           this.showContextMenu = true;
         }
         break;
@@ -309,7 +351,11 @@ export abstract class AbstractFrame implements Frame {
     }
     return codeHasChanged;
   }
-  cut(): void {
+  deleteSelected = () => {
+    this.getParent().deleteSelectedChildren();
+  };
+
+  cut = () => {
     const selected = parentHelper_getAllSelectedChildren(this.getParent());
     const nonSelectors = selected.filter((s) => !(s.initialKeywords() === "selector"));
     if (nonSelectors.length === 0) {
@@ -325,10 +371,10 @@ export abstract class AbstractFrame implements Frame {
     newFocus.select(true, false);
     const sp = this.getScratchPad();
     sp.addSnippet(selected);
-    if (!("isSelector" in newFocus) && !newFocus.getParent().minimumNumberOfChildrenExceeded()) {
+    if (!isSelector(newFocus) && !newFocus.getParent().minimumNumberOfChildrenExceeded()) {
       newFocus.insertPeerSelector(false);
     }
-  }
+  };
 
   deleteIfPermissible(): void {
     if (this.movable) {
@@ -368,8 +414,8 @@ export abstract class AbstractFrame implements Frame {
     const parent = this.getParent();
     let next = parent.getChildAfter(this);
     if (next === this) {
-      if (!("isFile" in parent)) {
-        next = parent as unknown as Frame;
+      if (isFrame(parent)) {
+        next = parent;
       }
     }
     next.select(true, false);
@@ -428,10 +474,12 @@ export abstract class AbstractFrame implements Frame {
     this.pushClass(this.collapsed, "collapsed");
     this.pushClass(this.selected, "selected");
     this.pushClass(this.focused, "focused");
-    this._classes.push(DisplayStatus[this.readDisplayStatus()]);
+    this.pushClass(this.breakpointStatus !== BreakpointStatus.none, "breakpoint");
+    this.pushClass(this.paused, "paused");
+    this._classes.push(DisplayColour[this.readDisplayStatus()]);
   }
 
-  protected readDisplayStatus(): DisplayStatus {
+  protected readDisplayStatus(): DisplayColour {
     return helper_CompileOrParseAsDisplayStatus(this);
   }
 
@@ -444,7 +492,7 @@ export abstract class AbstractFrame implements Frame {
 
   indent(): string {
     if (this.hasParent()) {
-      return this.getParent()?.indent() + singleIndent();
+      return this.getParent().indent() + singleIndent();
     } else {
       return singleIndent();
     }
@@ -502,10 +550,6 @@ export abstract class AbstractFrame implements Frame {
     throw new Error(`Frame : ${this.htmlId} has no Parent`);
   }
 
-  getParentScope(): Scope {
-    return this.getParent();
-  }
-
   expandCollapse(): void {
     if (this.isCollapsed()) {
       this.expand();
@@ -523,13 +567,13 @@ export abstract class AbstractFrame implements Frame {
   }
 
   collapse(): void {
-    if ("isCollapsible" in this) {
+    if (isCollapsible(this)) {
       this.collapsed = true;
     }
   }
 
   expand(): void {
-    if ("isCollapsible" in this) {
+    if (isCollapsible(this)) {
       this.collapsed = false;
     }
   }
@@ -604,11 +648,90 @@ export abstract class AbstractFrame implements Frame {
     return helper_compileMsgAsHtml(this);
   }
 
-  setBreakPoint() {}
+  getNextState(currentState: BreakpointStatus, event: BreakpointEvent) {
+    switch (currentState) {
+      case BreakpointStatus.none:
+        switch (event) {
+          case BreakpointEvent.clear:
+            return BreakpointStatus.none;
+          case BreakpointEvent.activate:
+            return BreakpointStatus.singlestep;
+          case BreakpointEvent.disable:
+            return BreakpointStatus.none;
+        }
+      case BreakpointStatus.disabled:
+        switch (event) {
+          case BreakpointEvent.clear:
+            return BreakpointStatus.none;
+          case BreakpointEvent.activate:
+            return BreakpointStatus.active;
+          case BreakpointEvent.disable:
+            return BreakpointStatus.disabled;
+        }
+      case BreakpointStatus.active:
+        switch (event) {
+          case BreakpointEvent.clear:
+            return BreakpointStatus.none;
+          case BreakpointEvent.activate:
+            return BreakpointStatus.active;
+          case BreakpointEvent.disable:
+            return BreakpointStatus.disabled;
+        }
+      case BreakpointStatus.singlestep:
+        switch (event) {
+          case BreakpointEvent.clear:
+            return BreakpointStatus.none;
+          case BreakpointEvent.activate:
+            return BreakpointStatus.singlestep;
+          case BreakpointEvent.disable:
+            return BreakpointStatus.none;
+        }
+    }
+  }
+
+  updateBreakpoints(event: BreakpointEvent): void {
+    this.breakpointStatus = this.getNextState(this.breakpointStatus, event);
+  }
+
+  setBreakPoint = () => {
+    this.breakpointStatus = BreakpointStatus.active;
+  };
+
+  clearBreakPoint = () => {
+    this.breakpointStatus = BreakpointStatus.none;
+  };
+
+  toggleBreakPoint = () => {
+    if (this.hasBreakpoint()) {
+      this.clearBreakPoint();
+    } else {
+      this.setBreakPoint();
+    }
+  };
+
+  clearAllBreakPoints = () => {
+    this.getFile().updateBreakpoints(BreakpointEvent.clear);
+  };
+
+  hasBreakpoint() {
+    return (
+      this.breakpointStatus === BreakpointStatus.active ||
+      this.breakpointStatus === BreakpointStatus.disabled
+    );
+  }
 
   getContextMenuItems() {
-    const map = new Map<string, [string, () => void]>();
-    map.set("setBP", ["set Break Point", this.setBreakPoint]);
+    const map = new Map<string, [string, (() => void) | undefined, string]>();
+    map.set("frameHelp", ["help for this instruction", undefined, this.hrefForFrameHelp]);
+    // Must be arrow functions for this binding
+    if (this.hasBreakpoint()) {
+      map.set("clearBP", ["clear breakpoint (Ctrl-b)", this.clearBreakPoint, ""]);
+      map.set("clearAllBP", ["clear all breakpoints", this.clearAllBreakPoints, ""]);
+    } else {
+      map.set("setBP", ["set breakpoint (Ctrl-b)", this.setBreakPoint, ""]);
+    }
+    map.set("cut", ["cut (Ctrl-x)", this.cut, ""]);
+    map.set("delete", ["delete (Ctrl-Delete or Ctrl-d)", this.deleteSelected, ""]);
     return map;
   }
 
@@ -621,12 +744,90 @@ export abstract class AbstractFrame implements Frame {
       for (const k of map.keys()) {
         const val = map.get(k)!;
         items.push(
-          `<div class='context-menu-item' data-id='${this.htmlId}' data-func='${k}'>${val[0]}</div>`,
+          `<div class='context-menu-item' data-id='${this.htmlId}' data-func='${k}' data-href='${val[2]}' title="">${val[0]}</div>`,
         );
       }
 
       return `<div class='context-menu'>${items.join("")}</div>`;
     }
     return "";
+  }
+
+  debugSymbols() {
+    return () => allScopedSymbols(this.getParentScope(), this);
+  }
+
+  isNotGlobalOrLib(s: ElanSymbol) {
+    const scope = s.symbolScope;
+
+    return !(scope === SymbolScope.program || scope === SymbolScope.stdlib);
+  }
+
+  bpAsHtml(): string {
+    return this.hasBreakpoint() ? `<el-bp>&#x1f5f2;</el-bp>` : "";
+  }
+
+  bpIndent() {
+    return this.indent() === "" ? "  " : this.indent();
+  }
+
+  resolveVariables(scopedSymbols: () => ElanSymbol[]) {
+    const resolveId: string[] = [];
+    const symbols = scopedSymbols().filter(this.isNotGlobalOrLib).sort(orderSymbol);
+    const indent = this.bpIndent();
+
+    for (const symbol of symbols) {
+      const idPrefix =
+        symbol.symbolScope === SymbolScope.program
+          ? "global."
+          : symbol.symbolScope === SymbolScope.member
+            ? "property."
+            : "";
+
+      const scopePrefix =
+        symbol.symbolScope === SymbolScope.stdlib
+          ? "_stdlib."
+          : symbol.symbolScope === SymbolScope.program
+            ? "global."
+            : symbol.symbolScope === SymbolScope.member
+              ? "this."
+              : "";
+
+      const id = `${idPrefix}${symbol.symbolId}`;
+      const value = `${scopePrefix}${symbol.symbolId}`;
+      resolveId.push(
+        `${indent}_scopedIds${this.htmlId}.push(["${id}", await system.debugSymbol(${value})]);`,
+      );
+    }
+
+    return `${resolveId.join("\r\n")}`;
+  }
+
+  breakPoint(scopedSymbols: () => ElanSymbol[]) {
+    if (
+      this.breakpointStatus === BreakpointStatus.active ||
+      this.breakpointStatus === BreakpointStatus.singlestep
+    ) {
+      let resolve = this.resolveVariables(scopedSymbols);
+      const type = this.breakpointStatus === BreakpointStatus.singlestep ? "true" : "false";
+      const indent = this.bpIndent();
+
+      if (this.breakpointStatus === BreakpointStatus.singlestep) {
+        resolve = `${indent}if (__pause) {
+${resolve}
+${indent}}`;
+      }
+
+      resolve = `${indent}const _scopedIds${this.htmlId} = [];
+${resolve}`;
+
+      return `${resolve}\r\n${indent}__pause = await system.breakPoint(_scopedIds${this.htmlId}, "${this.htmlId}", ${type}, __pause);\r\n`;
+    }
+
+    return "";
+  }
+
+  protected toolTip(): string {
+    return `title="Right-mouse-click or Ctrl-m to show context menu"`;
   }
 }

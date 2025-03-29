@@ -77,14 +77,14 @@ suite("Selector tests", () => {
     let help = g.getCompletion();
     assert.equal(
       help,
-      " main procedure function constant test interface enum class abstract record #",
+      " main procedure function test constant enum record class abstract interface #",
     );
     g.processKey(key("c"));
     help = g.getCompletion();
     assert.equal(help, " constant class");
     assert.equal(
       g.renderAsHtml(),
-      `<el-global class="default" id='select1' tabindex="0"><el-select><el-txt>c</el-txt><el-place>new code</el-place><el-help class="selector"> constant class</el-help></el-select></el-global>`,
+      `<el-global class="none" id='select1' tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-select><el-txt>c</el-txt><el-place>new code</el-place><el-help class="selector"> constant class</el-help></el-select></el-global>`,
     );
   });
 
@@ -93,26 +93,26 @@ suite("Selector tests", () => {
     const c = new ConcreteClass(f);
     const s = new MemberSelector(c);
     let help = s.getCompletion();
-    assert.equal(help, " constructor function procedure property private...   #");
+    assert.equal(help, " constructor property procedure function private...   #");
     s.processKey(key("p"));
     assert.equal(s.text, "pr");
     help = s.getCompletion();
-    assert.equal(help, " procedure property private...  ");
+    assert.equal(help, " property procedure private...  ");
     s.processKey(key("r"));
     assert.equal(s.text, "pr");
     help = s.getCompletion();
-    assert.equal(help, " procedure property private...  ");
+    assert.equal(help, " property procedure private...  ");
     s.processKey(key("i"));
     assert.equal(s.text, "private ");
     help = s.getCompletion();
-    assert.equal(help, " function procedure property");
+    assert.equal(help, " property procedure function");
     s.processKey(key("p"));
     assert.equal(s.text, "private pro");
     help = s.getCompletion();
-    assert.equal(help, " procedure property");
+    assert.equal(help, " property procedure");
     assert.equal(
       s.renderAsHtml(),
-      `<el-member class="ok" id='select5' tabindex="0"><el-select><el-txt>private pro</el-txt><el-place>new code</el-place><el-help class="selector"> procedure property</el-help></el-select></el-member>`,
+      `<el-member class="ok" id='select5' tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-select><el-txt>private pro</el-txt><el-place>new code</el-place><el-help class="selector"> property procedure</el-help></el-select></el-member>`,
     );
   });
 
@@ -120,21 +120,21 @@ suite("Selector tests", () => {
     const f = new FileImpl(hash, new DefaultProfile(), transforms());
     const c = new AbstractClass(f);
     const s = new MemberSelector(c);
-    assert.equal(s.getCompletion(), " function procedure property abstract...   private...   #");
+    assert.equal(s.getCompletion(), " property procedure function abstract...   private...   #");
     s.processKey(key("a"));
     assert.equal(s.text, "abstract ");
-    assert.equal(s.getCompletion(), " function procedure property");
+    assert.equal(s.getCompletion(), " property procedure function");
     s.processKey(key("a"));
     assert.equal(s.text, "abstract ");
     s.processKey(key("b"));
     assert.equal(s.text, "abstract ");
-    assert.equal(s.getCompletion(), " function procedure property");
+    assert.equal(s.getCompletion(), " property procedure function");
     s.processKey(key("p"));
     assert.equal(s.text, "abstract pro");
-    assert.equal(s.getCompletion(), " procedure property");
+    assert.equal(s.getCompletion(), " property procedure");
     assert.equal(
       s.renderAsHtml(),
-      `<el-member class="ok" id='select5' tabindex="0"><el-select><el-txt>abstract pro</el-txt><el-place>new code</el-place><el-help class="selector"> procedure property</el-help></el-select></el-member>`,
+      `<el-member class="ok" id='select5' tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-select><el-txt>abstract pro</el-txt><el-place>new code</el-place><el-help class="selector"> property procedure</el-help></el-select></el-member>`,
     );
   });
 
@@ -145,7 +145,7 @@ suite("Selector tests", () => {
     assert.equal(s.getCompletion(), " abstract...   #");
     s.processKey(key("a"));
     assert.equal(s.text, "abstract ");
-    assert.equal(s.getCompletion(), " function procedure property");
+    assert.equal(s.getCompletion(), " property procedure function");
   });
 
   test("Selection Filtering - statements", () => {
@@ -159,7 +159,7 @@ suite("Selector tests", () => {
     assert.equal(help, " throw try");
     assert.equal(
       s.renderAsHtml(),
-      `<el-statement class="ok" id='select3' tabindex="0"><el-select><el-txt>t</el-txt><el-place>new code</el-place><el-help class="selector"> throw try</el-help></el-select></el-statement>`,
+      `<el-statement class="ok" id='select3' tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-select><el-txt>t</el-txt><el-place>new code</el-place><el-help class="selector"> throw try</el-help></el-select></el-statement>`,
     );
   });
 
@@ -220,13 +220,13 @@ suite("Selector tests", () => {
     let help = gs.getCompletion();
     assert.equal(
       help,
-      " main procedure function constant test interface enum class abstract record #",
+      " main procedure function test constant enum record class abstract interface #",
     );
     const m = new MainFrame(fl);
     fl.getChildren().push(m);
     gs = new GlobalSelector(fl);
     help = gs.getCompletion();
-    assert.equal(help, " procedure function constant test interface enum class abstract record #");
+    assert.equal(help, " procedure function test constant enum record class abstract interface #");
   });
 
   test("#377 - Global select filtered by profile", () => {

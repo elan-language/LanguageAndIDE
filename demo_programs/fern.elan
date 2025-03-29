@@ -1,31 +1,33 @@
-# FFFF Elan Beta 5 valid
+# e7893268c6b90bda1bb0c28194b4cad41cc90c8db5185159144d68cb497b3add Elan Beta 9 valid
 
 # https://en.wikipedia.org/wiki/Barnsley_fern
 # Draws a fractal image
 main
-  variable vg set to new VectorGraphics()
+  variable vg set to new List<of VectorGraphic>()
   # coordinates
   variable x set to 0.0
   variable y set to 0.16
   # random number
   variable r set to 0
+  variable rect set to new RectangleVG(0, 0, 0, 0, 0, 0, 0)
   variable count set to 0
   # don't set the count limit too high
   # or the browser will run out of memory
   while count < 1000
-    set vg, x, y, r to onepoint(vg, x, y, r)
-    call vg.display()
+    set rect, x, y, r to onepoint(x, y, r)
+    call vg.append(rect)
+    call displayVectorGraphics(vg)
     set count to count + 1
   end while
   print "Finished"
 end main
 
-function onepoint(vg as VectorGraphics, x as Float, y as Float, r as Int) returns (VectorGraphics, Float, Float, Int)
+function onepoint(x as Float, y as Float, r as Int) returns (RectangleVG, Float, Float, Int)
   # next pseudo-random number (Grogono parameters)
   variable nr set to (r*25173 + 13849) mod 0x10000
   variable nx, ny set to onestep(x, y, nr/0x10000)
-  variable vg2 set to vg.add(new RectangleVG() with x set to nx*scale + 50, y set to 75 - ny*scale, height set to 0.5, width set to 0.5, fill set to 0x408040, stroke set to 0x408040, strokeWidth set to 0.25)
-  return tuple(vg2, nx, ny, nr)
+  let rect be new RectangleVG(nx*scale + 50, 75 - ny*scale, 0.5, 0.5, 0x408040, 0x408040, 0.25)
+  return tuple(rect, nx, ny, nr)
 end function
 
 # r is random Float 0.0 <= r < 1.0
@@ -47,11 +49,10 @@ function onestep(x as Float, y as Float, r as Float) returns (Float, Float)
   variable ny set to 0.0
   each pp in params
     set cumuprob to cumuprob + pp[6]
-    if (not done) and (r < cumuprob)
-      then
-        set nx to x*pp[0] + y*pp[1] + pp[4]
-        set ny to x*pp[2] + y*pp[3] + pp[5]
-        set done to true
+    if (not done) and (r < cumuprob) then
+      set nx to x*pp[0] + y*pp[1] + pp[4]
+      set ny to x*pp[2] + y*pp[3] + pp[5]
+      set done to true
     end if
   end each
   return tuple(nx, ny)
@@ -68,9 +69,9 @@ function roundtuple1(n as (Float, Float)) returns (Float, Float)
   return tuple(a.round(8), b.round(8))
 end function
 
-function roundtuple2(n as (Float, Float)) returns List<of Float>
+function roundtuple2(n as (Float, Float)) returns ListImmutable<of Float>
   let a, b be n
-  return {a, b}.map(lambda x as Float => x.round(8)).asList()
+  return {a, b}.map(lambda x as Float => x.round(8))
 end function
 
 constant scale set to 7

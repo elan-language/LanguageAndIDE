@@ -5,12 +5,12 @@ import { Field } from "../../src/frames/interfaces/field";
 import { Frame } from "../../src/frames/interfaces/frame";
 import { ParseStatus } from "../../src/frames/status-enums";
 import { transform, transformMany } from "../../src/frames/syntax-nodes/ast-visitor";
-import { Transforms } from "../../src/frames/syntax-nodes/transforms";
 import { runTests } from "../../src/runner";
 import { StdLib } from "../../src/standard-library/std-lib";
 import { AssertOutcome } from "../../src/system";
 import { TestInputOutput } from "./test-input-output";
 import { getTestSystem } from "./test-system";
+import { Transforms } from "../../src/frames/interfaces/transforms";
 
 export function assertParses(file: FileImpl) {
   assert.strictEqual(file.parseError, undefined, "Unexpected parse error: " + file.parseError);
@@ -100,6 +100,7 @@ export async function executeTestCode(file: FileImpl, input?: string) {
   const system = getTestSystem(input ?? "");
   const stdlib = new StdLib();
   stdlib.system = system;
+  system.stdlib = stdlib;
 
   return doImport(jsCode).then(async (elan) => {
     if (elan.program) {
@@ -165,8 +166,7 @@ export async function assertGraphicsContains(file: FileImpl, offset: number, sni
   } catch (e) {
     assert.fail((e as { message: string }).message ?? "");
   }
-  const start = `<div id="block-graphics">`.length;
-  const divs = graphics.substring(start).split("</div>");
+  const divs = graphics.split("</div>");
 
   if (divs.length > offset) {
     assert.strictEqual(divs[offset], snippet);

@@ -1,12 +1,14 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
+  assertDoesNotCompile,
   assertDoesNotCompileWithId,
   assertDoesNotParse,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -24,7 +26,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = 3;
-  system.printLine(a);
+  await system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -51,7 +53,7 @@ const global = new class {};
 async function main() {
   let a = 3;
   let b = a;
-  system.printLine(b);
+  await system.printLine(b);
 }
 return [main, _tests];}`;
 
@@ -76,7 +78,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = 3 + 4;
-  system.printLine(a);
+  await system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -103,7 +105,7 @@ const global = new class {};
 async function main() {
   let a = 3;
   a = 4;
-  system.printLine(a);
+  await system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -130,7 +132,7 @@ const global = new class {};
 async function main() {
   let a = 3.1;
   a = 4;
-  system.printLine(a);
+  await system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -179,15 +181,15 @@ async function main() {
   let g = 3 !== 4;
   let h = !_stdlib.false;
   let k = 4 / 3;
-  system.printLine(a);
-  system.printLine(b);
-  system.printLine(c);
-  system.printLine(d);
-  system.printLine(e);
-  system.printLine(f);
-  system.printLine(g);
-  system.printLine(h);
-  system.printLine(k);
+  await system.printLine(a);
+  await system.printLine(b);
+  await system.printLine(c);
+  await system.printLine(d);
+  await system.printLine(e);
+  await system.printLine(f);
+  await system.printLine(g);
+  await system.printLine(h);
+  await system.printLine(k);
 }
 return [main, _tests];}`;
 
@@ -216,7 +218,7 @@ const Fruit = {
 const global = new class {};
 async function main() {
   let a = Fruit.apple;
-  system.printLine(a);
+  await system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -242,13 +244,13 @@ end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
-  a = system.list([1, 2]);
+  a = system.listImmutable([1, 2]);
 
 };
 async function main() {
-  let b = _stdlib.map(global.a, (x) => x);
-  b = system.list([1, 2]);
-  system.printLine(b);
+  let b = (await global.a.map(async (x) => x));
+  b = system.listImmutable([1, 2]);
+  await system.printLine(b);
 }
 return [main, _tests];}`;
 
@@ -300,7 +302,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "set6", ["Incompatible types Float to String"]);
+    assertDoesNotCompileWithId(fileImpl, "set6", [
+      "Incompatible types. Expected: String Provided: Float",
+    ]);
   });
 
   test("Fail_NotInitialized", async () => {
@@ -396,17 +400,25 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "set22", ["Incompatible types Float to Boolean"]);
-    assertDoesNotCompileWithId(fileImpl, "set25", ["Incompatible types Boolean to Int"]);
-    assertDoesNotCompileWithId(fileImpl, "set28", ["Incompatible types List<of Float> to String"]);
-    assertDoesNotCompileWithId(fileImpl, "set31", ["Incompatible types Float to Int"]);
+    assertDoesNotCompileWithId(fileImpl, "set22", [
+      "Incompatible types. Expected: Boolean Provided: Float",
+    ]);
+    assertDoesNotCompileWithId(fileImpl, "set25", [
+      "Incompatible types. Expected: Int Provided: Boolean",
+    ]);
+    assertDoesNotCompileWithId(fileImpl, "set28", [
+      "Incompatible types. Expected: String Provided: ListImmutable<of Float>",
+    ]);
+    assertDoesNotCompileWithId(fileImpl, "set31", [
+      "Incompatible types. Expected: Int Provided: Float",
+    ]);
   });
 
   test("Fail_TypeCheck2", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to createArray(3, "")
+  variable a set to createList(3, "")
   variable b set to {1.0, 2}
   variable c set to ["a":1.0, "b":3, "z":10]
   set a to {1.0, 2}
@@ -419,15 +431,15 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompileWithId(fileImpl, "set12", [
-      "Incompatible types List<of Float> to Array<of String>",
+      "Incompatible types. Expected: List<of String> Provided: ListImmutable<of Float>",
     ]);
 
     assertDoesNotCompileWithId(fileImpl, "set15", [
-      "Incompatible types Array<of String> to List<of Float> try converting with '.asList()'",
+      "Incompatible types. Expected: ListImmutable<of Float> try converting with '.asListImmutable()' Provided: List<of String>",
     ]);
 
     assertDoesNotCompileWithId(fileImpl, "set18", [
-      "Incompatible types List<of Float> to Dictionary<of String, Float>",
+      "Incompatible types. Expected: Dictionary<of String, Float> Provided: ListImmutable<of Float>",
     ]);
   });
 
@@ -449,24 +461,25 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable i set to [1,2]
-  variable x set to head
-  variable y set to x(i)
+  variable x set to ref createFileForWriting
+  variable y set to x("")
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "expr11", ["Cannot call extension method directly"]);
+    assertDoesNotCompile(fileImpl, [
+      "Library or class function 'createFileForWriting' cannot be preceded by by 'ref'",
+    ]);
   });
 
   test("Fail_referenceToExtensionFunction1", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable i set to [1,2]
-  variable x set to head
+  variable i set to 1
+  variable x set to asList
   variable y set to i.x()
 end main`;
 
@@ -474,7 +487,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "expr11", ["'x' is not defined"]);
+    assertDoesNotCompileWithId(fileImpl, "expr11", ["'x' is not defined for type 'Int'"]);
   });
 
   test("Pass_Redefine", async () => {
@@ -491,10 +504,10 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let [a, length] = foo();
+  let [a, length] = (await global.foo());
 }
 
-function foo() {
+async function foo() {
   return system.tuple([0, 0]);
 }
 global["foo"] = foo;
@@ -521,7 +534,7 @@ end main
 const global = new class {};
 async function main() {
   let a = ((((3))));
-  system.printLine(a);
+  await system.printLine(a);
 }
 return [main, _tests];}`;
 

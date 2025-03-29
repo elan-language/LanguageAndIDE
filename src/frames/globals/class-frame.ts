@@ -20,7 +20,7 @@ import {
 import { InheritsFrom } from "../fields/inheritsFrom";
 import { Regexes } from "../fields/regexes";
 import { TypeNameField } from "../fields/type-name-field";
-import { isMember } from "../frame-helpers";
+import { isConstructor, isMember } from "../frame-helpers";
 import { Class } from "../interfaces/class";
 import { Collapsible } from "../interfaces/collapsible";
 import { ElanSymbol } from "../interfaces/elan-symbol";
@@ -29,8 +29,10 @@ import { File } from "../interfaces/file";
 import { Frame } from "../interfaces/frame";
 import { Parent } from "../interfaces/parent";
 import { Profile } from "../interfaces/profile";
+import { Scope } from "../interfaces/scope";
 import { StatementFactory } from "../interfaces/statement-factory";
 import { SymbolType } from "../interfaces/symbol-type";
+import { Transforms } from "../interfaces/transforms";
 import { classKeyword, constructorKeyword, thisKeyword } from "../keywords";
 import {
   parentHelper_addChildAfter,
@@ -49,15 +51,17 @@ import {
   parentHelper_readWorstCompileStatusOfChildren,
   parentHelper_readWorstParseStatusOfChildren,
   parentHelper_removeChild,
+  parentHelper_updateBreakpoints,
 } from "../parent-helpers";
 import { CommentStatement } from "../statements/comment-statement";
+import { BreakpointEvent } from "../status-enums";
 import { ClassSubType, ClassType } from "../symbols/class-type";
 import { DuplicateSymbol } from "../symbols/duplicate-symbol";
+import { NullScope } from "../symbols/null-scope";
 import { getGlobalScope, isSymbol, symbolMatches } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { isAstCollectionNode, isAstIdNode, transforms } from "../syntax-nodes/ast-helpers";
-import { Transforms } from "../syntax-nodes/transforms";
 
 export abstract class ClassFrame
   extends AbstractFrame
@@ -74,6 +78,7 @@ export abstract class ClassFrame
   public isNotInheritable = false;
   public inheritance: InheritsFrom;
   private _children: Array<Frame> = new Array<Frame>();
+  hrefForFrameHelp: string = "LangRef.html#class";
 
   constructor(parent: File) {
     super(parent);
@@ -83,7 +88,10 @@ export abstract class ClassFrame
   }
 
   ofTypes: SymbolType[] = [];
-  genericParamMatches: Map<string, SymbolType> = new Map<string, SymbolType>();
+
+  updateOfTypes(_ofTypes: SymbolType[]) {
+    return this;
+  }
 
   get subType(): ClassSubType {
     if (this.isInterface) {
@@ -355,7 +363,7 @@ export abstract class ClassFrame
   }
 
   public getConstructor(): Constructor {
-    return this.getChildren().filter((m) => "isConstructor" in m)[0] as Constructor;
+    return this.getChildren().filter((m) => isConstructor(m))[0] as Constructor;
   }
   parseFrom(source: CodeSource): void {
     this.parseTop(source);
@@ -407,7 +415,7 @@ export abstract class ClassFrame
     return this.name.text;
   }
 
-  symbolMatches(id: string, all: boolean, _initialScope?: Frame | undefined): ElanSymbol[] {
+  symbolMatches(id: string, all: boolean, _initialScope: Scope): ElanSymbol[] {
     const otherMatches = this.getParent().symbolMatches(id, all, this);
 
     const symbols = this.getChildren().filter(
@@ -421,7 +429,7 @@ export abstract class ClassFrame
     let inheritedMatches: ElanSymbol[] = [];
 
     for (const ct of types) {
-      const s = ct.scope!.symbolMatches(id, all);
+      const s = ct.scope.symbolMatches(id, all, NullScope.Instance);
       inheritedMatches = inheritedMatches.concat(s);
     }
 
@@ -430,7 +438,7 @@ export abstract class ClassFrame
     return matches.concat(inheritedMatches).concat(otherMatches);
   }
 
-  resolveSymbol(id: string, transforms: Transforms, _initialScope: Frame): ElanSymbol {
+  resolveSymbol(id: string, transforms: Transforms, _initialScope: Scope): ElanSymbol {
     const symbol = this.resolveOwnSymbol(id, transforms);
 
     if (symbol instanceof UnknownSymbol) {
@@ -519,5 +527,10 @@ export abstract class ClassFrame
 
   getClassIndex() {
     return this.getParent().getChildren().indexOf(this);
+  }
+
+  updateBreakpoints(event: BreakpointEvent): void {
+    super.updateBreakpoints(event);
+    parentHelper_updateBreakpoints(this, event);
   }
 }

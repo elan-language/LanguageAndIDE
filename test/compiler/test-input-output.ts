@@ -1,5 +1,4 @@
 import { ElanInputOutput } from "../../src/elan-input-output";
-import { hasHiddenType } from "../../src/has-hidden-type";
 
 export class TestInputOutput implements ElanInputOutput {
   waitForAnyKey(): Promise<void> {
@@ -21,37 +20,61 @@ export class TestInputOutput implements ElanInputOutput {
 
   getKeyWithModifier(): Promise<[string, string]> {
     const t = ["", ""] as [string, string];
-    (t as unknown as hasHiddenType)._type = "Tuple";
     return  Promise.resolve(t);
   }
-  clearKeyBuffer(): void {}
+  clearKeyBuffer(): Promise<void> {
+    return Promise.resolve();
+  }
+
   printed: string = "";
   inputed: string = "";
   drawn: string = "";
 
-  drawGraphics(html: string): void {
+  drawBlockGraphics(html: string): Promise<void> {
     this.drawn = html;
+    return Promise.resolve();
   }
-  clearGraphics(): void {
+  clearBlockGraphics(): Promise<void> {
     this.drawn = "";
+    return Promise.resolve();
   }
-  print(line: string): void {
+  drawVectorGraphics(html: string): Promise<void> {
+    this.drawn = html;
+    return Promise.resolve();
+  }
+  clearVectorGraphics(): Promise<void> {
+    this.drawn = "";
+    return Promise.resolve();
+  }
+  clearAllGraphics(): Promise<void> {
+    this.drawn = "";
+    return Promise.resolve();
+  }
+  print(line: string): Promise<void> {
     this.printed = this.printed + line;
+    return Promise.resolve();
   }
-  printLine(line: string): void {
+  printLine(line: string): Promise<void> {
     this.print(line); //Currently, newline is not added for testing purposes
+    return Promise.resolve();
   }
-  printTab(position: number, text: string): void {
+  printTab(position: number, text: string): Promise<void> {
     const charsSinceNl = this.printed.length;
     const spaces =
       "                                                                                ";
     const tab = spaces.substring(0, position - charsSinceNl);
     this.print(`${tab}${text}`);
+    return Promise.resolve();
   }
   readLine(): Promise<string> {
     return Promise.resolve(this.inputed);
   }
-  clearConsole(): void {
+  clearPrintedText(): Promise<void> {
     this.printed = "";
+    return Promise.resolve();
+  }
+  clearSystemInfo(): Promise<void> {
+    this.printed = "";
+    return Promise.resolve();
   }
 }

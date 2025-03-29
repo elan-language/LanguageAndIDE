@@ -10,21 +10,23 @@ import {
 } from "../compile-rules";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstNode } from "../interfaces/ast-node";
+import { ChainedAsn } from "../interfaces/chained-asn";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
-import { ClassType } from "../symbols/class-type";
 import { FunctionType } from "../symbols/function-type";
+import { NullScope } from "../symbols/null-scope";
 import { isMemberOnFieldsClass, scopePrefix } from "../symbols/symbol-helpers";
 import { AbstractAstNode } from "./abstract-ast-node";
 import {
   containsGenericType,
   generateType,
+  isEmptyNode,
   matchGenericTypes,
   matchParametersAndTypes,
   transforms,
 } from "./ast-helpers";
-import { ChainedAsn } from "./chained-asn";
+import { EmptyAsn } from "./empty-asn";
 
 export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
   constructor(
@@ -36,8 +38,8 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
     super();
   }
 
-  private precedingNode?: AstNode = undefined;
-  private updatedScope?: Scope = undefined;
+  private precedingNode: AstNode = EmptyAsn.Instance;
+  private updatedScope: Scope = NullScope.Instance;
 
   updateScopeAndChain(scope: Scope, ast: AstNode) {
     this.updatedScope = scope;
@@ -53,7 +55,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
   private isExtensionMethod: boolean = false;
 
   aggregateCompileErrors(): CompileError[] {
-    const cc = this.precedingNode?.aggregateCompileErrors() ?? [];
+    const cc = this.precedingNode.aggregateCompileErrors();
     let pc: CompileError[] = [];
 
     for (const i of this.parameters) {
@@ -64,7 +66,8 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
   }
 
   getSymbolAndType(): [ElanSymbol, SymbolType] {
-    const currentScope = this.updatedScope ?? this.scope.getParentScope();
+    const currentScope =
+      this.updatedScope === NullScope.Instance ? this.scope.getParentScope() : this.updatedScope;
     const funcSymbol = currentScope.resolveSymbol(this.id, transforms(), this.scope);
     const funcSymbolType = funcSymbol.symbolType(transforms());
     return [funcSymbol, funcSymbolType];
@@ -76,7 +79,13 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
     let parameters = [...this.parameters];
     const [funcSymbol, funcSymbolType] = this.getSymbolAndType();
 
-    mustBeKnownSymbol(funcSymbol, this.updatedScope, this.compileErrors, this.fieldId);
+    mustBeKnownSymbol(
+      funcSymbol,
+      this.updatedScope,
+      this.precedingNode.symbolType(),
+      this.compileErrors,
+      this.fieldId,
+    );
 
     if (!isMemberOnFieldsClass(funcSymbol, transforms(), this.scope)) {
       mustBePublicMember(funcSymbol, this.compileErrors, this.fieldId);
@@ -102,15 +111,18 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
         this.fieldId,
       );
 
-      if (funcSymbolType.isExtension && this.precedingNode) {
+      if (funcSymbolType.isExtension && !isEmptyNode(this.precedingNode)) {
         this.isExtensionMethod = true;
         parameters = [this.precedingNode].concat(parameters);
       }
 
-      const st = this.precedingNode?.symbolType();
-      const cls = st instanceof ClassType ? st.scope : undefined;
-
-      matchParametersAndTypes(funcSymbolType, parameters, cls, this.compileErrors, this.fieldId);
+      matchParametersAndTypes(
+        funcSymbol.symbolId,
+        funcSymbolType,
+        parameters,
+        this.compileErrors,
+        this.fieldId,
+      );
 
       this.isAsync = funcSymbolType.isAsync;
     } else {
@@ -123,14 +135,20 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
       );
     }
 
-    const showPreviousNode = this.precedingNode && this.showPreviousNode;
-    const async = this.isAsync && !showPreviousNode ? "await " : "";
+    const showPreviousNode = !isEmptyNode(this.precedingNode) && this.showPreviousNode;
+    const showAwait =
+      this.isAsync &&
+      (!showPreviousNode ||
+        (this.updatedScope === NullScope.Instance && isEmptyNode(this.precedingNode)));
+    const asyncStart = showAwait ? "(await " : "";
+
+    const asyncEnd = showAwait ? ")" : "";
     const parms = parameters.map((p) => p.compile()).join(", ");
     const prefix = showPreviousNode
       ? ""
       : scopePrefix(funcSymbol, this.compileErrors, this.scope, this.fieldId);
 
-    return `${async}${prefix}${this.id}(${parms})`;
+    return `${asyncStart}${prefix}${this.id}(${parms})${asyncEnd}`;
   }
 
   symbolType() {
@@ -142,14 +160,10 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
       if (containsGenericType(returnType)) {
         let callParameters = this.parameters;
 
-        if (funcSymbolType.isExtension && this.precedingNode) {
+        if (funcSymbolType.isExtension && !isEmptyNode(this.precedingNode)) {
           callParameters = [this.precedingNode].concat(callParameters);
         }
-
-        const st = this.precedingNode?.symbolType();
-        const cls = st instanceof ClassType ? st.scope : undefined;
-
-        const matches = matchGenericTypes(funcSymbolType, callParameters, cls);
+        const matches = matchGenericTypes(funcSymbolType, callParameters);
         return generateType(returnType, matches);
       }
       return returnType;

@@ -1,5 +1,6 @@
 import { AbstractSelector } from "./abstract-selector";
 import { CompileError } from "./compile-error";
+import { MainFrame } from "./globals/main-frame";
 import { AstNode } from "./interfaces/ast-node";
 import { AstTypeNode } from "./interfaces/ast-type-node";
 import { Class } from "./interfaces/class";
@@ -12,17 +13,18 @@ import { Frame } from "./interfaces/frame";
 import { GlobalFrame } from "./interfaces/global-frame";
 import { Member } from "./interfaces/member";
 import { Parent } from "./interfaces/parent";
+import { PossiblyPrivateMember } from "./interfaces/possibly-private-member";
 import { Scope } from "./interfaces/scope";
 import { Selectable } from "./interfaces/selectable";
 import { Statement } from "./interfaces/statement";
 import { SymbolType } from "./interfaces/symbol-type";
-import { CompileStatus, DisplayStatus, ParseStatus, RunStatus, TestStatus } from "./status-enums";
-import { ArrayType } from "./symbols/array-type";
+import { isRecord } from "./interfaces/type-options";
+import { ReturnStatement } from "./statements/return-statement";
+import { CompileStatus, DisplayColour, ParseStatus, RunStatus, TestStatus } from "./status-enums";
 import { ClassType } from "./symbols/class-type";
 import { DeconstructedListType } from "./symbols/deconstructed-list-type";
 import { DeconstructedRecordType } from "./symbols/deconstructed-record-type";
 import { DeconstructedTupleType } from "./symbols/deconstructed-tuple-type";
-import { ListType } from "./symbols/list-type";
 import { TupleType } from "./symbols/tuple-type";
 
 export function isCollapsible(f?: Selectable): f is Collapsible {
@@ -31,6 +33,10 @@ export function isCollapsible(f?: Selectable): f is Collapsible {
 
 export function isFile(f?: Scope): f is File {
   return !!f && "isFile" in f;
+}
+
+export function isMain(f?: Scope): f is MainFrame {
+  return !!f && "isMain" in f;
 }
 
 export function isClass(f?: ElanSymbol | Scope): f is Class {
@@ -85,6 +91,10 @@ export function isGlobal(f?: Selectable | GlobalFrame): f is GlobalFrame {
   return !!f && "isGlobal" in f;
 }
 
+export function isReturnStatement(f?: Scope): f is ReturnStatement {
+  return !!f && "isReturnStatement" in f;
+}
+
 export function isScope(f?: ElanSymbol | Scope): f is Scope {
   return !!f && "resolveSymbol" in f && "getParentScope" in f;
 }
@@ -137,8 +147,8 @@ export function helper_compileMsgAsHtml(loc: Frame | Field): string {
   }
   let cls = "";
   const compile = helper_compileStatusAsDisplayStatus(loc.readCompileStatus());
-  if (compile === DisplayStatus.error || compile === DisplayStatus.warning) {
-    cls = DisplayStatus[compile];
+  if (compile === DisplayColour.error || compile === DisplayColour.warning) {
+    cls = DisplayColour[compile];
   }
   const toDisplay = escapeHtmlChars(msg);
   return cls === "" ? "<el-msg></el-msg>" : ` <el-msg class="${cls}">${toDisplay}</el-msg>`;
@@ -149,16 +159,16 @@ export function helper_deriveCompileStatusFromErrors(errors: CompileError[]): Co
   if (errors.length === 0) {
     result = CompileStatus.ok;
   } else {
-    result = errors.some((e) => !e.isWarning) ? CompileStatus.error : CompileStatus.unknownSymbol;
+    result = errors.some((e) => !e.isWarning) ? CompileStatus.error : CompileStatus.unknown_symbol;
   }
   return result;
 }
 
-export function helper_CompileOrParseAsDisplayStatus(loc: Frame | Field): DisplayStatus {
+export function helper_CompileOrParseAsDisplayStatus(loc: Frame | Field): DisplayColour {
   let status = helper_parseStatusAsDisplayStatus(loc.readParseStatus());
-  if (status === DisplayStatus.ok) {
+  if (status === DisplayColour.ok) {
     const compile = helper_compileStatusAsDisplayStatus(loc.readCompileStatus());
-    if (compile !== DisplayStatus.default) {
+    if (compile !== DisplayColour.none) {
       // Implies that the compiler has not been run
       status = compile;
     }
@@ -166,50 +176,50 @@ export function helper_CompileOrParseAsDisplayStatus(loc: Frame | Field): Displa
   return status;
 }
 
-export function helper_parseStatusAsDisplayStatus(ps: ParseStatus): DisplayStatus {
-  let overall = DisplayStatus.default;
+export function helper_parseStatusAsDisplayStatus(ps: ParseStatus): DisplayColour {
+  let overall = DisplayColour.none;
   if (ps === ParseStatus.valid) {
-    overall = DisplayStatus.ok;
+    overall = DisplayColour.ok;
   } else if (ps === ParseStatus.incomplete) {
-    overall = DisplayStatus.warning;
+    overall = DisplayColour.warning;
   } else if (ps === ParseStatus.invalid) {
-    overall = DisplayStatus.error;
+    overall = DisplayColour.error;
   }
   return overall;
 }
 
-export function helper_compileStatusAsDisplayStatus(cs: CompileStatus): DisplayStatus {
-  let overall = DisplayStatus.default;
+export function helper_compileStatusAsDisplayStatus(cs: CompileStatus): DisplayColour {
+  let overall = DisplayColour.none;
   if (cs === CompileStatus.ok) {
-    overall = DisplayStatus.ok;
-  } else if (cs === CompileStatus.unknownSymbol) {
-    overall = DisplayStatus.warning;
+    overall = DisplayColour.ok;
+  } else if (cs === CompileStatus.unknown_symbol) {
+    overall = DisplayColour.warning;
   } else if (cs === CompileStatus.error) {
-    overall = DisplayStatus.error;
+    overall = DisplayColour.error;
   }
   return overall;
 }
 
-export function helper_testStatusAsDisplayStatus(ts: TestStatus): DisplayStatus {
-  let overall = DisplayStatus.default;
+export function helper_testStatusAsDisplayStatus(ts: TestStatus): DisplayColour {
+  let overall = DisplayColour.none;
   if (ts === TestStatus.pass) {
-    overall = DisplayStatus.ok;
+    overall = DisplayColour.ok;
   } else if (ts === TestStatus.running || ts === TestStatus.ignored) {
-    overall = DisplayStatus.warning;
+    overall = DisplayColour.warning;
   } else if (ts === TestStatus.fail || ts === TestStatus.error) {
-    overall = DisplayStatus.error;
+    overall = DisplayColour.error;
   }
   return overall;
 }
 
-export function helper_runStatusAsDisplayStatus(rs: RunStatus): DisplayStatus {
-  let overall = DisplayStatus.default;
+export function helper_runStatusAsDisplayStatus(rs: RunStatus): DisplayColour {
+  let overall = DisplayColour.none;
   if (rs === RunStatus.running) {
-    overall = DisplayStatus.ok;
+    overall = DisplayColour.ok;
   } else if (rs === RunStatus.paused) {
-    overall = DisplayStatus.warning;
+    overall = DisplayColour.warning;
   } else if (rs === RunStatus.error) {
-    overall = DisplayStatus.error;
+    overall = DisplayColour.error;
   }
   return overall;
 }
@@ -242,13 +252,14 @@ export function mapSymbolType(ids: string[], st: SymbolType) {
     return new DeconstructedTupleType(ids, st.ofTypes);
   }
 
-  if (ids.length > 1 && st instanceof ClassType && st.isImmutable) {
+  if (ids.length > 1 && st instanceof ClassType && isRecord(st.typeOptions)) {
     return new DeconstructedRecordType(ids, st.scope as Class);
   }
 
-  if (ids.length === 2 && (st instanceof ArrayType || st instanceof ListType)) {
-    return new DeconstructedListType(ids[0], ids[1], st.ofType, st);
+  if (ids.length === 2 && st instanceof ClassType && st.typeOptions.isIterable) {
+    return new DeconstructedListType(ids[0], ids[1], st.ofTypes[0], st);
   }
+
   return st;
 }
 
@@ -271,12 +282,6 @@ export function currentParameterIndex(text: string) {
   return 0;
 }
 
-export function privateHelp(member: Member, memberType: string): string {
-  return member.private
-    ? `title="To make ${memberType} public, select '${memberType}' frame then Ctrl-p."`
-    : `title="To make ${memberType} private, select '${memberType}' frame then Ctrl-p."`;
-}
-
 export function processTogglePrivate(member: Member, e: editorEvent): boolean {
   let result = false;
   if (e.key === "p" && e.modKey.control) {
@@ -284,4 +289,15 @@ export function processTogglePrivate(member: Member, e: editorEvent): boolean {
     result = true;
   }
   return result;
+}
+
+export function addPrivateToggleToContextMenu(
+  member: PossiblyPrivateMember,
+  menu: Map<string, [string, (() => void) | undefined, string]>,
+) {
+  if (member.private) {
+    menu.set("makePublic", ["make public (Ctrl-p)", member.makePublic, ""]);
+  } else {
+    menu.set("makePrivate", ["make private (Ctrl-p)", member.makePrivate, ""]);
+  }
 }

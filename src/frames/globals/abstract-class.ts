@@ -2,6 +2,8 @@ import { mustBeDeclaredAbove } from "../compile-rules";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { SymbolType } from "../interfaces/symbol-type";
+import { Transforms } from "../interfaces/transforms";
+import { noTypeOptions } from "../interfaces/type-options";
 import { abstractClassKeywords, classKeyword, endKeyword } from "../keywords";
 import {
   parentHelper_compileChildren,
@@ -9,17 +11,17 @@ import {
   parentHelper_renderChildrenAsSource,
 } from "../parent-helpers";
 import { ClassSubType, ClassType } from "../symbols/class-type";
-import { Transforms } from "../syntax-nodes/transforms";
 import { ClassFrame } from "./class-frame";
 
 export class AbstractClass extends ClassFrame {
+  hrefForFrameHelp: string = "LangRef.html#Abstract_class";
+
   constructor(parent: File) {
     super(parent);
     this.isAbstract = true;
   }
 
   ofTypes: SymbolType[] = [];
-  genericParamMatches: Map<string, SymbolType> = new Map<string, SymbolType>();
 
   initialKeywords(): string {
     return abstractClassKeywords;
@@ -34,7 +36,7 @@ export class AbstractClass extends ClassFrame {
       this.symbolId,
       ClassSubType.abstract,
       false,
-      false,
+      noTypeOptions,
       cd ? [] : this.inheritance.symbolTypes(transforms),
       this,
     );
@@ -53,8 +55,8 @@ export class AbstractClass extends ClassFrame {
   }
 
   public renderAsHtml(): string {
-    return `<el-class class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>abstract class </el-kw>${this.name.renderAsHtml()}${this.inheritanceAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
+    return `<el-class class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.toolTip()}>
+<el-top>${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>abstract class </el-kw>${this.name.renderAsHtml()}${this.inheritanceAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
 ${parentHelper_renderChildrenAsHtml(this)}
 <el-kw>end class</el-kw>
 </el-class>`;

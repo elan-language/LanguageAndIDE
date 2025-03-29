@@ -31,8 +31,8 @@ async function main() {
   let y = 0;
   let z = "";
   [y, z] = x;
-  system.printLine(y);
-  system.printLine(z);
+  await system.printLine(y);
+  await system.printLine(z);
 }
 return [main, _tests];}`;
 
@@ -61,12 +61,12 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const [a, b] = foo();
-  system.printLine(a);
-  system.printLine(b);
+  const [a, b] = (await global.foo());
+  await system.printLine(a);
+  await system.printLine(b);
 }
 
-function foo() {
+async function foo() {
   return system.tuple([0, 0]);
 }
 global["foo"] = foo;
@@ -103,19 +103,21 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const foo = system.initialise(new Foo());
-  const [a, b] = foo.bar();
-  system.printLine(a);
-  system.printLine(b);
+  const foo = system.initialise(await new Foo()._initialise());
+  const [a, b] = (await foo.bar());
+  await system.printLine(a);
+  await system.printLine(b);
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
-  constructor() {
 
+  async _initialise() {
+
+    return this;
   }
 
-  bar() {
+  async bar() {
     return system.tuple([0, 0]);
   }
 
@@ -140,20 +142,20 @@ main
   print b
 end main
 
-function foo() returns (List<of Float>, Int)
+function foo() returns (ListImmutable<of Float>, Int)
   return tuple({0.0}, 0)
 end function`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const [a, b] = foo();
-  system.printLine(a);
-  system.printLine(b);
+  const [a, b] = (await global.foo());
+  await system.printLine(a);
+  await system.printLine(b);
 }
 
-function foo() {
-  return system.tuple([system.list([0]), 0]);
+async function foo() {
+  return system.tuple([system.listImmutable([0]), 0]);
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -187,14 +189,14 @@ end main
 const global = new class {};
 async function main() {
   let x = system.tuple([3, "Apple", _stdlib.true, 1.1]);
-  system.printLine(x);
+  await system.printLine(x);
   const [a, b, c, d] = x;
-  system.printLine(a);
-  system.printLine(b);
-  system.printLine(c);
-  system.printLine(d);
+  await system.printLine(a);
+  await system.printLine(b);
+  await system.printLine(c);
+  await system.printLine(d);
   const [, , e, ] = x;
-  system.printLine(e);
+  await system.printLine(e);
 }
 return [main, _tests];}`;
 
@@ -204,7 +206,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "(3, Apple, true, 1.1)3Appletrue1.1true");
+    await assertObjectCodeExecutes(fileImpl, "tuple(3, Apple, true, 1.1)3Appletrue1.1true");
   });
 
   test("Pass_DeconstructIntoExistingVariablesWithDiscard1", async () => {
@@ -224,7 +226,7 @@ async function main() {
   let x = system.tuple([3, "Apple"]);
   let z = "";
   [, z] = x;
-  system.printLine(z);
+  await system.printLine(z);
 }
 return [main, _tests];}`;
 
@@ -254,7 +256,7 @@ async function main() {
   let x = system.tuple([3, "Apple"]);
   let y = 0;
   [y, ] = x;
-  system.printLine(y);
+  await system.printLine(y);
 }
 return [main, _tests];}`;
 
@@ -284,7 +286,7 @@ async function main() {
   let x = system.tuple([3, "Apple", 4]);
   let z = "";
   [, z, ] = x;
-  system.printLine(z);
+  await system.printLine(z);
 }
 return [main, _tests];}`;
 
@@ -314,7 +316,7 @@ async function main() {
   let x = system.tuple([3, "Apple", 4]);
   let y = 0;
   [, , y] = x;
-  system.printLine(y);
+  await system.printLine(y);
 }
 return [main, _tests];}`;
 
@@ -343,8 +345,8 @@ const global = new class {};
 async function main() {
   let x = system.tuple([3, "Apple"]);
   const [y, z] = x;
-  system.printLine(y);
-  system.printLine(z);
+  await system.printLine(y);
+  await system.printLine(z);
 }
 return [main, _tests];}`;
 
@@ -372,7 +374,7 @@ const global = new class {};
 async function main() {
   let x = system.tuple([3, "Apple"]);
   const [, z] = x;
-  system.printLine(z);
+  await system.printLine(z);
 }
 return [main, _tests];}`;
 
@@ -401,8 +403,8 @@ const global = new class {};
 async function main() {
   let x = system.tuple([3, "Apple"]);
   let [y, z] = x;
-  system.printLine(y);
-  system.printLine(z);
+  await system.printLine(y);
+  await system.printLine(z);
 }
 return [main, _tests];}`;
 
@@ -430,7 +432,7 @@ const global = new class {};
 async function main() {
   let x = system.tuple([3, "Apple"]);
   let [, z] = x;
-  system.printLine(z);
+  await system.printLine(z);
 }
 return [main, _tests];}`;
 
@@ -459,8 +461,8 @@ const global = new class {};
 async function main() {
   let t = system.tuple([3, 4, "Apple"]);
   let [x, , z] = t;
-  system.printLine(x);
-  system.printLine(z);
+  await system.printLine(x);
+  await system.printLine(z);
 }
 return [main, _tests];}`;
 
@@ -497,8 +499,8 @@ async function main() {
   let b = "";
   a = y;
   b = z;
-  system.printLine(a);
-  system.printLine(b);
+  await system.printLine(a);
+  await system.printLine(b);
 }
 return [main, _tests];}`;
 
@@ -526,11 +528,11 @@ end main
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.literalArray([1, 2]);
+  let a = system.list([1, 2]);
   let x = system.tuple([3, a]);
   let [y, z] = x;
-  system.printLine(y);
-  system.printLine(z);
+  await system.printLine(y);
+  await system.printLine(z);
 }
 return [main, _tests];}`;
 
@@ -558,11 +560,11 @@ end main
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.literalArray([1, 2]);
+  let a = system.list([1, 2]);
   let x = system.tuple([3, a]);
   const [y, z] = x;
-  system.printLine(y);
-  system.printLine(z);
+  await system.printLine(y);
+  await system.printLine(z);
 }
 return [main, _tests];}`;
 
@@ -582,7 +584,7 @@ main
   variable a set to [1,2]
   variable x set to tuple(3, a)
   variable y set to 0
-  variable z set to empty Array<of Int>
+  variable z set to empty List<of Int>
   set y, z to x
   print y
   print z
@@ -592,13 +594,13 @@ end main
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.literalArray([1, 2]);
+  let a = system.list([1, 2]);
   let x = system.tuple([3, a]);
   let y = 0;
-  let z = system.emptyArray();
+  let z = system.initialise(_stdlib.List.emptyInstance());
   [y, z] = x;
-  system.printLine(y);
-  system.printLine(z);
+  await system.printLine(y);
+  await system.printLine(z);
 }
 return [main, _tests];}`;
 
@@ -629,8 +631,8 @@ async function main() {
   let a = system.tuple([1, 2]);
   let x = system.tuple([3, a]);
   let [y, z] = x;
-  system.printLine(y);
-  system.printLine(z);
+  await system.printLine(y);
+  await system.printLine(z);
 }
 return [main, _tests];}`;
 
@@ -640,7 +642,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "3(1, 2)");
+    await assertObjectCodeExecutes(fileImpl, "3tuple(1, 2)");
   });
 
   test("Pass_DeconstructTupleWithTupleIntoNewLet", async () => {
@@ -661,8 +663,8 @@ async function main() {
   let a = system.tuple([1, 2]);
   let x = system.tuple([3, a]);
   const [y, z] = x;
-  system.printLine(y);
-  system.printLine(z);
+  await system.printLine(y);
+  await system.printLine(z);
 }
 return [main, _tests];}`;
 
@@ -672,7 +674,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "3(1, 2)");
+    await assertObjectCodeExecutes(fileImpl, "3tuple(1, 2)");
   });
 
   test("Pass_DeconstructTupleWithTupleIntoExisting", async () => {
@@ -697,8 +699,8 @@ async function main() {
   let y = 0;
   let z = system.tuple([0, 0]);
   [y, z] = x;
-  system.printLine(y);
-  system.printLine(z);
+  await system.printLine(y);
+  await system.printLine(z);
 }
 return [main, _tests];}`;
 
@@ -708,7 +710,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "3(1, 2)");
+    await assertObjectCodeExecutes(fileImpl, "3tuple(1, 2)");
   });
 
   test("Pass_DeconstructTupleTypes", async () => {
@@ -760,8 +762,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types Int to String",
-      "Incompatible types String to Int",
+      "Incompatible types. Expected: String, Int Provided: tuple(Int, String)",
     ]);
   });
 
@@ -782,7 +783,10 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String", "'y' is not defined"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: String, Unknown Provided: tuple(Int, String)",
+      "'y' is not defined",
+    ]);
   });
 
   test("Fail_DeconstructIntoMixed2", async () => {
@@ -823,7 +827,9 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: String, _ Provided: tuple(Int, String)",
+    ]);
   });
 
   test("Fail_DeconstructIntoExistingLetVariables", async () => {
@@ -882,5 +888,23 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["Expression must be able to be deconstructed"]);
+  });
+
+  test("Fail_DeconstructIntoExistingAndNewVariables", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to tuple(1, 2)
+  variable x set to 1
+  set x, y to a
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'y' is not defined"]);
   });
 });

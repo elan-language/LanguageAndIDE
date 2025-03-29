@@ -26,9 +26,9 @@ end main`;
 const global = new class {};
 async function main() {
   let r = /a+/;
-  system.printLine(r);
-  system.printLine(_stdlib.matchesRegExp("aa", r));
-  system.printLine(_stdlib.matchesRegExp("b", r));
+  await system.printLine(r);
+  await system.printLine(_stdlib.matchesRegExp("aa", r));
+  await system.printLine(_stdlib.matchesRegExp("b", r));
 }
 return [main, _tests];}`;
 
@@ -57,10 +57,10 @@ end function`;
 const global = new class {};
 async function main() {
   let r = /a+/;
-  system.printLine(testRegex(r));
+  await system.printLine((await global.testRegex(r)));
 }
 
-function testRegex(r) {
+async function testRegex(r) {
   return _stdlib.matchesRegExp("aa", r);
 }
 global["testRegex"] = testRegex;
@@ -92,11 +92,11 @@ end function`;
 const global = new class {};
 async function main() {
   let r = system.emptyRegExp();
-  r = testRegex();
-  system.printLine(_stdlib.matchesRegExp("aa", r));
+  r = (await global.testRegex());
+  await system.printLine(_stdlib.matchesRegExp("aa", r));
 }
 
-function testRegex() {
+async function testRegex() {
   return /a+/;
 }
 global["testRegex"] = testRegex;
@@ -127,10 +127,10 @@ end main`;
 const global = new class {};
 async function main() {
   let r = /a\\/b/;
-  system.printLine(_stdlib.matchesRegExp("a/b", r));
-  system.printLine(_stdlib.matchesRegExp("a/b", r));
-  system.printLine(_stdlib.matchesRegExp("a\b", r));
-  system.printLine(_stdlib.matchesRegExp("a\\/b", r));
+  await system.printLine(_stdlib.matchesRegExp("a/b", r));
+  await system.printLine(_stdlib.matchesRegExp("a/b", r));
+  await system.printLine(_stdlib.matchesRegExp("a\b", r));
+  await system.printLine(_stdlib.matchesRegExp("a\\/b", r));
 }
 return [main, _tests];}`;
 
@@ -169,6 +169,6 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Argument types expected: regExp (RegExp) Provided: String"]);
+    assertDoesNotCompile(fileImpl, ["Argument types. Expected: regExp (RegExp) Provided: String"]);
   });
 });

@@ -1,4 +1,4 @@
-# c7003128fc36fcd75e9f405ca43edf92252c52bdbb727f60701956791524c296 Elan Beta 6 valid
+# 4c9290c38796a005427ec99e3a90efe5b7b8617f8fc5e0f77e8f0f7f3a92c5d9 Elan Beta 9 valid
 
 main
   variable a set to 3
@@ -30,5 +30,6 @@ main
   end if
   try
   catch exception in e
+
   end try
 end main

@@ -2,26 +2,25 @@ import { CodeSource } from "../code-source";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
-import { catchKeyword, endKeyword, tryKeyword } from "../keywords";
-import { Transforms } from "../syntax-nodes/transforms";
+import { Transforms } from "../interfaces/transforms";
+import { endKeyword, tryKeyword } from "../keywords";
 import { CatchStatement } from "./catch-statement";
-import { StatementSelector } from "./statement-selector";
 
 export class TryStatement extends FrameWithStatements {
   catch: CatchStatement;
+  hrefForFrameHelp: string = "LangRef.html#try";
 
   constructor(parent: Parent) {
     super(parent);
     this.catch = new CatchStatement(this);
     this.getChildren().push(this.catch);
-    this.getChildren().push(new StatementSelector(this));
   }
 
   initialKeywords(): string {
     return tryKeyword;
   }
   minimumNumberOfChildrenExceeded(): boolean {
-    return this.getChildren().length > 3;
+    return this.getChildren().length > 2;
   }
 
   getFields(): Field[] {
@@ -33,8 +32,8 @@ export class TryStatement extends FrameWithStatements {
   }
 
   renderAsHtml(): string {
-    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>${tryKeyword} </el-kw>${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
+    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.toolTip()}>
+<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>${tryKeyword} </el-kw>${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
 <el-kw>end try</el-kw>
 </el-statement>`;
@@ -46,23 +45,22 @@ ${this.indent()}${endKeyword} ${tryKeyword}`;
   }
   parseTop(source: CodeSource): void {
     source.remove(tryKeyword);
-    source.removeNewLine();
   }
+
   parseBottom(source: CodeSource): boolean {
-    source.removeIndent();
-    if (source.isMatch(catchKeyword)) {
+    let result = false;
+    if (source.isMatchRegEx(/^[^\S\r\n]*catch\s/)) {
+      result = true;
       this.catch.parseFrom(source);
-      const priorSelector = this.getChildBefore(this.catch);
-      this.removeChild(priorSelector);
     }
-    return this.parseStandardEnding(source, `${endKeyword} ${tryKeyword}`);
+    return result;
   }
 
   compile(transforms: Transforms): string {
     this.compileErrors = [];
 
-    return `${this.indent()}try {\r
-${this.compileStatements(transforms)}\r
+    return `${this.indent()}${this.breakPoint(this.debugSymbols())}try {\r
+${this.compileChildren(transforms)}\r
 ${this.indent()}}`;
   }
 }

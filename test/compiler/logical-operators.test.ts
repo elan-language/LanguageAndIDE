@@ -33,10 +33,10 @@ async function main() {
   let b = _stdlib.false && _stdlib.true;
   let c = _stdlib.true && _stdlib.false;
   let d = _stdlib.true && _stdlib.true;
-  system.printLine(a);
-  system.printLine(b);
-  system.printLine(c);
-  system.printLine(d);
+  await system.printLine(a);
+  await system.printLine(b);
+  await system.printLine(c);
+  await system.printLine(d);
 }
 return [main, _tests];}`;
 
@@ -70,10 +70,10 @@ async function main() {
   let b = _stdlib.false || _stdlib.true;
   let c = _stdlib.true || _stdlib.false;
   let d = _stdlib.true || _stdlib.true;
-  system.printLine(a);
-  system.printLine(b);
-  system.printLine(c);
-  system.printLine(d);
+  await system.printLine(a);
+  await system.printLine(b);
+  await system.printLine(c);
+  await system.printLine(d);
 }
 return [main, _tests];}`;
 
@@ -92,12 +92,8 @@ return [main, _tests];}`;
 main
   variable a set to not false
   variable b set to not true
-  variable c set to not not true
-  variable d set to not not false
   print a
   print b
-  print c
-  print d
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -105,12 +101,8 @@ const global = new class {};
 async function main() {
   let a = !_stdlib.false;
   let b = !_stdlib.true;
-  let c = !!_stdlib.true;
-  let d = !!_stdlib.false;
-  system.printLine(a);
-  system.printLine(b);
-  system.printLine(c);
-  system.printLine(d);
+  await system.printLine(a);
+  await system.printLine(b);
 }
 return [main, _tests];}`;
 
@@ -120,7 +112,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "truefalsetruefalse");
+    await assertObjectCodeExecutes(fileImpl, "truefalse");
   });
 
   test("Pass_Precedence", async () => {
@@ -138,8 +130,8 @@ const global = new class {};
 async function main() {
   let a = !_stdlib.false && _stdlib.true;
   let b = !(_stdlib.false && _stdlib.true);
-  system.printLine(a);
-  system.printLine(b);
+  await system.printLine(a);
+  await system.printLine(b);
 }
 return [main, _tests];}`;
 
@@ -169,9 +161,9 @@ async function main() {
   let a = (4 > 3) && (6 > 5);
   let b = (3 > 4) || (6 === 6);
   let c = !(4 > 3);
-  system.printLine(a);
-  system.printLine(b);
-  system.printLine(c);
+  await system.printLine(a);
+  await system.printLine(b);
+  await system.printLine(c);
 }
 return [main, _tests];}`;
 
@@ -195,7 +187,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = (_stdlib.true && _stdlib.false) === (_stdlib.true || _stdlib.false);
-  system.printLine(a);
+  await system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -226,14 +218,14 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types Int to Boolean",
-      "Incompatible types Int to Boolean",
-      "Incompatible types Int to Boolean",
-      "Incompatible types Int to Boolean",
-      "Incompatible types Int to Boolean",
-      "Incompatible types Int to Boolean",
-      "Incompatible types Int to Boolean",
-      "Incompatible types Int to Boolean",
+      "Incompatible types. Expected: Boolean Provided: Int",
+      "Incompatible types. Expected: Boolean Provided: Int",
+      "Incompatible types. Expected: Boolean Provided: Int",
+      "Incompatible types. Expected: Boolean Provided: Int",
+      "Incompatible types. Expected: Boolean Provided: Int",
+      "Incompatible types. Expected: Boolean Provided: Int",
+      "Incompatible types. Expected: Boolean Provided: Int",
+      "Incompatible types. Expected: Boolean Provided: Int",
     ]);
   });
 
@@ -250,7 +242,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Boolean to Float or Int"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Float or Int Provided: Boolean",
+    ]);
   });
 
   test("Fail_CombineLogicalOpsWithComparisonWithoutBrackets2", async () => {
@@ -266,10 +260,12 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Boolean to Float or Int"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Float or Int Provided: Boolean",
+    ]);
   });
 
-  test("fail_CombineLogicalOpsWithComparison2WithoutBrackets", async () => {
+  test("Fail_CombineLogicalOpsWithComparison2WithoutBrackets", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main 
@@ -281,7 +277,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = _stdlib.true && _stdlib.false === _stdlib.true || _stdlib.false;
-  system.printLine(a);
+  await system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -319,5 +315,73 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
+  });
+
+  test("Fail_notOnNonBoolean1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to not 1
+  print a
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Boolean Provided: Int"]);
+  });
+
+  test("Fail_notOnNonBoolean2", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to "fred"
+  variable b set to not a
+  print b
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Boolean Provided: String"]);
+  });
+
+  test("Fail_minusOnNonNumber1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to - true
+  print a
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Float or Int Provided: Boolean",
+    ]);
+  });
+
+  test("Fail_minusOnNonNumber2", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to "fred"
+  variable b set to -a
+  print b
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Float or Int Provided: String"]);
   });
 });

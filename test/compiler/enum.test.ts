@@ -30,9 +30,9 @@ const Fruit = {
 
 const global = new class {};
 async function main() {
-  system.printLine(Fruit.apple);
-  system.printLine(Fruit.orange);
-  system.printLine(Fruit.pear);
+  await system.printLine(Fruit.apple);
+  await system.printLine(Fruit.orange);
+  await system.printLine(Fruit.pear);
 }
 return [main, _tests];}`;
 
@@ -63,7 +63,7 @@ const Fruit = {
 const global = new class {};
 async function main() {
   let e = Fruit._default;
-  system.printLine(e);
+  await system.printLine(e);
 }
 return [main, _tests];}`;
 
@@ -100,14 +100,16 @@ const Fruit = {
 
 const global = new class {};
 async function main() {
-  let foo = system.initialise(new Foo());
-  system.printLine(foo.fruit);
+  let foo = system.initialise(await new Foo()._initialise());
+  await system.printLine(foo.fruit);
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["fruit", Fruit._default]]);};
-  constructor() {
 
+  async _initialise() {
+
+    return this;
   }
 
   fruit = Fruit._default;
@@ -149,13 +151,15 @@ const Fruit = {
 const global = new class {};
 async function main() {
   let foo = Foo.emptyInstance();
-  system.printLine(foo.fruit);
+  await system.printLine(foo.fruit);
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["fruit", Fruit._default]]);};
-  constructor() {
 
+  async _initialise() {
+
+    return this;
   }
 
   fruit = Fruit._default;
@@ -192,7 +196,7 @@ const global = new class {};
 async function main() {
   let x = Fruit.apple;
   x = Fruit.pear;
-  system.printLine(x);
+  await system.printLine(x);
 }
 return [main, _tests];}`;
 
@@ -225,7 +229,7 @@ const global = new class {};
 async function main() {
   let x = Fruit.apple;
   let y = x;
-  system.printLine(y);
+  await system.printLine(y);
 }
 return [main, _tests];}`;
 
@@ -260,12 +264,12 @@ const Fruit = {
 
 const global = new class {};
 async function main() {
-  system.printLine(isFavourite(Fruit.apple));
-  system.printLine(isFavourite(Fruit.pear));
+  await system.printLine((await global.isFavourite(Fruit.apple)));
+  await system.printLine((await global.isFavourite(Fruit.pear)));
 }
 
-function isFavourite(f) {
-  return system.objectEquals(f, Fruit.pear);
+async function isFavourite(f) {
+  return f === Fruit.pear;
 }
 global["isFavourite"] = isFavourite;
 return [main, _tests];}`;
@@ -300,10 +304,10 @@ const Fruit = {
 
 const global = new class {};
 async function main() {
-  system.printLine(system.objectEquals(firstFruit(), Fruit.apple));
+  await system.printLine((await global.firstFruit()) === Fruit.apple);
 }
 
-function firstFruit() {
+async function firstFruit() {
   return Fruit.apple;
 }
 global["firstFruit"] = firstFruit;
@@ -337,8 +341,8 @@ const Fruit = {
 const global = new class {};
 async function main() {
   let x = Fruit.apple;
-  system.printLine(system.objectEquals(x, Fruit.apple));
-  system.printLine(system.objectEquals(x, Fruit.pear));
+  await system.printLine(x === Fruit.apple);
+  await system.printLine(x === Fruit.pear);
 }
 return [main, _tests];}`;
 
@@ -350,11 +354,12 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "truefalse");
   });
-  test("Pass_coercionToString", async () => {
+
+  test("Pass_InInterpolatedString", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to "Eat more " + Fruit.apple + "s!"
+  variable a set to "Eat more {Fruit.apple}s!"
   print a
 end main
    
@@ -367,8 +372,8 @@ const Fruit = {
 
 const global = new class {};
 async function main() {
-  let a = "Eat more " + Fruit.apple + "s!";
-  system.printLine(a);
+  let a = \`Eat more \${await _stdlib.asString(Fruit.apple)}s!\`;
+  await system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -379,6 +384,27 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "Eat more apples!");
+  });
+
+  test("Fail_coercionToString", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to "Eat more " + Fruit.apple
+  print a
+end main
+   
+enum Fruit apple, orange, pear`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Float or Int Provided: String",
+      "Incompatible types. Expected: Float or Int Provided: Fruit",
+    ]);
   });
 
   test("Fail_InvalidTypeName", async () => {
@@ -437,7 +463,7 @@ enum Fruit apple, orange, pear`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Fruit to Int"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: Fruit"]);
   });
 
   test("Fail_undefinedEnum", async () => {

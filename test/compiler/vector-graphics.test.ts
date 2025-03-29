@@ -16,7 +16,7 @@ suite("VectorGraphics", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable svg set to new BaseVG()
+  variable svg set to new VectorGraphic()
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -24,22 +24,26 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["BaseVG must be concrete to new"]);
+    assertDoesNotCompile(fileImpl, ["VectorGraphic must be concrete to new"]);
   });
 
-  test("Pass_VectorGraphicsEmpty", async () => {
+  test("Pass_AppendUsingFunction", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  let vg be new VectorGraphics()
-  print vg.asHtml()
+  let vg be new List<of VectorGraphic>()
+  let circ be new CircleVG(50, 50, 10, red, black, 1)
+  let vg2 be vg.withAppend(circ)
+  print vg2.vectorGraphicsAsHtml()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const vg = system.initialise(new _stdlib.VectorGraphics());
-  system.printLine(vg.asHtml());
+  const vg = system.initialise(await new _stdlib.List()._initialise());
+  const circ = system.initialise(await new _stdlib.CircleVG()._initialise(50, 50, 10, _stdlib.red, _stdlib.black, 1));
+  const vg2 = vg.withAppend(circ);
+  await system.printLine(_stdlib.vectorGraphicsAsHtml(vg2));
 }
 return [main, _tests];}`;
 
@@ -52,32 +56,29 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(
       fileImpl,
       `<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+<circle cx="50%" cy="66.66666666666667%" r="11.25%" stroke="#000000" stroke-width="0.3%" fill="#ff0000"/>
 </svg>
 `,
     );
   });
 
-  test("Pass_AddDefaultObjects", async () => {
+  test("Pass_AppendUsingProcedure", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  let vg be new VectorGraphics()
-  let circ be new CircleVG()
-  let line be new LineVG()
-  let rect be new RectangleVG()
-  let vg2 be vg.add(circ).add(line).add(rect)
-  print vg2.asHtml()
+  let vg be new List<of VectorGraphic>()
+  let circ be new CircleVG(50, 50, 10, red, black, 1)
+  call vg.append(circ)
+  print vg.vectorGraphicsAsHtml()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const vg = system.initialise(new _stdlib.VectorGraphics());
-  const circ = system.initialise(new _stdlib.CircleVG());
-  const line = system.initialise(new _stdlib.LineVG());
-  const rect = system.initialise(new _stdlib.RectangleVG());
-  const vg2 = vg.add(circ).add(line).add(rect);
-  system.printLine(vg2.asHtml());
+  const vg = system.initialise(await new _stdlib.List()._initialise());
+  const circ = system.initialise(await new _stdlib.CircleVG()._initialise(50, 50, 10, _stdlib.red, _stdlib.black, 1));
+  vg.append(circ);
+  await system.printLine(_stdlib.vectorGraphicsAsHtml(vg));
 }
 return [main, _tests];}`;
 
@@ -90,31 +91,75 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(
       fileImpl,
       `<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-  <circle cx="100%" cy="133.33333333333334%" r="11.25%" stroke="#000000" stroke-width="0.3%" fill="#ffff00" />
-  <line x1="0%" y1="0%" x2="100%" y2="133.33333333333334%" stroke="#000000" stroke-width="0.3%" />
-  <rect x="30%" y="53.333333333333336%" width="20%" height="13.333333333333334%" stroke="#000000" stroke-width="0.3%" fill="#0000ff" />
+<circle cx="50%" cy="66.66666666666667%" r="11.25%" stroke="#000000" stroke-width="0.3%" fill="#ff0000"/>
 </svg>
 `,
     );
   });
 
-  test("Pass_FullySpecifiedObject", async () => {
+  test("Pass_SetPropertyOnVG", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  let vg be new VectorGraphics()
-  let circ be new CircleVG() with cx set to 90, cy set to 70, r set to 13, stroke set to red, strokeWidth set to 2, fill set to green
-  let vg2 be vg.add(circ)
-  print vg2.asHtml()
+  let vg be new List<of VectorGraphic>()
+  let circ be new CircleVG(0, 0, 0, 0, 0, 0)
+  call vg.append(circ)
+  call circ.setRadius(20)
+  call circ.setCentreX(30)
+  call circ.setCentreY(40)
+  call circ.setFillColour(blue)
+  call circ.setStrokeColour(yellow)
+  call circ.setStrokeWidth(2)
+  let line be new LineVG(0, 0, 0, 0, 0, 0)
+  call vg.append(line)
+  call line.setX1(10)
+  call line.setY1(15)
+  call line.setX2(20)
+  call line.setY2(30)
+  call line.setStrokeColour(blue)
+  call line.setStrokeWidth(3)
+  let rect be new RectangleVG(0, 0, 0, 0, 0, 0, 0)
+  call vg.append(rect)
+  call rect.setX(10)
+  call rect.setY(15)
+  call rect.setWidth(20)
+  call rect.setHeight(30)
+  call rect.setFillColour(green)
+  call rect.setStrokeColour(blue)
+  call rect.setStrokeWidth(3)
+  print vg.vectorGraphicsAsHtml()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const vg = system.initialise(new _stdlib.VectorGraphics());
-  const circ = (() => {const _a = {...system.initialise(new _stdlib.CircleVG())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new _stdlib.CircleVG()))); _a.cx = 90; _a.cy = 70; _a.r = 13; _a.stroke = _stdlib.red; _a.strokeWidth = 2; _a.fill = _stdlib.green; return _a;})();
-  const vg2 = vg.add(circ);
-  system.printLine(vg2.asHtml());
+  const vg = system.initialise(await new _stdlib.List()._initialise());
+  const circ = system.initialise(await new _stdlib.CircleVG()._initialise(0, 0, 0, 0, 0, 0));
+  vg.append(circ);
+  circ.setRadius(20);
+  circ.setCentreX(30);
+  circ.setCentreY(40);
+  circ.setFillColour(_stdlib.blue);
+  circ.setStrokeColour(_stdlib.yellow);
+  circ.setStrokeWidth(2);
+  const line = system.initialise(await new _stdlib.LineVG()._initialise(0, 0, 0, 0, 0, 0));
+  vg.append(line);
+  line.setX1(10);
+  line.setY1(15);
+  line.setX2(20);
+  line.setY2(30);
+  line.setStrokeColour(_stdlib.blue);
+  line.setStrokeWidth(3);
+  const rect = system.initialise(await new _stdlib.RectangleVG()._initialise(0, 0, 0, 0, 0, 0, 0));
+  vg.append(rect);
+  rect.setX(10);
+  rect.setY(15);
+  rect.setWidth(20);
+  rect.setHeight(30);
+  rect.setFillColour(_stdlib.green);
+  rect.setStrokeColour(_stdlib.blue);
+  rect.setStrokeWidth(3);
+  await system.printLine(_stdlib.vectorGraphicsAsHtml(vg));
 }
 return [main, _tests];}`;
 
@@ -127,35 +172,77 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(
       fileImpl,
       `<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-  <circle cx="90%" cy="93.33333333333333%" r="14.625%" stroke="#ff0000" stroke-width="0.6%" fill="#008000" />
+<circle cx="30%" cy="53.333333333333336%" r="22.5%" stroke="#ffff00" stroke-width="0.6%" fill="#0000ff"/>
+<line x1="10%" y1="20%" x2="20%" y2="40%" stroke="#0000ff" stroke-width="0.8999999999999999%"/>
+<rect x="10%" y="20%" width="20%" height="40%" stroke="#0000ff" stroke-width="0.8999999999999999%" fill="#008000"/>
 </svg>
 `,
     );
   });
 
-  test("Pass_RemoveLast", async () => {
+  test("Pass_WithSetPropertyOnVG", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  let vg be new VectorGraphics()
-  let circ be new CircleVG()
-  let line be new LineVG()
-  let rect be new RectangleVG()
-  let vg2 be vg.add(circ).add(line).add(rect)
-  let vg3 be vg2.removeLast()
-  print vg3.asHtml()
+  variable vg set to new List<of VectorGraphic>()
+  variable circ set to new CircleVG(0, 0, 0, 0, 0, 0)
+  set circ to circ.withRadius(20)
+  set circ to circ.withCentreX(30)
+  set circ to circ.withCentreY(40)
+  set circ to circ.withFillColour(blue)
+  set circ to circ.withStrokeColour(yellow)
+  set circ to circ.withStrokeWidth(2)
+  set vg to vg.withAppend(circ)
+  variable line set to new LineVG(0, 0, 0, 0, 0, 0)
+  set line to line.withX1(10)
+  set line to line.withY1(15)
+  set line to line.withX2(20)
+  set line to line.withY2(30)
+  set line to line.withStrokeColour(blue)
+  set line to line.withStrokeWidth(3)
+  set vg to vg.withAppend(line)
+  variable rect set to new RectangleVG(0, 0, 0, 0, 0, 0, 0)
+  set rect to rect.withX(10)
+  set rect to rect.withY(15)
+  set rect to rect.withWidth(20)
+  set rect to rect.withHeight(30)
+  set rect to rect.withFillColour(green)
+  set rect to rect.withStrokeColour(blue)
+  set rect to rect.withStrokeWidth(3)
+  set vg to vg.withAppend(rect)
+  print vg.vectorGraphicsAsHtml()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const vg = system.initialise(new _stdlib.VectorGraphics());
-  const circ = system.initialise(new _stdlib.CircleVG());
-  const line = system.initialise(new _stdlib.LineVG());
-  const rect = system.initialise(new _stdlib.RectangleVG());
-  const vg2 = vg.add(circ).add(line).add(rect);
-  const vg3 = vg2.removeLast();
-  system.printLine(vg3.asHtml());
+  let vg = system.initialise(await new _stdlib.List()._initialise());
+  let circ = system.initialise(await new _stdlib.CircleVG()._initialise(0, 0, 0, 0, 0, 0));
+  circ = circ.withRadius(20);
+  circ = circ.withCentreX(30);
+  circ = circ.withCentreY(40);
+  circ = circ.withFillColour(_stdlib.blue);
+  circ = circ.withStrokeColour(_stdlib.yellow);
+  circ = circ.withStrokeWidth(2);
+  vg = vg.withAppend(circ);
+  let line = system.initialise(await new _stdlib.LineVG()._initialise(0, 0, 0, 0, 0, 0));
+  line = line.withX1(10);
+  line = line.withY1(15);
+  line = line.withX2(20);
+  line = line.withY2(30);
+  line = line.withStrokeColour(_stdlib.blue);
+  line = line.withStrokeWidth(3);
+  vg = vg.withAppend(line);
+  let rect = system.initialise(await new _stdlib.RectangleVG()._initialise(0, 0, 0, 0, 0, 0, 0));
+  rect = rect.withX(10);
+  rect = rect.withY(15);
+  rect = rect.withWidth(20);
+  rect = rect.withHeight(30);
+  rect = rect.withFillColour(_stdlib.green);
+  rect = rect.withStrokeColour(_stdlib.blue);
+  rect = rect.withStrokeWidth(3);
+  vg = vg.withAppend(rect);
+  await system.printLine(_stdlib.vectorGraphicsAsHtml(vg));
 }
 return [main, _tests];}`;
 
@@ -168,154 +255,27 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(
       fileImpl,
       `<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-  <circle cx="100%" cy="133.33333333333334%" r="11.25%" stroke="#000000" stroke-width="0.3%" fill="#ffff00" />
-  <line x1="0%" y1="0%" x2="100%" y2="133.33333333333334%" stroke="#000000" stroke-width="0.3%" />
+<circle cx="30%" cy="53.333333333333336%" r="22.5%" stroke="#ffff00" stroke-width="0.6%" fill="#0000ff"/>
+<line x1="10%" y1="20%" x2="20%" y2="40%" stroke="#0000ff" stroke-width="0.8999999999999999%"/>
+<rect x="10%" y="20%" width="20%" height="40%" stroke="#0000ff" stroke-width="0.8999999999999999%" fill="#008000"/>
 </svg>
 `,
     );
   });
 
-  test("Pass_Remove", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-  let vg be new VectorGraphics()
-  let circ be new CircleVG()
-  let line be new LineVG()
-  let rect be new RectangleVG()
-  let vg2 be vg.add(circ).add(line).add(rect)
-  let vg3 be vg2.remove(line)
-  print vg3.asHtml()
-end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  const vg = system.initialise(new _stdlib.VectorGraphics());
-  const circ = system.initialise(new _stdlib.CircleVG());
-  const line = system.initialise(new _stdlib.LineVG());
-  const rect = system.initialise(new _stdlib.RectangleVG());
-  const vg2 = vg.add(circ).add(line).add(rect);
-  const vg3 = vg2.remove(line);
-  system.printLine(vg3.asHtml());
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      `<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-  <circle cx="100%" cy="133.33333333333334%" r="11.25%" stroke="#000000" stroke-width="0.3%" fill="#ffff00" />
-  <rect x="30%" y="53.333333333333336%" width="20%" height="13.333333333333334%" stroke="#000000" stroke-width="0.3%" fill="#0000ff" />
-</svg>
-`,
-    );
-  });
-
-  test("Pass_RemoveFirst", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-  let vg be new VectorGraphics()
-  let circ be new CircleVG()
-  let line be new LineVG()
-  let rect be new RectangleVG()
-  let vg2 be vg.add(circ).add(line).add(rect)
-  let vg3 be vg2.remove(circ)
-  print vg3.asHtml()
-end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  const vg = system.initialise(new _stdlib.VectorGraphics());
-  const circ = system.initialise(new _stdlib.CircleVG());
-  const line = system.initialise(new _stdlib.LineVG());
-  const rect = system.initialise(new _stdlib.RectangleVG());
-  const vg2 = vg.add(circ).add(line).add(rect);
-  const vg3 = vg2.remove(circ);
-  system.printLine(vg3.asHtml());
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      `<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-  <line x1="0%" y1="0%" x2="100%" y2="133.33333333333334%" stroke="#000000" stroke-width="0.3%" />
-  <rect x="30%" y="53.333333333333336%" width="20%" height="13.333333333333334%" stroke="#000000" stroke-width="0.3%" fill="#0000ff" />
-</svg>
-`,
-    );
-  });
-
-  test("Pass_Replace", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-  let vg be new VectorGraphics()
-  let circ be new CircleVG()
-  let line be new LineVG()
-  let rect be new RectangleVG()
-  let vg2 be vg.add(circ).add(line).add(rect)
-  let circ2 be copy circ with fill set to green
-  let vg3 be vg2.replace(circ, circ2)
-  print vg3.asHtml()
-end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  const vg = system.initialise(new _stdlib.VectorGraphics());
-  const circ = system.initialise(new _stdlib.CircleVG());
-  const line = system.initialise(new _stdlib.LineVG());
-  const rect = system.initialise(new _stdlib.RectangleVG());
-  const vg2 = vg.add(circ).add(line).add(rect);
-  const circ2 = (() => {const _a = {...circ}; Object.setPrototypeOf(_a, Object.getPrototypeOf(circ)); _a.fill = _stdlib.green; return _a;})();
-  const vg3 = vg2.replace(circ, circ2);
-  system.printLine(vg3.asHtml());
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      `<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-  <circle cx="100%" cy="133.33333333333334%" r="11.25%" stroke="#000000" stroke-width="0.3%" fill="#008000" />
-  <line x1="0%" y1="0%" x2="100%" y2="133.33333333333334%" stroke="#000000" stroke-width="0.3%" />
-  <rect x="30%" y="53.333333333333336%" width="20%" height="13.333333333333334%" stroke="#000000" stroke-width="0.3%" fill="#0000ff" />
-</svg>
-`,
-    );
-  });
   test("Pass_ReadPropertyOnObject", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  let circ be new CircleVG()
-  print circ.cx
+  let circ be new CircleVG(50, 50, 10, red, black, 1)
+  print circ.centreX
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const circ = system.initialise(new _stdlib.CircleVG());
-  system.printLine(circ.cx);
+  const circ = system.initialise(await new _stdlib.CircleVG()._initialise(50, 50, 10, _stdlib.red, _stdlib.black, 1));
+  await system.printLine(circ.centreX);
 }
 return [main, _tests];}`;
 
@@ -325,26 +285,26 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, `100`);
+    await assertObjectCodeExecutes(fileImpl, `50`);
   });
 
   test("Pass_TransparentFill", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  let vg be new VectorGraphics()
-  let circ be new CircleVG() with cx set to 90, cy set to 70, r set to 13, stroke set to red, strokeWidth set to 2, fill set to -1
-  let vg2 be vg.add(circ)
-  print vg2.asHtml()
+  let vg be new List<of VectorGraphic>()
+  let circ be new CircleVG(50, 50, 10, transparent, black, 1)
+  let vg2 be vg.withAppend(circ)
+  print vg2.vectorGraphicsAsHtml()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const vg = system.initialise(new _stdlib.VectorGraphics());
-  const circ = (() => {const _a = {...system.initialise(new _stdlib.CircleVG())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new _stdlib.CircleVG()))); _a.cx = 90; _a.cy = 70; _a.r = 13; _a.stroke = _stdlib.red; _a.strokeWidth = 2; _a.fill = -1; return _a;})();
-  const vg2 = vg.add(circ);
-  system.printLine(vg2.asHtml());
+  const vg = system.initialise(await new _stdlib.List()._initialise());
+  const circ = system.initialise(await new _stdlib.CircleVG()._initialise(50, 50, 10, _stdlib.transparent, _stdlib.black, 1));
+  const vg2 = vg.withAppend(circ);
+  await system.printLine(_stdlib.vectorGraphicsAsHtml(vg2));
 }
 return [main, _tests];}`;
 
@@ -357,29 +317,29 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(
       fileImpl,
       `<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-  <circle cx="90%" cy="93.33333333333333%" r="14.625%" stroke="#ff0000" stroke-width="0.6%" fill="none" />
+<circle cx="50%" cy="66.66666666666667%" r="11.25%" stroke="#000000" stroke-width="0.3%" fill="none"/>
 </svg>
 `,
     );
   });
 
-  test("Pass_StrokeCannotBeNegative", async () => {
+  test("Pass_StrokeCannotBeTransparent", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  let vg be new VectorGraphics()
-  let circ be new CircleVG() with stroke set to -1
-  let vg2 be vg.add(circ)
-  print vg2.asHtml()
+  let vg be new List<of VectorGraphic>()
+  let circ be new CircleVG(50, 50, 10, red, transparent, 1)
+  call vg.append(circ)
+  print vg.vectorGraphicsAsHtml()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const vg = system.initialise(new _stdlib.VectorGraphics());
-  const circ = (() => {const _a = {...system.initialise(new _stdlib.CircleVG())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new _stdlib.CircleVG()))); _a.stroke = -1; return _a;})();
-  const vg2 = vg.add(circ);
-  system.printLine(vg2.asHtml());
+  const vg = system.initialise(await new _stdlib.List()._initialise());
+  const circ = system.initialise(await new _stdlib.CircleVG()._initialise(50, 50, 10, _stdlib.red, _stdlib.transparent, 1));
+  vg.append(circ);
+  await system.printLine(_stdlib.vectorGraphicsAsHtml(vg));
 }
 return [main, _tests];}`;
 
@@ -394,23 +354,24 @@ return [main, _tests];}`;
       `stroke (colour) cannot be negative because a stroke cannot be transparent`,
     );
   });
-  test("Pass_ColourCannotBeLargerThanFFFFFF", async () => {
+
+  test("Pass_colourCannotBeLargerThanFFFFFF", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  let vg be new VectorGraphics()
-  let circ be new CircleVG() with fill set to 0x1000000
-  let vg2 be vg.add(circ)
-  print vg2.asHtml()
+  let vg be new List<of VectorGraphic>()
+  let circ be new CircleVG(50, 50, 10, white + 1, black, 1)
+  call vg.append(circ)
+  print vg.vectorGraphicsAsHtml()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const vg = system.initialise(new _stdlib.VectorGraphics());
-  const circ = (() => {const _a = {...system.initialise(new _stdlib.CircleVG())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new _stdlib.CircleVG()))); _a.fill = 16777216; return _a;})();
-  const vg2 = vg.add(circ);
-  system.printLine(vg2.asHtml());
+  const vg = system.initialise(await new _stdlib.List()._initialise());
+  const circ = system.initialise(await new _stdlib.CircleVG()._initialise(50, 50, 10, _stdlib.white + 1, _stdlib.black, 1));
+  vg.append(circ);
+  await system.printLine(_stdlib.vectorGraphicsAsHtml(vg));
 }
 return [main, _tests];}`;
 

@@ -26,11 +26,11 @@ end procedure`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await printModified(4, (x) => x * 3);
+  await printModified(4, async (x) => x * 3);
 }
 
 async function printModified(i, f) {
-  system.printLine(f(i));
+  await system.printLine((await f(i)));
 }
 global["printModified"] = printModified;
 return [main, _tests];}`;
@@ -48,7 +48,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  call printModified(tuple(4, 5), lambda t as (Int, Int) => first(t))
+  call printModified(tuple(4, 5), lambda t as (Int, Int) => global.first(t))
 end main
 
 function first(t as (Int, Int)) returns Int
@@ -63,17 +63,17 @@ end procedure`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await printModified(system.tuple([4, 5]), (t) => first(t));
+  await printModified(system.tuple([4, 5]), async (t) => (await global.first(t)));
 }
 
-function first(t) {
+async function first(t) {
   const [a, ] = t;
   return a;
 }
 global["first"] = first;
 
 async function printModified(i, f) {
-  system.printLine(f(i));
+  await system.printLine((await f(i)));
 }
 global["printModified"] = printModified;
 return [main, _tests];}`;
@@ -98,8 +98,8 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let l = (x) => x * 5;
-  system.printLine(l(5));
+  let l = async (x) => x * 5;
+  await system.printLine((await l(5)));
 }
 return [main, _tests];}`;
 
@@ -136,16 +136,18 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let foo = system.initialise(new Foo());
-  await foo.setP1((x) => x);
-  let v = foo.p1(5);
-  system.printLine(v);
+  let foo = system.initialise(await new Foo()._initialise());
+  await foo.setP1(async (x) => x);
+  let v = (await foo.p1(5));
+  await system.printLine(v);
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", system.emptyFunc(0)]]);};
-  constructor() {
 
+  async _initialise() {
+
+    return this;
   }
 
   async setP1(p) {
@@ -177,8 +179,8 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let l = (x) => x * 5;
-  system.printLine(l(5) + 5);
+  let l = async (x) => x * 5;
+  await system.printLine((await l(5)) + 5);
 }
 return [main, _tests];}`;
 
@@ -206,12 +208,12 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let l = getFunc();
-  system.printLine(l(5));
+  let l = (await global.getFunc());
+  await system.printLine((await l(5)));
 }
 
-function getFunc() {
-  return (x) => x * 5;
+async function getFunc() {
+  return async (x) => x * 5;
 }
 global["getFunc"] = getFunc;
 return [main, _tests];}`;
@@ -238,8 +240,8 @@ end main`;
 const global = new class {};
 async function main() {
   let x = 3;
-  let l = () => x * 5;
-  system.printLine(l());
+  let l = async () => x * 5;
+  await system.printLine((await l()));
 }
 return [main, _tests];}`;
 
@@ -267,12 +269,12 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let l = getFunc(5);
-  system.printLine(l());
+  let l = (await global.getFunc(5));
+  await system.printLine((await l()));
 }
 
-function getFunc(x) {
-  return () => x * 5;
+async function getFunc(x) {
+  return async () => x * 5;
 }
 global["getFunc"] = getFunc;
 return [main, _tests];}`;
@@ -284,6 +286,40 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "25");
+  });
+
+  test("Pass_FuncOfMutableType", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable l set to getFunc(5)
+  print l([5])
+end main
+    
+function getFunc(x as Int) returns Func<of List<of Int> => List<of Int>>
+  return lambda y as List<of Int> => [x * y[0]]
+end function`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let l = (await global.getFunc(5));
+  await system.printLine((await l(system.list([5]))));
+}
+
+async function getFunc(x) {
+  return async (y) => system.list([x * system.safeIndex(y, 0)]);
+}
+global["getFunc"] = getFunc;
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[25]");
   });
 
   test("Fail_ImmediateInvoke", async () => {
@@ -320,7 +356,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: i (Int), f (Func<of Int => Int>) Provided: Int, Func<of Int => String>",
+      "Argument types. Expected: i (Int), f (Func<of Int => Int>) Provided: Int, Func<of Int => String>",
     ]);
   });
 
@@ -339,7 +375,7 @@ end procedure`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Argument types expected: parameter0 (Int) Provided: String"]);
+    assertDoesNotCompile(fileImpl, ["Argument types. Expected: parameter0 (Int) Provided: String"]);
   });
 
   test("Fail_PassLambdaWithWrongTypes1", async () => {
@@ -358,7 +394,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: i (Int), f (Func<of  => Int>) Provided: Int, Func<of Int => Int>",
+      "Argument types. Expected: i (Int), f (Func<of  => Int>) Provided: Int, Func<of Int => Int>",
     ]);
   });
 
@@ -378,7 +414,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: i (Int), f (Func<of Int => Int>) Provided: Int, Func<of  => Int>",
+      "Argument types. Expected: i (Int), f (Func<of Int => Int>) Provided: Int, Func<of  => Int>",
     ]);
   });
 
@@ -398,5 +434,33 @@ end procedure`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Too many argument(s). Expected: none"]);
+  });
+
+  test("Fail_LambdaWithListOfMutableType1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+procedure printModified(i as Int, f as Func<of => ListImmutable<of List<of Int>>>)
+  
+end procedure`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'List<of Int>'"]);
+  });
+
+  test("Fail_LambdaWithListOfMutableType2", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+procedure printModified(i as Int, f as Func<of ListImmutable<of List<of Int>> => Int>)
+  
+end procedure`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'List<of Int>'"]);
   });
 });

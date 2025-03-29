@@ -38,22 +38,24 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = system.initialise(new Foo());
-  system.printLine(x);
+  let x = system.initialise(await new Foo()._initialise());
+  await system.printLine(x);
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", ""]]);};
-  constructor() {
+
+  async _initialise() {
     this.p1 = 5;
     this.p2 = "Apple";
+    return this;
   }
 
   p1 = 0;
 
   p2 = "";
 
-  asString() {
+  async asString() {
     return this.p2;
   }
 
@@ -97,15 +99,17 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = system.initialise(new Foo());
+  let x = system.initialise(await new Foo()._initialise());
   await x.testSetP1(5);
-  system.printLine(x.p1);
+  await system.printLine(x.p1);
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
-  constructor() {
 
+  async _initialise() {
+
+    return this;
   }
 
   p1 = 0;
@@ -155,22 +159,24 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let f = system.initialise(new Foo());
-  system.printLine(f.testFf("test"));
+  let f = system.initialise(await new Foo()._initialise());
+  await system.printLine((await f.testFf("test")));
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
-  constructor() {
 
+  async _initialise() {
+
+    return this;
   }
 
-  ff(f) {
+  async ff(f) {
     return f;
   }
 
-  testFf(f) {
-    return this.ff(f);
+  async testFf(f) {
+    return (await this.ff(f));
   }
 
 }

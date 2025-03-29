@@ -14,11 +14,12 @@ import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { Frame } from "../interfaces/frame";
 import { Selectable } from "../interfaces/selectable";
+import { Transforms } from "../interfaces/transforms";
 import { propertyKeyword } from "../keywords";
 import { Overtyper } from "../overtyper";
 import { CSV } from "../parse-nodes/csv";
 import { ParseNode } from "../parse-nodes/parse-node";
-import { CompileStatus, DisplayStatus, ParseStatus } from "../status-enums";
+import { CompileStatus, DisplayColour, ParseStatus } from "../status-enums";
 import { KeywordCompletion, SymbolCompletionSpec, TokenType } from "../symbol-completion-helpers";
 import {
   filteredSymbols,
@@ -30,7 +31,6 @@ import {
 import { SymbolWrapper } from "../symbols/symbol-wrapper";
 import { UnknownType } from "../symbols/unknown-type";
 import { EmptyAsn } from "../syntax-nodes/empty-asn";
-import { Transforms } from "../syntax-nodes/transforms";
 
 export abstract class AbstractField implements Selectable, Field {
   public isField: boolean = true;
@@ -161,7 +161,7 @@ export abstract class AbstractField implements Selectable, Field {
     this.codeHasChanged = false;
     const key = e.key;
     const textLen = this.text.length;
-    this.processAutocompleteText(e.autocomplete);
+    this.processAutocompleteText(e.optionalData);
     switch (key) {
       case "Home": {
         this.setSelection(0);
@@ -197,11 +197,15 @@ export abstract class AbstractField implements Selectable, Field {
         break;
       }
       case "ArrowUp": {
-        this.selectFromAutoCompleteItems(true);
+        if (this.popupAsHtml() !== "") {
+          this.selectFromAutoCompleteItems(true);
+        }
         break;
       }
       case "ArrowDown": {
-        this.selectFromAutoCompleteItems(false);
+        if (this.popupAsHtml() !== "") {
+          this.selectFromAutoCompleteItems(false);
+        }
         break;
       }
       case "Backspace": {
@@ -234,6 +238,9 @@ export abstract class AbstractField implements Selectable, Field {
         this.parseCurrentText();
         this.codeHasChanged = true;
         this.editingField();
+        break;
+      }
+      case "ContextMenu": {
         break;
       }
       case "t": {
@@ -621,10 +628,10 @@ export abstract class AbstractField implements Selectable, Field {
     this.pushClass(this.focused, "focused");
     this.pushClass(!this.text, "empty");
     this.pushClass(this.isOptional(), "optional");
-    this._classes.push(DisplayStatus[this.readDisplayStatus()]);
+    this._classes.push(DisplayColour[this.readDisplayStatus()]);
   }
 
-  private readDisplayStatus(): DisplayStatus {
+  private readDisplayStatus(): DisplayColour {
     return helper_CompileOrParseAsDisplayStatus(this);
   }
 
@@ -641,7 +648,7 @@ export abstract class AbstractField implements Selectable, Field {
 
   protected getMessage(): string {
     return this.parseErrorMsg !== ""
-      ? `<el-msg class="${DisplayStatus[DisplayStatus.error]}"> ${this.parseErrorMsg}</el-msg>`
+      ? `<el-msg class="${DisplayColour[DisplayColour.error]}"> ${this.parseErrorMsg}</el-msg>`
       : helper_compileMsgAsHtml(this);
   }
 
@@ -674,13 +681,13 @@ export abstract class AbstractField implements Selectable, Field {
       }
       this.codeHasChanged = false;
     }
-    return this.astNode ?? new EmptyAsn(this.htmlId);
+    return this.astNode ?? EmptyAsn.Instance;
   }
 
   compile(transforms: Transforms): string {
     this.compileErrors = [];
     if (this.rootNode && this.rootNode.status === ParseStatus.valid) {
-      return this.getOrTransformAstNode(transforms)?.compile() ?? "";
+      return this.getOrTransformAstNode(transforms).compile();
     }
 
     return "";

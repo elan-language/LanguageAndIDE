@@ -15,14 +15,15 @@ import { mapSymbolType } from "../frame-helpers";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
+import { Transforms } from "../interfaces/transforms";
 import { setKeyword, toKeyword } from "../keywords";
 import { getIds, wrapDeconstructionLhs, wrapDeconstructionRhs } from "../syntax-nodes/ast-helpers";
-import { Transforms } from "../syntax-nodes/transforms";
 
 export class SetStatement extends AbstractFrame implements Statement {
   isStatement = true;
   assignable: AssignableField;
   expr: ExpressionField;
+  hrefForFrameHelp: string = "LangRef.html#set";
 
   constructor(parent: Parent) {
     super(parent);
@@ -49,7 +50,7 @@ export class SetStatement extends AbstractFrame implements Statement {
     return "set";
   }
   renderAsHtml(): string {
-    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><el-kw>${setKeyword} </el-kw>${this.assignable.renderAsHtml()}<el-kw> ${toKeyword} </el-kw>${this.expr.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-statement>`;
+    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.toolTip()}>${this.contextMenu()}${this.bpAsHtml()}<el-kw>${setKeyword} </el-kw>${this.assignable.renderAsHtml()}<el-kw> ${toKeyword} </el-kw>${this.expr.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-statement>`;
   }
   renderAsSource(): string {
     return `${this.indent()}${setKeyword} ${this.assignable.renderAsSource()} ${toKeyword} ${this.expr.renderAsSource()}`;
@@ -103,6 +104,6 @@ export class SetStatement extends AbstractFrame implements Statement {
 
     const rhs = wrapDeconstructionRhs(assignableAstNode, exprAstNode, true);
 
-    return `${this.indent()}${lhs} = ${rhs};`;
+    return `${this.indent()}${this.breakPoint(this.debugSymbols())}${lhs} = ${rhs};`;
   }
 }

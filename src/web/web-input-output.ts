@@ -4,24 +4,19 @@ import { ElanInputOutput } from "../elan-input-output";
 export class WebInputOutput implements ElanInputOutput {
   keyBuffer: KeyboardEvent[] = [];
 
-  private graphics: HTMLElement;
+  private display: HTMLElement;
   private lastDirId = "elan-data";
 
-  constructor(
-    private readonly consoleWindow: { innerHTML: string },
-    private readonly graphicsWindow: { innerHTML: string },
-  ) {
-    consoleWindow.innerHTML = this.renderConsole();
-
-    this.graphics = document.getElementById("graphics") as HTMLElement;
-    this.graphics.addEventListener("keydown", (k: KeyboardEvent) => {
+  constructor() {
+    this.display = document.getElementById("display") as HTMLElement;
+    this.display.addEventListener("keydown", (k: KeyboardEvent) => {
       if (k.key === "Shift" || k.key === "Control" || k.key === "Alt") {
         return;
       }
       this.keyBuffer.push(k);
     });
 
-    this.graphics.focus();
+    this.display.focus();
   }
 
   useChromeFileAPI() {
@@ -30,7 +25,7 @@ export class WebInputOutput implements ElanInputOutput {
 
   chooser() {
     const f = document.createElement("input");
-    const g = document.getElementById("graphics") as HTMLElement;
+    const g = this.display;
     f.style.display = "none";
     f.type = "file";
     f.name = "file";
@@ -40,7 +35,7 @@ export class WebInputOutput implements ElanInputOutput {
 
   chromeChooser() {
     const f = document.createElement("input");
-    const g = document.getElementById("graphics") as HTMLElement;
+    const g = this.display as HTMLElement;
     f.style.display = "none";
     g.appendChild(f);
     return f;
@@ -72,7 +67,7 @@ export class WebInputOutput implements ElanInputOutput {
       });
 
       chooser.click();
-      document.getElementById("graphics")?.removeChild(chooser);
+      this.display?.removeChild(chooser);
     });
   }
 
@@ -159,45 +154,73 @@ export class WebInputOutput implements ElanInputOutput {
     });
   }
 
-  drawGraphics(html: string): void {
-    this.graphicsWindow.innerHTML = html;
-    this.graphics.focus();
+  drawBlockGraphics(html: string): Promise<void> {
+    document.getElementById("block-graphics")!.innerHTML = html;
+    this.display.focus();
+    return Promise.resolve();
   }
 
-  previousContent: string = "";
+  clearBlockGraphics(): Promise<void> {
+    this.clearKeyBuffer();
+    return this.drawBlockGraphics("");
+  }
+
+  drawVectorGraphics(html: string): Promise<void> {
+    document.getElementById("vector-graphics")!.innerHTML = html;
+    this.display.focus();
+    return Promise.resolve();
+  }
+
+  clearVectorGraphics(): Promise<void> {
+    this.clearKeyBuffer();
+    return this.drawVectorGraphics("");
+  }
+
+  async clearAllGraphics(): Promise<void> {
+    this.clearKeyBuffer();
+    this.clearPrintedText();
+    await this.clearBlockGraphics();
+    return this.clearVectorGraphics();
+  }
+
+  printedText: string = "";
   currentInterval?: any;
 
-  printLine(text: string) {
+  printLine(text: string): Promise<void> {
     this.print(`${text}\n`);
-    const element = document.getElementById("console")!;
+    const element = document.getElementById("printed-text")!;
     element.scrollTop = element.scrollHeight;
+    return Promise.resolve();
   }
 
-  print(text: string) {
-    this.previousContent = `${this.previousContent}${text}`;
-    this.consoleWindow.innerHTML = this.renderConsole();
+  print(text: string): Promise<void> {
+    this.printedText = `${this.printedText}${text}`;
+    this.renderPrintedText();
+    return Promise.resolve();
   }
 
-  printTab(position: number, text: string) {
-    const lastNl = this.previousContent.lastIndexOf("\n");
+  printTab(position: number, text: string): Promise<void> {
+    const lastNl = this.printedText.lastIndexOf("\n");
     const spaces =
       "                                                                                ";
-    const charsSinceNl = this.previousContent.length - lastNl;
+    const charsSinceNl = this.printedText.length - lastNl;
     const tab = spaces.substring(0, position - charsSinceNl + 1);
-    this.previousContent = `${this.previousContent}${tab}${text}`;
-    this.consoleWindow.innerHTML = this.renderConsole();
+    this.printedText = `${this.printedText}${tab}${text}`;
+    this.renderPrintedText();
+    return Promise.resolve();
   }
 
-  stopReading() {
+  stopReading(): Promise<void> {
     clearInterval(this.currentInterval);
-    const inputOffset = this.previousContent.indexOf("<input");
-    this.previousContent = `${this.previousContent.slice(0, inputOffset)}`;
-    this.graphics.focus();
+    const inputOffset = this.printedText.indexOf("<input");
+    this.printedText = `${this.printedText.slice(0, inputOffset)}`;
+    this.display.focus();
+    return Promise.resolve();
   }
 
   readLine() {
-    this.previousContent = `${this.previousContent}<input id = "inp" type="text" autofocus tabindex="2"></input>`;
-    this.consoleWindow.innerHTML = this.renderConsole();
+    this.printedText = `${this.printedText}<input id = "inp" type="text" autofocus tabindex="2"></input>`;
+    this.renderPrintedText();
     const inp = document.getElementById("inp") as HTMLInputElement;
     inp.focus();
 
@@ -228,7 +251,7 @@ export class WebInputOutput implements ElanInputOutput {
   }
 
   getKey() {
-    this.graphics.focus();
+    this.display.focus();
     const evt = this.keyBuffer[0];
     this.keyBuffer = this.keyBuffer.slice(1);
     const ks = evt ? evt.key : "";
@@ -240,27 +263,32 @@ export class WebInputOutput implements ElanInputOutput {
   }
 
   getKeyWithModifier(): Promise<[string, string]> {
-    this.graphics.focus();
+    this.display.focus();
     const evt = this.keyBuffer.pop();
     const ks: [string, string] = evt ? [evt.key, this.getModKey(evt)] : ["", ""];
     return Promise.resolve(ks);
   }
 
-  clearKeyBuffer() {
+  clearKeyBuffer(): Promise<void> {
     this.keyBuffer = [];
+    return Promise.resolve();
   }
 
-  private renderConsole() {
-    return `<div>${this.previousContent}</div>`;
+  clearSystemInfo(): Promise<void> {
+    document.getElementById("system-info")!.innerHTML = "";
+    return Promise.resolve();
   }
 
-  clearConsole() {
-    this.previousContent = "";
-    this.consoleWindow.innerHTML = this.renderConsole();
+  renderPrintedText(): Promise<void> {
+    const div = document.getElementById("printed-text")!;
+    div.innerHTML = this.printedText;
+    this.display.focus();
+    return Promise.resolve();
   }
 
-  clearGraphics() {
-    this.clearKeyBuffer();
-    this.graphicsWindow.innerHTML = `<div></div>`;
+  clearPrintedText(): Promise<void> {
+    this.printedText = "";
+    this.renderPrintedText();
+    return Promise.resolve();
   }
 }

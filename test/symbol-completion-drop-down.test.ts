@@ -114,7 +114,7 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    await assertSymbolCompletionWithString(fileImpl, "expr5", " ", 71);
+    await assertSymbolCompletionWithString(fileImpl, "expr5", " ", 75);
   });
 
   test("Pass_LocalVarsCaseInsensitive1", async () => {
@@ -416,18 +416,14 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable foo set to new BlockGraphics()
+  variable foo set to new Array<of Int>()
   call foo()
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [
-      ["clearGraphics", "clearGraphics", "clearGraphics"],
-      ["clearKeyBuffer", "clearKeyBuffer", "clearKeyBuffer"],
-      ["display", "display", "display"],
-    ] as [string, string, string][];
+    const expected = [["put", "put", "put"]] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "ident7", ".", 3, expected);
   });
@@ -482,11 +478,11 @@ end main`;
 
     const expected = [
       ["append", "*", "*"],
-      ["appendArray", "*", "*"],
-      ["insertAt", "*", "*"],
+      ["appendList", "*", "*"],
+      ["insert", "*", "*"],
       ["prepend", "*", "*"],
-      ["prependArray", "*", "*"],
-      ["putAt", "*", "*"],
+      ["prependList", "*", "*"],
+      ["put", "*", "*"],
       ["removeAll", "*", "*"],
       ["removeAt", "*", "*"],
       ["removeFirst", "*", "*"],
@@ -508,7 +504,7 @@ end main`;
 
     const expected = [
       ["append", "*", "*"],
-      ["appendArray", "*", "*"],
+      ["appendList", "*", "*"],
     ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "ident7", "p", 5, expected);
@@ -591,8 +587,8 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["withPutAtKey", "*", "*"],
-      ["withRemoveAtKey", "*", "*"],
+      ["withPut", "*", "*"],
+      ["withRemoveAt", "*", "*"],
     ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "expr8", "i", 5, expected);
@@ -612,8 +608,6 @@ end main`;
     const expected = [
       ["keys", "*", "*"],
       ["hasKey", "*", "*"],
-      ["withPutAtKey", "*", "*"],
-      ["withRemoveAtKey", "*", "*"],
     ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "expr8", "e", 5, expected);
@@ -647,8 +641,8 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["putAtKey", "*", "*"],
-      ["removeAtKey", "*", "*"],
+      ["put", "*", "*"],
+      ["removeAt", "*", "*"],
     ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "ident7", ".", 3, expected);
@@ -666,10 +660,13 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
+      ["asDictionaryImmutable", "*", "*"],
       ["asString", "*", "*"],
       ["hasKey", "*", "*"],
       ["keys", "*", "*"],
       ["values", "*", "*"],
+      ["withPut", "*", "*"],
+      ["withRemoveAt", "*", "*"],
     ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "expr8", ".", 3, expected);
@@ -687,12 +684,13 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
+      ["asDictionary", "*", "*"],
       ["asString", "*", "*"],
       ["hasKey", "*", "*"],
       ["keys", "*", "*"],
       ["values", "*", "*"],
-      ["withPutAtKey", "*", "*"],
-      ["withRemoveAtKey", "*", "*"],
+      ["withPut", "*", "*"],
+      ["withRemoveAt", "*", "*"],
     ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "expr8", ".", 3, expected);
@@ -1060,8 +1058,8 @@ end function`;
 
     const expected = [
       ["Int", "*", "*"],
-      ["Iterable", "*", "*"],
       ["DictionaryImmutable", "*", "*"],
+      ["ListImmutable", "*", "*"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "params6", "a as I", expected);
@@ -1081,12 +1079,7 @@ end function`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [
-      ["BaseVG", "*", "*"],
-      ["BlockGraphics", "*", "*"],
-      ["Boolean", "*", "*"],
-      ["GraphicsBase", "*", "*"],
-    ] as [string, string, string][];
+    const expected = [["Boolean", "*", "*"]] as [string, string, string][];
 
     await assertSymbolCompletionWithString(
       fileImpl,
@@ -1110,12 +1103,7 @@ end function`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [
-      ["BaseVG", "*", "*"],
-      ["BlockGraphics", "*", "*"],
-      ["Boolean", "*", "*"],
-      ["GraphicsBase", "*", "*"],
-    ] as [string, string, string][];
+    const expected = [["Boolean", "*", "*"]] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "params6", "a as Int, b as B", expected);
   });
@@ -1136,8 +1124,8 @@ end function`;
 
     const expected = [
       ["Int", "*", "*"],
-      ["Iterable", "*", "*"],
       ["DictionaryImmutable", "*", "*"],
+      ["ListImmutable", "*", "*"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "params6", "a as Set<of I", expected);
@@ -1158,12 +1146,12 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["GraphicsBase", "*", "*"],
-      ["BlockGraphics", "*", "*"],
-      ["VectorGraphics", "*", "*"],
+      ["CircleVG", "*", "*"],
+      ["LineVG", "*", "*"],
+      ["RectangleVG", "*", "*"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "params6", "a as Graphics", expected);
+    await assertSymbolCompletionWithString(fileImpl, "params6", "a as VG", expected);
   });
 
   test("Pass_returnType1", async () => {
@@ -1195,13 +1183,9 @@ end function`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [
-      ["GraphicsBase", "*", "*"],
-      ["BlockGraphics", "*", "*"],
-      ["VectorGraphics", "*", "*"],
-    ] as [string, string, string][];
+    const expected = [["CircleVG", "*", "*"]] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "type5", "Graphics", expected);
+    await assertSymbolCompletionWithString(fileImpl, "type5", "Circle", expected);
   });
 
   test("Pass_functionResult", async () => {
@@ -1510,43 +1494,20 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
     main
-      variable foo set to new BlockGraphics()
-      call foo()
+      variable foo set to 1.1
+      let a be foo
     end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["clearGraphics", "*", "*"],
-      ["clearKeyBuffer", "*", "*"],
-      ["display", "*", "*"],
-    ] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "ident7", "foo.", expected);
-  });
-
-  test("Pass_libExtension2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-    main
-      variable foo set to new BlockGraphics()
-      variable a set to foo
-    end main`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["asHtml", "*", "*"],
       ["asString", "*", "*"],
-      ["getBackground", "*", "*"],
-      ["getChar", "*", "*"],
-      ["getForeground", "*", "*"],
-      ["withBackground", "*", "*"],
-      ["withBlock", "*", "*"],
-      ["withText", "*", "*"],
-      ["withUnicode", "*", "*"],
+      ["ceiling", "*", "*"],
+      ["floor", "*", "*"],
+      ["isInfinite", "*", "*"],
+      ["isNaN", "*", "*"],
+      ["round", "*", "*"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "expr8", "foo.", expected);
@@ -1556,16 +1517,14 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  let foo be new BlockGraphics()
-end main`;
+  let foo be new CircleVG()
+end main
+`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [
-      ["BlockGraphics", "*", "*"],
-      ["Boolean", "*", "*"],
-    ] as [string, string, string][];
+    const expected = [["Boolean", "*", "*"]] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "expr5", "new B", expected);
   });
@@ -1574,7 +1533,7 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  let foo be new BlockGraphics()
+  let foo be new Array<of Int>()
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -1583,7 +1542,6 @@ end main`;
     const expected = [
       ["Array", "*", "Array<of "],
       ["Array2D", "*", "Array2D<of "],
-      ["BlockGraphics", "*", "*"],
       ["Boolean", "*", "*"],
       ["CircleVG", "*", "*"],
       ["Dictionary", "*", "*"],
@@ -1592,6 +1550,7 @@ end main`;
       ["Int", "*", "*"],
       ["LineVG", "*", "*"],
       ["List", "*", "List<of "],
+      ["ListImmutable", "*", "ListImmutable<of "],
       ["Queue", "*", "*"],
       ["Random", "*", "*"],
       ["RectangleVG", "*", "*"],
@@ -1602,7 +1561,6 @@ end main`;
       ["TextFileReader", "*", "*"],
       ["TextFileWriter", "*", "*"],
       ["Turtle", "*", "*"],
-      ["VectorGraphics", "*", "*"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "expr5", "new ", expected);
@@ -1680,8 +1638,8 @@ end record`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable bubbles set to empty Array<of CircleVG>
-  call bubbles.putAt(0, new CircleVG())
+  variable bubbles set to empty List<of CircleVG>
+  call bubbles.put(0, new CircleVG())
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -1696,35 +1654,42 @@ end main`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  let c be new CircleVG() with cx set to 1
-end main`;
+  let c be new Foo() with x set to 1
+end main
+
+record Foo
+  property x1 as Int
+
+  property x2 as Int
+
+end record
+`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["cx", "cx", "cx"],
-      ["cy", "cy", "cy"],
+      ["x1", "x1", "x1"],
+      ["x2", "x2", "x2"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "expr5", "new CircleVG() with c", expected);
+    await assertSymbolCompletionWithString(fileImpl, "expr5", "new Foo() with x", expected);
   });
 
   test("Pass_newConcreteType #897", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  let vg be new VectorGraphics()
-  let vg2 be vg.add(new CircleVG())
+  let vg be new List<of VectorGraphic>()
+  let vg2 be vg.withAppend(new CircleVG())
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["Array", "*", "*"],
+      ["Array", "*", "Array<of "],
       ["Array2D", "*", "Array2D<of "],
-      ["BlockGraphics", "*", "*"],
       ["Boolean", "*", "*"],
       ["CircleVG", "*", "*"],
       ["Dictionary", "*", "*"],
@@ -1733,6 +1698,7 @@ end main`;
       ["Int", "*", "*"],
       ["LineVG", "*", "*"],
       ["List", "*", "*"],
+      ["ListImmutable", "*", "*"],
       ["Queue", "*", "*"],
       ["Random", "*", "*"],
       ["RectangleVG", "*", "*"],
@@ -1743,10 +1709,9 @@ end main`;
       ["TextFileReader", "*", "*"],
       ["TextFileWriter", "*", "*"],
       ["Turtle", "*", "*"],
-      ["VectorGraphics", "*", "*"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "expr8", "vg.add(new ", expected);
+    await assertSymbolCompletionWithString(fileImpl, "expr8", "vg.withAppend(new ", expected);
   });
 
   test("Pass_EnumType", async () => {
@@ -1891,6 +1856,7 @@ end main`;
     await assertSymbolCompletionWithString(fileImpl, "expr5", "range(1,4).ma", expected);
   });
 
+  // outstanding symbol completion bugs eg #1063
   ignore_test("Pass_listExtension2", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
@@ -1898,7 +1864,7 @@ main
   variable a set to range(1,4)
 end main
 
-function last(l as List<of Int>) returns Int
+function last(l as ListImmutable<of Int>) returns Int
   return l[l.length() - 1]
 end function`;
 
@@ -1913,7 +1879,7 @@ end function`;
     await assertSymbolCompletionWithString(fileImpl, "expr5", "last(range(1,4).ma", expected);
   });
 
-  ignore_test("Pass_bracketedExpression", async () => {
+  test("Pass_bracketedExpression", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main

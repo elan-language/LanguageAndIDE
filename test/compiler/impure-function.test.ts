@@ -16,14 +16,13 @@ suite("Impure Function", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable gr set to new BlockGraphics()
   variable k set to getKey()
   variable r set to randomInt(1, 6)
   set r to randomInt(1, 6) * 10
   call bar(randomInt(1,6))
 end main
 
-procedure foo(gr as BlockGraphics)
+procedure foo()
   variable k set to getKey()
   variable r set to randomInt(1, 6)
   set r to randomInt(1, 6) * 10
@@ -36,15 +35,14 @@ end procedure
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let gr = system.initialise(new _stdlib.BlockGraphics());
-  let k = await _stdlib.getKey();
+  let k = (await _stdlib.getKey());
   let r = _stdlib.randomInt(1, 6);
   r = _stdlib.randomInt(1, 6) * 10;
   await bar(_stdlib.randomInt(1, 6));
 }
 
-async function foo(gr) {
-  let k = await _stdlib.getKey();
+async function foo() {
+  let k = (await _stdlib.getKey());
   let r = _stdlib.randomInt(1, 6);
   r = _stdlib.randomInt(1, 6) * 10;
 }

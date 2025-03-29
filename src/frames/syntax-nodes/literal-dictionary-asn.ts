@@ -1,16 +1,21 @@
 import { CompileError } from "../compile-error";
-import { mustBeCompatibleType, mustHaveUniqueKeys } from "../compile-rules";
+import { mustBeAssignableType, mustBeValidKeyType, mustHaveUniqueKeys } from "../compile-rules";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstNode } from "../interfaces/ast-node";
-import { DictionaryType } from "../symbols/dictionary-type";
+import { ReifyableSymbolType } from "../interfaces/reifyable-symbol-type";
+import { Scope } from "../interfaces/scope";
+import { DictionaryName } from "../symbols/elan-type-names";
+import { getGlobalScope } from "../symbols/symbol-helpers";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
+import { transforms } from "./ast-helpers";
 import { KvpAsn } from "./kvp-asn";
 
 export class LiteralDictionaryAsn extends AbstractAstNode implements AstNode {
   constructor(
     private readonly list: AstCollectionNode,
     public readonly fieldId: string,
+    private readonly scope: Scope,
   ) {
     super();
   }
@@ -32,20 +37,28 @@ export class LiteralDictionaryAsn extends AbstractAstNode implements AstNode {
     const ofValueType = first.symbolType();
 
     for (const i of items) {
-      mustBeCompatibleType(ofKeyType, i.keySymbolType(), this.compileErrors, this.fieldId);
-      mustBeCompatibleType(ofValueType, i.symbolType(), this.compileErrors, this.fieldId);
+      mustBeAssignableType(ofKeyType, i.keySymbolType(), this.compileErrors, this.fieldId);
+      mustBeAssignableType(ofValueType, i.symbolType(), this.compileErrors, this.fieldId);
     }
 
+    const st = this.symbolType();
+    mustBeValidKeyType(st, ofKeyType, this.compileErrors, this.fieldId);
+
     const itemList = this.list.items.map((p) => p.compile()).join(", ");
-    return `system.dictionary({${itemList}})`;
+    return `system.dictionary([${itemList}])`;
   }
 
   symbolType() {
+    const globalScope = getGlobalScope(this.scope);
+    const symbol = globalScope.resolveSymbol(DictionaryName, transforms(), this.scope);
+    const st = symbol.symbolType() as ReifyableSymbolType;
+
     const first = this.list.items[0] as KvpAsn | undefined;
     if (first) {
-      return new DictionaryType(first.keySymbolType(), first.symbolType());
+      return st.reify([first.keySymbolType(), first.symbolType()]);
     }
-    return new DictionaryType(UnknownType.Instance, UnknownType.Instance);
+
+    return st.reify([UnknownType.Instance, UnknownType.Instance]);
   }
 
   toString() {

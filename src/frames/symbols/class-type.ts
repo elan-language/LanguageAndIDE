@@ -1,11 +1,16 @@
 import { Class } from "../interfaces/class";
 import { ElanSymbol } from "../interfaces/elan-symbol";
+import { GenericSymbolType } from "../interfaces/generic-symbol-type";
+import { ReifyableSymbolType } from "../interfaces/reifyable-symbol-type";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
-import { Transforms } from "../syntax-nodes/transforms";
-import { isSymbol, symbolMatches } from "./symbol-helpers";
+import { Transforms } from "../interfaces/transforms";
+import { TypeOptions } from "../interfaces/type-options";
+import { FloatType } from "./float-type";
+import { IntType } from "./int-type";
+import { NullScope } from "./null-scope";
+import { isClassTypeDef, isSymbol, symbolMatches } from "./symbol-helpers";
 import { SymbolScope } from "./symbol-scope";
-import { UnknownSymbol } from "./unknown-symbol";
 
 export enum ClassSubType {
   concrete,
@@ -13,18 +18,44 @@ export enum ClassSubType {
   interface,
 }
 
-export class ClassType implements SymbolType, Scope {
+export class ClassType implements ReifyableSymbolType, Scope, GenericSymbolType {
   constructor(
-    public readonly className: string,
-    public readonly subType: ClassSubType,
-    public readonly isNotInheritable: boolean,
-    public readonly isImmutable: boolean,
-    public readonly inheritsFrom: SymbolType[],
-    public scope: Class | undefined,
+    public className: string,
+    public subType: ClassSubType,
+    public isNotInheritable: boolean,
+    public typeOptions: TypeOptions,
+    public inheritsFrom: SymbolType[],
+    public scope: Class | NullScope,
   ) {}
 
-  updateScope(scope: Class) {
-    this.scope = scope;
+  get ofTypes() {
+    return isClassTypeDef(this.scope) ? this.scope.ofTypes : [];
+  }
+
+  reify(gts: SymbolType[]): ReifyableSymbolType {
+    if (isClassTypeDef(this.scope)) {
+      const cls = this.scope.updateOfTypes(gts);
+
+      return new ClassType(
+        this.className,
+        this.subType,
+        this.isNotInheritable,
+        this.typeOptions,
+        this.inheritsFrom,
+        cls,
+      );
+    }
+
+    return this;
+  }
+
+  updateFrom(other: ClassType): ClassType {
+    this.className = other.className;
+    this.isNotInheritable = other.isNotInheritable;
+    this.typeOptions = other.typeOptions;
+    this.inheritsFrom = other.inheritsFrom;
+    this.scope = other.scope;
+    return this;
   }
 
   symbolMatches(id: string, all: boolean): ElanSymbol[] {
@@ -33,10 +64,23 @@ export class ClassType implements SymbolType, Scope {
     return symbolMatches(id, all, symbols);
   }
 
+  typeMatch(t1: SymbolType, t2: SymbolType) {
+    if (t1 instanceof FloatType && t2 instanceof IntType) {
+      return true;
+    }
+
+    return t1.name === t2.name;
+  }
+
   isAssignableFrom(otherType: SymbolType): boolean {
     if (otherType instanceof ClassType) {
       if (otherType.className === this.className) {
-        return true;
+        if (this.ofTypes.length === otherType.ofTypes.length) {
+          return this.ofTypes.length === 0
+            ? true
+            : this.ofTypes.every((t, i) => this.typeMatch(t, otherType.ofTypes[i]));
+        }
+        return false;
       }
       return otherType.inheritsFrom.some((c) => this.isAssignableFrom(c));
     }
@@ -52,10 +96,17 @@ export class ClassType implements SymbolType, Scope {
   }
 
   resolveSymbol(id: string, transforms: Transforms, scope: Scope): ElanSymbol {
-    return this.scope?.resolveSymbol(id, transforms, scope) ?? new UnknownSymbol(id);
+    return this.scope.resolveSymbol(id, transforms, scope);
   }
 
   get name() {
+    if (this.ofTypes.length === 1) {
+      return `${this.className.trim()}<of ${this.ofTypes[0].name}>`;
+    }
+    if (this.ofTypes.length === 2) {
+      return `${this.className.trim()}<of ${this.ofTypes[0].name}, ${this.ofTypes[1].name}>`;
+    }
+
     return `${this.className.trim()}`;
   }
 
@@ -64,7 +115,7 @@ export class ClassType implements SymbolType, Scope {
   }
 
   get initialValue() {
-    const isStdLib = this.scope?.symbolScope === SymbolScope.stdlib;
+    const isStdLib = this.scope.symbolScope === SymbolScope.stdlib;
     const prefix = isStdLib ? "system.initialise(_stdlib." : "";
     const postfix = isStdLib ? ")" : "";
     return `${prefix}${this.className}.emptyInstance()${postfix}`;

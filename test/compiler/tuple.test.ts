@@ -27,10 +27,10 @@ end main`;
 const global = new class {};
 async function main() {
   let x = system.tuple([3, "Apple"]);
-  system.printLine(x);
+  await system.printLine(x);
   const [f, s] = x;
-  system.printLine(f);
-  system.printLine(s);
+  await system.printLine(f);
+  await system.printLine(s);
 }
 return [main, _tests];}`;
 
@@ -40,7 +40,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "(3, Apple)3Apple");
+    await assertObjectCodeExecutes(fileImpl, "tuple(3, Apple)3Apple");
   });
 
   test("Pass_FunctionReturnsTuple", async () => {
@@ -61,14 +61,14 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = f();
-  system.printLine(x);
+  let x = (await global.f());
+  await system.printLine(x);
   const [fst, sec] = x;
-  system.printLine(fst);
-  system.printLine(sec);
+  await system.printLine(fst);
+  await system.printLine(sec);
 }
 
-function f() {
+async function f() {
   return system.tuple(["1", "2"]);
 }
 global["f"] = f;
@@ -80,7 +80,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "(1, 2)12");
+    await assertObjectCodeExecutes(fileImpl, "tuple(1, 2)12");
   });
 
   test("Pass_IndexFunctionReturnsTuple", async () => {
@@ -99,12 +99,12 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let t = f();
+  let t = (await global.f());
   const [fst, ] = t;
-  system.printLine(fst);
+  await system.printLine(fst);
 }
 
-function f() {
+async function f() {
   return system.tuple(["1", "2"]);
 }
 global["f"] = f;
@@ -131,13 +131,13 @@ constant a set to {tuple(1,2)}`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
-  a = system.list([system.tuple([1, 2])]);
+  a = system.listImmutable([system.tuple([1, 2])]);
 
 };
 async function main() {
-  let t = _stdlib.reduce(global.a, system.tuple([1, 1]), (i, j) => j);
+  let t = (await global.a.reduce(system.tuple([1, 1]), async (i, j) => j));
   const [fst, ] = t;
-  system.printLine(fst);
+  await system.printLine(fst);
 }
 return [main, _tests];}`;
 
@@ -169,10 +169,10 @@ const global = new class {};
 async function main() {
   let x = "one";
   let y = "two";
-  system.printLine(f(system.tuple([x, y])));
+  await system.printLine((await global.f(system.tuple([x, y]))));
 }
 
-function f(t) {
+async function f(t) {
   const [first, ] = t;
   return first;
 }
@@ -203,7 +203,7 @@ const global = new class {};
 async function main() {
   let x = system.tuple([3, "Apple"]);
   x = system.tuple([4, "Pear"]);
-  system.printLine(x);
+  await system.printLine(x);
 }
 return [main, _tests];}`;
 
@@ -213,7 +213,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "(4, Pear)");
+    await assertObjectCodeExecutes(fileImpl, "tuple(4, Pear)");
   });
 
   test("Fail_OutOfRangeError", async () => {
@@ -250,7 +250,9 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types String to Int"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: _, Int Provided: tuple(Int, String)",
+    ]);
   });
 
   test("Fail_ImmutableSoCannotAssignAnItem", async () => {
@@ -282,7 +284,9 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types String to Int"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: tuple(Int, String) Provided: tuple(String, String)",
+    ]);
   });
 
   test("Fail_DifferentSizeTuples1", async () => {
@@ -299,7 +303,9 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types (Int, String) to (Int, String, Int)"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: tuple(Int, String, Int) Provided: tuple(Int, String)",
+    ]);
   });
 
   test("Fail_DifferentSizeTuples2", async () => {
@@ -316,6 +322,8 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types (Int, String, Int) to (Int, String)"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: tuple(Int, String) Provided: tuple(Int, String, Int)",
+    ]);
   });
 });

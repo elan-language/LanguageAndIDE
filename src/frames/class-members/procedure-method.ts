@@ -1,22 +1,27 @@
 import { CodeSource } from "../code-source";
 import { mustBeUniqueNameInScope } from "../compile-rules";
-import { privateHelp, processTogglePrivate, singleIndent } from "../frame-helpers";
+import {
+  addPrivateToggleToContextMenu,
+  processTogglePrivate,
+  singleIndent,
+} from "../frame-helpers";
 import { ConcreteClass } from "../globals/concrete-class";
 import { ProcedureFrame } from "../globals/procedure-frame";
 import { editorEvent } from "../interfaces/editor-event";
 import { ElanSymbol } from "../interfaces/elan-symbol";
-import { Frame } from "../interfaces/frame";
-import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
-import { privateKeyword, procedureKeyword } from "../keywords";
+import { PossiblyPrivateMember } from "../interfaces/possibly-private-member";
+import { Scope } from "../interfaces/scope";
+import { Transforms } from "../interfaces/transforms";
+import { privateKeyword } from "../keywords";
 import { getClassScope } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
-import { Transforms } from "../syntax-nodes/transforms";
 
-export class ProcedureMethod extends ProcedureFrame implements Member {
+export class ProcedureMethod extends ProcedureFrame implements PossiblyPrivateMember {
   isMember: boolean = true;
   private: boolean;
   isAbstract = false;
+  hrefForFrameHelp: string = "LangRef.html#procedure_method";
 
   constructor(parent: Parent, priv = false) {
     super(parent);
@@ -47,8 +52,8 @@ ${this.indent()}end procedure\r
   }
 
   public renderAsHtml(): string {
-    return `<el-proc class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.privateHelp()}>
-<el-top><el-expand>+</el-expand>${this.modifierAsHtml()}<el-kw>procedure </el-kw><el-method>${this.name.renderAsHtml()}</el-method>(${this.params.renderAsHtml()})${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
+    return `<el-proc class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.toolTip()}>
+<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>${this.modifierAsHtml()}<el-kw>procedure </el-kw><el-method>${this.name.renderAsHtml()}</el-method>(${this.params.renderAsHtml()})${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
 <el-kw>end procedure</el-kw>
 </el-proc>`;
@@ -78,7 +83,7 @@ ${this.indent()}}\r
     return super.parseBottom(source);
   }
 
-  resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
+  resolveSymbol(id: string, transforms: Transforms, initialScope: Scope): ElanSymbol {
     if (this.name.text === id) {
       return this;
     }
@@ -102,7 +107,15 @@ ${this.indent()}}\r
     return result;
   }
 
-  privateHelp(): string {
-    return privateHelp(this, procedureKeyword);
+  makePublic = () => {
+    this.private = false;
+  };
+  makePrivate = () => {
+    this.private = true;
+  };
+  getContextMenuItems() {
+    const map = super.getContextMenuItems();
+    addPrivateToggleToContextMenu(this, map);
+    return map;
   }
 }

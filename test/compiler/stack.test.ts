@@ -16,15 +16,16 @@ suite("Stack", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  let st be new Stack<of String>()
+  variable st set to new Stack<of String>()
   print st.length()
-  call st.push("apple")
-  call st.push("pear")
+  set st to st.push("apple")
+  set st to st.push("pear")
   print st.length()
   print st.peek()
-  variable fruit set to st.pop()
+  variable fruit set to ""
+  set fruit, st to st.pop()
   print fruit
-  set fruit to st.pop()
+  set fruit, st to st.pop()
   print fruit
   print st.length()
 end main`;
@@ -32,17 +33,18 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const st = system.initialise(new _stdlib.Stack());
-  system.printLine(st.length());
-  st.push("apple");
-  st.push("pear");
-  system.printLine(st.length());
-  system.printLine(st.peek());
-  let fruit = st.pop();
-  system.printLine(fruit);
-  fruit = st.pop();
-  system.printLine(fruit);
-  system.printLine(st.length());
+  let st = system.initialise(await new _stdlib.Stack()._initialise());
+  await system.printLine(st.length());
+  st = st.push("apple");
+  st = st.push("pear");
+  await system.printLine(st.length());
+  await system.printLine(st.peek());
+  let fruit = "";
+  [fruit, st] = st.pop();
+  await system.printLine(fruit);
+  [fruit, st] = st.pop();
+  await system.printLine(fruit);
+  await system.printLine(st.length());
 }
 return [main, _tests];}`;
 
@@ -59,9 +61,9 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  let st be new Stack<of String>()
-  call st.push("apple")
-  call st.push(3)
+  variable st set to new Stack<of String>()
+  set st to st.push("apple")
+  set st to st.push(3)
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -69,15 +71,15 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Argument types expected: parameter0 (String) Provided: Int"]);
+    assertDoesNotCompile(fileImpl, ["Argument types. Expected: parameter0 (String) Provided: Int"]);
   });
 
   test("Fail_Stack_adding_incompatible_type2", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  let st be new Stack<of String>()
-  call st.push(3)
+  variable st set to new Stack<of String>()
+  set st to st.push(3)
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -85,15 +87,15 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Argument types expected: parameter0 (String) Provided: Int"]);
+    assertDoesNotCompile(fileImpl, ["Argument types. Expected: parameter0 (String) Provided: Int"]);
   });
 
   test("Fail_Stack_peek_incompatible_type", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  let st be new Stack<of String>()
-  call st.push("apple")
+  variable st set to new Stack<of String>()
+  set st to st.push("apple")
   variable a set to 1
   set a to st.peek()
 end main`;
@@ -103,7 +105,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types String to Int"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: String"]);
   });
 
   test("Fail_Stack_peek_empty_stack", async () => {
@@ -117,8 +119,8 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const st = system.initialise(new _stdlib.Stack());
-  system.printLine(st.peek());
+  const st = system.initialise(await new _stdlib.Stack()._initialise());
+  await system.printLine(st.peek());
 }
 return [main, _tests];}`;
 
@@ -128,7 +130,10 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    assertObjectCodeDoesNotExecute(fileImpl, "Cannot peek an empty Stack - check using length()");
+    await assertObjectCodeDoesNotExecute(
+      fileImpl,
+      "Cannot peek an empty Stack - check using length()",
+    );
   });
 
   test("Fail_Stack_pop_empty_stack", async () => {
@@ -142,8 +147,8 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const st = system.initialise(new _stdlib.Stack());
-  system.printLine(st.pop());
+  const st = system.initialise(await new _stdlib.Stack()._initialise());
+  await system.printLine(st.pop());
 }
 return [main, _tests];}`;
 
@@ -153,7 +158,10 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    assertObjectCodeDoesNotExecute(fileImpl, "Cannot pop an empty Stack - check using length()");
+    await assertObjectCodeDoesNotExecute(
+      fileImpl,
+      "Cannot pop an empty Stack - check using length()",
+    );
   });
 
   test("Fail_StackWithoutGenericParm", async () => {
@@ -168,6 +176,24 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["<of Type(s)> expected: 1 got: 0"]);
+    assertDoesNotCompile(fileImpl, ["<of Type(s)> Expected: 1 Provided: 0"]);
+  });
+
+  test("Fail_StackOfMutable", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable st set to new Stack<of Foo>()
+end main
+
+class Foo
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Stack cannot be of mutable type 'Foo'"]);
   });
 });

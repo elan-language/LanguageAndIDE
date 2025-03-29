@@ -23,7 +23,7 @@ end main`;
 const global = new class {};
 async function main() {
   let bReak = 2;
-  system.printLine(bReak);
+  await system.printLine(bReak);
 }
 return [main, _tests];}`;
 
@@ -55,17 +55,19 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let foo = system.initialise(new Foo());
-  system.printLine(foo);
+  let foo = system.initialise(await new Foo()._initialise());
+  await system.printLine(foo);
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
-  constructor() {
 
+  async _initialise() {
+
+    return this;
   }
 
-  asString() {
+  async asString() {
     return "Hello World!";
   }
 

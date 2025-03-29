@@ -1,9 +1,10 @@
 import { SymbolType } from "../interfaces/symbol-type";
+import { noTypeOptions } from "../interfaces/type-options";
 
 export class GenericParameterType implements SymbolType {
   constructor(public id: string) {}
 
-  isImmutable = false;
+  typeOptions = noTypeOptions;
 
   initialValue = "";
 
@@ -13,5 +14,12 @@ export class GenericParameterType implements SymbolType {
 
   toString() {
     return this.name;
+  }
+
+  isAssignableFrom(otherType: SymbolType): boolean {
+    if (otherType instanceof GenericParameterType) {
+      return this.name === otherType.name;
+    }
+    return false;
   }
 }

@@ -1,10 +1,10 @@
 import { TokenType } from "../symbol-completion-helpers";
 import { AbstractAlternatives } from "./abstract-alternatives";
-import { ArrayNode } from "./array-node";
 import { BracketedExpression } from "./bracketed-expression";
 import { DictionaryNode } from "./dictionary-node";
 import { ExprNode } from "./expr-node";
 import { DictionaryImmutableNode } from "./immutable-dictionary-node";
+import { ListImmutableNode } from "./list-immutable-node";
 import { ListNode } from "./list-node";
 import { LitValueNode } from "./lit-value";
 import { ReferenceNode } from "./reference-node";
@@ -30,8 +30,8 @@ export class TermSimple extends AbstractAlternatives {
 
   parseText(text: string): void {
     if (text.trim().length > 0) {
+      this.alternatives.push(new ListImmutableNode(() => new ExprNode()));
       this.alternatives.push(new ListNode(() => new ExprNode()));
-      this.alternatives.push(new ArrayNode(() => new ExprNode()));
       this.alternatives.push(
         new DictionaryNode(
           () => new ExprNode(),

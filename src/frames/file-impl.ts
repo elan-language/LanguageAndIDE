@@ -8,8 +8,8 @@ import {
   expandCollapseAll,
   helper_compileStatusAsDisplayStatus,
   helper_parseStatusAsDisplayStatus,
-  helper_runStatusAsDisplayStatus,
   helper_testStatusAsDisplayStatus,
+  isMain,
   isSelector,
 } from "./frame-helpers";
 import { AbstractClass } from "./globals/abstract-class";
@@ -34,6 +34,7 @@ import { Profile } from "./interfaces/profile";
 import { Scope } from "./interfaces/scope";
 import { Selectable } from "./interfaces/selectable";
 import { StatementFactory } from "./interfaces/statement-factory";
+import { Transforms } from "./interfaces/transforms";
 import {
   parentHelper_addChildAfter,
   parentHelper_addChildBefore,
@@ -50,15 +51,22 @@ import {
   parentHelper_removeChild,
   parentHelper_renderChildrenAsHtml,
   parentHelper_renderChildrenAsSource,
+  parentHelper_updateBreakpoints,
   worstParseStatus,
 } from "./parent-helpers";
 import { ScratchPad } from "./scratch-pad";
 import { StatementFactoryImpl } from "./statement-factory-impl";
-import { CompileStatus, DisplayStatus, ParseStatus, RunStatus, TestStatus } from "./status-enums";
+import {
+  BreakpointEvent,
+  CompileStatus,
+  DisplayColour,
+  ParseStatus,
+  RunStatus,
+  TestStatus,
+} from "./status-enums";
 import { DuplicateSymbol } from "./symbols/duplicate-symbol";
 import { elanSymbols } from "./symbols/elan-symbols";
 import { isSymbol, symbolMatches } from "./symbols/symbol-helpers";
-import { Transforms } from "./syntax-nodes/transforms";
 
 // for web editor bundle
 export { CodeSourceFromString };
@@ -220,7 +228,7 @@ export class FileImpl implements File, Scope {
     this._frNo = 1;
     const globals = parentHelper_renderChildrenAsHtml(this);
     this.currentHash = await this.getHash();
-    return `<el-header># <el-hash>${this.currentHash}</el-hash> ${this.getVersion()}${this.getProfileName()} <span id="fileStatus" class="${this.parseStatusAsString()}">${this.parseStatusAsString()}</span></el-header>\r\n${globals}`;
+    return `<el-header># <el-hash>${this.currentHash}</el-hash> ${this.getVersion()}${this.getProfileName()}</el-header>\r\n${globals}`;
   }
 
   public indent(): string {
@@ -233,7 +241,7 @@ export class FileImpl implements File, Scope {
   }
 
   private getVersion() {
-    return "Elan Beta 6";
+    return "Elan Beta 9";
   }
 
   private getProfileName() {
@@ -262,7 +270,7 @@ export class FileImpl implements File, Scope {
       }
 
       for (const frame of this._children.filter(
-        (g) => !("isSelector" in g || g instanceof Enum || g instanceof Constant),
+        (g) => !(isSelector(g) || g instanceof Enum || g instanceof Constant),
       )) {
         ss.push(frame.compile(this.transform));
       }
@@ -290,8 +298,9 @@ export class FileImpl implements File, Scope {
     return `${stdlib}\n${this.compileGlobals()}return [main, _tests];}`;
   }
 
-  compileAsWorker(base: string): string {
-    const onmsg = `onmessage = async (e) => {
+  compileAsWorker(base: string, debugMode: boolean): string {
+    this.updateBreakpoints(debugMode ? BreakpointEvent.activate : BreakpointEvent.disable);
+    const onmsg = `addEventListener("message", async (e) => {
   if (e.data.type === "start") {
     try {
       const [main, tests] = await program();
@@ -302,13 +311,17 @@ export class FileImpl implements File, Scope {
       postMessage({type : "status", status : "error", error : e});
     }
   }
-};`;
+  if (e.data.type === "pause") {
+    __pause = true;
+  }
+  });`;
 
-    const stdlib = `import { StdLib } from "${base}/elan-api.js"; let system; let _stdlib; let _tests = []; async function program() { _stdlib = new StdLib(); system = _stdlib.system; system.stdlib = _stdlib  `;
+    const stdlib = `import { StdLib } from "${base}/elan-api.js"; let system; let _stdlib; let _tests = []; let __pause = false; async function program() { _stdlib = new StdLib(); system = _stdlib.system; system.stdlib = _stdlib  `;
     return `${stdlib}\n${this.compileGlobals()}return [main, _tests];}\n${onmsg}`;
   }
 
   compileAsTestWorker(base: string): string {
+    this.updateBreakpoints(BreakpointEvent.disable);
     const onmsg = `onmessage = async (e) => {
   if (e.data.type === "start") {
     try {
@@ -328,13 +341,13 @@ export class FileImpl implements File, Scope {
 
   renderHashableContent(): string {
     const globals = parentHelper_renderChildrenAsSource(this);
-    let html = `${this.getVersion()}${this.getProfileName()} ${this.parseStatusAsString()}\r\n\r\n${globals}`;
+    let html = `${this.getVersion()}${this.getProfileName()} ${this.getParseStatusLabel()}\r\n\r\n${globals}`;
     html = html.endsWith("\r\n") ? html : html + "\r\n"; // To accommodate possibility that last global is a global-comment
     return html;
   }
 
   public getFirstSelectorAsDirectChild(): AbstractSelector {
-    return this.getChildren().filter((g) => "isSelector" in g)[0] as GlobalSelector;
+    return this.getChildren().filter((g) => isSelector(g))[0];
   }
 
   getChildNumber(n: number): Frame {
@@ -391,20 +404,26 @@ export class FileImpl implements File, Scope {
   readRunStatus(): RunStatus {
     return this._runStatus;
   }
-  readRunStatusForDashboard(): string {
-    return DisplayStatus[helper_runStatusAsDisplayStatus(this._runStatus)];
+  getRunStatusLabel(): string {
+    const status = this.readRunStatus();
+    return status === RunStatus.default ? "" : RunStatus[status];
+  }
+  getRunStatusColour(): string {
+    return RunStatus[this._runStatus];
   }
   setRunStatus(s: RunStatus) {
     this._runStatus = s;
   }
+
   readParseStatus(): ParseStatus {
     return this._parseStatus;
   }
-  parseStatusAsString(): string {
-    return ParseStatus[this.readParseStatus()];
+  getParseStatusLabel(): string {
+    const status = this.readParseStatus();
+    return status === ParseStatus.default ? "" : ParseStatus[status];
   }
-  readParseStatusForDashboard(): string {
-    return DisplayStatus[helper_parseStatusAsDisplayStatus(this._parseStatus)];
+  getParseStatusColour(): string {
+    return DisplayColour[helper_parseStatusAsDisplayStatus(this._parseStatus)];
   }
 
   setTestStatus(s: TestStatus) {
@@ -452,13 +471,17 @@ export class FileImpl implements File, Scope {
   readCompileStatus(): CompileStatus {
     return this._compileStatus;
   }
-  readCompileStatusForDashboard(): string {
-    let status = DisplayStatus.default;
+  getCompileStatusLabel(): string {
+    const status = this.readCompileStatus();
+    return status === CompileStatus.default ? "" : CompileStatus[status].replace("_", " ");
+  }
+  getCompileStatusColour(): string {
+    let status = DisplayColour.none;
     const parseStatus = helper_parseStatusAsDisplayStatus(this.readParseStatus());
-    if (parseStatus === DisplayStatus.ok) {
+    if (parseStatus === DisplayColour.ok) {
       status = helper_compileStatusAsDisplayStatus(this._compileStatus);
     }
-    return DisplayStatus[status];
+    return DisplayColour[status];
   }
   updateAllCompileStatus(): void {
     this.getChildren().forEach((c) => c.updateCompileStatus());
@@ -473,22 +496,23 @@ export class FileImpl implements File, Scope {
   readTestStatus(): TestStatus {
     return this.hasTests ? this._testStatus : TestStatus.default;
   }
-
   getTestError(): Error | undefined {
     return this._testError;
   }
-
-  readTestStatusForDashboard(): string {
-    let status: DisplayStatus;
+  getTestStatusLabel(): string {
+    return this.getTestStatusColour() === "none" ? "" : TestStatus[this.readTestStatus()];
+  }
+  getTestStatusColour(): string {
+    let status: DisplayColour;
     if (
       this.readParseStatus() !== ParseStatus.valid ||
       this.readCompileStatus() !== CompileStatus.ok
     ) {
-      status = DisplayStatus.default;
+      status = DisplayColour.none;
     } else {
       status = helper_testStatusAsDisplayStatus(this.readTestStatus());
     }
-    return DisplayStatus[status];
+    return DisplayColour[status];
   }
   updateAllTestStatus(): void {
     const tests = this.getTestFrames();
@@ -569,7 +593,7 @@ export class FileImpl implements File, Scope {
   getNextSelector(append?: boolean) {
     if (append) {
       const last = this.getLastChild();
-      if ("isSelector" in last) {
+      if (isSelector(last)) {
         return last as GlobalSelector;
       }
 
@@ -618,7 +642,7 @@ export class FileImpl implements File, Scope {
   }
 
   containsMain(): boolean {
-    const mains = this.getChildren().filter((g) => "isMain" in g);
+    const mains = this.getChildren().filter((g) => isMain(g));
     return mains.length > 0;
   }
 
@@ -710,7 +734,7 @@ export class FileImpl implements File, Scope {
     }
   }
 
-  resolveSymbol(id: string | undefined, transforms: Transforms, _initialScope: Frame): ElanSymbol {
+  resolveSymbol(id: string, transforms: Transforms, _initialScope: Scope): ElanSymbol {
     // unknown because of typescript quirk
     const globalSymbols = (this.getChildren().filter((c) => isSymbol(c)) as ElanSymbol[]).concat(
       elanSymbols,
@@ -729,6 +753,10 @@ export class FileImpl implements File, Scope {
 
   get libraryScope() {
     return this._stdLibSymbols;
+  }
+
+  updateBreakpoints(event: BreakpointEvent) {
+    parentHelper_updateBreakpoints(this, event);
   }
 }
 

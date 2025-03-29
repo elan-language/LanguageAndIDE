@@ -1,6 +1,7 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
+  assertDoesNotCompile,
   assertDoesNotParse,
   assertObjectCodeDoesNotExecute,
   assertObjectCodeExecutes,
@@ -72,7 +73,7 @@ end main`;
 const global = new class {};
 async function main() {
   let bar = 1;
-  throw new Error(\`\${_stdlib.asString(bar)}\`);
+  throw new Error(\`\${await _stdlib.asString(bar)}\`);
 }
 return [main, _tests];}`;
 
@@ -138,10 +139,10 @@ const global = new class {};
 async function main() {
   try {
     await foo();
-    system.printLine("not caught");
+    await system.printLine("not caught");
   } catch (_e) {
     let e = _e.message;
-    system.printLine(e);
+    await system.printLine(e);
   }
 }
 
@@ -165,7 +166,7 @@ return [main, _tests];}`;
 
 main
   try
-    variable x set to empty Array<of Foo>
+    variable x set to empty List<of Foo>
     variable y set to x[1]
     variable z set to y.p1
     print "not caught"
@@ -186,20 +187,22 @@ end class`;
 const global = new class {};
 async function main() {
   try {
-    let x = system.emptyArray();
+    let x = system.initialise(_stdlib.List.emptyInstance());
     let y = system.safeIndex(x, 1);
     let z = y.p1;
-    system.printLine("not caught");
+    await system.printLine("not caught");
   } catch (_e) {
     let e = _e.message;
-    system.printLine(e);
+    await system.printLine(e);
   }
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
-  constructor() {
 
+  async _initialise() {
+
+    return this;
   }
 
   p1 = 0;
@@ -239,12 +242,12 @@ const global = new class {};
 async function main() {
   try {
     await foo();
-    system.printLine("not caught");
+    await system.printLine("not caught");
   } catch (_e) {
     let e = _e.message;
     let s = "";
     s = e;
-    system.printLine(s);
+    await system.printLine(s);
   }
 }
 
@@ -261,6 +264,94 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "Foo");
+  });
+
+  test("Pass_RedefineVariableinCatch", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  try
+    variable a set to 1
+    throw exception "fail"
+  catch exception in e
+    variable a set to e
+    print a
+  end try
+end main
+  
+procedure foo()
+  throw exception "Foo"
+end procedure`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  try {
+    let a = 1;
+    throw new Error("fail");
+  } catch (_e) {
+    let e = _e.message;
+    let a = e;
+    await system.printLine(a);
+  }
+}
+
+async function foo() {
+  throw new Error("Foo");
+}
+global["foo"] = foo;
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "fail");
+  });
+
+  test("Pass_UseOuterScopeVariableInCatch", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to 1
+  try
+    throw exception "fail"
+  catch exception in e
+    print a
+  end try
+end main
+  
+procedure foo()
+  throw exception "Foo"
+end procedure`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = 1;
+  try {
+    throw new Error("fail");
+  } catch (_e) {
+    let e = _e.message;
+    await system.printLine(a);
+  }
+}
+
+async function foo() {
+  throw new Error("Foo");
+}
+global["foo"] = foo;
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1");
   });
 
   test("Fail_ThrowExceptionInFunction", async () => {
@@ -318,5 +409,56 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
+  });
+
+  test("Fail_TryVariableOutOfScopeInCatch", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  try
+    variable a set to 1
+    throw exception "fail"
+  catch exception in e
+    print a
+  end try
+end main
+  
+procedure foo()
+  throw exception "Foo"
+end procedure
+`;
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'a' is not defined"]);
+  });
+
+  test("Fail_RedefineVariableinCatch1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to 1
+  try
+    throw exception "fail"
+  catch exception in e
+    variable a set to e
+    print a
+  end try
+end main
+  
+procedure foo()
+  throw exception "Foo"
+end procedure`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "The identifier 'a' is already used for a variable and cannot be re-defined here.",
+    ]);
   });
 });

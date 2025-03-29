@@ -3,7 +3,13 @@ import { CodeSource } from "../code-source";
 import { CompileError } from "../compile-error";
 import { editorEvent } from "../interfaces/editor-event";
 import { ScratchPad } from "../scratch-pad";
-import { CompileStatus, ParseStatus, RunStatus, TestStatus } from "../status-enums";
+import {
+  BreakpointEvent,
+  CompileStatus,
+  ParseStatus,
+  RunStatus,
+  TestStatus,
+} from "../status-enums";
 import { Frame } from "./frame";
 import { Parent } from "./parent";
 import { Profile } from "./profile";
@@ -18,7 +24,7 @@ export interface File extends Parent {
   renderAsSource(): Promise<string>;
   compile(): string;
 
-  compileAsWorker(base: string): string;
+  compileAsWorker(base: string, debugMode: boolean): string;
 
   compileAsTestWorker(base: string): string;
 
@@ -38,21 +44,25 @@ export interface File extends Parent {
   expandCollapseAll(): void;
 
   readParseStatus(): ParseStatus;
-  readParseStatusForDashboard(): string;
+  getParseStatusLabel(): string;
+  getParseStatusColour(): string;
   updateAllParseStatus(): void;
 
   readCompileStatus(): CompileStatus;
-  readCompileStatusForDashboard(): string;
+  getCompileStatusLabel(): string;
+  getCompileStatusColour(): string;
   updateAllCompileStatus(): void;
   resetAllCompileStatusAndErrors(): void;
 
   readTestStatus(): TestStatus;
-  readTestStatusForDashboard(): string;
+  getTestStatusLabel(): string;
+  getTestStatusColour(): string;
   updateAllTestStatus(): void;
   resetAllTestStatus(): void;
 
   readRunStatus(): RunStatus;
-  readRunStatusForDashboard(): string;
+  getRunStatusLabel(): string;
+  getRunStatusColour(): string;
 
   //Internal use only
   createMain(): Frame;
@@ -96,4 +106,6 @@ export interface File extends Parent {
   removeAllSelectorsThatCanBe(): void;
   currentHash: string;
   hasTests: boolean;
+
+  updateBreakpoints(event: BreakpointEvent): void;
 }

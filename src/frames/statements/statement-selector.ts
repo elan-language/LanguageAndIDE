@@ -24,6 +24,7 @@ import {
 export class StatementSelector extends AbstractSelector {
   isStatement = true;
   private factory: StatementFactory;
+  hrefForFrameHelp: string = "LangRef.html#Statement_selector";
 
   constructor(parent: FrameWithStatements) {
     super(parent);
@@ -54,28 +55,19 @@ export class StatementSelector extends AbstractSelector {
     return this.profile.statements.includes(keyword);
   }
 
-  otherwiseMaybeAdded(): boolean {
-    const peers = this.getParent().getChildren();
-    const noExistingOtherwise = peers.filter((p) => "isOtherwise" in p).length === 0;
-    const isLastInSwitch = this.getParent().getLastChild() === this;
-    return noExistingOtherwise && isLastInSwitch;
-  }
-
-  isAboveOtherwiseIfPresent(): boolean {
-    const peers = this.getParent().getChildren();
-    const existingOtherwise = peers.filter((p) => "isOtherwise" in p)[0];
-    return !existingOtherwise || peers.indexOf(this) < peers.indexOf(existingOtherwise);
-  }
-
   validWithinCurrentContext(keyword: string, _userEntry: boolean): boolean {
     const parent = this.getParent();
     let result = false;
     if (keyword === elseKeyword) {
       result = parent.getIdPrefix() === ifKeyword;
     } else if (keyword === assertKeyword) {
-      return this.isWithinATest();
+      return this.isDirectlyWithinATest();
     } else if (keyword === printKeyword || keyword === callKeyword) {
-      result = !(this.isWithinAFunction() || this.isWithinATest() || this.isWithinAConstructor());
+      result = !(
+        this.isWithinAFunction() ||
+        this.isDirectlyWithinATest() ||
+        this.isWithinAConstructor()
+      );
     } else {
       result = true;
     }
@@ -86,8 +78,8 @@ export class StatementSelector extends AbstractSelector {
     return this.isWithinContext(this.getParent(), "func");
   }
 
-  private isWithinATest(): boolean {
-    return this.isWithinContext(this.getParent(), "test");
+  private isDirectlyWithinATest(): boolean {
+    return this.getParent().getIdPrefix() === "test";
   }
 
   private isWithinAConstructor(): boolean {
@@ -101,6 +93,6 @@ export class StatementSelector extends AbstractSelector {
   }
 
   renderAsHtml(): string {
-    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.textToDisplayAsHtml()}</el-statement>`;
+    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.toolTip()}>${this.bpAsHtml()}${this.textToDisplayAsHtml()}</el-statement>`;
   }
 }

@@ -1,7 +1,7 @@
 import { CompileError } from "../compile-error";
 import {
+  mustBeAssignableType,
   mustBeClass,
-  mustBeCompatibleType,
   mustBePropertyAndPublic,
   mustBeRecord,
   mustBeRecordType,
@@ -55,7 +55,7 @@ export class CopyWithAsn extends AbstractAstNode implements AstNode {
 
           const pSymbol = classSymbol.resolveSymbol(propertyId, transforms(), this.scope);
           mustBePropertyAndPublic(pSymbol, this.compileErrors, this.fieldId);
-          mustBeCompatibleType(
+          mustBeAssignableType(
             pSymbol.symbolType(transforms()),
             type,
             this.compileErrors,
@@ -71,7 +71,7 @@ export class CopyWithAsn extends AbstractAstNode implements AstNode {
       withClauseStr = ` ${withClause.join("; ")};`;
     }
 
-    return `(() => {const ${tempTo} = {...${from}}; Object.setPrototypeOf(${tempTo}, Object.getPrototypeOf(${from}));${withClauseStr} return ${tempTo};})()`;
+    return `await (async () => {const ${tempTo} = {...${from}}; Object.setPrototypeOf(${tempTo}, Object.getPrototypeOf(${from}));${withClauseStr} return ${tempTo};})()`;
   }
 
   symbolType() {

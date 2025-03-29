@@ -1,30 +1,34 @@
 import { ElanCompilerError } from "../../elan-compiler-error";
 import { CompileError } from "../compile-error";
-import { mustMatchParameters } from "../compile-rules";
+import {
+  mustBeAssignableType,
+  mustBeDoubleIndexableType,
+  mustBeIndexableType,
+  mustMatchParameters,
+} from "../compile-rules";
 import { isFile, isFrame, isFunction } from "../frame-helpers";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstIndexableNode } from "../interfaces/ast-indexable-node";
 import { AstNode } from "../interfaces/ast-node";
 import { AstQualifiedNode } from "../interfaces/ast-qualified-node";
-import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
-import { Class } from "../interfaces/class";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
-import { AbstractDictionaryType } from "../symbols/abstract-dictionary-type";
-import { ArrayType } from "../symbols/array-type";
+import { Transforms } from "../interfaces/transforms";
+import { noTypeOptions } from "../interfaces/type-options";
+
 import { ClassType } from "../symbols/class-type";
-import { DictionaryImmutableType } from "../symbols/dictionary-immutable-type";
-import { DictionaryType } from "../symbols/dictionary-type";
+
 import { FunctionType } from "../symbols/function-type";
 import { GenericParameterType } from "../symbols/generic-parameter-type";
-import { IterableType } from "../symbols/iterable-type";
-import { ListType } from "../symbols/list-type";
+import { IntType } from "../symbols/int-type";
 import { ProcedureType } from "../symbols/procedure-type";
 import { StringType } from "../symbols/string-type";
 import {
-  isAnyDictionaryType,
+  isClassType,
   isClassTypeDef,
+  isGenericSymbolType,
+  isReifyableSymbolType,
   parameterNamesWithTypes,
 } from "../symbols/symbol-helpers";
 import { TupleType } from "../symbols/tuple-type";
@@ -32,8 +36,9 @@ import { UnknownType } from "../symbols/unknown-type";
 import { transform, transformMany } from "./ast-visitor";
 import { DeconstructedListAsn } from "./deconstructed-list-asn";
 import { DeconstructedTupleAsn } from "./deconstructed-tuple-asn";
+import { EmptyAsn } from "./empty-asn";
+import { IndexAsn } from "./index-asn";
 import { OperationSymbol } from "./operation-symbol";
-import { Transforms } from "./transforms";
 
 export function isAstQualifiedNode(n: AstNode): n is AstQualifiedNode {
   return !!n && "qualifier" in n;
@@ -43,16 +48,16 @@ export function isAstIndexableNode(n: AstNode): n is AstIndexableNode {
   return !!n && "rootSymbolType" in n;
 }
 
-export function isAstQualifierNode(n: AstNode): n is AstQualifierNode {
-  return !!n && "value" in n;
-}
-
 export function isAstCollectionNode(n: AstNode): n is AstCollectionNode {
   return !!n && "items" in n;
 }
 
 export function isAstIdNode(n: AstNode | undefined): n is AstIdNode {
   return !!n && "id" in n;
+}
+
+export function isEmptyNode(n: AstNode): n is EmptyAsn {
+  return !!n && "isEmpty" in n;
 }
 
 export function InFunctionScope(start: Scope): boolean {
@@ -83,7 +88,11 @@ class TypeHolder implements SymbolType {
     public readonly symbolType: SymbolType,
     public readonly ofTypes: SymbolType[],
   ) {}
-  isImmutable = false;
+  isAssignableFrom(otherType: SymbolType): boolean {
+    return this.symbolType.isAssignableFrom(otherType);
+  }
+  typeOptions = noTypeOptions;
+
   name = "TypeHolder";
   initialValue = "";
   toString() {
@@ -92,12 +101,12 @@ class TypeHolder implements SymbolType {
 }
 
 export function flatten(p: SymbolType): SymbolType {
-  if (p instanceof ArrayType || p instanceof ListType || p instanceof IterableType) {
-    return new TypeHolder(p, [flatten(p.ofType)]);
+  if (p instanceof ClassType && p.typeOptions.isIndexable && p.ofTypes.length === 1) {
+    return new TypeHolder(p, [flatten(p.ofTypes[0])]);
   }
 
-  if (isAnyDictionaryType(p)) {
-    return new TypeHolder(p, [flatten(p.keyType), flatten(p.valueType)]);
+  if (p instanceof ClassType && p.typeOptions.isIndexable && p.ofTypes.length === 2) {
+    return new TypeHolder(p, [flatten(p.ofTypes[0]), flatten(p.ofTypes[1])]);
   }
 
   if (p instanceof TupleType) {
@@ -129,66 +138,76 @@ export function containsGenericType(type: SymbolType): boolean {
   if (type instanceof GenericParameterType) {
     return true;
   }
-  if (type instanceof ArrayType || type instanceof ListType || type instanceof IterableType) {
-    return containsGenericType(type.ofType);
-  }
-  if (isAnyDictionaryType(type)) {
-    return containsGenericType(type.keyType) || containsGenericType(type.valueType);
-  }
+
   if (type instanceof TupleType) {
     return type.ofTypes.some((t) => containsGenericType(t));
+  }
+  if (type instanceof ClassType) {
+    if (isClassTypeDef(type.scope)) {
+      return type.scope.ofTypes.some((t) => containsGenericType(t));
+    }
+  }
+
+  if (type instanceof FunctionType) {
+    if (containsGenericType(type.returnType)) {
+      return true;
+    }
+    return type.parameterTypes.some((t) => containsGenericType(t));
+  }
+
+  if (type instanceof ProcedureType) {
+    return type.parameterTypes.some((t) => containsGenericType(t));
   }
 
   return false;
 }
 
-export function generateType(type: SymbolType, matches: Map<string, SymbolType>): SymbolType {
+export function generateType(
+  type: SymbolType,
+  matches: Map<string, SymbolType>,
+  depth = 0,
+): SymbolType {
+  depth++;
+
+  // arbitary depth
+  if (depth > 20) {
+    return type;
+  }
+
+  if (isReifyableSymbolType(type)) {
+    return type.reify(type.ofTypes.map((t) => generateType(t, matches, depth)));
+  }
+
   if (type instanceof GenericParameterType) {
     const match = matches.get(type.id);
     if (match instanceof TypeHolder) {
-      return generateType(match.symbolType, matches);
+      return generateType(match.symbolType, matches, depth);
     }
 
-    return match ?? UnknownType.Instance;
+    return match ?? type;
   }
-  if (type instanceof ArrayType) {
-    return new ArrayType(generateType(type.ofType, matches));
-  }
-  if (type instanceof ListType) {
-    return new ListType(generateType(type.ofType, matches));
-  }
-  if (type instanceof IterableType) {
-    return new IterableType(generateType(type.ofType, matches));
-  }
-  if (type instanceof DictionaryType) {
-    return new DictionaryType(
-      generateType(type.keyType, matches),
-      generateType(type.valueType, matches),
-    );
-  }
-  if (type instanceof DictionaryImmutableType) {
-    return new DictionaryImmutableType(
-      generateType(type.keyType, matches),
-      generateType(type.valueType, matches),
-    );
-  }
-  if (type instanceof AbstractDictionaryType) {
-    return new AbstractDictionaryType(
-      generateType(type.keyType, matches),
-      generateType(type.valueType, matches),
-    );
-  }
+
   if (type instanceof TupleType) {
-    return new TupleType(type.ofTypes.map((t) => generateType(t, matches)));
+    return new TupleType(type.ofTypes.map((t) => generateType(t, matches, depth)));
   }
 
   if (type instanceof FunctionType) {
     return new FunctionType(
       type.parameterNames,
-      type.parameterTypes.map((t) => generateType(t, matches)),
+      type.parameterTypes.map((t) => generateType(t, matches, depth)),
       generateType(type.returnType, matches),
       type.isExtension,
       type.isPure,
+      type.isAsync,
+    );
+  }
+
+  if (type instanceof ProcedureType) {
+    return new ProcedureType(
+      type.parameterNames,
+      type.parameterTypes.map((t) => generateType(t, matches, depth)),
+      type.isExtension,
+      type.isAsync,
     );
   }
 
@@ -222,16 +241,8 @@ export function match(
   }
 }
 
-export function matchGenericTypes(
-  type: FunctionType | ProcedureType,
-  parameters: AstNode[],
-  cls?: Scope,
-) {
+export function matchGenericTypes(type: FunctionType | ProcedureType, parameters: AstNode[]) {
   const matches = new Map<string, SymbolType>();
-
-  if (isClassTypeDef(cls) && cls.ofTypes.length > 0) {
-    return cls.genericParamMatches ?? matches;
-  }
 
   const flattened = type.parameterTypes.map((n) => flatten(n));
 
@@ -240,33 +251,26 @@ export function matchGenericTypes(
   return matches;
 }
 
-export function matchClassGenericTypes(type: Class, parameters: AstNode[]) {
-  const matches = new Map<string, SymbolType>();
-  const flattened = type.ofTypes.map((n) => flatten(n));
-  const pTypes = parameters.map((p) => flatten(p.symbolType()));
-  match(flattened, pTypes, matches);
-  return matches;
-}
-
 export function matchParametersAndTypes(
-  funcSymbolType: FunctionType | ProcedureType,
+  id: string,
+  methodSymbolType: FunctionType | ProcedureType,
   parameters: AstNode[],
-  classTypeDef: Scope | undefined,
   compileErrors: CompileError[],
   location: string,
 ) {
-  let parameterTypes = funcSymbolType.parameterTypes;
+  let parameterTypes = methodSymbolType.parameterTypes;
 
   if (parameterTypes.some((pt) => containsGenericType(pt))) {
-    const matches = matchGenericTypes(funcSymbolType, parameters, classTypeDef);
+    const matches = matchGenericTypes(methodSymbolType, parameters);
     parameterTypes = parameterTypes.map((pt) => generateType(pt, matches));
   }
 
   mustMatchParameters(
+    id,
     parameters,
     parameterTypes,
-    parameterNamesWithTypes(funcSymbolType, parameterTypes).join(", "),
-    funcSymbolType.isExtension,
+    parameterNamesWithTypes(methodSymbolType, parameterTypes).join(", "),
+    methodSymbolType.isExtension,
     compileErrors,
     location,
   );
@@ -348,4 +352,47 @@ export function getIds(ast: AstNode) {
     return id.includes(",") ? id.split(",") : [id];
   }
   return [];
+}
+
+export function getIndexAndOfType(rootType: SymbolType): [SymbolType, SymbolType] {
+  if (isClassType(rootType) && isClassTypeDef(rootType.scope)) {
+    if (rootType.scope.ofTypes.length === 1) {
+      return [IntType.Instance, rootType.scope.ofTypes[0]];
+    }
+
+    if (rootType.scope.ofTypes.length === 2) {
+      return [rootType.scope.ofTypes[0], rootType.scope.ofTypes[1]];
+    }
+  }
+
+  if (isGenericSymbolType(rootType)) {
+    return [IntType.Instance, rootType.ofTypes[0]];
+  }
+
+  return [UnknownType.Instance, UnknownType.Instance];
+}
+
+export function wrapSimpleSubscript(code: string): string {
+  return `system.safeIndex(${code})`;
+}
+
+export function compileSimpleSubscript(
+  id: string,
+  rootType: SymbolType,
+  index: IndexAsn,
+  prefix: string,
+  code: string,
+  postfix: string,
+  compileErrors: CompileError[],
+  fieldId: string,
+) {
+  if (postfix.includes(",")) {
+    mustBeDoubleIndexableType(id, rootType, true, compileErrors, fieldId);
+  } else {
+    mustBeIndexableType(id, rootType, true, compileErrors, fieldId);
+  }
+  const [indexType] = getIndexAndOfType(rootType);
+  mustBeAssignableType(indexType, index.subscript1.symbolType(), compileErrors, fieldId);
+
+  return wrapSimpleSubscript(`${prefix}${code}, ${postfix}`);
 }

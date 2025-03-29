@@ -7,7 +7,6 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -25,7 +24,7 @@ end main`;
 const global = new class {};
 async function main() {
   let pi = _stdlib.pi;
-  system.printLine(pi);
+  await system.printLine(pi);
 }
 return [main, _tests];}`;
 
@@ -56,8 +55,8 @@ const global = new class {
 };
 async function main() {
   let f = 2;
-  system.printLine(f);
-  system.printLine(global.f);
+  await system.printLine(f);
+  await system.printLine(global.f);
 }
 return [main, _tests];}`;
 
@@ -82,7 +81,7 @@ end main`;
 const global = new class {};
 async function main() {
   const pi = _stdlib.pi;
-  system.printLine(pi);
+  await system.printLine(pi);
 }
 return [main, _tests];}`;
 
@@ -113,8 +112,8 @@ const global = new class {
 };
 async function main() {
   const f = 2;
-  system.printLine(f);
-  system.printLine(global.f);
+  await system.printLine(f);
+  await system.printLine(global.f);
 }
 return [main, _tests];}`;
 
@@ -154,25 +153,27 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let f = system.initialise(new Foo());
-  system.printLine(f.sin(1));
-  system.printLine(sin(1));
-  system.printLine(global.sin(1));
-  system.printLine(_stdlib.sin(1));
+  let f = system.initialise(await new Foo()._initialise());
+  await system.printLine((await f.sin(1)));
+  await system.printLine((await global.sin(1)));
+  await system.printLine((await global.sin(1)));
+  await system.printLine(_stdlib.sin(1));
 }
 
-function sin(x) {
+async function sin(x) {
   return 111;
 }
 global["sin"] = sin;
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
-  constructor() {
 
+  async _initialise() {
+
+    return this;
   }
 
-  sin(x) {
+  async sin(x) {
     return 222;
   }
 
@@ -215,7 +216,7 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let f = system.initialise(new Foo());
+  let f = system.initialise(await new Foo()._initialise());
   await f.pause(1);
   await pause(1);
   await global.pause(1);
@@ -223,18 +224,20 @@ async function main() {
 }
 
 async function pause(x) {
-  system.printLine(111);
+  await system.printLine(111);
 }
 global["pause"] = pause;
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
-  constructor() {
 
+  async _initialise() {
+
+    return this;
   }
 
   async pause(x) {
-    system.printLine(222);
+    await system.printLine(222);
   }
 
 }
@@ -266,11 +269,11 @@ end function`;
 const global = new class {};
 async function main() {
   let sin = 2;
-  system.printLine(sin);
-  system.printLine(global.sin(1));
+  await system.printLine(sin);
+  await system.printLine((await global.sin(1)));
 }
 
-function sin(x) {
+async function sin(x) {
   return 111;
 }
 global["sin"] = sin;
@@ -302,12 +305,12 @@ end procedure`;
 const global = new class {};
 async function main() {
   let sin = 2;
-  system.printLine(sin);
+  await system.printLine(sin);
   await global.sin(1);
 }
 
 async function sin(x) {
-  system.printLine(111);
+  await system.printLine(111);
 }
 global["sin"] = sin;
 return [main, _tests];}`;
@@ -321,7 +324,41 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "2111");
   });
 
-  ignore_test("Fail_LocalShadowsConstant", async () => {
+  test("Pass_LocalVarShadowsGlobalFunction", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  let add2 be add2(1)
+  print add2
+end main
+
+function add2(x as Float) returns Float
+  return x + 2
+end function`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  const add2 = (await global.add2(1));
+  await system.printLine(add2);
+}
+
+async function add2(x) {
+  return x + 2;
+}
+global["add2"] = add2;
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "3");
+  });
+
+  test("Pass_LocalShadowsConstant", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 constant a set to 4
@@ -331,17 +368,27 @@ main
   print a
 end main`;
 
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {
+  a = 4;
+
+};
+async function main() {
+  let a = 3;
+  await system.printLine(a);
+}
+return [main, _tests];}`;
+
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "The identifier 'a' is already used for a constant and cannot be re-defined here.",
-    ]);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "3");
   });
 
-  ignore_test("Fail_IdShadowsFunction", async () => {
+  test("Pass_IdShadowsFunction", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -356,24 +403,42 @@ function bar() returns Int
   return foo
 end function`;
 
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await system.printLine((await global.foo()));
+}
+
+async function foo() {
+  return 1;
+}
+global["foo"] = foo;
+
+async function bar() {
+  let foo = (await global.foo());
+  return foo;
+}
+global["bar"] = bar;
+return [main, _tests];}`;
+
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "The identifier 'foo' is already used for a function and cannot be re-defined here.",
-    ]);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1");
   });
+});
 
-  ignore_test("Fail_IdShadowsProcedure", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+test("Pass_IdShadowsProcedure", async () => {
+  const code = `# FFFF Elan v1.0.0 valid
 
 main
   call foo()
 end main
 procedure foo()
-
+  print 1
 end procedure
 
 function bar() returns Int
@@ -381,18 +446,35 @@ function bar() returns Int
   return foo
 end function`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
+  const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await foo();
+}
 
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "The identifier 'foo' is already used for a procedure and cannot be re-defined here.",
-    ]);
-  });
+async function foo() {
+  await system.printLine(1);
+}
+global["foo"] = foo;
 
-  test("Fail_IdShadowsParameter", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+async function bar() {
+  let foo = 1;
+  return foo;
+}
+global["bar"] = bar;
+return [main, _tests];}`;
+
+  const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+  await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+  assertParses(fileImpl);
+  assertStatusIsValid(fileImpl);
+  assertObjectCodeIs(fileImpl, objectCode);
+  await assertObjectCodeExecutes(fileImpl, "1");
+});
+
+test("Fail_IdShadowsParameter", async () => {
+  const code = `# FFFF Elan v1.0.0 valid
 
 main
   call foo(1)
@@ -401,95 +483,109 @@ procedure foo(a as Int)
   variable a set to a
 end procedure`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
+  const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+  await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "The identifier 'a' is already used for a parameter and cannot be re-defined here.",
-    ]);
-  });
+  assertParses(fileImpl);
+  assertStatusIsValid(fileImpl);
+  assertDoesNotCompile(fileImpl, [
+    "The identifier 'a' is already used for a parameter and cannot be re-defined here.",
+  ]);
+});
 
-  test("Fail_IdShadowsVariable", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+test("Fail_IdShadowsVariable", async () => {
+  const code = `# FFFF Elan v1.0.0 valid
 
 main
   variable a set to 1
   variable a set to 2
 end main`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
+  const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+  await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "The identifier 'a' is already used for a variable and cannot be re-defined here.",
-    ]);
-  });
+  assertParses(fileImpl);
+  assertStatusIsValid(fileImpl);
+  assertDoesNotCompile(fileImpl, [
+    "The identifier 'a' is already used for a variable and cannot be re-defined here.",
+  ]);
+});
 
-  test("Fail_IdShadowsLet", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+test("Fail_IdShadowsLet", async () => {
+  const code = `# FFFF Elan v1.0.0 valid
 
 main
   let a be 1
   variable a set to 2
 end main`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
+  const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+  await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "The identifier 'a' is already used for a 'let' and cannot be re-defined here.",
-    ]);
-  });
+  assertParses(fileImpl);
+  assertStatusIsValid(fileImpl);
+  assertDoesNotCompile(fileImpl, [
+    "The identifier 'a' is already used for a 'let' and cannot be re-defined here.",
+  ]);
+});
 
-  test("Fail_LetShadowsLet", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+test("Fail_LetShadowsLet", async () => {
+  const code = `# FFFF Elan v1.0.0 valid
 
 main
   let a be 1
   let a be 2
 end main`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
+  const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+  await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "The identifier 'a' is already used for a 'let' and cannot be re-defined here.",
-    ]);
-  });
+  assertParses(fileImpl);
+  assertStatusIsValid(fileImpl);
+  assertDoesNotCompile(fileImpl, [
+    "The identifier 'a' is already used for a 'let' and cannot be re-defined here.",
+  ]);
+});
 
-  ignore_test("Fail_ParameterShadowsConst", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+test("Pass_ParameterShadowsConst", async () => {
+  const code = `# FFFF Elan v1.0.0 valid
 
 constant x set to 1
 
 main
-  
+  print foo(1)
 end main
 
 function foo(x as Int) returns Int
   return x
 end function`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
+  const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {
+  x = 1;
 
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "The identifier 'x' is already used for a constant and cannot be re-defined here.",
-    ]);
-  });
+};
+async function main() {
+  await system.printLine((await global.foo(1)));
+}
 
-  test("Fail_global", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+async function foo(x) {
+  return x;
+}
+global["foo"] = foo;
+return [main, _tests];}`;
+
+  const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+  await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+  assertParses(fileImpl);
+  assertStatusIsValid(fileImpl);
+  assertObjectCodeIs(fileImpl, objectCode);
+  await assertObjectCodeExecutes(fileImpl, "1");
+});
+
+test("Fail_global", async () => {
+  const code = `# FFFF Elan v1.0.0 valid
 
 const a = 4
 const b = global.a
@@ -498,14 +594,14 @@ main
  
 end main`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
+  const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+  await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
-  });
+  assertDoesNotParse(fileImpl);
+});
 
-  test("Fail_ShadowParameter1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+test("Fail_ShadowParameter1", async () => {
+  const code = `# FFFF Elan v1.0.0 valid
 
 main
   variable result set to foo(3,4)
@@ -517,17 +613,17 @@ function foo(a as Int, b as Int) returns Int
   return a * b
 end function`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
+  const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+  await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "The identifier 'a' is already used for a parameter and cannot be re-defined here.",
-    ]);
-  });
+  assertParses(fileImpl);
+  assertDoesNotCompile(fileImpl, [
+    "The identifier 'a' is already used for a parameter and cannot be re-defined here.",
+  ]);
+});
 
-  test("Fail_ShadowParameter2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+test("Fail_ShadowParameter2", async () => {
+  const code = `# FFFF Elan v1.0.0 valid
 
 main
   variable result set to foo(3,4)
@@ -539,12 +635,11 @@ function foo(a as Int, b as Int) returns Int
   return a * b
 end function`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
+  const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+  await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "The identifier 'a' is already used for a parameter and cannot be re-defined here.",
-    ]);
-  });
+  assertParses(fileImpl);
+  assertDoesNotCompile(fileImpl, [
+    "The identifier 'a' is already used for a parameter and cannot be re-defined here.",
+  ]);
 });

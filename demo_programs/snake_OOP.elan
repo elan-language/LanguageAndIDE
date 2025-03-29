@@ -1,15 +1,15 @@
-# 34d6d6421a725f8734ea1b7b65e20a368ce4ba4058b6bf3a9edd1f151bb949de Elan Beta 6 valid
+# fc662c92b1dd50066db2a95757e48390f745c051253c0aed1bbb70f6a5d5e112 Elan Beta 9 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
-  variable gr set to new BlockGraphics()
+  variable blocks set to new Array2D<of Int>(40, 30, white)
   variable snake set to new Snake()
   variable apple set to new Apple()
   call apple.newRandomPosition(snake)
   while not snake.gameOver()
-    set gr to snake.updateGraphics(gr)
-    set gr to apple.updateGraphics(gr)
-    call gr.display()
+    call snake.updateBlocks(blocks)
+    call apple.updateBlocks(blocks)
+    call displayBlocks(blocks)
     call pause(150)
     call snake.clockTick(getKey(), apple)
   end while
@@ -29,7 +29,7 @@ class Snake
 
   private property head as Square
 
-  private property body as Array<of Square>
+  private property body as List<of Square>
 
   private property priorTail as Square
 
@@ -45,13 +45,12 @@ class Snake
     end if
   end procedure
 
-  function updateGraphics(gr as BlockGraphics) returns BlockGraphics
-    variable gr2 set to property.head.updateGraphics(gr, green)
+  procedure updateBlocks(blocks as Array2D<of Int>)
+    call blocks.put(property.head.x, property.head.y, green)
     if property.body[0] isnt property.priorTail then
-      set gr2 to property.priorTail.updateGraphics(gr, white)
+      call blocks.put(property.priorTail.x, property.priorTail.y, white)
     end if
-    return gr2
-  end function
+  end procedure
 
   function score() returns Int
     return property.body.length() - 1
@@ -96,9 +95,9 @@ class Apple
     end repeat when not snake.bodyCovers(property.location)
   end procedure
 
-  function updateGraphics(gr as BlockGraphics) returns BlockGraphics
-    return property.location.updateGraphics(gr, red)
-  end function
+  procedure updateBlocks(blocks as Array2D<of Int>)
+    call blocks.put(property.location.x, property.location.y, red)
+  end procedure
 
 end class
 
@@ -108,9 +107,9 @@ class Square
     set property.y to y
   end constructor
 
-  private property x as Int
+  property x as Int
 
-  private property y as Int
+  property y as Int
 
   function getAdjacentSquare(d as Direction) returns Square
     variable newX set to property.x
@@ -131,10 +130,6 @@ class Square
     return (property.x is -1) or (property.y is -1) or (property.x is 40) or (property.y is 30)
   end function
 
-  function updateGraphics(gr as BlockGraphics, colour as Int) returns BlockGraphics
-    return gr.withBlock(property.x, property.y, colour)
-  end function
-
 end class
 
 enum Direction up, down, left, right
@@ -147,22 +142,11 @@ test snake
   # gameOver, score - can only test for default - which is not thorough test
   assert snake.gameOver() is false
   assert snake.score() is 0
-  # updateGraphics - can test only on new Snake - not a thorough test
-  variable gr set to new BlockGraphics()
-  set gr to gr.withBlock(20, 15, green)
-  set gr to snake.updateGraphics(gr)
-  assert gr.getBackground(20, 15) is green
-  assert gr.getBackground(21, 15) is green
 end test
 
 test apple
   # constructor has no user code to test
   # newRandomPosition is a procedure
-  # updateGraphics can only be tested minimally, with default location (0,0)
-  variable gr set to new BlockGraphics()
-  let apple be new Apple()
-  set gr to apple.updateGraphics(gr)
-  assert gr.getBackground(0, 0) is red
 end test
 
 test square
@@ -183,10 +167,6 @@ test square
   assert (new Square(3, -1)).hasHitEdge() is true
   assert (new Square(40, 3)).hasHitEdge() is true
   assert (new Square(3, 30)).hasHitEdge() is true
-  # updateGraphics
-  variable gr set to new BlockGraphics()
-  set gr to sq1.updateGraphics(gr, blue)
-  assert gr.getBackground(3, 4) is blue
 end test
 
-# Testcoverage: 45% (40/88 frames)
+# Testcoverage: 45% (40/88 instructions)

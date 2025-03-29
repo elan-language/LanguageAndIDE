@@ -1,11 +1,12 @@
-import { Parent } from "../interfaces/parent";
-import { ProcedureFrame } from "./procedure-frame";
 import { GlobalFrame } from "../interfaces/global-frame";
-import { Transforms } from "../syntax-nodes/transforms";
+import { Parent } from "../interfaces/parent";
+import { Transforms } from "../interfaces/transforms";
 import { SymbolScope } from "../symbols/symbol-scope";
+import { ProcedureFrame } from "./procedure-frame";
 
 export class GlobalProcedure extends ProcedureFrame implements GlobalFrame {
   isGlobal = true;
+  hrefForFrameHelp: string = "LangRef.html#procedure";
 
   constructor(parent: Parent) {
     super(parent);

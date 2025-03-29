@@ -5,9 +5,9 @@ import { AstNode } from "../interfaces/ast-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { Scope } from "../interfaces/scope";
 import { globalKeyword, libraryKeyword, propertyKeyword, thisKeyword } from "../keywords";
+import { Index } from "../parse-nodes";
 import { AbstractAlternatives } from "../parse-nodes/abstract-alternatives";
 import { ArgListNode } from "../parse-nodes/arg-list-node";
-import { ArrayNode } from "../parse-nodes/array-node";
 import { BinaryExpression } from "../parse-nodes/binary-expression";
 import { BracketedExpression } from "../parse-nodes/bracketed-expression";
 import { CommaNode } from "../parse-nodes/comma-node";
@@ -25,13 +25,13 @@ import { FunctionRefNode } from "../parse-nodes/function-ref-node";
 import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { IfExpr } from "../parse-nodes/if-expr";
 import { DictionaryImmutableNode } from "../parse-nodes/immutable-dictionary-node";
-import { IndexSingle } from "../parse-nodes/index-single";
 import { InheritanceNode } from "../parse-nodes/inheritanceNode";
 import { InstanceNode } from "../parse-nodes/instanceNode";
 import { InstanceProcRef } from "../parse-nodes/instanceProcRef";
 import { KeywordNode } from "../parse-nodes/keyword-node";
 import { KVPnode } from "../parse-nodes/kvp-node";
 import { Lambda } from "../parse-nodes/lambda";
+import { ListImmutableNode } from "../parse-nodes/list-immutable-node";
 import { ListNode } from "../parse-nodes/list-node";
 import { LitFloat } from "../parse-nodes/lit-float";
 import { LitInt } from "../parse-nodes/lit-int";
@@ -63,6 +63,7 @@ import { TypeTupleNode } from "../parse-nodes/type-tuple-node";
 import { UnaryExpression } from "../parse-nodes/unary-expression";
 import { WithClause } from "../parse-nodes/with-clause";
 import { SetStatement } from "../statements/set-statement";
+import { FuncName, TupleName } from "../symbols/elan-type-names";
 import { EnumType } from "../symbols/enum-type";
 import { wrapScopeInScope } from "../symbols/symbol-helpers";
 import { isAstIdNode, mapOperation } from "./ast-helpers";
@@ -87,13 +88,13 @@ import { InterpolatedAsn } from "./interpolated-asn";
 import { KvpAsn } from "./kvp-asn";
 import { LambdaAsn } from "./lambda-asn";
 import { LambdaSigAsn } from "./lambda-sig-asn";
-import { LiteralArrayAsn } from "./literal-array-list-asn";
 import { LiteralDictionaryAsn } from "./literal-dictionary-asn";
+import { LiteralDictionaryImmutableAsn } from "./literal-dictionary-immutable-asn";
 import { LiteralEnumAsn } from "./literal-enum-asn";
 import { LiteralFloatAsn } from "./literal-float-asn";
-import { LiteralDictionaryImmutableAsn } from "./literal-immutable-dictionary-asn";
 import { LiteralIntAsn } from "./literal-int-asn";
 import { LiteralListAsn } from "./literal-list-asn";
+import { LiteralListImmutableAsn } from "./literal-list-immutable-asn";
 import { LiteralRegExAsn } from "./literal-regex-asn";
 import { LiteralStringAsn } from "./literal-string-asn";
 import { LiteralTupleAsn } from "./literal-tuple-asn";
@@ -105,7 +106,7 @@ import { SegmentedStringAsn } from "./segmented-string-asn";
 import { ThisAsn } from "./this-asn";
 import { ToAsn } from "./to-asn";
 import { TypeAsn } from "./type-asn";
-import { UnaryExprASn } from "./unary-expr-asn";
+import { UnaryExprAsn } from "./unary-expr-asn";
 import { VarAsn } from "./var-asn";
 
 export function transformMany(
@@ -148,7 +149,7 @@ export function transform(
     const op = mapOperation(node.unaryOp!.matchedText);
     const operand = transform(node.term, fieldId, scope) as AstNode;
 
-    return new UnaryExprASn(op, operand, fieldId);
+    return new UnaryExprAsn(op, operand, fieldId);
   }
 
   if (node instanceof BinaryExpression) {
@@ -245,15 +246,13 @@ export function transform(
   }
 
   if (node instanceof TypeFuncNode) {
-    const type = "Func";
-
     const inp = node.inputTypes?.matchedNode
       ? transformMany(node.inputTypes.matchedNode as CSV, fieldId, scope).items
       : [];
 
     const oup = node.returnType ? [transform(node.returnType, fieldId, scope)!] : [];
 
-    return new TypeAsn(type, inp.concat(oup), fieldId, scope);
+    return new TypeAsn(FuncName, inp.concat(oup), fieldId, scope);
   }
 
   if (node instanceof TypeSimpleNode) {
@@ -332,27 +331,27 @@ export function transform(
     if (node.bestMatch) {
       return transform(node.bestMatch, fieldId, scope);
     }
-    return new EmptyAsn(fieldId);
+    return EmptyAsn.Instance;
+  }
+
+  if (node instanceof ListImmutableNode) {
+    const items = transformMany(node.csv as CSV, fieldId, scope).items;
+    return new LiteralListImmutableAsn(items, fieldId, scope);
   }
 
   if (node instanceof ListNode) {
     const items = transformMany(node.csv as CSV, fieldId, scope).items;
-    return new LiteralListAsn(items, fieldId);
-  }
-
-  if (node instanceof ArrayNode) {
-    const items = transformMany(node.csv as CSV, fieldId, scope).items;
-    return new LiteralArrayAsn(items, fieldId);
+    return new LiteralListAsn(items, fieldId, scope);
   }
 
   if (node instanceof DictionaryNode) {
     const items = transformMany(node.csv!, fieldId, scope);
-    return new LiteralDictionaryAsn(items, fieldId);
+    return new LiteralDictionaryAsn(items, fieldId, scope);
   }
 
   if (node instanceof DictionaryImmutableNode) {
     const items = transformMany(node.csv!, fieldId, scope);
-    return new LiteralDictionaryImmutableAsn(items, fieldId);
+    return new LiteralDictionaryImmutableAsn(items, fieldId, scope);
   }
 
   if (node instanceof TupleNode) {
@@ -397,7 +396,7 @@ export function transform(
 
   if (node instanceof TermChained) {
     const expr1 = transform(node.head, fieldId, scope) as AstNode;
-    const expr2 = transformMany(node.tail!, fieldId, scope) as AstNode;
+    const expr2 = transformMany(node.tail!, fieldId, scope);
     return new CompositeAsn(expr1, expr2, fieldId, scope);
   }
 
@@ -413,20 +412,22 @@ export function transform(
 
   if (node instanceof TypeTupleNode) {
     const gp = transformMany(node.types as CSV, fieldId, scope).items;
-    return new TypeAsn("Tuple", gp, fieldId, scope);
+    return new TypeAsn(TupleName, gp, fieldId, scope);
   }
 
   if (node instanceof RangeNode) {
     const fromNode = node.fromIndex?.matchedNode;
-    const from = fromNode ? transform(fromNode, fieldId, scope) : undefined;
+    const from = fromNode ? (transform(fromNode, fieldId, scope) as AstNode) : EmptyAsn.Instance;
     const toNode = node.toIndex?.matchedNode;
-    const to = toNode ? transform(toNode, fieldId, scope) : undefined;
+    const to = toNode ? (transform(toNode, fieldId, scope) as AstNode) : EmptyAsn.Instance;
     return new RangeAsn(from, to, fieldId);
   }
 
-  if (node instanceof IndexSingle) {
-    const index = transform(node.contents, fieldId, scope) as AstNode;
-    return new IndexAsn(index, undefined, fieldId);
+  if (node instanceof Index) {
+    const indexes = transformMany(node.contents as CSV, fieldId, scope) as AstCollectionNode;
+    const singleIndex = indexes.items[0];
+    const secondIndex = indexes.items.length > 1 ? indexes.items[1] : undefined;
+    return new IndexAsn(singleIndex, secondIndex, fieldId);
   }
 
   if (node instanceof DotAfter) {
@@ -436,8 +437,9 @@ export function transform(
 
   if (node instanceof InstanceNode) {
     const id = node.variable!.matchedText;
-    const index = transform(node.index, fieldId, scope) as IndexAsn | undefined;
-    return new VarAsn(id, false, undefined, index, fieldId, scope);
+    const index =
+      (transform(node.index, fieldId, scope) as IndexAsn | undefined) ?? EmptyAsn.Instance;
+    return new VarAsn(id, false, EmptyAsn.Instance, index, fieldId, scope);
   }
 
   if (node instanceof IfExpr) {
@@ -478,13 +480,14 @@ export function transform(
   if (node instanceof PropertyRef) {
     const qualifier = transform(node.qualifier, fieldId, scope) as AstQualifierNode;
     const name = transform(node.name, fieldId, scope) as AstIdNode;
-    return new VarAsn(name.id, true, qualifier, undefined, fieldId, scope);
+    return new VarAsn(name.id, true, qualifier, EmptyAsn.Instance, fieldId, scope);
   }
 
   if (node instanceof InstanceProcRef) {
-    const q = transform(node.prefix, fieldId, scope) as AstQualifierNode | undefined;
+    const q =
+      (transform(node.prefix, fieldId, scope) as AstQualifierNode | undefined) ?? EmptyAsn.Instance;
     const id = node.procName!.matchedText;
-    return new VarAsn(id, false, q, undefined, fieldId, scope);
+    return new VarAsn(id, false, q, EmptyAsn.Instance, fieldId, scope);
   }
 
   if (node instanceof FunctionRefNode) {

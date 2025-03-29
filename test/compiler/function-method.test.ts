@@ -40,23 +40,25 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let f = system.initialise(new Foo());
-  system.printLine(f.times(2));
+  let f = system.initialise(await new Foo()._initialise());
+  await system.printLine((await f.times(2)));
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
-  constructor() {
+
+  async _initialise() {
     this.p1 = 5;
+    return this;
   }
 
   p1 = 0;
 
-  times(value) {
+  async times(value) {
     return this.p1 * value;
   }
 
-  asString() {
+  async asString() {
     return "";
   }
 
@@ -102,25 +104,27 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let f = system.initialise(new Foo());
+  let f = system.initialise(await new Foo()._initialise());
   let x = 1.1;
-  x = f.times(x);
-  system.printLine(x);
+  x = (await f.times(x));
+  await system.printLine(x);
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
-  constructor() {
+
+  async _initialise() {
     this.p1 = 5;
+    return this;
   }
 
   p1 = 0;
 
-  times(value) {
+  async times(value) {
     return this.p1 * value;
   }
 
-  asString() {
+  async asString() {
     return "";
   }
 
@@ -141,7 +145,7 @@ return [main, _tests];}`;
 
 main
   variable f set to new Foo()
-  variable x set to empty List<of Float>
+  variable x set to empty ListImmutable<of Float>
   set x to f.times(2)
   print x
 end main
@@ -153,7 +157,7 @@ class Foo
 
     property p1 as Float
 
-    function times(value as Float) returns List<of Float>
+    function times(value as Float) returns ListImmutable<of Float>
         return {property.p1 * value}
     end function
 
@@ -166,25 +170,27 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let f = system.initialise(new Foo());
-  let x = system.emptyImmutableList();
-  x = f.times(2);
-  system.printLine(x);
+  let f = system.initialise(await new Foo()._initialise());
+  let x = system.initialise(_stdlib.ListImmutable.emptyInstance());
+  x = (await f.times(2));
+  await system.printLine(x);
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
-  constructor() {
+
+  async _initialise() {
     this.p1 = 5;
+    return this;
   }
 
   p1 = 0;
 
-  times(value) {
-    return system.list([this.p1 * value]);
+  async times(value) {
+    return system.listImmutable([this.p1 * value]);
   }
 
-  asString() {
+  async asString() {
     return "";
   }
 
@@ -216,8 +222,8 @@ class Bar
 
   property p1 as Foo
 
-  function getTimes() returns List<of Float>
-    variable x set to empty List<of Float>
+  function getTimes() returns ListImmutable<of Float>
+    variable x set to empty ListImmutable<of Float>
     set x to property.p1.times(2)
     return x
   end function
@@ -231,7 +237,7 @@ class Foo
 
     property p1 as Float
 
-    function times(value as Float) returns List<of Float>
+    function times(value as Float) returns ListImmutable<of Float>
         return {property.p1 * value}
     end function
 
@@ -240,15 +246,17 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let b = system.initialise(new Bar());
-  let x = b.getTimes();
-  system.printLine(x);
+  let b = system.initialise(await new Bar()._initialise());
+  let x = (await b.getTimes());
+  await system.printLine(x);
 }
 
 class Bar {
   static emptyInstance() { return system.emptyClass(Bar, []);};
-  constructor() {
-    this.p1 = system.initialise(new Foo());
+
+  async _initialise() {
+    this.p1 = system.initialise(await new Foo()._initialise());
+    return this;
   }
 
   _p1;
@@ -259,9 +267,9 @@ class Bar {
     this._p1 = p1;
   }
 
-  getTimes() {
-    let x = system.emptyImmutableList();
-    x = this.p1.times(2);
+  async getTimes() {
+    let x = system.initialise(_stdlib.ListImmutable.emptyInstance());
+    x = (await this.p1.times(2));
     return x;
   }
 
@@ -269,14 +277,16 @@ class Bar {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
-  constructor() {
+
+  async _initialise() {
     this.p1 = 5;
+    return this;
   }
 
   p1 = 0;
 
-  times(value) {
-    return system.list([this.p1 * value]);
+  async times(value) {
+    return system.listImmutable([this.p1 * value]);
   }
 
 }
@@ -323,7 +333,7 @@ class Foo
     property p1 as Float
 
     function times(value as Float) returns List<of Qux>
-        return {new Qux()}
+        return [new Qux()]
     end function
 
 end class
@@ -336,15 +346,17 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let b = system.initialise(new Bar());
-  let x = b.getTimes();
-  system.printLine(x);
+  let b = system.initialise(await new Bar()._initialise());
+  let x = (await b.getTimes());
+  await system.printLine(x);
 }
 
 class Bar {
   static emptyInstance() { return system.emptyClass(Bar, []);};
-  constructor() {
-    this.p1 = system.initialise(new Foo());
+
+  async _initialise() {
+    this.p1 = system.initialise(await new Foo()._initialise());
+    return this;
   }
 
   _p1;
@@ -355,9 +367,9 @@ class Bar {
     this._p1 = p1;
   }
 
-  getTimes() {
-    let x = system.emptyImmutableList();
-    x = this.p1.times(2);
+  async getTimes() {
+    let x = system.initialise(_stdlib.List.emptyInstance());
+    x = (await this.p1.times(2));
     return x;
   }
 
@@ -365,22 +377,26 @@ class Bar {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
-  constructor() {
+
+  async _initialise() {
     this.p1 = 5;
+    return this;
   }
 
   p1 = 0;
 
-  times(value) {
-    return system.list([system.initialise(new Qux())]);
+  async times(value) {
+    return system.list([system.initialise(await new Qux()._initialise())]);
   }
 
 }
 
 class Qux {
   static emptyInstance() { return system.emptyClass(Qux, []);};
-  constructor() {
 
+  async _initialise() {
+
+    return this;
   }
 
 }
@@ -392,7 +408,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{a Qux}");
+    await assertObjectCodeExecutes(fileImpl, "[a Qux]");
   });
 
   test("Pass_FunctionMethodMayCallOtherClassFunctionViaProperty", async () => {
@@ -440,14 +456,16 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let f = system.initialise(new Foo());
-  system.printLine(f.length());
+  let f = system.initialise(await new Foo()._initialise());
+  await system.printLine((await f.length()));
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
-  constructor() {
-    this.p1 = system.initialise(new Bar());
+
+  async _initialise() {
+    this.p1 = system.initialise(await new Bar()._initialise());
+    return this;
   }
 
   _p1;
@@ -458,11 +476,11 @@ class Foo {
     this._p1 = p1;
   }
 
-  length() {
-    return this.p1.length() + 2;
+  async length() {
+    return (await this.p1.length()) + 2;
   }
 
-  asString() {
+  async asString() {
     return "";
   }
 
@@ -470,17 +488,19 @@ class Foo {
 
 class Bar {
   static emptyInstance() { return system.emptyClass(Bar, [["p1", 0]]);};
-  constructor() {
+
+  async _initialise() {
     this.p1 = 5;
+    return this;
   }
 
   p1 = 0;
 
-  length() {
+  async length() {
     return this.p1;
   }
 
-  asString() {
+  async asString() {
     return "";
   }
 
@@ -546,28 +566,30 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let f = system.initialise(new Foo());
-  let b = system.initialise(new Bar());
-  system.printLine(f.times(b));
+  let f = system.initialise(await new Foo()._initialise());
+  let b = system.initialise(await new Bar()._initialise());
+  await system.printLine((await f.times(b)));
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
-  constructor() {
+
+  async _initialise() {
     this.p1 = 5;
+    return this;
   }
 
   p1 = 0;
 
-  times(b) {
-    return this.p1PlusOne() * b.p1PlusOne();
+  async times(b) {
+    return (await this.p1PlusOne()) * (await b.p1PlusOne());
   }
 
-  p1PlusOne() {
+  async p1PlusOne() {
     return this.p1 + 1;
   }
 
-  asString() {
+  async asString() {
     return "";
   }
 
@@ -575,17 +597,19 @@ class Foo {
 
 class Bar {
   static emptyInstance() { return system.emptyClass(Bar, [["p1", 0]]);};
-  constructor() {
+
+  async _initialise() {
     this.p1 = 1;
+    return this;
   }
 
   p1 = 0;
 
-  p1PlusOne() {
+  async p1PlusOne() {
     return this.p1 + 1;
   }
 
-  asString() {
+  async asString() {
     return "";
   }
 
@@ -629,24 +653,26 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let f = system.initialise(new Foo());
+  let f = system.initialise(await new Foo()._initialise());
   await f.prt();
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
-  constructor() {
+
+  async _initialise() {
     this.p1 = 5;
+    return this;
   }
 
   p1 = 0;
 
   async prt() {
-    system.printLine(this.asString());
+    await system.printLine((await this.asString()));
   }
 
-  asString() {
-    return _stdlib.asString(this.p1);
+  async asString() {
+    return (await _stdlib.asString(this.p1));
   }
 
 }
@@ -981,5 +1007,39 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["'bar' is not defined for type 'Foo'"]);
+  });
+
+  test("Fail_ReturnListOfMutableType", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+class Foo
+  function p1() returns ListImmutable<of List<of Int>>
+    return p1()
+  end function
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'List<of Int>'"]);
+  });
+
+  test("Fail_ParameterListOfMutableType", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+class Foo
+  function p1(a as ListImmutable<of List<of Int>>) returns Int
+    return 0
+  end function
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'List<of Int>'"]);
   });
 });

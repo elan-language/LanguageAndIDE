@@ -27,12 +27,13 @@ end record`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let f = system.initialise(new Foo());
-  system.printLine(f.p1);
+  let f = system.initialise(await new Foo()._initialise());
+  await system.printLine(f.p1);
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
+  async _initialise() { return this; }
   p1 = 0;
 
 }
@@ -83,13 +84,14 @@ end record`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let f = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.p1 = 3; _a.p2 = "hello"; return _a;})();
-  system.printLine(f.p1);
-  system.printLine(f.p2);
+  let f = await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.p1 = 3; _a.p2 = "hello"; return _a;})();
+  await system.printLine(f.p1);
+  await system.printLine(f.p2);
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", ""]]);};
+  async _initialise() { return this; }
   p1 = 0;
 
   p2 = "";
@@ -104,6 +106,64 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "3hello");
+  });
+
+  test("Pass_withFunctionMethods", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable f set to new Foo() with p1 set to 3, p2 set to "hello"
+  print f
+  print f.doubled()
+end main
+
+record Foo
+    property p1 as Float
+    property p2 as String
+
+    function asString() returns String
+      return property.p1.asString() + property.p2.asString()
+    end function
+
+    function doubled() returns Foo
+      return copy this with p1 set to property.p1*2
+    end function
+
+end record`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let f = await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.p1 = 3; _a.p2 = "hello"; return _a;})();
+  await system.printLine(f);
+  await system.printLine((await f.doubled()));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", ""]]);};
+  async _initialise() { return this; }
+  p1 = 0;
+
+  p2 = "";
+
+  async asString() {
+    return (await _stdlib.asString(this.p1)) + (await _stdlib.asString(this.p2));
+  }
+
+  async doubled() {
+    return await (async () => {const _a = {...this}; Object.setPrototypeOf(_a, Object.getPrototypeOf(this)); _a.p1 = this.p1 * 2; return _a;})();
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "3hello6hello");
   });
 
   test("Fail_AbstractRecord", async () => {
@@ -161,17 +221,18 @@ end function
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let f = system.initialise(new Foo());
-  system.printLine(fun(f));
+  let f = system.initialise(await new Foo()._initialise());
+  await system.printLine((await global.fun(f)));
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
+  async _initialise() { return this; }
   p1 = 0;
 
 }
 
-function fun(foo) {
+async function fun(foo) {
   return foo.p1;
 }
 global["fun"] = fun;
@@ -206,18 +267,19 @@ end procedure
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let f = system.initialise(new Foo());
+  let f = system.initialise(await new Foo()._initialise());
   await proc(f);
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
+  async _initialise() { return this; }
   p1 = 0;
 
 }
 
 async function proc(foo) {
-  system.printLine(foo.p1);
+  await system.printLine(foo.p1);
 }
 global["proc"] = proc;
 return [main, _tests];}`;
@@ -244,7 +306,7 @@ record Foo
   property p3 as String
   property p4 as Boolean
   property p5 as RegExp
-  property p6 as List<of Int>
+  property p6 as ListImmutable<of Int>
   property p7 as DictionaryImmutable<of String, Int>
   property p8 as Bar
 end record
@@ -261,7 +323,8 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", 0], ["p3", ""], ["p4", false], ["p5", system.emptyRegExp()], ["p6", system.emptyImmutableList()], ["p7", system.emptyDictionaryImmutable()]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", 0], ["p3", ""], ["p4", false], ["p5", system.emptyRegExp()], ["p6", system.initialise(_stdlib.ListImmutable.emptyInstance())], ["p7", system.initialise(_stdlib.DictionaryImmutable.emptyInstance())]]);};
+  async _initialise() { return this; }
   p1 = 0;
 
   p2 = 0;
@@ -272,9 +335,9 @@ class Foo {
 
   p5 = system.emptyRegExp();
 
-  p6 = system.emptyImmutableList();
+  p6 = system.initialise(_stdlib.ListImmutable.emptyInstance());
 
-  p7 = system.emptyDictionaryImmutable();
+  p7 = system.initialise(_stdlib.DictionaryImmutable.emptyInstance());
 
   _p8;
   get p8() {
@@ -288,6 +351,7 @@ class Foo {
 
 class Bar {
   static emptyInstance() { return system.emptyClass(Bar, [["p1", 0]]);};
+  async _initialise() { return this; }
   p1 = 0;
 
 }
@@ -320,7 +384,7 @@ end record`;
     const code = `# FFFF Elan v1.0.0 valid
 
 record Foo
-  property p1 as Array<of Int> 
+  property p1 as List<of Int> 
   property p2 as Dictionary<of String, Int> 
   property p3 as Bar
 end record

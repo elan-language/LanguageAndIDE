@@ -5,14 +5,14 @@ import { IdentifierField } from "../fields/identifier-field";
 import { FrameWithStatements } from "../frame-with-statements";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
-import { Frame } from "../interfaces/frame";
 import { Parent } from "../interfaces/parent";
+import { Scope } from "../interfaces/scope";
 import { Statement } from "../interfaces/statement";
+import { Transforms } from "../interfaces/transforms";
 import { forKeyword } from "../keywords";
 import { IntType } from "../symbols/int-type";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
-import { Transforms } from "../syntax-nodes/transforms";
 
 export class For extends FrameWithStatements implements Statement {
   isStatement: boolean = true;
@@ -20,6 +20,7 @@ export class For extends FrameWithStatements implements Statement {
   from: ExpressionField;
   to: ExpressionField;
   step: ExpressionField;
+  hrefForFrameHelp: string = "LangRef.html#for";
 
   constructor(parent: Parent) {
     super(parent);
@@ -43,8 +44,8 @@ export class For extends FrameWithStatements implements Statement {
     return "for";
   }
   renderAsHtml(): string {
-    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>for </el-kw>${this.variable.renderAsHtml()}<el-kw> from </el-kw>${this.from.renderAsHtml()}<el-kw> to </el-kw>${this.to.renderAsHtml()}<el-kw> step </el-kw>${this.step.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
+    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.toolTip()}>
+<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>for </el-kw>${this.variable.renderAsHtml()}<el-kw> from </el-kw>${this.from.renderAsHtml()}<el-kw> to </el-kw>${this.to.renderAsHtml()}<el-kw> step </el-kw>${this.step.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
 <el-kw>end for</el-kw>
 </el-statement>`;
@@ -61,7 +62,7 @@ ${this.indent()}end for`;
     const v = this.variable.compile(transforms);
     const f = this.from.compile(transforms);
     const t = this.to.compile(transforms);
-    let s = this.step.compile(transforms);
+    let s = this.step.text;
 
     const id = this.getParentScope().resolveSymbol(v, transforms, this);
     let declare = "";
@@ -105,8 +106,8 @@ ${this.indent()}end for`;
       s = s.slice(1);
     }
 
-    return `${this.indent()}for (${declare}${v} = ${f}; ${v} ${compare} ${t}; ${v} = ${v} ${incDec} ${s}) {\r
-${this.compileStatements(transforms)}\r
+    return `${this.indent()}${this.breakPoint(this.debugSymbols())}for (${declare}${v} = ${f}; ${v} ${compare} ${t}; ${v} = ${v} ${incDec} ${s}) {\r
+${this.compileChildren(transforms)}\r
 ${this.indent()}}`;
   }
 
@@ -124,7 +125,7 @@ ${this.indent()}}`;
     return this.parseStandardEnding(source, "end for");
   }
 
-  resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
+  resolveSymbol(id: string, transforms: Transforms, initialScope: Scope): ElanSymbol {
     const v = this.variable.text;
 
     if (id === v) {
@@ -137,5 +138,23 @@ ${this.indent()}}`;
     }
 
     return super.resolveSymbol(id, transforms, initialScope);
+  }
+
+  symbolMatches(id: string, all: boolean, _initialScope: Scope): ElanSymbol[] {
+    const matches = super.symbolMatches(id, all, this);
+    const localMatches: ElanSymbol[] = [];
+
+    const v = this.variable.text;
+
+    if (id === v || all) {
+      const counter = {
+        symbolId: v,
+        symbolType: () => IntType.Instance,
+        symbolScope: SymbolScope.counter,
+      };
+      localMatches.push(counter);
+    }
+
+    return localMatches.concat(matches);
   }
 }

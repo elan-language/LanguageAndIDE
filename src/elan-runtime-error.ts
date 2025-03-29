@@ -9,6 +9,7 @@ export class ElanRuntimeError extends Error {
       token.startsWith("http") ||
       token.startsWith("async") ||
       token.startsWith("Array") ||
+      token.startsWith("System") ||
       token.startsWith("onmessage")
     );
   }

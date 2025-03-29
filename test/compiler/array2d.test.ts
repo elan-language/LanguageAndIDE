@@ -12,25 +12,19 @@ import {
 } from "./compiler-test-helpers";
 
 suite("Array2D", () => {
-  test("Pass_literalArrayOfArray", async () => {
+  test("Pass_Array2D", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to [1,2]
-  variable b set to [3,4]
-  variable c set to new Array2D<of Int>()
-  set c to [a,b]
+  variable c set to new Array2D<of Int>(1, 1, 0)
   print c
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.literalArray([1, 2]);
-  let b = system.literalArray([3, 4]);
-  let c = system.initialise(system.array(new Array()));
-  c = system.literalArray([a, b]);
-  system.printLine(c);
+  let c = system.initialise(await new _stdlib.Array2D()._initialise(1, 1, 0));
+  await system.printLine(c);
 }
 return [main, _tests];}`;
 
@@ -40,39 +34,29 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "[[1, 2], [3, 4]]");
+    await assertObjectCodeExecutes(fileImpl, "[[0]]");
   });
 
   test("Pass_Array2DAsParameter", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to new Array2D<of Int>()
-  print foo(a)
+  variable a set to new Array2D<of Int>(1, 1, 0)
+  print bar(a)
 end main
-
-function foo(arr as Array<of Array<of Int>>) returns Array<of Array<of Int>>
-  return bar(arr)
-end function
 
 function bar(arr as Array2D<of Int>) returns Array2D<of Int>
   return arr
-end function
-`;
+end function`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(system.array(new Array()));
-  system.printLine(foo(a));
+  let a = system.initialise(await new _stdlib.Array2D()._initialise(1, 1, 0));
+  await system.printLine((await global.bar(a)));
 }
 
-function foo(arr) {
-  return bar(arr);
-}
-global["foo"] = foo;
-
-function bar(arr) {
+async function bar(arr) {
   return arr;
 }
 global["bar"] = bar;
@@ -84,24 +68,43 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "[]");
+    await assertObjectCodeExecutes(fileImpl, "[[0]]");
+  });
+
+  test("Fail_Array2DAsParameter", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to new Array2D<of Int>(0, 0, 0)
+  print foo(a)
+end main
+
+function foo(arr as List<of List<of Int>>) returns List<of List<of Int>>
+  return bar(arr)
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types. Expected: arr (List<of List<of Int>>) Provided: Array2D<of Int>",
+    ]);
   });
 
   test("Pass_DeclareAnEmptyArrayBySizeAndCheckLength", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to new Array2D<of String>()
-  set a to createArray2D(3, 0, "")
-  print a.length()
+  variable a set to empty Array2D<of String>
+  print a.columns()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(system.array(new Array()));
-  a = _stdlib.createArray2D(3, 0, "");
-  system.printLine(_stdlib.length(a));
+  let a = system.initialise(_stdlib.Array2D.emptyInstance());
+  await system.printLine(a.columns());
 }
 return [main, _tests];}`;
 
@@ -111,30 +114,32 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "3");
+    await assertObjectCodeExecutes(fileImpl, "0");
   });
 
   test("Pass_SetAndReadElements1", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to new Array2D<of String>()
-  set a to [[""], [""], [""]]
-  call a.putAt(0, ["bar", "foo"])
-  call a.putAt(2, ["yon", "xan"])
-  print a[0][1]
-  print a[2][0]
+  variable a set to new Array2D<of String>(3, 2, "")
+  call a.put(0, 0, "bar")
+  call a.put(0, 1, "foo")
+  call a.put(2, 0, "yon")
+  call a.put(2, 1, "xan")
+  print a[0, 1]
+  print a[2, 0]
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(system.array(new Array()));
-  a = system.literalArray([system.literalArray([""]), system.literalArray([""]), system.literalArray([""])]);
-  _stdlib.putAt(a, 0, system.literalArray(["bar", "foo"]));
-  _stdlib.putAt(a, 2, system.literalArray(["yon", "xan"]));
-  system.printLine(system.safeIndex(system.safeIndex(a, 0), 1));
-  system.printLine(system.safeIndex(system.safeIndex(a, 2), 0));
+  let a = system.initialise(await new _stdlib.Array2D()._initialise(3, 2, ""));
+  a.put(0, 0, "bar");
+  a.put(0, 1, "foo");
+  a.put(2, 0, "yon");
+  a.put(2, 1, "xan");
+  await system.printLine(system.safeIndex(a, 0, 1));
+  await system.printLine(system.safeIndex(a, 2, 0));
 }
 return [main, _tests];}`;
 
@@ -152,20 +157,20 @@ return [main, _tests];}`;
 
 main
   variable a set to empty Array2D<of String>
-  set a to createArray2D(3, 0, "")
-  call a.putAt(0, ["bar", "foo"])
-  call a[0].putAt(1, "yon")
-  print a[0][1]
+  set a to new Array2D<of String>(3, 2, "")
+  call a.put(0, 0, "bar")
+  call a.put(0, 1, "foo")
+  print a[0, 1]
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.emptyArray();
-  a = _stdlib.createArray2D(3, 0, "");
-  _stdlib.putAt(a, 0, system.literalArray(["bar", "foo"]));
-  _stdlib.putAt(system.safeIndex(a, 0), 1, "yon");
-  system.printLine(system.safeIndex(system.safeIndex(a, 0), 1));
+  let a = system.initialise(_stdlib.Array2D.emptyInstance());
+  a = system.initialise(await new _stdlib.Array2D()._initialise(3, 2, ""));
+  a.put(0, 0, "bar");
+  a.put(0, 1, "foo");
+  await system.printLine(system.safeIndex(a, 0, 1));
 }
 return [main, _tests];}`;
 
@@ -175,30 +180,63 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "yon");
+    await assertObjectCodeExecutes(fileImpl, "foo");
   });
 
-  test("Pass_AddAndReadElements1", async () => {
+  test("Pass_WithSetAndReadElements1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to new Array2D<of String>(3, 2, "")
+  set a to a.withPut(0, 0, "bar")
+  set a to a.withPut(0, 1, "foo")
+  set a to a.withPut(2, 0, "yon")
+  set a to a.withPut(2, 1, "xan")
+  print a[0, 1]
+  print a[2, 0]
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.initialise(await new _stdlib.Array2D()._initialise(3, 2, ""));
+  a = a.withPut(0, 0, "bar");
+  a = a.withPut(0, 1, "foo");
+  a = a.withPut(2, 0, "yon");
+  a = a.withPut(2, 1, "xan");
+  await system.printLine(system.safeIndex(a, 0, 1));
+  await system.printLine(system.safeIndex(a, 2, 0));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "fooyon");
+  });
+
+  test("Pass_WithSetAndReadElements2", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
   variable a set to empty Array2D<of String>
-  set a to createArray2D(3, 0, "")
-  call a.append(["foo"])
-  call a.append(["yon"])
-  print a[3]
-  print a[4]
+  set a to new Array2D<of String>(3, 2, "")
+  set a to a.withPut(0, 0, "bar")
+  set a to a.withPut(0, 1, "foo")
+  print a[0, 1]
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.emptyArray();
-  a = _stdlib.createArray2D(3, 0, "");
-  _stdlib.append(a, system.literalArray(["foo"]));
-  _stdlib.append(a, system.literalArray(["yon"]));
-  system.printLine(system.safeIndex(a, 3));
-  system.printLine(system.safeIndex(a, 4));
+  let a = system.initialise(_stdlib.Array2D.emptyInstance());
+  a = system.initialise(await new _stdlib.Array2D()._initialise(3, 2, ""));
+  a = a.withPut(0, 0, "bar");
+  a = a.withPut(0, 1, "foo");
+  await system.printLine(system.safeIndex(a, 0, 1));
 }
 return [main, _tests];}`;
 
@@ -208,38 +246,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "[foo][yon]");
-  });
-
-  test("Pass_AddAndReadElements2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-  variable a set to empty Array2D<of String>
-  set a to createArray2D(3, 0, "")
-  call a[1].append("foo")
-  call a[2].append("yon")
-  print a
-end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let a = system.emptyArray();
-  a = _stdlib.createArray2D(3, 0, "");
-  _stdlib.append(system.safeIndex(a, 1), "foo");
-  _stdlib.append(system.safeIndex(a, 2), "yon");
-  system.printLine(a);
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "[[], [foo], [yon]]");
+    await assertObjectCodeExecutes(fileImpl, "foo");
   });
 
   test("Pass_EmptyArray", async () => {
@@ -248,25 +255,23 @@ return [main, _tests];}`;
 main
   variable a set to empty Array2D<of Int>
   variable b set to empty Array2D<of Int>
-  call a.append([3])
   print a
   print b
   print a is b
-  print a is empty Array<of Array<of Int>>
-  print b is empty Array<of Array<of Int>>
+  print a is empty Array2D<of Int>
+  print b is empty Array2D<of Int>
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.emptyArray();
-  let b = system.emptyArray();
-  _stdlib.append(a, system.literalArray([3]));
-  system.printLine(a);
-  system.printLine(b);
-  system.printLine(system.objectEquals(a, b));
-  system.printLine(system.objectEquals(a, system.emptyArray()));
-  system.printLine(system.objectEquals(b, system.emptyArray()));
+  let a = system.initialise(_stdlib.Array2D.emptyInstance());
+  let b = system.initialise(_stdlib.Array2D.emptyInstance());
+  await system.printLine(a);
+  await system.printLine(b);
+  await system.printLine(system.objectEquals(a, b));
+  await system.printLine(system.objectEquals(a, system.initialise(_stdlib.Array2D.emptyInstance())));
+  await system.printLine(system.objectEquals(b, system.initialise(_stdlib.Array2D.emptyInstance())));
 }
 return [main, _tests];}`;
 
@@ -276,24 +281,22 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "[[3]][]falsefalsetrue");
+    await assertObjectCodeExecutes(fileImpl, "[][]truetruetrue");
   });
 
   test("Pass_InitialiseEmptyArray", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to new Array2D<of Int>()
-  set a to createArray2D(2, 2, 0)
+  variable a set to new Array2D<of Int>(2, 2, 0)
   print a
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(system.array(new Array()));
-  a = _stdlib.createArray2D(2, 2, 0);
-  system.printLine(a);
+  let a = system.initialise(await new _stdlib.Array2D()._initialise(2, 2, 0));
+  await system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -306,21 +309,19 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[[0, 0], [0, 0]]");
   });
 
-  test("Pass_InitialiseArray", async () => {
+  test("Pass_InitialiseArray2D", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to new Array2D<of Int>()
-  set a to createArray2D(2, 2, 1)
+  variable a set to new Array2D<of Int>(2, 2, 1)
   print a
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(system.array(new Array()));
-  a = _stdlib.createArray2D(2, 2, 1);
-  system.printLine(a);
+  let a = system.initialise(await new _stdlib.Array2D()._initialise(2, 2, 1));
+  await system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -333,12 +334,99 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[[1, 1], [1, 1]]");
   });
 
-  test("Fail_EmptyArray1", async () => {
+  test("Pass_Contains1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to new Array2D<of String>(2, 2, "")
+  call a.put(0, 1, "foo")
+  print a.contains("foo")
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.initialise(await new _stdlib.Array2D()._initialise(2, 2, ""));
+  a.put(0, 1, "foo");
+  await system.printLine(a.contains("foo"));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "true");
+  });
+
+  test("Pass_Contains2", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to new Array2D<of String>(2, 2, "")
+  call a.put(0, 1, "bar")
+  print a.contains("foo")
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.initialise(await new _stdlib.Array2D()._initialise(2, 2, ""));
+  a.put(0, 1, "bar");
+  await system.printLine(a.contains("foo"));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "false");
+  });
+
+  test("Pass_IndexOf", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to new Array2D<of String>(10, 10, "")
+  call a.put(5, 7, "bar")
+  call a.put(8, 2, "foo")
+  print a.indexOf("bar")
+  print a.indexOf("foo")
+  print a.indexOf("yon")
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.initialise(await new _stdlib.Array2D()._initialise(10, 10, ""));
+  a.put(5, 7, "bar");
+  a.put(8, 2, "foo");
+  await system.printLine(a.indexOf("bar"));
+  await system.printLine(a.indexOf("foo"));
+  await system.printLine(a.indexOf("yon"));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "tuple(5, 7)tuple(8, 2)tuple(-1, -1)");
+  });
+
+  test("Fail_EmptyArray2D1", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
   variable a set to empty Array2D<of Int>
-  call a[0].putAt(0, 3)
+  call a.put(0, 0, 3)
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -349,12 +437,12 @@ end main`;
     await assertObjectCodeDoesNotExecute(fileImpl, "Out of range index: 0 size: 0");
   });
 
-  test("Fail_2DArrayAccessedAs1D", async () => {
+  test("Fail_Array2DAccessedAs1D", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to new Array2D<of String>()
-  call a.putAt(0, "foo")
+  variable a set to new Array2D<of String>(1, 1, "")
+  call a.put(0, "foo")
 end main
 `;
 
@@ -363,17 +451,16 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: index (Int), value (Array<of String>) Provided: Int, String",
+      "Missing argument(s). Expected: column (Int), row (Int), value (String)",
     ]);
   });
 
-  test("Fail_OutOfRange", async () => {
+  test("Fail_OutOfRange1", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to new Array2D<of String>()
-  call a.putAt(0, empty Array<of String>)
-  variable b set to a[0][0]
+  variable a set to new Array2D<of String>(2, 1, "")
+  variable b set to a[0, 1]
 end main
 `;
 
@@ -382,15 +469,32 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    await assertObjectCodeDoesNotExecute(fileImpl, "Out of range index: 0 size: 0");
+    await assertObjectCodeDoesNotExecute(fileImpl, "Out of range index: 1 size: 1");
+  });
+
+  test("Fail_OutOfRange2", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to new Array2D<of String>(2, 1, "")
+  variable b set to a[3, 0]
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    await assertObjectCodeDoesNotExecute(fileImpl, "Out of range index: 3 size: 2");
   });
 
   test("Fail_TypeIncompatibility", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to new Array2D<of String>()
-  call a.putAt(0, true)
+  variable a set to new Array2D<of String>(1, 1, "")
+  call a.put(0, 0, true)
 end main
 `;
 
@@ -399,61 +503,100 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: index (Int), value (Array<of String>) Provided: Int, Boolean",
+      "Argument types. Expected: column (Int), row (Int), value (String) Provided: Int, Int, Boolean",
     ]);
   });
 
-  test("Fail_2DArrayAdd", async () => {
+  test("Fail_singleIndexArray2D", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to new Array2D<of String>()
-  call a.append("foo")
-end main
-`;
+  variable a set to new Array2D<of String>(3, 0, "")
+  print a[0].length()
+  print a
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Cannot index Array2D<of String>"]);
+  });
+
+  test("Fail_missingGenericParameter", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to new Array2D(3, 0, "")
+  print a
+end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: value (Array<of String>) Provided: String",
+      "Argument types. Expected: columns (Int), rows (Int), initialValue (Generic Parameter T1) Provided: Int, Int, String",
+      "<of Type(s)> Expected: 1 Provided: 0",
     ]);
   });
 
-  test("Fail_IndexWrongType1", async () => {
+  test("Fail_zeroSize1", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to new Array2D<of Int>()
-  set a to [[1,2],[3,4]]
-  call a["b"].putAt(0, 5)
-end main
-`;
+  variable a set to new Array2D<of String>(0, 1, "")
+  print a
+end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types String to Int"]);
+    assertStatusIsValid(fileImpl);
+    await assertObjectCodeDoesNotExecute(
+      fileImpl,
+      "Each dimension of Array2D must be non zero, positive value",
+    );
   });
 
-  test("Fail_IndexWrongType2", async () => {
+  test("Fail_zeroSize2", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to new Array2D<of Int>()
-  set a to [[1,2],[3,4]]
-  call a[0].putAt("b", 5)
-end main
-`;
+  variable a set to new Array2D<of String>(1, 0, "")
+  print a
+end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Argument types expected: index (Int), value (Int) Provided: String, Int",
-    ]);
+    assertStatusIsValid(fileImpl);
+    await assertObjectCodeDoesNotExecute(
+      fileImpl,
+      "Each dimension of Array2D must be non zero, positive value",
+    );
+  });
+
+  test("Fail_InvalidType", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to new Array2D<of Point>(2, 2, new Point())
+end main
+
+record Point
+end record`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    await assertObjectCodeDoesNotExecute(
+      fileImpl,
+      "Array2D must be of Type: Int, Float, String, or Boolean, with matching initial value",
+    );
   });
 });

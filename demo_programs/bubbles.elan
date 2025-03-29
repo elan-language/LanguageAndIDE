@@ -1,30 +1,31 @@
-# 4775e5ef6c31f0dccc35f16a5b682813a7718954146a748b194504a153d79862 Elan Beta 6 valid
+# 0e83b462c2ed084bbaa21cad0f44e05ebc7cb8679102d76eb6efedcf6e19938c Elan Beta 9 valid
 
 main
-  variable vg set to new VectorGraphics()
-  let bubbles be empty Array<of CircleVG>
-  for i from 0 to 19 step 1
-    let b be new CircleVG() with cx set to i*5 + 2, cy set to 75, r set to 1, fill set to -1, stroke set to white
+  variable bubbles set to new List<of CircleVG>()
+  # create 20 small bubbles at the bottom
+  for i from 1 to 20 step 1
+    let randomColour be randomInt(0, white)
+    let b be new CircleVG(i*5 + 2, 75, 1, transparent, randomColour, 1)
     call bubbles.append(b)
-    set vg to vg.add(b)
   end for
   while true
-    call refresh(bubbles, vg)
-    call pause(5)
+    each b in bubbles
+      if random() < 0.05 then
+        # 1/20 chance bubble 'bursts', and is replaced by new one at the bottom
+        call b.setCentreY(75)
+        call b.setRadius(1)
+      else
+        # bubble rises and grows
+        call b.setCentreY(b.centreY - 1)
+        call b.setRadius(b.radius + 0.2)
+      end if
+    end each
+    # create a List<of VectorGraphic> from the bubbles (List<of CircleVG>)
+    let vgList be new List<of VectorGraphic>()
+    each b in bubbles
+      call vgList.append(b)
+    end each
+    call displayVectorGraphics(vgList)
+    call pause(50)
   end while
 end main
-
-procedure refresh(bubbles as Array<of CircleVG>, out vg as VectorGraphics)
-  for i from 0 to 19 step 1
-    let b be bubbles[i]
-    variable b2 set to copy b with cy set to b.cy - 1, r set to b.r + 0.2
-    if random() < 0.05 then
-      set b2 to copy b2 with cx set to randomInt(0, 99), r set to 1, cy set to 75, stroke set to randomInt(0, maxColour)
-    end if
-    set vg to vg.replace(b, b2)
-    call bubbles.putAt(i, b2)
-    call vg.display()
-  end for
-end procedure
-
-constant maxColour set to 0xffffff

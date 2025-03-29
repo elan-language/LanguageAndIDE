@@ -30,7 +30,7 @@ async function main() {
   for (let i = 1; i <= 10; i = i + 1) {
     tot = tot + i;
   }
-  system.printLine(tot);
+  await system.printLine(tot);
 }
 return [main, _tests];}`;
 
@@ -63,7 +63,7 @@ async function main() {
   for (i = 1; i <= 10; i = i + 1) {
     tot = tot + i;
   }
-  system.printLine(tot);
+  await system.printLine(tot);
 }
 return [main, _tests];}`;
 
@@ -94,7 +94,7 @@ async function main() {
   for (let i = 1; i <= 10; i = i + 2) {
     tot = tot + i;
   }
-  system.printLine(tot);
+  await system.printLine(tot);
 }
 return [main, _tests];}`;
 
@@ -125,7 +125,7 @@ async function main() {
   for (let i = 10; i >= 3; i = i - 1) {
     tot = tot + i;
   }
-  system.printLine(tot);
+  await system.printLine(tot);
 }
 return [main, _tests];}`;
 
@@ -160,7 +160,7 @@ async function main() {
       tot = tot + 1;
     }
   }
-  system.printLine(tot);
+  await system.printLine(tot);
 }
 return [main, _tests];}`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -194,7 +194,7 @@ async function main() {
   for (let i = lower; i <= upper; i = i + 2) {
     tot = tot + i;
   }
-  system.printLine(tot);
+  await system.printLine(tot);
 }
 return [main, _tests];}`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -210,13 +210,13 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to createArray(11, 0)
+  variable a set to createList(11, 0)
   call foo(a)
 end main
 
-procedure foo(out arr as Array<of Int>)
+procedure foo(out arr as List<of Int>)
   for i from 0 to 10 step 1
-    call arr.putAt(i, 1)
+    call arr.put(i, 1)
   end for
   print arr[0]
 end procedure`;
@@ -224,17 +224,17 @@ end procedure`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.createArray(11, 0);
-  let _a = [a];
-  await foo(_a);
-  a = _a[0];
+  let a = _stdlib.createList(11, 0);
+  let _a24 = [a];
+  await foo(_a24);
+  a = _a24[0];
 }
 
 async function foo(arr) {
   for (let i = 0; i <= 10; i = i + 1) {
-    _stdlib.putAt(arr[0], i, 1);
+    arr[0].put(i, 1);
   }
-  system.printLine(system.safeIndex(arr[0], 0));
+  await system.printLine(system.safeIndex(arr[0], 0));
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -392,5 +392,41 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
+  });
+
+  test("Fail_duplicateId1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable ids set to 10
+  for id from id to 11 step 1
+    print id
+  end for
+  print ids
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'id' is not defined"]);
+  });
+
+  test("Fail_duplicateId2", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable ids set to 10
+  for id from 0 to id step 1
+    print id
+  end for
+  print ids
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'id' is not defined"]);
   });
 });

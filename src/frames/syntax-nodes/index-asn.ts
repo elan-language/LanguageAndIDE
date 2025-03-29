@@ -1,26 +1,26 @@
 import { CompileError } from "../compile-error";
 import {
   getId,
-  mustBeCompatibleType,
-  mustBeIndexableSymbol,
-  mustBeRangeableSymbol,
+  mustBeAssignableType,
+  mustBeRangeableType,
+  mustNotBeNegativeIndex,
 } from "../compile-rules";
 import { AstNode } from "../interfaces/ast-node";
+import { ChainedAsn } from "../interfaces/chained-asn";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
-import { ArrayType } from "../symbols/array-type";
 import { IntType } from "../symbols/int-type";
-import { ListType } from "../symbols/list-type";
-import { isAnyDictionaryType, isGenericSymbolType } from "../symbols/symbol-helpers";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { ChainedAsn } from "./chained-asn";
+import { compileSimpleSubscript, getIndexAndOfType } from "./ast-helpers";
+import { OperationSymbol } from "./operation-symbol";
 import { RangeAsn } from "./range-asn";
+import { UnaryExprAsn } from "./unary-expr-asn";
 
 export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
   constructor(
-    public readonly index1: AstNode,
-    public readonly index2: AstNode | undefined,
+    public readonly subscript1: AstNode,
+    public readonly subscript2: AstNode | undefined,
     public readonly fieldId: string,
   ) {
     super();
@@ -40,88 +40,70 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
 
   aggregateCompileErrors(): CompileError[] {
     const cc = this.precedingNode?.aggregateCompileErrors() ?? [];
-    return cc.concat(this.compileErrors).concat(this.index1.aggregateCompileErrors());
+    return cc.concat(this.compileErrors).concat(this.subscript1.aggregateCompileErrors());
   }
 
-  isRange() {
-    return this.index1 instanceof RangeAsn;
+  isSimpleSubscript() {
+    return !(this.subscript1 instanceof RangeAsn);
   }
 
-  isIndex() {
-    return !(this.index1 instanceof RangeAsn);
-  }
-
-  compileIndexParameters() {
-    if (this.index1 instanceof RangeAsn || this.index1 instanceof IndexAsn) {
-      return `${this.index1.compile()}`;
+  compileSubscript() {
+    if (this.subscript1 instanceof UnaryExprAsn) {
+      if (this.subscript1.op === OperationSymbol.Minus) {
+        mustNotBeNegativeIndex(this.compileErrors, this.fieldId);
+      }
     }
 
-    return `${this.index1.compile()}`;
+    if (this.subscript2 instanceof UnaryExprAsn) {
+      if (this.subscript2.op === OperationSymbol.Minus) {
+        mustNotBeNegativeIndex(this.compileErrors, this.fieldId);
+      }
+    }
+
+    const s1c = this.subscript1.compile();
+    const s2c = this.subscript2 ? `, ${this.subscript2.compile()}` : "";
+
+    return `${s1c}${s2c}`;
   }
 
-  wrapListOrArray(rootType: SymbolType, code: string): string {
-    if (rootType instanceof ListType) {
-      return `system.list(${code})`;
-    }
-    if (rootType instanceof ArrayType) {
-      return `system.array(${code})`;
-    }
-    return code;
+  wrapRange(code: string): string {
+    return `system.safeSlice(${code})`;
   }
 
-  wrapIndex(code: string): string {
-    return `system.safeIndex(${code})`;
+  compileSimpleSubscript(id: string, indexedType: SymbolType, indexed: string, subscript: string) {
+    return compileSimpleSubscript(
+      id,
+      indexedType,
+      this,
+      "",
+      indexed,
+      subscript,
+      this.compileErrors,
+      this.fieldId,
+    );
   }
 
-  getIndexType(rootType: SymbolType): [SymbolType, SymbolType] {
-    if (isGenericSymbolType(rootType)) {
-      return [IntType.Instance, rootType.ofType];
-    }
-    if (isAnyDictionaryType(rootType)) {
-      return [rootType.keyType, rootType.valueType];
-    }
-    return [UnknownType.Instance, UnknownType.Instance];
-  }
-
-  compileIndex(id: string, rootType: SymbolType, index: IndexAsn, q: string, idx: string) {
-    mustBeIndexableSymbol(id, rootType, true, this.compileErrors, this.fieldId);
-    const [indexType] = this.getIndexType(rootType);
-    mustBeCompatibleType(indexType, index.index1.symbolType(), this.compileErrors, this.fieldId);
-
-    let code = `${q}, ${idx}`;
-
-    code = this.wrapIndex(code);
-
-    return code;
+  compileRange(indexedType: SymbolType, indexed: string, subscript: string) {
+    mustBeRangeableType(indexedType, true, this.compileErrors, this.fieldId);
+    const [indexType] = getIndexAndOfType(indexedType);
+    mustBeAssignableType(indexType, IntType.Instance, this.compileErrors, this.fieldId);
+    return this.wrapRange(`${indexed}, ${subscript}`);
   }
 
   compile(): string {
     this.compileErrors = [];
+    const subscript = this.compileSubscript();
 
     if (!this.precedingNode) {
-      return this.compileIndexParameters();
+      return subscript;
     }
 
-    const b = `${this.precedingNode!.compile()}`;
-    const idx = this.compileIndexParameters();
-    let code = `${b}`;
+    const indexed = this.precedingNode!.compile();
+    const indexedType = this.precedingNode!.symbolType();
 
-    if (this.isIndex() || this.isRange()) {
-      const rootType = this.precedingNode!.symbolType();
-
-      if (this.isIndex()) {
-        code = this.compileIndex(getId(this.precedingNode), rootType, this, code, idx);
-      }
-      if (this.isRange()) {
-        mustBeRangeableSymbol(rootType, true, this.compileErrors, this.fieldId);
-        const [indexType] = this.getIndexType(rootType);
-        mustBeCompatibleType(indexType, IntType.Instance, this.compileErrors, this.fieldId);
-        code = `${code}${idx}`;
-        code = this.wrapListOrArray(rootType, code);
-      }
-    }
-
-    return code;
+    return this.isSimpleSubscript()
+      ? this.compileSimpleSubscript(getId(this.precedingNode), indexedType, indexed, subscript)
+      : this.compileRange(indexedType, indexed, subscript);
   }
 
   symbolType() {
@@ -129,18 +111,18 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
       return UnknownType.Instance;
     }
 
-    const rootType = this.precedingNode.symbolType();
+    const indexedType = this.precedingNode.symbolType();
 
-    if (this.isIndex()) {
-      const [, ofType] = this.getIndexType(rootType);
+    if (this.isSimpleSubscript()) {
+      const [, ofType] = getIndexAndOfType(indexedType);
       return ofType;
     }
 
-    return rootType;
+    return indexedType;
   }
 
   toString() {
     const pn = this.precedingNode ? `${this.precedingNode}` : "";
-    return `${pn}[${this.index1}]`;
+    return `${pn}[${this.subscript1}]`;
   }
 }

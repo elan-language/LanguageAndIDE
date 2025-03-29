@@ -16,6 +16,7 @@ import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
+import { Transforms } from "../interfaces/transforms";
 import { callKeyword } from "../keywords";
 import { ProcedureType } from "../symbols/procedure-type";
 import {
@@ -27,18 +28,20 @@ import { SymbolScope } from "../symbols/symbol-scope";
 import {
   isAstCollectionNode,
   isAstIdNode,
+  isEmptyNode,
   matchParametersAndTypes,
 } from "../syntax-nodes/ast-helpers";
+import { EmptyAsn } from "../syntax-nodes/empty-asn";
 import { QualifierAsn } from "../syntax-nodes/qualifier-asn";
-import { Transforms } from "../syntax-nodes/transforms";
 import { LetStatement } from "./let-statement";
-import { VarStatement } from "./var-statement";
+import { VariableStatement } from "./variable-statement";
 
 export class CallStatement extends AbstractFrame implements Statement {
   isStatement = true;
   isCall = true;
   proc: ProcRefField;
   args: ArgListField;
+  hrefForFrameHelp: string = "LangRef.html#call";
 
   constructor(parent: Parent) {
     super(parent);
@@ -69,7 +72,7 @@ export class CallStatement extends AbstractFrame implements Statement {
   }
 
   renderAsHtml(): string {
-    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><el-top><el-kw>call </el-kw>${this.proc.renderAsHtml()}(${this.args.renderAsHtml()})${this.compileMsgAsHtml()}${this.getFrNo()}</el-statement>`;
+    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.toolTip()}><el-top>${this.contextMenu()}${this.bpAsHtml()}<el-kw>call </el-kw>${this.proc.renderAsHtml()}(${this.args.renderAsHtml()})${this.compileMsgAsHtml()}${this.getFrNo()}</el-statement>`;
   }
 
   renderAsSource(): string {
@@ -81,6 +84,7 @@ export class CallStatement extends AbstractFrame implements Statement {
     callParameters: AstNode[],
     transforms: Transforms,
   ): [string[], string[], string[]] {
+    const postFix = this.getFile().getNextId();
     const wrappedInParameters: string[] = [];
     const wrappedOutParameters: string[] = [];
     const passedParameters: string[] = [];
@@ -100,11 +104,11 @@ export class CallStatement extends AbstractFrame implements Statement {
         if (isAstIdNode(p)) {
           const callParamSymbol = this.getParentScope().resolveSymbol(p.id, transforms, this);
           if (
-            callParamSymbol instanceof VarStatement ||
+            callParamSymbol instanceof VariableStatement ||
             callParamSymbol.symbolScope === SymbolScope.parameter ||
             callParamSymbol.symbolScope === SymbolScope.outParameter
           ) {
-            const tpName = `_${p.id}`;
+            const tpName = `_${p.id}${postFix}`;
             wrappedInParameters.push(`let ${tpName} = [${pName}]`);
             wrappedOutParameters.push(`${pName} = ${tpName}[0]`);
             pName = tpName;
@@ -134,7 +138,13 @@ export class CallStatement extends AbstractFrame implements Statement {
 
     const procSymbol = currentScope.resolveSymbol(id, transforms, this);
 
-    mustBeKnownSymbol(procSymbol, currentScope, this.compileErrors, this.htmlId);
+    mustBeKnownSymbol(
+      procSymbol,
+      currentScope,
+      qualifier.symbolType(),
+      this.compileErrors,
+      this.htmlId,
+    );
     mustBeProcedure(
       procSymbol.symbolId,
       procSymbol.symbolType(transforms),
@@ -166,13 +176,13 @@ export class CallStatement extends AbstractFrame implements Statement {
 
         if (procSymbolType.isExtension && qualifier instanceof QualifierAsn) {
           callParameters = [qualifier.value as AstNode].concat(callParameters);
-          qualifier = undefined;
+          qualifier = EmptyAsn.Instance;
         }
 
         matchParametersAndTypes(
+          id,
           procSymbolType,
           callParameters,
-          currentScope,
           this.compileErrors,
           this.htmlId,
         );
@@ -187,7 +197,7 @@ export class CallStatement extends AbstractFrame implements Statement {
       );
 
       const parms = passedParameters.join(", ");
-      const prefix = qualifier
+      const prefix = !isEmptyNode(qualifier)
         ? `${qualifier.compile()}`
         : scopePrefix(procSymbol, this.compileErrors, this, this.htmlId);
       const async = isAsync ? "await " : "";
@@ -202,7 +212,7 @@ export class CallStatement extends AbstractFrame implements Statement {
         wrappedOutParms = `\n${this.indent()}${wrappedOutParameters.join("; ")};`;
       }
 
-      return `${wrappedInParms}${this.indent()}${async}${prefix}${id}(${parms});${wrappedOutParms}`;
+      return `${wrappedInParms}${this.indent()}${this.breakPoint(this.debugSymbols())}${async}${prefix}${id}(${parms});${wrappedOutParms}`;
     }
     return "";
   }

@@ -7,67 +7,66 @@ import { AstNode } from "../interfaces/ast-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { Class } from "../interfaces/class";
 import { DeconstructedSymbolType } from "../interfaces/deconstructed-symbol-type";
-import { DictionarySymbolType } from "../interfaces/dictionary-symbol-type";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { File } from "../interfaces/file";
 import { Frame } from "../interfaces/frame";
 import { GenericSymbolType } from "../interfaces/generic-symbol-type";
-import { IterableSymbolType } from "../interfaces/iterable-symbol-type";
 import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
 import { ReifyableSymbolType } from "../interfaces/reifyable-symbol-type";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
+import { Transforms } from "../interfaces/transforms";
 import { globalKeyword, libraryKeyword } from "../keywords";
+import { DefinitionAdapter } from "../statements/definition-adapter";
 import { SymbolCompletionSpec, TokenType } from "../symbol-completion-helpers";
-import { isAstIdNode, isAstQualifiedNode, transforms } from "../syntax-nodes/ast-helpers";
-import { Transforms } from "../syntax-nodes/transforms";
-import { AbstractDictionaryType } from "./abstract-dictionary-type";
-import { AbstractListType } from "./abstract-list-type";
-import { ArrayType } from "./array-type";
+import {
+  isAstIdNode,
+  isAstQualifiedNode,
+  isEmptyNode,
+  transforms,
+} from "../syntax-nodes/ast-helpers";
+import { EmptyAsn } from "../syntax-nodes/empty-asn";
+
 import { BooleanType } from "./boolean-type";
 import { ClassType } from "./class-type";
-import { DictionaryImmutableType } from "./dictionary-immutable-type";
-import { DictionaryType } from "./dictionary-type";
+import { ListImmutableName, ListName } from "./elan-type-names";
 import { EnumType } from "./enum-type";
 import { EnumValueType } from "./enum-value-type";
 import { FloatType } from "./float-type";
 import { FunctionType } from "./function-type";
 import { GenericParameterType } from "./generic-parameter-type";
 import { IntType } from "./int-type";
-import { IterableType } from "./iterable-type";
-import { ListType } from "./list-type";
 import { NullScope } from "./null-scope";
 import { ProcedureType } from "./procedure-type";
 import { RegExpType } from "./regexp-type";
 import { StringType } from "./string-type";
 import { SymbolScope } from "./symbol-scope";
 import { UnknownSymbol } from "./unknown-symbol";
+import { UnknownType } from "./unknown-type";
 
 export function isDeconstructedType(s?: SymbolType): s is DeconstructedSymbolType {
   return !!s && "symbolTypeFor" in s;
 }
 
-export function isIterableType(s?: SymbolType): s is IterableSymbolType {
-  return !!s && "isIterable" in s;
+export function isListImmutableType(s?: SymbolType): s is ClassType {
+  return !!s && s instanceof ClassType && s.className === ListImmutableName;
 }
 
-export function isAnyDictionaryType(s?: SymbolType): s is DictionarySymbolType {
-  return !!s && "keyType" in s && "valueType" in s;
+export function isListType(s?: SymbolType): s is ClassType {
+  return !!s && s instanceof ClassType && s.className === ListName;
 }
 
-export function isConcreteDictionaryType(
-  s?: SymbolType,
-): s is DictionaryType | DictionaryImmutableType {
-  return s instanceof DictionaryType || s instanceof DictionaryImmutableType;
+export function isIndexableType(s?: SymbolType): boolean {
+  return !!s?.typeOptions.isIndexable;
 }
 
-export function isListType(s?: SymbolType): s is AbstractListType {
-  return s instanceof AbstractListType;
+export function isDoubleIndexableType(s?: SymbolType): boolean {
+  return !!s?.typeOptions.isDoubleIndexable;
 }
 
-export function isIndexableType(s?: SymbolType): s is IterableSymbolType {
-  return isIterableType(s) && !(s instanceof IterableType);
+export function isIterableType(s?: SymbolType): boolean {
+  return !!s?.typeOptions.isIterable;
 }
 
 export function isSymbol(s?: Parent | Frame | ElanSymbol): s is ElanSymbol {
@@ -75,7 +74,11 @@ export function isSymbol(s?: Parent | Frame | ElanSymbol): s is ElanSymbol {
 }
 
 export function isGenericSymbolType(s?: SymbolType | GenericSymbolType): s is GenericSymbolType {
-  return !!s && "ofType" in s;
+  return !!s && "ofTypes" in s;
+}
+
+export function isClassType(s?: SymbolType): s is ClassType {
+  return !!s && "inheritsFrom" in s;
 }
 
 export function isReifyableSymbolType(
@@ -84,8 +87,8 @@ export function isReifyableSymbolType(
   return !!s && "reify" in s;
 }
 
-export function isVarStatement(s?: ElanSymbol): boolean {
-  return !!s && "isVarStatement" in s;
+export function isVariableStatement(s?: ElanSymbol): boolean {
+  return !!s && "isVariableStatement" in s;
 }
 
 export function isLetStatement(s?: ElanSymbol): boolean {
@@ -108,12 +111,8 @@ export function isParameter(s?: ElanSymbol): boolean {
   return !!s && s.symbolScope === SymbolScope.parameter;
 }
 
-export function isAssignable(s?: ElanSymbol): boolean {
-  return !!s && (isVarStatement(s) || isProperty(s) || isOutParameter(s));
-}
-
 export function isClassTypeDef(s?: ElanSymbol | Scope): s is Class {
-  return !!s && "genericParamMatches" in s;
+  return !!s && "updateOfTypes" in s;
 }
 
 export function isEnumValue(s?: ElanSymbol): boolean {
@@ -138,10 +137,6 @@ export function isInsideClass(scope: Scope) {
   return getClassScope(scope) !== NullScope.Instance;
 }
 
-export function isPrivateMember(s: ElanSymbol | Member): boolean {
-  return isMember(s) && s.private;
-}
-
 export function isPublicMember(s: ElanSymbol | Member): boolean {
   return isMember(s) && !s.private;
 }
@@ -164,16 +159,20 @@ export function scopePrefix(
     return `this.`;
   }
 
+  if (isFunction(symbol, transforms()) && symbol.symbolScope === SymbolScope.program) {
+    return "global.";
+  }
+
   return "";
 }
 
 function internalUpdateScopeAndQualifier(
-  qualifierScope: SymbolType | undefined,
+  qualifierScope: SymbolType,
   currentScope: Scope,
   transforms: Transforms,
-  value: AstNode | undefined,
-  qualifier: AstNode | undefined,
-): [AstNode | undefined, Scope] {
+  value: AstNode,
+  qualifier: AstNode,
+): [AstNode, Scope] {
   if (qualifierScope instanceof ClassType) {
     const classSymbol = currentScope.resolveSymbol(
       qualifierScope.className,
@@ -182,12 +181,18 @@ function internalUpdateScopeAndQualifier(
     );
     // replace scope with class scope
     currentScope = isScope(classSymbol) ? classSymbol : currentScope;
+
+    if (isClassTypeDef(currentScope)) {
+      if (isClass(qualifierScope.scope)) {
+        currentScope = currentScope.updateOfTypes(qualifierScope.scope.ofTypes);
+      }
+    }
   } else if (isAstIdNode(value) && value.id === libraryKeyword) {
     currentScope = getGlobalScope(currentScope).libraryScope;
-    qualifier = undefined;
+    qualifier = EmptyAsn.Instance;
   } else if (isAstIdNode(value) && value.id === globalKeyword) {
     currentScope = getGlobalScope(currentScope);
-  } else if (qualifier) {
+  } else if (!isEmptyNode(qualifier)) {
     currentScope = getGlobalScope(currentScope).libraryScope;
   } else {
     currentScope = currentScope.getParentScope();
@@ -199,10 +204,10 @@ export function updateScopeAndQualifier(
   rootNode: AstNode,
   transforms: Transforms,
   currentScope: Scope,
-): [AstNode | undefined, Scope] {
-  const qualifier = isAstQualifiedNode(rootNode) ? rootNode.qualifier : undefined;
-  const qualifierScope = qualifier?.symbolType();
-  const value = qualifier?.value;
+): [AstNode, Scope] {
+  const qualifier = isAstQualifiedNode(rootNode) ? rootNode.qualifier : EmptyAsn.Instance;
+  const qualifierScope = qualifier.symbolType();
+  const value = qualifier.value;
 
   return internalUpdateScopeAndQualifier(
     qualifierScope,
@@ -257,12 +262,12 @@ export function getClassScope(start: Scope): Class | NullScope {
 
 export function wrapScopeInScope(wrapped: Scope): Scope {
   return {
-    resolveSymbol: (id: string | undefined, transforms: Transforms, scope: Scope) =>
+    resolveSymbol: (id: string, transforms: Transforms, scope: Scope) =>
       wrapped.resolveSymbol(id, transforms, scope),
 
     getParentScope: () => wrapped,
 
-    symbolMatches: (id: string, all: boolean, initialScope?: Scope) =>
+    symbolMatches: (id: string, all: boolean, initialScope: Scope) =>
       wrapped.symbolMatches(id, all, initialScope),
   };
 }
@@ -273,40 +278,9 @@ export function isValueType(type: SymbolType) {
     type instanceof FloatType ||
     type instanceof BooleanType ||
     type instanceof StringType ||
+    type instanceof EnumType ||
     type instanceof RegExpType
   );
-}
-
-function matchGenericTypes(actualType: SymbolType, paramType: SymbolType) {
-  if (paramType.constructor.name === actualType.constructor.name) {
-    return true;
-  }
-
-  if (
-    paramType instanceof IterableType &&
-    (actualType instanceof ListType ||
-      actualType instanceof ArrayType ||
-      actualType instanceof StringType)
-  ) {
-    return true;
-  }
-
-  return false;
-}
-
-function matchDictionaryTypes(actualType: SymbolType, paramType: SymbolType) {
-  if (paramType.constructor.name === actualType.constructor.name) {
-    return true;
-  }
-
-  if (
-    paramType instanceof AbstractDictionaryType &&
-    (actualType instanceof DictionaryType || actualType instanceof DictionaryImmutableType)
-  ) {
-    return true;
-  }
-
-  return false;
 }
 
 export function matchType(actualType: SymbolType, paramType: SymbolType): boolean {
@@ -318,32 +292,9 @@ export function matchType(actualType: SymbolType, paramType: SymbolType): boolea
     return true;
   }
 
-  if (
-    isGenericSymbolType(paramType) &&
-    (isGenericSymbolType(actualType) || actualType instanceof StringType)
-  ) {
-    return (
-      matchGenericTypes(actualType, paramType) &&
-      (paramType.ofType instanceof GenericParameterType ||
-        matchType(actualType.ofType, paramType.ofType))
-    );
-  }
-
-  if (isAnyDictionaryType(paramType) && isAnyDictionaryType(actualType)) {
-    return (
-      matchDictionaryTypes(actualType, paramType) &&
-      (paramType.keyType instanceof GenericParameterType ||
-        matchType(actualType.keyType, paramType.keyType)) &&
-      (paramType.valueType instanceof GenericParameterType ||
-        matchType(actualType.valueType, paramType.valueType))
-    );
-  }
-
   if (paramType instanceof ClassType) {
     return paramType.isAssignableFrom(actualType);
   }
-
-  // Todo when we have extensions on Class
 
   return false;
 }
@@ -385,17 +336,13 @@ export function isFunctionType(s: SymbolType): s is FunctionType {
   return !!s && s instanceof FunctionType;
 }
 
-export function isIdOrProcedure(s: ElanSymbol, transforms: Transforms) {
-  return isProcedure(s, transforms) || isVarStatement(s);
-}
-
-export function isExpression(s: ElanSymbol, transforms: Transforms) {
-  return !isProcedure(s, transforms);
+export function firstCharIsUpper(s: string) {
+  const firstChar = s[0] ?? "";
+  return firstChar.toUpperCase() === firstChar;
 }
 
 export function isTypeName(s?: ElanSymbol) {
-  const firstChar = s?.symbolId[0] ?? "";
-  return firstChar.toUpperCase() === firstChar;
+  return firstCharIsUpper(s?.symbolId ?? "");
 }
 
 export function isAbstractClass(s?: ElanSymbol) {
@@ -443,7 +390,9 @@ function matchingSymbolsWithQualifier(
     const cls = getGlobalScope(scope).resolveSymbol(qualSt.className, transforms, scope);
 
     if (isClassTypeDef(cls)) {
-      qualifiedSymbols = cls.symbolMatches(propId, !propId).filter((s) => isPublicMember(s));
+      qualifiedSymbols = cls
+        .symbolMatches(propId, !propId, NullScope.Instance)
+        .filter((s) => isPublicMember(s));
     }
   }
 
@@ -451,12 +400,12 @@ function matchingSymbolsWithQualifier(
     const en = getGlobalScope(scope).resolveSymbol(qualSt.name, transforms, scope);
 
     if (isEnumDef(en)) {
-      qualifiedSymbols = en.symbolMatches(propId, !propId);
+      qualifiedSymbols = en.symbolMatches(propId, !propId, NullScope.Instance);
     }
   }
 
   const allExtensions = getGlobalScope(scope)
-    .libraryScope.symbolMatches(propId, !propId)
+    .libraryScope.symbolMatches(propId, !propId, NullScope.Instance)
     .filter((s) => {
       const st = s.symbolType(transforms);
       return (
@@ -536,9 +485,9 @@ export function filteredSymbols(
   return startsWith.concat(includes);
 }
 
-export function updateScope(qualifier: AstQualifierNode | undefined, originalScope: Scope) {
+export function updateScope(qualifier: AstQualifierNode | EmptyAsn, originalScope: Scope) {
   let currentScope = originalScope;
-  const classScope = qualifier ? qualifier.symbolType() : undefined;
+  const classScope = qualifier.symbolType();
   if (classScope instanceof ClassType) {
     const classSymbol = originalScope.resolveSymbol(
       classScope.className,
@@ -606,7 +555,7 @@ export function isId(f: ElanSymbol): f is ElanSymbol {
   return (
     isConstant(f) ||
     isLetStatement(f) ||
-    isVarStatement(f) ||
+    isVariableStatement(f) ||
     isParameter(f) ||
     isOutParameter(f) ||
     isProperty(f) ||
@@ -638,7 +587,7 @@ export function filterForTokenType(
     case TokenType.id_let:
       return isLetStatement;
     case TokenType.id_variable:
-      return isVarStatement;
+      return isVariableStatement;
     case TokenType.id_parameter_regular:
       return isParameter;
     case TokenType.id_parameter_out:
@@ -693,4 +642,61 @@ export function parameterNames(st: SymbolType) {
     return descriptions;
   }
   return [];
+}
+
+function isNotFuncOrProcOrType(s: ElanSymbol) {
+  const st = s.symbolType();
+  return !(
+    st instanceof FunctionType ||
+    st instanceof ProcedureType ||
+    firstCharIsUpper(s.symbolId)
+  );
+}
+
+export function allScopedSymbols(scope: Scope, initialScope: Scope) {
+  return scope.symbolMatches("", true, initialScope).filter((s) => isNotFuncOrProcOrType(s));
+}
+
+export function getIds(sid: string) {
+  if (sid.includes(",")) {
+    return sid.split(",").map((s) => s.trim());
+  }
+  if (sid.includes(":")) {
+    return sid.split(":").map((s) => s.trim());
+  }
+  return [sid];
+}
+
+export function handleDeconstruction(ss: ElanSymbol[]) {
+  const newSymbols: ElanSymbol[] = [];
+
+  for (const s of ss) {
+    const ids = getDeconstructionIds(s.symbolId);
+
+    if (ids.length === 1) {
+      newSymbols.push(s);
+    } else {
+      for (let i = 0; i < ids.length; i++) {
+        newSymbols.push(new DefinitionAdapter(s, i));
+      }
+    }
+  }
+
+  return newSymbols;
+}
+
+export function mostPreciseSymbol(lhs: SymbolType, rhs: SymbolType): SymbolType {
+  if (lhs instanceof FloatType || rhs instanceof FloatType) {
+    return FloatType.Instance;
+  }
+
+  return lhs;
+}
+
+export function isNumber(st: SymbolType) {
+  return st instanceof IntType || st instanceof FloatType;
+}
+
+export function knownType(symbolType: SymbolType) {
+  return !(symbolType instanceof UnknownType);
 }

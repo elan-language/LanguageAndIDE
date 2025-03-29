@@ -1,29 +1,118 @@
-import { ClassOptions, ElanClass, elanClass, elanProperty } from "../elan-type-annotations";
-import { BaseVG } from "./base-vg";
+import {
+  ClassOption,
+  ElanClass,
+  elanClass,
+  ElanFloat,
+  elanFunction,
+  elanProcedure,
+  elanProperty,
+  FunctionOptions,
+} from "../elan-type-annotations";
+import { System } from "../system";
+import { VectorGraphic } from "./vector-graphic";
 
-@elanClass(ClassOptions.record, [], [], [], [ElanClass(BaseVG)])
-export class CircleVG extends BaseVG {
+@elanClass(
+  ClassOption.concrete,
+  [],
+  ["centreX", "centreY", "radius", "fillColour", "strokeColour", "strokeWidth"],
+  [ElanFloat, ElanFloat, ElanFloat, ElanFloat, ElanFloat, ElanFloat],
+  [ElanClass(VectorGraphic)],
+)
+export class CircleVG extends VectorGraphic {
   static emptyInstance() {
     return new CircleVG();
   }
 
-  constructor() {
-    super();
-    this.cx = 100;
-    this.cy = 100;
-    this.r = 10;
+  async _initialise(
+    centreX: number,
+    centreY: number,
+    radius: number,
+    fillColour: number,
+    strokeColour: number,
+    strokeWidth: number,
+  ) {
+    this.fillColour = fillColour;
+    this.strokeColour = strokeColour;
+    this.strokeWidth = strokeWidth;
+    this.centreX = centreX;
+    this.centreY = centreY;
+    this.radius = radius;
+    return this;
+  }
+
+  private system?: System;
+
+  constructor(copy?: CircleVG) {
+    super(copy);
+    this.centreX = copy ? copy.centreX : 0;
+    this.centreY = copy ? copy.centreY : 0;
+    this.radius = copy ? copy.radius : 0;
   }
 
   @elanProperty()
-  cx: number = 0;
+  centreX: number = 0;
+
+  @elanProcedure(["centreX"])
+  setCentreX(centreX: number) {
+    this.centreX = centreX;
+  }
+
+  @elanFunction(["centreX"], FunctionOptions.pure, ElanClass(CircleVG))
+  withCentreX(centreX: number): CircleVG {
+    const copy = this.system!.initialise(new CircleVG(this));
+    copy.centreX = centreX;
+    return copy;
+  }
 
   @elanProperty()
-  cy: number = 0;
+  centreY: number = 0;
+
+  @elanProcedure(["centreY"])
+  setCentreY(centreY: number) {
+    this.centreY = centreY;
+  }
+
+  @elanFunction(["centreY"], FunctionOptions.pure, ElanClass(CircleVG))
+  withCentreY(centreY: number): CircleVG {
+    const copy = this.system!.initialise(new CircleVG(this));
+    copy.centreY = centreY;
+    return copy;
+  }
 
   @elanProperty()
-  r: number = 0;
+  radius: number = 0;
+
+  @elanProcedure(["radius"])
+  setRadius(r: number) {
+    this.radius = r;
+  }
+
+  @elanFunction(["radius"], FunctionOptions.pure, ElanClass(CircleVG))
+  withRadius(r: number): CircleVG {
+    const copy = this.system!.initialise(new CircleVG(this));
+    copy.radius = r;
+    return copy;
+  }
+  @elanFunction(["colour"], FunctionOptions.pure, ElanClass(CircleVG))
+  withFillColour(fillColour: number): CircleVG {
+    const copy = this.system!.initialise(new CircleVG(this));
+    copy.fillColour = fillColour;
+    return copy;
+  }
+  @elanFunction(["colour"], FunctionOptions.pure, ElanClass(CircleVG))
+  withStrokeColour(strokeColour: number): CircleVG {
+    const copy = this.system!.initialise(new CircleVG(this));
+    copy.strokeColour = strokeColour;
+    return copy;
+  }
+  @elanFunction(["width"], FunctionOptions.pure, ElanClass(CircleVG))
+  withStrokeWidth(strokeWidth: number): CircleVG {
+    const copy = this.system!.initialise(new CircleVG(this));
+    copy.strokeWidth = strokeWidth;
+    return copy;
+  }
 
   asHtml(): string {
-    return `<circle cx="${this.cx}%" cy="${this.cy / 0.75}%" r="${this.r * 1.125}%" stroke="${this.strokeAsColour()}" stroke-width="${this.strokeWidthPC()}%" fill="${this.fillAsColour()}" />`;
+    return `<circle cx="${this.centreX}%" cy="${this.centreY / 0.75}%" r="${this.radius * 1.125}%" ${this.strokeAsHtml()} ${this.fillAsHtml()}/>`;
   }
 }

@@ -43,19 +43,21 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = system.initialise(new Foo(7, "Apple"));
-  let y = system.initialise(new Foo(7, "Orange"));
-  let z = system.initialise(new Foo(7, "Orange"));
-  system.printLine(system.objectEquals(x, x));
-  system.printLine(system.objectEquals(x, y));
-  system.printLine(system.objectEquals(y, z));
+  let x = system.initialise(await new Foo()._initialise(7, "Apple"));
+  let y = system.initialise(await new Foo()._initialise(7, "Orange"));
+  let z = system.initialise(await new Foo()._initialise(7, "Orange"));
+  await system.printLine(system.objectEquals(x, x));
+  await system.printLine(system.objectEquals(x, y));
+  await system.printLine(system.objectEquals(y, z));
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", ""]]);};
-  constructor(p1, p2) {
+
+  async _initialise(p1, p2) {
     this.p1 = p1;
     this.p2 = p2;
+    return this;
   }
 
   p1 = 0;
@@ -66,8 +68,8 @@ class Foo {
     this.p1 = v;
   }
 
-  asString() {
-    return \`\${_stdlib.asString(this.p1)} \${_stdlib.asString(this.p2)}\`;
+  async asString() {
+    return \`\${await _stdlib.asString(this.p1)} \${await _stdlib.asString(this.p2)}\`;
   }
 
 }
@@ -108,14 +110,16 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = system.initialise(new Foo());
-  system.printLine(system.objectEquals(x, Foo.emptyInstance()));
+  let x = system.initialise(await new Foo()._initialise());
+  await system.printLine(system.objectEquals(x, Foo.emptyInstance()));
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", ""]]);};
-  constructor() {
 
+  async _initialise() {
+
+    return this;
   }
 
   p1 = 0;
@@ -126,8 +130,8 @@ class Foo {
     this.p1 = v;
   }
 
-  asString() {
-    return \`\${_stdlib.asString(this.p1)} \${_stdlib.asString(this.p2)}\`;
+  async asString() {
+    return \`\${await _stdlib.asString(this.p1)} \${await _stdlib.asString(this.p2)}\`;
   }
 
 }
@@ -176,20 +180,22 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = system.initialise(new Foo(7, "Apple"));
+  let x = system.initialise(await new Foo()._initialise(7, "Apple"));
   let y = x;
   await y.setP1(3);
-  let z = system.initialise(new Foo(8, "Orange"));
-  system.printLine(system.objectEquals(x, x));
-  system.printLine(system.objectEquals(x, y));
-  system.printLine(system.objectEquals(x, z));
+  let z = system.initialise(await new Foo()._initialise(8, "Orange"));
+  await system.printLine(system.objectEquals(x, x));
+  await system.printLine(system.objectEquals(x, y));
+  await system.printLine(system.objectEquals(x, z));
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", ""]]);};
-  constructor(p1, p2) {
+
+  async _initialise(p1, p2) {
     this.p1 = p1;
     this.p2 = p2;
+    return this;
   }
 
   p1 = 0;
@@ -200,8 +206,8 @@ class Foo {
     this.p1 = v;
   }
 
-  asString() {
-    return \`\${_stdlib.asString(this.p1)} \${_stdlib.asString(this.p2)}\`;
+  async asString() {
+    return \`\${await _stdlib.asString(this.p1)} \${await _stdlib.asString(this.p2)}\`;
   }
 
 }
@@ -240,5 +246,128 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Cannot do equality operations on Procedures or Functions"]);
+  });
+
+  test("Pass_ListEquality", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable f1 set to new Foo(1)
+  variable f2 set to new Foo(2)
+  let l1 be [f1, f2]
+  let l2 be [f1, f2]
+  print l1 is l2
+  let l3 be [f2, f1]
+  print l1 is l3
+  let l4 be [new Foo(1), new Foo(2)]
+  print  l4 is l1
+  call l4[0].setP(3)
+  print l4 is l1
+end main
+
+class Foo
+  constructor(p as Int)
+    set property.p to p
+  end constructor
+
+  property p as Int
+
+  procedure setP(value as Int)
+    set property.p to value
+  end procedure
+
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let f1 = system.initialise(await new Foo()._initialise(1));
+  let f2 = system.initialise(await new Foo()._initialise(2));
+  const l1 = system.list([f1, f2]);
+  const l2 = system.list([f1, f2]);
+  await system.printLine(system.objectEquals(l1, l2));
+  const l3 = system.list([f2, f1]);
+  await system.printLine(system.objectEquals(l1, l3));
+  const l4 = system.list([system.initialise(await new Foo()._initialise(1)), system.initialise(await new Foo()._initialise(2))]);
+  await system.printLine(system.objectEquals(l4, l1));
+  await system.safeIndex(l4, 0).setP(3);
+  await system.printLine(system.objectEquals(l4, l1));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [[\"p\", 0]]);};
+
+  async _initialise(p) {
+    this.p = p;
+    return this;
+  }
+
+  p = 0;
+
+  async setP(value) {
+    this.p = value;
+  }
+
+}
+return [main, _tests];}`;
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "truefalsetruefalse");
+  });
+
+  test("Pass_ListEquality", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable f1 set to new Foo() with p set to 1
+  variable f2 set to new Foo() with p set to 2
+  let l1 be {f1, f2}
+  let l2 be {f1, f2}
+  print l1 is l2
+  let l3 be {f2, f1}
+  print l1 is l3
+  let l4 be {new Foo() with p set to 1, new Foo() with p set to 2}
+  print  l4 is l1
+end main
+
+record Foo
+  property p as Int
+
+end record`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let f1 = await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.p = 1; return _a;})();
+  let f2 = await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.p = 2; return _a;})();
+  const l1 = system.listImmutable([f1, f2]);
+  const l2 = system.listImmutable([f1, f2]);
+  await system.printLine(system.objectEquals(l1, l2));
+  const l3 = system.listImmutable([f2, f1]);
+  await system.printLine(system.objectEquals(l1, l3));
+  const l4 = system.listImmutable([await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.p = 1; return _a;})(), await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.p = 2; return _a;})()]);
+  await system.printLine(system.objectEquals(l4, l1));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [[\"p\", 0]]);};
+  async _initialise() { return this; }
+  p = 0;
+
+}
+return [main, _tests];}`;
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "truefalsetrue");
   });
 });

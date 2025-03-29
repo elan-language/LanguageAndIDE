@@ -29,13 +29,13 @@ end procedure`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(1);
+  await system.printLine(1);
   await foo();
-  system.printLine(3);
+  await system.printLine(3);
 }
 
 async function foo() {
-  system.printLine(2);
+  await system.printLine(2);
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -59,7 +59,7 @@ main
   call foo(a, b, c, d)
 end main
 
-procedure foo(x as Array<of Int>, y as List<of Int>, z as Dictionary<of String, Boolean>, t as DictionaryImmutable<of String, Boolean>)
+procedure foo(x as List<of Int>, y as ListImmutable<of Int>, z as Dictionary<of String, Boolean>, t as DictionaryImmutable<of String, Boolean>)
   print x
   print y
   print z
@@ -69,18 +69,18 @@ end procedure`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.literalArray([1, 2]);
-  let b = system.list([3, 4]);
-  let c = system.dictionary({["a"] : _stdlib.true, ["b"] : _stdlib.false});
-  let d = system.dictionaryImmutable({["a"] : _stdlib.true, ["b"] : _stdlib.false});
+  let a = system.list([1, 2]);
+  let b = system.listImmutable([3, 4]);
+  let c = system.dictionary([["a", _stdlib.true], ["b", _stdlib.false]]);
+  let d = system.dictionaryImmutable([["a", _stdlib.true], ["b", _stdlib.false]]);
   await foo(a, b, c, d);
 }
 
 async function foo(x, y, z, t) {
-  system.printLine(x);
-  system.printLine(y);
-  system.printLine(z);
-  system.printLine(t);
+  await system.printLine(x);
+  await system.printLine(y);
+  await system.printLine(z);
+  await system.printLine(t);
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -106,7 +106,7 @@ end main`;
 const global = new class {};
 async function main() {
   await _stdlib.pause(1);
-  system.printLine(1);
+  await system.printLine(1);
 }
 return [main, _tests];}`;
 
@@ -142,8 +142,8 @@ async function main() {
 }
 
 async function foo(a, b) {
-  system.printLine(a);
-  system.printLine(b);
+  await system.printLine(a);
+  await system.printLine(b);
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -166,22 +166,22 @@ main
   print a
 end main
 
-procedure changeFirst(out a as Array<of Int>)
-    call a.putAt(0, 5)
+procedure changeFirst(out a as List<of Int>)
+    call a.put(0, 5)
 end procedure`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.literalArray([2, 3]);
-  let _a = [a];
-  await changeFirst(_a);
-  a = _a[0];
-  system.printLine(a);
+  let a = system.list([2, 3]);
+  let _a18 = [a];
+  await changeFirst(_a18);
+  a = _a18[0];
+  await system.printLine(a);
 }
 
 async function changeFirst(a) {
-  _stdlib.putAt(a[0], 0, 5);
+  a[0].put(0, 5);
 }
 global["changeFirst"] = changeFirst;
 return [main, _tests];}`;
@@ -216,8 +216,8 @@ async function main() {
 }
 
 async function foo(a, b) {
-  system.printLine(a);
-  system.printLine(b);
+  await system.printLine(a);
+  await system.printLine(b);
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -252,17 +252,17 @@ end procedure`;
 const global = new class {};
 async function main() {
   await foo();
-  system.printLine(3);
+  await system.printLine(3);
 }
 
 async function foo() {
-  system.printLine(1);
+  await system.printLine(1);
   await bar();
 }
 global["foo"] = foo;
 
 async function bar() {
-  system.printLine(2);
+  await system.printLine(2);
 }
 global["bar"] = bar;
 return [main, _tests];}`;
@@ -296,7 +296,7 @@ async function main() {
 }
 
 async function square(x) {
-  system.printLine(x * x);
+  await system.printLine(x * x);
 }
 global["square"] = square;
 return [main, _tests];}`;
@@ -333,7 +333,7 @@ async function main() {
 
 async function foo(a) {
   if (a > 0) {
-    system.printLine(a);
+    await system.printLine(a);
     let b = a - 1;
     await foo(b);
   }
@@ -395,14 +395,16 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let f = system.initialise(new Foo());
+  let f = system.initialise(await new Foo()._initialise());
   await f.length();
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
-  constructor() {
-    this.p1 = system.initialise(new Bar());
+
+  async _initialise() {
+    this.p1 = system.initialise(await new Bar()._initialise());
+    return this;
   }
 
   _p1;
@@ -417,7 +419,7 @@ class Foo {
     await this.p1.length(2);
   }
 
-  asString() {
+  async asString() {
     return "";
   }
 
@@ -425,17 +427,19 @@ class Foo {
 
 class Bar {
   static emptyInstance() { return system.emptyClass(Bar, [["p1", 0]]);};
-  constructor() {
+
+  async _initialise() {
     this.p1 = 5;
+    return this;
   }
 
   p1 = 0;
 
   async length(plus) {
-    system.printLine(this.p1 + plus);
+    await system.printLine(this.p1 + plus);
   }
 
-  asString() {
+  async asString() {
     return "";
   }
 
@@ -472,11 +476,11 @@ const global = new class {};
 async function main() {
   let a = 2;
   let b = "hello";
-  let _a = [a]; let _b = [b];
-  await foo(_a, _b);
-  a = _a[0]; b = _b[0];
-  system.printLine(a);
-  system.printLine(b);
+  let _a26 = [a]; let _b26 = [b];
+  await foo(_a26, _b26);
+  a = _a26[0]; b = _b26[0];
+  await system.printLine(a);
+  await system.printLine(b);
 }
 
 async function foo(x, y) {
@@ -517,11 +521,11 @@ const global = new class {};
 async function main() {
   let a = 2;
   let b = 3;
-  let _a = [a]; let _b = [b];
-  await foo(_a, _b);
-  a = _a[0]; b = _b[0];
-  system.printLine(a);
-  system.printLine(b);
+  let _a29 = [a]; let _b29 = [b];
+  await foo(_a29, _b29);
+  a = _a29[0]; b = _b29[0];
+  await system.printLine(a);
+  await system.printLine(b);
 }
 
 async function foo(x, y) {
@@ -567,17 +571,17 @@ const global = new class {};
 async function main() {
   let a = 2;
   let b = 3;
-  let _a = [a]; let _b = [b];
-  await foo(_a, _b);
-  a = _a[0]; b = _b[0];
-  system.printLine(a);
-  system.printLine(b);
+  let _a36 = [a]; let _b36 = [b];
+  await foo(_a36, _b36);
+  a = _a36[0]; b = _b36[0];
+  await system.printLine(a);
+  await system.printLine(b);
 }
 
 async function foo(a, b) {
-  let _a = [a[0]]; let _b = [b[0]];
-  await bar(_a, _b);
-  a[0] = _a[0]; b[0] = _b[0];
+  let _a37 = [a[0]]; let _b37 = [b[0]];
+  await bar(_a37, _b37);
+  a[0] = _a37[0]; b[0] = _b37[0];
 }
 global["foo"] = foo;
 
@@ -624,25 +628,27 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(new Foo());
+  let a = system.initialise(await new Foo()._initialise());
   let b = 0;
-  let _a = [a]; let _b = [b];
-  await foo(_a, _b);
-  a = _a[0]; b = _b[0];
-  system.printLine(b);
+  let _a35 = [a]; let _b35 = [b];
+  await foo(_a35, _b35);
+  a = _a35[0]; b = _b35[0];
+  await system.printLine(b);
 }
 
 async function foo(f, y) {
-  let _y = [y[0]];
-  await f[0].bar(_y);
-  y[0] = _y[0];
+  let _y36 = [y[0]];
+  await f[0].bar(_y36);
+  y[0] = _y36[0];
 }
 global["foo"] = foo;
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
-  constructor() {
 
+  async _initialise() {
+
+    return this;
   }
 
   async bar(z) {
@@ -686,12 +692,12 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(new Foo());
+  let a = system.initialise(await new Foo()._initialise());
   let b = 100;
-  let _a = [a]; let _b = [b];
-  await foo(_a, _b);
-  a = _a[0]; b = _b[0];
-  system.printLine(b);
+  let _a34 = [a]; let _b34 = [b];
+  await foo(_a34, _b34);
+  a = _a34[0]; b = _b34[0];
+  await system.printLine(b);
 }
 
 async function foo(f, y) {
@@ -701,8 +707,10 @@ global["foo"] = foo;
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["ff", 0]]);};
-  constructor() {
+
+  async _initialise() {
     this.ff = 1;
+    return this;
   }
 
   ff = 0;
@@ -717,6 +725,86 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "101");
+  });
+
+  test("Pass_MultipleCallsWithOutParameters", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable x set to 1
+  call addOne(x)
+  print x
+  call addOne(x)
+  print x
+end main
+
+procedure addOne(out n as Int)
+  set n to n + 1
+end procedure`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let x = 1;
+  let _x23 = [x];
+  await addOne(_x23);
+  x = _x23[0];
+  await system.printLine(x);
+  let _x24 = [x];
+  await addOne(_x24);
+  x = _x24[0];
+  await system.printLine(x);
+}
+
+async function addOne(n) {
+  n[0] = n[0] + 1;
+}
+global["addOne"] = addOne;
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "23");
+  });
+
+  test("Pass_PrintOutParameter", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable x set to 1
+  call printParameter(x)
+end main
+
+procedure printParameter(out n as Int)
+  print n
+end procedure`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let x = 1;
+  let _x15 = [x];
+  await printParameter(_x15);
+  x = _x15[0];
+}
+
+async function printParameter(n) {
+  await system.printLine(n[0]);
+}
+global["printParameter"] = printParameter;
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1");
   });
 
   test("Fail_CallingUndeclaredProc", async () => {
@@ -850,7 +938,7 @@ end procedure
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: a (Int), b (String) Provided: Int, Int",
+      "Argument types. Expected: a (Int), b (String) Provided: Int, Int",
     ]);
   });
 
@@ -927,8 +1015,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: p (Int) Provided: Boolean",
-      "Argument types expected: p (Int) Provided: Float",
+      "Argument types. Expected: p (Int) Provided: Boolean",
+      "Argument types. Expected: p (Int) Provided: Float",
     ]);
   });
 
@@ -941,7 +1029,7 @@ main
   print a
 end main
 
-procedure changeAll(a as List<of Int>)
+procedure changeAll(a as ListImmutable<of Int>)
     set a to {1, 2, 3}
 end procedure`;
 
@@ -953,7 +1041,7 @@ end procedure`;
     assertDoesNotCompile(fileImpl, ["May not re-assign the parameter 'a'"]);
   });
 
-  test("Fail_ArrayParamMayNotBeReassigned", async () => {
+  test("Fai_ListParamMayNotBeReassigned", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -962,7 +1050,7 @@ main
   print a
 end main
 
-procedure changeAll(a as Array<of Int>)
+procedure changeAll(a as List<of Int>)
     set a to [1, 2, 3]
 end procedure`;
 
@@ -1146,8 +1234,8 @@ end procedure`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "Cannot do equality operations on Procedures or Functions",
-      "Incompatible types Procedure () to Float or Int",
-      "Incompatible types Procedure () to Float or Int",
+      "Incompatible types. Expected: Float or Int Provided: Procedure ()",
+      "Incompatible types. Expected: Float or Int Provided: Procedure ()",
     ]);
   });
 
@@ -1164,7 +1252,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types Procedure (Array<of Generic Parameter T1>, Generic Parameter T1) to Array<of Int>",
+      "Incompatible types. Expected: List<of Int> Provided: Procedure (Int)",
       "Cannot call procedure 'append' within an expression",
     ]);
   });
@@ -1313,5 +1401,36 @@ end procedure`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["'bar' is not defined for type 'Foo'"]);
+  });
+
+  test("Fail_ParameterListOfMutableType", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+procedure p1(a as ListImmutable<of List<of Int>>)
+  
+end procedure`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'List<of Int>'"]);
+  });
+
+  test("Fail_noMatchingExtension2", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  let s be "hello"
+  call s.reverse()
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'reverse' is not defined for type 'String'"]);
   });
 });

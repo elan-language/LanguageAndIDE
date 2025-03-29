@@ -26,10 +26,10 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(foo(3, 4));
+  await system.printLine((await global.foo(3, 4)));
 }
 
-function foo(a, b) {
+async function foo(a, b) {
   return a * b;
 }
 global["foo"] = foo;
@@ -52,19 +52,19 @@ main
   print a
 end main
 
-function foo(a as Int, b as Int) returns Array<of Int>
+function foo(a as Int, b as Int) returns List<of Int>
   return [a, b]
 end function`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.safeIndex(foo(1, 2), 0);
-  system.printLine(a);
+  let a = system.safeIndex((await global.foo(1, 2)), 0);
+  await system.printLine(a);
 }
 
-function foo(a, b) {
-  return system.literalArray([a, b]);
+async function foo(a, b) {
+  return system.list([a, b]);
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -86,19 +86,19 @@ main
   print a
 end main
 
-function foo(a as Int, b as Int) returns Array<of Int>
+function foo(a as Int, b as Int) returns List<of Int>
   return [a, b]
 end function`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.array(foo(1, 2).slice(0, 1));
-  system.printLine(a);
+  let a = system.safeSlice((await global.foo(1, 2)), 0, 1);
+  await system.printLine(a);
 }
 
-function foo(a, b) {
-  return system.literalArray([a, b]);
+async function foo(a, b) {
+  return system.list([a, b]);
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -126,10 +126,10 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(foo(3, 4));
+  await system.printLine((await global.foo(3, 4)));
 }
 
-function foo(a, b) {
+async function foo(a, b) {
   return 0;
 }
 global["foo"] = foo;
@@ -163,18 +163,20 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(foo(3, 4));
+  await system.printLine((await global.foo(3, 4)));
 }
 
-function foo(a, b) {
+async function foo(a, b) {
   return Foo.emptyInstance();
 }
 global["foo"] = foo;
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
-  constructor() {
 
+  async _initialise() {
+
+    return this;
   }
 
 }
@@ -196,18 +198,18 @@ main
     print foo(3,4)
 end main
 
-function foo(a as Int, b as Int) returns Array<of Int>
-    return empty Array<of Int>
+function foo(a as Int, b as Int) returns List<of Int>
+    return empty List<of Int>
 end function`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(foo(3, 4));
+  await system.printLine((await global.foo(3, 4)));
 }
 
-function foo(a, b) {
-  return system.emptyArray();
+async function foo(a, b) {
+  return system.initialise(_stdlib.List.emptyInstance());
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -241,13 +243,13 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(factorial(5));
+  await system.printLine((await global.factorial(5)));
 }
 
-function factorial(a) {
+async function factorial(a) {
   let result = 0;
   if (a > 2) {
-    result = a * factorial(a - 1);
+    result = a * (await global.factorial(a - 1));
   } else {
     result = a;
   }
@@ -290,22 +292,24 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let b = system.initialise(new Bar());
-  system.printLine(foo(b));
+  let b = system.initialise(await new Bar()._initialise());
+  await system.printLine((await global.foo(b)));
 }
 
-function foo(bar) {
-  return bar.asString();
+async function foo(bar) {
+  return (await bar.asString());
 }
 global["foo"] = foo;
 
 class Bar {
   static emptyInstance() { return system.emptyClass(Bar, []);};
-  constructor() {
 
+  async _initialise() {
+
+    return this;
   }
 
-  asString() {
+  async asString() {
     return "bar";
   }
 
@@ -324,11 +328,11 @@ return [main, _tests];}`;
   test("Fail_ExtensionParameterCount", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
-constant a set to {"a":1}
+constant a set to ""
 
 main
-  variable b set to a.withPutAtKey()
-  variable c set to a.withPutAtKey("a", 1, 2)
+  variable b set to a.contains()
+  variable c set to a.contains("a", 1, 2)
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -336,8 +340,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Missing argument(s). Expected: key (String), value (Int)",
-      "Too many argument(s). Expected: key (String), value (Int)",
+      "Missing argument(s). Expected: item (String)",
+      "Too many argument(s). Expected: item (String)",
     ]);
   });
 
@@ -380,8 +384,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: p (Int) Provided: Boolean",
-      "Argument types expected: p (Int) Provided: Float",
+      "Argument types. Expected: p (Int) Provided: Boolean",
+      "Argument types. Expected: p (Int) Provided: Float",
     ]);
   });
 
@@ -400,7 +404,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Boolean to Int"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: Boolean"]);
   });
 
   test("Fail_noReturnType", async () => {
@@ -471,7 +475,7 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: String Provided: Int"]);
   });
 
   test("Fail_NoReturn2", async () => {
@@ -525,7 +529,7 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Float to Int"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: Float"]);
   });
 
   test("Fail_statementAfterReturn", async () => {
@@ -619,14 +623,14 @@ end function`;
     assertDoesNotCompile(fileImpl, ["May not re-assign the parameter 'a'"]);
   });
 
-  test("Fail_CannotUpdateArray", async () => {
+  test("Fail_CannotUpdateList", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
 end main
 
-function foo(a as Array<of Int>) returns Int
-    call a.putAt(0, 1)
+function foo(a as List<of Int>) returns Int
+    call a.put(0, 1)
     return a[0]
 end function`;
 
@@ -636,13 +640,13 @@ end function`;
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_CannotPassInArrayMultipleParameters", async () => {
+  test("Fail_CannotPassInListMultipleParameters", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
 end main
 
-function foo(b as Int, a as Array<of Int>) returns Int
+function foo(b as Int, a as List<of Int>) returns Int
     call a.setAt(0, 0)
     return a[0]
 end function`;
@@ -708,7 +712,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: a (Int), b (Int) Provided: Int, String",
+      "Argument types. Expected: a (Int), b (Int) Provided: Int, String",
     ]);
   });
 
@@ -737,7 +741,7 @@ main
  
 end main
 
-function foo(a as Array<of Int>, b as Dictionary<of String, Int>, c as Foo) returns Int
+function foo(a as List<of Int>, b as Dictionary<of String, Int>, c as Foo) returns Int
   call b.setAtKey("key", 1)
   return 1
 end function
@@ -925,12 +929,17 @@ main
   variable a set to ref p1 is ref p2
   variable b set to ref p1 + ref p2
   variable c set to - ref p1
+  variable d set to ref p1
+  set d to ref p3
 end main
 
 function p1() returns Int
   return 0
 end function
 function p2() returns Int
+  return 0
+end function
+function p3(a as Int) returns Float
   return 0
 end function`;
 
@@ -940,8 +949,10 @@ end function`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "Cannot do equality operations on Procedures or Functions",
-      "Incompatible types Func<of  => Int> to Float or Int",
-      "Incompatible types Func<of  => Int> to Float or Int",
+      "Incompatible types. Expected: Float or Int Provided: Func<of  => Int>",
+      "Incompatible types. Expected: Float or Int Provided: Func<of  => Int>",
+      "Incompatible types. Expected: Float or Int Provided: Func<of  => Int>",
+      "Incompatible types. Expected: Func<of  => Int> Provided: Func<of Int => Float>",
     ]);
   });
 
@@ -969,10 +980,11 @@ end function`;
       "Cannot do equality operations on Procedures or Functions",
       "To evaluate function 'p1' add brackets. Or to create a reference to 'p1', precede it by 'ref'",
       "To evaluate function 'p2' add brackets. Or to create a reference to 'p2', precede it by 'ref'",
-      "Incompatible types Func<of  => Int> to Float or Int",
-      "Incompatible types Func<of  => Int> to Float or Int",
+      "Incompatible types. Expected: Float or Int Provided: Func<of  => Int>",
+      "Incompatible types. Expected: Float or Int Provided: Func<of  => Int>",
       "To evaluate function 'p1' add brackets. Or to create a reference to 'p1', precede it by 'ref'",
       "To evaluate function 'p2' add brackets. Or to create a reference to 'p2', precede it by 'ref'",
+      "Incompatible types. Expected: Float or Int Provided: Func<of  => Int>",
       "To evaluate function 'p1' add brackets. Or to create a reference to 'p1', precede it by 'ref'",
     ]);
   });
@@ -1002,8 +1014,8 @@ end function`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  let g be new BlockGraphics()
-  let g2 be g.withBlock
+  let g be "xxx"
+  let g2 be g.length
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -1011,9 +1023,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "To evaluate function 'withBlock' add brackets. Or to create a reference to 'withBlock', precede it by 'ref'",
-    ]);
+    assertDoesNotCompile(fileImpl, ["To evaluate function 'length' add brackets."]);
   });
 
   test("Fail_LibFunctionWithoutRefKeyword", async () => {
@@ -1028,9 +1038,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "To evaluate function 'abs' add brackets. Or to create a reference to 'abs', precede it by 'ref'",
-    ]);
+    assertDoesNotCompile(fileImpl, ["To evaluate function 'abs' add brackets."]);
   });
 
   test("Fail_PrintLibFunctionWithoutRefKeyword", async () => {
@@ -1045,9 +1053,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "To evaluate function 'abs' add brackets. Or to create a reference to 'abs', precede it by 'ref'",
-    ]);
+    assertDoesNotCompile(fileImpl, ["To evaluate function 'abs' add brackets."]);
   });
 
   test("Fail_NoIndexing", async () => {
@@ -1068,5 +1074,67 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
+  });
+
+  test("Fail_ReturnListOfMutableType", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+function p1() returns ListImmutable<of List<of Int>>
+  return p1()
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'List<of Int>'"]);
+  });
+
+  test("Fail_ParameterListOfMutableType", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+function p1(a as ListImmutable<of List<of Int>>) returns Int
+  return 0
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'List<of Int>'"]);
+  });
+
+  test("Fail_noMatchingExtension1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  let s be "hello"
+  let s1 be s.asBinary()
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'asBinary' is not defined for type 'String'"]);
+  });
+
+  test("Fail_noMatchingExtension2", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  let s be "hello"
+  let s1 be s.reverse()
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'reverse' is not defined for type 'String'"]);
   });
 });

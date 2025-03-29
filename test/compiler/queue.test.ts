@@ -16,33 +16,35 @@ suite("Queue", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  let st be new Queue<of String>()
-  print st.length()
-  call st.enqueue("apple")
-  call st.enqueue("pear")
-  print st.length()
-  print st.peek()
-  variable fruit set to st.dequeue()
+  variable q set to new Queue<of String>()
+  print q.length()
+  set q to q.enqueue("apple")
+  set q to q.enqueue("pear")
+  print q.length()
+  print q.peek()
+  variable fruit set to ""
+  set fruit, q to q.dequeue()
   print fruit
-  set fruit to st.dequeue()
+  set fruit, q to q.dequeue()
   print fruit
-  print st.length()
+  print q.length()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const st = system.initialise(new _stdlib.Queue());
-  system.printLine(st.length());
-  st.enqueue("apple");
-  st.enqueue("pear");
-  system.printLine(st.length());
-  system.printLine(st.peek());
-  let fruit = st.dequeue();
-  system.printLine(fruit);
-  fruit = st.dequeue();
-  system.printLine(fruit);
-  system.printLine(st.length());
+  let q = system.initialise(await new _stdlib.Queue()._initialise());
+  await system.printLine(q.length());
+  q = q.enqueue("apple");
+  q = q.enqueue("pear");
+  await system.printLine(q.length());
+  await system.printLine(q.peek());
+  let fruit = "";
+  [fruit, q] = q.dequeue();
+  await system.printLine(fruit);
+  [fruit, q] = q.dequeue();
+  await system.printLine(fruit);
+  await system.printLine(q.length());
 }
 return [main, _tests];}`;
 
@@ -59,9 +61,9 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  let st be new Queue<of String>()
-  call st.enqueue("apple")
-  call st.enqueue(3)
+  variable q set to new Queue<of String>()
+  set q to q.enqueue("apple")
+  set q to q.enqueue(3)
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -69,15 +71,15 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Argument types expected: parameter0 (String) Provided: Int"]);
+    assertDoesNotCompile(fileImpl, ["Argument types. Expected: parameter0 (String) Provided: Int"]);
   });
 
   test("Fail_Queue_adding_incompatible_type2", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  let st be new Queue<of String>()
-  call st.enqueue(3)
+  variable q set to new Queue<of String>()
+  set q to q.enqueue(3)
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -85,22 +87,22 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Argument types expected: parameter0 (String) Provided: Int"]);
+    assertDoesNotCompile(fileImpl, ["Argument types. Expected: parameter0 (String) Provided: Int"]);
   });
 
   test("Fail_Queue_peek_empty_Queue", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  let st be new Queue<of String>()
-  print st.peek()
+  let q be new Queue<of String>()
+  print q.peek()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const st = system.initialise(new _stdlib.Queue());
-  system.printLine(st.peek());
+  const q = system.initialise(await new _stdlib.Queue()._initialise());
+  await system.printLine(q.peek());
 }
 return [main, _tests];}`;
 
@@ -110,22 +112,25 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    assertObjectCodeDoesNotExecute(fileImpl, "Cannot peek an empty Queue - check using length()");
+    await assertObjectCodeDoesNotExecute(
+      fileImpl,
+      "Cannot peek an empty Queue - check using length()",
+    );
   });
 
   test("Fail_Queue_dequeue_empty_Queue", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  let st be new Queue<of String>()
-  print st.dequeue()
+  let q be new Queue<of String>()
+  print q.dequeue()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const st = system.initialise(new _stdlib.Queue());
-  system.printLine(st.dequeue());
+  const q = system.initialise(await new _stdlib.Queue()._initialise());
+  await system.printLine(q.dequeue());
 }
 return [main, _tests];}`;
 
@@ -135,7 +140,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    assertObjectCodeDoesNotExecute(
+    await assertObjectCodeDoesNotExecute(
       fileImpl,
       "Cannot dequeue an empty Queue - check using length()",
     );
@@ -145,7 +150,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  let st be new Queue()
+  let q be new Queue()
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -153,6 +158,24 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["<of Type(s)> expected: 1 got: 0"]);
+    assertDoesNotCompile(fileImpl, ["<of Type(s)> Expected: 1 Provided: 0"]);
+  });
+
+  test("Fail_QueueOfMutable", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable st set to new Queue<of Foo>()
+end main
+
+class Foo
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Queue cannot be of mutable type 'Foo'"]);
   });
 });

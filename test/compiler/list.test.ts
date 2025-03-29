@@ -17,7 +17,7 @@ suite("List", () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to {4,5,6,7,8}
+  variable a set to [4,5,6,7,8]
   print a
 end main`;
 
@@ -25,7 +25,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.list([4, 5, 6, 7, 8]);
-  system.printLine(a);
+  await system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -35,219 +35,26 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{4, 5, 6, 7, 8}");
+    await assertObjectCodeExecutes(fileImpl, "[4, 5, 6, 7, 8]");
   });
 
-  test("Pass_literalListofList", async () => {
+  test("Pass_appendList", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to {{4, 5}, {6, 7, 8}}
+  variable a set to [4,5,6,7,8]
+  let b be [9,10,11]
+  call a.appendList(b)
   print a
-end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let a = system.list([system.list([4, 5]), system.list([6, 7, 8])]);
-  system.printLine(a);
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{{4, 5}, {6, 7, 8}}");
-  });
-
-  test("Pass_literalListOfClass", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-  variable a set to new Foo()
-  variable b set to {a}
-  print b
-end main
-
-class Foo
-  constructor()
-  end constructor
-
-  function asString() returns String
-    return "foo"
-  end function
-
-end class`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let a = system.initialise(new Foo());
-  let b = system.list([a]);
-  system.printLine(b);
-}
-
-class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, []);};
-  constructor() {
-
-  }
-
-  asString() {
-    return "foo";
-  }
-
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{foo}");
-  });
-
-  test("Pass_literalListOfValueId", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-  variable a set to 1
-  variable b set to 1.1
-  variable c set to "c"
-  variable d set to "d"
-  variable e set to true
-  variable v set to {a}
-  variable w set to {b}
-  variable x set to {c}
-  variable y set to {d}
-  variable z set to {e}
-  print v
-  print w
-  print x
-  print y
-  print z
-end main
-
-class Foo
-  constructor()
-  end constructor
-
-  function asString() returns String
-    return "foo"
-  end function
-
-end class`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let a = 1;
-  let b = 1.1;
-  let c = "c";
-  let d = "d";
-  let e = _stdlib.true;
-  let v = system.list([a]);
-  let w = system.list([b]);
-  let x = system.list([c]);
-  let y = system.list([d]);
-  let z = system.list([e]);
-  system.printLine(v);
-  system.printLine(w);
-  system.printLine(x);
-  system.printLine(y);
-  system.printLine(z);
-}
-
-class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, []);};
-  constructor() {
-
-  }
-
-  asString() {
-    return "foo";
-  }
-
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{1}{1.1}{c}{d}{true}");
-  });
-
-  test("Pass_literalListOfString", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-  variable a set to {"Foo", "Bar"}
-  print a
-end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let a = system.list(["Foo", "Bar"]);
-  system.printLine(a);
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{Foo, Bar}");
-  });
-
-  test("Pass_literalListWithCoercion", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-  variable a set to {4.1,5,6,7,8}
-  print a
-end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let a = system.list([4.1, 5, 6, 7, 8]);
-  system.printLine(a);
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{4.1, 5, 6, 7, 8}");
-  });
-
-  test("Pass_length", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-    variable a set to {4,5,6,7,8}
-    print a.length()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = system.list([4, 5, 6, 7, 8]);
-  system.printLine(_stdlib.length(a));
+  const b = system.list([9, 10, 11]);
+  a.appendList(b);
+  await system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -257,22 +64,95 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "5");
+    await assertObjectCodeExecutes(fileImpl, "[4, 5, 6, 7, 8, 9, 10, 11]");
   });
 
-  test("Pass_emptyList", async () => {
+  test("Fail_appendValueAsList", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-    variable a set to new List<of Int>()
-    print a.length()
+  variable a set to [4,5,6,7,8]
+  let b be 9
+  call a.appendList(b)
+  print a
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types. Expected: other (List<of Int>) Provided: Int",
+    ]);
+  });
+
+  test("Pass_prependList", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to [4,5,6,7,8]
+  let b be [9,10,11]
+  call a.prependList(b)
+  print a
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(system.list(new Array()));
-  system.printLine(_stdlib.length(a));
+  let a = system.list([4, 5, 6, 7, 8]);
+  const b = system.list([9, 10, 11]);
+  a.prependList(b);
+  await system.printLine(a);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[9, 10, 11, 4, 5, 6, 7, 8]");
+  });
+
+  test("Pass_literalListOfList", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to [{4},{5}]
+  print a
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.list([system.listImmutable([4]), system.listImmutable([5])]);
+  await system.printLine(a);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[{4}, {5}]");
+  });
+
+  test("Pass_DeclareAnEmptyListBySizeAndCheckLength", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to new List<of String>()
+  print a.length()
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.initialise(await new _stdlib.List()._initialise());
+  await system.printLine(a.length());
 }
 return [main, _tests];}`;
 
@@ -285,19 +165,21 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "0");
   });
 
-  test("Pass_index", async () => {
+  test("Pass_ConfirmStringElementsInitializedToEmptyStringNotNull", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-    variable a set to {4,5,6,7,8}
-    print a[2]
+  variable a set to createList(3, "")
+  print a[0].length()
+  print a
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.list([4, 5, 6, 7, 8]);
-  system.printLine(system.safeIndex(a, 2));
+  let a = _stdlib.createList(3, "");
+  await system.printLine(_stdlib.length(system.safeIndex(a, 0)));
+  await system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -307,28 +189,29 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "6");
+    await assertObjectCodeExecutes(fileImpl, "0[, , ]");
   });
 
-  test("Pass_put", async () => {
+  test("Pass_InitialiseToEnum", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-    variable a set to {"one", "two", "three"}
-    set a to a.withPutAt(1, "TWO")
-    variable b set to a.withPutAt(0, "ONE")
-    print a
-    print b
-end main`;
+  variable a set to createList(3, Fruit.apple)
+  print a
+end main
+
+enum Fruit apple, orange, pear
+`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const Fruit = {
+  _default : "apple", apple : "apple", orange : "orange", pear : "pear"
+};
+
 const global = new class {};
 async function main() {
-  let a = system.list(["one", "two", "three"]);
-  a = _stdlib.withPutAt(a, 1, "TWO");
-  let b = _stdlib.withPutAt(a, 0, "ONE");
-  system.printLine(a);
-  system.printLine(b);
+  let a = _stdlib.createList(3, Fruit.apple);
+  await system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -338,28 +221,24 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{one, TWO, three}{ONE, TWO, three}");
+    await assertObjectCodeExecutes(fileImpl, "[apple, apple, apple]");
   });
 
-  test("Pass_withInsertAt", async () => {
+  test("Pass_SetAndReadIndex", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-    variable a set to {"one", "two", "three"}
-    set a to a.withInsertAt(1, "TWO")
-    variable b set to a.withInsertAt(0, "ONE")
-    print a
-    print b
+  variable a set to [1,2,3]
+  call a.put(0, a[1])
+  print a
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.list(["one", "two", "three"]);
-  a = _stdlib.withInsertAt(a, 1, "TWO");
-  let b = _stdlib.withInsertAt(a, 0, "ONE");
-  system.printLine(a);
-  system.printLine(b);
+  let a = system.list([1, 2, 3]);
+  a.put(0, system.safeIndex(a, 1));
+  await system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -369,100 +248,17 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{one, TWO, two, three}{ONE, one, TWO, two, three}");
-  });
-
-  test("Pass_withRemove", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-    variable a set to {"one", "two", "three"}
-    set a to a.withRemoveAt(1)
-    variable b set to a.withRemoveAt(0)
-    print a
-    print b
-end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let a = system.list(["one", "two", "three"]);
-  a = _stdlib.withRemoveAt(a, 1);
-  let b = _stdlib.withRemoveAt(a, 0);
-  system.printLine(a);
-  system.printLine(b);
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{one, three}{three}");
-  });
-
-  test("Pass_withRemoveFirst", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-    variable a set to {"one", "two", "three", "one", "two", "three"}
-    set a to a.withRemoveFirst("two")
-    print a
-end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let a = system.list(["one", "two", "three", "one", "two", "three"]);
-  a = _stdlib.withRemoveFirst(a, "two");
-  system.printLine(a);
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{one, three, one, two, three}");
-  });
-
-  test("Pass_withRemoveAll", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-    variable a set to {"one", "two", "three", "one", "two", "three"}
-    set a to a.withRemoveAll("two")
-    print a
-end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let a = system.list(["one", "two", "three", "one", "two", "three"]);
-  a = _stdlib.withRemoveAll(a, "two");
-  system.printLine(a);
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{one, three, one, three}");
+    await assertObjectCodeExecutes(fileImpl, "[2, 2, 3]");
   });
 
   test("Pass_Range", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to {4,5,6,7,8}
-  print a[2..5]
+  variable a set to [4,5,6,7,8]
+  variable b set to empty List<of Int>
+  set b to a[2..5]
+  print b
   print a[1..3]
   print a[0..2]
 end main`;
@@ -471,9 +267,11 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.list([4, 5, 6, 7, 8]);
-  system.printLine(system.list(a.slice(2, 5)));
-  system.printLine(system.list(a.slice(1, 3)));
-  system.printLine(system.list(a.slice(0, 2)));
+  let b = system.initialise(_stdlib.List.emptyInstance());
+  b = system.safeSlice(a, 2, 5);
+  await system.printLine(b);
+  await system.printLine(system.safeSlice(a, 1, 3));
+  await system.printLine(system.safeSlice(a, 0, 2));
 }
 return [main, _tests];}`;
 
@@ -483,223 +281,71 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{6, 7, 8}{5, 6}{4, 5}");
+    await assertObjectCodeExecutes(fileImpl, "[6, 7, 8][5, 6][4, 5]");
   });
 
-  test("Pass_addElementToList", async () => {
+  test("Fail_CannotinitialiseToReferenceType1", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to {4,5,6,7,8}
-  variable b set to a + 9
+  variable a set to createList(3, empty Foo)
   print a
-  print b
-end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let a = system.list([4, 5, 6, 7, 8]);
-  let b = system.concat(a, 9);
-  system.printLine(a);
-  system.printLine(b);
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{4, 5, 6, 7, 8}{4, 5, 6, 7, 8, 9}");
-  });
-
-  test("Pass_addListToElement", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-  variable a set to {4,5,6,7,8}
-  variable b set to 9 + a
-  print a
-  print b
-end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let a = system.list([4, 5, 6, 7, 8]);
-  let b = system.concat(9, a);
-  system.printLine(a);
-  system.printLine(b);
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{4, 5, 6, 7, 8}{9, 4, 5, 6, 7, 8}");
-  });
-
-  test("Pass_addListToListUsingPlus", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-    variable a set to {4,5,6,7,8}
-    variable b set to {1,2,3}
-    variable c set to a + b
-    print a
-    print b
-    print c
-end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let a = system.list([4, 5, 6, 7, 8]);
-  let b = system.list([1, 2, 3]);
-  let c = system.concat(a, b);
-  system.printLine(a);
-  system.printLine(b);
-  system.printLine(c);
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{4, 5, 6, 7, 8}{1, 2, 3}{4, 5, 6, 7, 8, 1, 2, 3}");
-  });
-
-  test("Pass_addListToListUsingPlus1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-    variable a set to {"a", "b"}
-    variable b set to "cd"
-    variable c set to a + b[0]
-    print a
-    print b
-    print c
-end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let a = system.list(["a", "b"]);
-  let b = "cd";
-  let c = system.concat(a, system.safeIndex(b, 0));
-  system.printLine(a);
-  system.printLine(b);
-  system.printLine(c);
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{a, b}cd{a, b, c}");
-  });
-
-  test("Pass_constantLists", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-constant a set to {4,5,6,7,8}
-main
-  print a
-end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {
-  a = system.list([4, 5, 6, 7, 8]);
-
-};
-async function main() {
-  system.printLine(global.a);
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{4, 5, 6, 7, 8}");
-  });
-
-  test("Pass_createEmptyListUsingConstructor", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-  variable a set to new List<of Int>()
-  print a
-end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let a = system.initialise(system.list(new Array()));
-  system.printLine(a);
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{}");
-  });
-
-  test("Pass_Default", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-  variable f set to new Foo()
-  print f.it
+  variable foo set to a[0]
+  print foo.p1
 end main
-  
+
 class Foo
   constructor()
+
   end constructor
-  
-  property it as List<of Int>
-  
-  function asString() returns String
-    return "A Foo"
-  end function
-end class`;
+
+  property p1 as Int
+end class
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    await assertObjectCodeDoesNotExecute(fileImpl, "Can only create List with simple value");
+  });
+
+  test("Fail_CannotinitialiseToReferenceType2", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to createList(3, empty List<of Int>)
+  print a
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    await assertObjectCodeDoesNotExecute(fileImpl, "Can only create List with simple value");
+  });
+
+  test("Pass_SetAndReadElements", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to createList(3, "")
+  call a.put(0, "foo")
+  call a.put(2, "yon")
+  print a[0]
+  print a[2]
+end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let f = system.initialise(new Foo());
-  system.printLine(f.it);
-}
-
-class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["it", system.emptyImmutableList()]]);};
-  constructor() {
-
-  }
-
-  it = system.emptyImmutableList();
-
-  asString() {
-    return "A Foo";
-  }
-
+  let a = _stdlib.createList(3, "");
+  a.put(0, "foo");
+  a.put(2, "yon");
+  await system.printLine(system.safeIndex(a, 0));
+  await system.printLine(system.safeIndex(a, 2));
 }
 return [main, _tests];}`;
 
@@ -709,16 +355,250 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{}");
+    await assertObjectCodeExecutes(fileImpl, "fooyon");
   });
 
-  test("Pass_EmptyImmutableList", async () => {
+  test("Pass_Range1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to ["foo", "bar", "yon"]
+  set a to a[1..]
+  print a
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.list(["foo", "bar", "yon"]);
+  a = system.safeSlice(a, 1);
+  await system.printLine(a);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[bar, yon]");
+  });
+
+  test("Pass_AddAndReadElements", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to createList(3, "")
+  call a.append("foo")
+  call a.append("yon")
+  print a[3]
+  print a[4]
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = _stdlib.createList(3, "");
+  a.append("foo");
+  a.append("yon");
+  await system.printLine(system.safeIndex(a, 3));
+  await system.printLine(system.safeIndex(a, 4));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "fooyon");
+  });
+
+  test("Pass_SetFromIndex", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to createList(3, "")
+  call a.append("foo")
+  call a.append("yon")
+  variable c set to ""
+  variable d set to ""
+  set c to a[3]
+  set d to a[4]
+  print c
+  print d
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = _stdlib.createList(3, "");
+  a.append("foo");
+  a.append("yon");
+  let c = "";
+  let d = "";
+  c = system.safeIndex(a, 3);
+  d = system.safeIndex(a, 4);
+  await system.printLine(c);
+  await system.printLine(d);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "fooyon");
+  });
+
+  test("Pass_InsertElements", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to ["one", "two", "three"]
+  call a.insert(1, "foo")
+  call a.insert(3, "yon")
+  print a
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.list(["one", "two", "three"]);
+  a.insert(1, "foo");
+  a.insert(3, "yon");
+  await system.printLine(a);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[one, foo, two, yon, three]");
+  });
+
+  test("Pass_removeAt", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to ["one", "two", "three"]
+  call a.removeAt(0)
+  call a.removeAt(1)
+  print a
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.list(["one", "two", "three"]);
+  a.removeAt(0);
+  a.removeAt(1);
+  await system.printLine(a);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[two]");
+  });
+
+  test("Pass_removeFirst", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to ["one", "two", "three", "one", "two", "three"]
+  call a.removeFirst("two")
+  print a
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.list(["one", "two", "three", "one", "two", "three"]);
+  a.removeFirst("two");
+  await system.printLine(a);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[one, three, one, two, three]");
+  });
+
+  test("Pass_removeAll", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to ["one", "two", "three", "one", "two", "three"]
+  call a.removeAll("two")
+  print a
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.list(["one", "two", "three", "one", "two", "three"]);
+  a.removeAll("two");
+  await system.printLine(a);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[one, three, one, three]");
+  });
+
+  test("Pass_InitializeAnListFromAList", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to {"foo","bar","yon"}.asList()
+  print a.length()
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.listImmutable(["foo", "bar", "yon"]).asList();
+  await system.printLine(a.length());
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "3");
+  });
+
+  test("Pass_EmptyList", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
   variable a set to empty List<of Int>
   variable b set to empty List<of Int>
-  set b to a + 3
+  call a.append(3)
   print a
   print b
   print a is b
@@ -729,14 +609,14 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.emptyImmutableList();
-  let b = system.emptyImmutableList();
-  b = system.concat(a, 3);
-  system.printLine(a);
-  system.printLine(b);
-  system.printLine(system.objectEquals(a, b));
-  system.printLine(system.objectEquals(a, system.emptyImmutableList()));
-  system.printLine(system.objectEquals(b, system.emptyImmutableList()));
+  let a = system.initialise(_stdlib.List.emptyInstance());
+  let b = system.initialise(_stdlib.List.emptyInstance());
+  a.append(3);
+  await system.printLine(a);
+  await system.printLine(b);
+  await system.printLine(system.objectEquals(a, b));
+  await system.printLine(system.objectEquals(a, system.initialise(_stdlib.List.emptyInstance())));
+  await system.printLine(system.objectEquals(b, system.initialise(_stdlib.List.emptyInstance())));
 }
 return [main, _tests];}`;
 
@@ -746,14 +626,79 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{}{3}falsetruefalse");
+    await assertObjectCodeExecutes(fileImpl, "[3][]falsefalsetrue");
   });
 
-  test("Fail_emptyLiteralList", async () => {
+  test("Fail_EmptyList", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to []
+  variable a set to empty List<of Int>
+  call a.put(0, 3)
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    await assertObjectCodeDoesNotExecute(fileImpl, "Out of range index: 0 size: 0");
+  });
+
+  test("Fail_UseRoundBracketsForIndex", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to createList(3, "")
+  variable b set to a(0)
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Cannot invoke identifier 'a' as a method"]);
+  });
+
+  test("Fail_ApplyIndexToANonIndexable", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to 3
+  variable b set to a[0]
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Cannot index Int"]);
+  });
+
+  test("Fail_ApplyIndexToUnknown", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable b set to a[0]
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'a' is not defined"]);
+  });
+
+  test("Fail_2DListCreatedByDoubleIndex", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to new List<of String>[3][4]
+  print a[0, 0]
+  print a[2, 3]
 end main
 `;
 
@@ -761,44 +706,14 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
-  });
-
-  test("Fail_literalListInconsistentTypes1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-  variable a set to {3, "apples"}
-end main
-`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types String to Int"]);
-  });
-
-  test("Fail_literalListInconsistentTypes2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-  variable a set to {3, 3.1}
-end main
-`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Float to Int"]);
   });
 
   test("Fail_OutOfRange", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to {4, 5, 6, 7, 8}
-  variable b set to a[5]
+  variable a set to createList(3, "")
+  variable b set to a[3]
 end main
 `;
 
@@ -807,15 +722,15 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    await assertObjectCodeDoesNotExecute(fileImpl, "Out of range index: 5 size: 5");
+    await assertObjectCodeDoesNotExecute(fileImpl, "Out of range index: 3 size: 3");
   });
 
-  test("Fail_CannotPutAt", async () => {
+  test("Fail_TypeIncompatibility", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to {4, 5, 6, 7, 8}
-  call a.putAt(0, 0)
+  variable a set to createList(3, "")
+  call a.put(0, true)
 end main
 `;
 
@@ -823,16 +738,68 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types List<of Int> to Array<of Int>"]);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types. Expected: index (Int), value (String) Provided: Int, Boolean",
+    ]);
   });
 
-  test("Fail_CannotSetIndex", async () => {
+  test("Fail_DoubleIndex", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to {4, 5, 6, 7, 8}
-  set a[0] to 0
+  variable a set to new List<of Int>()
+  print a[0, 0]
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Cannot double index List<of Int>"]);
+  });
+
+  test("Fail_IndexTypeIncompatibility", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to new List<of String>()
+  call a.put(0, "fred")
+  call a.put(1, "bill")
+  variable b set to 0
+  set b to a[0]
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: String"]);
+  });
+
+  test("Fail_IndexTypeIncompatibility1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to new List<of String>()
+  call a.append(1)
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Argument types. Expected: value (String) Provided: Int"]);
+  });
+
+  test("Fail_NoSet", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to createList(3, "")
+  set a[0] to true
 end main
 `;
 
@@ -842,12 +809,270 @@ end main
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_putAtKey", async () => {
+  test("Fail_IndexWrongType", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to {"one", "two", "three"}
-  set a to a.withPutAtKey(1, "TWO")
+  variable a set to new List<of String>()
+  call a.put("b", "fred")
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types. Expected: index (Int), value (String) Provided: String, String",
+    ]);
+  });
+
+  test("Fail_SizeWrongType", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to createList(3.1, 1)
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types. Expected: size (Int), initialValue (Int) Provided: Float, Int",
+    ]);
+  });
+
+  test("Fail_SizeSpecifiedInSquareBrackets", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to new List<of String>[3]
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  // obsolete code
+  test("Fail_SpecifySizeAndInitializer", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to new List<of String>() {"foo","bar","yon"}
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test("Fail_get", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to ["one", "two", "three"]
+  print a.get(1)
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'get' is not defined for type 'List'"]);
+  });
+
+  test("Fail_getRange", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to ["one", "two", "three"]
+  print a.getRange(1, 2)
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'getRange' is not defined for type 'List'"]);
+  });
+
+  test("Pass_withPut", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+    variable a set to ["one", "two", "three"]
+    set a to a.withPut(1, "TWO")
+    variable b set to a.withPut(0, "ONE")
+    print a
+    print b
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.list(["one", "two", "three"]);
+  a = a.withPut(1, "TWO");
+  let b = a.withPut(0, "ONE");
+  await system.printLine(a);
+  await system.printLine(b);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[one, TWO, three][ONE, TWO, three]");
+  });
+
+  test("Fail_withPutOutOfRange", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+    variable a set to ["one", "two", "three"]
+    set a to a.withPut(3, "THREE")
+    print a
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.list(["one", "two", "three"]);
+  a = a.withPut(3, "THREE");
+  await system.printLine(a);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeDoesNotExecute(fileImpl, "Out of range index: 3 size: 3");
+  });
+
+  test("Pass_withInsertAt", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+    variable a set to ["one", "two", "three"]
+    set a to a.withInsert(1, "TWO")
+    variable b set to a.withInsert(0, "ONE")
+    print a
+    print b
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.list(["one", "two", "three"]);
+  a = a.withInsert(1, "TWO");
+  let b = a.withInsert(0, "ONE");
+  await system.printLine(a);
+  await system.printLine(b);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[one, TWO, two, three][ONE, one, TWO, two, three]");
+  });
+
+  test("Pass_Conversions", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  let a be ["one", "two", "three"]
+  let b be a.asListImmutable()
+  let c be a.asArray()
+  let d be a.asSet()
+  variable aa set to empty List<of String>
+  variable bb set to empty ListImmutable<of String>
+  variable cc set to empty Array<of String>
+  variable dd set to empty Set<of String>
+  set aa to a
+  set bb to b
+  set cc to c
+  set dd to d
+  print aa
+  print bb
+  print cc
+  print dd
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  const a = system.list(["one", "two", "three"]);
+  const b = a.asListImmutable();
+  const c = a.asArray();
+  const d = a.asSet();
+  let aa = system.initialise(_stdlib.List.emptyInstance());
+  let bb = system.initialise(_stdlib.ListImmutable.emptyInstance());
+  let cc = system.initialise(_stdlib.Array.emptyInstance());
+  let dd = system.initialise(_stdlib.Set.emptyInstance());
+  aa = a;
+  bb = b;
+  cc = c;
+  dd = d;
+  await system.printLine(aa);
+  await system.printLine(bb);
+  await system.printLine(cc);
+  await system.printLine(dd);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "[one, two, three]{one, two, three}[one, two, three]{one, two, three}",
+    );
+  });
+
+  test("Fail_withRemove", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to ["one", "two", "three"]
+  set a to a.withRemove(1)
+  print a
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'withRemove' is not defined for type 'List'"]);
+  });
+
+  test("Fail_appendWithPlus", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to ["one", "two", "three"]
+  set a to a + "four"
   print a
 end main
 `;
@@ -857,16 +1082,16 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types DictionaryImmutable<of String, String> to List<of String>",
+      "Incompatible types. Expected: Float or Int Provided: List<of String>",
     ]);
   });
 
-  test("Fail_add", async () => {
+  test("Fail_prependWithPlus", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to {"one", "two", "three"}
-  call a.append("four")
+  variable a set to ["one", "two", "three"]
+  set a to "four" + a
   print a
 end main
 `;
@@ -875,73 +1100,281 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types List<of String> to Array<of String>"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: List<of String> Provided: String",
+    ]);
   });
 
-  test("Fail_insertAt", async () => {
+  test("Pass_withRemoveFirst", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to {"one", "two", "three"}
-  call a.insertAt(1, "four")
-  print a
-end main
-`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types List<of String> to Array<of String>"]);
-  });
-
-  test("Fail_removeAt", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-  variable a set to {"one", "two", "three"}
-  call a.removeAt(1)
-  print a
-end main
-`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types List<of String> to Array<of String>"]);
-  });
-
-  test("Fail_removeFirst", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-  variable a set to {"one", "two", "three", "one", "two", "three"}
-  call a.removeFirst("two")
-  print a
+    variable a set to ["one", "two", "three", "one", "two", "three"]
+    set a to a.withRemoveFirst("two")
+    print a
 end main`;
 
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.list(["one", "two", "three", "one", "two", "three"]);
+  a = a.withRemoveFirst("two");
+  await system.printLine(a);
+}
+return [main, _tests];}`;
+
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types List<of String> to Array<of String>"]);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[one, three, one, two, three]");
   });
 
-  test("Fail_removeAll", async () => {
+  test("Pass_withRemoveAll", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to {"one", "two", "three", "one", "two", "three"}
-  call a.removeAll("two")
-  print a
+    variable a set to ["one", "two", "three", "one", "two", "three"]
+    set a to a.withRemoveAll("two")
+    print a
 end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.list(["one", "two", "three", "one", "two", "three"]);
+  a = a.withRemoveAll("two");
+  await system.printLine(a);
+}
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types List<of String> to Array<of String>"]);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[one, three, one, three]");
+  });
+
+  test("Pass_withRemoveAt", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+    variable a set to ["one", "two", "three"]
+    set a to a.withRemoveAt(1)
+    variable b set to a.withRemoveAt(0)
+    print a
+    print b
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.list(["one", "two", "three"]);
+  a = a.withRemoveAt(1);
+  let b = a.withRemoveAt(0);
+  await system.printLine(a);
+  await system.printLine(b);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[one, three][three]");
+  });
+
+  test("Pass_head", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+    variable a set to ["one", "two", "three"]
+    variable b set to ""
+    set b to a.head()
+    print b
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.list(["one", "two", "three"]);
+  let b = "";
+  b = a.head();
+  await system.printLine(b);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "one");
+  });
+
+  test("Pass_listOfFunction", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable foo1 set to ref foo
+  variable body set to [ref foo, ref foo1]
+  variable foo2 set to body[0]
+  print foo2(1)
+end main
+
+function foo(i as Int) returns Int
+  return i
+end function`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let foo1 = global.foo;
+  let body = system.list([global.foo, foo1]);
+  let foo2 = system.safeIndex(body, 0);
+  await system.printLine((await foo2(1)));
+}
+
+async function foo(i) {
+  return i;
+}
+global["foo"] = foo;
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1");
+  });
+
+  test("Pass_addElementToList", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to [4,5,6,7,8]
+  variable b set to a.withAppend(9)
+  print a
+  print b
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.list([4, 5, 6, 7, 8]);
+  let b = a.withAppend(9);
+  await system.printLine(a);
+  await system.printLine(b);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[4, 5, 6, 7, 8][4, 5, 6, 7, 8, 9]");
+  });
+
+  test("Pass_addListToList", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to [4,5,6,7,8]
+  variable b set to [1,2,3,4,5]
+  variable c set to a.withAppendList(b)
+  print a
+  print c
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.list([4, 5, 6, 7, 8]);
+  let b = system.list([1, 2, 3, 4, 5]);
+  let c = a.withAppendList(b);
+  await system.printLine(a);
+  await system.printLine(c);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[4, 5, 6, 7, 8][4, 5, 6, 7, 8, 1, 2, 3, 4, 5]");
+  });
+
+  test("Pass_prependElementToList", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to [4,5,6,7,8]
+  variable b set to a.withPrepend(9)
+  print a
+  print b
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.list([4, 5, 6, 7, 8]);
+  let b = a.withPrepend(9);
+  await system.printLine(a);
+  await system.printLine(b);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[4, 5, 6, 7, 8][9, 4, 5, 6, 7, 8]");
+  });
+
+  test("Pass_prependListToList", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to [4,5,6,7,8]
+  variable b set to [1,2,3,4,5]
+  variable c set to a.withPrependList(b)
+  print a
+  print c
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.list([4, 5, 6, 7, 8]);
+  let b = system.list([1, 2, 3, 4, 5]);
+  let c = a.withPrependList(b);
+  await system.printLine(a);
+  await system.printLine(c);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[4, 5, 6, 7, 8][1, 2, 3, 4, 5, 4, 5, 6, 7, 8]");
   });
 
   test("Fail_withoutGenericType", async () => {
@@ -956,16 +1389,128 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["<of Type(s)> expected: 1 got: 0"]);
+    assertDoesNotCompile(fileImpl, ["<of Type(s)> Expected: 1 Provided: 0"]);
   });
 
-  test("Fail_typeErrorMessage", async () => {
+  test("Fail_assignRange", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-    variable a set to empty Array<of Int>
-    variable b set to empty List<of Int>
-    set b to a
+    variable a set to [1,2,3,4]
+    set a[1..2] to a
+    print a
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test("Fail_negativeIndexCompile", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+    variable a set to [1,2,3,4]
+    variable b set to a[-1]
+    print b
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Index cannot be negative"]);
+  });
+
+  test("Fail_negativeIndexRuntime", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+    variable a set to [1,2,3,4]
+    variable b set to -1
+    variable c set to a[b]
+    print c
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    await assertObjectCodeDoesNotExecute(fileImpl, "Out of range index: -1 size: 4");
+  });
+
+  test("Fail_negativeRange1Compile", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+    variable a set to [1,2,3,4]
+    variable b set to a[-1..2]
+    print b
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Index cannot be negative"]);
+  });
+
+  test("Fail_negativeRange1Runtime", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+    variable a set to [1,2,3,4]
+    variable b set to -1
+    variable c set to a[b..2]
+    print c
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    await assertObjectCodeDoesNotExecute(fileImpl, "Out of range index: -1 size: 4");
+  });
+
+  test("Fail_negativeRange2Compile", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+    variable a set to [1,2,3,4]
+    variable b set to a[0..-1]
+    print b
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Index cannot be negative"]);
+  });
+
+  test("Fail_negativeRange2Runtime", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+    variable a set to [1,2,3,4]
+    variable b set to -1
+    variable c set to a[0..b]
+    print c
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    await assertObjectCodeDoesNotExecute(fileImpl, "Out of range index: -1 size: 4");
+  });
+
+  test("Fail_listOfLibFunction", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+    variable body set to [ref getKey]
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -973,23 +1518,110 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types Array<of Int> to List<of Int> try converting with '.asList()'",
+      "Library or class function 'getKey' cannot be preceded by by 'ref'",
     ]);
   });
-  test("Pass_listOfListOfFloats", async () => {
+
+  test("Fail_listOfClassFunction", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to {{0.0, 0.0, 0.0, 0.16, 0.0, 0.0, 0.01}, {0.85, 0.04, -0.04, 0.85, 0.0, 1.60, 0.85}, {0.20, -0.26, 0.23, 0.22, 0.0, 1.60, 0.07}, {-0.15, 0.28, 0.26, 0.24, 0.0, 0.44, 0.07}}
-  print a
+  let f be new Foo()
+  variable body set to [ref f.bar]
 end main
-`;
+
+class Foo
+  function bar() returns Int
+    return 0
+  end function
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["To evaluate function 'bar' add brackets."]);
+  });
+
+  test("Fail_LiteralListOfEmptyUnknownClass", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable f set to [empty Foo]
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'Foo' is not defined"]);
+  });
+
+  test("Fail_EmptyGenericType", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable f set to empty List
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["<of Type(s)> Expected: 1 Provided: 0"]);
+  });
+
+  test("Fail_appendTuple1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable points set to empty List<of Tuple<of Int, Int>>
+  set points to points + tuple(1, 2)
+  print points
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Float or Int Provided: List<of tuple(Int, Int)>",
+    ]);
+  });
+
+  test("Fail_appendTuple2", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable points set to empty List<of Tuple<of Int, Int>>
+  set points to points.appendList(tuple(1, 2))
+  print points
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: List<of tuple(Int, Int)> Provided: Procedure (List<of tuple(Int, Int)>)",
+    ]);
+  });
+
+  test("Fail_withPutOutOfRange", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+    variable a set to ["one", "two", "three"]
+    variable b set to a.withPut(3, "THREE")
+    print b
+end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.list([system.list([0, 0, 0, 0.16, 0, 0, 0.01]), system.list([0.85, 0.04, -0.04, 0.85, 0, 1.6, 0.85]), system.list([0.2, -0.26, 0.23, 0.22, 0, 1.6, 0.07]), system.list([-0.15, 0.28, 0.26, 0.24, 0, 0.44, 0.07])]);
-  system.printLine(a);
+  let a = system.list(["one", "two", "three"]);
+  let b = a.withPut(3, "THREE");
+  await system.printLine(b);
 }
 return [main, _tests];}`;
 
@@ -999,9 +1631,23 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      "{{0, 0, 0, 0.16, 0, 0, 0.01}, {0.85, 0.04, -0.04, 0.85, 0, 1.6, 0.85}, {0.2, -0.26, 0.23, 0.22, 0, 1.6, 0.07}, {-0.15, 0.28, 0.26, 0.24, 0, 0.44, 0.07}}",
-    );
+    await assertObjectCodeDoesNotExecute(fileImpl, "Out of range index: 3 size: 3");
+  });
+
+  test("Fail_OutOfRange", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to [4, 5, 6, 7, 8]
+  variable b set to a[5]
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    await assertObjectCodeDoesNotExecute(fileImpl, "Out of range index: 5 size: 5");
   });
 });

@@ -1,20 +1,17 @@
 import { CompileError } from "../compile-error";
 import {
-  mustBeBooleanType,
+  mustBeBooleanTypes,
   mustBeCoercibleType,
-  mustBeCompatibleType,
   mustBeIntegerType,
-  mustBeNumberType,
+  mustBeNumberTypes,
 } from "../compile-rules";
 import { AstNode } from "../interfaces/ast-node";
 import { SymbolType } from "../interfaces/symbol-type";
 import { BooleanType } from "../symbols/boolean-type";
-import { EnumType } from "../symbols/enum-type";
 import { FloatType } from "../symbols/float-type";
 import { IntType } from "../symbols/int-type";
-import { ListType } from "../symbols/list-type";
 import { StringType } from "../symbols/string-type";
-import { isValueType } from "../symbols/symbol-helpers";
+import { isValueType, mostPreciseSymbol } from "../symbols/symbol-helpers";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { mapOperationSymbol } from "./ast-helpers";
 import { OperationSymbol } from "./operation-symbol";
@@ -33,14 +30,6 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
     return this.compileErrors
       .concat(this.lhs.aggregateCompileErrors())
       .concat(this.rhs.aggregateCompileErrors());
-  }
-
-  private MostPreciseSymbol(lhs: SymbolType, rhs: SymbolType): SymbolType {
-    if (lhs instanceof FloatType || rhs instanceof FloatType) {
-      return FloatType.Instance;
-    }
-
-    return lhs;
   }
 
   private isEqualityOp() {
@@ -128,13 +117,8 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
     }
   }
 
-  isAppendPrependable(st: SymbolType) {
-    return (
-      st instanceof StringType ||
-      st instanceof IntType ||
-      st instanceof FloatType ||
-      st instanceof EnumType
-    );
+  isString(st: SymbolType) {
+    return st instanceof StringType;
   }
 
   compile(): string {
@@ -146,22 +130,7 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
     const lst = this.lhs.symbolType();
     const rst = this.rhs.symbolType();
 
-    if (this.op === OperationSymbol.Add && (lst instanceof ListType || rst instanceof ListType)) {
-      if (lst instanceof ListType && rst instanceof ListType) {
-        mustBeCompatibleType(lst, rst, this.compileErrors, this.fieldId);
-      } else if (lst instanceof ListType) {
-        mustBeCompatibleType(lst.ofType, rst, this.compileErrors, this.fieldId);
-      } else if (rst instanceof ListType) {
-        mustBeCompatibleType(lst, rst.ofType, this.compileErrors, this.fieldId);
-      }
-      return `system.concat(${lhsCode}, ${rhsCode})`;
-    }
-
-    if (
-      this.op === OperationSymbol.Add &&
-      this.isAppendPrependable(lst) &&
-      this.isAppendPrependable(rst)
-    ) {
+    if (this.op === OperationSymbol.Add && this.isString(lst) && this.isString(rst)) {
       return `${lhsCode} + ${rhsCode}`;
     }
 
@@ -170,7 +139,7 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
     }
 
     if (this.isCompareOp() || this.isArithmeticOp()) {
-      mustBeNumberType(lst, rst, this.compileErrors, this.fieldId);
+      mustBeNumberTypes(lst, rst, this.compileErrors, this.fieldId);
     }
 
     if (this.isIntegerOnlyOp()) {
@@ -178,7 +147,7 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
     }
 
     if (this.isLogicalOp()) {
-      mustBeBooleanType(lst, rst, this.compileErrors, this.fieldId);
+      mustBeBooleanTypes(lst, rst, this.compileErrors, this.fieldId);
     }
 
     if (this.op === OperationSymbol.Equals && (isValueType(lst) || isValueType(rst))) {
@@ -189,10 +158,10 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
       return `system.objectEquals(${lhsCode}, ${rhsCode})`;
     }
 
-    const code = `${lhsCode} ${this.opToJs()} ${rhsCode}`;
+    let code = `${lhsCode} ${this.opToJs()} ${rhsCode}`;
 
     if (this.op === OperationSymbol.Div) {
-      return `Math.floor(${code})`;
+      code = `Math.floor(${code})`;
     }
 
     return code;
@@ -201,11 +170,13 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
   symbolType() {
     switch (this.op) {
       case OperationSymbol.Add:
-        return this.MostPreciseSymbol(this.lhs.symbolType(), this.rhs.symbolType());
+        return mostPreciseSymbol(this.lhs.symbolType(), this.rhs.symbolType());
       case OperationSymbol.Minus:
-        return this.MostPreciseSymbol(this.lhs.symbolType(), this.rhs.symbolType());
+        return mostPreciseSymbol(this.lhs.symbolType(), this.rhs.symbolType());
       case OperationSymbol.Multiply:
-        return this.MostPreciseSymbol(this.lhs.symbolType(), this.rhs.symbolType());
+        return mostPreciseSymbol(this.lhs.symbolType(), this.rhs.symbolType());
+      case OperationSymbol.Pow:
+        return mostPreciseSymbol(this.lhs.symbolType(), this.rhs.symbolType());
       case OperationSymbol.Div:
         return IntType.Instance;
       case OperationSymbol.Mod:

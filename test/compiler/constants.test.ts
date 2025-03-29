@@ -27,16 +27,13 @@ const global = new class {
 
 };
 async function main() {
-  system.printLine(global.a);
+  await system.printLine(global.a);
 }
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    //const symbols not yet implemented
-    //const varConst = fileImpl.getChildFloat(0);
-    //assertIsSymbol(varConst, "a", "Int");
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
@@ -59,7 +56,7 @@ const global = new class {
 
 };
 async function main() {
-  system.printLine(global.a);
+  await system.printLine(global.a);
 }
 return [main, _tests];}`;
 
@@ -87,7 +84,7 @@ const global = new class {
 
 };
 async function main() {
-  system.printLine(global.a);
+  await system.printLine(global.a);
 }
 return [main, _tests];}`;
 
@@ -115,7 +112,7 @@ const global = new class {
 
 };
 async function main() {
-  system.printLine(global.a);
+  await system.printLine(global.a);
 }
 return [main, _tests];}`;
 
@@ -143,7 +140,7 @@ const global = new class {
 
 };
 async function main() {
-  system.printLine(global.a);
+  await system.printLine(global.a);
 }
 return [main, _tests];}`;
 
@@ -172,8 +169,8 @@ const global = new class {
 
 };
 async function main() {
-  system.printLine(global.a);
-  system.printLine(global.a === "");
+  await system.printLine(global.a);
+  await system.printLine(global.a === "");
 }
 return [main, _tests];}`;
 
@@ -201,7 +198,7 @@ const global = new class {
 
 };
 async function main() {
-  system.printLine(global.a);
+  await system.printLine(global.a);
 }
 return [main, _tests];}`;
 
@@ -229,7 +226,7 @@ const global = new class {
 
 };
 async function main() {
-  system.printLine(global.a);
+  await system.printLine(global.a);
 }
 return [main, _tests];}`;
 
@@ -262,7 +259,7 @@ const global = new class {
 
 };
 async function main() {
-  system.printLine(global.a);
+  await system.printLine(global.a);
 }
 return [main, _tests];}`;
 
@@ -286,11 +283,11 @@ end main
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
-  a = system.list([1, 2, 3]);
+  a = system.listImmutable([1, 2, 3]);
 
 };
 async function main() {
-  system.printLine(global.a);
+  await system.printLine(global.a);
 }
 return [main, _tests];}`;
 
@@ -303,7 +300,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "{1, 2, 3}");
   });
 
-  test("Fail_Array", async () => {
+  test("Fail_List", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 constant a set to [1,2,3]
@@ -329,11 +326,11 @@ end main
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
-  a = system.list([system.list([4, 5]), system.list([6, 7, 8])]);
+  a = system.listImmutable([system.listImmutable([4, 5]), system.listImmutable([6, 7, 8])]);
 
 };
 async function main() {
-  system.printLine(global.a);
+  await system.printLine(global.a);
 }
 return [main, _tests];}`;
 
@@ -356,11 +353,11 @@ end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
-  a = system.list([system.list([0, 0, 0, 0.16, 0, 0, 0.01]), system.list([0.85, 0.04, -0.04, 0.85, 0, 1.6, 0.85]), system.list([0.2, -0.26, 0.23, 0.22, 0, 1.6, 0.07]), system.list([-0.15, 0.28, 0.26, 0.24, 0, 0.44, 0.07])]);
+  a = system.listImmutable([system.listImmutable([0, 0, 0, 0.16, 0, 0, 0.01]), system.listImmutable([0.85, 0.04, -0.04, 0.85, 0, 1.6, 0.85]), system.listImmutable([0.2, -0.26, 0.23, 0.22, 0, 1.6, 0.07]), system.listImmutable([-0.15, 0.28, 0.26, 0.24, 0, 0.44, 0.07])]);
 
 };
 async function main() {
-  system.printLine(global.a);
+  await system.printLine(global.a);
 }
 return [main, _tests];}`;
 
@@ -491,7 +488,7 @@ const global = new class {
 
 };
 async function main() {
-  system.printLine(global.b);
+  await system.printLine(global.b);
 }
 return [main, _tests];}`;
 
@@ -570,20 +567,17 @@ end main
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
-  a = system.dictionaryImmutable({[_stdlib.openBrace] : _stdlib.blue, [_stdlib.closeBrace] : _stdlib.red});
+  a = system.dictionaryImmutable([[_stdlib.openBrace, _stdlib.blue], [_stdlib.closeBrace, _stdlib.red]]);
 
 };
 async function main() {
-  system.printLine(global.a);
+  await system.printLine(global.a);
 }
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    //const symbols not yet implemented
-    //const varConst = fileImpl.getChildFloat(0);
-    //assertIsSymbol(varConst, "a", "Int");
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);

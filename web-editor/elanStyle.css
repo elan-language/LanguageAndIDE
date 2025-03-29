@@ -1,8 +1,8 @@
-* {
+.elan-code * {
     font-family: consolas, monospace;
     font-size: 11pt;
 }
-.elan-code, #console {
+.elan-code {
     color: var(--defaultText);
     background-color: var(--defaultBackground);
     border-color: var(--defaultBackground);
@@ -54,7 +54,7 @@ el-type {
 }
 el-lit {
     color: var(--string);
-    white-space: pre;
+    white-space: pre-wrap;
 }
 el-id {
     color: var(--namedValue);
@@ -112,10 +112,11 @@ el-global:has(el-comment) {
 }
 
 /* Frame selection */
-.selected > * {
+.selected > * , .selected > .outdent *{
     border-left-color: var(--selection);
 }
 
+.selected > el-bp,
 .selected > el-top, 
 .selected > el-top *, 
 .selected > el-kw, 
@@ -124,7 +125,8 @@ el-global:has(el-comment) {
 .selected > el-txt, 
 .selected > el-place, 
 .selected > el-compl,
-.selected > .outdent el-top, .selected > .outdent el-top * {
+.selected > .outdent el-top, .selected > .outdent el-top *
+{
     background-color: var(--selection);
     border-right-color: var(--selection);
 }
@@ -249,7 +251,7 @@ el-field.selected.empty.optional el-compl, el-field.selected.empty.optional el-c
     display: none;
 }
 
-el-field .autocomplete-popup, el-field .autocomplete-popup * {
+el-field .autocomplete-popup, .context-menu, el-field .autocomplete-popup * {
     text-indent: 0;
     background-color: lightgray;
 }
@@ -357,3 +359,36 @@ el-statement.selected > el-fr
     border-left: 0;
 }
 
+
+el-bp {
+    display: none;
+}
+.breakpoint > el-top el-bp, .breakpoint > el-bp {
+    display: inline;
+    color: red;
+}
+
+.paused-at > * {
+    border-left-color: var(--warning);
+}
+
+.paused-at > el-bp,
+.paused-at > el-top, 
+.paused-at > el-top *, 
+.paused-at > el-kw, 
+.paused-at > el-field, 
+.paused-at > el-field *, 
+.paused-at > el-txt, 
+.paused-at > el-place, 
+.paused-at > el-compl,
+.paused-at > .outdent el-top, 
+.paused-at > .outdent el-top * {
+    background-color: var(--warning);
+    border-right-color: var(--warning);
+}
+el-statement.paused-at > el-fr  
+ {
+    background-color: var(--warning);
+    color: white;
+    text-indent: 0;
+}

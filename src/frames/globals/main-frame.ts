@@ -4,14 +4,15 @@ import { FrameWithStatements } from "../frame-with-statements";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { GlobalFrame } from "../interfaces/global-frame";
+import { Transforms } from "../interfaces/transforms";
 import { mainKeyword } from "../keywords";
 import { DuplicateSymbol } from "../symbols/duplicate-symbol";
-import { Transforms } from "../syntax-nodes/transforms";
 
 export class MainFrame extends FrameWithStatements implements GlobalFrame {
   isMain = true;
   isGlobal = true;
   file: File;
+  hrefForFrameHelp: string = "LangRef.html#main";
 
   constructor(parent: File) {
     super(parent);
@@ -35,10 +36,10 @@ export class MainFrame extends FrameWithStatements implements GlobalFrame {
   }
 
   public renderAsHtml(): string {
-    return `<main class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>main</el-kw>${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
+    return `<main class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.toolTip()}>
+<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>main</el-kw>${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
-<el-kw>end main</el-kw>${this.contextMenu()}
+<el-kw>end main</el-kw>
 </main>`;
   }
 
@@ -63,7 +64,7 @@ end main\r
     }
 
     return `async function main() {\r
-${this.compileStatements(transforms)}\r
+${this.breakPoint(this.debugSymbols())}${this.compileChildren(transforms)}\r
 }\r
 `;
   }

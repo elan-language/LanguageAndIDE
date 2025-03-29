@@ -59,13 +59,21 @@ export class MemberTypeCompileError extends CompileError {
 
 export class TypesCompileError extends CompileError {
   constructor(type1: string, type2: string, addInfo: string, location: string) {
-    super(Priority.typeError, `Incompatible types ${type1} to ${type2}${addInfo}`, location);
+    super(
+      Priority.typeError,
+      `Incompatible types. Expected: ${type2}${addInfo} Provided: ${type1}`,
+      location,
+    );
   }
 }
 
-export class ArraySizeCompileError extends CompileError {
-  constructor(location: string) {
-    super(Priority.illegalOperation, `Array requires 1 or 2 parameters`, location);
+export class TernaryCompileError extends CompileError {
+  constructor(type1: string, type2: string, location: string) {
+    super(
+      Priority.typeError,
+      `Cannot determine common type between ${type1} and ${type2}`,
+      location,
+    );
   }
 }
 
@@ -111,8 +119,9 @@ export class CannotCallAsAMethod extends CompileError {
 }
 
 export class NotIndexableCompileError extends CompileError {
-  constructor(type: string, location: string) {
-    super(Priority.illegalOperation, `Cannot index ${type}`, location);
+  constructor(type: string, location: string, double: boolean) {
+    const dbl = double ? "double " : "";
+    super(Priority.illegalOperation, `Cannot ${dbl}index ${type}`, location);
   }
 }
 
@@ -230,7 +239,7 @@ export class ExtraParameterCompileError extends CompileError {
 export class ParameterTypesCompileError extends CompileError {
   constructor(description: string, provided: string, location: string) {
     const priority = Priority.typeError;
-    super(priority, `Argument types expected: ${description} Provided: ${provided}`, location);
+    super(priority, `Argument types. Expected: ${description} Provided: ${provided}`, location);
   }
 }
 
@@ -239,17 +248,7 @@ export class ParametersCompileError extends CompileError {
     const priority = actual < expected ? Priority.unknownIdentifier : Priority.illegalOperation;
     super(
       priority,
-      `${generic ? "<of Type(s)>" : "Parameters"} expected: ${expected} got: ${actual}`,
-      location,
-    );
-  }
-}
-
-export class SignatureCompileError extends CompileError {
-  constructor(expected: number, actual: number, location: string) {
-    super(
-      Priority.illegalOperation,
-      `Function Signatures do not match expected: ${expected} parameter(s) got: ${actual}`,
+      `${generic ? "<of Type(s)>" : "Parameters"} Expected: ${expected} Provided: ${actual}`,
       location,
     );
   }
@@ -283,33 +282,28 @@ export class RedefinedCompileError extends CompileError {
   }
 }
 
-export class IndexCompileError extends CompileError {
-  constructor(thing: string, location: string) {
-    super(
-      Priority.illegalOperation,
-      `May not set an indexed value in a function: ${thing}`,
-      location,
-    );
-  }
-}
-
 export class DuplicateKeyCompileError extends CompileError {
   constructor(location: string) {
     super(Priority.typeError, `Duplicate Dictionary key(s)`, location);
   }
 }
 
-export class DuplicateIdsCompileError extends CompileError {
-  constructor(ids: string[], location: string) {
-    super(Priority.typeError, `Duplicate inherited ids: ${ids.join(", ")}`, location);
+export class FunctionRefCompileError extends CompileError {
+  constructor(id: string, isGlobal: boolean, location: string) {
+    const postfix = isGlobal ? ` Or to create a reference to '${id}', precede it by 'ref'` : "";
+    super(
+      Priority.illegalOperation,
+      `To evaluate function '${id}' add brackets.${postfix}`,
+      location,
+    );
   }
 }
 
-export class FunctionRefCompileError extends CompileError {
+export class NotGlobalFunctionRefCompileError extends CompileError {
   constructor(id: string, location: string) {
     super(
       Priority.illegalOperation,
-      `To evaluate function '${id}' add brackets. Or to create a reference to '${id}', precede it by 'ref'`,
+      `Library or class function '${id}' cannot be preceded by by 'ref'`,
       location,
     );
   }

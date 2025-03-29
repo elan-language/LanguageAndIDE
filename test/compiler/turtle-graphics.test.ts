@@ -27,14 +27,14 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const t = system.initialise(new _stdlib.Turtle());
-  t.turn(30);
-  t.move(40);
-  system.printLine(_stdlib.round(t.x, 2));
-  system.printLine(" ");
-  system.printLine(_stdlib.round(t.y, 2));
-  system.printLine(" ");
-  system.printLine(t.heading);
+  const t = system.initialise(await new _stdlib.Turtle()._initialise());
+  await t.turn(30);
+  await t.move(40);
+  await system.printLine(_stdlib.round(t.x, 2));
+  await system.printLine(" ");
+  await system.printLine(_stdlib.round(t.y, 2));
+  await system.printLine(" ");
+  await system.printLine(t.heading);
 }
 return [main, _tests];}`;
 
@@ -61,10 +61,10 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const t = system.initialise(new _stdlib.Turtle());
-  t.turn(90);
-  t.turn(1000);
-  system.printLine(t.heading);
+  const t = system.initialise(await new _stdlib.Turtle()._initialise());
+  await t.turn(90);
+  await t.turn(1000);
+  await system.printLine(t.heading);
 }
 return [main, _tests];}`;
 
@@ -89,10 +89,10 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const t = system.initialise(new _stdlib.Turtle());
-  t.turn(90);
-  t.turn(-1000);
-  system.printLine(t.heading);
+  const t = system.initialise(await new _stdlib.Turtle()._initialise());
+  await t.turn(90);
+  await t.turn((-1000));
+  await system.printLine(t.heading);
 }
 return [main, _tests];}`;
 
@@ -117,10 +117,10 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const t = system.initialise(new _stdlib.Turtle());
-  system.printLine(t.x);
-  system.printLine(t.y);
-  system.printLine(t.heading);
+  const t = system.initialise(await new _stdlib.Turtle()._initialise());
+  await system.printLine(t.x);
+  await system.printLine(t.y);
+  await system.printLine(t.heading);
 }
 return [main, _tests];}`;
 
@@ -147,12 +147,12 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const t = system.initialise(new _stdlib.Turtle());
-  t.turn(90);
+  const t = system.initialise(await new _stdlib.Turtle()._initialise());
+  await t.turn(90);
   t.penWidth(3);
   t.penColour(_stdlib.red);
-  t.move(10);
-  system.printLine(t.asHtml());
+  await t.move(10);
+  await system.printLine(t.asHtml());
 }
 return [main, _tests];}`;
 
@@ -165,7 +165,9 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(
       fileImpl,
       `<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-  <line x1="50%" y1="50%" x2="60%" y2="50%" stroke="#ff0000" stroke-width="0.8999999999999999%" />
+<line x1="50%" y1="50%" x2="60%" y2="50%" stroke="#ff0000" stroke-width="0.8999999999999999%"/>
+<circle cx="60%" cy="50%" r="2.25%" stroke="#000000" stroke-width="0%" fill="#008000"/>
+<line x1="60%" y1="50%" x2="62%" y2="50%" stroke="#000000" stroke-width="0.6%"/>
 </svg>
 `,
     );
@@ -187,14 +189,14 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const t = system.initialise(new _stdlib.Turtle());
-  t.turn(90);
-  t.move(10);
+  const t = system.initialise(await new _stdlib.Turtle()._initialise());
+  await t.turn(90);
+  await t.move(10);
   t.penUp();
-  t.move(5);
+  await t.move(5);
   t.penDown();
-  t.move(10);
-  system.printLine(t.asHtml());
+  await t.move(10);
+  await system.printLine(t.asHtml());
 }
 return [main, _tests];}`;
 
@@ -207,8 +209,10 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(
       fileImpl,
       `<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-  <line x1="50%" y1="50%" x2="60%" y2="50%" stroke="#000000" stroke-width="0.3%" />
-  <line x1="65%" y1="50%" x2="75%" y2="50%" stroke="#000000" stroke-width="0.3%" />
+<line x1="50%" y1="50%" x2="60%" y2="50%" stroke="#000000" stroke-width="0.3%"/>
+<line x1="65%" y1="50%" x2="75%" y2="50%" stroke="#000000" stroke-width="0.3%"/>
+<circle cx="75%" cy="50%" r="2.25%" stroke="#000000" stroke-width="0%" fill="#008000"/>
+<line x1="75%" y1="50%" x2="77%" y2="50%" stroke="#000000" stroke-width="0.6%"/>
 </svg>
 `,
     );
@@ -227,11 +231,11 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const t = system.initialise(new _stdlib.Turtle());
-  t.show();
-  t.turn(90);
-  t.move(10);
-  system.printLine(t.asHtml());
+  const t = system.initialise(await new _stdlib.Turtle()._initialise());
+  await t.show();
+  await t.turn(90);
+  await t.move(10);
+  await system.printLine(t.asHtml());
 }
 return [main, _tests];}`;
 
@@ -244,9 +248,9 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(
       fileImpl,
       `<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-  <line x1="50%" y1="50%" x2="60%" y2="50%" stroke="#000000" stroke-width="0.3%" />
-  <circle cx="60%" cy="50%" r="2.25%" stroke="#000000" stroke-width="0%" fill="#008000" />
-  <line x1="60%" y1="50%" x2="62%" y2="50%" stroke="#000000" stroke-width="0.6%" />
+<line x1="50%" y1="50%" x2="60%" y2="50%" stroke="#000000" stroke-width="0.3%"/>
+<circle cx="60%" cy="50%" r="2.25%" stroke="#000000" stroke-width="0%" fill="#008000"/>
+<line x1="60%" y1="50%" x2="62%" y2="50%" stroke="#000000" stroke-width="0.6%"/>
 </svg>
 `,
     );
@@ -266,12 +270,12 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const t = system.initialise(new _stdlib.Turtle());
-  t.show();
-  t.turn(90);
-  t.move(10);
-  t.hide();
-  system.printLine(t.asHtml());
+  const t = system.initialise(await new _stdlib.Turtle()._initialise());
+  await t.show();
+  await t.turn(90);
+  await t.move(10);
+  await t.hide();
+  await system.printLine(t.asHtml());
 }
 return [main, _tests];}`;
 
@@ -284,7 +288,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(
       fileImpl,
       `<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-  <line x1="50%" y1="50%" x2="60%" y2="50%" stroke="#000000" stroke-width="0.3%" />
+<line x1="50%" y1="50%" x2="60%" y2="50%" stroke="#000000" stroke-width="0.3%"/>
 </svg>
 `,
     );
@@ -302,10 +306,10 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const t = system.initialise(new _stdlib.Turtle());
-  t.show();
-  t.placeAt(20, 30);
-  system.printLine(t.asHtml());
+  const t = system.initialise(await new _stdlib.Turtle()._initialise());
+  await t.show();
+  await t.placeAt(20, 30);
+  await system.printLine(t.asHtml());
 }
 return [main, _tests];}`;
 
@@ -318,8 +322,8 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(
       fileImpl,
       `<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-  <circle cx="20%" cy="40%" r="2.25%" stroke="#000000" stroke-width="0%" fill="#008000" />
-  <line x1="20%" y1="40%" x2="20%" y2="37.333333333333336%" stroke="#000000" stroke-width="0.6%" />
+<circle cx="20%" cy="40%" r="2.25%" stroke="#000000" stroke-width="0%" fill="#008000"/>
+<line x1="20%" y1="40%" x2="20%" y2="37.333333333333336%" stroke="#000000" stroke-width="0.6%"/>
 </svg>
 `,
     );

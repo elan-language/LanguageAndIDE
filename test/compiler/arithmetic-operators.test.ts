@@ -4,6 +4,7 @@ import {
   assertDoesNotCompile,
   assertDoesNotCompileWithId,
   assertDoesNotParse,
+  assertObjectCodeDoesNotExecute,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
@@ -23,7 +24,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(3 + 4);
+  await system.printLine(3 + 4);
 }
 return [main, _tests];}`;
 
@@ -46,7 +47,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(3 - 4);
+  await system.printLine(3 - 4);
 }
 return [main, _tests];}`;
 
@@ -69,7 +70,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(3 * 4);
+  await system.printLine(3 * 4);
 }
 return [main, _tests];}`;
 
@@ -94,7 +95,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = 3;
-  system.printLine(a + 4);
+  await system.printLine(a + 4);
 }
 return [main, _tests];}`;
 
@@ -117,7 +118,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(3 / 2);
+  await system.printLine(3 / 2);
 }
 return [main, _tests];}`;
 
@@ -140,7 +141,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(Math.floor(7 / 2));
+  await system.printLine(Math.floor(7 / 2));
 }
 return [main, _tests];}`;
 
@@ -163,7 +164,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(11 % 3);
+  await system.printLine(11 % 3);
 }
 return [main, _tests];}`;
 
@@ -186,7 +187,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine((25 % 20) < 19 ? 1 : 2);
+  await system.printLine((25 % 20) < 19 ? 1 : 2);
 }
 return [main, _tests];}`;
 
@@ -209,7 +210,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(3 ** 3);
+  await system.printLine(3 ** 3);
 }
 return [main, _tests];}`;
 
@@ -220,6 +221,43 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "27");
+  });
+
+  test("Pass_PowerTypes", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to 1
+  variable b set to 1.1
+  set a to 2 ^ 2
+  set b to 2 ^ 2
+  set b to 2 ^ 0.5
+  set b to 0.5 ^ 2
+  print a
+  print b
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = 1;
+  let b = 1.1;
+  a = 2 ** 2;
+  b = 2 ** 2;
+  b = 2 ** 0.5;
+  b = 0.5 ** 2;
+  await system.printLine(a);
+  await system.printLine(b);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "40.25");
   });
 
   test("Pass_UseVariableBothSides", async () => {
@@ -236,7 +274,7 @@ const global = new class {};
 async function main() {
   let a = 3;
   a = a + 1;
-  system.printLine(a);
+  await system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -311,11 +349,17 @@ end class
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "expr5", ["Incompatible types Boolean to Float or Int"]);
+    assertDoesNotCompileWithId(fileImpl, "expr5", [
+      "Incompatible types. Expected: Float or Int Provided: Boolean",
+    ]);
 
-    assertDoesNotCompileWithId(fileImpl, "expr8", ["Incompatible types Boolean to Float or Int"]);
+    assertDoesNotCompileWithId(fileImpl, "expr8", [
+      "Incompatible types. Expected: Float or Int Provided: Boolean",
+    ]);
 
-    assertDoesNotCompileWithId(fileImpl, "expr11", ["Incompatible types Foo to Float or Int"]);
+    assertDoesNotCompileWithId(fileImpl, "expr11", [
+      "Incompatible types. Expected: Float or Int Provided: Foo",
+    ]);
   });
 
   test("Fail_IntegerDivisionOnFloats1", async () => {
@@ -330,7 +374,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Float to Int"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: Float"]);
   });
 
   test("Fail_IntegerDivisionOnFloats2", async () => {
@@ -343,7 +387,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(Math.floor(7.6 / 2.5));
+  await system.printLine(Math.floor(7.6 / 2.5));
 }
 return [main, _tests];}`;
 
@@ -352,7 +396,7 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Float to Int"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: Float"]);
   });
 
   test("Fail_ModWithFloats1", async () => {
@@ -367,7 +411,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Float to Int"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: Float"]);
   });
 
   test("Fail_ModWithFloats2", async () => {
@@ -382,6 +426,100 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Float to Int"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: Float"]);
+  });
+
+  test("Fail_DoubleMinus1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  let x be --4
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Unsupported operation"]);
+  });
+
+  test("Fail_DoubleMinus2", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable x set to 1
+  variable y set to --x
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Unsupported operation"]);
+  });
+
+  test("Fail_DoubleNot1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  let x be not not true
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Unsupported operation"]);
+  });
+
+  test("Fail_DoubleNot2", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable x set to true
+  variable y set to not not x
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Unsupported operation"]);
+  });
+
+  test("Fail_PowerType1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable x set to 1
+  set x to 2 ^ 0.5
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: Float"]);
+  });
+
+  test("Fail_PowerType2", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable x set to 1
+  set x to 0.5 ^ 2
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: Float"]);
   });
 });

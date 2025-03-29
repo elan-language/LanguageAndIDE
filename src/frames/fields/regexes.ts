@@ -9,9 +9,13 @@ export class Regexes {
   static readonly identifier = /^\s*[a-z]\w*/;
   static readonly literalInt = /^\s*[0-9]+/;
   static readonly negatableLitInt = /^\s*-?((0b[0-1]+)|(0x[0-9a-fA-F]+)|([0-9]+))/;
+  static readonly negatableLitFloat = /^\s*-?[0-9]+\.[0-9]+((e|E)-?[0-9]+)?/;
+  static readonly negatableLitIntOnly = /^\s*-?((0b[0-1]+)|(0x[0-9a-fA-F]+)|([0-9]+))$/;
+  static readonly negatableLitFloatOnly = /^\s*-?[0-9]+\.[0-9]+((e|E)-?[0-9]+)?$/;
   static readonly charValue = /[^']/;
   static readonly nonEmptyStringContent = /^[^{"]+/;
   static readonly leadingSpaceNotNL = /^[^\S\r\n]+/;
   static readonly anythingExceptUnescapedForwardSlash = /^([^\/\\]|\\.)+/;
   static readonly flags = /^[dgimsuvy]*/;
+  static readonly whiteSpaceButNotNewline = /[^\S\r\n]/;
 }

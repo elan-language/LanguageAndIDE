@@ -1,5 +1,5 @@
 import {
-  ClassOptions,
+  ClassOption,
   elanClass,
   ElanClass,
   elanFloatType,
@@ -14,20 +14,26 @@ import { System } from "../system";
 import { CircleVG } from "./circle-vg";
 import { GraphicsBase } from "./graphics-base";
 import { LineVG } from "./line-vg";
+import { List } from "./list";
 import { StdLib } from "./std-lib";
-import { VectorGraphics } from "./vector-graphics";
+import { VectorGraphic } from "./vector-graphic";
 
-@elanClass(ClassOptions.concrete, [], [], [], [ElanClass(GraphicsBase)])
+@elanClass(ClassOption.concrete, [], [], [], [ElanClass(GraphicsBase)])
 export class Turtle extends GraphicsBase {
   // this must = implemented by hand on all stdlib classes
   static emptyInstance() {
     return new Turtle();
   }
+
+  async _initialise() {
+    return this;
+  }
+
   private _system?: System;
 
   set system(value: System) {
     this._system = value;
-    this.vg = this._system!.initialise(new VectorGraphics());
+    this.vg = this._system!.initialise(new List<VectorGraphic>());
   }
 
   constructor() {
@@ -36,14 +42,25 @@ export class Turtle extends GraphicsBase {
     this.y = 37.5;
     this.heading = 0;
     this.pen = true;
-    this.shown = false;
+    this.shown = true;
     this.colour = 0;
     this.width = 1;
-    this.vg = new VectorGraphics(); // replaced by initialised version in set system()
+    this.vg = new List<VectorGraphic>(); // replaced by initialised version in set system()
   }
+
+  private reset() {
+    this.x = 50;
+    this.y = 37.5;
+    this.heading = 0;
+    this.pen = true;
+    this.shown = true;
+    this.colour = 0;
+    this.width = 1;
+  }
+
   private stdlib!: StdLib; // injected
 
-  vg: VectorGraphics;
+  vg: List<VectorGraphic>;
 
   @elanProperty()
   x: number;
@@ -59,20 +76,32 @@ export class Turtle extends GraphicsBase {
   colour: number;
   width: number;
 
-  @elanProcedure([])
-  show() {
+  @elanProcedure([], ProcedureOptions.async)
+  async show() {
     if (!this.shown) {
       this.shown = true;
       this.addTurtleIfShown();
-      this.vg.display();
+      await this.stdlib.displayVectorGraphics(this.vg);
     }
   }
 
-  @elanProcedure([])
-  hide() {
+  @elanProcedure([], ProcedureOptions.async)
+  async clearAndReset() {
+    this.vg = this._system!.initialise(new List<VectorGraphic>());
+    this.x = 50;
+    this.y = 37.5;
+    this.heading = 0;
+    this.pen = true;
+    this.colour = 0;
+    this.width = 1;
+    await this.stdlib.displayVectorGraphics(this.vg);
+  }
+
+  @elanProcedure([], ProcedureOptions.async)
+  async hide() {
     this.removeTurtleIfShown();
     this.shown = false;
-    this.vg.display();
+    await this.stdlib.displayVectorGraphics(this.vg);
   }
 
   @elanProcedure([])
@@ -88,10 +117,10 @@ export class Turtle extends GraphicsBase {
   private addTurtleIfShown() {
     if (this.shown) {
       const turtle = new CircleVG();
-      turtle.cx = this.x;
-      turtle.cy = this.y;
-      turtle.r = 2;
-      turtle.fill = 0x008000;
+      turtle.centreX = this.x;
+      turtle.centreY = this.y;
+      turtle.radius = 2;
+      turtle.fillColour = 0x008000;
       turtle.strokeWidth = 0;
       const [x2, y2] = this.getDestination(2);
       const pointer = new LineVG();
@@ -100,13 +129,16 @@ export class Turtle extends GraphicsBase {
       pointer.x2 = x2;
       pointer.y2 = y2;
       pointer.strokeWidth = 2;
-      this.vg = this.vg.add(turtle).add(pointer);
+      this.vg.append(turtle);
+      this.vg.append(pointer);
     }
   }
 
   private removeTurtleIfShown() {
     if (this.shown) {
-      this.vg = this.vg.removeLast().removeLast(); // circle and line
+      const len = this.vg.length();
+      this.vg.removeAt(len - 1);
+      this.vg.removeAt(len - 2); // circle and line
     }
   }
 
@@ -116,8 +148,8 @@ export class Turtle extends GraphicsBase {
     return [newX, newY];
   }
 
-  @elanProcedure([])
-  move(distance: number) {
+  @elanProcedure([], ProcedureOptions.async)
+  async move(distance: number) {
     this.removeTurtleIfShown();
     const [newX, newY] = this.getDestination(distance);
     if (this.pen) {
@@ -126,27 +158,27 @@ export class Turtle extends GraphicsBase {
       line.y1 = this.y;
       line.x2 = newX;
       line.y2 = newY;
-      line.stroke = this.colour;
+      line.strokeColour = this.colour;
       line.strokeWidth = this.width;
-      this.vg = this.vg.add(line);
+      this.vg.append(line);
     }
     this.x = newX;
     this.y = newY;
     this.addTurtleIfShown();
-    this.vg.display();
+    await this.stdlib.displayVectorGraphics(this.vg);
   }
 
-  @elanProcedure([])
-  turn(degrees: number) {
-    this.turnToHeading(this.heading + degrees);
+  @elanProcedure([], ProcedureOptions.async)
+  async turn(degrees: number) {
+    await this.turnToHeading(this.heading + degrees);
   }
 
-  @elanProcedure([])
-  turnToHeading(heading: number) {
+  @elanProcedure([], ProcedureOptions.async)
+  async turnToHeading(heading: number) {
     this.removeTurtleIfShown();
     this.heading = this.normaliseHeading(heading);
     this.addTurtleIfShown();
-    this.vg.display();
+    await this.stdlib.displayVectorGraphics(this.vg);
   }
 
   private normaliseHeading(x: number): number {
@@ -159,6 +191,7 @@ export class Turtle extends GraphicsBase {
       setTimeout(() => resolve(), ms);
     });
   }
+
   @elanProcedure([])
   penColour(@elanIntType() colour: number) {
     this.colour = colour;
@@ -169,17 +202,17 @@ export class Turtle extends GraphicsBase {
     this.width = width > 0 ? width : 1;
   }
 
-  @elanProcedure([])
-  placeAt(x: number, y: number) {
+  @elanProcedure([], ProcedureOptions.async)
+  async placeAt(x: number, y: number) {
     this.removeTurtleIfShown();
     this.x = x;
     this.y = y;
     this.addTurtleIfShown();
-    this.vg.display();
+    await this.stdlib.displayVectorGraphics(this.vg);
   }
 
   @elanFunction([], FunctionOptions.pure)
   asHtml(): string {
-    return this.vg.asHtml();
+    return this.stdlib.vectorGraphicsAsHtml(this.vg);
   }
 }

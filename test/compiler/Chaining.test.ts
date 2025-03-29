@@ -23,9 +23,9 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.list([system.list([1, 2]), system.list([3, 4])]);
+  let a = system.listImmutable([system.listImmutable([1, 2]), system.listImmutable([3, 4])]);
   let b = system.safeIndex(system.safeIndex(a, 1), 1);
-  system.printLine(b);
+  await system.printLine(b);
 }
 return [main, _tests];}`;
 
@@ -42,7 +42,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main 
-  variable a set to {[1,2], [3,4]}
+  variable a set to [[1,2], [3,4]]
   variable b set to a[1][1]
   print b
 end main`;
@@ -50,9 +50,9 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.list([system.literalArray([1, 2]), system.literalArray([3, 4])]);
+  let a = system.list([system.list([1, 2]), system.list([3, 4])]);
   let b = system.safeIndex(system.safeIndex(a, 1), 1);
-  system.printLine(b);
+  await system.printLine(b);
 }
 return [main, _tests];}`;
 
@@ -79,24 +79,26 @@ class Foo
     set property.a to {1}
   end constructor
   
-  property a as List<of Int>
+  property a as ListImmutable<of Int>
 end class`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(new Foo());
+  let a = system.initialise(await new Foo()._initialise());
   let b = system.safeIndex(a.a, 0);
-  system.printLine(b);
+  await system.printLine(b);
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["a", system.emptyImmutableList()]]);};
-  constructor() {
-    this.a = system.list([1]);
+  static emptyInstance() { return system.emptyClass(Foo, [["a", system.initialise(_stdlib.ListImmutable.emptyInstance())]]);};
+
+  async _initialise() {
+    this.a = system.listImmutable([1]);
+    return this;
   }
 
-  a = system.emptyImmutableList();
+  a = system.initialise(_stdlib.ListImmutable.emptyInstance());
 
 }
 return [main, _tests];}`;
@@ -145,16 +147,18 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let f = system.initialise(new Foo());
+  let f = system.initialise(await new Foo()._initialise());
   let b = 0;
   b = f.b.y.z;
-  system.printLine(b);
+  await system.printLine(b);
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
-  constructor() {
 
+  async _initialise() {
+
+    return this;
   }
 
   _b;
@@ -169,8 +173,10 @@ class Foo {
 
 class Bar {
   static emptyInstance() { return system.emptyClass(Bar, []);};
-  constructor() {
 
+  async _initialise() {
+
+    return this;
   }
 
   _y;
@@ -185,8 +191,10 @@ class Bar {
 
 class Yon {
   static emptyInstance() { return system.emptyClass(Yon, [["z", 0]]);};
-  constructor() {
+
+  async _initialise() {
     this.z = 2;
+    return this;
   }
 
   z = 0;
@@ -232,16 +240,18 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let f = system.literalArray([system.initialise(new Foo())]);
+  let f = system.list([system.initialise(await new Foo()._initialise())]);
   let b = 0;
-  b = system.safeIndex(f, 0).b.ff();
-  system.printLine(b);
+  b = (await system.safeIndex(f, 0).b.ff());
+  await system.printLine(b);
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
-  constructor() {
 
+  async _initialise() {
+
+    return this;
   }
 
   _b;
@@ -256,11 +266,13 @@ class Foo {
 
 class Bar {
   static emptyInstance() { return system.emptyClass(Bar, []);};
-  constructor() {
 
+  async _initialise() {
+
+    return this;
   }
 
-  ff() {
+  async ff() {
     return 4;
   }
 
@@ -280,7 +292,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main 
-  variable f set to {new Foo()}
+  variable f set to [new Foo()]
   variable b set to 0
   set b to f[0].b.ff()
   print b
@@ -305,16 +317,18 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let f = system.list([system.initialise(new Foo())]);
+  let f = system.list([system.initialise(await new Foo()._initialise())]);
   let b = 0;
-  b = system.safeIndex(f, 0).b.ff();
-  system.printLine(b);
+  b = (await system.safeIndex(f, 0).b.ff());
+  await system.printLine(b);
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
-  constructor() {
 
+  async _initialise() {
+
+    return this;
   }
 
   _b;
@@ -329,11 +343,13 @@ class Foo {
 
 class Bar {
   static emptyInstance() { return system.emptyClass(Bar, []);};
-  constructor() {
 
+  async _initialise() {
+
+    return this;
   }
 
-  ff() {
+  async ff() {
     return 4;
   }
 
@@ -362,8 +378,8 @@ end main`;
 const global = new class {};
 async function main() {
   let s = "";
-  s = _stdlib.upperCase(_stdlib.lowerCase("Hello World!").slice(0, 1));
-  system.printLine(s);
+  s = _stdlib.upperCase(system.safeSlice(_stdlib.lowerCase("Hello World!"), 0, 1));
+  await system.printLine(s);
 }
 return [main, _tests];}`;
 
@@ -391,8 +407,8 @@ const global = new class {};
 async function main() {
   let aStringVar = "abcdexefg";
   let s = "";
-  s = _stdlib.asString(_stdlib.indexOf(_stdlib.upperCase(aStringVar).slice(1, 7).slice(2, 6), "X"));
-  system.printLine(s);
+  s = (await _stdlib.asString(_stdlib.indexOf(system.safeSlice(system.safeSlice(_stdlib.upperCase(aStringVar), 1, 7), 2, 6), "X")));
+  await system.printLine(s);
 }
 return [main, _tests];}`;
 
@@ -418,7 +434,7 @@ class Bar
     set property.strArr to ["apple", "orange", "pair"]
   end constructor
 
-  property strArr as Array<of String>
+  property strArr as List<of String>
 
 end class`;
 
@@ -426,17 +442,19 @@ end class`;
 const global = new class {};
 async function main() {
   let a = "";
-  a = system.safeIndex(_stdlib.upperCase(system.safeIndex((system.initialise(new Bar())).strArr, 0)), 0);
-  system.printLine(a);
+  a = system.safeIndex(_stdlib.upperCase(system.safeIndex((system.initialise(await new Bar()._initialise())).strArr, 0)), 0);
+  await system.printLine(a);
 }
 
 class Bar {
-  static emptyInstance() { return system.emptyClass(Bar, [["strArr", system.emptyArray()]]);};
-  constructor() {
-    this.strArr = system.literalArray(["apple", "orange", "pair"]);
+  static emptyInstance() { return system.emptyClass(Bar, [["strArr", system.initialise(_stdlib.List.emptyInstance())]]);};
+
+  async _initialise() {
+    this.strArr = system.list(["apple", "orange", "pair"]);
+    return this;
   }
 
-  strArr = system.emptyArray();
+  strArr = system.initialise(_stdlib.List.emptyInstance());
 
 }
 return [main, _tests];}`;
@@ -449,13 +467,13 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "A");
   });
-  test("Pass_CreateArray", async () => {
+  test("Pass_CreateList", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main 
   variable aFoo set to new Foo()
   variable b set to 0
-  set b to aFoo.createArr(10)[1..5].length() + 3
+  set b to aFoo.createLst(10)[1..5].length() + 3
   print b
 end main
 
@@ -463,8 +481,8 @@ class Foo
   constructor()
   end constructor
 
-  function createArr(n as Int) returns Array<of Int>
-    return createArray(n, 7)
+  function createLst(n as Int) returns List<of Int>
+    return createList(n, 7)
   end function
 
 end class`;
@@ -472,20 +490,22 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let aFoo = system.initialise(new Foo());
+  let aFoo = system.initialise(await new Foo()._initialise());
   let b = 0;
-  b = _stdlib.length(system.array(aFoo.createArr(10).slice(1, 5))) + 3;
-  system.printLine(b);
+  b = system.safeSlice((await aFoo.createLst(10)), 1, 5).length() + 3;
+  await system.printLine(b);
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
-  constructor() {
 
+  async _initialise() {
+
+    return this;
   }
 
-  createArr(n) {
-    return _stdlib.createArray(n, 7);
+  async createLst(n) {
+    return _stdlib.createList(n, 7);
   }
 
 }
@@ -500,13 +520,13 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "7");
   });
 
-  test("Pass_CreateArray1", async () => {
+  test("Pass_CreateList1", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main 
   variable aBar set to new Bar()
   variable b set to 0
-  set b to 5 + aBar.foo.create2DArr()[2][1] - 2
+  set b to 5 + aBar.foo.create2DList()[2][1] - 2
   print b
 end main
 
@@ -523,8 +543,8 @@ class Foo
   constructor()
   end constructor
 
-  function create2DArr() returns Array<of Array<of Int>>
-    return createArray2D(3, 4, 8)
+  function create2DList() returns List<of List<of Int>>
+    return [[8,8,8,8],[8,8,8,8],[8,8,8,8]]
   end function
 
 end class`;
@@ -532,16 +552,18 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let aBar = system.initialise(new Bar());
+  let aBar = system.initialise(await new Bar()._initialise());
   let b = 0;
-  b = 5 + system.safeIndex(system.safeIndex(aBar.foo.create2DArr(), 2), 1) - 2;
-  system.printLine(b);
+  b = 5 + system.safeIndex(system.safeIndex((await aBar.foo.create2DList()), 2), 1) - 2;
+  await system.printLine(b);
 }
 
 class Bar {
   static emptyInstance() { return system.emptyClass(Bar, []);};
-  constructor() {
-    this.foo = system.initialise(new Foo());
+
+  async _initialise() {
+    this.foo = system.initialise(await new Foo()._initialise());
+    return this;
   }
 
   _foo;
@@ -556,12 +578,14 @@ class Bar {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
-  constructor() {
 
+  async _initialise() {
+
+    return this;
   }
 
-  create2DArr() {
-    return _stdlib.createArray2D(3, 4, 8);
+  async create2DList() {
+    return system.list([system.list([8, 8, 8, 8]), system.list([8, 8, 8, 8]), system.list([8, 8, 8, 8])]);
   }
 
 }
@@ -587,8 +611,8 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.list([1, 2, 3, 4, 5, 6]);
-  system.printLine(_stdlib.reduce(_stdlib.map(_stdlib.filter(a, (x) => x > 2), (x) => x * x), 0, (s, x) => s + x));
+  let a = system.listImmutable([1, 2, 3, 4, 5, 6]);
+  await system.printLine((await (await (await a.filter(async (x) => x > 2)).map(async (x) => x * x)).reduce(0, async (s, x) => s + x)));
 }
 return [main, _tests];}`;
 
@@ -606,14 +630,14 @@ return [main, _tests];}`;
 
 main 
   variable a set to [1,2,3,4,5,6]
-  print a[..5].map(lambda x as Int => x * x).asArray()[2..].reduce(0, lambda s as Int, x as Int => s + x)
+  print a[..5].map(lambda x as Int => x * x)[2..].reduce(0, lambda s as Int, x as Int => s + x)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.literalArray([1, 2, 3, 4, 5, 6]);
-  system.printLine(_stdlib.reduce(system.array(_stdlib.asArray(_stdlib.map(system.array(a.slice(0, 5)), (x) => x * x)).slice(2)), 0, (s, x) => s + x));
+  let a = system.list([1, 2, 3, 4, 5, 6]);
+  await system.printLine((await system.safeSlice((await system.safeSlice(a, 0, 5).map(async (x) => x * x)), 2).reduce(0, async (s, x) => s + x)));
 }
 return [main, _tests];}`;
 
@@ -630,7 +654,7 @@ return [main, _tests];}`;
     const code = `# FFFF Elan v1.0.0 valid
 
 main 
-  variable a set to {[1,2], [3,4]}
+  variable a set to [[1,2], [3,4]]
   variable b set to ""
   set b to a[1][1]
   print b
@@ -640,7 +664,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: String Provided: Int"]);
   });
 
   test("Fail_TypeError1", async () => {

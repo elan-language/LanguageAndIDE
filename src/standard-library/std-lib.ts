@@ -2,44 +2,34 @@ import "reflect-metadata";
 import { ElanCompilerError } from "../elan-compiler-error";
 import { ElanRuntimeError } from "../elan-runtime-error";
 import {
-  elanAbstractDictionaryType,
-  ElanArray,
-  elanArrayType,
   ElanBoolean,
   ElanClass,
   elanClassExport,
   elanClassType,
   elanConstant,
-  ElanDictionaryImmutable,
-  elanDictionaryImmutableType,
-  elanDictionaryType,
   ElanFloat,
   elanFunction,
-  elanFuncType,
   elanGenericParamT1Type,
-  elanGenericParamT2Type,
   ElanInt,
   elanIntType,
-  ElanIterable,
-  elanIterableType,
-  ElanList,
-  elanListType,
   elanProcedure,
   ElanString,
-  ElanT1,
-  ElanT2,
+  elanStringType,
   ElanTuple,
   FunctionOptions,
   ProcedureOptions,
 } from "../elan-type-annotations";
-import { hasHiddenType } from "../has-hidden-type";
+import { Regexes } from "../frames/fields/regexes";
 import { StubInputOutput } from "../stub-input-output";
 import { System } from "../system";
-import { BaseVG } from "./base-vg";
-import { BlockGraphics } from "./block-graphics";
 import { CircleVG } from "./circle-vg";
-import { GraphicsBase } from "./graphics-base";
+import { Dictionary } from "./dictionary";
+import { DictionaryImmutable } from "./dictionary-immutable";
+import { ElanArray } from "./elan-array";
+import { ElanArray2D } from "./elan-array-2d";
 import { LineVG } from "./line-vg";
+import { List } from "./list";
+import { ListImmutable } from "./list-immutable";
 import { Queue } from "./queue";
 import { Random } from "./random";
 import { RectangleVG } from "./rectangle-vg";
@@ -48,7 +38,7 @@ import { Stack } from "./stack";
 import { TextFileReader } from "./text-file-reader";
 import { TextFileWriter } from "./text-file-writer";
 import { Turtle } from "./turtle";
-import { VectorGraphics } from "./vector-graphics";
+import { VectorGraphic } from "./vector-graphic";
 
 export class StdLib {
   constructor() {
@@ -76,20 +66,11 @@ export class StdLib {
   @elanClassExport(ElanSet)
   Set = ElanSet;
 
-  @elanClassExport(GraphicsBase)
-  GraphicsBase = GraphicsBase;
-
-  @elanClassExport(BlockGraphics)
-  BlockGraphics = BlockGraphics;
-
   @elanClassExport(Turtle)
   Turtle = Turtle;
 
-  @elanClassExport(VectorGraphics)
-  VectorGraphics = VectorGraphics;
-
-  @elanClassExport(BaseVG)
-  BaseVG = BaseVG;
+  @elanClassExport(VectorGraphic)
+  VectorGraphic = VectorGraphic;
 
   @elanClassExport(CircleVG)
   CircleVG = CircleVG;
@@ -99,6 +80,24 @@ export class StdLib {
 
   @elanClassExport(RectangleVG)
   RectangleVG = RectangleVG;
+
+  @elanClassExport(List)
+  List = List;
+
+  @elanClassExport(ElanArray)
+  Array = ElanArray;
+
+  @elanClassExport(ElanArray2D)
+  Array2D = ElanArray2D;
+
+  @elanClassExport(ListImmutable)
+  ListImmutable = ListImmutable;
+
+  @elanClassExport(Dictionary)
+  Dictionary = Dictionary;
+
+  @elanClassExport(DictionaryImmutable)
+  DictionaryImmutable = DictionaryImmutable;
 
   // Standard colours
 
@@ -110,6 +109,7 @@ export class StdLib {
   @elanConstant(ElanInt) blue = 0x0000ff;
   @elanConstant(ElanInt) yellow = 0xffff00;
   @elanConstant(ElanInt) brown = 0xa52a2a;
+  @elanConstant(ElanInt) transparent = -1;
 
   @elanConstant(ElanBoolean) true = true;
   @elanConstant(ElanBoolean) false = false;
@@ -124,8 +124,8 @@ export class StdLib {
     return typeof v === "boolean" || typeof v === "string" || typeof v === "number";
   }
 
-  @elanFunction([], FunctionOptions.pureExtension)
-  asString<T1>(@elanGenericParamT1Type() v: T1 | T1[] | undefined): string {
+  @elanFunction([], FunctionOptions.pureAsyncExtension, ElanString)
+  async asString<T1>(@elanGenericParamT1Type() v: T1 | T1[] | undefined): Promise<string> {
     if (v === undefined || v === null) {
       throw new ElanRuntimeError(`Out of range error`);
     }
@@ -147,33 +147,25 @@ export class StdLib {
     }
 
     if (Array.isArray(v)) {
-      const type = (v as unknown as hasHiddenType)._type;
+      // tuple
+      const items: string[] = [];
 
-      switch (type) {
-        case "List":
-          return `{${v.map((i) => this.asString(i)).join(", ")}}`;
-        case "Tuple":
-          return `(${v.map((i) => this.asString(i)).join(", ")})`;
-        case "Array":
-          return `[${v.map((i) => this.asString(i)).join(", ")}]`;
-        case "Iterable":
-          return `an Iterable`;
-        default:
-          return v.toString();
+      for (const i of v) {
+        const s = await this.asString(i);
+        items.push(s);
       }
+      if (items.length < 2) {
+        // TODO fix
+        // this handles case of outParameter wrapped in array
+        // need better fix but for moment just return value;
+        return items.join("");
+      }
+
+      return `tuple(${items.join(", ")})`;
     }
 
     if (typeof v === "object" && "asString" in v) {
-      return (v.asString as () => string)();
-    }
-
-    if (typeof v === "object" && v.constructor.name === "Object") {
-      const type = (v as unknown as hasHiddenType)._type;
-      const [pf, sf] = type === "Dictionary" ? ["[", "]"] : ["{", "}"];
-
-      const items = Object.getOwnPropertyNames(v).filter((s) => s !== "_type");
-      const o = v as { [key: string]: object };
-      return `${pf}${items.map((n) => `${n}:${this.asString(o[n])}`).join(", ")}${sf}`;
+      return await (v.asString as () => Promise<string>)();
     }
 
     if (typeof v === "object") {
@@ -197,100 +189,24 @@ export class StdLib {
     return s.charCodeAt(0);
   }
 
-  @elanFunction([], FunctionOptions.pureExtension, ElanArray(ElanT1))
-  asArray<T1>(@elanIterableType(ElanT1) list: T1[]): T1[] {
-    const arr = [...list];
-    (arr as unknown as hasHiddenType)._type = "Array";
-    return arr;
+  @elanFunction(["", "item"], FunctionOptions.pureExtension, ElanInt)
+  indexOf(
+    @elanStringType()
+    s: string,
+    @elanStringType()
+    item: string,
+  ): number {
+    const ss = s.split("");
+    return ss.indexOf(item);
   }
 
-  @elanFunction([], FunctionOptions.pureExtension, ElanList(ElanT1))
-  asList<T1>(@elanIterableType(ElanT1) arr: T1[]): T1[] {
-    const list = [...arr];
-    (list as unknown as hasHiddenType)._type = "List";
-    return list;
-  }
-
-  @elanFunction([], FunctionOptions.pureExtension, ElanClass(ElanSet))
-  asSet<T1>(@elanIterableType(ElanT1) arr: T1[]): ElanSet<T1> {
-    const set = this.system.initialise(new ElanSet<T1>());
-    return set.addFromArray(arr);
-  }
-
-  @elanFunction(["start", "end"], FunctionOptions.pure, ElanIterable(ElanInt))
-  range(@elanIntType() start: number, @elanIntType() end: number): number[] {
+  @elanFunction(["start", "end"], FunctionOptions.pure, ElanClass(ListImmutable, [ElanInt]))
+  range(@elanIntType() start: number, @elanIntType() end: number): ListImmutable<number> {
     const seq = [];
     for (let i = start; i <= end; i++) {
       seq.push(i);
     }
-    (seq as unknown as hasHiddenType)._type = "Iterable";
-    return seq;
-  }
-
-  @elanFunction([], FunctionOptions.pureExtension, ElanIterable(ElanT1))
-  asIterable<T1>(@elanIterableType(ElanT1) arr: T1[]): T1[] {
-    const list = [...arr];
-    (list as unknown as hasHiddenType)._type = "Iterable";
-    return list as T1[];
-  }
-
-  @elanFunction([], FunctionOptions.pureExtension, ElanT1)
-  head<T1>(@elanIterableType(ElanT1) arr: T1[]): T1 {
-    return this.system.safeIndex(arr, 0);
-  }
-
-  @elanFunction([], FunctionOptions.pureExtension, ElanList(ElanT1))
-  keys<T1>(
-    @elanAbstractDictionaryType(ElanT1, ElanT2)
-    dict: {
-      [key: string]: T1;
-    },
-  ): string[] {
-    const lst = Object.getOwnPropertyNames(dict).filter((s) => s !== "_type");
-    (lst as unknown as hasHiddenType)._type = "List";
-    return lst;
-  }
-
-  @elanFunction([], FunctionOptions.pureExtension, ElanList(ElanT2))
-  values<T1>(
-    @elanAbstractDictionaryType(ElanT1, ElanT2)
-    dict: {
-      [key: string]: T1;
-    },
-  ): T1[] {
-    const lst = this.keys(dict).map((k) => dict[k]);
-    (lst as unknown as hasHiddenType)._type = `List`;
-    return lst;
-  }
-
-  @elanFunction(["key"], FunctionOptions.pureExtension, ElanBoolean)
-  hasKey<T1>(
-    @elanAbstractDictionaryType(ElanT1, ElanT2)
-    dict: { [key: string]: T1 },
-    @elanGenericParamT1Type() key: string,
-  ): boolean {
-    return this.keys(dict).includes(key);
-  }
-
-  @elanFunction(["key"], FunctionOptions.pureExtension, ElanDictionaryImmutable(ElanT1, ElanT2))
-  withRemoveAtKey<T1>(
-    @elanDictionaryImmutableType(ElanT1, ElanT2)
-    dict: { [key: string]: T1 },
-    @elanGenericParamT1Type() key: string,
-  ) {
-    const newDict = { ...dict };
-    (newDict as unknown as hasHiddenType)._type = (dict as unknown as hasHiddenType)._type;
-    delete newDict[key];
-    return newDict;
-  }
-
-  @elanProcedure(["key"], ProcedureOptions.extension)
-  removeAtKey<T1>(
-    @elanDictionaryType(ElanT1, ElanT2)
-    dict: { [key: string]: T1 },
-    @elanGenericParamT1Type() key: string,
-  ) {
-    delete dict[key];
+    return this.system.initialise(new ListImmutable(seq));
   }
 
   @elanFunction(["match", "replacement"], FunctionOptions.pureExtension)
@@ -299,17 +215,8 @@ export class StdLib {
   }
 
   @elanFunction([], FunctionOptions.pureExtension, ElanInt)
-  length<T1>(
-    @elanIterableType(ElanT1)
-    coll: string | T1[] | { [key: string]: T1 },
-  ) {
-    if (typeof coll === "string") {
-      return coll.length;
-    }
-    if (Array.isArray(coll)) {
-      return coll.length;
-    }
-    return this.keys(coll).length;
+  length(coll: string) {
+    return coll.length;
   }
 
   @elanFunction([], FunctionOptions.pureExtension)
@@ -342,210 +249,29 @@ export class StdLib {
     return s1 < s2 || s1 === s2;
   }
 
-  @elanFunction(["", "index", "value"], FunctionOptions.pureExtension, ElanList(ElanT1))
-  withPutAt<T1>(
-    @elanListType(ElanT1) list: T1[],
-    @elanIntType() index: number,
-    @elanGenericParamT1Type() value: T1,
-  ) {
-    const newList = [...list];
-    newList[index] = value;
-    (newList as unknown as hasHiddenType)._type = "List";
-    return newList;
-  }
-
-  @elanProcedure(["", "index", "value"], ProcedureOptions.extension)
-  putAt<T1>(
-    @elanArrayType(ElanT1) list: T1[],
-    @elanIntType() index: number,
-    @elanGenericParamT1Type() value: T1,
-  ) {
-    this.system.safeArraySet(list, index, value);
-  }
-
-  @elanProcedure(["", "column", "row"], ProcedureOptions.extension)
-  putAt2D<T1>(
-    @elanArrayType(ElanArray(ElanT1))
-    list: T1[][],
-    @elanIntType() col: number,
-    @elanIntType() row: number,
-    @elanGenericParamT1Type() value: T1,
-  ) {
-    this.system.safeArraySet(list[col], row, value);
-  }
-
-  @elanProcedure(["", "key", "value"], ProcedureOptions.extension)
-  putAtKey<T1>(
-    @elanDictionaryType(ElanT1, ElanT2)
-    dict: { [key: string]: T1 },
-    @elanGenericParamT1Type() key: string,
-    @elanGenericParamT2Type() value: T1,
-  ) {
-    this.system.safeDictionarySet(dict, key, value);
-  }
-
-  @elanFunction(["", "index", "value"], FunctionOptions.pureExtension, ElanList(ElanT1))
-  withInsertAt<T1>(
-    @elanListType(ElanT1) list: T1[],
-    @elanIntType() index: number,
-    @elanGenericParamT1Type() value: T1,
-  ) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const newList = (list as any).toSpliced(index, 0, value);
-    (newList as unknown as hasHiddenType)._type = "List";
-    return newList;
-  }
-
-  @elanProcedure(["", "index", "value"], ProcedureOptions.extension)
-  insertAt<T1>(
-    @elanArrayType(ElanT1) list: T1[],
-    @elanIntType() index: number,
-    @elanGenericParamT1Type() value: T1,
-  ) {
-    list.splice(index, 0, value);
-  }
-
-  // custom impl
-  private elanIndexOf<T1>(list: T1[], elem: T1) {
-    for (let i = 0; i < list.length; i++) {
-      const item = list[i];
-      if (this.system.equals(item, elem)) {
-        return i;
-      }
-    }
-    return -1;
-  }
-
-  @elanFunction(["", "index"], FunctionOptions.pureExtension, ElanList(ElanT1))
-  withRemoveAt<T1>(@elanListType(ElanT1) list: T1[], @elanIntType() index: number) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const newList = (list as any).toSpliced(index, 1);
-    (newList as unknown as hasHiddenType)._type = "List";
-    return newList;
-  }
-
-  @elanFunction(["", "value"], FunctionOptions.pureExtension, ElanList(ElanT1))
-  withRemoveFirst<T1>(@elanListType(ElanT1) list: T1[], @elanGenericParamT1Type() value: T1) {
-    let newList = [...list];
-    const index = this.elanIndexOf(newList, value);
-    if (index > -1) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      newList = (newList as any).toSpliced(index, 1);
-    }
-    (newList as unknown as hasHiddenType)._type = "List";
-    return newList;
-  }
-
-  @elanFunction(["", "value"], FunctionOptions.pureExtension, ElanList(ElanT1))
-  withRemoveAll<T1>(@elanListType(ElanT1) list: T1[], @elanGenericParamT1Type() value: T1) {
-    let newList = [...list];
-    let index = this.elanIndexOf(newList, value);
-    while (index > -1) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      newList = (newList as any).toSpliced(index, 1);
-      index = this.elanIndexOf(newList, value);
-    }
-    (newList as unknown as hasHiddenType)._type = "List";
-    return newList;
-  }
-
-  @elanProcedure(["", "index"], ProcedureOptions.extension)
-  removeAt<T1>(@elanArrayType(ElanT1) list: T1[], @elanIntType() index: number) {
-    list.splice(index, 1);
-  }
-
-  @elanProcedure(["", "value"], ProcedureOptions.extension)
-  removeFirst<T1>(@elanArrayType(ElanT1) list: T1[], @elanGenericParamT1Type() value: T1) {
-    const index = this.elanIndexOf(list, value);
-    if (index > -1) {
-      list.splice(index, 1);
-    }
-  }
-
-  @elanProcedure(["", "value"], ProcedureOptions.extension)
-  removeAll<T1>(@elanArrayType(ElanT1) list: T1[], @elanGenericParamT1Type() value: T1) {
-    let index = this.elanIndexOf(list, value);
-    while (index > -1) {
-      list.splice(index, 1);
-      index = this.elanIndexOf(list, value);
-    }
-  }
-
-  @elanProcedure(["", "value"], ProcedureOptions.extension)
-  append<T1>(@elanArrayType(ElanT1) list: T1[], @elanGenericParamT1Type() value: T1) {
-    list.push(value);
-  }
-
-  @elanProcedure(["", "other"], ProcedureOptions.extension)
-  appendArray<T1>(@elanArrayType(ElanT1) list: T1[], @elanArrayType(ElanT1) listB: T1[]) {
-    list.push(...listB);
-  }
-
-  @elanProcedure(["", "other"], ProcedureOptions.extension)
-  prepend<T1>(@elanArrayType(ElanT1) list: T1[], @elanGenericParamT1Type() value: T1) {
-    list.unshift(value);
-  }
-
-  @elanProcedure(["", "other"], ProcedureOptions.extension)
-  prependArray<T1>(@elanArrayType(ElanT1) list: T1[], @elanArrayType(ElanT1) listB: T1[]) {
-    list.unshift(...listB);
-  }
-
-  @elanFunction(
-    ["", "key", "value"],
-    FunctionOptions.pureExtension,
-    ElanDictionaryImmutable(ElanT1, ElanT2),
-  )
-  withPutAtKey<T1>(
-    @elanDictionaryImmutableType(ElanT1, ElanT2)
-    dict: { [key: string]: T1 },
-    @elanGenericParamT1Type() key: string,
-    @elanGenericParamT2Type() value: T1,
-  ) {
-    const newDict = { ...dict };
-    newDict[key] = value;
-    (newDict as unknown as hasHiddenType)._type = "DictionaryImmutable";
-    return newDict;
-  }
-
-  @elanFunction(["", "targetString"], FunctionOptions.pureExtension, ElanInt)
-  indexOf(s1: string, s2: string): number {
-    return s1.indexOf(s2);
-  }
-
-  @elanFunction(["", "item"], FunctionOptions.pureExtension, ElanInt)
-  indexOfItem<T1>(
-    @elanIterableType(ElanT1)
-    source: T1[],
-    @elanGenericParamT1Type()
-    item: T1,
-  ): number {
-    return this.elanIndexOf(source, item);
-  }
-
   @elanFunction([], FunctionOptions.pureExtension)
   trim(s: string): string {
     return s.trim();
   }
 
-  @elanFunction(["", "separator"], FunctionOptions.pureExtension, ElanList(ElanString))
-  split(s: string, separator: string): string[] {
-    return this.asList(s.split(separator));
-  }
-
-  @elanFunction(["", "separator"], FunctionOptions.pureExtension)
-  joinArrayElements(@elanArrayType(ElanString) list: string[], separator: string): string {
-    return list.join(separator);
-  }
-
-  @elanFunction(["", "separator"], FunctionOptions.pureExtension)
-  joinListElements(@elanListType(ElanString) list: string[], separator: string): string {
-    return list.join(separator);
+  @elanFunction(["", "separator"], FunctionOptions.pureExtension, ElanClass(List))
+  split(s: string, separator: string): List<string> {
+    return this.system.initialise(new List(s.split(separator)));
   }
 
   @elanFunction(["number"], FunctionOptions.pureExtension, ElanInt)
   floor(n: number) {
     return Math.floor(n);
+  }
+
+  @elanFunction(["number"], FunctionOptions.pureExtension, ElanBoolean)
+  isNaN(n: number) {
+    return isNaN(n);
+  }
+
+  @elanFunction(["number"], FunctionOptions.pureExtension, ElanBoolean)
+  isInfinite(n: number) {
+    return n === Number.POSITIVE_INFINITY || n === Number.NEGATIVE_INFINITY;
   }
 
   @elanFunction(["number", "decimalPlaces"], FunctionOptions.pureExtension)
@@ -560,98 +286,28 @@ export class StdLib {
     return n > fl ? fl + 1 : fl;
   }
 
-  @elanFunction(["", "lambdaOrFunctionRef"], FunctionOptions.pureExtension, ElanIterable(ElanT1))
-  filter<T1>(
-    @elanIterableType(ElanT1)
-    source: T1[] | string,
-    @elanFuncType([ElanT1], ElanBoolean)
-    predicate: (value: T1 | string) => boolean,
-  ): (T1 | string)[] {
-    const list = typeof source === "string" ? source.split("") : [...source];
-    return this.asIterable(list.filter(predicate));
-  }
-
-  @elanFunction(["", "lambdaOrFunctionRef"], FunctionOptions.pureExtension, ElanIterable(ElanT2))
-  map<T1, T2>(
-    @elanIterableType(ElanT1)
-    source: T1[] | string,
-    @elanFuncType([ElanT1], ElanT2)
-    predicate: (value: T1 | string) => T2,
-  ) {
-    const list = typeof source === "string" ? source.split("") : [...source];
-    return this.asIterable(list.map(predicate));
-  }
-
-  @elanFunction(["", "initialValue", "lambdaOrFunctionRef"], FunctionOptions.pureExtension, ElanT2)
-  reduce<T1, T2>(
-    @elanIterableType(ElanT1)
-    source: T1[] | string,
-    @elanGenericParamT2Type() initValue: T2,
-    @elanFuncType([ElanT2, ElanT1], ElanT2)
-    predicate: (s: T2, value: T1 | string) => T2,
-  ): T2 {
-    const list = typeof source === "string" ? source.split("") : [...source];
-    return list.reduce(predicate, initValue);
-  }
-
-  @elanFunction([], FunctionOptions.pureExtension)
-  max(@elanIterableType(ElanFloat) source: number[]): number {
+  @elanFunction(["listOfFloat"], FunctionOptions.pure, ElanFloat)
+  maxFloat(@elanClassType(List, [ElanFloat]) source: List<number>): number {
     return Math.max(...source);
   }
 
-  @elanFunction(["", "lambdaOrFunctionRef"], FunctionOptions.pureExtension, ElanT1)
-  maxBy<T1>(
-    @elanIterableType(ElanT1) source: T1[],
-    @elanFuncType([ElanT1], ElanFloat)
-    predicate: (value: T1) => number,
-  ): T1 {
-    const mm = source.map(predicate);
-    const max = Math.max(...mm);
-    const i = this.elanIndexOf(mm, max);
-    return source[i];
+  @elanFunction(["listOfInt"], FunctionOptions.pure, ElanInt)
+  maxInt(@elanClassType(List, [ElanInt]) source: List<number>): number {
+    return Math.max(...source);
   }
 
-  @elanFunction([], FunctionOptions.pureExtension)
-  min(@elanIterableType(ElanFloat) source: number[]): number {
+  @elanFunction(["listOfFloat"], FunctionOptions.pure, ElanFloat)
+  minFloat(@elanClassType(List, [ElanFloat]) source: List<number>): number {
     return Math.min(...source);
   }
 
-  @elanFunction(["", "lambdaOrFunctionRef"], FunctionOptions.pureExtension, ElanT1)
-  minBy<T1>(
-    @elanIterableType(ElanT1) source: T1[],
-    @elanFuncType([ElanT1], ElanFloat)
-    predicate: (value: T1) => number,
-  ): T1 {
-    const mm = source.map(predicate);
-    const min = Math.min(...mm);
-    const i = this.elanIndexOf(mm, min);
-    return source[i];
-  }
-
-  @elanFunction(["", "lambdaOrFunctionRef"], FunctionOptions.pureExtension, ElanIterable(ElanT1))
-  sortBy<T1>(
-    @elanIterableType(ElanT1) source: T1[],
-    @elanFuncType([ElanT1, ElanT1], ElanInt)
-    predicate: (a: T1, b: T1) => number,
-  ): T1[] {
-    const clone = [...source];
-    return this.asIterable(clone.sort(predicate));
-  }
-
-  @elanFunction(["", "lambdaOrFunctionRef"], FunctionOptions.pureExtension)
-  any<T1>(
-    @elanIterableType(ElanT1) source: T1[],
-    @elanFuncType([ElanT1], ElanBoolean)
-    predicate: (value: T1) => boolean,
-  ): boolean {
-    return source.some(predicate);
+  @elanFunction(["listOfInt"], FunctionOptions.pure, ElanInt)
+  minInt(@elanClassType(List, [ElanInt]) source: List<number>): number {
+    return Math.min(...source);
   }
 
   @elanFunction(["", "item"], FunctionOptions.pureExtension)
-  contains<T1>(
-    @elanIterableType(ElanT1) source: T1[],
-    @elanGenericParamT1Type() item: T1,
-  ): boolean {
+  contains(source: string, item: string): boolean {
     return source.includes(item);
   }
 
@@ -679,195 +335,159 @@ export class StdLib {
 
   @elanFunction(["string"], FunctionOptions.pure, ElanTuple([ElanBoolean, ElanFloat]))
   parseAsFloat(s: string): [boolean, number] {
-    const f = parseFloat(s);
-    if (Number.isFinite(f)) {
-      return [true, f];
+    if (Regexes.negatableLitFloatOnly.test(s)) {
+      const f = parseFloat(s);
+      if (Number.isFinite(f)) {
+        return this.system.tuple([true, f]) as [boolean, number];
+      }
     }
-    return [false, 0];
+    return this.system.tuple([false, 0]) as [boolean, number];
   }
 
   @elanFunction(["string"], FunctionOptions.pure, ElanTuple([ElanBoolean, ElanInt]))
   parseAsInt(s: string): [boolean, number] {
-    const [b, f] = this.parseAsFloat(s);
-    return [b, Math.floor(f)];
+    if (Regexes.negatableLitIntOnly.test(s)) {
+      const i = parseInt(s);
+      if (isFinite(i)) {
+        return this.system.tuple([true, i]) as [boolean, number];
+      }
+    }
+    return this.system.tuple([false, 0]) as [boolean, number];
   }
 
-  @elanProcedure(["text"])
-  printLine(s: string) {
-    this.system.elanInputOutput.print(`${s}\n`);
+  @elanProcedure(["text"], ProcedureOptions.async)
+  async printLine(s: string) {
+    await this.system.elanInputOutput.print(`${s}\n`);
   }
 
-  @elanProcedure(["text"])
-  printNoLine(s: string) {
-    this.system.elanInputOutput.print(s);
+  @elanProcedure(["text"], ProcedureOptions.async)
+  async printNoLine(s: string) {
+    await this.system.elanInputOutput.print(s);
   }
 
-  @elanProcedure(["position", "text"])
-  printTab(@elanIntType() position: number, s: string) {
-    this.system.elanInputOutput.printTab(position, s);
+  @elanProcedure(["position", "text"], ProcedureOptions.async)
+  async printTab(@elanIntType() position: number, s: string) {
+    await this.system.elanInputOutput.printTab(position, s);
   }
 
-  @elanProcedure([])
-  clearConsole() {
-    this.system.elanInputOutput.clearConsole();
+  @elanProcedure([], ProcedureOptions.async)
+  async clearPrintedText() {
+    await this.system.elanInputOutput.clearPrintedText();
   }
 
-  @elanFunction(["size", "initialValue"], FunctionOptions.pure, ElanArray(ElanT1))
-  createArray<T1>(@elanIntType() x: number, @elanGenericParamT1Type() value: T1) {
+  @elanFunction(["size", "initialValue"], FunctionOptions.pure, ElanClass(List))
+  createList<T1>(@elanIntType() x: number, @elanGenericParamT1Type() value: T1) {
     if (!this.isValueType(value)) {
-      throw new ElanRuntimeError(
-        `Can only create array with simple value, not: ${this.asString(value)}`,
-      );
+      throw new ElanRuntimeError(`Can only create List with simple value`);
     }
 
-    const toInit = this.system.array([]);
-    toInit.length = x;
+    const toInit = [];
 
     for (let i = 0; i < x; i++) {
       toInit[i] = value;
     }
 
-    return toInit;
-  }
-
-  @elanFunction(
-    ["columns", "rows", "initialValue"],
-    FunctionOptions.pure,
-    ElanArray(ElanArray(ElanT1)),
-  )
-  createArray2D<T1>(
-    @elanIntType() x: number,
-    @elanIntType() y: number,
-    @elanGenericParamT1Type() value: T1,
-  ) {
-    if (!this.isValueType(value)) {
-      throw new ElanRuntimeError(
-        `Can only initialise array with simple value, not: ${this.asString(value)}`,
-      );
-    }
-
-    const toInit = this.system.array([]);
-    toInit.length = x;
-
-    for (let i = 0; i < x; i++) {
-      const subArr = this.system.array([]);
-      subArr.length = y;
-      for (let j = 0; j < y; j++) {
-        subArr[j] = value;
-      }
-      toInit[i] = subArr;
-    }
-    return toInit;
+    return this.system.initialise(new List<T1>(toInit));
   }
 
   //Input functions
-  private prompt(prompt: string) {
-    this.printLine(prompt);
+  private async prompt(prompt: string) {
+    await this.printLine(prompt);
   }
 
   @elanFunction(["prompt"], FunctionOptions.impureAsync, ElanString)
-  inputString(prompt: string): Promise<string> {
-    this.prompt(prompt);
-    return this.system.input();
+  async inputString(prompt: string): Promise<string> {
+    await this.prompt(prompt);
+    return await this.system.input();
   }
 
   @elanFunction(["prompt", "minLength", "maxLength"], FunctionOptions.impureAsync, ElanString)
-  inputStringWithLimits(
+  async inputStringWithLimits(
     prompt: string,
     @elanIntType() minLength: number,
     @elanIntType() maxLength: number,
   ): Promise<string> {
-    this.prompt(prompt);
-    return this.system.input().then((s) => {
-      if (s.length < minLength) {
-        this.system.printLine(`minimum length ${minLength} characters`);
-      } else if (s.length > maxLength) {
-        this.system.printLine(`maximum length ${maxLength} characters`);
-      } else {
-        return s;
-      }
-      return this.inputStringWithLimits(prompt, minLength, maxLength);
-    });
+    const s = await this.inputString(prompt);
+
+    if (s.length < minLength) {
+      await this.prompt(`minimum length ${minLength} characters`);
+    } else if (s.length > maxLength) {
+      await this.prompt(`maximum length ${maxLength} characters`);
+    } else {
+      return s;
+    }
+    return await this.inputStringWithLimits(prompt, minLength, maxLength);
   }
 
   @elanFunction(["prompt", "options"], FunctionOptions.impureAsync, ElanString)
-  inputStringFromOptions(
+  async inputStringFromOptions(
     prompt: string,
-    @elanArrayType(ElanString) options: string[],
+    @elanClassType(List) options: List<string>,
   ): Promise<string> {
-    this.prompt(prompt);
-    return this.system.input().then((s) => {
-      if (options.includes(s)) {
-        return s;
-      } else {
-        this.system.printLine(`response must be one of ${options}`);
-      }
-      return this.inputStringFromOptions(prompt, options);
-    });
+    const s = await this.inputString(prompt);
+
+    if (options.contains(s)) {
+      return s;
+    }
+    await this.prompt(`response must be one of ${options}`);
+    return await this.inputStringFromOptions(prompt, options);
   }
 
   @elanFunction(["prompt"], FunctionOptions.impureAsync, ElanInt)
-  inputInt(prompt: string): Promise<number> {
-    this.prompt(prompt);
-    return this.system.input().then((s) => {
-      const [b, i] = this.parseAsInt(s);
+  async inputInt(prompt: string): Promise<number> {
+    const s = await this.inputString(prompt);
+    const [b, i] = this.parseAsInt(s);
 
-      if (b && i.toString() === s) {
-        return i;
-      } else {
-        this.system.printLine("must be an integer");
-      }
+    if (b && i.toString() === s) {
+      return i;
+    }
 
-      return this.inputInt(prompt);
-    });
+    await this.prompt("must be an integer");
+    return await this.inputInt(prompt);
   }
 
   @elanFunction(["prompt", "minValue", "maxValue"], FunctionOptions.impureAsync, ElanInt)
-  inputIntBetween(
+  async inputIntBetween(
     prompt: string,
     @elanIntType() min: number,
     @elanIntType() max: number,
   ): Promise<number> {
-    this.prompt(prompt);
-    return this.system.input().then((s) => {
-      const [b, i] = this.parseAsInt(s);
-      if (b && i.toString() === s && i >= min && i <= max) {
-        return i;
-      } else {
-        this.system.printLine(`must be an integer between ${min} and ${max} inclusive`);
-      }
-      return this.inputIntBetween(prompt, min, max);
-    });
+    const s = await this.inputString(prompt);
+    const [b, i] = this.parseAsInt(s);
+
+    if (b && i.toString() === s && i >= min && i <= max) {
+      return i;
+    }
+
+    await this.prompt(`must be an integer between ${min} and ${max} inclusive`);
+
+    return await this.inputIntBetween(prompt, min, max);
   }
 
   @elanFunction(["prompt"], FunctionOptions.impureAsync, ElanFloat)
-  inputFloat(prompt: string): Promise<number> {
-    this.prompt(prompt);
-    return this.system.input().then((s) => {
-      const [b, i] = this.parseAsFloat(s);
+  async inputFloat(prompt: string): Promise<number> {
+    const s = await this.inputString(prompt);
+    const [b, i] = this.parseAsFloat(s);
 
-      if (b) {
-        return i;
-      } else {
-        this.system.printLine("not a number");
-      }
+    if (b) {
+      return i;
+    }
 
-      return this.inputFloat(prompt);
-    });
+    await this.prompt("not a number");
+    return await this.inputFloat(prompt);
   }
 
   @elanFunction(["prompt", "minValue", "maxValue"], FunctionOptions.impureAsync, ElanFloat)
-  inputFloatBetween(prompt: string, min: number, max: number): Promise<number> {
-    this.prompt(prompt);
-    return this.system.input().then((s) => {
-      const [b, i] = this.parseAsFloat(s);
-      if (b && i >= min && i <= max) {
-        return i;
-      } else {
-        this.system.printLine(`must be a number between ${min} and ${max} inclusive`);
-      }
-      return this.inputFloatBetween(prompt, min, max);
-    });
+  async inputFloatBetween(prompt: string, min: number, max: number): Promise<number> {
+    const s = await this.inputString(prompt);
+
+    const [b, i] = this.parseAsFloat(s);
+    if (b && i >= min && i <= max) {
+      return i;
+    }
+
+    await this.prompt(`must be a number between ${min} and ${max} inclusive`);
+    return await this.inputFloatBetween(prompt, min, max);
   }
   //Math
 
@@ -1058,28 +678,85 @@ export class StdLib {
   }
 
   // Graphics
-  @elanProcedure([], ProcedureOptions.extension)
-  clearGraphics(@elanClassType(GraphicsBase) _g: GraphicsBase) {
-    this.system!.elanInputOutput.clearGraphics();
-  }
 
   @elanProcedure([], ProcedureOptions.async)
-  waitForAnyKey() {
-    return this.system.elanInputOutput.waitForAnyKey();
+  async waitForAnyKey() {
+    return await this.system.elanInputOutput.waitForAnyKey();
   }
 
   @elanFunction([], FunctionOptions.impureAsync, ElanString)
-  getKey(): Promise<string> {
-    return this.system!.elanInputOutput.getKey();
+  async getKey(): Promise<string> {
+    return await this.system!.elanInputOutput.getKey();
   }
 
   @elanFunction([], FunctionOptions.impureAsync, ElanTuple([ElanString, ElanString]))
-  getKeyWithModifier(): Promise<[string, string]> {
-    return this.system!.elanInputOutput.getKeyWithModifier();
+  async getKeyWithModifier(): Promise<[string, string]> {
+    return await this.system!.elanInputOutput.getKeyWithModifier();
   }
 
-  @elanProcedure([], ProcedureOptions.extension)
-  clearKeyBuffer(@elanClassType(GraphicsBase) _g: GraphicsBase) {
-    this.system!.elanInputOutput.clearKeyBuffer();
+  @elanProcedure([], ProcedureOptions.async)
+  async clearKeyBuffer() {
+    await this.system!.elanInputOutput.clearKeyBuffer();
+  }
+  //Block graphics
+  @elanFunction([""], FunctionOptions.pureExtension)
+  blocksAsHtml(@elanClassType(ElanArray2D, [ElanInt]) blocks: ElanArray2D<number>): string {
+    let rendered = ``;
+
+    for (let y = 0; y < 30; y++) {
+      for (let x = 0; x < 40; x++) {
+        const colour = blocks.read(x, y);
+        rendered = `${rendered}<div style="background-color:${this.asHex(colour)};"></div>`;
+      }
+    }
+    return rendered;
+  }
+
+  private asHex(n: number): string {
+    const h = "000000" + n.toString(16);
+    const h6 = h.substring(h.length - 6);
+    return `#${h6}`;
+  }
+
+  @elanProcedure(["blocks"], ProcedureOptions.async)
+  async displayBlocks(
+    @elanClassType(ElanArray2D, [ElanInt]) blocks: ElanArray2D<number>,
+  ): Promise<void> {
+    if (blocks.columns() !== 40 || blocks.rows() !== 30) {
+      throw new ElanRuntimeError(`argument must be Array2D<of Int> with dimensions 40 x 30`);
+    }
+    const html = this.blocksAsHtml(blocks);
+    return await this.system!.elanInputOutput.drawBlockGraphics(html);
+  }
+
+  @elanProcedure([], ProcedureOptions.async)
+  async clearBlocks() {
+    await this.system!.elanInputOutput.clearBlockGraphics();
+  }
+
+  @elanFunction([""], FunctionOptions.pureExtension)
+  vectorGraphicsAsHtml(
+    @elanClassType(List, [ElanClass(VectorGraphic)]) vgs: List<VectorGraphic>,
+  ): string {
+    let content = ``;
+    for (let i = 0; i < vgs.length(); i++) {
+      const vg = vgs.read(i);
+      content = content + vg.asHtml() + "\n";
+    }
+    const html = `<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">\n${content}</svg>\n`;
+    return html;
+  }
+
+  @elanProcedure(["listOfVGs"], ProcedureOptions.async)
+  async displayVectorGraphics(
+    @elanClassType(List, [ElanClass(VectorGraphic)]) vgs: List<VectorGraphic>,
+  ): Promise<void> {
+    const html = this.vectorGraphicsAsHtml(vgs);
+    return await this.system!.elanInputOutput.drawVectorGraphics(html);
+  }
+
+  @elanProcedure([], ProcedureOptions.async)
+  async clearVectorGraphics() {
+    await this.system!.elanInputOutput.clearVectorGraphics();
   }
 }

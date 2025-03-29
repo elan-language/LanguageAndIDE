@@ -2,19 +2,20 @@ import { CodeSource } from "../code-source";
 import { MethodNameField } from "../fields/method-name-field";
 import { ParamList } from "../fields/param-list";
 import { TypeField } from "../fields/type-field";
+import { isReturnStatement } from "../frame-helpers";
 import { FrameWithStatements } from "../frame-with-statements";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
-import { Frame } from "../interfaces/frame";
 import { Parent } from "../interfaces/parent";
 import { Profile } from "../interfaces/profile";
+import { Scope } from "../interfaces/scope";
+import { Transforms } from "../interfaces/transforms";
 import { endKeyword, functionKeyword, returnKeyword, returnsKeyword } from "../keywords";
 import { ReturnStatement } from "../statements/return-statement";
 import { FunctionType } from "../symbols/function-type";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
-import { Transforms } from "../syntax-nodes/transforms";
 
 export abstract class FunctionFrame extends FrameWithStatements implements Parent, ElanSymbol {
   public name: MethodNameField;
@@ -41,7 +42,7 @@ export abstract class FunctionFrame extends FrameWithStatements implements Paren
   symbolType(transforms?: Transforms) {
     const [pn, pt] = this.params.symbolNamesAndTypes(transforms);
     const rt = this.returnType.symbolType(transforms);
-    return new FunctionType(pn, pt, rt, false);
+    return new FunctionType(pn, pt, rt, false, true, true);
   }
 
   get symbolScope() {
@@ -64,8 +65,8 @@ export abstract class FunctionFrame extends FrameWithStatements implements Paren
     return "func";
   }
   public renderAsHtml(): string {
-    return `<el-func class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>${functionKeyword} </el-kw><el-method>${this.name.renderAsHtml()}</el-method>(${this.params.renderAsHtml()})<el-kw> ${returnsKeyword} </el-kw>${this.returnType.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
+    return `<el-func class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.toolTip()}>
+<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>${functionKeyword} </el-kw><el-method>${this.name.renderAsHtml()}</el-method>(${this.params.renderAsHtml()})<el-kw> ${returnsKeyword} </el-kw>${this.returnType.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
 <el-kw>${endKeyword} ${functionKeyword}</el-kw>
 </el-func>`;
@@ -92,10 +93,10 @@ ${this.renderChildrenAsHtml()}
     return result;
   }
   protected getReturnStatement(): ReturnStatement {
-    return this.getChildren().filter((s) => "isReturnStatement" in s)[0] as ReturnStatement;
+    return this.getChildren().filter((s) => isReturnStatement(s))[0];
   }
 
-  resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
+  resolveSymbol(id: string, transforms: Transforms, initialScope: Scope): ElanSymbol {
     if (this.name.text === id) {
       return this;
     }
@@ -107,10 +108,10 @@ ${this.renderChildrenAsHtml()}
 
   public compile(transforms: Transforms): string {
     return `${this.name.compile(transforms)}(${this.params.compile(transforms)}) {\r
-${this.compileStatements(transforms)}\r`;
+${this.breakPoint(this.debugSymbols())}${this.compileChildren(transforms)}\r`;
   }
 
-  public override symbolMatches(id: string, all: boolean, initialScope?: Frame): ElanSymbol[] {
+  public override symbolMatches(id: string, all: boolean, initialScope: Scope): ElanSymbol[] {
     const matches = super.symbolMatches(id, all, initialScope);
     const localMatches = this.params.symbolMatches(id, all, initialScope);
     return localMatches.concat(matches);

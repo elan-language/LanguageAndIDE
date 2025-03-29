@@ -26,8 +26,8 @@ const global = new class {};
 async function main() {
   let a = 1;
   let b = "Apple";
-  let c = system.list([1, 2, 3]);
-  system.printLine(\`\${_stdlib.asString(a)} \${_stdlib.asString(b)} \${_stdlib.asString(c)}\`);
+  let c = system.listImmutable([1, 2, 3]);
+  await system.printLine(\`\${await _stdlib.asString(a)} \${await _stdlib.asString(b)} \${await _stdlib.asString(c)}\`);
 }
 return [main, _tests];}`;
 

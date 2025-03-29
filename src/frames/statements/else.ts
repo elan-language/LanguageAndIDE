@@ -3,18 +3,24 @@ import { CodeSource, CodeSourceFromString } from "../code-source";
 import { mustBeOfType } from "../compile-rules";
 import { ExpressionField } from "../fields/expression-field";
 import { IfSelector } from "../fields/if-selector";
+import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
+import { Frame } from "../interfaces/frame";
 import { Parent } from "../interfaces/parent";
+import { Scope } from "../interfaces/scope";
 import { Statement } from "../interfaces/statement";
+import { Transforms } from "../interfaces/transforms";
 import { elseKeyword, thenKeyword } from "../keywords";
+import { compileStatements } from "../parent-helpers";
 import { BooleanType } from "../symbols/boolean-type";
-import { Transforms } from "../syntax-nodes/transforms";
+import { getIds, handleDeconstruction, isSymbol, symbolMatches } from "../symbols/symbol-helpers";
 
 export class Else extends AbstractFrame implements Statement {
   isStatement: boolean = true;
   selectIfClause: IfSelector;
   hasIf: boolean = false;
   condition: ExpressionField;
+  hrefForFrameHelp: string = "LangRef.html#else";
 
   constructor(parent: Parent) {
     super(parent);
@@ -66,12 +72,16 @@ export class Else extends AbstractFrame implements Statement {
     return `{`;
   }
 
+  getCurrentScope(): Scope {
+    return this.compileScope ?? this;
+  }
+
   indent() {
     return this.getParent()!.indent(); //overrides the additional indent added for most child statements
   }
 
   renderAsHtml(): string {
-    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><el-top>
+    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.toolTip()}><el-top>${this.contextMenu()}${this.bpAsHtml()}
     <el-kw>${elseKeyword} </el-kw>${this.ifClauseAsHtml()}${this.hasIf ? "<el-kw> " + thenKeyword + "</el-kw>" : ""}</el-top>${this.compileMsgAsHtml()}${this.getFrNo()}</el-statement>`;
   }
 
@@ -81,7 +91,8 @@ export class Else extends AbstractFrame implements Statement {
 
   compile(transforms: Transforms): string {
     this.compileErrors = [];
-    return `${this.indent()}} else ${this.compileIfClause(transforms)}`;
+    return `${this.indent()}} else ${this.compileIfClause(transforms)}
+${compileStatements(transforms, this.compileChildren)}`;
   }
 
   parseFrom(source: CodeSource): void {
@@ -93,5 +104,69 @@ export class Else extends AbstractFrame implements Statement {
       this.condition.parseFrom(new CodeSourceFromString(condition));
       source.remove(" then");
     }
+  }
+
+  compileChildren: Frame[] = [];
+
+  setCompileScope(s: Scope) {
+    this.compileScope = s;
+    this.compileChildren = [];
+  }
+
+  addChild(f: Frame) {
+    this.compileChildren.push(f);
+  }
+
+  getOuterScope() {
+    // need to get scope of IfStatement
+    return this.getCurrentScope().getParentScope();
+  }
+
+  getChildRange(initialScope: Scope) {
+    const fst = this.compileChildren[0];
+    const fi = this.compileChildren.indexOf(fst);
+    const li = this.compileChildren.indexOf(initialScope as Frame);
+
+    return fi < li
+      ? this.compileChildren.slice(fi, li + 1)
+      : this.compileChildren.slice(li, fi + 1);
+  }
+
+  resolveSymbol(id: string, transforms: Transforms, initialScope: Scope): ElanSymbol {
+    if (this.compileChildren.length > 0) {
+      let range = this.getChildRange(initialScope);
+
+      if (range.length > 1) {
+        range = range.slice(0, range.length - 1);
+
+        for (const f of range) {
+          if (isSymbol(f) && id) {
+            const sids = getIds(f.symbolId);
+            if (sids.includes(id)) {
+              return f;
+            }
+          }
+        }
+      }
+    }
+
+    return this.getOuterScope().resolveSymbol(id, transforms, this.getCurrentScope());
+  }
+
+  symbolMatches(id: string, all: boolean, initialScope: Scope): ElanSymbol[] {
+    const matches = this.getOuterScope().symbolMatches(id, all, this.getCurrentScope());
+
+    let localMatches: ElanSymbol[] = [];
+
+    if (this.compileChildren.length > 0) {
+      let range = this.getChildRange(initialScope as Frame);
+
+      if (range.length > 1) {
+        range = range.slice(0, range.length - 1);
+        const symbols = handleDeconstruction(range.filter((r) => isSymbol(r)));
+        localMatches = symbolMatches(id, all, symbols);
+      }
+    }
+    return localMatches.concat(matches);
   }
 }

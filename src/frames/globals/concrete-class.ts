@@ -1,8 +1,11 @@
 import { Constructor } from "../class-members/constructor";
 import { mustBeDeclaredAbove, mustImplementSuperClasses } from "../compile-rules";
+import { isConstructor } from "../frame-helpers";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { SymbolType } from "../interfaces/symbol-type";
+import { Transforms } from "../interfaces/transforms";
+import { noTypeOptions } from "../interfaces/type-options";
 import { classKeyword, endKeyword } from "../keywords";
 import {
   parentHelper_compileChildren,
@@ -10,7 +13,6 @@ import {
   parentHelper_renderChildrenAsSource,
 } from "../parent-helpers";
 import { ClassSubType, ClassType } from "../symbols/class-type";
-import { Transforms } from "../syntax-nodes/transforms";
 import { ClassFrame } from "./class-frame";
 
 export class ConcreteClass extends ClassFrame {
@@ -20,7 +22,6 @@ export class ConcreteClass extends ClassFrame {
   }
 
   ofTypes: SymbolType[] = [];
-  genericParamMatches: Map<string, SymbolType> = new Map<string, SymbolType>();
 
   initialKeywords(): string {
     return classKeyword;
@@ -35,7 +36,7 @@ export class ConcreteClass extends ClassFrame {
       this.symbolId,
       ClassSubType.concrete,
       false,
-      false,
+      noTypeOptions,
       cd ? [] : this.inheritance.symbolTypes(transforms),
       this,
     );
@@ -54,8 +55,8 @@ export class ConcreteClass extends ClassFrame {
   }
 
   public renderAsHtml(): string {
-    return `<el-class class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>class </el-kw>${this.name.renderAsHtml()}${this.inheritanceAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
+    return `<el-class class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.toolTip()}>
+<el-top>${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>class </el-kw>${this.name.renderAsHtml()}${this.inheritanceAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
 ${parentHelper_renderChildrenAsHtml(this)}
 <el-kw>end class</el-kw>
 </el-class>`;
@@ -97,14 +98,19 @@ end class\r\n`;
       this.htmlId,
     );
 
+    const emptyInitialise = this.getChildren().some((m) => isConstructor(m))
+      ? ""
+      : `  ${this.indent()}async _initialise() { return this; }`;
+
     return `class ${name} ${extendsClause}{\r
-  static emptyInstance() { return system.emptyClass(${name}, ${this.propertiesToInit()});};\r
+  static emptyInstance() { return system.emptyClass(${name}, ${this.propertiesToInit()});};
+${emptyInitialise}
 ${parentHelper_compileChildren(this, transforms)}\r
 }\r\n`;
   }
 
   public getConstructor(): Constructor {
-    return this.getChildren().filter((m) => "isConstructor" in m)[0] as Constructor;
+    return this.getChildren().filter((m) => isConstructor(m))[0] as Constructor;
   }
 
   topKeywords(): string {

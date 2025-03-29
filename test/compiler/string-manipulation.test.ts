@@ -26,7 +26,7 @@ const global = new class {};
 async function main() {
   let a = "Hello";
   let b = "World!";
-  system.printLine(a + " " + b);
+  await system.printLine(a + " " + b);
 }
 return [main, _tests];}`;
 
@@ -49,7 +49,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine("_" + "Hello" + "!");
+  await system.printLine("_" + "Hello" + "!");
 }
 return [main, _tests];}`;
 
@@ -62,27 +62,34 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "_Hello!");
   });
 
-  test("Pass_AppendFloat", async () => {
+  test("Fail_AppendFloat", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
   print "Hello" + 3.1
 end main`;
 
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  system.printLine("Hello" + 3.1);
-}
-return [main, _tests];}`;
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Float or Int Provided: String"]);
+  });
+
+  test("Fail_AppendInt", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  print "Hello" + 3
+end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "Hello3.1");
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Float or Int Provided: String"]);
   });
 
   test("Pass_Indexing", async () => {
@@ -97,7 +104,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = "abcde";
-  system.printLine(system.safeIndex(a, 2));
+  await system.printLine(system.safeIndex(a, 2));
 }
 return [main, _tests];}`;
 
@@ -126,7 +133,7 @@ async function main() {
   let a = "abcde";
   let b = "z";
   b = b + system.safeIndex(a, 0);
-  system.printLine(b);
+  await system.printLine(b);
 }
 return [main, _tests];}`;
 
@@ -155,7 +162,7 @@ async function main() {
   let a = "abcde";
   let b = "z";
   b = system.safeIndex(a, 0);
-  system.printLine(b);
+  await system.printLine(b);
 }
 return [main, _tests];}`;
 
@@ -182,9 +189,9 @@ end main`;
 const global = new class {};
 async function main() {
   let a = "abcde";
-  system.printLine(a.slice(1, 3));
-  system.printLine(a.slice(2));
-  system.printLine(a.slice(0, 2));
+  await system.printLine(system.safeSlice(a, 1, 3));
+  await system.printLine(system.safeSlice(a, 2));
+  await system.printLine(system.safeSlice(a, 0, 2));
 }
 return [main, _tests];}`;
 
@@ -213,13 +220,13 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine("abc" === "abc");
-  system.printLine("abc" === "abcd");
-  system.printLine("abc" === "Abc");
-  system.printLine("abc" === "abc");
-  system.printLine("abc" !== "abcd");
-  system.printLine("abc" !== "abcd");
-  system.printLine("abc" !== "Abc");
+  await system.printLine("abc" === "abc");
+  await system.printLine("abc" === "abcd");
+  await system.printLine("abc" === "Abc");
+  await system.printLine("abc" === "abc");
+  await system.printLine("abc" !== "abcd");
+  await system.printLine("abc" !== "abcd");
+  await system.printLine("abc" !== "Abc");
 }
 return [main, _tests];}`;
 
@@ -247,12 +254,12 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(_stdlib.isBefore("abc", "abC"));
-  system.printLine(_stdlib.isAfter("abcd", "abc"));
-  system.printLine(_stdlib.isAfterOrSameAs("abc", "abc"));
-  system.printLine(_stdlib.isBeforeOrSameAs("abc", "abc"));
-  system.printLine(_stdlib.isAfterOrSameAs("abcd", "abc"));
-  system.printLine(_stdlib.isBeforeOrSameAs("abcd", "abc"));
+  await system.printLine(_stdlib.isBefore("abc", "abC"));
+  await system.printLine(_stdlib.isAfter("abcd", "abc"));
+  await system.printLine(_stdlib.isAfterOrSameAs("abc", "abc"));
+  await system.printLine(_stdlib.isBeforeOrSameAs("abc", "abc"));
+  await system.printLine(_stdlib.isAfterOrSameAs("abcd", "abc"));
+  await system.printLine(_stdlib.isBeforeOrSameAs("abcd", "abc"));
 }
 return [main, _tests];}`;
 
@@ -280,8 +287,8 @@ const global = new class {};
 async function main() {
   let a = "abcde";
   let b = 2.1 + 3.4;
-  a = _stdlib.asString(b);
-  system.printLine(a);
+  a = (await _stdlib.asString(b));
+  await system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -309,8 +316,8 @@ const global = new class {};
 async function main() {
   let a = 3;
   let b = 4;
-  let c = \`\${_stdlib.asString(a)} x \${_stdlib.asString(b)} = \${_stdlib.asString(a * b)}\`;
-  system.printLine(c);
+  let c = \`\${await _stdlib.asString(a)} x \${await _stdlib.asString(b)} = \${await _stdlib.asString(a * b)}\`;
+  await system.printLine(c);
 }
 return [main, _tests];}`;
 
@@ -323,7 +330,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "3 x 4 = 12");
   });
 
-  test("Pass_AppendStringToFloat", async () => {
+  test("Fail_AppendStringToFloat", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -331,21 +338,28 @@ main
   print a
 end main`;
 
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let a = 3.1 + "Hello";
-  system.printLine(a);
-}
-return [main, _tests];}`;
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Float or Int Provided: String"]);
+  });
+
+  test("Fail_AppendStringToInt", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to 3 + "Hello"
+  print a
+end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "3.1Hello");
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Float or Int Provided: String"]);
   });
 
   test("Fail_IndexOutOfRange", async () => {
@@ -370,7 +384,7 @@ end main
 
 main
   variable a set to "abcde"
-  call a.putAt(0, "b")
+  call a.put(0, "b")
   print a
 end main
 `;
@@ -380,7 +394,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types String to Array<of String>"]);
+    assertDoesNotCompile(fileImpl, ["'put' is not defined for type 'String'"]);
   });
 
   test("Fail_ComparisonOperators", async () => {
@@ -401,12 +415,12 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types String to Float or Int",
-      "Incompatible types String to Float or Int",
-      "Incompatible types String to Float or Int",
-      "Incompatible types String to Float or Int",
-      "Incompatible types String to Float or Int",
-      "Incompatible types String to Float or Int",
+      "Incompatible types. Expected: Float or Int Provided: String",
+      "Incompatible types. Expected: Float or Int Provided: String",
+      "Incompatible types. Expected: Float or Int Provided: String",
+      "Incompatible types. Expected: Float or Int Provided: String",
+      "Incompatible types. Expected: Float or Int Provided: String",
+      "Incompatible types. Expected: Float or Int Provided: String",
     ]);
   });
 
@@ -424,6 +438,6 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Float to String"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: String Provided: Float"]);
   });
 });

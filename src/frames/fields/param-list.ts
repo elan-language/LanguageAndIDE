@@ -11,6 +11,7 @@ import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Frame } from "../interfaces/frame";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
+import { Transforms } from "../interfaces/transforms";
 import { ParamListNode } from "../parse-nodes/param-list-node";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { ParseStatus } from "../status-enums";
@@ -19,8 +20,6 @@ import { symbolMatches } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { isAstCollectionNode, isAstIdNode, transforms } from "../syntax-nodes/ast-helpers";
-import { EmptyAsn } from "../syntax-nodes/empty-asn";
-import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractField } from "./abstract-field";
 
 export class ParamList extends AbstractField implements Scope {
@@ -53,7 +52,7 @@ export class ParamList extends AbstractField implements Scope {
     return [];
   }
 
-  symbolMatches(id: string, all: boolean, _initialScope?: Scope): ElanSymbol[] {
+  symbolMatches(id: string, all: boolean, _initialScope: Scope): ElanSymbol[] {
     const symbols = this.getParamsAsSymbols();
     return symbolMatches(id, all, symbols);
   }
@@ -83,7 +82,7 @@ export class ParamList extends AbstractField implements Scope {
     return [names, types];
   }
 
-  resolveSymbol(id: string | undefined, _transforms: Transforms, _initialScope: Frame): ElanSymbol {
+  resolveSymbol(id: string, _transforms: Transforms, _initialScope: Scope): ElanSymbol {
     const allSymbols = this.getParamsAsSymbols();
     const matches = allSymbols.filter((n) => n.symbolId === id);
 
@@ -120,7 +119,7 @@ export class ParamList extends AbstractField implements Scope {
     }
   }
 
-  private getIdNodes(parms: AstNode | EmptyAsn): AstIdNode[] {
+  private getIdNodes(parms: AstNode): AstIdNode[] {
     if (isAstCollectionNode(parms)) {
       return parms.items.filter((n) => isAstIdNode(n)) as AstIdNode[];
     }

@@ -3,14 +3,17 @@ import { AbstractSelector } from "./abstract-selector";
 import { CodeSource } from "./code-source";
 import { CompileError } from "./compile-error";
 import { Regexes } from "./fields/regexes";
+import { isSelector } from "./frame-helpers";
 import { Collapsible } from "./interfaces/collapsible";
 import { ElanSymbol } from "./interfaces/elan-symbol";
 import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
 import { Profile } from "./interfaces/profile";
+import { Scope } from "./interfaces/scope";
 import { StatementFactory } from "./interfaces/statement-factory";
+import { Transforms } from "./interfaces/transforms";
 import {
-  isNotSelectorFrame,
+  compileStatements,
   parentHelper_addChildAfter,
   parentHelper_addChildBefore,
   parentHelper_aggregateCompileErrorsOfChildren,
@@ -31,12 +34,12 @@ import {
   parentHelper_renderChildrenAsHtml,
   parentHelper_renderChildrenAsSource,
   parentHelper_selectFirstChild,
+  parentHelper_updateBreakpoints,
 } from "./parent-helpers";
 import { AssertStatement } from "./statements/assert-statement";
-import { DefinitionAdapter } from "./statements/definition-adapter";
 import { StatementSelector } from "./statements/statement-selector";
-import { getDeconstructionIds, isSymbol, symbolMatches } from "./symbols/symbol-helpers";
-import { Transforms } from "./syntax-nodes/transforms";
+import { BreakpointEvent } from "./status-enums";
+import { getIds, handleDeconstruction, isSymbol, symbolMatches } from "./symbols/symbol-helpers";
 
 export abstract class FrameWithStatements extends AbstractFrame implements Parent, Collapsible {
   isFrameWithStatements = true;
@@ -112,7 +115,7 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
 
   insertSelectorAfterLastField(): void {
     const firstChild = this._children[0];
-    if ("isSelector" in firstChild) {
+    if (isSelector(firstChild)) {
       firstChild.select(true, false);
     } else {
       const selector = this.newChildSelector();
@@ -219,41 +222,23 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     return result;
   }
 
-  protected compileStatements(transforms: Transforms): string {
-    let result = "";
-    if (this._children.length > 0) {
-      const ss: Array<string> = [];
-      for (const frame of this._children.filter(isNotSelectorFrame)) {
-        ss.push(frame.compile(transforms));
-      }
-      result = ss.join("\r\n");
-    }
-    return result;
+  protected compileChildStatements(transforms: Transforms): string {
+    return compileStatements(transforms, this._children);
   }
 
   multipleIds(sid: string) {
     return sid.includes(",") || sid.includes(":");
   }
 
-  getIds(sid: string) {
-    if (sid.includes(",")) {
-      return sid.split(",").map((s) => s.trim());
-    }
-    if (sid.includes(":")) {
-      return sid.split(":").map((s) => s.trim());
-    }
-    return [sid];
-  }
-
-  resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
+  resolveSymbol(id: string, transforms: Transforms, initialScope: Scope): ElanSymbol {
     const fst = this.getFirstChild();
-    let range = this.getChildRange(fst, initialScope);
+    let range = this.getChildRange(fst, initialScope as Frame);
     if (range.length > 1) {
       range = range.slice(0, range.length - 1);
 
       for (const f of range) {
         if (isSymbol(f) && id) {
-          const sids = this.getIds(f.symbolId);
+          const sids = getIds(f.symbolId);
           if (sids.includes(id)) {
             return f;
           }
@@ -261,36 +246,18 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
       }
     }
 
-    return this.getParent().resolveSymbol(id, transforms, this);
+    return this.getParentScope().resolveSymbol(id, transforms, this.getCurrentScope());
   }
 
-  handleDeconstruction(ss: ElanSymbol[]) {
-    const newSymbols: ElanSymbol[] = [];
-
-    for (const s of ss) {
-      const ids = getDeconstructionIds(s.symbolId);
-
-      if (ids.length === 1) {
-        newSymbols.push(s);
-      } else {
-        for (let i = 0; i < ids.length; i++) {
-          newSymbols.push(new DefinitionAdapter(s, i));
-        }
-      }
-    }
-
-    return newSymbols;
-  }
-
-  symbolMatches(id: string, all: boolean, initialScope?: Frame): ElanSymbol[] {
-    const matches = this.getParent().symbolMatches(id, all, this);
+  symbolMatches(id: string, all: boolean, initialScope: Scope): ElanSymbol[] {
+    const matches = this.getParentScope().symbolMatches(id, all, this.getCurrentScope());
     let localMatches: ElanSymbol[] = [];
 
     const fst = this.getFirstChild();
-    let range = this.getChildRange(fst, initialScope!);
+    let range = this.getChildRange(fst, initialScope as Frame);
     if (range.length > 1) {
       range = range.slice(0, range.length - 1);
-      const symbols = this.handleDeconstruction(range.filter((r) => isSymbol(r)));
+      const symbols = handleDeconstruction(range.filter((r) => isSymbol(r)));
       localMatches = symbolMatches(id, all, symbols);
     }
 
@@ -311,5 +278,10 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     }
 
     return asserts;
+  }
+
+  updateBreakpoints(event: BreakpointEvent): void {
+    super.updateBreakpoints(event);
+    parentHelper_updateBreakpoints(this, event);
   }
 }

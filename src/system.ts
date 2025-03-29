@@ -2,7 +2,13 @@
 import { ElanInputOutput } from "./elan-input-output";
 import { ElanRuntimeError } from "./elan-runtime-error";
 import { TestStatus } from "./frames/status-enums";
-import { hasHiddenType } from "./has-hidden-type";
+import { Dictionary } from "./standard-library/dictionary";
+import { DictionaryImmutable } from "./standard-library/dictionary-immutable";
+import { ElanArray } from "./standard-library/elan-array";
+import { List } from "./standard-library/list";
+import { ListImmutable } from "./standard-library/list-immutable";
+import { ElanSet } from "./standard-library/set";
+import { WebWorkerBreakpointMessage } from "./web/web-worker-messages";
 
 export class AssertOutcome {
   constructor(
@@ -24,33 +30,13 @@ export class System {
   }
 
   // constant immutables
-  emptyImmutableListSingleton = this.list([]);
-  emptyIterableSingleton = this.iter([]);
-  emptyDictionaryImmutableSingleton = this.dictionaryImmutable({});
+  emptyImmutableListSingleton = this.initialise(new ListImmutable([]));
+  emptyDictionaryImmutableSingleton = this.dictionaryImmutable([]);
+
   emptyRegExpSingleton = /(?:)/;
 
   emptyRegExp() {
     return this.emptyRegExpSingleton;
-  }
-
-  emptyIter() {
-    return this.emptyIterableSingleton;
-  }
-
-  emptyArray() {
-    return this.literalArray([]);
-  }
-
-  emptyDictionary() {
-    return this.dictionary({});
-  }
-
-  emptyDictionaryImmutable() {
-    return this.emptyDictionaryImmutableSingleton;
-  }
-
-  emptyImmutableList() {
-    return this.emptyImmutableListSingleton;
   }
 
   emptyTuple(toInit: any[]) {
@@ -63,51 +49,26 @@ export class System {
   }
 
   tuple(t: Array<any>) {
-    (t as unknown as hasHiddenType)._type = "Tuple";
     return t;
+  }
+
+  listImmutable(t: Array<any>) {
+    return this.initialise(new ListImmutable(t));
+  }
+
+  dictionary(t: []) {
+    return this.initialise(new Dictionary(t));
+  }
+
+  dictionaryImmutable(t: []) {
+    return this.initialise(new DictionaryImmutable(t));
   }
 
   list(t: Array<any>) {
-    (t as unknown as hasHiddenType)._type = "List";
-    return t;
+    return this.initialise(new List(t));
   }
 
-  dictionary(t: object) {
-    (t as unknown as hasHiddenType)._type = "Dictionary";
-    return t;
-  }
-
-  dictionaryImmutable(t: object) {
-    (t as unknown as hasHiddenType)._type = "DictionaryImmutable";
-    return t;
-  }
-
-  literalArray(t: Array<any>) {
-    (t as unknown as hasHiddenType)._type = "Array";
-    return t;
-  }
-
-  iter(t: Array<any>) {
-    (t as unknown as hasHiddenType)._type = "Iterable";
-    return t;
-  }
-
-  array(t: Array<any>) {
-    (t as unknown as hasHiddenType)._type = "Array";
-    return t;
-  }
-
-  initialise<T>(toInit: T, toType?: () => any): T {
-    if (toType && Array.isArray(toInit) && toInit.length > 0) {
-      for (let i = 0; i < toInit.length; i++) {
-        if (Array.isArray(toInit[i])) {
-          this.initialise(toInit[i], toType);
-        } else {
-          toInit[i] = toType();
-        }
-      }
-    }
-
+  initialise<T>(toInit: T): T {
     if ("system" in (toInit as object)) {
       (toInit as any).system = this;
     }
@@ -129,23 +90,46 @@ export class System {
     return t;
   }
 
-  safeIndex(indexable: any, index: any) {
+  safeIndex(indexable: any, index1: any, index2?: any | undefined) {
+    if (typeof indexable !== "string" && "safeIndex" in indexable) {
+      return indexable.safeIndex(index1, index2);
+    }
+
     if (indexable === undefined) {
       throw new ElanRuntimeError(`Out of range index`);
     }
 
-    const r = indexable[index];
+    const r = indexable[index1];
 
     if (r === undefined) {
-      this.throwRangeError(indexable, index);
+      this.throwRangeError(indexable, index1);
     }
 
     return r;
   }
 
-  safeDictionarySet(toIndex: any, index: any, value: any) {
-    const d = this.dictionary(toIndex ?? {}) as any;
-    d[index] = value;
+  safeSlice(indexable: any, index1: number | undefined, index2: number | undefined) {
+    if (indexable === undefined) {
+      throw new ElanRuntimeError(`Out of range index`);
+    }
+
+    if (typeof indexable !== "string" && "safeSlice" in indexable) {
+      return indexable.safeSlice(index1, index2);
+    }
+
+    if (typeof indexable !== "string") {
+      throw new ElanRuntimeError(`Out of range index`);
+    }
+
+    if (index1 && index1 < 0) {
+      this.throwRangeError(indexable, index1);
+    }
+
+    if (index2 && index2 < 0) {
+      this.throwRangeError(indexable, index2);
+    }
+
+    return indexable.slice(index1, index2);
   }
 
   throwRangeError(toIndex: any, index: any) {
@@ -156,7 +140,11 @@ export class System {
     throw new ElanRuntimeError(`No such key: ${index}`);
   }
 
-  safeArraySet<T>(toIndex: T[], index: number, value: T) {
+  throwKeyError(index: any) {
+    throw new ElanRuntimeError(`No such key: ${index}`);
+  }
+
+  safeListSet<T>(toIndex: T[], index: number, value: T) {
     const size = toIndex.length;
     if (index >= size) {
       throw new ElanRuntimeError(`Out of range index: ${index} size: ${size}`);
@@ -165,26 +153,22 @@ export class System {
     toIndex[index] = value;
   }
 
-  printLine(s: any) {
-    const ss = this._stdlib.asString(s);
-    this.elanInputOutput.printLine(ss);
+  safeArray2DSet<T>(toIndex: T[][], col: number, row: number, value: T) {
+    const size = toIndex.length;
+    if (col >= size) {
+      throw new ElanRuntimeError(`Out of range index: ${col} size: ${size}`);
+    }
+
+    this.safeListSet(toIndex[col], row, value);
+  }
+
+  async printLine(s: any) {
+    const ss = await this._stdlib.asString(s);
+    await this.elanInputOutput.printLine(ss);
   }
 
   async input() {
-    return this.elanInputOutput.readLine();
-  }
-
-  concat<T>(lhs: Array<T> | T, rhs: Array<T> | T) {
-    if (Array.isArray(lhs) && Array.isArray(rhs)) {
-      return this.list(lhs.concat(rhs));
-    }
-
-    if (Array.isArray(lhs)) {
-      return this.list(lhs.concat([rhs as T]));
-    }
-
-    // if (Array.isArray(rhs)){
-    return this.list([lhs as T].concat(rhs));
+    return await this.elanInputOutput.readLine();
   }
 
   equals(i1: any, i2: any) {
@@ -210,6 +194,10 @@ export class System {
       return false;
     }
 
+    if ("equals" in o1) {
+      return o1.equals(o2);
+    }
+
     const o1items = Object.getOwnPropertyNames(o1);
     const o2items = Object.getOwnPropertyNames(o2);
 
@@ -230,51 +218,48 @@ export class System {
     return true;
   }
 
-  assert(
-    actualFunc: () => any,
+  async assert(
+    actualFunc: () => Promise<any>,
     expected: any,
     htmlId: string,
-    stdlib: { asString: (a: any) => string },
+    stdlib: { asString: (a: any) => Promise<string> },
     ignored: boolean,
   ) {
     if (ignored) {
       return new AssertOutcome(TestStatus.ignored, "", "", htmlId);
     }
     try {
-      const actual = actualFunc();
-      return this.doAssert(actual, expected, htmlId, stdlib);
+      const actual = await actualFunc();
+      return await this.doAssert(actual, expected, htmlId, stdlib);
     } catch (err) {
-      return this.doAssert((err as any).message, expected, htmlId, stdlib);
+      return await this.doAssert((err as any).message, expected, htmlId, stdlib);
     }
   }
 
-  private doAssert(
+  private async doAssert(
     actual: any,
     expected: any,
     htmlId: string,
-    stdlib: { asString: (a: any) => string },
+    stdlib: { asString: (a: any) => Promise<string> },
   ) {
     if (!this.equals(actual, expected)) {
       return new AssertOutcome(
         TestStatus.fail,
-        `${stdlib.asString(actual)}`,
-        `${stdlib.asString(expected)}`,
+        `${await stdlib.asString(actual)}`,
+        `${await stdlib.asString(expected)}`,
         htmlId,
       );
     }
     return new AssertOutcome(
       TestStatus.pass,
-      `${stdlib.asString(actual)}`,
-      `${stdlib.asString(expected)}`,
+      `${await stdlib.asString(actual)}`,
+      `${await stdlib.asString(expected)}`,
       htmlId,
     );
   }
 
-  deconstructList<T>(list: T[]): [T, T[]] {
-    const type = (list as unknown as hasHiddenType)._type;
-    const [hd, ...tl] = list;
-    (tl as unknown as hasHiddenType)._type = type;
-    return [hd, tl];
+  deconstructList<T>(list: List<T> | ListImmutable<T>): [T, List<T> | ListImmutable<T>] {
+    return list.deconstructList();
   }
 
   unhandledExpression(v: any) {
@@ -301,5 +286,188 @@ export class System {
     tests.length = 0;
 
     return allOutcomes;
+  }
+
+  async debugSymbol(symbol: any) {
+    try {
+      return await this._stdlib.asString(symbol);
+    } catch (_e) {
+      return "error resolving";
+    }
+  }
+
+  elanIndexOf<T1>(list: T1[], elem: T1) {
+    for (let i = 0; i < list.length; i++) {
+      const item = list[i];
+      if (this.equals(item, elem)) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  elan2DIndexOf<T1>(list: T1[][], elem: T1): [number, number] {
+    for (let i = 0; i < list.length; i++) {
+      const subArr = list[i];
+      for (let j = 0; j < subArr.length; j++) {
+        const item = subArr[j];
+        if (this.equals(item, elem)) {
+          return [i, j];
+        }
+      }
+    }
+    return [-1, -1];
+  }
+
+  async asString(a: any) {
+    return await this._stdlib.asString(a);
+  }
+
+  async breakPoint(
+    allScopedSymbols: [string, string][],
+    id: string,
+    singlestep: boolean,
+    pause: boolean,
+  ): Promise<boolean> {
+    if (singlestep && !pause) {
+      return false;
+    }
+
+    let paused = true;
+    let nextPause = false;
+
+    addEventListener("message", async (e) => {
+      if (e.data.type === "resume") {
+        paused = false;
+      }
+      if (e.data.type === "pause") {
+        nextPause = true;
+      }
+    });
+
+    return new Promise<boolean>((rs) => {
+      postMessage({
+        type: singlestep ? "singlestep" : "breakpoint",
+        value: allScopedSymbols,
+        pausedAt: id,
+      } as WebWorkerBreakpointMessage);
+
+      const timeOut = setInterval(async () => {
+        if (!paused) {
+          clearInterval(timeOut);
+          rs(nextPause);
+        }
+      }, 1);
+    });
+  }
+
+  async getPivot<T1>(x: T1, y: T1, z: T1, compare: (a: T1, b: T1) => Promise<number>) {
+    if ((await compare(x, y)) < 0) {
+      if ((await compare(y, z)) < 0) {
+        return y;
+      } else if ((await compare(z, x)) < 0) {
+        return x;
+      } else {
+        return z;
+      }
+    } else if ((await compare(y, z)) > 0) {
+      return y;
+    } else if ((await compare(z, x)) > 0) {
+      return x;
+    } else {
+      return z;
+    }
+  }
+
+  // from github https://gist.github.com/kimamula/fa34190db624239111bbe0deba72a6ab
+  async quickSort<T1>(
+    arr: T1[],
+    compare: (a: T1, b: T1) => Promise<number>,
+    left = 0,
+    right = arr.length - 1,
+  ) {
+    if (left < right) {
+      let i = left,
+        j = right,
+        tmp;
+      const pivot = await this.getPivot(arr[i], arr[i + Math.floor((j - i) / 2)], arr[j], compare);
+      while (true) {
+        while ((await compare(arr[i], pivot)) < 0) {
+          i++;
+        }
+        while ((await compare(pivot, arr[j])) < 0) {
+          j--;
+        }
+        if (i >= j) {
+          break;
+        }
+        tmp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = tmp;
+
+        i++;
+        j--;
+      }
+      await this.quickSort(arr, compare, left, i - 1);
+      await this.quickSort(arr, compare, j + 1, right);
+    }
+    return arr;
+  }
+
+  listImmutableAsList<T1>(list: ListImmutable<T1>): List<T1> {
+    const newList = [...list];
+    return this.initialise(new List(newList));
+  }
+
+  listImmutableAsSet<T1>(list: ListImmutable<T1>): ElanSet<T1> {
+    const newList = [...list];
+    return this.initialise(new ElanSet<T1>(newList));
+  }
+
+  listImmutableAsArray<T1>(list: ListImmutable<T1>): ElanArray<T1> {
+    const newList = [...list];
+    return this.initialise(new ElanArray(newList));
+  }
+
+  listAsListImmutable<T1>(list: List<T1>): ListImmutable<T1> {
+    const newList = [...list];
+    return this.initialise(new ListImmutable(newList));
+  }
+
+  listAsSet<T1>(list: List<T1>): ElanSet<T1> {
+    const newList = [...list];
+    return this.initialise(new ElanSet<T1>(newList));
+  }
+
+  listAsArray<T1>(list: List<T1>): ElanArray<T1> {
+    const newList = [...list];
+    return this.initialise(new ElanArray(newList));
+  }
+
+  arrayAsListImmutable<T1>(list: ElanArray<T1>): ListImmutable<T1> {
+    const newList = [...list];
+    return this.initialise(new ListImmutable(newList));
+  }
+
+  arrayAsSet<T1>(list: ElanArray<T1>): ElanSet<T1> {
+    const newList = [...list];
+    return this.initialise(new ElanSet<T1>(newList));
+  }
+
+  arrayAsList<T1>(list: ElanArray<T1>): List<T1> {
+    const newList = [...list];
+    return this.initialise(new List(newList));
+  }
+
+  dictionaryAsDictionaryImmutable<T1, T2>(
+    dictionary: Dictionary<T1, T2>,
+  ): DictionaryImmutable<T1, T2> {
+    return this.initialise(new DictionaryImmutable([...dictionary.contents.entries()]));
+  }
+
+  dictionaryImmutableAsDictionary<T1, T2>(
+    dictionary: DictionaryImmutable<T1, T2>,
+  ): Dictionary<T1, T2> {
+    return this.initialise(new Dictionary([...dictionary.contents.entries()]));
   }
 }

@@ -10,6 +10,7 @@ import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
+import { Transforms } from "../interfaces/transforms";
 import {
   abstractFunctionKeywords,
   abstractKeyword,
@@ -19,7 +20,6 @@ import {
 import { FunctionType } from "../symbols/function-type";
 import { getClassScope } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
-import { Transforms } from "../syntax-nodes/transforms";
 
 export class AbstractFunction extends AbstractFrame implements Member, ElanSymbol {
   isAbstract = true;
@@ -28,6 +28,7 @@ export class AbstractFunction extends AbstractFrame implements Member, ElanSymbo
   public name: IdentifierField;
   public params: ParamList;
   public returnType: TypeField;
+  hrefForFrameHelp: string = "LangRef.html#Abstract_function";
 
   constructor(parent: Parent) {
     super(parent);
@@ -56,8 +57,8 @@ export class AbstractFunction extends AbstractFrame implements Member, ElanSymbo
   }
 
   renderAsHtml(): string {
-    return `<el-func class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<el-top><el-kw>${abstractKeyword} ${functionKeyword} </el-kw><el-method>${this.name.renderAsHtml()}</el-method>(${this.params.renderAsHtml()})<el-kw> ${returnsKeyword} </el-kw>${this.returnType.renderAsHtml()}</el-top>${this.compileMsgAsHtml()}${this.getFrNo()}</el-func>
+    return `<el-func class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.toolTip()}>
+<el-top>${this.bpAsHtml()}<el-kw>${abstractKeyword} ${functionKeyword} </el-kw><el-method>${this.name.renderAsHtml()}</el-method>(${this.params.renderAsHtml()})<el-kw> ${returnsKeyword} </el-kw>${this.returnType.renderAsHtml()}</el-top>${this.compileMsgAsHtml()}${this.getFrNo()}</el-func>
 `;
   }
 
@@ -72,8 +73,10 @@ export class AbstractFunction extends AbstractFrame implements Member, ElanSymbo
     const name = this.name.compile(transforms);
     mustBeUniqueNameInScope(name, getClassScope(this), transforms, this.compileErrors, this.htmlId);
 
+    this.returnType.compile(transforms);
+
     if (name !== "asString") {
-      return `${this.indent()}${name}(${this.params.compile(transforms)}) {\r
+      return `${this.indent()}async ${name}(${this.params.compile(transforms)}) {\r
 ${this.indent()}${this.indent()}return ${this.returnType.compile(transforms)};\r
 ${this.indent()}}\r
 `;
@@ -97,7 +100,7 @@ ${this.indent()}}\r
   symbolType(transforms?: Transforms) {
     const [pn, pt] = this.params.symbolNamesAndTypes(transforms);
     const rt = this.returnType.symbolType(transforms);
-    return new FunctionType(pn, pt, rt, false);
+    return new FunctionType(pn, pt, rt, false, true, true);
   }
 
   get symbolScope() {

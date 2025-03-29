@@ -6,8 +6,8 @@ import { Field } from "../interfaces/field";
 import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
+import { Transforms } from "../interfaces/transforms";
 import { commentMarker } from "../keywords";
-import { Transforms } from "../syntax-nodes/transforms";
 
 export class CommentStatement extends AbstractFrame implements Statement, Member {
   isStatement = true;
@@ -15,6 +15,7 @@ export class CommentStatement extends AbstractFrame implements Statement, Member
   isAbstract = false;
   private = false;
   public text: CommentField;
+  hrefForFrameHelp: string = "LangRef.html#Comment";
 
   constructor(parent: Parent) {
     super(parent);
@@ -45,7 +46,7 @@ export class CommentStatement extends AbstractFrame implements Statement, Member
   }
 
   renderAsHtml(): string {
-    return `<el-statement><el-comment class="${this.cls()}" id='${this.htmlId}' tabindex="0"><el-top><el-kw># </el-kw>${this.text.renderAsHtml()}</el-top></el-comment></el-statement>`;
+    return `<el-statement>${this.bpAsHtml()}<el-comment class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.toolTip()}><el-top>${this.bpAsHtml()}<el-kw># </el-kw>${this.text.renderAsHtml()}</el-top></el-comment></el-statement>`;
   }
 
   renderAsSource(): string {

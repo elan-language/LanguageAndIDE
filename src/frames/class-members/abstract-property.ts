@@ -8,12 +8,12 @@ import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
+import { Transforms } from "../interfaces/transforms";
 import { abstractKeyword, abstractPropertyKeywords, asKeyword, propertyKeyword } from "../keywords";
 import { ClassType } from "../symbols/class-type";
 import { getClassScope } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { transforms } from "../syntax-nodes/ast-helpers";
-import { Transforms } from "../syntax-nodes/transforms";
 
 export class AbstractProperty extends AbstractFrame implements Member, ElanSymbol {
   isAbstract = true;
@@ -21,6 +21,7 @@ export class AbstractProperty extends AbstractFrame implements Member, ElanSymbo
   name: IdentifierField;
   type: TypeField;
   public private: boolean = false;
+  hrefForFrameHelp: string = "LangRef.html#Abstract_property";
 
   constructor(parent: Parent) {
     super(parent);
@@ -45,7 +46,7 @@ export class AbstractProperty extends AbstractFrame implements Member, ElanSymbo
   }
 
   renderAsHtml(): string {
-    return `<el-prop class="${this.cls()}" id='${this.htmlId}' tabindex="0"><el-top><el-kw>${abstractKeyword} ${propertyKeyword} </el-kw>${this.name.renderAsHtml()}<el-kw> ${asKeyword} </el-kw>${this.type.renderAsHtml()}</el-top>${this.compileMsgAsHtml()}${this.getFrNo()}</el-prop>`;
+    return `<el-prop class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.toolTip()}><el-top>${this.bpAsHtml()}<el-kw>${abstractKeyword} ${propertyKeyword} </el-kw>${this.name.renderAsHtml()}<el-kw> ${asKeyword} </el-kw>${this.type.renderAsHtml()}</el-top>${this.compileMsgAsHtml()}${this.getFrNo()}</el-prop>`;
   }
 
   renderAsSource(): string {

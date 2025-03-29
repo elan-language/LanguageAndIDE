@@ -24,6 +24,7 @@ export class MemberSelector extends AbstractSelector implements Member {
   isAbstract = false;
   private = false;
   private class: ClassFrame;
+  hrefForFrameHelp: string = "LangRef.html#Member_selector";
 
   constructor(parent: Parent) {
     super(parent);
@@ -37,15 +38,15 @@ export class MemberSelector extends AbstractSelector implements Member {
   defaultOptions(): [string, (parent: Parent) => Frame][] {
     const options: [string, (parent: Parent) => Frame][] = [
       [constructorKeyword, (_parent: Parent) => this.class.createConstructor()],
-      [functionKeyword, (_parent: Parent) => this.class.createFunction()],
-      [procedureKeyword, (_parent: Parent) => this.class.createProcedure()],
       [propertyKeyword, (_parent: Parent) => this.class.createProperty()],
-      [abstractFunctionKeywords, (_parent: Parent) => this.class.createAbstractFunction()],
-      [abstractProcedureKeywords, (_parent: Parent) => this.class.createAbstractProcedure()],
+      [procedureKeyword, (_parent: Parent) => this.class.createProcedure()],
+      [functionKeyword, (_parent: Parent) => this.class.createFunction()],
       [abstractPropertyKeywords, (_parent: Parent) => this.class.createAbstractProperty()],
-      [privateFunctionKeywords, (_parent: Parent) => this.class.createFunction(true)],
-      [privateProcedureKeywords, (_parent: Parent) => this.class.createProcedure(true)],
+      [abstractProcedureKeywords, (_parent: Parent) => this.class.createAbstractProcedure()],
+      [abstractFunctionKeywords, (_parent: Parent) => this.class.createAbstractFunction()],
       [privatePropertyKeywords, (_parent: Parent) => this.class.createProperty(true)],
+      [privateProcedureKeywords, (_parent: Parent) => this.class.createProcedure(true)],
+      [privateFunctionKeywords, (_parent: Parent) => this.class.createFunction(true)],
       [commentMarker, (_parent: Parent) => this.class.createComment()],
     ];
     return options;
@@ -63,7 +64,8 @@ export class MemberSelector extends AbstractSelector implements Member {
     } else if (this.class.isInterface) {
       result = keyword === commentMarker;
     } else if (this.class.isRecord) {
-      result = keyword === propertyKeyword || keyword === commentMarker;
+      result =
+        keyword === propertyKeyword || keyword === functionKeyword || keyword === commentMarker;
     } else if (keyword === constructorKeyword) {
       result = this.class.isConcrete && !this.getClass().getConstructor();
     } else {
@@ -73,7 +75,7 @@ export class MemberSelector extends AbstractSelector implements Member {
   }
 
   renderAsHtml(): string {
-    return `<el-member class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.textToDisplayAsHtml()}</el-member>`;
+    return `<el-member class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.toolTip()}>${this.textToDisplayAsHtml()}</el-member>`;
   }
 
   indent(): string {

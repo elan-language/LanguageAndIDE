@@ -29,9 +29,9 @@ async function main() {
   let x = 2 + 3 * 5 + 1;
   let y = (2 + 3) * 5 + 1;
   let z = (2 + 3) * (5 + 1);
-  system.printLine(x);
-  system.printLine(y);
-  system.printLine(z);
+  await system.printLine(x);
+  await system.printLine(y);
+  await system.printLine(z);
 }
 return [main, _tests];}`;
 
@@ -62,9 +62,9 @@ async function main() {
   let x = 2 + (3 * 5) + 1;
   let y = ((2 + 3)) * 5 + (1);
   let z = ((2 + 3) * (5 + 1));
-  system.printLine(x);
-  system.printLine(y);
-  system.printLine(z);
+  await system.printLine(x);
+  await system.printLine(y);
+  await system.printLine(z);
 }
 return [main, _tests];}`;
 
@@ -92,8 +92,8 @@ const global = new class {};
 async function main() {
   let x = 2 + 3 ** 2;
   let y = (2 + 3) ** 2;
-  system.printLine(x);
-  system.printLine(y);
+  await system.printLine(x);
+  await system.printLine(y);
 }
 return [main, _tests];}`;
 
@@ -121,8 +121,8 @@ const global = new class {};
 async function main() {
   let x = 16 / 2 ** 3;
   let y = (16 / 2) ** 3;
-  system.printLine(x);
-  system.printLine(y);
+  await system.printLine(x);
+  await system.printLine(y);
 }
 return [main, _tests];}`;
 
@@ -150,8 +150,8 @@ const global = new class {};
 async function main() {
   let x = 16 / 2 ** 3;
   let y = (16 / 2) ** 3;
-  system.printLine(x);
-  system.printLine(y);
+  await system.printLine(x);
+  await system.printLine(y);
 }
 return [main, _tests];}`;
 
@@ -181,10 +181,10 @@ const global = new class {};
 async function main() {
   let x = 0;
   let y = 0;
-  x = -4.7;
-  y = 5 * -3;
-  system.printLine(x);
-  system.printLine(y);
+  x = (-4.7);
+  y = 5 * (-3);
+  await system.printLine(x);
+  await system.printLine(y);
 }
 return [main, _tests];}`;
 
@@ -212,8 +212,8 @@ const global = new class {};
 async function main() {
   let x = 11 % 3;
   let y = (5 + 6) % 3;
-  system.printLine(x);
-  system.printLine(y);
+  await system.printLine(x);
+  await system.printLine(y);
 }
 return [main, _tests];}`;
 
@@ -241,8 +241,8 @@ const global = new class {};
 async function main() {
   let x = Math.floor(11 / 3);
   let y = Math.floor((5 + 6) / 3);
-  system.printLine(x);
-  system.printLine(y);
+  await system.printLine(x);
+  await system.printLine(y);
 }
 return [main, _tests];}`;
 
@@ -279,5 +279,73 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
+  });
+  test("Pass_OperatorOrder#1167", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  print 2*12/3 + 190
+  print 24/6/2
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await system.printLine(2 * 12 / 3 + 190);
+  await system.printLine(24 / 6 / 2);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1982");
+  });
+  test("Pass_NaN#1167", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  print sqrt(-1)
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await system.printLine(_stdlib.sqrt((-1)));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "NaN");
+  });
+  test("Pass_Infinity#1167", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  print 1/0
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await system.printLine(1 / 0);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "Infinity");
   });
 });

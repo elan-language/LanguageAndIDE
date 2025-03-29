@@ -12,7 +12,7 @@ import {
 } from "./compiler-test-helpers";
 
 suite("Each Loop", () => {
-  test("Pass_List", async () => {
+  test("Pass_List1", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -27,12 +27,12 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.list([7, 8, 9]);
+  let a = system.listImmutable([7, 8, 9]);
   let n = 0;
   for (const x of a) {
     n = n + x;
   }
-  system.printLine(n);
+  await system.printLine(n);
 }
 return [main, _tests];}`;
 
@@ -45,14 +45,14 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "24");
   });
 
-  test("Pass_Array", async () => {
+  test("Pass_List2", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to {7,8,9}.asArray()
+  variable a set to {7,8,9}.asList()
   variable n set to 0
   each x in a
-      set n to n + x
+    set n to n + x
   end each
   print n
 end main`;
@@ -60,12 +60,12 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.asArray(system.list([7, 8, 9]));
+  let a = system.listImmutable([7, 8, 9]).asList();
   let n = 0;
   for (const x of a) {
     n = n + x;
   }
-  system.printLine(n);
+  await system.printLine(n);
 }
 return [main, _tests];}`;
 
@@ -93,7 +93,7 @@ const global = new class {};
 async function main() {
   let a = "hello";
   for (const x of a) {
-    system.printLine(x);
+    await system.printLine(x);
   }
 }
 return [main, _tests];}`;
@@ -123,7 +123,7 @@ const global = new class {};
 async function main() {
   for (const x of "12") {
     for (const y of "34") {
-      system.printLine(\`\${_stdlib.asString(x)}\${_stdlib.asString(y)}\`);
+      await system.printLine(\`\${await _stdlib.asString(x)}\${await _stdlib.asString(y)}\`);
     }
   }
 }
@@ -147,20 +147,20 @@ main
   end each
 end main
 
-function fruit() returns List<of String>
+function fruit() returns ListImmutable<of String>
   return {"apple","orange", "pear"}
 end function`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  for (const x of fruit()) {
-    system.printLine(x);
+  for (const x of (await global.fruit())) {
+    await system.printLine(x);
   }
 }
 
-function fruit() {
-  return system.list(["apple", "orange", "pear"]);
+async function fruit() {
+  return system.listImmutable(["apple", "orange", "pear"]);
 }
 global["fruit"] = fruit;
 return [main, _tests];}`;
@@ -213,6 +213,25 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["'x' is not defined"]);
+  });
+
+  test("Fail_duplicateId", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable ids set to {7, 8, 9}
+  each id in id
+    print id
+  end each
+  print ids
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'id' is not defined"]);
   });
 
   test("Fail_NoEndeach", async () => {

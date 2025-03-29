@@ -23,8 +23,8 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
-  system.printLine(a);
+  let a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
+  await system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -48,8 +48,8 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.dictionary({["a"] : system.dictionary({["a"] : 1}), ["b"] : system.dictionary({["b"] : 3, ["z"] : 10})});
-  system.printLine(a);
+  let a = system.dictionary([["a", system.dictionary([["a", 1]])], ["b", system.dictionary([["b", 3], ["z", 10]])]]);
+  await system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -79,8 +79,8 @@ const Fruit = {
 
 const global = new class {};
 async function main() {
-  let a = system.dictionary({[Fruit.apple] : 1, [Fruit.orange] : 3, [Fruit.pear] : 10});
-  system.printLine(a);
+  let a = system.dictionary([[Fruit.apple, 1], [Fruit.orange, 3], [Fruit.pear, 10]]);
+  await system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -104,8 +104,8 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
-  system.printLine(system.safeIndex(a, "z"));
+  let a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
+  await system.printLine(system.safeIndex(a, "z"));
 }
 return [main, _tests];}`;
 
@@ -129,8 +129,8 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.dictionary({["a"] : system.dictionary({["a"] : 1}), ["b"] : system.dictionary({["b"] : 3, ["z"] : 10})});
-  system.printLine(system.safeIndex(system.safeIndex(a, "b"), "z"));
+  let a = system.dictionary([["a", system.dictionary([["a", 1]])], ["b", system.dictionary([["b", 3], ["z", 10]])]]);
+  await system.printLine(system.safeIndex(system.safeIndex(a, "b"), "z"));
 }
 return [main, _tests];}`;
 
@@ -148,7 +148,7 @@ return [main, _tests];}`;
 
 main
   variable a set to ["a":1, "b":3, "z":10]
-  variable b set to empty List<of String>
+  variable b set to empty ListImmutable<of String>
   set b to a.keys()
   print b
 end main`;
@@ -156,10 +156,10 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
-  let b = system.emptyImmutableList();
-  b = _stdlib.keys(a);
-  system.printLine(b);
+  let a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
+  let b = system.initialise(_stdlib.ListImmutable.emptyInstance());
+  b = a.keys();
+  await system.printLine(b);
 }
 return [main, _tests];}`;
 
@@ -184,9 +184,9 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
-  system.printLine(_stdlib.hasKey(a, "b"));
-  system.printLine(_stdlib.hasKey(a, "d"));
+  let a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
+  await system.printLine(a.hasKey("b"));
+  await system.printLine(a.hasKey("d"));
 }
 return [main, _tests];}`;
 
@@ -210,8 +210,8 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
-  system.printLine(_stdlib.values(a));
+  let a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
+  await system.printLine(a.values());
 }
 return [main, _tests];}`;
 
@@ -229,18 +229,18 @@ return [main, _tests];}`;
 
 main
   variable a set to ["a":1, "b":3, "z":10]
-  call a.putAtKey("b", 4)
-  call a.putAtKey("d", 2)
+  call a.put("b", 4)
+  call a.put("d", 2)
   print a
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
-  _stdlib.putAtKey(a, "b", 4);
-  _stdlib.putAtKey(a, "d", 2);
-  system.printLine(a);
+  let a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
+  a.put("b", 4);
+  a.put("d", 2);
+  await system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -258,18 +258,18 @@ return [main, _tests];}`;
 
 main
   variable a set to ["a":["a":1], "b":["b":3, "z":10]]
-  call a.putAtKey("b", ["c":4])
-  call a["a"].putAtKey("x", 2)
+  call a.put("b", ["c":4])
+  call a["a"].put("x", 2)
   print a
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.dictionary({["a"] : system.dictionary({["a"] : 1}), ["b"] : system.dictionary({["b"] : 3, ["z"] : 10})});
-  _stdlib.putAtKey(a, "b", system.dictionary({["c"] : 4}));
-  _stdlib.putAtKey(system.safeIndex(a, "a"), "x", 2);
-  system.printLine(a);
+  let a = system.dictionary([["a", system.dictionary([["a", 1]])], ["b", system.dictionary([["b", 3], ["z", 10]])]]);
+  a.put("b", system.dictionary([["c", 4]]));
+  system.safeIndex(a, "a").put("x", 2);
+  await system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -287,16 +287,16 @@ return [main, _tests];}`;
 
 main
   variable a set to ["a":1, "b":3, "z":10]
-  call a.removeAtKey("b")
+  call a.removeAt("b")
   print a
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
-  _stdlib.removeAtKey(a, "b");
-  system.printLine(a);
+  let a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
+  a.removeAt("b");
+  await system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -314,16 +314,16 @@ return [main, _tests];}`;
 
 main
   variable a set to ["a":["a":1], "b":["b":3, "z":10]]
-  call a["b"].removeAtKey("b")
+  call a["b"].removeAt("b")
   print a
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.dictionary({["a"] : system.dictionary({["a"] : 1}), ["b"] : system.dictionary({["b"] : 3, ["z"] : 10})});
-  _stdlib.removeAtKey(system.safeIndex(a, "b"), "b");
-  system.printLine(a);
+  let a = system.dictionary([["a", system.dictionary([["a", 1]])], ["b", system.dictionary([["b", 3], ["z", 10]])]]);
+  system.safeIndex(a, "b").removeAt("b");
+  await system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -341,16 +341,16 @@ return [main, _tests];}`;
 
 main
   variable a set to ["a":1, "b":3, "z":10]
-  call a.removeAtKey("c")
+  call a.removeAt("c")
   print a
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
-  _stdlib.removeAtKey(a, "c");
-  system.printLine(a);
+  let a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
+  a.removeAt("c");
+  await system.printLine(a);
 }
 return [main, _tests];}`;
 
@@ -368,8 +368,8 @@ return [main, _tests];}`;
 
 main
   variable a set to new Dictionary<of String, Int>()
-  call a.putAtKey("Foo", 1)
-  call a.putAtKey("Bar", 3)
+  call a.put("Foo", 1)
+  call a.put("Bar", 3)
   variable k set to a.keys()
   print k.length()
   print a["Foo"]
@@ -379,13 +379,13 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(system.dictionary(new Object()));
-  _stdlib.putAtKey(a, "Foo", 1);
-  _stdlib.putAtKey(a, "Bar", 3);
-  let k = _stdlib.keys(a);
-  system.printLine(_stdlib.length(k));
-  system.printLine(system.safeIndex(a, "Foo"));
-  system.printLine(system.safeIndex(a, "Bar"));
+  let a = system.initialise(await new _stdlib.Dictionary()._initialise());
+  a.put("Foo", 1);
+  a.put("Bar", 3);
+  let k = a.keys();
+  await system.printLine(k.length());
+  await system.printLine(system.safeIndex(a, "Foo"));
+  await system.printLine(system.safeIndex(a, "Bar"));
 }
 return [main, _tests];}`;
 
@@ -403,9 +403,9 @@ return [main, _tests];}`;
 
 main
   variable a set to new Dictionary<of String, Dictionary<of String, Int>>()
-  call a.putAtKey("Foo", ["ff":1])
-  call a.putAtKey("Bar", new Dictionary<of String, Int>())
-  call a["Bar"].putAtKey("bb", 3)
+  call a.put("Foo", ["ff":1])
+  call a.put("Bar", new Dictionary<of String, Int>())
+  call a["Bar"].put("bb", 3)
   variable k set to a.keys()
   print k.length()
   print a["Foo"]
@@ -415,14 +415,14 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(system.dictionary(new Object()));
-  _stdlib.putAtKey(a, "Foo", system.dictionary({["ff"] : 1}));
-  _stdlib.putAtKey(a, "Bar", system.initialise(system.dictionary(new Object())));
-  _stdlib.putAtKey(system.safeIndex(a, "Bar"), "bb", 3);
-  let k = _stdlib.keys(a);
-  system.printLine(_stdlib.length(k));
-  system.printLine(system.safeIndex(a, "Foo"));
-  system.printLine(system.safeIndex(a, "Bar"));
+  let a = system.initialise(await new _stdlib.Dictionary()._initialise());
+  a.put("Foo", system.dictionary([["ff", 1]]));
+  a.put("Bar", system.initialise(await new _stdlib.Dictionary()._initialise()));
+  system.safeIndex(a, "Bar").put("bb", 3);
+  let k = a.keys();
+  await system.printLine(k.length());
+  await system.printLine(system.safeIndex(a, "Foo"));
+  await system.printLine(system.safeIndex(a, "Bar"));
 }
 return [main, _tests];}`;
 
@@ -442,8 +442,8 @@ return [main, _tests];}`;
 
 main
   variable a set to new Dictionary<of Fruit, Int>()
-  call a.putAtKey(Fruit.apple, 1)
-  call a.putAtKey(Fruit.orange, 3)
+  call a.put(Fruit.apple, 1)
+  call a.put(Fruit.orange, 3)
   variable k set to a.keys()
   print k.length()
   print a[Fruit.apple]
@@ -457,13 +457,13 @@ const Fruit = {
 
 const global = new class {};
 async function main() {
-  let a = system.initialise(system.dictionary(new Object()));
-  _stdlib.putAtKey(a, Fruit.apple, 1);
-  _stdlib.putAtKey(a, Fruit.orange, 3);
-  let k = _stdlib.keys(a);
-  system.printLine(_stdlib.length(k));
-  system.printLine(system.safeIndex(a, Fruit.apple));
-  system.printLine(system.safeIndex(a, Fruit.orange));
+  let a = system.initialise(await new _stdlib.Dictionary()._initialise());
+  a.put(Fruit.apple, 1);
+  a.put(Fruit.orange, 3);
+  let k = a.keys();
+  await system.printLine(k.length());
+  await system.printLine(system.safeIndex(a, Fruit.apple));
+  await system.printLine(system.safeIndex(a, Fruit.orange));
 }
 return [main, _tests];}`;
 
@@ -476,13 +476,125 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "213");
   });
 
+  test("Pass_RecordKey", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to new Dictionary<of Point, Int>()
+  let r1 be new Point() with x set to 1, y set to 2
+  let r2 be new Point() with x set to 2, y set to 1
+  let r3 be new Point() with x set to 1, y set to 2
+
+  call a.put(r1, 1)
+  call a.put(r2, 2)
+  
+  print a[r1]
+  print a[r2]
+  print a[r3]
+end main
+
+record Point
+  property x as Int
+  property y as Int
+end record`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.initialise(await new _stdlib.Dictionary()._initialise());
+  const r1 = await (async () => {const _a = {...system.initialise(await new Point()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Point()._initialise()))); _a.x = 1; _a.y = 2; return _a;})();
+  const r2 = await (async () => {const _a = {...system.initialise(await new Point()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Point()._initialise()))); _a.x = 2; _a.y = 1; return _a;})();
+  const r3 = await (async () => {const _a = {...system.initialise(await new Point()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Point()._initialise()))); _a.x = 1; _a.y = 2; return _a;})();
+  a.put(r1, 1);
+  a.put(r2, 2);
+  await system.printLine(system.safeIndex(a, r1));
+  await system.printLine(system.safeIndex(a, r2));
+  await system.printLine(system.safeIndex(a, r3));
+}
+
+class Point {
+  static emptyInstance() { return system.emptyClass(Point, [["x", 0], ["y", 0]]);};
+  async _initialise() { return this; }
+  x = 0;
+
+  y = 0;
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "121");
+  });
+
+  test("Pass_RecordKeyNoDuplicates", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to new Dictionary<of Point, Int>()
+  let r1 be new Point() with x set to 1, y set to 2
+  let r2 be new Point() with x set to 1, y set to 2
+
+  call a.put(r1, 1)
+  call a.put(r2, 2)
+  
+  print a[r1]
+  print a.keys().length()
+
+  call a.removeAt(r1)
+
+  print a.keys().length()
+end main
+
+record Point
+  property x as Int
+  property y as Int
+end record`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.initialise(await new _stdlib.Dictionary()._initialise());
+  const r1 = await (async () => {const _a = {...system.initialise(await new Point()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Point()._initialise()))); _a.x = 1; _a.y = 2; return _a;})();
+  const r2 = await (async () => {const _a = {...system.initialise(await new Point()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Point()._initialise()))); _a.x = 1; _a.y = 2; return _a;})();
+  a.put(r1, 1);
+  a.put(r2, 2);
+  await system.printLine(system.safeIndex(a, r1));
+  await system.printLine(a.keys().length());
+  a.removeAt(r1);
+  await system.printLine(a.keys().length());
+}
+
+class Point {
+  static emptyInstance() { return system.emptyClass(Point, [["x", 0], ["y", 0]]);};
+  async _initialise() { return this; }
+  x = 0;
+
+  y = 0;
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "210");
+  });
+
   test("Pass_EmptyDictionary", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
   variable a set to empty Dictionary<of String, Int>
   variable b set to empty Dictionary<of String, Int>
-  call a.putAtKey("a", 3)
+  call a.put("a", 3)
   print a
   print b
   print a is b
@@ -493,14 +605,14 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.emptyDictionary();
-  let b = system.emptyDictionary();
-  _stdlib.putAtKey(a, "a", 3);
-  system.printLine(a);
-  system.printLine(b);
-  system.printLine(system.objectEquals(a, b));
-  system.printLine(system.objectEquals(a, system.emptyDictionary()));
-  system.printLine(system.objectEquals(b, system.emptyDictionary()));
+  let a = system.initialise(_stdlib.Dictionary.emptyInstance());
+  let b = system.initialise(_stdlib.Dictionary.emptyInstance());
+  a.put("a", 3);
+  await system.printLine(a);
+  await system.printLine(b);
+  await system.printLine(system.objectEquals(a, b));
+  await system.printLine(system.objectEquals(a, system.initialise(_stdlib.Dictionary.emptyInstance())));
+  await system.printLine(system.objectEquals(b, system.initialise(_stdlib.Dictionary.emptyInstance())));
 }
 return [main, _tests];}`;
 
@@ -519,7 +631,7 @@ return [main, _tests];}`;
 main
   variable a set to empty Dictionary<of String, Dictionary<of String, Int>>
   variable b set to empty Dictionary<of String, Dictionary<of String, Int>>
-  call a.putAtKey("a", ["a":1])
+  call a.put("a", ["a":1])
   print a
   print b
   print a is b
@@ -530,14 +642,14 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.emptyDictionary();
-  let b = system.emptyDictionary();
-  _stdlib.putAtKey(a, "a", system.dictionary({["a"] : 1}));
-  system.printLine(a);
-  system.printLine(b);
-  system.printLine(system.objectEquals(a, b));
-  system.printLine(system.objectEquals(a, system.emptyDictionary()));
-  system.printLine(system.objectEquals(b, system.emptyDictionary()));
+  let a = system.initialise(_stdlib.Dictionary.emptyInstance());
+  let b = system.initialise(_stdlib.Dictionary.emptyInstance());
+  a.put("a", system.dictionary([["a", 1]]));
+  await system.printLine(a);
+  await system.printLine(b);
+  await system.printLine(system.objectEquals(a, b));
+  await system.printLine(system.objectEquals(a, system.initialise(_stdlib.Dictionary.emptyInstance())));
+  await system.printLine(system.objectEquals(b, system.initialise(_stdlib.Dictionary.emptyInstance())));
 }
 return [main, _tests];}`;
 
@@ -579,7 +691,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Float to Int"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: Float"]);
   });
 
   test("Fail_InconsistentTypes2", async () => {
@@ -595,7 +707,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: String Provided: Int"]);
   });
 
   test("Fail_AccessByInvalidKey", async () => {
@@ -619,7 +731,7 @@ end main
 
 main
   variable a set to ["a":1, "b":3, "z":10]
-  call a.removeAtKey(10)
+  call a.removeAt(10)
 end main
 `;
 
@@ -627,7 +739,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Argument types expected: parameter1 (String) Provided: Int"]);
+    assertDoesNotCompile(fileImpl, ["Argument types. Expected: key (String) Provided: Int"]);
   });
 
   test("Fail_SetInvalidKeyType", async () => {
@@ -635,7 +747,7 @@ end main
 
 main
   variable a set to ["a":1, "b":3, "z":10]
-  call a.putAtKey(10, 4)
+  call a.put(10, 4)
 end main
 `;
 
@@ -644,27 +756,136 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: key (String), value (Int) Provided: Int, Int",
+      "Argument types. Expected: key (String), value (Int) Provided: Int, Int",
     ]);
   });
 
-  test("Fail_putAtKey", async () => {
+  test("Pass_withPutAt", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to ["a":1, "b":3, "z":10]
-  set a to a.withPutAtKey("a", 2)
+  let a be ["a":1, "b":3, "z":10]
+  variable b set to a.withPut("b", 4)
+  variable c set to b.withPut("d", 2)
   print a
-end main
-`;
+  print c
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  const a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
+  let b = a.withPut("b", 4);
+  let c = b.withPut("d", 2);
+  await system.printLine(a);
+  await system.printLine(c);
+}
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Incompatible types DictionaryImmutable<of String, Int> to Dictionary<of String, Int>",
-    ]);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[a:1, b:3, z:10][a:1, b:4, z:10, d:2]");
+  });
+
+  test("Pass_withRemoveAt", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  let a be ["a":1, "b":3, "z":10]
+  variable b set to a.withRemoveAt("b")
+  print a
+  print b
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  const a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
+  let b = a.withRemoveAt("b");
+  await system.printLine(a);
+  await system.printLine(b);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[a:1, b:3, z:10][a:1, z:10]");
+  });
+
+  test("Pass_checkKeys(#1196)", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable di set to empty Dictionary<of Int, Int>
+  variable ds set to empty Dictionary<of String, Int>
+  variable i42 set to 42
+  variable s42 set to "42"
+  call di.put(i42, 99)
+  call ds.put(s42, 98)
+  print "{di.hasKey(i42)} {di[i42]} {ds.hasKey(s42)} {ds[s42]}"
+  print "{di} {ds}"
+  print "{di.keys()} {di.keys().contains(42)}"
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let di = system.initialise(_stdlib.Dictionary.emptyInstance());
+  let ds = system.initialise(_stdlib.Dictionary.emptyInstance());
+  let i42 = 42;
+  let s42 = "42";
+  di.put(i42, 99);
+  ds.put(s42, 98);
+  await system.printLine(\`\${await _stdlib.asString(di.hasKey(i42))} \${await _stdlib.asString(system.safeIndex(di, i42))} \${await _stdlib.asString(ds.hasKey(s42))} \${await _stdlib.asString(system.safeIndex(ds, s42))}\`);
+  await system.printLine(\`\${await _stdlib.asString(di)} \${await _stdlib.asString(ds)}\`);
+  await system.printLine(\`\${await _stdlib.asString(di.keys())} \${await _stdlib.asString(di.keys().contains(42))}\`);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "true 99 true 98[42:99] [42:98]{42} true");
+  });
+
+  test("Pass_asDictionaryImmutable", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  let a be ["a":1, "b":3, "z":10]
+  let b be a.asDictionaryImmutable()
+  print a
+  print b
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  const a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
+  const b = a.asDictionaryImmutable();
+  await system.printLine(a);
+  await system.printLine(b);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[a:1, b:3, z:10]{a:1, b:3, z:10}");
   });
 
   test("Fail_SetInvalidValueType", async () => {
@@ -672,7 +893,7 @@ end main
 
 main
   variable a set to ["a":1, "b":3, "z":10]
-  call a.putAtKey("b", 3.1)
+  call a.put("b", 3.1)
 end main
 `;
 
@@ -681,26 +902,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: key (String), value (Int) Provided: String, Float",
-    ]);
-  });
-
-  test("Fail_withRemoveAtKey", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-  variable a set to ["a":1, "b":3, "z":10]
-  variable b set to a.withRemoveAtKey("b")
-  print a
-  print b
-end main`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Incompatible types Dictionary<of String, Int> to DictionaryImmutable<of String, Int>",
+      "Argument types. Expected: key (String), value (Int) Provided: String, Float",
     ]);
   });
 
@@ -716,7 +918,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["<of Type(s)> expected: 2 got: 0"]);
+    assertDoesNotCompile(fileImpl, ["<of Type(s)> Expected: 2 Provided: 0"]);
   });
 
   test("Fail_IndexWrongType1", async () => {
@@ -724,7 +926,7 @@ end main`;
 
 main
   variable a set to ["a":1, "d":2]
-  call a.putAtKey(1, 1)
+  call a.put(1, 1)
 end main
 `;
 
@@ -733,7 +935,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: key (String), value (Int) Provided: Int, Int",
+      "Argument types. Expected: key (String), value (Int) Provided: Int, Int",
     ]);
   });
 
@@ -742,7 +944,7 @@ end main
 
 main
   variable a set to ["a":["a":1, "d":2]]
-  call a[0].putAtKey("a", 1)
+  call a[0].put("a", 1)
 end main
 `;
 
@@ -750,7 +952,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: String Provided: Int"]);
   });
 
   test("Fail_IndexWrongType3", async () => {
@@ -758,7 +960,7 @@ end main
 
 main
   variable a set to ["a":["a":1, "d":2]]
-  call a["a"].putAtKey(1, 1)
+  call a["a"].put(1, 1)
 end main
 `;
 
@@ -767,7 +969,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: key (String), value (Int) Provided: Int, Int",
+      "Argument types. Expected: key (String), value (Int) Provided: Int, Int",
     ]);
   });
 
@@ -785,5 +987,180 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Cannot range Dictionary<of Int, Int>"]);
+  });
+
+  test("Fail_LiteralDictionaryOfDictionaryKey", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable f set to ["a":1]
+  variable a set to [f:1]
+end main
+
+class Foo
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Dictionary cannot have key of type 'Dictionary<of String, Int>'",
+    ]);
+  });
+
+  test("Fail_LiteralDictionaryOfListKey", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable f set to empty List<of Int>
+  variable a set to [f:1]
+end main
+
+class Foo
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Dictionary cannot have key of type 'List<of Int>'"]);
+  });
+
+  test("Fail_LiteralDictionaryOfMutableClassKey", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable f set to new Foo()
+  variable a set to [f:1]
+end main
+
+class Foo
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Dictionary cannot have key of type 'Foo'"]);
+  });
+
+  test("Fail_DictionaryOfDictionaryKey", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to empty Dictionary<of Dictionary<of Int, Int>, Int>
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Dictionary cannot have key of type 'Dictionary<of Int, Int>'",
+    ]);
+  });
+
+  test("Fail_DictionaryOfDictionaryImmutableKey", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to empty Dictionary<of DictionaryImmutable<of Int, Int>, Int>
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Dictionary cannot have key of type 'DictionaryImmutable<of Int, Int>'",
+    ]);
+  });
+
+  test("Fail_DictionaryOfListKey", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to empty Dictionary<of List<of Int>, Int>
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Dictionary cannot have key of type 'List<of Int>'"]);
+  });
+
+  test("Fail_DictionaryOfListKey", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to empty Dictionary<of ListImmutable<of Int>, Int>
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Dictionary cannot have key of type 'ListImmutable<of Int>'"]);
+  });
+
+  test("Fail_DictionaryOfMutableClassKey", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+    variable a set to empty Dictionary<of Foo, Int>
+end main
+
+class Foo
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Dictionary cannot have key of type 'Foo'"]);
+  });
+
+  test("Fail_LiteralDictionyOfEmptyUnknownClass1", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable f set to [empty Foo:1]
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'Foo' is not defined"]);
+  });
+
+  test("Fail_LiteralDictionyOfEmptyUnknownClass2", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable f set to [1:empty Foo]
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'Foo' is not defined"]);
+  });
+
+  test("Fail_EmptyGenericType", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable f set to empty Dictionary
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["<of Type(s)> Expected: 2 Provided: 0"]);
   });
 });

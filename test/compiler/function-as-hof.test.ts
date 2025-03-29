@@ -29,15 +29,15 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await printModified(3, twice);
+  await printModified(3, global.twice);
 }
 
 async function printModified(i, f) {
-  system.printLine(f(i));
+  await system.printLine((await f(i)));
 }
 global["printModified"] = printModified;
 
-function twice(x) {
+async function twice(x) {
   return x * 2;
 }
 global["twice"] = twice;
@@ -70,15 +70,15 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await printModified(3, twice);
+  await printModified(3, global.twice);
 }
 
 async function printModified(i, f) {
-  system.printLine(f());
+  await system.printLine((await f()));
 }
 global["printModified"] = printModified;
 
-function twice() {
+async function twice() {
   return 2;
 }
 global["twice"] = twice;
@@ -111,15 +111,15 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await printIt("Hello", "e", find);
+  await printIt("Hello", "e", global.find);
 }
 
 async function printIt(s, c, f) {
-  system.printLine(f(s, c));
+  await system.printLine((await f(s, c)));
 }
 global["printIt"] = printIt;
 
-function find(x, y) {
+async function find(x, y) {
   return _stdlib.indexOf(x, y);
 }
 global["find"] = find;
@@ -153,16 +153,16 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let f = getFunc();
-  system.printLine(f(5));
+  let f = (await global.getFunc());
+  await system.printLine((await f(5)));
 }
 
-function getFunc() {
-  return twice;
+async function getFunc() {
+  return global.twice;
 }
 global["getFunc"] = getFunc;
 
-function twice(x) {
+async function twice(x) {
   return x * 2;
 }
 global["twice"] = twice;
@@ -192,11 +192,11 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let f = twice;
-  system.printLine(f(5));
+  let f = global.twice;
+  await system.printLine((await f(5)));
 }
 
-function twice(x) {
+async function twice(x) {
   return x * 2;
 }
 global["twice"] = twice;
@@ -235,19 +235,21 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let f = system.initialise(new Foo(ff));
-  system.printLine(f.pf(5));
+  let f = system.initialise(await new Foo()._initialise(global.ff));
+  await system.printLine((await f.pf(5)));
 }
 
-function ff(a) {
+async function ff(a) {
   return a;
 }
 global["ff"] = ff;
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["pf", system.emptyFunc(0)]]);};
-  constructor(f) {
+
+  async _initialise(f) {
     this.pf = f;
+    return this;
   }
 
   pf = system.emptyFunc(0);
@@ -278,10 +280,10 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(ff);
+  await system.printLine(global.ff);
 }
 
-function ff(a) {
+async function ff(a) {
   return a;
 }
 global["ff"] = ff;
@@ -338,7 +340,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: i (Int), f (Func<of Int => Int>) Provided: Int, Func<of Int, Int => Int>",
+      "Argument types. Expected: i (Int), f (Func<of Int => Int>) Provided: Int, Func<of Int, Int => Int>",
     ]);
   });
 
@@ -362,7 +364,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: i (Int), f (Func<of Int => Int>) Provided: Int, Func<of Int => String>",
+      "Argument types. Expected: i (Int), f (Func<of Int => Int>) Provided: Int, Func<of Int => String>",
     ]);
   });
 
@@ -488,7 +490,7 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types Func<of Int => Int> to Float or Int",
+      "Incompatible types. Expected: Float or Int Provided: Func<of Int => Int>",
       "To evaluate function 'ff' add brackets. Or to create a reference to 'ff', precede it by 'ref'",
     ]);
   });
@@ -509,6 +511,8 @@ end function`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Func<of Int => Int> to Float or Int"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Float or Int Provided: Func<of Int => Int>",
+    ]);
   });
 });

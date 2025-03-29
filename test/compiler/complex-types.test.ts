@@ -2,6 +2,7 @@ import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
   assertDoesNotCompile,
+  assertDoesNotParse,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
@@ -11,21 +12,21 @@ import {
 } from "./compiler-test-helpers";
 
 suite("Complex Types", () => {
-  test("Pass_ArrayOfDictionary", async () => {
+  test("Pass_ListOfDictionary", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main 
   variable a set to [["a":1], ["b":3, "z":10]]
-  call a[0].putAtKey("b", 2)
+  call a[0].put("b", 2)
   print a[0]["b"]
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.literalArray([system.dictionary({["a"] : 1}), system.dictionary({["b"] : 3, ["z"] : 10})]);
-  _stdlib.putAtKey(system.safeIndex(a, 0), "b", 2);
-  system.printLine(system.safeIndex(system.safeIndex(a, 0), "b"));
+  let a = system.list([system.dictionary([["a", 1]]), system.dictionary([["b", 3], ["z", 10]])]);
+  system.safeIndex(a, 0).put("b", 2);
+  await system.printLine(system.safeIndex(system.safeIndex(a, 0), "b"));
 }
 return [main, _tests];}`;
 
@@ -38,21 +39,21 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "2");
   });
 
-  test("Pass_DictionaryOfArray", async () => {
+  test("Pass_DictionaryOfList", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main 
   variable a set to ["a":[1,2], "b":[3,4,5]]
-  call a["b"].putAt(0, 2)
+  call a["b"].put(0, 2)
   print a["b"][0]
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.dictionary({["a"] : system.literalArray([1, 2]), ["b"] : system.literalArray([3, 4, 5])});
-  _stdlib.putAt(system.safeIndex(a, "b"), 0, 2);
-  system.printLine(system.safeIndex(system.safeIndex(a, "b"), 0));
+  let a = system.dictionary([["a", system.list([1, 2])], ["b", system.list([3, 4, 5])]]);
+  system.safeIndex(a, "b").put(0, 2);
+  await system.printLine(system.safeIndex(system.safeIndex(a, "b"), 0));
 }
 return [main, _tests];}`;
 
@@ -70,7 +71,7 @@ return [main, _tests];}`;
 
 main 
   variable a set to [["a":1], ["b":3, "z":10]]
-  call a.putAt("b", ["b":2])
+  call a.put("b", ["b":2])
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -79,7 +80,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: index (Int), value (Dictionary<of String, Int>) Provided: String, Dictionary<of String, Int>",
+      "Argument types. Expected: index (Int), value (Dictionary<of String, Int>) Provided: String, Dictionary<of String, Int>",
     ]);
   });
 
@@ -88,7 +89,7 @@ end main`;
 
 main 
   variable a set to [["a":1], ["b":3, "z":10]]
-  call a[0].putAtKey(0, 2)
+  call a[0].put(0, 2)
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -97,7 +98,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: key (String), value (Int) Provided: Int, Int",
+      "Argument types. Expected: key (String), value (Int) Provided: Int, Int",
     ]);
   });
 
@@ -106,7 +107,7 @@ end main`;
 
 main 
   variable a set to ["a":[1,2], "b":[3,4,5]]
-  call a.putAtKey(0, [2,2])
+  call a.put(0, [2,2])
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -115,7 +116,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: key (String), value (Array<of Int>) Provided: Int, Array<of Int>",
+      "Argument types. Expected: key (String), value (List<of Int>) Provided: Int, List<of Int>",
     ]);
   });
 
@@ -124,7 +125,7 @@ end main`;
 
 main 
   variable a set to ["a":[1,2], "b":[3,4,5]]
-  call a["b"].putAt("b", 2)
+  call a["b"].put("b", 2)
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -133,7 +134,51 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types expected: index (Int), value (Int) Provided: String, Int",
+      "Argument types. Expected: index (Int), value (Int) Provided: String, Int",
     ]);
+  });
+
+  test("Fail_UnknownOfType", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  let a be new List<of Foo>()
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'Foo' is not defined"]);
+  });
+
+  test("Fail_UnknowNestedOfType", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  let a be new List<of List<of Foo>>()
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'Foo' is not defined"]);
+  });
+
+  test("Fail_NotType", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  let t be 1
+  let a be new List<of t>()
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
   });
 });

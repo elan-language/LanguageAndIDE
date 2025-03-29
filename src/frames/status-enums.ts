@@ -8,7 +8,7 @@ export enum ParseStatus {
 
 export enum CompileStatus {
   error,
-  unknownSymbol,
+  unknown_symbol,
   ok,
   default,
 }
@@ -30,9 +30,22 @@ export enum RunStatus {
 }
 
 //Set of generic status values that drive the 'traffic light' rendering in code and status panel
-export enum DisplayStatus {
+export enum DisplayColour {
   error,
   warning,
   ok,
-  default,
+  none,
+}
+
+export enum BreakpointStatus {
+  none,
+  disabled,
+  active,
+  singlestep,
+}
+
+export enum BreakpointEvent {
+  clear,
+  activate,
+  disable,
 }

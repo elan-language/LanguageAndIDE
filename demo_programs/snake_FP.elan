@@ -1,15 +1,15 @@
-# 4076fd417a9553519baade42728251e1afc5bf544d9845ab97ada015055aa457 Elan Beta 6 valid
+# ddc94495bbe375daa3d4a88f138a67ac2ef61c61adc3c4fa8047de139459ad9f Elan Beta 9 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
+  variable blocks set to new Array2D<of Int>(40, 30, white)
   let rnd be new Random()
   call rnd.initialiseFromClock()
   variable game set to newGame(rnd)
   set game to newApple(game)
   while game.isOn
-    set game to updateGraphics(game)
-    let gr be game.graphics
-    call gr.display()
+    set blocks to updateGraphics(game, blocks)
+    call displayBlocks(blocks)
     call pause(150)
     set game to clockTick(game, getKey())
   end while
@@ -23,12 +23,12 @@ function clockTick(g as Game, k as String) returns Game
   return if gameOver(g4) then copy g4 with isOn set to false else g4
 end function
 
-function updateGraphics(g as Game) returns Game
-  let g2 be copy g with graphics set to g.graphics.withBlock(g.apple.x, g.apple.y, red)
-  let g3 be copy g2 with graphics set to g2.graphics.withBlock(g2.head.x, g2.head.y, green)
-  let tail be g3.body[0]
-  let tailColour be if tail is g3.priorTail then green else white
-  return copy g3 with graphics set to g3.graphics.withBlock(tail.x, tail.y, tailColour)
+function updateGraphics(g as Game, b as Array2D<of Int>) returns Array2D<of Int>
+  let b2 be b.withPut(g.apple.x, g.apple.y, red)
+  let b3 be b2.withPut(g.head.x, g.head.y, green)
+  let tail be g.body[0]
+  let tailColour be if tail is g.priorTail then green else white
+  return b3.withPut(tail.x, tail.y, tailColour)
 end function
 
 function newApple(g as Game) returns Game
@@ -48,7 +48,7 @@ function moveSnake(g as Game) returns Game
   let x, y be g.head
   let newX be if k is "a" then x - 1 else if k is "d" then x + 1 else x
   let newY be if k is "w" then y - 1 else if k is "s" then y + 1 else y
-  return copy g with body set to g.body + g.head, head set to newSquare(newX, newY)
+  return copy g with body set to g.body.withAppend(g.head), head set to newSquare(newX, newY)
 end function
 
 function eatAppleIfPoss(g as Game) returns Game
@@ -75,13 +75,13 @@ function bodyOverlaps(g as Game, target as Square) returns Boolean
 end function
 
 function newGame(rnd as Random) returns Game
-  return new Game() with rnd set to rnd, graphics set to new BlockGraphics(), head set to newSquare(22, 15), body set to {newSquare(20, 15), newSquare(21, 15)}, priorTail set to empty Square, key set to "d", isOn set to true
+  return new Game() with rnd set to rnd, head set to newSquare(22, 15), body set to {newSquare(20, 15), newSquare(21, 15)}, priorTail set to empty Square, key set to "d", isOn set to true
 end function
 
 record Game
   property head as Square
 
-  property body as List<of Square>
+  property body as ListImmutable<of Square>
 
   property priorTail as Square
 
@@ -90,8 +90,6 @@ record Game
   property isOn as Boolean
 
   property rnd as Random
-
-  property graphics as BlockGraphics
 
   property key as String
 
@@ -127,17 +125,18 @@ test clockTick
 end test
 
 test updateGraphics
+  variable blocks set to new Array2D<of Int>(40, 30, white)
   let g1 be newGame(new Random())
   let g2 be newApple(g1)
-  let g3 be updateGraphics(g2)
-  assert g3.graphics.getBackground(12, 15) is red
-  assert g3.graphics.getBackground(22, 15) is green
-  assert g3.graphics.getBackground(21, 15) is white
-  let g4 be clockTick(g3, "d")
-  let g5 be updateGraphics(g4)
-  assert g4.graphics.getBackground(12, 15) is red
-  assert g4.graphics.getBackground(22, 15) is green
-  assert g4.graphics.getBackground(23, 15) is green
+  set blocks to updateGraphics(g2, blocks)
+  assert blocks[12, 15] is red
+  assert blocks[22, 15] is green
+  assert blocks[21, 15] is white
+  let g4 be clockTick(g2, "d")
+  set blocks to updateGraphics(g4, blocks)
+  assert blocks[12, 15] is red
+  assert blocks[22, 15] is green
+  assert blocks[23, 15] is green
 end test
 
 test newApple
@@ -260,4 +259,4 @@ test newGame
   assert game.isOn is true
 end test
 
-# Test coverage: 82% (54/66 frames)
+# Test coverage: 82% (54/66 instructions)

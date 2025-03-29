@@ -36,19 +36,21 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = system.initialise(new Foo(7));
-  system.printLine(x.p1);
+  let x = system.initialise(await new Foo()._initialise(7));
+  await system.printLine(x.p1);
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
-  constructor(p1) {
+
+  async _initialise(p1) {
     this.p1 = p1;
+    return this;
   }
 
   p1 = 0;
 
-  asString() {
+  async asString() {
     return "";
   }
 
@@ -96,28 +98,30 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let f = system.initialise(new Foo());
-  system.printLine(f.bar());
+  let f = system.initialise(await new Foo()._initialise());
+  await system.printLine((await f.bar()));
 }
 
-function doubled(f) {
+async function doubled(f) {
   return 2 * f.p1;
 }
 global["doubled"] = doubled;
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
-  constructor() {
+
+  async _initialise() {
     this.p1 = 3;
+    return this;
   }
 
   p1 = 0;
 
-  bar() {
-    return doubled(this);
+  async bar() {
+    return (await global.doubled(this));
   }
 
-  asString() {
+  async asString() {
     return "";
   }
 
@@ -157,20 +161,22 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let f = system.initialise(new Foo());
-  system.printLine(f.bar());
+  let f = system.initialise(await new Foo()._initialise());
+  await system.printLine((await f.bar()));
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
-  constructor() {
+
+  async _initialise() {
     this.p1 = 1;
+    return this;
   }
 
   p1 = 0;
 
-  bar() {
-    let lst = system.literalArray([1, 2]);
+  async bar() {
+    let lst = system.list([1, 2]);
     return system.safeIndex(lst, this.p1);
   }
 
@@ -203,14 +209,15 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let f = system.initialise(new Foo());
+  let f = system.initialise(await new Foo()._initialise());
   await f.bar();
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
+  async _initialise() { return this; }
   async bar() {
-    system.printLine(this);
+    await system.printLine(this);
   }
 
 }

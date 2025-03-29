@@ -4,13 +4,14 @@ import { ExpressionField } from "../fields/expression-field";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
+import { Transforms } from "../interfaces/transforms";
 import { returnKeyword } from "../keywords";
-import { Transforms } from "../syntax-nodes/transforms";
 
 export class ReturnStatement extends AbstractFrame implements Statement {
   isStatement = true;
   isReturnStatement = true;
   expr: ExpressionField;
+  hrefForFrameHelp: string = "LangRef.html#return";
 
   constructor(parent: Parent) {
     super(parent);
@@ -31,7 +32,7 @@ export class ReturnStatement extends AbstractFrame implements Statement {
     return "return";
   }
   renderAsHtml(): string {
-    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><el-kw>return </el-kw>${this.expr.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-statement>`;
+    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.toolTip()}>${this.contextMenu()}${this.bpAsHtml()}<el-kw>return </el-kw>${this.expr.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-statement>`;
   }
 
   renderAsSource(): string {
@@ -40,7 +41,7 @@ export class ReturnStatement extends AbstractFrame implements Statement {
 
   compile(transforms: Transforms): string {
     this.compileErrors = [];
-    return `${this.indent()}return ${this.expr.compile(transforms)};`;
+    return `${this.indent()}${this.breakPoint(this.debugSymbols())}return ${this.expr.compile(transforms)};`;
   }
 
   parseFrom(source: CodeSource): void {

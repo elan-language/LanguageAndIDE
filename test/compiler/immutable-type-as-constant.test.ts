@@ -26,7 +26,7 @@ const global = new class {
 
 };
 async function main() {
-  system.printLine(global.k);
+  await system.printLine(global.k);
 }
 return [main, _tests];}`;
 
@@ -54,7 +54,7 @@ const global = new class {
 
 };
 async function main() {
-  system.printLine(global.k);
+  await system.printLine(global.k);
 }
 return [main, _tests];}`;
 
@@ -64,7 +64,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "(3, Apple)");
+    await assertObjectCodeExecutes(fileImpl, "tuple(3, Apple)");
   });
 
   test("Pass_List", async () => {
@@ -78,11 +78,11 @@ end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
-  k = system.list([1, 2, 3]);
+  k = system.listImmutable([1, 2, 3]);
 
 };
 async function main() {
-  system.printLine(global.k);
+  await system.printLine(global.k);
 }
 return [main, _tests];}`;
 
@@ -106,11 +106,11 @@ end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
-  k = system.dictionaryImmutable({["a"] : 1, ["b"] : 3, ["c"] : 3});
+  k = system.dictionaryImmutable([["a", 1], ["b", 3], ["c", 3]]);
 
 };
 async function main() {
-  system.printLine(global.k);
+  await system.printLine(global.k);
 }
 return [main, _tests];}`;
 
@@ -146,7 +146,7 @@ end record`;
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_Array1", async () => {
+  test("Fail_List1", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 constant k set to [1, 2, 3]
@@ -161,10 +161,10 @@ end main`;
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_Array2", async () => {
+  test("Fail_List2", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
-constant k set to new Array<of Int>()
+constant k set to new List<of Int>()
 
 main 
   print k
@@ -176,10 +176,10 @@ end main`;
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_Array3", async () => {
+  test("Fail_List3", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
-constant k set to empty Array<of Int>
+constant k set to empty List<of Int>
 
 main 
   print k

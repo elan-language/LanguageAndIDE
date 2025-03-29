@@ -5,8 +5,12 @@ import { Statement } from "../interfaces/statement";
 import { setKeyword, toKeyword, variableKeyword } from "../keywords";
 import { AbstractDefinitionStatement } from "./abstract-definition.statement";
 
-export class VarStatement extends AbstractDefinitionStatement implements Statement, ElanSymbol {
-  isVarStatement = true;
+export class VariableStatement
+  extends AbstractDefinitionStatement
+  implements Statement, ElanSymbol
+{
+  isVariableStatement = true;
+  hrefForFrameHelp: string = "LangRef.html#variable";
 
   constructor(parent: Parent) {
     super(parent);
@@ -34,7 +38,7 @@ export class VarStatement extends AbstractDefinitionStatement implements Stateme
   }
 
   renderAsHtml(): string {
-    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><el-kw>${variableKeyword} </el-kw>${this.name.renderAsHtml()}<el-kw> ${setKeyword} ${toKeyword} </el-kw>${this.expr.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-statement>`;
+    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.toolTip()}>${this.contextMenu()}${this.bpAsHtml()}<el-kw>${variableKeyword} </el-kw>${this.name.renderAsHtml()}<el-kw> ${setKeyword} ${toKeyword} </el-kw>${this.expr.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-statement>`;
   }
 
   renderAsSource(): string {

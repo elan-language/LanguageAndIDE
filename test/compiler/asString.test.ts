@@ -22,7 +22,7 @@ end main`;
 const global = new class {};
 async function main() {
   let f = 1;
-  system.printLine(_stdlib.asString(f));
+  await system.printLine((await _stdlib.asString(f)));
 }
 return [main, _tests];}`;
 
@@ -56,15 +56,17 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let f = system.initialise(new Foo());
-  let s = _stdlib.asString(f);
-  system.printLine(s);
+  let f = system.initialise(await new Foo()._initialise());
+  let s = (await _stdlib.asString(f));
+  await system.printLine(s);
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
-  constructor() {
+
+  async _initialise() {
     this.p1 = 5;
+    return this;
   }
 
   p1 = 0;
@@ -101,16 +103,18 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let f = system.initialise(new Foo());
+  let f = system.initialise(await new Foo()._initialise());
   let p = f.p1;
-  let s = _stdlib.asString(p);
-  system.printLine(s);
+  let s = (await _stdlib.asString(p));
+  await system.printLine(s);
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
-  constructor() {
 
+  async _initialise() {
+
+    return this;
   }
 
   _p1;
@@ -160,18 +164,20 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let f = system.initialise(new Foo());
-  let s1 = f.asString();
+  let f = system.initialise(await new Foo()._initialise());
+  let s1 = (await f.asString());
   let p = f.p1;
-  let s2 = p.asString();
-  system.printLine(s1);
-  system.printLine(s2);
+  let s2 = (await p.asString());
+  await system.printLine(s1);
+  await system.printLine(s2);
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
-  constructor() {
 
+  async _initialise() {
+
+    return this;
   }
 
   _p1;
@@ -182,7 +188,7 @@ class Foo {
     this._p1 = p1;
   }
 
-  asString() {
+  async asString() {
     return "Custom asString";
   }
 
@@ -226,23 +232,25 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let f = system.initialise(new Foo());
-  let s = f.asString();
-  system.printLine(s);
+  let f = system.initialise(await new Foo()._initialise());
+  let s = (await f.asString());
+  await system.printLine(s);
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", ""]]);};
-  constructor() {
+
+  async _initialise() {
     this.p1 = 5;
     this.p2 = "Apple";
+    return this;
   }
 
   p1 = 0;
 
   p2 = "";
 
-  asString() {
+  async asString() {
     return this.p2;
   }
 
@@ -285,22 +293,24 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let f = system.initialise(new Foo());
-  system.printLine(f);
+  let f = system.initialise(await new Foo()._initialise());
+  await system.printLine(f);
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", ""]]);};
-  constructor() {
+
+  async _initialise() {
     this.p1 = 5;
     this.p2 = "Apple";
+    return this;
   }
 
   p1 = 0;
 
   p2 = "";
 
-  asString() {
+  async asString() {
     return this.p2;
   }
 
@@ -323,7 +333,7 @@ main
     variable l set to {1,2,3}
     variable sl set to l.asString()
     print sl
-    variable a set to {1,2,3}.asArray()
+    variable a set to {1,2,3}.asList()
     variable sa set to a.asString()
     print sa
     variable d set to ["a":1, "b":3, "z":10]
@@ -334,15 +344,15 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let l = system.list([1, 2, 3]);
-  let sl = _stdlib.asString(l);
-  system.printLine(sl);
-  let a = _stdlib.asArray(system.list([1, 2, 3]));
-  let sa = _stdlib.asString(a);
-  system.printLine(sa);
-  let d = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
-  let sd = _stdlib.asString(d);
-  system.printLine(sd);
+  let l = system.listImmutable([1, 2, 3]);
+  let sl = (await _stdlib.asString(l));
+  await system.printLine(sl);
+  let a = system.listImmutable([1, 2, 3]).asList();
+  let sa = (await _stdlib.asString(a));
+  await system.printLine(sa);
+  let d = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
+  let sd = (await _stdlib.asString(d));
+  await system.printLine(sd);
 }
 return [main, _tests];}`;
 

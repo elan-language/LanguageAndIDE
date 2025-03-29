@@ -1,8 +1,12 @@
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { SymbolType } from "../interfaces/symbol-type";
-import { getDeconstructionIds, isLetStatement, isVarStatement } from "../symbols/symbol-helpers";
+import { Transforms } from "../interfaces/transforms";
+import {
+  getDeconstructionIds,
+  isLetStatement,
+  isVariableStatement,
+} from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
-import { Transforms } from "../syntax-nodes/transforms";
 
 export class DefinitionAdapter implements ElanSymbol {
   constructor(
@@ -13,9 +17,9 @@ export class DefinitionAdapter implements ElanSymbol {
     this.symbolId = ids[index];
     this.symbolScope = adapted.symbolScope;
 
-    if (isVarStatement(adapted)) {
+    if (isVariableStatement(adapted)) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (this as any)["isVarStatement"] = true;
+      (this as any)["isVariableStatement"] = true;
     }
 
     if (isLetStatement(adapted)) {

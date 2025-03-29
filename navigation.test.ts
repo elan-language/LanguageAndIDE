@@ -2,10 +2,10 @@ import assert from "assert";
 import { ExpressionField } from "../src/frames/fields/expression-field";
 import { IdentifierField } from "../src/frames/fields/identifier-field";
 import { isParent } from "../src/frames/helpers";
-import { VarStatement } from "../src/frames/statements/var-statement";
+import { VariableStatement } from "../src/frames/statements/variable-statement";
 import {
-    T03_mainWithAllStatements,
-    T04_allGlobalsExceptClass
+  T03_mainWithAllStatements,
+  T04_allGlobalsExceptClass
 } from "./model-generating-functions.";
 import { assertClasses, end, home, right, shift_tab, tab, up } from "./testHelpers";
 
@@ -58,7 +58,7 @@ suite("Navigation", () => {
     assert.equal(expr5.isSelected(), true);
     expr5.processKey(tab());
     assert.equal(expr5.isSelected(), false);
-    const var3 = file.getById("var3") as VarStatement;
+    const var3 = file.getById("var3") as VariableStatement;
     assert.equal(var3.isSelected(), true);
     var3.processKey(tab());
     assert.equal(var3.isSelected(), false);
@@ -67,7 +67,7 @@ suite("Navigation", () => {
   test("Shift-tabbing through fields and back to the frame", () => {
     const file = T03_mainWithAllStatements();
 
-    const var3 = file.getById("var3") as VarStatement;
+    const var3 = file.getById("var3") as VariableStatement;
     var3.select(true, false);
     var3.processKey(shift_tab());
     assert.equal(var3.isSelected(), false);

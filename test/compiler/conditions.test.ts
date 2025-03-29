@@ -24,9 +24,9 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(3 < 4);
-  system.printLine(3 < 2);
-  system.printLine(3 < 3);
+  await system.printLine(3 < 4);
+  await system.printLine(3 < 2);
+  await system.printLine(3 < 3);
 }
 return [main, _tests];}`;
 
@@ -51,9 +51,9 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(3 > 4);
-  system.printLine(3 > 2);
-  system.printLine(3 > 3);
+  await system.printLine(3 > 4);
+  await system.printLine(3 > 2);
+  await system.printLine(3 > 3);
 }
 return [main, _tests];}`;
 
@@ -78,9 +78,9 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(3 <= 4);
-  system.printLine(3 <= 2);
-  system.printLine(3 <= 3);
+  await system.printLine(3 <= 4);
+  await system.printLine(3 <= 2);
+  await system.printLine(3 <= 3);
 }
 return [main, _tests];}`;
 
@@ -105,9 +105,9 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(3 >= 4);
-  system.printLine(3 >= 2);
-  system.printLine(3 >= 3);
+  await system.printLine(3 >= 4);
+  await system.printLine(3 >= 2);
+  await system.printLine(3 >= 3);
 }
 return [main, _tests];}`;
 
@@ -132,9 +132,9 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(3 !== 4);
-  system.printLine(3 !== 2);
-  system.printLine(3 !== 3);
+  await system.printLine(3 !== 4);
+  await system.printLine(3 !== 2);
+  await system.printLine(3 !== 3);
 }
 return [main, _tests];}`;
 
@@ -159,9 +159,9 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(3 === 4);
-  system.printLine(3 === 2);
-  system.printLine(3 === 3);
+  await system.printLine(3 === 4);
+  await system.printLine(3 === 2);
+  await system.printLine(3 === 3);
 }
 return [main, _tests];}`;
 
@@ -193,16 +193,16 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine(3 < 3.1);
-  system.printLine(3 <= 3.1);
-  system.printLine(3 > 3.1);
-  system.printLine(3 >= 3.1);
-  system.printLine(3 === 3);
-  system.printLine(3 !== 3);
-  system.printLine(3.1 < 3);
-  system.printLine(3.1 <= 3);
-  system.printLine(3.1 > 3);
-  system.printLine(3.1 >= 3);
+  await system.printLine(3 < 3.1);
+  await system.printLine(3 <= 3.1);
+  await system.printLine(3 > 3.1);
+  await system.printLine(3 >= 3.1);
+  await system.printLine(3 === 3);
+  await system.printLine(3 !== 3);
+  await system.printLine(3.1 < 3);
+  await system.printLine(3.1 <= 3);
+  await system.printLine(3.1 > 3);
+  await system.printLine(3.1 >= 3);
 }
 return [main, _tests];}`;
 
@@ -227,9 +227,9 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  system.printLine((5 + 3) > (4 + 2));
-  system.printLine((5 + 3) === (4 + 4));
-  system.printLine((5 + 3) > (4 + 6));
+  await system.printLine((5 + 3) > (4 + 2));
+  await system.printLine((5 + 3) === (4 + 4));
+  await system.printLine((5 + 3) > (4 + 6));
 }
 return [main, _tests];}`;
 
@@ -344,12 +344,12 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types String to Int",
-      "Incompatible types String to Int",
-      "Incompatible types String to Float or Int",
-      "Incompatible types String to Float or Int",
-      "Incompatible types String to Float or Int",
-      "Incompatible types String to Float or Int",
+      "Incompatible types. Expected: Int Provided: String",
+      "Incompatible types. Expected: Int Provided: String",
+      "Incompatible types. Expected: Float or Int Provided: String",
+      "Incompatible types. Expected: Float or Int Provided: String",
+      "Incompatible types. Expected: Float or Int Provided: String",
+      "Incompatible types. Expected: Float or Int Provided: String",
     ]);
   });
 
@@ -391,6 +391,8 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Boolean to Float or Int"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Float or Int Provided: Boolean",
+    ]);
   });
 });

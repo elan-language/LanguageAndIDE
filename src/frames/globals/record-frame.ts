@@ -2,6 +2,8 @@ import { mustBeImmutableType } from "../compile-rules";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { SymbolType } from "../interfaces/symbol-type";
+import { Transforms } from "../interfaces/transforms";
+import { immutableTypeOptions } from "../interfaces/type-options";
 import { endKeyword, recordKeyword } from "../keywords";
 import {
   parentHelper_compileChildren,
@@ -10,10 +12,11 @@ import {
 } from "../parent-helpers";
 import { ClassSubType, ClassType } from "../symbols/class-type";
 import { SymbolScope } from "../symbols/symbol-scope";
-import { Transforms } from "../syntax-nodes/transforms";
 import { ClassFrame } from "./class-frame";
 
 export class RecordFrame extends ClassFrame {
+  hrefForFrameHelp: string = "LangRef.html#record";
+
   constructor(parent: File) {
     super(parent);
     this.isNotInheritable = true;
@@ -21,7 +24,6 @@ export class RecordFrame extends ClassFrame {
   }
 
   ofTypes: SymbolType[] = [];
-  genericParamMatches: Map<string, SymbolType> = new Map<string, SymbolType>();
 
   initialKeywords(): string {
     return recordKeyword;
@@ -31,7 +33,14 @@ export class RecordFrame extends ClassFrame {
     return this.name.text;
   }
   symbolType(_transforms?: Transforms) {
-    return new ClassType(this.symbolId, ClassSubType.concrete, false, true, [], this);
+    return new ClassType(
+      this.symbolId,
+      ClassSubType.concrete,
+      false,
+      immutableTypeOptions,
+      [],
+      this,
+    );
   }
   get symbolScope() {
     return SymbolScope.program;
@@ -46,8 +55,8 @@ export class RecordFrame extends ClassFrame {
   }
 
   public renderAsHtml(): string {
-    return `<el-class class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>record </el-kw>${this.name.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
+    return `<el-class class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.toolTip()}>
+<el-top>${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>record </el-kw>${this.name.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
 ${parentHelper_renderChildrenAsHtml(this)}
 <el-kw>end record</el-kw>
 </el-class>`;
@@ -75,6 +84,7 @@ end record\r\n`;
 
     return `class ${name} {\r
   static emptyInstance() { return system.emptyClass(${name}, ${this.propertiesToInit()});};\r
+  async _initialise() { return this; }\r
 ${body}\r
 }\r\n`;
   }

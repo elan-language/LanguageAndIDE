@@ -1,7 +1,5 @@
 import { CompileError } from "../compile-error";
 import {
-  mustBeCompatibleType,
-  mustBeIndexableSymbol,
   mustBeKnownSymbol,
   mustBePropertyPrefixedOnMember,
   mustBePublicMember,
@@ -9,12 +7,9 @@ import {
 import { AstIndexableNode } from "../interfaces/ast-indexable-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { Scope } from "../interfaces/scope";
-import { SymbolType } from "../interfaces/symbol-type";
-import { IntType } from "../symbols/int-type";
+import { NullScope } from "../symbols/null-scope";
 import {
-  isAnyDictionaryType,
   isDeconstructedType,
-  isGenericSymbolType,
   isMemberOnFieldsClass,
   scopePrefix,
   updateScope,
@@ -22,16 +17,16 @@ import {
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { transforms } from "./ast-helpers";
+import { compileSimpleSubscript, getIndexAndOfType, isEmptyNode, transforms } from "./ast-helpers";
+import { EmptyAsn } from "./empty-asn";
 import { IndexAsn } from "./index-asn";
-import { RangeAsn } from "./range-asn";
 
 export class VarAsn extends AbstractAstNode implements AstIndexableNode {
   constructor(
     public readonly id: string,
     public readonly isAssignable: boolean,
-    public readonly qualifier: AstQualifierNode | undefined,
-    private readonly index: IndexAsn | undefined,
+    public readonly qualifier: AstQualifierNode | EmptyAsn,
+    private readonly index: IndexAsn | EmptyAsn,
     public readonly fieldId: string,
     private scope: Scope,
   ) {
@@ -39,40 +34,32 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
   }
 
   aggregateCompileErrors(): CompileError[] {
-    const q = this.qualifier ? this.qualifier.aggregateCompileErrors() : [];
-    const i = this.index ? this.index.aggregateCompileErrors() : [];
+    const q = this.qualifier.aggregateCompileErrors();
+    const i = this.index.aggregateCompileErrors();
 
     return this.compileErrors.concat(q).concat(i);
   }
 
-  isIndex() {
-    return this.index instanceof IndexAsn && !(this.index.index1 instanceof RangeAsn);
-  }
-
-  getIndexAndOfType(rootType: SymbolType): [SymbolType, SymbolType] {
-    if (isGenericSymbolType(rootType)) {
-      return [IntType.Instance, rootType.ofType];
-    }
-
-    if (isAnyDictionaryType(rootType)) {
-      return [rootType.keyType, rootType.valueType];
-    }
-
-    return [UnknownType.Instance, UnknownType.Instance];
-  }
-
-  compileIndex(id: string, rootType: SymbolType, index: IndexAsn, prefix: string, postfix: string) {
-    mustBeIndexableSymbol(id, rootType, true, this.compileErrors, this.fieldId);
-    const [indexType] = this.getIndexAndOfType(rootType);
-    mustBeCompatibleType(indexType, index.index1.symbolType(), this.compileErrors, this.fieldId);
-
-    const code = `${prefix}${this.id}, ${postfix}`;
-    return `system.safeIndex(${code})`;
+  isSimpleSubscript() {
+    return this.index instanceof IndexAsn && this.index.isSimpleSubscript();
   }
 
   getSymbol() {
     const currentScope = updateScope(this.qualifier, this.scope);
     return currentScope.resolveSymbol(this.id, transforms(), this.scope);
+  }
+
+  compileSimpleSubscript(id: string, prefix: string, postfix: string) {
+    return compileSimpleSubscript(
+      id,
+      this.rootSymbolType(),
+      this.index as IndexAsn,
+      prefix,
+      this.id,
+      postfix,
+      this.compileErrors,
+      this.fieldId,
+    );
   }
 
   compile(): string {
@@ -84,21 +71,28 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
       mustBePublicMember(symbol, this.compileErrors, this.fieldId);
     }
 
-    mustBeKnownSymbol(symbol, undefined, this.compileErrors, this.fieldId);
+    mustBeKnownSymbol(
+      symbol,
+      NullScope.Instance,
+      UnknownType.Instance,
+      this.compileErrors,
+      this.fieldId,
+    );
 
-    if (symbol.symbolScope === SymbolScope.member && !this.qualifier) {
+    if (symbol.symbolScope === SymbolScope.member && isEmptyNode(this.qualifier)) {
       mustBePropertyPrefixedOnMember(this.compileErrors, this.fieldId);
     }
 
     const prefix = scopePrefix(symbol, this.compileErrors, this.scope, this.fieldId);
-    const postfix = this.index
+    const postfix = !isEmptyNode(this.index)
       ? this.index.compile()
       : symbol.symbolScope === SymbolScope.outParameter
         ? "[0]"
         : "";
 
-    return this.isIndex()
-      ? this.compileIndex(symbol.symbolId, this.rootSymbolType(), this.index!, prefix, postfix)
+    // handles indexing within call statement
+    return this.isSimpleSubscript()
+      ? this.compileSimpleSubscript(symbol.symbolId, prefix, postfix)
       : `${prefix}${this.id}${postfix}`;
   }
 
@@ -113,7 +107,7 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
       return rootType.symbolTypeFor(this.id);
     }
 
-    return this.isIndex() ? this.getIndexAndOfType(rootType)[1] : rootType;
+    return this.isSimpleSubscript() ? getIndexAndOfType(rootType)[1] : rootType;
   }
 
   get symbolScope() {
@@ -121,8 +115,6 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
   }
 
   toString() {
-    const prefix = this.qualifier ? `${this.qualifier}` : "";
-    const postfix = this.index ? `${this.index}` : "";
-    return `${prefix}${this.id}${postfix}`;
+    return `${this.qualifier}${this.id}${this.index}`;
   }
 }

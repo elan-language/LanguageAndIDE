@@ -1,17 +1,18 @@
 import {
-  mustBeCompatibleType,
+  mustBeAssignableType,
   mustBeKnownSymbolType,
   mustBeUniqueNameInScope,
 } from "../compile-rules";
 import { GlobalFrame } from "../interfaces/global-frame";
 import { Parent } from "../interfaces/parent";
+import { Transforms } from "../interfaces/transforms";
 import { endKeyword, functionKeyword, returnsKeyword } from "../keywords";
 import { getGlobalScope } from "../symbols/symbol-helpers";
-import { Transforms } from "../syntax-nodes/transforms";
 import { FunctionFrame } from "./function-frame";
 
 export class GlobalFunction extends FunctionFrame implements GlobalFrame {
   isGlobal = true;
+  hrefForFrameHelp: string = "LangRef.html#function";
 
   constructor(parent: Parent) {
     super(parent);
@@ -39,6 +40,8 @@ ${endKeyword} ${functionKeyword}\r
       this.htmlId,
     );
 
+    this.returnType.compile(transforms);
+
     const rt = this.symbolType(transforms).returnType;
 
     mustBeKnownSymbolType(rt, this.returnType.renderAsSource(), this.compileErrors, this.htmlId);
@@ -46,9 +49,9 @@ ${endKeyword} ${functionKeyword}\r
     const returnStatement = this.getReturnStatement().expr.getOrTransformAstNode(transforms);
     const rst = returnStatement.symbolType();
 
-    mustBeCompatibleType(rt, rst, this.compileErrors, this.htmlId);
+    mustBeAssignableType(rt, rst, this.compileErrors, this.htmlId);
 
-    return `function ${super.compile(transforms)}\r
+    return `async function ${super.compile(transforms)}\r
 }
 global["${name}"] = ${name};
 `;

@@ -31,16 +31,17 @@ end record`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = 100; _a.b = "fred"; return _a;})();
+  let x = await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.a = 100; _a.b = "fred"; return _a;})();
   let a = 0;
   let b = "";
   ({a, b} = x);
-  system.printLine(a);
-  system.printLine(b);
+  await system.printLine(a);
+  await system.printLine(b);
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["a", 0], ["b", ""]]);};
+  async _initialise() { return this; }
   a = 0;
 
   b = "";
@@ -81,16 +82,17 @@ end record
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = 3; _a.fruit = "Apple"; _a.aBool = _stdlib.true; _a.aFloat = 1.1; return _a;})();
+  let x = await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.a = 3; _a.fruit = "Apple"; _a.aBool = _stdlib.true; _a.aFloat = 1.1; return _a;})();
   const {a, fruit, aBool, aFloat} = x;
-  system.printLine(a);
-  system.printLine(fruit);
-  system.printLine(aBool);
-  system.printLine(aFloat);
+  await system.printLine(a);
+  await system.printLine(fruit);
+  await system.printLine(aBool);
+  await system.printLine(aFloat);
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["a", 0], ["fruit", ""], ["aBool", false], ["aFloat", 0]]);};
+  async _initialise() { return this; }
   a = 0;
 
   fruit = "";
@@ -174,14 +176,15 @@ end record`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = 100; _a.b = "fred"; return _a;})();
+  let x = await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.a = 100; _a.b = "fred"; return _a;})();
   let {a, b} = x;
-  system.printLine(a);
-  system.printLine(b);
+  await system.printLine(a);
+  await system.printLine(b);
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["a", 0], ["b", ""]]);};
+  async _initialise() { return this; }
   a = 0;
 
   b = "";
@@ -242,18 +245,19 @@ end record`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = 100; _a.b = "fred"; return _a;})();
+  let x = await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.a = 100; _a.b = "fred"; return _a;})();
   let {a, b} = x;
   let y = 0;
   let z = "";
   y = a;
   z = b;
-  system.printLine(y);
-  system.printLine(z);
+  await system.printLine(y);
+  await system.printLine(z);
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["a", 0], ["b", ""]]);};
+  async _initialise() { return this; }
   a = 0;
 
   b = "";
@@ -276,7 +280,7 @@ return [main, _tests];}`;
 main
   variable x set to new Foo() with a set to {1,2}, b set to "fred"
   variable a, b set to x
-  variable y set to empty List<of Int>
+  variable y set to empty ListImmutable<of Int>
   variable z set to ""
   set y to a
   set z to b
@@ -285,26 +289,27 @@ main
 end main
 
 record Foo
-  property a as List<of Int>
+  property a as ListImmutable<of Int>
   property b as String
 end record`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = system.list([1, 2]); _a.b = "fred"; return _a;})();
+  let x = await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.a = system.listImmutable([1, 2]); _a.b = "fred"; return _a;})();
   let {a, b} = x;
-  let y = system.emptyImmutableList();
+  let y = system.initialise(_stdlib.ListImmutable.emptyInstance());
   let z = "";
   y = a;
   z = b;
-  system.printLine(y);
-  system.printLine(z);
+  await system.printLine(y);
+  await system.printLine(z);
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["a", system.emptyImmutableList()], ["b", ""]]);};
-  a = system.emptyImmutableList();
+  static emptyInstance() { return system.emptyClass(Foo, [["a", system.initialise(_stdlib.ListImmutable.emptyInstance())], ["b", ""]]);};
+  async _initialise() { return this; }
+  a = system.initialise(_stdlib.ListImmutable.emptyInstance());
 
   b = "";
 
@@ -331,22 +336,23 @@ main
 end main
 
 record Foo
-  property a as List<of Int>
+  property a as ListImmutable<of Int>
   property b as String
 end record`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = system.list([1, 2]); _a.b = "fred"; return _a;})();
+  const x = await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.a = system.listImmutable([1, 2]); _a.b = "fred"; return _a;})();
   const {a, b} = x;
-  system.printLine(a);
-  system.printLine(b);
+  await system.printLine(a);
+  await system.printLine(b);
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["a", system.emptyImmutableList()], ["b", ""]]);};
-  a = system.emptyImmutableList();
+  static emptyInstance() { return system.emptyClass(Foo, [["a", system.initialise(_stdlib.ListImmutable.emptyInstance())], ["b", ""]]);};
+  async _initialise() { return this; }
+  a = system.initialise(_stdlib.ListImmutable.emptyInstance());
 
   b = "";
 
@@ -373,22 +379,23 @@ main
 end main
 
 record Foo
-  property a as List<of Int>
+  property a as ListImmutable<of Int>
   property b as String
 end record`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = system.list([1, 2]); _a.b = "fred"; return _a;})();
+  let x = await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.a = system.listImmutable([1, 2]); _a.b = "fred"; return _a;})();
   const {a, b} = x;
-  system.printLine(a);
-  system.printLine(b);
+  await system.printLine(a);
+  await system.printLine(b);
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["a", system.emptyImmutableList()], ["b", ""]]);};
-  a = system.emptyImmutableList();
+  static emptyInstance() { return system.emptyClass(Foo, [["a", system.initialise(_stdlib.ListImmutable.emptyInstance())], ["b", ""]]);};
+  async _initialise() { return this; }
+  a = system.initialise(_stdlib.ListImmutable.emptyInstance());
 
   b = "";
 
@@ -416,7 +423,7 @@ main
 end main
 
 record Foo
-  property a as List<of Int>
+  property a as ListImmutable<of Int>
   property b as String
 end record
 
@@ -428,16 +435,17 @@ end record`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = system.list([1, 2]); _a.b = "fred"; return _a;})();
-  let y = (() => {const _a = {...system.initialise(new Bar())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Bar()))); _a.c = x; return _a;})();
+  let x = await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.a = system.listImmutable([1, 2]); _a.b = "fred"; return _a;})();
+  let y = await (async () => {const _a = {...system.initialise(await new Bar()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Bar()._initialise()))); _a.c = x; return _a;})();
   let {c, d} = y;
-  system.printLine(c);
-  system.printLine(d);
+  await system.printLine(c);
+  await system.printLine(d);
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["a", system.emptyImmutableList()], ["b", ""]]);};
-  a = system.emptyImmutableList();
+  static emptyInstance() { return system.emptyClass(Foo, [["a", system.initialise(_stdlib.ListImmutable.emptyInstance())], ["b", ""]]);};
+  async _initialise() { return this; }
+  a = system.initialise(_stdlib.ListImmutable.emptyInstance());
 
   b = "";
 
@@ -445,6 +453,7 @@ class Foo {
 
 class Bar {
   static emptyInstance() { return system.emptyClass(Bar, [["d", ""]]);};
+  async _initialise() { return this; }
   _c;
   get c() {
     return this._c ??= Foo.emptyInstance();
@@ -479,7 +488,7 @@ main
 end main
 
 record Foo
-  property a as List<of Int>
+  property a as ListImmutable<of Int>
   property b as String
 end record
 
@@ -491,16 +500,17 @@ end record`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = system.list([1, 2]); _a.b = "fred"; return _a;})();
-  const y = (() => {const _a = {...system.initialise(new Bar())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Bar()))); _a.c = x; return _a;})();
+  const x = await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.a = system.listImmutable([1, 2]); _a.b = "fred"; return _a;})();
+  const y = await (async () => {const _a = {...system.initialise(await new Bar()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Bar()._initialise()))); _a.c = x; return _a;})();
   let {c, d} = y;
-  system.printLine(c);
-  system.printLine(d);
+  await system.printLine(c);
+  await system.printLine(d);
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["a", system.emptyImmutableList()], ["b", ""]]);};
-  a = system.emptyImmutableList();
+  static emptyInstance() { return system.emptyClass(Foo, [["a", system.initialise(_stdlib.ListImmutable.emptyInstance())], ["b", ""]]);};
+  async _initialise() { return this; }
+  a = system.initialise(_stdlib.ListImmutable.emptyInstance());
 
   b = "";
 
@@ -508,6 +518,7 @@ class Foo {
 
 class Bar {
   static emptyInstance() { return system.emptyClass(Bar, [["d", ""]]);};
+  async _initialise() { return this; }
   _c;
   get c() {
     return this._c ??= Foo.emptyInstance();
@@ -536,7 +547,7 @@ return [main, _tests];}`;
 
 main
   variable x set to new Foo() with a set to {1,2}, b set to "fred"
-  variable a set to empty List<of Int>
+  variable a set to empty ListImmutable<of Int>
   variable b set to ""
   set a, b to x
   print a
@@ -544,24 +555,25 @@ main
 end main
 
 record Foo
-  property a as List<of Int>
+  property a as ListImmutable<of Int>
   property b as String
 end record`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = system.list([1, 2]); _a.b = "fred"; return _a;})();
-  let a = system.emptyImmutableList();
+  let x = await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.a = system.listImmutable([1, 2]); _a.b = "fred"; return _a;})();
+  let a = system.initialise(_stdlib.ListImmutable.emptyInstance());
   let b = "";
   ({a, b} = x);
-  system.printLine(a);
-  system.printLine(b);
+  await system.printLine(a);
+  await system.printLine(b);
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["a", system.emptyImmutableList()], ["b", ""]]);};
-  a = system.emptyImmutableList();
+  static emptyInstance() { return system.emptyClass(Foo, [["a", system.initialise(_stdlib.ListImmutable.emptyInstance())], ["b", ""]]);};
+  async _initialise() { return this; }
+  a = system.initialise(_stdlib.ListImmutable.emptyInstance());
 
   b = "";
 
@@ -591,7 +603,7 @@ main
 end main
 
 record Foo
-  property a as List<of Int>
+  property a as ListImmutable<of Int>
   property b as String
 end record
 
@@ -603,18 +615,19 @@ end record`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = system.list([1, 2]); _a.b = "fred"; return _a;})();
-  let y = (() => {const _a = {...system.initialise(new Bar())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Bar()))); _a.c = x; return _a;})();
+  let x = await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.a = system.listImmutable([1, 2]); _a.b = "fred"; return _a;})();
+  let y = await (async () => {const _a = {...system.initialise(await new Bar()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Bar()._initialise()))); _a.c = x; return _a;})();
   let c = Foo.emptyInstance();
   let d = "";
   ({c, d} = y);
-  system.printLine(c);
-  system.printLine(d);
+  await system.printLine(c);
+  await system.printLine(d);
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["a", system.emptyImmutableList()], ["b", ""]]);};
-  a = system.emptyImmutableList();
+  static emptyInstance() { return system.emptyClass(Foo, [["a", system.initialise(_stdlib.ListImmutable.emptyInstance())], ["b", ""]]);};
+  async _initialise() { return this; }
+  a = system.initialise(_stdlib.ListImmutable.emptyInstance());
 
   b = "";
 
@@ -622,6 +635,7 @@ class Foo {
 
 class Bar {
   static emptyInstance() { return system.emptyClass(Bar, [["d", ""]]);};
+  async _initialise() { return this; }
   _c;
   get c() {
     return this._c ??= Foo.emptyInstance();
@@ -658,7 +672,7 @@ main
 end main
 
 record Foo
-  property a as List<of Int>
+  property a as ListImmutable<of Int>
   property b as String
 end record
 
@@ -670,18 +684,19 @@ end record`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const x = (() => {const _a = {...system.initialise(new Foo())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Foo()))); _a.a = system.list([1, 2]); _a.b = "fred"; return _a;})();
-  const y = (() => {const _a = {...system.initialise(new Bar())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(new Bar()))); _a.c = x; return _a;})();
+  const x = await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.a = system.listImmutable([1, 2]); _a.b = "fred"; return _a;})();
+  const y = await (async () => {const _a = {...system.initialise(await new Bar()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Bar()._initialise()))); _a.c = x; return _a;})();
   let c = Foo.emptyInstance();
   let d = "";
   ({c, d} = y);
-  system.printLine(c);
-  system.printLine(d);
+  await system.printLine(c);
+  await system.printLine(d);
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["a", system.emptyImmutableList()], ["b", ""]]);};
-  a = system.emptyImmutableList();
+  static emptyInstance() { return system.emptyClass(Foo, [["a", system.initialise(_stdlib.ListImmutable.emptyInstance())], ["b", ""]]);};
+  async _initialise() { return this; }
+  a = system.initialise(_stdlib.ListImmutable.emptyInstance());
 
   b = "";
 
@@ -689,6 +704,7 @@ class Foo {
 
 class Bar {
   static emptyInstance() { return system.emptyClass(Bar, [["d", ""]]);};
+  async _initialise() { return this; }
   _c;
   get c() {
     return this._c ??= Foo.emptyInstance();
@@ -734,8 +750,8 @@ end record`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types Int to String",
-      "Incompatible types String to Int",
+      "Incompatible types. Expected: String Provided: Int",
+      "Incompatible types. Expected: Int Provided: String",
     ]);
   });
 
@@ -760,7 +776,10 @@ end record`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String", "'b' is not defined"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: String Provided: Int",
+      "'b' is not defined",
+    ]);
   });
 
   test("Fail_DeconstructIntoMixed2", async () => {
@@ -786,7 +805,7 @@ end record`;
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "The identifier 'a' is already used for a variable and cannot be re-defined here.",
-      "Incompatible types Int to String",
+      "Incompatible types. Expected: String Provided: Int",
     ]);
   });
 

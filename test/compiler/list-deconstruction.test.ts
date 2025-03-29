@@ -19,7 +19,7 @@ suite("List Deconstruction", () => {
 main
   variable a set to [1,2,3]
   variable x set to 1
-  variable y set to empty Array<of Int>
+  variable y set to empty List<of Int>
   set x:y to a
   print x
   print y
@@ -29,12 +29,12 @@ end main
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.literalArray([1, 2, 3]);
+  let a = system.list([1, 2, 3]);
   let x = 1;
-  let y = system.emptyArray();
+  let y = system.initialise(_stdlib.List.emptyInstance());
   [x, y] = system.deconstructList(a);
-  system.printLine(x);
-  system.printLine(y);
+  await system.printLine(x);
+  await system.printLine(y);
 }
 return [main, _tests];}`;
 
@@ -52,7 +52,7 @@ return [main, _tests];}`;
 
 main
   variable a set to [1,2,3]
-  variable y set to empty Array<of Int>
+  variable y set to empty List<of Int>
   set _:y to a
   print y
 end main
@@ -61,10 +61,10 @@ end main
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.literalArray([1, 2, 3]);
-  let y = system.emptyArray();
+  let a = system.list([1, 2, 3]);
+  let y = system.initialise(_stdlib.List.emptyInstance());
   [, y] = system.deconstructList(a);
-  system.printLine(y);
+  await system.printLine(y);
 }
 return [main, _tests];}`;
 
@@ -91,10 +91,10 @@ end main
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.literalArray([1, 2, 3]);
+  let a = system.list([1, 2, 3]);
   let x = 1;
   [x, ] = system.deconstructList(a);
-  system.printLine(x);
+  await system.printLine(x);
 }
 return [main, _tests];}`;
 
@@ -121,10 +121,10 @@ end main
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.literalArray([1, 2, 3]);
+  let a = system.list([1, 2, 3]);
   let [x, y] = system.deconstructList(a);
-  system.printLine(x);
-  system.printLine(y);
+  await system.printLine(x);
+  await system.printLine(y);
 }
 return [main, _tests];}`;
 
@@ -137,13 +137,13 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "1[2, 3]");
   });
 
-  test("Pass_DeconstructArrayOfArrayIntoExistingVariables", async () => {
+  test("Pass_DeconstructListOfListIntoExistingVariables", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
   variable a set to [[1,2,3], [4,5,6], [7,8,9]]
-  variable x set to empty Array<of Int>
-  variable y set to empty Array<of Array<of Int>>
+  variable x set to empty List<of Int>
+  variable y set to empty List<of List<of Int>>
   set x:y to a
   print x
   print y
@@ -153,12 +153,12 @@ end main
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.literalArray([system.literalArray([1, 2, 3]), system.literalArray([4, 5, 6]), system.literalArray([7, 8, 9])]);
-  let x = system.emptyArray();
-  let y = system.emptyArray();
+  let a = system.list([system.list([1, 2, 3]), system.list([4, 5, 6]), system.list([7, 8, 9])]);
+  let x = system.initialise(_stdlib.List.emptyInstance());
+  let y = system.initialise(_stdlib.List.emptyInstance());
   [x, y] = system.deconstructList(a);
-  system.printLine(x);
-  system.printLine(y);
+  await system.printLine(x);
+  await system.printLine(y);
 }
 return [main, _tests];}`;
 
@@ -171,7 +171,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[1, 2, 3][[4, 5, 6], [7, 8, 9]]");
   });
 
-  test("Pass_DeconstructArrayOfArrayIntoNewVariables", async () => {
+  test("Pass_DeconstructListOfListIntoNewVariables", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -185,10 +185,10 @@ end main
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.literalArray([system.literalArray([1, 2, 3]), system.literalArray([4, 5, 6]), system.literalArray([7, 8, 9])]);
+  let a = system.list([system.list([1, 2, 3]), system.list([4, 5, 6]), system.list([7, 8, 9])]);
   let [x, y] = system.deconstructList(a);
-  system.printLine(x);
-  system.printLine(y);
+  await system.printLine(x);
+  await system.printLine(y);
 }
 return [main, _tests];}`;
 
@@ -201,7 +201,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[1, 2, 3][[4, 5, 6], [7, 8, 9]]");
   });
 
-  test("Pass_DeconstructArrayOfArrayIntoNewLetVariables", async () => {
+  test("Pass_DeconstructListOfListIntoNewLetVariables", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
@@ -215,10 +215,10 @@ end main
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.literalArray([system.literalArray([1, 2, 3]), system.literalArray([4, 5, 6]), system.literalArray([7, 8, 9])]);
+  let a = system.list([system.list([1, 2, 3]), system.list([4, 5, 6]), system.list([7, 8, 9])]);
   const [x, y] = system.deconstructList(a);
-  system.printLine(x);
-  system.printLine(y);
+  await system.printLine(x);
+  await system.printLine(y);
 }
 return [main, _tests];}`;
 
@@ -237,7 +237,7 @@ return [main, _tests];}`;
 main
   variable a set to [1]
   variable x set to 1
-  variable y set to empty Array<of Int>
+  variable y set to empty List<of Int>
   set x:y to a
   print x
   print y
@@ -247,12 +247,12 @@ end main
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.literalArray([1]);
+  let a = system.list([1]);
   let x = 1;
-  let y = system.emptyArray();
+  let y = system.initialise(_stdlib.List.emptyInstance());
   [x, y] = system.deconstructList(a);
-  system.printLine(x);
-  system.printLine(y);
+  await system.printLine(x);
+  await system.printLine(y);
 }
 return [main, _tests];}`;
 
@@ -279,10 +279,10 @@ end main
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.list([1, 2, 3]);
+  let a = system.listImmutable([1, 2, 3]);
   const [x, y] = system.deconstructList(a);
-  system.printLine(x);
-  system.printLine(y);
+  await system.printLine(x);
+  await system.printLine(y);
 }
 return [main, _tests];}`;
 
@@ -308,9 +308,9 @@ end main
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.list([1, 2, 3]);
+  let a = system.listImmutable([1, 2, 3]);
   const [x, ] = system.deconstructList(a);
-  system.printLine(x);
+  await system.printLine(x);
 }
 return [main, _tests];}`;
 
@@ -336,9 +336,9 @@ end main
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.list([1, 2, 3]);
+  let a = system.listImmutable([1, 2, 3]);
   const [, y] = system.deconstructList(a);
-  system.printLine(y);
+  await system.printLine(y);
 }
 return [main, _tests];}`;
 
@@ -365,10 +365,10 @@ end main
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.literalArray([1]);
+  let a = system.list([1]);
   let [x, y] = system.deconstructList(a);
-  system.printLine(x);
-  system.printLine(y);
+  await system.printLine(x);
+  await system.printLine(y);
 }
 return [main, _tests];}`;
 
@@ -395,10 +395,10 @@ end main
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.literalArray([1]);
+  let a = system.list([1]);
   const [x, y] = system.deconstructList(a);
-  system.printLine(x);
-  system.printLine(y);
+  await system.printLine(x);
+  await system.printLine(y);
 }
 return [main, _tests];}`;
 
@@ -425,10 +425,10 @@ end main
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.list([1, 2, 3]);
+  let a = system.listImmutable([1, 2, 3]);
   let [x, y] = system.deconstructList(a);
-  system.printLine(x);
-  system.printLine(y);
+  await system.printLine(x);
+  await system.printLine(y);
 }
 return [main, _tests];}`;
 
@@ -447,7 +447,7 @@ return [main, _tests];}`;
 main
   variable a set to {1,2,3}
   variable x set to 1
-  variable y set to empty List<of Int>
+  variable y set to empty ListImmutable<of Int>
   set x:y to a
   print x
   print y
@@ -457,12 +457,12 @@ end main
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.list([1, 2, 3]);
+  let a = system.listImmutable([1, 2, 3]);
   let x = 1;
-  let y = system.emptyImmutableList();
+  let y = system.initialise(_stdlib.ListImmutable.emptyInstance());
   [x, y] = system.deconstructList(a);
-  system.printLine(x);
-  system.printLine(y);
+  await system.printLine(x);
+  await system.printLine(y);
 }
 return [main, _tests];}`;
 
@@ -489,7 +489,7 @@ end main
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.list([1, 2, 3]);
+  let a = system.listImmutable([1, 2, 3]);
   let [x, y] = system.deconstructList(a);
   x = x;
   y = y;
@@ -511,7 +511,7 @@ return [main, _tests];}`;
 main
   variable a set to [1,2]
   variable x set to ""
-  variable y set to empty Array<of Int>
+  variable y set to empty List<of Int>
   set x:y to a
 end main
 `;
@@ -521,7 +521,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: String Provided: Int"]);
   });
 
   test("Fail_DeconstructIntoWrongType2", async () => {
@@ -530,7 +530,7 @@ end main
 main
   variable a set to [1,2]
   variable x set to 0
-  variable y set to empty Array<of String>
+  variable y set to empty List<of String>
   set x:y to a
 end main
 `;
@@ -540,7 +540,9 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types String to Int"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: List<of String> Provided: List<of Int>",
+    ]);
   });
 
   test("Fail_DeconstructIntoWrongType3", async () => {
@@ -549,7 +551,7 @@ end main
 main
   variable a set to [1,2]
   variable x set to ""
-  variable y set to empty Array<of String>
+  variable y set to empty List<of String>
   set x:y to a
 end main
 `;
@@ -559,7 +561,9 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Array<of Int> to Array<of String>"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: List<of String> Provided: List<of Int>",
+    ]);
   });
 
   test("Fail_DeconstructIntoWrongType4", async () => {
@@ -578,7 +582,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Array<of Int> to Int"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: List<of Int>"]);
   });
 
   test("Fail_DeconstructIntoWrongType5", async () => {
@@ -586,26 +590,7 @@ end main
 
 main
   variable a set to [1,2]
-  variable x set to empty Array<of Int>
-  variable y set to empty Array<of Int>
-  set x:y to a
-end main
-`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Int to Array<of Int>"]);
-  });
-
-  test("Fail_DeconstructIntoWrongType6", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-  variable a set to [1,2]
-  variable x set to 0
+  variable x set to empty List<of Int>
   variable y set to empty List<of Int>
   set x:y to a
 end main
@@ -616,8 +601,27 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: List<of Int> Provided: Int"]);
+  });
+
+  test("Fail_DeconstructIntoWrongType6", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to [1,2]
+  variable x set to 0
+  variable y set to empty ListImmutable<of Int>
+  set x:y to a
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types Array<of Int> to List<of Int> try converting with '.asList()'",
+      "Incompatible types. Expected: ListImmutable<of Int> Provided: List<of Int>",
     ]);
   });
 
@@ -636,7 +640,9 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: ListImmutable<of String> or List<of String> Provided: List<of Int>",
+    ]);
   });
 
   test("Fail_DeconstructIntoWrongType2WithDiscard", async () => {
@@ -644,7 +650,7 @@ end main
 
 main
   variable a set to [1,2]
-  variable y set to empty Array<of String>
+  variable y set to empty List<of String>
   set _:y to a
 end main
 `;
@@ -654,7 +660,9 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Array<of Int> to Array<of String>"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: List<of String> Provided: List<of Int>",
+    ]);
   });
 
   test("Fail_CannotDeconstruct1", async () => {
@@ -731,7 +739,7 @@ end main
 main
   variable a set to {1:1}
   variable x set to 0
-  variable y set to empty Array<of Int>
+  variable y set to empty List<of Int>
   set x:y to a
 end main
 `;
@@ -750,7 +758,7 @@ end main
 main
   variable a set to 1
   variable x set to 0
-  variable y set to empty Array<of Int>
+  variable y set to empty List<of Int>
   set x:y to a
 end main
 `;
@@ -763,11 +771,11 @@ end main
     assertDoesNotCompile(fileImpl, ["Expression must be able to be deconstructed"]);
   });
 
-  test("Fail_DeconstructEmptyArray1", async () => {
+  test("Fail_DeconstructEmptyList1", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to empty Array<of Int>
+  variable a set to empty List<of Int>
   variable x:y set to a
   print x
   print y
@@ -782,13 +790,13 @@ end main
     await assertObjectCodeDoesNotExecute(fileImpl, "Out of range error");
   });
 
-  test("Fail_DeconstructEmptyArray2", async () => {
+  test("Fail_DeconstructEmptyList2", async () => {
     const code = `# FFFF Elan v1.0.0 valid
 
 main
-  variable a set to empty Array<of Int>
+  variable a set to empty List<of Int>
   variable x set to 0
-  variable y set to empty Array<of Int>
+  variable y set to empty List<of Int>
   set x:y to a
   print x
   print y
@@ -809,7 +817,7 @@ end main
 main
   variable a set to [1,2,3]
   let x be 1
-  let y be empty Array<of Int>
+  let y be empty List<of Int>
   set x:y to a
   print x
   print y
@@ -825,5 +833,23 @@ end main
       "May not re-assign the 'let' 'x'",
       "May not re-assign the 'let' 'y'",
     ]);
+  });
+
+  test("Fail_DeconstructIntoExistingAndNewVariables", async () => {
+    const code = `# FFFF Elan v1.0.0 valid
+
+main
+  variable a set to [1,2,3]
+  variable x set to 1
+  set x:y to a
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'y' is not defined"]);
   });
 });

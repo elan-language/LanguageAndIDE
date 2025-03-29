@@ -1,45 +1,52 @@
-# FFFF Elan Beta 6 valid
+# 6cff642cc6c869e9c25676581612f0a5876a3b136e03f4722f864a305513eaac Elan Beta 9 valid
 
 main
-  let start be new Point(5, 5)
-  let destination be new Point(34, 24)
+  let start be newPoint(5, 5)
+  let destination be newPoint(34, 24)
   let percentRocks be inputIntBetween("Enter % rocks (0-100): ", 0, 100)
-  variable rocks set to empty Array<of Point>
-  variable nodes set to empty Array<of Node>
+  call clearPrintedText()
+  variable rocks set to empty List<of Point>
+  variable nodes set to empty List<of Node>
   call createRocksAndNodes(percentRocks, rocks, nodes, start, destination)
   variable gr set to initialiseGraphics(start, destination, rocks)
-  call gr.display()
+  call displayBlocks(gr)
   variable solver set to new Solver(nodes, start, destination)
   while true
-    let option be inputString(algPrompt)
+    print algPrompt
+    call clearKeyBuffer()
+    variable option set to ""
+    while (option isnt "a") and (option isnt "d") and (option isnt "h")
+      set option to getKey()
+    end while
+    call clearPrintedText()
     let alg be algFromLetter[option]
     call runSolver(gr, start, destination, rocks, solver, alg)
   end while
 end main
 
-procedure runSolver(gr as BlockGraphics, start as Point, destination as Point, rocks as Array<of Point>, out solver as Solver, alg as Algorithm)
+procedure runSolver(gr as Array2D<of Int>, start as Point, destination as Point, rocks as List<of Point>, out solver as Solver, alg as Algorithm)
   call solver.initialise(alg)
   variable gr2 set to initialiseGraphics(start, destination, rocks)
   while solver.running
     call solver.visitNextPoint()
     set gr2 to addVisited(gr2, solver.getLastVisited())
-    call gr2.display()
+    call displayBlocks(gr2)
     call pause(0)
   end while
   if solver.getLastVisited() is destination then
     let route, length be solver.getRouteAndLength()
     set gr2 to addRoute(gr2, route)
-    call gr2.display()
-    print "Length of route: {length.round(2)}"
+    call displayBlocks(gr2)
+    call printNoLine("Length of route: {length.round(2)} ")
   else
-    print "No route from start to destination found through these rocks."
+    call printNoLine("No path found. ")
   end if
 end procedure
 
-procedure createRocksAndNodes(percentRocks as Int, out rocks as Array<of Point>, out nodes as Array<of Node>, start as Point, dest as Point)
+procedure createRocksAndNodes(percentRocks as Int, out rocks as List<of Point>, out nodes as List<of Node>, start as Point, dest as Point)
   for x from 0 to 39 step 1
-    for y from 0 to 29 step 1
-      let p be new Point(x, y)
+    for y from 1 to 29 step 1
+      let p be newPoint(x, y)
       if p is start then
         call nodes.append(new Node(p, 0, p.minDistTo(dest)))
       else if p is dest then
@@ -53,40 +60,40 @@ procedure createRocksAndNodes(percentRocks as Int, out rocks as Array<of Point>,
   end for
 end procedure
 
-function initialiseGraphics(start as Point, dest as Point, rocks as Array<of Point>) returns BlockGraphics
-  variable gr set to new BlockGraphics()
+function initialiseGraphics(start as Point, dest as Point, rocks as List<of Point>) returns Array2D<of Int>
+  variable gr set to new Array2D<of Int>(40, 30, white)
   each rock in rocks
-    set gr to gr.withBlock(rock.x, rock.y, black)
+    set gr to gr.withPut(rock.x, rock.y, black)
   end each
-  set gr to gr.withBlock(start.x, start.y, green)
-  set gr to gr.withBlock(dest.x, dest.y, red)
+  set gr to gr.withPut(start.x, start.y, green)
+  set gr to gr.withPut(dest.x, dest.y, red)
   return gr
 end function
 
-function addVisited(gr as BlockGraphics, visited as Point) returns BlockGraphics
-  return gr.withBlock(visited.x, visited.y, lightBlue)
+function addVisited(gr as Array2D<of Int>, visited as Point) returns Array2D<of Int>
+  return gr.withPut(visited.x, visited.y, lightBlue)
 end function
 
-function addRoute(gr as BlockGraphics, route as List<of Point>) returns BlockGraphics
+function addRoute(gr as Array2D<of Int>, route as ListImmutable<of Point>) returns Array2D<of Int>
   variable gr2 set to gr
   each p in route
-    set gr2 to gr2.withBlock(p.x, p.y, orange)
+    set gr2 to gr2.withPut(p.x, p.y, orange)
   end each
   let start be route[0]
   let dest be route[route.length() - 1]
-  set gr2 to gr2.withBlock(start.x, start.y, green)
-  set gr2 to gr2.withBlock(dest.x, dest.y, red)
+  set gr2 to gr2.withPut(start.x, start.y, green)
+  set gr2 to gr2.withPut(dest.x, dest.y, red)
   return gr2
 end function
 
 class Solver
-  constructor(nodes as Array<of Node>, start as Point, destination as Point)
+  constructor(nodes as List<of Node>, start as Point, destination as Point)
     set property.nodes to nodes
     set property.start to start
     set property.destination to destination
   end constructor
 
-  property nodes as Array<of Node>
+  property nodes as List<of Node>
 
   property start as Point
 
@@ -131,17 +138,17 @@ class Solver
     end each
   end procedure
 
-  function currentNeighbours() returns Array<of Node>
-    variable neighbours set to empty List<of Node>
+  function currentNeighbours() returns List<of Node>
+    variable neighbours set to new List<of Node>()
     let currentPoint be property.current.point
     each p in currentPoint.neighbouringPoints()
       let node be getNodeFor(p)
       let point be node.point
       if point.isNotEmpty then
-        set neighbours to neighbours + node
+        set neighbours to neighbours.withAppend(node)
       end if
     end each
-    return neighbours.asArray()
+    return neighbours
   end function
 
   function getNodeFor(p as Point) returns Node
@@ -181,7 +188,7 @@ class Solver
     return cost
   end function
 
-  function getRouteAndLength() returns (List<of Point>, Float)
+  function getRouteAndLength() returns (ListImmutable<of Point>, Float)
     variable route set to {property.destination}
     variable length set to 0.0
     variable node set to getNodeFor(property.destination)
@@ -189,7 +196,7 @@ class Solver
       let previous be node.via
       let p be node.point
       set length to length + p.minDistTo(previous)
-      set route to route.withInsertAt(0, previous)
+      set route to route.withInsert(0, previous)
       set node to getNodeFor(previous)
     end repeat when node.point is property.start
     return tuple(route, length)
@@ -228,16 +235,13 @@ class Node
     set property.via to p
   end procedure
 
+  function asString() returns String
+    return "[{property.point.asString()} {property.visited} {property.distFromStart}]"
+  end function
+
 end class
 
-class Point
-  constructor(x as Int, y as Int)
-    set property.x to x
-    set property.y to y
-    # isNotEmpty is needed to distinguish Point(0,0) from empty Point, which will also have zero values
-    set property.isNotEmpty to true
-  end constructor
-
+record Point
   property x as Int
 
   property y as Int
@@ -253,11 +257,19 @@ class Point
   end function
 
   # Returns the 8 theoretically-neighbouring points, whether or not within bounds
-  function neighbouringPoints() returns List<of Point>
-    return {new Point(property.x - 1, property.y - 1), new Point(property.x, property.y - 1), new Point(property.x + 1, property.y - 1), new Point(property.x - 1, property.y), new Point(property.x + 1, property.y), new Point(property.x - 1, property.y + 1), new Point(property.x, property.y + 1), new Point(property.x + 1, property.y + 1)}
+  function neighbouringPoints() returns ListImmutable<of Point>
+    return {newPoint(property.x - 1, property.y - 1), newPoint(property.x, property.y - 1), newPoint(property.x + 1, property.y - 1), newPoint(property.x - 1, property.y), newPoint(property.x + 1, property.y), newPoint(property.x - 1, property.y + 1), newPoint(property.x, property.y + 1), newPoint(property.x + 1, property.y + 1)}
   end function
 
-end class
+  function asString() returns String
+    return "{property.x},{property.y}"
+  end function
+
+end record
+
+function newPoint(x as Int, y as Int) returns Point
+  return new Point() with x set to x, y set to y, isNotEmpty set to true
+end function
 
 enum Algorithm dijkstra, aStar, heuristic
 
@@ -266,15 +278,15 @@ constant infinity set to 2000.0
 
 constant algFromLetter set to {"a":Algorithm.aStar, "d":Algorithm.dijkstra, "h":Algorithm.heuristic}
 
-constant algPrompt set to "\n'a' for A-star \n'd' for Dijkstra \n'h' for Heuristic \nEnter option: "
+constant algPrompt set to "Press 'a' for A-star, 'd' for Dijkstra, 'h' for Heuristic"
 
 constant lightBlue set to 0x80abff
 
 constant orange set to 0xe97132
 
 test point
-  let p be new Point(0, 0)
+  let p be newPoint(0, 0)
   let n be p.neighbouringPoints()
-  let expected be {new Point(-1, -1), new Point(0, -1), new Point(1, -1), new Point(-1, 0), new Point(1, 0), new Point(-1, 1), new Point(0, 1), new Point(1, 1)}
+  let expected be {newPoint(-1, -1), newPoint(0, -1), newPoint(1, -1), newPoint(-1, 0), newPoint(1, 0), newPoint(-1, 1), newPoint(0, 1), newPoint(1, 1)}
   assert n is expected
 end test

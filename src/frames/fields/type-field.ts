@@ -1,11 +1,11 @@
 import { CodeSource } from "../code-source";
 import { isAstType } from "../frame-helpers";
 import { Frame } from "../interfaces/frame";
+import { Transforms } from "../interfaces/transforms";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { TypeNode } from "../parse-nodes/type-node";
 import { TokenType } from "../symbol-completion-helpers";
 import { transforms } from "../syntax-nodes/ast-helpers";
-import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractField } from "./abstract-field";
 
 export class TypeField extends AbstractField {

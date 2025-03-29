@@ -1,8 +1,8 @@
-# 4141e723391aa2ee322f66035217443cb2534e6f7c093a0c86000ef9400b9f6c Elan Beta 6 valid
+# c7aa0d5255cb8bc9fcfec1ced682f706b8f73767f2e3d10f7c7ceb09450c285d Elan Beta 9 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
-  variable gr set to new BlockGraphics()
+  variable blocks set to new Array2D<of Int>(40, 30, white)
   variable head set to [20, 15]
   variable tail set to head
   variable body set to [head]
@@ -11,13 +11,14 @@ main
   variable apple set to [0, 0]
   call setAppleToRandomPosition(apple, body)
   while gameOn
-    variable gr2 set to gr.withBlock(head[0], head[1], green)
+    call blocks.put(head[0], head[1], green)
     variable paintTail set to white
     if body[0] is tail then
       set paintTail to green
     end if
-    set gr2 to gr2.withBlock(tail[0], tail[1], paintTail).withBlock(apple[0], apple[1], red)
-    call gr.display()
+    call blocks.put(tail[0], tail[1], paintTail)
+    call blocks.put(apple[0], apple[1], red)
+    call displayBlocks(blocks)
     set currentDir to directionByKey(currentDir, getKey())
     set tail to body[0]
     call body.append(head)
@@ -33,7 +34,7 @@ main
   print "Game Over! Score: {body.length() - 1}"
 end main
 
-procedure setAppleToRandomPosition(out apple as Array<of Int>, body as Array2D<of Int>)
+procedure setAppleToRandomPosition(out apple as List<of Int>, body as List<of List<of Int>>)
   repeat
     set apple to [randomInt(0, 39), randomInt(0, 29)]
   end repeat when not overlaps(body, apple)
@@ -43,7 +44,7 @@ function hasHitEdge(headX as Int, headY as Int) returns Boolean
   return (headX < 0) or (headY < 0) or (headX > 39) or (headY > 29)
 end function
 
-function getAdjacentSquare(sq as Array<of Int>, dir as String) returns Array<of Int>
+function getAdjacentSquare(sq as List<of Int>, dir as String) returns List<of Int>
   variable newX set to sq[0]
   variable newY set to sq[1]
   if dir is "left" then
@@ -58,7 +59,7 @@ function getAdjacentSquare(sq as Array<of Int>, dir as String) returns Array<of 
   return [newX, newY]
 end function
 
-function overlaps(body as Array2D<of Int>, sq as Array<of Int>) returns Boolean
+function overlaps(body as List<of List<of Int>>, sq as List<of Int>) returns Boolean
   variable result set to false
   each seg in body
     if (seg is sq) then
@@ -122,4 +123,4 @@ test overlaps
   assert overlaps(body, [2, 1]) is false
 end test
 
-# Test coverage: 48% (29/61 frames)
+# Test coverage: 48% (29/61 instructions)
