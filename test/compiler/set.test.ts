@@ -231,36 +231,6 @@ return [main, _tests];}`;
 
 main
   let st0 be new Set<of Int>()
-  let st1 be st0.addFromListImmutable({2,4,6,3})
-  print st1
-  let st2 be st1.addFromListImmutable({2,5,6})
-  print st2
-end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  const st0 = system.initialise(await new _stdlib.Set()._initialise());
-  const st1 = st0.addFromListImmutable(system.listImmutable([2, 4, 6, 3]));
-  await system.printLine(st1);
-  const st2 = st1.addFromListImmutable(system.listImmutable([2, 5, 6]));
-  await system.printLine(st2);
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{2, 4, 6, 3}{2, 4, 6, 3, 5}");
-  });
-  test("Pass_AddFromList", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-  let st0 be new Set<of Int>()
   let st1 be st0.addFromList([2,4,6,3])
   print st1
   let st2 be st1.addFromList([2,5,6])
