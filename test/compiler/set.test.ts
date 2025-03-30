@@ -262,16 +262,12 @@ return [main, _tests];}`;
 
 main
   let a be ["one", "two", "three"].asSet()
-  let b be a.asListImmutable()
   let c be a.asList()
   variable aa set to empty Set<of String>
-  variable bb set to empty ListImmutable<of String>
   variable cc set to empty List<of String>
   set aa to a
-  set bb to b
   set cc to c
   print aa
-  print bb
   print cc
 end main`;
 
@@ -279,16 +275,12 @@ end main`;
 const global = new class {};
 async function main() {
   const a = system.list(["one", "two", "three"]).asSet();
-  const b = a.asListImmutable();
   const c = a.asList();
   let aa = system.initialise(_stdlib.Set.emptyInstance());
-  let bb = system.initialise(_stdlib.ListImmutable.emptyInstance());
   let cc = system.initialise(_stdlib.List.emptyInstance());
   aa = a;
-  bb = b;
   cc = c;
   await system.printLine(aa);
-  await system.printLine(bb);
   await system.printLine(cc);
 }
 return [main, _tests];}`;
@@ -299,7 +291,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{one, two, three}{one, two, three}[one, two, three]");
+    await assertObjectCodeExecutes(fileImpl, "{one, two, three}[one, two, three]");
   });
 
   test("Pass_Contains1", async () => {

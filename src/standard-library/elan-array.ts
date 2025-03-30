@@ -139,11 +139,6 @@ export class ElanArray<T1> {
     return false;
   }
 
-  @elanFunction([], FunctionOptions.pure, ElanClassName("ListImmutable"))
-  asListImmutable() {
-    return this.system!.arrayAsListImmutable(this);
-  }
-
   @elanFunction([], FunctionOptions.pure, ElanClassName("ElanSet"))
   asSet() {
     return this.system!.arrayAsSet(this);
