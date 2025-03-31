@@ -1,3 +1,4 @@
+import { isProduction } from "../production";
 import { StdLibSymbols } from "../standard-library/std-lib-symbols";
 import { AssertOutcome } from "../system";
 import { AbstractSelector } from "./abstract-selector";
@@ -659,7 +660,7 @@ export class FileImpl implements File, Scope {
       const toHash = code.substring(code.indexOf("Elan"));
       const newHash = await this.getHash(toHash);
 
-      if (fileHash !== newHash && fileHash !== "FFFF") {
+      if (fileHash !== newHash && (isProduction || fileHash !== "FFFF")) {
         throw new Error(msg);
       }
     }
