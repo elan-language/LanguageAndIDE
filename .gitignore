@@ -18,3 +18,4 @@ coverage
 .nyc_output
 web-editor/elan-api.js
 web-editor/documentation/
+web-editor/demo/

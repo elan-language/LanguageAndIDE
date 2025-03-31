@@ -123,7 +123,7 @@ export function loadFileAsSourceNew(sourceFile: string): string {
 export async function loadFileAsModelNew(sourceFile: string): Promise<FileImpl> {
   const source = loadFileAsSourceNew(sourceFile);
   const codeSource = new CodeSourceFromString(source);
-  const fl = new FileImpl(hash, new DefaultProfile(), transforms());
+  const fl = new FileImpl(hash, new DefaultProfile(), transforms(), true);
   await fl.parseFrom(codeSource);
   if (fl.parseError) {
     throw new Error(fl.parseError);
