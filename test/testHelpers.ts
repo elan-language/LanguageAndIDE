@@ -87,7 +87,7 @@ export async function assertGeneratesHtmlandSameSourceNew(sourceFile: string, ht
   }
 }
 
-function updateTestFileNew(testDoc: string, newContent: string) {
+export function updateTestFileNew(testDoc: string, newContent: string) {
   writeFileSync(testDoc, newContent);
 }
 

@@ -14,6 +14,7 @@
     "Education"
   ],
   "scripts": {
+    "update" : "node ./out/test/update-elan-files.js",
     "compile-test-api": "esbuild ./src/standard-library/std-lib.ts --bundle --format=esm --outfile=out/test/elan-api.js",
     "compile-api": "esbuild ./src/standard-library/std-lib.ts --bundle --format=esm --outfile=web-editor/elan-api.js",
     "compile-test": "tsc -p ./test && npm run format-test",
@@ -26,7 +27,8 @@
     "test": "npm run pretest && mocha --timeout 10000 out/test/**/*.test.js",
     "test-coverage": "npm run pretest && nyc --reporter=lcov mocha out/test/**/*.test.js",
     "format-src": "prettier --ignore-path .gitignore --print-width 100 --log-level silent --end-of-line auto --write \"src/**/*.ts\"",
-    "format-test": "prettier --ignore-path .gitignore --print-width 100 --log-level silent --end-of-line auto --write \"test/**/*.test.ts\""
+    "format-test": "prettier --ignore-path .gitignore --print-width 100 --log-level silent --end-of-line auto --write \"test/**/*.test.ts\"",
+    "update-elan" :"npm run compile-src && npm run compile-test && npm run update"
   },
   "dependencies": {
     "@types/wicg-file-system-access": "^2023.10.5",
