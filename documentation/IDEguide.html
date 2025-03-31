@@ -1,0 +1,529 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en-GB">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="Documentation.css" rel="stylesheet">
+<link href="colourScheme.css" rel="stylesheet">
+<link href="elanStyle.css" rel="stylesheet">
+<title>Elan IDE Guide</title>
+<script type="text/javascript" src="generated_toc.js"></script>
+</head>
+<body>
+<div class="docTitle">Elan IDE Guide</div>
+<div class="docTOC">
+  <div id="generated-toc" class="generate_from_h1 generate_for_page"></div>
+</div>
+
+<p></p>
+<p>IDE means <b>Integrated Development Environment</b> which, for Elan, is one browser page in which code is written and tested,
+and in which text and graphic outputs are displayed.
+It looks like this:</p>
+
+<img src="images/IDE-overview.png" style="width:80%;height:auto;">
+
+<!-- #region Menu -->
+<h1 id="Menu">1. Menu</h1>
+
+<p>At the top left of the screen is the 'menu' of commands:</p>
+
+<img src="images/menu.png" style="width:30%;">
+
+<p>Some of the options shown act like a button to  perform that command directly; others, when clicked will show a drop-down sub-menu
+    of further commands. Individual commands may be greyed-out if unavailable. If you use the mouse to hover over any option
+    you will usually be shown a 'toolip' that provides a description and/or information about why the option is currently
+    unavailable.
+</p>
+
+<!--   #region Demo -->
+<h2 id="Button_Demo">Demo</h2>
+
+<p><b>Note:</b> Depending upon how the installation of Elan that you are using, the <b>Demo</b> button might or might not be shown.</p>
+
+<p>If the <b>Demo</b> button is shown, clicking on it will show a list of available demo programs,
+    which you may load just by selecting the program name. You can then run the program with the <a href="#Run_controls">Run button</a>.</p>
+
+<!-- #endregion -->
+<!--   #region Help-->
+<h2 id="Button_Help">Help</h2>
+<p>The <b>Help</b> menu offers links to online documentation.
+    Each link will open in a new tab in the browser so that you don't lose your current work.</p>
+
+<p>Note that the <a href="#Context_menu">Context Menu</a> opened on a selected instruction offers a direct link to help concerning that specific instruction.
+As with the main <b>Help</b> menu, the documentation will open in a separate browser tab.</p>
+<!-- #endregion -->
+<!--   #region   File -->
+<h2 id="Button_File">File</h2>
+<!--     #region New -->
+<h3 id="New">New</h3>
+<p><b>New</b> will clear the current code - allowing you to start writing a new program. The code editor will then show this:</p>
+
+<el-header># Elan Beta 8</el-header>
+
+The first line shows a standard Elan 'header' comment, which is required on every code file, and which you are not able to move, edit, or delete.
+    The second line shows the <a href="#Global_selector">Global selector</a>.
+<!--     #endregion -->
+<!--     #region Load -->
+<h3 id="Menu_Load">Load</h3>
+<p><b>Load</b> will present you with a file-selector dialog, from which you can navigate to, and load a <el-code>.elan</el-code> file,
+     which will be loaded in place of your current code. As with <b>New</b> (above) if your existing code is not saved, you will see a confirmation dialog.</p>
+
+     <p>The name of the file that has been loaded is displayed above the code editor.</p>
+     <p>Note: you may only load a valid Elan file - one that has been created and saved by the Elan IDE. Loading any other file will result in
+    a message in <a href="System_info">System info</a>:</p>
+
+<el-code>Cannot load file: it has been created or modified outside Elan IDE</el-code>
+<!-- #endregion -->
+<!--     #region Append -->
+<h3 id="Menu_Append">Append</h3>
+
+<p><b>Append</b>, like <b>Load</b> offers a file selection dialog. If you select a valid <el-code>.elan</el-code> file
+     it will be <i>appended</i> onto the end of your current code. From there the appended code may be moved within
+    the existing code (see <a href="Editing">Editing</a>).</p>
+<!-- #endregion -->
+<!--     #region Auto Save -->
+<h3 id="Menu_Auto_Save">Auto Save</h3>
+<p><b>Auto Save</b> offers a file selection dialog to allow you to specify the name and location where your code will be saved.
+    If you use this option, every time you modify the code <i>and its parse status is 'valid'</i> the code will be saved automatically,
+    <i>overriding the previous version in the file</i>. Once this option has been selected, the <b>File</b> menu will offer
+    a <b>Cancel Auto Save</b> option, after which you may use <b>Manual Save</b> - or re-select <b>Auto Save</b>.
+
+<p>Note that you may auto-save a <b>New</b> code file, even though you haven't added any instructions yet, because the file contains a valid header.</p>
+<!-- #endregion -->
+<!-- #endregion -->
+<!--     #region Manual Save -->
+<h3 id="Menu_Manual_Save">Manual Save</h3>
+<b>Manual Save</b> offers a file selection dialog to allow you to specify the name and location where your code will be saved.
+Unlike <b>Auto Save</b> - <b>Manual Save</b> is a one-off event - you must remember to save any subsequent changes if you need them saved.
+As a reminder, if your existing code is not saved, you will see a confirmation dialog:</p>
+<img src="images/Unsaved_warning.png" style="width:30%;">
+<p>Note that for both <b>Auto Save</b> and <b>Manual Save</b>, code may be saved <i>only when its parse status is 'valid'</i>. However,
+    it <i>may</i> be saved even if it does not compile, or pass any tests.</p>
+<!-- #endregion -->
+<!--   #region Trim -->
+<h2 id="Button_Trim">Trim</h2>
+
+<p>The <b>Trim</b> command is used to neaten-up your code: it removes any 'new code' selectors from your code <i>that may be removed</i> which is typically most of them.
+<i>Where a 'new code' selector is not removed by <b>Trim</b> this indicates that code is still expected in that location.</i></p>
+
+<p>The keyboard shortcut for <b>Trim</b> is <b>Alt-t</b>. (This is because <b>Ctrl-b</b> is a key sequence used for standard browser functionality).</p>
+<!-- #endregion -->
+ <!--   #region Outlining -->
+<h2 id="Button_Outlining">Outlining</h2>
+
+<p>The outlining menu command is labelled <b>+/-</b>. Pressing it toggles the presentation of the code between its expanded (normal)
+format, and an outline format, where instructions are collapsed to a single line, for example:</p>
+
+<el-code-block source="outlining.elan">
+<main class="collapsed ok multiline" id="main3" tabindex="0">
+<el-top><el-expand>+</el-expand><el-kw>main</el-kw></el-top>
+<el-statement class="ok empty" id="select4" tabindex="0"><el-select><el-txt></el-txt><el-place>new code</el-place></el-select></el-statement>
+<el-kw>end main</el-kw>
+</main>
+<el-func class="collapsed ok multiline" id="func5" tabindex="0">
+<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-method><el-field id="ident7" class="ok" tabindex="0"><el-txt>binarySearch</el-txt><el-place><i>name</i></el-place></el-field></el-method>(<el-field id="params8" class="optional ok" tabindex="0"><el-txt><el-id>list</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;, <el-id>item</el-id> <el-kw>as</el-kw> <el-type>String</el-type></el-txt><el-place><i>parameter definitions</i></el-place></el-field>)<el-kw> returns </el-kw><el-field id="type9" class="ok" tabindex="0"><el-txt><el-type>Boolean</el-type></el-txt><el-place><i>Type</i></el-place></el-field></el-top>
+<el-statement class="ok" id="return10" tabindex="0"><el-kw>return </el-kw><el-field id="expr11" class="ok" tabindex="0"><el-txt><el-id>true</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-kw>end function</el-kw>
+</el-func>
+<el-test class="collapsed none multiline" id="test12" tabindex="0">
+<el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="comment14" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i>optional description</i></el-place></el-field></el-top>
+<el-statement class="ok empty" id="select13" tabindex="0"><el-select><el-txt></el-txt><el-place>new code</el-place></el-select></el-statement>
+<el-kw>end test</el-kw>
+</el-test>
+<el-const class="collapsed ok multiline" id="const15" tabindex="0"><el-top><el-expand>+</el-expand><el-kw>constant </el-kw><el-field id="ident16" class="ok" tabindex="0"><el-txt><el-id>example</el-id></el-txt><el-place><i>name</i></el-place></el-field></el-top><el-kw> set to </el-kw><el-field id="text17" class="ok" tabindex="0"><el-txt>"<el-lit>example</el-lit>"</el-txt><el-place><i>literal value or data structure</i></el-place></el-field></el-const>
+</el-code-block>
+
+<p>Any collapsed instruction may be expanded individually by double-clicking on the <b>+</b> sign next to it.
+The background colour for the <b>+</b> shows the status of the code that is currently hidden so that you
+may easily find the parts of code that contain issues.</p>
+
+<p>The keyboard shortcut for <b>Trim</b> is <b>Alt-t</b>. (This is because <b>Ctrl-b</b> is a key sequence used for standard browser functionality).</p>
+<!-- #endregion -->
+ <!--   #region Undo & Redo -->
+ <div id="Button_Undo"></div>
+<h2 id="Button_Redo">Undo & Redo</h2>
+ <p>The <b>Undo</b> command allows you to undo recent change(s) and go back to the <i>last point at which the code parsed as 'valid'</i> - you cannot go back to any state when the code was still parsing as 'incomplete' or 'invalid'.
+    You may apply <b>Undo</b> repeatedly, to go back through all parse-valid states of the code since you loaded the code, or started from <b>New</b>.
+    The <b>Redo</b> command to revert the last <b>Undo</b> if you went back too far.</p>
+
+    <p>The keyboard short-cut for <b>Undo</b> is <b>Ctrl-z</b>, and for <b>Undo</b> is <b>Ctrl-y</b>.</p>
+<!-- #endregion -->
+<!-- #endregion -->
+
+<!-- #region Code Editor-->
+ <!-- #region Heading & Intro-->
+<h1 id="Editor">2. The code editor</h1>
+
+<p>The main pane within the IDE is the 'code editor`.</p>
+
+<p>When entering, editing, or just navigating (browsing) through, different sections of code will be highlighted at two different levels:
+    whole instruction(s) or an individual field within an instruction.</p>
+
+<h3 id="Instruction">Instructions</h3>
+
+<p>The following show examples of instructions being highlighted.</p>
+Here a single instruction is highlighted:
+
+<el-code-block><main class="ok multiline" id="main1" tabindex="0">
+    <el-top><el-expand>+</el-expand><el-kw>main</el-kw></el-top>
+    <el-statement class="ok" id="var3" tabindex="0"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>gr</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>BlockGraphics</el-type>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+    <el-statement class="selected focused ok" id="var6" tabindex="0"><el-kw>variable </el-kw><el-field id="var7" class="ok" tabindex="0"><el-txt><el-id>grid</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-kw>empty</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Boolean</el-type>&gt;</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+    <el-statement class="ok" id="call9" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident10" class="ok" tabindex="0"><el-txt><el-method>fillRandom</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args11" class="optional ok" tabindex="0"><el-txt><el-id>grid</el-id></el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
+    <el-statement class="ok multiline" id="while12" tabindex="0">
+    <el-top><el-expand>+</el-expand><el-kw>while </el-kw><el-field id="expr14" class="ok" tabindex="0"><el-txt><el-id>true</el-id></el-txt><el-place><i>condition</i></el-place></el-field></el-top>
+    <el-statement class="ok" id="set15" tabindex="0"><el-kw>set </el-kw><el-field id="ident16" class="ok" tabindex="0"><el-txt><el-id>gr</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr17" class="ok" tabindex="0"><el-txt><el-method>updateGraphics</el-method>(<el-id>grid</el-id>, <el-id>gr</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+    <el-statement class="ok" id="call18" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident19" class="ok" tabindex="0"><el-txt><el-id>gr</el-id>.<el-method>display</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args20" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i><i>arguments</i></i></el-place></el-field>)</el-top></el-statement>
+    <el-statement class="ok" id="set21" tabindex="0"><el-kw>set </el-kw><el-field id="ident22" class="ok" tabindex="0"><el-txt><el-id>grid</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr23" class="ok" tabindex="0"><el-txt><el-method>nextGeneration</el-method>(<el-id>grid</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+    <el-statement class="ok" id="call24" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident25" class="ok" tabindex="0"><el-txt><el-method>pause</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args26" class="optional ok" tabindex="0"><el-txt><el-lit>50</el-lit></el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
+    <el-kw>end while</el-kw>
+    </el-statement>
+    <el-kw>end main</el-kw>
+    </main></el-code-block>
+
+<li id="Container_instruction">Here a <i>container</i>-instruction is highlighted. The highlight shows the full extent of the instruction, indicating the sequence of other instructions that it contains, which are all indented by two characters:</li>
+    <el-code-block>
+        <el-statement class="selected focused ok multiline" id="while12" tabindex="0">
+            <el-top><el-expand>+</el-expand><el-kw>while </el-kw><el-field id="expr14" class="ok" tabindex="0"><el-txt><el-id>true</el-id></el-txt><el-place><i>condition</i></el-place></el-field></el-top>
+            <el-statement class="ok" id="set15" tabindex="0"><el-kw>set </el-kw><el-field id="ident16" class="ok" tabindex="0"><el-txt><el-id>gr</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr17" class="ok" tabindex="0"><el-txt><el-method>updateGraphics</el-method>(<el-id>grid</el-id>, <el-id>gr</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+            <el-statement class="ok" id="call18" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident19" class="ok" tabindex="0"><el-txt><el-id>gr</el-id>.<el-method>display</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args20" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i><i>arguments</i></i></el-place></el-field>)</el-top></el-statement>
+            <el-statement class="ok" id="set21" tabindex="0"><el-kw>set </el-kw><el-field id="ident22" class="ok" tabindex="0"><el-txt><el-id>grid</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr23" class="ok" tabindex="0"><el-txt><el-method>nextGeneration</el-method>(<el-id>grid</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+            <el-statement class="ok" id="call24" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident25" class="ok" tabindex="0"><el-txt><el-method>pause</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args26" class="optional ok" tabindex="0"><el-txt><el-lit>50</el-lit></el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
+            <el-kw>end while</el-kw>
+            </el-statement>
+    </el-code-block>
+
+It is also possible to select multiple instructions (to move, or delete them, together), for example:
+
+<el-code-block>
+    <el-statement class="ok multiline" id="while12" tabindex="0">
+        <el-top><el-expand>+</el-expand><el-kw>while </el-kw><el-field id="expr14" class="ok" tabindex="0"><el-txt><el-id>true</el-id></el-txt><el-place><i>condition</i></el-place></el-field></el-top>
+        <el-statement class="selected ok" id="set15" tabindex="0"><el-kw>set </el-kw><el-field id="ident16" class="ok" tabindex="0"><el-txt><el-id>g</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr17" class="ok" tabindex="0"><el-txt><el-id>g</el-id>.<el-method>withText</el-method>(<el-id>x</el-id>, <el-id>y</el-id>, "<el-lit>*</el-lit>", <el-id>red</el-id>, <el-id>black</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+        <el-statement class="selected ok" id="call18" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident19" class="ok" tabindex="0"><el-txt><el-id>g</el-id>.<el-method>display</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args20" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i><i>arguments</i></i></el-place></el-field>)</el-top></el-statement>
+        <el-statement class="selected ok" id="call21" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident22" class="ok" tabindex="0"><el-txt><el-method>pause</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args23" class="optional ok" tabindex="0"><el-txt><el-lit>100</el-lit></el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
+        <el-statement class="selected ok" id="set24" tabindex="0"><el-kw>set </el-kw><el-field id="ident25" class="ok" tabindex="0"><el-txt><el-id>g</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr26" class="ok" tabindex="0"><el-txt><el-id>g</el-id>.<el-method>withBlock</el-method>(<el-id>x</el-id>, <el-id>y</el-id>, <el-id>black</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+        <el-statement class="selected ok" id="let27" tabindex="0"><el-kw>let </el-kw><el-field id="var28" class="ok" tabindex="0"><el-txt><el-id>dir</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr29" class="ok" tabindex="0"><el-txt><el-method>randomInt</el-method>(<el-lit>0</el-lit>, <el-lit>3</el-lit>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+        <el-statement class="selected focused ok" id="set30" tabindex="0"><el-kw>set </el-kw><el-field id="ident31" class="ok" tabindex="0"><el-txt><el-id>x</el-id>, <el-id>y</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr32" class="ok" tabindex="0"><el-txt><el-method>updateCoordinates</el-method>(<el-id>x</el-id>, <el-id>y</el-id>, <el-id>dir</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+        <el-kw>end while</el-kw>
+    </el-statement>
+</el-code-block>
+
+The following example shows a <i>single instruction</i> that has been formatted over multiple lines - either because it is too long to fit on one line, or because the editor formats that instruction over multiple lines for readability. Note that the second and subsequent lines are indented by just <i>one</i> character:
+<el-code-block>
+    <el-statement class="selected focused ok" id="let15" tabindex="0"><el-kw>let </el-kw><el-field id="var16" class="ok" tabindex="0"><el-txt><el-id>b</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr17" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>CircleVG</el-type>()<el-kw> with </el-kw><br><el-id>cx</el-id><el-kw> set to </el-kw><el-id>i</el-id>*<el-lit>5</el-lit> + <el-lit>2</el-lit>, <br><el-id>cy</el-id><el-kw> set to </el-kw><el-lit>75</el-lit>, <br><el-id>r</el-id><el-kw> set to </el-kw><el-lit>1</el-lit>, <br><el-id>fill</el-id><el-kw> set to </el-kw>-<el-lit>1</el-lit>, <br><el-id>stroke</el-id><el-kw> set to </el-kw><el-id>white</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+</el-code-block>
+
+<h3 id="Field">Fields</h3>
+
+<p>Instructions consist of fixed (or 'templated') code - keywords and sometimes symbols - plus a number of 'fields' which is where the user enters code that define specific details for that instruction.
+    When the field is highlighted it will be highlighted with a background colour and a thin black border. This indicates that the user may now enter or edit code in that field, for example:</p>
+<el-code-block>
+    <el-statement class="ok" id="var40" tabindex="0"><el-kw>variable </el-kw><el-field id="var41" class="selected focused ok" tabindex="0"><el-txt><input spellcheck="false" data-cursorstart="4" data-cursorend="4" size="3" style="width: 4ch" value="newX"></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr42" class="ok" tabindex="0"><el-txt><el-id>x</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+</el-code-block>
+
+<p>A green background (as above) indicates that the text in field  is valid for that field. An amber background indicates that the text is not complete
+    but that additional text could be added to make it valid. <i>Commonly</i>, the field will contain a prompt that suggests what else might be needed, and/or
+        a drop-down list of 'symbols' that <i>might</i> be valid for the field - though it is <i>not</i> guaranteed that all those options will then
+    compile:</p>
+
+<el-code-block><el-statement class="warning" id="var6" tabindex="0"><el-kw>variable </el-kw><el-field id="var7" class="ok" tabindex="0"><el-txt><el-id>x</el-id></el-txt><el-place><i>name</i></el-place>
+    </el-field><el-kw> set to </el-kw><el-field id="expr8" class="selected focused warning" tabindex="0"><el-txt><input spellcheck="false" data-cursorstart="5" data-cursorend="5" size="4" style="width: 5ch" value="20 + ">
+        </el-txt><el-place><i>expression</i></el-place><el-compl><i>expression</i></el-compl></el-field></el-statement></el-code-block>
+
+<p>A red background indicates that the contents of the field are not valid for that field. In the following example a variable name cannot contain a bracket:</p>
+
+<el-code-block><el-statement class="selected focused error" id="var9" tabindex="0">
+<el-kw>variable </el-kw><el-field id="var10" class="error" tabindex="0"><el-txt>y(</el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr11" class="ok" tabindex="0"><el-txt><el-lit>15</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement></el-code-block>
+
+<p>If a field background turns red as you type, it is best to hit <b>Backspace</b> until it goes green or amber again, so that you can identify the <i>first</i> character that caused the issue.</p>
+
+<p>If the background to a field is grey, it means that that field is <i>optional</i> - you may enter valid text or move on to the next field, or the next instruction.</p>
+<!-- #endregion -->
+ <!-- #region Adding Instructions-->
+<h2 id="Selector">Adding Instructions into a program</h2>
+
+ <p>At various places in the code you may see a 'new code selector', for example:</p>
+
+ <el-code-block>
+    <main class="ok multiline" id="main14" tabindex="0">
+        <el-top><el-expand>+</el-expand><el-kw>main</el-kw></el-top>
+        <el-statement class="ok empty" id="select15" tabindex="0"><el-select><el-txt></el-txt><el-place>new code</el-place></el-select></el-statement>
+        <el-kw>end main</el-kw>
+        </main>
+ </el-code-block>
+
+ <p>which indicates that new instruction(s) may be created there. When the line containing 'new code' is given focus it
+    changes form to show the list of instructions that you may insert, for example: </p>
+
+    <el-code>
+        <el-global class="selected focused ok empty" id="select0" tabindex="0">
+            <el-select><el-txt></el-txt><el-place>new code</el-place></el-select></el-global>
+    </el-code>
+
+<h3>Using a selector to insert a new instruction</h3>
+
+    <p>When a new code selector has focus (for example as shown above)
+        in most cases you can type just the first character of the instruction to be inserted. And you will then see
+        the template for that instruction including any mandatory and/or optional <a href="">fields</a>.
+        For example, given the initial list shown above, typing <el-code>f</el-code> will result in this being inserted:</p>
+
+<el-code-block>
+        <el-func class="warning multiline" id="func5" tabindex="0">
+        <el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-method><el-field id="ident7" class="selected focused empty warning" tabindex="0"><el-txt><input spellcheck="false" data-cursorstart="0" data-cursorend="0" size="1" style="width: 2px" value=""></el-txt><el-place><i>name</i></el-place><el-compl><i>name</i></el-compl></el-field></el-method>(<el-field id="params8" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i>parameter definitions</i></el-place></el-field>)<el-kw> returns </el-kw><el-field id="type9" class="empty warning" tabindex="0"><el-txt></el-txt><el-place><i>Type</i></el-place></el-field></el-top>
+        <el-statement class="ok empty" id="select6" tabindex="0"><el-select><el-txt></el-txt><el-place>new code</el-place></el-select></el-statement>
+        <el-statement class="warning" id="return10" tabindex="0"><el-kw>return </el-kw><el-field id="expr11" class="empty warning" tabindex="0"><el-txt></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+        <el-kw>end function</el-kw>
+        </el-func>
+        <el-global class="ok empty" id="select0" tabindex="0"><el-select><el-txt></el-txt><el-place>new code</el-place></el-select></el-global></div>
+</el-code-block>
+
+<p>Note that when an instruction is inserted is is followed by a 'new code' selector, and if, as in the example above, the inserted instruction
+    template is for a <a href="#Container_instruction">container instruction</a> then the template will contain its own 'new code' selector for inserting further instructions within it.</p>
+</p>
+
+<p>Where two or more instruction start with the same letter(s) typing the initial letter will filter the options.
+        For example, if the initial list were:</p>
+
+<el-code><el-statement class="selected focused ok empty" id="select4" tabindex="0"><el-select><el-txt></el-txt><el-place>new code</el-place></el-select></el-statement></el-code>
+
+<p>then after typing <el-code>t</el-code> you will see:</p>
+
+<el-code><el-statement class="selected focused ok" id="select4" tabindex="0"><el-select><el-txt>t</el-txt><el-place>new code</el-place></el-select></el-statement></el-code>
+
+<p>and the desired instruction can be selected by then typing the second character (<el-code>h</el-code> or <el-code>r</el-code>).
+In the following example, starting from this <a href="#Member_selector">member selector</a>:</p>
+
+<!--TODO-->
+
+<h3>Why do the options I can see differ from those shown here?</h3>
+
+    <p>The specific list offered may depends upon various factors including:</p>
+
+    <ul>
+        <li>The specific context where the 'new code' is located</li>
+        <li>What other instructions already exist in that context</li>
+        <li>Your individual permissions determined by your <a href="#Profile">User profile</a></li>
+    </ul>
+
+    <p>which means that you won't necessarily see all the instructions shown in this explanation. However, in general there are three
+        distinct forms of 'new code selector': the global selector, the statement selector, and the member selector.<p>
+
+<h3 id="Global_selector">Global selector</h3>
+
+<p>The global selector appears only at 'global' level - in other words when the 'new code' is located <i>directly</i> within the file,
+rather than within <a href="#Container_Instruction">container instruction</a>. When given focus, it will list the <a href="LangRef.html#global"></a>global instructions that
+you may insert. This is the full list:</p>
+
+<el-code>
+<el-global class="selected focused ok empty" id="select0" tabindex="0"><el-select><el-place>new code</el-place><el-help class="selector"> main procedure function test constant enum record class abstract interface #</el-help></el-select></el-global>
+</el-code>
+
+Note that <el-code>main</el-code> will not be shown if the program already contains a <el-code>main</el-code> routine.
+
+<h3 id="Statement_selector">Statement selector</h3>
+
+<h3 id="Member_selector">Member selector</h3>
+
+<h3>What if there is no 'new code' selector shown where you want to insert an instruction?</h3>
+ <p> If you want to insert new instructions in a place where there is no 'new code' indicator, then <i>either</i>:</p>
+    <ul>
+    <li>select the instruction immediately <i>before</i> where you want the new instruction and press <b>Enter</b> <i>or</i></li>
+    <li>select the instruction immediately <i>after</i> where you want the new instruction and press <b>Shift-Enter</b></li>
+</ul>
+
+<h3>How to remove unneeded new code selectors</h3>
+<!-- TODO  Delete and Trim-->
+
+ <!-- #endregion -->
+<!-- #region Keyboard navigation-->
+<h2 id="Keyboard">Navigation &#8211; using the keyboard</h2>
+<p>Note: For Apple Mac users: commands use of the Ctrl key in this reference, should be replaced by the macOS Cmd key.</p>
+<p>
+ <table>
+ <tr><th>Keystroke</th>  <th>On a selected Frame</th> <th>On a selected Field</th> </tr>
+ <tr><td>Home</td> <td>First peer-level frame.</td> <td>Move text cursor to start of field.</td> </tr>
+ <tr><td>End</td> <td>Last peer-level frame.</td> <td>Move text cursor to end of field.</td> </tr>
+ <tr><td>Tab</td> <td>First field in frame.</td> <td>Select next field within frame or, if from last field in a frame, select the frame itself.<br> (If the field has a selected option in the auto-complete popup list then Tab will use that option &#8211; the same as Enter) </td> </tr>
+ <tr><td>&uarr;</td> <td>Select previous frame <br> (within peer-level only). </td> <td>Select previous frame<br> &nbsp;(in tab order). </td> </tr>
+ <tr><td>&darr;</td> <td>Select next frame<br> (within peer-level only). </td> <td>Select next frame<br> &nbsp;(in tab order). </td> </tr>
+ <tr><td>&larr;</td> <td>Select parent frame (if any).</td> <td>Move text cursor left within field.</td> </tr>
+ <tr><td>&rarr;</td> <td>Select first child frame (if any).</td> <td>Move text cursor right within field.</td> </tr>
+ <tr><td>Shift- &uarr;</td> <td>Add prev. frame (peer-level) to current selection.</td> <td>If auto-complete options are offered (drop-down list), move the selection down one in the list. (See also Enter)</td> </tr>
+ <tr><td>Shift- &darr;</td> <td>Add next frame (peer-level) to current selection.</td> <td>If auto-complete options are offered (drop-down list), move the selection up one in the list. (See also Enter)</td> </tr>
+ <tr><td>Esc</td> <td>Escape from the code editor, and put focus on the first Button in the IDE</td> <td> </td> </tr>
+ <tr><td>Ctrl-o</td> <td>Toggle (expand/collapse) outlining on selected frame.</td> <td>Toggle (expand/collapse) outlining on the frame enclosing this field.</td> </tr>
+ <tr><td align="center">Ctrl-O <br> (Ctrl-Shift-o) </td> <td>Toggle (expand/collapse) outlining on all frames.</td> <td>Toggle (expand/collapse) outlining on all frames.</td> </tr>
+ </table>
+ </p>
+<!-- endregion -->
+<!-- #region Keyboard Editing-->
+<h2 id="Editing">Editing &#8211; using the keyboard</h2>
+ <p>
+ <table>
+ <tr><th>Keystroke</th> <th>On a selected Frame</th> <th>On a selected Field</th> </tr>
+ <tr><td>Alt-t</td> <td align="center" colspan="2">Remove all &#8216;new code&#8217; selections that can be removed.<br> This is equivalent to clicking on the Trim button. <br> (This cannot be Ctrl-t as that is defined and executed by the browser). </td> </tr>
+ <tr><td>Backspace</td> <td>On any &#8216;new code&#8217; selector: delete the selector. (Note that all &#8216;new code&#8217; selectors can be removed with the +/- button above the code pane).<br> <br> On a new, unmodified, frame, or from any unedited field within that new frame: delete the whole frame and go back to the selector. This capability is to facilitate deleting a frame created unintentionally. As soon as any field has been edited, or any child frame added &#8211; the frame can only be deleted using Ctrl-Delete (see below). </td> <td>Delete character to the left of the cursor.</td> </tr>
+ <tr><td>Delete</td> <td></td> <td>Delete the character to the right of the cursor.</td> </tr>
+ <tr><td>Ctrl-Delete or<br> Ctrl-d </td> <td>Delete the selected frame, including any frames within it.</td> <td></td> </tr>
+ <tr><td>Enter</td> <td>Insert a selector-frame (&#8216;new code&#8217;) below selected, at peer level &#8211; if permissible.</td> <td>If auto-complete options are offered (as a drop-down list), enter the selected option into the field.<br> <br> Otherwise, move to the next field (in the same frame) &#8211; like Tab. <br> <br> For last field in frame only: insert &#8216;new code&#8217; after this field. </td> </tr>
+ <tr><td>Shift-Enter</td> <td>Insert a selector-frame (&#8216;new code&#8217;) above selected, at peer level &#8211; if permissible</td> <td>-</td> </tr>
+ <tr><td>Ctrl- &uarr;</td> <td>Move selected frame(s) up, within peer level.</td> <td>-</td> </tr>
+ <tr><td>Ctrl- &darr;</td> <td>Move selected frame(s) down, within peer level.</td> <td>-</td> </tr>
+ <tr><td>Ctrl- &larr;</td> <td></td> <td>Move the cursor to the end of the next &#8216;word&#8217; or other transition</td> </tr>
+ <tr><td>Ctrl- &rarr;</td> <td></td> <td>Move the cursor to the end of the next &#8216;word&#8217; or other transition</td> </tr>
+ <tr><td>Ctrl-x</td> <td>Cut selected frame(s) into the scratchpad</td> <td>Cut any selected text from the field</td> </tr>
+ <tr><td>Ctrl-v</td> <td>Paste text from the clipboard into the field, at the cursor.</td> <td>On a selected &#8216;new code&#8217; field: Paste the frame(s) added to the scratchpad in place of the &#8216;new code&#8217; field. If any of the frames to be added is not compatible with the content of the &#8216;new code&#8217; field then no action will take place. </td></tr>
+ <tr><td>Ctrl-i</td> <td>Toggle the <el-code>ignore</el-code> setting of a <el-code>test</el-code></td> <td></td> </tr>
+ <tr><td>Ctrl-m</td> <td>Open menu of help options</td> <td></td> </tr>
+ <tr><td>Ctrl-p</td> <td>Toggle the <el-code>private</el-code> status of members <el-code>property</el-code>, <el-code>function</el-code> or <el-code>procedure</el-code> of a <el-code>class</el-code></td> <td></td> </tr>
+ <tr><td>Ctrl-y</td> <td>Redo last undo<br> provided that the code you undid from was parsing successfully </td> <td></td> </tr>
+ <tr><td>Ctrl-z</td> <td>Undo last edit<br> Takes you back to the next most recent version <span>that parsed successfully.<br> </span>Any changes made that did not result in a successful parse will be lost. </td> <td></td> </tr>
+</table>
+ </p>
+<!-- #endregion -->
+<!-- #region Mouse operations-->
+<h2 id="Mouse">Mouse operation &#8211; quick reference</h2>
+ <ul>
+ <li>To select a frame, click on the keyword at the start the frame. (You can successfully click in several other places within the frame, but the simplest rule to remember is click on the starting keyword).</li>
+ <li>To select an additional frame (&#8216;multi-select&#8217;), hold down the Shift key on the keyboard and click on the frame to add to the current selection. Note that all the multi-selected frames must be at peer-level (the same level of indentation) and, unless global frames, must be within the same &#8216;parent&#8217; frame.</li>
+ <li>To select a field, click on the text (or, if empty, the prompt) shown for that field. Having selected the field, you may then click again at a particular place within the text to position the text cursor. (By default, when a field is selected the text cursor will be at the right-hand end of any existing text).</li>
+ <li>To collapse a multi-line frame, double-click on the keyword at the start of the frame</li>
+ <li>To expand a collapsed frame, double-click on the keyword at the start of the frame (or the &#8216;+&#8217; symbol in front of it).</li>
+</ul>
+ <!-- #endregion -->
+<!-- #region Context menu-->
+<h2 id="Context_menu">Context menu</h2>
+
+<p>When an instruction is highlighted, you may right-mouse-click on it, or type <b>Ctrl-m</b> to bring up the context menu, for example:</p>
+
+<img src="Images/Context_menu.png" style="width:30%;">
+<p>Note that several of the options show a keyboard short-cut - which you may use just by selecting the instruction and pressing
+    the specified keys <i>without having to bring up the context menu.</i></p>
+<!-- #endregion -->
+<!-- #endregion -->
+
+<!-- #region The run controls-->
+<h1 id="Run_controls">3. Run controls</h1>
+<p>The set of 5 buttons shown below constitute the 'run controls':</p>
+<img src="Images/Run_controls.png" style="width:30%;">
+<p>Reading left-to-right the five controls are:</p>
+<ul>
+<li><b>Run</b> This is the normal way to run the program. It will run at full speed, ignoring any breakpoints, and is the most efficient in terms of memory usage.</li>
+<li><b>Debug</b> Run in 'debug' mode. See <a href="#Debugging">Debugging</a></li>
+<li><b>Stop</b> When a program is running, or is paused, this button will stop and exit the program.</li>
+<li><b>Pause</b> Pause the program (if running in debug mode). See <a href="#Debugging">Debugging</a></li>
+<li><b>Step</b> From a paused state, execute the next instruction only and pause again. See <a href="#Debugging">Debugging</a></i>
+</ul>
+<!-- #endregion -->
+<!-- #endregion -->
+
+<!-- #region Status panel-->
+<h1 id="Status_panel">4. Status panel</h1>
+<p>The status panel is shown below:</p>
+<img src="Images/Status_panel.png" style="width:30%;">
+<p>The panel shows four status bars:</p>
+<ul>
+    <li><b>Parse status</b> aggregates the parse status of each <a href="#field">field</a> and shows the <i>worst</i> status of any field.
+    <i>It is important to get the Parse Status to green ('ok') at the earliest opportunity because unless the parse status is green/ok, Elan
+        cannot attempt to <i>compile</i> the code, and nor can it <i>save</i> the code to a file. If the parse status is amber/incomplete or red/error
+    </i></li>
+    <li><b>Compile status</b> If the <i>parse status</i> is green/ok, Elan will attempt to <i>compile</i> the code, and will then shown</li>
+    <li><b>Test status</b></li>
+    <li><b>Run status</b></li>
+</ul>
+<p>Each of the four status bars may appear with a green, amber, or red background - with a superimposed word to clarify the meaning.
+Alternatively the bar may be replaced by the blue background, with no text, indicating that that particular status is not relevant at present.</p>
+<p>
+If the Parse, Compile, or Test status shows amber, or red, you may click on that status bar to highlight the first location in your code where the status shown was identified.</p>
+<!-- #endregion -->
+
+<!-- #region Display-->
+<h1 id="Display">5. Display</h1>
+<img src="images/display.png" style="width:30%;">
+ <p id="Bar_resize">>The Display pane is always rendered with an aspect ratio of 4:3 - so if the width is changed (by moving the central blue bart left or right) the Display will change its vertical dimension also.
+    It is used for the following purposes, on their own or in combination:</p>
+
+ <ul>
+    <li>to generate plain text, or formatted Html, using the <a href="LangRef.html#print">print instructions</a> and/or <a href="LibRef.html#Lib_proc">print procedures</a>.</li>
+    <li>to input text from the keyboard using various <a href="LibRef.html#System_methods">system methods</a>.</li>
+    <li>for <a href="LibRef.html#BlockGraphics">Block graphics</a> (as shown in the 'maze' example above)</li>
+    <li>for <a href="LibRef.html#VectorGraphics">Vector graphics</a></li>
+    <li>for <a href="LibRef.html#Turtle">Turtle graphics</a></li>
+ </ul>
+
+ <p>Any of the three forms of graphics may be overlaid with printed text/Html, or each other, with the one exception that Turtle graphics and Vector graphics may not be used together - as the former makes exclusive use of the latter.</p>
+ <p id="Button_ClearDisplay">The <b>Clear</b> button will clear all of contents of the display, irrespective of the mechanism by which it was generated.
+    However, the individual forms of display listed above may be cleared individually using specific methods (see links above).</p>
+<!-- #endregion -->
+
+<!-- #System info-->
+<h1 id="System_info">6. System info</h1>
+
+<img src="images/System_info.png" style="width:50%;">
+
+ <p>The <b>System info</b> pane shows only messages generated by the Elan system, of three forms:</p>
+ <ul>
+    <li>Feedback on a user-action, for example: <el-code>Paste Failed: Nothing to paste</el-code></li>
+    <li>Run-time error messages, as shown in the screenshot above. Following the error message (the first two lines), you will see a 'stack trace',
+        the top-most line of which indicates the routine (function, procedure, or main) in which the error occurred.
+         If it is not obvious which instruction within the routine caused the error, you can use the <a href="#Debugging">Debugging</a> facilities.</li>
+    <li>Status of all variable, whenever program execution is paused. See <a>Debugging</a></li>
+ </ul>
+
+ <p>If the information presented exceeds the space available for the pane, a scroll-bar will be shown.</p>
+<!-- #endregion -->
+
+<!-- #Debugging-->
+<!--   # Heading & Intro-->
+<h1 id="Debugging">Debugging</h1>
+
+<p>Elan contains some simple debugging tools. To use these tools, you need to run the program via the <a href="#Run_controls">Debug button</a>).
+    Note that because of the additional overhead involved in debugging, the program may run slower than when run normally.</p>
+
+<p>When debugging, a program may be paused at any point with the <a href="#Run_controls">Pause button.
+    The <a href="#Status_panel">Run status</a> will then show as <el-code>paused</el-code>. Note, however, that:
+    <ul>
+        <li>the Pause key is not active if the program is currently waiting for a user input.)</li>
+        <li>it is not possible to pause within a loop that is executing very fast. For that you should use a breakpoint (below)</li>
+    </ul>
+
+<p>Whenever the run status is shown as <el-code>paused</el-code> ,
+    the instruction that would have been executed next will be highlighted with an amber background, and
+    the <a href="#System_info">System info</a> will display the current value of each named value that is defined in the current scope, for example:</p>
+
+<img src="images/Variable_dump.png" style="width:50%;">
+
+<p>From the paused state, you may continue execution of the program by clicking the Debug key, or you may execute <i>just the next instruction</i>
+     by clicking the <a href="#Run_controls">Single step</a> button.</p>
+<!-- #endregion -->
+<!--   #Breakpoints-->
+<h2 id="Breakpoint">Breakpoints</h2>
+<p>You can place a breakpoint on an instruction, by selecting the instruction and then hitting <b>Ctrl-b</b>,
+    or by bringing up the <a href="#Context_menu">Context menu</a> and selecting <b>set breakpoint</b>.
+    The breakpoint will be shown as a (red' flash adjacent to the instruction:</p>
+
+<img src="images/Breakpoint_set.png">
+
+    <p>Pressing <b>Ctrl-b</b> on a selected instruction that already has a breakpoint will clear that breakpoint.
+    The context menu also offers options to clear a breakpoint that has been set, or to clear <i>all</i> breakpoints from the program in one go.</p>
+
+    <p>Breakpoints are active <i>only when running the program via the</i> <a href="#Run_controls">Debug button</a>.
+        Then,whenever a breakpoint is reached, execution will be paused, and the instruction containing the breakpoint will be
+        highlighted with an amber background:</p>
+
+<img src="images/Breakpoint_reached.png">
+        <p>and the <a href="#System_info">System info</a> will display the current value of each named value that is defined in the current scope.</p>
+<!-- #endregion -->
+<!-- #endregion -->
+
+<!-- #region User profile-->
+<h1 id="User_profile">User profile</h1>
+<!-- TODO -->
+<p>User profiles determine the availability of specific language instructions and IDE capabilities are made available to the user.
+    They may also be used to manage accessibility - for example to provide alternate colour scheme(s) for users with CVD.
+    Profiles are created and managed by a teacher.
+</p>
+<!-- #endregion -->
+<b>Elan IDE Guide</b> go to the <a href="#top">top</a></h4>
+ </body>
+ </html>

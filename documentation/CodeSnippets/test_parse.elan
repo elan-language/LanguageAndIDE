@@ -1,0 +1,11 @@
+# 7bad718c6a4f3a8f34c1b3db9ab41ff9b6fc45bed9b93295a7bf8327cea30d23 Elan Beta 8 valid
+
+test 
+  assert parseAsInt("31") is tuple(true, 31)
+  assert parseAsInt("0") is tuple(true, 0)
+  assert parseAsInt("thirty one") is tuple(false, 0)
+  assert parseAsInt("3.1") is tuple(false, 0)
+  assert parseAsFloat("31") is tuple(true, 31)
+  assert parseAsFloat("0") is tuple(true, 0)
+  assert parseAsFloat("3.1") is tuple(true, 3.1)
+end test

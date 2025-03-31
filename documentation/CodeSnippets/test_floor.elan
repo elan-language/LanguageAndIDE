@@ -1,0 +1,15 @@
+# 2c45cfccc6bc0a2b26e7c34348a7183b15b8f279825b6b2f63f7326ab83a29e6 Elan Beta 8 valid
+
+test 
+  let n be 3.14159
+  assert n.floor() is 3
+  assert n.ceiling() is 4
+  assert n.round(3) is 3.142
+  assert sqrt(-1).isNaN() is true
+  let x be 1/0
+  assert x.isInfinite() is true
+end test
+
+main
+
+end main

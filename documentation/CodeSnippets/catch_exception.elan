@@ -1,0 +1,13 @@
+# ecee618d2354193715e09a6426efeb5e8145126668d27e3dff3260e4888276e4 Elan Beta 8 valid
+
+main
+  let file be createFileForWriting("squares.txt")
+  for i from 1 to 100 step 1
+    call file.writeLine("{i*i}")
+  end for
+  try
+    call file.saveAndClose()
+  catch exception in e
+    print "File save cancelled"
+  end try
+end main

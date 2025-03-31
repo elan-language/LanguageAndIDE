@@ -1,0 +1,13 @@
+# a19e8dad932f2bbad91dce96733603aa34bffea0943fab9a425658695ae6e6d3 Elan Beta 8 valid
+
+test 
+  let s1 be "hello"
+  let s2 be "World"
+  let r be /^[a-z]*$/
+  assert s1.matchesRegExp(r) is true
+  assert s2.matchesRegExp(r) is false
+end test
+
+main
+
+end main

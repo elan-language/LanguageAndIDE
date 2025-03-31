@@ -1,0 +1,15 @@
+# 8b0cf29dd5ca18ccdefc3e5232fb82ca2fa616a4f07ad4e4ee56fd8a953ac25a Elan Beta 8 valid
+
+main
+  let sk be "new Stack<of String()"
+  print sk.length()
+  call sk.push("apple")
+  call sk.push("pear")
+  print sk.length()
+  print sk.peek()
+  variable fruit set to sk.pop()
+  print fruit
+  set fruit to sk.pop()
+  print fruit
+  print sk.length()
+end main

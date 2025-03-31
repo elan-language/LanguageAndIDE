@@ -1,0 +1,8 @@
+# cb7a5289f74d84224347225830b8cbf26c2f1fd4ca3ba5f81919cf48ce9113c6 Elan Beta 8 valid
+
+main
+  let file be openFileForReading()
+  let text be file.readWholeFile()
+  call file.close()
+  print text
+end main

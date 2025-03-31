@@ -1,0 +1,11 @@
+# 3b4cd3d8e907c32b7464e60c0ff758da15336faa00642dbc470e483fde1bbe37 Elan Beta 8 valid
+
+main
+  variable li set to [3, 6, 1, 0, 99, 4, 67]
+  call inPlaceRippleSort(li)
+  print li
+end main
+
+procedure inPlaceRippleSort(out arr as List<of Int>)
+
+end procedure

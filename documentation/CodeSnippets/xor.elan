@@ -1,0 +1,5 @@
+# 26de698e2e03f5a87b153a296e0c98d33cab1006227ae03c241ca39e36bc0885 Elan Beta 8 valid
+
+function xor(a as Boolean, b as Boolean) returns Boolean
+  return a and not b or b and not a
+end function
