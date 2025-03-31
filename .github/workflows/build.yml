@@ -30,10 +30,10 @@ jobs:
     - run: npm run compile --if-present
     - run: npm test
     - name: Upload static files as artifact
-        id: deployment
-        uses: actions/upload-pages-artifact@v3 # or specific "vX.X.X" version tag for this action
-        with:
-          path: build_outputs_folder/
+      id: deployment
+      uses: actions/upload-pages-artifact@v3 # or specific "vX.X.X" version tag for this action
+      with:
+        path: build_outputs_folder/
 
   deploy:
     # Add a dependency to the build job
