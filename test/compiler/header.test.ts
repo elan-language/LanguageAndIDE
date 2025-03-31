@@ -6,12 +6,13 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  testHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("Header", () => {
   test("Pass_hash", async () => {
-    const code = `# FFFF Elan Beta 9 valid
+    const code = `${testHeader}
 
 main
   # My first program

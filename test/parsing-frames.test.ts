@@ -13,7 +13,7 @@ import { StatementSelector } from "../src/frames/statements/statement-selector";
 import { Throw } from "../src/frames/statements/throw";
 import { VariableStatement } from "../src/frames/statements/variable-statement";
 import { hash } from "../src/util";
-import { transforms } from "./compiler/compiler-test-helpers";
+import { testHeader, transforms } from "./compiler/compiler-test-helpers";
 
 suite("Parsing Frame Tests", async () => {
   test("parse Frames - set statement", () => {
@@ -347,7 +347,7 @@ end main
   });
 
   test("abstract class can contain concrete property", async () => {
-    const code = `# FFFF Elan Beta 9 valid
+    const code = `${testHeader}
 
 abstract class Card
   property value as Int
@@ -361,7 +361,7 @@ end class
   });
 
   test("abstract class can contain concrete method", async () => {
-    const code = `# FFFF Elan Beta 9 valid
+    const code = `${testHeader}
 
 abstract class Card
   function bar() returns Int
@@ -426,7 +426,7 @@ end record
   });
 
   test("#367 abstract class cannot contain constructor", async () => {
-    const code = `# FFFF Elan Beta 9 valid
+    const code = `${testHeader}
 
 abstract class Card
   constructor()
