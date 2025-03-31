@@ -1,7 +1,7 @@
-# FFFF Elan Beta 6 valid
+# 958e5042bc1f925c1aee808dbbfe181755370e90ef868f66fd149e0bfc009058 Elan Beta 9 valid
 
 main
-  variable t set to new Turtle()
+  let t be new Turtle()
   call t.placeAt(0, 0)
   call t.turnToHeading(90)
   call t.show()

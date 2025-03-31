@@ -1,10 +1,10 @@
-# fc662c92b1dd50066db2a95757e48390f745c051253c0aed1bbb70f6a5d5e112 Elan Beta 9 valid
+# 566d632da14d2888ee6689264ca3f926787d4ff64a70b342901c2470348d4433 Elan Beta 9 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
-  variable blocks set to new Array2D<of Int>(40, 30, white)
-  variable snake set to new Snake()
-  variable apple set to new Apple()
+  let blocks be new Array2D<of Int>(40, 30, white)
+  let snake be new Snake()
+  let apple be new Apple()
   call apple.newRandomPosition(snake)
   while not snake.gameOver()
     call snake.updateBlocks(blocks)
@@ -33,7 +33,7 @@ class Snake
 
   private property priorTail as Square
 
-  procedure clockTick(key as String, out apple as Apple)
+  procedure clockTick(key as String, apple as Apple)
     call setDirection(key)
     set property.priorTail to property.body[0]
     call property.body.append(property.head)

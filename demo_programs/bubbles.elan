@@ -1,7 +1,7 @@
-# 0e83b462c2ed084bbaa21cad0f44e05ebc7cb8679102d76eb6efedcf6e19938c Elan Beta 9 valid
+# 5493edeb31aea4f73d5376d994c7ecb42f0ac667ae62857aff4da65060c7fd31 Elan Beta 9 valid
 
 main
-  variable bubbles set to new List<of CircleVG>()
+  let bubbles be new List<of CircleVG>()
   # create 20 small bubbles at the bottom
   for i from 1 to 20 step 1
     let randomColour be randomInt(0, white)

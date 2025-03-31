@@ -1,4 +1,4 @@
-# 0ce66e938d509b6026bbf7489b525b9049311416fa565663a7bbfe578003fff5 Elan Beta 9 valid
+# 1d5347ddae4ab8d0c3702cc17a7bcf37c915ba813e472acfaeaf7ad428695d28 Elan Beta 9 valid
 
 # Turing Machine that converts a Year from decimal to roman numerals
 # Run the program, enter the number to convert and watch the machine in action.
@@ -58,7 +58,7 @@ class TuringMachine
   end procedure
 
   procedure singleStep()
-    variable rule set to findMatchingRule()
+    let rule be findMatchingRule()
     call execute(rule)
   end procedure
 

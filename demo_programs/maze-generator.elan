@@ -1,4 +1,4 @@
-# 53c6a95dcc73edb1c190f5ce40f1dcfae91618412ad635fd372242654d60a6d8 Elan Beta 9 valid
+# 069eca70037081ea8c23fd02700d2aa1eb68fa429d72233c096bca5853d34fc8 Elan Beta 9 valid
 
 main
   variable blocks set to new Array2D<of Int>(40, 30, black)
@@ -24,7 +24,7 @@ end main
 constant displayWidth set to 150
 
 procedure saveAsFile(name as String, b as Array2D<of Int>)
-  variable file set to createFileForWriting(name)
+  let file be createFileForWriting(name)
   for row from 0 to 29 step 1
     variable line set to ""
     for col from 0 to 39 step 1

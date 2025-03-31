@@ -1,14 +1,14 @@
-# e7893268c6b90bda1bb0c28194b4cad41cc90c8db5185159144d68cb497b3add Elan Beta 9 valid
+# 91edd8ac39181c227d2721da9b4e11fc57e59cb0675229ab713fc88483726a96 Elan Beta 9 valid
 
 # https://en.wikipedia.org/wiki/Barnsley_fern
 # Draws a fractal image
 main
-  variable vg set to new List<of VectorGraphic>()
+  let vg be new List<of VectorGraphic>()
   # coordinates
   variable x set to 0.0
   variable y set to 0.16
   # random number
-  variable r set to 0
+  variable r set to new Random()
   variable rect set to new RectangleVG(0, 0, 0, 0, 0, 0, 0)
   variable count set to 0
   # don't set the count limit too high
@@ -22,12 +22,12 @@ main
   print "Finished"
 end main
 
-function onepoint(x as Float, y as Float, r as Int) returns (RectangleVG, Float, Float, Int)
+function onepoint(x as Float, y as Float, r as Random) returns (RectangleVG, Float, Float, Random)
   # next pseudo-random number (Grogono parameters)
-  variable nr set to (r*25173 + 13849) mod 0x10000
-  variable nx, ny set to onestep(x, y, nr/0x10000)
+  let rValue, rNext be r.next()
+  let nx, ny be onestep(x, y, rValue)
   let rect be new RectangleVG(nx*scale + 50, 75 - ny*scale, 0.5, 0.5, 0x408040, 0x408040, 0.25)
-  return tuple(rect, nx, ny, nr)
+  return tuple(rect, nx, ny, rNext)
 end function
 
 # r is random Float 0.0 <= r < 1.0
