@@ -1155,7 +1155,7 @@ end function`;
   });
 
   test("Pass_returnType1", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `${testHeader}
 
 function foo(a as String) returns String
   return a
@@ -1174,7 +1174,7 @@ end function`;
   });
 
   test("Pass_returnType2", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `${testHeader}
 
 function foo(a as String) returns String
   return a
@@ -1189,7 +1189,7 @@ end function`;
   });
 
   test("Pass_functionResult", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `${testHeader}
 
 main
   variable a set to foo().f1()
@@ -1229,7 +1229,7 @@ end class`;
   });
 
   test("Pass_functionResultWithParams", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `${testHeader}
 
 main
   variable a set to foo(1).f1()
@@ -1269,7 +1269,7 @@ end class`;
   });
 
   test("Pass_complexExpression1", async () => {
-    const code = `# FFFF Elan Beta 3 valid
+    const code = `${testHeader}
 
 main
   variable alpha set to 0

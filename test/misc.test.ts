@@ -4,7 +4,7 @@ import { DefaultProfile } from "../src/frames/default-profile";
 import { Regexes } from "../src/frames/fields/regexes";
 import { FileImpl } from "../src/frames/file-impl";
 import { hash } from "../src/util";
-import { ignore_test, transforms } from "./compiler/compiler-test-helpers";
+import { ignore_test, testHeaderVersion, transforms } from "./compiler/compiler-test-helpers";
 import { T03_mainWithAllStatements } from "./model-generating-functions";
 import { assertElementHasClasses, key } from "./testHelpers";
 
@@ -69,7 +69,7 @@ suite("Misc Tests", () => {
     const fl = new FileImpl(hash, new DefaultProfile(), transforms());
     await fl.parseFrom(source);
     const elan = await fl.renderAsSource();
-    const code = `# 14fdf0594bba0db0ab1657374310d3f97f7fc84b35bed0f76160bd5d46bfa7e6 Elan Beta 9 valid
+    const code = `# 14fdf0594bba0db0ab1657374310d3f97f7fc84b35bed0f76160bd5d46bfa7e6 ${testHeaderVersion} valid
 
 `;
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
