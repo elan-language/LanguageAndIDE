@@ -241,8 +241,14 @@ export class FileImpl implements File, Scope {
     return await this.hash(body);
   }
 
+  private version = "Elan Beta 9";
+
   private getVersion() {
-    return "Elan Beta 9";
+    return this.version;
+  }
+
+  setVersion(newVersion : string) {
+    this.version = newVersion;
   }
 
   private getProfileName() {

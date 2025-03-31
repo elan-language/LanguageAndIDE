@@ -2,13 +2,15 @@ import { loadFileAsModelNew, updateTestFileNew } from "./testHelpers";
 
 
 async function updateDemoProgram(program: string) {
-  const fn = `${__dirname}\\..\\..\\demo_programs\\${program}`;
+  const fileName = `${__dirname}\\..\\..\\demo_programs\\${program}`;
 
-  const f = await loadFileAsModelNew(fn);
+  const file = await loadFileAsModelNew(fileName);
+
+  file.setVersion("Elan Beta 10");
   
-  const updated = await f.renderAsSource(); 
+  const updatedContent = await file.renderAsSource(); 
 
-  updateTestFileNew(fn, updated);
+  updateTestFileNew(fileName, updatedContent);
 }
 
 updateDemoProgram("best-fit.elan");
