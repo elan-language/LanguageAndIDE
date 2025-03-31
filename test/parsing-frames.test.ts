@@ -158,7 +158,7 @@ suite("Parsing Frame Tests", async () => {
 `;
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(hash, new DefaultProfile(), transforms());
-    await await fl.parseFrom(source);
+    await fl.parseFrom(source);
     const elan = await fl.renderAsSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
@@ -170,7 +170,7 @@ constant pi set to 3.142
 `;
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(hash, new DefaultProfile(), transforms());
-    await await fl.parseFrom(source);
+    await fl.parseFrom(source);
     const elan = await fl.renderAsSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
@@ -184,7 +184,7 @@ constant e set to 2.718
 `;
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(hash, new DefaultProfile(), transforms());
-    await await fl.parseFrom(source);
+    await fl.parseFrom(source);
     const elan = await fl.renderAsSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
@@ -214,7 +214,7 @@ end main
 `;
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(hash, new DefaultProfile(), transforms());
-    await await fl.parseFrom(source);
+    await fl.parseFrom(source);
     if (fl.parseError) {
       throw new Error(fl.parseError);
     }
@@ -235,7 +235,7 @@ end main
 `;
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(hash, new DefaultProfile(), transforms());
-    await await fl.parseFrom(source);
+    await fl.parseFrom(source);
     const elan = await fl.renderAsSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
@@ -261,7 +261,7 @@ enum Fruit apple, orange, pear
 `;
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(hash, new DefaultProfile(), transforms());
-    await await fl.parseFrom(source);
+    await fl.parseFrom(source);
     const elan = await fl.renderAsSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
@@ -288,7 +288,7 @@ end class
 `;
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(hash, new DefaultProfile(), transforms());
-    await await fl.parseFrom(source);
+    await fl.parseFrom(source);
     const elan = await fl.renderAsSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
@@ -303,7 +303,7 @@ end record
 `;
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(hash, new DefaultProfile(), transforms());
-    await await fl.parseFrom(source);
+    await fl.parseFrom(source);
     const elan = await fl.renderAsSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
@@ -341,7 +341,7 @@ end main
 `;
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(hash, new DefaultProfile(), transforms());
-    await await fl.parseFrom(source);
+    await fl.parseFrom(source);
     const elan = await fl.renderAsSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
@@ -356,7 +356,7 @@ end class
 `;
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(hash, new DefaultProfile(), transforms(), true);
-    fl.parseFrom(source);
+    await fl.parseFrom(source);
     assert.equal(source.getRemainingCode(), "");
   });
 
@@ -372,7 +372,7 @@ end class
 `;
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(hash, new DefaultProfile(), transforms(), true);
-    fl.parseFrom(source);
+    await fl.parseFrom(source);
     assert.equal(source.getRemainingCode(), "");
   });
   test("record can contain a function method", async () => {
@@ -387,7 +387,7 @@ end record
 `;
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(hash, new DefaultProfile(), transforms(), true);
-    await await fl.parseFrom(source);
+    await fl.parseFrom(source);
     assert.equal(source.getRemainingCode(), "");
   });
 
@@ -405,7 +405,7 @@ end record
 `;
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(hash, new DefaultProfile(), transforms(), true);
-    await await fl.parseFrom(source);
+    await fl.parseFrom(source);
     assert.equal(source.getRemainingCode(), "");
   });
 
@@ -421,7 +421,7 @@ end record
 `;
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(hash, new DefaultProfile(), transforms(), true);
-    await await fl.parseFrom(source);
+    await fl.parseFrom(source);
     assert.equal(fl.parseError!.includes(`0 matches found at procedure foo()`), true);
   });
 
@@ -437,7 +437,7 @@ abstract class Card
 `;
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(hash, new DefaultProfile(), transforms(), true);
-    await await fl.parseFrom(source);
+    await fl.parseFrom(source);
     assert.equal(fl.parseError!.includes(`0 matches found at constructor()`), true);
   });
   test("#927 parse test and ignored test", async () => {
@@ -449,7 +449,7 @@ end test
 `;
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(hash, new DefaultProfile(), transforms());
-    await await fl.parseFrom(source);
+    await fl.parseFrom(source);
     const elan = await fl.renderAsSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
@@ -466,7 +466,7 @@ end test
 `;
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(hash, new DefaultProfile(), transforms());
-    await await fl.parseFrom(source);
+    await fl.parseFrom(source);
     const elan = await fl.renderAsSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
@@ -483,7 +483,7 @@ end test
 `;
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(hash, new DefaultProfile(), transforms());
-    await await fl.parseFrom(source);
+    await fl.parseFrom(source);
     const elan = await fl.renderAsSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
@@ -501,7 +501,7 @@ end class
 `;
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(hash, new DefaultProfile(), transforms());
-    await await fl.parseFrom(source);
+    await fl.parseFrom(source);
     const elan = await fl.renderAsSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
