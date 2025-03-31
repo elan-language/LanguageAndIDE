@@ -9,12 +9,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
+  testHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("Basic Syntax", () => {
   test("Pass_CommentsOnly", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 # comment 1
 main # comment 2
@@ -40,7 +41,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_EmptyFile", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 `;
 
@@ -61,7 +62,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_PrintWithNoExpression", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   print
@@ -86,7 +87,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_StringLiteral", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
     print "Hello World!"
@@ -109,7 +110,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_BracketsMakeNoDifference", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
     print ("Hello World!")
@@ -132,7 +133,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_IntegerLiteral", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
     print 1
@@ -155,7 +156,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_FloatLiteral", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
     print 2.1
@@ -178,7 +179,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_FloatWithExponent", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   print 2.1e4
@@ -201,7 +202,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_FloatWithExponent2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   print 2.1e100
@@ -224,7 +225,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_FloatWithExponent3", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   print 2.1e-4
@@ -247,7 +248,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_CharLiteral", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   print "%"
@@ -270,7 +271,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_BoolLiteral", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
     print true
@@ -293,7 +294,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_EmptyLine", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
     print ""
@@ -316,7 +317,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_noMain", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 print "hello World!"`;
 
@@ -327,7 +328,7 @@ print "hello World!"`;
   });
 
   test("Fail_noEnd", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   print "Hello World!"
@@ -340,7 +341,7 @@ main
   });
 
   test("Fail_wrongCasing", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 MAIN
   print "Hello World!"
@@ -353,7 +354,7 @@ end main`;
   });
 
   test("Fail_printFunction", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   print foo
@@ -375,7 +376,7 @@ end function
   });
 
   test("Fail_printIndirectFunction", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   print [foo]
@@ -397,7 +398,7 @@ end function
   });
 
   test("Fail_compilerDirective1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   # [unknownDirective]
@@ -414,7 +415,7 @@ end main`;
   });
 
   test("Fail_compilerDirective1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 class Foo
   # [unknownDirective]
@@ -431,7 +432,7 @@ end class`;
   });
 
   test("Fail_compilerDirective3", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 # [unknownDirective]
 `;

@@ -8,12 +8,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
+  testHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("For Loop", () => {
   test("Pass_minimal", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable tot set to 0
@@ -44,7 +45,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_reuseVariable", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable tot set to 0
@@ -77,7 +78,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_withStep", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
 variable tot set to 0
@@ -108,7 +109,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_negativeStep", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable tot set to 0
@@ -139,7 +140,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_innerLoop", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable tot set to 0
@@ -173,7 +174,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_canUseExistingVariablesOfRightType", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable lower set to 1
@@ -207,7 +208,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_forInProcedure", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to createList(11, 0)
@@ -248,7 +249,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_reuseVariableWrongType", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable tot set to 0
@@ -268,7 +269,7 @@ end main`;
   });
 
   test("Fail_useOfFloat", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable tot set to 0.0
@@ -291,7 +292,7 @@ end main
   });
 
   test("Fail_modifyingCounter", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable tot set to 0
@@ -309,7 +310,7 @@ end main
   });
 
   test("Fail_scopeOfCounter", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable tot set to 0
@@ -328,7 +329,7 @@ end main
   });
 
   test("Fail_missingEnd", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable tot set to 0
@@ -345,7 +346,7 @@ end main
   });
 
   test("Fail_nextVariable", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable tot set to 0
@@ -361,7 +362,7 @@ end main
   });
 
   test("Fail_break", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable tot set to 0
@@ -378,7 +379,7 @@ end main
   });
 
   test("Fail_continue", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable tot set to 0
@@ -395,7 +396,7 @@ end main
   });
 
   test("Fail_duplicateId1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable ids set to 10
@@ -413,7 +414,7 @@ end main`;
   });
 
   test("Fail_duplicateId2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable ids set to 10

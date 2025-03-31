@@ -7,12 +7,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
+  testHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("Unique Identifiers", () => {
   test("Pass_CanUseKeywordWithDifferentCase", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable bReak set to 2
@@ -37,7 +38,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_CanHaveIdentiferSameAsTypeExceptCase", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable foo set to new Foo()
@@ -84,7 +85,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_KeywordWithCorrectCaseIfAlteredCaseAlreadyUsed", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable bReak set to 1
@@ -101,7 +102,7 @@ end main`;
   });
 
   test("Fail_SameVariableNameInScope", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable id set to 1

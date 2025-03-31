@@ -6,12 +6,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
+  testHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("Turtle", () => {
   test("Pass_MethodsUpdateTurtleState", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let t be new Turtle()
@@ -49,7 +50,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_HeadingNormalised", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let t be new Turtle()
@@ -77,7 +78,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, `10`);
   });
   test("Pass_HeadingNormalisedMinus", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let t be new Turtle()
@@ -105,7 +106,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, `170`);
   });
   test("Pass_StartPosition", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let t be new Turtle()
@@ -133,7 +134,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, `5037.50`);
   });
   test("Pass_AsHtml", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let t be new Turtle()
@@ -173,7 +174,7 @@ return [main, _tests];}`;
     );
   });
   test("Pass_PenUpDown", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let t be new Turtle()
@@ -218,7 +219,7 @@ return [main, _tests];}`;
     );
   });
   test("Pass_Show", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let t be new Turtle()
@@ -256,7 +257,7 @@ return [main, _tests];}`;
     );
   });
   test("Pass_Hide", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let t be new Turtle()
@@ -294,7 +295,7 @@ return [main, _tests];}`;
     );
   });
   test("Pass_PlaceAt", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let t be new Turtle()

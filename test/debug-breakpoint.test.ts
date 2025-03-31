@@ -1,11 +1,11 @@
 import { DefaultProfile } from "../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../src/frames/file-impl";
-import { testHash, transforms } from "./compiler/compiler-test-helpers";
+import { testHash, testHeader, transforms } from "./compiler/compiler-test-helpers";
 import { assertDebugBreakPoint } from "./testHelpers";
 
 suite("DebugBreakpoint", () => {
   test("Pass_Main", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant a set to 1
 
@@ -22,7 +22,7 @@ end main`;
   });
 
   test("Pass_LocalvariablesMain", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to 1
@@ -46,7 +46,7 @@ end main`;
   });
 
   test("Pass_LocalvariablesProcedure", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   call pp(3)
@@ -75,7 +75,7 @@ end procedure`;
   });
 
   test("Pass_LocalvariablesFunction", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let a be ff(3)
@@ -105,7 +105,7 @@ end function`;
   });
 
   test("Pass_LocalvariablesMemberProcedure", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let f be new Foo()
@@ -141,7 +141,7 @@ end class`;
   });
 
   test("Pass_LocalvariablesMemberFunction", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let f be new Foo()
@@ -178,7 +178,7 @@ end class`;
   });
 
   test("Pass_LocalvariablesConstructor", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let f be new Foo(3)
@@ -214,7 +214,7 @@ end class`;
   });
 
   test("Pass_InForLoop", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable tot set to 0
@@ -236,7 +236,7 @@ end main`;
   });
 
   test("Pass_InEachLoop", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to {7,8,9}
@@ -260,7 +260,7 @@ end main`;
   });
 
   test("Pass_InWhileLoop", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable t set to 0
@@ -289,7 +289,7 @@ end main`;
   });
 
   test("Pass_InRepeatLoop", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to 0
@@ -308,7 +308,7 @@ end main`;
   });
 
   test("Pass_InTry", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   try
@@ -330,7 +330,7 @@ end main`;
   });
 
   test("Pass_InCatch", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   try
@@ -355,7 +355,7 @@ end main`;
   });
 
   test("Pass_InIf", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to true
@@ -380,7 +380,7 @@ end main`;
   });
 
   test("Pass_InElse", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to false
@@ -405,7 +405,7 @@ end main`;
   });
 
   test("Pass_InElseIf", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to false
@@ -430,7 +430,7 @@ end main`;
   });
 
   test("Pass_AsyncBreakPoints", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to [ff(1), ff(2)]
@@ -451,7 +451,7 @@ end function
   });
 
   test("Pass_OutParameter", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to 1

@@ -8,12 +8,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
+  testHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("Tuple", () => {
   test("Pass_CreatingTuplesAndReadingContents", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
     variable x set to tuple(3, "Apple")
@@ -44,7 +45,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_FunctionReturnsTuple", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to f()
@@ -84,7 +85,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_IndexFunctionReturnsTuple", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable t set to f()
@@ -120,7 +121,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_IndexGenericFunctionReturnsTuple", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable t set to a.reduce(tuple(1, 1), lambda i as (Int, Int), j as (Int, Int) => j)
@@ -151,7 +152,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_FunctionTupleParameter", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to "one"
@@ -189,7 +190,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AssignANewTupleOfSameType", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to tuple(3,"Apple")
@@ -217,7 +218,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_OutOfRangeError", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to tuple(3,"Apple")
@@ -235,7 +236,7 @@ end main
   });
 
   test("Fail_AssignItemToWrongType", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to tuple(3,"Apple")
@@ -256,7 +257,7 @@ end main
   });
 
   test("Fail_ImmutableSoCannotAssignAnItem", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to (3, "Apple")
@@ -271,7 +272,7 @@ end main
   });
 
   test("Fail_AssignANewTupleOfWrongType", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to tuple(3, "Apple")
@@ -290,7 +291,7 @@ end main
   });
 
   test("Fail_DifferentSizeTuples1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to tuple(3, "Apple", 4)
@@ -309,7 +310,7 @@ end main
   });
 
   test("Fail_DifferentSizeTuples2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to tuple(3, "Apple")

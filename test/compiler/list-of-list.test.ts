@@ -8,12 +8,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
+  testHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("List-of-List", () => {
   test("Pass_literalListOfList", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to [1,2]
@@ -42,7 +43,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DeclareAnEmptyListBySizeAndCheckLength", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to createList(0, "")
@@ -67,7 +68,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_SetAndReadElements1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to [[""],[""],[""]]
@@ -98,7 +99,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_SetAndReadElements2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to [["",""],["",""],["",""]]
@@ -127,7 +128,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AddAndReadElements1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to [[""],[""],[""]]
@@ -158,7 +159,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AddAndReadElements2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to [[""], [""], [""]]
@@ -187,7 +188,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InsertElements1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to [["one"], ["two"], ["three"]]
@@ -216,7 +217,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InsertElements2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to [["one"], ["two"], ["three"]]
@@ -245,7 +246,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_remove1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to [["one"], ["two"], ["three"]]
@@ -274,7 +275,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_remove2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to [["one"], ["two"], ["three"]]
@@ -303,7 +304,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_removeFirst1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to [["one"], ["two"], ["three"], ["one"], ["two"], ["three"]]
@@ -330,7 +331,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_removeFirst2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to [["one"], ["two"], ["three"], ["one"], ["two"], ["three"]]
@@ -357,7 +358,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_removeAll1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to [["one"], ["two"], ["three"], ["one"], ["two"], ["three"]]
@@ -384,7 +385,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_removeAll2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to [["one"], ["two", "two"], ["three"], ["one"], ["two"], ["three"]]
@@ -411,7 +412,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InitializeAnListFromAList", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to {{"foo"},{"bar","yon"}}.asList()
@@ -438,7 +439,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_EmptyList", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to empty List<of List<of Int>>
@@ -475,7 +476,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InitialiseEmptyList", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to [createList(2, 0), createList(2, 0), createList(2, 0)]
@@ -500,7 +501,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InitialiseList", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to [createList(2, 1), createList(2, 1)]
@@ -525,7 +526,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_EmptyList1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to empty List<of List<of Int>>
@@ -541,7 +542,7 @@ end main`;
   });
 
   test("Fail_ApplyIndexToANonIndexable", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to [1, 2]
@@ -557,7 +558,7 @@ end main
   });
 
   test("Fail_1DListAccessedAs2D1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to createList(3, "")
@@ -573,7 +574,7 @@ end main
   });
 
   test("Fail_1DListAccessedAs2D2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to [[1],[1]]
@@ -589,7 +590,7 @@ end main
   });
 
   test("Fail_2DListAccessedAs1D", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to createList(3, empty List<of String>)
@@ -607,7 +608,7 @@ end main
   });
 
   test("Fail_OutOfRange", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to [[""],[""]]
@@ -625,7 +626,7 @@ end main
   });
 
   test("Fail_TypeIncompatibility", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to createList(3, empty List<of String>)
@@ -643,7 +644,7 @@ end main
   });
 
   test("Fail_2DListAdd", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to new List<of List<of String>>()
@@ -661,7 +662,7 @@ end main
   });
 
   test("Fail_IndexWrongType1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to [[1,2],[3,4]]
@@ -677,7 +678,7 @@ end main
   });
 
   test("Fail_IndexWrongType2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to [[1,2],[3,4]]

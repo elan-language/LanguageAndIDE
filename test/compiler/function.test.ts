@@ -8,12 +8,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
+  testHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("Function", () => {
   test("Pass_SimpleCase", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   print foo(3,4)
@@ -45,7 +46,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_IndexResult", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to foo(1,2)[0]
@@ -79,7 +80,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_RangeResult", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to foo(1,2)[0..1]
@@ -113,7 +114,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ReturnSimpleDefault", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   print foo(3,4)
@@ -145,7 +146,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ReturnClassDefault", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   print foo(3,4)
@@ -192,7 +193,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ReturnCollectionDefault", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
     print foo(3,4)
@@ -224,7 +225,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Recursive", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   print factorial(5)
@@ -268,7 +269,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_GlobalFunctionOnClass", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable b set to new Bar()
@@ -326,7 +327,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_ExtensionParameterCount", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant a set to ""
 
@@ -346,7 +347,7 @@ end main`;
   });
 
   test("Fail_ParameterCount", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 function f(p as Float) returns Float
   return 0
@@ -368,7 +369,7 @@ end main`;
   });
 
   test("Fail_ParameterType", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 function f(p as Int) returns Float
   return 0.0
@@ -390,7 +391,7 @@ end main`;
   });
 
   test("Fail_ReturnType", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 function f(p as Boolean) returns Int
   return p
@@ -408,7 +409,7 @@ end main`;
   });
 
   test("Fail_noReturnType", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 function f(p as Int)
   return p
@@ -425,7 +426,7 @@ end main`;
   });
 
   test("Fail_noAs", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 function f(p Int) returns Int 
   return p
@@ -442,7 +443,7 @@ end main`;
   });
 
   test("Fail_noReturn", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 function f(p Int) returns Int 
   variable c set to p
@@ -459,7 +460,7 @@ end main`;
   });
 
   test("Fail_ReturnTypeIncompatible", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to ""
@@ -479,7 +480,7 @@ end function`;
   });
 
   test("Fail_NoReturn2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
 end main
@@ -496,7 +497,7 @@ end function`;
   });
 
   test("Fail_embeddedReturns", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
 end main
@@ -516,7 +517,7 @@ end function`;
   });
 
   test("Fail_nonMatchingReturn2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
 end main
@@ -533,7 +534,7 @@ end function`;
   });
 
   test("Fail_statementAfterReturn", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
 end main
@@ -550,7 +551,7 @@ end function`;
   });
 
   test("Fail_CanNotContainPrint", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
 end main
@@ -567,7 +568,7 @@ end function`;
   });
 
   test("Fail_CanNotContainInput", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
 end main
@@ -584,7 +585,7 @@ end function`;
   });
 
   test("Fail_CannotModifyParam", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable result set to foo(3,4)
@@ -604,7 +605,7 @@ end function`;
   });
 
   test("Fail_CannotModifyParam1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable result set to foo(3,4)
@@ -624,7 +625,7 @@ end function`;
   });
 
   test("Fail_CannotUpdateList", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
 end main
@@ -641,7 +642,7 @@ end function`;
   });
 
   test("Fail_CannotPassInListMultipleParameters", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
 end main
@@ -658,7 +659,7 @@ end function`;
   });
 
   test("Fail_TooManyParams", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable result set to foo(3, 4, 5)
@@ -677,7 +678,7 @@ end function`;
   });
 
   test("Fail_NotEnoughParams", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable result set to foo(3)
@@ -696,7 +697,7 @@ end function`;
   });
 
   test("Fail_WrongParamType", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable result set to foo(3, "b")
@@ -717,7 +718,7 @@ end function`;
   });
 
   test("Fail_CannotSpecifyParamByRef", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable result set to foo(3, "b")
@@ -735,7 +736,7 @@ end function`;
   });
 
   test("Fail_PassMutableTypes", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
  
@@ -760,7 +761,7 @@ end class
   });
 
   test("Fail_ParameterUnknownType", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
  
@@ -779,7 +780,7 @@ end function`;
   });
 
   test("Fail_ReturnUnknownType", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
  
@@ -798,7 +799,7 @@ end function`;
   });
 
   test("Fail_UseOfKeywordAsName", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   
@@ -816,7 +817,7 @@ end function`;
   });
 
   test("Fail_UseOfReservedwordAsName", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   
@@ -836,7 +837,7 @@ end function`;
   });
 
   test("Fail_UseOfKeywordAsParamName", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   
@@ -853,7 +854,7 @@ end function`;
   });
 
   test("Fail_UseOfReservedWordAsParamName", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   
@@ -873,7 +874,7 @@ end function`;
   });
 
   test("Fail_NotUniqueName", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 function foo() returns Int
   return 0
@@ -893,7 +894,7 @@ end function
   });
 
   test("Fail_NotUniqueParameterName", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 function foo(a as Int, b as String, a as Int) returns Int
   return 0
@@ -908,7 +909,7 @@ end function`;
   });
 
   test("Fail_OutOnParameter", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 function foo(out a as Int) returns Int
   return 0
@@ -923,7 +924,7 @@ end function`;
   });
 
   test("Fail_OperatorsAndProceduresWithFunctionKeyword", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to ref p1 is ref p2
@@ -957,7 +958,7 @@ end function`;
   });
 
   test("Fail_OperatorsAndProcedures", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to p1 is p2
@@ -990,7 +991,7 @@ end function`;
   });
 
   test("Fail_FunctionWithoutRefKeyword", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   print a.b
@@ -1011,7 +1012,7 @@ end function`;
   });
 
   test("Fail_FunctionMethodWithoutRefKeyword", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let g be "xxx"
@@ -1027,7 +1028,7 @@ end main`;
   });
 
   test("Fail_LibFunctionWithoutRefKeyword", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   print abs.b
@@ -1042,7 +1043,7 @@ end main`;
   });
 
   test("Fail_PrintLibFunctionWithoutRefKeyword", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   print abs
@@ -1057,7 +1058,7 @@ end main`;
   });
 
   test("Fail_NoIndexing", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to p1()
@@ -1077,7 +1078,7 @@ end function`;
   });
 
   test("Fail_ReturnListOfMutableType", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 function p1() returns ListImmutable<of List<of Int>>
   return p1()
@@ -1092,7 +1093,7 @@ end function`;
   });
 
   test("Fail_ParameterListOfMutableType", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 function p1(a as ListImmutable<of List<of Int>>) returns Int
   return 0
@@ -1107,7 +1108,7 @@ end function`;
   });
 
   test("Fail_noMatchingExtension1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let s be "hello"
@@ -1123,7 +1124,7 @@ end main`;
   });
 
   test("Fail_noMatchingExtension2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let s be "hello"

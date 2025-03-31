@@ -8,12 +8,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
+  testHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("String Manipulation", () => {
   test("Pass_AppendStrings", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to "Hello"
@@ -40,7 +41,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AppendOrPrependChar", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   print "_" + "Hello" + "!"
@@ -63,7 +64,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_AppendFloat", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   print "Hello" + 3.1
@@ -78,7 +79,7 @@ end main`;
   });
 
   test("Fail_AppendInt", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   print "Hello" + 3
@@ -93,7 +94,7 @@ end main`;
   });
 
   test("Pass_Indexing", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to "abcde"
@@ -118,7 +119,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_IndexingAndAppend", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to "abcde"
@@ -147,7 +148,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_SetIndex", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to "abcde"
@@ -176,7 +177,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Ranges", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to "abcde"
@@ -205,7 +206,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_EqualityTesting", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
     print "abc" is "abc"
@@ -240,7 +241,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ComparisonMethods", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   print "abc".isBefore("abC")
@@ -273,7 +274,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_UseAsStringExplicitly", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to "abcde"
@@ -302,7 +303,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Interpolation", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to 3
@@ -331,7 +332,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_AppendStringToFloat", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to 3.1 + "Hello"
@@ -347,7 +348,7 @@ end main`;
   });
 
   test("Fail_AppendStringToInt", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to 3 + "Hello"
@@ -363,7 +364,7 @@ end main`;
   });
 
   test("Fail_IndexOutOfRange", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to "abcde"
@@ -380,7 +381,7 @@ end main
   });
 
   test("Fail_SetIndex", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to "abcde"
@@ -398,7 +399,7 @@ end main
   });
 
   test("Fail_ComparisonOperators", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   print "abc" < "abC"
@@ -425,7 +426,7 @@ end main
   });
 
   test("Fail_CoerceNumberToString", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to "abcde"

@@ -7,12 +7,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
+  testHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("Interpolated String", () => {
   test("Pass_String", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to 1
@@ -41,7 +42,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_missingBrace", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to 1
@@ -57,7 +58,7 @@ end main`;
   });
 
   test("Fail_extraBrace", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to 1

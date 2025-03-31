@@ -8,12 +8,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
+  testHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("Repeat Loop", () => {
   test("Pass_minimal", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to 0
@@ -44,7 +45,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_innerLoop", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable t set to 0
@@ -87,7 +88,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_variableRedeclaredInTest", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to 0
@@ -104,7 +105,7 @@ end main
   });
 
   test("Fail_variableDefinedInLoop", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   repeat
@@ -121,7 +122,7 @@ end main
   });
 
   test("Fail_testPutOnRepeat", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to 0
@@ -138,7 +139,7 @@ end main
   });
 
   test("Fail_noCondition", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to 0
@@ -155,7 +156,7 @@ end main
   });
 
   test("Fail_invalidCondition", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to 0
@@ -172,7 +173,7 @@ end main
   });
 
   test("Fail_RepeatConditionNotBool", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to 0

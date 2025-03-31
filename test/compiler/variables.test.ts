@@ -8,14 +8,14 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   transforms,
+  testHeader,
 } from "./compiler-test-helpers";
 
 suite("Variables", () => {
   test("Pass_Int", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to 3
@@ -40,7 +40,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_IntVariable", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to 3
@@ -67,7 +67,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Int_Expression", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to 3 + 4
@@ -92,7 +92,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Reassign", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to 3
@@ -119,7 +119,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_CoerceFloatToIntVar", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to 3.1
@@ -146,7 +146,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_OperatorCoverage", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to 3 - 4
@@ -202,7 +202,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Enum", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to Fruit.apple
@@ -232,7 +232,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Iter", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant a set to {1, 2}
 
@@ -264,7 +264,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_WrongKeyword", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   var a set to 3
@@ -277,7 +277,7 @@ end main`;
   });
 
   test("Fail_GlobalVariable", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 variable a set to 4
 main
@@ -291,7 +291,7 @@ end main`;
   });
 
   test("Fail_AssignIncompatibleType", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to "astring"
@@ -308,7 +308,7 @@ end main`;
   });
 
   test("Fail_NotInitialized", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a
@@ -322,7 +322,7 @@ end main`;
   });
 
   test("Fail_InvalidVariableName1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let a = 4.1
@@ -335,7 +335,7 @@ end main`;
   });
 
   test("Fail_InvalidVariableName2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a@b set to 4.1
@@ -348,7 +348,7 @@ end main`;
   });
 
   test("Fail_UseOfKeywordAsName", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable if set to 4.1
@@ -364,7 +364,7 @@ end main`;
   });
 
   test("Fail_UseOfReservedwordAsName", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable break set to 4.1
@@ -380,7 +380,7 @@ end main`;
   });
 
   test("Fail_TypeCheck1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 function f() returns Int
   return 0
@@ -415,7 +415,7 @@ end main`;
   });
 
   test("Fail_TypeCheck2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to createList(3, "")
@@ -444,7 +444,7 @@ end main`;
   });
 
   test("Fail_RecursiveDefinition", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to x + 1
@@ -458,7 +458,7 @@ end main`;
   });
 
   test("Fail_referenceToExtensionFunction", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to ref createFileForWriting
@@ -475,7 +475,7 @@ end main`;
   });
 
   test("Fail_referenceToExtensionFunction1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable i set to 1
@@ -491,7 +491,7 @@ end main`;
   });
 
   test("Pass_Redefine", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a, length set to foo()
@@ -522,7 +522,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "");
   });
   test("Pass_fourOpenBrackets", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to ((((3))))

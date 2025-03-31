@@ -5,12 +5,13 @@ import {
   assertDoesNotParse,
   assertParses,
   testHash,
+  testHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("Constructor Parameters", () => {
   test("Fail_reassigningIntParam", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 class Foo
     constructor(p_1 as Int)
@@ -33,7 +34,7 @@ end class`;
   });
 
   test("Fail_MutatingListParam", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 class Foo
     constructor(a as List<of Float>)
@@ -52,7 +53,7 @@ end class`;
   });
 
   test("Fail_SetPropertyWithoutPrefix", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 class Foo
     constructor()
@@ -71,7 +72,7 @@ end class`;
   });
 
   test("Fail_OutParameter", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 class Foo
     constructor(out a as Int)

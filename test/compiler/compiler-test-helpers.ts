@@ -203,3 +203,5 @@ export function transforms() {
     transformMany: transformMany,
   } as Transforms;
 }
+
+export const testHeader = "# FFFF Elan v1.0.0 valid";

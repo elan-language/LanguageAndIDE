@@ -8,12 +8,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
+  testHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("Array", () => {
   test("Pass_Array", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable c set to new Array<of Int>(1, 0)
@@ -38,7 +39,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ArrayAsParameter", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to new Array<of Int>(1, 0)
@@ -72,7 +73,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_ArrayAsParameter", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to new Array<of Int>(0, 0)
@@ -93,7 +94,7 @@ end function`;
   });
 
   test("Pass_DeclareAnEmptyArrayBySizeAndCheckLength", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to empty Array<of String>
@@ -118,7 +119,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_SetAndReadElements1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to new Array<of String>(3, "")
@@ -149,7 +150,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_WithSetAndReadElements1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to new Array<of String>(3, "")
@@ -180,7 +181,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Conversions", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let a be ["one", "two", "three"].asArray()
@@ -225,7 +226,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_WithPutOutOfRange", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to new Array<of String>(3, "")
@@ -256,7 +257,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_EmptyArray", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to empty Array<of Int>
@@ -291,7 +292,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InitialiseEmptyArray", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to new Array<of Int>(2, 0)
@@ -316,7 +317,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InitialiseArray", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to new Array<of Int>(2, 1)
@@ -341,7 +342,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Contains1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to new Array<of String>(2, "")
@@ -368,7 +369,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Contains2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to new Array<of String>(2, "")
@@ -395,7 +396,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_IndexOf", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to new Array<of String>(10, "")
@@ -428,7 +429,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Range", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to {4,5,6,7,8}.asArray()
@@ -461,7 +462,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_OutOfRange1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to {4, 5, 6, 7, 8}.asArray()
@@ -491,7 +492,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_OutOfRange2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to {4, 5, 6, 7, 8}.asArray()
@@ -521,7 +522,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_ArrayAccessedAs2D", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to new Array<of String>(1, "")
@@ -537,7 +538,7 @@ end main
   });
 
   test("Fail_OutOfRange1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to new Array<of String>(2, "")
@@ -554,7 +555,7 @@ end main
   });
 
   test("Fail_OutOfRange2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to new Array<of String>(2, "")
@@ -572,7 +573,7 @@ end main
   });
 
   test("Fail_TypeIncompatibility", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to new Array<of String>(1, "")
@@ -590,7 +591,7 @@ end main
   });
 
   test("Fail_missingGenericParameter", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to new Array(3, "")
@@ -608,7 +609,7 @@ end main`;
   });
 
   test("Fail_zeroSize1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to new Array<of String>(0, "")
@@ -627,7 +628,7 @@ end main`;
   });
 
   test("Fail_withPutOutOfRange", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
     variable a set to {"one", "two", "three"}.asArray()
@@ -654,7 +655,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_OutOfRange", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to {4, 5, 6, 7, 8}.asArray()
@@ -671,7 +672,7 @@ end main
   });
 
   test("Fail_NegativeIndex", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to {4, 5, 6, 7, 8}.asArray()
@@ -689,7 +690,7 @@ end main
   });
 
   test("Fail_NegativeRange1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to {4, 5, 6, 7, 8}.asArray()
@@ -707,7 +708,7 @@ end main
   });
 
   test("Fail_NegativeRange2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to {4, 5, 6, 7, 8}.asArray()
@@ -725,7 +726,7 @@ end main
   });
 
   test("Fail_InvalidType", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to new Array<of Point>(2, new Point())

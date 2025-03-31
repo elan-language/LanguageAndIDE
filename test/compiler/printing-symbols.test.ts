@@ -6,12 +6,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
+  testHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("Printing", () => {
   test("Pass_PrintWithNoArgument", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   print 
@@ -33,7 +34,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "");
   });
   test("Pass_CommonSymbolsAccessibleFromUKKeyboard", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   print "¬!£$%^&*()@~#|<>'"
@@ -55,7 +56,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "�!�$%^&*()@~#|<>'");
   });
   test("Pass_CallPrintTab", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   call printTab(5, "Foo")
@@ -77,7 +78,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "     Foo");
   });
   test("Pass_CallClearPrintedText", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   print "Foo"

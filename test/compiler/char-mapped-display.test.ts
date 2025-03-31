@@ -7,12 +7,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
+  testHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("Char Mapped Display", () => {
   test("Pass_SimpleDraw", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable g set to new Array2D<of Int>(40, 30, white)
@@ -37,7 +38,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_withPut", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable g set to new Array2D<of Int>(40, 30, white)
@@ -64,7 +65,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ClearBlocks", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable g set to new Array2D<of Int>(40, 30, white)
@@ -91,7 +92,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_getKey", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable gr set to new Array2D<of Int>(40, 30, white)
@@ -118,7 +119,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_getKeyWithModifier", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable gr set to new Array2D<of Int>(40, 30, white)
@@ -145,7 +146,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_clearKeyBuffer", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable gr set to new Array2D<of Int>(40, 30, white)
@@ -170,7 +171,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_newGraphics", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to new Array2D<of Int>(40, 30, white)
@@ -193,7 +194,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_defaultGraphics", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable foo set to new Foo()

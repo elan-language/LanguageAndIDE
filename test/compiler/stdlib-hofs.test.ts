@@ -7,12 +7,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
+  testHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("StdLib HOFs", () => {
   test("Pass_filterImmutableList", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
@@ -43,7 +44,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_filterList", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
@@ -72,7 +73,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_filterStringViaSplit", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant source set to "onetwo"
 main
@@ -101,7 +102,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_filterInFunction", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
@@ -138,7 +139,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_mapImmutableList", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
@@ -170,7 +171,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_mapList", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 
 main
@@ -201,7 +202,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_mapStringViaSplit", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant source set to "onetwo"
 main
@@ -230,7 +231,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_mapTestType", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
@@ -257,7 +258,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_reduceImmutableList", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
@@ -288,7 +289,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_reduceList", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 
 main
@@ -318,7 +319,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_reduceString", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant source set to "onetwo"
 main
@@ -347,7 +348,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_reduceToDictionaryImmutable", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant source set to {"three", "four"}
 main
@@ -378,7 +379,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_maxImmutableList", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
@@ -395,7 +396,7 @@ end main`;
   });
 
   test("Pass_maxByImmutableList", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
@@ -422,7 +423,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_maxByList", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
@@ -447,7 +448,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_maxBy1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant source set to {{1}, {2, 2}}
 main
@@ -474,7 +475,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_maxBy2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant source set to {"apple", "orange", "pear"}
 main
@@ -501,7 +502,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_lengthImmutableList", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
@@ -528,7 +529,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_lengthList", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
@@ -553,7 +554,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_minInt", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let source be [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
@@ -578,7 +579,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_minFloat", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let source be [2.0, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
@@ -603,7 +604,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_maxInt", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let source be [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
@@ -628,7 +629,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_maxFloat", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let source be [2.0, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
@@ -653,7 +654,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_minIntAppliedToFloatList", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let source be [2.0, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
@@ -670,7 +671,7 @@ end main`;
   });
 
   test("Pass_minByImmutableList", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
@@ -697,7 +698,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_minByList", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
@@ -722,7 +723,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_sortByImmutableList", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
@@ -754,7 +755,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_sortByList", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
@@ -784,7 +785,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_asSet", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant source set to {"apple", "orange", "pair", "apple"}
 main
@@ -813,7 +814,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_complexHof", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant numberChars set to "-.0123456789"
 main
@@ -867,7 +868,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_MaxOnNonNumeric", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let source be ["apple", "orange", "pair"]
@@ -884,7 +885,7 @@ end main`;
   });
 
   test("Fail_MaxLambdaReturningNonNumeric", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant source set to {"apple", "orange", "pair"}
 main
@@ -901,7 +902,7 @@ end main`;
   });
 
   test("Fail_MissingBrackets", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant source set to {"apple":"apple", "orange":"orange", "pair":"pair"}
 main

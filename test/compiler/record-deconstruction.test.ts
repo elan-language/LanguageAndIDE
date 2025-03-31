@@ -7,12 +7,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
+  testHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("Record Deconstruction", () => {
   test("Pass_DeconstructIntoExistingVariables", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Foo() with a set to 100, b set to "fred"
@@ -59,7 +60,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DeconstructIntoLet", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Foo() with a set to 3, fruit set to "Apple", aBool set to true, aFloat set to 1.1
@@ -114,7 +115,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_DeconstructIntoExistingVariablesWithDiscard", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Foo() with a set to 100, b set to "fred"
@@ -137,7 +138,7 @@ end record`;
   });
 
   test("Fail_DeconstructIntoLetVariablesWithDiscard", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Foo() with a set to 100, b set to "fred"
@@ -159,7 +160,7 @@ end record`;
   });
 
   test("Pass_DeconstructIntoNewVariables", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Foo() with a set to 100, b set to "fred"
@@ -202,7 +203,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_DeconstructIntoNewVariablesWithDiscard", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Foo() with a set to 100, b set to "fred"
@@ -224,7 +225,7 @@ end record`;
   });
 
   test("Pass_DeconstructIntoNewVariablesTypeCheck", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Foo() with a set to 100, b set to "fred"
@@ -275,7 +276,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DeconstructRecordWithListIntoNew", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Foo() with a set to {1,2}, b set to "fred"
@@ -326,7 +327,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DeconstructLetRecordWithListIntoNewLet", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let x be new Foo() with a set to {1,2}, b set to "fred"
@@ -369,7 +370,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DeconstructVarRecordWithListIntoNewLet", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Foo() with a set to {1,2}, b set to "fred"
@@ -412,7 +413,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DeconstructVarRecordWithRecordIntoNewVar", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Foo() with a set to {1,2}, b set to "fred"
@@ -477,7 +478,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DeconstructLetRecordWithRecordIntoNewVar", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let x be new Foo() with a set to {1,2}, b set to "fred"
@@ -543,7 +544,7 @@ return [main, _tests];}`;
 
   //
   test("Pass_DeconstructRecordWithListIntoExisting", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Foo() with a set to {1,2}, b set to "fred"
@@ -590,7 +591,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DeconstructVarRecordWithRecordIntoExistingVar", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Foo() with a set to {1,2}, b set to "fred"
@@ -659,7 +660,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DeconstructLetRecordWithRecordIntoExistingVar", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let x be new Foo() with a set to {1,2}, b set to "fred"
@@ -728,7 +729,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_DeconstructIntoWrongType", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Foo() with a set to 100, b set to "fred"
@@ -756,7 +757,7 @@ end record`;
   });
 
   test("Fail_DeconstructIntoMixed1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Foo() with a set to 100, b set to "fred"
@@ -783,7 +784,7 @@ end record`;
   });
 
   test("Fail_DeconstructIntoMixed2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Foo() with a set to 100, b set to "fred"
@@ -810,7 +811,7 @@ end record`;
   });
 
   test("Fail_DeconstructIntoExistingLetVariables", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Foo() with a set to 100, b set to "fred"
@@ -838,7 +839,7 @@ end record`;
   });
 
   test("Fail_CannotDeconstructNew", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Foo()
@@ -864,7 +865,7 @@ end class`;
   });
 
   test("Fail_CannotDeconstructExisting", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Foo()
@@ -892,7 +893,7 @@ end class`;
   });
 
   test("Fail_CannotDeconstructLet", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Foo()

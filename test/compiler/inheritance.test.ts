@@ -8,12 +8,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
+  testHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("Inheritance", () => {
   test("Pass_DefineAbstractClassAndInheritFromIt", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Bar()
@@ -124,7 +125,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_PassAsAbstractClassIntoFunction", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Yon()
@@ -221,7 +222,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AbstractMutableClassAsProcedureParameter", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable f set to new Bar()
@@ -288,7 +289,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Invariance", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable b set to new Bar()
@@ -357,7 +358,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AbstractMutableClassAsFunctionParameter", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable f set to new Bar()
@@ -424,7 +425,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DefineAbstractWithPrivateMembers", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Bar()
@@ -503,7 +504,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DefineAbstractWithPrivateMembersMultipleInheritance", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Bar()
@@ -613,7 +614,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DefineAbstractWithPrivateMembersIndirectInheritance", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Bar()
@@ -723,7 +724,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_SetInheritedProperty", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Bar()
@@ -786,7 +787,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AccessAbstractPropertyFromPrivate", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Bar()
@@ -864,7 +865,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AccessAbstractProcedureFromPrivate", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Bar()
@@ -947,7 +948,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AccessAbstractFunctionFromPrivate", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Bar()
@@ -1031,7 +1032,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AccessInheritedPropertyFromPrivate", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Bar()
@@ -1107,7 +1108,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AccessInheritedProcedureFromPrivate", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Bar()
@@ -1184,7 +1185,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AccessInheritedFunctionFromPrivate", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Bar()
@@ -1262,7 +1263,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InheritImplementation", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Bar()
@@ -1342,7 +1343,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InheritImplementation1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Bar()
@@ -1422,7 +1423,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InheritImplementation2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Bar()
@@ -1502,7 +1503,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_AbstractClassCannotInheritFromConcreteClass", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
 end main
@@ -1529,7 +1530,7 @@ end class`;
   });
 
   test("Fail_MustImplementAllInheritedMethods", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Bar()
@@ -1568,7 +1569,7 @@ end class`;
   });
 
   test("Fail_CannotInheritFromConcreteClass", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Bar()
@@ -1598,7 +1599,7 @@ end class`;
   });
 
   test("Fail_MustCorrectlyImplementAllInheritedMethods", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Bar()
@@ -1645,7 +1646,7 @@ end class`;
   });
 
   test("Fail_ImplementedMethodMustHaveSameSignature", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Bar()
@@ -1689,7 +1690,7 @@ end class`;
   });
 
   test("Fail_AbstractClassDefinesMethodBody", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Bar()
@@ -1713,7 +1714,7 @@ end class`;
   });
 
   test("Pass_ConcretePropertyInAbstractClass", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
 
@@ -1745,7 +1746,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DiamondInheritance", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
 
@@ -1826,7 +1827,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_MissingAbstractFunction", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Bar()
@@ -1843,7 +1844,7 @@ end class`;
   });
 
   test("Fail_MissingAbstractProcedure", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Bar()
@@ -1860,7 +1861,7 @@ end class`;
   });
 
   test("Fail_CannotInstantiateAbstractClass", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
     variable a set to new Bar()
@@ -1879,7 +1880,7 @@ end class`;
   });
 
   test("Fail_SuperClassAsFunctionParameter", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable b set to new Bar()
@@ -1915,7 +1916,7 @@ end function
   });
 
   test("Fail_Invariance1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable b set to new Bar()
@@ -1949,7 +1950,7 @@ end function
   });
 
   test("Fail_Invariance2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable b set to new Bar()
@@ -1983,7 +1984,7 @@ end procedure
   });
 
   test("Fail_Invariance3", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable lst set to new Dictionary<of String, Bar>()
@@ -2016,7 +2017,7 @@ end function
   });
 
   test("Fail_InheritFromNonexistentClass", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Bar()
@@ -2039,7 +2040,7 @@ end class`;
   });
 
   test("Fail_DuplicateNames", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
  
@@ -2062,7 +2063,7 @@ end class`;
   });
 
   test("Fail_DuplicatePropertyNames", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
  
@@ -2084,7 +2085,7 @@ end class`;
   });
 
   test("Fail_DuplicateFunctionNames", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
  
@@ -2106,7 +2107,7 @@ end class`;
   });
 
   test("Fail_DuplicateProcedureNames", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
  
@@ -2128,7 +2129,7 @@ end class`;
   });
 
   test("Fail_DuplicateMemberNames1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
  
@@ -2150,7 +2151,7 @@ end class`;
   });
 
   test("Fail_DuplicateMemberNames2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
  
@@ -2172,7 +2173,7 @@ end class`;
   });
 
   test("Fail_DuplicateMemberNames3", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
  
@@ -2194,7 +2195,7 @@ end class`;
   });
 
   test("Fail_DuplicatePrivateMembers1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
  
@@ -2224,7 +2225,7 @@ end class`;
   });
 
   test("Fail_DuplicatePrivateMembers2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
  
@@ -2255,7 +2256,7 @@ end class`;
   });
 
   test("Fail_DuplicatePrivateMembers3", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
  
@@ -2287,7 +2288,7 @@ end class`;
   });
 
   test("Fail_DuplicatePrivateMembers4", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
  
@@ -2319,7 +2320,7 @@ end class`;
   });
 
   test("Fail_DuplicatePrivateMembers5", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
  
@@ -2345,7 +2346,7 @@ end class`;
   });
 
   test("Fail_DuplicatePrivateMembers6", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
  
@@ -2372,7 +2373,7 @@ end class`;
   });
 
   test("Fail_DuplicateMembers1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
  
@@ -2402,7 +2403,7 @@ end class`;
   });
 
   test("Fail_DuplicateMembers2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
  
@@ -2433,7 +2434,7 @@ end class`;
   });
 
   test("Fail_DuplicateMembers3", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
  
@@ -2465,7 +2466,7 @@ end class`;
   });
 
   test("Fail_DuplicateMembers4", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
  
@@ -2497,7 +2498,7 @@ end class`;
   });
 
   test("Fail_DuplicateMembers5", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
  
@@ -2523,7 +2524,7 @@ end class`;
   });
 
   test("Fail_DuplicateMembers6", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
  
@@ -2550,7 +2551,7 @@ end class`;
   });
 
   test("Fail_StdLibSuperClass", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 class Bar inherits VectorGraphic
   constructor()
@@ -2568,7 +2569,7 @@ end class`;
   });
 
   test("Fail_UnknownSuperClass", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 class Bar inherits BaseVg
   constructor()
@@ -2586,7 +2587,7 @@ end class`;
   });
 
   test("Fail_OnlyOneAbstract Class", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Yon()
@@ -2620,7 +2621,7 @@ end class`;
   });
 
   test("Fail_SuperclassesCannotDefineSameMember", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Bar()
@@ -2674,7 +2675,7 @@ end class`;
   });
 
   test("Fail_SuperclassesCannotDefineSameMember1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Bar()
@@ -2726,7 +2727,7 @@ end class`;
   });
 
   test("Fail_DiamondInheritance", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
 
@@ -2758,7 +2759,7 @@ end class`;
   });
 
   test("Fail_PrivateMemberCannotImplementInterface", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let x be new Bar()
@@ -2786,7 +2787,7 @@ end class`;
   });
 
   test("Fail_PrivateMemberCannotImplementInterface1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let x be new Bar()
@@ -2818,7 +2819,7 @@ end class`;
   });
 
   test("Fail_PrivateMemberDuplicateId", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let x be new Bar()
@@ -2850,7 +2851,7 @@ end class`;
   });
 
   test("Fail_SuperClassUsedBeforeDeclared", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Foo()
@@ -2873,7 +2874,7 @@ end class`;
   });
 
   test("Fail_SuperClassUsedBeforeDeclared1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   

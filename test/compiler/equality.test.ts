@@ -7,12 +7,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
+  testHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("Equality", () => {
   test("Pass_DifferentInstancesWithSameValuesAreEqual", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Foo(7, "Apple")
@@ -85,7 +86,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_EmptyDoesEqualDefault", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Foo()
@@ -147,7 +148,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ActuallyTheSameReference", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Foo(7, "Apple")
@@ -223,7 +224,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_CompareLambdas", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Foo()
@@ -249,7 +250,7 @@ end class`;
   });
 
   test("Pass_ListEquality", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable f1 set to new Foo(1)
@@ -321,7 +322,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ListEquality", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable f1 set to new Foo() with p set to 1

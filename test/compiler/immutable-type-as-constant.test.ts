@@ -7,12 +7,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
+  testHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("Immutable Type as Constant", () => {
   test("Pass_String", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant k set to "Apple"
 
@@ -40,7 +41,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Tuple", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant k set to tuple(3, "Apple")
 
@@ -68,7 +69,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_List", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant k set to {1, 2, 3}
 
@@ -96,7 +97,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Dictionary", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant k set to {"a":1, "b":3, "c":3}
 
@@ -124,7 +125,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_record", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant k = new Foo()
 
@@ -147,7 +148,7 @@ end record`;
   });
 
   test("Fail_List1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant k set to [1, 2, 3]
 
@@ -162,7 +163,7 @@ end main`;
   });
 
   test("Fail_List2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant k set to new List<of Int>()
 
@@ -177,7 +178,7 @@ end main`;
   });
 
   test("Fail_List3", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant k set to empty List<of Int>
 
@@ -192,7 +193,7 @@ end main`;
   });
 
   test("Fail_Dictionary1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant k set to ["a":1]
 
@@ -207,7 +208,7 @@ end main`;
   });
 
   test("Fail_Dictionary2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant k set to new Dictionary<of String, Int>()
 
@@ -222,7 +223,7 @@ end main`;
   });
 
   test("Fail_Dictionary3", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant k set to empty Dictionary<of String, Int>
 
@@ -237,7 +238,7 @@ end main`;
   });
 
   test("Fail_Class", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant k set to new Foo()
 

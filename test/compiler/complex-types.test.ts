@@ -8,12 +8,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
+  testHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("Complex Types", () => {
   test("Pass_ListOfDictionary", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main 
   variable a set to [["a":1], ["b":3, "z":10]]
@@ -40,7 +41,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DictionaryOfList", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main 
   variable a set to ["a":[1,2], "b":[3,4,5]]
@@ -67,7 +68,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_IndexWrongType1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main 
   variable a set to [["a":1], ["b":3, "z":10]]
@@ -85,7 +86,7 @@ end main`;
   });
 
   test("Fail_IndexWrongType2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main 
   variable a set to [["a":1], ["b":3, "z":10]]
@@ -103,7 +104,7 @@ end main`;
   });
 
   test("Fail_IndexWrongType3", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main 
   variable a set to ["a":[1,2], "b":[3,4,5]]
@@ -121,7 +122,7 @@ end main`;
   });
 
   test("Fail_IndexWrongType4", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main 
   variable a set to ["a":[1,2], "b":[3,4,5]]
@@ -139,7 +140,7 @@ end main`;
   });
 
   test("Fail_UnknownOfType", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let a be new List<of Foo>()
@@ -154,7 +155,7 @@ end main`;
   });
 
   test("Fail_UnknowNestedOfType", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let a be new List<of List<of Foo>>()
@@ -169,7 +170,7 @@ end main`;
   });
 
   test("Fail_NotType", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let t be 1

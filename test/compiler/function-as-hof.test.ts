@@ -7,12 +7,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
+  testHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("Function as HOF", () => {
   test("Pass_PassAsParam", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   call printModified(3, ref twice)
@@ -53,7 +54,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_PassAsParam1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   call printModified(3, ref twice)
@@ -94,7 +95,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_PassAsParam2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   call printIt("Hello", "e", ref find)
@@ -135,7 +136,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ReturnAFunction", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable f set to getFunc()
@@ -178,7 +179,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_SetAsVariable", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable f set to ref twice
@@ -212,7 +213,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_SetAsProperty", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable f set to new Foo(ref ff)
@@ -267,7 +268,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Print", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   print ref ff
@@ -299,7 +300,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_SetAsVariableWithoutRefKeyword", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable f set to twice
@@ -321,7 +322,7 @@ end function`;
   });
 
   test("Fail_FunctionSignatureDoesntMatch1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   call printModified(3, ref power)
@@ -345,7 +346,7 @@ end function`;
   });
 
   test("Fail_FunctionSignatureDoesntMatch2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   call printModified(3, ref power)
@@ -369,7 +370,7 @@ end function`;
   });
 
   test("Fail_UsingReturnedFuncWithoutArgs", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to getFunc()
@@ -392,7 +393,7 @@ end function`;
   });
 
   test("Fail_PassAsParamWithoutRefKeyword", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   call printModified(3, twice)
@@ -417,7 +418,7 @@ end function`;
   });
 
   test("Fail_ReturnAFunctionWithoutRefKeyword", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable f set to getFunc()
@@ -443,7 +444,7 @@ end function`;
   });
 
   test("Fail_SetAsPropertyWithoutRefKeyword", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable f set to new Foo(ff)
@@ -474,7 +475,7 @@ end class`;
   });
 
   test("Fail_InExpression1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable f set to 1 + ff
@@ -496,7 +497,7 @@ end function`;
   });
 
   test("Fail_InExpression2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable f set to 1 + ref ff

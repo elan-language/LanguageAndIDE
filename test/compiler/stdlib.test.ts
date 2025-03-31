@@ -10,12 +10,13 @@ import {
   assertStatusIsValid,
   assertTestObjectCodeExecutes,
   testHash,
+  testHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("StdLib", () => {
   test("Pass_contains", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant lst set to {1, 2}
 main
@@ -54,7 +55,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_pause", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   print 1
@@ -81,7 +82,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_clock", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to clock()
@@ -110,7 +111,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_random1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to random()
@@ -139,7 +140,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_parseAsFloat1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to  parseAsFloat("10.1")
@@ -164,7 +165,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_parseAsFloat2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to parseAsFloat("x12")
@@ -189,7 +190,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_parseAsFloat3", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to parseAsFloat("25g")
@@ -214,7 +215,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_parseAsInt0", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to parseAsInt("25g")
@@ -239,7 +240,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_parseAsInt1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to parseAsInt("10")
@@ -264,7 +265,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_parseAsInt2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to parseAsInt("")
@@ -289,7 +290,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_parseAsInt3", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to parseAsInt("10.1")
@@ -313,7 +314,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "tuple(false, 0)");
   });
   test("Pass print (procedure)", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   call printNoLine("Hello")
@@ -338,7 +339,7 @@ return [main, _tests];}`;
   });
 
   test("Pass printTab", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   call printTab(0,"Hello")
@@ -363,7 +364,7 @@ return [main, _tests];}`;
   });
 
   test("Pass lib constants", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   print openBrace
@@ -390,7 +391,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_maths_tests", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 test 
   assert pi is 3.141592653589793
@@ -483,7 +484,7 @@ return [main, _tests];}`;
     ]);
   });
   test("Pass_Random2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable results set to [0, 0, 0, 0, 0, 0, 0]
@@ -524,7 +525,7 @@ return [main, _tests];}`;
   });
 
   test("RandomInitialised", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable results set to [0, 0, 0, 0, 0, 0, 0]
@@ -570,7 +571,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "0, 0, 0, 0.3, 0.3, 0.3, 0, ");
   });
   test("RandomInFixedSequence", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable results set to [0, 0, 0, 0, 0, 0, 0]
@@ -614,7 +615,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "0, 0, 0, 3365, 3268, 3367, 0, ");
   });
   test("Pass_RandomType", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable results set to [0, 0, 0, 0, 0, 0, 0]
@@ -668,7 +669,7 @@ return [main, _tests];}`;
   });
 
   test("bitwise operations", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to 13
@@ -706,7 +707,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "1101 11110 1100 11111 10011 -1110 110100 11");
   });
   test("Pass_2DArrays", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable oxoBoard set to new Array2D<of String>(3,3,"")
@@ -737,7 +738,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_stringForUnicode", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   print unicode(65)
@@ -760,7 +761,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_asUnicode", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   print "Apple".asUnicode()
@@ -783,7 +784,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_appendList", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to [1,2]
@@ -814,7 +815,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_prependList", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to [1,2]
@@ -845,7 +846,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_prepend", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to [1,2]
@@ -874,7 +875,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_split", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let s be "Now is the time..."
@@ -900,7 +901,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[Now, is, the, time...]");
   });
   test("Pass_joinListOfString", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let words be ["Now", "is","the","time..."]
@@ -926,7 +927,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Now.is.the.time...");
   });
   test("Pass_joinImmutableListOfString", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let words be {"Now", "is","the","time..."}
@@ -953,7 +954,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_joinImmutableListOfInt", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let words be {1,2,3,4}
@@ -980,7 +981,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_joinImmutableListOfRecord", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let words be {new Point(), new Point()}
@@ -1016,7 +1017,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_joinListOfRecord", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let words be [new Point(), new Point()]
@@ -1052,7 +1053,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_joinArrayOfString", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let words be ["Now", "is","the","time..."].asArray()
@@ -1068,7 +1069,7 @@ end main`;
   });
 
   test("Pass_replace", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let s1 be "[a] [b]"
@@ -1096,7 +1097,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[a] [b]{a} {b}");
   });
   test("Pass_testRegExp", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let s1 be "cbababbc"
@@ -1128,7 +1129,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "truefalse");
   });
   test("Pass_asRegExp", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let r be "[a-c]*".asRegExp()
@@ -1152,7 +1153,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "A RegExp");
   });
   test("Pass_indexOf", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let a be [1, 3, 5, 7, 9]
@@ -1194,7 +1195,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "420-14-1");
   });
   test("Pass_asUnicodeReturnsInt#1061", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable i set to 1
@@ -1220,7 +1221,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "65");
   });
   test("Pass_isNaN", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   print sqrt(-1).isNaN()
@@ -1244,7 +1245,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "truefalse");
   });
   test("Pass_isInfinite", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   print (1/0).isInfinite()

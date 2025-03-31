@@ -8,12 +8,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
+  testHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("Impure Function", () => {
   test("Pass_CanUseImpureMethodsWithinExpressionsInMainOrProcedure", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable k set to getKey()
@@ -64,7 +65,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_CannotCallAProcedureWithinAnExpression", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable k set to foo()
@@ -82,7 +83,7 @@ end procedure
   });
 
   test("Fail_CannotCallAFunctionLikeAProcedure", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   call square(3)
@@ -101,7 +102,7 @@ end function`;
   });
 
   test("Fail_CannotCallAProcedureWithinAFunction", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable k set to foo()
@@ -123,7 +124,7 @@ end function
   });
 
   test("Fail_CannotUseAnImpureMethodWithinAFunction", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
 end main

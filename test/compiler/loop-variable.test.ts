@@ -5,12 +5,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
+  testHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("Loop Variable", () => {
   test("Pass_Pattern1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 procedure removeLetters(wordAsPlayed as String)
   each letter in wordAsPlayed
@@ -54,7 +55,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Pattern2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 procedure removeLetters(wordAsPlayed as String)
   each letter in wordAsPlayed

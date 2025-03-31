@@ -8,12 +8,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
+  testHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("Each Loop", () => {
   test("Pass_List1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to {7,8,9}
@@ -46,7 +47,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_List2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to {7,8,9}.asList()
@@ -79,7 +80,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_String", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to "hello"
@@ -108,7 +109,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DoubleLoop", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   each x in "12"
@@ -139,7 +140,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_functionProvidingList", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   each x in fruit()
@@ -175,7 +176,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_variableIsScoped", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to {7, 8, 9}
@@ -197,7 +198,7 @@ end main
   });
 
   test("Fail_variableIsScoped2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to {7, 8, 9}
@@ -216,7 +217,7 @@ end main
   });
 
   test("Fail_duplicateId", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable ids set to {7, 8, 9}
@@ -235,7 +236,7 @@ end main
   });
 
   test("Fail_NoEndeach", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to [7, 8, 9]
@@ -253,7 +254,7 @@ end main
   });
 
   test("Fail_applyToANonIterable", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable y set to 10
@@ -271,7 +272,7 @@ end main
   });
 
   test("Fail_CannotAlterTheIterableWithinLoop", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to {1, 2, 3, 4, 5}

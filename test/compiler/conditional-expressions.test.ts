@@ -8,12 +8,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
+  testHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("Conditional Expressions", () => {
   test("Pass_InFunction", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   print grade(90)
@@ -51,7 +52,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InVariableDeclaration", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable score set to 70
@@ -79,7 +80,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_MostPreciseType1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable score set to 70.1
@@ -107,7 +108,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_MostPreciseType2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable score set to 70.1
@@ -135,7 +136,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_CommonSuperClass1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable score set to cast(new Bar())
@@ -188,7 +189,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_CommonSuperClass2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable score set to cast(new Bar())
@@ -241,7 +242,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_EndIf", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
  print grade(90)
@@ -262,7 +263,7 @@ end function
   });
 
   test("Fail_NotBooleanCondition", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
  variable a set to if 2 then 5 else 7
@@ -278,7 +279,7 @@ end main`;
   });
 
   test("Fail_BranchesDifferentTypes", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
  variable a set to if true then "five" else 7
@@ -294,7 +295,7 @@ end main`;
   });
 
   test("Fail_MostPreciseType1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
  variable a set to 10
@@ -311,7 +312,7 @@ end main`;
   });
 
   test("Fail_MostPreciseType2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
  variable a set to 10
@@ -328,7 +329,7 @@ end main`;
   });
 
   test("Fail_NoCommonSuperClass1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable score set to new Bar()
@@ -351,7 +352,7 @@ end class`;
   });
 
   test("Fail_NoCommonSuperClass2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable score set to new Bar()
@@ -374,7 +375,7 @@ end class`;
   });
 
   test("Fail_CannotAssignToBaseClass1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable score set to new Bar()
@@ -401,7 +402,7 @@ end function`;
   });
 
   test("Fail_CannotAssignToBaseClass2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable score set to new Bar()
