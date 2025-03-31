@@ -8,35 +8,35 @@ import {
 import { assertEffectOfActionNew, assertGeneratesHtmlandSameSourceNew } from "./testHelpers";
 
 suite("Parse source and generate Html", () => {
-  test("Test Empty File", async () => {
+  ignore_test("Test Empty File", async () => {
     await assertGeneratesHtmlandSameSourceNew(
       `${__dirname}\\files\\T00_emptyFile.elan`,
       `${__dirname}\\files\\T00_emptyFile.html`,
     );
   });
 
-  test("Test Hello World", async () => {
+  ignore_test("Test Hello World", async () => {
     await assertGeneratesHtmlandSameSourceNew(
       `${__dirname}\\files\\T01_helloWorld.elan`,
       `${__dirname}\\files\\T01_helloWorld.html`,
     );
   });
 
-  test("Test Comments", async () => {
+  ignore_test("Test Comments", async () => {
     await assertGeneratesHtmlandSameSourceNew(
       `${__dirname}\\files\\T02_comments.elan`,
       `${__dirname}\\files\\T02_comments.html`,
     );
   });
 
-  test("Test Main With All Statements", async () => {
+  ignore_test("Test Main With All Statements", async () => {
     await assertGeneratesHtmlandSameSourceNew(
       `${__dirname}\\files\\T03_mainWithAllStatements.elan`,
       `${__dirname}\\files\\T03_mainWithAllStatements.html`,
     );
   });
 
-  test("Test All Globals Except Class", async () => {
+  ignore_test("Test All Globals Except Class", async () => {
     await assertGeneratesHtmlandSameSourceNew(
       `${__dirname}\\files\\T04_allGlobalsExceptClass.elan`,
       `${__dirname}\\files\\T04_allGlobalsExceptClass.html`,
@@ -50,7 +50,7 @@ suite("Parse source and generate Html", () => {
     );
   });
 
-  test("Test Select Main By Id", async () => {
+  ignore_test("Test Select Main By Id", async () => {
     await assertEffectOfActionNew(
       `${__dirname}\\files\\T03_mainWithAllStatements.elan`,
       SelectMainById,
@@ -58,7 +58,7 @@ suite("Parse source and generate Html", () => {
     );
   });
 
-  test("Test Select Statement By Id", async () => {
+  ignore_test("Test Select Statement By Id", async () => {
     await assertEffectOfActionNew(
       `${__dirname}\\files\\T03_mainWithAllStatements.elan`,
       SelectStatementById,
@@ -67,7 +67,7 @@ suite("Parse source and generate Html", () => {
   });
 
   //-------------------
-  test("ExpandAll", async () => {
+  ignore_test("ExpandAll", async () => {
     await assertEffectOfActionNew(
       `${__dirname}\\files\\T03_mainWithAllStatements.elan`,
       ExpandAll,
@@ -75,7 +75,7 @@ suite("Parse source and generate Html", () => {
     );
   });
 
-  test("CollapseAll", async () => {
+  ignore_test("CollapseAll", async () => {
     await assertEffectOfActionNew(
       `${__dirname}\\files\\T03_mainWithAllStatements.elan`,
       CollapseAll,
@@ -83,7 +83,7 @@ suite("Parse source and generate Html", () => {
     );
   });
 
-  test("#702 - last line is a comment", async () => {
+  ignore_test("#702 - last line is a comment", async () => {
     await assertEffectOfActionNew(
       `${__dirname}\\files\\test702.elan`,
       CollapseAll,

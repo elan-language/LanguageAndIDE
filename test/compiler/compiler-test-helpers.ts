@@ -204,6 +204,6 @@ export function transforms() {
   } as Transforms;
 }
 
-export const testHeaderVersion = "Elan Beta 9";
+export const testHeaderVersion = "Elan 9.0.0-Beta";
 
 export const testHeader = `# FFFF ${testHeaderVersion} valid`;

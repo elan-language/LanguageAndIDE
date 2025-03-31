@@ -7,7 +7,7 @@ async function updateDemoProgram(program: string) {
 
   const file = await loadFileAsModelNew(fileName);
 
-  file.setVersion("Elan Beta 9");
+  file.setVersion(9, 0, 0, "Beta");
   
   const updatedContent = await file.renderAsSource(); 
 

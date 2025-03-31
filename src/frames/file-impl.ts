@@ -1,4 +1,4 @@
-import { isProduction } from "../production";
+import { elanVersion, isProduction } from "../production";
 import { StdLibSymbols } from "../standard-library/std-lib-symbols";
 import { AssertOutcome } from "../system";
 import { AbstractSelector } from "./abstract-selector";
@@ -229,7 +229,7 @@ export class FileImpl implements File, Scope {
     this._frNo = 1;
     const globals = parentHelper_renderChildrenAsHtml(this);
     this.currentHash = await this.getHash();
-    return `<el-header># <el-hash>${this.currentHash}</el-hash> ${this.getVersion()}${this.getProfileName()}</el-header>\r\n${globals}`;
+    return `<el-header># <el-hash>${this.currentHash}</el-hash> ${this.getVersionString()}${this.getProfileName()}</el-header>\r\n${globals}`;
   }
 
   public indent(): string {
@@ -241,14 +241,21 @@ export class FileImpl implements File, Scope {
     return await this.hash(body);
   }
 
-  private version = "Elan Beta 9";
+  private version = elanVersion;
 
   private getVersion() {
     return this.version;
   }
 
-  setVersion(newVersion: string) {
-    this.version = newVersion;
+  private getVersionString() {
+    const v = this.getVersion();
+    const suffix = v.preRelease === "" ? "" : `-${v.preRelease}`;
+
+    return `Elan ${v.major}.${v.minor}.${v.patch}${suffix}`;
+  }
+
+  setVersion(major: number, minor: number, patch: number, preRelease: string) {
+    this.version = { major: major, minor: minor, patch: patch, preRelease: preRelease };
   }
 
   private getProfileName() {
@@ -348,7 +355,7 @@ export class FileImpl implements File, Scope {
 
   renderHashableContent(): string {
     const globals = parentHelper_renderChildrenAsSource(this);
-    let html = `${this.getVersion()}${this.getProfileName()} ${this.getParseStatusLabel()}\r\n\r\n${globals}`;
+    let html = `${this.getVersionString()}${this.getProfileName()} ${this.getParseStatusLabel()}\r\n\r\n${globals}`;
     html = html.endsWith("\r\n") ? html : html + "\r\n"; // To accommodate possibility that last global is a global-comment
     return html;
   }
