@@ -19,7 +19,7 @@
     "compile-test": "tsc -p ./test && npm run format-test",
     "compile-src": "tsc -p ./ && esbuild ./out/src/web/web-scripts.js --bundle --outfile=web-editor/web-scripts.js",
     "compile": "npm run compile-src && npm run compile-api && npm run format-src && npm run lint",
-    "production-compile": "cpr ./src/production/production.ts ./src/production.ts -o && npm run compile",
+    "production-compile": "cpr ./src/production/production.ts ./src/production.ts -o && npm run compile && cpr ./demo_programs ./web-editor/demo -o",
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile-src && npm run compile-test && npm run compile-test-api && cpr ./test/files ./out/test/files -o",
     "lint": "eslint src",
