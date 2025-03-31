@@ -1,0 +1,6 @@
+# cd341dca9441939c37e5fef51bc18e743be9009f2dfff7a33aa2ceda8b9a3c2d Elan Beta 8 valid
+
+main
+  let file be createFileForWriting("myFile.txt")
+  call file.writeWholeFile("this is\nmyText")
+end main

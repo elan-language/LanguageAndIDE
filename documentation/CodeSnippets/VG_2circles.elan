@@ -1,0 +1,16 @@
+# 23062be2522c877b76fd1e6f45ef54eb1dbe08ef1b5d51f85dda8d75735517bf Elan Beta 8 valid
+
+main
+  variable vg set to new VectorGraphics()
+  let greenCirc be new CircleVG() with cx set to 50, cy set to 37, r set to 30, fill set to green
+  let redCirc be copy greenCirc with fill set to red
+  set vg to vg.add(greenCirc)
+  while true
+    call vg.display()
+    call pause(700)
+    set vg to vg.replace(greenCirc, redCirc)
+    call vg.display()
+    call pause(700)
+    set vg to vg.replace(redCirc, greenCirc)
+  end while
+end main

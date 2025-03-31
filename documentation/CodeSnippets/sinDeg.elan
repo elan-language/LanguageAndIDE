@@ -1,0 +1,8 @@
+# b332cdcbea22b7864a75b34691471a37fa153ce8baa7922147ca8b2253a8ee11 Elan Beta 8 valid
+
+main
+  print sinDeg(30)
+  variable x set to sinDeg(30)^2 + cosDeg(30)^2
+  variable name set to inputString("Your name")
+  print name.upperCase()
+end main

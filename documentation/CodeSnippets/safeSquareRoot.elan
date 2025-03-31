@@ -1,0 +1,6 @@
+# 0e4b8e056080d634d4d13df08c31a0c2e6fd15ed83f724db1f44896fb45cddcd Elan Beta 8 valid
+
+function safeSquareRoot(x as Float) returns Float
+  let root be lambda => sqrt(x)
+  return if x < 0 then 0 else root()
+end function

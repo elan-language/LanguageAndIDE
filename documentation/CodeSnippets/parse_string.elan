@@ -1,0 +1,8 @@
+# 4ecd4f00227c79feda72a64b53451b2c6282e19de893d48aa69dac3d68cb3393 Elan Beta 8 valid
+
+main
+  variable myString set to "1"
+  variable success, parsedValue set to parseAsInt(myString)
+  print success
+  print parsedValue
+end main

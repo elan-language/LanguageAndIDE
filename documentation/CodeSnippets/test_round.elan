@@ -1,0 +1,7 @@
+# b2a6ee911c33d820e978ecc945f0fefc0ca2ba88bed1ef7984ad08fc1de4a605 Elan Beta 8 valid
+
+test round()
+  assert sqrt(2).round(3) is 1.414
+end test
+
+# 

@@ -1,0 +1,5 @@
+# 2a2d65ed934e82924310e6b892a5c91d31b5b89167a4a227e4f77033f4b63564 Elan Beta 8 valid
+
+main
+  let a be createFileForWriting
+end main

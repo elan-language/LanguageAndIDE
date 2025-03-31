@@ -1,0 +1,7 @@
+# 4838a6041aa9dc6ee19f7800449574e446ea1f2e6bb314f45dc7a97e68c1b653 Elan Beta 8 valid
+
+main
+  variable x set to Status.pending
+end main
+
+enum Status pending, playing

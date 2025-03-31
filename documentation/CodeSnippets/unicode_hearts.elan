@@ -1,0 +1,9 @@
+# 667f72285af437e517d63edc785fd6b126d38073bfb6ea98e9db28aa894aadf2 Elan Beta 8 valid
+
+function hearts() returns String
+  return unicode(0x2665)
+end function
+
+main
+  print hearts()
+end main

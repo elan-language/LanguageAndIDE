@@ -1,0 +1,17 @@
+# 8357b66dcb2edc67da541c739d7efa7ad3f80151fb041ef6ded9d7018d67a45a Elan Beta 8 valid
+
+class Square
+  constructor(x as Int, y as Int)
+    set property.x to x
+    set property.y to y
+  end constructor
+
+  private property x as Int
+
+  private property y as Int
+
+end class
+
+main
+  let tail be new Square(20, 15)
+end main

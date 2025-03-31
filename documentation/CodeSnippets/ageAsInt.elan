@@ -1,0 +1,5 @@
+# da6ea345b3f43d9e5f78b062cb3dd6a179d426afbc379135ff4c2c5e18842651 Elan Beta 8 valid
+
+function a(age as Int) returns Int
+  return age
+end function

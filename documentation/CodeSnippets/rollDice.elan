@@ -1,0 +1,15 @@
+# 3ea8973ec9ea79c3dd4ff7eb1fe6c83e365d89f3c97ea0cd2ffcb0dc33621080 Elan Beta 8 valid
+
+main
+  variable rnd set to new Random()
+  call rnd.initialiseFromClock()
+  variable dice set to 0
+  for i from 1 to 10 step 1
+    set dice, rnd to rollDice(rnd)
+    print dice
+  end for
+end main
+
+function rollDice(rnd as Random) returns (Int, Random)
+  return rnd.nextInt(1, 6)
+end function

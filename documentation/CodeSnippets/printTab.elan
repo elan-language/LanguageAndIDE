@@ -1,0 +1,12 @@
+# f93604cc18517cf1d980a28880776edaf656d12200140bc84b433d670290346b Elan Beta 8 valid
+
+main
+  call printTab(0, "Number")
+  call printTab(10, "Square")
+  call printTab(20, "Cube\n")
+  for i from 1 to 10 step 1
+    call printTab(0, i.asString())
+    call printTab(10, "{i^2}")
+    call printTab(20, "{i^3}\n")
+  end for
+end main
