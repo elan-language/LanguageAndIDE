@@ -1,16 +1,23 @@
-import { loadFileAsModelNew, updateTestFileNew } from "./testHelpers";
+import { getElanFiles, loadFileAsModelNew, updateTestFileNew } from "./testHelpers";
 
+const dir = `${__dirname}\\..\\..\\demo_programs\\`;
 
 async function updateDemoProgram(program: string) {
-  const fileName = `${__dirname}\\..\\..\\demo_programs\\${program}`;
+  const fileName = `${dir}${program}`;
 
   const file = await loadFileAsModelNew(fileName);
 
-  file.setVersion("Elan Beta 10");
+  file.setVersion("Elan Beta 9");
   
   const updatedContent = await file.renderAsSource(); 
 
   updateTestFileNew(fileName, updatedContent);
 }
 
-updateDemoProgram("best-fit.elan");
+const files = getElanFiles(dir);
+
+for (const fn of files) {
+  updateDemoProgram(fn);
+}
+
+

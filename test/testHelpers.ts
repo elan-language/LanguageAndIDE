@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import assert from "assert";
-import { readFileSync, writeFileSync } from "fs";
+import { readdirSync, readFileSync, writeFileSync } from "fs";
 import * as jsdom from "jsdom";
 import Worker from 'web-worker';
 import { AbstractFrame } from "../src/frames/abstract-frame";
@@ -118,6 +118,10 @@ export async function assertFileParsesNew(sourceFile: string) {
 
 export function loadFileAsSourceNew(sourceFile: string): string {
   return readFileSync(sourceFile, "utf-8");
+}
+
+export function getElanFiles(sourceDir: string): string[] {
+  return readdirSync(sourceDir).filter(s =>  s.endsWith(".elan") );
 }
 
 export async function loadFileAsModelNew(sourceFile: string): Promise<FileImpl> {

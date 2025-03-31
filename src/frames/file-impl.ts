@@ -247,7 +247,7 @@ export class FileImpl implements File, Scope {
     return this.version;
   }
 
-  setVersion(newVersion : string) {
+  setVersion(newVersion: string) {
     this.version = newVersion;
   }
 
