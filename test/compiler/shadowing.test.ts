@@ -8,12 +8,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
+  testHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("Shadowing", () => {
   test("Pass_DisambiguateLocalVariableFromLibConstant", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable pi set to library.pi
@@ -38,7 +39,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DisambiguateLocalVariableFromGlobalConstant", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant f set to 1
 
@@ -70,7 +71,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DisambiguateLocalLetFromLibConstant", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let pi be library.pi
@@ -95,7 +96,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DisambiguateLocalLetFromGlobalConstant", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant f set to 1
 
@@ -127,7 +128,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DisambiguateLibFunctionFromLocalAndInstanceFunctions", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
     variable f set to new Foo()
@@ -190,7 +191,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DisambiguateLibProcedureFromLocalAndInstanceProcedures", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable f set to new Foo()
@@ -253,7 +254,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DisambiguateGlobalFunctionFromLocalVar", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
     variable sin set to 2
@@ -289,7 +290,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DisambiguateGlobalProcedureFromLocalVar", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable sin set to 2
@@ -325,7 +326,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_LocalVarShadowsGlobalFunction", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let add2 be add2(1)
@@ -359,7 +360,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_LocalShadowsConstant", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant a set to 4
 
@@ -389,7 +390,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_IdShadowsFunction", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   print foo()
@@ -432,7 +433,7 @@ return [main, _tests];}`;
 });
 
 test("Pass_IdShadowsProcedure", async () => {
-  const code = `# FFFF Elan v1.0.0 valid
+  const code = `${testHeader}
 
 main
   call foo()
@@ -474,7 +475,7 @@ return [main, _tests];}`;
 });
 
 test("Fail_IdShadowsParameter", async () => {
-  const code = `# FFFF Elan v1.0.0 valid
+  const code = `${testHeader}
 
 main
   call foo(1)
@@ -494,7 +495,7 @@ end procedure`;
 });
 
 test("Fail_IdShadowsVariable", async () => {
-  const code = `# FFFF Elan v1.0.0 valid
+  const code = `${testHeader}
 
 main
   variable a set to 1
@@ -512,7 +513,7 @@ end main`;
 });
 
 test("Fail_IdShadowsLet", async () => {
-  const code = `# FFFF Elan v1.0.0 valid
+  const code = `${testHeader}
 
 main
   let a be 1
@@ -530,7 +531,7 @@ end main`;
 });
 
 test("Fail_LetShadowsLet", async () => {
-  const code = `# FFFF Elan v1.0.0 valid
+  const code = `${testHeader}
 
 main
   let a be 1
@@ -548,7 +549,7 @@ end main`;
 });
 
 test("Pass_ParameterShadowsConst", async () => {
-  const code = `# FFFF Elan v1.0.0 valid
+  const code = `${testHeader}
 
 constant x set to 1
 
@@ -585,7 +586,7 @@ return [main, _tests];}`;
 });
 
 test("Fail_global", async () => {
-  const code = `# FFFF Elan v1.0.0 valid
+  const code = `${testHeader}
 
 const a = 4
 const b = global.a
@@ -601,7 +602,7 @@ end main`;
 });
 
 test("Fail_ShadowParameter1", async () => {
-  const code = `# FFFF Elan v1.0.0 valid
+  const code = `${testHeader}
 
 main
   variable result set to foo(3,4)
@@ -623,7 +624,7 @@ end function`;
 });
 
 test("Fail_ShadowParameter2", async () => {
-  const code = `# FFFF Elan v1.0.0 valid
+  const code = `${testHeader}
 
 main
   variable result set to foo(3,4)

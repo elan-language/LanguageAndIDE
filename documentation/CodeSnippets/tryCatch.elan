@@ -1,0 +1,25 @@
+# 7713b8a26eb89a1ae38a9b1bf1543f69fb0848c3f8d93f911237677716a54776 Elan Beta 8 valid
+
+test 
+  try
+    call foo()
+    print "not caught"
+  catch exception in e
+    print e
+  end try
+end test
+
+test 
+  try
+    call foo()
+    print "not caught"
+  catch exception in e
+    if e isnt "an expected message" then
+      throw exception e
+    end if
+  end try
+end test
+
+procedure foo()
+
+end procedure

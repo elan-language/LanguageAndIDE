@@ -7,12 +7,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
+  testHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("Text Files", () => {
   test("Pass_Create", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable fr set to new TextFileReader()
@@ -36,7 +37,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_readWholeFile", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable tf set to openFileForReading()
@@ -63,7 +64,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_readWholeFile_ClosesFile", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable tf set to openFileForReading()
@@ -90,7 +91,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ReadLineInLoop", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable tf set to openFileForReading()
@@ -120,7 +121,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ReadLine_ErrorIfClosed", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable tf set to openFileForReading()
@@ -147,7 +148,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_write", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable tf set to createFileForWriting("data.txt")
@@ -173,7 +174,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "something");
   });
   test("Pass_writeWholeFile", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable tf set to createFileForWriting("data.txt")
@@ -197,7 +198,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "something else");
   });
   test("Pass_writeWholeFileErrorIfAlreadyWrittenTo", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable tf set to createFileForWriting("data.txt")
@@ -226,7 +227,7 @@ return [main, _tests];}`;
     );
   });
   test("Pass_writeWholeFileErrorIfAlreadyClosed", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable tf set to createFileForWriting("data.txt")

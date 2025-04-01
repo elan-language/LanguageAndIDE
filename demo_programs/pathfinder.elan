@@ -1,4 +1,4 @@
-# 6cff642cc6c869e9c25676581612f0a5876a3b136e03f4722f864a305513eaac Elan Beta 9 valid
+# f1b9ab8eaf48288a06201968a6003840a22b537cc09554f257b5d5a2c03c35c0 Elan Beta 9 valid
 
 main
   let start be newPoint(5, 5)
@@ -8,7 +8,7 @@ main
   variable rocks set to empty List<of Point>
   variable nodes set to empty List<of Node>
   call createRocksAndNodes(percentRocks, rocks, nodes, start, destination)
-  variable gr set to initialiseGraphics(start, destination, rocks)
+  let gr be initialiseGraphics(start, destination, rocks)
   call displayBlocks(gr)
   variable solver set to new Solver(nodes, start, destination)
   while true

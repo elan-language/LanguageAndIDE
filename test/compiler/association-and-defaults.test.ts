@@ -7,12 +7,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
+  testHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("Associations and Defaults", () => {
   test("Pass_CanHavePropertiesThatAreDataStructuresOrObjects", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable g set to new Game()
@@ -122,7 +123,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AssignProperty", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable g set to new Foo()
@@ -174,7 +175,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_PropertiesOfAllStandardTypesHaveDefaultValues", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable g set to new Game()
@@ -277,7 +278,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DefaultValuesOnEmptyClass", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable p set to new Player()
@@ -402,7 +403,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DefaultValuesNotPickedUpFromDefaultConstructor", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable g set to empty Game
@@ -456,7 +457,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_PropertiesOfClassTypesHaveDefaultValues", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable g set to new Game()
@@ -555,7 +556,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_defaultKeywordToTestValue", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable g set to new Game()
@@ -690,7 +691,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_defaultValueCanBeAssigned", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable g set to new Game()
@@ -821,7 +822,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_defaultForStandardDataStructures", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable f set to new Foo()
@@ -897,7 +898,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_PropertyOfAbstractType", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable g set to new Game()
@@ -986,7 +987,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_PropertyOfListType", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable g set to new Game()
@@ -1044,7 +1045,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_CallProcedureOnProperty", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable bar set to new Bar()
@@ -1120,7 +1121,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_UseOfKeywordAsName", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
  
@@ -1142,7 +1143,7 @@ end class`;
   });
 
   test("Fail_UseOfReservedWordAsName", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
  
@@ -1166,7 +1167,7 @@ end class`;
   });
 
   test("Fail_MissingPropertyKeyword1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
  
@@ -1190,7 +1191,7 @@ end class`;
   });
 
   test("Fail_MissingPropertyKeyword2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
  
@@ -1215,7 +1216,7 @@ end class`;
   });
 
   test("Fail_MissingPropertyKeyword3", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
  
@@ -1244,7 +1245,7 @@ end class`;
   });
 
   test("Fail_MissingPropertyKeyword3", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
  
@@ -1272,7 +1273,7 @@ end class`;
   });
 
   test("Fail_MissingPropertyKeyword4", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable bar set to new Bar()
@@ -1307,7 +1308,7 @@ end class`;
   });
 
   test("Fail_MissingPropertyKeyword5", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable bar set to new Bar()
@@ -1345,7 +1346,7 @@ end class`;
   });
 
   test("Fail_MissingPropertyKeyword6", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable bar set to new Bar()
@@ -1383,7 +1384,7 @@ end class`;
   });
 
   test("Fail_spuriousProperty1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 class Bar
   procedure p()
@@ -1400,7 +1401,7 @@ end class`;
   });
 
   test("Fail_spuriousProperty2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 function foo() returns Int
   return 0
@@ -1421,7 +1422,7 @@ end class`;
   });
 
   test("Fail_spuriousProperty3", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant aa set to 1
 

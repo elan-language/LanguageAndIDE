@@ -1,0 +1,19 @@
+# 373ba3ffa96fba0755cdd2a15f2906f4afda1dc977ecb3eaf7dc09251fab60cd Elan Beta 8 valid
+
+main
+  print s.length()
+  print s.contains()
+  print s.add(item)
+  print s.addFromList(list)
+  print s.addFromList(array)
+  print s.remove(item)
+  print s.union(anotherSet)
+  print s.difference(anotherSet)
+  print s.intersection(anotherSet)
+  print s.isDisjointFrom(anotherSet)
+  print isSubsetOf(anotherSet)
+  print isSupersetOf(anotherSet)
+  print "s.asList(anotherSet)"
+  print "s.asImmutableList(anotherSet)"
+  print s.asString()
+end main

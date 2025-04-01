@@ -8,12 +8,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
+  testHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("This and Property", () => {
   test("Pass_DisambiguateParamAndProperty", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Foo(7)
@@ -67,7 +68,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_UsingThisAsAnInstance", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable f set to new Foo()
@@ -138,7 +139,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_UsingPropertyAsIndex", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable f set to new Foo()
@@ -193,7 +194,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_PrintThis", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable f set to new Foo()
@@ -233,7 +234,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_UsingPropertyAsIndex1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable f set to new Foo()
@@ -260,7 +261,7 @@ end class`;
   });
 
   test("Fail_NoSuchProperty", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
     variable x set to new Foo(7)
@@ -288,7 +289,7 @@ end class`;
   });
 
   test("Fail_MissingSelfCausesCompileErrorDueToAssigningToParam", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
     variable x set to new Foo(7)
@@ -316,7 +317,7 @@ end class`;
   });
 
   test("Fail_ThisOutsideClassScope", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   print this

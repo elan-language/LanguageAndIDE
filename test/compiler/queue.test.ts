@@ -8,12 +8,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
+  testHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("Queue", () => {
   test("Pass_Queue", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable q set to new Queue<of String>()
@@ -58,7 +59,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_Queue_adding_incompatible_type1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable q set to new Queue<of String>()
@@ -75,7 +76,7 @@ end main`;
   });
 
   test("Fail_Queue_adding_incompatible_type2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable q set to new Queue<of String>()
@@ -91,7 +92,7 @@ end main`;
   });
 
   test("Fail_Queue_peek_empty_Queue", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let q be new Queue<of String>()
@@ -119,7 +120,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_Queue_dequeue_empty_Queue", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let q be new Queue<of String>()
@@ -147,7 +148,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_QueueWithoutGenericParm", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let q be new Queue()
@@ -162,7 +163,7 @@ end main`;
   });
 
   test("Fail_QueueOfMutable", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable st set to new Queue<of Foo>()

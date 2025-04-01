@@ -1,8 +1,8 @@
-# c7aa0d5255cb8bc9fcfec1ced682f706b8f73767f2e3d10f7c7ceb09450c285d Elan Beta 9 valid
+# 8fb088a57b3740ac3bd2e4e93eaf6b678fe1d8c11fcb16f1b0234430425155fe Elan Beta 9 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
-  variable blocks set to new Array2D<of Int>(40, 30, white)
+  let blocks be new Array2D<of Int>(40, 30, white)
   variable head set to [20, 15]
   variable tail set to head
   variable body set to [head]

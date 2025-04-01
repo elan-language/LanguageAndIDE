@@ -8,12 +8,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
+  testHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("Constants", () => {
   test("Pass_Int", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant a set to 3
 main
@@ -41,7 +42,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Int_Hex", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant a set to 0xFF
 main
@@ -70,7 +71,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Int_Binary", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant a set to 0b10101
 main
@@ -98,7 +99,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Float", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant a set to 3.1
 main
@@ -126,7 +127,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_String", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant a set to "hell0"
 main
@@ -154,7 +155,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_EmptyString", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant a set to ""
 main
@@ -184,7 +185,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_SpaceAsString", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant a set to " "
 main
@@ -212,7 +213,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Bool", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant a set to true
 main
@@ -240,7 +241,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Enum", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant a set to Fruit.apple
 main
@@ -273,7 +274,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_List", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant a set to {1,2,3}
 main
@@ -301,7 +302,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_List", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant a set to [1,2,3]
 main
@@ -316,7 +317,7 @@ end main
   });
 
   test("Pass_ListofList", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant a set to {{4, 5}, {6, 7, 8}}
 main
@@ -344,7 +345,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_LargeConstant", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant a set to {{0.0,0.0,0.0,0.16,0.0,0.0,0.01},{0.85,0.04,-0.04,0.85,0.0,1.60,0.85},{0.20,-0.26,0.23,0.22,0.0,1.60,0.07},{-0.15,0.28,0.26,0.24,0.0,0.44,0.07}}
 main
@@ -374,7 +375,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_Dictionary", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant a set to ["a":1]
 main
@@ -389,7 +390,7 @@ end main
   });
 
   test("Fail_useInsideMain", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   constant a set to 3 
@@ -404,7 +405,7 @@ end main
   });
 
   test("Fail_incorrectKeyword", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 const a set to 3
 
@@ -420,7 +421,7 @@ end main
   });
 
   test("Fail_invalidLiteralString", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant a set to 'hello'
 
@@ -436,7 +437,7 @@ end main
   });
 
   test("Fail_reassignment", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant a set to 3
 
@@ -454,7 +455,7 @@ end main
   });
 
   test("Fail_expression", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant a set to 3 + 4
 
@@ -471,7 +472,7 @@ end main
   });
 
   test("Pass_referenceToOtherConstant", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant a set to 3
 constant b set to a
@@ -502,7 +503,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_UseOfKeywordAsName", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant if set to 3
 
@@ -521,7 +522,7 @@ end main
   });
 
   test("Fail_UseOfReservedAsName", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant break set to 3
 
@@ -540,7 +541,7 @@ end main
   });
 
   test("Fail_NotUniqueName", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant a set to 1
 constant a set to 2
@@ -557,7 +558,7 @@ end main
     assertDoesNotCompileWithId(fileImpl, "const1", ["Name 'a' not unique in scope"]);
   });
   test("Pass_usingConstantAsKeyInConstantDictionary", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant a set to {openBrace:blue, closeBrace:red}
 main

@@ -1,7 +1,7 @@
-# 21326e9945dff8d4a927fd4829553ef0cfdae4c6ba9ee759e5b87f4924be402f Elan Beta 9 valid
+# 970474937c7af4510fb4a4497479e22fded9354efc8b1abd8bdbe62a4bcab383 Elan Beta 9 valid
 
 main
-  variable blocks set to new Array2D<of Int>(40, 30, white)
+  let blocks be new Array2D<of Int>(40, 30, white)
   variable x set to 20
   variable y set to 15
   while true

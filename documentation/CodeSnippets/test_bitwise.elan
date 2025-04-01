@@ -1,0 +1,24 @@
+# 78e86f77196d8e9cb390801ed694b923a238acd30519b487c07a2659f8f9ee60 Elan Beta 8 valid
+
+test bitwise
+  variable a set to 13
+  assert a is 0xd
+  assert a is 0b1101
+  assert a.asBinary() is "1101"
+  variable b set to 30
+  assert b is 0b11110
+  assert bitAnd(a, b) is 0b1100
+  variable aob set to bitOr(a, b)
+  assert aob is 0b11111
+  variable axb set to bitXor(a, b)
+  assert axb is 0b10011
+  variable nota set to bitNot(a)
+  assert nota is -14
+  variable aL set to bitShiftL(a, 2)
+  assert aL is 0b110100
+  assert bitShiftR(a,2) is 0b11
+end test
+
+main
+
+end main

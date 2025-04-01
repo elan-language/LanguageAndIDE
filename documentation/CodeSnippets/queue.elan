@@ -1,0 +1,15 @@
+# ff178441a0f9fef1a16608a58c08f5c1e4c7465bd502f25d40ac905b4f6a55e9 Elan Beta 8 valid
+
+main
+  let qu be "new Queue<of String()"
+  print qu.length()
+  call qu.enqueue("apple")
+  call qu.enqueue("pear")
+  print qu.length()
+  print qu.peek()
+  variable fruit set to qu.dequeue()
+  print fruit
+  set fruit to qu.dequeue()
+  print fruit
+  print qu.length()
+end main

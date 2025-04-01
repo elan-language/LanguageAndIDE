@@ -9,12 +9,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
+  testHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("Immutable Dictionary", () => {
   test("Pass_LiteralConstantAndPrinting", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant a set to {"a":1, "b":3, "z":10}
 main
@@ -41,7 +42,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_LiteralEnumKey", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 enum Fruit apple, orange, pear  
 constant a set to {Fruit.apple:1, Fruit.orange:3, Fruit.pear:10}
@@ -73,7 +74,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_LiteralVarAndPrinting", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to {"a":1, "b":3, "z":10}
@@ -98,7 +99,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AccessByKey", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant a set to {"a":1, "b":3, "z":10}
 main
@@ -125,7 +126,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_keys", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant a set to {"a":1, "b":3, "z":10}
 main
@@ -156,7 +157,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_RecordKey", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to new DictionaryImmutable<of Point, Int>()
@@ -211,7 +212,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_hasKey", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant a set to {"a":1, "b":3, "z":10}
 main
@@ -240,7 +241,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_values", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant a set to {"a":1, "b":3, "z":10}
 main
@@ -267,7 +268,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_withPutAt", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant a set to {"a":1, "b":3, "z":10}
 main
@@ -300,7 +301,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_withRemoveAt", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant a set to {"a":1, "b":3, "z":10}
 main
@@ -331,7 +332,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_removeInvalidKey", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant a set to {"a":1, "b":3, "z":10}
 main
@@ -360,7 +361,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_CreateEmptyDictionary", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to new DictionaryImmutable<of String, Int>()
@@ -395,7 +396,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_EnumKey", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 enum Fruit apple, orange, pear  
 
@@ -436,7 +437,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_EmptyDictionaryImmutable", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to empty DictionaryImmutable<of String, Int>
@@ -473,7 +474,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_RecordKeyNoDuplicates", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to new DictionaryImmutable<of Point, Int>()
@@ -530,7 +531,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_asDictionary", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let a be {"a":1, "b":3, "z":10}
@@ -559,7 +560,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_RepeatedKey", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant a set to {"a":1, "b":3, "a":10}
 main
@@ -575,7 +576,7 @@ end main
   });
 
   test("Fail_InconsistentTypes1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant a set to {"a":1, "b":3.1, "c":10}
 main
@@ -591,7 +592,7 @@ end main
   });
 
   test("Fail_InconsistentTypes2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant a set to {"a":1, "b":3, 10:10}
 main
@@ -607,7 +608,7 @@ end main
   });
 
   test("Fail_AccessByInvalidKey", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant a set to {"a":1, "b":3, "z":10}
 main
@@ -623,7 +624,7 @@ end main
   });
 
   test("Fail_RemoveInvalidKeyType", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant a set to {"a":1, "b":3, "z":10}
 main
@@ -639,7 +640,7 @@ end main
   });
 
   test("Fail_SetInvalidKeyType", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant a set to {"a":1, "b":3, "z":10}
 main
@@ -657,7 +658,7 @@ end main
   });
 
   test("Fail_SetInvalidValueType", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant a set to {"a":1, "b":3, "z":10}
 main
@@ -675,7 +676,7 @@ end main
   });
 
   test("Fail_CannotSetIndex", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to {"a":4, "b":5, "c":6, "d":7, "e":8}
@@ -690,7 +691,7 @@ end main
   });
 
   test("Fail_CannotPutAtKey", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to {"a":4, "b":5, "c":6, "d":7, "e":8}
@@ -707,7 +708,7 @@ end main
   });
 
   test("Fail_removeKey", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to {"a":1, "b":3, "z":10}
@@ -724,7 +725,7 @@ end main`;
   });
 
   test("Fail_undefined", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to a.withPut("a", 1)
@@ -738,7 +739,7 @@ end main`;
   });
 
   test("Fail_withoutGenericType", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
     variable a set to new DictionaryImmutable()
@@ -753,7 +754,7 @@ end main`;
   });
 
   test("Fail_WrongIndexBrackets", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant a set to {0:"a"}
 
@@ -773,7 +774,7 @@ end function`;
   });
 
   test("Fail_WrongIndexBrackets1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 constant a set to {0:"a"}
 
@@ -789,7 +790,7 @@ end main`;
   });
 
   test("Fail_DictionaryImmutableOfMutableClassValue", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
     variable a set to empty DictionaryImmutable<of Int, Foo>
@@ -806,7 +807,7 @@ end class`;
   });
 
   test("Fail_DictionaryImmutableOfMutableClassKey", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
     variable a set to empty DictionaryImmutable<of Foo, Int>
@@ -823,7 +824,7 @@ end class`;
   });
 
   test("Fail_DictionaryImmutableOfListValue", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to empty DictionaryImmutable<of Int, List<of Int>>
@@ -839,7 +840,7 @@ end main`;
   });
 
   test("Fail_DictionaryImmutableOfListKey", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to empty DictionaryImmutable<of List<of Int>, Int>
@@ -853,7 +854,7 @@ end main`;
   });
 
   test("Fail_DictionaryImmutableOfDictionaryValue", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to empty DictionaryImmutable<of Int, Dictionary<of Int, Int>>
@@ -869,7 +870,7 @@ end main`;
   });
 
   test("Fail_DictionaryImmutableOfDictionaryKey", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to empty DictionaryImmutable<of Dictionary<of Int, Int>, Int>
@@ -885,7 +886,7 @@ end main`;
   });
 
   test("Fail_LiteralDictionaryImmutableOfMutableClassValue", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable f set to new Foo()
@@ -903,7 +904,7 @@ end class`;
   });
 
   test("Fail_LiteralDictionaryImmutableOfMutableClassKey", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable f set to new Foo()
@@ -921,7 +922,7 @@ end class`;
   });
 
   test("Fail_LiteralDictionaryImmutableOfListValue", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable f set to empty List<of Int>
@@ -941,7 +942,7 @@ end class`;
   });
 
   test("Fail_LiteralDictionaryImmutableOfListKey", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable f set to empty List<of Int>
@@ -959,7 +960,7 @@ end class`;
   });
 
   test("Fail_LiteralDictionaryImmutableOfListKey", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable f set to empty ListImmutable<of Int>
@@ -979,7 +980,7 @@ end class`;
   });
 
   test("Fail_LiteralDictionaryImmutableOfDictionaryValue", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable f set to ["a":1]
@@ -999,7 +1000,7 @@ end class`;
   });
 
   test("Fail_LiteralDictionaryImmutableOfDictionaryKey", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable f set to ["a":1]
@@ -1019,7 +1020,7 @@ end class`;
   });
 
   test("Fail_LiteralDictionaryImmutableOfDictionaryImmutableKey", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable f set to {"a":1}
@@ -1039,7 +1040,7 @@ end class`;
   });
 
   test("Fail_LiteralDictionaryImmutableOfEmptyUnknownClass1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable f set to {empty Foo:1}
@@ -1053,7 +1054,7 @@ end main`;
   });
 
   test("Fail_LiteralDictionaryImmutableOfEmptyUnknownClass2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable f set to {1:empty Foo}
@@ -1067,7 +1068,7 @@ end main`;
   });
 
   test("Fail_EmptyGenericType", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable f set to empty DictionaryImmutable

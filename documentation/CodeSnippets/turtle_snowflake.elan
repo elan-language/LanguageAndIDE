@@ -1,0 +1,29 @@
+# 3615612e862087ca5542a68e987602295747219af6e94460e8c7d5462e934669 Elan Beta 8 valid
+
+main
+  variable t set to new Turtle()
+  call t.placeAt(20, 20)
+  call t.turn(90)
+  call t.show()
+  for i from 1 to 3 step 1
+    call drawSide(side, t)
+    call t.turn(120)
+  end for
+end main
+
+procedure drawSide(length as Float, t as Turtle)
+  if (length > 1) then
+    let third be length/3
+    call drawSide(third, t)
+    call t.turn(-60)
+    call drawSide(third, t)
+    call t.turn(120)
+    call drawSide(third, t)
+    call t.turn(-60)
+    call drawSide(third, t)
+  else
+    call t.move(length)
+  end if
+end procedure
+
+constant side set to 60

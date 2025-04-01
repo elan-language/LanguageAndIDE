@@ -1,0 +1,11 @@
+# 725871605b2c3370c4dbc541c34d577f05978b6270b556c72695979ba1378675 Elan Beta 8 valid
+
+main
+  variable tab set to 10
+  variable i set to 0
+  for i from 1 to (tab - 1) step 1
+    variable j set to 9^i
+    variable f set to lambda j as Int => j.asString().length()
+    call printTab(tab - f(j), "{j}\n")
+  end for
+end main

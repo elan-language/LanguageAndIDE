@@ -7,12 +7,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
+  testHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("Set", () => {
   test("Pass_SetAddRemoveLength", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable st set to new Set<of Int>()
@@ -53,7 +54,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_SetUnion", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable st1 set to new Set<of Int>()
@@ -86,7 +87,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_SetIntersection", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable st1 set to new Set<of Int>()
@@ -119,7 +120,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_SetDifference", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable st1 set to new Set<of Int>()
@@ -152,7 +153,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_IsDisjointFrom", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let st0 be new Set<of Int>()
@@ -187,7 +188,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_IsSubsetOfIsSupersetOf", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let st0 be new Set<of Int>()
@@ -227,37 +228,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "truefalsetruefalsetruetrue");
   });
   test("Pass_AddFromList", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
-
-main
-  let st0 be new Set<of Int>()
-  let st1 be st0.addFromListImmutable({2,4,6,3})
-  print st1
-  let st2 be st1.addFromListImmutable({2,5,6})
-  print st2
-end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  const st0 = system.initialise(await new _stdlib.Set()._initialise());
-  const st1 = st0.addFromListImmutable(system.listImmutable([2, 4, 6, 3]));
-  await system.printLine(st1);
-  const st2 = st1.addFromListImmutable(system.listImmutable([2, 5, 6]));
-  await system.printLine(st2);
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{2, 4, 6, 3}{2, 4, 6, 3, 5}");
-  });
-  test("Pass_AddFromList", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let st0 be new Set<of Int>()
@@ -288,20 +259,16 @@ return [main, _tests];}`;
   });
 
   test("Pass_Conversions", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let a be ["one", "two", "three"].asSet()
-  let b be a.asListImmutable()
   let c be a.asList()
   variable aa set to empty Set<of String>
-  variable bb set to empty ListImmutable<of String>
   variable cc set to empty List<of String>
   set aa to a
-  set bb to b
   set cc to c
   print aa
-  print bb
   print cc
 end main`;
 
@@ -309,16 +276,12 @@ end main`;
 const global = new class {};
 async function main() {
   const a = system.list(["one", "two", "three"]).asSet();
-  const b = a.asListImmutable();
   const c = a.asList();
   let aa = system.initialise(_stdlib.Set.emptyInstance());
-  let bb = system.initialise(_stdlib.ListImmutable.emptyInstance());
   let cc = system.initialise(_stdlib.List.emptyInstance());
   aa = a;
-  bb = b;
   cc = c;
   await system.printLine(aa);
-  await system.printLine(bb);
   await system.printLine(cc);
 }
 return [main, _tests];}`;
@@ -329,11 +292,11 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{one, two, three}{one, two, three}[one, two, three]");
+    await assertObjectCodeExecutes(fileImpl, "{one, two, three}[one, two, three]");
   });
 
   test("Pass_Contains1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to new Set<of String>()
@@ -360,7 +323,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Contains2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to new Set<of String>()
@@ -387,7 +350,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_SetOfMutable", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable st set to new Set<of Foo>()

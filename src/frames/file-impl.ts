@@ -1,3 +1,4 @@
+import { elanVersion, isElanProduction } from "../production";
 import { StdLibSymbols } from "../standard-library/std-lib-symbols";
 import { AssertOutcome } from "../system";
 import { AbstractSelector } from "./abstract-selector";
@@ -116,6 +117,9 @@ export class FileImpl implements File, Scope {
     this.scratchPad = new ScratchPad();
   }
 
+  private version = elanVersion;
+  private isProduction = isElanProduction;
+
   symbolMatches(id: string, all: boolean): ElanSymbol[] {
     const languageMatches = symbolMatches(id, all, elanSymbols);
     const libMatches = this.libraryScope.symbolMatches(id, all);
@@ -228,7 +232,7 @@ export class FileImpl implements File, Scope {
     this._frNo = 1;
     const globals = parentHelper_renderChildrenAsHtml(this);
     this.currentHash = await this.getHash();
-    return `<el-header># <el-hash>${this.currentHash}</el-hash> ${this.getVersion()}${this.getProfileName()}</el-header>\r\n${globals}`;
+    return `<el-header># <el-hash>${this.currentHash}</el-hash> ${this.getVersionString()}${this.getProfileName()}</el-header>\r\n${globals}`;
   }
 
   public indent(): string {
@@ -241,7 +245,24 @@ export class FileImpl implements File, Scope {
   }
 
   private getVersion() {
-    return "Elan Beta 9";
+    return this.version;
+  }
+
+  private getVersionString() {
+    const v = this.getVersion();
+    const suffix = v.preRelease === "" ? "" : `-${v.preRelease}`;
+
+    return `Elan ${v.major}.${v.minor}.${v.patch}${suffix}`;
+  }
+
+  // to allow header generation of new version
+  setVersion(major: number, minor: number, patch: number, preRelease: string) {
+    this.version = { major: major, minor: minor, patch: patch, preRelease: preRelease };
+  }
+
+  // for testing
+  setIsProduction(flag: boolean) {
+    this.isProduction = flag;
   }
 
   private getProfileName() {
@@ -341,7 +362,7 @@ export class FileImpl implements File, Scope {
 
   renderHashableContent(): string {
     const globals = parentHelper_renderChildrenAsSource(this);
-    let html = `${this.getVersion()}${this.getProfileName()} ${this.getParseStatusLabel()}\r\n\r\n${globals}`;
+    let html = `${this.getVersionString()}${this.getProfileName()} ${this.getParseStatusLabel()}\r\n\r\n${globals}`;
     html = html.endsWith("\r\n") ? html : html + "\r\n"; // To accommodate possibility that last global is a global-comment
     return html;
   }
@@ -614,7 +635,7 @@ export class FileImpl implements File, Scope {
     try {
       this.parseError = undefined;
       this._parseStatus = ParseStatus.default;
-      //await this.validateHeader(source.getRemainingCode());
+      await this.validateHeader(source.getRemainingCode());
       if (source.isMatch("#")) {
         source.removeRegEx(Regexes.comment, false);
         source.removeRegEx(Regexes.newLine, false);
@@ -646,22 +667,25 @@ export class FileImpl implements File, Scope {
     return mains.length > 0;
   }
 
+  async validateHash(fileHash: string, code: string) {
+    const toHash = code.substring(code.indexOf("Elan"));
+    const newHash = await this.getHash(toHash);
+
+    if (fileHash !== newHash && (this.isProduction || fileHash !== "FFFF")) {
+      throw new Error(cannotLoadFile);
+    }
+  }
+
   async validateHeader(code: string) {
-    const msg = cannotLoadFile;
     if (!this.ignoreHashOnParsing && !this.isEmpty(code)) {
       const eol = code.indexOf("\n");
       const header = code.substring(0, eol > 0 ? eol : undefined);
       const tokens = header.split(" ");
-      if (tokens.length !== 6 || tokens[0] !== "#" || tokens[2] !== "Elan") {
-        throw new Error(msg);
+      if (tokens.length !== 5 || tokens[0] !== "#" || tokens[2] !== "Elan") {
+        throw new Error(cannotLoadFile);
       }
-      const fileHash = tokens[1];
-      const toHash = code.substring(code.indexOf("Elan"));
-      const newHash = await this.getHash(toHash);
 
-      if (fileHash !== newHash && fileHash !== "FFFF") {
-        throw new Error(msg);
-      }
+      await this.validateHash(tokens[1], code);
     }
   }
 

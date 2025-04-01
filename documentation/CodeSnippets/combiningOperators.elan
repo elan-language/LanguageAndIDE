@@ -1,0 +1,11 @@
+# 8bda275f4a8663d3445533ac05600a7016fdb6e64605cdb6bfed10a3c73a6e72 Elan Beta 8 valid
+
+main
+  variable a set to 0
+  variable b set to 0
+  variable c set to 0
+  variable d set to 0
+  variable x set to true
+  set x to (a > b) and (b < c)
+  set x to (a + b) > (c - d)
+end main

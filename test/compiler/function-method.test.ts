@@ -8,12 +8,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
+  testHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("Function Method", () => {
   test("Pass_HappyCase", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable f set to new Foo()
@@ -75,7 +76,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_FunctionMethodReturnType", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable f set to new Foo()
@@ -141,7 +142,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_FunctionMethodReturnType1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable f set to new Foo()
@@ -207,7 +208,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_FunctionMethodReturnTypeOnProperty", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable b set to new Bar()
@@ -302,7 +303,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_FunctionMethodReturnTypeOnProperty1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable b set to new Bar()
@@ -412,7 +413,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_FunctionMethodMayCallOtherClassFunctionViaProperty", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable f set to new Foo()
@@ -517,7 +518,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_FunctionMethodMayCallOtherClassFunctionMethod", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable f set to new Foo()
@@ -626,7 +627,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_FunctionMethodNameHidesGlobalFunction", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable f set to new Foo()
@@ -688,7 +689,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_FunctionCannotBeCalledDirectly", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable f set to new Foo()
@@ -720,7 +721,7 @@ end class`;
   });
 
   test("Fail_FunctionisNotDefined", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable f set to new Foo()
@@ -747,7 +748,7 @@ end class`;
   });
 
   test("Fail_FunctionMethodCannotMutateProperty", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 class Foo
   constructor()
@@ -771,7 +772,7 @@ end class`;
   });
 
   test("Fail_FunctionMethodCannotCallProcedureMethod", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 class Foo
     constructor()
@@ -802,7 +803,7 @@ end class`;
   });
 
   test("Fail_ParameterUnknownType", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
  
@@ -826,7 +827,7 @@ end class`;
   });
 
   test("Fail_ReturnUnknownType", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
  
@@ -850,7 +851,7 @@ end class`;
   });
 
   test("Fail_UseOfKeywordAsName", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
  
@@ -873,7 +874,7 @@ end class`;
   });
 
   test("Fail_UseOfReservedWordAsName", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
  
@@ -898,7 +899,7 @@ end class`;
   });
 
   test("Fail_NotUniqueParameterName", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
 
@@ -922,7 +923,7 @@ end class`;
   });
 
   test("Fail_NestedUpdateProperty", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let f be new Foo()
@@ -953,7 +954,7 @@ end class`;
   });
 
   test("Fail_NestedUpdateProperty1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let f be new Foo()
@@ -988,7 +989,7 @@ end class`;
   });
 
   test("Fail_IncorrectScope", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable f set to new Foo()
@@ -1010,7 +1011,7 @@ end function`;
   });
 
   test("Fail_ReturnListOfMutableType", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 class Foo
   function p1() returns ListImmutable<of List<of Int>>
@@ -1027,7 +1028,7 @@ end class`;
   });
 
   test("Fail_ParameterListOfMutableType", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 class Foo
   function p1(a as ListImmutable<of List<of Int>>) returns Int

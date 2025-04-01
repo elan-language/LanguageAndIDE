@@ -10,12 +10,13 @@ import {
   assertStatusIsValid,
   assertTestObjectCodeExecutes,
   testHash,
+  testHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("Test and Assert", () => {
   test("Pass_PassingTest", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
 end main
@@ -69,7 +70,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_BracketedExpression", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
 end main
@@ -102,7 +103,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AssertTuple", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
 end main
@@ -140,7 +141,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AssertLetTuple", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
 end main
@@ -178,7 +179,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AssertTupleFromParseAsInt", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
 end main
@@ -214,7 +215,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AssertSimpleVarRef", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
 end main
@@ -254,7 +255,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AssertCompoundVarRef1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
 end main
@@ -311,7 +312,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AssertCompoundVarRef2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
 end main
@@ -368,7 +369,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_FailingTest", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
 end main
@@ -417,7 +418,7 @@ return [main, _tests];}`;
     ]);
   });
   test("Pass_ErrorTest1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
 end main
@@ -462,7 +463,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ErrorTest2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
 end main
@@ -499,7 +500,7 @@ return [main, _tests];}`;
     ]);
   });
   test("Pass_ErrorTest3", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
 end main
@@ -535,7 +536,7 @@ return [main, _tests];}`;
     ]);
   });
   test("Pass_VariousTestsOnAssert", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
 end main
@@ -675,7 +676,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_TestUseOfRoundForFloats", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
 end main
@@ -752,7 +753,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_TestWithProcedure", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
 end main
@@ -774,7 +775,7 @@ end test
   });
 
   test("Pass_expressionForExpected", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
 end main
@@ -816,7 +817,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_IgnoreTest", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
 end main
@@ -858,7 +859,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_IgnoreInfiniteTest1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
 end main
@@ -905,7 +906,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_IgnoreInfiniteTest2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
 end main
@@ -949,7 +950,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_AssertOutsideAtest", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   assert square(3) is 3 * 3
@@ -967,7 +968,7 @@ end function
   });
 
   test("Fail_callATest", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   call squareTest()
@@ -989,7 +990,7 @@ end test
   });
 
   test("Fail_ignoredFailCompile", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
 
@@ -1011,7 +1012,7 @@ end test
   });
 
   test("Fail_useTestAsAReference", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to squareTest
@@ -1033,7 +1034,7 @@ end test
   });
 
   test("Fail_assertWithinAMultiline", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
 
@@ -1054,7 +1055,7 @@ end test
   });
 
   test("Fail_assertWithinAMultiline2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
 

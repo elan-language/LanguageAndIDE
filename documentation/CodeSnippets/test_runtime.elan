@@ -1,0 +1,8 @@
+# bb809b0ef7acbbd0c825e48ef3b5104da934ea2afd46ea64b803f6430ef1d722 Elan Beta 8 valid
+
+test 
+  let a be [5, 1, 7]
+  assert a[0] is 5
+  assert a[2] is 7
+  assert a[3] is 0
+end test

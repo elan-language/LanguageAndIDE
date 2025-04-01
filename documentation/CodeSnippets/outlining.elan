@@ -1,0 +1,15 @@
+# a301960f79611706575446273ef4d54f3d31af196166bc2bb339106854a9399d Elan Beta 8 valid
+
+main
+
+end main
+
+function binarySearch(list as List<of String>, item as String) returns Boolean
+  return true
+end function
+
+test 
+
+end test
+
+constant example set to "example"

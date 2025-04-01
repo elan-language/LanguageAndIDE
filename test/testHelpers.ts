@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import assert from "assert";
-import { readFileSync, writeFileSync } from "fs";
+import { readdirSync, readFileSync, writeFileSync } from "fs";
 import * as jsdom from "jsdom";
 import Worker from 'web-worker';
 import { AbstractFrame } from "../src/frames/abstract-frame";
@@ -87,7 +87,7 @@ export async function assertGeneratesHtmlandSameSourceNew(sourceFile: string, ht
   }
 }
 
-function updateTestFileNew(testDoc: string, newContent: string) {
+export function updateTestFileNew(testDoc: string, newContent: string) {
   writeFileSync(testDoc, newContent);
 }
 
@@ -120,10 +120,14 @@ export function loadFileAsSourceNew(sourceFile: string): string {
   return readFileSync(sourceFile, "utf-8");
 }
 
+export function getElanFiles(sourceDir: string): string[] {
+  return readdirSync(sourceDir).filter(s =>  s.endsWith(".elan") );
+}
+
 export async function loadFileAsModelNew(sourceFile: string): Promise<FileImpl> {
   const source = loadFileAsSourceNew(sourceFile);
   const codeSource = new CodeSourceFromString(source);
-  const fl = new FileImpl(hash, new DefaultProfile(), transforms());
+  const fl = new FileImpl(hash, new DefaultProfile(), transforms(), true);
   await fl.parseFrom(codeSource);
   if (fl.parseError) {
     throw new Error(fl.parseError);

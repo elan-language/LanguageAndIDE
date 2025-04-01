@@ -1,10 +1,16 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
-import { assertDoesNotCompile, assertParses, testHash, transforms } from "./compiler-test-helpers";
+import {
+  assertDoesNotCompile,
+  assertParses,
+  testHash,
+  transforms,
+  testHeader,
+} from "./compiler-test-helpers";
 
 suite("Main", () => {
   test("Fail_TwoMain", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to 3

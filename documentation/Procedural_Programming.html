@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en-GB">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link href="Documentation.css" rel="stylesheet">
+<link href="colourScheme.css" rel="stylesheet">
+<link href="elanStyle.css" rel="stylesheet">
+<title>Elan Procedural Programming</title>
+</head>
+<body>
+<h1 id="h61">Procedural programming</h1>
+<h2 id="Defining_named_values">Defining named values</h2>
+<p>There are several kinds of name value in Elan, defined by:</p>
+<ul>
+<li>A <el-code>constant</el-code> (which might be a user-defined <el-code>constant</el-code> or a library <el-code>constant</el-code>)</li>
+<li>A <el-code>let</el-code> statement (see below)</li>
+<li>A <el-code>variable</el-code> statement</li>
+<li>A parameter in a <el-code>function</el-code> or a <el-code>procedure</el-code>: see <span class="Link">Functions and procedures</span></li>
+</ul>
+
+<h3>Variable statement</h3>
+<p>The <el-code>variable </el-code>statement is used to define, and initialise, a new variable. Unlike a named value defined by a let statement, a variable may be re-assigned from its initial value to a new value.</p>
+<p>The name given to the variable must follow the rules for an <a href="#Identifier">Identifier</a>.</p>
+<p>The value to which the new variable is initialised may be a literal value, or a more complex expression. Either way, the resulting value defines the Type for that variable.</p>
+
+<h3>Set statement</h3>
+<p>The <el-code>set</el-code> statement is used to assign a new value to an existing variable. The new value must be of the same Type (or a Type compatible with) that of the variable.</p>
+<p>A set statement may not assign a new value to a parameter: see <a href="#Parameter_passing_1">Parameter passing</a>.</p>
+
+
+<h3 id="Parameter_passing_1">Parameter passing</h3>
+<p>The arguments provided to a method (function or procedure) are passed &#8216;by value&#8217; and not &#8216;by reference&#8217;. If you wish to be able to re-assign the value associated with a parameter, such that that change would be visible to the code that calls the procedure, then you can precede the parameter definition with the keyword <el-code>out</el-code>. This is useful when you are passing in, say, an <el-code>Int</el-code> that refers to an index, and you want the procedure to update the index number it is pointing to.</p>
+<p> Note, however, that mutating an instance of a reference Type held in a variable is not the same thing as re-assigning the variable to a different instance. The first changes the contents of the thing, the second changes the thing for another thing!</p>
+<p>Therefore, if</p
+<ul>>
+<li>the method is a <el-code>procedure</el-code> AND</li>
+<li>the Type of the argument is a &#8216;reference Type&#8217; AND</li>
+<li>that Type is mutable such as an <el-code>List</el-code>, <el-code>Dictionary</el-code>, <el-code>Stack</el-code>, <el-code>Queue</el-code>, or a user-defined <el-code>class</el-code></li>
+</ul>
+<p>then it is possible to mutate the parameter that holds that argument within the procedure, such that any reference to the argument outside the procedure will &#8216;see&#8217; the changes. </p>
+<p>A good example of this is an &#8216;in-place sort&#8217; procedure. In the following code the <el-code>arr</el-code> parameter is mutated in the two <el-code>call arr.PutAt()</el-code> statements:</p>
+<el-code-block source="in-place-ripple-sort.elan">
+<el-proc class="ok multiline" id="proc11" tabindex="0">
+<el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-method><el-field id="ident13" class="ok" tabindex="0"><el-txt>inPlaceRippleSort</el-txt><el-place><i>name</i></el-place></el-field></el-method>(<el-field id="params14" class="optional ok" tabindex="0"><el-txt><el-kw>out</el-kw> <el-id>arr</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;</el-txt><el-place><i>parameter definitions</i></el-place></el-field>)<el-msg></el-msg></el-top>
+<el-statement class="ok" id="var15" tabindex="0"><el-kw>variable </el-kw><el-field id="var16" class="ok" tabindex="0"><el-txt><el-id>changes</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr17" class="ok" tabindex="0"><el-txt><el-id>true</el-id></el-txt><el-place><i>expression</i></el-place></el-field><el-msg></el-msg></el-statement>
+<el-statement class="ok" id="var18" tabindex="0"><el-kw>variable </el-kw><el-field id="var19" class="ok" tabindex="0"><el-txt><el-id>lastComp</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr20" class="ok" tabindex="0"><el-txt><el-id>arr</el-id>.<el-method>length</el-method>() - <el-lit>2</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-msg></el-msg></el-statement>
+<el-statement class="ok multiline" id="repeat21" tabindex="0">
+<el-top><el-expand>+</el-expand><el-kw>repeat</el-kw></el-top>
+<el-statement class="ok" id="set24" tabindex="0"><el-kw>set </el-kw><el-field id="ident25" class="ok" tabindex="0"><el-txt><el-id>changes</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr26" class="ok" tabindex="0"><el-txt><el-id>false</el-id></el-txt><el-place><i>expression</i></el-place></el-field><el-msg></el-msg></el-statement>
+<el-statement class="ok multiline" id="for27" tabindex="0">
+<el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident29" class="ok" tabindex="0"><el-txt><el-id>i</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> from </el-kw><el-field id="expr30" class="ok" tabindex="0"><el-txt><el-lit>0</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr31" class="ok" tabindex="0"><el-txt><el-id>lastComp</el-id></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> step </el-kw><el-field id="expr32" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-msg></el-msg></el-top>
+<el-statement class="ok multiline" id="if33" tabindex="0">
+<el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field id="expr35" class="ok" tabindex="0"><el-txt><el-id>arr</el-id>[<el-id>i</el-id>] &gt; <el-id>arr</el-id>[<el-id>i</el-id> + <el-lit>1</el-lit>]</el-txt><el-place><i>condition</i></el-place></el-field><el-kw> then</el-kw></el-top><el-msg></el-msg>
+<el-statement class="ok" id="let36" tabindex="0"><el-kw>let </el-kw><el-field id="var37" class="ok" tabindex="0"><el-txt><el-id>temp</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr38" class="ok" tabindex="0"><el-txt><el-id>arr</el-id>[<el-id>i</el-id>]</el-txt><el-place><i>expression</i></el-place></el-field><el-msg></el-msg></el-statement>
+<el-statement class="ok" id="call39" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident40" class="ok" tabindex="0"><el-txt><el-id>arr</el-id>.<el-method>putAt</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args41" class="optional ok" tabindex="0"><el-txt><el-id>i</el-id>, <el-id>arr</el-id>[<el-id>i</el-id> + <el-lit>1</el-lit>]</el-txt><el-place><i>arguments</i></el-place></el-field>)<el-msg></el-msg></el-top></el-statement>
+<el-statement class="ok" id="call42" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident43" class="ok" tabindex="0"><el-txt><el-id>arr</el-id>.<el-method>putAt</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args44" class="optional ok" tabindex="0"><el-txt><el-id>i</el-id> + <el-lit>1</el-lit>, <el-id>temp</el-id></el-txt><el-place><i>arguments</i></el-place></el-field>)<el-msg></el-msg></el-top></el-statement>
+<el-statement class="ok" id="set45" tabindex="0"><el-kw>set </el-kw><el-field id="ident46" class="ok" tabindex="0"><el-txt><el-id>changes</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr47" class="ok" tabindex="0"><el-txt><el-id>true</el-id></el-txt><el-place><i>expression</i></el-place></el-field><el-msg></el-msg></el-statement>
+<el-kw>end if</el-kw>
+</el-statement>
+<el-kw>end for</el-kw>
+</el-statement>
+<el-statement class="ok" id="set48" tabindex="0"><el-kw>set </el-kw><el-field id="ident49" class="ok" tabindex="0"><el-txt><el-id>lastComp</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr50" class="ok" tabindex="0"><el-txt><el-id>lastComp</el-id> - <el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-msg></el-msg></el-statement>
+<el-kw>end repeat when </el-kw><el-field id="expr23" class="ok" tabindex="0"><el-txt><el-kw>not</el-kw> <el-id>changes</el-id></el-txt><el-place><i>condition</i></el-place></el-field>
+<el-msg></el-msg></el-statement>
+<el-kw>end procedure</el-kw>
+</el-proc>
+</el-code-block>
+<p>Note however that:</p>
+<ul>
+<li>In a <el-code>function</el-code> you may not mutate any parameter</li>
+<li>In a <el-code>procedure</el-code> you may not re-assign any parameter</li>
+</ul>
+
+<h2>Generating random numbers</h2>
+<p>Random numbers may be created by calling one of these two standard methods:</p>
+<ul>
+<li><el-code>random() returns</el-code>s a <el-code>Float</el-code> in the range 0 &#8230; 1</li>
+<li><el-code>randomInt(min, max) returns</el-code>s an <el-code>Int</el-code> in the range <el-code>min</el-code> to <el-code>max</el-code> inclusive</li>
+</ul>
+<p>For example:</p>
+<el-code-block source="random.elan">
+<main class="ok multiline" id="main3" tabindex="0">
+<el-top><el-expand>+</el-expand><el-kw>main</el-kw><el-msg></el-msg></el-top>
+<el-statement class="ok" id="let5" tabindex="0"><el-kw>let </el-kw><el-field id="var6" class="ok" tabindex="0"><el-txt><el-id>probability</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr7" class="ok" tabindex="0"><el-txt><el-method>random</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field><el-msg></el-msg></el-statement>
+<el-statement class="ok" id="print8" tabindex="0"><el-kw>print </el-kw><el-field id="expr9" class="optional ok" tabindex="0"><el-txt><el-id>probability</el-id></el-txt><el-place><i>expression</i></el-place></el-field><el-msg></el-msg></el-statement>
+<el-statement class="ok multiline" id="for10" tabindex="0">
+<el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident12" class="ok" tabindex="0"><el-txt><el-id>i</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> from </el-kw><el-field id="expr13" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr14" class="ok" tabindex="0"><el-txt><el-lit>10</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> step </el-kw><el-field id="expr15" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-msg></el-msg></el-top>
+<el-statement class="ok" id="print16" tabindex="0"><el-kw>print </el-kw><el-field id="expr17" class="optional ok" tabindex="0"><el-txt><el-method>randomInt</el-method>(<el-lit>1</el-lit>, <el-lit>6</el-lit>)</el-txt><el-place><i>expression</i></el-place></el-field><el-msg></el-msg></el-statement>
+<el-kw>end for</el-kw>
+</el-statement>
+<el-kw>end main</el-kw>
+</main>
+</el-code-block>
+<p>Notes</p>
+<ul>
+<li>These two methods are both <a href="#System_methods">System methods</a>, so they may be used only within <el-code>main</el-code> or a <el-code>procedure</el-code>.  A resulting <span class="Hyperlink"><a href="#System_methods">Int</a></span> or <el-code>Float</el-code> may then be used as an argument to pass into a <el-code>function</el-code>.</li>
+<li>Elan provides a separate mechanism for <a href="#Generating_random_numbers">generating random numbers within a function</a>.</li>
+</ul>
+<h2 id="h69">Comments</h2>
+<p><a href="https://www.youtube.com/watch?v=Vv2hD3EobKU">Explanatory YouTube video</a>: Elan language constructs 4 - comments</p>
+<p>Comments:</p>
+<ul>
+<li>may be added at global level, as well as within constructs.</li>
+<li>always start with a <el-code>#</el-code> followed by a space and then free-form text. The text field may be left empty</li>
+<li>are a single line, though if the text is long enough the line may be wrapped within the editor</li>
+<li>are always on their own line. It is it not possible to add a comment after, or within, a line of code.</li>
+</ul>
+</body>
+</html>

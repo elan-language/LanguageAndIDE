@@ -69,15 +69,6 @@ export class ElanSet<T1> {
   }
 
   @elanFunction([], FunctionOptions.pure, ElanClass(ElanSet))
-  addFromListImmutable(@elanClassType(ListImmutable) list: ListImmutable<T1>): ElanSet<T1> {
-    const copy = this.copyOfThis();
-    for (const item of list) {
-      copy.contents.add(item as T1);
-    }
-    return copy;
-  }
-
-  @elanFunction([], FunctionOptions.pure, ElanClass(ElanSet))
   addFromList(@elanClassType(List) list: List<T1>): ElanSet<T1> {
     const copy = this.copyOfThis();
     for (const item of list) {
@@ -134,13 +125,9 @@ export class ElanSet<T1> {
     return this.system.initialise(new List(Array.from(this.contents)));
   }
 
-  @elanFunction([], FunctionOptions.pure, ElanClass(ListImmutable))
-  asListImmutable(): ListImmutable<T1> {
-    return this.system.initialise(new ListImmutable(Array.from(this.contents)));
-  }
-
   @elanFunction([], FunctionOptions.pureAsync, ElanString)
   async asString(): Promise<string> {
-    return await this.stdlib.asString(this.asListImmutable());
+    const listImm = this.system.initialise(new ListImmutable(Array.from(this.contents)));
+    return await this.stdlib.asString(listImm);
   }
 }

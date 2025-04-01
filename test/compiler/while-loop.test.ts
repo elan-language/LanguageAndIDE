@@ -8,12 +8,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
+  testHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("While Loop", () => {
   test("Pass_minimal", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to 0
@@ -44,7 +45,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_innerLoop", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable t set to 0
@@ -87,7 +88,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_noEnd", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let x = 0
@@ -103,7 +104,7 @@ main
   });
 
   test("Fail_variableNotPredefined", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   while x < 10
@@ -120,7 +121,7 @@ main
   });
 
   test("Fail_variableDefinedInWhile", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   while variable x < 10
@@ -136,7 +137,7 @@ main
   });
 
   test("Fail_noCondition", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to 0
@@ -153,7 +154,7 @@ main
   });
 
   test("Fail_while_do", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to 0
@@ -170,7 +171,7 @@ main
   });
 
   test("Fail_WhileConditionNotBool", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to 3
@@ -187,7 +188,7 @@ end main`;
   });
 
   test("Fail_WhileConditionUnknown", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   while a

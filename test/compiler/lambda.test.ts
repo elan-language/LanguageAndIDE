@@ -8,12 +8,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
+  testHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("Lambda", () => {
   test("Pass_PassAsParam", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   call printModified(4, lambda x as Int => x * 3)
@@ -45,7 +46,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_TupleArg", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   call printModified(tuple(4, 5), lambda t as (Int, Int) => global.first(t))
@@ -88,7 +89,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AssignALambdaToAVariable", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable l set to lambda x as Int => x * 5
@@ -113,7 +114,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AssignALambdaToAProperty", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable foo set to new Foo()
@@ -169,7 +170,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_lambdaInExpression", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable l set to lambda x as Int => x * 5
@@ -194,7 +195,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ReturnALambda", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable l set to getFunc()
@@ -228,7 +229,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ParameterlessLambda", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to 3
@@ -255,7 +256,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ReturnAParameterLessLambda", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable l set to getFunc(5)
@@ -289,7 +290,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_FuncOfMutableType", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable l set to getFunc(5)
@@ -323,7 +324,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_ImmediateInvoke", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable l set to getFunc()(5)
@@ -341,7 +342,7 @@ end function`;
   });
 
   test("Fail_PassLambdaWithWrongTypes", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   call printModified(4, lambda x as Int => x.asString())
@@ -361,7 +362,7 @@ end procedure`;
   });
 
   test("Fail_InvokeLambdaWithWrongType", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   call printModified("4", lambda x as Int => x + 3)
@@ -379,7 +380,7 @@ end procedure`;
   });
 
   test("Fail_PassLambdaWithWrongTypes1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   call printModified(4, lambda x as Int => x)
@@ -399,7 +400,7 @@ end procedure`;
   });
 
   test("Fail_PassLambdaWithWrongTypes2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   call printModified(4, lambda => 0)
@@ -419,7 +420,7 @@ end procedure`;
   });
 
   test("Fail_InvokeLambdaWithWrongTypes", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   call printModified(4, lambda => 0)
@@ -437,7 +438,7 @@ end procedure`;
   });
 
   test("Fail_LambdaWithListOfMutableType1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 procedure printModified(i as Int, f as Func<of => ListImmutable<of List<of Int>>>)
   
@@ -451,7 +452,7 @@ end procedure`;
   });
 
   test("Fail_LambdaWithListOfMutableType2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 procedure printModified(i as Int, f as Func<of ListImmutable<of List<of Int>> => Int>)
   

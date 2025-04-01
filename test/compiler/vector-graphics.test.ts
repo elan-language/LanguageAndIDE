@@ -8,12 +8,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
+  testHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("VectorGraphics", () => {
   test("Fail_CannotCreateAbstractClass", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable svg set to new VectorGraphic()
@@ -28,7 +29,7 @@ end main`;
   });
 
   test("Pass_AppendUsingFunction", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let vg be new List<of VectorGraphic>()
@@ -63,7 +64,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AppendUsingProcedure", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let vg be new List<of VectorGraphic>()
@@ -98,7 +99,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_SetPropertyOnVG", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let vg be new List<of VectorGraphic>()
@@ -181,7 +182,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_WithSetPropertyOnVG", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable vg set to new List<of VectorGraphic>()
@@ -264,7 +265,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ReadPropertyOnObject", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let circ be new CircleVG(50, 50, 10, red, black, 1)
@@ -289,7 +290,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_TransparentFill", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let vg be new List<of VectorGraphic>()
@@ -324,7 +325,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_StrokeCannotBeTransparent", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let vg be new List<of VectorGraphic>()
@@ -356,7 +357,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_colourCannotBeLargerThanFFFFFF", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   let vg be new List<of VectorGraphic>()

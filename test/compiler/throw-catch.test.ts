@@ -9,12 +9,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
+  testHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("Throw Catch", () => {
   test("Pass_ThrowExceptionInMain", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
     throw exception "Foo"
@@ -37,7 +38,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ThrowExceptionInMainUsingVariableForMessage", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable msg set to "Foo"
@@ -62,7 +63,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ThrowExceptionUsingInterpolatedStringForMessage", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable bar set to 1
@@ -87,7 +88,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ThrowExceptionInProcedure", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   call foo()
@@ -119,7 +120,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_CatchException", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   try
@@ -162,7 +163,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_CatchSystemGeneratedException", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   try
@@ -220,7 +221,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_UseException", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   try
@@ -267,7 +268,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_RedefineVariableinCatch", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   try
@@ -312,7 +313,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_UseOuterScopeVariableInCatch", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to 1
@@ -355,7 +356,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_ThrowExceptionInFunction", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable s set to foo("s")
@@ -374,7 +375,7 @@ end function
   });
 
   test("Fail_catchMissingVariable", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   try
@@ -397,7 +398,7 @@ end procedure
   });
 
   test("Fail_UseExpressionForMessage", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable msg set to "Foo"
@@ -412,7 +413,7 @@ end main
   });
 
   test("Fail_TryVariableOutOfScopeInCatch", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   try
@@ -436,7 +437,7 @@ end procedure
   });
 
   test("Fail_RedefineVariableinCatch1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to 1

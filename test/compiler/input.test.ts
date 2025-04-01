@@ -7,12 +7,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
+  testHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("Input", () => {
   test("Pass_InputString", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to inputString("")
@@ -37,7 +38,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InputStringWithPrompt", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to inputString("Your name")
@@ -62,7 +63,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InputInt", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to 0
@@ -89,7 +90,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InputFloat", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to 0.0
@@ -116,7 +117,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ReuseVariable", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to "value"
@@ -147,7 +148,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InputStringWithLimits", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to inputStringWithLimits("aprompt", 3, 7)
@@ -172,7 +173,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InputStringFromOptions", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to inputStringFromOptions("aprompt", ["y", "n"])
@@ -197,7 +198,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InputInt1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to 0
@@ -224,7 +225,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InputIntBetween", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to 0
@@ -251,7 +252,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InputFloat1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to 0.0
@@ -278,7 +279,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InputFloatBetween", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to 0.0
@@ -305,7 +306,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_ReuseVariableWrongType", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to ""
@@ -322,7 +323,7 @@ end main`;
   });
 
   test("Pass_InputInExpression", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to "Hello " + inputString("")

@@ -1,0 +1,23 @@
+# 01e17c76ec2a8aae980f93a8a7ee6e9e58357eefba67603633de94ab50a41599 Elan Beta 8 valid
+
+main
+  let file be openFileForReading()
+  variable text set to file.readWholeFile()
+  variable textl set to text.length()
+  variable s set to "<el-compl></el-compl><el-msg></el-msg>"
+  variable sl set to s.length()
+  variable j set to 0
+  for i from 0 to textl - 1 step 1
+    set j to i + sl
+    if text[i..j] is s then
+      set text to text[0..i] + text[(i + sl)..(textl - 1)]
+      print "match at " + "{i}"
+    end if
+  end for
+  variable r set to "<el-fr>[0..9]*</el-fr>".asRegExp()
+  for i from 0 to textl - 1 step 1
+    set j to i + sl
+  end for
+  let ofile be createFileForWriting("output.txt")
+  call ofile.writeWholeFile(text)
+end main

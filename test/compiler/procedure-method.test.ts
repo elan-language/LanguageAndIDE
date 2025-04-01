@@ -7,12 +7,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
+  testHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("Procedure Method", () => {
   test("Pass_HappyCase", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable f set to new Foo()
@@ -74,7 +75,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ProcedureCanContainSystemCall", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable f set to new Foo()
@@ -136,7 +137,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ProcedureMethodMayCallOtherClassProcedureMethod", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable f set to new Foo()
@@ -253,7 +254,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_ProcedureMethodCannotBeCalledDirectly", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable f set to new Foo()
@@ -285,7 +286,7 @@ end class`;
   });
 
   test("Fail_CallUnknownMethodOnInstance", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable x set to new Foo()
@@ -314,7 +315,7 @@ end class`;
   });
 
   test("Fail_ParameterUnknownType", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
  
@@ -338,7 +339,7 @@ end class`;
   });
 
   test("Fail_UseOfKeywordAsName", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
  
@@ -361,7 +362,7 @@ end class`;
   });
 
   test("Fail_UseOfReservedWordAsName", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
  
@@ -386,7 +387,7 @@ end class`;
   });
 
   test("Fail_NotUniqueParameterName", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
 
@@ -410,7 +411,7 @@ end class`;
   });
 
   test("Fail_SetPropertyWithoutPrefix", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
 
@@ -436,7 +437,7 @@ end class`;
   });
 
   test("Fail_ParameterListOfMutableType", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 class Foo
   procedure p1(a as ListImmutable<of List<of Int>>)

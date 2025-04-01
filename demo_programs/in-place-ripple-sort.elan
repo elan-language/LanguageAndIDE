@@ -1,7 +1,7 @@
-# 3a9e9d9024abc117170f7c6abdba7f4de622b022370c23d826e4684455ad1120 Elan Beta 9 valid
+# 36d942c3afbee51277bba6f1a02a11f8c8acb9f436d019e0e29714f8f0a45f54 Elan Beta 9 valid
 
 main
-  variable li set to [3, 6, 1, 0, 99, 4, 67]
+  let li be [3, 6, 1, 0, 99, 4, 67]
   call inPlaceRippleSort(li)
   print li
 end main

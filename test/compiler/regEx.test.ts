@@ -8,12 +8,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
+  testHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("RegExp", () => {
   test("Pass_LiteralRegex", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable r set to /a+/
@@ -42,7 +43,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_RegexAsParameter", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable r set to /a+/
@@ -76,7 +77,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ReturnRegex", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable r set to empty RegExp
@@ -112,7 +113,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ContainsEscapedForwardSlash", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable r set to /a\\/b/
@@ -144,7 +145,7 @@ return [main, _tests];}`;
   });
 
   test("fail_missing end slash", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable r set to /a+
@@ -157,7 +158,7 @@ end main`;
   });
 
   test("Fail_boundedByQuotes", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable r set to "/a+/"

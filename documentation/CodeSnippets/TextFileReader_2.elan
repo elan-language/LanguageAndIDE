@@ -1,0 +1,12 @@
+# a65ba3867077ba39aaea78d3b17e65b1691cd87a1b2a5abdb583c019709996d5 Elan Beta 8 valid
+
+main
+  let file be openFileForReading()
+  variable lines set to empty List<of String>
+  while not file.endOfFile()
+    let line be file.readLine()
+    call lines.append(line)
+  end while
+  print lines
+  call file.close()
+end main

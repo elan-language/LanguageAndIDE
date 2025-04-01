@@ -1,4 +1,4 @@
-# c503b5e02299c5f775ecf8bcbbf1a8dccccf6468019d753b2d764e4bbfcdfa7c Elan Beta 9 valid
+# 0d13ab689b7ca8c84c3acd24f6ede74fc1969f5c448437ed37413c110cc64152 Elan Beta 9 valid
 
 # After image is displayed, press: 
 # - z to zoom in, x to zoom out
@@ -9,7 +9,7 @@
 # https://mathworld.wolfram.com/JuliaSet.html
 # Implemented in Elan by Charles Wicksteed
 main
-  variable p set to new Coords()
+  let p be new Coords()
   while true
     let vg be allpoints(p)
     call displayVectorGraphics(vg)

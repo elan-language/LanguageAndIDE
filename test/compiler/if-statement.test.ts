@@ -8,12 +8,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
+  testHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("If Statement", () => {
   test("Pass_1", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to true
@@ -46,7 +47,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_2", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to false
@@ -79,7 +80,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_3", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to 2
@@ -116,7 +117,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_4", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to 3
@@ -153,7 +154,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_5", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to true
@@ -182,7 +183,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_6", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to 3
@@ -223,7 +224,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_7_end_with_else_if", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to 3
@@ -260,7 +261,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_variableInIf", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to 3
@@ -289,7 +290,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_localVariableInIf", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to 3
@@ -322,7 +323,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_variableInElse", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to 3
@@ -355,7 +356,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_localVariableInElse", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to 3
@@ -392,7 +393,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_variableInElseIf", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to 3
@@ -425,7 +426,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_localVariableInElseIf", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to 2
@@ -462,7 +463,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_NestedlocalVariableInElse", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to 2
@@ -503,7 +504,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_noEndIf", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to true
@@ -518,7 +519,7 @@ end main`;
   });
 
   test("Fail_TwoElses", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to 3
@@ -539,7 +540,7 @@ end main`;
   });
 
   test("Fail_ElseIfAfterElse", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to 3
@@ -560,7 +561,7 @@ end main`;
   });
 
   test("Fail_IfConditionNotBool", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
 main
   variable a set to 3
@@ -579,7 +580,7 @@ end main`;
   });
 
   test("Fail_ElseConditionNotBool", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
   main
     variable a set to 2
@@ -600,7 +601,7 @@ end main`;
   });
 
   test("Fail_RedefineVariable in if", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
   main
     variable a set to 2
@@ -623,7 +624,7 @@ end main`;
   });
 
   test("Fail_RedefineVariable in else if", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
   main
     variable a set to 2
@@ -646,7 +647,7 @@ end main`;
   });
 
   test("Fail_RedefineVariable in else", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
   main
     variable a set to 2
@@ -669,7 +670,7 @@ end main`;
   });
 
   test("Fail_useOutOfScopeVariable", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
 
   main
     variable a set to 2

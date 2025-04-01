@@ -1,4 +1,4 @@
-# 646f6b73c714949c299c87e10d6574db50845863fba440afaa3de907e6389cc4 Elan Beta 9 valid
+# 72fbe6fcbf6b0f29ab0e75084452b61318c4c9cc4883a495903ace4e2688e497 Elan Beta 9 valid
 
 # Demo shows one way to implement a mergeSort function - using recursion
 # Since merge sort is always an 'out of place' sort, we have chosen to use immutable lists
@@ -6,16 +6,16 @@
 main
   let fruit be ["plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear"]
   print "Original: {fruit}"
-  print "Sorted: {mergeSort(fruit)}"
+  print "Sorted: {sort(fruit)}"
 end main
 
-function mergeSort(li as List<of String>) returns List<of String>
+function sort(li as List<of String>) returns List<of String>
   variable result set to li
   let len be li.length()
   if len > 1 then
     let mid be (len/2).floor()
-    let frontHalf be mergeSort(li[..mid])
-    let backHalf be mergeSort(li[mid..])
+    let frontHalf be sort(li[..mid])
+    let backHalf be sort(li[mid..])
     set result to merge(frontHalf, backHalf)
   end if
   return result
@@ -23,31 +23,41 @@ end function
 
 function merge(a as List<of String>, b as List<of String>) returns List<of String>
   variable result set to empty List<of String>
-  let aLen be a.length()
-  let bLen be b.length()
   if a.length() is 0 then
     set result to b
-  else if bLen is 0 then
+  else if b.length() is 0 then
     set result to a
   else if a[0].isBefore(b[0]) then
-    set result to merge(a[1..], b).withPrepend(a[0])
+    set result to [a[0]].withAppendList(merge(a[1..], b))
   else
-    set result to merge(a, b[1..]).withPrepend(b[0])
+    set result to [b[0]].withAppendList(merge(a, b[1..]))
   end if
   return result
 end function
 
-test mergeSort
+test merge
+  assert merge(new List<of String>(), new List<of String>()) is new List<of String>()
+  assert merge(["orange"], ["melon"]) is ["melon", "orange"]
+  let l1 be ["apple", "lime", "pear"]
+  let l2 be ["apricot", "lemon", "plum"]
+  assert merge(l1, l2) is ["apple", "apricot", "lemon", "lime", "pear", "plum"]
+  assert merge(l2, l1) is ["apple", "apricot", "lemon", "lime", "pear", "plum"]
+  assert merge(l1, new List<of String>()) is l1
+  assert merge(new List<of String>(), l2) is l2
+  assert merge(l1, l1) is ["apple", "apple", "lime", "lime", "pear", "pear"]
+end test
+
+test sort
   let li1 be empty List<of String>
-  assert mergeSort(li1) is li1
+  assert sort(li1) is li1
   let li2 be ["plum"]
-  assert mergeSort(li2) is li2
+  assert sort(li2) is li2
   let li3 be ["plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear"]
   let sorted3 be ["apple", "apricot", "lemon", "lime", "melon", "orange", "pear", "plum", "strawberry"]
-  assert mergeSort(li3) is sorted3
+  assert sort(li3) is sorted3
   let li4 be ["plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry"]
   let sorted4 be ["apple", "apricot", "lemon", "lime", "melon", "orange", "plum", "strawberry"]
-  assert mergeSort(li4) is sorted4
+  assert sort(li4) is sorted4
   let li5 be ["apple", "apricot", "lemon", "lime", "melon", "orange", "pear", "strawberry"]
-  assert mergeSort(li5) is li5
+  assert sort(li5) is li5
 end test

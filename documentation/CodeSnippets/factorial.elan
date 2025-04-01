@@ -1,0 +1,13 @@
+# a90c656fef6c740a5255f43b6f0a34c901166901baa9118fb9c9dd221b6c6008 Elan Beta 8 valid
+
+main
+  print factorial(7)
+end main
+
+function factorial(n as Int) returns Int
+  return (if n > 1 then n*factorial(n - 1) else 1)
+end function
+
+test 
+  assert factorial(3) is 6
+end test

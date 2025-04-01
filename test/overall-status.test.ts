@@ -2,12 +2,12 @@ import assert from "assert";
 import { DefaultProfile } from "../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../src/frames/file-impl";
 import { CompileStatus, ParseStatus, RunStatus, TestStatus } from "../src/frames/status-enums";
-import { ignore_test, testHash, transforms } from "./compiler/compiler-test-helpers";
+import { ignore_test, testHash, testHeader, transforms } from "./compiler/compiler-test-helpers";
 import { createTestRunner, key, loadFileAsModelNew } from "./testHelpers";
 
 suite("Overall Status Tests", () => {
   ignore_test("Pattern for starting from literal program", async () => {
-    const code = `# FFFF Elan v1.0.0 valid
+    const code = `${testHeader}
   
       constant a set to 3
       main

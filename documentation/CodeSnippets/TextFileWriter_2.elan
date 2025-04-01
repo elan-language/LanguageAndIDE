@@ -1,0 +1,9 @@
+# 8afba5e4950e6f84e7853b6fb6776223ff97c98b9b0304359541a4ba56ad299d Elan Beta 8 valid
+
+main
+  let file be createFileForWriting("squares.txt")
+  for i from 1 to 100 step 1
+    call file.writeLine("{i*i}")
+  end for
+  call file.saveAndClose()
+end main
