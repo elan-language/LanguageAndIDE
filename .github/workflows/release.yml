@@ -41,6 +41,6 @@ jobs:
     - name: Push files
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
-        server: ftp.website.com
-        username: myFtpUserName
+        server: ${{ secrets.ftp_server }}
+        username: ${{ secrets.ftp_user }}
         password: ${{ secrets.ftp_password }}
