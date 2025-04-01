@@ -1,3 +1,4 @@
+import { elanVersion } from "../src/production";
 import { getElanFiles, loadFileAsModelNew, updateTestFileNew } from "./testHelpers";
 
 const dir = `${__dirname}\\..\\..\\demo_programs\\`;
@@ -7,7 +8,7 @@ async function updateDemoProgram(program: string) {
 
   const file = await loadFileAsModelNew(fileName);
 
-  file.setVersion(0, 10, 0, "Beta");
+  file.setVersion(elanVersion.major, elanVersion.minor, elanVersion.patch, elanVersion.preRelease);
   
   const updatedContent = await file.renderAsSource(); 
 
