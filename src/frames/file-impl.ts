@@ -97,7 +97,7 @@ export class FileImpl implements File, Scope {
   private _children: Array<Frame> = new Array<Frame>();
   private _map: Map<string, Selectable>;
   private _factory: StatementFactory;
-  private ignoreHashOnParsing: boolean = false;
+  private allowAnyHeader: boolean = false;
   private _stdLibSymbols: StdLibSymbols;
   private _nextId: number = 0;
   private _testError?: Error;
@@ -108,7 +108,7 @@ export class FileImpl implements File, Scope {
     private hash: (toHash: string) => Promise<string>,
     private profile: Profile,
     private transform: Transforms,
-    ignoreHashOnParsing?: boolean,
+    allowAnyHeader?: boolean,
   ) {
     this._stdLibSymbols = new StdLibSymbols();
     this._map = new Map<string, Selectable>();
@@ -116,8 +116,8 @@ export class FileImpl implements File, Scope {
     const selector = new GlobalSelector(this);
     this.getChildren().push(selector);
     selector.select(true, false);
-    if (ignoreHashOnParsing) {
-      this.ignoreHashOnParsing = ignoreHashOnParsing;
+    if (allowAnyHeader) {
+      this.allowAnyHeader = allowAnyHeader;
     }
     this.scratchPad = new ScratchPad();
   }
@@ -673,11 +673,13 @@ export class FileImpl implements File, Scope {
   }
 
   async validateHash(fileHash: string, code: string) {
-    const toHash = code.substring(code.indexOf("Elan"));
-    const newHash = await this.getHash(toHash);
+    if (this.isProduction && !this.allowAnyHeader) {
+      const toHash = code.substring(code.indexOf("Elan"));
+      const newHash = await this.getHash(toHash);
 
-    if (fileHash !== newHash && (this.isProduction || fileHash !== "FFFF")) {
-      throw new ElanFileError(cannotLoadFile);
+      if (fileHash !== newHash) {
+        throw new ElanFileError(cannotLoadFile);
+      }
     }
   }
 
@@ -695,35 +697,37 @@ export class FileImpl implements File, Scope {
   }
 
   validateVersion(version: string) {
-    const tokens = version.split(".");
+    if (this.isProduction && !this.allowAnyHeader) {
+      const tokens = version.split(".");
 
-    if (tokens.length !== 3) {
-      throw new ElanFileError(cannotLoadFile);
-    }
+      if (tokens.length !== 3) {
+        throw new ElanFileError(cannotLoadFile);
+      }
 
-    const fileMajor = parseInt(tokens[0], 10);
-    const fileMinor = parseInt(tokens[1], 10);
-    const [filePatch, _filePreRelease] = this.getPatch(tokens[2]);
+      const fileMajor = parseInt(tokens[0], 10);
+      const fileMinor = parseInt(tokens[1], 10);
+      const [filePatch, _filePreRelease] = this.getPatch(tokens[2]);
 
-    if (isNaN(fileMajor) || isNaN(fileMinor) || isNaN(filePatch)) {
-      throw new ElanFileError(cannotLoadFile);
-    }
+      if (isNaN(fileMajor) || isNaN(fileMinor) || isNaN(filePatch)) {
+        throw new ElanFileError(cannotLoadFile);
+      }
 
-    if (fileMajor !== this.version.major) {
-      throw new ElanFileError(
-        `${fileErrorPrefix} This file must be loaded into an Elan IDE version ${fileMajor}`,
-      );
-    }
+      if (fileMajor !== this.version.major) {
+        throw new ElanFileError(
+          `${fileErrorPrefix} This file must be loaded into an Elan IDE version ${fileMajor}`,
+        );
+      }
 
-    if (fileMinor > this.version.minor) {
-      throw new ElanFileError(
-        `${fileErrorPrefix} This file must be loaded into an Elan IDE version ${fileMajor}.${fileMinor}`,
-      );
+      if (fileMinor > this.version.minor) {
+        throw new ElanFileError(
+          `${fileErrorPrefix} This file must be loaded into an Elan IDE version ${fileMajor}.${fileMinor}`,
+        );
+      }
     }
   }
 
   async validateHeader(code: string) {
-    if (!this.ignoreHashOnParsing && !this.isEmpty(code)) {
+    if (!this.isEmpty(code)) {
       const eol = code.indexOf("\n");
       const header = code.substring(0, eol > 0 ? eol : undefined);
       const tokens = header.split(" ");
