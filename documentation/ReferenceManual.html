@@ -1,0 +1,668 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en-GB">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link href="Documentation.css" rel="stylesheet">
+<link href="colourScheme.css" rel="stylesheet">
+<link href="elanStyle.css" rel="stylesheet">
+<title>Elan Reference Manual</title>
+</head>
+<body>
+
+<!-- <p><img src="images/Pic1.png"  align="MIDDLE" height="255" width="559"></p> -->
+
+<p class="toc_1"><a href="#Punc">Symbols, Keywords, Constants, Methods and Types</a></p>
+<p class="toc_2"><a href="#Keyword">Keywords</a></p>
+<p class="toc_1"><a href="#h36">Getting started</a></p>
+<p class="toc_2"><a href="#h37">Technical platform</a></p>
+<p class="toc_2"><a href="#h38">Demo programs</a></p>
+<p class="toc_2"><a href="#h39">Changes and additions for Beta 6</a></p>
+<p class="toc_2"><a href="#h40">Still to be implemented..</a></p>
+<p class="toc_2"><a href="#h41">If you have programmed in another language, the key differences to be aware of&#8230;</a></p>
+<p class="toc_1"><a href="#Edit">The Elan editor  &#8211; quick reference</a></p>
+<p class="toc_2"><a href="#Keyboard">Navigation &#8211; using the keyboard</a></p>
+<p class="toc_2"><a href="#Keyboard">Editing &#8211; using the keyboard</a></p>
+<p class="toc_2"><a href="#Mouse">Mouse operation &#8211; quick reference</a></p>
+<p class="toc_1"><a href="#InstrSet">Instruction Set</a></p>
+<p class="toc_1"><a href="#Express">Expressions</a></p>
+<p class="toc_2"><a href="#LitVal">Literal value</a></p>
+<p class="toc_2"><a href="#NamVal">Named value</a></p>
+<p class="toc_2"><a href="#Oper">Operator</a></p>
+<p class="toc_3"><a href="#OperArith">Arithmetic operator</a></p>
+<p class="toc_3"><a href="#OperLog">Logical operator</a></p>
+<p class="toc_2"><a href="#Func">Function call</a></p>
+<p class="toc_2"><a href="#Lambda">Lamdba</a></p>
+<p class="toc_1"><a href="#InOut">Input/Output</a></p>
+<p class="toc_2"><a href="#PrnTxt">Printing plain text to the Console</a></p>
+<p class="toc_2"><a href="#PrnHTML">Print Html to the Console</a></p>
+<p class="toc_2"><a href="#h54">Inputting data from the keyboard</a></p>
+<p class="toc_2"><a href="#GrBlk">Block graphics</a></p>
+<p class="toc_2"><a href="#GrTur">Turtle graphics</a></p>
+<p class="toc_2"><a href="#GrVec">Vector graphics</a></p>
+<p class="toc_2"><a href="#h58">Reading keys &#8216;on the fly&#8217;</a></p>
+<p class="toc_2"><a href="#h59">Reading textual data from a file</a></p>
+<p class="toc_2"><a href="#h60">Writing textual data to a file</a></p>
+<p class="toc_1"><a href="#Type">Types</a></p>
+<p class="toc_2"><a href="#Int">Int</a></p>
+<p class="toc_2"><a href="#Float">Float</a></p>
+<p class="toc_2"><a href="#Boolean">Boolean</a></p>
+<p class="toc_2"><a href="#String">String</a></p>
+<p class="toc_1"><a href="#ProcProg">Procedural programming</a></p>
+<p class="toc_2"><a href="#Main">Main routine</a></p>
+<p class="toc_2"><a href="#h63">Defining named values</a></p>
+<p class="toc_2"><a href="#h64">Conditions &amp; selection</a></p>
+<p class="toc_2"><a href="#h65">Loops &amp; iteration</a></p>
+<p class="toc_2"><a href="#h66">Function and procedures</a></p>
+<p class="toc_2"><a href="#Throw">Catching and throwing exceptions</a></p>
+<p class="toc_2"><a href="#Random">Generating random numbers</a></p>
+<p class="toc_2"><a href="#Comment">Comments</a></p>
+<p class="toc_1"><a href="#OOProg">Object-oriented programming</a></p>
+<p class="toc_2"><a href="#Class">Class</a></p>
+<p class="toc_2"><a href="#ClassAbs">Abstract class</a></p>
+<p class="toc_2"><a href="#Interface">Interface</a></p>
+<p class="toc_2"><a href="#Inherit">Inheritance</a></p>
+<p class="toc_2"><a href="#Prop">Property</a></p>
+<p class="toc_2"><a href="#h76">Function method</a></p>
+<p class="toc_2"><a href="#h77">Procedure method</a></p>
+<p class="toc_1"><a href="#FuncProg">Functional programming</a></p>
+<p class="toc_2"><a href="#ExpressIf">If expression</a></p>
+<p class="toc_2"><a href="#HoF">Higher order functions (HoFs)</a></p>
+<p class="toc_2"><a href="#Record">Working with records</a></p>
+<p class="toc_2"><a href="#h82">Generating random numbers within a function</a></p>
+<p class="toc_1"><a href="#Test">Tests</a></p>
+<p class="toc_1"><a href="#h84">Types</a></p>
+<p class="toc_2"><a href="#h85">Int</a></p>
+<p class="toc_2"><a href="#h86">Float</a></p>
+<p class="toc_2"><a href="#h87">Boolean</a></p>
+<p class="toc_2"><a href="#h88">String</a></p>
+<p class="toc_2"><a href="#List">Lists</a></p>
+<p class="toc_2"><a href="#Dict">Dictionaries</a></p>
+<p class="toc_2"><a href="#Tuple">Tuple</a></p>
+<p class="toc_2"><a href="#Func">Func</a></p>
+<p class="toc_1"><a href="#StdLib">Standard Library</a></p>
+<p class="toc_2"><a href="#SAFunc">Standalone functions</a></p>
+<p class="toc_2"><a href="#SAProc">Standalone procedures</a></p>
+<p class="toc_2"><a href="#MethSys">System methods</a></p>
+<p class="toc_2"><a href="#h97">Standard data structures</a></p>
+<p class="toc_2"><a href="#HoF">Higher order functions (HoFs)</a></p>
+<p class="toc_2"><a href="#MethDot">Dot methods that work on many different Types</a></p>
+
+<h2 id="Punc">Symbols, Keywords, Constants, Methods and Types</h2>
+
+<p>
+<table>
+<tr><th colspan="3">Punctuation symbols recognised by Elan</th>
+</tr>
+<tr><td>( )</td>
+<td>brackets</td>
+<td>used in arithmetic or logical expressions, and to delimit parameters</td>
+</tr>
+<tr><td>[ ]</td>
+<td>square brackets</td>
+<td colspan="2">used to delimit a literal <el-code>List</el-code> or <el-code>Dictionary</el-code>, or for an index or<br>
+index-range
+</td>
+</tr>
+<tr><td>{ }</td>
+<td>curly braces</td>
+<td>used to delimit a literal <el-code>ListImmutable</el-code> or <el-code>DictionaryImmutable</el-code>, or to define an &#8216;interpolated field&#8217; within a literal <el-code>String</el-code></td>
+</tr>
+<tr><td>.</td>
+<td>dot</td>
+<td>used to define fractional number, and to access a method or property using &#8216;dot syntax&#8217;</td>
+</tr>
+<tr><td>..</td>
+<td>double-dot</td>
+<td>used to define an index-range</td>
+</tr>
+<tr><td>,</td>
+<td>comma</td>
+<td>used to separate items in several different forms of list</td>
+</tr>
+<tr><td>:</td>
+<td>colon</td>
+<td>used to define a key-value pair in a literal <el-code>Dictionary</el-code> or <el-code>DictionaryImmutable</el-code></td>
+</tr>
+<tr><td>+</td>
+<td>plus</td>
+<td>the addition operator</td>
+</tr>
+<tr><td>-</td>
+<td>minus</td>
+<td>the subtraction operator, or negation (unary) operator</td>
+</tr>
+<tr><td>*</td>
+<td>multiply</td>
+<td>the multiplication operator</td>
+</tr>
+<tr><td>/</td>
+<td>divide</td>
+<td>the division operator. Also used to delimit a literal Regular Expression (RegExp)</td>
+</tr>
+<tr><td>^</td>
+<td>caret</td>
+<td>raise-to-the-power-of operator</td>
+</tr>
+<tr><td>&lt;</td>
+<td>less than</td>
+<td>comparison operator</td>
+</tr>
+<tr><td>&gt;</td>
+<td>greater than</td>
+<td>comparison operator</td>
+</tr>
+<tr><td>&lt;=</td>
+<td>less than or equal to</td>
+<td>comparison operator</td>
+</tr>
+<tr><td>&gt;=</td>
+<td>greater than or equal to</td>
+<td>comparison operator</td>
+</tr>
+<tr><td>=&gt;</td>
+<td>fat arrow</td>
+<td>used in a <el-code>lambda</el-code> to signify &#8216;returns&#8217;</td>
+</tr>
+<tr><td>_</td>
+<td>underscore</td>
+<td>only punctuation symbol that may be used within an identifier (name), and can also be used to &#8216;discard&#8217; elements when deconstructing a <el-code>Tuple</el-code></td>
+</tr>
+<tr><td>"</td>
+<td>Double- quotes</td>
+<td>the delimiter for a literal <el-code>String</el-code></td>
+</tr>
+<tr><td>#</td>
+<td>hash</td>
+<td>signifies a comment</td>
+</tr></table>
+</p>
+
+<h2 id="Keyword">Keywords recognised by Elan</h2>
+<p>Colour key: <el-code><el-kw>keyword</el-kw></el-code> <el-code><el-id>constant</el-id></el-code> <el-code><el-method>method</el-method></el-code> <el-code><el-type>Type</el-type></el-code></p>
+<p></p>
+<p>Note: &#8216;extension&#8217; means that the function or procedure is called using &#8216;dot syntax&#8217; on a value of the appropriate Type.</p>
+
+<h3>A</h3>
+<p><el-code><el-method>abs</el-method></el-code><code class="symbol">(</el-code><el-code>number</el-code><code class="symbol">)</el-code> &#8211; standalone function</p>
+<p><el-code><el-kw>abstract</el-kw></el-code> &#8211; keyword: see <a href="#ClassAbs">Abstract class</a></p>
+<p><el-code><el-method>acos</el-method></el-code><code class="symbol">(</el-code><el-code>value</el-code><code class="symbol">)</el-code> &#8211; standalone function</p>
+<p><el-code><el-method>acosDeg</el-method></el-code><code class="symbol">(</el-code><el-code>value</el-code><code class="symbol">) &#8211; </el-code>standalone function</p>
+<p><el-code><el-kw>and</el-kw></el-code> &#8211; keyword: see <a href="#OperLog">Logical operators</a></p>
+<p><el-code><el-method>any</el-method></el-code><code class="symbol">(</el-code><el-code>lambdaOrFunctionRef</el-code><code class="symbol">)</el-code> &#8211; extension function</p>
+<p><el-code><el-method>append</el-method></el-code><code class="symbol">(</el-code><el-code>value</el-code><code class="symbol">)</el-code> &#8211; extension procedure</p>
+<p><el-code><el-method>appendList</el-method></el-code><code class="symbol">(</el-code><el-code>other</el-code><code class="symbol">)</el-code> &#8211; extension procedure</p>
+<p><el-code><el-kw>as</el-kw></el-code> &#8211; used in a parameter definition: see <span class="Link">Functions and procedures</span></p>
+<p><el-code><el-method>asList</el-method></el-code><code class="symbol">()</el-code> &#8211; extension function</p>
+<p><el-code><el-method>asBinary</el-method></el-code><code class="symbol">()</el-code> &#8211; extension function</p>
+<p><el-code><el-method>asin</el-method></el-code><code class="symbol">(</el-code><el-code>value</el-code><code class="symbol">)</el-code> &#8211; standalone function</p>
+<p><el-code><el-method>asinDeg</el-method></el-code><code class="symbol">(</el-code><el-code>value</el-code><code class="symbol">)</el-code> &#8211; standalone function</p>
+<p><el-code><el-method>asIterable</el-method></el-code><code class="symbol">()</el-code> &#8211; extension function</p>
+<p><el-code><el-method>asImmutableList</el-method></el-code><code class="symbol">()</el-code> &#8211; extension function</p>
+<p><el-code><el-method>asRegExp</el-method></el-code><code class="symbol">() &#8211; </el-code>extension function</p>
+<p><el-code><el-kw>assert</el-kw></el-code> &#8211; keyword: see <span class="Link">Tests</span></p>
+<p><el-code><el-method>asSet</el-method></el-code><code class="symbol">()</el-code> &#8211; extension function</p>
+<p><el-code><el-method>asString</el-method></el-code>() &#8211; extension function</p>
+<p><el-code><el-method>asUnicode</el-method></el-code><code class="symbol">(</el-code><el-code>character</el-code><code class="symbol">)</el-code> &#8211; extension function</p>
+<p><el-code><el-method>atan</el-method></el-code><code class="symbol">(</el-code><el-code>value</el-code><code class="symbol">)</el-code> &#8211; standalone function</p>
+<p><el-code><el-method>atanDeg</el-method></el-code><code class="symbol">(</el-code><el-code>value</el-code><code class="symbol">) &#8211; </el-code> see <a href="#atanDeg">more</a></p>
+
+<h3>B</h3>
+<p><el-code><el-type>BaseVG</el-type></el-code> &#8211; Type</p>
+<p><el-code><el-kw>be</el-kw></el-code> &#8211; keyword: see <span class="Link">Let statement</span></p>
+<p><el-code><el-method>bitAnd</el-method></el-code><code class="symbol">(</el-code><el-code>a, b</el-code><code class="symbol">)</el-code> &#8211; standalone function</p>
+<p><el-code><el-method>bitNot</el-method></el-code><code class="symbol">(</el-code><el-code>a</el-code><code class="symbol">)</el-code> &#8211; standalone function</p>
+<p><el-code><el-method>bitOr</el-method></el-code><code class="symbol">(</el-code><el-code>a, b</el-code><code class="symbol">)</el-code> &#8211; standalone function</p>
+<p><el-code><el-method>bitShiftL</el-method></el-code><code class="symbol">(</el-code><el-code>a</el-code><code class="symbol">)</el-code> &#8211; standalone function</p>
+<p><el-code><el-method>bitShiftR</el-method></el-code><code class="symbol">(</el-code><el-code>a</el-code><code class="symbol">)</el-code> &#8211; standalone function</p>
+<p><el-code><el-method>bitXor</el-method></el-code><code class="symbol">(</el-code><el-code>a, b</el-code><code class="symbol">)</el-code> &#8211; standalone function</p>
+<p><el-code><el-id>black</el-id></el-code> &#8211; constant (Int)</p>
+<p><el-code><el-type>BlockGraphics</el-type></el-code> &#8211; Type</p>
+<p><el-code><el-id>blue</el-id></el-code> &#8211; constant (Int)</p>
+<p><el-code><el-id>brown</el-id></el-code> &#8211; constant (Int)</p>
+
+<h3>C</h3>
+<p><el-code><el-kw>call</el-kw></el-code> &#8211; keyword: see <span class="Link">Procedure</span></p>
+<p><el-code><el-kw>catch</el-kw></el-code> &#8211; keyword: see <span class="Link">Catching and throwing exceptions</span></p>
+<p><el-code><el-method>ceiling</el-method></el-code><code class="symbol">(number)</el-code> &#8211; extension function</p>
+<p><el-code><el-type>CircleVG</el-type></el-code> &#8211; Type</p>
+<p><el-code><el-kw>class</el-kw></el-code> &#8211; keyword, see <span class="Link">Class</span></p>
+<p><el-code><el-method>clearPrintedText</el-method></el-code><code class="symbol">()</el-code> &#8211; standalone procedure</p>
+<p><el-code><el-method>clearGraphics</el-method></el-code><code class="symbol">() &#8211; </el-code>extension procedure</p>
+<p><el-code><el-method>clearKeyBuffer</el-method></el-code><code class="symbol">()</el-code> &#8211; extension procedure</p>
+<p><el-code><el-method>clock</el-method></el-code><code class="symbol">()</el-code> &#8211; standalone system method</p>
+<p><el-code><el-id>closeBrace</el-id></el-code> &#8211; constant (String)</p>
+<p><el-code><el-kw>constant</el-kw></el-code> &#8211; keyword, see <a href="#Constant">Constant</a></p>
+<p><el-code><el-kw>constructor</el-kw></el-code> &#8211; keyword, see <span class="Link">Class</span></p>
+<p><el-code><el-method>contains</el-method></el-code><code class="symbol">(</el-code><el-code>item</el-code><code class="symbol">)</el-code> &#8211; extension function</p>
+<p><el-code><el-kw>copy</el-kw></el-code> &#8211; keyword, see <span class="Link">Working with records</span></p>
+<p><el-code><el-method>cos</el-method></el-code><code class="symbol">(</el-code><el-code>radians</el-code><code class="symbol">)</el-code> &#8211; standalone function</p>
+<p><el-code><el-method>cosDeg</el-method></el-code><code class="symbol">(</el-code><el-code>degrees</el-code><code class="symbol">)</el-code> &#8211; standalone function</p>
+<p><el-code><el-method>new Array2D</el-method></el-code><code class="symbol">(</el-code><el-code>columns, rows, initialValue</el-code><code class="symbol">)</el-code> &#8211; standalone function</p>
+<p><el-code><el-method>createFileForWriting</el-method></el-code><code class="symbol">(</el-code><el-code>fileName</el-code><code class="symbol">)</el-code> &#8211; standalone function</p>
+
+<h3>D</h3>
+<p><el-code><el-method>degToRad</el-method></el-code><code class="symbol">(</el-code><el-code>degrees</el-code><code class="symbol">)</el-code> &#8211; standalone function</p>
+<p><el-code><el-kw>div</el-kw></el-code> &#8211; keyword, see <span class="Link">Arithmetic operators</span></p>
+
+<h3>E</h3>
+<p><el-code><el-kw>each</el-kw></el-code> &#8211; keyword, see <span class="Link">Each loop</span></p>
+<p><el-code><el-type>ElanSet</el-type></el-code> &#8211; Type</p>
+<p><el-code><el-kw>else</el-kw></el-code> &#8211; keyword, see <span class="Link">If statement</span> and <span class="Link">If expression</span></p>
+<p><el-code><el-kw>empty</el-kw></el-code> &#8211; keyword, creates the empty value of a specified Type. See e.g. <span class="Link">Lists</span></p>
+<p><el-code><el-kw>end</el-kw></el-code> &#8211; keyword, (followed by another keyword) defines the end of a multi-line construct</p>
+<p><el-code><el-kw>enum</el-kw></el-code> &#8211; keyword, see <a href="#Enum_1">Enum</a></p>
+<p><el-code><el-kw>exception</el-kw></el-code> &#8211; keyword, see <a href="#Try_statement">Try statement</a><span class="Link"> </span>and </p>
+<p><el-code><el-method>exp</el-method></el-code><code class="symbol">(x)</el-code> &#8211; standalone function</p>
+
+<h3>F</h3>
+<p><el-code><el-id>false</el-id></el-code> &#8211; constant (Boolean)</p>
+<p><el-code><el-method>filter</el-method></el-code><code class="symbol">(</el-code><el-code>lambdaOrFunctionRef</el-code><code class="symbol">)</el-code> &#8211; extension function</p>
+<p><el-code><el-method>floor</el-method></el-code><code class="symbol">(</el-code><el-code>number</el-code><code class="symbol">)</el-code> &#8211; extension function</p>
+<p><el-code><el-kw>for</el-kw></el-code> &#8211; keyword, see <span class="Link">For loop</span></p>
+<p><el-code><el-kw>from</el-kw></el-code> &#8211; keyword, see <span class="Link">For loop</span></p>
+<p><el-code><el-kw>function</el-kw></el-code> &#8211; keyword, see <span class="Link">Function </span>and <span class="Link">Passing a function as a referenc</span></p>
+
+<h3>G</h3>
+<p><el-code><el-method>getKey</el-method></el-code><code class="symbol">()</el-code> &#8211; standalone system method</p>
+<p><el-code><el-method>getKeyWithModifier</el-method></el-code><code class="symbol">()</el-code> &#8211; standalone system method</p>
+<p><el-code><el-kw>global</el-kw></el-code> &#8211; keyword, see <span class="Link">Scoping and name qualification</span> </p>
+<p><el-code><el-type>GraphicsBase</el-type></el-code> &#8211; Type</p>
+<p><el-code><el-id>green</el-id></el-code> &#8211; constant (Int)</p>
+<p><el-code><el-id>grey</el-id></el-code> &#8211; constant (Int)</p>
+
+<h3>H</h3>
+<p><el-code><el-method>hasKey</el-method></el-code><code class="symbol">(</el-code><el-code>key</el-code><code class="symbol">)</el-code> &#8211; extension function</p>
+<p><el-code><el-method>head</el-method></el-code><code class="symbol">()</el-code> &#8211; extension function</p>
+
+<h3>I</h3>
+<p><el-code><el-kw>if</el-kw></el-code> &#8211; keyword, see <span class="Link">If statement</span> and <span class="Link">If expression</span></p>
+<p><el-code><el-kw>ignore</el-kw></el-code> &#8211; keyword, see <span class="Link">Tests</span></p>
+<p><el-code><el-kw>import</el-kw></el-code> &#8211; (Not yet implemented)</p>
+<p><el-code><el-kw>in</el-kw></el-code> &#8211; keyword, see <span class="Link">Each loop</span></p>
+<p><el-code><el-method>indexOf</el-method></el-code><code class="symbol">(</el-code><el-code>targetString</el-code><code class="symbol">)</el-code> &#8211; extension function</p>
+<p><el-code><el-method>indexOfItem</el-method></el-code><code class="symbol">(</el-code><el-code>targetItem</el-code><code class="symbol">)</el-code> &#8211; extension function</p>
+<p><el-code><el-kw>inherits</el-kw></el-code> &#8211; keyword, see <a href="#Inheritance">Inheritance</a></p>
+<p><el-code><el-method>inputFloat</el-method></el-code><code class="symbol">(</el-code><el-code>prompt</el-code><code class="symbol">)</el-code> &#8211; standalone system method</p>
+<p><el-code><el-method>inputFloatBetween</el-method></el-code><code class="symbol">(</el-code><el-code>prompt, minValue, maxValue</el-code><code class="symbol">)</el-code> &#8211; standalone system method</p>
+<p><el-code><el-method>inputInt</el-method></el-code><code class="symbol">(</el-code><el-code>prompt</el-code><code class="symbol">)</el-code> &#8211; standalone system method</p>
+<p><el-code><el-method>inputIntBetween</el-method></el-code><code class="symbol">(</el-code><el-code>prompt, minValue, maxValue</el-code><code class="symbol">)</el-code> &#8211; standalone system method</p>
+<p><el-code><el-method>inputString</el-method></el-code><code class="symbol">(</el-code><el-code>prompt</el-code><code class="symbol">)</el-code> &#8211; standalone system method</p>
+<p><el-code><el-method>inputStringFromOptions</el-method></el-code><code class="symbol">(</el-code><el-code>prompt</el-code><code class="symbol">, </el-code><el-code>options</el-code><code class="symbol">)</el-code> &#8211; standalone system method</p>
+<p><el-code><el-method>inputStringWithLimits</el-method></el-code><code class="symbol">(</el-code><el-code>prompt, minLength, maxLength</el-code><code class="symbol">)</el-code> &#8211; standalone system method</p>
+<p><el-code><el-method>insertAt</el-method></el-code><code class="symbol">(</el-code><el-code>index</el-code><code class="symbol">, </el-code><el-code>value</el-code><code class="symbol">)</el-code> &#8211; extension procedure</p>
+<p><el-code><el-kw>interface</el-kw></el-code><el-code> </el-code>&#8211; keyword, see <span class="Link">Interface</span></p>
+<p><el-code><el-kw>is</el-kw></el-code> &#8211; keyword, see <span class="Link">Equality testing</span></p>
+<p><el-code><el-method>isAfter</el-method></el-code><code class="symbol">(</el-code><el-code>other</el-code><code class="symbol">)</el-code> &#8211; extension function</p>
+<p><el-code><el-method>isAfterOrSameAs</el-method></el-code><code class="symbol">(</el-code><el-code>other</el-code><code class="symbol">)</el-code> &#8211; extension function</p>
+<p><el-code><el-method>isBefore</el-method></el-code><code class="symbol">(</el-code><el-code>other</el-code><code class="symbol">)</el-code> &#8211; extension function</p>
+<p><el-code><el-method>isBeforeOrSameAs</el-method></el-code><code class="symbol">(</el-code><el-code>other</el-code><code class="symbol">)</el-code> &#8211; extension function</p>
+<p><el-code><el-kw>isnt</el-kw></el-code> &#8211; keyword, see <span class="Link">Equality testing</span></p>
+
+<h3>J</h3>
+<p><el-code><el-method>joinListElements</el-method></el-code><code class="symbol">(</el-code><el-code>separator</el-code><code class="symbol">)</el-code> &#8211; extension function</p>
+<p><el-code><el-method>joinListElements</el-method></el-code><code class="symbol">(</el-code><el-code>separator</el-code><code class="symbol">)</el-code> &#8211; extension function</p>
+
+<h3>K</h3>
+<p><el-code><el-method>keys</el-method></el-code><code class="symbol">()</el-code> &#8211; extension function</p>
+
+<h3>L</h3>
+<p><el-code><el-kw>lambda</el-kw></el-code> &#8211; keyword, see <span class="Link">Lambda</span></p>
+<p><el-code><el-method>length</el-method></el-code><code class="symbol">()</el-code> &#8211; extension function</p>
+<p><el-code><el-kw>let</el-kw></el-code> &#8211; keyword, see <a href="#Let_statement">Let statement</a></p>
+<p>&#8211; keyword, see <span class="Link">Scoping and name qualification</span> </p>
+<p><el-code><el-type>LineVG</el-type></el-code> &#8211; Type</p>
+<p><el-code><el-method>log10</el-method></el-code><code class="symbol">(</el-code><el-code>number</el-code><code class="symbol">)</el-code> &#8211; standalone function</p>
+<p><el-code><el-method>log2</el-method></el-code><code class="symbol">(</el-code><el-code>number</el-code><code class="symbol">)</el-code> &#8211; standalone function</p>
+<p><el-code><el-method>logE</el-method></el-code><code class="symbol">(</el-code><el-code>number</el-code><code class="symbol">)</el-code> &#8211; standalone function</p>
+<p><el-code><el-method>lowerCase</el-method></el-code><code class="symbol">()</el-code> &#8211; extension function</p>
+
+<h3>M</h3>
+<p><el-code><el-kw>main</el-kw></el-code> &#8211; keyword, see <span class="Link">Main routine</span></p>
+<p><el-code><el-method>map</el-method></el-code><code class="symbol">(</el-code><el-code>lambdaOrFunctionRef</el-code><code class="symbol">)</el-code> &#8211; extension function</p>
+<p><el-code><el-method>max</el-method></el-code><code class="symbol">()</el-code> &#8211; extension function</p>
+<p><el-code><el-method>maxBy</el-method></el-code><code class="symbol">(</el-code><el-code>lambdaOrFunctionRef</el-code><code class="symbol">)</el-code> &#8211; extension function</p>
+<p><el-code><el-method>min</el-method></el-code><code class="symbol">()</el-code> &#8211; extension function</p>
+<p><el-code><el-method>minBy</el-method></el-code><code class="symbol">(</el-code><el-code>lambdaOrFunctionRef</el-code><code class="symbol">)</el-code> &#8211; extension function</p>
+<p><el-code><el-kw>mod</el-kw></el-code> &#8211; keyword, see <span class="Link">Arithmetic operators</span></p>
+
+<h3>N</h3>
+<p><el-code><el-kw>new</el-kw></el-code> &#8211; keyword, see <span class="Link">Using a class</span></p>
+<p><el-code><el-kw>not</el-kw></el-code> &#8211; keyword, see <span class="Link">Logical operators</span></p>
+
+<h3>O</h3>
+<p><el-code><el-kw>of</el-kw></el-code> &#8211; keyword, used to define Types of elements, see <span class="Link">Lists</span> <span class="Link">Dictionaries</span> <span class="Link">Func</span> </p>
+<p><el-code><el-method>openFileForReading</el-method></el-code><code class="symbol">()</el-code> &#8211; standalone system method</p>
+<p><el-code><el-id>openBrace</el-id></el-code> &#8211; constant (String)</p>
+<p><el-code><el-kw>or</el-kw></el-code> &#8211; keyword, see <span class="Link">Logical operators</span></p>
+<p><el-code><el-kw>out</el-kw></el-code> &#8211; keyword, see <a href="#Parameter_passing_1">Parameter passing</a></p>
+
+<h3>P</h3>
+<p><el-code><el-method>parseAsFloat</el-method></el-code><code class="symbol">(</el-code><el-code>string</el-code><code class="symbol">)</el-code> &#8211; standalone function</p>
+<p><el-code><el-method>parseAsInt</el-method></el-code><code class="symbol">(</el-code><el-code>string</el-code><code class="symbol">)</el-code> &#8211; standalone function</p>
+<p><el-code><el-method>pause</el-method></el-code><code class="symbol">(</el-code><el-code>milliseconds</el-code><code class="symbol">)</el-code> &#8211; standalone procedure</p>
+<p><el-code><el-id>pi</el-id></el-code> &#8211; constant (Float)</p>
+<p><el-code><el-method>prepend</el-method></el-code><code class="symbol">(</el-code><el-code>other</el-code><code class="symbol">)</el-code> &#8211; extension procedure</p>
+<p><el-code><el-method>prependList</el-method></el-code><code class="symbol">(</el-code><el-code>other</el-code><code class="symbol">)</el-code> &#8211; extension procedure</p>
+<p><el-code><el-kw>print</el-kw></el-code> &#8211; keyword, see <span class="Link">Input/Output</span></p>
+<p><el-code><el-method>printLine</el-method></el-code><code class="symbol">(</el-code><el-code>text</el-code><code class="symbol">)</el-code> &#8211; standalone procedure</p>
+<p><el-code><el-method>printNoLine</el-method></el-code><code class="symbol">(</el-code><el-code>text</el-code><code class="symbol">)</el-code> &#8211; standalone procedure</p>
+<p><el-code><el-method>printTab</el-method></el-code><code class="symbol">(</el-code><el-code>position,</el-code><code class="symbol"> </el-code><el-code>text</el-code><code class="symbol">)</el-code> &#8211; standalone procedure</p>
+<p><el-code><el-kw>private</el-kw></el-code> &#8211; keyword, see <span class="Link">Object-oriented programming</span></p>
+<p><el-code><el-kw>procedure</el-kw></el-code> &#8211; keyword, see <span class="Link">Functions and procedures</span></p>
+<p><el-code><el-kw>property</el-kw></el-code> &#8211; keyword, see <span class="Link">Property</span></p>
+<p><el-code><el-method>putAt</el-method></el-code><code class="symbol">(</el-code><el-code>index, value</el-code><code class="symbol">)</el-code> &#8211; extension procedure</p>
+<p><el-code><el-method>putAt2D</el-method></el-code><code class="symbol">(</el-code><el-code>column, row</el-code><code class="symbol">)</el-code> &#8211; extension procedure</p>
+<p><el-code><el-method>putAtKey</el-method></el-code><code class="symbol">(</el-code><el-code>key, value</el-code><code class="symbol">)</el-code> &#8211; extension procedure</p>
+
+<h3>Q<el-code><el-type> </el-type></el-code></h3>
+<p><el-code><el-type>Queue</el-type></el-code> &#8211; Type</p>
+<p><el-code><el-id>quotes</el-id></el-code> &#8211; constant (String)</p>
+
+<h3>R</h3>
+<p><el-code><el-method>radToDeg</el-method></el-code><code class="symbol">(</el-code><el-code>radians</el-code><code class="symbol">)</el-code> &#8211; standalone function</p>
+<p><el-code><el-type>Random</el-type></el-code> &#8211; Type</p>
+<p><el-code><el-method>random</el-method></el-code><code class="symbol">()</el-code> &#8211; standalone system method</p>
+<p><el-code><el-method>randomInt</el-method></el-code><code class="symbol">(</el-code><el-code>low, high</el-code><code class="symbol">)</el-code> &#8211; standalone system method</p>
+<p><el-code><el-method>range</el-method></el-code><code class="symbol">(</el-code><el-code>start, end</el-code><code class="symbol">)</el-code> &#8211; standalone function</p>
+<p><el-code><el-kw>record</el-kw></el-code> &#8211; keyword, see <span class="Link">Working with records</span></p>
+<p><el-code><el-type>RectangleVG</el-type></el-code> &#8211; Type</p>
+<p><el-code><el-id>red</el-id></el-code> &#8211; constant (Int)</p>
+<p><el-code><el-method>reduce</el-method></el-code><code class="symbol">(</el-code><el-code>initialValue, lambdaOrFunctionRef</el-code><code class="symbol">)</el-code> &#8211; extension function</p>
+<p><el-code><el-kw>ref</el-kw></el-code> &#8211; keyword, see <span class="Link">Passing a function as a reference</span>Repeat loop</p>
+<p><el-code><el-method>removeAll</el-method></el-code><code class="symbol">(</el-code><el-code>value</el-code><code class="symbol">)</el-code> &#8211; extension procedure</p>
+<p><el-code><el-method>removeAt</el-method></el-code><code class="symbol">(</el-code><el-code>index</el-code><code class="symbol">)</el-code> &#8211; extension procedure</p>
+<p><el-code><el-method>removeAtKey</el-method></el-code><code class="symbol">(</el-code><el-code>key</el-code><code class="symbol">)</el-code> &#8211; extension procedure</p>
+<p><el-code><el-method>removeFirst</el-method></el-code><code class="symbol">(</el-code><el-code>value</el-code><code class="symbol">)</el-code> &#8211; extension procedure</p>
+<p><el-code><el-kw>repeat</el-kw></el-code> &#8211; keyword, see <span class="Link">Repeat loop</span></p>
+<p><el-code><el-method>replace</el-method></el-code><code class="symbol">(</el-code><el-code>match,</el-code><code class="symbol"> </el-code><el-code>replacement</el-code><code class="symbol">)</el-code> &#8211; extension function</p>
+<p><el-code><el-kw>return</el-kw></el-code> &#8211; keyword, last statement within a function &#8211; see <span class="Link">Function</span></p>
+<p><el-code><el-kw>returns</el-kw></el-code> &#8211; keyword, defines the return Type in a function signature &#8211; see <span class="Link">Function</span></p>
+<p><el-code><el-method>round</el-method></el-code><code class="symbol">(</el-code><el-code>number</el-code><code class="symbol">, </el-code><el-code>decimalPlaces</el-code><code class="symbol">)</el-code> &#8211; extension function</p>
+
+<h3>S</h3>
+<p><el-code><el-kw>set</el-kw></el-code> &#8211; keyword, see <a href="#Variables">Variables</a></p>
+<p><el-code><el-type>Set</el-type></el-code> &#8211;  Type</p>
+<p><el-code><el-method>sin</el-method></el-code><code class="symbol">(</el-code><el-code>radians</el-code><code class="symbol">)</el-code> &#8211; standalone function</p>
+<p><el-code><el-method>sinDeg</el-method></el-code><code class="symbol">(</el-code><el-code>degrees</el-code><code class="symbol">)</el-code> &#8211; standalone function</p>
+<p><el-code><el-method>sortBy</el-method></el-code><code class="symbol">(</el-code><el-code>lambdaOrFunctionRef</el-code><code class="symbol">)</el-code> &#8211; extension function</p>
+<p><el-code><el-method>split</el-method></el-code><code class="symbol">(</el-code><el-code>separator</el-code><code class="symbol">)</el-code> &#8211; extension function</p>
+<p><el-code><el-method>sqrt</el-method></el-code><code class="symbol">(</el-code><el-code>number</el-code><code class="symbol">)</el-code> &#8211; standalone function</p>
+<p><el-code><el-type>Stack</el-type></el-code> &#8211; Type</p>
+<p><el-code><el-kw>step</el-kw></el-code> &#8211; keyword, see <span class="Link">For loop</span></p>
+
+<h3>T</h3>
+<p><el-code><el-method>tan</el-method></el-code><code class="symbol">(</el-code><el-code>radians</el-code><code class="symbol">)</el-code> &#8211; standalone function</p>
+<p><el-code><el-method>tanDeg</el-method></el-code><code class="symbol">(</el-code><el-code>degrees</el-code><code class="symbol">)</el-code> &#8211; standalone function</p>
+<p><el-code><el-kw>test</el-kw></el-code> &#8211; keyword, see <span class="Link">Tests</span></p>
+<p><el-code><el-method>testRegExp</el-method></el-code><code class="symbol">(</el-code><el-code>regExp</el-code><code class="symbol">)</el-code> &#8211; extension function</p>
+<p><el-code><el-type>TextFileReader</el-type></el-code> &#8211; Type</p>
+<p><el-code><el-type>TextFileWriter</el-type></el-code> &#8211; Type</p>
+<p><el-code><el-kw>then</el-kw></el-code> &#8211; keyword, see <span class="Link">If statement</span> and <span class="Link">If expression</span></p>
+<p><el-code><el-kw>this</el-kw></el-code> &#8211; keyword, see <span class="Link">Object-oriented programming</span></p>
+<p><el-code><el-kw>throw</el-kw></el-code> &#8211; keyword, see <span class="Link">Catching and throwing exceptions</span></p>
+<p><el-code><el-kw>to</el-kw></el-code> &#8211; keyword, see <span class="Link">For loop</span></p>
+<p><el-code><el-method>trim</el-method></el-code><code class="symbol">()</el-code> &#8211; extension function</p>
+<p><el-code><el-id>true</el-id></el-code> &#8211; constant (Boolean)</p>
+<p><el-code><el-kw>try</el-kw></el-code> &#8211; keyword, see <span class="Link">Catching and throwing exceptions</span></p>
+<p><el-code><el-kw>tuple</el-kw></el-code><span class="Link"> </span> &#8211;keyword, see <a href="#Tuple">Tuple</a></p>
+<p><el-code><el-type>Turtle</el-type></el-code> &#8211; Type</p>
+
+<h3>U</h3>
+<p><el-code><el-method>unicode</el-method></el-code><code class="symbol">(</el-code><el-code>value</el-code><code class="symbol">)</el-code> &#8211; standalone function</p>
+<p><el-code><el-method>upperCase</el-method></el-code><code class="symbol">()</el-code> &#8211; extension function</p>
+
+<h3>V</h3>
+<p><el-code><el-method>values</el-method></el-code><code class="symbol">()</el-code> &#8211; extension function</p>
+<p><el-code><el-kw>variable</el-kw></el-code> &#8211; keyword, see <a href="#Variables">Variables</a></p>
+<p><el-code><el-type>VectorGraphics</el-type></el-code> &#8211; Type</p>
+
+<h3>W, X, Y, Z</h3>
+<p><el-code><el-method>waitForAnyKey</el-method></el-code><code class="symbol">()</el-code> &#8211; standalone procedure</p>
+<p><el-code><el-kw>while</el-kw></el-code> &#8211; keyword, see <span class="Link">While loop</span></p>
+<p><el-code><el-id>white</el-id></el-code> &#8211; constant (Int)</p>
+<p><el-code><el-kw>with</el-kw></el-code> &#8211; keyword, see <span class="Link">Working with records</span></p>
+<p><el-code><el-method>withInsert</el-method></el-code><code class="symbol">(</el-code><el-code>index</el-code><code class="symbol">, </el-code><el-code>value</el-code><code class="symbol">)</el-code> &#8211; extension function</p>
+<p><el-code><el-method>withPut</el-method></el-code><code class="symbol">(</el-code><el-code>index</el-code><code class="symbol">, </el-code><el-code>value</el-code><code class="symbol">)</el-code> &#8211; extension function</p>
+<p><el-code><el-method>withPutKey</el-method></el-code><code class="symbol">(</el-code><el-code>key</el-code><code class="symbol">, </el-code><el-code>value</el-code><code class="symbol">)</el-code> &#8211; extension function</p>
+<p><el-code><el-method>withRemoveAll</el-method></el-code><code class="symbol">(</el-code><el-code>value</el-code><code class="symbol">)</el-code> &#8211; extension function</p>
+<p><el-code><el-method>withRemoveAt</el-method></el-code><code class="symbol">(</el-code><el-code>index</el-code><code class="symbol">)</el-code> &#8211; extension function</p>
+<p><el-code><el-method>withRemoveAtKey</el-method></el-code><code class="symbol">(</el-code><el-code>key</el-code><code class="symbol">)</el-code> &#8211; extension function</p>
+<p><el-code><el-method>withRemoveFirst</el-method></el-code><code class="symbol">(</el-code><el-code>value</el-code><code class="symbol">)</el-code> &#8211; extension function</p>
+<p><el-code><el-id>yellow</el-id></el-code> &#8211; constant (Int)</p>
+<p></p>
+
+<h1 id="h36">Getting started</h1>
+
+<h2 id="h37">Technical platform</h2>
+<p>You can access the Elan Beta <a href="https://elan-lang.org/beta/">here</a>.</p>
+<p>Elan is designed to run within the Chrome browser; correct operation within other browsers is not guaranteed. </p>
+
+<h2 id="h38">Demo programs </h2>
+<p>The Beta version includes a Demo button that offers a menu of demonstration programs which you can run:</p>
+<p><img src="images/Pic9.png"  align="MIDDLE" height="221" width="278"></p>
+<p>The best way to get started with Elan is to explore these demo programs. You can edit any of them and save your own copy locally. </p>
+
+<h2 id="h39">Changes and additions for Beta 6</h2>
+
+<h3>Changes to language and standard library that could break existing code</h3>
+<p>Both the syntax and the layout for the following constructs have changed:</p>
+<li><el-code>if</el-code> statement. See <span class="Link">If statement</span></li>
+<li><el-code>try</el-code> Statement. See <span class="Link">Catching and throwing exceptions</span></li>
+<p>The <el-code>switch</el-code> statement has been removed entirely. The improved <el-code>if</el-code> statement means that the <el-code>switch</el-code> statement no longer offered any advantages over using a series of <el-code>else if</el-code> clauses.</p>
+<p>There have been significant changes to object-oriented programming, including:</p>
+<li>For a concrete <el-code>class</el-code>, defining a <el-code>constructor</el-code> is now optional.</li>
+<li>A concrete <el-code>class</el-code> may now inherit from only one <el-code>abstract class</el-code>.</li>
+<li>An <el-code>abstract class</el-code> may now define both public and <el-code>private</el-code> concrete properties and methods (as well as abstract properties and methods).</li>
+<li>Elan now has the concept of an <el-code>interface</el-code> &#8211; like an <el-code>abstract class</el-code> but defining only abstract members, and with the advantage that a concrete<el-code> class</el-code> may inherit from any number of i<el-code>nterface</el-code>s (plus, optionally, one <el-code>abstract class</el-code>).</li>
+<li>An <el-code>abstract class</el-code> cannot now inherit from another <el-code>abstract class</el-code>, but it may inherit from one or more <el-code>interface</el-code>s.</li>
+
+<h2 id="h40">Still to be implemented..</h2>
+<p>The following lists a few of the stand-out items that are not yet implemented. For a much longer list you are welcome to browse all the open items on our development project planning system on Github at: <a href="https://github.com/elan-language/IDE/issues">https://github.com/elan-languageAndIDE/issues</a>. However, please bear in mind that those items are written by and for the development team, rather than for public discussion.</p>
+
+<h3>Editor</h3>
+<li>Debugger. Ability to insert breakpoints, pause, single-step, and read the state of variables.</li>
+<li>Navigate directly from use of an identifier to its definition.</li>
+<li>Renaming of identifiers (variables, constants, parameters, function and procedure names).</li>
+<li>Profile configuration (exists as a proof of concept only at present). In future release you will be able to define multiple profiles and then assign a profile to each user name.</li>
+<li>Ability to switch-on anti-plagiarism option (exists as a proof of concept only at present).</li>
+<li>Ability to perform all navigation and actions by keyboard or mouse (except entering code into fields, which must be done through the keyboard).</li>
+
+<h2 id="h41">If you have programmed in another language, the key differences to be aware of&#8230;</h2>
+
+<h3>Types</h3>
+<li>Elan is a statically typed language. Basic Types are <el-code>Int</el-code>, <el-code>Float</el-code>, <el-code>Boolean</el-code>, and <el-code>String</el-code><el-code>.</el-code> There are ready-made data structures as Types <el-code>List</el-code>, <el-code>ListImmutable</el-code>, <el-code>Dictionary</el-code>. Elan supports user-defined <el-code>class</el-code>es and <el-code>enum</el-code>s, and there are several ready-made classes in the standard library such as <el-code>BlockGraphics</el-code>, <el-code>File</el-code>, <el-code>Set</el-code>, <el-code>Stack</el-code>, <el-code>Queue</el-code>, <el-code>Tree</el-code>, <el-code>Graph</el-code> &#8230; (only the first of these is in the Beta 6). </li>
+
+<h3 id="Vars">Variables</h3>
+<li>Variables are defined by the <el-code>variable </el-code>statement, and re-assigned with a <el-code>set</el-code> statement.</li>
+<li>Variable names (indeed all names in Elan) must begin with a lower-case letter.</li>
+<li>Variables must be initialised with a literal value or an expression that yields a value, and the Type of that value determines the Type of the variable.</li>
+<li>There is no such thing as a global variable in Elan. Variables are defined within <el-code>main</el-code>, or within a <el-code>function</el-code> or <el-code>procedure</el-code> and are visible only within that scope.</li>
+
+<h3 id="Const">Constants</h3>
+<li>A <el-code>constant</el-code> is only ever defined at global level and is <el-code>set to</el-code> a literal value of an immutable Type: for example any of the four basic Types or a <el-code>ListImmutable</el-code>, but not an <el-code>List</el-code> (see below).</li>
+
+<h3 id="Let_statement_1">Let statement</h3>
+<li>A <el-code>let</el-code> statement may be thought of as being between a constant and a variable. Like a variable a <el-code>let</el-code> may be defined only within a routine, but unlike a variable it may not be re-assigned once defined. It is recommended that you always use a <el-code>let</el-code> in preference to a <el-code>variable </el-code>unless you need to be able to assign a new value to it.</li>
+
+<h3>Lists</h3>
+<li>An <el-code>List</el-code> is a mutable data structure &#8211; as it is in most languages.</li>
+<li>It may be initialised to a specific size, with each element set to an initial value (e.g. 0 for an <el-code>Int</el-code> or <el-code>Float</el-code>), but it may also be extended dynamically with the <el-code>append</el-code><el-code> </el-code>and<el-code> prepend</el-code> methods.</li>
+<li>A 2D List may also be created, accessed with a double index e.g. <el-code>a[2][3</el-code>]. See also <a href="#2-dimensional_List">2-dimensional List</a>.</li>
+
+<h3>Testing for equality</h3>
+<li>Elan tests for equality by value (not equality by reference) using the keywords <el-code>is</el-code> (for example <el-code>if x is y</el-code>) and <el-code>isnt</el-code>. The comparisons, <el-code>&gt;</el-code>, <el-code>&lt;</el-code>. <el-code>&gt;=</el-code>, <el-code>&lt;=</el-code> apply to numeric Types (<el-code>Int</el-code> and <el-code>Float</el-code>) only. (There are methods for <el-code>String</el-code> comparison &#8211; see <span class="Link">Dot methods on a String</span> )</li>
+
+<h3>Methods</h3>
+<li>There are several types of method in Elan: standalone function, standalone procedure, instance function and instance procedure (both defined on a class), and system methods. These are expanded on below. </li>
+<li>Elan does not support overloaded method names (methods with the same name, but different number or Type of parameters). Every free-standing method must have a unique name distinct also from those in the standard library. Instance methods must be unique within a class, though the same name may be used within different classes.</li>
+
+<h3>Function</h3>
+<li>An Elan function (whether standalone or an instance method on a class) must be a pure function. That is, it must return a value that is derived, solely and deterministically, from the arguments supplied as parameters. A function contains one, and only one, <el-code>return</el-code> statement which must be the last (or only) statement in the function body.</li>
+<li>A function may not generate side-effects, for example it may not:</li>
+<li>Contain any <el-code>print</el-code> statements</li>
+<li>Use any system method within its expressions</li>
+<li>Make a <el-code>call</el-code> to any procedure (since procedures are not pure)</li>
+<li>Assign to or mutate any parameter</li>
+
+<h3>Procedure</h3>
+<li>An Elan <el-code>procedure</el-code> may be thought of as a &#8216;command&#8217;. Like a <el-code>function</el-code> it may define parameters but it does not return a value. This is because a <el-code>procedure</el-code> necessarily makes changes: changes to one or more of the parameters (if the parameter definition is prefixed by <el-code>out</el-code>), and/or changes to the system by calling <el-code>print</el-code> or any of the system methods.</li>
+<li>A <el-code>procedure</el-code> exits after executing the last statement in the body. There is (deliberately) no mechanism to exit &#8216;early&#8217;, thereby enforcing structured programming.</li>
+<li>A <el-code>procedure</el-code> is always executed via a <el-code>call</el-code> statement, either standalone, or as a &#8216;dot method&#8217; on a named instance.</li>
+
+<h3>System method</h3>
+<li>System methods are all defined as part of the standard Elan library. Some are like <el-code>procedure</el-code>s, returning no value, and are hence executed via the <el-code>call</el-code> statement. Others are similar to <el-code>function</el-code>s in that they return a value and are evaluated within an expression. However, unlike <el-code>function</el-code>s these system methods either have side-effects or external dependencies (or both). For that reason, no system method &#8211; whether resembling a <el-code>procedure</el-code> or a <el-code>function</el-code> &#8211; may be used within a user-defined <el-code>function</el-code> (or within a <el-code>test</el-code>). They may only be used within <el-code>main</el-code> or within a <el-code>procedure</el-code>.</li>
+
+<h3>Object-oriented techniques</h3>
+<li>The name given to a <el-code>class</el-code> must follow the rules for any Type name i.e. it must start with an upper-case letter.</li>
+<li>Every (concrete) class has a <el-code>constructor</el-code>, which is automatically added when you define a <el-code>class</el-code>. But it is not essential to define any code within that constructor. </li>
+<li>A property may be assigned (set) a new value within the <el-code>constructor</el-code>, or within a <el-code>procedure</el-code> method defined on the class or the sub-class. But a property may never be assigned by code outside the class. If you require this capability, you can write your own <el-code>procedure</el-code> methods (commonly called &#8216;setter&#8217; methods) to do this. A <el-code>function</el-code> method may read properties, but not write to them.</li>
+<p>
+Whenever you wish to access a property from within a method (or from within the constructor) on the same class, then the name of the property must be prefixed with the &#8216;qualifier&#8217; <el-code>property. </el-code>(&#8216;property-dot&#8217;). This applies whether you are reading or setting the property. By this means you can have a method parameter with the same name as a property, but they are unambiguous because the property must be prefixed. A common pattern is to use the same name in a &#8216;setter&#8217; method, for example:<br>
+<el-code><br>
+procedure setName(name as String)<br>
+&nbsp;&nbsp;set property.name to name<br>
+end procedure
+</el-code><br>
+<li>The <el-code>property.</el-code> qualifier is neither required, nor allowed, when accessing a property on an instance of the class, because the instance name acts as the qualifier.</li>
+<li>A concrete <el-code>class</el-code> may inherit from one or more <el-code>abstract</el-code> <el-code>class</el-code>es, but may not inherit from another concrete <el-code>class</el-code>. This enforces the widely-recognised OOP design principle that &#8216;all classes should be abstract or final (not inheritable)&#8217;.</li>
+<li>An <el-code>abstract class</el-code> may define abstract members (<el-code>property</el-code>, <el-code>function</el-code>, <el-code>procedure</el-code>), which must always be implemented by any concrete sub-class. It may also define private members (<el-code>property</el-code>, <el-code>function</el-code>, <el-code>procedure</el-code>), which are visible to any concrete sub-class, but not visible from code outside the class hierarchy. </li>
+
+<h3>Functional techniques</h3>
+<li>Elan has strong support for the functional programming paradigm, building on the foundation of its rigorous definition of a <el-code>function</el-code>. In addition:</li>
+<li>The standard library defines several &#8216;higher-order functions&#8217; (HoFs) including <el-code>map</el-code>, <el-code>filter</el-code> and <el-code>reduce</el-code> that apply to any Type that is &#8216;iterable&#8217; (including <el-code>String</el-code>, <el-code>List</el-code> and <el-code>ListImmutable</el-code>).</li>
+<li>Any user-defined or standard library function may be passed as an argument into a parameter, or associated with a name using a <el-code>variable </el-code>or <el-code>let</el-code> statement, by preceding the name of the function with the keyword <el-code>function</el-code>.</li>
+<li>You may also define a <el-code>lambda</el-code>, inline as an argument in a function call, or assigned to a named value.</li>
+<li>Although pure functions, including HoFs, may work with mutable data structures (without actually mutating them), immutable data structures are considered a better fit for functional programming. Elan provides many immutable standard data structures, including <el-code>String</el-code> (immutable in most languages) and <el-code>ListImmutable</el-code> (in contrast to many languages), and <el-code>record</el-code> which is like an immutable form of a <el-code>class</el-code> without encapsulated methods.</li>
+<p class="heading_1">
+
+<h1 id="InOut">Input/Output</h1>
+
+<p>All forms of input/output involve dependencies on, or make changes to, the system. Therefore they may only be used within either the <el-code>main</el-code> or a <el-code>procedure</el-code>.</p>
+
+
+
+<h2 id="PrintHtml">Print Html to the Console</h2>
+<p>As well as plain text, it is also possible to print Html to the console, which will be correctly formatted. For example:</p>
+<el-code>print "&lt;h1 style='color: blue;'&gt;A heading&lt;/h1&gt;"</el-code><br>
+<el-code>print "&lt;p&gt;some text&lt;/p&gt;"</el-code><br>
+
+<p>Will produce:</p>
+<p><img src="images/Pic25.png"  align="MIDDLE" height="153" width="374"></p>
+<p>Notes</p>
+<li>For specifying style or other attributes within Html tags, the attribute values should be enclosed in single quotation marks <el-code>'</el-code> as shown. Html will recognise single or double quotation marks, but entering double quotation marks would terminate the Elan string. Alternatively, you could replace each <el-code>'</el-code> by the interpolated constant <el-code>{quotes}</el-code>.</li>
+<li>It is not necessary to put individual lines of Html into separate <el-code>print</el-code> statements &#8211; you can print a string of any length &#8211; but putting tags into separate <el-code>print</el-code> statements can improve the readability of your code. </li>
+
+<h3>Using an embedded stylesheet</h3>
+<p>If you want styles to be applied to multiple tags you can embed a stylesheet. For example, the following stylesheet will set the font for all text, and some further details for all &lt;h1&gt; headings:</p>
+<el-code>&lt;style&gt;</el-code><br>
+<el-code>  h1 {</el-code><br>
+<el-code>    color: blue;</el-code><br>
+<el-code>    font-size: 24pt;</el-code><br>
+<el-code>  }</el-code><br>
+<el-code>  p {</el-code><br>
+<el-code>    font-family: Helvetica;</el-code><br>
+<el-code>    }</el-code><br>
+<el-code>&lt;/style&gt;</el-code><br>
+
+<p>This may be safely coalesced into a single line and many spaces removed:</p>
+<el-code>&lt;style&gt;h1{color:blue;font-size:24pt;}p{font-family:Helvetica;}&lt;/style&gt;</el-code><br>
+
+<p>The only problem is with the curly braces <el-code>{}</el-code> since within a literal string Elan will interpret these as defining an &#8216;interpolation&#8217; clause (see <span class="Link">Interpolated string</span>). This can best be overcome by using the interpolated constants <el-code>{openBrace}</el-code> and <el-code>{closeBrace}</el-code> instead of <el-code>{</el-code> and <el-code>}</el-code>:</p>
+
+<el-code>main</el-code><br>
+<el-code>  let stylesheet be "&lt;style&gt;h1{openBrace}color:blue;font-size:24pt;{closeBrace}p{openBrace}font-family:Helvetica;{closeBrace}&lt;/style&gt;"</el-code><br>
+<el-code>  print stylesheet</el-code><br>
+<el-code>  print "&lt;h1&gt;A heading&lt;/h1&gt;"</el-code><br>
+<el-code>  print "&lt;p&gt;plain text&lt;/p&gt;"</el-code><br>
+<el-code>end main</el-code><br>
+
+<p>Here is the result:</p>
+<p><img src="images/Pic26.png"  align="MIDDLE" height="226" width="316"></p>
+<p>Alternatively you could put, say, <el-code>[</el-code> and <el-code>]</el-code> in the original Html stylesheet instead of <el-code>{</el-code> and <el-code>}</el-code>, and use a function to replace the square brackets with curly braces (defined by their Unicode codepoint values) before use, and get the same result:</p>
+<el-code>main<br>
+&nbsp;&nbsp;let stylesheet be "&lt;style&gt; h1[color:blue;font-size:24pt;],p[font-family:Helvetica;] h1&lt;/style&gt;"<br>
+&nbsp;&nbsp;print replaceBrackets(stylesheet)<br>
+&nbsp;&nbsp;print "&lt;h1&gt;A heading&lt;/h1&gt;"<br>
+&nbsp;&nbsp;print "&lt;p&gt;plain text&lt;/p&gt;"<br>
+end main
+</el-code><br>
+
+<el-code>function replaceBrackets(original as String) returns String</el-code><br>
+<el-code>  return original.replace("[", unicode(123)).replace("]", unicode(125))</el-code><br>
+<el-code>end function</el-code><br>
+
+<p>Notes</p>
+<li>If you define an embedded stylesheet in the manner described above, then this should be printed first, and will then be applied to any subsequent printing of Html within the program. However &#8230;</li>
+<li>If the console is cleared, either by the Clear button on the UI, or by programmatically using <el-code>call clearPrintedText()</el-code>, then the stylesheet will be removed also. You can, though, print the stylesheet again before printing further content. In this case it can be a good idea to define the stylesheet as a (global) <el-code>constant</el-code>.</li>
+<li>In general you should avoid using <el-code>*</el-code> to define the applicability of a style, since this could mess up the styling of the Elan IDE, and even render it unusable. (Should this happen, refresh the browser and correct the stylesheet definition). If you want a style to apply to all elements that you are printing you may specify <el-code>#console *</el-code>, which means &#8216;all elements within the element with <el-code>id = 'console'</el-code></li>
+<li>Beware printing strings with <el-code>&lt;</el-code> and <el-code>&gt;</el-code> in them in case they enclose non-blank characters since Elan will try and interpret the enclosed characters as an Html tag.</li>
+
+<h2 id="h54">Inputting data from the keyboard</h2>
+
+<p>Also the <el-code>readKey</el-code> system method on <el-code>BlockGraphics</el-code></p>
+
+
+
+
+<h2 id="Colour">Colour</h2>
+<p>
+Where a colour can be specified, it is a value of Type <el-code>Int</el-code> in the range<br>
+0 &#8211; 16,777,215 (i.e. 0 to 224 -1, expressable as 24-bit binary number).</p>
+<p>As in Html, a colour number is made up of the values from 0 to 255 for each of the three components: red (R), green (G) and blue (B). So a colour value may be described by its integer value, or by three decimal values (R, G, B), or by a 6-digit hexadecimal number (<el-code>0xrrggbb</el-code>).</p>
+<p>Elan has a small number of standard named colours:</p>
+<p>
+
+
+<p>You can use these colour names directly in an <el-code>Int</el-code>. If you want to define other colours, you put any of the 16,777,215 colour numbers into literals, constants or variables either as a decimal integer or, more conveniently, in the hexadecimal form shown in the table. For example you might define <el-code>lightBlue</el-code> and <el-code>deepPink</el-code> using these hex values:</p>
+<p>
+<table>
+<tr><th>8421504</th>
+<th>128  171  255</th>
+<th><el-code>0x80abff</el-code></th>
+<th>lightBlue</th>
+</tr>
+<tr><td>16206720</td>
+<td>247   75  128</td>
+<td><el-code>0xf74b80</el-code></td>
+<td>deepPink</td>
+</tr></table>
+</p>
+
+<p>and then use a variable or a constant to hold those values:</p>
+<el-code>variable lightBlue set to 0x80abff</el-code><br>
+<el-code>constant deepPink set to 0xf74b80</el-code><br>
+
+<p>Note that in Elan code a hexadecimal colour value is preceded by <el-code>0x</el-code>, whereas in an Html stylesheet it is preceded by <el-code>#</el-code>. Also, the standard colour names may not correspond exactly.</p>
+
+<h2 id="h58">Reading keys &#8216;on the fly&#8217;</h2>
+<p>In some applications &#8211; especially in games, for example &#8211; you want the program to react to a key pressed by the user, but without holding up the program to wait for value to be input. </p>
+<p>Whether your application makes use graphics, or just uses the Console for text, reading keystrokes &#8216;on the fly&#8217; is done via one of two methods:</p>
+<el-code>let key be getKey()</el-code><br>
+<el-code>let key, modifier be getKeyWithModifier()</el-code><br>
+
+<p>Notes</p>
+<li>When the <el-code>getKey</el-code> is called, the system does not wait for a response. If a key has been pressed then that will be returned as a <el-code>String</el-code> e.g. <el-code>"a"</el-code>.</li>
+<li>Non-printable keys will be returned in the form: <el-code>"Backspace"</el-code>,"<el-code>Enter"</el-code>,<el-code>"ArrowDown"</el-code>,..</li>
+<li>If no key has been pressed (since the last time the method was called), it will return the empty string <el-code>""</el-code>. </li>
+<li>Pressing just the Shift, Ctrl (Cmd under macOS), or Alt keys will not be detected by <el-code>getKey</el-code>. To read those keys use&#8230;</li>
+<li>getKeyWithModifier</el-code> which returns a 2-tuple containing  the key pressed plus any &#8216;modifier&#8217; key such a <el-code>Shift</el-code>, <el-code>Ctrl</el-code>, or <el-code>Alt</el-code> (or the empty string if no modifier key is pressed).</li>
+<li>Both of these <el-code>getKey</el-code> methods are <a href="#System_methods">System methods</a> because they have a dependency on the system and so may only be used within a <el-code>procedure</el-code> or in <el-code>main</el-code>.</li>
+<p>Use the procedure method <el-code>clearKeyBuffer()</el-code> if you want to enforce that the user cannot get too far ahead of the program by hitting keys in very rapid succession.</p>
+<el-code>waitForAnyKey</el-code><br>
+<p>pauses the execution of the program until the user presses any single key. The identity of the key is not captured though. Example of use:</p>
+
+<el-code-block>
+    <el-statement class="ok" id="print3" tabindex="0"><el-kw>print </el-kw><el-field id="expr4" class="optional ok" tabindex="0"><el-txt>"<el-lit>Press any key to continue..</el-lit>"</el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Field may contain a literal value, a reference to a variable, or an expression">?</el-help></el-field><el-msg></el-msg><el-fr>2</el-fr></el-statement>
+    <el-statement class="ok" id="call5" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident6" class="ok" tabindex="0"><el-txt><el-method>waitForAnyKey</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="The name of the procedure to be called (starting lower-case). Alternatively, a 'dotted-call':  the name of a variable or property, followed by a ''' and the name of the procedure method to call on that 'instance'.">?</el-help></el-field>(<el-field id="args7" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i></i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="list of zero or more arguments, comma separated. Each argument may be a literal value, variable, or simple expression.">?</el-help></el-field>)<el-msg></el-msg><el-fr>3</el-fr></el-top></el-statement>
+    <el-statement class="ok" id="call8" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident9" class="ok" tabindex="0"><el-txt><el-method>clearPrintedText</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="The name of the procedure to be called (starting lower-case). Alternatively, a 'dotted-call':  the name of a variable or property, followed by a ''' and the name of the procedure method to call on that 'instance'.">?</el-help></el-field>(<el-field id="args10" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i></i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="list of zero or more arguments, comma separated. Each argument may be a literal value, variable, or simple expression.">?</el-help></el-field>)<el-msg></el-msg><el-fr>4</el-fr></el-top></el-statement>
+    <el-statement class="ok" id="print11" tabindex="0"><el-kw>print </el-kw><el-field id="expr12" class="optional ok" tabindex="0"><el-txt>"<el-lit>Next page</el-lit>"</el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Field may contain a literal value, a reference to a variable, or an expression">?</el-help></el-field><el-msg></el-msg><el-fr>5</el-fr></el-statement>
+</el-code-block>
+
+
+
+<hR><p align=left><a name="Bottom"></a>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Top">Top</a>
+</body>
+</html>
