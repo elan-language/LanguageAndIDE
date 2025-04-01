@@ -15,7 +15,7 @@ import {
 
 suite("Header", () => {
   test("Pass_hash", async () => {
-    const code = `# 1c668efb32f64c556b7b28d151b19a3818353937c63cd3ad2aad314655036110 ${testHeaderVersion} valid
+    const code = `# 5904cbdc7b13419a3719705bf8fa16ba218060e9dd1ba274b4af2d3d7d303d74 Elan 1.0.0 valid
 
 main
   # My first program
@@ -32,6 +32,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(hash, new DefaultProfile(), transforms());
     fileImpl.setIsProduction(true);
+    fileImpl.setVersion(1, 0, 0, "");
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
