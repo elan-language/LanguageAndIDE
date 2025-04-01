@@ -15,7 +15,7 @@ import {
 
 suite("Header", () => {
   test("Pass_hash", async () => {
-    const code = `# 2bca04c2bf83ece48bc494cb0d50099b2a3732ebf88773acc94f5a5f8a49cf99 ${testHeaderVersion} valid
+    const code = `# 1c668efb32f64c556b7b28d151b19a3818353937c63cd3ad2aad314655036110 ${testHeaderVersion} valid
 
 main
   # My first program

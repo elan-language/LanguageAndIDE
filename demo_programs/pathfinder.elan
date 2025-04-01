@@ -1,4 +1,4 @@
-# f1b9ab8eaf48288a06201968a6003840a22b537cc09554f257b5d5a2c03c35c0 Elan Beta 9 valid
+# 2d254a00818ed0d269674ed7b128bfde1095fead67066cfadb2e661880252d7c Elan 0.10.0-Beta valid
 
 main
   let start be newPoint(5, 5)

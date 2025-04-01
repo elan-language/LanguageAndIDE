@@ -1,4 +1,4 @@
-# 44dea1489987d850e11a3315a7f79956bfd4fafb17e0ba21f53dabb41903db83 Elan Beta 9 valid
+# b4c104814192dfdcb61e1a77c4a65f068234f1093548d5609e6e455580e856c8 Elan 0.10.0-Beta valid
 
 main
   call playGame()

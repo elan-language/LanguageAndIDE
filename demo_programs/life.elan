@@ -1,4 +1,4 @@
-# 6d1b55124925a866f70c7281f1766caf3086fc1be3ac2624ac308d2748611a67 Elan Beta 9 valid
+# abf1c9d8bc3002cb6d593873f054489adff69db086e0eb4b1fc0c337af281e85 Elan 0.10.0-Beta valid
 
 main
   variable grid set to new Array2D<of Int>(40, 30, white)

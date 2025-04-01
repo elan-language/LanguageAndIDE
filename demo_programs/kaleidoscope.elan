@@ -1,4 +1,4 @@
-# 46900198013b1a19b5b0a1d34fd26cd42fedf314bfe294bb7ad6c47f3fc9a90e Elan Beta 9 valid
+# 21fb7c34d839c8bcbd22a74b5b7a1d43afd6ca16a6e1f45cea9cc76718b07a95 Elan 0.10.0-Beta valid
 
 main
   variable blocks set to new Array2D<of Int>(40, 30, white)
