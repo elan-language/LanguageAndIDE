@@ -73,6 +73,10 @@ import { isSymbol, symbolMatches } from "./symbols/symbol-helpers";
 // for web editor bundle
 export { CodeSourceFromString };
 
+export const fileErrorPrefix = `Cannot load file:`;
+
+const cannotLoadFile = `${fileErrorPrefix} it has been created or modified outside Elan IDE`;
+
 export class FileImpl implements File, Scope {
   currentHash: string = "";
   isParent: boolean = true;
@@ -706,12 +710,14 @@ export class FileImpl implements File, Scope {
     }
 
     if (fileMajor !== this.version.major) {
-      throw new ElanFileError(`This file must be loaded into an Elan IDE version ${fileMajor}`);
+      throw new ElanFileError(
+        `${fileErrorPrefix} This file must be loaded into an Elan IDE version ${fileMajor}`,
+      );
     }
 
     if (fileMinor > this.version.minor) {
       throw new ElanFileError(
-        `This file must be loaded into an Elan IDE version ${fileMajor}.${fileMinor}`,
+        `${fileErrorPrefix} This file must be loaded into an Elan IDE version ${fileMajor}.${fileMinor}`,
       );
     }
   }
@@ -824,5 +830,3 @@ export class FileImpl implements File, Scope {
     parentHelper_updateBreakpoints(this, event);
   }
 }
-
-export const cannotLoadFile = `Cannot load file: it has been created or modified outside Elan IDE`;

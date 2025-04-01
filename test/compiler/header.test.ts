@@ -162,6 +162,47 @@ end main`;
     fileImpl.setVersion(2, 0, 0, "");
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParseWithMessage(fileImpl, "This file must be loaded into an Elan IDE version 1");
+    assertDoesNotParseWithMessage(
+      fileImpl,
+      "Cannot load file: This file must be loaded into an Elan IDE version 1",
+    );
+  });
+
+  test("Fail_versionMajor2", async () => {
+    const code = `# 5904cbdc7b13419a3719705bf8fa16ba218060e9dd1ba274b4af2d3d7d303d74 Elan 1.0.0 valid
+
+main
+  # My first program
+  print "Hello World!"
+end main`;
+
+    const fileImpl = new FileImpl(hash, new DefaultProfile(), transforms());
+    fileImpl.setIsProduction(true);
+    fileImpl.setVersion(0, 0, 0, "");
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParseWithMessage(
+      fileImpl,
+      "Cannot load file: This file must be loaded into an Elan IDE version 1",
+    );
+  });
+
+  test("Fail_versionMinor", async () => {
+    const code = `# d8a5c891665b4f3437fc68104c0a967bb9d95ac26d83f2c906ea3913938ba452 Elan 1.1.0 valid
+
+main
+  # My first program
+  print "Hello World!"
+end main`;
+
+    const fileImpl = new FileImpl(hash, new DefaultProfile(), transforms());
+    fileImpl.setIsProduction(true);
+    fileImpl.setVersion(1, 0, 0, "");
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParseWithMessage(
+      fileImpl,
+      "Cannot load file: This file must be loaded into an Elan IDE version 1.1",
+    );
   });
 });

@@ -3,7 +3,7 @@ import { handleClick, handleDblClick, handleKey } from "../editorHandlers";
 import { ElanCutCopyPasteError } from "../elan-cut-copy-paste-error";
 import { ElanRuntimeError } from "../elan-runtime-error";
 import { DefaultProfile } from "../frames/default-profile";
-import { CodeSourceFromString, FileImpl, cannotLoadFile } from "../frames/file-impl";
+import { CodeSourceFromString, fileErrorPrefix, FileImpl } from "../frames/file-impl";
 import { editorEvent } from "../frames/interfaces/editor-event";
 import { File } from "../frames/interfaces/file";
 import { Profile } from "../frames/interfaces/profile";
@@ -456,7 +456,7 @@ async function showError(err: Error, fileName: string, reset: boolean) {
 
   file.fileName = fileName;
 
-  if (err.message === cannotLoadFile) {
+  if (err.message?.startsWith(fileErrorPrefix)) {
     systemInfoPrintLine(err.message);
   } else if (err.stack) {
     let msg = "";
