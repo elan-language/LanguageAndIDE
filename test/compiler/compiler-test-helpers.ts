@@ -20,6 +20,10 @@ export function assertDoesNotParse(file: FileImpl) {
   assert.ok(file.parseError);
 }
 
+export function assertDoesNotParseWithMessage(file: FileImpl, msg : string) {
+  assert.strictEqual(file.parseError, msg, "Incorrect parse error: " + file.parseError);
+}
+
 export function assertStatusIsValid(file: FileImpl) {
   assert.strictEqual(file.readParseStatus(), ParseStatus.valid);
 }

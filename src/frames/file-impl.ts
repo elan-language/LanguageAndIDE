@@ -1,3 +1,4 @@
+import { ElanFileError } from "../elan-file-error";
 import { elanVersion, isElanProduction } from "../production";
 import { StdLibSymbols } from "../standard-library/std-lib-symbols";
 import { AssertOutcome } from "../system";
@@ -653,7 +654,7 @@ export class FileImpl implements File, Scope {
       this.getFirstChild().select(true, false);
       this.updateAllParseStatus();
     } catch (e) {
-      if (e instanceof Error && e.message === cannotLoadFile) {
+      if (e instanceof ElanFileError) {
         this.parseError = e.message;
       } else {
         this.parseError = `Parse error before: ${source.getRemainingCode().substring(0, 100)}: ${e instanceof Error ? e.message : e}`;
@@ -672,7 +673,7 @@ export class FileImpl implements File, Scope {
     const newHash = await this.getHash(toHash);
 
     if (fileHash !== newHash && (this.isProduction || fileHash !== "FFFF")) {
-      throw new Error(cannotLoadFile);
+      throw new ElanFileError(cannotLoadFile);
     }
   }
 
@@ -686,14 +687,14 @@ export class FileImpl implements File, Scope {
       return [parseInt(tokens[0], 10), tokens[1]];
     }
 
-    throw new Error(cannotLoadFile);
+    throw new ElanFileError(cannotLoadFile);
   }
 
   validateVersion(version: string) {
     const tokens = version.split(".");
 
     if (tokens.length !== 3) {
-      throw new Error(cannotLoadFile);
+      throw new ElanFileError(cannotLoadFile);
     }
 
     const fileMajor = parseInt(tokens[0], 10);
@@ -701,15 +702,17 @@ export class FileImpl implements File, Scope {
     const [filePatch, _filePreRelease] = this.getPatch(tokens[2]);
 
     if (isNaN(fileMajor) || isNaN(fileMinor) || isNaN(filePatch)) {
-      throw new Error(cannotLoadFile);
+      throw new ElanFileError(cannotLoadFile);
     }
 
-    if (fileMajor < this.version.major) {
-      throw new Error("something");
+    if (fileMajor !== this.version.major) {
+      throw new ElanFileError(`This file must be loaded into an Elan IDE version ${fileMajor}`);
     }
 
-    if (fileMajor > this.version.major || fileMinor > this.version.minor) {
-      throw new Error("something");
+    if (fileMinor > this.version.minor) {
+      throw new ElanFileError(
+        `This file must be loaded into an Elan IDE version ${fileMajor}.${fileMinor}`,
+      );
     }
   }
 
@@ -719,7 +722,7 @@ export class FileImpl implements File, Scope {
       const header = code.substring(0, eol > 0 ? eol : undefined);
       const tokens = header.split(" ");
       if (tokens.length !== 5 || tokens[0] !== "#" || tokens[2] !== "Elan") {
-        throw new Error(cannotLoadFile);
+        throw new ElanFileError(cannotLoadFile);
       }
 
       await this.validateHash(tokens[1], code);
