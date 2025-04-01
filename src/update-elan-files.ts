@@ -6,7 +6,7 @@ import { elanVersion } from "./production";
 import { hash } from "./util";
 import { transforms } from "./frames/syntax-nodes/ast-helpers";
 
-const dir = `${__dirname}\\..\\..\\demo_programs\\`;
+const dir = `${__dirname}/../../demo_programs/`;
 
 function loadFileAsSourceNew(sourceFile: string): string {
   return readFileSync(sourceFile, "utf-8");
