@@ -676,6 +676,43 @@ export class FileImpl implements File, Scope {
     }
   }
 
+  getPatch(patch: string): [number, string] {
+    const tokens = patch.split("-");
+    if (tokens.length === 1) {
+      return [parseInt(tokens[0], 10), ""];
+    }
+
+    if (tokens.length === 2) {
+      return [parseInt(tokens[0], 10), tokens[1]];
+    }
+
+    throw new Error(cannotLoadFile);
+  }
+
+  validateVersion(version: string) {
+    const tokens = version.split(".");
+
+    if (tokens.length !== 3) {
+      throw new Error(cannotLoadFile);
+    }
+
+    const fileMajor = parseInt(tokens[0], 10);
+    const fileMinor = parseInt(tokens[1], 10);
+    const [filePatch, _filePreRelease] = this.getPatch(tokens[2]);
+
+    if (isNaN(fileMajor) || isNaN(fileMinor) || isNaN(filePatch)) {
+      throw new Error(cannotLoadFile);
+    }
+
+    if (fileMajor < this.version.major) {
+      throw new Error("something");
+    }
+
+    if (fileMajor > this.version.major || fileMinor > this.version.minor) {
+      throw new Error("something");
+    }
+  }
+
   async validateHeader(code: string) {
     if (!this.ignoreHashOnParsing && !this.isEmpty(code)) {
       const eol = code.indexOf("\n");
@@ -686,6 +723,7 @@ export class FileImpl implements File, Scope {
       }
 
       await this.validateHash(tokens[1], code);
+      this.validateVersion(tokens[3]);
     }
   }
 
