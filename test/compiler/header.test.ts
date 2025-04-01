@@ -7,12 +7,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHeader,
+  testHeaderVersion,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("Header", () => {
   test("Pass_hash", async () => {
-    const code = `${testHeader}
+    const code = `# 2bca04c2bf83ece48bc494cb0d50099b2a3732ebf88773acc94f5a5f8a49cf99 ${testHeaderVersion} valid
 
 main
   # My first program
@@ -27,7 +28,8 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(hash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(hash, new DefaultProfile(), transforms());
+    fileImpl.setIsProduction(true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);

@@ -1,4 +1,4 @@
-import { elanVersion, isProduction } from "../production";
+import { elanVersion, isElanProduction } from "../production";
 import { StdLibSymbols } from "../standard-library/std-lib-symbols";
 import { AssertOutcome } from "../system";
 import { AbstractSelector } from "./abstract-selector";
@@ -116,6 +116,9 @@ export class FileImpl implements File, Scope {
     }
     this.scratchPad = new ScratchPad();
   }
+
+  private version = elanVersion;
+  private isProduction = isElanProduction;
 
   symbolMatches(id: string, all: boolean): ElanSymbol[] {
     const languageMatches = symbolMatches(id, all, elanSymbols);
@@ -241,8 +244,6 @@ export class FileImpl implements File, Scope {
     return await this.hash(body);
   }
 
-  private version = elanVersion;
-
   private getVersion() {
     return this.version;
   }
@@ -254,8 +255,14 @@ export class FileImpl implements File, Scope {
     return `Elan ${v.major}.${v.minor}.${v.patch}${suffix}`;
   }
 
+  // to allow header generation of new version
   setVersion(major: number, minor: number, patch: number, preRelease: string) {
     this.version = { major: major, minor: minor, patch: patch, preRelease: preRelease };
+  }
+
+  // for testing
+  setIsProduction(flag: boolean) {
+    this.isProduction = flag;
   }
 
   private getProfileName() {
@@ -660,22 +667,25 @@ export class FileImpl implements File, Scope {
     return mains.length > 0;
   }
 
+  async validateHash(fileHash: string, code: string) {
+    const toHash = code.substring(code.indexOf("Elan"));
+    const newHash = await this.getHash(toHash);
+
+    if (fileHash !== newHash && (this.isProduction || fileHash !== "FFFF")) {
+      throw new Error(cannotLoadFile);
+    }
+  }
+
   async validateHeader(code: string) {
-    const msg = cannotLoadFile;
     if (!this.ignoreHashOnParsing && !this.isEmpty(code)) {
       const eol = code.indexOf("\n");
       const header = code.substring(0, eol > 0 ? eol : undefined);
       const tokens = header.split(" ");
-      if (tokens.length !== 6 || tokens[0] !== "#" || tokens[2] !== "Elan") {
-        throw new Error(msg);
+      if (tokens.length !== 5 || tokens[0] !== "#" || tokens[2] !== "Elan") {
+        throw new Error(cannotLoadFile);
       }
-      const fileHash = tokens[1];
-      const toHash = code.substring(code.indexOf("Elan"));
-      const newHash = await this.getHash(toHash);
 
-      if (fileHash !== newHash && (isProduction || fileHash !== "FFFF")) {
-        throw new Error(msg);
-      }
+      await this.validateHash(tokens[1], code);
     }
   }
 
