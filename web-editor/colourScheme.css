@@ -1,15 +1,16 @@
 :root {
     --defaultBackground: white;
+    
+    /* Backgrounds */
+    --selection:rgb(173, 214, 255); /* All text colours */
+    --ok: rgb(169, 247, 169); /* Black text */
+    --warning: rgb(246, 193, 94); /* Both black and white text*/
+    --error:  rgb(255, 90, 90); /* Black text */
+    --optional:  lightgrey; /* White text */
+
+    /* Text colours - to work on white or the --selection background */
     --defaultText: black;
     --reverseText: white;
-    --help: rgb(68, 114, 196);
-    
-    --selection:rgb(173, 214, 255);
-    --ok: rgb(169, 247, 169); 
-    --warning: rgb(246, 193, 94);
-    --error:  rgb(255, 90, 90);
-    --optional:  lightgrey;
-
     --keyword: rgb(56,0,255);
     --method: rgb(152, 118, 49);
     --type:  rgb(38,127,153);

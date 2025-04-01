@@ -1,0 +1,22 @@
+:root {
+    --defaultBackground: white;
+    
+    /* Backgrounds */
+    --selection:#88ccee; /* All text colours */
+    --ok: #009988; /* Black text */
+    --warning: #ee7733; /* Both black and white text*/
+    --error:  #ee3377; /* Black text */
+    --optional:  #bbbbbb; /* White text */
+
+    /* Text colours - to work on white or the --selection background */
+    --defaultText: black;
+    --reverseText: white;
+    --keyword: #332288;
+    --method: #999933;
+    --type:  #44aa99;
+    --string:  #882255;
+    --comment: #173;
+    --namedValue: #aa4499;
+
+    /* Acknowledgment: https://cran.r-project.org/web/packages/khroma/vignettes/tol.html#qualitative-data */
+}
