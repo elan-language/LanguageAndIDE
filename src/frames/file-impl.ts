@@ -706,21 +706,27 @@ export class FileImpl implements File, Scope {
 
       const fileMajor = parseInt(tokens[0], 10);
       const fileMinor = parseInt(tokens[1], 10);
-      const [filePatch, _filePreRelease] = this.getPatch(tokens[2]);
+      const [filePatch, filePreRelease] = this.getPatch(tokens[2]);
 
       if (isNaN(fileMajor) || isNaN(fileMinor) || isNaN(filePatch)) {
         throw new ElanFileError(cannotLoadFile);
       }
 
+      if (filePreRelease) {
+        throw new ElanFileError(
+          `${fileErrorPrefix} it was created in a pre-release version of Elan IDE`,
+        );
+      }
+
       if (fileMajor !== this.version.major) {
         throw new ElanFileError(
-          `${fileErrorPrefix} This file must be loaded into an Elan IDE version ${fileMajor}`,
+          `${fileErrorPrefix} it must be loaded into an Elan IDE version ${fileMajor}`,
         );
       }
 
       if (fileMinor > this.version.minor) {
         throw new ElanFileError(
-          `${fileErrorPrefix} This file must be loaded into an Elan IDE version ${fileMajor}.${fileMinor}`,
+          `${fileErrorPrefix} it must be loaded into an Elan IDE version ${fileMajor}.${fileMinor}`,
         );
       }
     }

@@ -164,7 +164,7 @@ end main`;
 
     assertDoesNotParseWithMessage(
       fileImpl,
-      "Cannot load file: This file must be loaded into an Elan IDE version 1",
+      "Cannot load file: it must be loaded into an Elan IDE version 1",
     );
   });
 
@@ -183,7 +183,7 @@ end main`;
 
     assertDoesNotParseWithMessage(
       fileImpl,
-      "Cannot load file: This file must be loaded into an Elan IDE version 1",
+      "Cannot load file: it must be loaded into an Elan IDE version 1",
     );
   });
 
@@ -202,7 +202,26 @@ end main`;
 
     assertDoesNotParseWithMessage(
       fileImpl,
-      "Cannot load file: This file must be loaded into an Elan IDE version 1.1",
+      "Cannot load file: it must be loaded into an Elan IDE version 1.1",
+    );
+  });
+
+  test("Fail_preRelease", async () => {
+    const code = `# 7110aed3a8d6014e80c179c34c9c19dcb2b291df9f216505927a38d95dda099a Elan 1.1.0-Beta valid
+
+main
+  # My first program
+  print "Hello World!"
+end main`;
+
+    const fileImpl = new FileImpl(hash, new DefaultProfile(), transforms());
+    fileImpl.setIsProduction(true);
+    fileImpl.setVersion(1, 1, 0, "");
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParseWithMessage(
+      fileImpl,
+      "Cannot load file: it was created in a pre-release version of Elan IDE",
     );
   });
 });
