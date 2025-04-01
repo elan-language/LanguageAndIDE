@@ -1,4 +1,4 @@
-# 958e5042bc1f925c1aee808dbbfe181755370e90ef868f66fd149e0bfc009058 Elan Beta 9 valid
+# 9aae519bbc685f7bd0f68d223ddd4b61887a6453524aa49b24e91d7ff028d05e Elan 0.10.0-Beta valid
 
 main
   let t be new Turtle()

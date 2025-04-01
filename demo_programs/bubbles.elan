@@ -1,4 +1,4 @@
-# 5493edeb31aea4f73d5376d994c7ecb42f0ac667ae62857aff4da65060c7fd31 Elan Beta 9 valid
+# 842c576e60991d91ec8e5047bf08d2fcc878135a03667d5d1c2596d7c06653b9 Elan 0.10.0-Beta valid
 
 main
   let bubbles be new List<of CircleVG>()

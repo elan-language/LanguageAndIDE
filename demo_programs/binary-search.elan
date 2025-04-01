@@ -1,4 +1,4 @@
-# 07a2ff7502c3c7ae5c6fca6d69841c9e95c0b35d496f7287cb28a66127dde0db Elan Beta 9 valid
+# 31e33d6ee3eb20b1e0dd5cfc6cf78d7388ae3fd9d01c80810c09e888c903ac3f Elan 0.10.0-Beta valid
 
 main
   let fruit be example.asList()

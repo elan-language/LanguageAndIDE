@@ -1,4 +1,4 @@
-# 970474937c7af4510fb4a4497479e22fded9354efc8b1abd8bdbe62a4bcab383 Elan Beta 9 valid
+# 4823ec7909a69fc33f6a67fa8d1e4a0e1414943399a0693cb9accc5ac4ac8b7d Elan 0.10.0-Beta valid
 
 main
   let blocks be new Array2D<of Int>(40, 30, white)
