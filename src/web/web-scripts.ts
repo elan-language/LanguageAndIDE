@@ -47,6 +47,7 @@ const autoSaveButton = document.getElementById("auto-save") as HTMLButtonElement
 const undoButton = document.getElementById("undo") as HTMLButtonElement;
 const redoButton = document.getElementById("redo") as HTMLButtonElement;
 const fileButton = document.getElementById("file") as HTMLButtonElement;
+const logoutButton = document.getElementById("logout") as HTMLButtonElement;
 
 const codeTitle = document.getElementById("code-title") as HTMLDivElement;
 const parseStatus = document.getElementById("parse") as HTMLDivElement;
@@ -100,6 +101,14 @@ displayDiv.addEventListener("click", () => {
 trimButton.addEventListener("click", async () => {
   file.removeAllSelectorsThatCanBe();
   await renderAsHtml(false);
+});
+
+logoutButton.addEventListener("click", async () => {
+  window.location.reload();
+});
+
+addEventListener("beforeunload", (event) => {
+  event.preventDefault();
 });
 
 function resumeProgram() {
@@ -652,6 +661,7 @@ function updateDisplayValues() {
         clearGraphicsButton,
         clearSystemInfoButton,
         fileButton,
+        loadButton,
       ],
       msg,
     );
@@ -725,6 +735,13 @@ function updateDisplayValues() {
           disable([autoSaveButton], "Code must be parsing in order to save");
         }
       }
+    }
+
+    if (userName) {
+      logoutButton.removeAttribute("hidden");
+      enable(logoutButton, "Log out");
+    } else {
+      logoutButton.setAttribute("hidden", "hidden");
     }
   }
 }
@@ -1717,8 +1734,3 @@ function runTestsInner() {
     updateDisplayValues();
   }
 }
-
-addEventListener("beforeunload", (event) => {
-  // Recommended
-  event.preventDefault();
-});
