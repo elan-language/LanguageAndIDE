@@ -6,6 +6,7 @@ import { CodeSourceFromString, fileErrorPrefix, FileImpl } from "../frames/file-
 import { editorEvent } from "../frames/interfaces/editor-event";
 import { File } from "../frames/interfaces/file";
 import { Profile } from "../frames/interfaces/profile";
+import { Group, Individual } from "../frames/interfaces/user-config";
 import { CompileStatus, ParseStatus, RunStatus, TestStatus } from "../frames/status-enums";
 import { StdLib } from "../standard-library/std-lib";
 import {
@@ -410,14 +411,25 @@ if (okToContinue) {
         userName = prompt("You must login with a valid user id")?.trim();
       }
 
-      const user = userConfig.users.find((u) => u.userName === userName);
-      const profileName = user?.profileName;
-      const colourScheme = user?.colourScheme;
+      const ucUserName = userName.toUpperCase();
+
+      let userOrGroup: Individual | Group | undefined = userConfig.students.find(
+        (u) => u.userName.toUpperCase() === ucUserName,
+      );
+      if (!userOrGroup) {
+        userOrGroup = userConfig.groups.find((g) =>
+          g.members.map((m) => m.toUpperCase()).includes(ucUserName),
+        );
+      } else {
+        const colourScheme = userOrGroup?.colourScheme;
+        if (colourScheme) {
+          changeCss(colourScheme);
+        }
+      }
+
+      const profileName = userOrGroup?.profileName;
 
       profile = profileName ? await fetchProfile(profileName) : defaultProfile;
-      if (colourScheme) {
-        changeCss(colourScheme);
-      }
     }
 
     await setup(profile);

@@ -1,0 +1,21 @@
+# ebf29aac867f60037380cf1d5698c7872b66f3751d4d94f85d35091803060fe7 Elan Beta 9 valid
+
+main
+  print "<style>"
+  print "h1 openBrace"
+  print "color: DarkRed;"
+  print "font-size: 24pt;"
+  print closeBrace
+  print "p openBrace"
+  print "font-family: Serif;"
+  print closeBrace
+  print "</style>"
+  print "<h1>New heading</h1>"
+  print "<p>some new text</p>"
+  # 
+  print "<style>h1" + openBrace + "color:DarkRed;font-size:24pt;" + closeBrace + "p" + openBrace + "font-family:Serif;" + closeBrace + "</style>"
+end main
+
+test 
+
+end test

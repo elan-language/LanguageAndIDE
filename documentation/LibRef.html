@@ -265,12 +265,70 @@ or into existing variables of the correct Type:</p>
 </ul>
 <!-- #endregion-->
 <!-- #region Standard data structures-->
- <!--  #region Heading & intro-->
+<!--  #region Heading & intro-->
 <h1 id="standard_data-structures">Standard data structures</h1>
+<p>The four 'standard' data structures defined in the Elan library are summarised in this table:</p>
 
-<p>The four 'standard' data structures defined in the Elan library are summarised in the this table:</p>
-
-<img src="images/standard-data-structure-summary.png"  width="100%" >
+<table>
+ <tr><th><br></th><th>Array</th><th> Array2D</th><th>List</th><th>Dictionary</th></tr>
+ <tr>
+  <td>Size</td><td>Static</td><td>Static</td><td>Dynamic</td><td>Dynamic</td></tr>
+  <tr><td>Type form<br>(example)</td>
+  <td><el-code>Array&lt;of String&gt;</el-code><br>of Type <el-code>Int</el-code>, <el-code>Float</el-code>, <el-code>String</el-code>, or <el-code>Boolean</el-code></td>
+  <td><el-code>Array2D&lt;of String&gt;</el-code><br>of Type <el-code>Int</el-code>, <el-code>Float</el-code>, <el-code>String</el-code></el-code>, or <el-code>Boolean</el-code></td>
+  <td><el-code>List&lt;of String&gt;</el-code><br>of any Type including <el-code>Array</el-code><br> &ndash; or <el-code>List</el-code> for 'jagged' data</td>
+  <td><el-code>Dictionary&lt;of String, Int&gt;</el-code><br>key must be <el-code>Int</el-code>, <el-code>Float</el-code>, <el-code>String</el-code>, <el-code>Boolean</el-code>, or any<el-code>record</el-code>. Value Type may be anything</td>
+ </tr>
+ <tr>
+  <td>literal</td>
+  <td>N/A, but can convert literal list:<br><el-code>["a","b","c"].asArray()</el-code></td>
+  <td>N/A</td>
+  <td><el-code>["a","b","c"]</el-code></td>
+  <td><el-code>["a":3, "b":5]</el-code></td>
+ </tr>
+ <tr>
+  <td>create</td>d
+  <td><el-code>new Array&lt;of String&gt;(10, "")</el-code><br>any initial value of correct Type</td>
+  <td><el-code>new Array2D&lt;of String&gt;(8,8, "")</el-code><br>dimensions may differ ('rectangular')<br>any initial value of correct Type</td>
+  <td><el-code>new List&lt;of Int&gt;()</el-code><br>created empty<br>can be 'of' any Type</td>
+  <td><el-code>new Dictionary&lt;of String, Int&gt;()</el-code><br>Key Type must be simple value or a <el-code>record</el-code><br>Value Type can be any</td>
+ </tr>
+ <tr>
+  <td>read by index</td>
+  <td><el-code>a[3]</el-code></td>
+  <td><el-code>a2[3, 4]</el-code></td>
+  <td><el-code>li[2]</el-code></td>
+  <td><el-code>d["b"]</el-code></td>
+ </tr>
+ <tr>
+  <td>read range</td>
+  <td><el-code>a[2..5]</el-code><br>lower bound is <em>inclusive</em><br>upper bound is <em>exclusive</em></td>
+  <td>N/A</td>
+  <td><el-code>li[2..5]</el-code><br>lower bound is <em>inclusive</em><br>upper bound is <em>exclusive</em></td>
+  <td> N/A</td>
+ </tr>
+ <tr>
+  <td>procedure methods<br>to mutate contents</td>
+  <td><el-code>put(2, "x")</el-code></td>
+  <td><el-code>put(3, 5, "x")</el-code></td>
+  <td><el-code><el-code>append("x")</el-code></el-code><br><el-code>appendList(li2)</el-code><br><el-code>insert(2,"x")</el-code><br><el-code>put(2, "x")</el-code><br><el-code>removeAt(2)</el-code><br><el-code>removeValue("x")</el-code></td>
+  <td><el-code>put("c", 4)<br><el-code>removeAt("c")</el-code></el-code></td>
+ </tr>
+ <tr>
+  <td>function methods<br>to make changes<br>by returning new<br>structure</td>
+  <td><el-code>withPut(2, "x")</el-code></td>
+  <td><el-code> withPut(3, 5, "x")</el-code></td>
+  <td><el-code>withAppend("x")</el-code><br><el-code>withAppendList(li2)</el-code><br><el-code>withInsert(2, "x")</el-code><br><el-code>withPut(2,"x")</el-code><br><el-code>withRemoveAt(2)</el-code><br><el-code>withRemoveValue("x")</el-code></td>
+  <td><el-code>withPut("c",4)</el-code><br><el-code>withRemoveAt("c")</el-code></td>
+ </tr>
+ <tr>
+  <td>Other function methods</td>
+  <td><el-code>asList</el-code><br><el-code>sString</el-code><br><el-code>contains</el-code><br><el-code>indexOf</el-code><br><el-code>length</el-code></td>
+  <td><el-code>asString</el-code><br><el-code>contains</el-code><br><el-code>indexOf</el-code> returns Tuple with row & column index values<br><el-code>length</el-code></td>
+  <td><el-code>asArray asSet asString</el-code><br><el-code>contains</el-code><br> <el-code>indexOf</el-code><br><el-code>join</el-code><br><el-code>length</el-code><br><el-code>map filter reduce</el-code><br><el-code>maxBy minBy sortBy</el-code></td>
+  <td><el-code>asString</el-code><br><el-code>keys</el-code> returns a List<br><el-code>values</el-code> returns a List</td>
+ </tr>
+</table>
 
 <p>All four are 'mutable' &ndash; meaning that their contents may be changes directly by calling the various <i>procedure</i> dot methods that each
 Type defines.
@@ -353,9 +411,68 @@ differences. Immutable data structures are intended specifically to facilitate t
  but some are also useful within other programming paradigms.</p>
 
  <p>The five immutable data structures defined in the Elan library are summarised in this table:</p>
-
- <img src="images/immutable-data-structure-summary.png"  width="100%" >
-
+<table>
+ <tr>
+  <th></th><th>ListImmutable</th><th>DictionaryImmutable</th><th>Set</th><th>Stack</th><th>Queue</th>
+ </tr>
+ <tr>
+  <td>Type</td>
+  <td><el-code>ListImmutable&lt;of String&gt;</el-code><br>Item Type must be immutable</td>
+  <td><el-code>DictionaryImmutable&lt;of String, Int&gt;</el-code><br>Key Type must be <el-code>Int</el-code>, <el-code>Float</el-code>, <el-code>String</el-code>, <el-code>Boolean</el-code> or any <el-code>record</el-code><br>Value Type may be any immutable Type</td>
+  <td><el-code>Set&lt;of String&gt;</el-code><br>Item Type must be immutable</td>
+  <td><el-code>Stack&lt;of String&gt;</el-code><br>Item Type must be immutable</td>
+  <td><el-code>Queue&lt;of String&gt;</el-code><br>Item Type must be immutable</td>
+ </tr>
+ <tr>
+  <td>literal</td>
+  <td><el-code>{a","b","c"}</el-code></td>
+  <td><el-code>{"a":3, "b":5}</el-code></td>
+  <td>None, but can convert literal list:<br><el-code>["a","b","c"].asSet()</el-code></td>
+  <td>None</td>
+  <td>None</td>
+ </tr>
+ <tr>
+  <td>create</td>
+  <td><el-code>new ListImmutable&lt;ofString&gt;()</el-code><br>created empty<br>must be 'of' an immutable Type</td>
+  <td><el-code>new DictionaryImmutable&lt;of String, Int&gt;()</el-code><br>created empty <br>Key <em>and</em> Value Types must be immutable</td>
+  <td><el-code>new Set&lt;of String&gt;()</el-code><br> created empty<br>must be 'of' an immutable Type</td>
+  <td><el-code>new Stack&lt;of String&gt;()</el-code></td>
+  <td><el-code>new Queue&lt;of String&gt;()</el-code></td>
+ </tr>
+ <tr>
+  <td>read by Key</td>
+  <td><el-code>lim[2</el-code></td>
+  <td><el-code>di["b"]</el-code></td>
+  <td>N/A</td>
+  <td>N/A</td>
+  <td>N/A</td>
+ </tr>
+ <tr>
+  <td>read range</td>
+  <td><el-code>lim[2..5]</el-code><br>upper bound <em>exclusive</em></td>
+  <td>N/A</td>
+  <td>N/A</td>
+  <td>N/A</td>
+  <td>N/A</td>
+ </tr>
+ <tr>
+  <td>function methods<br>that return<br>new structure<br>of same Type</td>
+  <td><el-code>withAppend("x")</el-code><br><el-code>withAppendList(li2)</el-code> (immutable)<br><el-code>withInsert(2, "x")</el-code><br><el-code>withPut(2, "x")</el-code><br><el-code>withRemoveAt(2)</el-code><br><el-code>withRemoveValue("x")</el-code></td>
+  <td><el-code>withPut("c",4)</el-code><br><el-code>withRemoveAt("c")</el-code></td>
+  <td><el-code>add</el-code><br><el-code>difference</el-code><br><el-code>intersection</el-code><br><el-code>remove</el-code><br><el-code>union</el-code></td>
+  <td><el-code>push</el-code><br><el-code>pop</el-code> returns a tuple<br>comprising the popped Value<br>and the updated stack</td>
+  <td><el-code>enqueue</el-code><br><el-code>dequeue</el-code> returns a tuple<br>comprising the popped<br>Value and the updated queue</td>
+ </tr>
+ <tr>
+  <td>Other function methods</td>
+  <td><el-code>asString</el-code><br><el-code>contains</el-code><br><el-code>filter</el-code><br><el-code>indexOf</el-code><br><el-code>join</el-code><br><el-code>length</el-code><br><el-code>map</el-code><br><el-code>maxBy</el-code><br><el-code>minBy</el-code><br><el-code>reduce</el-code><br><el-code>sortBy</el-code></td>
+  <td><el-code>asDictionary</el-code><br><el-code>Keys</el-code> as <el-code>ListImmutable</el-code><br><el-code>Values</el-code> as <el-code>ListImmutable</el-code></td>
+  <td><el-code><el-code>asList</el-code></el-code><br><el-code>asString</el-code><br><el-code>contains</el-code><br><el-code>isDisjointFrom</el-code><br><el-code>isSubsetOf</el-code><br><el-code>isSupersetOf</el-code><br><el-code>length</el-code></td>
+  <td><el-code>peek</el-code><br><el-code>length</el-code></td>
+  <td><el-code>peek</el-code><br><el-code>length</el-code></td>
+ <tr>
+ </tr>
+</table>
  <p>More details on each Type are given below:</p>
 <!--   #region Set-->
 <h2 id="Set_data">Set</h2>
@@ -622,40 +739,46 @@ which the dot methods the following methods may be invoked:</p>
 <p>or you could make the code offer the user options: to save again, or to continue without saving.</p>
 <!-- #endregion-->
 <!--   #region Print Html-->
-<h2 id="Html" class="no-TOC">Printing Html to the Display</h2>
+<h2 id="Html">Printing Html to the Display</h2>
 <p>As well as plain text, it is also possible to print Html to the Display, which will be correctly formatted. For example:</p>
-<pre>
-<!--
-print "<h1 style='color: blue;'>A heading</h1>"
-print "<p>some text</p>"
--->
-</pre>
+
+<el-code-block source="Html_1.elan">
+<el-statement class="ok" id="print5" tabindex="0"><el-kw>print </el-kw><el-field id="expr6" class="optional ok" tabindex="0"><el-txt>"<el-lit>&lt;h1 style='color: blue;'&gt;A heading&lt;/h1&gt;</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="print7" tabindex="0"><el-kw>print </el-kw><el-field id="expr8" class="optional ok" tabindex="0"><el-txt>"<el-lit>&lt;p&gt;some text&lt;/p&gt;</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+</el-code-block>
+
 <p>will produce:</p>
-<img src="images/Pic25.png"  align="MIDDLE" width="277" height="280">
-<h4 class="no-TOC">Note</h4>
+<img src="images/Html_1.png" width="206" height="211">
+<h4 class="no-TOC">Notes</h4>
 <ul>
-<li>For specifying style or other attributes within Html tags, the attribute values should be enclosed in single quotation marks ' as shown. Html will recognise single or double quotation marks, but entering double quotation marks would terminate the Elan string. Alternatively, you could replace each ' by the interpolated constant <el-code>{quotes}</el-code>.
-It is not necessary to put individual lines of Html into separate <el-code>print</el-code> statements &ndash; you can print a string of any length &ndash; but putting tags into separate <el-code>print</el-code> statements can improve the readability of your code.</li>
+<li>For specifying style or other attributes within Html tags, the attribute values should be enclosed in single quotation marks ' as shown above. Html will recognise single or double quotation marks, but entering double quotation marks would terminate the Elan string. Alternatively, you could replace each ' by the interpolated constant <el-code>quotes</el-code>.</li>
+<li>It is not necessary to put individual lines of Html into separate <el-code>print</el-code> statements &ndash; you can print a string of any length &ndash; but putting tags into separate <el-code>print</el-code> statements can improve the readability of your code.</li>
 </ul>
 <h3 class="no-TOC">Using an embedded stylesheet</h3>
-<p>If you want styles to be applied to multiple tags you can embed a stylesheet. For example, the following stylesheet will set the font for all text, and some further details for all headings:</p>
-<!--
-<style>
-  h1 {
-    color: blue;
-    font-size: 24pt;
-  }
-  p {
-    font-family: Helvetica;
-    }
-</style>
--->
-<p>This may be safely coalesced into a single line and many spaces removed:</p>
-<!--
-<style>h1{color:blue;font-size:24pt;}p{font-family:Helvetica;}</style>
--->
-<p>The only problem is with the curly braces { } since, within a literal string, Elan will interpret these as defining an 'interpolation' clause (see <a href="Interpolated string">Interpolated string</a>). This can best be overcome by using the interpolated constants <el-code>{openBrace}</el-code> and <el-code>{closeBrace}</el-code> instead of { and }:</p>
-<el-code>
+<p>If you want styles to be applied to multiple tags you can embed a stylesheet. For example, the following stylesheet will set the font for all text, and some further details for all &lt;h1&gt; headings:</p>
+<el-code-block source="Html_2.elan">
+     <el-statement class="ok" id="print16" tabindex="0"><el-kw>print </el-kw><el-field id="expr17" class="optional ok" tabindex="0"><el-txt>"<el-lit>&lt;style&gt;</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="print18" tabindex="0"><el-kw>print </el-kw><el-field id="expr19" class="optional ok" tabindex="0"><el-txt>"<el-lit>h1 openBrace</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="print20" tabindex="0"><el-kw>print </el-kw><el-field id="expr21" class="optional ok" tabindex="0"><el-txt>"<el-lit>color: DarkRed;</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="print22" tabindex="0"><el-kw>print </el-kw><el-field id="expr23" class="optional ok" tabindex="0"><el-txt>"<el-lit>font-size: 24pt;</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="print24" tabindex="0"><el-kw>print </el-kw><el-field id="expr25" class="optional ok" tabindex="0"><el-txt><el-id>closeBrace</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="print26" tabindex="0"><el-kw>print </el-kw><el-field id="expr27" class="optional ok" tabindex="0"><el-txt>"<el-lit>p openBrace</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="print28" tabindex="0"><el-kw>print </el-kw><el-field id="expr29" class="optional ok" tabindex="0"><el-txt>"<el-lit>font-family: Serif;</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="print30" tabindex="0"><el-kw>print </el-kw><el-field id="expr31" class="optional ok" tabindex="0"><el-txt><el-id>closeBrace</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="print32" tabindex="0"><el-kw>print </el-kw><el-field id="expr33" class="optional ok" tabindex="0"><el-txt>"<el-lit>&lt;/style&gt;</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="print34" tabindex="0"><el-kw>print </el-kw><el-field id="expr35" class="optional ok" tabindex="0"><el-txt>"<el-lit>&lt;h1&gt;New heading&lt;/h1&gt;</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="print36" tabindex="0"><el-kw>print </el-kw><el-field id="expr37" class="optional ok" tabindex="0"><el-txt>"<el-lit>&lt;p&gt;some new text&lt;/p&gt;</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+</el-code-block>
+
+<img src="images/Html_2.png" width="277" height="219">
+
+<p>This may be safely coalesced into a single line with  <el-code>print</el-code> statements and spaces removed:</p>
+<el-code-block source="Html_2.elan">
+     <el-statement class="ok" id="print41" tabindex="0"><el-kw>print </el-kw><el-field id="expr42" class="optional ok" tabindex="0"><el-txt>"<el-lit>&lt;style&gt;h1</el-lit>" + <el-id>openBrace</el-id> + "<el-lit>color:DarkRed;font-size:24pt;</el-lit>" + <el-id>closeBrace</el-id> + "<el-lit>p</el-lit>" + <el-id>openBrace</el-id> + "<el-lit>font-family:Serif;</el-lit>" + <el-id>closeBrace</el-id> + "<el-lit>&lt;/style&gt;</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+</el-code-block>
+<p>This demonstrates how to include a stylesheet's necessary curly braces { } since, within a literal string, Elan would interpret these as defining an 'interpolation' clause (see <a href="Interpolated string">Interpolated string</a>). This is solved by using the interpolated constants <el-code>openBrace</el-code> and <el-code>closeBrace</el-code> instead of { and }:</p>
+<el-code-block source="">
+</el-code-block>
 <!--
 main
   let stylesheet be "<style>h1{openBrace}color:blue;font-size:24pt;{closeBrace}p{openBrace}font-family:Helvetica;{closeBrace}</style>"
@@ -664,11 +787,10 @@ main
   print "<p>plain text</p>"
 end main
 -->
-</el-code>
 </p>Here is the result:</p>
-<img src="images/Pic26.png"  align="MIDDLE" width="277" height="280" >
-<p>Alternatively you could put, say, [ and ] in the original Html stylesheet instead of { and }, and use a function to replace the square brackets with curly braces (defined by their Unicode codepoint values) before use, and get the same result:</p>
-<el-code>
+
+<p>An alternative would be to use, say,  [ and ] in the original Html stylesheet instead of { and }, and have a function replace the square brackets with curly braces (defined by their Unicode codepoint values) before use, and get the same result:</p>
+
 <!--
 main
   let stylesheet be "<style> h1[color:blue;font-size:24pt;],p[font-family:Helvetica;] h1</style>"
@@ -681,7 +803,7 @@ function replaceBrackets(original as String) returns String
   return original.replace("[", unicode(123)).replace("]", unicode(125))
 end function
 -->
-</el-code>
+
 <h4 class="no-TOC">Notes</h4>
 <ul>
 <li>If you define an embedded stylesheet in the manner described above, then this should be printed first, and will then be applied to any subsequent printing of Html within the program. However if the Display is cleared, either by the Clear button in the IDE, or programmatically by calling <el-code>clearPrintedText()</el-code>, then the stylesheet will be removed also.</li>
