@@ -1,5 +1,5 @@
 {
-"name": "TestUser Profile",
+"name": "U6 Profile",
 
 "globals":["main", "procedure", "function",  "constant", "test", "enum", "class", "abstract", "interface", "record","#"],
 "statements":["assert", "call", "each", "else", "for", "if", "let", "match", "otherwise", "print",

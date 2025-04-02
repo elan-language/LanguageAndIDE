@@ -1,5 +1,7 @@
 import { UserConfig } from "./interfaces/user-config";
 
 export class DefaultUserConfig implements UserConfig {
-  "users": [];
+  "students": [];
+  "groups": [];
+  "teachers": [];
 }
