@@ -105,9 +105,10 @@ export class FileImpl implements File, Scope {
   private _showFrameNos: boolean = true;
 
   constructor(
-    private hash: (toHash: string) => Promise<string>,
-    private profile: Profile,
-    private transform: Transforms,
+    private readonly hash: (toHash: string) => Promise<string>,
+    private readonly profile: Profile,
+    private readonly userName: string | undefined,
+    private readonly transform: Transforms,
     allowAnyHeader?: boolean,
   ) {
     this._stdLibSymbols = new StdLibSymbols();
@@ -237,7 +238,7 @@ export class FileImpl implements File, Scope {
     this._frNo = 1;
     const globals = parentHelper_renderChildrenAsHtml(this);
     this.currentHash = await this.getHash();
-    return `<el-header># <el-hash>${this.currentHash}</el-hash> ${this.getVersionString()}${this.getProfileName()}</el-header>\r\n${globals}`;
+    return `<el-header># <el-hash>${this.currentHash}</el-hash> ${this.getVersionString()}${this.getUserName()}</el-header>\r\n${globals}`;
   }
 
   public indent(): string {
@@ -270,9 +271,8 @@ export class FileImpl implements File, Scope {
     this.isProduction = flag;
   }
 
-  private getProfileName() {
-    const profile = this.getProfile();
-    return profile.require_log_on ? ` ${profile.name}` : "";
+  private getUserName() {
+    return this.userName ? ` ${this.userName}` : "";
   }
 
   compileGlobals(): string {
@@ -367,7 +367,7 @@ export class FileImpl implements File, Scope {
 
   renderHashableContent(): string {
     const globals = parentHelper_renderChildrenAsSource(this);
-    let html = `${this.getVersionString()}${this.getProfileName()} ${this.getParseStatusLabel()}\r\n\r\n${globals}`;
+    let html = `${this.getVersionString()}${this.getUserName()} ${this.getParseStatusLabel()}\r\n\r\n${globals}`;
     html = html.endsWith("\r\n") ? html : html + "\r\n"; // To accommodate possibility that last global is a global-comment
     return html;
   }

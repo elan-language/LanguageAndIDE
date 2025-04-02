@@ -74,6 +74,7 @@ suite("Misc Tests", () => {
     const fl = new FileImpl(
       () => Promise.resolve("FFFF"),
       new DefaultProfile(),
+      "",
       transforms(),
       true,
     );

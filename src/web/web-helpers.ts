@@ -1,7 +1,10 @@
 // TODO gradually move functions into here and refactor
 
+import { DefaultProfile } from "../frames/default-profile";
+import { DefaultUserConfig } from "../frames/default-user-config";
 import { Profile } from "../frames/interfaces/profile";
 import { Transforms } from "../frames/interfaces/transforms";
+import { UserConfig } from "../frames/interfaces/user-config";
 import { transform, transformMany } from "../frames/syntax-nodes/ast-visitor";
 
 export async function hash(toHash: string) {
@@ -19,15 +22,37 @@ export function transforms() {
   } as Transforms;
 }
 
-export function fetchProfile() {
-  if (window.location.protocol === "file:") {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const localProfile = (window as any).localProfile as Profile;
-    return localProfile ? Promise.resolve(localProfile) : Promise.reject();
-  } else {
-    const jsonProfile = `profile.json`;
-    return fetch(jsonProfile, { mode: "same-origin" })
-      .then((f) => f.json())
-      .then((j) => j as Profile);
+export async function fetchUserConfig() {
+  const jsonUserConfig = `userConfig.json`;
+  try {
+    const f = await fetch(jsonUserConfig, { mode: "same-origin" });
+    const j = await f.json();
+    return j as UserConfig;
+  } catch {
+    console.warn("user config not found");
+    return new DefaultUserConfig();
+  }
+}
+
+export async function fetchDefaultProfile() {
+  try {
+    const jsonProfile = `./profiles/default.json`;
+    const f = await fetch(jsonProfile, { mode: "same-origin" });
+    const j = await f.json();
+    return j as Profile;
+  } catch {
+    console.warn("default profile not found");
+    return new DefaultProfile();
+  }
+}
+
+export async function fetchProfile(name: string) {
+  try {
+    const f = await fetch(`./profiles/${name}.json`, { mode: "same-origin" });
+    const j = await f.json();
+    return j as Profile;
+  } catch {
+    console.warn(`${name} profile not found`);
+    return new DefaultProfile();
   }
 }

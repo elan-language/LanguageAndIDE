@@ -17,7 +17,7 @@ import { testExtractContextForExpression } from "./testHelpers";
 
 suite("Field Parsing Tests", () => {
   test("parse CommentField", () => {
-    const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
+    const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), "", transforms()));
     const commentStatement = new CommentStatement(main);
     const text = commentStatement.text;
     assert.equal(text.textAsSource(), "");
@@ -31,7 +31,7 @@ suite("Field Parsing Tests", () => {
     );
   });
   test("parse varDefField", () => {
-    const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
+    const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), "", transforms()));
     const variable = new VariableStatement(main);
     const id = variable.name;
     assert.equal(id.textAsSource(), "");
@@ -53,7 +53,7 @@ suite("Field Parsing Tests", () => {
   });
 
   test("parse VarDefField 2", () => {
-    const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
+    const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), "", transforms()));
     const letSt = new LetStatement(main);
     const id = letSt.name;
     assert.equal(id.textAsSource(), "");
@@ -73,7 +73,7 @@ suite("Field Parsing Tests", () => {
     assert.equal(id.readParseStatus(), ParseStatus.valid); //Because use of a keyword should now be picked up as a compile error
   });
   test("parse  ArgListField", () => {
-    const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
+    const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), "", transforms()));
     const call = new CallStatement(main);
     const argList = call.args;
     argList.setFieldToKnownValidText("3,4,5");
@@ -91,7 +91,7 @@ suite("Field Parsing Tests", () => {
   });
 
   test("parse ArgListField 2", () => {
-    const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
+    const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), "", transforms()));
     const call = new CallStatement(main);
     const argList = call.args;
     argList.setFieldToKnownValidText("");
@@ -100,7 +100,7 @@ suite("Field Parsing Tests", () => {
   });
 
   test("parse TypeField invalid", () => {
-    const func = new GlobalFunction(new FileImpl(hash, new DefaultProfile(), transforms()));
+    const func = new GlobalFunction(new FileImpl(hash, new DefaultProfile(), "", transforms()));
     const type = func.returnType;
     type.setFieldToKnownValidText("Foo<of bar");
     type.parseCurrentText();
@@ -110,7 +110,7 @@ suite("Field Parsing Tests", () => {
   });
 
   test("parse ExpressionField - literal string with interpolations", () => {
-    const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
+    const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), "", transforms()));
     const v = new VariableStatement(main);
     const expr = v.expr;
     expr.setFieldToKnownValidText(`"{op} times {op2} equals {op1*op2}"`);
@@ -124,7 +124,7 @@ suite("Field Parsing Tests", () => {
   });
 
   test("parse ValueRefField", () => {
-    const test = new TestFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
+    const test = new TestFrame(new FileImpl(hash, new DefaultProfile(), "", transforms()));
     const a = new AssertStatement(test);
     const expected = a.expected;
     expected.setFieldToKnownValidText(`{4, 5, 6, 24, 26, 44, 45, 46}`);
@@ -137,7 +137,7 @@ suite("Field Parsing Tests", () => {
     );
   });
   test("parse instance dot method", () => {
-    const test = new TestFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
+    const test = new TestFrame(new FileImpl(hash, new DefaultProfile(), "", transforms()));
     const a = new LetStatement(test);
     const expr = a.expr;
     expr.setFieldToKnownValidText(`foo.`);
@@ -147,7 +147,7 @@ suite("Field Parsing Tests", () => {
     assert.equal(spec.context, "foo");
   });
   test("parse paramDefs with closing bracket #855", () => {
-    const test = new TestFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
+    const test = new TestFrame(new FileImpl(hash, new DefaultProfile(), "", transforms()));
     const fn = new GlobalFunction(test);
     const params = fn.params;
     params.setFieldToKnownValidText(`a as Int)`);
@@ -156,7 +156,7 @@ suite("Field Parsing Tests", () => {
     assert.equal(params.textAsSource(), `a as Int`);
   });
   test("parse proc call args list with closing bracket #685", () => {
-    const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
+    const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), "", transforms()));
     const call = new CallStatement(main);
     const args = call.args;
     args.setFieldToKnownValidText(`a)`);
@@ -165,7 +165,7 @@ suite("Field Parsing Tests", () => {
     assert.equal(args.textAsSource(), `a`);
   });
   test("#950 space at start of var-def-field is ignored", () => {
-    const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
+    const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), "", transforms()));
     const v = new VariableStatement(main);
     const name = v.name;
     name.setFieldToKnownValidText(" ");
@@ -174,7 +174,7 @@ suite("Field Parsing Tests", () => {
     assert.equal(name.textAsSource(), ``);
   });
   test("parse list of listof floats", () => {
-    const c = new Constant(new FileImpl(hash, new DefaultProfile(), transforms()));
+    const c = new Constant(new FileImpl(hash, new DefaultProfile(), "", transforms()));
     const v = c.value;
     v.setFieldToKnownValidText(
       `{{0.0,0.0,0.0,0.16,0.0,0.0,0.01},{0.85,0.04,-0.04,0.85,0.0,1.60,0.85},{0.20,-0.26,0.23,0.22,0.0,1.60,0.07},{-0.15,0.28,0.26,0.24,0.0,0.44,0.07}}`,

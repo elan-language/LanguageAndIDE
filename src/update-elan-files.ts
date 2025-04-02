@@ -23,7 +23,7 @@ function getElanFiles(sourceDir: string): string[] {
 async function loadFileAsModelNew(sourceFile: string): Promise<FileImpl> {
   const source = loadFileAsSourceNew(sourceFile);
   const codeSource = new CodeSourceFromString(source);
-  const fl = new FileImpl(hash, new DefaultProfile(), transforms(), true);
+  const fl = new FileImpl(hash, new DefaultProfile(), "", transforms(), true);
   await fl.parseFrom(codeSource);
   if (fl.parseError) {
     throw new Error(fl.parseError);

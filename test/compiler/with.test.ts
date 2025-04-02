@@ -45,7 +45,7 @@ class Foo {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -83,7 +83,7 @@ class Foo {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -132,7 +132,7 @@ class Foo {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -181,7 +181,7 @@ class Foo {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -228,7 +228,7 @@ class Foo {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -276,7 +276,7 @@ class Foo {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -321,7 +321,7 @@ class Foo {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -361,7 +361,7 @@ class Foo {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -412,7 +412,7 @@ class Foo {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -454,7 +454,7 @@ class Foo {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -504,7 +504,7 @@ class Foo {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -563,7 +563,7 @@ class Foo {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -605,7 +605,7 @@ class Foo {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -647,7 +647,7 @@ class Foo {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -669,7 +669,7 @@ record Foo
   property b as Int
 end record`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -685,7 +685,7 @@ main
   print b
 end main`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -701,7 +701,7 @@ main
   print b
 end main`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -721,7 +721,7 @@ record Foo
   property d as Int
 end record`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -735,7 +735,7 @@ record Foo
   private property b as Int
 end record`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
@@ -757,7 +757,7 @@ class Foo
   property b as Int
 end class`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -780,7 +780,7 @@ record Foo
   property aa as Int
 end record`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
