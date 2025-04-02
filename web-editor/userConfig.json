@@ -2,7 +2,8 @@
     "users": [
         {
             "userName": "testUser",
-            "profileName": "testuser"
+            "profileName": "testuser",
+            "colourScheme": "cvd-colourScheme"
         }
     ]
 }

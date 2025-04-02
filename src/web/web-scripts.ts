@@ -313,6 +313,18 @@ async function handleStatusClick(event: Event, tag: string, useParent: boolean) 
   event.stopPropagation();
 }
 
+function changeCss(stylesheet: string) {
+  const links = document.getElementsByTagName("link");
+  for (const link of links) {
+    if (link.rel === "stylesheet" && link.href.includes("colourScheme")) {
+      const tokens = link.href.split("/");
+      tokens[tokens.length - 1] = `${stylesheet}.css`;
+      const newHref = tokens.join("/");
+      link.href = newHref;
+    }
+  }
+}
+
 parseStatus.addEventListener("click", async (event) => {
   await handleStatusClick(event, "el-field", false);
 });
@@ -386,9 +398,14 @@ if (okToContinue) {
         userName = prompt("You must login with a valid user id")?.trim();
       }
 
-      const profileName = userConfig.users.find((u) => u.userName === userName)?.profileName;
+      const user = userConfig.users.find((u) => u.userName === userName);
+      const profileName = user?.profileName;
+      const colourScheme = user?.colourScheme;
 
       profile = profileName ? await fetchProfile(profileName) : defaultProfile;
+      if (colourScheme) {
+        changeCss(colourScheme);
+      }
     }
 
     await setup(profile);
