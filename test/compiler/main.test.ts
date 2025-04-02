@@ -4,8 +4,8 @@ import {
   assertDoesNotCompile,
   assertParses,
   testHash,
-  transforms,
   testHeader,
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("Main", () => {
@@ -20,7 +20,7 @@ main
   variable a set to 3
 end main`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);

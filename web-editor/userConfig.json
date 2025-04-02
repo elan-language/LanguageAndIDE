@@ -1,0 +1,39 @@
+{
+    "students": [
+        {
+            "userName": "hugo",
+            "profileName": "l6",
+            "colourScheme": "cvd-colourScheme"
+        },
+        {
+            "userName": "ellie",
+            "profileName": "l6",
+            "anti_plagiarism": true
+        }
+    ],
+    "groups": [
+        {
+            "groupName": "CSu61",
+            "members": [
+                "izzy",
+                "max",
+                "charlie"
+            ],
+            "profileName": "u6"
+        },
+        {
+            "groupName": "CSl63",
+            "members": [
+                "chloe",
+                "james",
+                "jose"
+            ],
+            "profileName": "l6",
+            "anti_plagiarism": true
+        }
+    ],
+    "teachers": [
+        "drPawson",
+        "msPorter"
+    ]
+}

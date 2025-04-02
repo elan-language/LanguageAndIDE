@@ -4,8 +4,8 @@
 }
 .elan-code {
     color: var(--defaultText);
-    background-color: var(--defaultBackground);
-    border-color: var(--defaultBackground);
+    background-color: var(--panelBackground);
+    border-color: var(--panelBackground);
     font-style: normal;
 }
 
@@ -66,10 +66,13 @@ el-regex {
 }
 
 /* Header & comments (also test description) */
-el-comment *, el-comment el-field.ok el-txt, el-test el-top el-field el-txt  {
+el-comment *, el-comment el-field el-txt, el-test el-top el-field el-txt  {
     color: var(--comment);
 }
 
+el-comment input {
+    color: black;
+}
 #fileStatus {
     display: none;
 }
@@ -91,10 +94,10 @@ el-header .ok {
 /* Horizontal and vertical spacing */
 el-statement, el-constructor, el-prop, el-class > el-func, el-class > el-proc, el-class > el-member {
     display: block;
-    background-color: var(--defaultBackground);
+    background-color: var(--panelBackground);
     border-left-style: solid;
     border-left-width: 2ch;
-    border-color: var(--defaultBackground);
+    border-color: var(--panelBackground);
 }
 
 el-statement:not(.multiline), el-const{
@@ -167,7 +170,7 @@ el-field.warning, el-field.warning el-kw, el-field.warning el-type, el-field.war
 /* el-field-el-txt*/
 el-field el-txt {
     color: var(--defaultText);
-    background-color: var(--defaultBackground);
+    background-color: var(--panelBackground);
 }
 el-field.error *, el-field.error input  {
     background-color: var(--error);

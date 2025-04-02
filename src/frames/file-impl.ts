@@ -1,3 +1,4 @@
+import { ElanFileError } from "../elan-file-error";
 import { elanVersion, isElanProduction } from "../production";
 import { StdLibSymbols } from "../standard-library/std-lib-symbols";
 import { AssertOutcome } from "../system";
@@ -72,6 +73,10 @@ import { isSymbol, symbolMatches } from "./symbols/symbol-helpers";
 // for web editor bundle
 export { CodeSourceFromString };
 
+export const fileErrorPrefix = `Cannot load file:`;
+
+const cannotLoadFile = `${fileErrorPrefix} it has been created or modified outside Elan IDE`;
+
 export class FileImpl implements File, Scope {
   currentHash: string = "";
   isParent: boolean = true;
@@ -92,7 +97,7 @@ export class FileImpl implements File, Scope {
   private _children: Array<Frame> = new Array<Frame>();
   private _map: Map<string, Selectable>;
   private _factory: StatementFactory;
-  private ignoreHashOnParsing: boolean = false;
+  private allowAnyHeader: boolean = false;
   private _stdLibSymbols: StdLibSymbols;
   private _nextId: number = 0;
   private _testError?: Error;
@@ -100,10 +105,11 @@ export class FileImpl implements File, Scope {
   private _showFrameNos: boolean = true;
 
   constructor(
-    private hash: (toHash: string) => Promise<string>,
-    private profile: Profile,
-    private transform: Transforms,
-    ignoreHashOnParsing?: boolean,
+    private readonly hash: (toHash: string) => Promise<string>,
+    private readonly profile: Profile,
+    private userName: string | undefined,
+    private readonly transform: Transforms,
+    allowAnyHeader?: boolean,
   ) {
     this._stdLibSymbols = new StdLibSymbols();
     this._map = new Map<string, Selectable>();
@@ -111,8 +117,8 @@ export class FileImpl implements File, Scope {
     const selector = new GlobalSelector(this);
     this.getChildren().push(selector);
     selector.select(true, false);
-    if (ignoreHashOnParsing) {
-      this.ignoreHashOnParsing = ignoreHashOnParsing;
+    if (allowAnyHeader) {
+      this.allowAnyHeader = allowAnyHeader;
     }
     this.scratchPad = new ScratchPad();
   }
@@ -232,7 +238,7 @@ export class FileImpl implements File, Scope {
     this._frNo = 1;
     const globals = parentHelper_renderChildrenAsHtml(this);
     this.currentHash = await this.getHash();
-    return `<el-header># <el-hash>${this.currentHash}</el-hash> ${this.getVersionString()}${this.getProfileName()}</el-header>\r\n${globals}`;
+    return `<el-header># <el-hash>${this.currentHash}</el-hash> ${this.getVersionString()}${this.getUserName()}${this.getProfileName()}</el-header>\r\n${globals}`;
   }
 
   public indent(): string {
@@ -265,9 +271,13 @@ export class FileImpl implements File, Scope {
     this.isProduction = flag;
   }
 
+  private getUserName() {
+    return this.userName ? ` ${this.userName}` : " guest";
+  }
+
   private getProfileName() {
-    const profile = this.getProfile();
-    return profile.include_profile_name_in_header ? ` ${profile.name}` : "";
+    const pn = this.profile.name.replaceAll(" ", "_");
+    return pn ? ` ${pn}` : " _";
   }
 
   compileGlobals(): string {
@@ -362,9 +372,8 @@ export class FileImpl implements File, Scope {
 
   renderHashableContent(): string {
     const globals = parentHelper_renderChildrenAsSource(this);
-    let html = `${this.getVersionString()}${this.getProfileName()} ${this.getParseStatusLabel()}\r\n\r\n${globals}`;
-    html = html.endsWith("\r\n") ? html : html + "\r\n"; // To accommodate possibility that last global is a global-comment
-    return html;
+    const code = `${this.getVersionString()}${this.getUserName()}${this.getProfileName()} ${this.getParseStatusLabel()}\r\n\r\n${globals}`;
+    return code.endsWith("\r\n") ? code : code + "\r\n"; // To accommodate possibility that last global is a global-comment
   }
 
   public getFirstSelectorAsDirectChild(): AbstractSelector {
@@ -653,7 +662,7 @@ export class FileImpl implements File, Scope {
       this.getFirstChild().select(true, false);
       this.updateAllParseStatus();
     } catch (e) {
-      if (e instanceof Error && e.message === cannotLoadFile) {
+      if (e instanceof ElanFileError) {
         this.parseError = e.message;
       } else {
         this.parseError = `Parse error before: ${source.getRemainingCode().substring(0, 100)}: ${e instanceof Error ? e.message : e}`;
@@ -668,24 +677,77 @@ export class FileImpl implements File, Scope {
   }
 
   async validateHash(fileHash: string, code: string) {
-    const toHash = code.substring(code.indexOf("Elan"));
-    const newHash = await this.getHash(toHash);
+    if (this.isProduction && !this.allowAnyHeader) {
+      const toHash = code.substring(code.indexOf("Elan"));
+      const newHash = await this.getHash(toHash);
 
-    if (fileHash !== newHash && (this.isProduction || fileHash !== "FFFF")) {
-      throw new Error(cannotLoadFile);
+      if (fileHash !== newHash) {
+        throw new ElanFileError(cannotLoadFile);
+      }
+    }
+  }
+
+  getPatch(patch: string): [number, string] {
+    const tokens = patch.split("-");
+    if (tokens.length === 1) {
+      return [parseInt(tokens[0], 10), ""];
+    }
+
+    if (tokens.length === 2) {
+      return [parseInt(tokens[0], 10), tokens[1]];
+    }
+
+    throw new ElanFileError(cannotLoadFile);
+  }
+
+  validateVersion(version: string) {
+    if (this.isProduction && !this.allowAnyHeader) {
+      const tokens = version.split(".");
+
+      if (tokens.length !== 3) {
+        throw new ElanFileError(cannotLoadFile);
+      }
+
+      const fileMajor = parseInt(tokens[0], 10);
+      const fileMinor = parseInt(tokens[1], 10);
+      const [filePatch, filePreRelease] = this.getPatch(tokens[2]);
+
+      if (isNaN(fileMajor) || isNaN(fileMinor) || isNaN(filePatch)) {
+        throw new ElanFileError(cannotLoadFile);
+      }
+
+      if (filePreRelease) {
+        throw new ElanFileError(
+          `${fileErrorPrefix} it was created in a pre-release version of Elan IDE`,
+        );
+      }
+
+      if (fileMajor !== this.version.major) {
+        throw new ElanFileError(
+          `${fileErrorPrefix} it must be loaded into an Elan IDE version ${fileMajor}`,
+        );
+      }
+
+      if (fileMinor > this.version.minor) {
+        throw new ElanFileError(
+          `${fileErrorPrefix} it must be loaded into an Elan IDE version ${fileMajor}.${fileMinor}`,
+        );
+      }
     }
   }
 
   async validateHeader(code: string) {
-    if (!this.ignoreHashOnParsing && !this.isEmpty(code)) {
+    if (!this.isEmpty(code)) {
       const eol = code.indexOf("\n");
       const header = code.substring(0, eol > 0 ? eol : undefined);
       const tokens = header.split(" ");
-      if (tokens.length !== 5 || tokens[0] !== "#" || tokens[2] !== "Elan") {
-        throw new Error(cannotLoadFile);
+      if (tokens.length === 7 && tokens[0] === "#" && tokens[2] === "Elan") {
+        await this.validateHash(tokens[1], code);
+        this.validateVersion(tokens[3]);
+        this.userName = tokens[4] ?? "guest";
+      } else {
+        throw new ElanFileError(cannotLoadFile);
       }
-
-      await this.validateHash(tokens[1], code);
     }
   }
 
@@ -783,5 +845,3 @@ export class FileImpl implements File, Scope {
     parentHelper_updateBreakpoints(this, event);
   }
 }
-
-export const cannotLoadFile = `Cannot load file: it has been created or modified outside Elan IDE`;

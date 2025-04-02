@@ -15,7 +15,7 @@ import { key, tab } from "./testHelpers";
 
 suite("Editing Fields Tests", () => {
   test("Entry of text with formatting", () => {
-    const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
+    const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), "", transforms()));
     const set = new SetStatement(main);
     const expr = set.expr;
     expr.processKey(key("3"));
@@ -54,7 +54,7 @@ suite("Editing Fields Tests", () => {
   });
 
   test("Entry of text with formatting 2", () => {
-    const f = new GlobalFunction(new FileImpl(hash, new DefaultProfile(), transforms()));
+    const f = new GlobalFunction(new FileImpl(hash, new DefaultProfile(), "", transforms()));
     const t = f.returnType;
     t.processKey(key("F"));
     assert.equal(t.text, "F");
@@ -111,7 +111,7 @@ suite("Editing Fields Tests", () => {
   });
 
   test("Entry of text with formatting 3", () => {
-    const f = new GlobalFunction(new FileImpl(hash, new DefaultProfile(), transforms()));
+    const f = new GlobalFunction(new FileImpl(hash, new DefaultProfile(), "", transforms()));
     const t = f.returnType;
     t.processKey(key("("));
     assert.equal(t.text, "(");
@@ -155,7 +155,7 @@ suite("Editing Fields Tests", () => {
   });
 
   test("Entry of expression using 'is' - #464", () => {
-    const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
+    const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), "", transforms()));
     const if1 = new IfStatement(main);
     const expr = if1.condition;
     expr.processKey(key("a"));
@@ -177,7 +177,7 @@ suite("Editing Fields Tests", () => {
   });
 
   test("Ensure Html tag in a comment is not recognised - #840", () => {
-    const comment = new GlobalComment(new FileImpl(hash, new DefaultProfile(), transforms()));
+    const comment = new GlobalComment(new FileImpl(hash, new DefaultProfile(), "", transforms()));
     const field = comment.text;
     field.select();
     field.processKey(key("<"));
@@ -196,7 +196,7 @@ suite("Editing Fields Tests", () => {
   });
 
   test("Tabbing to use plain text completions #485", () => {
-    const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
+    const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), "", transforms()));
     const v = new VariableStatement(main);
     const expr = v.expr;
     expr.processKey(key("l"));
@@ -222,7 +222,7 @@ suite("Editing Fields Tests", () => {
     assert.equal(expr.text, "lambda a as Int => ");
   });
   test("End of field marker automatically skips to next field #496", () => {
-    const file = new FileImpl(hash, new DefaultProfile(), transforms());
+    const file = new FileImpl(hash, new DefaultProfile(), "", transforms());
     const main = new MainFrame(file);
     const c = new CallStatement(main);
     const proc = c.proc;

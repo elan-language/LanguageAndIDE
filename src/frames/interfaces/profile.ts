@@ -4,6 +4,6 @@ export interface Profile {
   statements: string[];
   class_members: string[];
 
-  include_profile_name_in_header: boolean;
+  require_log_on: boolean;
   can_load_only_own_files: boolean;
 }

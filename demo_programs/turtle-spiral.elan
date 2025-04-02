@@ -1,4 +1,4 @@
-# 958e5042bc1f925c1aee808dbbfe181755370e90ef868f66fd149e0bfc009058 Elan Beta 9 valid
+# 4bd53660159331652e921938857b29a5edf5a42e0402f5d9723416e7f5d4562f Elan 0.10.0-Beta guest default_profile valid
 
 main
   let t be new Turtle()
@@ -8,6 +8,6 @@ main
   for i from 75 to 0 step -1
     call t.move(i)
     call t.turn(90)
-    call t.pause(300)
+    call pause(300)
   end for
 end main

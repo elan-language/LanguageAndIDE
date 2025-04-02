@@ -2,18 +2,17 @@ import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import { hash } from "../../src/util";
 import {
+  assertDoesNotParseWithMessage,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  testHeader,
-  testHeaderVersion,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("Header", () => {
   test("Pass_hash", async () => {
-    const code = `# 2bca04c2bf83ece48bc494cb0d50099b2a3732ebf88773acc94f5a5f8a49cf99 ${testHeaderVersion} valid
+    const code = `# 14dddb83fe745f514d078c6035905da8f1dfbf7da06483ddd8c1f8ce8e5e4b05 Elan 1.0.0 guest default_profile valid
 
 main
   # My first program
@@ -28,13 +27,225 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(hash, new DefaultProfile(), transforms());
+    const fileImpl = new FileImpl(hash, new DefaultProfile(), "guest", transforms());
     fileImpl.setIsProduction(true);
+    fileImpl.setVersion(1, 0, 0, "");
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "Hello World!");
+  });
+
+  test("Pass_versionSame", async () => {
+    const code = `# 14dddb83fe745f514d078c6035905da8f1dfbf7da06483ddd8c1f8ce8e5e4b05 Elan 1.0.0 guest default_profile valid
+
+main
+  # My first program
+  print "Hello World!"
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+
+  await system.printLine("Hello World!");
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(hash, new DefaultProfile(), "", transforms());
+    fileImpl.setIsProduction(true);
+    fileImpl.setVersion(1, 0, 0, "");
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "Hello World!");
+  });
+
+  test("Pass_versionPatch1", async () => {
+    const code = `# 93c8c544e1e7e741cc1ecc570ac797c4d0095d4f7e9edbdbdb003d812e504537 Elan 1.0.100 guest default_profile valid
+
+main
+  # My first program
+  print "Hello World!"
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+
+  await system.printLine("Hello World!");
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(hash, new DefaultProfile(), "", transforms());
+    fileImpl.setIsProduction(true);
+    fileImpl.setVersion(1, 0, 0, "");
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "Hello World!");
+  });
+
+  test("Pass_versionPatch2", async () => {
+    const code = `# 14dddb83fe745f514d078c6035905da8f1dfbf7da06483ddd8c1f8ce8e5e4b05 Elan 1.0.0 guest default_profile valid
+
+main
+  # My first program
+  print "Hello World!"
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+
+  await system.printLine("Hello World!");
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(hash, new DefaultProfile(), "", transforms());
+    fileImpl.setIsProduction(true);
+    fileImpl.setVersion(1, 0, 100, "");
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "Hello World!");
+  });
+
+  test("Pass_versionMinor", async () => {
+    const code = `# 14dddb83fe745f514d078c6035905da8f1dfbf7da06483ddd8c1f8ce8e5e4b05 Elan 1.0.0 guest default_profile valid
+
+main
+  # My first program
+  print "Hello World!"
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+
+  await system.printLine("Hello World!");
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(hash, new DefaultProfile(), "", transforms());
+    fileImpl.setIsProduction(true);
+    fileImpl.setVersion(1, 1, 0, "");
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "Hello World!");
+  });
+
+  test("Pass_user", async () => {
+    const code = `# 0887656cae717264197a75bbc3f0c8c2b737eb0e48854ae2399ea76331822755 Elan 1.0.0 aUser default_profile valid
+
+main
+  # My first program
+  print "Hello World!"
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+
+  await system.printLine("Hello World!");
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(hash, new DefaultProfile(), "aUser", transforms());
+    fileImpl.setIsProduction(true);
+    fileImpl.setVersion(1, 0, 0, "");
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "Hello World!");
+  });
+
+  test("Fail_versionMajor1", async () => {
+    const code = `# 14dddb83fe745f514d078c6035905da8f1dfbf7da06483ddd8c1f8ce8e5e4b05 Elan 1.0.0 guest default_profile valid
+
+main
+  # My first program
+  print "Hello World!"
+end main`;
+
+    const fileImpl = new FileImpl(hash, new DefaultProfile(), "", transforms());
+    fileImpl.setIsProduction(true);
+    fileImpl.setVersion(2, 0, 0, "");
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParseWithMessage(
+      fileImpl,
+      "Cannot load file: it must be loaded into an Elan IDE version 1",
+    );
+  });
+
+  test("Fail_versionMajor2", async () => {
+    const code = `# 14dddb83fe745f514d078c6035905da8f1dfbf7da06483ddd8c1f8ce8e5e4b05 Elan 1.0.0 guest default_profile valid
+
+main
+  # My first program
+  print "Hello World!"
+end main`;
+
+    const fileImpl = new FileImpl(hash, new DefaultProfile(), "", transforms());
+    fileImpl.setIsProduction(true);
+    fileImpl.setVersion(0, 0, 0, "");
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParseWithMessage(
+      fileImpl,
+      "Cannot load file: it must be loaded into an Elan IDE version 1",
+    );
+  });
+
+  test("Fail_versionMinor", async () => {
+    const code = `# da01be00d946912fec86405112300c347b38ea560d11e4992db91681093ef049 Elan 1.1.0 guest default_profile valid
+
+main
+  # My first program
+  print "Hello World!"
+end main`;
+
+    const fileImpl = new FileImpl(hash, new DefaultProfile(), "", transforms());
+    fileImpl.setIsProduction(true);
+    fileImpl.setVersion(1, 0, 0, "");
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParseWithMessage(
+      fileImpl,
+      "Cannot load file: it must be loaded into an Elan IDE version 1.1",
+    );
+  });
+
+  test("Fail_preRelease", async () => {
+    const code = `# 775d96007a883395a4cb0cf72b418c81c5288b76b6387c8da49ca376834c1a04 Elan 1.1.0-Beta guest default_profile valid
+
+main
+  # My first program
+  print "Hello World!"
+end main`;
+
+    const fileImpl = new FileImpl(hash, new DefaultProfile(), "", transforms());
+    fileImpl.setIsProduction(true);
+    fileImpl.setVersion(1, 1, 0, "");
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParseWithMessage(
+      fileImpl,
+      "Cannot load file: it was created in a pre-release version of Elan IDE",
+    );
   });
 });

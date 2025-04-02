@@ -2,14 +2,20 @@
 import { handleClick, handleDblClick, handleKey } from "../editorHandlers";
 import { ElanCutCopyPasteError } from "../elan-cut-copy-paste-error";
 import { ElanRuntimeError } from "../elan-runtime-error";
-import { DefaultProfile } from "../frames/default-profile";
-import { CodeSourceFromString, FileImpl, cannotLoadFile } from "../frames/file-impl";
+import { CodeSourceFromString, fileErrorPrefix, FileImpl } from "../frames/file-impl";
 import { editorEvent } from "../frames/interfaces/editor-event";
 import { File } from "../frames/interfaces/file";
 import { Profile } from "../frames/interfaces/profile";
+import { Group, Individual } from "../frames/interfaces/user-config";
 import { CompileStatus, ParseStatus, RunStatus, TestStatus } from "../frames/status-enums";
 import { StdLib } from "../standard-library/std-lib";
-import { fetchProfile, hash, transforms } from "./web-helpers";
+import {
+  fetchDefaultProfile,
+  fetchProfile,
+  fetchUserConfig,
+  hash,
+  transforms,
+} from "./web-helpers";
 import { WebInputOutput } from "./web-input-output";
 import {
   WebWorkerBreakpointMessage,
@@ -42,6 +48,7 @@ const autoSaveButton = document.getElementById("auto-save") as HTMLButtonElement
 const undoButton = document.getElementById("undo") as HTMLButtonElement;
 const redoButton = document.getElementById("redo") as HTMLButtonElement;
 const fileButton = document.getElementById("file") as HTMLButtonElement;
+const logoutButton = document.getElementById("logout") as HTMLButtonElement;
 
 const codeTitle = document.getElementById("code-title") as HTMLDivElement;
 const parseStatus = document.getElementById("parse") as HTMLDivElement;
@@ -69,6 +76,7 @@ let currentFieldId: string = "";
 
 let file: File;
 let profile: Profile;
+let userName: string | undefined;
 let lastSavedHash = "";
 let undoRedoHash = "";
 let runWorker: Worker | undefined;
@@ -94,6 +102,16 @@ displayDiv.addEventListener("click", () => {
 trimButton.addEventListener("click", async () => {
   file.removeAllSelectorsThatCanBe();
   await renderAsHtml(false);
+});
+
+logoutButton.addEventListener("click", async () => {
+  window.location.reload();
+});
+
+addEventListener("beforeunload", (event) => {
+  if (hasUnsavedChanges()) {
+    event.preventDefault();
+  }
 });
 
 function resumeProgram() {
@@ -241,7 +259,7 @@ newButton?.addEventListener("click", async () => {
   if (checkForUnsavedChanges()) {
     clearDisplays();
     clearUndoRedoAndAutoSave();
-    file = new FileImpl(hash, profile, transforms());
+    file = new FileImpl(hash, profile, userName, transforms());
     await initialDisplay(false);
   }
 });
@@ -260,8 +278,9 @@ for (const elem of demoFiles) {
       const fileName = `${elem.id}`;
       const f = await fetch(fileName, { mode: "same-origin" });
       const rawCode = await f.text();
-      file = new FileImpl(hash, profile, transforms());
+      file = new FileImpl(hash, profile, userName, transforms());
       file.fileName = fileName;
+      clearUndoRedoAndAutoSave();
       await readAndParse(rawCode, fileName, true);
     }
   });
@@ -305,6 +324,18 @@ async function handleStatusClick(event: Event, tag: string, useParent: boolean) 
   }
   event.preventDefault();
   event.stopPropagation();
+}
+
+function changeCss(stylesheet: string) {
+  const links = document.getElementsByTagName("link");
+  for (const link of links) {
+    if (link.rel === "stylesheet" && link.href.includes("colourScheme")) {
+      const tokens = link.href.split("/");
+      tokens[tokens.length - 1] = `${stylesheet}.css`;
+      const newHref = tokens.join("/");
+      link.href = newHref;
+    }
+  }
 }
 
 parseStatus.addEventListener("click", async (event) => {
@@ -370,13 +401,39 @@ const isChrome = checkIsChrome();
 const okToContinue = isChrome || confirmContinueOnNonChromeBrowser();
 
 if (okToContinue) {
-  // fetch profile triggers page display
-  fetchProfile()
-    .then(async (p) => await setup(p))
-    .catch(async (_e) => {
-      console.warn("profile not found - using default");
-      await setup(new DefaultProfile());
-    });
+  // fetch userConfig triggers page display
+  fetchUserConfig().then(async (userConfig) => {
+    const defaultProfile = await fetchDefaultProfile();
+    let profile = defaultProfile;
+
+    if (defaultProfile.require_log_on) {
+      while (!userName) {
+        userName = prompt("You must login with a valid user id")?.trim();
+      }
+
+      const ucUserName = userName.toUpperCase();
+
+      let userOrGroup: Individual | Group | undefined = userConfig.students.find(
+        (u) => u.userName.toUpperCase() === ucUserName,
+      );
+      if (!userOrGroup) {
+        userOrGroup = userConfig.groups.find((g) =>
+          g.members.map((m) => m.toUpperCase()).includes(ucUserName),
+        );
+      } else {
+        const colourScheme = userOrGroup?.colourScheme;
+        if (colourScheme) {
+          changeCss(colourScheme);
+        }
+      }
+
+      const profileName = userOrGroup?.profileName;
+
+      profile = profileName ? await fetchProfile(profileName) : defaultProfile;
+    }
+
+    await setup(profile);
+  });
 } else {
   const msg = "Require Chrome";
   disable(
@@ -415,7 +472,8 @@ function checkForUnsavedChanges(): boolean {
 async function setup(p: Profile) {
   clearUndoRedoAndAutoSave();
   profile = p;
-  file = new FileImpl(hash, profile, transforms());
+
+  file = new FileImpl(hash, profile, userName, transforms());
   await displayFile();
 }
 
@@ -444,7 +502,7 @@ function clearUndoRedoAndAutoSave() {
 }
 
 async function resetFile() {
-  file = new FileImpl(hash, profile, transforms());
+  file = new FileImpl(hash, profile, userName, transforms());
   await renderAsHtml(false);
 }
 
@@ -456,7 +514,7 @@ async function showError(err: Error, fileName: string, reset: boolean) {
 
   file.fileName = fileName;
 
-  if (err.message === cannotLoadFile) {
+  if (err.message?.startsWith(fileErrorPrefix)) {
     systemInfoPrintLine(err.message);
   } else if (err.stack) {
     let msg = "";
@@ -618,6 +676,7 @@ function updateDisplayValues() {
         clearGraphicsButton,
         clearSystemInfoButton,
         fileButton,
+        loadButton,
       ],
       msg,
     );
@@ -691,6 +750,13 @@ function updateDisplayValues() {
           disable([autoSaveButton], "Code must be parsing in order to save");
         }
       }
+    }
+
+    if (userName) {
+      logoutButton.removeAttribute("hidden");
+      enable(logoutButton, "Log out");
+    } else {
+      logoutButton.setAttribute("hidden", "hidden");
     }
   }
 }
@@ -1148,7 +1214,7 @@ async function replaceCode(indexToUse: number, msg: string) {
     cursorWait();
     undoRedoing = true;
     const fn = file.fileName;
-    file = new FileImpl(hash, profile, transforms());
+    file = new FileImpl(hash, profile, userName, transforms());
     await displayCode(code, fn);
   }
 }
@@ -1406,7 +1472,7 @@ async function handleChromeUploadOrAppend(upload: boolean) {
     const fileName = upload ? codeFile.name : file.fileName;
     const rawCode = await codeFile.text();
     if (upload) {
-      file = new FileImpl(hash, profile, transforms());
+      file = new FileImpl(hash, profile, userName, transforms());
       clearUndoRedoAndAutoSave();
     }
     await readAndParse(rawCode, fileName, upload, !upload);
@@ -1443,7 +1509,7 @@ function handleUploadOrAppend(event: Event, upload: boolean) {
     reader.addEventListener("load", async (event: any) => {
       const rawCode = event.target.result;
       if (upload) {
-        file = new FileImpl(hash, profile, transforms());
+        file = new FileImpl(hash, profile, userName, transforms());
         clearUndoRedoAndAutoSave();
       }
       await readAndParse(rawCode, fileName, upload, !upload);

@@ -1,8 +1,4 @@
 :root {
-  --ideDefaultBackground: rgb(68, 114, 196);
-  --idePanelBackground: white;
-  --ideDefaultText: black;
-  --ideReverseText: white;
   --ideTitleFont: Segoe UI, Open Sans, Verdana, Arial, Helvetica, sans-serif;
   --ideTitleSize: 12pt;
 }
@@ -11,7 +7,7 @@
 #printed-text,
 #printed-text input {
   color: var(--defaultText);
-  border-color: var(--defaultBackground);
+  border-color: var(--panelBackground);
   font-style: normal;
   font-family: consolas, monospace;
   font-size: 11pt;
@@ -20,14 +16,14 @@
 #system-info-title,
 #display-title,
 #status {
-  background-color: var(--ideDefaultBackground);
-  color: var(--ideReverseText);
+  background-color: var(--ideBackground);
+  color: var(--reverseText);
   font-family: var(--ideTitleFont);
   font-size: var(--ideTitleSize);
 }
 
 body {
-  background-color: var(--ideDefaultBackground);
+  background-color: var(--ideBackground);
   display: flex;
   flex-direction: row;
   height: 100vh;
@@ -72,7 +68,7 @@ body {
 #code-controls {
   display: flex;
   flex-direction: row;
-  background-color: var(--ideDefaultBackground);
+  background-color: var(--ideBackground);
 }
 
 #code-title {
@@ -104,7 +100,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  background-color: var(--ideDefaultBackground);
+  background-color: var(--ideBackground);
 }
 
 #display-title, #system-info-title {
@@ -145,8 +141,8 @@ body {
 }
 
 #status-names div {
-  background-color: var(--ideDefaultBackground);
-  color: var(--ideReverseText);
+  background-color: var(--ideBackground);
+  color: var(--reverseText);
   font-family: var(--ideTitleFont);
   margin-bottom: 5px;
 }
@@ -154,7 +150,7 @@ body {
 #status-values div {
   font-family: var(--ideTitleFont);
   text-align: center;
-  background-color: var(--ideDefaultBackground);
+  background-color: var(--ideBackground);
   height: 20px;
   margin-bottom: 5px;
 }
@@ -180,7 +176,7 @@ body {
 
 #system-info {
   flex-grow: 1;
-  background-color: var(--defaultBackground);
+  background-color: var(--panelBackground);
   white-space: pre-wrap;
   overflow-wrap:anywhere;
   padding: 5px;
@@ -189,7 +185,7 @@ body {
 }
 
 #display {
-  background-color: var(--idePanelBackground);
+  background-color: var(--panelBackground);
   overflow: hidden;
   margin-bottom: 10px;
   aspect-ratio: 4/3;
@@ -238,8 +234,8 @@ button.icon img {
   padding: 0px;
   border: 2px;
   border-style: solid;
-  border-color: var(--ideDefaultBackground);
-  background-color: var(--ideDefaultBackground);
+  border-color: var(--ideBackground);
+  background-color: var(--ideBackground);
 }
 
 button.icon img {
@@ -262,7 +258,7 @@ button.plain,
 button.plain:hover,
 button.plain:active,
 button.plain:focus {
-  background-color: var(--idePanelBackground);
+  background-color: var(--panelBackground);
   border: none;
   outline: none;
   height: 22px;
@@ -301,7 +297,7 @@ button.plain:disabled, menu-item.button.plain:disabled {
 .dropdown-content button.plain:hover,
 .dropdown-content button.plain:active,
 .dropdown-content button.plain:focus {
-  background-color: var(--ideDefaultBackground);
+  background-color: var(--ideBackground);
   color: white;
   text-decoration: none;
 }
@@ -352,7 +348,7 @@ button.plain:disabled, menu-item.button.plain:disabled {
 .context-menu>div.selected,
 .context-menu>div:hover {
   color: white;
-  background-color: var(--help);
+  background-color: var(--ideBackground);
 }
 
 .dropdown {
@@ -383,7 +379,7 @@ button.plain:disabled, menu-item.button.plain:disabled {
 .menu-item:hover a,  button.menu-item:hover a
 .menu-item:active a, button.menu-item:active a
 {
-  background-color: var(--ideDefaultBackground);
+  background-color: var(--ideBackground);
   color: white;
   text-decoration: none;
 }
