@@ -30,12 +30,12 @@ import { hash } from "../src/util";
 import { transforms } from "./compiler/compiler-test-helpers";
 
 export function T00_emptyFile() {
-  const f = new FileImpl(hash, new DefaultProfile(), transforms());
+  const f = new FileImpl(hash, new DefaultProfile(), "", transforms());
   return f;
 }
 
 export function T01_helloWorld() {
-  const f = new FileImpl(hash, new DefaultProfile(), transforms());
+  const f = new FileImpl(hash, new DefaultProfile(), "", transforms());
   const gs = f.getFirstSelectorAsDirectChild();
   const m = new MainFrame(f);
   f.addChildBefore(m, gs);
@@ -51,7 +51,7 @@ export function T01_helloWorld() {
 }
 
 export function T02_comments() {
-  const f = new FileImpl(hash, new DefaultProfile(), transforms());
+  const f = new FileImpl(hash, new DefaultProfile(), "", transforms());
   const gs = f.getFirstSelectorAsDirectChild();
   const gc = new GlobalComment(f);
   gc.text.setFieldToKnownValidText("Comment 1");
@@ -67,7 +67,7 @@ export function T02_comments() {
 }
 
 export function T03_mainWithAllStatements(): FileImpl {
-  const f = new FileImpl(hash, new DefaultProfile(), transforms());
+  const f = new FileImpl(hash, new DefaultProfile(), "", transforms());
   const gs = f.getFirstSelectorAsDirectChild();
   const m = new MainFrame(f);
   f.addChildBefore(m, gs);
@@ -145,7 +145,7 @@ export function CollapseAll(f: FileImpl) {
 }
 
 export function T04_allGlobalsExceptClass(): FileImpl {
-  const f = new FileImpl(hash, new DefaultProfile(), transforms());
+  const f = new FileImpl(hash, new DefaultProfile(), "", transforms());
   const gs = f.getFirstSelectorAsDirectChild();
   const con = new Constant(f);
   con.name.setFieldToKnownValidText("phi");
@@ -173,7 +173,7 @@ export function T04_allGlobalsExceptClass(): FileImpl {
 }
 
 export function T05_classes() {
-  const f = new FileImpl(hash, new DefaultProfile(), transforms());
+  const f = new FileImpl(hash, new DefaultProfile(), "", transforms());
   const gs = f.getFirstSelectorAsDirectChild();
   const cl1 = new ConcreteClass(f);
   const ms = cl1.getFirstSelectorAsDirectChild();
@@ -204,7 +204,7 @@ export function T05_classes() {
 }
 
 export function T09_emptyMainAndClassWithGlobalSelector() {
-  const f = new FileImpl(hash, new DefaultProfile(), transforms());
+  const f = new FileImpl(hash, new DefaultProfile(), "", transforms());
   const gs = f.getFirstSelectorAsDirectChild();
   f.addChildBefore(new MainFrame(f), gs);
   f.addChildBefore(new ConcreteClass(f), gs);
@@ -216,12 +216,12 @@ export function getTestFrame(fn: string): FileImpl {
   try {
     return eval(`${fn}()`);
   } catch (e) {
-    return new FileImpl(hash, new DefaultProfile(), transforms());
+    return new FileImpl(hash, new DefaultProfile(), "", transforms());
   }
 }
 
 export function oneConstant(): FileImpl {
-  const file = new FileImpl(hash, new DefaultProfile(), transforms());
+  const file = new FileImpl(hash, new DefaultProfile(), "", transforms());
   const globSel = file.getFirstChild();
   const con = new Constant(file);
   file.addChildBefore(con, globSel);
@@ -232,7 +232,7 @@ export function oneConstant(): FileImpl {
 }
 
 export function emptyMainOnly(): FileImpl {
-  const file = new FileImpl(hash, new DefaultProfile(), transforms());
+  const file = new FileImpl(hash, new DefaultProfile(), "", transforms());
   const globSel = file.getFirstChild();
   const main = new MainFrame(file);
   file.addChildBefore(main, globSel);
@@ -241,7 +241,7 @@ export function emptyMainOnly(): FileImpl {
 }
 
 export function emptyFunctionOnly(): FileImpl {
-  const file = new FileImpl(hash, new DefaultProfile(), transforms());
+  const file = new FileImpl(hash, new DefaultProfile(), "", transforms());
   const globSel = file.getFirstChild();
   const fun = new GlobalFunction(file);
   file.addChildBefore(fun, globSel);
@@ -250,7 +250,7 @@ export function emptyFunctionOnly(): FileImpl {
 }
 
 export function twoConstants(): FileImpl {
-  const file = new FileImpl(hash, new DefaultProfile(), transforms());
+  const file = new FileImpl(hash, new DefaultProfile(), "", transforms());
   const globSel = file.getFirstChild();
   const con1 = new Constant(file);
   file.addChildBefore(con1, globSel);
@@ -265,7 +265,7 @@ export function twoConstants(): FileImpl {
 }
 
 export function classWithConstructor(): FileImpl {
-  const file = new FileImpl(hash, new DefaultProfile(), transforms());
+  const file = new FileImpl(hash, new DefaultProfile(), "", transforms());
   const globSel = file.getFirstChild();
   const cls = new ConcreteClass(file);
   file.addChildBefore(cls, globSel);

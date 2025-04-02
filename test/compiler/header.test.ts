@@ -2,14 +2,11 @@ import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import { hash } from "../../src/util";
 import {
-  assertDoesNotParse,
   assertDoesNotParseWithMessage,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  testHeader,
-  testHeaderVersion,
   transforms,
 } from "./compiler-test-helpers";
 
@@ -30,7 +27,7 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(hash, new DefaultProfile(), transforms());
+    const fileImpl = new FileImpl(hash, new DefaultProfile(), "", transforms());
     fileImpl.setIsProduction(true);
     fileImpl.setVersion(1, 0, 0, "");
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -57,7 +54,7 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(hash, new DefaultProfile(), transforms());
+    const fileImpl = new FileImpl(hash, new DefaultProfile(), "", transforms());
     fileImpl.setIsProduction(true);
     fileImpl.setVersion(1, 0, 0, "");
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -84,7 +81,7 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(hash, new DefaultProfile(), transforms());
+    const fileImpl = new FileImpl(hash, new DefaultProfile(), "", transforms());
     fileImpl.setIsProduction(true);
     fileImpl.setVersion(1, 0, 0, "");
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -111,7 +108,7 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(hash, new DefaultProfile(), transforms());
+    const fileImpl = new FileImpl(hash, new DefaultProfile(), "", transforms());
     fileImpl.setIsProduction(true);
     fileImpl.setVersion(1, 0, 100, "");
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -138,7 +135,7 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(hash, new DefaultProfile(), transforms());
+    const fileImpl = new FileImpl(hash, new DefaultProfile(), "", transforms());
     fileImpl.setIsProduction(true);
     fileImpl.setVersion(1, 1, 0, "");
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -157,7 +154,7 @@ main
   print "Hello World!"
 end main`;
 
-    const fileImpl = new FileImpl(hash, new DefaultProfile(), transforms());
+    const fileImpl = new FileImpl(hash, new DefaultProfile(), "", transforms());
     fileImpl.setIsProduction(true);
     fileImpl.setVersion(2, 0, 0, "");
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -176,7 +173,7 @@ main
   print "Hello World!"
 end main`;
 
-    const fileImpl = new FileImpl(hash, new DefaultProfile(), transforms());
+    const fileImpl = new FileImpl(hash, new DefaultProfile(), "", transforms());
     fileImpl.setIsProduction(true);
     fileImpl.setVersion(0, 0, 0, "");
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -195,7 +192,7 @@ main
   print "Hello World!"
 end main`;
 
-    const fileImpl = new FileImpl(hash, new DefaultProfile(), transforms());
+    const fileImpl = new FileImpl(hash, new DefaultProfile(), "", transforms());
     fileImpl.setIsProduction(true);
     fileImpl.setVersion(1, 0, 0, "");
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -214,7 +211,7 @@ main
   print "Hello World!"
 end main`;
 
-    const fileImpl = new FileImpl(hash, new DefaultProfile(), transforms());
+    const fileImpl = new FileImpl(hash, new DefaultProfile(), "", transforms());
     fileImpl.setIsProduction(true);
     fileImpl.setVersion(1, 1, 0, "");
     await fileImpl.parseFrom(new CodeSourceFromString(code));

@@ -15,13 +15,13 @@ suite("Overall Status Tests", () => {
       end main
       `;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
   });
 
   test("new file created with all statuses at default", async () => {
     const prof = new DefaultProfile();
-    const f = new FileImpl(testHash, prof, transforms(), true);
+    const f = new FileImpl(testHash, prof, "", transforms(), true);
     assert.equal(f.readParseStatus(), ParseStatus.default);
     assert.equal(f.readCompileStatus(), CompileStatus.default);
     assert.equal(f.readTestStatus(), TestStatus.default);

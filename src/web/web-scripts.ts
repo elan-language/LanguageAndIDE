@@ -2,14 +2,19 @@
 import { handleClick, handleDblClick, handleKey } from "../editorHandlers";
 import { ElanCutCopyPasteError } from "../elan-cut-copy-paste-error";
 import { ElanRuntimeError } from "../elan-runtime-error";
-import { DefaultProfile } from "../frames/default-profile";
 import { CodeSourceFromString, fileErrorPrefix, FileImpl } from "../frames/file-impl";
 import { editorEvent } from "../frames/interfaces/editor-event";
 import { File } from "../frames/interfaces/file";
 import { Profile } from "../frames/interfaces/profile";
 import { CompileStatus, ParseStatus, RunStatus, TestStatus } from "../frames/status-enums";
 import { StdLib } from "../standard-library/std-lib";
-import { fetchProfile, hash, transforms } from "./web-helpers";
+import {
+  fetchDefaultProfile,
+  fetchProfile,
+  fetchUserConfig,
+  hash,
+  transforms,
+} from "./web-helpers";
 import { WebInputOutput } from "./web-input-output";
 import {
   WebWorkerBreakpointMessage,
@@ -69,6 +74,7 @@ let currentFieldId: string = "";
 
 let file: File;
 let profile: Profile;
+let userName: string | undefined;
 let lastSavedHash = "";
 let undoRedoHash = "";
 let runWorker: Worker | undefined;
@@ -241,7 +247,7 @@ newButton?.addEventListener("click", async () => {
   if (checkForUnsavedChanges()) {
     clearDisplays();
     clearUndoRedoAndAutoSave();
-    file = new FileImpl(hash, profile, transforms());
+    file = new FileImpl(hash, profile, userName, transforms());
     await initialDisplay(false);
   }
 });
@@ -260,7 +266,7 @@ for (const elem of demoFiles) {
       const fileName = `${elem.id}`;
       const f = await fetch(fileName, { mode: "same-origin" });
       const rawCode = await f.text();
-      file = new FileImpl(hash, profile, transforms());
+      file = new FileImpl(hash, profile, userName, transforms());
       file.fileName = fileName;
       await readAndParse(rawCode, fileName, true);
     }
@@ -370,13 +376,23 @@ const isChrome = checkIsChrome();
 const okToContinue = isChrome || confirmContinueOnNonChromeBrowser();
 
 if (okToContinue) {
-  // fetch profile triggers page display
-  fetchProfile()
-    .then(async (p) => await setup(p))
-    .catch(async (_e) => {
-      console.warn("profile not found - using default");
-      await setup(new DefaultProfile());
-    });
+  // fetch userConfig triggers page display
+  fetchUserConfig().then(async (userConfig) => {
+    const defaultProfile = await fetchDefaultProfile();
+    let profile = defaultProfile;
+
+    if (defaultProfile.require_log_on) {
+      while (!userName) {
+        userName = prompt("You must login with a valid user id")?.trim();
+      }
+
+      const profileName = userConfig.users.find((u) => u.userName === userName)?.profileName;
+
+      profile = profileName ? await fetchProfile(profileName) : defaultProfile;
+    }
+
+    await setup(profile);
+  });
 } else {
   const msg = "Require Chrome";
   disable(
@@ -416,17 +432,7 @@ async function setup(p: Profile) {
   clearUndoRedoAndAutoSave();
   profile = p;
 
-  if (profile.require_log_on) {
-    let userName: string | null | undefined = "";
-
-    while (!userName) {
-      userName = prompt("You must login with a valid user id")?.trim();
-    }
-
-    profile.name = userName;
-  }
-
-  file = new FileImpl(hash, profile, transforms());
+  file = new FileImpl(hash, profile, userName, transforms());
   await displayFile();
 }
 
@@ -455,7 +461,7 @@ function clearUndoRedoAndAutoSave() {
 }
 
 async function resetFile() {
-  file = new FileImpl(hash, profile, transforms());
+  file = new FileImpl(hash, profile, userName, transforms());
   await renderAsHtml(false);
 }
 
@@ -1159,7 +1165,7 @@ async function replaceCode(indexToUse: number, msg: string) {
     cursorWait();
     undoRedoing = true;
     const fn = file.fileName;
-    file = new FileImpl(hash, profile, transforms());
+    file = new FileImpl(hash, profile, userName, transforms());
     await displayCode(code, fn);
   }
 }
@@ -1417,7 +1423,7 @@ async function handleChromeUploadOrAppend(upload: boolean) {
     const fileName = upload ? codeFile.name : file.fileName;
     const rawCode = await codeFile.text();
     if (upload) {
-      file = new FileImpl(hash, profile, transforms());
+      file = new FileImpl(hash, profile, userName, transforms());
       clearUndoRedoAndAutoSave();
     }
     await readAndParse(rawCode, fileName, upload, !upload);
@@ -1454,7 +1460,7 @@ function handleUploadOrAppend(event: Event, upload: boolean) {
     reader.addEventListener("load", async (event: any) => {
       const rawCode = event.target.result;
       if (upload) {
-        file = new FileImpl(hash, profile, transforms());
+        file = new FileImpl(hash, profile, userName, transforms());
         clearUndoRedoAndAutoSave();
       }
       await readAndParse(rawCode, fileName, upload, !upload);
