@@ -415,6 +415,17 @@ function checkForUnsavedChanges(): boolean {
 async function setup(p: Profile) {
   clearUndoRedoAndAutoSave();
   profile = p;
+
+  if (profile.require_log_on) {
+    let userName: string | null | undefined = "";
+
+    while (!userName) {
+      userName = prompt("You must login with a valid user id")?.trim();
+    }
+
+    profile.name = userName;
+  }
+
   file = new FileImpl(hash, profile, transforms());
   await displayFile();
 }

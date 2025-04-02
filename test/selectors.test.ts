@@ -26,7 +26,7 @@ export class TestProfileSPJ implements Profile {
   globals: string[] = [functionKeyword, testKeyword];
   statements: string[] = [assertKeyword, letKeyword];
   class_members: string[] = [];
-  include_profile_name_in_header: boolean = false;
+  require_log_on: boolean = false;
   can_load_only_own_files: boolean = false;
 }
 

@@ -82,6 +82,6 @@ export class DefaultProfile implements Profile {
     privatePropertyKeywords,
     commentMarker,
   ];
-  include_profile_name_in_header: boolean = false;
+  require_log_on: boolean = false;
   can_load_only_own_files: boolean = false;
 }

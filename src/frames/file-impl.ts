@@ -272,7 +272,7 @@ export class FileImpl implements File, Scope {
 
   private getProfileName() {
     const profile = this.getProfile();
-    return profile.include_profile_name_in_header ? ` ${profile.name}` : "";
+    return profile.require_log_on ? ` ${profile.name}` : "";
   }
 
   compileGlobals(): string {
