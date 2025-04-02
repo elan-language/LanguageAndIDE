@@ -150,20 +150,25 @@ export class Turtle extends GraphicsBase {
 
   @elanProcedure(["distance"], ProcedureOptions.async)
   async move(distance: number) {
+    const [x, y] = this.getDestination(distance);
+    await this.moveTo(x, y);
+  }
+
+  @elanProcedure(["x", "y"], ProcedureOptions.async)
+  async moveTo(x: number, y: number) {
     this.removeTurtleIfShown();
-    const [newX, newY] = this.getDestination(distance);
     if (this.pen) {
       const line = new LineVG();
       line.x1 = this.x;
       line.y1 = this.y;
-      line.x2 = newX;
-      line.y2 = newY;
+      line.x2 = x;
+      line.y2 = y;
       line.strokeColour = this.colour;
       line.strokeWidth = this.width;
       this.vg.append(line);
     }
-    this.x = newX;
-    this.y = newY;
+    this.x = x;
+    this.y = y;
     this.addTurtleIfShown();
     await this.stdlib.displayVectorGraphics(this.vg);
   }
