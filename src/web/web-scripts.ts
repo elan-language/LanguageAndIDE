@@ -1717,3 +1717,8 @@ function runTestsInner() {
     updateDisplayValues();
   }
 }
+
+addEventListener("beforeunload", (event) => {
+  // Recommended
+  event.preventDefault();
+});
