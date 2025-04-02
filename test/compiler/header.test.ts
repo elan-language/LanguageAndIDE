@@ -12,7 +12,7 @@ import {
 
 suite("Header", () => {
   test("Pass_hash", async () => {
-    const code = `# 5904cbdc7b13419a3719705bf8fa16ba218060e9dd1ba274b4af2d3d7d303d74 Elan 1.0.0 valid
+    const code = `# 14dddb83fe745f514d078c6035905da8f1dfbf7da06483ddd8c1f8ce8e5e4b05 Elan 1.0.0 guest default_profile valid
 
 main
   # My first program
@@ -27,7 +27,7 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(hash, new DefaultProfile(), "", transforms());
+    const fileImpl = new FileImpl(hash, new DefaultProfile(), "guest", transforms());
     fileImpl.setIsProduction(true);
     fileImpl.setVersion(1, 0, 0, "");
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -39,7 +39,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_versionSame", async () => {
-    const code = `# 5904cbdc7b13419a3719705bf8fa16ba218060e9dd1ba274b4af2d3d7d303d74 Elan 1.0.0 valid
+    const code = `# 14dddb83fe745f514d078c6035905da8f1dfbf7da06483ddd8c1f8ce8e5e4b05 Elan 1.0.0 guest default_profile valid
 
 main
   # My first program
@@ -66,7 +66,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_versionPatch1", async () => {
-    const code = `# 6122381bef25517049ba4628e4e7e1d0ddd8ca072cfd3bb5e44d4e18cf4a5ed9 Elan 1.0.100 valid
+    const code = `# 93c8c544e1e7e741cc1ecc570ac797c4d0095d4f7e9edbdbdb003d812e504537 Elan 1.0.100 guest default_profile valid
 
 main
   # My first program
@@ -93,7 +93,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_versionPatch2", async () => {
-    const code = `# 5904cbdc7b13419a3719705bf8fa16ba218060e9dd1ba274b4af2d3d7d303d74 Elan 1.0.0 valid
+    const code = `# 14dddb83fe745f514d078c6035905da8f1dfbf7da06483ddd8c1f8ce8e5e4b05 Elan 1.0.0 guest default_profile valid
 
 main
   # My first program
@@ -120,7 +120,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_versionMinor", async () => {
-    const code = `# 5904cbdc7b13419a3719705bf8fa16ba218060e9dd1ba274b4af2d3d7d303d74 Elan 1.0.0 valid
+    const code = `# 14dddb83fe745f514d078c6035905da8f1dfbf7da06483ddd8c1f8ce8e5e4b05 Elan 1.0.0 guest default_profile valid
 
 main
   # My first program
@@ -147,7 +147,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_user", async () => {
-    const code = `# 5904cbdc7b13419a3719705bf8fa16ba218060e9dd1ba274b4af2d3d7d303d74 Elan 1.0.0 aUser valid
+    const code = `# 0887656cae717264197a75bbc3f0c8c2b737eb0e48854ae2399ea76331822755 Elan 1.0.0 aUser default_profile valid
 
 main
   # My first program
@@ -174,7 +174,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_versionMajor1", async () => {
-    const code = `# 5904cbdc7b13419a3719705bf8fa16ba218060e9dd1ba274b4af2d3d7d303d74 Elan 1.0.0 valid
+    const code = `# 14dddb83fe745f514d078c6035905da8f1dfbf7da06483ddd8c1f8ce8e5e4b05 Elan 1.0.0 guest default_profile valid
 
 main
   # My first program
@@ -193,7 +193,7 @@ end main`;
   });
 
   test("Fail_versionMajor2", async () => {
-    const code = `# 5904cbdc7b13419a3719705bf8fa16ba218060e9dd1ba274b4af2d3d7d303d74 Elan 1.0.0 valid
+    const code = `# 14dddb83fe745f514d078c6035905da8f1dfbf7da06483ddd8c1f8ce8e5e4b05 Elan 1.0.0 guest default_profile valid
 
 main
   # My first program
@@ -212,7 +212,7 @@ end main`;
   });
 
   test("Fail_versionMinor", async () => {
-    const code = `# d8a5c891665b4f3437fc68104c0a967bb9d95ac26d83f2c906ea3913938ba452 Elan 1.1.0 valid
+    const code = `# da01be00d946912fec86405112300c347b38ea560d11e4992db91681093ef049 Elan 1.1.0 guest default_profile valid
 
 main
   # My first program
@@ -231,7 +231,7 @@ end main`;
   });
 
   test("Fail_preRelease", async () => {
-    const code = `# 7110aed3a8d6014e80c179c34c9c19dcb2b291df9f216505927a38d95dda099a Elan 1.1.0-Beta valid
+    const code = `# 775d96007a883395a4cb0cf72b418c81c5288b76b6387c8da49ca376834c1a04 Elan 1.1.0-Beta guest default_profile valid
 
 main
   # My first program
