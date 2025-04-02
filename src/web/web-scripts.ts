@@ -277,6 +277,7 @@ for (const elem of demoFiles) {
       const rawCode = await f.text();
       file = new FileImpl(hash, profile, userName, transforms());
       file.fileName = fileName;
+      clearUndoRedoAndAutoSave();
       await readAndParse(rawCode, fileName, true);
     }
   });
