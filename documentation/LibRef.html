@@ -17,10 +17,11 @@
 <!-- TODO: suggestion -->
 <!-- for temporary note of where change is needed -->
 
+<!-- #region Heading & Intro-->
+<!-- #endregion-->
+
 <!-- #region Value Types, with their methods-->
-<!--   #region Heading & Intro-->
 <h1 id="Value_Types">Value Types, with their methods</h1>
-<!--   #endregion-->
 <!--   #region Int-->
 <h2 id="Int">Integer</h2>
 <p>An integer or whole number, i.e. one that has no fractional component.</p>
@@ -231,7 +232,7 @@ prints 'true'.
 <el-code>asUnicode() returns Int</el-code><br>
 <p>returns the Unicode (integer) value for a character. If the string is more than one character long, the Unicode value returned is that for the first character in the string only. Note that the opposite method to create a single-character string from its numeric Unicode value is e.g. <el-code>unicode(123)</el-code> which returns <el-code>"{"</el-code>.</p>
 <!--   #endregion-->
-<!--   #endregion-->
+<!-- #endregion-->
 <!-- #region Tuples-->
 <h1 id="Tuple">Tuples</h1>
 A <el-code>tuple</el-code> is a way of holding a small number of values of different Types together as a single reference. It may be considered a &lsquo;lightweight&rsquo; alternative to defining a specific class for some purposes. Tuples are referred to as 2-tuples, 3-tuples, etc. according to the number of values they hold. Common uses include:
@@ -265,8 +266,7 @@ or into existing variables of the correct Type:</p>
 </ul>
 <!-- #endregion-->
 <!-- #region Standard data structures-->
-<!--  #region Heading & intro-->
-<h1 id="standard_data-structures">Standard data structures</h1>
+<h1 id="standard_data_structures">Standard data structures</h1>
 <p>The four 'standard' data structures defined in the Elan library are summarised in this table:</p>
 
 <table>
@@ -287,7 +287,7 @@ or into existing variables of the correct Type:</p>
   <td><el-code>["a":3, "b":5]</el-code></td>
  </tr>
  <tr>
-  <td>create</td>d
+  <td>create</td>
   <td><el-code>new Array&lt;of String&gt;(10, "")</el-code><br>any initial value of correct Type</td>
   <td><el-code>new Array2D&lt;of String&gt;(8,8, "")</el-code><br>dimensions may differ ('rectangular')<br>any initial value of correct Type</td>
   <td><el-code>new List&lt;of Int&gt;()</el-code><br>created empty<br>can be 'of' any Type</td>
@@ -341,7 +341,6 @@ with the specified changes &ndash; which is why all such methods have names star
     <el-code>of &lt;<el-kw>procedure</el-kw>&gt; <el-type>Int</el-type></el-code> &ndash; or implictly if the structure
     is created from its literal definition form. (<el-type>Dictionary</el-type> is defined by two types: one for the 'keys' and one for the 'values').</p>
 </p>
-<!-- #endregion-->
 <!--   #region Array-->
 <h2 id="Array">Array</h2>
 
@@ -400,11 +399,10 @@ further items to an array, although it is possible to convert an array to a list
     for the values, which may be any Type.</p>
 </p>
 <!-- #endregion-->
-<!-- #endregion-->
 <!-- #region Immutable data structures -->
 <h1>Immutable data structures</h1>
 
-<p>In constrast to the <a href="#standard_data-structures">standard data structures</a>, <i>immutable</i>
+<p>In constrast to the <a href="#standard_data_structures">standard data structures</a>, <i>immutable</i>
 data structures cannot be modified directly &ndash; and hence define no <i>procedure</i> dot methods. Instead,
 changes are made by using <i>function</i> dot methods that copy the existing data structure, but with specified
 differences. Immutable data structures are intended specifically to facilitate the Functional Programming paradigm,
@@ -520,7 +518,7 @@ differences. Immutable data structures are intended specifically to facilitate t
         <el-statement class="ok" id="print44" tabindex="0"><el-kw>print </el-kw><el-field id="expr45" class="optional ok" tabindex="0"><el-txt><el-id>s</el-id>.<el-method>asImmutableList</el-method>(<el-id>anotherSet</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
         <el-statement class="ok" id="print46" tabindex="0"><el-kw>print </el-kw><el-field id="expr47" class="optional ok" tabindex="0"><el-txt><el-id>s</el-id>.<el-method>asString</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 </el-code-block>
-<!-- #endregion-->
+<!--   #endregion-->
 <!--   #region Stack and queue-->
 <p id="Queue"></p>
 <h2 id="Stack">Stack and queue</h2>
@@ -1268,9 +1266,7 @@ Note that the argument must be provided as a <el-code><el-type>String</el-type><
 </main>
 </el-code-block>
 <!-- #endregion-->
-<!-- #endregion-->
 <!-- #region System methods-->
-<!--   #region Heading & intro-->
 <h1 id="System_method">System methods</h1>
     <p>System methods appear to work like <el-code>functions</el-code>, because:</p>
 <ul>
