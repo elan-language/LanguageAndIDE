@@ -107,7 +107,7 @@ export class FileImpl implements File, Scope {
   constructor(
     private readonly hash: (toHash: string) => Promise<string>,
     private readonly profile: Profile,
-    private readonly userName: string | undefined,
+    private userName: string | undefined,
     private readonly transform: Transforms,
     allowAnyHeader?: boolean,
   ) {
@@ -238,7 +238,7 @@ export class FileImpl implements File, Scope {
     this._frNo = 1;
     const globals = parentHelper_renderChildrenAsHtml(this);
     this.currentHash = await this.getHash();
-    return `<el-header># <el-hash>${this.currentHash}</el-hash> ${this.getVersionString()}${this.getUserName()}</el-header>\r\n${globals}`;
+    return `<el-header># <el-hash>${this.currentHash}</el-hash> ${this.getVersionString()}${this.getUserName()}${this.getProfileName()}</el-header>\r\n${globals}`;
   }
 
   public indent(): string {
@@ -272,7 +272,12 @@ export class FileImpl implements File, Scope {
   }
 
   private getUserName() {
-    return this.userName ? ` ${this.userName}` : "";
+    return this.userName ? ` ${this.userName}` : " guest";
+  }
+
+  private getProfileName() {
+    const pn = this.profile.name.replaceAll(" ", "_");
+    return pn ? ` ${pn}` : " _";
   }
 
   compileGlobals(): string {
@@ -367,9 +372,8 @@ export class FileImpl implements File, Scope {
 
   renderHashableContent(): string {
     const globals = parentHelper_renderChildrenAsSource(this);
-    let html = `${this.getVersionString()}${this.getUserName()} ${this.getParseStatusLabel()}\r\n\r\n${globals}`;
-    html = html.endsWith("\r\n") ? html : html + "\r\n"; // To accommodate possibility that last global is a global-comment
-    return html;
+    const code = `${this.getVersionString()}${this.getUserName()}${this.getProfileName()} ${this.getParseStatusLabel()}\r\n\r\n${globals}`;
+    return code.endsWith("\r\n") ? code : code + "\r\n"; // To accommodate possibility that last global is a global-comment
   }
 
   public getFirstSelectorAsDirectChild(): AbstractSelector {
@@ -737,12 +741,13 @@ export class FileImpl implements File, Scope {
       const eol = code.indexOf("\n");
       const header = code.substring(0, eol > 0 ? eol : undefined);
       const tokens = header.split(" ");
-      if (tokens.length !== 5 || tokens[0] !== "#" || tokens[2] !== "Elan") {
+      if (tokens.length === 7 && tokens[0] === "#" && tokens[2] === "Elan") {
+        await this.validateHash(tokens[1], code);
+        this.validateVersion(tokens[3]);
+        this.userName = tokens[4] ?? "guest";
+      } else {
         throw new ElanFileError(cannotLoadFile);
       }
-
-      await this.validateHash(tokens[1], code);
-      this.validateVersion(tokens[3]);
     }
   }
 

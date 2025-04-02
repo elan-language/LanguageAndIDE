@@ -1,4 +1,4 @@
-# 5eb0c319efeb1b414e37522479bc53cef450aa808aebac2a770c50729f916c04 Elan 0.10.0-Beta valid
+# 17d803aaa57aecdd7709c37625733d4460a21391ab01f71c99bf1ca0e85c2a67 Elan 0.10.0-Beta guest default_profile valid
 
 function bestFitLine(points as List<of Point>) returns (Float, Float)
   let sumX be points.reduce(0.0, lambda s as Float, p as Point => s + p.x)

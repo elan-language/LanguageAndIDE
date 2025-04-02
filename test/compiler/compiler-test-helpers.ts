@@ -210,4 +210,4 @@ export function transforms() {
 
 export const testHeaderVersion = "Elan 0.10.0-Beta";
 
-export const testHeader = `# FFFF ${testHeaderVersion} valid`;
+export const testHeader = `# FFFF ${testHeaderVersion} guest default_profile valid`;

@@ -146,6 +146,33 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Hello World!");
   });
 
+  test("Pass_user", async () => {
+    const code = `# 5904cbdc7b13419a3719705bf8fa16ba218060e9dd1ba274b4af2d3d7d303d74 Elan 1.0.0 aUser valid
+
+main
+  # My first program
+  print "Hello World!"
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+
+  await system.printLine("Hello World!");
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(hash, new DefaultProfile(), "aUser", transforms());
+    fileImpl.setIsProduction(true);
+    fileImpl.setVersion(1, 0, 0, "");
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "Hello World!");
+  });
+
   test("Fail_versionMajor1", async () => {
     const code = `# 5904cbdc7b13419a3719705bf8fa16ba218060e9dd1ba274b4af2d3d7d303d74 Elan 1.0.0 valid
 
