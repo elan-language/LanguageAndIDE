@@ -1,0 +1,10 @@
+# 5116f2c5ecc8cf82d5211ede5e777c138b0177d2079ed49edc46fdf387c24070 Elan Beta 9 valid
+
+main
+  print "<h1 style='color: blue;'>A heading</h1>"
+  print "<p>some text</p>"
+end main
+
+test 
+
+end test
