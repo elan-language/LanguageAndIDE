@@ -148,7 +148,7 @@ export class Turtle extends GraphicsBase {
     return [newX, newY];
   }
 
-  @elanProcedure([], ProcedureOptions.async)
+  @elanProcedure(["distance"], ProcedureOptions.async)
   async move(distance: number) {
     this.removeTurtleIfShown();
     const [newX, newY] = this.getDestination(distance);
@@ -168,7 +168,7 @@ export class Turtle extends GraphicsBase {
     await this.stdlib.displayVectorGraphics(this.vg);
   }
 
-  @elanProcedure([], ProcedureOptions.async)
+  @elanProcedure(["degrees"], ProcedureOptions.async)
   async turn(degrees: number) {
     await this.turnToHeading(this.heading + degrees);
   }
@@ -185,24 +185,17 @@ export class Turtle extends GraphicsBase {
     return x >= 360 ? this.normaliseHeading(x - 360) : x < 0 ? this.normaliseHeading(x + 360) : x;
   }
 
-  @elanProcedure([], ProcedureOptions.async)
-  pause(@elanIntType() ms: number): Promise<void> {
-    return new Promise((resolve) => {
-      setTimeout(() => resolve(), ms);
-    });
-  }
-
-  @elanProcedure([])
+  @elanProcedure(["colour"])
   penColour(@elanIntType() colour: number) {
     this.colour = colour;
   }
 
-  @elanProcedure([])
+  @elanProcedure(["width"])
   penWidth(@elanFloatType() width: number) {
     this.width = width > 0 ? width : 1;
   }
 
-  @elanProcedure([], ProcedureOptions.async)
+  @elanProcedure(["x", "y"], ProcedureOptions.async)
   async placeAt(x: number, y: number) {
     this.removeTurtleIfShown();
     this.x = x;

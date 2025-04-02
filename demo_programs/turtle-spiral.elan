@@ -1,4 +1,4 @@
-# 9aae519bbc685f7bd0f68d223ddd4b61887a6453524aa49b24e91d7ff028d05e Elan 0.10.0-Beta valid
+# a03e9f1e2cd0d6dbfd5b1ac6d050826abb9c0909e2dbbca68106205e1066133a Elan 0.10.0-Beta valid
 
 main
   let t be new Turtle()
@@ -8,6 +8,6 @@ main
   for i from 75 to 0 step -1
     call t.move(i)
     call t.turn(90)
-    call t.pause(300)
+    call pause(300)
   end for
 end main

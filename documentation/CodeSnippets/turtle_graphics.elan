@@ -1,4 +1,4 @@
-# 789a208d2a76770441e752335a0c7ba3a456312cd23f7f1c559a1ff64ef9d2b4 Elan Beta 8 valid
+# FFFF Elan Beta 8 valid
 
 main
   let t be new Turtle()
@@ -7,6 +7,6 @@ main
   for i from 1 to 4 step 1
     call t.turn(90)
     call t.move(40)
-    call t.pause(500)
+    call pause(500)
   end for
 end main
