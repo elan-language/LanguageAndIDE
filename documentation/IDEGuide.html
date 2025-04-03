@@ -57,7 +57,7 @@ As with the main <b>Help</b> menu, the documentation will open in a separate bro
 <h2 id="Button_File">File</h2>
 <!--     #region New -->
 <h3 id="New">New</h3>
-<p><b>New</b> will clear the current code - allowing you to start writing a new program. The code editor will then show this:</p>
+<p><b>New</b> will clear the current code &ndash; allowing you to start writing a new program. The code editor will then show this:</p>
 
 <el-header># Elan Beta 8</el-header>
 
@@ -70,7 +70,7 @@ The first line shows a standard Elan 'header' comment, which is required on ever
      which will be loaded in place of your current code. As with <b>New</b> (above) if your existing code is not saved, you will see a confirmation dialog.</p>
 
      <p>The name of the file that has been loaded is displayed above the code editor.</p>
-     <p>Note: you may only load a valid Elan file - one that has been created and saved by the Elan IDE. Loading any other file will result in
+     <p>Note: you may only load a valid Elan file &ndash; one that has been created and saved by the Elan IDE. Loading any other file will result in
     a message in <a href="System_info">System info</a>:</p>
 
 <el-code>Cannot load file: it has been created or modified outside Elan IDE</el-code>
@@ -87,7 +87,7 @@ The first line shows a standard Elan 'header' comment, which is required on ever
 <p><b>Auto Save</b> offers a file selection dialog to allow you to specify the name and location where your code will be saved.
     If you use this option, every time you modify the code <i>and its parse status is 'valid'</i> the code will be saved automatically,
     <i>overriding the previous version in the file</i>. Once this option has been selected, the <b>File</b> menu will offer
-    a <b>Cancel Auto Save</b> option, after which you may use <b>Manual Save</b> - or re-select <b>Auto Save</b>.
+    a <b>Cancel Auto Save</b> option, after which you may use <b>Manual Save</b> &ndash; or re-select <b>Auto Save</b>.
 
 <p>Note that you may auto-save a <b>New</b> code file, even though you haven't added any instructions yet, because the file contains a valid header.</p>
 <!-- #endregion -->
@@ -95,7 +95,7 @@ The first line shows a standard Elan 'header' comment, which is required on ever
 <!--     #region Manual Save -->
 <h3 id="Menu_Manual_Save">Manual Save</h3>
 <b>Manual Save</b> offers a file selection dialog to allow you to specify the name and location where your code will be saved.
-Unlike <b>Auto Save</b> - <b>Manual Save</b> is a one-off event - you must remember to save any subsequent changes if you need them saved.
+Unlike <b>Auto Save</b> &ndash; <b>Manual Save</b> is a one-off event &ndash; you must remember to save any subsequent changes if you need them saved.
 As a reminder, if your existing code is not saved, you will see a confirmation dialog:</p>
 <img src="images/Unsaved_warning.png" style="width:30%;">
 <p>Note that for both <b>Auto Save</b> and <b>Manual Save</b>, code may be saved <i>only when its parse status is 'valid'</i>. However,
@@ -141,9 +141,9 @@ may easily find the parts of code that contain issues.</p>
 <p>The keyboard shortcut for <b>Trim</b> is <b>Alt-t</b>. (This is because <b>Ctrl-b</b> is a key sequence used for standard browser functionality).</p>
 <!-- #endregion -->
  <!--   #region Undo & Redo -->
- <div id="Button_Undo"></div>
+<div id="Button_Undo"></div>
 <h2 id="Button_Redo">Undo & Redo</h2>
- <p>The <b>Undo</b> command allows you to undo recent change(s) and go back to the <i>last point at which the code parsed as 'valid'</i> - you cannot go back to any state when the code was still parsing as 'incomplete' or 'invalid'.
+ <p>The <b>Undo</b> command allows you to undo recent change(s) and go back to the <i>last point at which the code parsed as 'valid'</i> &ndash; you cannot go back to any state when the code was still parsing as 'incomplete' or 'invalid'.
     You may apply <b>Undo</b> repeatedly, to go back through all parse-valid states of the code since you loaded the code, or started from <b>New</b>.
     The <b>Redo</b> command to revert the last <b>Undo</b> if you went back too far.</p>
 
@@ -181,7 +181,7 @@ Here a single instruction is highlighted:
     <el-kw>end main</el-kw>
     </main></el-code-block>
 
-<li id="Container_instruction">Here a <i>container</i>-instruction is highlighted. The highlight shows the full extent of the instruction, indicating the sequence of other instructions that it contains, which are all indented by two characters:</li>
+<p id="Container_instruction">Here a <i>container</i>-instruction is highlighted. The highlight shows the full extent of the instruction, indicating the sequence of other instructions that it contains, which are all indented by two characters:</p>
     <el-code-block>
         <el-statement class="selected focused ok multiline" id="while12" tabindex="0">
             <el-top><el-expand>+</el-expand><el-kw>while </el-kw><el-field id="expr14" class="ok" tabindex="0"><el-txt><el-id>true</el-id></el-txt><el-place><i>condition</i></el-place></el-field></el-top>
@@ -208,14 +208,14 @@ It is also possible to select multiple instructions (to move, or delete them, to
     </el-statement>
 </el-code-block>
 
-The following example shows a <i>single instruction</i> that has been formatted over multiple lines - either because it is too long to fit on one line, or because the editor formats that instruction over multiple lines for readability. Note that the second and subsequent lines are indented by just <i>one</i> character:
+The following example shows a <i>single instruction</i> that has been formatted over multiple lines &ndash; either because it is too long to fit on one line, or because the editor formats that instruction over multiple lines for readability. Note that the second and subsequent lines are indented by just <i>one</i> character:
 <el-code-block>
     <el-statement class="selected focused ok" id="let15" tabindex="0"><el-kw>let </el-kw><el-field id="var16" class="ok" tabindex="0"><el-txt><el-id>b</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr17" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>CircleVG</el-type>()<el-kw> with </el-kw><br><el-id>cx</el-id><el-kw> set to </el-kw><el-id>i</el-id>*<el-lit>5</el-lit> + <el-lit>2</el-lit>, <br><el-id>cy</el-id><el-kw> set to </el-kw><el-lit>75</el-lit>, <br><el-id>r</el-id><el-kw> set to </el-kw><el-lit>1</el-lit>, <br><el-id>fill</el-id><el-kw> set to </el-kw>-<el-lit>1</el-lit>, <br><el-id>stroke</el-id><el-kw> set to </el-kw><el-id>white</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 </el-code-block>
 
 <h3 id="Field">Fields</h3>
 
-<p>Instructions consist of fixed (or 'templated') code - keywords and sometimes symbols - plus a number of 'fields' which is where the user enters code that define specific details for that instruction.
+<p>Instructions consist of fixed (or 'templated') code &ndash; keywords and sometimes symbols &ndash; plus a number of 'fields' which is where the user enters code that define specific details for that instruction.
     When the field is highlighted it will be highlighted with a background colour and a thin black border. This indicates that the user may now enter or edit code in that field, for example:</p>
 <el-code-block>
     <el-statement class="ok" id="var40" tabindex="0"><el-kw>variable </el-kw><el-field id="var41" class="selected focused ok" tabindex="0"><el-txt><input spellcheck="false" data-cursorstart="4" data-cursorend="4" size="3" style="width: 4ch" value="newX"></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr42" class="ok" tabindex="0"><el-txt><el-id>x</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
@@ -223,7 +223,7 @@ The following example shows a <i>single instruction</i> that has been formatted 
 
 <p>A green background (as above) indicates that the text in field  is valid for that field. An amber background indicates that the text is not complete
     but that additional text could be added to make it valid. <i>Commonly</i>, the field will contain a prompt that suggests what else might be needed, and/or
-        a drop-down list of 'symbols' that <i>might</i> be valid for the field - though it is <i>not</i> guaranteed that all those options will then
+        a drop-down list of 'symbols' that <i>might</i> be valid for the field &ndash; though it is <i>not</i> guaranteed that all those options will then
     compile:</p>
 
 <el-code-block><el-statement class="warning" id="var6" tabindex="0"><el-kw>variable </el-kw><el-field id="var7" class="ok" tabindex="0"><el-txt><el-id>x</el-id></el-txt><el-place><i>name</i></el-place>
@@ -237,7 +237,7 @@ The following example shows a <i>single instruction</i> that has been formatted 
 
 <p>If a field background turns red as you type, it is best to hit <b>Backspace</b> until it goes green or amber again, so that you can identify the <i>first</i> character that caused the issue.</p>
 
-<p>If the background to a field is grey, it means that that field is <i>optional</i> - you may enter valid text or move on to the next field, or the next instruction.</p>
+<p>If the background to a field is grey, it means that that field is <i>optional</i> &ndash; you may enter valid text or move on to the next field, or the next instruction.</p>
 <!-- #endregion -->
  <!-- #region Adding Instructions-->
 <h2 id="Selector">Adding Instructions into a program</h2>
@@ -310,7 +310,7 @@ In the following example, starting from this <a href="#Member_selector">member s
 
 <h3 id="Global_selector">Global selector</h3>
 
-<p>The global selector appears only at 'global' level - in other words when the 'new code' is located <i>directly</i> within the file,
+<p>The global selector appears only at 'global' level &ndash; in other words when the 'new code' is located <i>directly</i> within the file,
 rather than within <a href="#Container_Instruction">container instruction</a>. When given focus, it will list the <a href="LangRef.html#global"></a>global instructions that
 you may insert. This is the full list:</p>
 
@@ -397,7 +397,7 @@ Note that <el-code>main</el-code> will not be shown if the program already conta
 <p>When an instruction is highlighted, you may right-mouse-click on it, or type <b>Ctrl-m</b> to bring up the context menu, for example:</p>
 
 <img src="Images/Context_menu.png" style="width:30%;">
-<p>Note that several of the options show a keyboard short-cut - which you may use just by selecting the instruction and pressing
+<p>Note that several of the options show a keyboard short-cut &ndash; which you may use just by selecting the instruction and pressing
     the specified keys <i>without having to bring up the context menu.</i></p>
 <!-- #endregion -->
 <!-- #endregion -->
@@ -431,7 +431,7 @@ Note that <el-code>main</el-code> will not be shown if the program already conta
     <li><b>Test status</b></li>
     <li><b>Run status</b></li>
 </ul>
-<p>Each of the four status bars may appear with a green, amber, or red background - with a superimposed word to clarify the meaning.
+<p>Each of the four status bars may appear with a green, amber, or red background &ndash; with a superimposed word to clarify the meaning.
 Alternatively the bar may be replaced by the blue background, with no text, indicating that that particular status is not relevant at present.</p>
 <p>
 If the Parse, Compile, or Test status shows amber, or red, you may click on that status bar to highlight the first location in your code where the status shown was identified.</p>
@@ -440,22 +440,21 @@ If the Parse, Compile, or Test status shows amber, or red, you may click on that
 <!-- #region Display-->
 <h1 id="Display">5. Display</h1>
 <img src="images/display.png" style="width:30%;">
- <p id="Bar_resize">>The Display pane is always rendered with an aspect ratio of 4:3 - so if the width is changed (by moving the central blue bart left or right) the Display will change its vertical dimension also.
-    It is used for the following purposes, on their own or in combination:</p>
+<p id="Bar_resize">The Display pane is always rendered with an aspect ratio of 4:3 &ndash; so if the size of the browser window is changed, the Display will change its dimensions also.</p>
+<p>The pane is used for the following purposes, on their own or in combination:</p>
 
- <ul>
-    <li>to generate plain text, or formatted Html, using the <a href="LangRef.html#print">print instructions</a> and/or <a href="LibRef.html#Lib_proc">print procedures</a>.</li>
-    <li>to input text from the keyboard using various <a href="LibRef.html#System_methods">system methods</a>.</li>
-    <li>for <a href="LibRef.html#BlockGraphics">Block graphics</a> (as shown in the 'maze' example above)</li>
-    <li>for <a href="LibRef.html#VectorGraphics">Vector graphics</a></li>
-    <li>for <a href="LibRef.html#Turtle">Turtle graphics</a></li>
- </ul>
+<ul>
+ <li>to generate plain text, or formatted Html, using the <a href="LangRef.html#print">print instructions</a> and/or <a href="LibRef.html#Lib_proc">print procedures</a>.</li>
+ <li>to input text from the keyboard using various <a href="LibRef.html#System_methods">system methods</a>.</li>
+ <li>for <a href="LibRef.html#BlockGraphics">Block graphics</a> (as shown in the 'maze' example above)</li>
+ <li>for <a href="LibRef.html#VectorGraphics">Vector graphics</a></li>
+ <li>for <a href="LibRef.html#Turtle">Turtle graphics</a></li>
+</ul>
 
- <p>Any of the three forms of graphics may be overlaid with printed text/Html, or each other, with the one exception that Turtle graphics and Vector graphics may not be used together - as the former makes exclusive use of the latter.</p>
- <p id="Button_ClearDisplay">The <b>Clear</b> button will clear all of contents of the display, irrespective of the mechanism by which it was generated.
-    However, the individual forms of display listed above may be cleared individually using specific methods (see links above).</p>
+ <p>Any of the three forms of graphics may be overlaid with printed text or Html, or each other, with the one exception that Turtle graphics and Vector graphics may not be used together &ndash; as the former makes exclusive use of the latter.</p>
+<p id="Button_ClearDisplay">The <b>Clear</b> button will clear all of contents of the Display, irrespective of the mechanism by which it was generated.
+    However, the individual forms of display listed above may be cleared individually using specific methods (see the links above).</p>
 <!-- #endregion -->
-
 <!-- #System info-->
 <h1 id="System_info">6. System info</h1>
 
@@ -520,7 +519,7 @@ If the Parse, Compile, or Test status shows amber, or red, you may click on that
 <h1 id="User_profile">User profile</h1>
 <!-- TODO -->
 <p>User profiles determine the availability of specific language instructions and IDE capabilities are made available to the user.
-    They may also be used to manage accessibility - for example to provide alternate colour scheme(s) for users with CVD.
+    They may also be used to manage accessibility &ndash; for example to provide alternate colour scheme(s) for users with CVD.
     Profiles are created and managed by a teacher.
 </p>
 <!-- #endregion -->
