@@ -68,12 +68,17 @@
 
 <h3 class="no-TOC">Dot methods</h3>
 <table>
-    <tr><th>Method</th><th>Returns</th><th>Parameters</th><th>Description</th></tr>
-    <tr><th colspan="4">Functions</th></tr>
-    <tr><td><el-code><el-method>asString</el-method></el-code></td><td><el-code><el-type>String</el-type></el-code></td><td></td><td></td></tr>
-    <tr><td><el-code><el-method>ceiling</el-method></el-code></td><td><el-code><el-type>Int</el-type></el-code></td><td></td><td>returns first integer larger than or equal to the floating-point number</td></tr>
-    <tr><td><el-code><el-method>floor</el-method></el-code></td><td><el-code><el-type>Int</el-type></el-code></td><td></td><td>returns first integer smaller than or equal to the floating-point number</td></tr>
-    <tr><td><el-code><el-method>round</el-method></el-code></td><td><el-code><el-type>Float</el-type></el-code></td><td>places<el-code><el-type>Int</el-type></el-code></td><td>returns the number rounded to the number of decimal places specified as the argument</td></tr>
+ <tr><th>Method</th><th>Returns</th><th>Parameters</th><th>Description</th></tr>
+ <tr><th colspan="4">Functions</th></tr>
+ <tr>
+  <td><el-code><el-method>asString</el-method></el-code></td><td><el-code><el-type>String</el-type></el-code></td><td></td><td></td>
+</tr><tr>
+  <td><el-code><el-method>ceiling</el-method></el-code></td><td><el-code><el-type>Int</el-type></el-code></td><td></td><td>returns first integer larger than or equal to the floating-point number</td>
+</tr><tr>
+  <td><el-code><el-method>floor</el-method></el-code></td><td><el-code><el-type>Int</el-type></el-code></td><td></td><td>returns first integer smaller than or equal to the floating-point number</td>
+</tr><tr>
+  <td><el-code><el-method>round</el-method></el-code></td><td><el-code><el-type>Float</el-type></el-code></td><td>places<el-code><el-type>Int</el-type></el-code></td><td>returns the number rounded to the number of decimal places specified as the argument</td>
+</tr>
 </table>
 
 <h4 class="no-TOC">Constraints</h4>
@@ -110,13 +115,14 @@ For greater detail, refer to the official JavaScript documentation.
 
 <h3 class="no-TOC">Dot methods</h3>
 <table>
-    <tr><th>Method</th><th>Returns</th><th>Parameters</th><th>Description</th></tr>
-    <tr><th colspan="4">Functions</th></tr>
-    <tr><td><el-code><el-method>asString</el-method></el-code></td>
-        <td><el-code><el-type>String</el-type></el-code></td>
-        <td><el-code><el-id></el-id> <el-kw>as</el-kw> <el-type></el-type></el-code></td>
-        <td></td>
-    </tr>
+ <tr><th>Method</th><th>Returns</th><th>Parameters</th><th>Description</th></tr>
+ <tr><th colspan="4">Functions</th></tr>
+ <tr>
+  <td><el-code><el-method>asString</el-method></el-code></td>
+  <td><el-code><el-type>String</el-type></el-code></td>
+  <td><el-code><el-kw>as</el-kw></el-code></td>
+  <td></td>
+ </tr>
 </table>
 <!--   #endregion-->
 <!--   #region String-->
@@ -144,39 +150,54 @@ For greater detail, refer to the official JavaScript documentation.
 
 <h3 class="no-TOC">Dot methods</h3>
 <table>
-    <tr><th>Method</th><th>Returns</th><th>Parameters</th><th>Description</th></tr>
-    <tr><th colspan="4">Functions</th></tr>
-    <tr><td><el-code><el-method>asString</el-method></el-code></td>
-        <td><el-code><el-type>String</el-type></el-code></td>
-        <td><el-code><el-id></el-id> <el-kw></el-kw> <el-type></el-type></el-code></td>
-        <td> returns the string itself. (All Types must have this method to be printable)</td></tr>
-    <tr><td><el-code><el-method>asList</el-method></el-code></td>
-        <td><el-code><el-type>List&lt;of String&gt;</el-type></el-code></td>
-        <td><el-code><el-id></el-id> <el-kw></el-kw> <el-type></el-type></el-code></td>
-        <td>returns a <el-code>List</el-code> of the individual characters</td></tr>
-    <tr><td><el-code><el-method>asUnicode</el-method></el-code></td>
-        <td><el-code><el-type>Int</el-type></el-code></td>
-        <td><el-code><el-id></el-id> <el-kw></el-kw> <el-type></el-type></el-code></td>
-        <td>returns the Unicode value of the <i>first character of the string</i></td></tr>
-    <tr><td><el-code><el-method>asRegExp</el-method></el-code></td>
-        <td><el-code><el-type>RegExp</el-type></el-code></td>
-        <td><el-code><el-id></el-id> <el-kw></el-kw> <el-type></el-type></el-code></td>
-        <td>returns the same string converted to RegExp (but does not check if the result is a valid regular expression)</td></tr>
-    <tr><td><el-code><el-method>asSet</el-method></el-code></td>
-        <td><el-code><el-type>Set</el-type></el-code></td>
-        <td><el-code><el-id></el-id> <el-kw></el-kw> <el-type></el-type></el-code></td>
-        <td> returns a set of the <i>unique</i> characters</td></tr>
-    <tr><td><el-code><el-method></el-method></el-code></td>
-        <td><el-code><el-type></el-type></el-code></td>
-        <td><el-code><el-id></el-id> <el-kw>as</el-kw> <el-type></el-type></el-code></td></tr>
-    <tr><th colspan="4">Procedures</th></tr>
-    <tr><td><el-code><el-method></el-method></el-code></td>
-        <td><el-code><el-type></el-type></el-code></td>
-        <td><el-code><el-id></el-id> <el-kw>as</el-kw> <el-type></el-type></el-code></td>
-    </tr>
+ <tr><th>Method</th><th>Returns</th><th>Parameters</th><th>Description</th></tr>
+ <tr><th colspan="4">Functions</th></tr>
+ <tr>
+  <td><el-code><el-method>asString</el-method></el-code></td>
+  <td><el-code><el-type>String</el-type></el-code></td>
+  <td><el-code>  </el-code></td>
+  <td> returns the string itself. (All Types must have this method to be printable)</td>
+ </tr><tr>
+  <td><el-code><el-method>asList</el-method></el-code></td>
+  <td><el-code><el-type>List&lt;of String&gt;</el-type></el-code></td>
+  <td><el-code>  </el-code></td>
+  <td>returns a <el-code>List</el-code> of the individual characters</td>
+ </tr><tr>
+  <td><el-code><el-method>asUnicode</el-method></el-code></td>
+  <td><el-code><el-type>Int</el-type></el-code></td>
+  <td><el-code>  </el-code></td>
+  <td>returns the Unicode value of the <i>first character of the string</i></td>
+ </tr><tr>
+  <td><el-code><el-method>asRegExp</el-method></el-code></td>
+  <td><el-code><el-type>RegExp</el-type></el-code></td>
+  <td><el-code>  </el-code></td>
+  <td>returns the same string converted to RegExp (but does not check if the result is a valid regular expression)</td>
+ </tr><tr>
+  <td><el-code><el-method>asSet</el-method></el-code></td>
+  <td><el-code><el-type>Set</el-type></el-code></td>
+  <td><el-code>  </el-code></td>
+  <td> returns a set of the <i>unique</i> characters</td>
+ </tr><tr>
+  <td><el-code><el-method></el-method></el-code></td>
+  <td><el-code></el-code></td>
+  <td><el-code> <el-kw>as</el-kw> </el-code></td>
+  <td></td>
+ </tr><tr>
+ <th colspan="4">Procedures</th></tr>
+ <tr>
+  <td><el-code><el-method></el-method></el-code></td>
+  <td><el-code></el-code></td>
+  <td><el-code> <el-kw>as</el-kw> </el-code></td>
+  <td></td>
+ </tr>
+ <tr>
+  <td><el-code><el-method>contains</el-method></el-code></td>
+  <td><el-code><el-code><el-type>Boolean</el-type></el-code></el-code></td>
+  <td><el-code>String</el-code></td>
+  <td><el-code>true</el-code> when the string contains the substring specified as the argument; <el-code>false</el-code> otherwise</td>
+ </tr>
 </table>
 <ul>
-     <li><el-code><el-method>contains</el-method></el-code> returns a <el-code><el-type>Boolean</el-type></el-code> indicating whether or not the string contains the substring specified as the argument.</li>
     <li><el-code><el-method>filter</el-method></el-code></li>
     <li><el-code><el-method>indexOf</el-method></el-code>  takes one parameter that is a string of exactly one character and returns the offset (from 0) of that character within the string to which this method is applied. If the character is not present, or if  the parameter string is other than a single character, the method returns -1.</li>
     <li><el-code><el-method>isAfter</el-method></el-code> compares, alphabetically, the string to the <el-code><el-type>String</el-type></el-code> argument returning a <el-code><el-type>Boolean</el-type></el-code></li>
@@ -268,7 +289,6 @@ or into existing variables of the correct Type:</p>
 <!-- #region Standard data structures-->
 <h1 id="standard_data_structures">Standard data structures</h1>
 <p>The four 'standard' data structures defined in the Elan library are summarised in this table:</p>
-
 <table>
  <tr><th><br></th><th>Array</th><th> Array2D</th><th>List</th><th>Dictionary</th></tr>
  <tr>
@@ -278,50 +298,43 @@ or into existing variables of the correct Type:</p>
   <td><el-code>Array2D&lt;of String&gt;</el-code><br>of Type <el-code>Int</el-code>, <el-code>Float</el-code>, <el-code>String</el-code></el-code>, or <el-code>Boolean</el-code></td>
   <td><el-code>List&lt;of String&gt;</el-code><br>of any Type including <el-code>Array</el-code><br> &ndash; or <el-code>List</el-code> for 'jagged' data</td>
   <td><el-code>Dictionary&lt;of String, Int&gt;</el-code><br>key must be <el-code>Int</el-code>, <el-code>Float</el-code>, <el-code>String</el-code>, <el-code>Boolean</el-code>, or any<el-code>record</el-code>. Value Type may be anything</td>
- </tr>
- <tr>
+ </tr><tr>
   <td>literal</td>
   <td>N/A, but can convert literal list:<br><el-code>["a","b","c"].asArray()</el-code></td>
   <td>N/A</td>
   <td><el-code>["a","b","c"]</el-code></td>
   <td><el-code>["a":3, "b":5]</el-code></td>
- </tr>
- <tr>
+ </tr><tr>
   <td>create</td>
   <td><el-code>new Array&lt;of String&gt;(10, "")</el-code><br>any initial value of correct Type</td>
   <td><el-code>new Array2D&lt;of String&gt;(8,8, "")</el-code><br>dimensions may differ ('rectangular')<br>any initial value of correct Type</td>
   <td><el-code>new List&lt;of Int&gt;()</el-code><br>created empty<br>can be 'of' any Type</td>
   <td><el-code>new Dictionary&lt;of String, Int&gt;()</el-code><br>Key Type must be simple value or a <el-code>record</el-code><br>Value Type can be any</td>
- </tr>
- <tr>
+ </tr><tr>
   <td>read by index</td>
   <td><el-code>a[3]</el-code></td>
   <td><el-code>a2[3, 4]</el-code></td>
   <td><el-code>li[2]</el-code></td>
   <td><el-code>d["b"]</el-code></td>
- </tr>
- <tr>
+ </tr><tr>
   <td>read range</td>
   <td><el-code>a[2..5]</el-code><br>lower bound is <em>inclusive</em><br>upper bound is <em>exclusive</em></td>
   <td>N/A</td>
   <td><el-code>li[2..5]</el-code><br>lower bound is <em>inclusive</em><br>upper bound is <em>exclusive</em></td>
   <td> N/A</td>
- </tr>
- <tr>
+ </tr><tr>
   <td>procedure methods<br>to mutate contents</td>
   <td><el-code>put(2, "x")</el-code></td>
   <td><el-code>put(3, 5, "x")</el-code></td>
   <td><el-code><el-code>append("x")</el-code></el-code><br><el-code>appendList(li2)</el-code><br><el-code>insert(2,"x")</el-code><br><el-code>put(2, "x")</el-code><br><el-code>removeAt(2)</el-code><br><el-code>removeValue("x")</el-code></td>
   <td><el-code>put("c", 4)<br><el-code>removeAt("c")</el-code></el-code></td>
- </tr>
- <tr>
+ </tr><tr>
   <td>function methods<br>to make changes<br>by returning new<br>structure</td>
   <td><el-code>withPut(2, "x")</el-code></td>
   <td><el-code> withPut(3, 5, "x")</el-code></td>
   <td><el-code>withAppend("x")</el-code><br><el-code>withAppendList(li2)</el-code><br><el-code>withInsert(2, "x")</el-code><br><el-code>withPut(2,"x")</el-code><br><el-code>withRemoveAt(2)</el-code><br><el-code>withRemoveValue("x")</el-code></td>
   <td><el-code>withPut("c",4)</el-code><br><el-code>withRemoveAt("c")</el-code></td>
- </tr>
- <tr>
+ </tr><tr>
   <td>Other function methods</td>
   <td><el-code>asList</el-code><br><el-code>sString</el-code><br><el-code>contains</el-code><br><el-code>indexOf</el-code><br><el-code>length</el-code></td>
   <td><el-code>asString</el-code><br><el-code>contains</el-code><br><el-code>indexOf</el-code> returns Tuple with row & column index values<br><el-code>length</el-code></td>
@@ -329,8 +342,8 @@ or into existing variables of the correct Type:</p>
   <td><el-code>asString</el-code><br><el-code>keys</el-code> returns a List<br><el-code>values</el-code> returns a List</td>
  </tr>
 </table>
-
-<p>All four are 'mutable' &ndash; meaning that their contents may be changes directly by calling the various <i>procedure</i> dot methods that each
+<br>
+<p>All four are 'mutable' &ndash; meaning that their contents may be changed directly by calling the various <i>procedure</i> dot methods that each
 Type defines.
 However, since procedure methods may be called only from within the <el-code><el-kw>main</el-kw></el-code> routine,
 or from within another <el-code><el-kw>procedure</el-kw></el-code>, it is also possible to make changes via
@@ -408,70 +421,62 @@ changes are made by using <i>function</i> dot methods that copy the existing dat
 differences. Immutable data structures are intended specifically to facilitate the Functional Programming paradigm,
  but some are also useful within other programming paradigms.</p>
 
- <p>The five immutable data structures defined in the Elan library are summarised in this table:</p>
+<p>The five immutable data structures defined in the Elan library are summarised in this table. More details on each Type are given below the table.</p>
 <table>
  <tr>
   <th></th><th>ListImmutable</th><th>DictionaryImmutable</th><th>Set</th><th>Stack</th><th>Queue</th>
- </tr>
- <tr>
+ </tr><tr>
   <td>Type</td>
   <td><el-code>ListImmutable&lt;of String&gt;</el-code><br>Item Type must be immutable</td>
   <td><el-code>DictionaryImmutable&lt;of String, Int&gt;</el-code><br>Key Type must be <el-code>Int</el-code>, <el-code>Float</el-code>, <el-code>String</el-code>, <el-code>Boolean</el-code> or any <el-code>record</el-code><br>Value Type may be any immutable Type</td>
   <td><el-code>Set&lt;of String&gt;</el-code><br>Item Type must be immutable</td>
   <td><el-code>Stack&lt;of String&gt;</el-code><br>Item Type must be immutable</td>
   <td><el-code>Queue&lt;of String&gt;</el-code><br>Item Type must be immutable</td>
- </tr>
- <tr>
+ </tr><tr>
   <td>literal</td>
   <td><el-code>{a","b","c"}</el-code></td>
   <td><el-code>{"a":3, "b":5}</el-code></td>
   <td>None, but can convert literal list:<br><el-code>["a","b","c"].asSet()</el-code></td>
   <td>None</td>
   <td>None</td>
- </tr>
- <tr>
+ </tr><tr>
   <td>create</td>
   <td><el-code>new ListImmutable&lt;ofString&gt;()</el-code><br>created empty<br>must be 'of' an immutable Type</td>
   <td><el-code>new DictionaryImmutable&lt;of String, Int&gt;()</el-code><br>created empty <br>Key <em>and</em> Value Types must be immutable</td>
   <td><el-code>new Set&lt;of String&gt;()</el-code><br> created empty<br>must be 'of' an immutable Type</td>
   <td><el-code>new Stack&lt;of String&gt;()</el-code></td>
   <td><el-code>new Queue&lt;of String&gt;()</el-code></td>
- </tr>
- <tr>
+ </tr><tr>
   <td>read by Key</td>
   <td><el-code>lim[2</el-code></td>
   <td><el-code>di["b"]</el-code></td>
   <td>N/A</td>
   <td>N/A</td>
   <td>N/A</td>
- </tr>
- <tr>
+ </tr><tr>
   <td>read range</td>
   <td><el-code>lim[2..5]</el-code><br>upper bound <em>exclusive</em></td>
   <td>N/A</td>
   <td>N/A</td>
   <td>N/A</td>
   <td>N/A</td>
- </tr>
- <tr>
+ </tr><tr>
   <td>function methods<br>that return<br>new structure<br>of same Type</td>
   <td><el-code>withAppend("x")</el-code><br><el-code>withAppendList(li2)</el-code> (immutable)<br><el-code>withInsert(2, "x")</el-code><br><el-code>withPut(2, "x")</el-code><br><el-code>withRemoveAt(2)</el-code><br><el-code>withRemoveValue("x")</el-code></td>
   <td><el-code>withPut("c",4)</el-code><br><el-code>withRemoveAt("c")</el-code></td>
   <td><el-code>add</el-code><br><el-code>difference</el-code><br><el-code>intersection</el-code><br><el-code>remove</el-code><br><el-code>union</el-code></td>
   <td><el-code>push</el-code><br><el-code>pop</el-code> returns a tuple<br>comprising the popped Value<br>and the updated stack</td>
   <td><el-code>enqueue</el-code><br><el-code>dequeue</el-code> returns a tuple<br>comprising the popped<br>Value and the updated queue</td>
- </tr>
- <tr>
+ </tr><tr>
   <td>Other function methods</td>
   <td><el-code>asString</el-code><br><el-code>contains</el-code><br><el-code>filter</el-code><br><el-code>indexOf</el-code><br><el-code>join</el-code><br><el-code>length</el-code><br><el-code>map</el-code><br><el-code>maxBy</el-code><br><el-code>minBy</el-code><br><el-code>reduce</el-code><br><el-code>sortBy</el-code></td>
   <td><el-code>asDictionary</el-code><br><el-code>Keys</el-code> as <el-code>ListImmutable</el-code><br><el-code>Values</el-code> as <el-code>ListImmutable</el-code></td>
   <td><el-code><el-code>asList</el-code></el-code><br><el-code>asString</el-code><br><el-code>contains</el-code><br><el-code>isDisjointFrom</el-code><br><el-code>isSubsetOf</el-code><br><el-code>isSupersetOf</el-code><br><el-code>length</el-code></td>
   <td><el-code>peek</el-code><br><el-code>length</el-code></td>
   <td><el-code>peek</el-code><br><el-code>length</el-code></td>
- <tr>
  </tr>
 </table>
- <p>More details on each Type are given below:</p>
+
 <!--   #region Set-->
 <h2 id="Set_data">Set</h2>
     <p>A <el-code>Set</el-code> is a standard data structure that works somewhat like a <el-code>ListImmutable</el-code> with the important difference that in a <el-code>Set</el-code> a given element may appear only once. If an item being added to a <el-code>Set</el-code> is identical to an existing item in the <el-code>Set</el-code> then the <el-code>Set</el-code> remains the same length as before. </p>
@@ -1006,13 +1011,14 @@ just by passing the required one as the argyument to the <el-code><el-method>dis
     <tr><td><el-code><el-id>yellow</el-id></el-code></td><td style="color:#ffff00">&#x25fc;</td><td>16776960</td><td>&nbsp;255&nbsp;&nbsp;255&nbsp;&nbsp;&nbsp;&nbsp;0</td><td><el-code>0xffff00</el-code></td></tr>
     <tr><td><el-code><el-id>brown</el-id></el-code></td><td style="color:#a52a2a">&#x25fc;</td><td>10824234</td><td>&nbsp;165&nbsp;&nbsp;&nbsp;42&nbsp;&nbsp;&nbsp;42</td><td><el-code>0xa52a2a</el-code></td></tr>
     <tr><td><el-code><el-id>grey</el-id></el-code></td><td style="color:#808080">&#x25fc;</td><td>8421504</td><td>&nbsp;128&nbsp;&nbsp;128&nbsp;&nbsp;128</td><td><el-code>0x808080</el-code></td></tr>
-    <tr><td><el-code><el-id>transparent</el-id></el-code></td><td> </td><td>-1</td><td>none</td><td><el-code></el-code></td></tr>
+    <tr><td><el-code><el-id>transparent</el-id></el-code></td><td style="color:#000000">&#x25fb;</td><td>-1</td><td>N/A</td><td>N/A</td></tr>
 </table>
+<br>
 <p>A colour is specified as an <el-code>Int</el-code> value using one of these methods:</p>
 <ul>
  <li>the limited colours defined as library constants as in the above table.</li>
- <li>an integer in the decimal range 0 (black) to 2<sup>24-1</sup> (white)</li>
- <li>as a six digit hexadecimal value in the range <el-code>0x000000</el-code> &ndash; <el-code>0xffffff</el-code>
+ <li>an integer in the decimal range 0 (black) to 2<sup>24-1</sup> (white).</li>
+ <li>a six digit hexadecimal value in the range <el-code>0x000000</el-code> &ndash; <el-code>0xffffff</el-code>
     using the same 'RGB' format as used in Html style, for example <el-code>0xff0000</el-code> for red.</li>
 </ul>
 <!-- #endregion-->
@@ -1081,7 +1087,6 @@ just by passing the required one as the argyument to the <el-code><el-method>dis
     </el-code-block>
 
 <h3 class="no-TOC" id="Maths_functions">Maths functions and constants</h3>
-    <p>
 <table>
 <tr><th>function</th><th>argument<br>Type</th><th>input<br>unit</th><th>returns</th><th>output<br>unit</th></tr>
 <tr id="pi"><td><el-code>pi</el-code></td><td>(none)</td><td></td><td>&#x1d70b = 3.141592653589793..</td><td></td></tr>
@@ -1105,8 +1110,8 @@ just by passing the required one as the argyument to the <el-code><el-method>dis
 <tr id="tanDeg"><td><el-code><el-method>tanDeg</el-method></el-code></td><td><el-code><el-type>Float</el-code></el-type></td><td>degrees</td><td>tangent of the input</td><td></td></tr>
 <tr id="degToRad"><td><el-code><el-method>degToRad</el-method></el-code></td><td><el-code><el-type>Float</el-code></el-type></td><td>degrees</td><td>converts input from degrees to radians</td><td>radians</td></tr>
 <tr id="radToDeg"><td><el-code><el-method>radToDeg</el-method></el-code></td><td><el-code><el-type>Float</el-code></el-type></td><td>radians</td><td>converts input from radians to degrees</td><td>degrees</td></tr></table>
-    </p>
-    <p>Examples of some maths functions being tested:</p>
+<br>
+<p>Examples of some maths functions being tested:</p>
 <el-code-block source="test_maths.elan">
 <el-test class="ok multiline" id="test1" tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="comment3" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i>optional description</i></el-place></el-field></el-top>
@@ -1396,13 +1401,13 @@ inputFloatBetween(prompt as string, min as Float, max as Float)
     <tr><th colspan="4">Functions</th></tr>
     <tr><td><el-code><el-method>asString</el-method></el-code></td>
         <td><el-code><el-type>String</el-type></el-code></td>
-        <td><el-code><el-id></el-id> <el-kw>as</el-kw> <el-type></el-type></el-code></td>
+        <td><el-code> <el-kw>as</el-kw> </el-code></td>
         <td></td>
     </tr>
     <tr><th colspan="4">Procedures</th></tr>
     <tr><td><el-code><el-method></el-method></el-code></td>
-        <td><el-code><el-type></el-type></el-code></td>
-        <td><el-code><el-id></el-id> <el-kw>as</el-kw> <el-type></el-type></el-code></td>
+        <td><el-code></el-code></td>
+        <td><el-code> <el-kw>as</el-kw> </el-code></td>
         <td></td>
     </tr>
 </table>
