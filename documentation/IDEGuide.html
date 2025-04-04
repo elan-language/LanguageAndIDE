@@ -56,7 +56,7 @@ As with the main <b>Help</b> menu, the documentation will open in a separate bro
 <!--   #region   File -->
 <h2 id="Button_File">File</h2>
 <!--     #region New -->
-<h3 id="New">New</h3>
+<h3 class="no-TOC" id="New">New</h3>
 <p><b>New</b> will clear the current code &ndash; allowing you to start writing a new program. The code editor will then show this:</p>
 
 <el-header># Elan Beta 8</el-header>
@@ -65,7 +65,7 @@ The first line shows a standard Elan 'header' comment, which is required on ever
     The second line shows the <a href="#Global_selector">Global selector</a>.
 <!--     #endregion -->
 <!--     #region Load -->
-<h3 id="Menu_Load">Load</h3>
+<h3 class="no-TOC" id="Menu_Load">Load</h3>
 <p><b>Load</b> will present you with a file-selector dialog, from which you can navigate to, and load a <el-code>.elan</el-code> file,
      which will be loaded in place of your current code. As with <b>New</b> (above) if your existing code is not saved, you will see a confirmation dialog.</p>
 
@@ -76,14 +76,14 @@ The first line shows a standard Elan 'header' comment, which is required on ever
 <el-code>Cannot load file: it has been created or modified outside Elan IDE</el-code>
 <!-- #endregion -->
 <!--     #region Append -->
-<h3 id="Menu_Append">Append</h3>
+<h3 class="no-TOC" id="Menu_Append">Append</h3>
 
 <p><b>Append</b>, like <b>Load</b> offers a file selection dialog. If you select a valid <el-code>.elan</el-code> file
      it will be <i>appended</i> onto the end of your current code. From there the appended code may be moved within
-    the existing code (see <a href="Editing">Editing</a>).</p>
+    the existing code (see <a href="#Editor">The Code Editor</a>).</p>
 <!-- #endregion -->
 <!--     #region Auto Save -->
-<h3 id="Menu_Auto_Save">Auto Save</h3>
+<h3 class="no-TOC" id="Menu_Auto_Save">Auto Save</h3>
 <p><b>Auto Save</b> offers a file selection dialog to allow you to specify the name and location where your code will be saved.
     If you use this option, every time you modify the code <i>and its parse status is 'valid'</i> the code will be saved automatically,
     <i>overriding the previous version in the file</i>. Once this option has been selected, the <b>File</b> menu will offer
@@ -93,7 +93,7 @@ The first line shows a standard Elan 'header' comment, which is required on ever
 <!-- #endregion -->
 <!-- #endregion -->
 <!--     #region Manual Save -->
-<h3 id="Menu_Manual_Save">Manual Save</h3>
+<h3 class="no-TOC" id="Menu_Manual_Save">Manual Save</h3>
 <b>Manual Save</b> offers a file selection dialog to allow you to specify the name and location where your code will be saved.
 Unlike <b>Auto Save</b> &ndash; <b>Manual Save</b> is a one-off event &ndash; you must remember to save any subsequent changes if you need them saved.
 As a reminder, if your existing code is not saved, you will see a confirmation dialog:</p>
@@ -160,39 +160,33 @@ may easily find the parts of code that contain issues.</p>
 <p>When entering, editing, or just navigating (browsing) through, different sections of code will be highlighted at two different levels:
     whole instruction(s) or an individual field within an instruction.</p>
 
-<h3 id="Instruction">Instructions</h3>
+<h3 class="no-TOC" id="Instruction">Instructions</h3>
 
 <p>The following show examples of instructions being highlighted.</p>
 Here a single instruction is highlighted:
-
-<el-code-block><main class="ok multiline" id="main1" tabindex="0">
-    <el-top><el-expand>+</el-expand><el-kw>main</el-kw></el-top>
-    <el-statement class="ok" id="var3" tabindex="0"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>gr</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>BlockGraphics</el-type>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-    <el-statement class="selected focused ok" id="var6" tabindex="0"><el-kw>variable </el-kw><el-field id="var7" class="ok" tabindex="0"><el-txt><el-id>grid</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-kw>empty</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Boolean</el-type>&gt;</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-    <el-statement class="ok" id="call9" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident10" class="ok" tabindex="0"><el-txt><el-method>fillRandom</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args11" class="optional ok" tabindex="0"><el-txt><el-id>grid</el-id></el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
-    <el-statement class="ok multiline" id="while12" tabindex="0">
-    <el-top><el-expand>+</el-expand><el-kw>while </el-kw><el-field id="expr14" class="ok" tabindex="0"><el-txt><el-id>true</el-id></el-txt><el-place><i>condition</i></el-place></el-field></el-top>
-    <el-statement class="ok" id="set15" tabindex="0"><el-kw>set </el-kw><el-field id="ident16" class="ok" tabindex="0"><el-txt><el-id>gr</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr17" class="ok" tabindex="0"><el-txt><el-method>updateGraphics</el-method>(<el-id>grid</el-id>, <el-id>gr</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-    <el-statement class="ok" id="call18" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident19" class="ok" tabindex="0"><el-txt><el-id>gr</el-id>.<el-method>display</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args20" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i><i>arguments</i></i></el-place></el-field>)</el-top></el-statement>
-    <el-statement class="ok" id="set21" tabindex="0"><el-kw>set </el-kw><el-field id="ident22" class="ok" tabindex="0"><el-txt><el-id>grid</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr23" class="ok" tabindex="0"><el-txt><el-method>nextGeneration</el-method>(<el-id>grid</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-    <el-statement class="ok" id="call24" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident25" class="ok" tabindex="0"><el-txt><el-method>pause</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args26" class="optional ok" tabindex="0"><el-txt><el-lit>50</el-lit></el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
-    <el-kw>end while</el-kw>
-    </el-statement>
-    <el-kw>end main</el-kw>
-    </main></el-code-block>
-
-<p id="Container_instruction">Here a <i>container</i>-instruction is highlighted. The highlight shows the full extent of the instruction, indicating the sequence of other instructions that it contains, which are all indented by two characters:</p>
-    <el-code-block>
-        <el-statement class="selected focused ok multiline" id="while12" tabindex="0">
-            <el-top><el-expand>+</el-expand><el-kw>while </el-kw><el-field id="expr14" class="ok" tabindex="0"><el-txt><el-id>true</el-id></el-txt><el-place><i>condition</i></el-place></el-field></el-top>
-            <el-statement class="ok" id="set15" tabindex="0"><el-kw>set </el-kw><el-field id="ident16" class="ok" tabindex="0"><el-txt><el-id>gr</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr17" class="ok" tabindex="0"><el-txt><el-method>updateGraphics</el-method>(<el-id>grid</el-id>, <el-id>gr</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-            <el-statement class="ok" id="call18" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident19" class="ok" tabindex="0"><el-txt><el-id>gr</el-id>.<el-method>display</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args20" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i><i>arguments</i></i></el-place></el-field>)</el-top></el-statement>
-            <el-statement class="ok" id="set21" tabindex="0"><el-kw>set </el-kw><el-field id="ident22" class="ok" tabindex="0"><el-txt><el-id>grid</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr23" class="ok" tabindex="0"><el-txt><el-method>nextGeneration</el-method>(<el-id>grid</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-            <el-statement class="ok" id="call24" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident25" class="ok" tabindex="0"><el-txt><el-method>pause</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args26" class="optional ok" tabindex="0"><el-txt><el-lit>50</el-lit></el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
-            <el-kw>end while</el-kw>
-            </el-statement>
-    </el-code-block>
-
+<el-code-block source="life.elan">
+<el-statement class="ok" id="var3" tabindex="0"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>grid</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Array2D</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;(<el-lit>40</el-lit>, <el-lit>30</el-lit>, <el-id>white</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="selected focused ok" id="call6" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident7" class="ok" tabindex="0"><el-txt><el-method>fillRandom</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args8" class="optional ok" tabindex="0"><el-txt><el-id>grid</el-id></el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
+<el-statement class="ok multiline" id="while9" tabindex="0">
+<el-top><el-expand>+</el-expand><el-kw>while </el-kw><el-field id="expr11" class="ok" tabindex="0"><el-txt><el-id>true</el-id></el-txt><el-place><i>condition</i></el-place></el-field></el-top>
+<el-statement class="ok" id="call12" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident13" class="ok" tabindex="0"><el-txt><el-method>displayBlocks</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args14" class="optional ok" tabindex="0"><el-txt><el-id>grid</el-id></el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
+<el-statement class="ok" id="call15" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident16" class="ok" tabindex="0"><el-txt><el-method>nextGeneration</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args17" class="optional ok" tabindex="0"><el-txt><el-id>grid</el-id></el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
+<el-statement class="ok" id="call18" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident19" class="ok" tabindex="0"><el-txt><el-method>pause</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args20" class="optional ok" tabindex="0"><el-txt><el-lit>50</el-lit></el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
+<el-kw>end while</el-kw>
+</el-statement>
+</el-code-block>
+<p id="Container_instruction">Here a <i>container</i>-instruction is highlighted. The highlight shows the full extent of the instruction, indicating the sequence of other instructions that it contains, which are all indented by two spaces:</p>
+<el-code-block source="life.elan">
+<el-statement class="ok" id="var3" tabindex="0"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>grid</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Array2D</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;(<el-lit>40</el-lit>, <el-lit>30</el-lit>, <el-id>white</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="call6" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident7" class="ok" tabindex="0"><el-txt><el-method>fillRandom</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args8" class="optional ok" tabindex="0"><el-txt><el-id>grid</el-id></el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
+<el-statement class="selected focused ok multiline" id="while9" tabindex="0">
+<el-top><el-expand>+</el-expand><el-kw>while </el-kw><el-field id="expr11" class="ok" tabindex="0"><el-txt><el-id>true</el-id></el-txt><el-place><i>condition</i></el-place></el-field></el-top>
+<el-statement class="ok" id="call12" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident13" class="ok" tabindex="0"><el-txt><el-method>displayBlocks</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args14" class="optional ok" tabindex="0"><el-txt><el-id>grid</el-id></el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
+<el-statement class="ok" id="call15" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident16" class="ok" tabindex="0"><el-txt><el-method>nextGeneration</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args17" class="optional ok" tabindex="0"><el-txt><el-id>grid</el-id></el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
+<el-statement class="ok" id="call18" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident19" class="ok" tabindex="0"><el-txt><el-method>pause</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args20" class="optional ok" tabindex="0"><el-txt><el-lit>50</el-lit></el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
+<el-kw>end while</el-kw>
+</el-statement>
+</el-code-block>
 It is also possible to select multiple instructions (to move, or delete them, together), for example:
 
 <el-code-block>
@@ -213,7 +207,7 @@ The following example shows a <i>single instruction</i> that has been formatted 
     <el-statement class="selected focused ok" id="let15" tabindex="0"><el-kw>let </el-kw><el-field id="var16" class="ok" tabindex="0"><el-txt><el-id>b</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr17" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>CircleVG</el-type>()<el-kw> with </el-kw><br><el-id>cx</el-id><el-kw> set to </el-kw><el-id>i</el-id>*<el-lit>5</el-lit> + <el-lit>2</el-lit>, <br><el-id>cy</el-id><el-kw> set to </el-kw><el-lit>75</el-lit>, <br><el-id>r</el-id><el-kw> set to </el-kw><el-lit>1</el-lit>, <br><el-id>fill</el-id><el-kw> set to </el-kw>-<el-lit>1</el-lit>, <br><el-id>stroke</el-id><el-kw> set to </el-kw><el-id>white</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 </el-code-block>
 
-<h3 id="Field">Fields</h3>
+<h3 class="no-TOC" id="Field">Fields</h3>
 
 <p>Instructions consist of fixed (or 'templated') code &ndash; keywords and sometimes symbols &ndash; plus a number of 'fields' which is where the user enters code that define specific details for that instruction.
     When the field is highlighted it will be highlighted with a background colour and a thin black border. This indicates that the user may now enter or edit code in that field, for example:</p>
@@ -260,7 +254,7 @@ The following example shows a <i>single instruction</i> that has been formatted 
             <el-select><el-txt></el-txt><el-place>new code</el-place></el-select></el-global>
     </el-code>
 
-<h3>Using a selector to insert a new instruction</h3>
+<h3 class="no-TOC">Using a selector to insert a new instruction</h3>
 
     <p>When a new code selector has focus (for example as shown above)
         in most cases you can type just the first character of the instruction to be inserted. And you will then see
@@ -295,7 +289,7 @@ In the following example, starting from this <a href="#Member_selector">member s
 
 <!--TODO-->
 
-<h3>Why do the options I can see differ from those shown here?</h3>
+<h3 class="no-TOC">Why do the options I can see differ from those shown here?</h3>
 
     <p>The specific list offered may depends upon various factors including:</p>
 
@@ -308,7 +302,7 @@ In the following example, starting from this <a href="#Member_selector">member s
     <p>which means that you won't necessarily see all the instructions shown in this explanation. However, in general there are three
         distinct forms of 'new code selector': the global selector, the statement selector, and the member selector.<p>
 
-<h3 id="Global_selector">Global selector</h3>
+<h3 class="no-TOC" id="Global_selector">Global selector</h3>
 
 <p>The global selector appears only at 'global' level &ndash; in other words when the 'new code' is located <i>directly</i> within the file,
 rather than within <a href="#Container_Instruction">container instruction</a>. When given focus, it will list the <a href="LangRef.html#global"></a>global instructions that
@@ -320,18 +314,18 @@ you may insert. This is the full list:</p>
 
 Note that <el-code>main</el-code> will not be shown if the program already contains a <el-code>main</el-code> routine.
 
-<h3 id="Statement_selector">Statement selector</h3>
+<h3 class="no-TOC" id="Statement_selector">Statement selector</h3>
 
-<h3 id="Member_selector">Member selector</h3>
+<h3 class="no-TOC" id="Member_selector">Member selector</h3>
 
-<h3>What if there is no 'new code' selector shown where you want to insert an instruction?</h3>
+<h3 class="no-TOC" >What if there is no 'new code' selector shown where you want to insert an instruction?</h3>
  <p> If you want to insert new instructions in a place where there is no 'new code' indicator, then <i>either</i>:</p>
     <ul>
     <li>select the instruction immediately <i>before</i> where you want the new instruction and press <b>Enter</b> <i>or</i></li>
     <li>select the instruction immediately <i>after</i> where you want the new instruction and press <b>Shift-Enter</b></li>
 </ul>
 
-<h3>How to remove unneeded new code selectors</h3>
+<h3 class="no-TOC" >How to remove unneeded new code selectors</h3>
 <!-- TODO  Delete and Trim-->
 
  <!-- #endregion -->
@@ -357,7 +351,7 @@ Note that <el-code>main</el-code> will not be shown if the program already conta
  </p>
 <!-- endregion -->
 <!-- #region Keyboard Editing-->
-<h2 id="Editing">Editing &#8211; using the keyboard</h2>
+<h2 id="Keyboard">Editing code</h2>
  <p>
  <table>
  <tr><th>Keystroke</th> <th>On a selected Frame</th> <th>On a selected Field</th> </tr>

@@ -23,7 +23,7 @@
 <p>This section defines the set of instructions that make up the Elan language and form the building blocks for any program.</p>
 <p>There are three categories of instruction, which are distinguished where the instructions of that category are <em>located</em> within a program:</p>
 <ul>
-<li><a href="#Global">Global instructions</a> (also referred to simply as &lsquo;globals&rsquo;) are located <em>directly</em> within a code file.
+<li><a href="#global">Global instructions</a> (also referred to simply as &lsquo;globals&rsquo;) are located <em>directly</em> within a code file.
   They are never indented from the left-hand edge, nor may they be located <em>within</em> other instructions.
   Three of the globals &ndash; <el-code>main</el-code>, <el-code>function</el-code>, and <el-code>procedure</el-code> &ndash; are described as &lsquo;methods&rsquo; and these defined one or more <a href="#Statement">statements</a> within them.</em>
   Four of the globals &ndash; <a href="#record"><el-code>record</el-code></a>, <a href="#class">class</a>, <a href="#Abstract_class"><el-code>abstract class</el-code></a>, and <a href="#interface"><el-code>interface</el-code></a> &ndash; define data structures and these always contain <a href="#Member">members</a>.
@@ -58,7 +58,7 @@ you will be shown the set of globals that you may insert there, namely all or on
 <a href="#class"><el-code>class</el-code></a>
 <a href="#ClassAbs"><el-code>abstract</el-code></a>
 <a href="#interface"><el-code>interface</el-code></a>
-<a href="#comment"><el-code>#</el-code></a></p>
+<a href="#Comment"><el-code>#</el-code></a></p>
 where <el-code>abstract</el-code> is, in this context, short for <a href="#Abstract_class"><el-code>abstract class</el-code></a>.
 
 <el-code><el-global class="selected focused ok empty" id="select0" tabindex="0"><el-select><el-txt></el-txt><el-place>new code</el-place></el-select></el-global></el-code>
@@ -383,7 +383,7 @@ When deconstructing, the names of the values must match the names of the <el-cod
 <!--     #region Class-->
 <h3 id="class">Class</h3>
 
-<p>See also: <a href="inherits">Inheritance</a></p>
+<p>See also: <a href="Inheritance">Inheritance</a></p>
 
 <p>A <el-code>class</el-code> is a user-defined Type offering far richer capability than an <el-code>enum</el-code>. </p>
 <p>Note that a <el-code><el-kw>record</el-kw></el-code> is in some ways similar to a <el-code>class</el-code> but simpler: it defines properties, but has no constructor and no methods. See <a href="">Working with records</a>.</p>
@@ -437,7 +437,7 @@ When deconstructing, the names of the values must match the names of the <el-cod
 </el-code-block>
 <p>The created instance may then be used within expressions, like any other variable.</p>
 
-<h3 id="inherits">Inheritance</h2>
+<h3 id="Inheritance">Inheritance</h2>
   <p>An ordinary <a href="class">class</a> (also known as a &lsquo;concrete class&rsquo;) may optionally inherit from just one <a href="Abstract_class"><el-code>abstract class</el-code></a>
     but may additionally inherit from any number of <a href="interface">interfaces</a>.
     The concrete class must define for itself a concrete implementation of every <em>abstract</em> member defined in the <el-code>abstract class</el-code> or any <el-code>interface</el-code>s that it inherits from, directly or indirectly.</p>
@@ -451,7 +451,7 @@ Notes:
 <!-- #endregion-->
 <!--     #region Abstract Class-->
 <h3 id="Abstract_class">Abstract Class</h3>
-<p>See also: <a href="inherits">Inheritance</a></p>
+<p>See also: <a href="Inheritance">Inheritance</a></p>
 <p>An <el-code>abstract class</el-code> may not be instantiated (and hence may not define a constructor). It may define concrete members i.e.:</p>
 <ul>
 <li>a <el-code><el-kw>property</el-kw></el-code> </li>
@@ -460,7 +460,7 @@ Notes:
 </ul>
 <p>As with a concrete class, any of these members may be made <el-code>private</el-code>, after the corresponding frame has been added, by selecting that member frame and pressing Ctrl-p.</p>
 <p>These concrete members are automatically inherited by any subclass, but they may not be overridden (re-defined) by the subclass. Therefore you should define concrete members only if they are intended to work identically on every subclass.</p>
-<p id="Abstract_function" id="Abstract_procedure" id="Abstract_property">You may also define abstract methods on an <el-code>abstract class</el-code>, i.e. <el-code>abstract property</el-code>, <el-code>abstract function</el-code>, <el-code>abstract procedure</el-code>. Such methods define only the signature of the method, not the implementation (body), therefore they have no <el-code>end</el-code> statement. For example:</p>
+<p id="Abstract_function" id="Abstract_procedure">You may also define abstract methods on an <el-code>abstract class</el-code>, i.e. <el-code>abstract property</el-code>, <el-code>abstract function</el-code>, <el-code>abstract procedure</el-code>. Such methods define only the signature of the method, not the implementation (body), therefore they have no <el-code>end</el-code> statement. For example:</p>
 <el-code>abstract function calculateDiscount() as Float</el-code></p>
 <p>
 If you wish to have several subclasses of an <el-code>abstract class</el-code> that share a common implementation for a method, but require that some of the subclasses can define a different implementation, then you should:</p>
@@ -472,8 +472,8 @@ If you wish to have several subclasses of an <el-code>abstract class</el-code> t
 <!-- #endregion-->
 <!--     #region Interface-->
 <h3 id="interface">Interface</h3>
-<p>See also: <a href="inherits">Inheritance</a></p>
-<p>An <el-code>interface</el-code> is similar to an <el-code>abstract class</el-code>, with the difference that it may define only abstract members. The advantage of using an <el-code>interface</el-code> instead of an <el-code>abstract class</el-code> is that a concrete<el-code> class</el-code> can inherit from multiple <el-code>interface</el-code>s. See <span class="Link">Inheritance</span>.</p>
+<p>See also: <a href="Inheritance">Inheritance</a></p>
+<p>An <el-code>interface</el-code> is similar to an <el-code>abstract class</el-code>, with the difference that it may define only abstract members. The advantage of using an <el-code>interface</el-code> instead of an <el-code>abstract class</el-code> is that a concrete<el-code> class</el-code> can inherit from multiple <el-code>interface</el-code>s.</p>
 <p>An <el-code>interface</el-code> may inherit only from other <el-code>interface</el-code>s.</p>
 <p>Important: An <el-code>interface</el-code> must not re-declare abstract interfaces that are defined in any <el-code>interface</el-code> it inherits from, directly or indirectly.</p>
 <!--     #endregion-->
@@ -500,7 +500,7 @@ If you wish to have several subclasses of an <el-code>abstract class</el-code> t
     <a href="#property">private property</a>,
     <a href="#procedure">private procedure</a>,
     <a href="#function">private function</a>,
-    <a href="#comment">#</a>
+    <a href="#Comment">#</a>
 <!-- #endregion-->
 <!--     #region Constructor-->
 <h3 id="constructor">Constructor</h3>
@@ -615,7 +615,7 @@ If the <el-code><el-kw>property</el-kw></el-code> is not initialised within the 
 <a href="#try">try</a>
 <a href="#variable">variable</a>
 <a href="#while">while</a>
-<a href="#comment">#</a>
+<a href="#Comment">#</a>
 <!--     #endregion-->
 <!--     #region Assert statement-->
 <h3 id="assert">Assert statement</h3>
