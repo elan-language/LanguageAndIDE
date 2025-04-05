@@ -150,55 +150,45 @@ For greater detail, refer to the official JavaScript documentation.
 
 <h3 class="no-TOC">Dot methods</h3>
 <table>
- <tr><th>Method</th><th>Returns</th><th>Parameters</th><th>Description</th></tr>
- <tr><th colspan="4">Functions</th></tr>
+ <tr><th>function<br>method</th><th>argument<br>Type</th><th>returns<br>Type</th><th>description</th></tr>
  <tr>
   <td><el-code><el-method>asString</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
-  <td><el-code>  </el-code></td>
-  <td> returns the string itself. (All Types must have this method to be printable)</td>
+  <td><el-code><el-type>String</el-type></el-code></td>
+  <td> returns the string itself. (All Types have this method in order to be printable)</td>
  </tr><tr>
   <td><el-code><el-method>asList</el-method></el-code></td>
-  <td><el-code><el-type>List&lt;of String&gt;</el-type></el-code></td>
-  <td><el-code>  </el-code></td>
+  <td><el-code><el-type>String</el-type></el-code></td>
+  <td><el-code> <el-type>List&lt;of String&gt;</el-type></el-code></td>
   <td>returns a <el-code>List</el-code> of the individual characters</td>
  </tr><tr>
   <td><el-code><el-method>asUnicode</el-method></el-code></td>
+  <td><el-code><el-type>String</el-type></el-code></td>
   <td><el-code><el-type>Int</el-type></el-code></td>
-  <td><el-code>  </el-code></td>
   <td>returns the Unicode value of the <i>first character of the string</i></td>
  </tr><tr>
   <td><el-code><el-method>asRegExp</el-method></el-code></td>
+  <td><el-code><el-type>String</el-type></el-code></td>
   <td><el-code><el-type>RegExp</el-type></el-code></td>
-  <td><el-code>  </el-code></td>
   <td>returns the same string converted to RegExp (but does not check if the result is a valid regular expression)</td>
  </tr><tr>
   <td><el-code><el-method>asSet</el-method></el-code></td>
+  <td><el-code><el-type>String</el-type></el-code></td>
   <td><el-code><el-type>Set</el-type></el-code></td>
-  <td><el-code>  </el-code></td>
   <td> returns a set of the <i>unique</i> characters</td>
  </tr><tr>
-  <td><el-code><el-method></el-method></el-code></td>
-  <td><el-code></el-code></td>
-  <td><el-code> <el-kw>as</el-kw> </el-code></td>
-  <td></td>
- </tr><tr>
- <th colspan="4">Procedures</th></tr>
- <tr>
-  <td><el-code><el-method></el-method></el-code></td>
-  <td><el-code></el-code></td>
-  <td><el-code> <el-kw>as</el-kw> </el-code></td>
-  <td></td>
- </tr>
- <tr>
   <td><el-code><el-method>contains</el-method></el-code></td>
-  <td><el-code><el-code><el-type>Boolean</el-type></el-code></el-code></td>
-  <td><el-code>String</el-code></td>
-  <td><el-code>true</el-code> when the string contains the substring specified as the argument; <el-code>false</el-code> otherwise</td>
+  <td><el-code><el-code><el-type>String</el-type></el-code></el-code></td>
+  <td><el-code><el-type>Boolean</el-type></el-code></td>
+  <td><el-code><el-constant>true</el-constant></el-code> when the string contains the substring specified as the argument &ndash; <el-code><el-constant>false</el-constant></el-code> otherwise</td>
  </tr>
-</table>
+<tr>
+  <td><el-code><el-method>filter</el-method></el-code></td>
+  <td><el-code><el-code><el-type>String</el-type></el-code></el-code></td>
+  <td><el-code><el-type></el-type></el-code></td>
+  <td> </td>
+ </tr></table>
 <ul>
-    <li><el-code><el-method>filter</el-method></el-code></li>
     <li><el-code><el-method>indexOf</el-method></el-code>  takes one parameter that is a string of exactly one character and returns the offset (from 0) of that character within the string to which this method is applied. If the character is not present, or if  the parameter string is other than a single character, the method returns -1.</li>
     <li><el-code><el-method>isAfter</el-method></el-code> compares, alphabetically, the string to the <el-code><el-type>String</el-type></el-code> argument returning a <el-code><el-type>Boolean</el-type></el-code></li>
     <li><el-code><el-method>isAfterOrSameAs</el-method></el-code> compares, alphabetically,  the string to the <el-code><el-type>String</el-type></el-code> argument, returning a <el-code><el-type>Boolean</el-type></el-code></li>
