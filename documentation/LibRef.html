@@ -147,65 +147,148 @@ For greater detail, refer to the official JavaScript documentation.
  <ul><li><el-code>print "Hello\nWorld"</el-code></li></ul>
  <li>You may insert single quotation marks  <el-code>'</el-code>within a string. </li>
 </ul>
-
 <h3 class="no-TOC">Dot methods</h3>
+String dot methods are functions which are applied to a variable of Type <el-code><el-type>String</el-type></el-code>. Some take arguments as shown in the table. Examples of use:
+<el-code-block source="stringDotMethods.elan">
+<el-statement class="ok" id="let5" tabindex="0"><el-kw>let </el-kw><el-field id="var6" class="ok" tabindex="0"><el-txt><el-id>s</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr7" class="ok" tabindex="0"><el-txt>"<el-lit>string</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement></el-code><el-code>
+<el-statement class="ok" id="print8" tabindex="0"><el-kw>print </el-kw><el-field id="expr9" class="optional ok" tabindex="0"><el-txt><el-id>s</el-id>.<el-method>length</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement></el-code><el-code>
+<el-statement class="ok" id="var13" tabindex="0"><el-kw>variable </el-kw><el-field id="var14" class="ok" tabindex="0"><el-txt><el-id>t</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr15" class="ok" tabindex="0"><el-txt>""</el-txt><el-place><i>expression</i></el-place></el-field></el-statement></el-code><el-code>
+<el-statement class="ok" id="set10" tabindex="0"><el-kw>set </el-kw><el-field id="ident11" class="ok" tabindex="0"><el-txt><el-id>t</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr12" class="ok" tabindex="0"><el-txt><el-id>s</el-id>.<el-method>replace</el-method>("<el-lit>i</el-lit>", "<el-lit>u</el-lit>")</el-txt><el-place><i>expression</i></el-place></el-field></el-statement></el-code><el-code>
+<el-statement class="ok" id="print17" tabindex="0"><el-kw>print </el-kw><el-field id="expr18" class="optional ok" tabindex="0"><el-txt><el-id>s</el-id> + "<el-lit> </el-lit>" + <el-id>t</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement></el-code><el-code>
+</el-code-block>
+<p>gives output:</p>
+<p><pre>    6<br>    string strung</pre></p>
+<br>
 <table>
- <tr><th>function<br>method</th><th>argument<br>Type</th><th>returns<br>Type</th><th>description</th></tr>
+ <tr><th>function<br>dot method</th><th>on<br>Type</th><th>argument<br>Types</th><th>return<br>Type</th><th>description</th></tr>
  <tr>
   <td><el-code><el-method>asString</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
+  <td>(none)</td>
   <td><el-code><el-type>String</el-type></el-code></td>
-  <td> returns the string itself. (All Types have this method in order to be printable)</td>
+  <td> returns the string itself &ndash; all Types have this method in order to be printable</td>
  </tr><tr>
   <td><el-code><el-method>asList</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
+  <td>(none)</td>
   <td><el-code> <el-type>List&lt;of String&gt;</el-type></el-code></td>
-  <td>returns a <el-code>List</el-code> of the individual characters</td>
+  <td>returns a list of the individual characters</td>
  </tr><tr>
   <td><el-code><el-method>asUnicode</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
+  <td>(none)</td>
   <td><el-code><el-type>Int</el-type></el-code></td>
   <td>returns the Unicode value of the <i>first character of the string</i></td>
- </tr><tr>
+ </td><tr>
   <td><el-code><el-method>asRegExp</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
+  <td>(none)</td>
   <td><el-code><el-type>RegExp</el-type></el-code></td>
-  <td>returns the same string converted to RegExp (but does not check if the result is a valid regular expression)</td>
+  <td>returns a new string that is a which is converted to a regular expression:<br>no check is made of whether the result is a valid regular expression</td>
  </tr><tr>
   <td><el-code><el-method>asSet</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
+  <td>(none)</td>
   <td><el-code><el-type>Set</el-type></el-code></td>
-  <td> returns a set of the <i>unique</i> characters</td>
+  <td> returns a <el-code><el-type>Set</el-type></el-code>of the <i>unique</i> characters in the string</td>
  </tr><tr>
   <td><el-code><el-method>contains</el-method></el-code></td>
-  <td><el-code><el-code><el-type>String</el-type></el-code></el-code></td>
+  <td><el-code><el-type>String</el-type></el-code></td>
+  <td>(none)</td>
   <td><el-code><el-type>Boolean</el-type></el-code></td>
-  <td><el-code><el-constant>true</el-constant></el-code> when the string contains the substring specified as the argument &ndash; <el-code><el-constant>false</el-constant></el-code> otherwise</td>
- </tr>
-<tr>
+  <td>returns <el-code><el-id>true</el-id></el-code> if the string contains the substring specified as the argument<br>&ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
+ </tr><tr>
   <td><el-code><el-method>filter</el-method></el-code></td>
-  <td><el-code><el-code><el-type>String</el-type></el-code></el-code></td>
+  <td><el-code><el-type>String</el-type></el-code></td>
+  <td>(none)</td>
   <td><el-code><el-type></el-type></el-code></td>
-  <td> </td>
- </tr></table>
-<ul>
-    <li><el-code><el-method>indexOf</el-method></el-code>  takes one parameter that is a string of exactly one character and returns the offset (from 0) of that character within the string to which this method is applied. If the character is not present, or if  the parameter string is other than a single character, the method returns -1.</li>
-    <li><el-code><el-method>isAfter</el-method></el-code> compares, alphabetically, the string to the <el-code><el-type>String</el-type></el-code> argument returning a <el-code><el-type>Boolean</el-type></el-code></li>
-    <li><el-code><el-method>isAfterOrSameAs</el-method></el-code> compares, alphabetically,  the string to the <el-code><el-type>String</el-type></el-code> argument, returning a <el-code><el-type>Boolean</el-type></el-code></li>
-    <li><el-code><el-method>isBefore</el-method></el-code> compares, alphabetically,  the string to the <el-code><el-type>String</el-type></el-code> argument, returning a <el-code><el-type>Boolean</el-type></el-code></li>
-    <li><el-code><el-method>isBeforeOrSameAs</el-method></el-code> compares, alphabetically,  the string to the <el-code><el-type>String</el-type></el-code> argument, returning a <el-code><el-type>Boolean</el-type></el-code></li>
-    <li><el-code><el-method>length</el-method></el-code> returns the number of characters in the string as an <el-code><el-type>Int</el-type></el-code></li>
-    <li><el-code><el-method>lowerCase</el-method></el-code>returns a new string with the original rendered in lower-case.</li>
-    <li><el-code><el-method>map</el-method></el-code></li>
-    <li><el-code><el-method>matchesRegExp</el-method></el-code>returns a <el-code><el-type>Int</el-type></el-code> indicating whether or not the string matches the regular expression provided as an argument of Type <el-code><el-type>RegExp</el-type></el-code>.</li>
-    <li><el-code><el-method>reduce</el-method></el-code></li>
-    <li><el-code><el-method>replace</el-method></el-code> returns a new string with <i>all</i> occurrences of the string (specified as the first argument replaced by the string specified as the second argument.</li>
-    <li><el-code><el-method>sortBy</el-method></el-code></li>
-    <li><el-code><el-method>split</el-method></el-code> splits the string at each occurrence of the specified 'separator' string, returning a <el-code><el-type>List&lt;of String&gt;</of></el-type></el-code> of the content between the separators.</li>
-    <li><el-code><el-method>trim</el-method></el-code> returns a new <el-code><el-type>String</el-type></el-code> with any leading and/or trailing spaces removed.</li>
-    <li><el-code><el-method>upperCase</el-method></el-code> returns a new string with the original rendered in upper-case.</li>
-</ul>
-
+  <td>(none)</td>
+ </tr><tr>
+  <td><el-code><el-method>indexOf</el-method></el-code></td>
+  <td><el-code><el-type>String</el-type></el-code></td>
+  <td><el-code><el-type>String</el-type></el-code></td>
+  <td><el-code><el-type>Int</el-type></el-code></td>
+  <td>returns the offset (from 0) of a single character argument  within the string: if the character is not present or if  the argument string is other than a single character, it returns -1</td>
+ </tr><tr>
+  <td><el-code><el-method>isAfter</el-method></el-code></td>
+  <td><el-code><el-type>String</el-type></el-code></td>
+  <td><el-code><el-type>String</el-type></el-code></td>
+  <td><el-code><el-type>Boolean</el-type></el-code></td>
+  <td>returns <el-code><el-id>true</el-id></el-code> if an alphabetic comparison finds the string comes strictly 'after' the argument string<br>&ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
+ </tr><tr>
+  <td><el-code><el-method>isAfterOrSameAs</el-method></el-code></td>
+  <td><el-code><el-type>String</el-type></el-code></td>
+  <td><el-code><el-type>String</el-type></el-code></td>
+  <td><el-code><el-type>Boolean</el-type></el-code></td>
+  <td>returns <el-code><el-id>true</el-id></el-code> if an alphabetic comparison finds the string comes 'after' or equals the argument string<br>&ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
+ </tr><tr>
+  <td><el-code><el-method>isBefore</el-method></el-code></td>
+  <td><el-code><el-type>String</el-type></el-code></td>
+  <td><el-code><el-type>String</el-type></el-code></td>
+  <td><el-code><el-type>Boolean</el-type></el-code></td>
+  <td>returns <el-code><el-id>true</el-id></el-code> if an alphabetic comparison finds the string comes strictly 'before' the argument string<br>&ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
+ </tr><tr>
+  <td><el-code><el-method>isBeforeOrSameAs</el-method></el-code></td>
+  <td><el-code><el-type>String</el-type></el-code></td>
+  <td><el-code><el-type>String</el-type></el-code></td>
+  <td><el-code><el-type>Boolean</el-type></el-code></td>
+  <td>returns <el-code><el-id>true</el-id></el-code> if an alphabetic comparison finds the string comes 'before' or equals the argument string<br>&ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
+ </tr><tr>
+  <td><el-code><el-method>length</el-method></el-code></td>
+  <td><el-code><el-type>String</el-type></el-code></td>
+  <td>(none)</td>
+  <td><el-code><el-type>Int</el-type></el-code></td>
+  <td>returns the number of characters in the string</td>
+ </tr><tr>
+  <td><el-code><el-method>lowerCase</el-method></el-code></td>
+  <td><el-code><el-type>String</el-type></el-code></td>
+  <td>(none)</td>
+  <td><el-code><el-type>String</el-type></el-code></td>
+  <td>returns a new string with the original rendered in lower case</td>
+ </tr><tr>
+  <td><el-code><el-method>matchesRegExp</el-method></el-code></td>
+  <td><el-code><el-type>String</el-type></el-code></td>
+  <td><el-code><el-type>RegExp</el-type></el-code></td>
+  <td><el-code><el-type>Boolean</el-type></el-code></td>
+  <td>returns <el-code><el-id>true</el-id></el-code> if the string matches the regular expression<br> &ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
+ </tr><tr>
+  <td><el-code><el-method>reduce</el-method></el-code></td>
+  <td><el-code><el-type></el-type></el-code></td>
+  <td></td>
+  <td><el-code><el-type></el-type></el-code></td>
+  <td></td>
+ </tr><tr>
+  <td><el-code><el-method>replace</el-method></el-code></td>
+  <td><el-code><el-type>String</el-type></el-code></td>
+  <td><el-code><el-type>String</el-type></el-code>, <el-code><el-type>String</el-type></el-code></td>
+  <td><el-code><el-type>String</el-type></el-code></td>
+  <td>returns a new string with <i>all</i> occurrences of the first argument string replaced<br>by the second argument string </td>
+ </tr><tr>
+  <td><el-code><el-method>sortBy</el-method></el-code></td>
+  <td><el-code><el-type>String</el-type></el-code></td>
+  <td></td>
+  <td><el-code><el-type></el-type></el-code></td>
+  <td></td>
+ </tr><tr>
+  <td><el-code><el-method>split</el-method></el-code></td>
+  <td><el-code><el-type>String</el-type></el-code></td>
+  <td><el-code><el-type>String</el-type></el-code></td>
+  <td><el-code><el-type>List&lt;of String&gt;</of></el-type></el-code></td>
+  <td>returns a <el-code><el-type>List</el-type></el-code> of the substrings found between occurrences of the argument string</td>
+ </tr><tr>
+  <td><el-code><el-method>trim</el-method></el-code></td>
+  <td><el-code><el-type>String</el-type></el-code></td>
+  <td>(none)</td>
+  <td><el-code><el-type>String</el-type></el-code></td>
+  <td>returns a new string with leading and trailing spaces removed</td>
+ </tr><tr>
+  <td><el-code><el-method>upperCase</el-method></el-code></td>
+  <td><el-code><el-type>String</el-type></el-code></td>
+  <td>(none)</td>
+  <td><el-code><el-type>String</el-type></el-code></td>
+  <td>returns a new string with the original rendered in upper case</td>
+ </tr>
+ </table>
 <h3 class="no-TOC" id="Interpolated_string">Interpolated string</h3>
 <p>
 Elan strings are automatically interpolated. This means that you may insert the values of variables or simple expressions within a string by enclosing them in curly braces. For example (assuming that the variables <el-code>a</el-code> and <el-code>b</el-code> are already defined as integers) :<br>
