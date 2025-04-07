@@ -89,10 +89,10 @@
    <li>Minimum value: approximately 5 &times; 10&ndash;<sup>324</sup></li>
   </ul>
 For greater detail, refer to the official JavaScript documentation.
- <li>A variable that has been defined as being of Type <el-code>Float</el-code> may not be passed as an argument into a method that requires an <el-code>Int</el-code>, nor as an index into a <el-code>List</el-code>, even if the variable contains no fractional part. It may, however, be converted into an <el-code>Int</el-code> before passing, using the functions <el-code>floor()</el-code> or <el-code>ceiling()</el-code>:
+ <li>A variable that has been defined as being of Type <el-code>Float</el-code> may not be passed as an argument into a method that requires an <el-code>Int</el-code>, nor as an index into a <el-code>List</el-code>, even if the variable contains no fractional part. It may, however, be converted into an <el-code>Int</el-code> before passing, using the functions <el-code>floor</el-code> or <el-code>ceiling</el-code>:
    <ul>
-<li><el-code>floor()</el-code> returns the integer value left by removing any fractional part, and</li>
-<li><el-code>ceiling()</el-code> returns the lowest integer greater than the <el-code>Float</el-code> value if does have a fractional part.</li>
+<li><el-code>floor</el-code> returns the integer value left by removing any fractional part, and</li>
+<li><el-code>ceiling</el-code> returns the lowest integer greater than the <el-code>Float</el-code> value if does have a fractional part.</li>
   </ul>
  <li>If you wish to define a variable to be of Type <el-code>Float</el-code> but initialise it with an integer value then add <el-code>.0</el-code> on the end of the whole number, for example:<br>
 <el-code>variable a set to 3.0</el-code></li>
@@ -148,22 +148,7 @@ For greater detail, refer to the official JavaScript documentation.
  <li>You may insert single quotation marks  <el-code>'</el-code>within a string. </li>
 </ul>
 <h3 class="no-TOC">Dot methods</h3>
-String dot methods are functions which are applied to a variable of Type <el-code><el-type>String</el-type></el-code>. Some take arguments as shown in the table. Examples of use:
-<el-code-block source="stringDotMethods.elan">
-<el-statement class="ok" id="let5" tabindex="0"><el-kw>let </el-kw><el-field id="var6" class="ok" tabindex="0"><el-txt><el-id>s</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr7" class="ok" tabindex="0"><el-txt>"<el-lit>string</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement></el-code>
-<el-code>
-<el-statement class="ok" id="print8" tabindex="0"><el-kw>print </el-kw><el-field id="expr9" class="optional ok" tabindex="0"><el-txt><el-id>s</el-id>.<el-method>length</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement></el-code>
-<el-code>
-<el-statement class="ok" id="var13" tabindex="0"><el-kw>variable </el-kw><el-field id="var14" class="ok" tabindex="0"><el-txt><el-id>t</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr15" class="ok" tabindex="0"><el-txt>""</el-txt><el-place><i>expression</i></el-place></el-field></el-statement></el-code>
-<el-code>
-<el-statement class="ok" id="set10" tabindex="0"><el-kw>set </el-kw><el-field id="ident11" class="ok" tabindex="0"><el-txt><el-id>t</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr12" class="ok" tabindex="0"><el-txt><el-id>s</el-id>.<el-method>replace</el-method>("<el-lit>i</el-lit>", "<el-lit>u</el-lit>")</el-txt><el-place><i>expression</i></el-place></el-field></el-statement></el-code>
-<el-code>
-<el-statement class="ok" id="print17" tabindex="0"><el-kw>print </el-kw><el-field id="expr18" class="optional ok" tabindex="0"><el-txt><el-id>s</el-id> + "<el-lit> </el-lit>" + <el-id>t</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement></el-code>
-<el-code>
-</el-code-block>
-<p>gives output:</p>
-<p><elan-code>6<br>string strung</elan-code></p>
-<br>
+String dot methods are functions which are applied to a variable of Type <el-code><el-type>String</el-type></el-code>. Some take arguments as shown in the table.
 <table>
  <tr><th>function<br>dot method</th><th>on<br>Type</th><th>argument<br>Types</th><th>return<br>Type</th><th>description</th></tr>
  <tr>
@@ -278,20 +263,20 @@ String dot methods are functions which are applied to a variable of Type <el-cod
  </table>
 <h3 class="no-TOC" id="Interpolated_string">Interpolated string</h3>
 <p>
-Elan strings are automatically interpolated. This means that you may insert the values of variables or simple expressions within a string by enclosing them in curly braces. For example (assuming that the variables <el-code>a</el-code> and <el-code>b</el-code> are already defined as integers) :<br>
+Elan strings are automatically interpolated. This means that you may insert the values of variables or simple expressions within a string by enclosing them in curly braces. For example (assuming that the variables <el-code>a</el-code> and <el-code>b</el-code> are already defined as integers):<br>
 <el-code>print "{a} times {b} equals {a*b}"</el-code></p>
 <p>
-You cannot include the characters <el-code>"</el-code>,<el-code> {</el-code>, or<el-code> }</el-code> directly within a literal string because of their special meanings. Instead, you use the constants <el-code>quotes</el-code>, <el-code>leftBrace</el-code> and <el-code>rightBrace</el-code> respectively:<br>
+You cannot include the characters <el-code>"</el-code>, <el-code>{</el-code>, or <el-code>}</el-code> directly within a literal string because of their special meanings. Instead, you use the constants <el-id>quotes</el-id>, <el-id>openBrace</el-id> and <el-id>closeBrace</el-id> respectively:<br>
 <el-code>print "This is a double quotation mark: " + quotes</el-code><br>
-Alternatively, you can insert their Unicode codepoints by means of the <el-code>unicode()</el-code> standalone function:<br>
+Alternatively, you can insert their Unicode codepoints by means of the <el-code>unicode</el-code> standalone function:<br>
 <el-code>print "This is a double quotation mark: " + unicode(34)</el-code><br>
 or<br>
 <el-code>print"Here are the curly braces: {unicode(123)} and {unicode(125)}"</el-code><br>
 
 <h3 class="no-TOC" id="String_method">Dot methods on a String</h3>
 <p>There are no &lsquo;substring&rsquo; methods in Elan because you can always use an index range to get a substring, e.g. <el-code>s[3..7]</el-code>  gives a <el-code>string</el-code> containing the fourth character to the seventh character inclusive of <el-code>string s</el-code>. Note that the upper bound of the range is <em>exclusive</em>. See<span class="Link"> Indexed Value</span>.</p>
-<p><el-code>upperCase()</el-code> returns a new string based on the input with all alphabetic characters in upper case.</p>
-<p><el-code>lowerCase()</el-code> returns a new string based on the input with all alphabetic characters in lower case.</p>
+<p><el-code>upperCase</el-code> returns a new string based on the input with all alphabetic characters in upper case.</p>
+<p><el-code>lowerCase</el-code> returns a new string based on the input with all alphabetic characters in lower case.</p>
 <p><el-code>contains(partString as String)</el-code> takes a single parameter of Type <el-code>String</el-code> and returns a Boolean value indicating whether or not the string argument is contained within the <el-code>string</el-code> on which <el-code>contains</el-code> was called. For example:</p>
 <ul>
 <el-code>
@@ -301,7 +286,7 @@ print a.contains("ello")<br>
 prints 'true'.
 </ul>
 <p><el-code>replace(match as String, replacement as String)</el-code> returns a new string in which all occurrences of the <el-code>match</el-code> string are replaced with the <el-code>replacement</el-code> string. </p>
-<p><el-code>trim() returns String</el-code> returns a new string based on the referenced string with all leading and trailing spaces removed.</p>
+<p><el-code>trim returns String</el-code> returns a new string based on the referenced string with all leading and trailing spaces removed.</p>
 <p id="indexOf"><el-code>indexOf(partString as String) returns Int</el-code>
 
 <p>The following methods are used for comparing strings alphabetically,  for example in a sort routine:</p>
@@ -310,7 +295,7 @@ prints 'true'.
 <el-code>isBeforeOrSameAs(otherString as String) returns Boolean</el-code><br>
 <el-code>isAfterOrSameAs(otherString as String) returns Boolean</el-code><br>
 
-<el-code>asUnicode() returns Int</el-code><br>
+<el-code>asUnicode returns Int</el-code><br>
 <p>returns the Unicode (integer) value for a character. If the string is more than one character long, the Unicode value returned is that for the first character in the string only. Note that the opposite method to create a single-character string from its numeric Unicode value is e.g. <el-code>unicode(123)</el-code> which returns <el-code>"{"</el-code>.</p>
 <!--   #endregion-->
 <!-- #endregion-->
@@ -360,7 +345,7 @@ or into existing variables of the correct Type:</p>
   <td><el-code>Dictionary&lt;of String, Int&gt;</el-code><br>key must be <el-code>Int</el-code>, <el-code>Float</el-code>, <el-code>String</el-code>, <el-code>Boolean</el-code>, or any<el-code>record</el-code>. Value Type may be anything</td>
  </tr><tr>
   <td>literal</td>
-  <td>N/A, but can convert literal list:<br><el-code>["a","b","c"].asArray()</el-code></td>
+  <td>N/A, but can convert literal list:<br><el-code>["a","b","c"].asArray</el-code></td>
   <td>N/A</td>
   <td><el-code>["a","b","c"]</el-code></td>
   <td><el-code>["a":3, "b":5]</el-code></td>
@@ -421,7 +406,7 @@ with the specified changes &ndash; which is why all such methods have names star
     <el-code><el-type>Int</el-type></el-code>, <el-code><el-type>Float</el-type></el-code>, <el-code><el-type>String</el-type></el-code>, or <el-code><el-type>Boolean</el-type></el-code>.
 The size must also be specified when it is
 created, along with the value (of the specific member Type) to which each member is initialised. It is not possible to append
-further items to an array, although it is possible to convert an array to a list using <el-code>.<el-method>asList</el-method>()</el-code> and then to extend or reduce that list.</p>
+further items to an array, although it is possible to convert an array to a list using <el-code>.<el-method>asList</el-method></el-code> and then to extend or reduce that list.</p>
 
 <p>As in most languages, individual elements may be read 'by index'. However, to modify an element you must either
     <el-code><el-kw>call</el-kw></el-code> the <el-code><el-method>put</el-method></el-code> procedure-method, or use <thead></thead>
@@ -563,7 +548,7 @@ differences. Immutable data structures are intended specifically to facilitate t
     <li> When creating a <el-code>Set</el-code>, the Type of the elements must be specified in the form
     <el-code>Set&lt;of String&gt;</el-code>. This applies both when creating a new, empty set and when defining the Type of a parameter to be a <el-code>Set</el-code>.</li>
     <li>You can add elements: individually with <el-code>add</el-code>, or multiple elements with <el-code>addFromList</el-code> and <el-code>addFromList</el-code>.</li>
-    <li>You can create a new <el-code>Se</el-code>t from an existing <el-code>List</el-code> or <el-code>ListImmutable</el-code> by calling <el-code>.asSet()</el-code> on it.</li>
+    <li>You can create a new <el-code>Se</el-code>t from an existing <el-code>List</el-code> or <el-code>ListImmutable</el-code> by calling <el-code>asSet</el-code> on it.</li>
 </ul>
     <p>Available dot methods on a <el-code>Set</el-code>:</p>
 <el-code-block source="set_2.elan">
@@ -592,7 +577,7 @@ differences. Immutable data structures are intended specifically to facilitate t
     <li>Both a <el-code>Stack</el-code> and a <el-code>Queue</el-code> are defined with the Type of the items that they can contain, similarly to how <el-code>List</el-code> and <el-code>ListImmutable</el-code> have a specified item Type, though with different syntax. The Type is specified in the form shown below e.g. <el-code>Stack&lt;of String&gt;, Queue&lt;of Int&gt;, Stack&lt;of (Float, Float)&gt;, Queue&lt;of Square&gt;</el-code>.</li>
     <li>Both <el-code>Stack </el-code>and<el-code> Queue</el-code> are dynamically extensible, like <el-code>List</el-code> and <el-code>ListImmutable</el-code>. There is no need (or means to) specify a size limit as they will continue to expand until, eventually, the computer&#8217;s memory limit is reached.</li>
     <li>This same syntax is used to specify the Type if you want to pass a <el-code>Stack</el-code> into a function, or specify it as the <el-code>return</el-code> Type.</li>
-    <li><el-code>Stack</el-code> and <el-code>Queue</el-code> have some methods in common: <el-code>length()</el-code>, and <el-code>peek()</el-code> which allows you to read the next item that would be removed, without actually removing it.</li>
+    <li><el-code>Stack</el-code> and <el-code>Queue</el-code> have some methods in common: <el-code>length</el-code>, and <el-code>peek</el-code> which allows you to read the next item that would be removed, without actually removing it.</li>
     <li>The names of the methods for adding or removing an item are different for <el-code>Stack</el-code>k and <el-code>Queue</el-code>, as summarised in this table:</li>
 </ul>
 <p>
@@ -751,7 +736,7 @@ which the dot methods the following methods may be invoked:</p>
 <li><el-code>openFileForReading</el-code> will present the user with a dialog to select the file.</li>
 <li><el-code>readWholeFile</el-code> returns a <el-code>String</el-code> containing every character in the file, without any trimming. It automatically closes the file after the read.</li>
 <li><el-code>readLine</el-code> reads as far as the next newline character (<el-code>\n</el-code>) and then automatically trims the line to remove any spaces and/or carriage-returns (which some file systems insert after the newline automatically) from the resulting line returned as a <el-code>String</el-code>. If this behaviour is not desired, you can use <el-code>readWholeFile</el-code>, which does no trimming, and then parse the resulting <el-code>String</el-code> into separate lines.</li>
-<li>Calling <el-code>file.close()</el-code> after reading line by line is strongly recommended to avoid any risk of leaving the file locked. It is not necessary to call it after using <el-code>readWholeFile() </el-code>because that method automatically closes the file.</li>
+<li>Calling <el-code>file.close</el-code> after reading line by line is strongly recommended to avoid any risk of leaving the file locked. It is not necessary to call it after using <el-code>readWholeFile</el-code> because that method automatically closes the file.</li>
 <li>Calling any method on a file that is already closed will result in a runtime error.</li>
 </ul>
 <h2 id="TextFileWriter">Writing text files</h2>
@@ -783,7 +768,7 @@ which the dot methods the following methods may be invoked:</p>
 <h4 class="no-TOC">Notes</h4>
 <ul>
 <li><el-code>writeLine</el-code> adds the string it is passed onto the end of any data previously written, with a newline character (<el-code>\n</el-code>) automatically appended.</li>
-<li>When execution reaches <el-code>saveAndClose()</el-code> you will be presented with a dialog to confirm (or edit) the given filename and location where it is to be saved. It is not therefore strictly necessary to specify a filename when creating the file, since it can be specified by the user in the dialog so, in that case, you might put the empty string <el-code>""</el-code> into the parameter of <el-code>createFileForWriting</el-code>.</li>
+<li>When execution reaches <el-code>saveAndClose</el-code> you will be presented with a dialog to confirm (or edit) the given filename and location where it is to be saved. It is not therefore strictly necessary to specify a filename when creating the file, since it can be specified by the user in the dialog so, in that case, you might put the empty string <el-code>""</el-code> into the parameter of <el-code>createFileForWriting</el-code>.</li>
 <li><el-code>writeWholeFile</el-code> puts the string it is given into the file and then automatically saves the file, so the user will be presented with the same dialog as if <el-code>saveAndClose</el-code> had been called.</li>
 <li>Calling any method on a file that has already been closed (by calling either <el-code>saveAndClose</el-code> or by <el-code>writeWholeFile</el-code>) will result in a runtime error.</li>
 <li>If the user were to hit Cancel on the save dialog, then the program will exit with an error. If you want to guard against this possibility (if, for example, it might mean the loss of important data) then you should perform the save and close within a <el-code>try..catch</el-code> like this:</li>
@@ -869,7 +854,7 @@ end function
 
 <h4 class="no-TOC">Notes</h4>
 <ul>
-<li>If you define an embedded stylesheet in the manner described above, then this should be printed first, and will then be applied to any subsequent printing of Html within the program. However if the Display is cleared, either by the Clear button in the IDE, or programmatically by calling <el-code>clearPrintedText()</el-code>, then the stylesheet will be removed also.</li>
+<li>If you define an embedded stylesheet in the manner described above, then this should be printed first, and will then be applied to any subsequent printing of Html within the program. However if the Display is cleared, either by the Clear button in the IDE, or programmatically by calling <el-code>clearPrintedText</el-code>, then the stylesheet will be removed also.</li>
 <li> You can, though, print the stylesheet again before printing further content. In this case it can be a good idea to define the stylesheet as a (global) constant.</li>
 <li>In general you should avoid using * to define the applicability of a style, since this could mess up the styling of the Elan IDE, and even render it unusable. (Should this happen, refresh the browser and correct the stylesheet definition). If you want a style to apply to all elements that you are printing you may specify <el-code>#display *</el-code>, which means 'all elements within the element with <el-code>id = 'display</el-code>'.</li>
 <li>Beware printing strings with < and > in them in case they enclose non-blank characters, since Elan will try and interpret the enclosed characters as an Html tag.</li>
@@ -1196,7 +1181,7 @@ just by passing the required one as the argyument to the <el-code><el-method>dis
 <h3 class="no-TOC">Regular expressions</h3>
     <p>Elan&#8217;s regular expressions are modelled on those of JavaScript, including the syntax for literal regular expressions. See, for example this <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions">Guide to Regular Expressions</a>.</p>
     <p>More functions for using regular expressions will be added in a future release of Elan. For now&#8230;</p>
-    <p>The method <el-code>matchesRegExp()</el-code> is applied to a <el-code>String</el-code> using dot syntax and requires a <el-code>RegExp</el-code> parameter specified as a literal or as variable. It returns a Boolean. For example:</p>
+    <p>The method <el-code>matchesRegExp</el-code> is applied to a <el-code>String</el-code> using dot syntax and requires a <el-code>RegExp</el-code> parameter specified as a literal or as variable. It returns a Boolean. For example:</p>
 <el-code-block source="test_regexp_1.elan">
 <el-test class="ok multiline" id="test1" tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="comment3" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i>optional description</i></el-place></el-field></el-top>
@@ -1208,7 +1193,7 @@ just by passing the required one as the argyument to the <el-code><el-method>dis
 <el-kw>end test</el-kw>
 </el-test>
 </el-code-block>
-<p>You can convert a valid <el-code>string</el-code> without <el-code>/../</el-code> delimiters to a <el-code>RegExp</el-code> using function <el-code>asRegExp()</el-code>:</p>
+<p>You can convert a valid <el-code>string</el-code> without <el-code>/../</el-code> delimiters to a <el-code>RegExp</el-code> using function <el-code>asRegExp</el-code>:</p>
 <el-code-block source="test_regexp_2.elan">
 <el-test class="ok multiline" id="test1" tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="comment3" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i>optional description</i></el-place></el-field></el-top>
@@ -1259,37 +1244,39 @@ just by passing the required one as the argyument to the <el-code><el-method>dis
 <!-- #endregion-->
 <!-- #region Standalone procedures-->
 <h1 id="Standalone_procedures">Standalone procedures</h1>
-    <p>All <el-code>procedure</el-code>s are accessed via a <el-code><a href="LangRef.html#Call">call</el-code></a> statement.</p>
-<!-- #region   Pause-->
-<h2 id="pause">pause</h2>
-<el-code>pause</el-code><br> is used to slow down the execution of a program e.g. for a game. The argument provided to <el-code>pause</el-code> is in milliseconds, so <el-code>pause(100)</el-code> delays execution for one tenth of a second.</p>
-<!-- #endregion-->
-
-<!-- #region   clearPrintedText-->
-<h2 id="clearPrintedText">clearPrintedText</h2>
-<el-code>clearPrintedText()</el-code>
-<!-- #endregion-->
-
-<!-- #region   clearKeyBuffer-->
-<h2 id="clearKeyBuffer">clearKeyBuffer</h2>
-<el-code>clearKeyBuffer()</el-code><br>
-<!-- #endregion-->
-
-<!-- #region   printLine-->
-<h2 id="printLine">printLine</h2>
-<p><el-code>printLine(arg as String)</el-code> prints the argument followed by a new line.
-The primary purpose of this is so that you may choose to do all printing via  methods rather than mixing them in with <el-code>print</el-code> statements.
-Note that the argument must be provided as a <el-code><el-type>String</el-type></el-code>.</p>
-<!-- #endregion-->
-
-<!-- #region   printNoLine-->
-<h2 id="printNoLine">printNoLine</h2>
-<p><el-code>printNoLine(arg as String)</el-code> does not automatically add a newline at the end,
-so you may subsequently print something else on the same line (unless you choose to include a newline <el-code>\n</el-code> within the string).
-Note that the argument must be provided as a <el-code><el-type>String</el-type></el-code>.</p>
-<!-- #endregion-->
-
-<!-- #region   printTab-->
+<p>All <el-code>procedure</el-code>s are accessed via a <el-code><a href="LangRef.html#Call">call</el-code></a> statement.</p>
+<table> <tr><th>procedure</th><th>input<br>argument<br>Types</th><th>output<br>argument<br>Types</th><th>description</th>
+</tr><tr id="pause">
+  <td><el-code><el-method>pause</el-method></el-code></td>
+  <td><el-code><el-type>Int</el-type></el-code></td>
+  <td>(none)</td>
+  <td>pauses the execution of a program for the given number of millisecons, e.g. for a game<br><el-code>pause(100)</el-code> delays execution for one tenth of a second </td>
+ </tr><tr id="clearPrintedText">
+  <td><el-code><el-method>clearPrintedText</el-method></el-code></td>
+  <td>(none)</td>
+  <td>(none)</td>
+  <td>clears the IDE's Display panel</td>
+ </tr><tr id="clearKeyBuffer">
+  <td><el-code><el-method>clearKeyBuffer</el-method></el-code></td>
+  <td>(none)</td>
+  <td>(none)</td>
+  <td>clears the IDE's keyboard input</td>
+ </tr><tr id="printLine">
+  <td><el-code><el-method>printLine></el-method></el-code></td>
+  <td><el-code><el-type>String</el-type></el-code></td>
+  <td>(none)</td>
+  <td>prints the string to the Display followed by a newline<br>
+  this method offers the means to do all printing via methods<br>
+  rather than coding a mixture of <el-code>call</el-code>s and <el-code>print</el-code> statements</td>
+ </tr><tr id="printNoLine">
+  <td><el-code><el-method>printNoLine></el-method></el-code></td>
+  <td><el-code><el-type>String</el-type></el-code></td>
+  <td>(none)</td>
+  <td>prints the string to the Display without appending a newline<br>
+  a following call will output on the same line<br>
+  you can put your own newlines with "\n"s in the argument string</td>
+ </tr>
+</table>
 <h2 id="printTab">printTab</h2>
 <p><el-code>printTab(tabPosition as Int, arg as String)</el-code>
  helps in the layout of information printed to the Display, in particular, when printing columns of data. <el-code>printTab</el-code> requires an additional argument specifying the tab position which is number of characters from the left of the display. For example:</li>
