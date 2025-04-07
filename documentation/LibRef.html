@@ -1245,12 +1245,13 @@ just by passing the required one as the argyument to the <el-code><el-method>dis
 <!-- #region Standalone procedures-->
 <h1 id="Standalone_procedures">Standalone procedures</h1>
 <p>All <el-code>procedure</el-code>s are accessed via a <el-code><a href="LangRef.html#Call">call</el-code></a> statement.</p>
-<table> <tr><th>procedure</th><th>input<br>argument<br>Types</th><th>output<br>argument<br>Types</th><th>description</th>
-</tr><tr id="pause">
+<table>
+ <tr><th>procedure</th><th>input<br>argument<br>Types</th><th>output<br>argument<br>Types</th><th>description</th></tr>
+ <tr id="pause">
   <td><el-code><el-method>pause</el-method></el-code></td>
   <td><el-code><el-type>Int</el-type></el-code></td>
   <td>(none)</td>
-  <td>pauses the execution of a program for the given number of millisecons, e.g. for a game<br><el-code>pause(100)</el-code> delays execution for one tenth of a second </td>
+  <td>pauses the execution of a program for the given number of milliseconds, e.g. for a game<br><el-code>pause(100)</el-code> delays execution for one tenth of a second </td>
  </tr><tr id="clearPrintedText">
   <td><el-code><el-method>clearPrintedText</el-method></el-code></td>
   <td>(none)</td>
@@ -1262,29 +1263,29 @@ just by passing the required one as the argyument to the <el-code><el-method>dis
   <td>(none)</td>
   <td>clears the IDE's keyboard input</td>
  </tr><tr id="printLine">
-  <td><el-code><el-method>printLine></el-method></el-code></td>
+  <td><el-code><el-method>printLine</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td>(none)</td>
   <td>prints the string to the Display followed by a newline<br>
   this method offers the means to do all printing via methods<br>
   rather than coding a mixture of <el-code>call</el-code>s and <el-code>print</el-code> statements</td>
  </tr><tr id="printNoLine">
-  <td><el-code><el-method>printNoLine></el-method></el-code></td>
+  <td><el-code><el-method>printNoLine</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td>(none)</td>
   <td>prints the string to the Display without appending a newline<br>
   a following call will output on the same line<br>
-  you can put your own newlines with "\n"s in the argument string</td>
+  you can put your own "\n" newlines in the argument string</td>
+ </tr><tr id="printTab">
+  <td><el-code><el-method>printTab</el-method></el-code></td>
+  <td><el-code><el-type>Int, String</el-type></el-code></td>
+  <td>(none)</td>
+  <td>prints the string to the Display starting at the tab position given (from 0)</td>
  </tr>
 </table>
-<h2 id="printTab">printTab</h2>
-<p><el-code>printTab(tabPosition as Int, arg as String)</el-code>
- helps in the layout of information printed to the Display, in particular, when printing columns of data. <el-code>printTab</el-code> requires an additional argument specifying the tab position which is number of characters from the left of the display. For example:</li>
- Note that the argument must be provided as a <el-code><el-type>String</el-type></el-code>.</p>
-
+<p>Method <el-code><el-method>printTab(</el-method></el-code> helps in the layout of information printed to the Display, in particular, when printing columns of data.
+ For example:</p>
 <el-code-block source="printTab.elan">
-<main class="ok multiline" id="main3" tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>main</el-kw></el-top>
 <el-statement class="ok" id="call5" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident6" class="ok" tabindex="0"><el-txt><el-method>printTab</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args7" class="optional ok" tabindex="0"><el-txt><el-lit>0</el-lit>, "<el-lit>Number</el-lit>"</el-txt><el-place><i>position, text</i></el-place></el-field>)</el-top></el-statement>
 <el-statement class="ok" id="call11" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident12" class="ok" tabindex="0"><el-txt><el-method>printTab</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args13" class="optional ok" tabindex="0"><el-txt><el-lit>10</el-lit>, "<el-lit>Square</el-lit>"</el-txt><el-place><i>position, text</i></el-place></el-field>)</el-top></el-statement>
 <el-statement class="ok" id="call18" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident19" class="ok" tabindex="0"><el-txt><el-method>printTab</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args20" class="optional ok" tabindex="0"><el-txt><el-lit>20</el-lit>, "<el-lit>Cube\n</el-lit>"</el-txt><el-place><i>position, text</i></el-place></el-field>)</el-top></el-statement>
@@ -1295,13 +1296,9 @@ just by passing the required one as the argyument to the <el-code><el-method>dis
 <el-statement class="ok" id="call60" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident61" class="ok" tabindex="0"><el-txt><el-method>printTab</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args62" class="optional ok" tabindex="0"><el-txt><el-lit>20</el-lit>, "<el-lit></el-lit>{<el-id>i</el-id>^<el-lit>3</el-lit>}<el-lit>\n</el-lit>"</el-txt><el-place><i>position, text</i></el-place></el-field>)</el-top></el-statement>
 <el-kw>end for</el-kw>
 </el-statement>
-<el-kw>end main</el-kw>
-</main>
 </el-code-block>
 <p>Right-align numeric output using a lambda function:</p>
 <el-code-block source="printTab_R.elan">
-<main class="ok multiline" id="main1" tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>main</el-kw></el-top>
 <el-statement class="ok" id="var3" tabindex="0"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>tab</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-lit>10</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="var6" tabindex="0"><el-kw>variable </el-kw><el-field id="var7" class="ok" tabindex="0"><el-txt><el-id>i</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-lit>0</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok multiline" id="for9" tabindex="0">
@@ -1311,8 +1308,6 @@ just by passing the required one as the argyument to the <el-code><el-method>dis
 <el-statement class="ok" id="call18" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident19" class="ok" tabindex="0"><el-txt><el-method>printTab</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args20" class="optional ok" tabindex="0"><el-txt><el-id>tab</el-id> - <el-method>f</el-method>(<el-id>j</el-id>), "<el-lit></el-lit>{<el-id>j</el-id>}<el-lit>\n</el-lit>"</el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
 <el-kw>end for</el-kw>
 </el-statement>
-<el-kw>end main</el-kw>
-</main>
 </el-code-block>
 <!-- #endregion-->
 <!-- #region System methods-->
@@ -1332,60 +1327,84 @@ just by passing the required one as the argyument to the <el-code><el-method>dis
     <li>Some system methods do not appear to be concerned with input/output: see the list below</li>
     <li>The reason those are system methods is that they have a dependency on variable data that is not passed into them as arguments</li>
 </ul>
-<!-- #endregion-->
-<!-- #region   clock-->
-<h2 id="clock">clock</h2>
- <p><el-code>clock</el-code> Returns an integer that increments every millisecond. It is useful for measuring elapsed time by comparing the values returned by two such evaluations of the <el-code>clock</el-code> method.</p>
-<!-- #endregion-->
-<!-- #region   getKey-->
-<h2 id="getKey">getKey</h2>
-<el-code>getKey()</el-code><br>
-<!-- #endregion-->
-<!-- #region   getKeyWithModifier-->
-<h2 id="getKeyWithModifier">getKeyWithModifier</h2>
-<el-code>getKeyWithModifier()</el-code>
-<!-- #endregion-->
-<!-- #region   inputString-->
+<table
+ <tr><th>function<br>method</th><th>argument<br>Types</th><th>return<br>Types</th><th>description</th></tr>
+ <tr id="clock">
+  <td><el-code><el-method>clock</el-method></el-code></td>
+  <td>(none)</td>
+  <td><el-code><el-type>Int</el-type></el-code></td>
+  <td>returns an integer that increments every millisecond<br>useful for measuring elapsed time by comparing the values returned by two calls</td>
+ </tr><tr id="getKey">
+  <td><el-code><el-method>getKey</el-method></el-code></td>
+  <td>(none)</td>
+  <td><el-code><el-type>String</el-type></el-code></td>
+  <td>returns the keyboard key character pressed (see below)</td>
+ </tr><tr id="getKeyWithModifier">
+  <td><el-code><el-method>getKeyWithModifier</el-method></el-code></td>
+  <td>(none)</td>
+  <td>2-tuple:<br><el-code><el-type>String</el-type></el-code>, <el-code><el-type>String</el-type></el-code></td>
+  <td>returns both the keyboard key character pressed<br>and the modifier key's name if pressed also (see below)</td>
+ </tr><tr id="inputString">
+  <td><el-code><el-method>inputString</el-method></el-code></td>
+  <td><el-code><el-type>String</el-type></el-code></td>
+  <td><el-code><el-type>String</el-type></el-code></td>
+  <td>prints the argument string as a prompt<br>and returns the string typed when Enter is pressed</td>
+ </tr><tr id="inputStringWithLimits">
+  <td><el-code><el-method>inputStringWithLimits</el-method></el-code></td>
+  <td><el-code><el-type>String</el-type></el-code>, <el-code><el-type>Int</el-type></el-code>, <el-code><el-type>Int</el-type></el-code></td>
+  <td><el-code><el-type>String</el-type></el-code></td>
+  <td>prints the argument string as a prompt together with minimum and maximum lengths of response<br>
+      and returns the string typed when Enter is pressed (see below)</td>
+ </tr><tr id="inputStringFromOptions">
+  <td><el-code><el-method>inputStringFromOptions</el-method></el-code></td>
+  <td><el-code><el-type>String</el-type></el-code>, <el-code><el-type>List&lt;of String&gt;</el-type></el-code></td>
+  <td><el-code><el-type>String</el-type></el-code></td>
+  <td></td>
+ </tr><tr id="inputInt">
+  <td><el-code><el-method>inputInt</el-method></el-code></td>
+  <td><el-code><el-type>String</el-type></el-code></td>
+  <td><el-code><el-type>Int</el-type></el-code></td>
+  <td></td>
+ </tr><tr id="inputIntBetween">
+  <td><el-code><el-method>inputIntBetween</el-method></el-code></td>
+  <td><el-code><el-type>String</el-type></el-code>, <el-code><el-type>Int</el-type></el-code>, <el-code><el-type>Int</el-type></el-code></td>
+  <td><el-code><el-type>Int</el-type></el-code></td>
+  <td></td>
+ </tr><tr id="inputFloat">
+  <td><el-code><el-method>inputFloat</el-method></el-code></td>
+  <td><el-code><el-type>String</el-type></el-code></td>
+  <td><el-code><el-type>Float</el-type></el-code></td>
+  <td></td>
+ </tr><tr id="inputFloatBetween">
+  <td><el-code><el-method>inputFloatBetween</el-method></el-code></td>
+  <td><el-code><el-type>String</el-type></el-code>, <el-code><el-type>Int</el-type></el-code>, <el-code><el-type>Int</el-type></el-code></td>
+  <td><el-code><el-type>Float</el-type></el-code></td>
+  <td></td>
+ </tr><tr id="openFileForReading">
+  <td><el-code><el-method>openFileForReading</el-method></el-code></td>
+  <td></td>
+  <td></td>
+  <td>see Reading textual data from a file</td>
+ </tr><tr id="random">
+  <td><el-code><el-method>random</el-method></el-code></td>
+  <td></td>
+  <td></td>
+  <td>see Generating random numbers</td>
+ </tr><tr id="randomInt">
+  <td><el-code><el-method>randomInt</el-method></el-code></td>
+  <td></td>
+  <td></td>
+  <td>see Generating random numbers</td>
+ </tr><tr id="waitForAnyKey">
+  <td><el-code><el-method>waitForAnyKey</el-method></el-code></td>
+  <td></td>
+  <td></td>
+  <td></td>
+ </tr>
+</table>
+
 <div id="input_methods"></div>
-<h2 id="inputString">inputString</h2>
-inputString(prompt as string)
-<!-- #endregion-->
-<!-- #region   inputStringWithLimits-->
-<h2 id="inputStringWithLimits">inputStringWithLimits</h2>
-inputStringWithLimits(prompt as string, minLength as Int, maxLength as Int)
-<!-- #endregion-->
-<!-- #region   inputStringFromOptions-->
-<h2 id="inputStringFromOptions">inputStringFromOptions</h2>
-inputStringFromOptions(prompt as String, options as List<of String>)
-<!-- #endregion-->
-<!-- #region   inputInt-->
-<h2 id="inputInt">inputInt</h2>
-inputInt(prompt as string)
-<!-- #endregion-->
-<!-- #region   inputIntBetween-->
-<h2 id="inputIntBetween">inputIntBetween</h2>
-inputIntBetween(prompt as string, min as Int, max as Int)
-<!-- #endregion-->
-<!-- #region   inputFloat-->
-<h2 id="inputFloat">inputFloat</h2>
-inputFloat(prompt as string)
-<!-- #endregion-->
-<!-- #region   inputFloatBetween-->
-<h2 id="inputFloatBetween">inputFloatBetween</h2>
-inputFloatBetween(prompt as string, min as Float, max as Float)
-<!-- #endregion-->
-<!-- #region   openFileForReading-->
-<h2 id="openFileForReading">openFileForReading</h2>
-<p><el-code>openFileForReading</el-code>: see <span class="Link">Reading textual data from a file</span></p>
-<!-- #endregion-->
-<!-- #region   random-->
-<h2 id="random">random</h2>
-<p><el-code>random</el-code> and <el-code>randomInt</el-code>: see <span class="Link">Generating random numbers</span></p>
-<!-- #endregion-->
-<!-- #region   waitForAnyKey-->
-<h2 id="waitForAnyKey">waitForAnyKey</h2>
-    <el-code>waitForAnyKey()</el-code>
-<!-- #endregion-->
+
 <!-- #endregion-->
 <!-- #region Higher order functions (HoFs)-->
 <h1>Library functions that process Lists</h1>
