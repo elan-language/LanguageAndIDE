@@ -15,6 +15,7 @@ import { ElanSymbol } from "./frames/interfaces/elan-symbol";
 import { Scope } from "./frames/interfaces/scope";
 import { SymbolType } from "./frames/interfaces/symbol-type";
 import { getTypeOptions, noTypeOptions, TypeOptions } from "./frames/interfaces/type-options";
+import { constructorKeyword } from "./frames/keywords";
 import { BooleanType } from "./frames/symbols/boolean-type";
 import { ClassSubType, ClassType } from "./frames/symbols/class-type";
 import {
@@ -250,7 +251,11 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
         | undefined;
 
       if (name === "constructor") {
-        children.push([name, classMetadata.mapType(scope), MemberType.procedure]);
+        children.push([
+          `__${constructorKeyword}`,
+          classMetadata.mapType(scope),
+          MemberType.procedure,
+        ]);
       }
 
       if (isFunctionDescriptor(metadata)) {
