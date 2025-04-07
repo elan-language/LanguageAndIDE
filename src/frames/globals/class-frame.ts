@@ -33,7 +33,7 @@ import { Scope } from "../interfaces/scope";
 import { StatementFactory } from "../interfaces/statement-factory";
 import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../interfaces/transforms";
-import { classKeyword, constructorKeyword, thisKeyword } from "../keywords";
+import { classKeyword, thisKeyword } from "../keywords";
 import {
   parentHelper_addChildAfter,
   parentHelper_addChildBefore,
@@ -418,9 +418,7 @@ export abstract class ClassFrame
   symbolMatches(id: string, all: boolean, _initialScope: Scope): ElanSymbol[] {
     const otherMatches = this.getParent().symbolMatches(id, all, this);
 
-    const symbols = this.getChildren().filter(
-      (f) => !(f instanceof Constructor) && isSymbol(f),
-    ) as ElanSymbol[];
+    const symbols = this.getChildren().filter((f) => isSymbol(f)) as ElanSymbol[];
 
     const types = this.getDirectSuperClassesTypeAndName(transforms())
       .map((tn) => tn[0])
@@ -451,10 +449,6 @@ export abstract class ClassFrame
   resolveOwnSymbol(id: string, transforms: Transforms): ElanSymbol {
     if (id === thisKeyword) {
       return this;
-    }
-
-    if (id === constructorKeyword) {
-      return this.getChildren().find((c) => c instanceof Constructor) ?? new UnknownSymbol(id);
     }
 
     let matches = this.getChildren().filter(
