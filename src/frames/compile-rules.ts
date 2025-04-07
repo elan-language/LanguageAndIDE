@@ -16,7 +16,6 @@ import {
   MustBeAbstractCompileError,
   MustBeConcreteCompileError,
   MustBeInterfaceCompileError,
-  MustBeRecordCompileError,
   MustBeSingleAbstractCompileError,
   MustImplementCompileError,
   MustNotBeCircularDependencyCompileError,
@@ -58,7 +57,6 @@ import { Parent } from "./interfaces/parent";
 import { Scope } from "./interfaces/scope";
 import { SymbolType } from "./interfaces/symbol-type";
 import { Transforms } from "./interfaces/transforms";
-import { isRecord } from "./interfaces/type-options";
 import { allKeywords, reservedWords } from "./keywords";
 import { LetStatement } from "./statements/let-statement";
 import { BooleanType } from "./symbols/boolean-type";
@@ -191,16 +189,6 @@ export function mustBeKnownSymbolType(
   }
 }
 
-export function mustBeRecord(
-  symbolType: SymbolType,
-  compileErrors: CompileError[],
-  location: string,
-) {
-  if (knownType(symbolType) && !isRecordType(symbolType)) {
-    compileErrors.push(new MustBeRecordCompileError(symbolType.name, location));
-  }
-}
-
 export function mustNotBeKeyword(id: string, compileErrors: CompileError[], location: string) {
   if (allKeywords.includes(id)) {
     compileErrors.push(
@@ -249,20 +237,6 @@ export function mustBeCallable(
     compileErrors.push(
       new CannotCallAsAMethod(symbolId, symbolScopeToFriendlyName(symbolScope), location),
     );
-  }
-}
-
-function isRecordType(st: SymbolType) {
-  return st instanceof ClassType && isRecord(st.typeOptions);
-}
-
-export function mustBeRecordType(
-  symbolType: SymbolType,
-  compileErrors: CompileError[],
-  location: string,
-) {
-  if (knownType(symbolType) && !isRecordType(symbolType)) {
-    compileErrors.push(new TypeCompileError("record", location));
   }
 }
 

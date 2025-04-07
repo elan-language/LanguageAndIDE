@@ -2196,4 +2196,22 @@ end main`;
 
     await assertSymbolCompletionWithString(fileImpl, "ident7", "t.", expected);
   });
+
+  test("Pass_newClass", async () => {
+    const code = `${testHeader}
+
+main
+  let t be new Foo()
+end main
+
+class Foo
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [["with", "*", "*"]] as [string, string, string][];
+
+    await assertSymbolCompletionWithString(fileImpl, "expr5", "new Foo()", expected);
+  });
 });
