@@ -150,14 +150,19 @@ For greater detail, refer to the official JavaScript documentation.
 <h3 class="no-TOC">Dot methods</h3>
 String dot methods are functions which are applied to a variable of Type <el-code><el-type>String</el-type></el-code>. Some take arguments as shown in the table. Examples of use:
 <el-code-block source="stringDotMethods.elan">
-<el-statement class="ok" id="let5" tabindex="0"><el-kw>let </el-kw><el-field id="var6" class="ok" tabindex="0"><el-txt><el-id>s</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr7" class="ok" tabindex="0"><el-txt>"<el-lit>string</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement></el-code><el-code>
-<el-statement class="ok" id="print8" tabindex="0"><el-kw>print </el-kw><el-field id="expr9" class="optional ok" tabindex="0"><el-txt><el-id>s</el-id>.<el-method>length</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement></el-code><el-code>
-<el-statement class="ok" id="var13" tabindex="0"><el-kw>variable </el-kw><el-field id="var14" class="ok" tabindex="0"><el-txt><el-id>t</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr15" class="ok" tabindex="0"><el-txt>""</el-txt><el-place><i>expression</i></el-place></el-field></el-statement></el-code><el-code>
-<el-statement class="ok" id="set10" tabindex="0"><el-kw>set </el-kw><el-field id="ident11" class="ok" tabindex="0"><el-txt><el-id>t</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr12" class="ok" tabindex="0"><el-txt><el-id>s</el-id>.<el-method>replace</el-method>("<el-lit>i</el-lit>", "<el-lit>u</el-lit>")</el-txt><el-place><i>expression</i></el-place></el-field></el-statement></el-code><el-code>
-<el-statement class="ok" id="print17" tabindex="0"><el-kw>print </el-kw><el-field id="expr18" class="optional ok" tabindex="0"><el-txt><el-id>s</el-id> + "<el-lit> </el-lit>" + <el-id>t</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement></el-code><el-code>
+<el-statement class="ok" id="let5" tabindex="0"><el-kw>let </el-kw><el-field id="var6" class="ok" tabindex="0"><el-txt><el-id>s</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr7" class="ok" tabindex="0"><el-txt>"<el-lit>string</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement></el-code>
+<el-code>
+<el-statement class="ok" id="print8" tabindex="0"><el-kw>print </el-kw><el-field id="expr9" class="optional ok" tabindex="0"><el-txt><el-id>s</el-id>.<el-method>length</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement></el-code>
+<el-code>
+<el-statement class="ok" id="var13" tabindex="0"><el-kw>variable </el-kw><el-field id="var14" class="ok" tabindex="0"><el-txt><el-id>t</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr15" class="ok" tabindex="0"><el-txt>""</el-txt><el-place><i>expression</i></el-place></el-field></el-statement></el-code>
+<el-code>
+<el-statement class="ok" id="set10" tabindex="0"><el-kw>set </el-kw><el-field id="ident11" class="ok" tabindex="0"><el-txt><el-id>t</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr12" class="ok" tabindex="0"><el-txt><el-id>s</el-id>.<el-method>replace</el-method>("<el-lit>i</el-lit>", "<el-lit>u</el-lit>")</el-txt><el-place><i>expression</i></el-place></el-field></el-statement></el-code>
+<el-code>
+<el-statement class="ok" id="print17" tabindex="0"><el-kw>print </el-kw><el-field id="expr18" class="optional ok" tabindex="0"><el-txt><el-id>s</el-id> + "<el-lit> </el-lit>" + <el-id>t</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement></el-code>
+<el-code>
 </el-code-block>
 <p>gives output:</p>
-<p><pre>    6<br>    string strung</pre></p>
+<p><elan-code>6<br>string strung</elan-code></p>
 <br>
 <table>
  <tr><th>function<br>dot method</th><th>on<br>Type</th><th>argument<br>Types</th><th>return<br>Type</th><th>description</th></tr>
@@ -197,12 +202,6 @@ String dot methods are functions which are applied to a variable of Type <el-cod
   <td>(none)</td>
   <td><el-code><el-type>Boolean</el-type></el-code></td>
   <td>returns <el-code><el-id>true</el-id></el-code> if the string contains the substring specified as the argument<br>&ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
- </tr><tr>
-  <td><el-code><el-method>filter</el-method></el-code></td>
-  <td><el-code><el-type>String</el-type></el-code></td>
-  <td>(none)</td>
-  <td><el-code><el-type></el-type></el-code></td>
-  <td>(none)</td>
  </tr><tr>
   <td><el-code><el-method>indexOf</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
@@ -252,23 +251,11 @@ String dot methods are functions which are applied to a variable of Type <el-cod
   <td><el-code><el-type>Boolean</el-type></el-code></td>
   <td>returns <el-code><el-id>true</el-id></el-code> if the string matches the regular expression<br> &ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
  </tr><tr>
-  <td><el-code><el-method>reduce</el-method></el-code></td>
-  <td><el-code><el-type></el-type></el-code></td>
-  <td></td>
-  <td><el-code><el-type></el-type></el-code></td>
-  <td></td>
- </tr><tr>
   <td><el-code><el-method>replace</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td><el-code><el-type>String</el-type></el-code>, <el-code><el-type>String</el-type></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td>returns a new string with <i>all</i> occurrences of the first argument string replaced<br>by the second argument string </td>
- </tr><tr>
-  <td><el-code><el-method>sortBy</el-method></el-code></td>
-  <td><el-code><el-type>String</el-type></el-code></td>
-  <td></td>
-  <td><el-code><el-type></el-type></el-code></td>
-  <td></td>
  </tr><tr>
   <td><el-code><el-method>split</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
