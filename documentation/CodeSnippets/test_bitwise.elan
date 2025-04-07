@@ -1,4 +1,4 @@
-# 78e86f77196d8e9cb390801ed694b923a238acd30519b487c07a2659f8f9ee60 Elan Beta 8 valid
+# c2a8d591a017d0c1f9588ea0f60bba798c533566c3fc05727f113532850f78ee Elan 0.10.0-Beta guest default_profile valid
 
 test bitwise
   variable a set to 13
@@ -16,7 +16,7 @@ test bitwise
   assert nota is -14
   variable aL set to bitShiftL(a, 2)
   assert aL is 0b110100
-  assert bitShiftR(a,2) is 0b11
+  assert bitShiftR(a, 2) is 0b11
 end test
 
 main

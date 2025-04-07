@@ -1,4 +1,4 @@
-# 23062be2522c877b76fd1e6f45ef54eb1dbe08ef1b5d51f85dda8d75735517bf Elan Beta 8 valid
+# 69067bb7db7dae56f9647a37edf44a75086fbead852b715af6fe296cb84c5d1d Elan 0.10.0-Beta guest default_profile valid
 
 main
   variable vg set to new VectorGraphics()

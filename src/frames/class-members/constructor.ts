@@ -89,7 +89,7 @@ ${this.indent()}}\r
   }
 
   get symbolId() {
-    return constructorKeyword;
+    return `__${constructorKeyword}`;
   }
 
   symbolType(transforms?: Transforms) {

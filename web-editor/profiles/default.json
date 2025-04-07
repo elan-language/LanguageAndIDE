@@ -8,6 +8,6 @@
                   "abstract function", "abstract procedure", "abstract property",
                   "private function", "private procedure", "private property","#"],
 
-"require_log_on": true,
+"require_log_on": false,
 "can_load_only_own_files": false
 }

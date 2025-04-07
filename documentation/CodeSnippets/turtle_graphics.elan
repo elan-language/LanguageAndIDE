@@ -1,4 +1,4 @@
-# FFFF Elan Beta 8 valid
+# 9af9908b60d56ecb86e0966e6de26d7dc6af1866c22b4dfd52b5f8f55354a779 Elan 0.10.0-Beta guest default_profile valid
 
 main
   let t be new Turtle()

@@ -5,7 +5,7 @@ import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../interfaces/transforms";
 import { TypeOptions } from "../interfaces/type-options";
-import { constructorKeyword, thisKeyword } from "../keywords";
+import { thisKeyword } from "../keywords";
 import { generateType } from "../syntax-nodes/ast-helpers";
 import { ClassSubType, ClassType } from "./class-type";
 import { DuplicateSymbol } from "./duplicate-symbol";
@@ -86,12 +86,6 @@ export class StdLibClass implements Class {
   resolveOwnSymbol(id: string, transforms: Transforms): ElanSymbol {
     if (id === thisKeyword) {
       return this;
-    }
-
-    if (id === constructorKeyword) {
-      return (
-        this.getChildren().find((c) => c.symbolId === constructorKeyword) ?? new UnknownSymbol(id)
-      );
     }
 
     const matches = this.getChildren().filter(
@@ -179,9 +173,7 @@ export class StdLibClass implements Class {
       }
     }
 
-    const symbols = this.getChildren().filter(
-      (f) => f.symbolId !== constructorKeyword && isSymbol(f),
-    ) as ElanSymbol[];
+    const symbols = this.getChildren().filter((f) => isSymbol(f)) as ElanSymbol[];
 
     const matches = symbolMatches(id, all, symbols);
 

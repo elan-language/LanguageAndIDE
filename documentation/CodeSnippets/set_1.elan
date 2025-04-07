@@ -1,4 +1,4 @@
-# 9066b404a264dc2a72ee77d5d3bc4b70b1103f9ccb8da6b15270f42b20ba2a41 Elan Beta 8 valid
+# bdc6f29768c01cfa637fbd50ae20b8aad2f1c4ea983e0fc1c6608e37095ea989 Elan 0.10.0-Beta guest default_profile valid
 
 main
   variable st set to "new Set<of Int()"

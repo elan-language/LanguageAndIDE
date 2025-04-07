@@ -1,4 +1,4 @@
-# db2b9ae9d292b14c9d15db2cd81fb42846ef0fb46abc73b9761fe30135f2cf5b Elan Beta 8 valid
+# 7750ef185f3ed8930382ebec5574d2af7734c278aff5a9276cfa8811529f30b9 Elan 0.10.0-Beta guest default_profile valid
 
 main
   variable li set to example.asList()

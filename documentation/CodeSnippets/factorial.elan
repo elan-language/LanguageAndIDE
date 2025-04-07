@@ -1,4 +1,4 @@
-# a90c656fef6c740a5255f43b6f0a34c901166901baa9118fb9c9dd221b6c6008 Elan Beta 8 valid
+# 704940c3ad9348901d40a9c74ad8a6aae237b6747b3c61197ab3db73b76ff034 Elan 0.10.0-Beta guest default_profile valid
 
 main
   print factorial(7)

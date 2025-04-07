@@ -6,7 +6,9 @@ import { elanVersion } from "./production";
 import { hash } from "./util";
 import { transforms } from "./frames/syntax-nodes/ast-helpers";
 
-const dir = `${__dirname}/../../demo_programs/`;
+const demos = `${__dirname}/../../demo_programs/`;
+const snippets = `${__dirname}/../../documentation/CodeSnippets/`;
+const tests = `${__dirname}/../../test/files/`;
 
 function loadFileAsSourceNew(sourceFile: string): string {
   return readFileSync(sourceFile, "utf-8");
@@ -26,14 +28,12 @@ async function loadFileAsModelNew(sourceFile: string): Promise<FileImpl> {
   const fl = new FileImpl(hash, new DefaultProfile(), "guest", transforms(), true);
   await fl.parseFrom(codeSource);
   if (fl.parseError) {
-    throw new Error(fl.parseError);
+    throw new Error(`${sourceFile}: ${fl.parseError}`);
   }
   return fl;
 }
 
-async function updateDemoProgram(program: string) {
-  const fileName = `${dir}${program}`;
-
+async function updateDemoProgram(fileName: string) {
   const file = await loadFileAsModelNew(fileName);
 
   file.setVersion(elanVersion.major, elanVersion.minor, elanVersion.patch, elanVersion.preRelease);
@@ -43,8 +43,14 @@ async function updateDemoProgram(program: string) {
   updateTestFileNew(fileName, updatedContent);
 }
 
-const files = getElanFiles(dir);
+for (const fn of getElanFiles(demos)) {
+  updateDemoProgram(`${demos}${fn}`);
+}
 
-for (const fn of files) {
-  updateDemoProgram(fn);
+for (const fn of getElanFiles(snippets)) {
+  updateDemoProgram(`${snippets}${fn}`);
+}
+
+for (const fn of getElanFiles(tests)) {
+  updateDemoProgram(`${tests}${fn}`);
 }

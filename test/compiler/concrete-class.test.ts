@@ -1279,4 +1279,24 @@ end class`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Class/interface 'Bar' cannot inherit from itself"]);
   });
+
+  test("Fail_CallConstructor", async () => {
+    const code = `${testHeader}
+
+main
+  let f be new Foo()
+  call f.constructor()
+end main
+
+class Foo
+  constructor()
+  end constructor
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'constructor' is not defined for type 'Foo'"]);
+  });
 });
