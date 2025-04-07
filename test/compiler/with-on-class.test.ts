@@ -13,7 +13,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("With", () => {
+suite("WithOnClass", () => {
   test("Pass_SingleSetToVar", async () => {
     const code = `${testHeader}
 
@@ -24,9 +24,9 @@ main
   print b.a
 end main
 
-record Foo
+class Foo
   property a as Int
-end record`;
+end class`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
@@ -63,9 +63,9 @@ main
   print a.a
 end main
 
-record Foo
+class Foo
   property a as Int
-end record`;
+end class`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
@@ -106,9 +106,9 @@ function foo() returns Foo
   return b
 end function
 
-record Foo
+class Foo
   property a as Int
-end record`;
+end class`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
@@ -155,9 +155,9 @@ function foo() returns Foo
   return b
 end function
 
-record Foo
+class Foo
   property a as Int
-end record`;
+end class`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
@@ -203,9 +203,9 @@ function foo() returns Foo
   return copy a with a set to 2
 end function
 
-record Foo
+class Foo
   property a as Int
-end record`;
+end class`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
@@ -249,11 +249,11 @@ main
   print b.b
 end main
 
-record Foo
+class Foo
   property a as Int
 
   property b as String
-end record`;
+end class`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
@@ -295,12 +295,12 @@ main
   print b.a
 end main
 
-record Foo
+class Foo
   property a as Int
 
   property b as Int
 
-end record`;
+end class`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
@@ -340,9 +340,9 @@ main
   print b.a
 end main
 
-record Foo
+class Foo
   property a as Int
-end record`;
+end class`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
@@ -381,10 +381,10 @@ main
   print b.a.b
 end main
 
-record Foo
+class Foo
   property a as Foo
   property b as Int
-end record`;
+end class`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
@@ -432,9 +432,9 @@ main
   print c.b
 end main
 
-record Foo
+class Foo
   property b as Int
-end record`;
+end class`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
@@ -475,11 +475,11 @@ main
   print c.d
 end main
 
-record Foo
+class Foo
   property b as Int
   property c as Int
   property d as Int
-end record`;
+end class`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
@@ -529,11 +529,11 @@ function doIndex(arr as List<of Int>, i as Int) returns Int
   return arr[i]
 end function
 
-record Foo
+class Foo
   property b as Int
   property c as Int
   property d as Int
-end record`;
+end class`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
@@ -583,9 +583,9 @@ main
   print c.b
 end main
 
-record Foo
+class Foo
   property b as Int
-end record`;
+end class`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
@@ -625,9 +625,9 @@ main
   print c.b
 end main
 
-record Foo
+class Foo
   property b as Int
-end record`;
+end class`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
@@ -656,6 +656,112 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "03");
   });
 
+  test("Pass_Constructor", async () => {
+    const code = `${testHeader}
+
+main
+  variable b set to new Foo(2)
+  variable c set to copy b with b set to 10
+  print b.a
+  print b.b
+  print c.a
+  print c.b
+end main
+
+class Foo
+  constructor(a as Int)
+    set property.a to a
+  end constructor 
+
+  property a as Int
+  property b as Int
+end class`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let b = system.initialise(await new Foo()._initialise(2));
+  let c = await (async () => {const _a = {...b}; Object.setPrototypeOf(_a, Object.getPrototypeOf(b)); _a.b = 10; return _a;})();
+  await system.printLine(b.a);
+  await system.printLine(b.b);
+  await system.printLine(c.a);
+  await system.printLine(c.b);
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["a", 0], ["b", 0]]);};
+
+  async _initialise(a) {
+    this.a = a;
+    return this;
+  }
+
+  a = 0;
+
+  b = 0;
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "20210");
+  });
+
+  test("Pass_Constructor1", async () => {
+    const code = `${testHeader}
+
+main
+  variable c set to new Foo(2) with b set to 10
+  print c.a
+  print c.b
+end main
+
+class Foo
+  constructor(a as Int)
+    set property.a to a
+  end constructor 
+
+  property a as Int
+  property b as Int
+end class`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let c = await (async () => {const _a = {...system.initialise(await new Foo()._initialise(2))}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise(2)))); _a.b = 10; return _a;})();
+  await system.printLine(c.a);
+  await system.printLine(c.b);
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["a", 0], ["b", 0]]);};
+
+  async _initialise(a) {
+    this.a = a;
+    return this;
+  }
+
+  a = 0;
+
+  b = 0;
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "210");
+  });
+
   test("Fail_WrongType", async () => {
     const code = `${testHeader}
 
@@ -665,15 +771,36 @@ main
   print c.b
 end main
 
-record Foo
+class Foo
   property b as Int
-end record`;
+end class`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: List<of Int>"]);
+  });
+
+  test("Fail_ConstructorNotCalled", async () => {
+    const code = `${testHeader}
+
+main
+  variable c set to new Foo() with b set to 0
+  print c.b
+end main
+
+class Foo
+  constructor(a as Int)
+  end constructor
+  property b as Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Missing argument(s). Expected: a (Int)"]);
   });
 
   test("Fail_NotClass", async () => {
@@ -689,7 +816,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Expression must be record"]);
+    assertDoesNotCompile(fileImpl, ["'a' is not defined"]);
   });
 
   test("Fail_NotClass1", async () => {
@@ -705,7 +832,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Expression must be record"]);
+    assertDoesNotCompile(fileImpl, ["'a' is not defined"]);
   });
 
   test("Fail_NoSuchProperty", async () => {
@@ -717,9 +844,9 @@ main
   print c.d
 end main
 
-record Foo
+class Foo
   property d as Int
-end record`;
+end class`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -731,40 +858,21 @@ end record`;
   test("Fail_PrivateProperty", async () => {
     const code = `${testHeader}
 
-record Foo
-  private property b as Int
-end record`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertDoesNotParse(fileImpl);
-  });
-
-  test("Fail_NotImmutable", async () => {
-    const code = `${testHeader}
-
 main
   variable b set to new Foo()
   variable c set to copy b with b set to 0
-  print c.b
+  print c.d
 end main
 
 class Foo
-  constructor()
-  end constructor
-
-  property b as Int
+  private property b as Int
 end class`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Expression must be record",
-      "Foo must be a record to use 'with'",
-    ]);
+    assertDoesNotCompile(fileImpl, ["Cannot reference private member 'b'"]);
   });
 
   test("Fail_UnknownProperty", async () => {
@@ -776,9 +884,9 @@ main
   print c.aa
 end main
 
-record Foo
+class Foo
   property aa as Int
-end record`;
+end class`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));

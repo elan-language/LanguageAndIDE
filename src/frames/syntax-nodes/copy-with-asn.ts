@@ -1,11 +1,5 @@
 import { CompileError } from "../compile-error";
-import {
-  mustBeAssignableType,
-  mustBeClass,
-  mustBePropertyAndPublic,
-  mustBeRecord,
-  mustBeRecordType,
-} from "../compile-rules";
+import { mustBeAssignableType, mustBeClass, mustBePropertyAndPublic } from "../compile-rules";
 import { isClass } from "../frame-helpers";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstNode } from "../interfaces/ast-node";
@@ -38,15 +32,12 @@ export class CopyWithAsn extends AbstractAstNode implements AstNode {
     const fromType = this.obj.symbolType();
     let withClauseStr = "";
 
-    mustBeRecordType(fromType, this.compileErrors, this.fieldId);
-
     if (fromType instanceof ClassType) {
       const classSymbol = this.scope
         .getParentScope()
         .resolveSymbol(fromType.className, transforms(), this.scope);
 
       mustBeClass(classSymbol, this.compileErrors, this.fieldId);
-      mustBeRecord(classSymbol.symbolType(), this.compileErrors, this.fieldId);
 
       if (isClass(classSymbol)) {
         for (const ast of this.withClause.items as ToAsn[]) {
