@@ -1,4 +1,4 @@
-# cb7a5289f74d84224347225830b8cbf26c2f1fd4ca3ba5f81919cf48ce9113c6 Elan Beta 8 valid
+# 1f26021591b641c523d80e13d046d1400d1a8e7cbdd38b7b9d6a35d6f2c3b4b5 Elan 0.10.0-Beta guest default_profile valid
 
 main
   let file be openFileForReading()

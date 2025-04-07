@@ -1,4 +1,4 @@
-# bb809b0ef7acbbd0c825e48ef3b5104da934ea2afd46ea64b803f6430ef1d722 Elan Beta 8 valid
+# 619acb3558d5aa16174bfd034ce42314441a07c571c92bf7ddb107a62f7451dc Elan 0.10.0-Beta guest default_profile valid
 
 test 
   let a be [5, 1, 7]
