@@ -2,7 +2,6 @@ import {
   ClassOption,
   ElanClass,
   elanClass,
-  ElanFloat,
   elanFunction,
   elanProcedure,
   elanProperty,
@@ -11,32 +10,13 @@ import {
 import { System } from "../system";
 import { VectorGraphic } from "./vector-graphic";
 
-@elanClass(
-  ClassOption.concrete,
-  [],
-  ["centreX", "centreY", "radius", "fillColour", "strokeColour", "strokeWidth"],
-  [ElanFloat, ElanFloat, ElanFloat, ElanFloat, ElanFloat, ElanFloat],
-  [ElanClass(VectorGraphic)],
-)
+@elanClass(ClassOption.concrete, [], [], [], [ElanClass(VectorGraphic)])
 export class CircleVG extends VectorGraphic {
   static emptyInstance() {
     return new CircleVG();
   }
 
-  async _initialise(
-    centreX: number,
-    centreY: number,
-    radius: number,
-    fillColour: number,
-    strokeColour: number,
-    strokeWidth: number,
-  ) {
-    this.fillColour = fillColour;
-    this.strokeColour = strokeColour;
-    this.strokeWidth = strokeWidth;
-    this.centreX = centreX;
-    this.centreY = centreY;
-    this.radius = radius;
+  async _initialise() {
     return this;
   }
 
@@ -44,9 +24,12 @@ export class CircleVG extends VectorGraphic {
 
   constructor(copy?: CircleVG) {
     super(copy);
-    this.centreX = copy ? copy.centreX : 0;
-    this.centreY = copy ? copy.centreY : 0;
-    this.radius = copy ? copy.radius : 0;
+    this.centreX = copy ? copy.centreX : 50;
+    this.centreY = copy ? copy.centreY : 37.5;
+    this.radius = copy ? copy.radius : 10;
+    this.fillColour = copy ? copy.fillColour : 0xffff00;
+    this.strokeColour = copy ? copy.strokeColour : 0;
+    this.strokeWidth = copy ? copy.strokeWidth : 1;
   }
 
   @elanProperty()

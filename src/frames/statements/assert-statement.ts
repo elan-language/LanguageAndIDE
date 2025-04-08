@@ -1,4 +1,4 @@
-import { AssertOutcome } from "../../system";
+import { AssertOutcome } from "../../assert-outcome";
 import { AbstractFrame } from "../abstract-frame";
 import { CodeSource } from "../code-source";
 import { AssertActualField } from "../fields/assert-actual-field";

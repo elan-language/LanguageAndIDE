@@ -1,4 +1,4 @@
-# bc869109bf0eef04b1bef3f170424c601a2bbc9486b1c3d560f8223a9f2ce877 Elan 0.10.0-Beta guest default_profile valid
+# 9f7ed80834623104dfec6733a83bd065e8eb7c1ec97501451b835f6c8ef3a939 Elan 0.10.0-Beta guest default_profile valid
 
 # https://en.wikipedia.org/wiki/Barnsley_fern
 # Draws a fractal image
@@ -9,7 +9,7 @@ main
   variable y set to 0.16
   # random number
   variable r set to new Random()
-  variable rect set to new RectangleVG(0, 0, 0, 0, 0, 0, 0)
+  variable rect set to new RectangleVG()
   variable count set to 0
   # don't set the count limit too high
   # or the browser will run out of memory
@@ -26,7 +26,7 @@ function onepoint(x as Float, y as Float, r as Random) returns (RectangleVG, Flo
   # next pseudo-random number (Grogono parameters)
   let rValue, rNext be r.next()
   let nx, ny be onestep(x, y, rValue)
-  let rect be new RectangleVG(nx*scale + 50, 75 - ny*scale, 0.5, 0.5, 0x408040, 0x408040, 0.25)
+  let rect be new RectangleVG() with x set to nx*scale + 50, y set to 75 - ny*scale, width set to 0.5, height set to 0.5, fillColour set to 0x408040, strokeColour set to 0x408040, strokeWidth set to 0.25
   return tuple(rect, nx, ny, rNext)
 end function
 

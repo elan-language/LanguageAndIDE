@@ -2,7 +2,6 @@ import {
   ClassOption,
   ElanClass,
   elanClass,
-  ElanFloat,
   elanFunction,
   elanProcedure,
   elanProperty,
@@ -11,34 +10,13 @@ import {
 import { System } from "../system";
 import { VectorGraphic } from "./vector-graphic";
 
-@elanClass(
-  ClassOption.record,
-  [],
-  ["x", "y", "width", "height", "fillColour", "strokeColour", "strokeWidth"],
-  [ElanFloat, ElanFloat, ElanFloat, ElanFloat, ElanFloat, ElanFloat, ElanFloat],
-  [ElanClass(VectorGraphic)],
-)
+@elanClass(ClassOption.record, [], [], [], [ElanClass(VectorGraphic)])
 export class RectangleVG extends VectorGraphic {
   static emptyInstance() {
     return new RectangleVG();
   }
 
-  async _initialise(
-    x: number,
-    y: number,
-    width: number,
-    height: number,
-    fillColour: number,
-    strokeColour: number,
-    strokeWidth: number,
-  ) {
-    this.fillColour = fillColour;
-    this.strokeColour = strokeColour;
-    this.strokeWidth = strokeWidth;
-    this.x = x;
-    this.y = y;
-    this.width = width;
-    this.height = height;
+  async _initialise() {
     return this;
   }
 
@@ -46,10 +24,13 @@ export class RectangleVG extends VectorGraphic {
 
   constructor(copy?: RectangleVG) {
     super(copy);
-    this.x = copy ? copy.x : 0;
-    this.y = copy ? copy.y : 0;
-    this.width = copy ? copy.width : 0;
-    this.height = copy ? copy.height : 0;
+    this.x = copy ? copy.x : 10;
+    this.y = copy ? copy.y : 10;
+    this.width = copy ? copy.width : 40;
+    this.height = copy ? copy.height : 20;
+    this.fillColour = copy ? copy.fillColour : 0xffff00;
+    this.strokeColour = copy ? copy.strokeColour : 0;
+    this.strokeWidth = copy ? copy.strokeWidth : 1;
   }
 
   @elanProperty()

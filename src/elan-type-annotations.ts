@@ -1,5 +1,6 @@
 import { ElanCompilerError } from "./elan-compiler-error";
 import {
+  Deprecated,
   ElanDescriptor,
   elanMetadataKey,
   ElanMethodDescriptor,
@@ -93,6 +94,8 @@ export class ElanClassDescriptor implements ElanDescriptor {
     public readonly alias?: string,
   ) {}
 
+  deprecated?: Deprecated | undefined;
+
   mapType(scope: Scope): SymbolType {
     const parameterTypes = this.parameterTypes;
 
@@ -119,6 +122,8 @@ export class ElanFunctionDescriptor implements IElanFunctionDescriptor {
 
   parameterNames: string[] = [];
 
+  deprecated?: Deprecated | undefined;
+
   mapType(scope: Scope): SymbolType {
     const retType = this.returnType!;
     const parameterTypes = this.parameterTypes;
@@ -130,6 +135,7 @@ export class ElanFunctionDescriptor implements IElanFunctionDescriptor {
       this.isExtension,
       this.isPure,
       this.isAsync,
+      this.deprecated,
     );
   }
 }
@@ -199,6 +205,7 @@ export class ElanFuncTypeDescriptor implements TypeDescriptor {
       false,
       true,
       false,
+      undefined,
     );
   }
 }
@@ -503,6 +510,21 @@ export function elanType(eType: TypeDescriptor) {
       Reflect.getOwnMetadata(elanMetadataKey, target, propertyKey) ?? new ElanSignatureDescriptor();
 
     metaData.parameterTypes[parameterIndex] = eType;
+    Reflect.defineMetadata(elanMetadataKey, metaData, target, propertyKey);
+  };
+}
+
+export function elanDeprecated(fromMajor: number, fromMinor: number, message: string) {
+  return function (target: object, propertyKey: string, _descriptor: PropertyDescriptor) {
+    const metaData: ElanMethodDescriptor =
+      Reflect.getOwnMetadata(elanMetadataKey, target, propertyKey) ?? new ElanSignatureDescriptor();
+
+    metaData.deprecated = {
+      fromMajor: fromMajor,
+      fromMinor: fromMinor,
+      message: message,
+    };
+
     Reflect.defineMetadata(elanMetadataKey, metaData, target, propertyKey);
   };
 }

@@ -199,6 +199,7 @@ export function generateType(
       type.isExtension,
       type.isPure,
       type.isAsync,
+      type.deprecated,
     );
   }
 

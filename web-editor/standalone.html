@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>body {
+            background-color: rgb(68, 114, 196);
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+          }
+          
+          #display {
+            background-color: white;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+            height: 100vh;
+            position: relative;
+          }
+          
+          #block-graphics,
+          #vector-graphics,
+          #printed-text {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+          }
+          
+          #printed-text,
+          #printed-text input {
+            color: black;
+            border-color: white;
+            font-style: normal;
+            font-family: consolas, monospace;
+            font-size: 11pt;
+          }
+          
+          #printed-text {
+            white-space: pre;
+            z-index: 20;
+            padding: 2px;
+            overflow-y: auto;
+          }
+          
+          #printed-text input:focus {
+            background-color: var(--selection);
+            width: 100%;
+          }
+          
+          #vector-graphics {
+            z-index: 10;
+          }
+          
+          #block-graphics {
+            width: 100%;
+            height: 100%;
+            display: grid;
+            grid-template-columns: repeat(40, 1fr);
+            grid-template-rows: repeat(30, 1fr);
+          }
+          
+          #block-graphics div {
+            container: block / size;
+            font-size: 0.7cqw;
+            text-align: center;
+          }</style>
+        <title></title>
+    </head>
+    <body>
+        <div id="display" tabindex="1">
+            <div id="printed-text"></div>
+            <div id="block-graphics"></div>
+            <div id="vector-graphics"></div>
+        </div>
+        <script type="text/javascript">injected_code</script>
+    </body>
+</html>

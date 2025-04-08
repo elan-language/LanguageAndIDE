@@ -1,7 +1,7 @@
+import { AssertOutcome } from "../assert-outcome";
 import { ElanFileError } from "../elan-file-error";
 import { elanVersion, isElanProduction } from "../production";
 import { StdLibSymbols } from "../standard-library/std-lib-symbols";
-import { AssertOutcome } from "../system";
 import { AbstractSelector } from "./abstract-selector";
 import { CodeSource, CodeSourceFromString } from "./code-source";
 import { CompileError } from "./compile-error";
@@ -35,6 +35,7 @@ import { Parent } from "./interfaces/parent";
 import { Profile } from "./interfaces/profile";
 import { Scope } from "./interfaces/scope";
 import { Selectable } from "./interfaces/selectable";
+import { Semver } from "./interfaces/semver";
 import { StatementFactory } from "./interfaces/statement-factory";
 import { Transforms } from "./interfaces/transforms";
 import {
@@ -250,7 +251,7 @@ export class FileImpl implements File, Scope {
     return await this.hash(body);
   }
 
-  private getVersion() {
+  getVersion(): Semver {
     return this.version;
   }
 
@@ -329,7 +330,7 @@ export class FileImpl implements File, Scope {
     return `${stdlib}\n${this.compileGlobals()}return [main, _tests];}`;
   }
 
-  compileAsWorker(base: string, debugMode: boolean): string {
+  compileAsWorker(base: string, debugMode: boolean, standalone: boolean): string {
     this.updateBreakpoints(debugMode ? BreakpointEvent.activate : BreakpointEvent.disable);
     const onmsg = `addEventListener("message", async (e) => {
   if (e.data.type === "start") {
@@ -347,7 +348,8 @@ export class FileImpl implements File, Scope {
   }
   });`;
 
-    const stdlib = `import { StdLib } from "${base}/elan-api.js"; let system; let _stdlib; let _tests = []; let __pause = false; async function program() { _stdlib = new StdLib(); system = _stdlib.system; system.stdlib = _stdlib  `;
+    const imp = standalone ? "" : `import { StdLib } from "${base}/elan-api.js"; `;
+    const stdlib = `${imp}let system; let _stdlib; let _tests = []; let __pause = false; async function program() { _stdlib = new StdLib(); system = _stdlib.system; system.stdlib = _stdlib  `;
     return `${stdlib}\n${this.compileGlobals()}return [main, _tests];}\n${onmsg}`;
   }
 

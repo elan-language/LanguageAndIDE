@@ -1,6 +1,7 @@
+import { AssertOutcome } from "./assert-outcome";
 import { TestStatus } from "./frames/status-enums";
 import { StdLib } from "./standard-library/std-lib";
-import { AssertOutcome, System } from "./system";
+import { System } from "./system";
 
 export async function runTests(tests: [string, (_outcomes: AssertOutcome[]) => Promise<void>][]) {
   const allOutcomes: [string, AssertOutcome[]][] = [];

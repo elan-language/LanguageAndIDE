@@ -7,6 +7,7 @@ import {
   CannotUseSystemMethodInAFunction,
   CompileError,
   DeclaredAboveCompileError,
+  Deprecated,
   DuplicateKeyCompileError,
   ExtensionCompileError,
   ExtraParameterCompileError,
@@ -68,6 +69,7 @@ import { FunctionType } from "./symbols/function-type";
 import { IntType } from "./symbols/int-type";
 import { ProcedureType } from "./symbols/procedure-type";
 import {
+  getGlobalScope,
   isClassTypeDef,
   isDeconstructedType,
   isDoubleIndexableType,
@@ -259,6 +261,26 @@ export function mustBePureFunctionSymbol(
   if (InFunctionScope(scope)) {
     if (knownType(symbolType) && !symbolType.isPure) {
       compileErrors.push(new CannotUseSystemMethodInAFunction(location));
+    }
+  }
+}
+
+export function checkForDeprecation(
+  symbolType: FunctionType,
+  scope: Scope,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  if (symbolType.deprecated) {
+    const file = getGlobalScope(scope);
+    const version = file.getVersion();
+    const fromMajor = symbolType.deprecated.fromMajor;
+    const fromMinor = symbolType.deprecated.fromMinor;
+
+    if (fromMajor < version.major || (fromMajor === version.major && fromMinor <= version.minor)) {
+      compileErrors.push(
+        new Deprecated(fromMajor, fromMinor, symbolType.deprecated.message, location),
+      );
     }
   }
 }
