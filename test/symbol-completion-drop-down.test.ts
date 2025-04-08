@@ -2214,4 +2214,23 @@ end class`;
 
     await assertSymbolCompletionWithString(fileImpl, "expr5", "new Foo()", expected);
   });
+
+  test("Pass_abstractClass", async () => {
+    const code = `${testHeader}
+
+main
+  let t be new List<of VectorGraphics>()
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["CircleVG", "*", "*"],
+      ["LineVG", "*", "*"],
+      ["RectangleVG", "*", "*"],
+    ] as [string, string, string][];
+
+    await assertSymbolCompletionWithString(fileImpl, "expr5", "new List<of V", expected);
+  });
 });
