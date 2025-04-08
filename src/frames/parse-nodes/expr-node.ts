@@ -8,6 +8,7 @@ import {
   refKeyword,
   thisKeyword,
   tupleKeyword,
+  typeofKeyword,
 } from "../keywords";
 import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { AbstractAlternatives } from "./abstract-alternatives";
@@ -20,6 +21,7 @@ import { NewInstance } from "./new-instance";
 import { ParseNode } from "./parse-node";
 import { Term } from "./term";
 import { TupleNode } from "./tuple-node";
+import { TypeofNode } from "./typeof-node";
 
 export class ExprNode extends AbstractAlternatives {
   constructor() {
@@ -36,6 +38,7 @@ export class ExprNode extends AbstractAlternatives {
       this.alternatives.push(new Lambda());
       this.alternatives.push(new EmptyOfTypeNode());
       this.alternatives.push(new TupleNode());
+      this.alternatives.push(new TypeofNode());
       //then others
       this.alternatives.push(new Term());
       this.alternatives.push(new BinaryExpression());
@@ -81,6 +84,7 @@ export class ExprNode extends AbstractAlternatives {
       thisKeyword,
       refKeyword,
       notKeyword,
+      typeofKeyword,
     ].map((kw) => KeywordCompletion.create(kw));
     kws.push(KeywordCompletion.create(tupleKeyword, false, false, true));
     const trim = this.matchedText.trim();
