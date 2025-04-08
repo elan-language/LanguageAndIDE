@@ -433,6 +433,7 @@ if (okToContinue) {
       redoButton,
       clearSystemInfoButton,
       clearGraphicsButton,
+      saveAsStandaloneButton,
     ],
     msg,
   );
@@ -655,6 +656,7 @@ function updateDisplayValues() {
         clearSystemInfoButton,
         fileButton,
         loadButton,
+        saveAsStandaloneButton,
       ],
       msg,
     );
@@ -690,15 +692,19 @@ function updateDisplayValues() {
     }
 
     if (!file.containsMain()) {
-      disable([runButton, runDebugButton], "Code must have a 'main' routine to be run");
+      disable(
+        [runButton, runDebugButton, saveAsStandaloneButton],
+        "Code must have a 'main' routine to be run",
+      );
     } else if (!isCompiling) {
       disable(
-        [runButton, runDebugButton],
+        [runButton, runDebugButton, saveAsStandaloneButton],
         "Program is not yet compiled. If you have just edited a field, press Enter or Tab to complete.",
       );
     } else {
       enable(runButton, "Run the program");
       enable(runDebugButton, "Debug the program");
+      enable(saveAsStandaloneButton, "Save the program as a standalone webpage");
     }
 
     if (canUndo()) {
