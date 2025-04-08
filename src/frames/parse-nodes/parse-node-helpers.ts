@@ -75,6 +75,7 @@ export const concreteAndAbstractTypes: TokenType[] = [
   TokenType.type_abstract,
   TokenType.type_notInheritable,
   TokenType.type_concrete,
+  TokenType.type_enum,
 ];
 export const allKeywordsThatCanStartAnExpression: Set<KeywordCompletion> = new Set(
   [newKeyword, copyKeyword, ifKeyword, lambdaKeyword, emptyKeyword].map((kw) =>

@@ -181,10 +181,10 @@ suite("Symbol Completion Spec", () => {
       TypeNode.name,
       "I",
       [
-        TokenType.type_concrete,
         TokenType.type_abstract,
-        TokenType.type_enum,
         TokenType.type_notInheritable,
+        TokenType.type_concrete,
+        TokenType.type_enum,
       ],
       [],
     );
