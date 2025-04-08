@@ -1,5 +1,6 @@
 import { CompileError } from "../compile-error";
 import { AstNode } from "../interfaces/ast-node";
+import { TypeType } from "../symbols/type-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { TypeAsn } from "./type-asn";
 
@@ -18,11 +19,12 @@ export class TypeofAsn extends AbstractAstNode implements AstNode {
   compile(): string {
     this.compileErrors = [];
 
-    return this.type.compileToEmptyObjectCode();
+    return `"${this.type.symbolType().name}"`;
   }
 
   symbolType() {
-    return this.type.symbolType();
+    //return this.type.symbolType();
+    return TypeType.Instance;
   }
 
   toString() {

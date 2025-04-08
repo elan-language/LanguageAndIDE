@@ -1561,6 +1561,7 @@ end main`;
       ["TextFileReader", "*", "*"],
       ["TextFileWriter", "*", "*"],
       ["Turtle", "*", "*"],
+      ["Type", "*", "*"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "expr5", "new ", expected);
@@ -1709,6 +1710,7 @@ end main`;
       ["TextFileReader", "*", "*"],
       ["TextFileWriter", "*", "*"],
       ["Turtle", "*", "*"],
+      ["Type", "*", "*"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "expr8", "vg.withAppend(new ", expected);

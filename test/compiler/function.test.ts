@@ -326,6 +326,79 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "bar");
   });
 
+  test("Pass_TypeParameter", async () => {
+    const code = `${testHeader}
+
+main
+  print foo(typeof Int)
+end main
+
+function foo(bar as Type) returns String
+  return "done"
+end function`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await system.printLine((await global.foo("Int")));
+}
+
+async function foo(bar) {
+  return "done";
+}
+global["foo"] = foo;
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "done");
+  });
+
+  test("Pass_TypeParameterClass", async () => {
+    const code = `${testHeader}
+
+main
+  print foo(typeof Bar)
+end main
+
+function foo(bar as Type) returns String
+  return "done"
+end function
+
+class Bar
+end class`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await system.printLine((await global.foo("Bar")));
+}
+
+async function foo(bar) {
+  return "done";
+}
+global["foo"] = foo;
+
+class Bar {
+  static emptyInstance() { return system.emptyClass(Bar, []);};
+  async _initialise() { return this; }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "done");
+  });
+
   test("Fail_ExtensionParameterCount", async () => {
     const code = `${testHeader}
 

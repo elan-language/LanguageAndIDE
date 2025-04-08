@@ -12,6 +12,7 @@ import { RegExpType } from "./regexp-type";
 import { StringType } from "./string-type";
 import { SymbolScope } from "./symbol-scope";
 import { TupleType } from "./tuple-type";
+import { TypeType } from "./type-type";
 
 const intSymbol: ElanSymbol = {
   symbolId: IntType.Instance.name,
@@ -84,6 +85,14 @@ const funcSymbol: ClassSymbol = {
   ofTypes: [new GenericParameterType("T")],
 };
 
+const typeSymbol: ElanSymbol = {
+  symbolId: TypeType.Instance.name,
+  symbolType: function (_transforms?: Transforms): SymbolType {
+    return TypeType.Instance;
+  },
+  symbolScope: SymbolScope.program,
+};
+
 export const elanSymbols = [
   intSymbol,
   floatSymbol,
@@ -92,4 +101,5 @@ export const elanSymbols = [
   regExpSymbol,
   tupleSymbol,
   funcSymbol,
+  typeSymbol,
 ];
