@@ -24,7 +24,7 @@ export interface File extends Parent {
   renderAsSource(): Promise<string>;
   compile(): string;
 
-  compileAsWorker(base: string, debugMode: boolean): string;
+  compileAsWorker(base: string, debugMode: boolean, standalone: boolean): string;
 
   compileAsTestWorker(base: string): string;
 

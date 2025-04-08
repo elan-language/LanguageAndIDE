@@ -49,6 +49,7 @@ const undoButton = document.getElementById("undo") as HTMLButtonElement;
 const redoButton = document.getElementById("redo") as HTMLButtonElement;
 const fileButton = document.getElementById("file") as HTMLButtonElement;
 const logoutButton = document.getElementById("logout") as HTMLButtonElement;
+const saveAsStandaloneButton = document.getElementById("save-as-standalone") as HTMLButtonElement;
 
 const codeTitle = document.getElementById("code-title") as HTMLDivElement;
 const parseStatus = document.getElementById("parse") as HTMLDivElement;
@@ -141,7 +142,7 @@ function runProgram() {
       "/index.html",
       "",
     );
-    const jsCode = file.compileAsWorker(path, debugMode);
+    const jsCode = file.compileAsWorker(path, debugMode, false);
     const asUrl = "data:text/javascript;base64," + btoa(jsCode);
 
     runWorker = new Worker(asUrl, { type: "module" });
@@ -271,6 +272,29 @@ appendButton.addEventListener("click", chooser(getAppender()));
 saveButton.addEventListener("click", getDownloader());
 
 autoSaveButton.addEventListener("click", handleChromeAutoSave);
+
+saveAsStandaloneButton.addEventListener("click", async () => {
+  let jsCode = file.compileAsWorker("", false, true);
+
+  const api = await (await fetch("elan-api.js", { mode: "same-origin" })).text();
+  let script = await (await fetch("standalone.js", { mode: "same-origin" })).text();
+  let html = await (await fetch("standalone.html", { mode: "same-origin" })).text();
+  const cssColour = await (await fetch("colourScheme.css", { mode: "same-origin" })).text();
+  const cssStyle = await (await fetch("elanStyle.css", { mode: "same-origin" })).text();
+  const cssIde = await (await fetch("ide.css", { mode: "same-origin" })).text();
+
+  jsCode = api + jsCode;
+
+  const asUrl = "data:text/javascript;base64," + btoa(jsCode);
+
+  script = script.replace("injected_code", asUrl);
+  html = html.replace("injected_code", script);
+  html = html.replace("injected_colour_css", cssColour);
+  html = html.replace("injected_style_css", cssStyle);
+  html = html.replace("injected_ide_css", cssIde);
+
+  await chromeSave(html, "standalone.html");
+});
 
 for (const elem of demoFiles) {
   elem.addEventListener("click", async () => {
@@ -1567,9 +1591,9 @@ async function handleDownload(event: Event) {
   await renderAsHtml(false);
 }
 
-async function chromeSave(code: string) {
+async function chromeSave(code: string, newName?: string) {
   const fh = await showSaveFilePicker({
-    suggestedName: file.fileName,
+    suggestedName: newName ?? file.fileName,
     startIn: "documents",
     types: [{ accept: { "text/elan": ".elan" } }],
     id: lastDirId,
