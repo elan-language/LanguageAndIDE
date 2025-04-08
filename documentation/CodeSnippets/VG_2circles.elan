@@ -1,16 +1,15 @@
-# 69067bb7db7dae56f9647a37edf44a75086fbead852b715af6fe296cb84c5d1d Elan 0.10.0-Beta guest default_profile valid
+# ece678cba563b91778d0ba16608f0719d8d097ed0fd80e6c8ae5bbd3fb22dc58 Elan 0.10.0-Beta guest Default_Profile valid
 
 main
-  variable vg set to new VectorGraphics()
-  let greenCirc be new CircleVG() with cx set to 50, cy set to 37, r set to 30, fill set to green
-  let redCirc be copy greenCirc with fill set to red
-  set vg to vg.add(greenCirc)
+  variable vg set to new List<of VectorGraphic>()
+  let circ be new CircleVG() with centreX set to 50, centreY set to 37, radius set to 30, fillColour set to green
+  call vg.append(circ)
   while true
-    call vg.display()
+    call displayVectorGraphics(vg)
     call pause(700)
-    set vg to vg.replace(greenCirc, redCirc)
-    call vg.display()
+    call circ.setFillColour(red)
+    call displayVectorGraphics(vg)
     call pause(700)
-    set vg to vg.replace(redCirc, greenCirc)
+    call circ.setFillColour(green)
   end while
 end main
