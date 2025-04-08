@@ -1,5 +1,3 @@
-// TODO gradually move functions into here and refactor
-
 import { DefaultProfile } from "../frames/default-profile";
 import { DefaultUserConfig } from "../frames/default-user-config";
 import { Profile } from "../frames/interfaces/profile";

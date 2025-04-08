@@ -1,7 +1,7 @@
+import { AssertOutcome } from "../../src/assert-outcome";
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import { TestStatus } from "../../src/frames/status-enums";
-import { AssertOutcome } from "../../src/system";
 import {
   assertDoesNotCompile,
   assertDoesNotParse,

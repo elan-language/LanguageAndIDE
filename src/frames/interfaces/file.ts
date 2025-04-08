@@ -1,4 +1,4 @@
-import { AssertOutcome } from "../../system";
+import { AssertOutcome } from "../../assert-outcome";
 import { CodeSource } from "../code-source";
 import { CompileError } from "../compile-error";
 import { editorEvent } from "../interfaces/editor-event";
@@ -24,7 +24,7 @@ export interface File extends Parent {
   renderAsSource(): Promise<string>;
   compile(): string;
 
-  compileAsWorker(base: string, debugMode: boolean): string;
+  compileAsWorker(base: string, debugMode: boolean, standalone: boolean): string;
 
   compileAsTestWorker(base: string): string;
 

@@ -9,6 +9,7 @@ import { Profile } from "../frames/interfaces/profile";
 import { Group, Individual } from "../frames/interfaces/user-config";
 import { CompileStatus, ParseStatus, RunStatus, TestStatus } from "../frames/status-enums";
 import { StdLib } from "../standard-library/std-lib";
+import { checkIsChrome, confirmContinueOnNonChromeBrowser } from "./ui-helpers";
 import {
   fetchDefaultProfile,
   fetchProfile,
@@ -49,6 +50,7 @@ const undoButton = document.getElementById("undo") as HTMLButtonElement;
 const redoButton = document.getElementById("redo") as HTMLButtonElement;
 const fileButton = document.getElementById("file") as HTMLButtonElement;
 const logoutButton = document.getElementById("logout") as HTMLButtonElement;
+const saveAsStandaloneButton = document.getElementById("save-as-standalone") as HTMLButtonElement;
 
 const codeTitle = document.getElementById("code-title") as HTMLDivElement;
 const parseStatus = document.getElementById("parse") as HTMLDivElement;
@@ -141,7 +143,7 @@ function runProgram() {
       "/index.html",
       "",
     );
-    const jsCode = file.compileAsWorker(path, debugMode);
+    const jsCode = file.compileAsWorker(path, debugMode, false);
     const asUrl = "data:text/javascript;base64," + btoa(jsCode);
 
     runWorker = new Worker(asUrl, { type: "module" });
@@ -272,6 +274,29 @@ saveButton.addEventListener("click", getDownloader());
 
 autoSaveButton.addEventListener("click", handleChromeAutoSave);
 
+saveAsStandaloneButton.addEventListener("click", async () => {
+  let jsCode = file.compileAsWorker("", false, true);
+
+  const api = await (await fetch("elan-api.js", { mode: "same-origin" })).text();
+  let script = await (await fetch("standalone.js", { mode: "same-origin" })).text();
+  let html = await (await fetch("standalone.html", { mode: "same-origin" })).text();
+  const cssColour = await (await fetch("colourScheme.css", { mode: "same-origin" })).text();
+  const cssStyle = await (await fetch("elanStyle.css", { mode: "same-origin" })).text();
+  const cssIde = await (await fetch("ide.css", { mode: "same-origin" })).text();
+
+  jsCode = api + jsCode;
+
+  const asUrl = "data:text/javascript;base64," + btoa(jsCode);
+
+  script = script.replace("injected_code", asUrl);
+  html = html.replace("injected_code", script);
+  html = html.replace("injected_colour_css", cssColour);
+  html = html.replace("injected_style_css", cssStyle);
+  html = html.replace("injected_ide_css", cssIde);
+
+  await chromeSave(html, "standalone.html");
+});
+
 for (const elem of demoFiles) {
   elem.addEventListener("click", async () => {
     if (checkForUnsavedChanges()) {
@@ -349,53 +374,6 @@ compileStatus.addEventListener("click", async (event) => {
 testStatus.addEventListener("click", async (event) => {
   await handleStatusClick(event, "el-msg", true);
 });
-
-// from https://stackoverflow.com/questions/4565112/how-to-find-out-if-the-user-browser-is-chrome
-function checkIsChrome() {
-  // please note,
-  // that IE11 now returns undefined again for window.chrome
-  // and new Opera 30 outputs true for window.chrome
-  // but needs to check if window.opr is not undefined
-  // and new IE Edge outputs to true now for window.chrome
-  // and if not iOS Chrome check
-  // so use the below updated condition
-  const isChromium = (window as any).chrome;
-  const winNav = window.navigator;
-  const vendorName = (winNav as any).vendor;
-  const isOpera = typeof (window as any).opr !== "undefined";
-  const _isFirefox = winNav.userAgent.indexOf("Firefox") > -1;
-  const isIEedge = winNav.userAgent.indexOf("Edg") > -1;
-  const isIOSChrome = winNav.userAgent.match("CriOS");
-  const isGoogleChrome =
-    typeof (winNav as any).userAgentData !== "undefined"
-      ? (winNav as any).userAgentData.brands.some((b: any) => b.brand === "Google Chrome")
-      : vendorName === "Google Inc.";
-
-  if (isIOSChrome) {
-    // is Google Chrome on IOS
-    return true;
-  } else if (
-    isChromium !== null &&
-    typeof isChromium !== "undefined" &&
-    vendorName === "Google Inc." &&
-    isOpera === false &&
-    isIEedge === false &&
-    isGoogleChrome
-  ) {
-    // is Google Chrome
-    return true;
-  } else {
-    // not Google Chrome
-    return false;
-  }
-}
-
-function confirmContinueOnNonChromeBrowser() {
-  return confirm(`We recommend that you access Elan via Chrome,
-which runs on all platforms.
-If you click OK you may continue to use Elan but, currently,
-it is not guaranteed to run correctly on this browser.`);
-}
 
 const isChrome = checkIsChrome();
 const okToContinue = isChrome || confirmContinueOnNonChromeBrowser();
@@ -1567,9 +1545,9 @@ async function handleDownload(event: Event) {
   await renderAsHtml(false);
 }
 
-async function chromeSave(code: string) {
+async function chromeSave(code: string, newName?: string) {
   const fh = await showSaveFilePicker({
-    suggestedName: file.fileName,
+    suggestedName: newName ?? file.fileName,
     startIn: "documents",
     types: [{ accept: { "text/elan": ".elan" } }],
     id: lastDirId,
