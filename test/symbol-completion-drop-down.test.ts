@@ -114,7 +114,7 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    await assertSymbolCompletionWithString(fileImpl, "expr5", " ", 75);
+    await assertSymbolCompletionWithString(fileImpl, "expr5", " ", 76);
   });
 
   test("Pass_LocalVarsCaseInsensitive1", async () => {

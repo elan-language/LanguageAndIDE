@@ -96,7 +96,7 @@ suite("Symbol Completion Spec", () => {
         TokenType.method_function,
         TokenType.method_system,
       ],
-      ["this,tuple"],
+      ["this,typeof,tuple"],
     );
   });
   test("Expression2", () => {
@@ -159,7 +159,7 @@ suite("Symbol Completion Spec", () => {
         TokenType.method_function,
         TokenType.method_system,
       ],
-      ["new,copy,if,lambda,empty,this,ref,not,tuple"],
+      ["new,copy,if,lambda,empty,this,ref,not,typeof,tuple"],
     );
   });
   test("Expression3", () => {
@@ -352,7 +352,7 @@ suite("Symbol Completion Spec", () => {
         TokenType.method_function,
         TokenType.method_system,
       ],
-      ["new,copy,if,lambda,empty,this,ref,not,tuple"],
+      ["new,copy,if,lambda,empty,this,ref,not,typeof,tuple"],
       "",
     );
   });
@@ -458,7 +458,7 @@ suite("Symbol Completion Spec", () => {
         TokenType.method_function,
         TokenType.method_system,
       ],
-      ["new,copy,if,lambda,empty,this,ref,not,tuple"],
+      ["new,copy,if,lambda,empty,this,ref,not,typeof,tuple"],
       "",
     );
   });
@@ -492,7 +492,7 @@ suite("Symbol Completion Spec", () => {
         TokenType.method_function,
         TokenType.method_system,
       ],
-      ["new,copy,if,lambda,empty,this,ref,not,tuple"],
+      ["new,copy,if,lambda,empty,this,ref,not,typeof,tuple"],
       "",
     );
   });
@@ -516,7 +516,7 @@ suite("Symbol Completion Spec", () => {
       ExprNode.name,
       "",
       allIds.concat([TokenType.method_function, TokenType.method_system]),
-      ["new,copy,if,lambda,empty,this,ref,not,tuple"],
+      ["new,copy,if,lambda,empty,this,ref,not,typeof,tuple"],
       "",
     );
   });
@@ -552,7 +552,7 @@ suite("Symbol Completion Spec", () => {
       TermSimple.name,
       "",
       allIds.concat([TokenType.method_function, TokenType.method_system]),
-      ["new,copy,if,lambda,empty,this,ref,not,tuple"],
+      ["new,copy,if,lambda,empty,this,ref,not,typeof,tuple"],
       "",
     );
   });
@@ -588,7 +588,7 @@ suite("Symbol Completion Spec", () => {
       TermSimple.name,
       "",
       allIds.concat([TokenType.method_function, TokenType.method_system]),
-      ["new,copy,if,lambda,empty,this,ref,not,tuple"],
+      ["new,copy,if,lambda,empty,this,ref,not,typeof,tuple"],
       "",
     );
   });

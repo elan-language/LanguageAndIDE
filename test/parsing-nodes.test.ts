@@ -172,6 +172,8 @@ suite("Parsing Nodes", () => {
       "lambda a as (String, String), x as Int => tuple(setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
       "",
     );
+    testNodeParse(new ExprNode(), "typeof Foo", ParseStatus.valid, "", "", "typeof Foo", "");
+    testNodeParse(new ExprNode(), "typeof foo", ParseStatus.invalid, "", "typeof foo", "", "");
   });
   test("Set Clause", () => {
     testNodeParse(new ToClause(() => ""), "x set to p.x + 3", ParseStatus.valid, "", "", "", "");
