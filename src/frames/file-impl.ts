@@ -35,6 +35,7 @@ import { Parent } from "./interfaces/parent";
 import { Profile } from "./interfaces/profile";
 import { Scope } from "./interfaces/scope";
 import { Selectable } from "./interfaces/selectable";
+import { Semver } from "./interfaces/semver";
 import { StatementFactory } from "./interfaces/statement-factory";
 import { Transforms } from "./interfaces/transforms";
 import {
@@ -250,7 +251,7 @@ export class FileImpl implements File, Scope {
     return await this.hash(body);
   }
 
-  private getVersion() {
+  getVersion(): Semver {
     return this.version;
   }
 

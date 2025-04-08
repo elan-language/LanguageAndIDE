@@ -102,6 +102,16 @@ export class CannotUseSystemMethodInAFunction extends CompileError {
   }
 }
 
+export class Deprecated extends CompileError {
+  constructor(fromMajor: number, fromMinor: number, msg: string, location: string) {
+    super(
+      Priority.illegalOperation,
+      `Deprecated since ${fromMajor}.${fromMinor} for help see ${msg}`,
+      location,
+    );
+  }
+}
+
 export class CannotUseLikeAFunction extends CompileError {
   constructor(id: string, location: string) {
     super(
