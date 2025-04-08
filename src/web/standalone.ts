@@ -2,7 +2,7 @@
 
 import { checkIsChrome, confirmContinueOnNonChromeBrowser, readMsg, errorMsg } from "./ui-helpers";
 import { WebInputOutput } from "./web-input-output";
-import { WebWorkerWriteMessage } from "./web-worker-messages";
+import { WebWorkerStatusMessage, WebWorkerWriteMessage } from "./web-worker-messages";
 
 // static html elements
 const displayDiv = document.getElementById("display") as HTMLDivElement;
@@ -42,7 +42,9 @@ function runProgram() {
       }
     };
 
-    runWorker.onerror = async (_ev: ErrorEvent) => {};
+    runWorker.onerror = async (ev: ErrorEvent) => {
+      console.warn(ev.message);
+    };
 
     runWorker.postMessage({ type: "start" } as any);
   } catch (e) {
@@ -108,7 +110,8 @@ function handleRunWorkerFinished() {
   console.info("elan program completed OK");
 }
 
-async function handleRunWorkerError(_data: any) {
+async function handleRunWorkerError(data: WebWorkerStatusMessage) {
   runWorker?.terminate();
   runWorker = undefined;
+  console.warn(data.error);
 }
