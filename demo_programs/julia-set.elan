@@ -26,7 +26,7 @@ function allpoints(p as Coords) returns List<of VectorGraphic>
       let n be onepoint((xp - width/2)/p.scale - p.xoff, (yp - height/2)/p.scale - p.yoff, nmax, p)
       # colour depends on how many iterations were done for that point
       let col be if n is nmax then 0xffffff else ((n*0x010201) mod 0xffffff)
-      variable rect set to new RectangleVG(xp/2, yp/2, 0.5, 0.5, col, col, 0.25)
+      variable rect set to new RectangleVG() with x set to xp/2, y set to yp/2, width set to 0.5, height set to 0.5, fillColour set to col, strokeColour set to col, strokeWidth set to 0.25
       set vg2 to vg2.withAppend(rect)
     end for
   end for

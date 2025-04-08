@@ -2,7 +2,8 @@
 
 main
   variable vg set to new List<of VectorGraphic>()
-  let circ be new CircleVG(20, 20, 5, red, green, 2)
+  let circ be new CircleVG() with centreX set to 0, centreY set to 0, radius set to 0, fillColour set to 0, strokeColour set to 0, strokeWidth set to 0
+20, 20, 5, red, green, 2)
   call vg.append(circ)
   call displayVectorGraphics(vg)
 end main

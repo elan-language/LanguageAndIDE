@@ -61,7 +61,7 @@ export class VectorGraphic {
   private strokeColourAsHex(): string {
     if (this.strokeColour < 0) {
       throw new ElanRuntimeError(
-        `stroke (colour) cannot be negative because a stroke cannot be transparent`,
+        `strokeColour cannot be transparent (negative value)`,
       );
     }
     return this.asColour(this.strokeColour);

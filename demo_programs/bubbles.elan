@@ -7,7 +7,7 @@ main
   # create 20 small bubbles at the bottom
   for i from 1 to 20 step 1
     let randomColour be randomInt(0, white)
-    let b be new CircleVG(i*5 + 2, 75, 1, transparent, randomColour, 1)
+    let b be new CircleVG() with centreX set to i*5 + 2, centreY set to 75, radius set to 1, fillColour set to transparent, strokeColour set to randomColour, strokeWidth set to 1
     call vgs.append(b)
     call bubbles.append(b)
   end for

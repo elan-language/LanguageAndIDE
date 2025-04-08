@@ -3,7 +3,6 @@ import { DefaultProfile } from "../../src/frames/default-profile";
 import { FileImpl } from "../../src/frames/file-impl";
 import {
   assertDoesNotCompile,
-  assertDoesNotParse,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
