@@ -1,5 +1,6 @@
 import { CompileError } from "../compile-error";
 import {
+  checkForDeprecation,
   mustBeCallable,
   mustBeKnownSymbol,
   mustBePublicMember,
@@ -94,6 +95,8 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
     mustbeValidQualifier(this.precedingNode, this.compileErrors, this.fieldId);
 
     if (funcSymbolType instanceof FunctionType) {
+      checkForDeprecation(funcSymbolType, this.scope, this.compileErrors, this.fieldId);
+
       mustBePureFunctionSymbol(funcSymbolType, this.scope, this.compileErrors, this.fieldId);
 
       mustCallExtensionViaQualifier(

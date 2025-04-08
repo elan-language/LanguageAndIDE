@@ -3,7 +3,15 @@ import { SymbolType } from "./frames/interfaces/symbol-type";
 
 export const elanMetadataKey = Symbol("elan-metadata");
 
-export interface ElanDescriptor {}
+export interface Deprecated {
+  fromMajor: number;
+  fromMinor: number;
+  message: string;
+}
+
+export interface ElanDescriptor {
+  deprecated?: Deprecated | undefined;
+}
 
 export interface ElanMethodDescriptor extends ElanDescriptor {
   isExtension: boolean;

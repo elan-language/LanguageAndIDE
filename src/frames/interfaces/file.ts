@@ -15,6 +15,7 @@ import { Parent } from "./parent";
 import { Profile } from "./profile";
 import { Scope } from "./scope";
 import { Selectable } from "./selectable";
+import { Semver } from "./semver";
 import { StatementFactory } from "./statement-factory";
 
 export interface File extends Parent {
@@ -108,4 +109,6 @@ export interface File extends Parent {
   hasTests: boolean;
 
   updateBreakpoints(event: BreakpointEvent): void;
+
+  getVersion(): Semver;
 }
