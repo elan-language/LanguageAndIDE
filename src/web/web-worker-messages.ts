@@ -1,4 +1,4 @@
-import { AssertOutcome } from "../system";
+import { AssertOutcome } from "../assert-outcome";
 
 export type WebWorkerStatusMessage = {
   type: "status";

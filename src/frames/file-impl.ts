@@ -1,7 +1,7 @@
+import { AssertOutcome } from "../assert-outcome";
 import { ElanFileError } from "../elan-file-error";
 import { elanVersion, isElanProduction } from "../production";
 import { StdLibSymbols } from "../standard-library/std-lib-symbols";
-import { AssertOutcome } from "../system";
 import { AbstractSelector } from "./abstract-selector";
 import { CodeSource, CodeSourceFromString } from "./code-source";
 import { CompileError } from "./compile-error";

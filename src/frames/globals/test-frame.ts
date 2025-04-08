@@ -1,4 +1,4 @@
-import { AssertOutcome } from "../../system";
+import { AssertOutcome } from "../../assert-outcome";
 import { CodeSource } from "../code-source";
 import { CommentField } from "../fields/comment-field";
 import {

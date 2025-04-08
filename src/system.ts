@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { AssertOutcome } from "./assert-outcome";
 import { ElanInputOutput } from "./elan-input-output";
 import { ElanRuntimeError } from "./elan-runtime-error";
 import { TestStatus } from "./frames/status-enums";
@@ -9,16 +10,6 @@ import { List } from "./standard-library/list";
 import { ListImmutable } from "./standard-library/list-immutable";
 import { ElanSet } from "./standard-library/set";
 import { WebWorkerBreakpointMessage } from "./web/web-worker-messages";
-
-export class AssertOutcome {
-  constructor(
-    public readonly status: TestStatus,
-    public readonly actual: string,
-    public readonly expected: string,
-    public readonly htmlId: string,
-    public readonly error?: Error,
-  ) {}
-}
 
 export class System {
   constructor(public readonly elanInputOutput: ElanInputOutput) {}
