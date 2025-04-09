@@ -190,6 +190,7 @@ main
   print g.t
   print g.ff("a", "b")
   print "aa".matchesRegExp(g.r)
+  print g.tt
 end main
 
 class Game
@@ -207,6 +208,7 @@ class Game
     property t as Tuple<of Int, String, ListImmutable<of Int>>
     property ff as Func<of String, String => Int>
     property r as RegExp
+    property tt as Type
 
     function asString() returns String
         return "A game"
@@ -229,10 +231,11 @@ async function main() {
   await system.printLine(g.t);
   await system.printLine((await g.ff("a", "b")));
   await system.printLine(_stdlib.matchesRegExp("aa", g.r));
+  await system.printLine(g.tt);
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.initialise(_stdlib.ListImmutable.emptyInstance())], ["ds", system.initialise(_stdlib.Dictionary.emptyInstance())], ["dsi", system.initialise(_stdlib.DictionaryImmutable.emptyInstance())], ["ai", system.initialise(_stdlib.List.emptyInstance())], ["t", system.emptyTuple([0, "", system.initialise(_stdlib.ListImmutable.emptyInstance())])], ["ff", system.emptyFunc(0)], ["r", system.emptyRegExp()]]);};
+  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.initialise(_stdlib.ListImmutable.emptyInstance())], ["ds", system.initialise(_stdlib.Dictionary.emptyInstance())], ["dsi", system.initialise(_stdlib.DictionaryImmutable.emptyInstance())], ["ai", system.initialise(_stdlib.List.emptyInstance())], ["t", system.emptyTuple([0, "", system.initialise(_stdlib.ListImmutable.emptyInstance())])], ["ff", system.emptyFunc(0)], ["r", system.emptyRegExp()], ["tt", "Unknown"]]);};
 
   async _initialise() {
 
@@ -261,6 +264,8 @@ class Game {
 
   r = system.emptyRegExp();
 
+  tt = "Unknown";
+
   async asString() {
     return "A game";
   }
@@ -274,7 +279,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "00false{}[]{}[]tuple(0, , {})0true");
+    await assertObjectCodeExecutes(fileImpl, "00false{}[]{}[]tuple(0, , {})0trueUnknown");
   });
 
   test("Pass_DefaultValuesOnEmptyClass", async () => {

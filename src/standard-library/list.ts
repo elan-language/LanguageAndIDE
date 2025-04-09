@@ -319,6 +319,6 @@ export class List<T1> {
 
   @elanFunction([], FunctionOptions.pure, ElanClass(List, [ElanT2]))
   asListOf(@elanTypeType(ElanT2) _type: string) {
-    return new List([...this.contents]);
+    return this.newList([...this.contents]);
   }
 }
