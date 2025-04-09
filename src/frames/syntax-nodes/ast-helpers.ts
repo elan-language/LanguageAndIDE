@@ -179,12 +179,26 @@ export function generateType(
   }
 
   if (type instanceof GenericParameterType) {
-    const match = matches.get(type.id);
+    let match = matches.get(type.id);
     if (match instanceof TypeHolder) {
-      return generateType(match.symbolType, matches, depth);
+      match = generateType(match.symbolType, matches, depth);
     }
 
-    return match ?? type;
+    match = match ?? type;
+
+    if (match instanceof GenericParameterType) {
+      let newConstraint: SymbolType | undefined = undefined;
+
+      if (match.constraint) {
+        newConstraint = generateType(match.constraint, matches, depth);
+      }
+
+      if (newConstraint) {
+        match = new GenericParameterType(match.id, newConstraint) as GenericParameterType;
+      }
+    }
+
+    return match;
   }
 
   if (type instanceof TupleType) {

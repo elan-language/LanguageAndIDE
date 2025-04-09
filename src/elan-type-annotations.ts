@@ -588,12 +588,12 @@ export function elanRegexType() {
   return elanType(ElanRegExp);
 }
 
-export function elanGenericParamT1Type() {
-  return elanType(ElanT1);
+export function elanGenericParamT1Type(constraint?: TypeDescriptor) {
+  return elanType(constraint ? ElanT1Constrained(constraint) : ElanT1);
 }
 
-export function elanGenericParamT2Type() {
-  return elanType(ElanT2);
+export function elanGenericParamT2Type(constraint?: TypeDescriptor) {
+  return elanType(constraint ? ElanT2Constrained(constraint) : ElanT2);
 }
 
 export function elanTupleType(ofTypes: TypeDescriptor[]) {

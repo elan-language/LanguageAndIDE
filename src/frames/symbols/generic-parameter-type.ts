@@ -12,8 +12,7 @@ export class GenericParameterType implements SymbolType {
   initialValue = "";
 
   get name() {
-    const c = this.constraint ? `(${this.constraint.name})` : "";
-    return `Generic Parameter ${this.id}${c}`;
+    return this.constraint ? `${this.constraint.name}` : `Generic Parameter ${this.id}`;
   }
 
   toString() {
