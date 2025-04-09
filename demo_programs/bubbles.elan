@@ -1,14 +1,12 @@
-# d68ccd38f74701d7ed44b700226ce45e2d3bc69d6585d0c4b00fde7eb679d3d5 Elan 0.10.0-Beta guest default_profile valid
+# 54dd251a3b0651d273ed2736b2d6b6b32c7dac73126beab0a4b23597f07fe1ce Elan 0.10.0-Beta guest Default_Profile valid
 
 main
   # Keep reference to each bubble in two lists: one used for display, one used for changing the bubbles
-  let vgs be new List<of VectorGraphic>()
   let bubbles be new List<of CircleVG>()
   # create 20 small bubbles at the bottom
   for i from 1 to 20 step 1
     let randomColour be randomInt(0, white)
     let b be new CircleVG() with centreX set to i*5 + 2, centreY set to 75, radius set to 1, fillColour set to transparent, strokeColour set to randomColour, strokeWidth set to 1
-    call vgs.append(b)
     call bubbles.append(b)
   end for
   # move, grow, and burst bubbles, continuously
@@ -26,7 +24,7 @@ main
       end if
     end each
     # Each update to a bubble in 'bubbles' list will also be seen in the `vgs` list, which can be displayed
-    call displayVectorGraphics(vgs)
+    call displayVectorGraphics(bubbles)
     call pause(50)
   end while
 end main
