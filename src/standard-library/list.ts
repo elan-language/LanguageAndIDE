@@ -16,6 +16,7 @@ import {
   ElanString,
   ElanT1,
   ElanT2,
+  ElanT2Constrained,
   FunctionOptions,
 } from "../elan-type-annotations";
 import { System } from "../system";
@@ -110,7 +111,7 @@ export class List<T1> {
   }
 
   @elanProcedure(["other"])
-  appendList(@elanClassType(List) listB: List<T1>) {
+  appendList<T2 extends T1>(@elanClassType(List, [ElanT2Constrained(ElanT1)]) listB: List<T2>) {
     this.contents.push(...listB.contents);
   }
 

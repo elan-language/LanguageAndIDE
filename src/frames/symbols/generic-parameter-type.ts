@@ -2,14 +2,17 @@ import { SymbolType } from "../interfaces/symbol-type";
 import { noTypeOptions } from "../interfaces/type-options";
 
 export class GenericParameterType implements SymbolType {
-  constructor(public id: string) {}
+  constructor(
+    public id: string,
+    public constraint?: SymbolType,
+  ) {}
 
   typeOptions = noTypeOptions;
 
   initialValue = "";
 
   get name() {
-    return `Generic Parameter ${this.id}`;
+    return this.constraint ? `${this.constraint.name}` : `Generic Parameter ${this.id}`;
   }
 
   toString() {
