@@ -178,12 +178,15 @@ export class ElanValueTypeDescriptor implements TypeDescriptor {
 }
 
 export class ElanGenericTypeDescriptor implements TypeDescriptor {
-  constructor(public readonly name: string) {}
+  constructor(
+    public readonly name: string,
+    public readonly constraint?: TypeDescriptor,
+  ) {}
 
   isConstant = true;
 
-  mapType(_scope: Scope): SymbolType {
-    return new GenericParameterType(this.name);
+  mapType(scope: Scope): SymbolType {
+    return new GenericParameterType(this.name, this.constraint?.mapType(scope));
   }
 }
 
@@ -537,6 +540,14 @@ export const ElanRegExp: ElanValueTypeDescriptor = new ElanValueTypeDescriptor(R
 
 export const ElanT1: ElanValueTypeDescriptor = new ElanGenericTypeDescriptor("T1");
 export const ElanT2: ElanValueTypeDescriptor = new ElanGenericTypeDescriptor("T2");
+
+export function ElanT1Constrained(constraint: TypeDescriptor) {
+  return new ElanGenericTypeDescriptor("T1", constraint);
+}
+
+export function ElanT2Constrained(constraint: TypeDescriptor) {
+  return new ElanGenericTypeDescriptor("T2", constraint);
+}
 
 export function ElanClass(
   cls: { name: string; prototype: object; emptyInstance: () => object },

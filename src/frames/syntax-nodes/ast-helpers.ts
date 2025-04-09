@@ -232,7 +232,9 @@ export function match(
 
     if (t instanceof GenericParameterType) {
       if (!matches.has(t.id)) {
-        matches.set(t.id, st);
+        if (!t.constraint || t.constraint.isAssignableFrom(st)) {
+          matches.set(t.id, st);
+        }
       }
     }
 

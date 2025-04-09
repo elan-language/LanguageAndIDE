@@ -15,6 +15,7 @@ import {
   elanProcedure,
   ElanString,
   elanStringType,
+  ElanT1Constrained,
   ElanTuple,
   FunctionOptions,
   ProcedureOptions,
@@ -735,8 +736,8 @@ export class StdLib {
   }
 
   @elanFunction([""], FunctionOptions.pureExtension)
-  vectorGraphicsAsHtml(
-    @elanClassType(List, [ElanClass(VectorGraphic)]) vgs: List<VectorGraphic>,
+  vectorGraphicsAsHtml<T extends VectorGraphic>(
+    @elanClassType(List, [ElanT1Constrained(ElanClass(VectorGraphic))]) vgs: List<T>,
   ): string {
     let content = ``;
     for (let i = 0; i < vgs.length(); i++) {
@@ -748,8 +749,8 @@ export class StdLib {
   }
 
   @elanProcedure(["listOfVGs"], ProcedureOptions.async)
-  async displayVectorGraphics(
-    @elanClassType(List, [ElanClass(VectorGraphic)]) vgs: List<VectorGraphic>,
+  async displayVectorGraphics<T extends VectorGraphic>(
+    @elanClassType(List, [ElanT1Constrained(ElanClass(VectorGraphic))]) vgs: List<T>,
   ): Promise<void> {
     const html = this.vectorGraphicsAsHtml(vgs);
     return await this.system!.elanInputOutput.drawVectorGraphics(html);
