@@ -59,7 +59,6 @@ import { TypeFuncNode } from "../parse-nodes/type-func-node";
 import { TypeGenericNode } from "../parse-nodes/type-generic-node";
 import { TypeSimpleNode } from "../parse-nodes/type-simple-node";
 import { TypeTupleNode } from "../parse-nodes/type-tuple-node";
-import { TypeofNode } from "../parse-nodes/typeof-node";
 import { UnaryExpression } from "../parse-nodes/unary-expression";
 import { WithClause } from "../parse-nodes/with-clause";
 import { SetStatement } from "../statements/set-statement";
@@ -106,7 +105,6 @@ import { SegmentedStringAsn } from "./segmented-string-asn";
 import { ThisAsn } from "./this-asn";
 import { ToAsn } from "./to-asn";
 import { TypeAsn } from "./type-asn";
-import { TypeofAsn } from "./typeof-asn";
 import { UnaryExprAsn } from "./unary-expr-asn";
 import { VarAsn } from "./var-asn";
 
@@ -270,11 +268,6 @@ export function transform(
   if (node instanceof EmptyOfTypeNode) {
     const type = transform(node.type, fieldId, scope) as TypeAsn;
     return new EmptyTypeAsn(type, fieldId);
-  }
-
-  if (node instanceof TypeofNode) {
-    const type = transform(node.type, fieldId, scope) as TypeAsn;
-    return new TypeofAsn(type, fieldId);
   }
 
   if (node instanceof OptionalNode) {
