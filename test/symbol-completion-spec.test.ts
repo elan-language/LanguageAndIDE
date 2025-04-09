@@ -95,8 +95,9 @@ suite("Symbol Completion Spec", () => {
         TokenType.id_enumValue,
         TokenType.method_function,
         TokenType.method_system,
+        TokenType.type_enum,
       ],
-      ["this,typeof,tuple"],
+      ["this,tuple"],
     );
   });
   test("Expression2", () => {
@@ -158,8 +159,9 @@ suite("Symbol Completion Spec", () => {
         TokenType.id_enumValue,
         TokenType.method_function,
         TokenType.method_system,
+        TokenType.type_enum,
       ],
-      ["new,copy,if,lambda,empty,this,ref,not,typeof,tuple"],
+      ["new,copy,if,lambda,empty,this,ref,not,tuple"],
     );
   });
   test("Expression3", () => {
@@ -329,6 +331,7 @@ suite("Symbol Completion Spec", () => {
         TokenType.id_enumValue,
         TokenType.method_function,
         TokenType.method_system,
+        TokenType.type_enum,
       ],
       ["new", "not"],
       "",
@@ -351,8 +354,9 @@ suite("Symbol Completion Spec", () => {
         TokenType.id_enumValue,
         TokenType.method_function,
         TokenType.method_system,
+        TokenType.type_enum,
       ],
-      ["new,copy,if,lambda,empty,this,ref,not,typeof,tuple"],
+      ["new,copy,if,lambda,empty,this,ref,not,tuple"],
       "",
     );
   });
@@ -457,8 +461,9 @@ suite("Symbol Completion Spec", () => {
         TokenType.id_enumValue,
         TokenType.method_function,
         TokenType.method_system,
+        TokenType.type_enum,
       ],
-      ["new,copy,if,lambda,empty,this,ref,not,typeof,tuple"],
+      ["new,copy,if,lambda,empty,this,ref,not,tuple"],
       "",
     );
   });
@@ -491,8 +496,9 @@ suite("Symbol Completion Spec", () => {
         TokenType.id_enumValue,
         TokenType.method_function,
         TokenType.method_system,
+        TokenType.type_enum,
       ],
-      ["new,copy,if,lambda,empty,this,ref,not,typeof,tuple"],
+      ["new,copy,if,lambda,empty,this,ref,not,tuple"],
       "",
     );
   });
@@ -515,8 +521,8 @@ suite("Symbol Completion Spec", () => {
       ParseStatus.incomplete,
       ExprNode.name,
       "",
-      allIds.concat([TokenType.method_function, TokenType.method_system]),
-      ["new,copy,if,lambda,empty,this,ref,not,typeof,tuple"],
+      allIds.concat([TokenType.method_function, TokenType.method_system, TokenType.type_enum]),
+      ["new,copy,if,lambda,empty,this,ref,not,tuple"],
       "",
     );
   });
@@ -551,8 +557,8 @@ suite("Symbol Completion Spec", () => {
       ParseStatus.incomplete,
       TermSimple.name,
       "",
-      allIds.concat([TokenType.method_function, TokenType.method_system]),
-      ["new,copy,if,lambda,empty,this,ref,not,typeof,tuple"],
+      allIds.concat([TokenType.method_function, TokenType.method_system, TokenType.type_enum]),
+      ["new,copy,if,lambda,empty,this,ref,not,tuple"],
       "",
     );
   });
@@ -587,8 +593,8 @@ suite("Symbol Completion Spec", () => {
       ParseStatus.incomplete,
       TermSimple.name,
       "",
-      allIds.concat([TokenType.method_function, TokenType.method_system]),
-      ["new,copy,if,lambda,empty,this,ref,not,typeof,tuple"],
+      allIds.concat([TokenType.method_function, TokenType.method_system, TokenType.type_enum]),
+      ["new,copy,if,lambda,empty,this,ref,not,tuple"],
       "",
     );
   });
