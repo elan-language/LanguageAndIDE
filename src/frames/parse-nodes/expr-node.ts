@@ -68,6 +68,7 @@ export class ExprNode extends AbstractAlternatives {
       TokenType.id_enumValue,
       TokenType.method_function,
       TokenType.method_system,
+      TokenType.type_enum,
     ]);
   }
 
