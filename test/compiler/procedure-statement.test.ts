@@ -808,6 +808,64 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "1");
   });
 
+  test("Pass_TypeParameter", async () => {
+    const code = `${testHeader}
+
+main
+  call foo(typeof Int)
+end main
+
+procedure foo(bar as Type)
+  print bar
+end procedure`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await foo("Int");
+}
+
+async function foo(bar) {
+  await system.printLine(bar);
+}
+global["foo"] = foo;
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "done");
+  });
+
+  test("Pass_TypeParameterClass", async () => {
+    const code = `${testHeader}
+
+main
+  call foo(typeof Bar)
+end main
+
+procedure foo(bar as Type)
+  print "done"
+end procedure
+
+class Bar
+end class`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "done");
+  });
+
   test("Fail_CallingUndeclaredProc", async () => {
     const code = `${testHeader}
 
