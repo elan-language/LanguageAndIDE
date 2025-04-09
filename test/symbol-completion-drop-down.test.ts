@@ -2228,6 +2228,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
+      ["VectorGraphic", "*", "*"],
       ["CircleVG", "*", "*"],
       ["LineVG", "*", "*"],
       ["RectangleVG", "*", "*"],

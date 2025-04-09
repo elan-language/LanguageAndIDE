@@ -16,11 +16,13 @@ export class TypeGenericNode extends AbstractSequence {
   simpleType: TypeSimpleNode | undefined;
   generic: Sequence | undefined;
   tokenTypes: Set<TokenType> = new Set<TokenType>();
+  concreteAndAbstract = new Set<TokenType>(concreteAndAbstractTypes);
 
   constructor(tokenTypes: Set<TokenType>) {
     super();
     this.tokenTypes = tokenTypes;
   }
+
   parseText(text: string): void {
     this.remainingText = text;
     if (text.length > 0) {
@@ -28,9 +30,9 @@ export class TypeGenericNode extends AbstractSequence {
       const lt = () => new PunctuationNode(LT);
       const of = () => new KeywordNode(ofKeyword);
       const sp = () => new SpaceNode(Space.required);
-      const type = () => new TypeNode(this.tokenTypes);
+      const type = () => new TypeNode(this.concreteAndAbstract);
       const commaType = () =>
-        new Sequence([() => new CommaNode(), () => new TypeNode(this.tokenTypes)]);
+        new Sequence([() => new CommaNode(), () => new TypeNode(this.concreteAndAbstract)]);
       const commaTypes = () => new Multiple(commaType, 0);
       const gt = () => new PunctuationNode(GT);
       this.generic = new Sequence([lt, of, sp, type, commaTypes, gt]);
@@ -42,7 +44,7 @@ export class TypeGenericNode extends AbstractSequence {
 
   symbolCompletion_tokenTypes(): Set<TokenType> {
     if (this.getElements().length === 0) {
-      return new Set<TokenType>(concreteAndAbstractTypes);
+      return this.concreteAndAbstract;
     } else {
       return super.symbolCompletion_tokenTypes();
     }

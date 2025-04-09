@@ -57,7 +57,6 @@ import { ToClause } from "../parse-nodes/to-clause";
 import { TupleNode } from "../parse-nodes/tuple-node";
 import { TypeFuncNode } from "../parse-nodes/type-func-node";
 import { TypeGenericNode } from "../parse-nodes/type-generic-node";
-import { TypeInDelimiters } from "../parse-nodes/type-in-delimiters";
 import { TypeSimpleNode } from "../parse-nodes/type-simple-node";
 import { TypeTupleNode } from "../parse-nodes/type-tuple-node";
 import { TypeofNode } from "../parse-nodes/typeof-node";
@@ -283,10 +282,6 @@ export function transform(
       return transform(node.matchedNode, fieldId, scope);
     }
     return undefined;
-  }
-
-  if (node instanceof TypeInDelimiters) {
-    return transform(node.alternatives, fieldId, scope);
   }
 
   if (node instanceof WithClause) {
