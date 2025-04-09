@@ -3,7 +3,7 @@ import { ElanSymbol } from "../interfaces/elan-symbol";
 import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../interfaces/transforms";
 import { BooleanType } from "./boolean-type";
-import { FuncName, TupleName } from "./elan-type-names";
+import { FuncName, TupleName, TypeName } from "./elan-type-names";
 import { FloatType } from "./float-type";
 import { FunctionType } from "./function-type";
 import { GenericParameterType } from "./generic-parameter-type";
@@ -13,6 +13,7 @@ import { StringType } from "./string-type";
 import { SymbolScope } from "./symbol-scope";
 import { TupleType } from "./tuple-type";
 import { TypeType } from "./type-type";
+import { UnknownType } from "./unknown-type";
 
 const intSymbol: ElanSymbol = {
   symbolId: IntType.Instance.name,
@@ -86,9 +87,9 @@ const funcSymbol: ClassSymbol = {
 };
 
 const typeSymbol: ElanSymbol = {
-  symbolId: TypeType.Instance.name,
+  symbolId: TypeName,
   symbolType: function (_transforms?: Transforms): SymbolType {
-    return TypeType.Instance;
+    return new TypeType(UnknownType.Instance);
   },
   symbolScope: SymbolScope.program,
 };

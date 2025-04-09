@@ -32,6 +32,7 @@ import {
   parameterNamesWithTypes,
 } from "../symbols/symbol-helpers";
 import { TupleType } from "../symbols/tuple-type";
+import { TypeType } from "../symbols/type-type";
 import { UnknownType } from "../symbols/unknown-type";
 import { transform, transformMany } from "./ast-visitor";
 import { DeconstructedListAsn } from "./deconstructed-list-asn";
@@ -125,6 +126,10 @@ export function flatten(p: SymbolType): SymbolType {
     flattened = flattened.concat(flatten(p.returnType));
 
     return new TypeHolder(p, flattened);
+  }
+
+  if (p instanceof TypeType) {
+    return new TypeHolder(p, [flatten(p.ofType)]);
   }
 
   if (p instanceof StringType) {

@@ -16,6 +16,7 @@ import {
   ElanString,
   ElanT1,
   ElanT2,
+  elanTypeType,
   FunctionOptions,
 } from "../elan-type-annotations";
 import { System } from "../system";
@@ -314,5 +315,10 @@ export class List<T1> {
   @elanFunction([], FunctionOptions.pure, ElanClassName("ElanArray"))
   asArray() {
     return this.system!.listAsArray(this);
+  }
+
+  @elanFunction([], FunctionOptions.pure, ElanClass(List, [ElanT2]))
+  asListOf(@elanTypeType(ElanT2) _type: string) {
+    return new List([...this.contents]);
   }
 }

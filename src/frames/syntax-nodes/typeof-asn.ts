@@ -23,8 +23,7 @@ export class TypeofAsn extends AbstractAstNode implements AstNode {
   }
 
   symbolType() {
-    //return this.type.symbolType();
-    return TypeType.Instance;
+    return new TypeType(this.type.symbolType());
   }
 
   toString() {

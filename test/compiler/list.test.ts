@@ -630,6 +630,52 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[3][]falsefalsetrue");
   });
 
+  test("Pass_asListof", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to new List<of Foo>()
+  variable b set to new List<of Bar>()
+  set a to b.asListOf(typeof Foo)
+  print a
+end main
+
+abstract class Foo
+end class
+
+class Bar inherits Foo
+end class`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.initialise(await new _stdlib.List()._initialise());
+  let b = system.initialise(await new _stdlib.List()._initialise());
+  a = b.asListOf("Foo");
+  await system.printLine(a);
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, []);};
+
+}
+
+class Bar extends Foo {
+  static emptyInstance() { return system.emptyClass(Bar, []);};
+  async _initialise() { return this; }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[]");
+  });
+
   test("Fail_EmptyList", async () => {
     const code = `${testHeader}
 

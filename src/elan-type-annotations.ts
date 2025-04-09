@@ -28,6 +28,7 @@ import {
   RegExpName,
   StringName,
   TupleName,
+  TypeName,
 } from "./frames/symbols/elan-type-names";
 import { FloatType } from "./frames/symbols/float-type";
 import { FunctionType } from "./frames/symbols/function-type";
@@ -39,6 +40,7 @@ import { StdLibClass } from "./frames/symbols/stdlib-class";
 import { StringType } from "./frames/symbols/string-type";
 import { SymbolScope } from "./frames/symbols/symbol-scope";
 import { TupleType } from "./frames/symbols/tuple-type";
+import { TypeType } from "./frames/symbols/type-type";
 import { UnknownType } from "./frames/symbols/unknown-type";
 
 export const nameToTypeMap = new Map<
@@ -174,6 +176,18 @@ export class ElanValueTypeDescriptor implements TypeDescriptor {
         return RegExpType.Instance;
     }
     throw new Error("NotImplemented: " + this.name);
+  }
+}
+
+export class ElanTypeTypeDescriptor implements TypeDescriptor {
+  constructor(public readonly ofType: TypeDescriptor) {}
+
+  name = TypeName;
+
+  isConstant = true;
+
+  mapType(scope: Scope): SymbolType {
+    return new TypeType(this.ofType.mapType(scope));
   }
 }
 
@@ -553,6 +567,10 @@ export function ElanTuple(ofTypes: TypeDescriptor[]) {
   return new ElanTupleTypeDescriptor(ofTypes);
 }
 
+export function ElanType(ofType: TypeDescriptor) {
+  return new ElanTypeTypeDescriptor(ofType);
+}
+
 export function ElanFunc(parameters: TypeDescriptor[], returnType: TypeDescriptor) {
   return new ElanFuncTypeDescriptor(parameters, returnType);
 }
@@ -587,6 +605,10 @@ export function elanGenericParamT2Type() {
 
 export function elanTupleType(ofTypes: TypeDescriptor[]) {
   return elanType(ElanTuple(ofTypes));
+}
+
+export function elanTypeType(ofType: TypeDescriptor) {
+  return elanType(ElanType(ofType));
 }
 
 export function elanFuncType(parameters: TypeDescriptor[], returnType: TypeDescriptor) {
