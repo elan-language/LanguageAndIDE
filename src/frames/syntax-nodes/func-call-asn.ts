@@ -8,6 +8,7 @@ import {
   mustbeValidQualifier,
   mustCallExtensionViaQualifier,
   mustCallMemberViaQualifier,
+  mustMatchTypeTypeParameter,
 } from "../compile-rules";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstNode } from "../interfaces/ast-node";
@@ -122,6 +123,14 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
       matchParametersAndTypes(
         funcSymbol.symbolId,
         funcSymbolType,
+        parameters,
+        this.compileErrors,
+        this.fieldId,
+      );
+
+      mustMatchTypeTypeParameter(
+        funcSymbolType,
+        this.precedingNode,
         parameters,
         this.compileErrors,
         this.fieldId,

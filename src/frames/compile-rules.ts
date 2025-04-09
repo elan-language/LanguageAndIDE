@@ -30,6 +30,7 @@ import {
   OutParameterCompileError,
   ParametersCompileError,
   ParameterTypesCompileError,
+  ParameterTypesTypeCompileError,
   PrivateMemberCompileError,
   PropertyCompileError,
   ReassignInFunctionCompileError,
@@ -73,6 +74,7 @@ import {
   isClassTypeDef,
   isDeconstructedType,
   isDoubleIndexableType,
+  isGenericSymbolType,
   isIndexableType,
   isIterableType,
   isListImmutableType,
@@ -84,14 +86,18 @@ import {
 } from "./symbols/symbol-helpers";
 import { SymbolScope } from "./symbols/symbol-scope";
 import { TupleType } from "./symbols/tuple-type";
+import { TypeType } from "./symbols/type-type";
 import { UnknownSymbol } from "./symbols/unknown-symbol";
 import { UnknownType } from "./symbols/unknown-type";
 import {
+  containsGenericType,
+  generateType,
   getIds,
   InFunctionScope,
   isAstIdNode,
   isAstIndexableNode,
   isEmptyNode,
+  matchGenericTypes,
   transforms,
 } from "./syntax-nodes/ast-helpers";
 import { ThisAsn } from "./syntax-nodes/this-asn";
@@ -573,6 +579,40 @@ export function mustMatchGenericParameters(
 ) {
   if (parms.length !== expected) {
     compileErrors.push(new ParametersCompileError(expected, parms.length, location, true));
+  }
+}
+
+export function mustMatchTypeTypeParameter(
+  methodSymbolType: FunctionType | ProcedureType,
+  precedingNode: AstNode,
+  parameters: AstNode[],
+  compileErrors: CompileError[],
+  location: string,
+) {
+  if (!methodSymbolType.isExtension && !isEmptyNode(precedingNode)) {
+    // need to match types
+
+    let parameterTypes = methodSymbolType.parameterTypes;
+
+    if (parameterTypes.some((pt) => containsGenericType(pt))) {
+      const matches = matchGenericTypes(methodSymbolType, parameters);
+      parameterTypes = parameterTypes.map((pt) => generateType(pt, matches));
+    }
+
+    for (const p of parameterTypes) {
+      if (p instanceof TypeType) {
+        const pt = p.ofType;
+        const st = precedingNode.symbolType();
+
+        if (
+          isGenericSymbolType(st) &&
+          (st.ofTypes.length !== 1 || !pt.isAssignableFrom(st.ofTypes[0]))
+        ) {
+          const expected = st.ofTypes.length === 1 ? st.ofTypes[0].name : st.name;
+          compileErrors.push(new ParameterTypesTypeCompileError(expected, pt.name, location));
+        }
+      }
+    }
   }
 }
 

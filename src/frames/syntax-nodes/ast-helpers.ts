@@ -147,6 +147,7 @@ export function containsGenericType(type: SymbolType): boolean {
   if (type instanceof TupleType) {
     return type.ofTypes.some((t) => containsGenericType(t));
   }
+
   if (type instanceof ClassType) {
     if (isClassTypeDef(type.scope)) {
       return type.scope.ofTypes.some((t) => containsGenericType(t));
@@ -162,6 +163,10 @@ export function containsGenericType(type: SymbolType): boolean {
 
   if (type instanceof ProcedureType) {
     return type.parameterTypes.some((t) => containsGenericType(t));
+  }
+
+  if (type instanceof TypeType) {
+    return containsGenericType(type.ofType);
   }
 
   return false;

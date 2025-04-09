@@ -253,6 +253,17 @@ export class ParameterTypesCompileError extends CompileError {
   }
 }
 
+export class ParameterTypesTypeCompileError extends CompileError {
+  constructor(expected: string, provided: string, location: string) {
+    const priority = Priority.typeError;
+    super(
+      priority,
+      `Argument types. Type parameter: ${provided} must be assignable from ${expected}`,
+      location,
+    );
+  }
+}
+
 export class ParametersCompileError extends CompileError {
   constructor(expected: number, actual: number, location: string, generic?: boolean) {
     const priority = actual < expected ? Priority.unknownIdentifier : Priority.illegalOperation;

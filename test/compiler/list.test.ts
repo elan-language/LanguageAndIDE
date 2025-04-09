@@ -676,6 +676,32 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[]");
   });
 
+  test("Fail_asListofInvalidType", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to new List<of Foo>()
+  variable b set to new List<of Bar>()
+  set a to b.asListOf(typeof Foo)
+  print a
+end main
+
+class Foo
+end class
+
+class Bar
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types. Type parameter: Foo must be assignable from Bar",
+    ]);
+  });
+
   test("Fail_EmptyList", async () => {
     const code = `${testHeader}
 
