@@ -742,7 +742,7 @@ export class StdLib {
     let content = ``;
     for (let i = 0; i < vgs.length(); i++) {
       const vg = vgs.read(i);
-      content = content + vg.asHtml() + "\n";
+      content = content + vg.asSVG() + "\n";
     }
     const html = `<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">\n${content}</svg>\n`;
     return html;

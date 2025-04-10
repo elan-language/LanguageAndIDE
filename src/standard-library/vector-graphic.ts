@@ -44,8 +44,7 @@ export class VectorGraphic {
     this.fillColour = fillColour;
   }
 
-  @elanProcedure(["fillColour"])
-  asHtml(): string {
+  asSVG(): string {
     return "";
   }
 

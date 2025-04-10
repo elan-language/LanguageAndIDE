@@ -114,7 +114,7 @@ export class RectangleVG extends VectorGraphic {
     return copy;
   }
 
-  asHtml(): string {
+  asSVG(): string {
     return `<rect x="${this.x}%" y="${this.y / 0.75}%" width="${this.width}%" height="${this.height / 0.75}%" ${this.strokeAsHtml()} ${this.fillAsHtml()}/>`;
   }
 }

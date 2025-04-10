@@ -113,7 +113,7 @@ export class LineVG extends VectorGraphic {
     return copy;
   }
 
-  asHtml(): string {
+  asSVG(): string {
     return `<line x1="${this.x1}%" y1="${this.y1 / 0.75}%" x2="${this.x2}%" y2="${this.y2 / 0.75}%" ${this.strokeAsHtml()}/>`;
   }
 }

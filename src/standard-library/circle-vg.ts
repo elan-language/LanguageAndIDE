@@ -95,7 +95,7 @@ export class CircleVG extends VectorGraphic {
     return copy;
   }
 
-  asHtml(): string {
+  asSVG(): string {
     return `<circle cx="${this.centreX}%" cy="${this.centreY / 0.75}%" r="${this.radius * 1.125}%" ${this.strokeAsHtml()} ${this.fillAsHtml()}/>`;
   }
 }
