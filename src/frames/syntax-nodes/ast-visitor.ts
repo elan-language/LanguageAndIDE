@@ -24,6 +24,7 @@ import { EnumVal } from "../parse-nodes/enum-val";
 import { FunctionRefNode } from "../parse-nodes/function-ref-node";
 import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { IfExpr } from "../parse-nodes/if-expr";
+import { ImageNode } from "../parse-nodes/image-node";
 import { DictionaryImmutableNode } from "../parse-nodes/immutable-dictionary-node";
 import { InheritanceNode } from "../parse-nodes/inheritanceNode";
 import { InstanceNode } from "../parse-nodes/instanceNode";
@@ -82,6 +83,7 @@ import { FuncCallAsn } from "./func-call-asn";
 import { IdAsn } from "./id-asn";
 import { IdDefAsn } from "./id-def-asn";
 import { IfExprAsn } from "./if-expr-asn";
+import { ImageAsn } from "./image-asn";
 import { IndexAsn } from "./index-asn";
 import { InterpolatedAsn } from "./interpolated-asn";
 import { KvpAsn } from "./kvp-asn";
@@ -263,6 +265,10 @@ export function transform(
   if (node instanceof InheritanceNode) {
     const types = transformMany(node.typeList as CSV, fieldId, scope).items;
     return new CsvAsn(types, fieldId);
+  }
+
+  if (node instanceof ImageNode) {
+    return new ImageAsn(fieldId);
   }
 
   if (node instanceof EmptyOfTypeNode) {

@@ -15,6 +15,7 @@ import { DottedTerm } from "../src/frames/parse-nodes/dotted-term";
 import { ExprNode } from "../src/frames/parse-nodes/expr-node";
 import { IdentifierNode } from "../src/frames/parse-nodes/identifier-node";
 import { IfExpr } from "../src/frames/parse-nodes/if-expr";
+import { ImageNode } from "../src/frames/parse-nodes/image-node";
 import { InstanceNode } from "../src/frames/parse-nodes/instanceNode";
 import { InstanceProcRef } from "../src/frames/parse-nodes/instanceProcRef";
 import { KeywordNode } from "../src/frames/parse-nodes/keyword-node";
@@ -1775,6 +1776,26 @@ suite("Parsing Nodes", () => {
   });
   ignore_test("Six open brackets", () => {
     testNodeParse(new ExprNode(), `((((((3))))))`, ParseStatus.valid, `((((((3))))))`, "");
+  });
+  test("Image", () => {
+    testNodeParse(
+      new RegExMatchNode(Regexes.url),
+      "http://website.com/images/image1.png",
+      ParseStatus.valid,
+      "http://website.com/images/image1.png",
+      "",
+      "",
+      "",
+    );
+    testNodeParse(
+      new ImageNode(),
+      "image http://website.com/images/image1.png",
+      ParseStatus.valid,
+      "image http://website.com/images/image1.png",
+      "",
+      "image http://website.com/images/image1.png",
+      `<img src="http://website.com/images/image1.png">`,
+    );
   });
 });
 

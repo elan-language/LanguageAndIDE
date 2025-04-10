@@ -395,3 +395,7 @@ el-statement.paused-at > el-fr
     color: white;
     text-indent: 0;
 }
+
+.elan-code img {
+    height: 0.9em;
+}
