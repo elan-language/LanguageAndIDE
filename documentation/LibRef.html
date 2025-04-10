@@ -435,7 +435,7 @@ further items to an array, although it is possible to convert an array to a list
 <!--   #endregion-->
 <!--   #region List-->
 <h2 id="List">List</h2>
-<p>An <el-code><el-type>List</el-type></el-code is similar to an array but more flexible because:
+<p>A <el-code><el-type>List</el-type></el-code> is similar to an array but more flexible because:
 
     <ul>
         <li>While the members must all be of one Type, that type is not limited to the simple value types:
@@ -445,7 +445,6 @@ further items to an array, although it is possible to convert an array to a list
             initialised from a literal definition.
         </li>
     </ul>
-
 </p>
 <!--   #endregion-->
 <!--   #region Dictionary-->
@@ -1017,6 +1016,8 @@ just by passing the required one as the argyument to the <el-code><el-method>dis
     <li>All parameters for the three constructors above are of type <el-code><el-type>Int</el-type></el-code>.</li>
     <li>Individual properties of any of the VG types may be modified by calling the corresponding <el-code><el-method>set...</el-method></el-code> procedure method,
     or, if working within a function, by using the corresponding <el-code><el-method>with...</el-method></el-code> function method.</li>
+    <li><el-code><el-method>displayVectorGraphics</el-method> takes as an argyment either a <el-code><el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>VectorGraphic</el-type>&gt;()</el-code>
+    or a <el-code><el-type>List</el-type></el-code> of any specific type of <el-code><el-type>VectorGraphic</el-type></el-code> such as <el-code><el-type>CircleVG</el-type></el-code>.</li>
 </ul>
 <!-- #endregion-->
 <!-- #endregion-->
