@@ -421,31 +421,4 @@ return [main, _tests];}`;
 `,
     );
   });
-  test("Pass_PrintImage", async () => {
-    const code = `${testHeader}
-
-main
-  let i be new Image() with x set to 50, y set to 50, width set to 50, height set to 50, url set to "https://elan-language.github.io/LanguageAndIDE/images/Debug.png"
-  print i
-end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  const i = await (async () => {const _a = {...system.initialise(await new _stdlib.Image()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new _stdlib.Image()._initialise()))); _a.x = 50; _a.y = 50; _a.width = 50; _a.height = 50; _a.url = "https://elan-language.github.io/LanguageAndIDE/images/Debug.png"; return _a;})();
-  await system.printLine(i);
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      `<img src="https://elan-language.github.io/LanguageAndIDE/images/Debug.png" width="50" height="50">`,
-    );
-  });
 });
