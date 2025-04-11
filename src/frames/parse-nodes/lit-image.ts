@@ -6,7 +6,7 @@ import { Space } from "./parse-node-helpers";
 import { RegExMatchNode } from "./regex-match-node";
 import { SpaceNode } from "./space-node";
 
-export class ImageNode extends AbstractSequence {
+export class LitImage extends AbstractSequence {
   url: RegExMatchNode | undefined;
 
   parseText(text: string): void {

@@ -387,4 +387,65 @@ return [main, _tests];}`;
       `colour must be in the range 0x0 to 0xffffff (0 to 16777215)`,
     );
   });
+  test("Pass_Image", async () => {
+    const code = `${testHeader}
+
+main
+  let vg be new List<of VectorGraphic>()
+  let i be new Image() with x set to 50, y set to 50, width set to 50, height set to 50, url set to "https://elan-language.github.io/LanguageAndIDE/images/Debug.png"
+  call vg.append(i)
+  print vg.vectorGraphicsAsHtml()
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  const vg = system.initialise(await new _stdlib.List()._initialise());
+  const i = await (async () => {const _a = {...system.initialise(await new _stdlib.Image()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new _stdlib.Image()._initialise()))); _a.x = 50; _a.y = 50; _a.width = 50; _a.height = 50; _a.url = "https://elan-language.github.io/LanguageAndIDE/images/Debug.png"; return _a;})();
+  vg.append(i);
+  await system.printLine(_stdlib.vectorGraphicsAsHtml(vg));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(
+      fileImpl,
+      `<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+<image x="50%" y="66.66666666666667%" width="50" height="66.66666666666667" href="https://elan-language.github.io/LanguageAndIDE/images/Debug.png" />
+</svg>
+`,
+    );
+  });
+  test("Pass_PrintImage", async () => {
+    const code = `${testHeader}
+
+main
+  let i be new Image() with x set to 50, y set to 50, width set to 50, height set to 50, url set to "https://elan-language.github.io/LanguageAndIDE/images/Debug.png"
+  print i
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  const i = await (async () => {const _a = {...system.initialise(await new _stdlib.Image()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new _stdlib.Image()._initialise()))); _a.x = 50; _a.y = 50; _a.width = 50; _a.height = 50; _a.url = "https://elan-language.github.io/LanguageAndIDE/images/Debug.png"; return _a;})();
+  await system.printLine(i);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(
+      fileImpl,
+      `<img src="https://elan-language.github.io/LanguageAndIDE/images/Debug.png" width="50" height="50">`,
+    );
+  });
 });

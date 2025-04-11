@@ -1057,6 +1057,7 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
+      ["Image", "*", "*"],
       ["Int", "*", "*"],
       ["DictionaryImmutable", "*", "*"],
       ["ListImmutable", "*", "*"],
@@ -1123,6 +1124,7 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
+      ["Image", "*", "*"],
       ["Int", "*", "*"],
       ["DictionaryImmutable", "*", "*"],
       ["ListImmutable", "*", "*"],
@@ -1547,6 +1549,7 @@ end main`;
       ["Dictionary", "*", "*"],
       ["DictionaryImmutable", "*", "*"],
       ["Float", "*", "*"],
+      ["Image", "*", "*"],
       ["Int", "*", "*"],
       ["LineVG", "*", "*"],
       ["List", "*", "List<of "],
@@ -1695,6 +1698,7 @@ end main`;
       ["Dictionary", "*", "*"],
       ["DictionaryImmutable", "*", "*"],
       ["Float", "*", "*"],
+      ["Image", "*", "*"],
       ["Int", "*", "*"],
       ["LineVG", "*", "*"],
       ["List", "*", "*"],

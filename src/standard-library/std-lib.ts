@@ -28,6 +28,7 @@ import { Dictionary } from "./dictionary";
 import { DictionaryImmutable } from "./dictionary-immutable";
 import { ElanArray } from "./elan-array";
 import { ElanArray2D } from "./elan-array-2d";
+import { Image } from "./image";
 import { LineVG } from "./line-vg";
 import { List } from "./list";
 import { ListImmutable } from "./list-immutable";
@@ -81,6 +82,9 @@ export class StdLib {
 
   @elanClassExport(RectangleVG)
   RectangleVG = RectangleVG;
+
+  @elanClassExport(Image)
+  Image = Image;
 
   @elanClassExport(List)
   List = List;

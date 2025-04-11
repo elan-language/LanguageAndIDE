@@ -24,7 +24,6 @@ import { EnumVal } from "../parse-nodes/enum-val";
 import { FunctionRefNode } from "../parse-nodes/function-ref-node";
 import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { IfExpr } from "../parse-nodes/if-expr";
-import { ImageNode } from "../parse-nodes/image-node";
 import { DictionaryImmutableNode } from "../parse-nodes/immutable-dictionary-node";
 import { InheritanceNode } from "../parse-nodes/inheritanceNode";
 import { InstanceNode } from "../parse-nodes/instanceNode";
@@ -35,6 +34,7 @@ import { Lambda } from "../parse-nodes/lambda";
 import { ListImmutableNode } from "../parse-nodes/list-immutable-node";
 import { ListNode } from "../parse-nodes/list-node";
 import { LitFloat } from "../parse-nodes/lit-float";
+import { LitImage } from "../parse-nodes/lit-image";
 import { LitInt } from "../parse-nodes/lit-int";
 import { LitRegExp } from "../parse-nodes/lit-regExp";
 import { LitStringEmpty } from "../parse-nodes/lit-string-empty";
@@ -267,7 +267,7 @@ export function transform(
     return new CsvAsn(types, fieldId);
   }
 
-  if (node instanceof ImageNode) {
+  if (node instanceof LitImage) {
     return new ImageAsn(fieldId);
   }
 
