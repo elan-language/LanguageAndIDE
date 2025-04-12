@@ -80,7 +80,7 @@ body {
   flex-grow: 1;
   padding: 5px;
   position: relative;
-  overflow-y: auto;
+  overflow-y: scroll;
 }
 
 #rh-header {
