@@ -416,7 +416,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(
       fileImpl,
       `<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-<image x="50%" y="66.66666666666667%" width="50" height="66.66666666666667" href="https://elan-language.github.io/LanguageAndIDE/images/Debug.png" />
+<image x="50%" y="66.66666666666667%" width="50" height="66.66666666666667" href="https://elan-language.github.io/LanguageAndIDE/images/Debug.png" title=""/>
 </svg>
 `,
     );

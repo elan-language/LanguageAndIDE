@@ -15,6 +15,7 @@ import { DottedTerm } from "../src/frames/parse-nodes/dotted-term";
 import { ExprNode } from "../src/frames/parse-nodes/expr-node";
 import { IdentifierNode } from "../src/frames/parse-nodes/identifier-node";
 import { IfExpr } from "../src/frames/parse-nodes/if-expr";
+import { ImageNode } from "../src/frames/parse-nodes/image-node";
 import { InstanceNode } from "../src/frames/parse-nodes/instanceNode";
 import { InstanceProcRef } from "../src/frames/parse-nodes/instanceProcRef";
 import { KeywordNode } from "../src/frames/parse-nodes/keyword-node";
@@ -22,7 +23,6 @@ import { KVPnode } from "../src/frames/parse-nodes/kvp-node";
 import { Lambda } from "../src/frames/parse-nodes/lambda";
 import { ListImmutableNode } from "../src/frames/parse-nodes/list-immutable-node";
 import { LitFloat } from "../src/frames/parse-nodes/lit-float";
-import { LitImage } from "../src/frames/parse-nodes/lit-image";
 import { LitInt } from "../src/frames/parse-nodes/lit-int";
 import { LitRegExp } from "../src/frames/parse-nodes/lit-regExp";
 import { LitString } from "../src/frames/parse-nodes/lit-string";
@@ -1788,12 +1788,21 @@ suite("Parsing Nodes", () => {
       "",
     );
     testNodeParse(
-      new LitImage(),
+      new ImageNode(),
       "image http://website.com/images/image1.png",
       ParseStatus.valid,
       "image http://website.com/images/image1.png",
       "",
       "image http://website.com/images/image1.png",
+      `<img src="http://website.com/images/image1.png">`,
+    );
+    testNodeParse(
+      new ImageNode(),
+      "image http://website.com/images/image1.png with height set to 10, width set to 20",
+      ParseStatus.valid,
+      "image http://website.com/images/image1.png with height set to 10, width set to 20",
+      "",
+      "image http://website.com/images/image1.png with height set to 10, width set to 20",
       `<img src="http://website.com/images/image1.png">`,
     );
   });

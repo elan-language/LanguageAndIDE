@@ -15,8 +15,8 @@ import { BinaryExpression } from "./binary-expression";
 import { CopyWith } from "./copy-with";
 import { EmptyOfTypeNode } from "./empty-of-type-node";
 import { IfExpr } from "./if-expr";
+import { ImageNode } from "./image-node";
 import { Lambda } from "./lambda";
-import { LitImage } from "./lit-image";
 import { NewInstance } from "./new-instance";
 import { ParseNode } from "./parse-node";
 import { Term } from "./term";
@@ -37,7 +37,7 @@ export class ExprNode extends AbstractAlternatives {
       this.alternatives.push(new Lambda());
       this.alternatives.push(new EmptyOfTypeNode());
       this.alternatives.push(new TupleNode());
-      this.alternatives.push(new LitImage());
+      this.alternatives.push(new ImageNode());
       //then others
       this.alternatives.push(new Term());
       this.alternatives.push(new BinaryExpression());

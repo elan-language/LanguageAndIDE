@@ -92,23 +92,26 @@ export class Image extends VectorGraphic {
   @elanProperty()
   url: string = "";
 
-  @elanProcedure(["url"])
-  setUrl(url: string) {
-    this.url = url;
+  @elanProperty()
+  title: string = "";
+
+  @elanProcedure(["title"])
+  setTitle(title: string) {
+    this.title = title;
   }
 
-  @elanFunction(["url"], FunctionOptions.pure, ElanClass(Image))
-  withUrl(url: string): Image {
+  @elanFunction(["title"], FunctionOptions.pure, ElanClass(Image))
+  withTitle(title: string): Image {
     const copy = this.system!.initialise(new Image(this));
-    copy.url = url;
+    copy.title = title;
     return copy;
   }
 
   asSVG(): string {
-    return `<image x="${this.x}%" y="${this.y / 0.75}%" width="${this.width}" height="${this.height / 0.75}" href="${this.url}" />`; //TODO style, size etc
+    return `<image x="${this.x}%" y="${this.y / 0.75}%" width="${this.width}" height="${this.height / 0.75}" href="${this.url}" title="${this.title}"/>`; //TODO style, size etc
   }
 
   async asString() {
-    return `<img src="${this.url}" width="${this.width}" height="${this.height}">`; //TODO style, size etc
+    return `<img src="${this.url}" width="${this.width}" height="${this.height}" title="${this.title}">`; //TODO style, size etc
   }
 }
