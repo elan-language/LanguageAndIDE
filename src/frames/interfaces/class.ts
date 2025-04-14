@@ -1,3 +1,4 @@
+import { Deprecated } from "../../elan-type-interfaces";
 import { ClassSymbol } from "./class-symbol";
 import { ElanSymbol } from "./elan-symbol";
 import { Scope } from "./scope";
@@ -10,4 +11,5 @@ export interface Class extends Scope, ClassSymbol {
   ofTypes: SymbolType[];
   getDirectSuperClassesTypeAndName(transforms: Transforms): [SymbolType, string][];
   updateOfTypes(ofTypes: SymbolType[]): Class;
+  deprecated: Deprecated | undefined;
 }

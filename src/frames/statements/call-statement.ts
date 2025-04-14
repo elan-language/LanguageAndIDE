@@ -2,6 +2,7 @@ import { AbstractFrame } from "../abstract-frame";
 import { CodeSource } from "../code-source";
 import {
   cannotPassAsOutParameter,
+  checkForDeprecation,
   mustBeKnownSymbol,
   mustBeProcedure,
   mustBePublicMember,
@@ -165,6 +166,8 @@ export class CallStatement extends AbstractFrame implements Statement {
       let isAsync: boolean = false;
 
       if (procSymbolType instanceof ProcedureType) {
+        checkForDeprecation(procSymbolType, currentScope, this.compileErrors, this.htmlId);
+
         mustCallExtensionViaQualifier(procSymbolType, qualifier, this.compileErrors, this.htmlId);
         mustCallMemberViaQualifier(
           id,

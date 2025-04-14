@@ -103,7 +103,7 @@ export class CannotUseSystemMethodInAFunction extends CompileError {
   }
 }
 
-export class Deprecated extends CompileError {
+export class IsDeprecated extends CompileError {
   constructor(fromMajor: number, fromMinor: number, help: string, location: string) {
     super(Priority.illegalOperation, `Deprecated since ${fromMajor}.${fromMinor}`, location, help);
   }

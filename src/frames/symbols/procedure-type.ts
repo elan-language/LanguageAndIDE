@@ -1,3 +1,4 @@
+import { Deprecated } from "../../elan-type-interfaces";
 import { SymbolType } from "../interfaces/symbol-type";
 import { immutableTypeOptions } from "../interfaces/type-options";
 
@@ -7,6 +8,7 @@ export class ProcedureType implements SymbolType {
     public readonly parameterTypes: SymbolType[],
     public readonly isExtension: boolean,
     public readonly isAsync: boolean,
+    public readonly deprecated?: Deprecated | undefined,
   ) {}
 
   typeOptions = immutableTypeOptions;

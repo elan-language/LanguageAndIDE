@@ -7,11 +7,11 @@ import {
   CannotUseSystemMethodInAFunction,
   CompileError,
   DeclaredAboveCompileError,
-  Deprecated,
   DuplicateKeyCompileError,
   ExtensionCompileError,
   ExtraParameterCompileError,
   FunctionRefCompileError,
+  IsDeprecated,
   MemberTypeCompileError,
   MissingParameterCompileError,
   MustBeAbstractCompileError,
@@ -266,7 +266,7 @@ export function mustBePureFunctionSymbol(
 }
 
 export function checkForDeprecation(
-  symbolType: FunctionType,
+  symbolType: FunctionType | ProcedureType | ClassType,
   scope: Scope,
   compileErrors: CompileError[],
   location: string,
@@ -279,7 +279,7 @@ export function checkForDeprecation(
 
     if (fromMajor < version.major || (fromMajor === version.major && fromMinor <= version.minor)) {
       compileErrors.push(
-        new Deprecated(fromMajor, fromMinor, symbolType.deprecated.message, location),
+        new IsDeprecated(fromMajor, fromMinor, symbolType.deprecated.message, location),
       );
     }
   }

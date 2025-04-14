@@ -72,6 +72,8 @@ export class ElanProcedureDescriptor implements IElanProcedureDescriptor {
 
   parameterNames: string[] = [];
 
+  deprecated?: Deprecated | undefined;
+
   mapType(scope: Scope): SymbolType {
     const parameterTypes = this.parameterTypes;
 
@@ -80,6 +82,7 @@ export class ElanProcedureDescriptor implements IElanProcedureDescriptor {
       parameterTypes.map((t) => t.mapType(scope)),
       this.isExtension,
       this.isAsync,
+      this.deprecated,
     );
   }
 }
@@ -241,6 +244,8 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
 
   name = ClassName;
 
+  deprecated?: Deprecated | undefined;
+
   classId(className: string, classMetadata: ElanClassDescriptor) {
     const ofTypeNames = (this.ofTypes ?? classMetadata.ofTypes).map((td) => td.name).join("_");
     return `${className}_${ofTypeNames}`;
@@ -289,6 +294,7 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
       [],
       [],
       scope!,
+      this.deprecated,
     );
 
     for (const c of children) {
@@ -518,17 +524,36 @@ export function elanType(eType: TypeDescriptor) {
 }
 
 export function elanDeprecated(fromMajor: number, fromMinor: number, message: string) {
-  return function (target: object, propertyKey: string, _descriptor: PropertyDescriptor) {
-    const metaData: ElanMethodDescriptor =
-      Reflect.getOwnMetadata(elanMetadataKey, target, propertyKey) ?? new ElanSignatureDescriptor();
+  return function (
+    target: object,
+    propertyKey: string,
+    propertyDescriptor?: PropertyDescriptor | undefined,
+  ) {
+    if (propertyDescriptor) {
+      const metaData: ElanMethodDescriptor =
+        Reflect.getOwnMetadata(elanMetadataKey, target, propertyKey) ??
+        new ElanSignatureDescriptor();
 
-    metaData.deprecated = {
-      fromMajor: fromMajor,
-      fromMinor: fromMinor,
-      message: message,
-    };
+      metaData.deprecated = {
+        fromMajor: fromMajor,
+        fromMinor: fromMinor,
+        message: message,
+      };
 
-    Reflect.defineMetadata(elanMetadataKey, metaData, target, propertyKey);
+      Reflect.defineMetadata(elanMetadataKey, metaData, target, propertyKey);
+    } else {
+      const typeMetadata = Reflect.getMetadata(elanMetadataKey, target, propertyKey);
+
+      if (typeMetadata) {
+        typeMetadata.deprecated = {
+          fromMajor: fromMajor,
+          fromMinor: fromMinor,
+          message: message,
+        };
+
+        Reflect.defineMetadata(elanMetadataKey, typeMetadata, target, propertyKey);
+      }
+    }
   };
 }
 

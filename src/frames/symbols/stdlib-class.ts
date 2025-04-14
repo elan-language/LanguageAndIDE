@@ -1,3 +1,4 @@
+import { Deprecated } from "../../elan-type-interfaces";
 import { isMember } from "../frame-helpers";
 import { Class } from "../interfaces/class";
 import { ElanSymbol } from "../interfaces/elan-symbol";
@@ -22,6 +23,7 @@ export class StdLibClass implements Class {
     public ofTypes: SymbolType[],
     public readonly inheritTypes: SymbolType[],
     private readonly scope: Scope,
+    public readonly deprecated: Deprecated | undefined,
   ) {
     this.symbolId = this.name;
   }
@@ -46,6 +48,7 @@ export class StdLibClass implements Class {
       newOfTypes,
       this.inheritTypes,
       this.scope,
+      this.deprecated,
     );
   }
 
