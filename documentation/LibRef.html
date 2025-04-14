@@ -785,7 +785,6 @@ which the dot methods the following methods may be invoked:</p>
 </el-code-block>
 <p>or you could make the code offer the user options: to save again, or to continue without saving.</p>
 <!-- #endregion-->
-<!--   #region Print Html-->
 <h2 id="Html">Printing Html to the Display</h2>
 <p>As well as plain text, it is also possible to print Html to the Display, which will be correctly formatted. For example:</p>
 
@@ -858,6 +857,99 @@ end function
 <li>In general you should avoid using * to define the applicability of a style, since this could mess up the styling of the Elan IDE, and even render it unusable. (Should this happen, refresh the browser and correct the stylesheet definition). If you want a style to apply to all elements that you are printing you may specify <el-code>#display *</el-code>, which means 'all elements within the element with <el-code>id = 'display</el-code>'.</li>
 <li>Beware printing strings with < and > in them in case they enclose non-blank characters, since Elan will try and interpret the enclosed characters as an Html tag.</li>
 </ul>
+<!-- #endregion-->
+<!--   #region Print Html-->
+<h2 id="Html">Printing Html to the Display</h2>
+<p>As well as plain text, it is also possible to print Html to the Display, which will be correctly formatted. For example:</p>
+
+<el-code-block source="Html_1.elan">
+<el-statement class="ok" id="print5" tabindex="0"><el-kw>print </el-kw><el-field id="expr6" class="optional ok" tabindex="0"><el-txt>"<el-lit>&lt;h1 style='color: blue;'&gt;A heading&lt;/h1&gt;</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="print7" tabindex="0"><el-kw>print </el-kw><el-field id="expr8" class="optional ok" tabindex="0"><el-txt>"<el-lit>&lt;p&gt;some text&lt;/p&gt;</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+</el-code-block>
+
+<p>will produce:</p>
+<img src="images/Html_1.png" width="206" height="211">
+<h4 class="no-TOC">Notes</h4>
+<ul>
+<li>For specifying style or other attributes within Html tags, the attribute values should be enclosed in single quotation marks ' as shown above. Html will recognise single or double quotation marks, but entering double quotation marks would terminate the Elan string. Alternatively, you could replace each ' by the interpolated constant <el-code>quotes</el-code>.</li>
+<li>It is not necessary to put individual lines of Html into separate <el-code>print</el-code> statements &ndash; you can print a string of any length &ndash; but putting tags into separate <el-code>print</el-code> statements can improve the readability of your code.</li>
+</ul>
+<h3 class="no-TOC">Using an embedded stylesheet</h3>
+<p>If you want styles to be applied to multiple tags you can embed a stylesheet. For example, the following stylesheet will set the font for all text, and some further details for all &lt;h1&gt; headings:</p>
+<el-code-block source="Html_2.elan">
+     <el-statement class="ok" id="print16" tabindex="0"><el-kw>print </el-kw><el-field id="expr17" class="optional ok" tabindex="0"><el-txt>"<el-lit>&lt;style&gt;</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="print18" tabindex="0"><el-kw>print </el-kw><el-field id="expr19" class="optional ok" tabindex="0"><el-txt>"<el-lit>h1 openBrace</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="print20" tabindex="0"><el-kw>print </el-kw><el-field id="expr21" class="optional ok" tabindex="0"><el-txt>"<el-lit>color: DarkRed;</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="print22" tabindex="0"><el-kw>print </el-kw><el-field id="expr23" class="optional ok" tabindex="0"><el-txt>"<el-lit>font-size: 24pt;</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="print24" tabindex="0"><el-kw>print </el-kw><el-field id="expr25" class="optional ok" tabindex="0"><el-txt><el-id>closeBrace</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="print26" tabindex="0"><el-kw>print </el-kw><el-field id="expr27" class="optional ok" tabindex="0"><el-txt>"<el-lit>p openBrace</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="print28" tabindex="0"><el-kw>print </el-kw><el-field id="expr29" class="optional ok" tabindex="0"><el-txt>"<el-lit>font-family: Serif;</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="print30" tabindex="0"><el-kw>print </el-kw><el-field id="expr31" class="optional ok" tabindex="0"><el-txt><el-id>closeBrace</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="print32" tabindex="0"><el-kw>print </el-kw><el-field id="expr33" class="optional ok" tabindex="0"><el-txt>"<el-lit>&lt;/style&gt;</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="print34" tabindex="0"><el-kw>print </el-kw><el-field id="expr35" class="optional ok" tabindex="0"><el-txt>"<el-lit>&lt;h1&gt;New heading&lt;/h1&gt;</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="print36" tabindex="0"><el-kw>print </el-kw><el-field id="expr37" class="optional ok" tabindex="0"><el-txt>"<el-lit>&lt;p&gt;some new text&lt;/p&gt;</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+</el-code-block>
+
+<img src="images/Html_2.png" width="277" height="219">
+
+<p>This may be safely coalesced into a single line with  <el-code>print</el-code> statements and spaces removed:</p>
+<el-code-block source="Html_2.elan">
+     <el-statement class="ok" id="print41" tabindex="0"><el-kw>print </el-kw><el-field id="expr42" class="optional ok" tabindex="0"><el-txt>"<el-lit>&lt;style&gt;h1</el-lit>" + <el-id>openBrace</el-id> + "<el-lit>color:DarkRed;font-size:24pt;</el-lit>" + <el-id>closeBrace</el-id> + "<el-lit>p</el-lit>" + <el-id>openBrace</el-id> + "<el-lit>font-family:Serif;</el-lit>" + <el-id>closeBrace</el-id> + "<el-lit>&lt;/style&gt;</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+</el-code-block>
+<p>This demonstrates how to include a stylesheet's necessary curly braces { } since, within a literal string, Elan would interpret these as defining an 'interpolation' clause (see <a href="Interpolated string">Interpolated string</a>). This is solved by using the interpolated constants <el-code>openBrace</el-code> and <el-code>closeBrace</el-code> instead of { and }.</p>
+
+<h4 class="no-TOC">Notes</h4>
+<ul>
+<li>If you define an embedded stylesheet in the manner described above, then this should be printed first, and will then be applied to any subsequent printing of Html within the program. However if the Display is cleared, either by the Clear button in the IDE, or programmatically by calling <el-code>clearPrintedText</el-code>, then the stylesheet will be removed also.</li>
+<li> You can, though, print the stylesheet again before printing further content. In this case it can be a good idea to define the stylesheet as a (global) constant.</li>
+<li>In general you should avoid using * to define the applicability of a style, since this could mess up the styling of the Elan IDE, and even render it unusable. (Should this happen, refresh the browser and correct the stylesheet definition). If you want a style to apply to all elements that you are printing you may specify <el-code>#display *</el-code>, which means 'all elements within the element with <el-code>id = 'display</el-code>'.</li>
+</ul>
+<!-- #endregion-->
+<!--   #region Images-->
+<h2 id="image">Handling images</h2>
+
+<h3 class="no-TOC">Printing an image on the Display</h3>
+
+<p>An image that can be accessed via a URL, may be printed on the display using the <el-code><el-kw>image</el-kw></el-code> keywork followed by the URL (note that, here, the URL is <i>not</i> bounded by quotes):</p>
+<el-code><el-statement class="ok" id="print3" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-kw>print </el-kw><el-field id="expr4" class="selected focused optional ok" tabindex="0"><el-txt><input spellcheck="false" data-cursorstart="88" data-cursorend="88" size="87" style="width: 88ch" value="image https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg"></el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Field may contain a literal value, a reference to a variable, or an expression">?</el-help></el-field><el-msg></el-msg><el-fr>2</el-fr></el-statement></el-code>
+
+<p>Note that as soon as you leave the field the text will change to show a thumnail copy of the image itself:</p>
+<el-code><el-statement class="ok" id="print3" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-kw>print </el-kw><el-field id="expr4" class="optional ok" tabindex="0"><el-txt><img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg"></el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Field may contain a literal value, a reference to a variable, or an expression">?</el-help></el-field><el-msg></el-msg><el-fr>2</el-fr></el-statement></el-code>
+<p>but if you edit the field again, the keyword and url will be shown.</p>
+
+<p>When run, by default the image will be printed on the <b>Display</b>, but still thumbnail sized. 
+    You can specify dimensions by using a <el-code><el-kw>with</el-kw></el-code> clause like this:</p>
+
+<el-code><el-statement class="ok" id="print3" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-kw>print </el-kw><el-field id="expr4" class="selected focused optional ok" tabindex="0"><el-txt><input spellcheck="false" data-cursorstart="129" data-cursorend="129" size="128" style="width: 129ch" value="image https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg with width set to 200, height set to 110"></el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Field may contain a literal value, a reference to a variable, or an expression">?</el-help></el-field><el-msg></el-msg><el-fr>2</el-fr></el-statement></el-code>
+
+<p>The <el-code><el-kw>with</el-kw></el-code> clause will also permit you to specify a title for the image (which is good practice for meeting accessibility guideline) - which shows up as a tooltip on the image.
+It will also offer position properties <el-code><el-id>x</el-id></el-code> and <el-code><el-id>y</el-id></el-code>: 
+these are ignored when <i>printing</i> an image, but are useful in the context of drawing vector graphics (see below).</p>
+
+<p>An image specified in this way may also be assigned to a named value, or defined in-line as an argument to a method, for example:</p>
+
+<el-code><el-statement class="ok" id="let5" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-kw>let </el-kw><el-field id="var6" class="ok" tabindex="0"><el-txt><el-id>shark</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="A variable name must start with a lower-case letter, optionally followed by any letters (lower or upper case), and/or numeric digits, and/or underscores - nothing else. (For'tuple deconstruction' or 'list deconstruction' consult documentation.)">?</el-help></el-field><el-kw> be </el-kw><el-field id="expr7" class="ok" tabindex="0"><el-txt><img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg"></el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Field may contain a literal value, a reference to a variable, or an expression">?</el-help></el-field><el-msg></el-msg><el-fr>2</el-fr></el-statement></el-code>
+
+<p>The type of a named value that holds an image is <el-code><el-type>ImageVG</el-type></el-code> - the 'VG' indicating that
+    this type is compatible with <a href="#VectorGraphics">vector graphics</a>, so an image may be added to a <el-code><el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>VectorGraphic</el-type>&gt;</el-code> or displayed
+    directly by:</p>
+
+<el-code><el-statement class="ok" id="call5" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-top><el-kw>call </el-kw><el-field id="ident6" class="ok" tabindex="0"><el-txt><el-method>displayVectorGraphics</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="The name of the procedure to be called (starting lower-case). Alternatively, a 'dotted-call':  the name of a variable or property, followed by a ''' and the name of the procedure method to call on that 'instance'.">?</el-help></el-field>(<el-field id="args7" class="selected focused optional ok" tabindex="0"><el-txt><input spellcheck="false" data-cursorstart="1" data-cursorend="1" size="89" style="width: 90ch" value="[image https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg]"></el-txt><el-place><i>listOfVGs</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="list of zero or more arguments, comma separated. Each argument may be a literal value, variable, or simple expression.">?</el-help></el-field>)<el-msg></el-msg><el-fr>2</el-fr></el-top></el-statement></el-code>
+
+<p>In this usage the position may be controlled by specifying the <el-code><el-id>x</el-id></el-code> and <el-code><el-id>y</el-id></el-code> coordinates for the top-left corner.</p>
+
+<p>It is also possible to instantiate an <el-code><el-type>ImageVG</el-type></el-code> explicitly, but in this case you must provide
+the Url as a <el-code><el-type>String</el-type></el-code>, either as a literal (by surrounding the URL with quotes) or as a named value, for example:</p>
+
+<el-code-block>
+    <main class="ok multiline" id="main1" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu">
+        <el-top><el-expand>+</el-expand><el-kw>main</el-kw><el-msg></el-msg><el-fr>1</el-fr></el-top>
+        <el-statement class="ok" id="let3" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>url</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="A variable name must start with a lower-case letter, optionally followed by any letters (lower or upper case), and/or numeric digits, and/or underscores - nothing else. (For'tuple deconstruction' or 'list deconstruction' consult documentation.)">?</el-help></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt>"<el-lit>https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg</el-lit>"</el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Field may contain a literal value, a reference to a variable, or an expression">?</el-help></el-field><el-msg></el-msg><el-fr>2</el-fr></el-statement>
+        <el-statement class="ok" id="let7" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-kw>let </el-kw><el-field id="var8" class="ok" tabindex="0"><el-txt><el-id>img1</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="A variable name must start with a lower-case letter, optionally followed by any letters (lower or upper case), and/or numeric digits, and/or underscores - nothing else. (For'tuple deconstruction' or 'list deconstruction' consult documentation.)">?</el-help></el-field><el-kw> be </el-kw><el-field id="expr9" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>ImageVG</el-type>(<el-id>url</el-id>)</el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Field may contain a literal value, a reference to a variable, or an expression">?</el-help></el-field><el-msg></el-msg><el-fr>3</el-fr></el-statement>
+        <el-statement class="ok" id="print10" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-kw>print </el-kw><el-field id="expr11" class="optional ok" tabindex="0"><el-txt><el-id>img1</el-id></el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Field may contain a literal value, a reference to a variable, or an expression">?</el-help></el-field><el-msg></el-msg><el-fr>4</el-fr></el-statement>
+        <el-kw>end main</el-kw>
+    </main>
+</el-code-block>
 <!-- #endregion-->
 <!--   #region Block Graphics-->
 <h2 id="BlockGraphics">Block graphics</h2>
