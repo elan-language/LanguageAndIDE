@@ -1,6 +1,5 @@
 import { CompileError } from "../compile-error";
 import {
-  checkForDeprecation,
   mustBeConcreteClass,
   mustBeKnownSymbolType,
   mustBeNewable,
@@ -46,7 +45,6 @@ export class NewAsn extends AbstractAstNode implements AstNode {
     mustBeKnownSymbolType(type, typeAsString, this.compileErrors, this.fieldId);
 
     if (type instanceof ClassType) {
-      checkForDeprecation(type, this.scope, this.compileErrors, this.fieldId);
       mustBeConcreteClass(type, this.compileErrors, this.fieldId);
 
       if (type.subType === ClassSubType.concrete) {

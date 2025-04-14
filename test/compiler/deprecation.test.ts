@@ -8,6 +8,7 @@ import {
 } from "../../src/elan-type-annotations";
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
+import { List } from "../../src/standard-library/list";
 import { StdLibSymbols } from "../../src/standard-library/std-lib-symbols";
 import {
   assertCompiles,
@@ -56,6 +57,9 @@ class TestStdLib {
   @elanDeprecated(0, 0, "LibRef.html#Xxxx")
   @elanClassExport(DeprecatedClass)
   DeprecatedClass = DeprecatedClass;
+
+  @elanClassExport(List)
+  List = List;
 }
 
 suite("Deprecation", () => {
@@ -127,11 +131,45 @@ end main`;
     assertDoesNotCompile(fileImpl, [`Deprecated since 0.0LibRef.html#Xxxx`]);
   });
 
-  test("Fail_ClassDeprecation", async () => {
+  test("Fail_NewClassDeprecation", async () => {
     const code = `${testHeader}
 
 main
   let a be new DeprecatedClass()
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    fileImpl.setSymbols(new StdLibSymbols(new TestStdLib()));
+
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [`Deprecated since 0.0LibRef.html#Xxxx`]);
+  });
+
+  test("Fail_EmptyClassDeprecation", async () => {
+    const code = `${testHeader}
+
+main
+  let a be empty DeprecatedClass
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    fileImpl.setSymbols(new StdLibSymbols(new TestStdLib()));
+
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [`Deprecated since 0.0LibRef.html#Xxxx`]);
+  });
+
+  test("Fail_OfClassDeprecation", async () => {
+    const code = `${testHeader}
+
+main
+  let a be new List<of DeprecatedClass>()
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
