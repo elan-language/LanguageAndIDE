@@ -1,47 +1,11 @@
 import { ElanRuntimeError } from "../elan-runtime-error";
-import {
-  ClassOption,
-  ElanInt,
-  elanClass,
-  elanProcedure,
-  elanProperty,
-} from "../elan-type-annotations";
+import { ClassOption, elanClass } from "../elan-type-annotations";
 
 @elanClass(ClassOption.abstract)
 export class VectorGraphic {
   // this must be implemented by hand on all stdlib classes
   static emptyInstance() {
     return new VectorGraphic();
-  }
-
-  constructor(copy?: VectorGraphic) {
-    this.fillColour = copy ? copy.fillColour : 0;
-    this.strokeColour = copy ? copy.strokeColour : 0;
-    this.strokeWidth = copy ? copy.strokeWidth : 1;
-  }
-
-  @elanProperty(ElanInt)
-  strokeColour: number = 0;
-
-  @elanProcedure(["colour"])
-  setStrokeColour(strokeColour: number) {
-    this.strokeColour = strokeColour;
-  }
-
-  @elanProperty()
-  strokeWidth: number = 0;
-
-  @elanProcedure(["strokeWidth"])
-  setStrokeWidth(strokeWidth: number) {
-    this.strokeWidth = strokeWidth;
-  }
-
-  @elanProperty(ElanInt)
-  fillColour: number = 0;
-
-  @elanProcedure(["fillColour"])
-  setFillColour(fillColour: number) {
-    this.fillColour = fillColour;
   }
 
   asSVG(): string {
@@ -57,31 +21,26 @@ export class VectorGraphic {
     return `#${rgb}`;
   }
 
-  private strokeColourAsHex(): string {
-    if (this.strokeColour < 0) {
+  private strokeColourAsHex(strokeColour: number): string {
+    if (strokeColour < 0) {
       throw new ElanRuntimeError(`strokeColour cannot be transparent (negative value)`);
     }
-    return this.asColour(this.strokeColour);
+    return this.asColour(strokeColour);
   }
-  private fillColourAsHex(): string {
+  private fillColourAsHex(fillColour: number): string {
     let colour = "";
-    if (this.fillColour < 0) {
+    if (fillColour < 0) {
       colour = "none";
     } else {
-      colour = this.asColour(this.fillColour);
+      colour = this.asColour(fillColour);
     }
     return colour;
   }
-
-  private strokeWidthScaled(): number {
-    return this.strokeWidth * 0.3;
+  strokeAsHtml(strokeWidth: number, strokeColour: number): string {
+    return `stroke="${this.strokeColourAsHex(strokeColour)}" stroke-width="${strokeWidth * 0.3}%"`;
   }
 
-  strokeAsHtml(): string {
-    return `stroke="${this.strokeColourAsHex()}" stroke-width="${this.strokeWidthScaled()}%"`;
-  }
-
-  fillAsHtml(): string {
-    return `fill="${this.fillColourAsHex()}"`;
+  fillAsHtml(fillColour: number): string {
+    return `fill="${this.fillColourAsHex(fillColour)}"`;
   }
 }

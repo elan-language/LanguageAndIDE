@@ -396,6 +396,7 @@ el-statement.paused-at > el-fr
     text-indent: 0;
 }
 
-.elan-code img {
+.elan-code img, el-code img {
     height: 0.9em;
+    margin: 0;
 }

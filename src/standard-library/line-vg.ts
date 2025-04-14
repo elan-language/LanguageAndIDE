@@ -3,6 +3,7 @@ import {
   ElanClass,
   elanClass,
   elanFunction,
+  ElanInt,
   elanProcedure,
   elanProperty,
   FunctionOptions,
@@ -23,7 +24,7 @@ export class LineVG extends VectorGraphic {
   private system?: System;
 
   constructor(copy?: LineVG) {
-    super(copy);
+    super();
     this.x1 = copy ? copy.x1 : 10;
     this.y1 = copy ? copy.y1 : 10;
     this.x2 = copy ? copy.x2 : 70;
@@ -91,21 +92,26 @@ export class LineVG extends VectorGraphic {
     copy.y2 = y2;
     return copy;
   }
+  @elanProperty(ElanInt)
+  strokeColour: number = 0;
 
-  @elanFunction(["colour"], FunctionOptions.pure, ElanClass(LineVG))
-  withFillColour(fillColour: number): LineVG {
-    const copy = this.system!.initialise(new LineVG(this));
-    copy.fillColour = fillColour;
-    return copy;
+  @elanProcedure(["colour"])
+  setStrokeColour(strokeColour: number) {
+    this.strokeColour = strokeColour;
   }
-
   @elanFunction(["colour"], FunctionOptions.pure, ElanClass(LineVG))
   withStrokeColour(strokeColour: number): LineVG {
     const copy = this.system!.initialise(new LineVG(this));
     copy.strokeColour = strokeColour;
     return copy;
   }
+  @elanProperty()
+  strokeWidth: number = 0;
 
+  @elanProcedure(["strokeWidth"])
+  setStrokeWidth(strokeWidth: number) {
+    this.strokeWidth = strokeWidth;
+  }
   @elanFunction(["width"], FunctionOptions.pure, ElanClass(LineVG))
   withStrokeWidth(strokeWidth: number): LineVG {
     const copy = this.system!.initialise(new LineVG(this));
@@ -114,6 +120,6 @@ export class LineVG extends VectorGraphic {
   }
 
   asSVG(): string {
-    return `<line x1="${this.x1}%" y1="${this.y1 / 0.75}%" x2="${this.x2}%" y2="${this.y2 / 0.75}%" ${this.strokeAsHtml()}/>`;
+    return `<line x1="${this.x1}%" y1="${this.y1 / 0.75}%" x2="${this.x2}%" y2="${this.y2 / 0.75}%" ${this.strokeAsHtml(this.strokeWidth, this.strokeColour)}/>`;
   }
 }
