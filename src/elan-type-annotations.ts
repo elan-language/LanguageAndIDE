@@ -524,6 +524,15 @@ export function elanType(eType: TypeDescriptor) {
   };
 }
 
+function getDeprecated(reason: Deprecation, fromMajor: number, fromMinor: number, message: string) {
+  return {
+    reason: reason,
+    fromMajor: fromMajor,
+    fromMinor: fromMinor,
+    message: message,
+  } as Deprecated;
+}
+
 export function elanDeprecated(
   reason: Deprecation,
   fromMajor: number,
@@ -540,23 +549,14 @@ export function elanDeprecated(
         Reflect.getOwnMetadata(elanMetadataKey, target, propertyKey) ??
         new ElanSignatureDescriptor();
 
-      metaData.deprecated = {
-        reason: reason,
-        fromMajor: fromMajor,
-        fromMinor: fromMinor,
-        message: message,
-      };
+      metaData.deprecated = getDeprecated(reason, fromMajor, fromMinor, message);
 
       Reflect.defineMetadata(elanMetadataKey, metaData, target, propertyKey);
     } else {
       const typeMetadata = Reflect.getMetadata(elanMetadataKey, target, propertyKey);
 
       if (typeMetadata) {
-        typeMetadata.deprecated = {
-          fromMajor: fromMajor,
-          fromMinor: fromMinor,
-          message: message,
-        };
+        typeMetadata.deprecated = getDeprecated(reason, fromMajor, fromMinor, message);
 
         Reflect.defineMetadata(elanMetadataKey, typeMetadata, target, propertyKey);
       }

@@ -32,6 +32,17 @@ export class DeprecatedClass {
   }
 }
 
+@elanClass(ClassOption.concrete)
+export class DeprecatedClass1 {
+  async _initialise() {
+    return this;
+  }
+
+  static emptyInstance() {
+    return new DeprecatedClass();
+  }
+}
+
 class TestStdLib {
   @elanDeprecated(Deprecation.methodRemoved, 0, 0, "LibRef.html#Xxxx")
   @elanFunction([])
@@ -58,6 +69,10 @@ class TestStdLib {
   @elanDeprecated(Deprecation.classRemoved, 0, 0, "LibRef.html#Xxxx")
   @elanClassExport(DeprecatedClass)
   DeprecatedClass = DeprecatedClass;
+
+  @elanDeprecated(Deprecation.parametersChanged, 0, 0, "LibRef.html#Xxxx")
+  @elanClassExport(DeprecatedClass1)
+  DeprecatedClass1 = DeprecatedClass1;
 
   @elanClassExport(List)
   List = List;
@@ -110,11 +125,45 @@ end main`;
     assertCompiles(fileImpl);
   });
 
-  test("Pass_ParametersChangedWithoutCompileErrors", async () => {
+  test("Pass_ParametersChangedWithoutCompileErrors1", async () => {
     const code = `${testHeader}
 
 main
   variable x set to deprecatedFunctionWithParameters1()
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    fileImpl.setSymbols(new StdLibSymbols(new TestStdLib()));
+
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertCompiles(fileImpl);
+  });
+
+  test("Pass_ParametersChangedWithoutCompileErrors2", async () => {
+    const code = `${testHeader}
+
+main
+  variable x set to deprecatedFunctionWithParameters2("fred")
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    fileImpl.setSymbols(new StdLibSymbols(new TestStdLib()));
+
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertCompiles(fileImpl);
+  });
+
+  test("Pass_ParametersChangedWithoutCompileErrorsOnClass", async () => {
+    const code = `${testHeader}
+
+main
+  variable x set to new DeprecatedClass1()
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
@@ -212,7 +261,7 @@ end main`;
     assertDoesNotCompile(fileImpl, [`Deprecated since 0.0LibRef.html#Xxxx`]);
   });
 
-  test("Fail_ParametersChangedWithCompileErrors", async () => {
+  test("Fail_ParametersChangedWithCompileErrors1", async () => {
     const code = `${testHeader}
 
 main
@@ -228,6 +277,46 @@ end main`;
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "Too many argument(s). Expected: none",
+      `Deprecated since 0.0LibRef.html#Xxxx`,
+    ]);
+  });
+
+  test("Fail_ParametersChangedWithCompileErrors2", async () => {
+    const code = `${testHeader}
+
+main
+  variable x set to deprecatedFunctionWithParameters2()
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    fileImpl.setSymbols(new StdLibSymbols(new TestStdLib()));
+
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Missing argument(s). Expected: s (String)",
+      `Deprecated since 0.0LibRef.html#Xxxx`,
+    ]);
+  });
+
+  test("Fail_ParametersChangedWithCompileErrorsOnClass", async () => {
+    const code = `${testHeader}
+
+main
+  variable x set to new DeprecatedClass1<of Int>()
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    fileImpl.setSymbols(new StdLibSymbols(new TestStdLib()));
+
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "<of Type(s)> Expected: 0 Provided: 1",
       `Deprecated since 0.0LibRef.html#Xxxx`,
     ]);
   });

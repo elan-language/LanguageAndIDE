@@ -65,16 +65,17 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
 
     mustBeKnownSymbolType(rootSt, this.id, this.compileErrors, this.fieldId);
 
-    if (rootSt instanceof ClassType) {
-      checkForDeprecation(rootSt, this.scope, this.compileErrors, this.fieldId);
-    }
-
     mustMatchGenericParameters(
       this.genericParameters,
       this.expectedMinimumGenericParameters(),
       this.compileErrors,
       this.fieldId,
     );
+
+    if (rootSt instanceof ClassType) {
+      // check after generic parameters
+      checkForDeprecation(rootSt, this.scope, this.compileErrors, this.fieldId);
+    }
 
     for (const gp of this.genericParameters) {
       gp.compile();
