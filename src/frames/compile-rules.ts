@@ -1,4 +1,5 @@
 import { ElanCompilerError } from "../elan-compiler-error";
+import { Deprecation } from "../elan-type-interfaces";
 import { Property } from "./class-members/property";
 import {
   CannotCallAFunction,
@@ -272,6 +273,14 @@ export function checkForDeprecation(
   location: string,
 ) {
   if (symbolType.deprecated) {
+    if (
+      symbolType.deprecated.reason === Deprecation.parametersChanged &&
+      compileErrors.length === 0
+    ) {
+      // ignore if the parameters compiled
+      return;
+    }
+
     const file = getGlobalScope(scope);
     const version = file.getVersion();
     const fromMajor = symbolType.deprecated.fromMajor;

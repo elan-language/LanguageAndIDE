@@ -95,8 +95,6 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
     mustbeValidQualifier(this.precedingNode, this.compileErrors, this.fieldId);
 
     if (funcSymbolType instanceof FunctionType) {
-      checkForDeprecation(funcSymbolType, this.scope, this.compileErrors, this.fieldId);
-
       mustBePureFunctionSymbol(funcSymbolType, this.scope, this.compileErrors, this.fieldId);
 
       mustCallExtensionViaQualifier(
@@ -126,6 +124,9 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
         this.compileErrors,
         this.fieldId,
       );
+
+      // do after parameters checked
+      checkForDeprecation(funcSymbolType, this.scope, this.compileErrors, this.fieldId);
 
       this.isAsync = funcSymbolType.isAsync;
     } else {
