@@ -1,6 +1,7 @@
 import { AssertOutcome } from "../assert-outcome";
 import { ElanFileError } from "../elan-file-error";
 import { elanVersion, isElanProduction } from "../production";
+import { StdLib } from "../standard-library/std-lib";
 import { StdLibSymbols } from "../standard-library/std-lib-symbols";
 import { AbstractSelector } from "./abstract-selector";
 import { CodeSource, CodeSourceFromString } from "./code-source";
@@ -112,7 +113,7 @@ export class FileImpl implements File, Scope {
     private readonly transform: Transforms,
     allowAnyHeader?: boolean,
   ) {
-    this._stdLibSymbols = new StdLibSymbols();
+    this._stdLibSymbols = new StdLibSymbols(new StdLib());
     this._map = new Map<string, Selectable>();
     this._factory = new StatementFactoryImpl();
     const selector = new GlobalSelector(this);
@@ -122,6 +123,11 @@ export class FileImpl implements File, Scope {
       this.allowAnyHeader = allowAnyHeader;
     }
     this.scratchPad = new ScratchPad();
+  }
+
+  // for testing only
+  setSymbols(testSymbols: StdLibSymbols) {
+    this._stdLibSymbols = testSymbols;
   }
 
   private version = elanVersion;

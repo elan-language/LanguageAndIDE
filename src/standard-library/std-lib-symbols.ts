@@ -14,12 +14,11 @@ import { NullScope } from "../frames/symbols/null-scope";
 import { symbolMatches } from "../frames/symbols/symbol-helpers";
 import { SymbolScope } from "../frames/symbols/symbol-scope";
 import { UnknownSymbol } from "../frames/symbols/unknown-symbol";
-import { StdLib } from "./std-lib";
 
 export class StdLibSymbols implements Scope {
-  constructor() {
+  constructor(stdlib: object) {
     try {
-      this.loadSymbols();
+      this.loadSymbols(stdlib);
       this.isInitialised = true;
     } catch (e) {
       this.isInitialised = false;
@@ -32,9 +31,7 @@ export class StdLibSymbols implements Scope {
 
   private symbols = new Map<string, ElanSymbol>();
 
-  private loadSymbols() {
-    const stdlib = new StdLib();
-
+  private loadSymbols(stdlib: object) {
     const names = Object.getOwnPropertyNames(Object.getPrototypeOf(stdlib)).concat(
       Object.getOwnPropertyNames(stdlib),
     );
