@@ -9,6 +9,7 @@ export abstract class CompileError {
     private readonly basePriority: Priority,
     public readonly message: string,
     public readonly locationId: string,
+    public readonly link?: string,
   ) {}
 
   public get isWarning() {
@@ -103,12 +104,8 @@ export class CannotUseSystemMethodInAFunction extends CompileError {
 }
 
 export class Deprecated extends CompileError {
-  constructor(fromMajor: number, fromMinor: number, msg: string, location: string) {
-    super(
-      Priority.illegalOperation,
-      `Deprecated since ${fromMajor}.${fromMinor} for help see ${msg}`,
-      location,
-    );
+  constructor(fromMajor: number, fromMinor: number, help: string, location: string) {
+    super(Priority.illegalOperation, `Deprecated since ${fromMajor}.${fromMinor}`, location, help);
   }
 }
 

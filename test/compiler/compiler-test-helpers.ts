@@ -53,7 +53,8 @@ export function assertDoesNotCompile(file: FileImpl, msgs: string[]) {
     const m = msgs[i];
     const e = errors[i];
     const id = e.locationId; // to help test migration
-    assert.strictEqual(e.message, m);
+    const em = e.message + (e.link ?? "");
+    assert.strictEqual(em, m);
   }
 }
 
