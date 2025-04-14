@@ -44,6 +44,12 @@ export function assertObjectCodeIs(file: FileImpl, objectCode: string) {
   assert.strictEqual(actual, expected);
 }
 
+export function assertCompiles(file: FileImpl) {
+  file.compile();
+  const errors = file.aggregateCompileErrors();
+  assert.strictEqual(errors.length, 0, errors.map((e) => e.message).join(", "));
+}
+
 export function assertDoesNotCompile(file: FileImpl, msgs: string[]) {
   file.compile();
 
