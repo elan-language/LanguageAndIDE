@@ -234,7 +234,7 @@ export class WebInputOutput implements ElanInputOutput {
         if (entered) {
           rs(inp.value);
           this.stopReading();
-          this.printLine(inp.value);
+          this.printLine(inp.value.replace(/</g, "&lt;"));
         }
       }, 250);
     });
