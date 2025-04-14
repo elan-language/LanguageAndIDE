@@ -1,6 +1,7 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
+  assertObjectCodeDoesNotExecute,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
@@ -128,5 +129,33 @@ return [main, _tests];}`;
       fileImpl,
       `<img src="https://elan-language.github.io/LanguageAndIDE/images/Debug.png" width="50" height="50" title="">`,
     );
+  });
+  test("Pass_PrintUncloseHtmlTag", async () => {
+    const code = `${testHeader}
+
+main
+  print "<3"
+  print "a < b "
+  print "c <d> "
+  print "e <f "
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await system.printLine("<3");
+  await system.printLine("a < b ");
+  await system.printLine("c <d> ");
+  await system.printLine("e <f ");
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeDoesNotExecute(fileImpl, `Unclosed HTML tag in printed text 'e &lt;f '`);
   });
 });

@@ -1,4 +1,5 @@
 import { ElanInputOutput } from "../../src/elan-input-output";
+import { checkForUnclosedHtmlTag } from "../../src/web/web-helpers";
 
 export class TestInputOutput implements ElanInputOutput {
   waitForAnyKey(): Promise<void> {
@@ -51,6 +52,7 @@ export class TestInputOutput implements ElanInputOutput {
     return Promise.resolve();
   }
   print(line: string): Promise<void> {
+    checkForUnclosedHtmlTag(line);
     this.printed = this.printed + line;
     return Promise.resolve();
   }
