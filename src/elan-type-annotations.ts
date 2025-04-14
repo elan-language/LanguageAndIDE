@@ -1,6 +1,7 @@
 import { ElanCompilerError } from "./elan-compiler-error";
 import {
   Deprecated,
+  Deprecation,
   ElanDescriptor,
   elanMetadataKey,
   ElanMethodDescriptor,
@@ -523,7 +524,12 @@ export function elanType(eType: TypeDescriptor) {
   };
 }
 
-export function elanDeprecated(fromMajor: number, fromMinor: number, message: string) {
+export function elanDeprecated(
+  reason: Deprecation,
+  fromMajor: number,
+  fromMinor: number,
+  message: string,
+) {
   return function (
     target: object,
     propertyKey: string,
@@ -535,6 +541,7 @@ export function elanDeprecated(fromMajor: number, fromMinor: number, message: st
         new ElanSignatureDescriptor();
 
       metaData.deprecated = {
+        reason: reason,
         fromMajor: fromMajor,
         fromMinor: fromMinor,
         message: message,

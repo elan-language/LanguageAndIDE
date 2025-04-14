@@ -6,6 +6,7 @@ import {
   elanFunction,
   elanProcedure,
 } from "../../src/elan-type-annotations";
+import { Deprecation } from "../../src/elan-type-interfaces";
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import { List } from "../../src/standard-library/list";
@@ -32,29 +33,29 @@ export class DeprecatedClass {
 }
 
 class TestStdLib {
-  @elanDeprecated(0, 0, "LibRef.html#Xxxx")
+  @elanDeprecated(Deprecation.methodRemoved, 0, 0, "LibRef.html#Xxxx")
   @elanFunction([])
   deprecatedFunction(): number {
     return 0;
   }
 
-  @elanDeprecated(0, 0, "LibRef.html#Xxxx")
+  @elanDeprecated(Deprecation.methodRemoved, 0, 0, "LibRef.html#Xxxx")
   @elanProcedure([])
   deprecatedProcedure() {}
 
-  @elanDeprecated(1, 0, "LibRef.html#Xxxx")
+  @elanDeprecated(Deprecation.methodRemoved, 1, 0, "LibRef.html#Xxxx")
   @elanFunction([])
   notYetDeprecated1(): number {
     return 0;
   }
 
-  @elanDeprecated(0, 20, "LibRef.html#Xxxx")
+  @elanDeprecated(Deprecation.methodRemoved, 0, 20, "LibRef.html#Xxxx")
   @elanFunction([])
   notYetDeprecated2(): number {
     return 0;
   }
 
-  @elanDeprecated(0, 0, "LibRef.html#Xxxx")
+  @elanDeprecated(Deprecation.classRemoved, 0, 0, "LibRef.html#Xxxx")
   @elanClassExport(DeprecatedClass)
   DeprecatedClass = DeprecatedClass;
 
