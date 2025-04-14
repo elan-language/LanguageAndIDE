@@ -32,6 +32,10 @@ export class ClassType implements ReifyableSymbolType, Scope, GenericSymbolType 
     return isClassTypeDef(this.scope) ? this.scope.ofTypes : [];
   }
 
+  get deprecated() {
+    return isClassTypeDef(this.scope) ? this.scope.deprecated : undefined;
+  }
+
   reify(gts: SymbolType[]): ReifyableSymbolType {
     if (isClassTypeDef(this.scope)) {
       const cls = this.scope.updateOfTypes(gts);

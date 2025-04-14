@@ -1,3 +1,4 @@
+import { Deprecated } from "../../elan-type-interfaces";
 import { Constructor } from "../class-members/constructor";
 import { mustBeDeclaredAbove, mustImplementSuperClasses } from "../compile-rules";
 import { isConstructor } from "../frame-helpers";
@@ -22,6 +23,8 @@ export class ConcreteClass extends ClassFrame {
   }
 
   ofTypes: SymbolType[] = [];
+
+  deprecated: Deprecated | undefined = undefined;
 
   initialKeywords(): string {
     return classKeyword;

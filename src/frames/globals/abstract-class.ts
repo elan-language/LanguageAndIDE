@@ -1,3 +1,4 @@
+import { Deprecated } from "../../elan-type-interfaces";
 import { mustBeDeclaredAbove } from "../compile-rules";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
@@ -22,6 +23,8 @@ export class AbstractClass extends ClassFrame {
   }
 
   ofTypes: SymbolType[] = [];
+
+  deprecated: Deprecated | undefined = undefined;
 
   initialKeywords(): string {
     return abstractClassKeywords;

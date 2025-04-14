@@ -1,5 +1,6 @@
 import { CompileError } from "../compile-error";
 import {
+  checkForDeprecation,
   mustBeImmutableGenericType,
   mustBeKnownSymbolType,
   mustBeValidKeyType,
@@ -63,6 +64,10 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
     const rootSt = this.rootSymbol().symbolType(transforms());
 
     mustBeKnownSymbolType(rootSt, this.id, this.compileErrors, this.fieldId);
+
+    if (rootSt instanceof ClassType) {
+      checkForDeprecation(rootSt, this.scope, this.compileErrors, this.fieldId);
+    }
 
     mustMatchGenericParameters(
       this.genericParameters,

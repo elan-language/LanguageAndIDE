@@ -1,3 +1,4 @@
+import { Deprecated } from "../../elan-type-interfaces";
 import { mustBeImmutableType } from "../compile-rules";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
@@ -24,6 +25,8 @@ export class RecordFrame extends ClassFrame {
   }
 
   ofTypes: SymbolType[] = [];
+
+  deprecated: Deprecated | undefined = undefined;
 
   initialKeywords(): string {
     return recordKeyword;

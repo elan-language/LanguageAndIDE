@@ -1,3 +1,4 @@
+import { Deprecated } from "../../elan-type-interfaces";
 import { AbstractFrame } from "../abstract-frame";
 import { AbstractSelector } from "../abstract-selector";
 import { AbstractFunction } from "../class-members/abstract-function";
@@ -88,6 +89,8 @@ export abstract class ClassFrame
   }
 
   ofTypes: SymbolType[] = [];
+
+  deprecated: Deprecated | undefined = undefined;
 
   updateOfTypes(_ofTypes: SymbolType[]) {
     return this;
