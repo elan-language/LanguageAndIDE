@@ -11,4 +11,4 @@ export const Array2DName = "Array2D";
 export const FuncName = "Func";
 export const TupleName = "Tuple";
 export const ClassName = "Class";
-export const ImageName = "Image";
+export const ImageName = "ImageVG";

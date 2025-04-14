@@ -17,8 +17,9 @@ export class ImageNode extends AbstractSequence {
       this.addElement(new KeywordNode(imageKeyword));
       this.addElement(new SpaceNode(Space.added));
       this.url = new RegExMatchNode(Regexes.url);
+      this.url.completionWhenEmpty = "<i>url</i>";
       this.addElement(this.url);
-      this.withClause = new OptionalNode(new WithClause(() => "Image"));
+      this.withClause = new OptionalNode(new WithClause(() => "ImageVG"));
       this.addElement(this.withClause);
       super.parseText(text);
     }
