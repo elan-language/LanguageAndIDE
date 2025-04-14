@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ElanInputOutput } from "../elan-input-output";
+import { checkForUnclosedHtmlTag } from "./web-helpers";
 
 export class WebInputOutput implements ElanInputOutput {
   keyBuffer: KeyboardEvent[] = [];
@@ -280,6 +281,7 @@ export class WebInputOutput implements ElanInputOutput {
   }
 
   renderPrintedText(): Promise<void> {
+    checkForUnclosedHtmlTag(this.printedText);
     const div = document.getElementById("printed-text")!;
     div.innerHTML = this.printedText;
     this.display.focus();

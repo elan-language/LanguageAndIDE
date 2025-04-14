@@ -1,3 +1,4 @@
+import { ElanRuntimeError } from "../elan-runtime-error";
 import { DefaultProfile } from "../frames/default-profile";
 import { DefaultUserConfig } from "../frames/default-user-config";
 import { Profile } from "../frames/interfaces/profile";
@@ -52,5 +53,13 @@ export async function fetchProfile(name: string) {
   } catch {
     console.warn(`${name} profile not found`);
     return new DefaultProfile();
+  }
+}
+
+export function checkForUnclosedHtmlTag(text: string) {
+  if (/<[A-Za-z!\/?][^>]*$/.test(text)) {
+    throw new ElanRuntimeError(
+      "Unclosed HTML tag in printed text '" + text.replace(/</g, "&lt;") + "'",
+    );
   }
 }
