@@ -166,8 +166,6 @@ export class CallStatement extends AbstractFrame implements Statement {
       let isAsync: boolean = false;
 
       if (procSymbolType instanceof ProcedureType) {
-        checkForDeprecation(procSymbolType, currentScope, this.compileErrors, this.htmlId);
-
         mustCallExtensionViaQualifier(procSymbolType, qualifier, this.compileErrors, this.htmlId);
         mustCallMemberViaQualifier(
           id,
@@ -190,6 +188,8 @@ export class CallStatement extends AbstractFrame implements Statement {
           this.htmlId,
         );
 
+        // do after parameters checked
+        checkForDeprecation(procSymbolType, currentScope, this.compileErrors, this.htmlId);
         isAsync = procSymbolType.isAsync;
       }
 

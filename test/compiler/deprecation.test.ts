@@ -43,13 +43,13 @@ class TestStdLib {
   @elanProcedure([])
   deprecatedProcedure() {}
 
-  @elanDeprecated(Deprecation.methodRemoved, 1, 0, "LibRef.html#Xxxx")
+  @elanDeprecated(Deprecation.methodRemoved, 2, 0, "LibRef.html#Xxxx")
   @elanFunction([])
   notYetDeprecated1(): number {
     return 0;
   }
 
-  @elanDeprecated(Deprecation.methodRemoved, 0, 20, "LibRef.html#Xxxx")
+  @elanDeprecated(Deprecation.methodRemoved, 1, 20, "LibRef.html#Xxxx")
   @elanFunction([])
   notYetDeprecated2(): number {
     return 0;
@@ -61,6 +61,18 @@ class TestStdLib {
 
   @elanClassExport(List)
   List = List;
+
+  @elanDeprecated(Deprecation.parametersChanged, 0, 0, "LibRef.html#Xxxx")
+  @elanFunction([])
+  deprecatedFunctionWithParameters1(): number {
+    return 0;
+  }
+
+  @elanDeprecated(Deprecation.parametersChanged, 0, 0, "LibRef.html#Xxxx")
+  @elanFunction(["s"])
+  deprecatedFunctionWithParameters2(s: string): number {
+    return 0;
+  }
 }
 
 suite("Deprecation", () => {
@@ -86,6 +98,23 @@ end main`;
 
 main
   variable x set to notYetDeprecated2()
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    fileImpl.setSymbols(new StdLibSymbols(new TestStdLib()));
+
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertCompiles(fileImpl);
+  });
+
+  test("Pass_ParametersChangedWithoutCompileErrors", async () => {
+    const code = `${testHeader}
+
+main
+  variable x set to deprecatedFunctionWithParameters1()
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
@@ -181,5 +210,25 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [`Deprecated since 0.0LibRef.html#Xxxx`]);
+  });
+
+  test("Fail_ParametersChangedWithCompileErrors", async () => {
+    const code = `${testHeader}
+
+main
+  variable x set to deprecatedFunctionWithParameters1("fred")
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    fileImpl.setSymbols(new StdLibSymbols(new TestStdLib()));
+
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Too many argument(s). Expected: none",
+      `Deprecated since 0.0LibRef.html#Xxxx`,
+    ]);
   });
 });
