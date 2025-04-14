@@ -3,6 +3,7 @@ import {
   ElanClass,
   elanClass,
   elanFunction,
+  ElanInt,
   elanProcedure,
   elanProperty,
   FunctionOptions,
@@ -23,7 +24,7 @@ export class RectangleVG extends VectorGraphic {
   private system?: System;
 
   constructor(copy?: RectangleVG) {
-    super(copy);
+    super();
     this.x = copy ? copy.x : 10;
     this.y = copy ? copy.y : 10;
     this.width = copy ? copy.width : 40;
@@ -93,6 +94,40 @@ export class RectangleVG extends VectorGraphic {
     return copy;
   }
 
+  @elanProperty(ElanInt)
+  strokeColour: number = 0;
+
+  @elanProcedure(["colour"])
+  setStrokeColour(strokeColour: number) {
+    this.strokeColour = strokeColour;
+  }
+  @elanFunction(["colour"], FunctionOptions.pure, ElanClass(RectangleVG))
+  withStrokeColour(strokeColour: number): RectangleVG {
+    const copy = this.system!.initialise(new RectangleVG(this));
+    copy.strokeColour = strokeColour;
+    return copy;
+  }
+  @elanProperty()
+  strokeWidth: number = 0;
+
+  @elanProcedure(["strokeWidth"])
+  setStrokeWidth(strokeWidth: number) {
+    this.strokeWidth = strokeWidth;
+  }
+  @elanFunction(["width"], FunctionOptions.pure, ElanClass(RectangleVG))
+  withStrokeWidth(strokeWidth: number): RectangleVG {
+    const copy = this.system!.initialise(new RectangleVG(this));
+    copy.strokeWidth = strokeWidth;
+    return copy;
+  }
+  @elanProperty(ElanInt)
+  fillColour: number = 0;
+
+  @elanProcedure(["fillColour"])
+  setFillColour(fillColour: number) {
+    this.fillColour = fillColour;
+  }
+
   @elanFunction(["colour"], FunctionOptions.pure, ElanClass(RectangleVG))
   withFillColour(fillColour: number): RectangleVG {
     const copy = this.system!.initialise(new RectangleVG(this));
@@ -100,21 +135,7 @@ export class RectangleVG extends VectorGraphic {
     return copy;
   }
 
-  @elanFunction(["colour"], FunctionOptions.pure, ElanClass(RectangleVG))
-  withStrokeColour(strokeColour: number): RectangleVG {
-    const copy = this.system!.initialise(new RectangleVG(this));
-    copy.strokeColour = strokeColour;
-    return copy;
-  }
-
-  @elanFunction(["width"], FunctionOptions.pure, ElanClass(RectangleVG))
-  withStrokeWidth(strokeWidth: number): RectangleVG {
-    const copy = this.system!.initialise(new RectangleVG(this));
-    copy.strokeWidth = strokeWidth;
-    return copy;
-  }
-
   asSVG(): string {
-    return `<rect x="${this.x}%" y="${this.y / 0.75}%" width="${this.width}%" height="${this.height / 0.75}%" ${this.strokeAsHtml()} ${this.fillAsHtml()}/>`;
+    return `<rect x="${this.x}%" y="${this.y / 0.75}%" width="${this.width}%" height="${this.height / 0.75}%" ${this.strokeAsHtml(this.strokeWidth, this.strokeColour)} ${this.fillAsHtml(this.fillColour)}/>`;
   }
 }

@@ -25,10 +25,12 @@ export class ImageVG extends VectorGraphic {
   private system?: System;
 
   constructor(copy?: ImageVG) {
-    super(copy);
-    this.fillColour = copy ? copy.fillColour : 0xffff00;
-    this.strokeColour = copy ? copy.strokeColour : 0;
-    this.strokeWidth = copy ? copy.strokeWidth : 1;
+    super();
+    this.x = copy ? copy.x : 0;
+    this.y = copy ? copy.y : 0;
+    this.width = copy ? copy.width : 13.2;
+    this.height = copy ? copy.height : 13.2;
+    this.url = copy ? copy.url : "";
   }
 
   @elanProperty()
@@ -62,7 +64,7 @@ export class ImageVG extends VectorGraphic {
   }
 
   @elanProperty()
-  width: number = 13.2; // for same (default) size as thumbnail in code
+  width: number; // for same (default) size as thumbnail in code
 
   @elanProcedure(["width"])
   setWidth(width: number) {

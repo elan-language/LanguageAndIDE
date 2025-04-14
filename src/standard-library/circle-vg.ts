@@ -3,6 +3,7 @@ import {
   ElanClass,
   elanClass,
   elanFunction,
+  ElanInt,
   elanProcedure,
   elanProperty,
   FunctionOptions,
@@ -23,7 +24,7 @@ export class CircleVG extends VectorGraphic {
   private system?: System;
 
   constructor(copy?: CircleVG) {
-    super(copy);
+    super();
     this.centreX = copy ? copy.centreX : 50;
     this.centreY = copy ? copy.centreY : 37.5;
     this.radius = copy ? copy.radius : 10;
@@ -76,11 +77,12 @@ export class CircleVG extends VectorGraphic {
     copy.radius = r;
     return copy;
   }
-  @elanFunction(["colour"], FunctionOptions.pure, ElanClass(CircleVG))
-  withFillColour(fillColour: number): CircleVG {
-    const copy = this.system!.initialise(new CircleVG(this));
-    copy.fillColour = fillColour;
-    return copy;
+  @elanProperty(ElanInt)
+  strokeColour: number = 0;
+
+  @elanProcedure(["colour"])
+  setStrokeColour(strokeColour: number) {
+    this.strokeColour = strokeColour;
   }
   @elanFunction(["colour"], FunctionOptions.pure, ElanClass(CircleVG))
   withStrokeColour(strokeColour: number): CircleVG {
@@ -88,14 +90,35 @@ export class CircleVG extends VectorGraphic {
     copy.strokeColour = strokeColour;
     return copy;
   }
+  @elanProperty()
+  strokeWidth: number = 0;
+
+  @elanProcedure(["strokeWidth"])
+  setStrokeWidth(strokeWidth: number) {
+    this.strokeWidth = strokeWidth;
+  }
   @elanFunction(["width"], FunctionOptions.pure, ElanClass(CircleVG))
   withStrokeWidth(strokeWidth: number): CircleVG {
     const copy = this.system!.initialise(new CircleVG(this));
     copy.strokeWidth = strokeWidth;
     return copy;
   }
+  @elanProperty(ElanInt)
+  fillColour: number = 0;
+
+  @elanProcedure(["fillColour"])
+  setFillColour(fillColour: number) {
+    this.fillColour = fillColour;
+  }
+
+  @elanFunction(["colour"], FunctionOptions.pure, ElanClass(CircleVG))
+  withFillColour(fillColour: number): CircleVG {
+    const copy = this.system!.initialise(new CircleVG(this));
+    copy.fillColour = fillColour;
+    return copy;
+  }
 
   asSVG(): string {
-    return `<circle cx="${this.centreX}%" cy="${this.centreY / 0.75}%" r="${this.radius * 1.125}%" ${this.strokeAsHtml()} ${this.fillAsHtml()}/>`;
+    return `<circle cx="${this.centreX}%" cy="${this.centreY / 0.75}%" r="${this.radius * 1.125}%" ${this.strokeAsHtml(this.strokeWidth, this.strokeColour)} ${this.fillAsHtml(this.fillColour)}/>`;
   }
 }
