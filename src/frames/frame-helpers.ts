@@ -136,6 +136,7 @@ export function escapeHtmlChars(str: string): string {
 
 export function helper_compileMsgAsHtml(loc: Frame | Field): string {
   let msg = "";
+  let link = "";
   const first = loc.compileErrors[0];
   const n = loc.compileErrors.length;
   if (n > 0) {
@@ -144,14 +145,19 @@ export function helper_compileMsgAsHtml(loc: Frame | Field): string {
       first,
     );
     msg = highest.message;
+    link = highest.link ?? "";
   }
   let cls = "";
   const compile = helper_compileStatusAsDisplayStatus(loc.readCompileStatus());
   if (compile === DisplayColour.error || compile === DisplayColour.warning) {
     cls = DisplayColour[compile];
   }
+  if (link) {
+    cls = cls + " error-link";
+  }
   const toDisplay = escapeHtmlChars(msg);
-  return cls === "" ? "<el-msg></el-msg>" : ` <el-msg class="${cls}">${toDisplay}</el-msg>`;
+  const href = link ? ` data-href="${link}"` : "";
+  return cls === "" ? "<el-msg></el-msg>" : ` <el-msg class="${cls}"${href}>${toDisplay}</el-msg>`;
 }
 
 export function helper_deriveCompileStatusFromErrors(errors: CompileError[]): CompileStatus {

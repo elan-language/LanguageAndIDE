@@ -12,7 +12,7 @@ import {
 } from "./compiler-test-helpers";
 
 class TestStdLib {
-  @elanDeprecated(0, 0, "")
+  @elanDeprecated(0, 0, "LibRef.html#Xxxx")
   @elanFunction([])
   deprecated(): number {
     return 0;
@@ -34,6 +34,6 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Deprecated since 0.0 for help see "]);
+    assertDoesNotCompile(fileImpl, [`Deprecated since 0.0LibRef.html#Xxxx`]);
   });
 });

@@ -404,3 +404,8 @@ button.plain:disabled, menu-item.button.plain:disabled {
   background-color: var(--selection);
   width: 100%;
 }
+
+.error-link {
+  cursor: pointer;
+  text-decoration: underline;
+}

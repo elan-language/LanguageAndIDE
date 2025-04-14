@@ -1059,6 +1059,19 @@ async function updateContent(text: string, editingField: boolean) {
     }
   }
 
+  const items = document.querySelectorAll(".error-link");
+
+  for (const item of items) {
+    item.addEventListener("click", (event) => {
+      const ke = event as PointerEvent;
+      const tgt = ke.target as HTMLDivElement;
+      const href = tgt.dataset.href;
+      if (href) {
+        window.open(`documentation/${href}`, "_blank")?.focus();
+      }
+    });
+  }
+
   if (input) {
     const cursorStart = input.dataset.cursorstart as string;
     const cursorEnd = input.dataset.cursorend as string;
