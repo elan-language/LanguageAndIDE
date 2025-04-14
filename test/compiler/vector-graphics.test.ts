@@ -392,7 +392,7 @@ return [main, _tests];}`;
 
 main
   let vg be new List<of VectorGraphic>()
-  let i be new Image() with x set to 50, y set to 50, width set to 50, height set to 50, url set to "https://elan-language.github.io/LanguageAndIDE/images/Debug.png"
+  let i be new Image("https://elan-language.github.io/LanguageAndIDE/images/Debug.png") with x set to 50, y set to 50, width set to 50, height set to 50
   call vg.append(i)
   print vg.vectorGraphicsAsHtml()
 end main`;
@@ -401,7 +401,7 @@ end main`;
 const global = new class {};
 async function main() {
   const vg = system.initialise(await new _stdlib.List()._initialise());
-  const i = await (async () => {const _a = {...system.initialise(await new _stdlib.Image()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new _stdlib.Image()._initialise()))); _a.x = 50; _a.y = 50; _a.width = 50; _a.height = 50; _a.url = "https://elan-language.github.io/LanguageAndIDE/images/Debug.png"; return _a;})();
+  const i = await (async () => {const _a = {...system.initialise(await new _stdlib.Image()._initialise("https://elan-language.github.io/LanguageAndIDE/images/Debug.png"))}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new _stdlib.Image()._initialise("https://elan-language.github.io/LanguageAndIDE/images/Debug.png")))); _a.x = 50; _a.y = 50; _a.width = 50; _a.height = 50; return _a;})();
   vg.append(i);
   await system.printLine(_stdlib.vectorGraphicsAsHtml(vg));
 }

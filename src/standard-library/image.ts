@@ -5,18 +5,20 @@ import {
   elanFunction,
   elanProcedure,
   elanProperty,
+  ElanString,
   FunctionOptions,
 } from "../elan-type-annotations";
 import { System } from "../system";
 import { VectorGraphic } from "./vector-graphic";
 
-@elanClass(ClassOption.concrete, [], [], [], [ElanClass(VectorGraphic)])
+@elanClass(ClassOption.concrete, [], [], [ElanString], [ElanClass(VectorGraphic)])
 export class Image extends VectorGraphic {
   static emptyInstance() {
     return new Image();
   }
 
-  async _initialise() {
+  async _initialise(url: string) {
+    this.url = url;
     return this;
   }
 

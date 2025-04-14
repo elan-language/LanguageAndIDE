@@ -63,7 +63,7 @@ import { TypeTupleNode } from "../parse-nodes/type-tuple-node";
 import { UnaryExpression } from "../parse-nodes/unary-expression";
 import { WithClause } from "../parse-nodes/with-clause";
 import { SetStatement } from "../statements/set-statement";
-import { FuncName, TupleName } from "../symbols/elan-type-names";
+import { FuncName, ImageName, TupleName } from "../symbols/elan-type-names";
 import { EnumType } from "../symbols/enum-type";
 import { wrapScopeInScope } from "../symbols/symbol-helpers";
 import { isAstIdNode, mapOperation } from "./ast-helpers";
@@ -83,7 +83,6 @@ import { FuncCallAsn } from "./func-call-asn";
 import { IdAsn } from "./id-asn";
 import { IdDefAsn } from "./id-def-asn";
 import { IfExprAsn } from "./if-expr-asn";
-import { ImageAsn } from "./image-asn";
 import { IndexAsn } from "./index-asn";
 import { InterpolatedAsn } from "./interpolated-asn";
 import { KvpAsn } from "./kvp-asn";
@@ -267,10 +266,6 @@ export function transform(
     return new CsvAsn(types, fieldId);
   }
 
-  if (node instanceof ImageNode) {
-    return new ImageAsn(fieldId);
-  }
-
   if (node instanceof EmptyOfTypeNode) {
     const type = transform(node.type, fieldId, scope) as TypeAsn;
     return new EmptyTypeAsn(type, fieldId);
@@ -379,6 +374,17 @@ export function transform(
     const withClause = transform(node.withClause, fieldId, scope) as AstCollectionNode;
 
     const obj = new NewAsn(type, pp, fieldId, scope);
+    if (withClause) {
+      return new CopyWithAsn(obj, withClause, fieldId, scope);
+    }
+    return obj;
+  }
+
+  if (node instanceof ImageNode) {
+    const imageType = new TypeAsn(ImageName, [], fieldId, scope);
+    const url = new LiteralStringAsn(`"${node.url?.matchedText ?? ""}"`, fieldId);
+    const obj = new NewAsn(imageType, [url], fieldId, scope);
+    const withClause = transform(node.withClause, fieldId, scope) as AstCollectionNode;
     if (withClause) {
       return new CopyWithAsn(obj, withClause, fieldId, scope);
     }
