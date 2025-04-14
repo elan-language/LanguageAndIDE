@@ -25,7 +25,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let c = system.initialise(await new _stdlib.Image()._initialise("http://website.image.png"));
+  let c = system.initialise(await new _stdlib.ImageVG()._initialise("http://website.image.png"));
   await system.printLine(c);
 }
 return [main, _tests];}`;
@@ -38,7 +38,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      `<img src="http://website.image.png" width="0" height="0" title="">`,
+      `<img src="http://website.image.png" width="13.2" height="13.2" title="">`,
     );
   });
 
@@ -53,7 +53,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let c = await (async () => {const _a = {...system.initialise(await new _stdlib.Image()._initialise("http://website.image.png"))}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new _stdlib.Image()._initialise("http://website.image.png")))); _a.width = 100; _a.height = 200; return _a;})();
+  let c = await (async () => {const _a = {...system.initialise(await new _stdlib.ImageVG()._initialise("http://website.image.png"))}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new _stdlib.ImageVG()._initialise("http://website.image.png")))); _a.width = 100; _a.height = 200; return _a;})();
   await system.printLine(c);
 }
 return [main, _tests];}`;

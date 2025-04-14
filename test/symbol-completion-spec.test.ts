@@ -161,7 +161,7 @@ suite("Symbol Completion Spec", () => {
         TokenType.method_system,
         TokenType.type_enum,
       ],
-      ["new,copy,if,lambda,empty,this,ref,not,tuple"],
+      ["new,copy,if,image,lambda,empty,this,ref,not,tuple"],
     );
   });
   test("Expression3", () => {
@@ -356,7 +356,7 @@ suite("Symbol Completion Spec", () => {
         TokenType.method_system,
         TokenType.type_enum,
       ],
-      ["new,copy,if,lambda,empty,this,ref,not,tuple"],
+      ["new,copy,if,image,lambda,empty,this,ref,not,tuple"],
       "",
     );
   });
@@ -463,7 +463,7 @@ suite("Symbol Completion Spec", () => {
         TokenType.method_system,
         TokenType.type_enum,
       ],
-      ["new,copy,if,lambda,empty,this,ref,not,tuple"],
+      ["new,copy,if,image,lambda,empty,this,ref,not,tuple"],
       "",
     );
   });
@@ -498,7 +498,7 @@ suite("Symbol Completion Spec", () => {
         TokenType.method_system,
         TokenType.type_enum,
       ],
-      ["new,copy,if,lambda,empty,this,ref,not,tuple"],
+      ["new,copy,if,image,lambda,empty,this,ref,not,tuple"],
       "",
     );
   });
@@ -522,7 +522,7 @@ suite("Symbol Completion Spec", () => {
       ExprNode.name,
       "",
       allIds.concat([TokenType.method_function, TokenType.method_system, TokenType.type_enum]),
-      ["new,copy,if,lambda,empty,this,ref,not,tuple"],
+      ["new,copy,if,image,lambda,empty,this,ref,not,tuple"],
       "",
     );
   });
@@ -558,7 +558,7 @@ suite("Symbol Completion Spec", () => {
       TermSimple.name,
       "",
       allIds.concat([TokenType.method_function, TokenType.method_system, TokenType.type_enum]),
-      ["new,copy,if,lambda,empty,this,ref,not,tuple"],
+      ["new,copy,if,image,lambda,empty,this,ref,not,tuple"],
       "",
     );
   });
@@ -586,7 +586,7 @@ suite("Symbol Completion Spec", () => {
       "",
     );
   });
-  test("#909 List 1", () => {
+  test("#909 ImmutableList 1", () => {
     testSymbolCompletionSpec(
       new ExprNode(),
       "{",
@@ -594,11 +594,11 @@ suite("Symbol Completion Spec", () => {
       TermSimple.name,
       "",
       allIds.concat([TokenType.method_function, TokenType.method_system, TokenType.type_enum]),
-      ["new,copy,if,lambda,empty,this,ref,not,tuple"],
+      ["new,copy,if,image,lambda,empty,this,ref,not,tuple"],
       "",
     );
   });
-  test("#909 List 2", () => {
+  test("#909 ImmutableList 2", () => {
     testSymbolCompletionSpec(
       new ExprNode(),
       "{a",
@@ -610,7 +610,7 @@ suite("Symbol Completion Spec", () => {
       "",
     );
   });
-  test("#909 List 3", () => {
+  test("#909 ImmutableList 3", () => {
     testSymbolCompletionSpec(
       new ExprNode(),
       "{a, a",

@@ -12,9 +12,9 @@ import { System } from "../system";
 import { VectorGraphic } from "./vector-graphic";
 
 @elanClass(ClassOption.concrete, [], [], [ElanString], [ElanClass(VectorGraphic)])
-export class Image extends VectorGraphic {
+export class ImageVG extends VectorGraphic {
   static emptyInstance() {
-    return new Image();
+    return new ImageVG();
   }
 
   async _initialise(url: string) {
@@ -24,7 +24,7 @@ export class Image extends VectorGraphic {
 
   private system?: System;
 
-  constructor(copy?: Image) {
+  constructor(copy?: ImageVG) {
     super(copy);
     this.fillColour = copy ? copy.fillColour : 0xffff00;
     this.strokeColour = copy ? copy.strokeColour : 0;
@@ -39,9 +39,9 @@ export class Image extends VectorGraphic {
     this.x = x;
   }
 
-  @elanFunction(["x"], FunctionOptions.pure, ElanClass(Image))
-  withX(x: number): Image {
-    const copy = this.system!.initialise(new Image(this));
+  @elanFunction(["x"], FunctionOptions.pure, ElanClass(ImageVG))
+  withX(x: number): ImageVG {
+    const copy = this.system!.initialise(new ImageVG(this));
     copy.x = x;
     return copy;
   }
@@ -54,45 +54,49 @@ export class Image extends VectorGraphic {
     this.y = y;
   }
 
-  @elanFunction(["y"], FunctionOptions.pure, ElanClass(Image))
-  withY(y: number): Image {
-    const copy = this.system!.initialise(new Image(this));
+  @elanFunction(["y"], FunctionOptions.pure, ElanClass(ImageVG))
+  withY(y: number): ImageVG {
+    const copy = this.system!.initialise(new ImageVG(this));
     copy.y = y;
     return copy;
   }
 
   @elanProperty()
-  width: number = 0;
+  width: number = 13.2; // for same (default) size as thumbnail in code
 
   @elanProcedure(["width"])
   setWidth(width: number) {
     this.width = width;
   }
 
-  @elanFunction(["width"], FunctionOptions.pure, ElanClass(Image))
-  withWidth(width: number): Image {
-    const copy = this.system!.initialise(new Image(this));
+  @elanFunction(["width"], FunctionOptions.pure, ElanClass(ImageVG))
+  withWidth(width: number): ImageVG {
+    const copy = this.system!.initialise(new ImageVG(this));
     copy.width = width;
     return copy;
   }
 
   @elanProperty()
-  height: number = 0;
+  height: number = 13.2; // see width
 
   @elanProcedure(["height"])
   setHeight(height: number) {
     this.height = height;
   }
 
-  @elanFunction(["height"], FunctionOptions.pure, ElanClass(Image))
-  withHeight(height: number): Image {
-    const copy = this.system!.initialise(new Image(this));
+  @elanFunction(["height"], FunctionOptions.pure, ElanClass(ImageVG))
+  withHeight(height: number): ImageVG {
+    const copy = this.system!.initialise(new ImageVG(this));
     copy.height = height;
     return copy;
   }
 
-  @elanProperty()
   url: string = "";
+
+  @elanFunction([], FunctionOptions.pure)
+  getUrl(): string {
+    return this.url;
+  }
 
   @elanProperty()
   title: string = "";
@@ -102,9 +106,9 @@ export class Image extends VectorGraphic {
     this.title = title;
   }
 
-  @elanFunction(["title"], FunctionOptions.pure, ElanClass(Image))
-  withTitle(title: string): Image {
-    const copy = this.system!.initialise(new Image(this));
+  @elanFunction(["title"], FunctionOptions.pure, ElanClass(ImageVG))
+  withTitle(title: string): ImageVG {
+    const copy = this.system!.initialise(new ImageVG(this));
     copy.title = title;
     return copy;
   }
