@@ -409,3 +409,7 @@ button.plain:disabled, menu-item.button.plain:disabled {
   cursor: pointer;
   text-decoration: underline;
 }
+
+el-user.hide, el-profile.hide {
+  display:none;
+}
