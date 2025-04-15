@@ -1004,22 +1004,59 @@ Example of use in this manner (taken from the 'Snake - functional' demo program)
 <h1 id="compile_error">Compile Errors and Warnings</h1>
 
 <h3 id="TypeCompileError" class="no-TOC">Expression must be ...</h3>
+<p>An expression, when evaluated, results in a value of a type that is not compatible with its 'target', 
+  for example: if the result of the expression is being assigned to an existing variable, or if an expression is defined 'inline' as
+  an argument into a method call.
+</p>
 <h3 id="ThisCompileError" class="no-TOC">Cannot use 'this' outside class context</h3>
+
+<p>The keyword <el-code><el-kw>this</el-kw></el-code> may only be used within an instance method on a class to refer to the current instance.</p>
+
 <h3 id="DeclaredAboveCompileError" class="no-TOC">Abstract Class ... must be declared before it is used</h3>
+
+<p>If a class inherits from one or more abstract classes, then the latter must all be already declared (defined) earlier in the code file.</p>
+
 <h3 id="MemberTypeCompileError" class="no-TOC">Member ... must be of type ...</h3>
+
+<p>This error occurs when a class is defined as inheriting from an abstract class, #
+  and has implemented an inherited member (method or property) with the correct name, but with different type(s).</p>
 <h3 id="TypesCompileError" class="no-TOC">Incompatible types. Expected: ... Provided: ...</h3>
 <h3 id="TernaryCompileError" class="no-TOC">Cannot determine common type between ... and ...</h3>
-<h3 id="SyntaxCompileError" class="no-TOC">
 <h3 id="UndefinedSymbolCompileError" class="no-TOC"> for type ...is not defined ...</h3>
+<p>Arises when 'dot-calling' a member (method or property) that does not exist on the type of the named value or expression before the dot.</p>
 <h3 id="CannotCallAFunction" class="no-TOC">Cannot call a function as a procedure</h3>
+<p>A function (or function-method) is to be used within an expression, not via a <el-code><el-kw>call</el-kw></el-code> instruction.</p>
+
 <h3 id="CannotUseSystemMethodInAFunction" class="no-TOC">Cannot use a system method in a function</h3>
+
+<p>A 'system method' (defined in the Standard Library) returns a value like a function does. However, because a system method
+  either makes changes to the system and/or depends on external inputs, it may be used only within a procedure or the main routine.
+</p>
 <h3 id="IsDeprecated" class="no-TOC">Code change required ...</h3>
+
+<p>Indicates that a library method or class has been changed since the version in which your Elan code was written. The link in the 
+  message should take you directly to information in in the Library Reference documentation on how to update your code to cope with the change.
+</p>
 <h3 id="CannotUseLikeAFunction" class="no-TOC">Cannot call procedure ... within an expression</h3>
+
+<p>A procedure may only be used within a <el-code><el-kw>call</el-kw></el-code> instruction.</p>
+
 <h3 id="CannotCallAsAMethod" class="no-TOC">Cannot invoke ... as a method</h3>
+
+<p>The code is attempting to use a free-standing method (function or procedure) as a 'dotted-method' on a named value or the result of an expression.</p>
 <h3 id="NotIndexableCompileError" class="no-TOC">Cannot ...index ...</h3>
+
+<p>An index (in square brackets) may be applied only to certain data structure types: String, Array, Array2D, List, ImmutableList, Dictionary, and ImmutableDictionary.</p>
 <h3 id="NotRangeableCompileError" class="no-TOC">Cannot range ...</h3>
+<p>An range may be applied only to certain data structure types: String, Array, List, and ImmutableList.</p>
+
 <h3 id="NotNewableCompileError" class="no-TOC">Cannot new ...</h3>
+
+<p>The type specified after the <el-code><el-kw>call</el-kw></el-code> keyword cannot be instantiated. Either the type is unknown,
+or it is an abstract class, or an interface.</p>
+
 <h3 id="NotIterableCompileError" class="no-TOC">Cannot iterate ...</h3>
+<p>The value or expression cannot be used where an 'iterable' type - one that comprises a sequence of elements - is required.</p>
 <h3 id="MustBeAbstractCompileError" class="no-TOC">Superclass ... must be inheritable class</h3>
 <h3 id="MustBeInterfaceCompileError" class="no-TOC">Superclass ... must be an interface</h3>
 <h3 id="MustNotBeCircularDependencyCompileError" class="no-TOC">Class/interface ... cannot inherit from itself</h3>
