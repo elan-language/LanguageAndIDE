@@ -158,6 +158,28 @@ export abstract class AbstractField implements Selectable, Field {
     this.selectionEnd = end ?? start;
   }
 
+  deleteSelection(selection: [number, number]) {
+    const [start, end] = selection;
+    const textLen = this.text.length;
+    if (start !== textLen) {
+      const endMod = start === end ? start + 1 : end;
+      this.text = this.text.slice(0, start) + this.text.slice(endMod);
+      this.setSelection(start);
+    }
+  }
+
+  deleteNewSelection(e: editorEvent) {
+    if (e.selection) {
+      this.deleteSelection(e.selection);
+    }
+  }
+
+  deleteExistingSelection() {
+    if (this.cursorPos !== this.selectionEnd) {
+      this.deleteSelection([this.cursorPos, this.selectionEnd]);
+    }
+  }
+
   processKey(e: editorEvent): boolean {
     this.codeHasChanged = false;
     const key = e.key;
@@ -229,13 +251,7 @@ export abstract class AbstractField implements Selectable, Field {
         break;
       }
       case "Delete": {
-        const [start, end] = e.selection!;
-        if (start === textLen) {
-          break;
-        }
-        const endMod = start === end ? start + 1 : end;
-        this.text = this.text.slice(0, start) + this.text.slice(endMod);
-        this.setSelection(start);
+        this.deleteNewSelection(e);
         this.parseCurrentText();
         this.codeHasChanged = true;
         this.editingField();
@@ -264,11 +280,13 @@ export abstract class AbstractField implements Selectable, Field {
           this.holder.expandCollapseAll();
           this.noLongerEditingField();
         } else if (key?.length === 1) {
+          this.deleteExistingSelection();
           this.processInput(key);
           this.codeHasChanged = true;
           this.holder.hasBeenAddedTo();
           this.editingField();
         } else if (key && key.length > 1) {
+          this.deleteExistingSelection();
           for (const c of key) {
             this.processInput(c);
           }
