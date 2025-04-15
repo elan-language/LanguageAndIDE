@@ -70,30 +70,30 @@ class TestStdLib {
   @elanClassExport(DeprecatedClass)
   DeprecatedClass = DeprecatedClass;
 
-  @elanDeprecated(Deprecation.parametersChanged, 0, 0, "LibRef.html#Xxxx")
+  @elanDeprecated(Deprecation.classParametersChanged, 0, 0, "LibRef.html#Xxxx")
   @elanClassExport(DeprecatedClass1)
   DeprecatedClass1 = DeprecatedClass1;
 
   @elanClassExport(List)
   List = List;
 
-  @elanDeprecated(Deprecation.parametersChanged, 0, 0, "LibRef.html#Xxxx")
+  @elanDeprecated(Deprecation.methodParametersChanged, 0, 0, "LibRef.html#Xxxx")
   @elanFunction([])
   deprecatedFunctionWithParameters1(): number {
     return 0;
   }
 
-  @elanDeprecated(Deprecation.parametersChanged, 0, 0, "LibRef.html#Xxxx")
+  @elanDeprecated(Deprecation.methodParametersChanged, 0, 0, "LibRef.html#Xxxx")
   @elanFunction(["s"])
   deprecatedFunctionWithParameters2(s: string): number {
     return 0;
   }
 
-  @elanDeprecated(Deprecation.parametersChanged, 0, 0, "LibRef.html#Xxxx")
+  @elanDeprecated(Deprecation.methodParametersChanged, 0, 0, "LibRef.html#Xxxx")
   @elanProcedure([])
   deprecatedProcedureWithParameters1() {}
 
-  @elanDeprecated(Deprecation.parametersChanged, 0, 0, "LibRef.html#Xxxx")
+  @elanDeprecated(Deprecation.methodParametersChanged, 0, 0, "LibRef.html#Xxxx")
   @elanProcedure(["s"])
   deprecatedProcedureWithParameters2(s: string) {}
 }
@@ -232,7 +232,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [`Deprecated since 0.0LibRef.html#Xxxx`]);
+    assertDoesNotCompile(fileImpl, [
+      `Code change required. Method was removed in v0.0. <u>More Info</u>LibRef.html#Xxxx`,
+    ]);
   });
 
   test("Fail_ProcedureDeprecation", async () => {
@@ -249,7 +251,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [`Deprecated since 0.0LibRef.html#Xxxx`]);
+    assertDoesNotCompile(fileImpl, [
+      `Code change required. Method was removed in v0.0. <u>More Info</u>LibRef.html#Xxxx`,
+    ]);
   });
 
   test("Fail_NewClassDeprecation", async () => {
@@ -266,7 +270,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [`Deprecated since 0.0LibRef.html#Xxxx`]);
+    assertDoesNotCompile(fileImpl, [
+      `Code change required. Class was removed in v0.0. <u>More Info</u>LibRef.html#Xxxx`,
+    ]);
   });
 
   test("Fail_EmptyClassDeprecation", async () => {
@@ -283,7 +289,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [`Deprecated since 0.0LibRef.html#Xxxx`]);
+    assertDoesNotCompile(fileImpl, [
+      `Code change required. Class was removed in v0.0. <u>More Info</u>LibRef.html#Xxxx`,
+    ]);
   });
 
   test("Fail_OfClassDeprecation", async () => {
@@ -300,7 +308,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [`Deprecated since 0.0LibRef.html#Xxxx`]);
+    assertDoesNotCompile(fileImpl, [
+      `Code change required. Class was removed in v0.0. <u>More Info</u>LibRef.html#Xxxx`,
+    ]);
   });
 
   test("Fail_ParametersChangedWithCompileErrors1", async () => {
@@ -318,8 +328,8 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Too many argument(s). Expected: none",
-      `Deprecated since 0.0LibRef.html#Xxxx`,
+      "Too many argument(s). Expected: none. <u>More Info</u>LangRef.html#compile_error",
+      `Code change required. Parameters for method were changed in v0.0. <u>More Info</u>LibRef.html#Xxxx`,
     ]);
   });
 
@@ -338,8 +348,8 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Missing argument(s). Expected: s (String)",
-      `Deprecated since 0.0LibRef.html#Xxxx`,
+      "Missing argument(s). Expected: s (String). <u>More Info</u>LangRef.html#compile_error",
+      `Code change required. Parameters for method were changed in v0.0. <u>More Info</u>LibRef.html#Xxxx`,
     ]);
   });
 
@@ -358,8 +368,8 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Too many argument(s). Expected: none",
-      `Deprecated since 0.0LibRef.html#Xxxx`,
+      "Too many argument(s). Expected: none. <u>More Info</u>LangRef.html#compile_error",
+      `Code change required. Parameters for method were changed in v0.0. <u>More Info</u>LibRef.html#Xxxx`,
     ]);
   });
 
@@ -378,8 +388,8 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Missing argument(s). Expected: s (String)",
-      `Deprecated since 0.0LibRef.html#Xxxx`,
+      "Missing argument(s). Expected: s (String). <u>More Info</u>LangRef.html#compile_error",
+      `Code change required. Parameters for method were changed in v0.0. <u>More Info</u>LibRef.html#Xxxx`,
     ]);
   });
 
@@ -398,8 +408,8 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "<of Type(s)> Expected: 0 Provided: 1",
-      `Deprecated since 0.0LibRef.html#Xxxx`,
+      "<of Type(s)> Expected: 0 Provided: 1. <u>More Info</u>LangRef.html#compile_error",
+      `Code change required. Parameters for class were changed in v0.0. <u>More Info</u>LibRef.html#Xxxx`,
     ]);
   });
 });

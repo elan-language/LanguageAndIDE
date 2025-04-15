@@ -73,7 +73,8 @@ export function assertDoesNotCompileWithId(file: FileImpl, id: string, msgs: str
   for (let i = 0; i < msgs.length; i++) {
     const m = msgs[i];
     const e = errors[i];
-    assert.strictEqual(e.message, m);
+    const em = e.message + (e.link ?? "");
+    assert.strictEqual(em, m);
   }
 }
 

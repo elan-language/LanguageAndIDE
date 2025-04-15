@@ -707,7 +707,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Missing argument(s). Expected: val (Int)"]);
+    assertDoesNotCompile(fileImpl, [
+      "Missing argument(s). Expected: val (Int). <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_InstantiateWithWrongArgType", async () => {
@@ -734,7 +736,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Argument types. Expected: val (Int) Provided: Float"]);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types. Expected: val (Int) Provided: Float. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_SupplyingArgumentNotSpecified", async () => {
@@ -760,7 +764,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Too many argument(s). Expected: none"]);
+    assertDoesNotCompile(fileImpl, [
+      "Too many argument(s). Expected: none. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_MissingNewOnInstantiation", async () => {
@@ -805,7 +811,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'Foo' is not defined"]);
+    assertDoesNotCompile(fileImpl, [
+      "'Foo' is not defined. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_IncompatibleClassAsProcedureParameter", async () => {
@@ -838,7 +846,9 @@ end procedure
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Argument types. Expected: bar (Bar) Provided: Foo"]);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types. Expected: bar (Bar) Provided: Foo. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_IncompatibleClassAsFunctionParameter", async () => {
@@ -871,7 +881,9 @@ end function
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Argument types. Expected: bar (Bar) Provided: Foo"]);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types. Expected: bar (Bar) Provided: Foo. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_UnknownPropertyType", async () => {
@@ -892,7 +904,9 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'Bar' is not defined"]);
+    assertDoesNotCompile(fileImpl, [
+      "'Bar' is not defined. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_DuplicateNames", async () => {
@@ -919,7 +933,9 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'Foo' not unique in scope"]);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'Foo' not unique in scope. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_DuplicatePropertyNames", async () => {
@@ -941,7 +957,9 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'p1' not unique in scope"]);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'p1' not unique in scope. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_DuplicateFunctionNames", async () => {
@@ -967,7 +985,9 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'ff' not unique in scope"]);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'ff' not unique in scope. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_DuplicateProcedureNames", async () => {
@@ -991,7 +1011,9 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'ff' not unique in scope"]);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'ff' not unique in scope. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_DuplicateMemberNames1", async () => {
@@ -1014,7 +1036,9 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'ff' not unique in scope"]);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'ff' not unique in scope. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_DuplicateMemberNames2", async () => {
@@ -1038,7 +1062,9 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'ff' not unique in scope"]);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'ff' not unique in scope. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_DuplicateMemberNames3", async () => {
@@ -1063,7 +1089,9 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'ff' not unique in scope"]);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'ff' not unique in scope. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_ConstructorWithCall", async () => {
@@ -1110,7 +1138,9 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["<of Type(s)> Expected: 0 Provided: 1"]);
+    assertDoesNotCompile(fileImpl, [
+      "<of Type(s)> Expected: 0 Provided: 1. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_UnnecessaryGenericParm2", async () => {
@@ -1125,7 +1155,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["<of Type(s)> Expected: 0 Provided: 1"]);
+    assertDoesNotCompile(fileImpl, [
+      "<of Type(s)> Expected: 0 Provided: 1. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_CannotNewUnknownType", async () => {
@@ -1140,7 +1172,10 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'FooBar' is not defined", "Cannot new FooBar"]);
+    assertDoesNotCompile(fileImpl, [
+      "'FooBar' is not defined. <u>More Info</u>LangRef.html#compile_error",
+      "Cannot new FooBar. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_CannotNewNonClassType", async () => {
@@ -1155,7 +1190,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot new Int"]);
+    assertDoesNotCompile(fileImpl, ["Cannot new Int. <u>More Info</u>LangRef.html#compile_error"]);
   });
 
   test("Fail_PropertyIsNotDefined", async () => {
@@ -1181,7 +1216,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'noSuch' is not defined for type 'CircleVG'"]);
+    assertDoesNotCompile(fileImpl, [
+      "'noSuch' is not defined for type 'CircleVG'. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_InheritSelf", async () => {
@@ -1199,7 +1236,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Class/interface 'Foo' cannot inherit from itself"]);
+    assertDoesNotCompile(fileImpl, [
+      "Class/interface 'Foo' cannot inherit from itself. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_InheritSelfIndirect", async () => {
@@ -1225,7 +1264,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Class/interface 'Yon' cannot inherit from itself"]);
+    assertDoesNotCompile(fileImpl, [
+      "Class/interface 'Yon' cannot inherit from itself. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_InheritInterfaceIndirect", async () => {
@@ -1251,7 +1292,9 @@ end interface`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Class/interface 'Bar' cannot inherit from itself"]);
+    assertDoesNotCompile(fileImpl, [
+      "Class/interface 'Bar' cannot inherit from itself. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_InheritAbstractClassIndirect", async () => {
@@ -1277,7 +1320,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Class/interface 'Bar' cannot inherit from itself"]);
+    assertDoesNotCompile(fileImpl, [
+      "Class/interface 'Bar' cannot inherit from itself. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_CallConstructor", async () => {
@@ -1297,6 +1342,8 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'constructor' is not defined for type 'Foo'"]);
+    assertDoesNotCompile(fileImpl, [
+      "'constructor' is not defined for type 'Foo'. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 });

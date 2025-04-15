@@ -820,7 +820,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'bar' is not defined"]);
+    assertDoesNotCompile(fileImpl, [
+      "'bar' is not defined. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_TypeSpecifiedBeforeParamName", async () => {
@@ -857,7 +859,9 @@ end procedure
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'main' is not defined"]);
+    assertDoesNotCompile(fileImpl, [
+      "'main' is not defined. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_PassingUnnecessaryParameter", async () => {
@@ -878,7 +882,9 @@ end procedure
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Too many argument(s). Expected: none"]);
+    assertDoesNotCompile(fileImpl, [
+      "Too many argument(s). Expected: none. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_PassingTooFewParams", async () => {
@@ -899,7 +905,9 @@ end procedure
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Missing argument(s). Expected: a (Int), b (String)"]);
+    assertDoesNotCompile(fileImpl, [
+      "Missing argument(s). Expected: a (Int), b (String). <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_ExtensionParameterCount", async () => {
@@ -916,8 +924,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Missing argument(s). Expected: value (Int)",
-      "Too many argument(s). Expected: value (Int)",
+      "Missing argument(s). Expected: value (Int). <u>More Info</u>LangRef.html#compile_error",
+      "Too many argument(s). Expected: value (Int). <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -939,7 +947,7 @@ end procedure
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: a (Int), b (String) Provided: Int, Int",
+      "Argument types. Expected: a (Int), b (String) Provided: Int, Int. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -994,8 +1002,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Too many argument(s). Expected: p (Float)",
-      "Missing argument(s). Expected: p (Float)",
+      "Too many argument(s). Expected: p (Float). <u>More Info</u>LangRef.html#compile_error",
+      "Missing argument(s). Expected: p (Float). <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -1016,8 +1024,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: p (Int) Provided: Boolean",
-      "Argument types. Expected: p (Int) Provided: Float",
+      "Argument types. Expected: p (Int) Provided: Boolean. <u>More Info</u>LangRef.html#compile_error",
+      "Argument types. Expected: p (Int) Provided: Float. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -1039,7 +1047,9 @@ end procedure`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not re-assign the parameter 'a'"]);
+    assertDoesNotCompile(fileImpl, [
+      "May not re-assign the parameter 'a'. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fai_ListParamMayNotBeReassigned", async () => {
@@ -1060,7 +1070,9 @@ end procedure`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not re-assign the parameter 'a'"]);
+    assertDoesNotCompile(fileImpl, [
+      "May not re-assign the parameter 'a'. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_ValueTypeParamMayNotBeReassigned", async () => {
@@ -1081,7 +1093,9 @@ end procedure`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not re-assign the parameter 'a'"]);
+    assertDoesNotCompile(fileImpl, [
+      "May not re-assign the parameter 'a'. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_ParameterUnknownType", async () => {
@@ -1100,7 +1114,9 @@ end procedure`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'Bar' is not defined"]);
+    assertDoesNotCompile(fileImpl, [
+      "'Bar' is not defined. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_UseOfKeywordAsName", async () => {
@@ -1118,7 +1134,9 @@ end procedure`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'if' is a keyword, and may not be used as an identifier"]);
+    assertDoesNotCompile(fileImpl, [
+      "'if' is a keyword, and may not be used as an identifier. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_UseOfReservedwordAsName", async () => {
@@ -1137,7 +1155,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'break' is a reserved word, and may not be used as an identifier",
+      "'break' is a reserved word, and may not be used as an identifier. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -1174,7 +1192,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'break' is a reserved word, and may not be used as an identifier",
+      "'break' is a reserved word, and may not be used as an identifier. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -1195,7 +1213,9 @@ end procedure
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'foo' not unique in scope"]);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'foo' not unique in scope. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_NotUniqueParameterName", async () => {
@@ -1210,7 +1230,9 @@ end procedure`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'a' not unique in scope"]);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'a' not unique in scope. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_OperatorsAndProcedures", async () => {
@@ -1234,9 +1256,9 @@ end procedure`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot do equality operations on Procedures or Functions",
-      "Incompatible types. Expected: Float or Int Provided: Procedure ()",
-      "Incompatible types. Expected: Float or Int Provided: Procedure ()",
+      "Cannot do equality operations on Procedures or Functions. <u>More Info</u>LangRef.html#compile_error",
+      "Incompatible types. Expected: Float or Int Provided: Procedure (). <u>More Info</u>LangRef.html#compile_error",
+      "Incompatible types. Expected: Float or Int Provided: Procedure (). <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -1253,8 +1275,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: List<of Int> Provided: Procedure (Int)",
-      "Cannot call procedure 'append' within an expression",
+      "Incompatible types. Expected: List<of Int> Provided: Procedure (Int). <u>More Info</u>LangRef.html#compile_error",
+      "Cannot call procedure 'append' within an expression. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -1273,7 +1295,9 @@ end procedure`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot pass '0' as an out parameter"]);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot pass '0' as an out parameter. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_PassExpressionAsOut", async () => {
@@ -1293,7 +1317,9 @@ end procedure`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot pass 'a + b' as an out parameter"]);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot pass 'a + b' as an out parameter. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_PassLetAsOut", async () => {
@@ -1312,7 +1338,9 @@ end procedure`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot pass 'let a' as an out parameter"]);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot pass 'let a' as an out parameter. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_PassFuncCall", async () => {
@@ -1334,7 +1362,9 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot pass 'bar()' as an out parameter"]);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot pass 'bar()' as an out parameter. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_PassProperty", async () => {
@@ -1361,7 +1391,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot pass 'f.ff' as an out parameter"]);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot pass 'f.ff' as an out parameter. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_PassIndex", async () => {
@@ -1380,7 +1412,9 @@ end procedure`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot pass 'f[0]' as an out parameter"]);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot pass 'f[0]' as an out parameter. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_IncorrectScope", async () => {
@@ -1401,7 +1435,9 @@ end procedure`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'bar' is not defined for type 'Foo'"]);
+    assertDoesNotCompile(fileImpl, [
+      "'bar' is not defined for type 'Foo'. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_ParameterListOfMutableType", async () => {
@@ -1416,7 +1452,9 @@ end procedure`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'List<of Int>'"]);
+    assertDoesNotCompile(fileImpl, [
+      "ListImmutable cannot be of mutable type 'List<of Int>'. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_noMatchingExtension2", async () => {
@@ -1432,6 +1470,8 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'reverse' is not defined for type 'String'"]);
+    assertDoesNotCompile(fileImpl, [
+      "'reverse' is not defined for type 'String'. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 });

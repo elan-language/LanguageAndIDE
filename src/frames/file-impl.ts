@@ -33,7 +33,7 @@ import { Field } from "./interfaces/field";
 import { File } from "./interfaces/file";
 import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
-import { Profile } from "./interfaces/profile";
+import { defaultUsername, Profile } from "./interfaces/profile";
 import { Scope } from "./interfaces/scope";
 import { Selectable } from "./interfaces/selectable";
 import { Semver } from "./interfaces/semver";
@@ -245,7 +245,7 @@ export class FileImpl implements File, Scope {
     this._frNo = 1;
     const globals = parentHelper_renderChildrenAsHtml(this);
     this.currentHash = await this.getHash();
-    return `<el-header># <el-hash>${this.currentHash}</el-hash> ${this.getVersionString()}${this.getUserName()}${this.getProfileName()}</el-header>\r\n${globals}`;
+    return `<el-header># ${this.getHashAsHtml()} ${this.getVersionAsHtml()} ${this.getUserNameAsHtml()} ${this.getProfileNameAsHtml()}</el-header>\r\n${globals}`;
   }
 
   public indent(): string {
@@ -261,11 +261,20 @@ export class FileImpl implements File, Scope {
     return this.version;
   }
 
-  private getVersionString() {
+  getVersionString() {
     const v = this.getVersion();
     const suffix = v.preRelease === "" ? "" : `-${v.preRelease}`;
 
     return `Elan ${v.major}.${v.minor}.${v.patch}${suffix}`;
+  }
+
+  getVersionAsHtml() {
+    const v = this.getVersionString();
+    return `<el-version>${v}</el-version>`;
+  }
+
+  getHashAsHtml() {
+    return `<el-hash>${this.currentHash}</el-hash>`;
   }
 
   // to allow header generation of new version
@@ -279,12 +288,24 @@ export class FileImpl implements File, Scope {
   }
 
   private getUserName() {
-    return this.userName ? ` ${this.userName}` : " guest";
+    return this.userName ? this.userName : defaultUsername;
+  }
+
+  private getUserNameAsHtml() {
+    const cls = this.profile.show_user_and_profile ? "show" : "hide";
+    const userName = this.getUserName();
+    return `<el-user class="${cls}">${userName}</el-user>`;
   }
 
   private getProfileName() {
     const pn = this.profile.name.replaceAll(" ", "_");
-    return pn ? ` ${pn}` : " _";
+    return pn ? pn : "_";
+  }
+
+  private getProfileNameAsHtml() {
+    const cls = this.profile.show_user_and_profile ? "show" : "hide";
+    const profileName = this.getProfileName();
+    return `<el-profile class="${cls}">${profileName}</el-profile>`;
   }
 
   compileGlobals(): string {
@@ -380,7 +401,7 @@ export class FileImpl implements File, Scope {
 
   renderHashableContent(): string {
     const globals = parentHelper_renderChildrenAsSource(this);
-    const code = `${this.getVersionString()}${this.getUserName()}${this.getProfileName()} ${this.getParseStatusLabel()}\r\n\r\n${globals}`;
+    const code = `${this.getVersionString()} ${this.getUserName()} ${this.getProfileName()} ${this.getParseStatusLabel()}\r\n\r\n${globals}`;
     return code.endsWith("\r\n") ? code : code + "\r\n"; // To accommodate possibility that last global is a global-comment
   }
 
@@ -477,15 +498,24 @@ export class FileImpl implements File, Scope {
   }
 
   refreshParseAndCompileStatuses(compileIfParsed: boolean) {
-    this._parseStatus = ParseStatus.default as ParseStatus;
-    this.parseError = undefined;
-    this.updateAllParseStatus();
-    this.resetAllCompileStatusAndErrors();
-    this.resetAllTestStatus();
-
-    if (this._parseStatus === ParseStatus.valid && (!this._fieldBeingEdited || compileIfParsed)) {
-      this.compile();
-      this.updateAllCompileStatus();
+    try {
+      this._parseStatus = ParseStatus.default as ParseStatus;
+      this.parseError = undefined;
+      this.updateAllParseStatus();
+      this.resetAllCompileStatusAndErrors();
+      this.resetAllTestStatus();
+    } catch (e) {
+      this._parseStatus = ParseStatus.invalid;
+      throw e;
+    }
+    try {
+      if (this._parseStatus === ParseStatus.valid && (!this._fieldBeingEdited || compileIfParsed)) {
+        this.compile();
+        this.updateAllCompileStatus();
+      }
+    } catch (e) {
+      this._compileStatus = CompileStatus.error;
+      throw e;
     }
   }
 
@@ -752,7 +782,7 @@ export class FileImpl implements File, Scope {
       if (tokens.length === 7 && tokens[0] === "#" && tokens[2] === "Elan") {
         await this.validateHash(tokens[1], code);
         this.validateVersion(tokens[3]);
-        this.userName = tokens[4] ?? "guest";
+        this.userName = tokens[4] ?? defaultUsername;
       } else {
         throw new ElanFileError(cannotLoadFile);
       }

@@ -84,4 +84,5 @@ export class DefaultProfile implements Profile {
   ];
   require_log_on: boolean = false;
   can_load_only_own_files: boolean = false;
+  show_user_and_profile: boolean = false;
 }

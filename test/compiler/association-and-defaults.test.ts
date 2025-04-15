@@ -1139,7 +1139,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'if' is a keyword, and may not be used as an identifier"]);
+    assertDoesNotCompile(fileImpl, [
+      "'if' is a keyword, and may not be used as an identifier. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_UseOfReservedWordAsName", async () => {
@@ -1162,7 +1164,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'break' is a reserved word, and may not be used as an identifier",
+      "'break' is a reserved word, and may not be used as an identifier. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -1187,7 +1189,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["referencing a property requires a prefix"]);
+    assertDoesNotCompile(fileImpl, [
+      "referencing a property requires a prefix. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_MissingPropertyKeyword2", async () => {
@@ -1212,7 +1216,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["referencing a property requires a prefix"]);
+    assertDoesNotCompile(fileImpl, [
+      "referencing a property requires a prefix. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_MissingPropertyKeyword3", async () => {
@@ -1241,7 +1247,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["referencing a property requires a prefix"]);
+    assertDoesNotCompile(fileImpl, [
+      "referencing a property requires a prefix. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_MissingPropertyKeyword3", async () => {
@@ -1269,7 +1277,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["referencing a property requires a prefix"]);
+    assertDoesNotCompile(fileImpl, [
+      "referencing a property requires a prefix. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_MissingPropertyKeyword4", async () => {
@@ -1304,7 +1314,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["referencing a property requires a prefix"]);
+    assertDoesNotCompile(fileImpl, [
+      "referencing a property requires a prefix. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_MissingPropertyKeyword5", async () => {
@@ -1342,7 +1354,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["referencing a property requires a prefix"]);
+    assertDoesNotCompile(fileImpl, [
+      "referencing a property requires a prefix. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_MissingPropertyKeyword6", async () => {
@@ -1380,7 +1394,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["referencing a property requires a prefix"]);
+    assertDoesNotCompile(fileImpl, [
+      "referencing a property requires a prefix. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_spuriousProperty1", async () => {
@@ -1397,7 +1413,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot prefix function with 'property'"]);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot prefix function with 'property'. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_spuriousProperty2", async () => {
@@ -1418,7 +1436,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot prefix function with 'property'"]);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot prefix function with 'property'. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_spuriousProperty3", async () => {
@@ -1437,6 +1457,8 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'aa' is not defined for type 'Bar'"]);
+    assertDoesNotCompile(fileImpl, [
+      "'aa' is not defined for type 'Bar'. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 });

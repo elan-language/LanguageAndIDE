@@ -25,7 +25,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["VectorGraphic must be concrete to new"]);
+    assertDoesNotCompile(fileImpl, [
+      "VectorGraphic must be concrete to new. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Pass_AppendUsingFunction", async () => {

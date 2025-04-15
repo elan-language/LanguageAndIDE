@@ -72,7 +72,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Argument types. Expected: parameter0 (String) Provided: Int"]);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types. Expected: parameter0 (String) Provided: Int. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_Stack_adding_incompatible_type2", async () => {
@@ -88,7 +90,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Argument types. Expected: parameter0 (String) Provided: Int"]);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types. Expected: parameter0 (String) Provided: Int. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_Stack_peek_incompatible_type", async () => {
@@ -106,7 +110,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: String"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Int Provided: String. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_Stack_peek_empty_stack", async () => {
@@ -177,7 +183,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["<of Type(s)> Expected: 1 Provided: 0"]);
+    assertDoesNotCompile(fileImpl, [
+      "<of Type(s)> Expected: 1 Provided: 0. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_StackOfMutable", async () => {
@@ -195,6 +203,8 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Stack cannot be of mutable type 'Foo'"]);
+    assertDoesNotCompile(fileImpl, [
+      "Stack cannot be of mutable type 'Foo'. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 });

@@ -30,7 +30,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not re-assign the parameter 'p_1'"]);
+    assertDoesNotCompile(fileImpl, [
+      "May not re-assign the parameter 'p_1'. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_MutatingListParam", async () => {
@@ -68,7 +70,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["referencing a property requires a prefix"]);
+    assertDoesNotCompile(fileImpl, [
+      "referencing a property requires a prefix. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_OutParameter", async () => {
@@ -85,6 +89,8 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'out' parameters are only supported on procedures."]);
+    assertDoesNotCompile(fileImpl, [
+      "'out' parameters are only supported on procedures. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 });

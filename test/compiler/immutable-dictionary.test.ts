@@ -572,7 +572,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Duplicate Dictionary key(s)"]);
+    assertDoesNotCompile(fileImpl, [
+      "Duplicate Dictionary key(s). <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_InconsistentTypes1", async () => {
@@ -588,7 +590,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: Float"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Int Provided: Float. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_InconsistentTypes2", async () => {
@@ -604,7 +608,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: String Provided: Int"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: String Provided: Int. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_AccessByInvalidKey", async () => {
@@ -636,7 +642,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Argument types. Expected: key (String) Provided: Int"]);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types. Expected: key (String) Provided: Int. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_SetInvalidKeyType", async () => {
@@ -653,7 +661,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: key (String), value (Int) Provided: Int, Int",
+      "Argument types. Expected: key (String), value (Int) Provided: Int, Int. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -671,7 +679,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: key (String), value (Int) Provided: String, Float",
+      "Argument types. Expected: key (String), value (Int) Provided: String, Float. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -704,7 +712,9 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'put' is not defined for type 'DictionaryImmutable'"]);
+    assertDoesNotCompile(fileImpl, [
+      "'put' is not defined for type 'DictionaryImmutable'. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_removeKey", async () => {
@@ -721,7 +731,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'removeAt' is not defined for type 'DictionaryImmutable'"]);
+    assertDoesNotCompile(fileImpl, [
+      "'removeAt' is not defined for type 'DictionaryImmutable'. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_undefined", async () => {
@@ -735,7 +747,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'a' is not defined"]);
+    assertDoesNotCompile(fileImpl, [
+      "'a' is not defined. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_withoutGenericType", async () => {
@@ -750,7 +764,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["<of Type(s)> Expected: 2 Provided: 0"]);
+    assertDoesNotCompile(fileImpl, [
+      "<of Type(s)> Expected: 2 Provided: 0. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_WrongIndexBrackets", async () => {
@@ -770,7 +786,9 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot invoke identifier 'a' as a method"]);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot invoke identifier 'a' as a method. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_WrongIndexBrackets1", async () => {
@@ -786,7 +804,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot invoke identifier 'a' as a method"]);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot invoke identifier 'a' as a method. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_DictionaryImmutableOfMutableClassValue", async () => {
@@ -803,7 +823,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["DictionaryImmutable cannot be of mutable type 'Foo'"]);
+    assertDoesNotCompile(fileImpl, [
+      "DictionaryImmutable cannot be of mutable type 'Foo'. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_DictionaryImmutableOfMutableClassKey", async () => {
@@ -820,7 +842,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["DictionaryImmutable cannot have key of type 'Foo'"]);
+    assertDoesNotCompile(fileImpl, [
+      "DictionaryImmutable cannot have key of type 'Foo'. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_DictionaryImmutableOfListValue", async () => {
@@ -835,7 +859,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "DictionaryImmutable cannot be of mutable type 'List<of Int>'",
+      "DictionaryImmutable cannot be of mutable type 'List<of Int>'. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -850,7 +874,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["DictionaryImmutable cannot have key of type 'List<of Int>'"]);
+    assertDoesNotCompile(fileImpl, [
+      "DictionaryImmutable cannot have key of type 'List<of Int>'. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_DictionaryImmutableOfDictionaryValue", async () => {
@@ -865,7 +891,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "DictionaryImmutable cannot be of mutable type 'Dictionary<of Int, Int>'",
+      "DictionaryImmutable cannot be of mutable type 'Dictionary<of Int, Int>'. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -881,7 +907,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "DictionaryImmutable cannot have key of type 'Dictionary<of Int, Int>'",
+      "DictionaryImmutable cannot have key of type 'Dictionary<of Int, Int>'. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -900,7 +926,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["DictionaryImmutable cannot be of mutable type 'Foo'"]);
+    assertDoesNotCompile(fileImpl, [
+      "DictionaryImmutable cannot be of mutable type 'Foo'. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_LiteralDictionaryImmutableOfMutableClassKey", async () => {
@@ -918,7 +946,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["DictionaryImmutable cannot have key of type 'Foo'"]);
+    assertDoesNotCompile(fileImpl, [
+      "DictionaryImmutable cannot have key of type 'Foo'. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_LiteralDictionaryImmutableOfListValue", async () => {
@@ -937,7 +967,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "DictionaryImmutable cannot be of mutable type 'List<of Int>'",
+      "DictionaryImmutable cannot be of mutable type 'List<of Int>'. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -956,7 +986,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["DictionaryImmutable cannot have key of type 'List<of Int>'"]);
+    assertDoesNotCompile(fileImpl, [
+      "DictionaryImmutable cannot have key of type 'List<of Int>'. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_LiteralDictionaryImmutableOfListKey", async () => {
@@ -975,7 +1007,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "DictionaryImmutable cannot have key of type 'ListImmutable<of Int>'",
+      "DictionaryImmutable cannot have key of type 'ListImmutable<of Int>'. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -995,7 +1027,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "DictionaryImmutable cannot be of mutable type 'Dictionary<of String, Int>'",
+      "DictionaryImmutable cannot be of mutable type 'Dictionary<of String, Int>'. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -1015,7 +1047,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "DictionaryImmutable cannot have key of type 'Dictionary<of String, Int>'",
+      "DictionaryImmutable cannot have key of type 'Dictionary<of String, Int>'. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -1035,7 +1067,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "DictionaryImmutable cannot have key of type 'DictionaryImmutable<of String, Int>'",
+      "DictionaryImmutable cannot have key of type 'DictionaryImmutable<of String, Int>'. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -1050,7 +1082,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'Foo' is not defined"]);
+    assertDoesNotCompile(fileImpl, [
+      "'Foo' is not defined. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_LiteralDictionaryImmutableOfEmptyUnknownClass2", async () => {
@@ -1064,7 +1098,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'Foo' is not defined"]);
+    assertDoesNotCompile(fileImpl, [
+      "'Foo' is not defined. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_EmptyGenericType", async () => {
@@ -1078,6 +1114,8 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["<of Type(s)> Expected: 2 Provided: 0"]);
+    assertDoesNotCompile(fileImpl, [
+      "<of Type(s)> Expected: 2 Provided: 0. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 });

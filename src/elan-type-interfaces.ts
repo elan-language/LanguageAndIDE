@@ -8,7 +8,8 @@ export enum Deprecation {
   methodRemoved,
   classRenamed,
   classRemoved,
-  parametersChanged,
+  methodParametersChanged,
+  classParametersChanged,
 }
 
 export interface Deprecated {

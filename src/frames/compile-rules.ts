@@ -12,6 +12,7 @@ import {
   ExtensionCompileError,
   ExtraParameterCompileError,
   FunctionRefCompileError,
+  GenericParametersCompileError,
   IsDeprecated,
   MemberTypeCompileError,
   MissingParameterCompileError,
@@ -29,7 +30,6 @@ import {
   NotRangeableCompileError,
   NotUniqueNameCompileError,
   OutParameterCompileError,
-  ParametersCompileError,
   ParameterTypesCompileError,
   PrivateMemberCompileError,
   PropertyCompileError,
@@ -139,7 +139,7 @@ export function mustBeBooleanCondition(
   if (knownType(st) && st !== BooleanType.Instance) {
     compileErrors.push(
       new SyntaxCompileError(
-        "Condition of 'if' expression does not evaluate to a Boolean",
+        "Condition of 'if' expression does not evaluate to a Boolean. <u>More Info</u>",
         location,
       ),
     );
@@ -154,7 +154,10 @@ export function mustNotHaveConditionalAfterUnconditionalElse(
   const unconditionals = elses.filter((s) => !s.hasIf).length;
   if (unconditionals > 1 || (unconditionals === 1 && elses[elses.length - 1].hasIf)) {
     compileErrors.push(
-      new SyntaxCompileError(`Cannot have any clause after unconditional 'else'`, location),
+      new SyntaxCompileError(
+        `Cannot have any clause after unconditional 'else'. <u>More Info</u>`,
+        location,
+      ),
     );
   }
 }
@@ -196,7 +199,7 @@ export function mustNotBeKeyword(id: string, compileErrors: CompileError[], loca
   if (allKeywords.includes(id)) {
     compileErrors.push(
       new SyntaxCompileError(
-        `'${id}' is a keyword, and may not be used as an identifier`,
+        `'${id}' is a keyword, and may not be used as an identifier. <u>More Info</u>`,
         location,
       ),
     );
@@ -204,7 +207,7 @@ export function mustNotBeKeyword(id: string, compileErrors: CompileError[], loca
   if (reservedWords.includes(id)) {
     compileErrors.push(
       new SyntaxCompileError(
-        `'${id}' is a reserved word, and may not be used as an identifier`,
+        `'${id}' is a reserved word, and may not be used as an identifier. <u>More Info</u>`,
         location,
       ),
     );
@@ -273,8 +276,11 @@ export function checkForDeprecation(
   location: string,
 ) {
   if (symbolType.deprecated) {
+    const reason = symbolType.deprecated.reason;
+
     if (
-      symbolType.deprecated.reason === Deprecation.parametersChanged &&
+      (reason === Deprecation.classParametersChanged ||
+        reason === Deprecation.methodParametersChanged) &&
       compileErrors.length === 0
     ) {
       // ignore if the parameters compiled
@@ -288,14 +294,16 @@ export function checkForDeprecation(
 
     if (fromMajor < version.major || (fromMajor === version.major && fromMinor <= version.minor)) {
       compileErrors.push(
-        new IsDeprecated(fromMajor, fromMinor, symbolType.deprecated.message, location),
+        new IsDeprecated(reason, fromMajor, fromMinor, symbolType.deprecated.message, location),
       );
     }
   }
 }
 
 export function mustNotBeNegativeIndex(compileErrors: CompileError[], location: string) {
-  compileErrors.push(new SyntaxCompileError("Index cannot be negative", location));
+  compileErrors.push(
+    new SyntaxCompileError("Index cannot be negative. <u>More Info</u>", location),
+  );
 }
 
 export function mustBeIndexableType(
@@ -581,7 +589,7 @@ export function mustMatchGenericParameters(
   location: string,
 ) {
   if (parms.length !== expected) {
-    compileErrors.push(new ParametersCompileError(expected, parms.length, location, true));
+    compileErrors.push(new GenericParametersCompileError(expected, parms.length, location));
   }
 }
 
@@ -622,7 +630,10 @@ function FailNotNumber(lhs: SymbolType, compileErrors: CompileError[], location:
 
 function FailCannotCompareProcFunc(compileErrors: CompileError[], location: string) {
   compileErrors.push(
-    new SyntaxCompileError("Cannot do equality operations on Procedures or Functions", location),
+    new SyntaxCompileError(
+      "Cannot do equality operations on Procedures or Functions. <u>More Info</u>",
+      location,
+    ),
   );
 }
 
@@ -699,7 +710,10 @@ export function mustBeImmutableType(
 ) {
   if (!type.typeOptions.isImmutable) {
     compileErrors.push(
-      new SyntaxCompileError(`Property ${name} is not of an immutable type.`, location),
+      new SyntaxCompileError(
+        `Property ${name} is not of an immutable type. <u>More Info</u>`,
+        location,
+      ),
     );
   }
 }
@@ -712,7 +726,10 @@ export function mustBeImmutableGenericType(
 ) {
   if (!ofType.typeOptions.isImmutable) {
     compileErrors.push(
-      new SyntaxCompileError(`${type} cannot be of mutable type '${ofType.name}'`, location),
+      new SyntaxCompileError(
+        `${type} cannot be of mutable type '${ofType.name}'. <u>More Info</u>`,
+        location,
+      ),
     );
   }
 }
@@ -729,7 +746,10 @@ export function mustBeValidKeyType(
       (ofType.typeOptions.isIndexable || ofType.typeOptions.isIterable))
   ) {
     compileErrors.push(
-      new SyntaxCompileError(`${type} cannot have key of type '${ofType.name}'`, location),
+      new SyntaxCompileError(
+        `${type} cannot have key of type '${ofType.name}'. <u>More Info</u>`,
+        location,
+      ),
     );
   }
 }
@@ -796,8 +816,8 @@ function mustBeCompatibleDeconstruction(
         mustBeAssignableType(llst, rrst, compileErrors, location);
       } else {
         const msg = id
-          ? `No such property '${id}' on record '${rst.name}`
-          : "Cannot discard in record deconstruction";
+          ? `No such property '${id}' on record '${rst.name}. <u>More Info</u>`
+          : "Cannot discard in record deconstruction. <u>More Info</u>";
         compileErrors.push(new SyntaxCompileError(msg, location));
       }
     }
@@ -820,7 +840,10 @@ export function mustBeCompatibleDefinitionNode(
     }
     if (rst instanceof TupleType && lst.ofTypes.length !== rst.ofTypes.length) {
       compileErrors.push(
-        new SyntaxCompileError(`Wrong number of deconstructed variables`, location),
+        new SyntaxCompileError(
+          `Wrong number of deconstructed variables. <u>More Info</u>`,
+          location,
+        ),
       );
     }
   }
@@ -871,7 +894,9 @@ export function mustNotBePropertyOnFunctionMethod(
 }
 
 export function mustBePropertyPrefixedOnMember(compileErrors: CompileError[], location: string) {
-  compileErrors.push(new SyntaxCompileError(`referencing a property requires a prefix`, location));
+  compileErrors.push(
+    new SyntaxCompileError(`referencing a property requires a prefix. <u>More Info</u>`, location),
+  );
 }
 
 function isIndexed(assignable: AstNode) {
@@ -956,7 +981,7 @@ export function mustBeUniqueNameInScope(
       symbol.duplicates.length ===
       symbol.duplicates.filter((s) => isMember(s) && s.isAbstract).length
     ) {
-      postFix = ". Suggestion: factor out the common member(s) into a higher level interface.";
+      postFix = ". Suggestion: factor out the common member(s) into a higher level interface";
     }
 
     compileErrors.push(new NotUniqueNameCompileError(name, postFix, location));
@@ -1022,13 +1047,16 @@ export function mustNotBeRedefined(
 
 export function mustNotBeOutParameter(compileErrors: CompileError[], location: string) {
   compileErrors.push(
-    new SyntaxCompileError("'out' parameters are only supported on procedures.", location),
+    new SyntaxCompileError(
+      "'out' parameters are only supported on procedures. <u>More Info</u>",
+      location,
+    ),
   );
 }
 
 export function mustNotHaveDuplicateMain(compileErrors: CompileError[], location: string) {
   compileErrors.push(
-    new SyntaxCompileError("There can only be one 'main' in a program.", location),
+    new SyntaxCompileError("There can only be one 'main' in a program. <u>More Info</u>", location),
   );
 }
 
@@ -1095,7 +1123,7 @@ export function mustBeKnownCompilerDirective(
 }
 
 export function mustNotBeTwoUnaryExpressions(compileErrors: CompileError[], location: string) {
-  compileErrors.push(new SyntaxCompileError("Unsupported operation", location));
+  compileErrors.push(new SyntaxCompileError("Unsupported operation. <u>More Info</u>", location));
 }
 
 const compilerAssertions = true;

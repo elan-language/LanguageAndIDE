@@ -673,7 +673,9 @@ end record`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: List<of Int>"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Int Provided: List<of Int>. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_NotClass", async () => {
@@ -689,7 +691,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'a' is not defined"]);
+    assertDoesNotCompile(fileImpl, [
+      "'a' is not defined. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_NotClass1", async () => {
@@ -705,7 +709,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'a' is not defined"]);
+    assertDoesNotCompile(fileImpl, [
+      "'a' is not defined. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_NoSuchProperty", async () => {
@@ -725,7 +731,9 @@ end record`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'b' is not defined"]);
+    assertDoesNotCompile(fileImpl, [
+      "'b' is not defined. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_PrivateProperty", async () => {
@@ -758,6 +766,8 @@ end record`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'aa' is not defined"]);
+    assertDoesNotCompile(fileImpl, [
+      "'aa' is not defined. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 });

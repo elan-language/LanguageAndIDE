@@ -72,7 +72,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Argument types. Expected: parameter0 (String) Provided: Int"]);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types. Expected: parameter0 (String) Provided: Int. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_Queue_adding_incompatible_type2", async () => {
@@ -88,7 +90,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Argument types. Expected: parameter0 (String) Provided: Int"]);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types. Expected: parameter0 (String) Provided: Int. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_Queue_peek_empty_Queue", async () => {
@@ -159,7 +163,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["<of Type(s)> Expected: 1 Provided: 0"]);
+    assertDoesNotCompile(fileImpl, [
+      "<of Type(s)> Expected: 1 Provided: 0. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_QueueOfMutable", async () => {
@@ -177,6 +183,8 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Queue cannot be of mutable type 'Foo'"]);
+    assertDoesNotCompile(fileImpl, [
+      "Queue cannot be of mutable type 'Foo'. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 });
