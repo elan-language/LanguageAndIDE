@@ -1,5 +1,5 @@
 import { AbstractSelector } from "./abstract-selector";
-import { CompileError } from "./compile-error";
+import { CompileError, Severity } from "./compile-error";
 import { MainFrame } from "./globals/main-frame";
 import { AstNode } from "./interfaces/ast-node";
 import { AstTypeNode } from "./interfaces/ast-type-node";
@@ -165,7 +165,9 @@ export function helper_deriveCompileStatusFromErrors(errors: CompileError[]): Co
   if (errors.length === 0) {
     result = CompileStatus.ok;
   } else {
-    result = errors.some((e) => !e.isWarning) ? CompileStatus.error : CompileStatus.unknown_symbol;
+    result = errors.some((e) => e.severity === Severity.error)
+      ? CompileStatus.error
+      : CompileStatus.unknown_symbol;
   }
   return result;
 }
