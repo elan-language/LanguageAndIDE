@@ -303,7 +303,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompileWithId(fileImpl, "set6", [
-      "Incompatible types. Expected: String Provided: Float",
+      "Incompatible types. Expected: String Provided: Float. <u>More Info</u>",
     ]);
   });
 
@@ -359,7 +359,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompileWithId(fileImpl, "var3", [
-      "'if' is a keyword, and may not be used as an identifier",
+      "'if' is a keyword, and may not be used as an identifier. <u>More Info</u>",
     ]);
   });
 
@@ -375,7 +375,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompileWithId(fileImpl, "var3", [
-      "'break' is a reserved word, and may not be used as an identifier",
+      "'break' is a reserved word, and may not be used as an identifier. <u>More Info</u>",
     ]);
   });
 
@@ -401,16 +401,16 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompileWithId(fileImpl, "set22", [
-      "Incompatible types. Expected: Boolean Provided: Float",
+      "Incompatible types. Expected: Boolean Provided: Float. <u>More Info</u>",
     ]);
     assertDoesNotCompileWithId(fileImpl, "set25", [
-      "Incompatible types. Expected: Int Provided: Boolean",
+      "Incompatible types. Expected: Int Provided: Boolean. <u>More Info</u>",
     ]);
     assertDoesNotCompileWithId(fileImpl, "set28", [
-      "Incompatible types. Expected: String Provided: ListImmutable<of Float>",
+      "Incompatible types. Expected: String Provided: ListImmutable<of Float>. <u>More Info</u>",
     ]);
     assertDoesNotCompileWithId(fileImpl, "set31", [
-      "Incompatible types. Expected: Int Provided: Float",
+      "Incompatible types. Expected: Int Provided: Float. <u>More Info</u>",
     ]);
   });
 
@@ -431,15 +431,15 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompileWithId(fileImpl, "set12", [
-      "Incompatible types. Expected: List<of String> Provided: ListImmutable<of Float>",
+      "Incompatible types. Expected: List<of String> Provided: ListImmutable<of Float>. <u>More Info</u>",
     ]);
 
     assertDoesNotCompileWithId(fileImpl, "set15", [
-      "Incompatible types. Expected: ListImmutable<of Float> try converting with '.asListImmutable()' Provided: List<of String>",
+      "Incompatible types. Expected: ListImmutable<of Float> try converting with '.asListImmutable()' Provided: List<of String>. <u>More Info</u>",
     ]);
 
     assertDoesNotCompileWithId(fileImpl, "set18", [
-      "Incompatible types. Expected: Dictionary<of String, Float> Provided: ListImmutable<of Float>",
+      "Incompatible types. Expected: Dictionary<of String, Float> Provided: ListImmutable<of Float>. <u>More Info</u>",
     ]);
   });
 
@@ -454,7 +454,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "expr5", ["'x' is not defined"]);
+    assertDoesNotCompileWithId(fileImpl, "expr5", ["'x' is not defined. <u>More Info</u>"]);
   });
 
   test("Fail_referenceToExtensionFunction", async () => {
@@ -470,7 +470,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Library or class function 'createFileForWriting' cannot be preceded by by 'ref'",
+      "Library or class function 'createFileForWriting' cannot be preceded by by 'ref'. <u>More Info</u>",
     ]);
   });
 
@@ -487,7 +487,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "expr11", ["'x' is not defined for type 'Int'"]);
+    assertDoesNotCompileWithId(fileImpl, "expr11", [
+      "'x' is not defined for type 'Int'. <u>More Info</u>",
+    ]);
   });
 
   test("Pass_Redefine", async () => {

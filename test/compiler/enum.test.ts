@@ -403,8 +403,8 @@ enum Fruit apple, orange, pear`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int Provided: String",
-      "Incompatible types. Expected: Float or Int Provided: Fruit",
+      "Incompatible types. Expected: Float or Int Provided: String. <u>More Info</u>",
+      "Incompatible types. Expected: Float or Int Provided: Fruit. <u>More Info</u>",
     ]);
   });
 
@@ -464,7 +464,9 @@ enum Fruit apple, orange, pear`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: Fruit"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Int Provided: Fruit. <u>More Info</u>",
+    ]);
   });
 
   test("Fail_undefinedEnum", async () => {
@@ -478,7 +480,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'Fruit' is not defined"]);
+    assertDoesNotCompile(fileImpl, ["'Fruit' is not defined. <u>More Info</u>"]);
   });
 
   test("Fail_undefinedEnumValue", async () => {
@@ -494,7 +496,7 @@ enum Fruit apple, orange, pear`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'kiwi' is not defined"]);
+    assertDoesNotCompile(fileImpl, ["'kiwi' is not defined. <u>More Info</u>"]);
   });
 
   test("Fail_UseOfKeywordAsName", async () => {
@@ -525,7 +527,9 @@ enum Fruit apple, orange, if`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'if' is a keyword, and may not be used as an identifier"]);
+    assertDoesNotCompile(fileImpl, [
+      "'if' is a keyword, and may not be used as an identifier. <u>More Info</u>",
+    ]);
   });
 
   test("Fail_UseOfReservedWordAsValue", async () => {
@@ -542,7 +546,7 @@ enum Fruit apple, orange, break`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'break' is a reserved word, and may not be used as an identifier",
+      "'break' is a reserved word, and may not be used as an identifier. <u>More Info</u>",
     ]);
   });
 
@@ -561,7 +565,7 @@ enum Fruit apple, orange, pear`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'Fruit' not unique in scope"]);
+    assertDoesNotCompile(fileImpl, ["Name 'Fruit' not unique in scope. <u>More Info</u>"]);
   });
 
   test("Fail_DuplicateValues", async () => {
@@ -577,6 +581,6 @@ enum Fruit apple, orange, pear, orange`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'orange' not unique in scope"]);
+    assertDoesNotCompile(fileImpl, ["Name 'orange' not unique in scope. <u>More Info</u>"]);
   });
 });

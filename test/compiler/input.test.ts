@@ -319,7 +319,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: String Provided: Int"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: String Provided: Int. <u>More Info</u>",
+    ]);
   });
 
   test("Pass_InputInExpression", async () => {

@@ -7,8 +7,8 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
-  transforms,
   testHeader,
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("Chaining", () => {
@@ -665,7 +665,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: String Provided: Int"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: String Provided: Int. <u>More Info</u>",
+    ]);
   });
 
   test("Fail_TypeError1", async () => {
@@ -699,6 +701,6 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'fd' is not defined for type 'Bar'"]);
+    assertDoesNotCompile(fileImpl, ["'fd' is not defined for type 'Bar'. <u>More Info</u>"]);
   });
 });

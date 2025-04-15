@@ -549,7 +549,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int Provided: ListImmutable<of Int>",
+      "Incompatible types. Expected: Float or Int Provided: ListImmutable<of Int>. <u>More Info</u>",
     ]);
   });
 
@@ -579,7 +579,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int Provided: ListImmutable<of Int>",
+      "Incompatible types. Expected: Float or Int Provided: ListImmutable<of Int>. <u>More Info</u>",
     ]);
   });
 
@@ -601,7 +601,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int Provided: ListImmutable<of Int>",
+      "Incompatible types. Expected: Float or Int Provided: ListImmutable<of Int>. <u>More Info</u>",
     ]);
   });
 
@@ -623,7 +623,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int Provided: ListImmutable<of String>",
+      "Incompatible types. Expected: Float or Int Provided: ListImmutable<of String>. <u>More Info</u>",
     ]);
   });
 
@@ -992,7 +992,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: String"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Int Provided: String. <u>More Info</u>",
+    ]);
   });
 
   test("Fail_literalListImmutableInconsistentTypes2", async () => {
@@ -1007,7 +1009,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: Float"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Int Provided: Float. <u>More Info</u>",
+    ]);
   });
 
   test("Fail_OutOfRange", async () => {
@@ -1041,7 +1045,9 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'put' is not defined for type 'ListImmutable'"]);
+    assertDoesNotCompile(fileImpl, [
+      "'put' is not defined for type 'ListImmutable'. <u>More Info</u>",
+    ]);
   });
 
   test("Fail_CannotSetIndex", async () => {
@@ -1073,7 +1079,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'put' is not defined for type 'ListImmutable'"]);
+    assertDoesNotCompile(fileImpl, [
+      "'put' is not defined for type 'ListImmutable'. <u>More Info</u>",
+    ]);
   });
 
   test("Fail_add", async () => {
@@ -1090,7 +1098,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'append' is not defined for type 'ListImmutable'"]);
+    assertDoesNotCompile(fileImpl, [
+      "'append' is not defined for type 'ListImmutable'. <u>More Info</u>",
+    ]);
   });
 
   test("Fail_insert", async () => {
@@ -1107,7 +1117,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'insert' is not defined for type 'ListImmutable'"]);
+    assertDoesNotCompile(fileImpl, [
+      "'insert' is not defined for type 'ListImmutable'. <u>More Info</u>",
+    ]);
   });
 
   test("Fail_removeAt", async () => {
@@ -1124,7 +1136,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'removeAt' is not defined for type 'ListImmutable'"]);
+    assertDoesNotCompile(fileImpl, [
+      "'removeAt' is not defined for type 'ListImmutable'. <u>More Info</u>",
+    ]);
   });
 
   test("Fail_removeFirst", async () => {
@@ -1140,7 +1154,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'removeFirst' is not defined for type 'ListImmutable'"]);
+    assertDoesNotCompile(fileImpl, [
+      "'removeFirst' is not defined for type 'ListImmutable'. <u>More Info</u>",
+    ]);
   });
 
   test("Fail_removeAll", async () => {
@@ -1156,7 +1172,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'removeAll' is not defined for type 'ListImmutable'"]);
+    assertDoesNotCompile(fileImpl, [
+      "'removeAll' is not defined for type 'ListImmutable'. <u>More Info</u>",
+    ]);
   });
 
   test("Fail_withoutGenericType", async () => {
@@ -1171,7 +1189,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["<of Type(s)> Expected: 1 Provided: 0"]);
+    assertDoesNotCompile(fileImpl, ["<of Type(s)> Expected: 1 Provided: 0. <u>More Info</u>"]);
   });
 
   test("Fail_typeErrorMessage", async () => {
@@ -1188,7 +1206,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: ListImmutable<of Int> try converting with '.asListImmutable()' Provided: List<of Int>",
+      "Incompatible types. Expected: ListImmutable<of Int> try converting with '.asListImmutable()' Provided: List<of Int>. <u>More Info</u>",
     ]);
   });
 
@@ -1291,7 +1309,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'Foo'"]);
+    assertDoesNotCompile(fileImpl, [
+      "ListImmutable cannot be of mutable type 'Foo'. <u>More Info</u>",
+    ]);
   });
 
   test("Fail_ListImmutableOfList", async () => {
@@ -1305,7 +1325,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'List<of Int>'"]);
+    assertDoesNotCompile(fileImpl, [
+      "ListImmutable cannot be of mutable type 'List<of Int>'. <u>More Info</u>",
+    ]);
   });
 
   test("Fail_ListOfDictionary", async () => {
@@ -1320,7 +1342,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "ListImmutable cannot be of mutable type 'Dictionary<of Int, Int>'",
+      "ListImmutable cannot be of mutable type 'Dictionary<of Int, Int>'. <u>More Info</u>",
     ]);
   });
 
@@ -1339,7 +1361,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'Foo'"]);
+    assertDoesNotCompile(fileImpl, [
+      "ListImmutable cannot be of mutable type 'Foo'. <u>More Info</u>",
+    ]);
   });
 
   test("Fail_LiteralListImmutableOfList", async () => {
@@ -1357,7 +1381,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'List<of Int>'"]);
+    assertDoesNotCompile(fileImpl, [
+      "ListImmutable cannot be of mutable type 'List<of Int>'. <u>More Info</u>",
+    ]);
   });
 
   test("Fail_LiteralListImmutableOfDictionary", async () => {
@@ -1376,7 +1402,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "ListImmutable cannot be of mutable type 'Dictionary<of String, Int>'",
+      "ListImmutable cannot be of mutable type 'Dictionary<of String, Int>'. <u>More Info</u>",
     ]);
   });
 
@@ -1391,7 +1417,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'Foo' is not defined"]);
+    assertDoesNotCompile(fileImpl, ["'Foo' is not defined. <u>More Info</u>"]);
   });
 
   test("Fail_EmptyGenericType", async () => {
@@ -1405,6 +1431,6 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["<of Type(s)> Expected: 1 Provided: 0"]);
+    assertDoesNotCompile(fileImpl, ["<of Type(s)> Expected: 1 Provided: 0. <u>More Info</u>"]);
   });
 });

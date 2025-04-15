@@ -89,7 +89,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: arr (List<of Int>) Provided: Array<of Int>",
+      "Argument types. Expected: arr (List<of Int>) Provided: Array<of Int>. <u>More Info</u>",
     ]);
   });
 
@@ -534,7 +534,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Too many argument(s). Expected: index (Int), value (String)"]);
+    assertDoesNotCompile(fileImpl, [
+      "Too many argument(s). Expected: index (Int), value (String). <u>More Info</u>",
+    ]);
   });
 
   test("Fail_OutOfRange1", async () => {
@@ -586,7 +588,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: index (Int), value (String) Provided: Int, Boolean",
+      "Argument types. Expected: index (Int), value (String) Provided: Int, Boolean. <u>More Info</u>",
     ]);
   });
 
@@ -603,8 +605,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: size (Int), initialValue (Generic Parameter T1) Provided: Int, String",
-      "<of Type(s)> Expected: 1 Provided: 0",
+      "Argument types. Expected: size (Int), initialValue (Generic Parameter T1) Provided: Int, String. <u>More Info</u>",
+      "<of Type(s)> Expected: 1 Provided: 0. <u>More Info</u>",
     ]);
   });
 

@@ -391,7 +391,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: listOfInt (List<of Int>) Provided: ListImmutable<of Int>",
+      "Argument types. Expected: listOfInt (List<of Int>) Provided: ListImmutable<of Int>. <u>More Info</u>",
     ]);
   });
 
@@ -666,7 +666,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: listOfInt (List<of Int>) Provided: List<of Float>",
+      "Argument types. Expected: listOfInt (List<of Int>) Provided: List<of Float>. <u>More Info</u>",
     ]);
   });
 
@@ -880,7 +880,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: listOfInt (List<of Int>) Provided: List<of String>",
+      "Argument types. Expected: listOfInt (List<of Int>) Provided: List<of String>. <u>More Info</u>",
     ]);
   });
 
@@ -897,7 +897,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: lambdaOrFunctionRef (Func<of String => Float>) Provided: Func<of String => String>",
+      "Argument types. Expected: lambdaOrFunctionRef (Func<of String => Float>) Provided: Func<of String => String>. <u>More Info</u>",
     ]);
   });
 
@@ -913,6 +913,6 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["To evaluate function 'keys' add brackets."]);
+    assertDoesNotCompile(fileImpl, ["To evaluate function 'keys' add brackets. <u>More Info</u>"]);
   });
 });

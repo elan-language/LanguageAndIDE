@@ -97,6 +97,6 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'z' is not defined"]);
+    assertDoesNotCompile(fileImpl, ["'z' is not defined. <u>More Info</u>"]);
   });
 });

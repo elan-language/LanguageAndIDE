@@ -117,7 +117,7 @@ main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'x' is not defined"]);
+    assertDoesNotCompile(fileImpl, ["'x' is not defined. <u>More Info</u>"]);
   });
 
   test("Fail_variableDefinedInWhile", async () => {
@@ -184,7 +184,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Expression must be Boolean"]);
+    assertDoesNotCompile(fileImpl, ["Expression must be Boolean. <u>More Info</u>"]);
   });
 
   test("Fail_WhileConditionUnknown", async () => {
@@ -200,6 +200,6 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'a' is not defined"]);
+    assertDoesNotCompile(fileImpl, ["'a' is not defined. <u>More Info</u>"]);
   });
 });

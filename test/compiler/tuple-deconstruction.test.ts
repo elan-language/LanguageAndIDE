@@ -763,7 +763,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: String, Int Provided: tuple(Int, String)",
+      "Incompatible types. Expected: String, Int Provided: tuple(Int, String). <u>More Info</u>",
     ]);
   });
 
@@ -785,8 +785,8 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: String, Unknown Provided: tuple(Int, String)",
-      "'y' is not defined",
+      "Incompatible types. Expected: String, Unknown Provided: tuple(Int, String). <u>More Info</u>",
+      "'y' is not defined. <u>More Info</u>",
     ]);
   });
 
@@ -808,7 +808,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "The identifier 'z' is already used for a variable and cannot be re-defined here.",
+      "The identifier 'z' is already used for a variable and cannot be re-defined here. <u>More Info</u>",
     ]);
   });
 
@@ -829,7 +829,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: String, _ Provided: tuple(Int, String)",
+      "Incompatible types. Expected: String, _ Provided: tuple(Int, String). <u>More Info</u>",
     ]);
   });
 
@@ -852,8 +852,8 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "May not re-assign the 'let' 'y'",
-      "May not re-assign the 'let' 'z'",
+      "May not re-assign the 'let' 'y'. <u>More Info</u>",
+      "May not re-assign the 'let' 'z'. <u>More Info</u>",
     ]);
   });
 
@@ -871,7 +871,9 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Expression must be able to be deconstructed"]);
+    assertDoesNotCompile(fileImpl, [
+      "Expression must be able to be deconstructed. <u>More Info</u>",
+    ]);
   });
 
   test("Fail_CannotDeconstructLet", async () => {
@@ -888,7 +890,9 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Expression must be able to be deconstructed"]);
+    assertDoesNotCompile(fileImpl, [
+      "Expression must be able to be deconstructed. <u>More Info</u>",
+    ]);
   });
 
   test("Fail_DeconstructIntoExistingAndNewVariables", async () => {
@@ -906,6 +910,6 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'y' is not defined"]);
+    assertDoesNotCompile(fileImpl, ["'y' is not defined. <u>More Info</u>"]);
   });
 });

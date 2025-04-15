@@ -1114,7 +1114,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'join' is not defined for type 'Array'"]);
+    assertDoesNotCompile(fileImpl, ["'join' is not defined for type 'Array'. <u>More Info</u>"]);
   });
 
   test("Pass_replace", async () => {
@@ -1368,7 +1368,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: listOfVGs (List<of VectorGraphic>) Provided: List<of Foo>",
+      "Argument types. Expected: listOfVGs (List<of VectorGraphic>) Provided: List<of Foo>. <u>More Info</u>",
     ]);
   });
 });

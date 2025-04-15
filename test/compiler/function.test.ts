@@ -341,8 +341,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Missing argument(s). Expected: item (String)",
-      "Too many argument(s). Expected: item (String)",
+      "Missing argument(s). Expected: item (String). <u>More Info</u>",
+      "Too many argument(s). Expected: item (String). <u>More Info</u>",
     ]);
   });
 
@@ -363,8 +363,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Too many argument(s). Expected: p (Float)",
-      "Missing argument(s). Expected: p (Float)",
+      "Too many argument(s). Expected: p (Float). <u>More Info</u>",
+      "Missing argument(s). Expected: p (Float). <u>More Info</u>",
     ]);
   });
 
@@ -385,8 +385,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: p (Int) Provided: Boolean",
-      "Argument types. Expected: p (Int) Provided: Float",
+      "Argument types. Expected: p (Int) Provided: Boolean. <u>More Info</u>",
+      "Argument types. Expected: p (Int) Provided: Float. <u>More Info</u>",
     ]);
   });
 
@@ -405,7 +405,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: Boolean"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Int Provided: Boolean. <u>More Info</u>",
+    ]);
   });
 
   test("Fail_noReturnType", async () => {
@@ -476,7 +478,9 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: String Provided: Int"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: String Provided: Int. <u>More Info</u>",
+    ]);
   });
 
   test("Fail_NoReturn2", async () => {
@@ -530,7 +534,9 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: Float"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Int Provided: Float. <u>More Info</u>",
+    ]);
   });
 
   test("Fail_statementAfterReturn", async () => {
@@ -601,7 +607,7 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not re-assign the parameter 'a'"]);
+    assertDoesNotCompile(fileImpl, ["May not re-assign the parameter 'a'. <u>More Info</u>"]);
   });
 
   test("Fail_CannotModifyParam1", async () => {
@@ -621,7 +627,7 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not re-assign the parameter 'a'"]);
+    assertDoesNotCompile(fileImpl, ["May not re-assign the parameter 'a'. <u>More Info</u>"]);
   });
 
   test("Fail_CannotUpdateList", async () => {
@@ -674,7 +680,9 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Too many argument(s). Expected: a (Int), b (Int)"]);
+    assertDoesNotCompile(fileImpl, [
+      "Too many argument(s). Expected: a (Int), b (Int). <u>More Info</u>",
+    ]);
   });
 
   test("Fail_NotEnoughParams", async () => {
@@ -693,7 +701,9 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Missing argument(s). Expected: a (Int), b (Int)"]);
+    assertDoesNotCompile(fileImpl, [
+      "Missing argument(s). Expected: a (Int), b (Int). <u>More Info</u>",
+    ]);
   });
 
   test("Fail_WrongParamType", async () => {
@@ -713,7 +723,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: a (Int), b (Int) Provided: Int, String",
+      "Argument types. Expected: a (Int), b (Int) Provided: Int, String. <u>More Info</u>",
     ]);
   });
 
@@ -776,7 +786,7 @@ end function`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'Bar' is not defined"]);
+    assertDoesNotCompile(fileImpl, ["'Bar' is not defined. <u>More Info</u>"]);
   });
 
   test("Fail_ReturnUnknownType", async () => {
@@ -795,7 +805,7 @@ end function`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'Bar' is not defined"]);
+    assertDoesNotCompile(fileImpl, ["'Bar' is not defined. <u>More Info</u>"]);
   });
 
   test("Fail_UseOfKeywordAsName", async () => {
@@ -813,7 +823,9 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'if' is a keyword, and may not be used as an identifier"]);
+    assertDoesNotCompile(fileImpl, [
+      "'if' is a keyword, and may not be used as an identifier. <u>More Info</u>",
+    ]);
   });
 
   test("Fail_UseOfReservedwordAsName", async () => {
@@ -832,7 +844,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'break' is a reserved word, and may not be used as an identifier",
+      "'break' is a reserved word, and may not be used as an identifier. <u>More Info</u>",
     ]);
   });
 
@@ -869,7 +881,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'break' is a reserved word, and may not be used as an identifier",
+      "'break' is a reserved word, and may not be used as an identifier. <u>More Info</u>",
     ]);
   });
 
@@ -890,7 +902,7 @@ end function
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'foo' not unique in scope"]);
+    assertDoesNotCompile(fileImpl, ["Name 'foo' not unique in scope. <u>More Info</u>"]);
   });
 
   test("Fail_NotUniqueParameterName", async () => {
@@ -905,7 +917,7 @@ end function`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'a' not unique in scope"]);
+    assertDoesNotCompile(fileImpl, ["Name 'a' not unique in scope. <u>More Info</u>"]);
   });
 
   test("Fail_OutOnParameter", async () => {
@@ -920,7 +932,9 @@ end function`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'out' parameters are only supported on procedures."]);
+    assertDoesNotCompile(fileImpl, [
+      "'out' parameters are only supported on procedures. <u>More Info</u>",
+    ]);
   });
 
   test("Fail_OperatorsAndProceduresWithFunctionKeyword", async () => {
@@ -949,11 +963,11 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot do equality operations on Procedures or Functions",
-      "Incompatible types. Expected: Float or Int Provided: Func<of  => Int>",
-      "Incompatible types. Expected: Float or Int Provided: Func<of  => Int>",
-      "Incompatible types. Expected: Float or Int Provided: Func<of  => Int>",
-      "Incompatible types. Expected: Func<of  => Int> Provided: Func<of Int => Float>",
+      "Cannot do equality operations on Procedures or Functions. <u>More Info</u>",
+      "Incompatible types. Expected: Float or Int Provided: Func<of  => Int>. <u>More Info</u>",
+      "Incompatible types. Expected: Float or Int Provided: Func<of  => Int>. <u>More Info</u>",
+      "Incompatible types. Expected: Float or Int Provided: Func<of  => Int>. <u>More Info</u>",
+      "Incompatible types. Expected: Func<of  => Int> Provided: Func<of Int => Float>. <u>More Info</u>",
     ]);
   });
 
@@ -978,15 +992,15 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot do equality operations on Procedures or Functions",
-      "To evaluate function 'p1' add brackets. Or to create a reference to 'p1', precede it by 'ref'",
-      "To evaluate function 'p2' add brackets. Or to create a reference to 'p2', precede it by 'ref'",
-      "Incompatible types. Expected: Float or Int Provided: Func<of  => Int>",
-      "Incompatible types. Expected: Float or Int Provided: Func<of  => Int>",
-      "To evaluate function 'p1' add brackets. Or to create a reference to 'p1', precede it by 'ref'",
-      "To evaluate function 'p2' add brackets. Or to create a reference to 'p2', precede it by 'ref'",
-      "Incompatible types. Expected: Float or Int Provided: Func<of  => Int>",
-      "To evaluate function 'p1' add brackets. Or to create a reference to 'p1', precede it by 'ref'",
+      "Cannot do equality operations on Procedures or Functions. <u>More Info</u>",
+      "To evaluate function 'p1' add brackets. Or to create a reference to 'p1', precede it by 'ref'. <u>More Info</u>",
+      "To evaluate function 'p2' add brackets. Or to create a reference to 'p2', precede it by 'ref'. <u>More Info</u>",
+      "Incompatible types. Expected: Float or Int Provided: Func<of  => Int>. <u>More Info</u>",
+      "Incompatible types. Expected: Float or Int Provided: Func<of  => Int>. <u>More Info</u>",
+      "To evaluate function 'p1' add brackets. Or to create a reference to 'p1', precede it by 'ref'. <u>More Info</u>",
+      "To evaluate function 'p2' add brackets. Or to create a reference to 'p2', precede it by 'ref'. <u>More Info</u>",
+      "Incompatible types. Expected: Float or Int Provided: Func<of  => Int>. <u>More Info</u>",
+      "To evaluate function 'p1' add brackets. Or to create a reference to 'p1', precede it by 'ref'. <u>More Info</u>",
     ]);
   });
 
@@ -1007,7 +1021,7 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "To evaluate function 'a' add brackets. Or to create a reference to 'a', precede it by 'ref'",
+      "To evaluate function 'a' add brackets. Or to create a reference to 'a', precede it by 'ref'. <u>More Info</u>",
     ]);
   });
 
@@ -1024,7 +1038,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["To evaluate function 'length' add brackets."]);
+    assertDoesNotCompile(fileImpl, [
+      "To evaluate function 'length' add brackets. <u>More Info</u>",
+    ]);
   });
 
   test("Fail_LibFunctionWithoutRefKeyword", async () => {
@@ -1039,7 +1055,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["To evaluate function 'abs' add brackets."]);
+    assertDoesNotCompile(fileImpl, ["To evaluate function 'abs' add brackets. <u>More Info</u>"]);
   });
 
   test("Fail_PrintLibFunctionWithoutRefKeyword", async () => {
@@ -1054,7 +1070,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["To evaluate function 'abs' add brackets."]);
+    assertDoesNotCompile(fileImpl, ["To evaluate function 'abs' add brackets. <u>More Info</u>"]);
   });
 
   test("Fail_NoIndexing", async () => {
@@ -1089,7 +1105,9 @@ end function`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'List<of Int>'"]);
+    assertDoesNotCompile(fileImpl, [
+      "ListImmutable cannot be of mutable type 'List<of Int>'. <u>More Info</u>",
+    ]);
   });
 
   test("Fail_ParameterListOfMutableType", async () => {
@@ -1104,7 +1122,9 @@ end function`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'List<of Int>'"]);
+    assertDoesNotCompile(fileImpl, [
+      "ListImmutable cannot be of mutable type 'List<of Int>'. <u>More Info</u>",
+    ]);
   });
 
   test("Fail_noMatchingExtension1", async () => {
@@ -1120,7 +1140,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'asBinary' is not defined for type 'String'"]);
+    assertDoesNotCompile(fileImpl, [
+      "'asBinary' is not defined for type 'String'. <u>More Info</u>",
+    ]);
   });
 
   test("Fail_noMatchingExtension2", async () => {
@@ -1136,6 +1158,8 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'reverse' is not defined for type 'String'"]);
+    assertDoesNotCompile(fileImpl, [
+      "'reverse' is not defined for type 'String'. <u>More Info</u>",
+    ]);
   });
 });

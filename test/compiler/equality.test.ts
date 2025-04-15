@@ -246,7 +246,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot do equality operations on Procedures or Functions"]);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot do equality operations on Procedures or Functions. <u>More Info</u>",
+    ]);
   });
 
   test("Pass_ListEquality", async () => {

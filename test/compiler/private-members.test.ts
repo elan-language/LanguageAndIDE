@@ -220,7 +220,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot reference private member 'p2'"]);
+    assertDoesNotCompile(fileImpl, ["Cannot reference private member 'p2'. <u>More Info</u>"]);
   });
 
   test("Fail_PrivatePropertyCannotBeAccessedViaAbstract", async () => {
@@ -247,7 +247,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot reference private member 'p2'"]);
+    assertDoesNotCompile(fileImpl, ["Cannot reference private member 'p2'. <u>More Info</u>"]);
   });
 
   test("Fail_PrivateProcedureCannotBeAccessed", async () => {
@@ -274,7 +274,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot reference private member 'setP1'"]);
+    assertDoesNotCompile(fileImpl, ["Cannot reference private member 'setP1'. <u>More Info</u>"]);
   });
 
   test("Fail_PrivateFunctionCannotBeAccessed", async () => {
@@ -301,7 +301,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot reference private member 'ff'"]);
+    assertDoesNotCompile(fileImpl, ["Cannot reference private member 'ff'. <u>More Info</u>"]);
   });
 
   test("Fail_PrivatePropertyCannotBePrinted", async () => {
@@ -332,7 +332,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot reference private member 'p2'"]);
+    assertDoesNotCompile(fileImpl, ["Cannot reference private member 'p2'. <u>More Info</u>"]);
   });
 
   test("Fail_PrivateFunctionCannotBePrinted", async () => {
@@ -359,6 +359,6 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot reference private member 'ff'"]);
+    assertDoesNotCompile(fileImpl, ["Cannot reference private member 'ff'. <u>More Info</u>"]);
   });
 });

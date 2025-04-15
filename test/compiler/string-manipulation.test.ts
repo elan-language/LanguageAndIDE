@@ -75,7 +75,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Float or Int Provided: String"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Float or Int Provided: String. <u>More Info</u>",
+    ]);
   });
 
   test("Fail_AppendInt", async () => {
@@ -90,7 +92,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Float or Int Provided: String"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Float or Int Provided: String. <u>More Info</u>",
+    ]);
   });
 
   test("Pass_Indexing", async () => {
@@ -344,7 +348,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Float or Int Provided: String"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Float or Int Provided: String. <u>More Info</u>",
+    ]);
   });
 
   test("Fail_AppendStringToInt", async () => {
@@ -360,7 +366,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Float or Int Provided: String"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Float or Int Provided: String. <u>More Info</u>",
+    ]);
   });
 
   test("Fail_IndexOutOfRange", async () => {
@@ -395,7 +403,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'put' is not defined for type 'String'"]);
+    assertDoesNotCompile(fileImpl, ["'put' is not defined for type 'String'. <u>More Info</u>"]);
   });
 
   test("Fail_ComparisonOperators", async () => {
@@ -416,12 +424,12 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int Provided: String",
-      "Incompatible types. Expected: Float or Int Provided: String",
-      "Incompatible types. Expected: Float or Int Provided: String",
-      "Incompatible types. Expected: Float or Int Provided: String",
-      "Incompatible types. Expected: Float or Int Provided: String",
-      "Incompatible types. Expected: Float or Int Provided: String",
+      "Incompatible types. Expected: Float or Int Provided: String. <u>More Info</u>",
+      "Incompatible types. Expected: Float or Int Provided: String. <u>More Info</u>",
+      "Incompatible types. Expected: Float or Int Provided: String. <u>More Info</u>",
+      "Incompatible types. Expected: Float or Int Provided: String. <u>More Info</u>",
+      "Incompatible types. Expected: Float or Int Provided: String. <u>More Info</u>",
+      "Incompatible types. Expected: Float or Int Provided: String. <u>More Info</u>",
     ]);
   });
 
@@ -439,6 +447,8 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: String Provided: Float"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: String Provided: Float. <u>More Info</u>",
+    ]);
   });
 });

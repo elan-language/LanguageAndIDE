@@ -232,7 +232,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Wrong number of deconstructed variables"]);
+    assertDoesNotCompile(fileImpl, ["Wrong number of deconstructed variables. <u>More Info</u>"]);
   });
 
   test("Fail_AssignItemToWrongType", async () => {
@@ -252,7 +252,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: _, Int Provided: tuple(Int, String)",
+      "Incompatible types. Expected: _, Int Provided: tuple(Int, String). <u>More Info</u>",
     ]);
   });
 
@@ -286,7 +286,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: tuple(Int, String) Provided: tuple(String, String)",
+      "Incompatible types. Expected: tuple(Int, String) Provided: tuple(String, String). <u>More Info</u>",
     ]);
   });
 
@@ -305,7 +305,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: tuple(Int, String, Int) Provided: tuple(Int, String)",
+      "Incompatible types. Expected: tuple(Int, String, Int) Provided: tuple(Int, String). <u>More Info</u>",
     ]);
   });
 
@@ -324,7 +324,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: tuple(Int, String) Provided: tuple(Int, String, Int)",
+      "Incompatible types. Expected: tuple(Int, String) Provided: tuple(Int, String, Int). <u>More Info</u>",
     ]);
   });
 });

@@ -317,7 +317,7 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "To evaluate function 'twice' add brackets. Or to create a reference to 'twice', precede it by 'ref'",
+      "To evaluate function 'twice' add brackets. Or to create a reference to 'twice', precede it by 'ref'. <u>More Info</u>",
     ]);
   });
 
@@ -341,7 +341,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: i (Int), f (Func<of Int => Int>) Provided: Int, Func<of Int, Int => Int>",
+      "Argument types. Expected: i (Int), f (Func<of Int => Int>) Provided: Int, Func<of Int, Int => Int>. <u>More Info</u>",
     ]);
   });
 
@@ -365,7 +365,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: i (Int), f (Func<of Int => Int>) Provided: Int, Func<of Int => String>",
+      "Argument types. Expected: i (Int), f (Func<of Int => Int>) Provided: Int, Func<of Int => String>. <u>More Info</u>",
     ]);
   });
 
@@ -389,7 +389,9 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Missing argument(s). Expected: parameter0 (Int)"]);
+    assertDoesNotCompile(fileImpl, [
+      "Missing argument(s). Expected: parameter0 (Int). <u>More Info</u>",
+    ]);
   });
 
   test("Fail_PassAsParamWithoutRefKeyword", async () => {
@@ -413,7 +415,7 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "To evaluate function 'twice' add brackets. Or to create a reference to 'twice', precede it by 'ref'",
+      "To evaluate function 'twice' add brackets. Or to create a reference to 'twice', precede it by 'ref'. <u>More Info</u>",
     ]);
   });
 
@@ -439,7 +441,7 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "To evaluate function 'twice' add brackets. Or to create a reference to 'twice', precede it by 'ref'",
+      "To evaluate function 'twice' add brackets. Or to create a reference to 'twice', precede it by 'ref'. <u>More Info</u>",
     ]);
   });
 
@@ -470,7 +472,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "To evaluate function 'ff' add brackets. Or to create a reference to 'ff', precede it by 'ref'",
+      "To evaluate function 'ff' add brackets. Or to create a reference to 'ff', precede it by 'ref'. <u>More Info</u>",
     ]);
   });
 
@@ -491,8 +493,8 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int Provided: Func<of Int => Int>",
-      "To evaluate function 'ff' add brackets. Or to create a reference to 'ff', precede it by 'ref'",
+      "Incompatible types. Expected: Float or Int Provided: Func<of Int => Int>. <u>More Info</u>",
+      "To evaluate function 'ff' add brackets. Or to create a reference to 'ff', precede it by 'ref'. <u>More Info</u>",
     ]);
   });
 
@@ -513,7 +515,7 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int Provided: Func<of Int => Int>",
+      "Incompatible types. Expected: Float or Int Provided: Func<of Int => Int>. <u>More Info</u>",
     ]);
   });
 });

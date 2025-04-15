@@ -778,7 +778,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: List<of Int>"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Int Provided: List<of Int>. <u>More Info</u>",
+    ]);
   });
 
   test("Fail_ConstructorNotCalled", async () => {
@@ -799,7 +801,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Missing argument(s). Expected: a (Int)"]);
+    assertDoesNotCompile(fileImpl, ["Missing argument(s). Expected: a (Int). <u>More Info</u>"]);
   });
 
   test("Fail_NotClass", async () => {
@@ -815,7 +817,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'a' is not defined"]);
+    assertDoesNotCompile(fileImpl, ["'a' is not defined. <u>More Info</u>"]);
   });
 
   test("Fail_NotClass1", async () => {
@@ -831,7 +833,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'a' is not defined"]);
+    assertDoesNotCompile(fileImpl, ["'a' is not defined. <u>More Info</u>"]);
   });
 
   test("Fail_NoSuchProperty", async () => {
@@ -851,7 +853,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'b' is not defined"]);
+    assertDoesNotCompile(fileImpl, ["'b' is not defined. <u>More Info</u>"]);
   });
 
   test("Fail_PrivateProperty", async () => {
@@ -871,7 +873,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot reference private member 'b'"]);
+    assertDoesNotCompile(fileImpl, ["Cannot reference private member 'b'. <u>More Info</u>"]);
   });
 
   test("Fail_UnknownProperty", async () => {
@@ -891,6 +893,6 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'aa' is not defined"]);
+    assertDoesNotCompile(fileImpl, ["'aa' is not defined. <u>More Info</u>"]);
   });
 });

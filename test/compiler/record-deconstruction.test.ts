@@ -134,7 +134,7 @@ end record`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot discard in record deconstruction"]);
+    assertDoesNotCompile(fileImpl, ["Cannot discard in record deconstruction. <u>More Info</u>"]);
   });
 
   test("Fail_DeconstructIntoLetVariablesWithDiscard", async () => {
@@ -156,7 +156,7 @@ end record`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot discard in record deconstruction"]);
+    assertDoesNotCompile(fileImpl, ["Cannot discard in record deconstruction. <u>More Info</u>"]);
   });
 
   test("Pass_DeconstructIntoNewVariables", async () => {
@@ -221,7 +221,7 @@ end record`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot discard in record deconstruction"]);
+    assertDoesNotCompile(fileImpl, ["Cannot discard in record deconstruction. <u>More Info</u>"]);
   });
 
   test("Pass_DeconstructIntoNewVariablesTypeCheck", async () => {
@@ -751,8 +751,8 @@ end record`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: String Provided: Int",
-      "Incompatible types. Expected: Int Provided: String",
+      "Incompatible types. Expected: String Provided: Int. <u>More Info</u>",
+      "Incompatible types. Expected: Int Provided: String. <u>More Info</u>",
     ]);
   });
 
@@ -778,8 +778,8 @@ end record`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: String Provided: Int",
-      "'b' is not defined",
+      "Incompatible types. Expected: String Provided: Int. <u>More Info</u>",
+      "'b' is not defined. <u>More Info</u>",
     ]);
   });
 
@@ -805,8 +805,8 @@ end record`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "The identifier 'a' is already used for a variable and cannot be re-defined here.",
-      "Incompatible types. Expected: String Provided: Int",
+      "The identifier 'a' is already used for a variable and cannot be re-defined here. <u>More Info</u>",
+      "Incompatible types. Expected: String Provided: Int. <u>More Info</u>",
     ]);
   });
 
@@ -833,8 +833,8 @@ end record`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "May not re-assign the 'let' 'a'",
-      "May not re-assign the 'let' 'b'",
+      "May not re-assign the 'let' 'a'. <u>More Info</u>",
+      "May not re-assign the 'let' 'b'. <u>More Info</u>",
     ]);
   });
 
@@ -861,7 +861,9 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Expression must be able to be deconstructed"]);
+    assertDoesNotCompile(fileImpl, [
+      "Expression must be able to be deconstructed. <u>More Info</u>",
+    ]);
   });
 
   test("Fail_CannotDeconstructExisting", async () => {
@@ -889,7 +891,9 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Expression must be able to be deconstructed"]);
+    assertDoesNotCompile(fileImpl, [
+      "Expression must be able to be deconstructed. <u>More Info</u>",
+    ]);
   });
 
   test("Fail_CannotDeconstructLet", async () => {
@@ -915,6 +919,8 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Expression must be able to be deconstructed"]);
+    assertDoesNotCompile(fileImpl, [
+      "Expression must be able to be deconstructed. <u>More Info</u>",
+    ]);
   });
 });

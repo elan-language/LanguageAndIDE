@@ -350,15 +350,15 @@ end class
 
     assertParses(fileImpl);
     assertDoesNotCompileWithId(fileImpl, "expr5", [
-      "Incompatible types. Expected: Float or Int Provided: Boolean",
+      "Incompatible types. Expected: Float or Int Provided: Boolean. <u>More Info</u>",
     ]);
 
     assertDoesNotCompileWithId(fileImpl, "expr8", [
-      "Incompatible types. Expected: Float or Int Provided: Boolean",
+      "Incompatible types. Expected: Float or Int Provided: Boolean. <u>More Info</u>",
     ]);
 
     assertDoesNotCompileWithId(fileImpl, "expr11", [
-      "Incompatible types. Expected: Float or Int Provided: Foo",
+      "Incompatible types. Expected: Float or Int Provided: Foo. <u>More Info</u>",
     ]);
   });
 
@@ -374,7 +374,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: Float"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Int Provided: Float. <u>More Info</u>",
+    ]);
   });
 
   test("Fail_IntegerDivisionOnFloats2", async () => {
@@ -384,19 +386,14 @@ main
   print 7 div 2.5
 end main`;
 
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  await system.printLine(Math.floor(7.6 / 2.5));
-}
-return [main, _tests];}`;
-
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: Float"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Int Provided: Float. <u>More Info</u>",
+    ]);
   });
 
   test("Fail_ModWithFloats1", async () => {
@@ -411,7 +408,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: Float"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Int Provided: Float. <u>More Info</u>",
+    ]);
   });
 
   test("Fail_ModWithFloats2", async () => {
@@ -426,7 +425,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: Float"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Int Provided: Float. <u>More Info</u>",
+    ]);
   });
 
   test("Fail_DoubleMinus1", async () => {
@@ -441,7 +442,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Unsupported operation"]);
+    assertDoesNotCompile(fileImpl, ["Unsupported operation. <u>More Info</u>"]);
   });
 
   test("Fail_DoubleMinus2", async () => {
@@ -457,7 +458,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Unsupported operation"]);
+    assertDoesNotCompile(fileImpl, ["Unsupported operation. <u>More Info</u>"]);
   });
 
   test("Fail_DoubleNot1", async () => {
@@ -472,7 +473,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Unsupported operation"]);
+    assertDoesNotCompile(fileImpl, ["Unsupported operation. <u>More Info</u>"]);
   });
 
   test("Fail_DoubleNot2", async () => {
@@ -488,7 +489,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Unsupported operation"]);
+    assertDoesNotCompile(fileImpl, ["Unsupported operation. <u>More Info</u>"]);
   });
 
   test("Fail_PowerType1", async () => {
@@ -504,7 +505,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: Float"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Int Provided: Float. <u>More Info</u>",
+    ]);
   });
 
   test("Fail_PowerType2", async () => {
@@ -520,6 +523,8 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: Float"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Int Provided: Float. <u>More Info</u>",
+    ]);
   });
 });

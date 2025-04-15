@@ -205,7 +205,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'max' is not defined for type 'String'"]);
+    assertDoesNotCompile(fileImpl, ["'max' is not defined for type 'String'. <u>More Info</u>"]);
   });
 
   test("Fail_UnconsumedExpressionResult1", async () => {
@@ -219,7 +219,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot call a function as a procedure"]);
+    assertDoesNotCompile(fileImpl, ["Cannot call a function as a procedure. <u>More Info</u>"]);
   });
 
   test("Fail_UnconsumedExpressionResult2", async () => {
@@ -247,6 +247,6 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot call a function as a procedure"]);
+    assertDoesNotCompile(fileImpl, ["Cannot call a function as a procedure. <u>More Info</u>"]);
   });
 });

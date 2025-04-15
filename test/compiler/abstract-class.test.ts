@@ -988,7 +988,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Bar must implement Foo.prop"]);
+    assertDoesNotCompile(fileImpl, ["Bar must implement Foo.prop. <u>More Info</u>"]);
   });
 
   test("Fail_DoesntImplementFunc", async () => {
@@ -1022,7 +1022,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Bar must implement Foo.func"]);
+    assertDoesNotCompile(fileImpl, ["Bar must implement Foo.func. <u>More Info</u>"]);
   });
 
   test("Fail_DoesntImplementProc", async () => {
@@ -1056,7 +1056,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Bar must implement Foo.proc"]);
+    assertDoesNotCompile(fileImpl, ["Bar must implement Foo.proc. <u>More Info</u>"]);
   });
 
   test("Fail_DoesntImplementIndirectProp", async () => {
@@ -1095,7 +1095,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Bar must implement Foo1.prop"]);
+    assertDoesNotCompile(fileImpl, ["Bar must implement Foo1.prop. <u>More Info</u>"]);
   });
 
   test("Fail_DoesntImplementIndirectProp1", async () => {
@@ -1134,7 +1134,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Bar must implement Foo1.prop"]);
+    assertDoesNotCompile(fileImpl, ["Bar must implement Foo1.prop. <u>More Info</u>"]);
   });
 
   test("Fail_InheritSelf", async () => {
@@ -1152,7 +1152,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Class/interface 'Foo' cannot inherit from itself"]);
+    assertDoesNotCompile(fileImpl, [
+      "Class/interface 'Foo' cannot inherit from itself. <u>More Info</u>",
+    ]);
   });
 
   test("Fail_InheritSelfIndirect", async () => {
@@ -1178,7 +1180,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Class/interface 'Yon' cannot inherit from itself"]);
+    assertDoesNotCompile(fileImpl, [
+      "Class/interface 'Yon' cannot inherit from itself. <u>More Info</u>",
+    ]);
   });
 
   test("Fail_InheritInterfaceIndirect", async () => {
@@ -1204,7 +1208,9 @@ end interface`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Class/interface 'Bar' cannot inherit from itself"]);
+    assertDoesNotCompile(fileImpl, [
+      "Class/interface 'Bar' cannot inherit from itself. <u>More Info</u>",
+    ]);
   });
 
   test("Fail_DuplicateProperty", async () => {
@@ -1227,7 +1233,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Name 'prop' not unique in scope. Suggestion: factor out the common member(s) into a higher level interface.",
+      "Name 'prop' not unique in scope. Suggestion: factor out the common member(s) into a higher level interface. <u>More Info</u>",
     ]);
   });
 
@@ -1251,7 +1257,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Name 'prop' not unique in scope. Suggestion: factor out the common member(s) into a higher level interface.",
+      "Name 'prop' not unique in scope. Suggestion: factor out the common member(s) into a higher level interface. <u>More Info</u>",
     ]);
   });
 
@@ -1274,7 +1280,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Superclass 'Foo' must be inheritable class"]);
+    assertDoesNotCompile(fileImpl, [
+      "Superclass 'Foo' must be inheritable class. <u>More Info</u>",
+    ]);
   });
 
   test("Fail_DifferentAbstractClassIntoFunction", async () => {
@@ -1316,7 +1324,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'ff2' is not defined for type 'Foo1'"]);
+    assertDoesNotCompile(fileImpl, ["'ff2' is not defined for type 'Foo1'. <u>More Info</u>"]);
   });
 
   test("Fail_MultipleAbstractClassInherits", async () => {
@@ -1363,7 +1371,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "There must be only one abstract superclass, Foo, Foo1, Foo2 are abstract classes",
+      "There must be only one abstract superclass, Foo, Foo1, Foo2 are abstract classes. <u>More Info</u>",
     ]);
   });
 
@@ -1379,7 +1387,9 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'List<of Int>'"]);
+    assertDoesNotCompile(fileImpl, [
+      "ListImmutable cannot be of mutable type 'List<of Int>'. <u>More Info</u>",
+    ]);
   });
 
   test("Fail_ParameterListOfMutableType", async () => {
@@ -1394,6 +1404,8 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'List<of Int>'"]);
+    assertDoesNotCompile(fileImpl, [
+      "ListImmutable cannot be of mutable type 'List<of Int>'. <u>More Info</u>",
+    ]);
   });
 });
