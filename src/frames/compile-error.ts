@@ -132,7 +132,7 @@ export class IsDeprecated extends CompileError {
   ) {
     super(
       Priority.unknownIdentifier,
-      `${reasonString(reason)} in v${fromMajor}.${fromMinor}. More Info`,
+      `Code change required. ${reasonString(reason)} in v${fromMajor}.${fromMinor}. <u>More Info</u>`,
       location,
       help,
     );
@@ -231,12 +231,6 @@ export class MustImplementCompileError extends CompileError {
 export class MustBeConcreteCompileError extends CompileError {
   constructor(type: string, location: string) {
     super(Priority.illegalOperation, `${type} must be concrete to new`, location);
-  }
-}
-
-export class MustBeRecordCompileError extends CompileError {
-  constructor(type: string, location: string) {
-    super(Priority.typeError, `${type} must be a record to use 'with'`, location);
   }
 }
 
