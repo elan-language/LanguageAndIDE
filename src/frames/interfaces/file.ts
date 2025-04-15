@@ -111,4 +111,5 @@ export interface File extends Parent {
   updateBreakpoints(event: BreakpointEvent): void;
 
   getVersion(): Semver;
+  getVersionString(): string;
 }

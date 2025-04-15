@@ -3,11 +3,12 @@ import { handleClick, handleDblClick, handleKey } from "../editorHandlers";
 import { ElanCutCopyPasteError } from "../elan-cut-copy-paste-error";
 import { ElanRuntimeError } from "../elan-runtime-error";
 import { CodeSourceFromString, fileErrorPrefix, FileImpl } from "../frames/file-impl";
-import { editorEvent } from "../frames/interfaces/editor-event";
+import { editorEvent, toDebugString } from "../frames/interfaces/editor-event";
 import { File } from "../frames/interfaces/file";
 import { Profile } from "../frames/interfaces/profile";
 import { Group, Individual } from "../frames/interfaces/user-config";
 import { CompileStatus, ParseStatus, RunStatus, TestStatus } from "../frames/status-enums";
+import { isElanProduction } from "../production";
 import { StdLib } from "../standard-library/std-lib";
 import { checkIsChrome, confirmContinueOnNonChromeBrowser } from "./ui-helpers";
 import {
@@ -88,6 +89,11 @@ let autoSaveFileHandle: FileSystemFileHandle | undefined = undefined;
 let singleStepping = false;
 let processingSingleStep = false;
 let debugMode = false;
+let lastDOMEvent: Event | undefined;
+let lastEditorEvent: editorEvent | undefined;
+let errorDOMEvent: Event | undefined;
+let errorEditorEvent: editorEvent | undefined;
+let errorStack: string | undefined;
 
 autoSaveButton.hidden = !useChromeFileAPI();
 
@@ -485,7 +491,43 @@ async function resetFile() {
   await renderAsHtml(false);
 }
 
+function domEventType(evt: Event | undefined) {
+  return evt
+    ? `DOMEvent: {
+type: ${evt.type},
+}`
+    : "no DOM event recorded";
+}
+
+async function gatherDebugInfo() {
+  const elanVersion = file.getVersionString();
+  const now = new Date().toLocaleString();
+  const body = document.getElementsByTagName("body")[0].innerHTML;
+  const id = undoRedoFiles[undoRedoFiles.length - 1];
+  const code = localStorage.getItem(id);
+  const lde = domEventType(errorDOMEvent);
+  const lee = toDebugString(errorEditorEvent);
+  const es = errorStack ?? "no stack recorded";
+
+  const all = `${elanVersion}\n${now}\n${body}\n${code}\n${lde}\n${lee}\n${es}`;
+
+  await navigator.clipboard.writeText(all);
+}
+
+const internalErrorMsg = `<p>Sorry - an internal error has occurred within Elan. Please help us by reporting the bug, following these steps:</p>
+<ol>
+<li>Click on this <button id="bug-report">button</button>:  [Copy full bug report to your clipboard]</li>
+<li>In your own email system create an email to [address], with the subject 'Elan bug report'</li>
+<li>Paste the copied bug report (it is plain text) from your clipboard into the body of the email.</li>
+<li>Add any further details that might help us - such as your action immediately prior to the error message appearing</li>
+</ol>
+<p>Please note that the report includes your Elan code. We promise not to use this for any purpose other than to try to reproduce and fix the bug.</p>`;
+
 async function showError(err: Error, fileName: string, reset: boolean) {
+  // because otherwise we will pick up any clicks or edits done after error
+  errorDOMEvent = lastDOMEvent;
+  errorEditorEvent = lastEditorEvent;
+
   clearDisplays();
   if (reset) {
     await resetFile();
@@ -501,17 +543,17 @@ async function showError(err: Error, fileName: string, reset: boolean) {
     if (err instanceof ElanRuntimeError) {
       msg = "A Runtime error occurred in the Elan code";
       stack = err.elanStack;
+      systemInfoPrintLine(msg);
+      systemInfoPrintLine(stack);
     } else {
-      msg =
-        "An unexpected error has occurred; please email whole-screen snapshot to rpawson@nakedobjects.org\nTo continue, try clicking the Refresh icon on the browser.";
-      stack = err.stack;
+      systemInfoPrintLine(internalErrorMsg);
+      errorStack = err.stack;
+      document.getElementById("bug-report")?.addEventListener("click", gatherDebugInfo);
     }
-    systemInfoPrintLine(msg);
-    systemInfoPrintLine(stack);
   } else {
     systemInfoPrintLine(err.message ?? "Unknown error parsing file");
   }
-  cursorDefault();
+  updateDisplayValues();
 }
 
 function systemInfoPrintLine(text: string) {
@@ -521,11 +563,11 @@ function systemInfoPrintLine(text: string) {
 }
 
 async function refreshAndDisplay(compileIfParsed: boolean, editingField: boolean) {
-  file.refreshParseAndCompileStatuses(compileIfParsed);
-  if (file.readCompileStatus() === CompileStatus.ok && file.hasTests) {
-    runTests();
-  }
   try {
+    file.refreshParseAndCompileStatuses(compileIfParsed);
+    if (file.readCompileStatus() === CompileStatus.ok && file.hasTests) {
+      runTests();
+    }
     await renderAsHtml(editingField);
   } catch (e) {
     await showError(e as Error, file.fileName, false);
@@ -911,7 +953,13 @@ async function handleEditorEvent(
     return;
   }
 
+  // save last dom event for debug
+  lastDOMEvent = event;
+
   const msg = getEditorMsg(type, target, id, key, modKey, selection, autocomplete);
+
+  // save last editor event for debug
+  lastEditorEvent = msg;
 
   if (!isSupportedKey(msg)) {
     // discard
@@ -1136,14 +1184,16 @@ async function updateContent(text: string, editingField: boolean) {
   await localAndAutoSave(focused, editingField);
   updateDisplayValues();
 
-  const dbgFocused = document.querySelectorAll(".focused");
-
-  // debug check
-  if (dbgFocused.length > 1) {
-    let msg = "multiple focused ";
-    dbgFocused.forEach((n) => (msg = `${msg}, Node: ${(n.nodeName, n.id)} `));
-    await showError(new Error(msg), file.fileName, false);
+  if (!isElanProduction) {
+    const dbgFocused = document.querySelectorAll(".focused");
+    //debug check
+    if (dbgFocused.length > 1) {
+      let msg = "multiple focused ";
+      dbgFocused.forEach((n) => (msg = `${msg}, Node: ${(n.nodeName, n.id)} `));
+      await showError(new Error(msg), file.fileName, false);
+    }
   }
+
   cursorDefault();
 }
 

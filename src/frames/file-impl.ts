@@ -261,7 +261,7 @@ export class FileImpl implements File, Scope {
     return this.version;
   }
 
-  private getVersionString() {
+  getVersionString() {
     const v = this.getVersion();
     const suffix = v.preRelease === "" ? "" : `-${v.preRelease}`;
 
@@ -477,15 +477,24 @@ export class FileImpl implements File, Scope {
   }
 
   refreshParseAndCompileStatuses(compileIfParsed: boolean) {
-    this._parseStatus = ParseStatus.default as ParseStatus;
-    this.parseError = undefined;
-    this.updateAllParseStatus();
-    this.resetAllCompileStatusAndErrors();
-    this.resetAllTestStatus();
-
-    if (this._parseStatus === ParseStatus.valid && (!this._fieldBeingEdited || compileIfParsed)) {
-      this.compile();
-      this.updateAllCompileStatus();
+    try {
+      this._parseStatus = ParseStatus.default as ParseStatus;
+      this.parseError = undefined;
+      this.updateAllParseStatus();
+      this.resetAllCompileStatusAndErrors();
+      this.resetAllTestStatus();
+    } catch (e) {
+      this._parseStatus = ParseStatus.invalid;
+      throw e;
+    }
+    try {
+      if (this._parseStatus === ParseStatus.valid && (!this._fieldBeingEdited || compileIfParsed)) {
+        this.compile();
+        this.updateAllCompileStatus();
+      }
+    } catch (e) {
+      this._compileStatus = CompileStatus.error;
+      throw e;
     }
   }
 
