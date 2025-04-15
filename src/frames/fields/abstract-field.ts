@@ -56,9 +56,10 @@ export abstract class AbstractField implements Selectable, Field {
   protected help: string = "help TBD";
   overtyper = new Overtyper();
   codeHasChanged: boolean = false;
-  autocompleteSymbols: SymbolWrapper[] = [];
-  autocompleteMatch: string = "";
-  protected autoCompSelected?: SymbolWrapper;
+  allPossibleSymbolCompletions: SymbolWrapper[] = [];
+  protected symbolToMatch: string = "";
+  protected selectedSymbolCompletion?: SymbolWrapper;
+  protected showingSymbolCompletion: boolean = false;
 
   constructor(holder: Frame) {
     this.holder = holder;
@@ -148,7 +149,7 @@ export abstract class AbstractField implements Selectable, Field {
 
   processAutocompleteText(txt: string | undefined) {
     if (txt) {
-      this.autoCompSelected = this.autocompleteSymbols.find((s) => s.name === txt);
+      this.selectedSymbolCompletion = this.allPossibleSymbolCompletions.find((s) => s.name === txt);
     }
   }
 
@@ -197,13 +198,13 @@ export abstract class AbstractField implements Selectable, Field {
         break;
       }
       case "ArrowUp": {
-        if (this.popupAsHtml() !== "") {
+        if (this.showingSymbolCompletion) {
           this.selectFromAutoCompleteItems(true);
         }
         break;
       }
       case "ArrowDown": {
-        if (this.popupAsHtml() !== "") {
+        if (this.showingSymbolCompletion) {
           this.selectFromAutoCompleteItems(false);
         }
         break;
@@ -278,7 +279,7 @@ export abstract class AbstractField implements Selectable, Field {
       }
     }
     if (this.codeHasChanged) {
-      this.autoCompSelected = undefined;
+      this.selectedSymbolCompletion = undefined;
     }
 
     return this.codeHasChanged;
@@ -456,22 +457,22 @@ export abstract class AbstractField implements Selectable, Field {
   private replaceAutocompletedText() {
     // todo this will need refinement
 
-    if (this.autocompleteMatch !== "") {
-      const li = this.text.lastIndexOf(this.autocompleteMatch);
+    if (this.symbolToMatch !== "") {
+      const li = this.text.lastIndexOf(this.symbolToMatch);
       this.text = this.text.slice(0, li);
     }
 
     const propertyPrefix = `${propertyKeyword}.`;
-    const appendText = this.autoCompSelected?.insertedText ?? "";
+    const appendText = this.selectedSymbolCompletion?.insertedText ?? "";
 
     if (this.text === propertyPrefix && appendText.startsWith(propertyPrefix)) {
       this.text = "";
     }
 
-    const optSpace = this.text && this.autoCompSelected?.isKeyword ? " " : "";
+    const optSpace = this.text && this.selectedSymbolCompletion?.isKeyword ? " " : "";
 
     this.text = `${this.text}${optSpace}${appendText}`;
-    this.autoCompSelected = undefined;
+    this.selectedSymbolCompletion = undefined;
     this.parseCurrentText();
     this.setSelection(this.text.length);
     this.codeHasChanged = true;
@@ -480,7 +481,7 @@ export abstract class AbstractField implements Selectable, Field {
   private tab(back: boolean) {
     if (back) {
       this.holder.selectFieldBefore(this);
-    } else if (this.autoCompSelected) {
+    } else if (this.selectedSymbolCompletion) {
       this.replaceAutocompletedText();
     } else {
       const completions = this.getPlainTextCompletion();
@@ -493,7 +494,7 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   private enter() {
-    if (this.autoCompSelected) {
+    if (this.selectedSymbolCompletion) {
       this.replaceAutocompletedText();
     } else {
       const completions = this.getPlainTextCompletion();
@@ -733,14 +734,16 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   protected popupAsHtml() {
-    const symbols = this.autocompleteSymbols;
+    const symbols = this.allPossibleSymbolCompletions;
     const symbolAsHtml: string[] = [];
-    const count = this.autocompleteSymbols.length;
+    const count = this.allPossibleSymbolCompletions.length;
     // we're doing a ref equality below so make sure same objects!
-    this.autoCompSelected = this.autoCompSelected
-      ? symbols.filter((s) => s.matches(this.autoCompSelected))[0]
+    this.selectedSymbolCompletion = this.selectedSymbolCompletion
+      ? symbols.filter((s) => s.matches(this.selectedSymbolCompletion))[0]
       : undefined;
-    const selectedIndex = this.autoCompSelected ? symbols.indexOf(this.autoCompSelected) : 0;
+    const selectedIndex = this.selectedSymbolCompletion
+      ? symbols.indexOf(this.selectedSymbolCompletion)
+      : 0;
     let popupAsHtml = "";
     let startIndex = 0;
     let lastIndex = count > 10 ? 10 : count;
@@ -753,7 +756,7 @@ export abstract class AbstractField implements Selectable, Field {
     }
 
     if (count === 0) {
-      this.autoCompSelected = undefined;
+      this.selectedSymbolCompletion = undefined;
     }
 
     for (let i = startIndex; i < lastIndex; i++) {
@@ -782,25 +785,25 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   private markIfSelected(symbol: SymbolWrapper) {
-    return symbol === this.autoCompSelected;
+    return symbol === this.selectedSymbolCompletion;
   }
 
   selectFromAutoCompleteItems(up: boolean) {
-    const options = this.autocompleteSymbols;
+    const options = this.allPossibleSymbolCompletions;
     let matched = false;
     for (let i = 0; i < options.length; i++) {
-      if (!matched && options[i] === this.autoCompSelected) {
+      if (!matched && options[i] === this.selectedSymbolCompletion) {
         if (i > 0 && up) {
-          this.autoCompSelected = options[i - 1];
+          this.selectedSymbolCompletion = options[i - 1];
           matched = true;
         } else if (i < options.length - 1 && !up) {
-          this.autoCompSelected = options[i + 1];
+          this.selectedSymbolCompletion = options[i + 1];
           matched = true;
         }
       }
     }
     if (!matched && options.length > 0) {
-      this.autoCompSelected = options[0];
+      this.selectedSymbolCompletion = options[0];
     }
   }
 
@@ -838,7 +841,7 @@ export abstract class AbstractField implements Selectable, Field {
     let popupAsHtml = "";
     const spec = this.getSymbolCompletionSpec();
     if (this.showAutoComplete(spec)) {
-      this.autocompleteMatch = spec.toMatch;
+      this.symbolToMatch = spec.toMatch;
       const scope = this.getHolder();
       const keywords = Array.from(spec.keywords)
         .map((k) => new SymbolWrapper(k, transforms, scope))
@@ -846,9 +849,10 @@ export abstract class AbstractField implements Selectable, Field {
       const symbols = this.matchingSymbolsForId(spec, transforms).map(
         (s) => new SymbolWrapper(s, transforms, scope),
       );
-      this.autocompleteSymbols = keywords.concat(symbols);
+      this.allPossibleSymbolCompletions = keywords.concat(symbols);
       popupAsHtml = this.popupAsHtml();
     }
+    this.showingSymbolCompletion = !!popupAsHtml;
     return popupAsHtml;
   }
 
