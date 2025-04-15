@@ -12,6 +12,7 @@ import {
   ExtensionCompileError,
   ExtraParameterCompileError,
   FunctionRefCompileError,
+  GenericParametersCompileError,
   IsDeprecated,
   MemberTypeCompileError,
   MissingParameterCompileError,
@@ -29,7 +30,6 @@ import {
   NotRangeableCompileError,
   NotUniqueNameCompileError,
   OutParameterCompileError,
-  ParametersCompileError,
   ParameterTypesCompileError,
   PrivateMemberCompileError,
   PropertyCompileError,
@@ -589,7 +589,7 @@ export function mustMatchGenericParameters(
   location: string,
 ) {
   if (parms.length !== expected) {
-    compileErrors.push(new ParametersCompileError(expected, parms.length, location, true));
+    compileErrors.push(new GenericParametersCompileError(expected, parms.length, location));
   }
 }
 

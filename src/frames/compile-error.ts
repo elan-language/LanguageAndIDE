@@ -390,7 +390,7 @@ export class ExtraParameterCompileError extends CompileError {
     description = description ? description : "none";
     super(
       DisplayPriority.second,
-      Severity.warning,
+      Severity.error,
       `Too many argument(s). Expected: ${description}. <u>More Info</u>`,
       location,
       "LangRef.html#compile_error",
@@ -410,14 +410,14 @@ export class ParameterTypesCompileError extends CompileError {
   }
 }
 
-export class ParametersCompileError extends CompileError {
-  constructor(expected: number, actual: number, location: string, generic?: boolean) {
+export class GenericParametersCompileError extends CompileError {
+  constructor(expected: number, actual: number, location: string) {
     const priority = actual < expected ? DisplayPriority.third : DisplayPriority.second;
     const severity = actual < expected ? Severity.warning : Severity.error;
     super(
       priority,
       severity,
-      `${generic ? "<of Type(s)>" : "Parameters"} Expected: ${expected} Provided: ${actual}. <u>More Info</u>`,
+      `<of Type(s)> Expected: ${expected} Provided: ${actual}. <u>More Info</u>`,
       location,
       "LangRef.html#compile_error",
     );
