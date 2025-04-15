@@ -20,10 +20,6 @@ export abstract class CompileError {
     public readonly link: string = "LangRef.html#compile_error",
   ) {}
 
-  public get isWarning() {
-    return this.severity === Severity.warning;
-  }
-
   public toString() {
     return `${this.constructor.name}: ${this.message} Priority: ${DisplayPriority[this.priority]} Severity: ${Severity[this.severity]} at: ${this.locationId}`;
   }
