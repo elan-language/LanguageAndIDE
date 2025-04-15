@@ -4,6 +4,7 @@ export enum DisplayPriority {
   first,
   second,
   third,
+  fourth,
 }
 
 export enum Severity {
@@ -32,7 +33,7 @@ export abstract class CompileError {
 export class TypeCompileError extends CompileError {
   constructor(type: string, location: string) {
     super(
-      DisplayPriority.third,
+      DisplayPriority.fourth,
       Severity.error,
       `Expression must be ${type}. <u>More Info</u>`,
       location,
@@ -43,7 +44,7 @@ export class TypeCompileError extends CompileError {
 export class ThisCompileError extends CompileError {
   constructor(location: string) {
     super(
-      DisplayPriority.first,
+      DisplayPriority.second,
       Severity.error,
       `Cannot use 'this' outside class context. <u>More Info</u>`,
       location,
@@ -54,7 +55,7 @@ export class ThisCompileError extends CompileError {
 export class DeclaredAboveCompileError extends CompileError {
   constructor(type: string, location: string) {
     super(
-      DisplayPriority.first,
+      DisplayPriority.second,
       Severity.error,
       `Abstract Class '${type}' must be declared before it is used. <u>More Info</u>`,
       location,
@@ -65,7 +66,7 @@ export class DeclaredAboveCompileError extends CompileError {
 export class MemberTypeCompileError extends CompileError {
   constructor(name: string, type: string, location: string) {
     super(
-      DisplayPriority.third,
+      DisplayPriority.fourth,
       Severity.error,
       `Member '${name}' must be of type ${type}. <u>More Info</u>`,
       location,
@@ -76,7 +77,7 @@ export class MemberTypeCompileError extends CompileError {
 export class TypesCompileError extends CompileError {
   constructor(type1: string, type2: string, addInfo: string, location: string) {
     super(
-      DisplayPriority.third,
+      DisplayPriority.fourth,
       Severity.error,
       `Incompatible types. Expected: ${type2}${addInfo} Provided: ${type1}. <u>More Info</u>`,
       location,
@@ -87,7 +88,7 @@ export class TypesCompileError extends CompileError {
 export class TernaryCompileError extends CompileError {
   constructor(type1: string, type2: string, location: string) {
     super(
-      DisplayPriority.third,
+      DisplayPriority.fourth,
       Severity.error,
       `Cannot determine common type between ${type1} and ${type2}. <u>More Info</u>`,
       location,
@@ -97,7 +98,7 @@ export class TernaryCompileError extends CompileError {
 
 export class SyntaxCompileError extends CompileError {
   constructor(message: string, location: string) {
-    super(DisplayPriority.first, Severity.error, message, location);
+    super(DisplayPriority.second, Severity.error, message, location);
   }
 }
 
@@ -105,7 +106,7 @@ export class UndefinedSymbolCompileError extends CompileError {
   constructor(id: string, type: string, location: string) {
     const postfix = type ? ` for type '${type}'` : "";
     super(
-      DisplayPriority.second,
+      DisplayPriority.third,
       Severity.warning,
       `'${id}' is not defined${postfix}. <u>More Info</u>`,
       location,
@@ -116,7 +117,7 @@ export class UndefinedSymbolCompileError extends CompileError {
 export class CannotCallAFunction extends CompileError {
   constructor(location: string) {
     super(
-      DisplayPriority.first,
+      DisplayPriority.second,
       Severity.error,
       `Cannot call a function as a procedure. <u>More Info</u>`,
       location,
@@ -127,7 +128,7 @@ export class CannotCallAFunction extends CompileError {
 export class CannotUseSystemMethodInAFunction extends CompileError {
   constructor(location: string) {
     super(
-      DisplayPriority.first,
+      DisplayPriority.second,
       Severity.error,
       `Cannot use a system method in a function. <u>More Info</u>`,
       location,
@@ -161,8 +162,8 @@ export class IsDeprecated extends CompileError {
     location: string,
   ) {
     super(
-      DisplayPriority.second,
-      Severity.warning,
+      DisplayPriority.first,
+      Severity.error,
       `Code change required. ${reasonString(reason)} in v${fromMajor}.${fromMinor}. <u>More Info</u>`,
       location,
       help,
@@ -173,7 +174,7 @@ export class IsDeprecated extends CompileError {
 export class CannotUseLikeAFunction extends CompileError {
   constructor(id: string, location: string) {
     super(
-      DisplayPriority.first,
+      DisplayPriority.second,
       Severity.error,
       `Cannot call procedure '${id}' within an expression. <u>More Info</u>`,
       location,
@@ -184,7 +185,7 @@ export class CannotUseLikeAFunction extends CompileError {
 export class CannotCallAsAMethod extends CompileError {
   constructor(id: string, symbolType: string, location: string) {
     super(
-      DisplayPriority.first,
+      DisplayPriority.second,
       Severity.error,
       `Cannot invoke ${symbolType} '${id}' as a method. <u>More Info</u>`,
       location,
@@ -196,7 +197,7 @@ export class NotIndexableCompileError extends CompileError {
   constructor(type: string, location: string, double: boolean) {
     const dbl = double ? "double " : "";
     super(
-      DisplayPriority.first,
+      DisplayPriority.second,
       Severity.error,
       `Cannot ${dbl}index ${type}. <u>More Info</u>`,
       location,
@@ -207,7 +208,7 @@ export class NotIndexableCompileError extends CompileError {
 export class NotRangeableCompileError extends CompileError {
   constructor(type: string, location: string) {
     super(
-      DisplayPriority.first,
+      DisplayPriority.second,
       Severity.error,
       `Cannot range ${type}. <u>More Info</u>`,
       location,
@@ -217,14 +218,14 @@ export class NotRangeableCompileError extends CompileError {
 
 export class NotNewableCompileError extends CompileError {
   constructor(type: string, location: string) {
-    super(DisplayPriority.third, Severity.error, `Cannot new ${type}. <u>More Info</u>`, location);
+    super(DisplayPriority.fourth, Severity.error, `Cannot new ${type}. <u>More Info</u>`, location);
   }
 }
 
 export class NotIterableCompileError extends CompileError {
   constructor(type: string, location: string) {
     super(
-      DisplayPriority.first,
+      DisplayPriority.second,
       Severity.error,
       `Cannot iterate ${type}. <u>More Info</u>`,
       location,
@@ -235,7 +236,7 @@ export class NotIterableCompileError extends CompileError {
 export class MustBeAbstractCompileError extends CompileError {
   constructor(type: string, location: string) {
     super(
-      DisplayPriority.first,
+      DisplayPriority.second,
       Severity.error,
       `Superclass '${type}' must be inheritable class. <u>More Info</u>`,
       location,
@@ -246,7 +247,7 @@ export class MustBeAbstractCompileError extends CompileError {
 export class MustBeInterfaceCompileError extends CompileError {
   constructor(type: string, location: string) {
     super(
-      DisplayPriority.first,
+      DisplayPriority.second,
       Severity.error,
       `Superclass '${type}' must be an interface. <u>More Info</u>`,
       location,
@@ -257,7 +258,7 @@ export class MustBeInterfaceCompileError extends CompileError {
 export class MustNotBeCircularDependencyCompileError extends CompileError {
   constructor(type: string, location: string) {
     super(
-      DisplayPriority.first,
+      DisplayPriority.second,
       Severity.error,
       `Class/interface '${type}' cannot inherit from itself. <u>More Info</u>`,
       location,
@@ -268,7 +269,7 @@ export class MustNotBeCircularDependencyCompileError extends CompileError {
 export class MustBeSingleAbstractCompileError extends CompileError {
   constructor(types: string[], location: string) {
     super(
-      DisplayPriority.first,
+      DisplayPriority.second,
       Severity.error,
       `There must be only one abstract superclass, ${types.join(", ")} are abstract classes. <u>More Info</u>`,
       location,
@@ -279,7 +280,7 @@ export class MustBeSingleAbstractCompileError extends CompileError {
 export class PrivateMemberCompileError extends CompileError {
   constructor(id: string, location: string) {
     super(
-      DisplayPriority.first,
+      DisplayPriority.second,
       Severity.error,
       `Cannot reference private member '${id}'. <u>More Info</u>`,
       location,
@@ -290,7 +291,7 @@ export class PrivateMemberCompileError extends CompileError {
 export class MustImplementCompileError extends CompileError {
   constructor(classType: string, superClassType: string, id: string, location: string) {
     super(
-      DisplayPriority.first,
+      DisplayPriority.second,
       Severity.error,
       `${classType} must implement ${superClassType}.${id}. <u>More Info</u>`,
       location,
@@ -301,7 +302,7 @@ export class MustImplementCompileError extends CompileError {
 export class MustBeConcreteCompileError extends CompileError {
   constructor(type: string, location: string) {
     super(
-      DisplayPriority.first,
+      DisplayPriority.second,
       Severity.error,
       `${type} must be concrete to new. <u>More Info</u>`,
       location,
@@ -312,7 +313,7 @@ export class MustBeConcreteCompileError extends CompileError {
 export class OutParameterCompileError extends CompileError {
   constructor(name: string, location: string) {
     super(
-      DisplayPriority.third,
+      DisplayPriority.fourth,
       Severity.error,
       `Cannot pass '${name}' as an out parameter. <u>More Info</u>`,
       location,
@@ -323,7 +324,7 @@ export class OutParameterCompileError extends CompileError {
 export class ExtensionCompileError extends CompileError {
   constructor(location: string) {
     super(
-      DisplayPriority.first,
+      DisplayPriority.second,
       Severity.error,
       `Cannot call extension method directly. <u>More Info</u>`,
       location,
@@ -334,7 +335,7 @@ export class ExtensionCompileError extends CompileError {
 export class PropertyCompileError extends CompileError {
   constructor(location: string) {
     super(
-      DisplayPriority.first,
+      DisplayPriority.second,
       Severity.error,
       `Cannot prefix function with 'property'. <u>More Info</u>`,
       location,
@@ -345,7 +346,7 @@ export class PropertyCompileError extends CompileError {
 export class MissingParameterCompileError extends CompileError {
   constructor(description: string, location: string) {
     super(
-      DisplayPriority.second,
+      DisplayPriority.third,
       Severity.warning,
       `Missing argument(s). Expected: ${description}. <u>More Info</u>`,
       location,
@@ -357,7 +358,7 @@ export class ExtraParameterCompileError extends CompileError {
   constructor(description: string, location: string) {
     description = description ? description : "none";
     super(
-      DisplayPriority.first,
+      DisplayPriority.second,
       Severity.warning,
       `Too many argument(s). Expected: ${description}. <u>More Info</u>`,
       location,
@@ -368,7 +369,7 @@ export class ExtraParameterCompileError extends CompileError {
 export class ParameterTypesCompileError extends CompileError {
   constructor(description: string, provided: string, location: string) {
     super(
-      DisplayPriority.third,
+      DisplayPriority.fourth,
       Severity.error,
       `Argument types. Expected: ${description} Provided: ${provided}. <u>More Info</u>`,
       location,
@@ -378,7 +379,7 @@ export class ParameterTypesCompileError extends CompileError {
 
 export class ParametersCompileError extends CompileError {
   constructor(expected: number, actual: number, location: string, generic?: boolean) {
-    const priority = actual < expected ? DisplayPriority.second : DisplayPriority.first;
+    const priority = actual < expected ? DisplayPriority.third : DisplayPriority.second;
     const severity = actual < expected ? Severity.warning : Severity.error;
     super(
       priority,
@@ -392,7 +393,7 @@ export class ParametersCompileError extends CompileError {
 export class MutateCompileError extends CompileError {
   constructor(name: string, purpose: string, location: string) {
     super(
-      DisplayPriority.first,
+      DisplayPriority.second,
       Severity.error,
       `May not re-assign the ${purpose} '${name}'. <u>More Info</u>`,
       location,
@@ -403,7 +404,7 @@ export class MutateCompileError extends CompileError {
 export class NotUniqueNameCompileError extends CompileError {
   constructor(name: string, postFix: string, location: string) {
     super(
-      DisplayPriority.first,
+      DisplayPriority.second,
       Severity.error,
       `Name '${name}' not unique in scope${postFix}. <u>More Info</u>`,
       location,
@@ -414,7 +415,7 @@ export class NotUniqueNameCompileError extends CompileError {
 export class ReassignInFunctionCompileError extends CompileError {
   constructor(thing: string, location: string) {
     super(
-      DisplayPriority.first,
+      DisplayPriority.second,
       Severity.error,
       `May not set ${thing} in a function. <u>More Info</u>`,
       location,
@@ -425,7 +426,7 @@ export class ReassignInFunctionCompileError extends CompileError {
 export class RedefinedCompileError extends CompileError {
   constructor(id: string, purpose: string, location: string) {
     super(
-      DisplayPriority.first,
+      DisplayPriority.second,
       Severity.error,
       `The identifier '${id}' is already used for a ${purpose} and cannot be re-defined here. <u>More Info</u>`,
       location,
@@ -436,7 +437,7 @@ export class RedefinedCompileError extends CompileError {
 export class DuplicateKeyCompileError extends CompileError {
   constructor(location: string) {
     super(
-      DisplayPriority.third,
+      DisplayPriority.fourth,
       Severity.error,
       `Duplicate Dictionary key(s). <u>More Info</u>`,
       location,
@@ -448,7 +449,7 @@ export class FunctionRefCompileError extends CompileError {
   constructor(id: string, isGlobal: boolean, location: string) {
     const postfix = isGlobal ? ` Or to create a reference to '${id}', precede it by 'ref'.` : "";
     super(
-      DisplayPriority.first,
+      DisplayPriority.second,
       Severity.error,
       `To evaluate function '${id}' add brackets.${postfix} <u>More Info</u>`,
       location,
@@ -459,7 +460,7 @@ export class FunctionRefCompileError extends CompileError {
 export class NotGlobalFunctionRefCompileError extends CompileError {
   constructor(id: string, location: string) {
     super(
-      DisplayPriority.first,
+      DisplayPriority.second,
       Severity.error,
       `Library or class function '${id}' cannot be preceded by by 'ref'. <u>More Info</u>`,
       location,
@@ -470,7 +471,7 @@ export class NotGlobalFunctionRefCompileError extends CompileError {
 export class UnknownCompilerDirectiveCompileError extends CompileError {
   constructor(_directive: string, location: string) {
     super(
-      DisplayPriority.first,
+      DisplayPriority.second,
       Severity.error,
       `a comment may not start with [ unless it is a recognised compiler directive. <u>More Info</u>`,
       location,
