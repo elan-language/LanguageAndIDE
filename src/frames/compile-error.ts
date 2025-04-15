@@ -1,3 +1,5 @@
+import { Deprecation } from "../elan-type-interfaces";
+
 export enum Priority {
   illegalOperation,
   unknownIdentifier,
@@ -103,9 +105,37 @@ export class CannotUseSystemMethodInAFunction extends CompileError {
   }
 }
 
+function reasonString(reason: Deprecation) {
+  switch (reason) {
+    case Deprecation.classRemoved:
+      return "Class was removed";
+    case Deprecation.classRenamed:
+      return "Class was renamed";
+    case Deprecation.methodRemoved:
+      return "Method was removed";
+    case Deprecation.methodRenamed:
+      return "Method was renamed";
+    case Deprecation.classParametersChanged:
+      return "Parameters for class were changed";
+    case Deprecation.methodParametersChanged:
+      return "Parameters for method were changed";
+  }
+}
+
 export class IsDeprecated extends CompileError {
-  constructor(fromMajor: number, fromMinor: number, help: string, location: string) {
-    super(Priority.unknownIdentifier, `Deprecated since ${fromMajor}.${fromMinor}`, location, help);
+  constructor(
+    reason: Deprecation,
+    fromMajor: number,
+    fromMinor: number,
+    help: string,
+    location: string,
+  ) {
+    super(
+      Priority.unknownIdentifier,
+      `${reasonString(reason)} in v${fromMajor}.${fromMinor}. More Info`,
+      location,
+      help,
+    );
   }
 }
 

@@ -273,8 +273,11 @@ export function checkForDeprecation(
   location: string,
 ) {
   if (symbolType.deprecated) {
+    const reason = symbolType.deprecated.reason;
+
     if (
-      symbolType.deprecated.reason === Deprecation.parametersChanged &&
+      (reason === Deprecation.classParametersChanged ||
+        reason === Deprecation.methodParametersChanged) &&
       compileErrors.length === 0
     ) {
       // ignore if the parameters compiled
@@ -288,7 +291,7 @@ export function checkForDeprecation(
 
     if (fromMajor < version.major || (fromMajor === version.major && fromMinor <= version.minor)) {
       compileErrors.push(
-        new IsDeprecated(fromMajor, fromMinor, symbolType.deprecated.message, location),
+        new IsDeprecated(reason, fromMajor, fromMinor, symbolType.deprecated.message, location),
       );
     }
   }
