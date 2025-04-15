@@ -232,7 +232,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [`Method was removed in v0.0. More InfoLibRef.html#Xxxx`]);
+    assertDoesNotCompile(fileImpl, [
+      `Code change required. Method was removed in v0.0. More InfoLibRef.html#Xxxx`,
+    ]);
   });
 
   test("Fail_ProcedureDeprecation", async () => {
@@ -249,7 +251,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [`Method was removed in v0.0. More InfoLibRef.html#Xxxx`]);
+    assertDoesNotCompile(fileImpl, [
+      `Code change required. Method was removed in v0.0. More InfoLibRef.html#Xxxx`,
+    ]);
   });
 
   test("Fail_NewClassDeprecation", async () => {
@@ -266,7 +270,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [`Class was removed in v0.0. More InfoLibRef.html#Xxxx`]);
+    assertDoesNotCompile(fileImpl, [
+      `Code change required. Class was removed in v0.0. More InfoLibRef.html#Xxxx`,
+    ]);
   });
 
   test("Fail_EmptyClassDeprecation", async () => {
@@ -283,7 +289,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [`Class was removed in v0.0. More InfoLibRef.html#Xxxx`]);
+    assertDoesNotCompile(fileImpl, [
+      `Code change required. Class was removed in v0.0. More InfoLibRef.html#Xxxx`,
+    ]);
   });
 
   test("Fail_OfClassDeprecation", async () => {
@@ -300,7 +308,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [`Class was removed in v0.0. More InfoLibRef.html#Xxxx`]);
+    assertDoesNotCompile(fileImpl, [
+      `Code change required. Class was removed in v0.0. More InfoLibRef.html#Xxxx`,
+    ]);
   });
 
   test("Fail_ParametersChangedWithCompileErrors1", async () => {
@@ -319,7 +329,7 @@ end main`;
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "Too many argument(s). Expected: none",
-      `Parameters for method were changed in v0.0. More InfoLibRef.html#Xxxx`,
+      `Code change required. Parameters for method were changed in v0.0. More InfoLibRef.html#Xxxx`,
     ]);
   });
 
@@ -339,7 +349,7 @@ end main`;
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "Missing argument(s). Expected: s (String)",
-      `Parameters for method were changed in v0.0. More InfoLibRef.html#Xxxx`,
+      `Code change required. Parameters for method were changed in v0.0. More InfoLibRef.html#Xxxx`,
     ]);
   });
 
@@ -359,7 +369,7 @@ end main`;
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "Too many argument(s). Expected: none",
-      `Parameters for method were changed in v0.0. More InfoLibRef.html#Xxxx`,
+      `Code change required. Parameters for method were changed in v0.0. More InfoLibRef.html#Xxxx`,
     ]);
   });
 
@@ -379,7 +389,7 @@ end main`;
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "Missing argument(s). Expected: s (String)",
-      `Parameters for method were changed in v0.0. More InfoLibRef.html#Xxxx`,
+      `Code change required. Parameters for method were changed in v0.0. More InfoLibRef.html#Xxxx`,
     ]);
   });
 
@@ -399,7 +409,7 @@ end main`;
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "<of Type(s)> Expected: 0 Provided: 1",
-      `Parameters for class were changed in v0.0. More InfoLibRef.html#Xxxx`,
+      `Code change required. Parameters for class were changed in v0.0. More InfoLibRef.html#Xxxx`,
     ]);
   });
 });
