@@ -408,3 +408,7 @@ button.plain:disabled, menu-item.button.plain:disabled {
 .error-link u {
   cursor: pointer;
 }
+
+el-user.hide, el-profile.hide {
+  display:none;
+}
