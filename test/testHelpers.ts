@@ -174,7 +174,7 @@ function getEvent(char: string) {
 
 async function doAsserts(f: FileImpl, fld: AbstractField, expected: [string, string, string][] | number) {
   await f.renderAsHtml();
-  const symbols = fld.autocompleteSymbols;
+  const symbols = fld.allPossibleSymbolCompletions;
 
   if (typeof expected === "number") {
     assert.strictEqual(symbols.length, expected);

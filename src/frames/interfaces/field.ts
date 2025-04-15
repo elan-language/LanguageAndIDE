@@ -15,5 +15,5 @@ export interface Field extends Selectable {
   aggregateCompileErrors(): CompileError[];
   overtyper: Overtyper;
   updateCompileStatus(): void;
-  autocompleteSymbols: SymbolWrapper[];
+  allPossibleSymbolCompletions: SymbolWrapper[];
 }
