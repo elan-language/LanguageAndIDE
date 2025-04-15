@@ -275,7 +275,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Condition of 'if' expression does not evaluate to a Boolean"]);
+    assertDoesNotCompile(fileImpl, [
+      "Condition of 'if' expression does not evaluate to a Boolean. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_BranchesDifferentTypes", async () => {
@@ -291,7 +293,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot determine common type between Int and String"]);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot determine common type between Int and String. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_MostPreciseType1", async () => {
@@ -308,7 +312,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: Float"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Int Provided: Float. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_MostPreciseType2", async () => {
@@ -325,7 +331,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: Float"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Int Provided: Float. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_NoCommonSuperClass1", async () => {
@@ -348,7 +356,9 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Bar Provided: Foo"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Bar Provided: Foo. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_NoCommonSuperClass2", async () => {
@@ -371,7 +381,9 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot determine common type between Foo and Bar"]);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot determine common type between Foo and Bar. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_CannotAssignToBaseClass1", async () => {
@@ -398,7 +410,9 @@ end function`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Bar Provided: Foo"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Bar Provided: Foo. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_CannotAssignToBaseClass2", async () => {
@@ -425,6 +439,8 @@ end function`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Bar Provided: Foo"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Bar Provided: Foo. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 });

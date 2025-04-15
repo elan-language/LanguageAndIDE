@@ -405,9 +405,8 @@ button.plain:disabled, menu-item.button.plain:disabled {
   width: 100%;
 }
 
-.error-link {
+.error-link u {
   cursor: pointer;
-  text-decoration: underline;
 }
 
 el-user.hide, el-profile.hide {

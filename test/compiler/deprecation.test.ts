@@ -233,7 +233,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      `Code change required. Method was removed in v0.0. More InfoLibRef.html#Xxxx`,
+      `Code change required. Method was removed in v0.0. <u>More Info</u>LibRef.html#Xxxx`,
     ]);
   });
 
@@ -252,7 +252,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      `Code change required. Method was removed in v0.0. More InfoLibRef.html#Xxxx`,
+      `Code change required. Method was removed in v0.0. <u>More Info</u>LibRef.html#Xxxx`,
     ]);
   });
 
@@ -271,7 +271,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      `Code change required. Class was removed in v0.0. More InfoLibRef.html#Xxxx`,
+      `Code change required. Class was removed in v0.0. <u>More Info</u>LibRef.html#Xxxx`,
     ]);
   });
 
@@ -290,7 +290,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      `Code change required. Class was removed in v0.0. More InfoLibRef.html#Xxxx`,
+      `Code change required. Class was removed in v0.0. <u>More Info</u>LibRef.html#Xxxx`,
     ]);
   });
 
@@ -309,7 +309,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      `Code change required. Class was removed in v0.0. More InfoLibRef.html#Xxxx`,
+      `Code change required. Class was removed in v0.0. <u>More Info</u>LibRef.html#Xxxx`,
     ]);
   });
 
@@ -328,8 +328,8 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Too many argument(s). Expected: none",
-      `Code change required. Parameters for method were changed in v0.0. More InfoLibRef.html#Xxxx`,
+      "Too many argument(s). Expected: none. <u>More Info</u>LangRef.html#compile_error",
+      `Code change required. Parameters for method were changed in v0.0. <u>More Info</u>LibRef.html#Xxxx`,
     ]);
   });
 
@@ -348,8 +348,8 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Missing argument(s). Expected: s (String)",
-      `Code change required. Parameters for method were changed in v0.0. More InfoLibRef.html#Xxxx`,
+      "Missing argument(s). Expected: s (String). <u>More Info</u>LangRef.html#compile_error",
+      `Code change required. Parameters for method were changed in v0.0. <u>More Info</u>LibRef.html#Xxxx`,
     ]);
   });
 
@@ -368,8 +368,8 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Too many argument(s). Expected: none",
-      `Code change required. Parameters for method were changed in v0.0. More InfoLibRef.html#Xxxx`,
+      "Too many argument(s). Expected: none. <u>More Info</u>LangRef.html#compile_error",
+      `Code change required. Parameters for method were changed in v0.0. <u>More Info</u>LibRef.html#Xxxx`,
     ]);
   });
 
@@ -388,8 +388,8 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Missing argument(s). Expected: s (String)",
-      `Code change required. Parameters for method were changed in v0.0. More InfoLibRef.html#Xxxx`,
+      "Missing argument(s). Expected: s (String). <u>More Info</u>LangRef.html#compile_error",
+      `Code change required. Parameters for method were changed in v0.0. <u>More Info</u>LibRef.html#Xxxx`,
     ]);
   });
 
@@ -408,8 +408,8 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "<of Type(s)> Expected: 0 Provided: 1",
-      `Code change required. Parameters for class were changed in v0.0. More InfoLibRef.html#Xxxx`,
+      "<of Type(s)> Expected: 0 Provided: 1. <u>More Info</u>LangRef.html#compile_error",
+      `Code change required. Parameters for class were changed in v0.0. <u>More Info</u>LibRef.html#Xxxx`,
     ]);
   });
 });

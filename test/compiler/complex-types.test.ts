@@ -81,7 +81,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: index (Int), value (Dictionary<of String, Int>) Provided: String, Dictionary<of String, Int>",
+      "Argument types. Expected: index (Int), value (Dictionary<of String, Int>) Provided: String, Dictionary<of String, Int>. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -99,7 +99,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: key (String), value (Int) Provided: Int, Int",
+      "Argument types. Expected: key (String), value (Int) Provided: Int, Int. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -117,7 +117,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: key (String), value (List<of Int>) Provided: Int, List<of Int>",
+      "Argument types. Expected: key (String), value (List<of Int>) Provided: Int, List<of Int>. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -135,7 +135,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: index (Int), value (Int) Provided: String, Int",
+      "Argument types. Expected: index (Int), value (Int) Provided: String, Int. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -151,7 +151,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'Foo' is not defined"]);
+    assertDoesNotCompile(fileImpl, [
+      "'Foo' is not defined. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_UnknowNestedOfType", async () => {
@@ -166,7 +168,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'Foo' is not defined"]);
+    assertDoesNotCompile(fileImpl, [
+      "'Foo' is not defined. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_NotType", async () => {

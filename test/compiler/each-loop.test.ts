@@ -193,7 +193,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "The identifier 'x' is already used for a variable and cannot be re-defined here.",
+      "The identifier 'x' is already used for a variable and cannot be re-defined here. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -213,7 +213,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'x' is not defined"]);
+    assertDoesNotCompile(fileImpl, [
+      "'x' is not defined. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_duplicateId", async () => {
@@ -232,7 +234,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'id' is not defined"]);
+    assertDoesNotCompile(fileImpl, [
+      "'id' is not defined. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_NoEndeach", async () => {
@@ -268,7 +272,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot iterate Int"]);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot iterate Int. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_CannotAlterTheIterableWithinLoop", async () => {
@@ -286,6 +292,8 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not re-assign the loop counter 'a'"]);
+    assertDoesNotCompile(fileImpl, [
+      "May not re-assign the loop counter 'a'. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 });

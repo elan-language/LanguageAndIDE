@@ -357,7 +357,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: i (Int), f (Func<of Int => Int>) Provided: Int, Func<of Int => String>",
+      "Argument types. Expected: i (Int), f (Func<of Int => Int>) Provided: Int, Func<of Int => String>. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -376,7 +376,9 @@ end procedure`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Argument types. Expected: parameter0 (Int) Provided: String"]);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types. Expected: parameter0 (Int) Provided: String. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_PassLambdaWithWrongTypes1", async () => {
@@ -395,7 +397,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: i (Int), f (Func<of  => Int>) Provided: Int, Func<of Int => Int>",
+      "Argument types. Expected: i (Int), f (Func<of  => Int>) Provided: Int, Func<of Int => Int>. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -415,7 +417,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: i (Int), f (Func<of Int => Int>) Provided: Int, Func<of  => Int>",
+      "Argument types. Expected: i (Int), f (Func<of Int => Int>) Provided: Int, Func<of  => Int>. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -434,7 +436,9 @@ end procedure`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Too many argument(s). Expected: none"]);
+    assertDoesNotCompile(fileImpl, [
+      "Too many argument(s). Expected: none. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_LambdaWithListOfMutableType1", async () => {
@@ -448,7 +452,9 @@ end procedure`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'List<of Int>'"]);
+    assertDoesNotCompile(fileImpl, [
+      "ListImmutable cannot be of mutable type 'List<of Int>'. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_LambdaWithListOfMutableType2", async () => {
@@ -462,6 +468,8 @@ end procedure`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["ListImmutable cannot be of mutable type 'List<of Int>'"]);
+    assertDoesNotCompile(fileImpl, [
+      "ListImmutable cannot be of mutable type 'List<of Int>'. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 });

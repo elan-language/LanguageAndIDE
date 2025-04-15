@@ -433,7 +433,9 @@ end procedure
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'a' is not defined"]);
+    assertDoesNotCompile(fileImpl, [
+      "'a' is not defined. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_RedefineVariableinCatch1", async () => {
@@ -459,7 +461,7 @@ end procedure`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "The identifier 'a' is already used for a variable and cannot be re-defined here.",
+      "The identifier 'a' is already used for a variable and cannot be re-defined here. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 });

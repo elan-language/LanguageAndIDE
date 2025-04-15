@@ -83,7 +83,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: other (List<of Int>) Provided: Int",
+      "Argument types. Expected: other (List<of Int>) Provided: Int. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -659,7 +659,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot invoke identifier 'a' as a method"]);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot invoke identifier 'a' as a method. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_ApplyIndexToANonIndexable", async () => {
@@ -675,7 +677,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot index Int"]);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot index Int. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_ApplyIndexToUnknown", async () => {
@@ -690,7 +694,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'a' is not defined"]);
+    assertDoesNotCompile(fileImpl, [
+      "'a' is not defined. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_2DListCreatedByDoubleIndex", async () => {
@@ -740,7 +746,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: index (Int), value (String) Provided: Int, Boolean",
+      "Argument types. Expected: index (Int), value (String) Provided: Int, Boolean. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -757,7 +763,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot double index List<of Int>"]);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot double index List<of Int>. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_IndexTypeIncompatibility", async () => {
@@ -776,7 +784,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types. Expected: Int Provided: String"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Int Provided: String. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_IndexTypeIncompatibility1", async () => {
@@ -792,7 +802,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Argument types. Expected: value (String) Provided: Int"]);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types. Expected: value (String) Provided: Int. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_NoSet", async () => {
@@ -824,7 +836,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: index (Int), value (String) Provided: String, String",
+      "Argument types. Expected: index (Int), value (String) Provided: String, String. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -841,7 +853,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: size (Int), initialValue (Int) Provided: Float, Int",
+      "Argument types. Expected: size (Int), initialValue (Int) Provided: Float, Int. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -887,7 +899,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'get' is not defined for type 'List'"]);
+    assertDoesNotCompile(fileImpl, [
+      "'get' is not defined for type 'List'. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_getRange", async () => {
@@ -903,7 +917,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'getRange' is not defined for type 'List'"]);
+    assertDoesNotCompile(fileImpl, [
+      "'getRange' is not defined for type 'List'. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Pass_withPut", async () => {
@@ -1065,7 +1081,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'withRemove' is not defined for type 'List'"]);
+    assertDoesNotCompile(fileImpl, [
+      "'withRemove' is not defined for type 'List'. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_appendWithPlus", async () => {
@@ -1083,7 +1101,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int Provided: List<of String>",
+      "Incompatible types. Expected: Float or Int Provided: List<of String>. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -1102,7 +1120,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: List<of String> Provided: String",
+      "Incompatible types. Expected: List<of String> Provided: String. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -1390,7 +1408,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["<of Type(s)> Expected: 1 Provided: 0"]);
+    assertDoesNotCompile(fileImpl, [
+      "<of Type(s)> Expected: 1 Provided: 0. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_assignRange", async () => {
@@ -1421,7 +1441,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Index cannot be negative"]);
+    assertDoesNotCompile(fileImpl, [
+      "Index cannot be negative. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_negativeIndexRuntime", async () => {
@@ -1454,7 +1476,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Index cannot be negative"]);
+    assertDoesNotCompile(fileImpl, [
+      "Index cannot be negative. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_negativeRange1Runtime", async () => {
@@ -1487,7 +1511,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Index cannot be negative"]);
+    assertDoesNotCompile(fileImpl, [
+      "Index cannot be negative. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_negativeRange2Runtime", async () => {
@@ -1519,7 +1545,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Library or class function 'getKey' cannot be preceded by by 'ref'",
+      "Library or class function 'getKey' cannot be preceded by by 'ref'. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -1541,7 +1567,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["To evaluate function 'bar' add brackets."]);
+    assertDoesNotCompile(fileImpl, [
+      "To evaluate function 'bar' add brackets. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_LiteralListOfEmptyUnknownClass", async () => {
@@ -1555,7 +1583,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'Foo' is not defined"]);
+    assertDoesNotCompile(fileImpl, [
+      "'Foo' is not defined. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_EmptyGenericType", async () => {
@@ -1569,7 +1599,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["<of Type(s)> Expected: 1 Provided: 0"]);
+    assertDoesNotCompile(fileImpl, [
+      "<of Type(s)> Expected: 1 Provided: 0. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_appendTuple1", async () => {
@@ -1586,7 +1618,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int Provided: List<of tuple(Int, Int)>",
+      "Incompatible types. Expected: Float or Int Provided: List<of tuple(Int, Int)>. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -1604,7 +1636,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: List<of tuple(Int, Int)> Provided: Procedure (List<of tuple(Int, Int)>)",
+      "Incompatible types. Expected: List<of tuple(Int, Int)> Provided: Procedure (List<of tuple(Int, Int)>). <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
