@@ -285,7 +285,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'p' is not defined. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "'p' is not defined. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_MissingSelfCausesCompileErrorDueToAssigningToParam", async () => {
@@ -313,7 +315,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not re-assign the parameter 'p1'. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "May not re-assign the parameter 'p1'. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_ThisOutsideClassScope", async () => {
@@ -327,6 +331,8 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot use 'this' outside class context. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot use 'this' outside class context. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 });

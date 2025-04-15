@@ -549,7 +549,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int Provided: ListImmutable<of Int>. <u>More Info</u>",
+      "Incompatible types. Expected: Float or Int Provided: ListImmutable<of Int>. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -579,7 +579,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int Provided: ListImmutable<of Int>. <u>More Info</u>",
+      "Incompatible types. Expected: Float or Int Provided: ListImmutable<of Int>. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -601,7 +601,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int Provided: ListImmutable<of Int>. <u>More Info</u>",
+      "Incompatible types. Expected: Float or Int Provided: ListImmutable<of Int>. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -623,7 +623,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int Provided: ListImmutable<of String>. <u>More Info</u>",
+      "Incompatible types. Expected: Float or Int Provided: ListImmutable<of String>. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -993,7 +993,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int Provided: String. <u>More Info</u>",
+      "Incompatible types. Expected: Int Provided: String. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -1010,7 +1010,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int Provided: Float. <u>More Info</u>",
+      "Incompatible types. Expected: Int Provided: Float. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -1046,7 +1046,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'put' is not defined for type 'ListImmutable'. <u>More Info</u>",
+      "'put' is not defined for type 'ListImmutable'. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -1080,7 +1080,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'put' is not defined for type 'ListImmutable'. <u>More Info</u>",
+      "'put' is not defined for type 'ListImmutable'. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -1099,7 +1099,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'append' is not defined for type 'ListImmutable'. <u>More Info</u>",
+      "'append' is not defined for type 'ListImmutable'. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -1118,7 +1118,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'insert' is not defined for type 'ListImmutable'. <u>More Info</u>",
+      "'insert' is not defined for type 'ListImmutable'. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -1137,7 +1137,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'removeAt' is not defined for type 'ListImmutable'. <u>More Info</u>",
+      "'removeAt' is not defined for type 'ListImmutable'. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -1155,7 +1155,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'removeFirst' is not defined for type 'ListImmutable'. <u>More Info</u>",
+      "'removeFirst' is not defined for type 'ListImmutable'. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -1173,7 +1173,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'removeAll' is not defined for type 'ListImmutable'. <u>More Info</u>",
+      "'removeAll' is not defined for type 'ListImmutable'. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -1189,7 +1189,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["<of Type(s)> Expected: 1 Provided: 0. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "<of Type(s)> Expected: 1 Provided: 0. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_typeErrorMessage", async () => {
@@ -1206,7 +1208,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: ListImmutable<of Int> try converting with '.asListImmutable()' Provided: List<of Int>. <u>More Info</u>",
+      "Incompatible types. Expected: ListImmutable<of Int> try converting with '.asListImmutable()' Provided: List<of Int>. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -1310,7 +1312,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "ListImmutable cannot be of mutable type 'Foo'. <u>More Info</u>",
+      "ListImmutable cannot be of mutable type 'Foo'. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -1326,7 +1328,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "ListImmutable cannot be of mutable type 'List<of Int>'. <u>More Info</u>",
+      "ListImmutable cannot be of mutable type 'List<of Int>'. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -1342,7 +1344,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "ListImmutable cannot be of mutable type 'Dictionary<of Int, Int>'. <u>More Info</u>",
+      "ListImmutable cannot be of mutable type 'Dictionary<of Int, Int>'. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -1362,7 +1364,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "ListImmutable cannot be of mutable type 'Foo'. <u>More Info</u>",
+      "ListImmutable cannot be of mutable type 'Foo'. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -1382,7 +1384,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "ListImmutable cannot be of mutable type 'List<of Int>'. <u>More Info</u>",
+      "ListImmutable cannot be of mutable type 'List<of Int>'. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -1402,7 +1404,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "ListImmutable cannot be of mutable type 'Dictionary<of String, Int>'. <u>More Info</u>",
+      "ListImmutable cannot be of mutable type 'Dictionary<of String, Int>'. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -1417,7 +1419,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'Foo' is not defined. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "'Foo' is not defined. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_EmptyGenericType", async () => {
@@ -1431,6 +1435,8 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["<of Type(s)> Expected: 1 Provided: 0. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "<of Type(s)> Expected: 1 Provided: 0. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 });

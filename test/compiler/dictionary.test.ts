@@ -676,7 +676,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Duplicate Dictionary key(s). <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "Duplicate Dictionary key(s). <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_InconsistentTypes1", async () => {
@@ -693,7 +695,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int Provided: Float. <u>More Info</u>",
+      "Incompatible types. Expected: Int Provided: Float. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -711,7 +713,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: String Provided: Int. <u>More Info</u>",
+      "Incompatible types. Expected: String Provided: Int. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -745,7 +747,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: key (String) Provided: Int. <u>More Info</u>",
+      "Argument types. Expected: key (String) Provided: Int. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -763,7 +765,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: key (String), value (Int) Provided: Int, Int. <u>More Info</u>",
+      "Argument types. Expected: key (String), value (Int) Provided: Int, Int. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -909,7 +911,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: key (String), value (Int) Provided: String, Float. <u>More Info</u>",
+      "Argument types. Expected: key (String), value (Int) Provided: String, Float. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -925,7 +927,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["<of Type(s)> Expected: 2 Provided: 0. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "<of Type(s)> Expected: 2 Provided: 0. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_IndexWrongType1", async () => {
@@ -942,7 +946,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: key (String), value (Int) Provided: Int, Int. <u>More Info</u>",
+      "Argument types. Expected: key (String), value (Int) Provided: Int, Int. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -960,7 +964,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: String Provided: Int. <u>More Info</u>",
+      "Incompatible types. Expected: String Provided: Int. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -978,7 +982,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: key (String), value (Int) Provided: Int, Int. <u>More Info</u>",
+      "Argument types. Expected: key (String), value (Int) Provided: Int, Int. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -995,7 +999,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot range Dictionary<of Int, Int>. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot range Dictionary<of Int, Int>. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_LiteralDictionaryOfDictionaryKey", async () => {
@@ -1014,7 +1020,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Dictionary cannot have key of type 'Dictionary<of String, Int>'. <u>More Info</u>",
+      "Dictionary cannot have key of type 'Dictionary<of String, Int>'. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -1034,7 +1040,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Dictionary cannot have key of type 'List<of Int>'. <u>More Info</u>",
+      "Dictionary cannot have key of type 'List<of Int>'. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -1053,7 +1059,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Dictionary cannot have key of type 'Foo'. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "Dictionary cannot have key of type 'Foo'. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_DictionaryOfDictionaryKey", async () => {
@@ -1068,7 +1076,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Dictionary cannot have key of type 'Dictionary<of Int, Int>'. <u>More Info</u>",
+      "Dictionary cannot have key of type 'Dictionary<of Int, Int>'. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -1084,7 +1092,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Dictionary cannot have key of type 'DictionaryImmutable<of Int, Int>'. <u>More Info</u>",
+      "Dictionary cannot have key of type 'DictionaryImmutable<of Int, Int>'. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -1100,7 +1108,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Dictionary cannot have key of type 'List<of Int>'. <u>More Info</u>",
+      "Dictionary cannot have key of type 'List<of Int>'. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -1116,7 +1124,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Dictionary cannot have key of type 'ListImmutable<of Int>'. <u>More Info</u>",
+      "Dictionary cannot have key of type 'ListImmutable<of Int>'. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -1134,7 +1142,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Dictionary cannot have key of type 'Foo'. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "Dictionary cannot have key of type 'Foo'. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_LiteralDictionyOfEmptyUnknownClass1", async () => {
@@ -1148,7 +1158,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'Foo' is not defined. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "'Foo' is not defined. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_LiteralDictionyOfEmptyUnknownClass2", async () => {
@@ -1162,7 +1174,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'Foo' is not defined. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "'Foo' is not defined. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_EmptyGenericType", async () => {
@@ -1176,6 +1190,8 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["<of Type(s)> Expected: 2 Provided: 0. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "<of Type(s)> Expected: 2 Provided: 0. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 });

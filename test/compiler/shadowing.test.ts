@@ -490,7 +490,7 @@ end procedure`;
   assertParses(fileImpl);
   assertStatusIsValid(fileImpl);
   assertDoesNotCompile(fileImpl, [
-    "The identifier 'a' is already used for a parameter and cannot be re-defined here. <u>More Info</u>",
+    "The identifier 'a' is already used for a parameter and cannot be re-defined here. <u>More Info</u>LangRef.html#compile_error",
   ]);
 });
 
@@ -508,7 +508,7 @@ end main`;
   assertParses(fileImpl);
   assertStatusIsValid(fileImpl);
   assertDoesNotCompile(fileImpl, [
-    "The identifier 'a' is already used for a variable and cannot be re-defined here. <u>More Info</u>",
+    "The identifier 'a' is already used for a variable and cannot be re-defined here. <u>More Info</u>LangRef.html#compile_error",
   ]);
 });
 
@@ -526,7 +526,7 @@ end main`;
   assertParses(fileImpl);
   assertStatusIsValid(fileImpl);
   assertDoesNotCompile(fileImpl, [
-    "The identifier 'a' is already used for a 'let' and cannot be re-defined here. <u>More Info</u>",
+    "The identifier 'a' is already used for a 'let' and cannot be re-defined here. <u>More Info</u>LangRef.html#compile_error",
   ]);
 });
 
@@ -544,7 +544,7 @@ end main`;
   assertParses(fileImpl);
   assertStatusIsValid(fileImpl);
   assertDoesNotCompile(fileImpl, [
-    "The identifier 'a' is already used for a 'let' and cannot be re-defined here. <u>More Info</u>",
+    "The identifier 'a' is already used for a 'let' and cannot be re-defined here. <u>More Info</u>LangRef.html#compile_error",
   ]);
 });
 
@@ -619,7 +619,7 @@ end function`;
 
   assertParses(fileImpl);
   assertDoesNotCompile(fileImpl, [
-    "The identifier 'a' is already used for a parameter and cannot be re-defined here. <u>More Info</u>",
+    "The identifier 'a' is already used for a parameter and cannot be re-defined here. <u>More Info</u>LangRef.html#compile_error",
   ]);
 });
 
@@ -641,6 +641,6 @@ end function`;
 
   assertParses(fileImpl);
   assertDoesNotCompile(fileImpl, [
-    "The identifier 'a' is already used for a parameter and cannot be re-defined here. <u>More Info</u>",
+    "The identifier 'a' is already used for a parameter and cannot be re-defined here. <u>More Info</u>LangRef.html#compile_error",
   ]);
 });

@@ -986,7 +986,9 @@ end test
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'squareTest' is not defined. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "'squareTest' is not defined. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_ignoredFailCompile", async () => {
@@ -1008,7 +1010,9 @@ end test
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Too many argument(s). Expected: x (Float). <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "Too many argument(s). Expected: x (Float). <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_useTestAsAReference", async () => {
@@ -1030,7 +1034,9 @@ end test
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'squareTest' is not defined. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "'squareTest' is not defined. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_assertWithinAMultiline", async () => {

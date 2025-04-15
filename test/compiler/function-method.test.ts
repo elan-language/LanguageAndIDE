@@ -717,7 +717,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'times' is not defined. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "'times' is not defined. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_FunctionisNotDefined", async () => {
@@ -744,7 +746,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'noSuch' is not defined for type 'Foo'. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "'noSuch' is not defined for type 'Foo'. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_FunctionMethodCannotMutateProperty", async () => {
@@ -768,7 +772,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not set property: p1 in a function. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "May not set property: p1 in a function. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_FunctionMethodCannotCallProcedureMethod", async () => {
@@ -823,7 +829,9 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'Bar' is not defined. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "'Bar' is not defined. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_ReturnUnknownType", async () => {
@@ -847,7 +855,9 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'Bar' is not defined. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "'Bar' is not defined. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_UseOfKeywordAsName", async () => {
@@ -871,7 +881,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'if' is a keyword, and may not be used as an identifier. <u>More Info</u>",
+      "'if' is a keyword, and may not be used as an identifier. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -896,7 +906,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'break' is a reserved word, and may not be used as an identifier. <u>More Info</u>",
+      "'break' is a reserved word, and may not be used as an identifier. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -921,7 +931,9 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'a' not unique in scope. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'a' not unique in scope. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_NestedUpdateProperty", async () => {
@@ -952,7 +964,9 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not set property: p1 in a function. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "May not set property: p1 in a function. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_NestedUpdateProperty1", async () => {
@@ -987,7 +1001,9 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not set property: p1 in a function. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "May not set property: p1 in a function. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_IncorrectScope", async () => {
@@ -1009,7 +1025,9 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'bar' is not defined for type 'Foo'. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "'bar' is not defined for type 'Foo'. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_ReturnListOfMutableType", async () => {
@@ -1027,7 +1045,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "ListImmutable cannot be of mutable type 'List<of Int>'. <u>More Info</u>",
+      "ListImmutable cannot be of mutable type 'List<of Int>'. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -1046,7 +1064,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "ListImmutable cannot be of mutable type 'List<of Int>'. <u>More Info</u>",
+      "ListImmutable cannot be of mutable type 'List<of Int>'. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 });

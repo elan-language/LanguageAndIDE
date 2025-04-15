@@ -364,6 +364,8 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Set cannot be of mutable type 'Foo'. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "Set cannot be of mutable type 'Foo'. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 });

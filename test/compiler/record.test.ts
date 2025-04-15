@@ -65,7 +65,9 @@ end record`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Too many argument(s). Expected: none. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "Too many argument(s). Expected: none. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Pass_instantiateUsingWith", async () => {
@@ -400,9 +402,9 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Property p1 is not of an immutable type. <u>More Info</u>",
-      "Property p2 is not of an immutable type. <u>More Info</u>",
-      "Property p3 is not of an immutable type. <u>More Info</u>",
+      "Property p1 is not of an immutable type. <u>More Info</u>LangRef.html#compile_error",
+      "Property p2 is not of an immutable type. <u>More Info</u>LangRef.html#compile_error",
+      "Property p3 is not of an immutable type. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 });

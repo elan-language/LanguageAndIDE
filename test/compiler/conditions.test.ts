@@ -345,12 +345,12 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int Provided: String. <u>More Info</u>",
-      "Incompatible types. Expected: Int Provided: String. <u>More Info</u>",
-      "Incompatible types. Expected: Float or Int Provided: String. <u>More Info</u>",
-      "Incompatible types. Expected: Float or Int Provided: String. <u>More Info</u>",
-      "Incompatible types. Expected: Float or Int Provided: String. <u>More Info</u>",
-      "Incompatible types. Expected: Float or Int Provided: String. <u>More Info</u>",
+      "Incompatible types. Expected: Int Provided: String. <u>More Info</u>LangRef.html#compile_error",
+      "Incompatible types. Expected: Int Provided: String. <u>More Info</u>LangRef.html#compile_error",
+      "Incompatible types. Expected: Float or Int Provided: String. <u>More Info</u>LangRef.html#compile_error",
+      "Incompatible types. Expected: Float or Int Provided: String. <u>More Info</u>LangRef.html#compile_error",
+      "Incompatible types. Expected: Float or Int Provided: String. <u>More Info</u>LangRef.html#compile_error",
+      "Incompatible types. Expected: Float or Int Provided: String. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -393,7 +393,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int Provided: Boolean. <u>More Info</u>",
+      "Incompatible types. Expected: Float or Int Provided: Boolean. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 });

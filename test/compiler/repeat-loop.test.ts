@@ -118,7 +118,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'x' is not defined. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "'x' is not defined. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_testPutOnRepeat", async () => {
@@ -187,6 +189,8 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Expression must be Boolean. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "Expression must be Boolean. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 });

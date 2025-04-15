@@ -80,7 +80,7 @@ end procedure
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot call procedure 'foo' within an expression. <u>More Info</u>",
+      "Cannot call procedure 'foo' within an expression. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -100,7 +100,9 @@ end function`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot call a function as a procedure. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot call a function as a procedure. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_CannotCallAProcedureWithinAFunction", async () => {
@@ -141,6 +143,8 @@ end function
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot use a system method in a function. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot use a system method in a function. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 });

@@ -554,7 +554,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot index Int. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot index Int. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_1DListAccessedAs2D1", async () => {
@@ -571,7 +573,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Too many argument(s). Expected: index (Int), value (String). <u>More Info</u>",
+      "Too many argument(s). Expected: index (Int), value (String). <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -588,7 +590,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot double index List<of List<of Int>>. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot double index List<of List<of Int>>. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_2DListAccessedAs1D", async () => {
@@ -605,7 +609,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: index (Int), value (List<of String>) Provided: Int, String. <u>More Info</u>",
+      "Argument types. Expected: index (Int), value (List<of String>) Provided: Int, String. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -641,7 +645,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: index (Int), value (List<of String>) Provided: Int, Boolean. <u>More Info</u>",
+      "Argument types. Expected: index (Int), value (List<of String>) Provided: Int, Boolean. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -659,7 +663,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: value (List<of String>) Provided: String. <u>More Info</u>",
+      "Argument types. Expected: value (List<of String>) Provided: String. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -677,7 +681,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int Provided: String. <u>More Info</u>",
+      "Incompatible types. Expected: Int Provided: String. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -695,7 +699,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: index (Int), value (Int) Provided: String, Int. <u>More Info</u>",
+      "Argument types. Expected: index (Int), value (Int) Provided: String, Int. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 });

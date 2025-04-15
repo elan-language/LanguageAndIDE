@@ -154,7 +154,10 @@ export function mustNotHaveConditionalAfterUnconditionalElse(
   const unconditionals = elses.filter((s) => !s.hasIf).length;
   if (unconditionals > 1 || (unconditionals === 1 && elses[elses.length - 1].hasIf)) {
     compileErrors.push(
-      new SyntaxCompileError(`Cannot have any clause after unconditional 'else'. <u>More Info</u>`, location),
+      new SyntaxCompileError(
+        `Cannot have any clause after unconditional 'else'. <u>More Info</u>`,
+        location,
+      ),
     );
   }
 }
@@ -298,7 +301,9 @@ export function checkForDeprecation(
 }
 
 export function mustNotBeNegativeIndex(compileErrors: CompileError[], location: string) {
-  compileErrors.push(new SyntaxCompileError("Index cannot be negative. <u>More Info</u>", location));
+  compileErrors.push(
+    new SyntaxCompileError("Index cannot be negative. <u>More Info</u>", location),
+  );
 }
 
 export function mustBeIndexableType(
@@ -625,7 +630,10 @@ function FailNotNumber(lhs: SymbolType, compileErrors: CompileError[], location:
 
 function FailCannotCompareProcFunc(compileErrors: CompileError[], location: string) {
   compileErrors.push(
-    new SyntaxCompileError("Cannot do equality operations on Procedures or Functions. <u>More Info</u>", location),
+    new SyntaxCompileError(
+      "Cannot do equality operations on Procedures or Functions. <u>More Info</u>",
+      location,
+    ),
   );
 }
 
@@ -702,7 +710,10 @@ export function mustBeImmutableType(
 ) {
   if (!type.typeOptions.isImmutable) {
     compileErrors.push(
-      new SyntaxCompileError(`Property ${name} is not of an immutable type. <u>More Info</u>`, location),
+      new SyntaxCompileError(
+        `Property ${name} is not of an immutable type. <u>More Info</u>`,
+        location,
+      ),
     );
   }
 }
@@ -715,7 +726,10 @@ export function mustBeImmutableGenericType(
 ) {
   if (!ofType.typeOptions.isImmutable) {
     compileErrors.push(
-      new SyntaxCompileError(`${type} cannot be of mutable type '${ofType.name}'. <u>More Info</u>`, location),
+      new SyntaxCompileError(
+        `${type} cannot be of mutable type '${ofType.name}'. <u>More Info</u>`,
+        location,
+      ),
     );
   }
 }
@@ -732,7 +746,10 @@ export function mustBeValidKeyType(
       (ofType.typeOptions.isIndexable || ofType.typeOptions.isIterable))
   ) {
     compileErrors.push(
-      new SyntaxCompileError(`${type} cannot have key of type '${ofType.name}'. <u>More Info</u>`, location),
+      new SyntaxCompileError(
+        `${type} cannot have key of type '${ofType.name}'. <u>More Info</u>`,
+        location,
+      ),
     );
   }
 }
@@ -823,7 +840,10 @@ export function mustBeCompatibleDefinitionNode(
     }
     if (rst instanceof TupleType && lst.ofTypes.length !== rst.ofTypes.length) {
       compileErrors.push(
-        new SyntaxCompileError(`Wrong number of deconstructed variables. <u>More Info</u>`, location),
+        new SyntaxCompileError(
+          `Wrong number of deconstructed variables. <u>More Info</u>`,
+          location,
+        ),
       );
     }
   }
@@ -874,7 +894,9 @@ export function mustNotBePropertyOnFunctionMethod(
 }
 
 export function mustBePropertyPrefixedOnMember(compileErrors: CompileError[], location: string) {
-  compileErrors.push(new SyntaxCompileError(`referencing a property requires a prefix. <u>More Info</u>`, location));
+  compileErrors.push(
+    new SyntaxCompileError(`referencing a property requires a prefix. <u>More Info</u>`, location),
+  );
 }
 
 function isIndexed(assignable: AstNode) {
@@ -1025,7 +1047,10 @@ export function mustNotBeRedefined(
 
 export function mustNotBeOutParameter(compileErrors: CompileError[], location: string) {
   compileErrors.push(
-    new SyntaxCompileError("'out' parameters are only supported on procedures. <u>More Info</u>", location),
+    new SyntaxCompileError(
+      "'out' parameters are only supported on procedures. <u>More Info</u>",
+      location,
+    ),
   );
 }
 

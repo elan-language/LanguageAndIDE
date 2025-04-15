@@ -763,7 +763,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: String, Int Provided: tuple(Int, String). <u>More Info</u>",
+      "Incompatible types. Expected: String, Int Provided: tuple(Int, String). <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -785,8 +785,8 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: String, Unknown Provided: tuple(Int, String). <u>More Info</u>",
-      "'y' is not defined. <u>More Info</u>",
+      "Incompatible types. Expected: String, Unknown Provided: tuple(Int, String). <u>More Info</u>LangRef.html#compile_error",
+      "'y' is not defined. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -808,7 +808,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "The identifier 'z' is already used for a variable and cannot be re-defined here. <u>More Info</u>",
+      "The identifier 'z' is already used for a variable and cannot be re-defined here. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -829,7 +829,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: String, _ Provided: tuple(Int, String). <u>More Info</u>",
+      "Incompatible types. Expected: String, _ Provided: tuple(Int, String). <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -852,8 +852,8 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "May not re-assign the 'let' 'y'. <u>More Info</u>",
-      "May not re-assign the 'let' 'z'. <u>More Info</u>",
+      "May not re-assign the 'let' 'y'. <u>More Info</u>LangRef.html#compile_error",
+      "May not re-assign the 'let' 'z'. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -872,7 +872,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Expression must be able to be deconstructed. <u>More Info</u>",
+      "Expression must be able to be deconstructed. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -891,7 +891,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Expression must be able to be deconstructed. <u>More Info</u>",
+      "Expression must be able to be deconstructed. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -910,6 +910,8 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'y' is not defined. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "'y' is not defined. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 });

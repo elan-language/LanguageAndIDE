@@ -24,6 +24,8 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["There can only be one 'main' in a program. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "There can only be one 'main' in a program. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 });

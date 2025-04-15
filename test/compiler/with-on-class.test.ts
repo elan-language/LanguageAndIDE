@@ -779,7 +779,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int Provided: List<of Int>. <u>More Info</u>",
+      "Incompatible types. Expected: Int Provided: List<of Int>. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -801,7 +801,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Missing argument(s). Expected: a (Int). <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "Missing argument(s). Expected: a (Int). <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_NotClass", async () => {
@@ -817,7 +819,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'a' is not defined. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "'a' is not defined. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_NotClass1", async () => {
@@ -833,7 +837,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'a' is not defined. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "'a' is not defined. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_NoSuchProperty", async () => {
@@ -853,7 +859,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'b' is not defined. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "'b' is not defined. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_PrivateProperty", async () => {
@@ -873,7 +881,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot reference private member 'b'. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot reference private member 'b'. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_UnknownProperty", async () => {
@@ -893,6 +903,8 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'aa' is not defined. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "'aa' is not defined. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 });

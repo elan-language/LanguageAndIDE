@@ -666,7 +666,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: String Provided: Int. <u>More Info</u>",
+      "Incompatible types. Expected: String Provided: Int. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -701,6 +701,8 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'fd' is not defined for type 'Bar'. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "'fd' is not defined for type 'Bar'. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 });

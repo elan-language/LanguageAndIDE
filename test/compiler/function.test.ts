@@ -341,8 +341,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Missing argument(s). Expected: item (String). <u>More Info</u>",
-      "Too many argument(s). Expected: item (String). <u>More Info</u>",
+      "Missing argument(s). Expected: item (String). <u>More Info</u>LangRef.html#compile_error",
+      "Too many argument(s). Expected: item (String). <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -363,8 +363,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Too many argument(s). Expected: p (Float). <u>More Info</u>",
-      "Missing argument(s). Expected: p (Float). <u>More Info</u>",
+      "Too many argument(s). Expected: p (Float). <u>More Info</u>LangRef.html#compile_error",
+      "Missing argument(s). Expected: p (Float). <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -385,8 +385,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: p (Int) Provided: Boolean. <u>More Info</u>",
-      "Argument types. Expected: p (Int) Provided: Float. <u>More Info</u>",
+      "Argument types. Expected: p (Int) Provided: Boolean. <u>More Info</u>LangRef.html#compile_error",
+      "Argument types. Expected: p (Int) Provided: Float. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -406,7 +406,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int Provided: Boolean. <u>More Info</u>",
+      "Incompatible types. Expected: Int Provided: Boolean. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -479,7 +479,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: String Provided: Int. <u>More Info</u>",
+      "Incompatible types. Expected: String Provided: Int. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -535,7 +535,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int Provided: Float. <u>More Info</u>",
+      "Incompatible types. Expected: Int Provided: Float. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -607,7 +607,9 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not re-assign the parameter 'a'. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "May not re-assign the parameter 'a'. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_CannotModifyParam1", async () => {
@@ -627,7 +629,9 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not re-assign the parameter 'a'. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "May not re-assign the parameter 'a'. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_CannotUpdateList", async () => {
@@ -681,7 +685,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Too many argument(s). Expected: a (Int), b (Int). <u>More Info</u>",
+      "Too many argument(s). Expected: a (Int), b (Int). <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -702,7 +706,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Missing argument(s). Expected: a (Int), b (Int). <u>More Info</u>",
+      "Missing argument(s). Expected: a (Int), b (Int). <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -723,7 +727,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: a (Int), b (Int) Provided: Int, String. <u>More Info</u>",
+      "Argument types. Expected: a (Int), b (Int) Provided: Int, String. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -786,7 +790,9 @@ end function`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'Bar' is not defined. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "'Bar' is not defined. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_ReturnUnknownType", async () => {
@@ -805,7 +811,9 @@ end function`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'Bar' is not defined. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "'Bar' is not defined. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_UseOfKeywordAsName", async () => {
@@ -824,7 +832,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'if' is a keyword, and may not be used as an identifier. <u>More Info</u>",
+      "'if' is a keyword, and may not be used as an identifier. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -844,7 +852,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'break' is a reserved word, and may not be used as an identifier. <u>More Info</u>",
+      "'break' is a reserved word, and may not be used as an identifier. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -881,7 +889,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'break' is a reserved word, and may not be used as an identifier. <u>More Info</u>",
+      "'break' is a reserved word, and may not be used as an identifier. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -902,7 +910,9 @@ end function
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'foo' not unique in scope. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'foo' not unique in scope. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_NotUniqueParameterName", async () => {
@@ -917,7 +927,9 @@ end function`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'a' not unique in scope. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'a' not unique in scope. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_OutOnParameter", async () => {
@@ -933,7 +945,7 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'out' parameters are only supported on procedures. <u>More Info</u>",
+      "'out' parameters are only supported on procedures. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -963,11 +975,11 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot do equality operations on Procedures or Functions. <u>More Info</u>",
-      "Incompatible types. Expected: Float or Int Provided: Func<of  => Int>. <u>More Info</u>",
-      "Incompatible types. Expected: Float or Int Provided: Func<of  => Int>. <u>More Info</u>",
-      "Incompatible types. Expected: Float or Int Provided: Func<of  => Int>. <u>More Info</u>",
-      "Incompatible types. Expected: Func<of  => Int> Provided: Func<of Int => Float>. <u>More Info</u>",
+      "Cannot do equality operations on Procedures or Functions. <u>More Info</u>LangRef.html#compile_error",
+      "Incompatible types. Expected: Float or Int Provided: Func<of  => Int>. <u>More Info</u>LangRef.html#compile_error",
+      "Incompatible types. Expected: Float or Int Provided: Func<of  => Int>. <u>More Info</u>LangRef.html#compile_error",
+      "Incompatible types. Expected: Float or Int Provided: Func<of  => Int>. <u>More Info</u>LangRef.html#compile_error",
+      "Incompatible types. Expected: Func<of  => Int> Provided: Func<of Int => Float>. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -992,15 +1004,15 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot do equality operations on Procedures or Functions. <u>More Info</u>",
-      "To evaluate function 'p1' add brackets. Or to create a reference to 'p1', precede it by 'ref'. <u>More Info</u>",
-      "To evaluate function 'p2' add brackets. Or to create a reference to 'p2', precede it by 'ref'. <u>More Info</u>",
-      "Incompatible types. Expected: Float or Int Provided: Func<of  => Int>. <u>More Info</u>",
-      "Incompatible types. Expected: Float or Int Provided: Func<of  => Int>. <u>More Info</u>",
-      "To evaluate function 'p1' add brackets. Or to create a reference to 'p1', precede it by 'ref'. <u>More Info</u>",
-      "To evaluate function 'p2' add brackets. Or to create a reference to 'p2', precede it by 'ref'. <u>More Info</u>",
-      "Incompatible types. Expected: Float or Int Provided: Func<of  => Int>. <u>More Info</u>",
-      "To evaluate function 'p1' add brackets. Or to create a reference to 'p1', precede it by 'ref'. <u>More Info</u>",
+      "Cannot do equality operations on Procedures or Functions. <u>More Info</u>LangRef.html#compile_error",
+      "To evaluate function 'p1' add brackets. Or to create a reference to 'p1', precede it by 'ref'. <u>More Info</u>LangRef.html#compile_error",
+      "To evaluate function 'p2' add brackets. Or to create a reference to 'p2', precede it by 'ref'. <u>More Info</u>LangRef.html#compile_error",
+      "Incompatible types. Expected: Float or Int Provided: Func<of  => Int>. <u>More Info</u>LangRef.html#compile_error",
+      "Incompatible types. Expected: Float or Int Provided: Func<of  => Int>. <u>More Info</u>LangRef.html#compile_error",
+      "To evaluate function 'p1' add brackets. Or to create a reference to 'p1', precede it by 'ref'. <u>More Info</u>LangRef.html#compile_error",
+      "To evaluate function 'p2' add brackets. Or to create a reference to 'p2', precede it by 'ref'. <u>More Info</u>LangRef.html#compile_error",
+      "Incompatible types. Expected: Float or Int Provided: Func<of  => Int>. <u>More Info</u>LangRef.html#compile_error",
+      "To evaluate function 'p1' add brackets. Or to create a reference to 'p1', precede it by 'ref'. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -1021,7 +1033,7 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "To evaluate function 'a' add brackets. Or to create a reference to 'a', precede it by 'ref'. <u>More Info</u>",
+      "To evaluate function 'a' add brackets. Or to create a reference to 'a', precede it by 'ref'. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -1039,7 +1051,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "To evaluate function 'length' add brackets. <u>More Info</u>",
+      "To evaluate function 'length' add brackets. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -1055,7 +1067,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["To evaluate function 'abs' add brackets. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "To evaluate function 'abs' add brackets. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_PrintLibFunctionWithoutRefKeyword", async () => {
@@ -1070,7 +1084,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["To evaluate function 'abs' add brackets. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "To evaluate function 'abs' add brackets. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_NoIndexing", async () => {
@@ -1106,7 +1122,7 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "ListImmutable cannot be of mutable type 'List<of Int>'. <u>More Info</u>",
+      "ListImmutable cannot be of mutable type 'List<of Int>'. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -1123,7 +1139,7 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "ListImmutable cannot be of mutable type 'List<of Int>'. <u>More Info</u>",
+      "ListImmutable cannot be of mutable type 'List<of Int>'. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -1141,7 +1157,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'asBinary' is not defined for type 'String'. <u>More Info</u>",
+      "'asBinary' is not defined for type 'String'. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -1159,7 +1175,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'reverse' is not defined for type 'String'. <u>More Info</u>",
+      "'reverse' is not defined for type 'String'. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 });

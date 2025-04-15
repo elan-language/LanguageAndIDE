@@ -328,7 +328,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Too many argument(s). Expected: none. <u>More Info</u>",
+      "Too many argument(s). Expected: none. <u>More Info</u>LangRef.html#compile_error",
       `Code change required. Parameters for method were changed in v0.0. <u>More Info</u>LibRef.html#Xxxx`,
     ]);
   });
@@ -348,7 +348,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Missing argument(s). Expected: s (String). <u>More Info</u>",
+      "Missing argument(s). Expected: s (String). <u>More Info</u>LangRef.html#compile_error",
       `Code change required. Parameters for method were changed in v0.0. <u>More Info</u>LibRef.html#Xxxx`,
     ]);
   });
@@ -368,7 +368,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Too many argument(s). Expected: none. <u>More Info</u>",
+      "Too many argument(s). Expected: none. <u>More Info</u>LangRef.html#compile_error",
       `Code change required. Parameters for method were changed in v0.0. <u>More Info</u>LibRef.html#Xxxx`,
     ]);
   });
@@ -388,7 +388,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Missing argument(s). Expected: s (String). <u>More Info</u>",
+      "Missing argument(s). Expected: s (String). <u>More Info</u>LangRef.html#compile_error",
       `Code change required. Parameters for method were changed in v0.0. <u>More Info</u>LibRef.html#Xxxx`,
     ]);
   });
@@ -408,7 +408,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "<of Type(s)> Expected: 0 Provided: 1. <u>More Info</u>",
+      "<of Type(s)> Expected: 0 Provided: 1. <u>More Info</u>LangRef.html#compile_error",
       `Code change required. Parameters for class were changed in v0.0. <u>More Info</u>LibRef.html#Xxxx`,
     ]);
   });

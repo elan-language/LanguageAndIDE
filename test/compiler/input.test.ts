@@ -320,7 +320,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: String Provided: Int. <u>More Info</u>",
+      "Incompatible types. Expected: String Provided: Int. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 

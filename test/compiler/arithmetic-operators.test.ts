@@ -350,15 +350,15 @@ end class
 
     assertParses(fileImpl);
     assertDoesNotCompileWithId(fileImpl, "expr5", [
-      "Incompatible types. Expected: Float or Int Provided: Boolean. <u>More Info</u>",
+      "Incompatible types. Expected: Float or Int Provided: Boolean. <u>More Info</u>LangRef.html#compile_error",
     ]);
 
     assertDoesNotCompileWithId(fileImpl, "expr8", [
-      "Incompatible types. Expected: Float or Int Provided: Boolean. <u>More Info</u>",
+      "Incompatible types. Expected: Float or Int Provided: Boolean. <u>More Info</u>LangRef.html#compile_error",
     ]);
 
     assertDoesNotCompileWithId(fileImpl, "expr11", [
-      "Incompatible types. Expected: Float or Int Provided: Foo. <u>More Info</u>",
+      "Incompatible types. Expected: Float or Int Provided: Foo. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -375,7 +375,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int Provided: Float. <u>More Info</u>",
+      "Incompatible types. Expected: Int Provided: Float. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -392,7 +392,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int Provided: Float. <u>More Info</u>",
+      "Incompatible types. Expected: Int Provided: Float. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -409,7 +409,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int Provided: Float. <u>More Info</u>",
+      "Incompatible types. Expected: Int Provided: Float. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -426,7 +426,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int Provided: Float. <u>More Info</u>",
+      "Incompatible types. Expected: Int Provided: Float. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -442,7 +442,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Unsupported operation. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "Unsupported operation. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_DoubleMinus2", async () => {
@@ -458,7 +460,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Unsupported operation. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "Unsupported operation. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_DoubleNot1", async () => {
@@ -473,7 +477,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Unsupported operation. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "Unsupported operation. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_DoubleNot2", async () => {
@@ -489,7 +495,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Unsupported operation. <u>More Info</u>"]);
+    assertDoesNotCompile(fileImpl, [
+      "Unsupported operation. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_PowerType1", async () => {
@@ -506,7 +514,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int Provided: Float. <u>More Info</u>",
+      "Incompatible types. Expected: Int Provided: Float. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -524,7 +532,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int Provided: Float. <u>More Info</u>",
+      "Incompatible types. Expected: Int Provided: Float. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 });

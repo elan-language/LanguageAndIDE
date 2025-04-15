@@ -11,7 +11,7 @@ export abstract class CompileError {
     private readonly basePriority: Priority,
     public readonly message: string,
     public readonly locationId: string,
-    public readonly link?: string,
+    public readonly link: string = "LangRef.html#compile_error",
   ) {}
 
   public get isWarning() {
@@ -385,9 +385,7 @@ export class DuplicateKeyCompileError extends CompileError {
 
 export class FunctionRefCompileError extends CompileError {
   constructor(id: string, isGlobal: boolean, location: string) {
-    const postfix = isGlobal
-      ? ` Or to create a reference to '${id}', precede it by 'ref'.`
-      : "";
+    const postfix = isGlobal ? ` Or to create a reference to '${id}', precede it by 'ref'.` : "";
     super(
       Priority.illegalOperation,
       `To evaluate function '${id}' add brackets.${postfix} <u>More Info</u>`,

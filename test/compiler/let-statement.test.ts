@@ -194,7 +194,7 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompileWithId(fileImpl, "let15", [
-      "The identifier 'x' is already used for a 'let' and cannot be re-defined here. <u>More Info</u>",
+      "The identifier 'x' is already used for a 'let' and cannot be re-defined here. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -217,7 +217,7 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompileWithId(fileImpl, "set15", [
-      "May not re-assign the 'let' 'x'. <u>More Info</u>",
+      "May not re-assign the 'let' 'x'. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
@@ -238,9 +238,13 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "expr17", ["'x' is not defined. <u>More Info</u>"]);
+    assertDoesNotCompileWithId(fileImpl, "expr17", [
+      "'x' is not defined. <u>More Info</u>LangRef.html#compile_error",
+    ]);
 
-    assertDoesNotCompileWithId(fileImpl, "func8", ["'x' is not defined. <u>More Info</u>"]);
+    assertDoesNotCompileWithId(fileImpl, "func8", [
+      "'x' is not defined. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_RecursiveDefinition1", async () => {
@@ -260,8 +264,12 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "expr17", ["'y' is not defined. <u>More Info</u>"]);
-    assertDoesNotCompileWithId(fileImpl, "func5", ["'y' is not defined. <u>More Info</u>"]);
+    assertDoesNotCompileWithId(fileImpl, "expr17", [
+      "'y' is not defined. <u>More Info</u>LangRef.html#compile_error",
+    ]);
+    assertDoesNotCompileWithId(fileImpl, "func5", [
+      "'y' is not defined. <u>More Info</u>LangRef.html#compile_error",
+    ]);
   });
 
   test("Pass_Redefine", async () => {
