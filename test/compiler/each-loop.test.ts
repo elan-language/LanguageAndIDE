@@ -175,6 +175,36 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "appleorangepear");
   });
 
+  test("Pass_EachOfConstant", async () => {
+    const code = `${testHeader}
+
+constant ints set to {1, 2, 3}
+main
+  each i1 in ints
+  end each
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {
+  ints = system.listImmutable([1, 2, 3]);
+
+};
+async function main() {
+  for (const i1 of global.ints) {
+
+  }
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "");
+  });
+
   test("Fail_variableIsScoped", async () => {
     const code = `${testHeader}
 
