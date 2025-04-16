@@ -174,8 +174,12 @@ export abstract class AbstractField implements Selectable, Field {
     }
   }
 
+  hasSelection() {
+    return this.cursorPos !== this.selectionEnd;
+  }
+
   deleteExistingSelection() {
-    if (this.cursorPos !== this.selectionEnd) {
+    if (this.hasSelection()) {
       this.deleteSelection([this.cursorPos, this.selectionEnd]);
     }
   }
@@ -235,6 +239,8 @@ export abstract class AbstractField implements Selectable, Field {
         if (this.holder.isNew) {
           this.holder.deleteIfPermissible();
           this.codeHasChanged = true;
+        } else if (this.hasSelection()) {
+          this.deleteExistingSelection();
         } else if (this.cursorPos > 0) {
           const reduced = this.text.slice(0, this.cursorPos - 1) + this.text.slice(this.cursorPos);
           this.text = reduced;
