@@ -1058,28 +1058,94 @@ or it is an abstract class, or an interface.</p>
 <h3 id="NotIterableCompileError" class="no-TOC">Cannot iterate ...</h3>
 <p>The value or expression cannot be used where an 'iterable' type - one that comprises a sequence of elements - is required.</p>
 <h3 id="MustBeAbstractCompileError" class="no-TOC">Superclass ... must be inheritable class</h3>
+
+<p>In Elan, all classes must be either abstract or 'final' - a final class being concrete and not-inheritable.</p>
 <h3 id="MustBeInterfaceCompileError" class="no-TOC">Superclass ... must be an interface</h3>
+
+<p>An interface may inherit from other interfaces, but not from any class.</p>
+
 <h3 id="MustNotBeCircularDependencyCompileError" class="no-TOC">Class/interface ... cannot inherit from itself</h3>
-<h3 id="MustBeSingleAbstractCompileError" class="no-TOC">
+
+<p>The message is self explanatory.</p>
+
+<h3 id="MustBeSingleAbstractCompileError" class="no-TOC">There must be only one abstract superclass ...</h3>
+
+<p>A class may inherit from only one abstract class. However, it may additionally inherit from one or more interfaces.</p>
+
 <h3 id="PrivateMemberCompileError" class="no-TOC">Cannot reference private member ...</h3>
+
+<p>A private member (method or property) may be accessed only by code within the class, or within sub-classes of it. 
+  It may not be accessed by any code outside the class hierarchy.
+</p>
+
 <h3 id="MustImplementCompileError" class="no-TOC">... must implement ...</h3>
+
+<p>If a concrete class inherits from any abstract class or interface(s) it must implement all abstract methods defined in those types.</p>
+
 <h3 id="MustBeConcreteCompileError" class="no-TOC">... must be concrete to new</h3>
+
+<p>You cannot create an instance of any abstract class or interface - only of a concrete class.</p>
+
 <h3 id="OutParameterCompileError" class="no-TOC">Cannot pass ... as an out parameter</h3>
+
+<p>If a parameter of a procedure is marked with <el-code><el-kw>out</el-kw></el-code> then this means that the parameter may be
+reassigned within the procedure. Therefore you must pass in a variable that can be re-assigned. You cannot pass in: a 
+constant, a literal value, or a named value that is defined by a <el-code><el-kw>let</el-kw></el-code> instruction.</p>
+
 <h3 id="ExtensionCompileError" class="no-TOC">Cannot call extension method directly</h3>
+
+<p>A method that is defined within the Library as an 'extension method', such as <el-code><el-method>asString</el-method></el-code> may only be called using 'dot-syntax' on a named
+  value or an expression.</p>
+
 <h3 id="PropertyCompileError" class="no-TOC">Cannot prefix function with 'property'</h3>
-<h3 id="MissingParameterCompileError" class="no-TOC">
-<h3 id="ExtraParameterCompileError" class="no-TOC">Too many argument(s). Expected: ...</h3>
-<h3 id="ParameterTypesCompileError" class="no-TOC">Argument types. Expected: ... Provided: ...</h3>
-<h3 id="ParametersCompileError" class="no-TOC">
+
+<p>The prefix <el-code><el-kw>out</el-kw>.</el-code> may only be used before a property name - not a function name.</p>
+
+<h3 id="MissingParameterCompileError" class="no-TOC">Missing argument(s) ...</h3>
+
+<p>The method being called expects more arguments than have been provided.</p>
+
+<h3 id="ExtraParameterCompileError" class="no-TOC">Too many argument(s) ...</h3>
+
+<p>A method has been passed more arguments than it expects.</p> 
+
+<h3 id="ParameterTypesCompileError" class="no-TOC">Argument types ...</h3>
+
+<p>One or more arguments provided to the method are of the wrong type.</p>
+
+<h3 id="GenericParametersCompileError" class="no-TOC">&lt;of Type(s)&gt;</3>
+
+<p>The the number of types given in the <el-code><el-kw>of</el-kw></el-code> clause, does not match the number required for the specified outer type.</p>
+
 <h3 id="MutateCompileError" class="no-TOC">May not re-assign the ...</h3>
+<p>Attempting to re-assign, or mutate, a named value that may not be re-assigned in the current context.</p>
 <h3 id="NotUniqueNameCompileError" class="no-TOC">Name ... not unique in scope ...</h3>
+<p>Attempting to create an identifier with the same name as one already defined <i>within the same scope</i>.</p>
 <h3 id="ReassignInFunctionCompileError" class="no-TOC">May not set ... in a function</h3>
+<p>A property cannot be re-assigned only within a procedure method, not within a function - because re-assigning a property is a 'side effecr'.</p>
 <h3 id="RedefinedCompileError" class="no-TOC">The identifier ... is already used for a ... and cannot be re-defined here.</h3>
-<h3 id="DuplicateKeyCompileError" class="no-TOC">
+
+<p>An existing named value may not be defined again within the same scope.</p>
+<h3 id="DuplicateKeyCompileError" class="no-TOC">Duplicate Dictionary key(s)</h3>
+
+<p>Attempting to define a literal <el-code><el-type>Dictionary</el-type></el-code> or <el-code><el-type>DictionaryImmutable</el-type></el-code>
+with one or more duplicated keys in the definition.</p>
+  
 <h3 id="FunctionRefCompileError" class="no-TOC">To evaluate function ... add brackets ...</h3>
+
+<p>If you intend to <i>evaluate</i> a function, the function name must be followed by brackets even if the function
+defines no parameters. If your intent was to define a <i>reference</i> to the function (a pattern used commonly in 
+'Functional Programming' then the name of the function must be preceded by the keyword <el-code><el-kw>ref</el-kw></el-code> and a single space.</p>
 <h3 id="NotGlobalFunctionRefCompileError" class="no-TOC">Library or class function ... cannot be preceded by by 'ref'</h3>
+
+<p>The keyword <el-code><el-kw>ref</el-kw></el-code> may be applied only to functions that you have defined in your own code as a standalone (global) function.
+  It may not be applied to a function method defined on a class, nor to a library function. 
+  (You may, however, define your own function that simply <i>delegates</i> its implementation to a library function.</p>
 <h3 id="UnknownCompilerDirectiveCompileError" class="no-TOC">a comment may not start with [ unless it is a recognised compiler directive</h3>
 
+<p>Compiler directives are a planned future capability - they will look like comments, but begin with an open-square bracket.
+  To avoid the possibility of ambiguity, you may not start your own comments with an open square bracket.
+</p>
 <!-- #endregion-->
 <hr>
 <b>Elan Language Reference</b> go to the <a href="#top">top</a></h4>
