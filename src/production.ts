@@ -1,4 +1,4 @@
-export const isElanProduction = true;
+export const isElanProduction = false;
 
 export const elanVersion = {
   major: 1,
