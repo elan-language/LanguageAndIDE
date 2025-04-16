@@ -205,6 +205,56 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "");
   });
 
+  test("Fail_UndefinedIterable1", async () => {
+    const code = `${testHeader}
+
+main
+  each i1 in ints
+  end each
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "'ints' is not defined. <u>More Info</u>LangRef.html#compile_error",
+    ]);
+  });
+
+  test("Fail_UndefinedIterable2", async () => {
+    const code = `${testHeader}
+
+main
+  let bar be new Bar([1,2])
+  call bar.display()
+end main
+
+class Bar
+  private property l as List<of Int>
+  constructor(li as List<of Int>)
+    set property.li to li
+  end constructor
+
+  procedure display()
+    each item in li
+      print item
+    end each
+  end procedure
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "'li' is not defined. <u>More Info</u>LangRef.html#compile_error",
+      "'li' is not defined. <u>More Info</u>LangRef.html#compile_error",
+    ]);
+  });
+
   test("Fail_variableIsScoped", async () => {
     const code = `${testHeader}
 
