@@ -43,5 +43,5 @@ jobs:
         target-server: ${{ secrets.ftp_server }}
         remote-user: ${{ secrets.ftp_user }}
         private-ssh-key: ${{ secrets.ftp_password }}
-        destination-path: ~/
+        destination-path: ~/sandbox
         rsync-options: --dry-run
