@@ -38,7 +38,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Push files
-      uses: SamKirkland/web-deployn@v1
+      uses: SamKirkland/web-deploy@v1
       with:
         target-server: ${{ secrets.ftp_server }}
         remote-user: ${{ secrets.ftp_user }}
