@@ -26,20 +26,10 @@ jobs:
     - run: npm ci
     - run: npm run production-compile --if-present
     - run: npm run test
-    - name: Upload static files as artifact
-      id: deployment
-      uses: actions/upload-artifact@v4 # or specific "vX.X.X" version tag for this action
-      with:
-        name: elan-ide
-        path: web-editor/
-        
-  web-deploy:
-    name: Deploy
-    runs-on: ubuntu-latest
-    steps:
     - name: Push files
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      uses: Dylan700/sftp-upload-action@latest
       with:
         server: ${{ secrets.ftp_server }}
         username: ${{ secrets.ftp_user }}
         password: ${{ secrets.ftp_password }}
+        uploads: ./web-editor/ => ./sandbox/
