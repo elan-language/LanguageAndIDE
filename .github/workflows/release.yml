@@ -44,4 +44,3 @@ jobs:
         username: ${{ secrets.ftp_user }}
         password: ${{ secrets.ftp_password }}
         uploads: web-editor/ => ~/sandbox/
-        dry-run: true
