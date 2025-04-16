@@ -31,12 +31,14 @@ jobs:
       uses: jaywcjlove/github-action-read-file@v2.0.0
       with:
         path: src/build-version.txt
+    - name: dbg
+      run: echo "${{ steps.read_file.outputs.content }}"
     - name: zip archive
       uses: vimtor/action-zip@v1.2
       with:
         files: web-editor/
         recursive: false
-        dest: Elan_v${{ steps.read_file.outputs.contents }}.zip
+        dest: "Elan_v${{ steps.read_file.outputs.contents }}.zip"
     - name: Push web-site
       uses: Dylan700/sftp-upload-action@latest
       with:
