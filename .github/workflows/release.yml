@@ -38,10 +38,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Push files
-      uses: SamKirkland/web-deploy@v1
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
-        target-server: ${{ secrets.ftp_server }}
-        remote-user: ${{ secrets.ftp_user }}
-        private-ssh-key: ${{ secrets.ftp_password }}
-        destination-path: ~/sandbox
-        rsync-options: --dry-run
+        server: ${{ secrets.ftp_server }}
+        username: ${{ secrets.ftp_user }}
+        password: ${{ secrets.ftp_password }}
+        protocol: ftps
+        port: 990
+        dry-run: true
