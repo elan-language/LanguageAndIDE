@@ -37,8 +37,13 @@ jobs:
       uses: vimtor/action-zip@v1.2
       with:
         files: web-editor/
-        recursive: false
-        dest: ./Elan_v${{ steps.read_file.outputs.content }}.zip
+        recursive: true
+        dest: Elan_v${{ steps.read_file.outputs.content }}.zip
+    - name: artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-zip
+        path: ${{ github.workspace }}/Elan_v${{ steps.read_file.outputs.content }}.zip
     - name: Push web-site
       uses: Dylan700/sftp-upload-action@latest
       with:
@@ -46,13 +51,15 @@ jobs:
         username: ${{ secrets.ftp_user }}
         password: ${{ secrets.ftp_password }}
         uploads: ./web-editor/ => ./
+        dry-run: true
     - name: Push archive
       uses: Dylan700/sftp-upload-action@latest
       with:
         server: ${{ secrets.ftp_server }}
         username: ${{ secrets.ftp_user }}
         password: ${{ secrets.ftp_password }}
-        uploads: ./ => ./versions/
+        uploads: ${{ github.workspace }}/ => ./versions/
         ignore: |
           !.zip
+        dry-run: true
         
