@@ -947,7 +947,7 @@ export function mustNotBeConstant(
 ) {
   const s = assignable.symbolScope;
 
-  if (s === SymbolScope.program) {
+  if (s === SymbolScope.program || s === SymbolScope.stdlib) {
     compileErrors.push(new MutateCompileError(getId(assignable), "constant", location));
   }
 }

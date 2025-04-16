@@ -1,6 +1,7 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
+  assertDoesNotCompile,
   assertDoesNotCompileWithId,
   assertDoesNotParse,
   assertObjectCodeExecutes,
@@ -453,6 +454,24 @@ end main
     assertParses(fileImpl);
     assertDoesNotCompileWithId(fileImpl, "set6", [
       "May not re-assign the constant 'a'. <u>More Info</u>LangRef.html#compile_error",
+    ]);
+  });
+
+  test("Fail_libConstantReassignment", async () => {
+    const code = `${testHeader}
+
+main
+  set pi to 4
+  print a
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "May not re-assign the constant 'pi'. <u>More Info</u>LangRef.html#compile_error",
     ]);
   });
 
