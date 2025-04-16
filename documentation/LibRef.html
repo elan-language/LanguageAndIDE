@@ -11,6 +11,7 @@
 </head>
 <body>
 <div class="docTitle">Elan Library Reference</div>
+Links to documents: <a href="ElanIndex.html#top">Elan Index and Symbols</a> and  <a href="LangRef.html#top">Elan Language Reference</a>
 <div class="docTOC">
 <div id="generated-toc" class="generate_from_h1 generate_for_page"></div></div>
 
@@ -917,13 +918,13 @@ end function
 <el-code><el-statement class="ok" id="print3" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-kw>print </el-kw><el-field id="expr4" class="optional ok" tabindex="0"><el-txt><img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg"></el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Field may contain a literal value, a reference to a variable, or an expression">?</el-help></el-field><el-msg></el-msg><el-fr>2</el-fr></el-statement></el-code>
 <p>but if you edit the field again, the keyword and url will be shown.</p>
 
-<p>When run, by default the image will be printed on the <b>Display</b>, but still thumbnail sized. 
+<p>When run, by default the image will be printed on the <b>Display</b>, but still thumbnail sized.
     You can specify dimensions by using a <el-code><el-kw>with</el-kw></el-code> clause like this:</p>
 
 <el-code><el-statement class="ok" id="print3" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-kw>print </el-kw><el-field id="expr4" class="selected focused optional ok" tabindex="0"><el-txt><input spellcheck="false" data-cursorstart="129" data-cursorend="129" size="128" style="width: 129ch" value="image https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg with width set to 200, height set to 110"></el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Field may contain a literal value, a reference to a variable, or an expression">?</el-help></el-field><el-msg></el-msg><el-fr>2</el-fr></el-statement></el-code>
 
 <p>The <el-code><el-kw>with</el-kw></el-code> clause will also permit you to specify a title for the image (which is good practice for meeting accessibility guideline) - which shows up as a tooltip on the image.
-It will also offer position properties <el-code><el-id>x</el-id></el-code> and <el-code><el-id>y</el-id></el-code>: 
+It will also offer position properties <el-code><el-id>x</el-id></el-code> and <el-code><el-id>y</el-id></el-code>:
 these are ignored when <i>printing</i> an image, but are useful in the context of drawing vector graphics (see below).</p>
 
 <p>An image specified in this way may also be assigned to a named value, or defined in-line as an argument to a method, for example:</p>
