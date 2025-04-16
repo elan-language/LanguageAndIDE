@@ -1,4 +1,4 @@
-# 029c15d92963a3b6b009f93f1708b1845f1ab8cbafd67c2fdc37d7013a7b0894 Elan 0.10.0-Beta guest default_profile valid
+# 0979bbaf05af53d7deb6139bbd8187722cc8e7623375d420c7218993b503aa77 Elan 1.0.0-pre1 guest default_profile valid
 
 class Player
   constructor()

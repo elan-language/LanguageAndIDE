@@ -1,4 +1,4 @@
-# 2f4ae52b64cd02e600a40b281174a5e7ec07c7216a122bd53eee38ec9e0b4918 Elan 0.10.0-Beta guest default_profile valid
+# b1d6cf3ecfe4080acd81ad96f3ff1fbeb6481d55f630b770e0a86250ad9752fd Elan 1.0.0-pre1 guest default_profile valid
 
 main
   let a be createFileForWriting

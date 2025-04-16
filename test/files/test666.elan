@@ -1,4 +1,4 @@
-# abefda0b08634355a82556856e5e5d322d269a1addb70f6af09ea130e28fbd39 Elan 0.10.0-Beta guest default_profile valid
+# 63622902dcdaf2cba2c307b193ff8354d51f6bf8ec559bf5ce186cf9bfb2ae5b Elan 1.0.0-pre1 guest default_profile valid
 
 main
   variable foo set to 1

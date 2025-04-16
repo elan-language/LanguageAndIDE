@@ -1,4 +1,4 @@
-# 97ae7274fd0683dac185000b5043e67555bc0c65bf463ee04845e76978a30afd Elan 0.10.0-Beta guest default_profile valid
+# 825f0c8649736fd0f7f52dae9748068fb7587dbf5579e28df1b0eb066b6ce6ca Elan 1.0.0-pre1 guest default_profile valid
 
 main
   let sk be "new Stack<of String()"
