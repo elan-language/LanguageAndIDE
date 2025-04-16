@@ -261,11 +261,15 @@ export class FileImpl implements File, Scope {
     return this.version;
   }
 
-  getVersionString() {
+  getSemverString() {
     const v = this.getVersion();
     const suffix = v.preRelease === "" ? "" : `-${v.preRelease}`;
 
-    return `Elan ${v.major}.${v.minor}.${v.patch}${suffix}`;
+    return `${v.major}.${v.minor}.${v.patch}${suffix}`;
+  }
+
+  getVersionString() {
+    return `Elan ${this.getSemverString()}`;
   }
 
   getVersionAsHtml() {

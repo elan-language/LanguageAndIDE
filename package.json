@@ -14,6 +14,7 @@
     "Education"
   ],
   "scripts": {
+    "update-build" : "node ./out/src/update-build-files.js",
     "update" : "node ./out/src/update-elan-files.js",
     "copy-static-files": "npm run update && cpr ./demo_programs ./web-editor/demo -o && cpr ./documentation ./web-editor/documentation -f .*\\.pptx  -o ",
     "compile-standalone" : "esbuild ./src/web/standalone.ts --bundle --outfile=web-editor/standalone.js",
