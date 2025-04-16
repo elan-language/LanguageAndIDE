@@ -38,7 +38,7 @@ jobs:
       with:
         files: web-editor/
         recursive: false
-        dest: Elan_v + ${{ steps.read_file.outputs.contents }} + .zip
+        dest: Elan_v${{ steps.read_file.outputs.content }}.zip
     - name: Push web-site
       uses: Dylan700/sftp-upload-action@latest
       with:
