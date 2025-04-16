@@ -28,9 +28,9 @@ jobs:
     - run: npm run test
     - name: Read build version
       id: read_file
-      uses: satya-500/read-file-github-action@v1
+      uses: jaywcjlove/github-action-read-file@v2.0.0
       with:
-        path: "src/build-version.txt"
+        path: src/build-version.txt
     - name: zip archive
       uses: vimtor/action-zip@v1.2
       with:
