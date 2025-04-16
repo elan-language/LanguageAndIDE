@@ -546,7 +546,7 @@ async function showError(err: Error, fileName: string, reset: boolean) {
       systemInfoPrintLine(msg);
       systemInfoPrintLine(stack);
     } else {
-      systemInfoPrintLine(internalErrorMsg);
+      systemInfoPrintLine(internalErrorMsg, false);
       errorStack = err.stack;
       document.getElementById("bug-report")?.addEventListener("click", gatherDebugInfo);
     }
@@ -556,9 +556,11 @@ async function showError(err: Error, fileName: string, reset: boolean) {
   updateDisplayValues();
 }
 
-function systemInfoPrintLine(text: string) {
+function systemInfoPrintLine(text: string, scroll = true) {
   systemInfoDiv.innerHTML = systemInfoDiv.innerHTML + text + "\n";
-  systemInfoDiv.scrollTop = systemInfoDiv.scrollHeight;
+  if (scroll) {
+    systemInfoDiv.scrollTop = systemInfoDiv.scrollHeight;
+  }
   systemInfoDiv.focus();
 }
 
