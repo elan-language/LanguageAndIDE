@@ -40,7 +40,7 @@ jobs:
         recursive: true
         dest: Elan_v${{ steps.read_file.outputs.content }}.zip
     - name: artifact
-      uses: actions/upload-artifact@v1.1
+      uses: actions/upload-artifact@v4
       with:
         name: build-zip
         path: ${{ github.workspace }}/Elan_v${{ steps.read_file.outputs.content }}.zip
