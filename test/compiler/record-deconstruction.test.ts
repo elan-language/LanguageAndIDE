@@ -135,7 +135,7 @@ end record`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot discard in record deconstruction. <u>More Info</u>LangRef.html#compile_error",
+      "Cannot discard in record deconstruction. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -159,7 +159,7 @@ end record`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot discard in record deconstruction. <u>More Info</u>LangRef.html#compile_error",
+      "Cannot discard in record deconstruction. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -226,7 +226,7 @@ end record`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot discard in record deconstruction. <u>More Info</u>LangRef.html#compile_error",
+      "Cannot discard in record deconstruction. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -757,8 +757,8 @@ end record`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: String Provided: Int. <u>More Info</u>LangRef.html#compile_error",
-      "Incompatible types. Expected: Int Provided: String. <u>More Info</u>LangRef.html#compile_error",
+      "Incompatible types. Expected: String Provided: Int. Click for more info.LangRef.html#compile_error",
+      "Incompatible types. Expected: Int Provided: String. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -784,8 +784,8 @@ end record`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: String Provided: Int. <u>More Info</u>LangRef.html#compile_error",
-      "'b' is not defined. <u>More Info</u>LangRef.html#compile_error",
+      "Incompatible types. Expected: String Provided: Int. Click for more info.LangRef.html#compile_error",
+      "'b' is not defined. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -811,8 +811,8 @@ end record`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "The identifier 'a' is already used for a variable and cannot be re-defined here. <u>More Info</u>LangRef.html#compile_error",
-      "Incompatible types. Expected: String Provided: Int. <u>More Info</u>LangRef.html#compile_error",
+      "The identifier 'a' is already used for a variable and cannot be re-defined here. Click for more info.LangRef.html#compile_error",
+      "Incompatible types. Expected: String Provided: Int. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -839,8 +839,8 @@ end record`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "May not re-assign the 'let' 'a'. <u>More Info</u>LangRef.html#compile_error",
-      "May not re-assign the 'let' 'b'. <u>More Info</u>LangRef.html#compile_error",
+      "May not re-assign the 'let' 'a'. Click for more info.LangRef.html#compile_error",
+      "May not re-assign the 'let' 'b'. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -868,7 +868,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Expression must be able to be deconstructed. <u>More Info</u>LangRef.html#compile_error",
+      "Expression must be able to be deconstructed. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -898,7 +898,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Expression must be able to be deconstructed. <u>More Info</u>LangRef.html#compile_error",
+      "Expression must be able to be deconstructed. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -926,7 +926,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Expression must be able to be deconstructed. <u>More Info</u>LangRef.html#compile_error",
+      "Expression must be able to be deconstructed. Click for more info.LangRef.html#compile_error",
     ]);
   });
 });

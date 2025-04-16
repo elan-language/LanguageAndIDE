@@ -283,7 +283,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'show' is not defined. <u>More Info</u>LangRef.html#compile_error",
+      "'show' is not defined. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -314,7 +314,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'calculate' is not defined for type 'Foo'. <u>More Info</u>LangRef.html#compile_error",
+      "'calculate' is not defined for type 'Foo'. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -340,7 +340,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'Bar' is not defined. <u>More Info</u>LangRef.html#compile_error",
+      "'Bar' is not defined. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -365,7 +365,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'if' is a keyword, and may not be used as an identifier. <u>More Info</u>LangRef.html#compile_error",
+      "'if' is a keyword, and may not be used as an identifier. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -390,7 +390,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'break' is a reserved word, and may not be used as an identifier. <u>More Info</u>LangRef.html#compile_error",
+      "'break' is a reserved word, and may not be used as an identifier. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -416,7 +416,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Name 'a' not unique in scope. <u>More Info</u>LangRef.html#compile_error",
+      "Name 'a' not unique in scope. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -444,7 +444,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "referencing a property requires a prefix. <u>More Info</u>LangRef.html#compile_error",
+      "referencing a property requires a prefix. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -463,7 +463,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "ListImmutable cannot be of mutable type 'List<of Int>'. <u>More Info</u>LangRef.html#compile_error",
+      "ListImmutable cannot be of mutable type 'List<of Int>'. Click for more info.LangRef.html#compile_error",
     ]);
   });
 });

@@ -89,7 +89,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: arr (List<of List<of Int>>) Provided: Array2D<of Int>. <u>More Info</u>LangRef.html#compile_error",
+      "Argument types. Expected: arr (List<of List<of Int>>) Provided: Array2D<of Int>. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -452,7 +452,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Missing argument(s). Expected: column (Int), row (Int), value (String). <u>More Info</u>LangRef.html#compile_error",
+      "Missing argument(s). Expected: column (Int), row (Int), value (String). Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -504,7 +504,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: column (Int), row (Int), value (String) Provided: Int, Int, Boolean. <u>More Info</u>LangRef.html#compile_error",
+      "Argument types. Expected: column (Int), row (Int), value (String) Provided: Int, Int, Boolean. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -522,7 +522,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot index Array2D<of String>. <u>More Info</u>LangRef.html#compile_error",
+      "Cannot index Array2D<of String>. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -539,8 +539,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: columns (Int), rows (Int), initialValue (Generic Parameter T1) Provided: Int, Int, String. <u>More Info</u>LangRef.html#compile_error",
-      "<of Type(s)> Expected: 1 Provided: 0. <u>More Info</u>LangRef.html#compile_error",
+      "Argument types. Expected: columns (Int), rows (Int), initialValue (Generic Parameter T1) Provided: Int, Int, String. Click for more info.LangRef.html#compile_error",
+      "<of Type(s)> Expected: 1 Provided: 0. Click for more info.LangRef.html#compile_error",
     ]);
   });
 

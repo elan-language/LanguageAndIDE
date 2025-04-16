@@ -120,6 +120,7 @@ export class StdLib {
   @elanConstant(ElanBoolean) false = false;
 
   @elanConstant() pi: number = Math.PI;
+  @elanConstant(ElanInt) meaningOfLife = 42;
 
   @elanConstant(ElanString) quotes = `"`;
   @elanConstant(ElanString) openBrace = `{`;

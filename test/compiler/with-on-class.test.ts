@@ -779,7 +779,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int Provided: List<of Int>. <u>More Info</u>LangRef.html#compile_error",
+      "Incompatible types. Expected: Int Provided: List<of Int>. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -802,7 +802,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Missing argument(s). Expected: a (Int). <u>More Info</u>LangRef.html#compile_error",
+      "Missing argument(s). Expected: a (Int). Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -820,7 +820,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'a' is not defined. <u>More Info</u>LangRef.html#compile_error",
+      "'a' is not defined. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -838,7 +838,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'a' is not defined. <u>More Info</u>LangRef.html#compile_error",
+      "'a' is not defined. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -860,7 +860,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'b' is not defined. <u>More Info</u>LangRef.html#compile_error",
+      "'b' is not defined. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -882,7 +882,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot reference private member 'b'. <u>More Info</u>LangRef.html#compile_error",
+      "Cannot reference private member 'b'. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -904,7 +904,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'aa' is not defined. <u>More Info</u>LangRef.html#compile_error",
+      "'aa' is not defined. Click for more info.LangRef.html#compile_error",
     ]);
   });
 });

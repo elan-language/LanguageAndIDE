@@ -1527,7 +1527,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Superclass 'Foo' must be inheritable class. <u>More Info</u>LangRef.html#compile_error",
+      "Superclass 'Foo' must be inheritable class. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -1564,9 +1564,9 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Bar must implement Foo.p2. <u>More Info</u>LangRef.html#compile_error",
-      "Bar must implement Foo.setP1. <u>More Info</u>LangRef.html#compile_error",
-      "Bar must implement Foo.product. <u>More Info</u>LangRef.html#compile_error",
+      "Bar must implement Foo.p2. Click for more info.LangRef.html#compile_error",
+      "Bar must implement Foo.setP1. Click for more info.LangRef.html#compile_error",
+      "Bar must implement Foo.product. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -1598,7 +1598,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Superclass 'Foo' must be inheritable class. <u>More Info</u>LangRef.html#compile_error",
+      "Superclass 'Foo' must be inheritable class. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -1643,9 +1643,9 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Member 'p1' must be of type Int. <u>More Info</u>LangRef.html#compile_error",
-      "Member 'setP1' must be of type Procedure (Int). <u>More Info</u>LangRef.html#compile_error",
-      "Member 'product' must be of type Func<of  => Int>. <u>More Info</u>LangRef.html#compile_error",
+      "Member 'p1' must be of type Int. Click for more info.LangRef.html#compile_error",
+      "Member 'setP1' must be of type Procedure (Int). Click for more info.LangRef.html#compile_error",
+      "Member 'product' must be of type Func<of  => Int>. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -1691,7 +1691,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Member 'product' must be of type Func<of  => Int>. <u>More Info</u>LangRef.html#compile_error",
+      "Member 'product' must be of type Func<of  => Int>. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -1883,7 +1883,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Bar must be concrete to new. <u>More Info</u>LangRef.html#compile_error",
+      "Bar must be concrete to new. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -1921,7 +1921,7 @@ end function
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: bar (Bar) Provided: Foo. <u>More Info</u>LangRef.html#compile_error",
+      "Argument types. Expected: bar (Bar) Provided: Foo. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -1955,7 +1955,7 @@ end function
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: l (List<of Foo>) Provided: List<of Bar>. <u>More Info</u>LangRef.html#compile_error",
+      "Argument types. Expected: l (List<of Foo>) Provided: List<of Bar>. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -1989,7 +1989,7 @@ end procedure
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: l (List<of Foo>) Provided: List<of Bar>. <u>More Info</u>LangRef.html#compile_error",
+      "Argument types. Expected: l (List<of Foo>) Provided: List<of Bar>. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -2022,7 +2022,7 @@ end function
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: l (Dictionary<of String, Foo>) Provided: Dictionary<of String, Bar>. <u>More Info</u>LangRef.html#compile_error",
+      "Argument types. Expected: l (Dictionary<of String, Foo>) Provided: Dictionary<of String, Bar>. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -2047,7 +2047,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'Foo' is not defined. <u>More Info</u>LangRef.html#compile_error",
+      "'Foo' is not defined. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -2072,7 +2072,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Name 'Foo' not unique in scope. <u>More Info</u>LangRef.html#compile_error",
+      "Name 'Foo' not unique in scope. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -2094,7 +2094,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Name 'p1' not unique in scope. Suggestion: factor out the common member(s) into a higher level interface. <u>More Info</u>LangRef.html#compile_error",
+      "Name 'p1' not unique in scope. Suggestion: factor out the common member(s) into a higher level interface. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -2116,7 +2116,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Name 'ff' not unique in scope. Suggestion: factor out the common member(s) into a higher level interface. <u>More Info</u>LangRef.html#compile_error",
+      "Name 'ff' not unique in scope. Suggestion: factor out the common member(s) into a higher level interface. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -2138,7 +2138,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Name 'ff' not unique in scope. Suggestion: factor out the common member(s) into a higher level interface. <u>More Info</u>LangRef.html#compile_error",
+      "Name 'ff' not unique in scope. Suggestion: factor out the common member(s) into a higher level interface. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -2160,7 +2160,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Name 'ff' not unique in scope. Suggestion: factor out the common member(s) into a higher level interface. <u>More Info</u>LangRef.html#compile_error",
+      "Name 'ff' not unique in scope. Suggestion: factor out the common member(s) into a higher level interface. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -2182,7 +2182,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Name 'ff' not unique in scope. Suggestion: factor out the common member(s) into a higher level interface. <u>More Info</u>LangRef.html#compile_error",
+      "Name 'ff' not unique in scope. Suggestion: factor out the common member(s) into a higher level interface. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -2204,7 +2204,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Name 'ff' not unique in scope. Suggestion: factor out the common member(s) into a higher level interface. <u>More Info</u>LangRef.html#compile_error",
+      "Name 'ff' not unique in scope. Suggestion: factor out the common member(s) into a higher level interface. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -2236,7 +2236,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Name 'p1' not unique in scope. <u>More Info</u>LangRef.html#compile_error",
+      "Name 'p1' not unique in scope. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -2269,7 +2269,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Name 'p1' not unique in scope. <u>More Info</u>LangRef.html#compile_error",
+      "Name 'p1' not unique in scope. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -2303,7 +2303,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Name 'p1' not unique in scope. <u>More Info</u>LangRef.html#compile_error",
+      "Name 'p1' not unique in scope. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -2337,7 +2337,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Name 'p1' not unique in scope. <u>More Info</u>LangRef.html#compile_error",
+      "Name 'p1' not unique in scope. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -2365,7 +2365,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Name 'p1' not unique in scope. <u>More Info</u>LangRef.html#compile_error",
+      "Name 'p1' not unique in scope. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -2394,7 +2394,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Name 'p1' not unique in scope. <u>More Info</u>LangRef.html#compile_error",
+      "Name 'p1' not unique in scope. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -2426,7 +2426,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Name 'p1' not unique in scope. <u>More Info</u>LangRef.html#compile_error",
+      "Name 'p1' not unique in scope. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -2459,7 +2459,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Name 'p1' not unique in scope. <u>More Info</u>LangRef.html#compile_error",
+      "Name 'p1' not unique in scope. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -2493,7 +2493,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Name 'p1' not unique in scope. <u>More Info</u>LangRef.html#compile_error",
+      "Name 'p1' not unique in scope. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -2527,7 +2527,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Name 'p1' not unique in scope. <u>More Info</u>LangRef.html#compile_error",
+      "Name 'p1' not unique in scope. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -2555,7 +2555,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Name 'p1' not unique in scope. <u>More Info</u>LangRef.html#compile_error",
+      "Name 'p1' not unique in scope. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -2584,7 +2584,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Name 'p1' not unique in scope. <u>More Info</u>LangRef.html#compile_error",
+      "Name 'p1' not unique in scope. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -2604,7 +2604,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Superclass 'VectorGraphic' must be inheritable class. <u>More Info</u>LangRef.html#compile_error",
+      "Superclass 'VectorGraphic' must be inheritable class. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -2624,7 +2624,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'BaseVg' is not defined. <u>More Info</u>LangRef.html#compile_error",
+      "'BaseVg' is not defined. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -2658,7 +2658,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "There must be only one abstract superclass, Foo, Bar are abstract classes. <u>More Info</u>LangRef.html#compile_error",
+      "There must be only one abstract superclass, Foo, Bar are abstract classes. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -2712,7 +2712,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Name 'p1' not unique in scope. Suggestion: factor out the common member(s) into a higher level interface. <u>More Info</u>LangRef.html#compile_error",
+      "Name 'p1' not unique in scope. Suggestion: factor out the common member(s) into a higher level interface. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -2766,7 +2766,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Name 'p1' not unique in scope. <u>More Info</u>LangRef.html#compile_error",
+      "Name 'p1' not unique in scope. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -2800,7 +2800,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Qux must implement Foo.p1. <u>More Info</u>LangRef.html#compile_error",
+      "Qux must implement Foo.p1. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -2830,7 +2830,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Bar must implement Foo.p1. <u>More Info</u>LangRef.html#compile_error",
+      "Bar must implement Foo.p1. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -2864,7 +2864,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Bar must implement Yon.p1. <u>More Info</u>LangRef.html#compile_error",
+      "Bar must implement Yon.p1. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -2898,7 +2898,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Name 'p1' not unique in scope. <u>More Info</u>LangRef.html#compile_error",
+      "Name 'p1' not unique in scope. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -2923,7 +2923,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Abstract Class 'Bar' must be declared before it is used. <u>More Info</u>LangRef.html#compile_error",
+      "Abstract Class 'Bar' must be declared before it is used. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -2948,7 +2948,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Abstract Class 'Bar' must be declared before it is used. <u>More Info</u>LangRef.html#compile_error",
+      "Abstract Class 'Bar' must be declared before it is used. Click for more info.LangRef.html#compile_error",
     ]);
   });
 });

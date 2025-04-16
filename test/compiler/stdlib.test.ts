@@ -1115,7 +1115,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'join' is not defined for type 'Array'. <u>More Info</u>LangRef.html#compile_error",
+      "'join' is not defined for type 'Array'. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -1370,7 +1370,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: listOfVGs (List<of VectorGraphic>) Provided: List<of Foo>. <u>More Info</u>LangRef.html#compile_error",
+      "Argument types. Expected: listOfVGs (List<of VectorGraphic>) Provided: List<of Foo>. Click for more info.LangRef.html#compile_error",
     ]);
   });
 });

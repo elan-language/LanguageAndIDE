@@ -76,7 +76,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int Provided: String. <u>More Info</u>LangRef.html#compile_error",
+      "Incompatible types. Expected: Float or Int Provided: String. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -93,7 +93,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int Provided: String. <u>More Info</u>LangRef.html#compile_error",
+      "Incompatible types. Expected: Float or Int Provided: String. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -349,7 +349,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int Provided: String. <u>More Info</u>LangRef.html#compile_error",
+      "Incompatible types. Expected: Float or Int Provided: String. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -367,7 +367,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int Provided: String. <u>More Info</u>LangRef.html#compile_error",
+      "Incompatible types. Expected: Float or Int Provided: String. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -404,7 +404,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'put' is not defined for type 'String'. <u>More Info</u>LangRef.html#compile_error",
+      "'put' is not defined for type 'String'. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -426,12 +426,12 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int Provided: String. <u>More Info</u>LangRef.html#compile_error",
-      "Incompatible types. Expected: Float or Int Provided: String. <u>More Info</u>LangRef.html#compile_error",
-      "Incompatible types. Expected: Float or Int Provided: String. <u>More Info</u>LangRef.html#compile_error",
-      "Incompatible types. Expected: Float or Int Provided: String. <u>More Info</u>LangRef.html#compile_error",
-      "Incompatible types. Expected: Float or Int Provided: String. <u>More Info</u>LangRef.html#compile_error",
-      "Incompatible types. Expected: Float or Int Provided: String. <u>More Info</u>LangRef.html#compile_error",
+      "Incompatible types. Expected: Float or Int Provided: String. Click for more info.LangRef.html#compile_error",
+      "Incompatible types. Expected: Float or Int Provided: String. Click for more info.LangRef.html#compile_error",
+      "Incompatible types. Expected: Float or Int Provided: String. Click for more info.LangRef.html#compile_error",
+      "Incompatible types. Expected: Float or Int Provided: String. Click for more info.LangRef.html#compile_error",
+      "Incompatible types. Expected: Float or Int Provided: String. Click for more info.LangRef.html#compile_error",
+      "Incompatible types. Expected: Float or Int Provided: String. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -450,7 +450,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: String Provided: Float. <u>More Info</u>LangRef.html#compile_error",
+      "Incompatible types. Expected: String Provided: Float. Click for more info.LangRef.html#compile_error",
     ]);
   });
 });

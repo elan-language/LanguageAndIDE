@@ -98,7 +98,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'z' is not defined. <u>More Info</u>LangRef.html#compile_error",
+      "'z' is not defined. Click for more info.LangRef.html#compile_error",
     ]);
   });
 });

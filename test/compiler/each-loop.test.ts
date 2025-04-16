@@ -219,7 +219,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'ints' is not defined. <u>More Info</u>LangRef.html#compile_error",
+      "'ints' is not defined. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -250,8 +250,8 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'li' is not defined. <u>More Info</u>LangRef.html#compile_error",
-      "'li' is not defined. <u>More Info</u>LangRef.html#compile_error",
+      "'li' is not defined. Click for more info.LangRef.html#compile_error",
+      "'li' is not defined. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -273,7 +273,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "The identifier 'x' is already used for a variable and cannot be re-defined here. <u>More Info</u>LangRef.html#compile_error",
+      "The identifier 'x' is already used for a variable and cannot be re-defined here. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -294,7 +294,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'x' is not defined. <u>More Info</u>LangRef.html#compile_error",
+      "'x' is not defined. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -315,7 +315,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'id' is not defined. <u>More Info</u>LangRef.html#compile_error",
+      "'id' is not defined. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -353,7 +353,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot iterate Int. <u>More Info</u>LangRef.html#compile_error",
+      "Cannot iterate Int. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -373,7 +373,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "May not re-assign the loop counter 'a'. <u>More Info</u>LangRef.html#compile_error",
+      "May not re-assign the loop counter 'a'. Click for more info.LangRef.html#compile_error",
     ]);
   });
 });

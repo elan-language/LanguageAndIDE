@@ -247,7 +247,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot do equality operations on Procedures or Functions. <u>More Info</u>LangRef.html#compile_error",
+      "Cannot do equality operations on Procedures or Functions. Click for more info.LangRef.html#compile_error",
     ]);
   });
 

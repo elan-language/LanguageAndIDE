@@ -357,7 +357,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: i (Int), f (Func<of Int => Int>) Provided: Int, Func<of Int => String>. <u>More Info</u>LangRef.html#compile_error",
+      "Argument types. Expected: i (Int), f (Func<of Int => Int>) Provided: Int, Func<of Int => String>. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -377,7 +377,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: parameter0 (Int) Provided: String. <u>More Info</u>LangRef.html#compile_error",
+      "Argument types. Expected: parameter0 (Int) Provided: String. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -397,7 +397,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: i (Int), f (Func<of  => Int>) Provided: Int, Func<of Int => Int>. <u>More Info</u>LangRef.html#compile_error",
+      "Argument types. Expected: i (Int), f (Func<of  => Int>) Provided: Int, Func<of Int => Int>. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -417,7 +417,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: i (Int), f (Func<of Int => Int>) Provided: Int, Func<of  => Int>. <u>More Info</u>LangRef.html#compile_error",
+      "Argument types. Expected: i (Int), f (Func<of Int => Int>) Provided: Int, Func<of  => Int>. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -437,7 +437,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Too many argument(s). Expected: none. <u>More Info</u>LangRef.html#compile_error",
+      "Too many argument(s). Expected: none. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -453,7 +453,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "ListImmutable cannot be of mutable type 'List<of Int>'. <u>More Info</u>LangRef.html#compile_error",
+      "ListImmutable cannot be of mutable type 'List<of Int>'. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -469,7 +469,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "ListImmutable cannot be of mutable type 'List<of Int>'. <u>More Info</u>LangRef.html#compile_error",
+      "ListImmutable cannot be of mutable type 'List<of Int>'. Click for more info.LangRef.html#compile_error",
     ]);
   });
 });

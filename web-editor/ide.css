@@ -405,10 +405,6 @@ button.plain:disabled, menu-item.button.plain:disabled {
   width: 100%;
 }
 
-.error-link u {
-  cursor: pointer;
-}
-
 el-user.hide, el-profile.hide {
   display:none;
 }

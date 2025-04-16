@@ -400,3 +400,8 @@ el-statement.paused-at > el-fr
     height: 0.9em;
     margin: 0;
 }
+
+.error-link {
+    cursor: pointer;
+    text-decoration: underline;
+  }

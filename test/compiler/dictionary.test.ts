@@ -677,7 +677,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Duplicate Dictionary key(s). <u>More Info</u>LangRef.html#compile_error",
+      "Duplicate Dictionary key(s). Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -695,7 +695,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int Provided: Float. <u>More Info</u>LangRef.html#compile_error",
+      "Incompatible types. Expected: Int Provided: Float. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -713,7 +713,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: String Provided: Int. <u>More Info</u>LangRef.html#compile_error",
+      "Incompatible types. Expected: String Provided: Int. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -747,7 +747,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: key (String) Provided: Int. <u>More Info</u>LangRef.html#compile_error",
+      "Argument types. Expected: key (String) Provided: Int. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -765,7 +765,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: key (String), value (Int) Provided: Int, Int. <u>More Info</u>LangRef.html#compile_error",
+      "Argument types. Expected: key (String), value (Int) Provided: Int, Int. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -911,7 +911,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: key (String), value (Int) Provided: String, Float. <u>More Info</u>LangRef.html#compile_error",
+      "Argument types. Expected: key (String), value (Int) Provided: String, Float. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -928,7 +928,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "<of Type(s)> Expected: 2 Provided: 0. <u>More Info</u>LangRef.html#compile_error",
+      "<of Type(s)> Expected: 2 Provided: 0. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -946,7 +946,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: key (String), value (Int) Provided: Int, Int. <u>More Info</u>LangRef.html#compile_error",
+      "Argument types. Expected: key (String), value (Int) Provided: Int, Int. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -964,7 +964,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: String Provided: Int. <u>More Info</u>LangRef.html#compile_error",
+      "Incompatible types. Expected: String Provided: Int. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -982,7 +982,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: key (String), value (Int) Provided: Int, Int. <u>More Info</u>LangRef.html#compile_error",
+      "Argument types. Expected: key (String), value (Int) Provided: Int, Int. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -1000,7 +1000,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot range Dictionary<of Int, Int>. <u>More Info</u>LangRef.html#compile_error",
+      "Cannot range Dictionary<of Int, Int>. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -1020,7 +1020,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Dictionary cannot have key of type 'Dictionary<of String, Int>'. <u>More Info</u>LangRef.html#compile_error",
+      "Dictionary cannot have key of type 'Dictionary<of String, Int>'. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -1040,7 +1040,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Dictionary cannot have key of type 'List<of Int>'. <u>More Info</u>LangRef.html#compile_error",
+      "Dictionary cannot have key of type 'List<of Int>'. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -1060,7 +1060,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Dictionary cannot have key of type 'Foo'. <u>More Info</u>LangRef.html#compile_error",
+      "Dictionary cannot have key of type 'Foo'. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -1076,7 +1076,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Dictionary cannot have key of type 'Dictionary<of Int, Int>'. <u>More Info</u>LangRef.html#compile_error",
+      "Dictionary cannot have key of type 'Dictionary<of Int, Int>'. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -1092,7 +1092,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Dictionary cannot have key of type 'DictionaryImmutable<of Int, Int>'. <u>More Info</u>LangRef.html#compile_error",
+      "Dictionary cannot have key of type 'DictionaryImmutable<of Int, Int>'. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -1108,7 +1108,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Dictionary cannot have key of type 'List<of Int>'. <u>More Info</u>LangRef.html#compile_error",
+      "Dictionary cannot have key of type 'List<of Int>'. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -1124,7 +1124,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Dictionary cannot have key of type 'ListImmutable<of Int>'. <u>More Info</u>LangRef.html#compile_error",
+      "Dictionary cannot have key of type 'ListImmutable<of Int>'. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -1143,7 +1143,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Dictionary cannot have key of type 'Foo'. <u>More Info</u>LangRef.html#compile_error",
+      "Dictionary cannot have key of type 'Foo'. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -1159,7 +1159,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'Foo' is not defined. <u>More Info</u>LangRef.html#compile_error",
+      "'Foo' is not defined. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -1175,7 +1175,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'Foo' is not defined. <u>More Info</u>LangRef.html#compile_error",
+      "'Foo' is not defined. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -1191,7 +1191,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "<of Type(s)> Expected: 2 Provided: 0. <u>More Info</u>LangRef.html#compile_error",
+      "<of Type(s)> Expected: 2 Provided: 0. Click for more info.LangRef.html#compile_error",
     ]);
   });
 });

@@ -434,7 +434,7 @@ end procedure
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'a' is not defined. <u>More Info</u>LangRef.html#compile_error",
+      "'a' is not defined. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -461,7 +461,7 @@ end procedure`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "The identifier 'a' is already used for a variable and cannot be re-defined here. <u>More Info</u>LangRef.html#compile_error",
+      "The identifier 'a' is already used for a variable and cannot be re-defined here. Click for more info.LangRef.html#compile_error",
     ]);
   });
 });

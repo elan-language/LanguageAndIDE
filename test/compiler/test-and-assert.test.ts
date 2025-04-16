@@ -987,7 +987,7 @@ end test
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'squareTest' is not defined. <u>More Info</u>LangRef.html#compile_error",
+      "'squareTest' is not defined. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -1011,7 +1011,7 @@ end test
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Too many argument(s). Expected: x (Float). <u>More Info</u>LangRef.html#compile_error",
+      "Too many argument(s). Expected: x (Float). Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -1035,7 +1035,7 @@ end test
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'squareTest' is not defined. <u>More Info</u>LangRef.html#compile_error",
+      "'squareTest' is not defined. Click for more info.LangRef.html#compile_error",
     ]);
   });
 

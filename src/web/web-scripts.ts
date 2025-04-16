@@ -517,7 +517,7 @@ async function gatherDebugInfo() {
 const internalErrorMsg = `<p>Sorry - an internal error has occurred within Elan. Please help us by reporting the bug, following these steps:</p>
 <ol>
 <li>Click on this button:  <button id="bug-report">Copy bug report to your clipboard</button></li>
-<li>In your own email system create an email to bugs@elan-lang.org, with anything in the Subject line.</li>
+<li>In your own email system create an email to bugs@elan-lang.org with anything in the Subject line.</li>
 <li>Paste the copied bug report (it is plain text) from your clipboard into the body of the email.</li>
 <li><b>Above</b> the pasted-in report, add any further details that might help us - such as your action immediately prior to the error message appearing</li>
 </ol>

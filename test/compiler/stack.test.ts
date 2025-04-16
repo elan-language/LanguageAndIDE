@@ -73,7 +73,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: parameter0 (String) Provided: Int. <u>More Info</u>LangRef.html#compile_error",
+      "Argument types. Expected: parameter0 (String) Provided: Int. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -91,7 +91,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: parameter0 (String) Provided: Int. <u>More Info</u>LangRef.html#compile_error",
+      "Argument types. Expected: parameter0 (String) Provided: Int. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -111,7 +111,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int Provided: String. <u>More Info</u>LangRef.html#compile_error",
+      "Incompatible types. Expected: Int Provided: String. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -184,7 +184,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "<of Type(s)> Expected: 1 Provided: 0. <u>More Info</u>LangRef.html#compile_error",
+      "<of Type(s)> Expected: 1 Provided: 0. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -204,7 +204,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Stack cannot be of mutable type 'Foo'. <u>More Info</u>LangRef.html#compile_error",
+      "Stack cannot be of mutable type 'Foo'. Click for more info.LangRef.html#compile_error",
     ]);
   });
 });

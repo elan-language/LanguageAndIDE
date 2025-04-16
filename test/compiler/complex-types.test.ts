@@ -81,7 +81,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: index (Int), value (Dictionary<of String, Int>) Provided: String, Dictionary<of String, Int>. <u>More Info</u>LangRef.html#compile_error",
+      "Argument types. Expected: index (Int), value (Dictionary<of String, Int>) Provided: String, Dictionary<of String, Int>. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -99,7 +99,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: key (String), value (Int) Provided: Int, Int. <u>More Info</u>LangRef.html#compile_error",
+      "Argument types. Expected: key (String), value (Int) Provided: Int, Int. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -117,7 +117,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: key (String), value (List<of Int>) Provided: Int, List<of Int>. <u>More Info</u>LangRef.html#compile_error",
+      "Argument types. Expected: key (String), value (List<of Int>) Provided: Int, List<of Int>. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -135,7 +135,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: index (Int), value (Int) Provided: String, Int. <u>More Info</u>LangRef.html#compile_error",
+      "Argument types. Expected: index (Int), value (Int) Provided: String, Int. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -152,7 +152,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'Foo' is not defined. <u>More Info</u>LangRef.html#compile_error",
+      "'Foo' is not defined. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -169,7 +169,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'Foo' is not defined. <u>More Info</u>LangRef.html#compile_error",
+      "'Foo' is not defined. Click for more info.LangRef.html#compile_error",
     ]);
   });
 

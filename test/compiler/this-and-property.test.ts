@@ -286,7 +286,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'p' is not defined. <u>More Info</u>LangRef.html#compile_error",
+      "'p' is not defined. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -316,7 +316,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "May not re-assign the parameter 'p1'. <u>More Info</u>LangRef.html#compile_error",
+      "May not re-assign the parameter 'p1'. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -332,7 +332,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot use 'this' outside class context. <u>More Info</u>LangRef.html#compile_error",
+      "Cannot use 'this' outside class context. Click for more info.LangRef.html#compile_error",
     ]);
   });
 });

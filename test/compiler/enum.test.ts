@@ -403,8 +403,8 @@ enum Fruit apple, orange, pear`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int Provided: String. <u>More Info</u>LangRef.html#compile_error",
-      "Incompatible types. Expected: Float or Int Provided: Fruit. <u>More Info</u>LangRef.html#compile_error",
+      "Incompatible types. Expected: Float or Int Provided: String. Click for more info.LangRef.html#compile_error",
+      "Incompatible types. Expected: Float or Int Provided: Fruit. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -465,7 +465,7 @@ enum Fruit apple, orange, pear`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int Provided: Fruit. <u>More Info</u>LangRef.html#compile_error",
+      "Incompatible types. Expected: Int Provided: Fruit. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -481,7 +481,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'Fruit' is not defined. <u>More Info</u>LangRef.html#compile_error",
+      "'Fruit' is not defined. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -499,7 +499,7 @@ enum Fruit apple, orange, pear`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'kiwi' is not defined. <u>More Info</u>LangRef.html#compile_error",
+      "'kiwi' is not defined. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -532,7 +532,7 @@ enum Fruit apple, orange, if`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'if' is a keyword, and may not be used as an identifier. <u>More Info</u>LangRef.html#compile_error",
+      "'if' is a keyword, and may not be used as an identifier. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -550,7 +550,7 @@ enum Fruit apple, orange, break`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'break' is a reserved word, and may not be used as an identifier. <u>More Info</u>LangRef.html#compile_error",
+      "'break' is a reserved word, and may not be used as an identifier. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -570,7 +570,7 @@ enum Fruit apple, orange, pear`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Name 'Fruit' not unique in scope. <u>More Info</u>LangRef.html#compile_error",
+      "Name 'Fruit' not unique in scope. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -588,7 +588,7 @@ enum Fruit apple, orange, pear, orange`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Name 'orange' not unique in scope. <u>More Info</u>LangRef.html#compile_error",
+      "Name 'orange' not unique in scope. Click for more info.LangRef.html#compile_error",
     ]);
   });
 });

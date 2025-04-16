@@ -139,7 +139,7 @@ export function mustBeBooleanCondition(
   if (knownType(st) && st !== BooleanType.Instance) {
     compileErrors.push(
       new SyntaxCompileError(
-        "Condition of 'if' expression does not evaluate to a Boolean. <u>More Info</u>",
+        "Condition of 'if' expression does not evaluate to a Boolean. Click for more info.",
         location,
       ),
     );
@@ -155,7 +155,7 @@ export function mustNotHaveConditionalAfterUnconditionalElse(
   if (unconditionals > 1 || (unconditionals === 1 && elses[elses.length - 1].hasIf)) {
     compileErrors.push(
       new SyntaxCompileError(
-        `Cannot have any clause after unconditional 'else'. <u>More Info</u>`,
+        `Cannot have any clause after unconditional 'else'. Click for more info.`,
         location,
       ),
     );
@@ -199,7 +199,7 @@ export function mustNotBeKeyword(id: string, compileErrors: CompileError[], loca
   if (allKeywords.includes(id)) {
     compileErrors.push(
       new SyntaxCompileError(
-        `'${id}' is a keyword, and may not be used as an identifier. <u>More Info</u>`,
+        `'${id}' is a keyword, and may not be used as an identifier. Click for more info.`,
         location,
       ),
     );
@@ -207,7 +207,7 @@ export function mustNotBeKeyword(id: string, compileErrors: CompileError[], loca
   if (reservedWords.includes(id)) {
     compileErrors.push(
       new SyntaxCompileError(
-        `'${id}' is a reserved word, and may not be used as an identifier. <u>More Info</u>`,
+        `'${id}' is a reserved word, and may not be used as an identifier. Click for more info.`,
         location,
       ),
     );
@@ -302,7 +302,7 @@ export function checkForDeprecation(
 
 export function mustNotBeNegativeIndex(compileErrors: CompileError[], location: string) {
   compileErrors.push(
-    new SyntaxCompileError("Index cannot be negative. <u>More Info</u>", location),
+    new SyntaxCompileError("Index cannot be negative. Click for more info.", location),
   );
 }
 
@@ -631,7 +631,7 @@ function FailNotNumber(lhs: SymbolType, compileErrors: CompileError[], location:
 function FailCannotCompareProcFunc(compileErrors: CompileError[], location: string) {
   compileErrors.push(
     new SyntaxCompileError(
-      "Cannot do equality operations on Procedures or Functions. <u>More Info</u>",
+      "Cannot do equality operations on Procedures or Functions. Click for more info.",
       location,
     ),
   );
@@ -711,7 +711,7 @@ export function mustBeImmutableType(
   if (!type.typeOptions.isImmutable) {
     compileErrors.push(
       new SyntaxCompileError(
-        `Property ${name} is not of an immutable type. <u>More Info</u>`,
+        `Property ${name} is not of an immutable type. Click for more info.`,
         location,
       ),
     );
@@ -727,7 +727,7 @@ export function mustBeImmutableGenericType(
   if (!ofType.typeOptions.isImmutable) {
     compileErrors.push(
       new SyntaxCompileError(
-        `${type} cannot be of mutable type '${ofType.name}'. <u>More Info</u>`,
+        `${type} cannot be of mutable type '${ofType.name}'. Click for more info.`,
         location,
       ),
     );
@@ -747,7 +747,7 @@ export function mustBeValidKeyType(
   ) {
     compileErrors.push(
       new SyntaxCompileError(
-        `${type} cannot have key of type '${ofType.name}'. <u>More Info</u>`,
+        `${type} cannot have key of type '${ofType.name}'. Click for more info.`,
         location,
       ),
     );
@@ -816,8 +816,8 @@ function mustBeCompatibleDeconstruction(
         mustBeAssignableType(llst, rrst, compileErrors, location);
       } else {
         const msg = id
-          ? `No such property '${id}' on record '${rst.name}. <u>More Info</u>`
-          : "Cannot discard in record deconstruction. <u>More Info</u>";
+          ? `No such property '${id}' on record '${rst.name}. Click for more info.`
+          : "Cannot discard in record deconstruction. Click for more info.";
         compileErrors.push(new SyntaxCompileError(msg, location));
       }
     }
@@ -841,7 +841,7 @@ export function mustBeCompatibleDefinitionNode(
     if (rst instanceof TupleType && lst.ofTypes.length !== rst.ofTypes.length) {
       compileErrors.push(
         new SyntaxCompileError(
-          `Wrong number of deconstructed variables. <u>More Info</u>`,
+          `Wrong number of deconstructed variables. Click for more info.`,
           location,
         ),
       );
@@ -895,7 +895,10 @@ export function mustNotBePropertyOnFunctionMethod(
 
 export function mustBePropertyPrefixedOnMember(compileErrors: CompileError[], location: string) {
   compileErrors.push(
-    new SyntaxCompileError(`referencing a property requires a prefix. <u>More Info</u>`, location),
+    new SyntaxCompileError(
+      `referencing a property requires a prefix. Click for more info.`,
+      location,
+    ),
   );
 }
 
@@ -1048,7 +1051,7 @@ export function mustNotBeRedefined(
 export function mustNotBeOutParameter(compileErrors: CompileError[], location: string) {
   compileErrors.push(
     new SyntaxCompileError(
-      "'out' parameters are only supported on procedures. <u>More Info</u>",
+      "'out' parameters are only supported on procedures. Click for more info.",
       location,
     ),
   );
@@ -1056,7 +1059,10 @@ export function mustNotBeOutParameter(compileErrors: CompileError[], location: s
 
 export function mustNotHaveDuplicateMain(compileErrors: CompileError[], location: string) {
   compileErrors.push(
-    new SyntaxCompileError("There can only be one 'main' in a program. <u>More Info</u>", location),
+    new SyntaxCompileError(
+      "There can only be one 'main' in a program. Click for more info.",
+      location,
+    ),
   );
 }
 
@@ -1123,7 +1129,9 @@ export function mustBeKnownCompilerDirective(
 }
 
 export function mustNotBeTwoUnaryExpressions(compileErrors: CompileError[], location: string) {
-  compileErrors.push(new SyntaxCompileError("Unsupported operation. <u>More Info</u>", location));
+  compileErrors.push(
+    new SyntaxCompileError("Unsupported operation. Click for more info.", location),
+  );
 }
 
 const compilerAssertions = true;

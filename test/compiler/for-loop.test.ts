@@ -266,7 +266,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Expression must be Int. <u>More Info</u>LangRef.html#compile_error",
+      "Expression must be Int. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -287,9 +287,9 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Expression must be Int. <u>More Info</u>LangRef.html#compile_error",
-      "Expression must be Int. <u>More Info</u>LangRef.html#compile_error",
-      "Expression must be Int. <u>More Info</u>LangRef.html#compile_error",
+      "Expression must be Int. Click for more info.LangRef.html#compile_error",
+      "Expression must be Int. Click for more info.LangRef.html#compile_error",
+      "Expression must be Int. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -309,7 +309,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "May not re-assign the loop counter 'i'. <u>More Info</u>LangRef.html#compile_error",
+      "May not re-assign the loop counter 'i'. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -330,7 +330,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'i' is not defined. <u>More Info</u>LangRef.html#compile_error",
+      "'i' is not defined. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -417,7 +417,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'id' is not defined. <u>More Info</u>LangRef.html#compile_error",
+      "'id' is not defined. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -437,7 +437,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'id' is not defined. <u>More Info</u>LangRef.html#compile_error",
+      "'id' is not defined. Click for more info.LangRef.html#compile_error",
     ]);
   });
 });

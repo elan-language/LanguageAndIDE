@@ -119,7 +119,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'x' is not defined. <u>More Info</u>LangRef.html#compile_error",
+      "'x' is not defined. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -190,7 +190,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Expression must be Boolean. <u>More Info</u>LangRef.html#compile_error",
+      "Expression must be Boolean. Click for more info.LangRef.html#compile_error",
     ]);
   });
 });

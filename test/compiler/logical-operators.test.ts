@@ -219,14 +219,14 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Boolean Provided: Int. <u>More Info</u>LangRef.html#compile_error",
-      "Incompatible types. Expected: Boolean Provided: Int. <u>More Info</u>LangRef.html#compile_error",
-      "Incompatible types. Expected: Boolean Provided: Int. <u>More Info</u>LangRef.html#compile_error",
-      "Incompatible types. Expected: Boolean Provided: Int. <u>More Info</u>LangRef.html#compile_error",
-      "Incompatible types. Expected: Boolean Provided: Int. <u>More Info</u>LangRef.html#compile_error",
-      "Incompatible types. Expected: Boolean Provided: Int. <u>More Info</u>LangRef.html#compile_error",
-      "Incompatible types. Expected: Boolean Provided: Int. <u>More Info</u>LangRef.html#compile_error",
-      "Incompatible types. Expected: Boolean Provided: Int. <u>More Info</u>LangRef.html#compile_error",
+      "Incompatible types. Expected: Boolean Provided: Int. Click for more info.LangRef.html#compile_error",
+      "Incompatible types. Expected: Boolean Provided: Int. Click for more info.LangRef.html#compile_error",
+      "Incompatible types. Expected: Boolean Provided: Int. Click for more info.LangRef.html#compile_error",
+      "Incompatible types. Expected: Boolean Provided: Int. Click for more info.LangRef.html#compile_error",
+      "Incompatible types. Expected: Boolean Provided: Int. Click for more info.LangRef.html#compile_error",
+      "Incompatible types. Expected: Boolean Provided: Int. Click for more info.LangRef.html#compile_error",
+      "Incompatible types. Expected: Boolean Provided: Int. Click for more info.LangRef.html#compile_error",
+      "Incompatible types. Expected: Boolean Provided: Int. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -244,7 +244,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int Provided: Boolean. <u>More Info</u>LangRef.html#compile_error",
+      "Incompatible types. Expected: Float or Int Provided: Boolean. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -262,7 +262,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int Provided: Boolean. <u>More Info</u>LangRef.html#compile_error",
+      "Incompatible types. Expected: Float or Int Provided: Boolean. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -332,7 +332,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Boolean Provided: Int. <u>More Info</u>LangRef.html#compile_error",
+      "Incompatible types. Expected: Boolean Provided: Int. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -351,7 +351,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Boolean Provided: String. <u>More Info</u>LangRef.html#compile_error",
+      "Incompatible types. Expected: Boolean Provided: String. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -369,7 +369,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int Provided: Boolean. <u>More Info</u>LangRef.html#compile_error",
+      "Incompatible types. Expected: Float or Int Provided: Boolean. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -388,7 +388,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int Provided: String. <u>More Info</u>LangRef.html#compile_error",
+      "Incompatible types. Expected: Float or Int Provided: String. Click for more info.LangRef.html#compile_error",
     ]);
   });
 });
