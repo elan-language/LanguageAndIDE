@@ -26,12 +26,17 @@ jobs:
     - run: npm ci
     - run: npm run production-compile --if-present
     - run: npm run test
+    - name: Read build version
+      id: read_file
+      uses: satya-500/read-file-github-action@v1
+      with:
+        path: "src/build-version.txt"
     - name: zip archive
       uses: vimtor/action-zip@v1.2
       with:
         files: web-editor/
         recursive: false
-        dest: result.zip
+        dest: Elan_v${{ steps.read_file.outputs.contents }}.zip
     - name: Push web-site
       uses: Dylan700/sftp-upload-action@latest
       with:
