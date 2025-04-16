@@ -38,11 +38,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Push files
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      uses: Dylan700/sftp-upload-action@latest
       with:
         server: ${{ secrets.ftp_server }}
         username: ${{ secrets.ftp_user }}
         password: ${{ secrets.ftp_password }}
-        protocol: ftps
-        port: 990
+        uploads: web-editor/ => ~/sandbox/
         dry-run: true
