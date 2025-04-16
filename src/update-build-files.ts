@@ -23,13 +23,14 @@ function updateVersion() {
 
   const versionFileContent = readFileSync(versionFilePath, "utf-8");
 
-  const newContent = versionFileContent.replace(
-    replacePhrase,
-    `${replacePhrase}
+  if (!versionFileContent.includes(tableEntry)) {
+    const newContent = versionFileContent.replace(
+      replacePhrase,
+      `${replacePhrase}
     ${tableEntry}`,
-  );
-
-  writeFileSync(versionFilePath, newContent);
+    );
+    writeFileSync(versionFilePath, newContent);
+  }
 
   const buildFilePath = `${__dirname}/../../src/build-version.txt`;
   writeFileSync(buildFilePath, semver);
