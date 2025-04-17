@@ -1,16 +1,16 @@
 import assert from "assert";
 import { Done } from "mocha";
+import { AssertOutcome } from "../../src/assert-outcome";
 import { FileImpl } from "../../src/frames/file-impl";
 import { Field } from "../../src/frames/interfaces/field";
 import { Frame } from "../../src/frames/interfaces/frame";
+import { Transforms } from "../../src/frames/interfaces/transforms";
 import { ParseStatus } from "../../src/frames/status-enums";
 import { transform, transformMany } from "../../src/frames/syntax-nodes/ast-visitor";
 import { runTests } from "../../src/runner";
 import { StdLib } from "../../src/standard-library/std-lib";
 import { TestInputOutput } from "./test-input-output";
 import { getTestSystem } from "./test-system";
-import { Transforms } from "../../src/frames/interfaces/transforms";
-import { AssertOutcome } from "../../src/assert-outcome";
 
 export function assertParses(file: FileImpl) {
   assert.strictEqual(file.parseError, undefined, "Unexpected parse error: " + file.parseError);
@@ -216,6 +216,6 @@ export function transforms() {
   } as Transforms;
 }
 
-export const testHeaderVersion = "Elan 0.10.0-Beta";
+export const testHeaderVersion = "Elan 1.0.0-pre1";
 
 export const testHeader = `# FFFF ${testHeaderVersion} guest default_profile valid`;
