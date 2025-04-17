@@ -51,7 +51,7 @@ return [main, _tests];}`;
   test("Pass_InLoop", async () => {
     const code = `${testHeader}
 
-constant list set to {1,2,3,4,5}
+constant li set to {1,2,3,4,5}
 
 main
   call foo()
@@ -59,14 +59,14 @@ end main
 
 procedure foo()
   for i from 0 to 4 step 1
-    let temp be list[i]
+    let temp be li[i]
     print temp
   end for
 end procedure`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
-  list = system.listImmutable([1, 2, 3, 4, 5]);
+  li = system.listImmutable([1, 2, 3, 4, 5]);
 
 };
 async function main() {
@@ -75,7 +75,7 @@ async function main() {
 
 async function foo() {
   for (let i = 0; i <= 4; i = i + 1) {
-    const temp = system.safeIndex(global.list, i);
+    const temp = system.safeIndex(global.li, i);
     await system.printLine(temp);
   }
 }
@@ -99,13 +99,13 @@ main
 end main
 
 procedure foo()
-  variable list set to {1,2,3,4,5}
+  variable li set to {1,2,3,4,5}
   for i from 0 to 3 step 1
-    let temp be list[i]
-    set list to list.withPut(i, list[i + 1])
-    set list to list.withPut(i + 1, temp)
+    let temp be li[i]
+    set li to li.withPut(i, li[i + 1])
+    set li to li.withPut(i + 1, temp)
   end for
-  print list
+  print li
 end procedure`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -115,13 +115,13 @@ async function main() {
 }
 
 async function foo() {
-  let list = system.listImmutable([1, 2, 3, 4, 5]);
+  let li = system.listImmutable([1, 2, 3, 4, 5]);
   for (let i = 0; i <= 3; i = i + 1) {
-    const temp = system.safeIndex(list, i);
-    list = list.withPut(i, system.safeIndex(list, i + 1));
-    list = list.withPut(i + 1, temp);
+    const temp = system.safeIndex(li, i);
+    li = li.withPut(i, system.safeIndex(li, i + 1));
+    li = li.withPut(i + 1, temp);
   }
-  await system.printLine(list);
+  await system.printLine(li);
 }
 global["foo"] = foo;
 return [main, _tests];}`;
