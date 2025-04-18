@@ -1,0 +1,14 @@
+# 3980cf60b168f56d921397a9c6f2bf3587c642f945929ff0e9ff6bdb8452ffd5 Elan 1.0.0-pre1 guest Default_Profile valid
+
+main
+  # reusing variable fruit for each new ListImmutable
+  variable fruit set to empty ListImmutable<of String>
+  print fruit
+  set fruit to fruit.withAppend("apple")
+  set fruit to fruit.withAppend("pear")
+  print fruit
+  print fruit[1]
+  print fruit.length()
+  print fruit[fruit.length() - 2]
+  print fruit.contains("banana")
+end main
