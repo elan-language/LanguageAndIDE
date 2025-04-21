@@ -2,13 +2,13 @@
 import { handleClick, handleDblClick, handleKey } from "../editorHandlers";
 import { ElanCutCopyPasteError } from "../elan-cut-copy-paste-error";
 import { ElanRuntimeError } from "../elan-runtime-error";
+import { isElanProduction } from "../environment";
 import { CodeSourceFromString, fileErrorPrefix, FileImpl } from "../frames/file-impl";
 import { editorEvent, toDebugString } from "../frames/interfaces/editor-event";
 import { File } from "../frames/interfaces/file";
 import { Profile } from "../frames/interfaces/profile";
 import { Group, Individual } from "../frames/interfaces/user-config";
 import { CompileStatus, ParseStatus, RunStatus, TestStatus } from "../frames/status-enums";
-import { isElanProduction } from "../production";
 import { StdLib } from "../standard-library/std-lib";
 import { checkIsChrome, confirmContinueOnNonChromeBrowser } from "./ui-helpers";
 import {

@@ -230,7 +230,34 @@ end main`;
     );
   });
 
-  test("Fail_preRelease", async () => {
+  test("Pass_preRelease", async () => {
+    const code = `# 775d96007a883395a4cb0cf72b418c81c5288b76b6387c8da49ca376834c1a04 Elan 1.1.0-Beta guest default_profile valid
+
+main
+  # My first program
+  print "Hello World!"
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+
+  await system.printLine("Hello World!");
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(hash, new DefaultProfile(), "aUser", transforms());
+    fileImpl.setIsProduction(true);
+    fileImpl.setVersion(1, 1, 0, "");
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "Hello World!");
+  });
+
+  test("Fail_preReleaseBadSemver", async () => {
     const code = `# 775d96007a883395a4cb0cf72b418c81c5288b76b6387c8da49ca376834c1a04 Elan 1.1.0-Beta guest default_profile valid
 
 main
@@ -240,12 +267,12 @@ end main`;
 
     const fileImpl = new FileImpl(hash, new DefaultProfile(), "", transforms());
     fileImpl.setIsProduction(true);
-    fileImpl.setVersion(1, 1, 0, "");
+    fileImpl.setVersion(1, 0, 0, "");
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParseWithMessage(
       fileImpl,
-      "Cannot load file: it was created in a pre-release version of Elan IDE",
+      "Cannot load file: it must be loaded into an Elan IDE version 1.1",
     );
   });
 });

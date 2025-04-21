@@ -1,6 +1,6 @@
 import { AssertOutcome } from "../assert-outcome";
 import { ElanFileError } from "../elan-file-error";
-import { elanVersion, isElanProduction } from "../production";
+import { elanVersion, isElanProduction } from "../environment";
 import { StdLib } from "../standard-library/std-lib";
 import { StdLibSymbols } from "../standard-library/std-lib-symbols";
 import { AbstractSelector } from "./abstract-selector";
@@ -752,16 +752,10 @@ export class FileImpl implements File, Scope {
 
       const fileMajor = parseInt(tokens[0], 10);
       const fileMinor = parseInt(tokens[1], 10);
-      const [filePatch, filePreRelease] = this.getPatch(tokens[2]);
+      const [filePatch] = this.getPatch(tokens[2]);
 
       if (isNaN(fileMajor) || isNaN(fileMinor) || isNaN(filePatch)) {
         throw new ElanFileError(cannotLoadFile);
-      }
-
-      if (filePreRelease) {
-        throw new ElanFileError(
-          `${fileErrorPrefix} it was created in a pre-release version of Elan IDE`,
-        );
       }
 
       if (fileMajor !== this.version.major) {

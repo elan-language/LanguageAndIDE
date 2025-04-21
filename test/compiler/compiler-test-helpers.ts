@@ -11,6 +11,7 @@ import { runTests } from "../../src/runner";
 import { StdLib } from "../../src/standard-library/std-lib";
 import { TestInputOutput } from "./test-input-output";
 import { getTestSystem } from "./test-system";
+import { elanVersion } from "../../src/environment";
 
 export function assertParses(file: FileImpl) {
   assert.strictEqual(file.parseError, undefined, "Unexpected parse error: " + file.parseError);
@@ -216,6 +217,6 @@ export function transforms() {
   } as Transforms;
 }
 
-export const testHeaderVersion = "Elan 1.0.0-pre1";
+export const testHeaderVersion = `Elan ${elanVersion.major}.${elanVersion.minor}.${elanVersion.patch}-${elanVersion.preRelease}`;
 
 export const testHeader = `# FFFF ${testHeaderVersion} guest default_profile valid`;

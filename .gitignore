@@ -20,3 +20,4 @@ web-editor/elan-api.js
 web-editor/documentation/
 web-editor/demo/
 web-editor/standalone.js
+src/environment.ts
