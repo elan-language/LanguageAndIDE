@@ -1133,9 +1133,15 @@ Turtle graphics are implemented in Elan with output to the Display pane on the s
 <!-- #endregion-->
 <h2 id="combiningGraphics">Combining graphic outputs</h2>
 <p>Program outputs, whether text or graphical, can be combined in the Display. In particular, Block graphics and text or Html printing can share the Display
- along with <i>either</i> Vector graphics <i>or</i> Turtle graphics (but not both).</p>
+ along with <em>either</em> Vector graphics <em>or</em> Turtle graphics (but not both).</p>
 <p>If you want to share the Display in this way, remember that both text and Html print outputs appear sequentially down the Display (which can be scrolled), whereas the graphic outputs are positioned in the Display using their own absolute coordinate systems.</p>
-
+<p>The order in which the outputs are displayed (and therefore overwite) is:</p>
+<ol>
+ <li>Block graphics</li>
+ <li>Vector <em>or</em> Turtle graphics</li>
+ <li>Printed text or Html</li>
+</ol>
+<p>so some care is needed to manage the layout in the Display.</p>
 <!-- #endregion-->
 <!-- #region Other Types -->
 <h1 id="Func">Other Types</h1>
