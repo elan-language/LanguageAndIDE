@@ -1,0 +1,18 @@
+# cc41a42a88016ccb3f73075dbb1fda7d28204589b45fbcd1bd8bb0bd9261298a Elan 1.0.0-pre1 guest Default_Profile valid
+
+main
+  let w be 121
+  let h be 55
+  print "print image [url] with width set to w, height set to h"
+  print image https://filedn.eu/lISiayU8ls0XMXubUjtLSn8/Images/logo.png with width set to w, height set to h
+  let url be "https://filedn.eu/lISiayU8ls0XMXubUjtLSn8/Images/logo.png"
+  let logo be new ImageVG(url) with width set to w, height set to h, x set to 0, y set to 35
+  print "print variable logo [which is ImageVG(url)]"
+  print logo
+  variable vg set to new List<of VectorGraphic>()
+  call vg.append(logo)
+  print "call displayVectorGraphics(vg) [which is a List with logo appended]"
+  print "in which x=0, y=35 have been set to place the logo at an absolute position"
+  print "that is clear of the sequence of print statements above this line"
+  call displayVectorGraphics(vg)
+end main
