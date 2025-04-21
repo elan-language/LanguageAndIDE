@@ -3,6 +3,9 @@ import { RegExMatchNode } from "./regex-match-node";
 
 export class TypeSimpleNode extends RegExMatchNode {
   tokenTypes: Set<TokenType> = new Set<TokenType>();
+  override nameForError(): string {
+    return `as a Type name`;
+  }
 
   constructor(
     tokenTypes: Set<TokenType> = new Set<TokenType>([

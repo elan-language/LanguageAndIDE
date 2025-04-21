@@ -46,7 +46,7 @@ suite("Field Parsing Tests", () => {
     id.setFieldToKnownValidText("Ab_1");
     id.parseCurrentText();
     assert.equal(id.readParseStatus(), ParseStatus.invalid);
-    assert.equal(id.parseErrorMsg, "");
+    assert.equal(id.parseErrorMsg, "does not parse as a name for a value");
     id.setFieldToKnownValidText("default");
     id.parseCurrentText();
     assert.equal(id.readParseStatus(), ParseStatus.valid); //Because use of a keyword should now be picked up as a compile error
@@ -88,6 +88,10 @@ suite("Field Parsing Tests", () => {
     argList.setFieldToKnownValidText(`5, (3 + 4)`);
     argList.parseCurrentText();
     assert.equal(argList.readParseStatus(), ParseStatus.valid);
+    argList.setFieldToKnownValidText(`5 3 4`);
+    argList.parseCurrentText();
+    assert.equal(argList.readParseStatus(), ParseStatus.invalid);
+    assert.equal(argList.parseErrorMsg, "does not parse as an argument list");
   });
 
   test("parse ArgListField 2", () => {
@@ -107,6 +111,10 @@ suite("Field Parsing Tests", () => {
     assert.equal(type.readParseStatus(), ParseStatus.invalid);
     assert.equal(type.textAsSource(), "Foo<of bar");
     assert.equal(type.textAsHtml(), "Foo&lt;of bar");
+    type.setFieldToKnownValidText(`foo`);
+    type.parseCurrentText();
+    assert.equal(type.readParseStatus(), ParseStatus.invalid);
+    assert.equal(type.parseErrorMsg, "does not parse as a Type");
   });
 
   test("parse ExpressionField - literal string with interpolations", () => {

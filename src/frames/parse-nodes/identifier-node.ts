@@ -9,6 +9,10 @@ export class IdentifierNode extends AbstractParseNode {
   private tokenTypes: Set<TokenType>;
   private contextGenerator: () => string;
 
+  override nameForError(): string {
+    return "a valid identifier";
+  }
+
   constructor(tokenTypes: Set<TokenType> = new Set<TokenType>(), contextGenerator = () => "") {
     super();
     this.tokenTypes = tokenTypes;

@@ -3,6 +3,9 @@ import { ExprNode } from "./expr-node";
 import { ParseNode } from "./parse-node";
 
 export class ArgListNode extends CSV {
+  nameForError(): string {
+    return "as an argument list";
+  }
   context: () => string;
 
   constructor(context: () => string) {

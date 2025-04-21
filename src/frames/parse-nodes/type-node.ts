@@ -8,6 +8,9 @@ import { TypeTupleNode } from "./type-tuple-node";
 
 export class TypeNode extends AbstractAlternatives {
   tokenTypes: Set<TokenType> = new Set<TokenType>();
+  override nameForError(): string {
+    return `as a Type`;
+  }
 
   constructor(tokenTypes: Set<TokenType> = new Set<TokenType>()) {
     super();

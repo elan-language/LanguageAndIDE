@@ -7,6 +7,10 @@ export class KeywordNode extends FixedTextNode {
   spaceAfter: boolean;
   dotAfter: boolean;
 
+  override nameForError(): string {
+    return `as ${this.fixedText}`;
+  }
+
   constructor(keyword: string, spaceAfter = false, dotAfter = false) {
     super(keyword);
     this.spaceAfter = spaceAfter;

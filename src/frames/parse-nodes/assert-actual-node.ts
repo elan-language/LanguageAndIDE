@@ -6,6 +6,9 @@ import { TermChained } from "./term-chained";
 import { TermSimple } from "./term-simple";
 
 export class AssertActualNode extends AbstractAlternatives {
+  nameForError(): string {
+    return "as an identifier or method call";
+  }
   idTypes: Set<TokenType> = new Set([TokenType.id_let, TokenType.id_variable]);
   methodTypes: Set<TokenType> = new Set([TokenType.method_function]);
   constructor() {

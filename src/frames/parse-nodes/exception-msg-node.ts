@@ -14,4 +14,7 @@ export class ExceptionMsgNode extends AbstractAlternatives {
     this.alternatives.push(new LitStringNonEmpty());
     this.alternatives.push(new IdentifierNode(this.tokenTypes));
   }
+  override nameForError(): string {
+    return " a literal or named string";
+  }
 }

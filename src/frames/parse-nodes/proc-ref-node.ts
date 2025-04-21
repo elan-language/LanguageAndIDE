@@ -4,6 +4,10 @@ import { InstanceProcRef } from "./instanceProcRef";
 import { MethodNameNode } from "./method-name-node";
 
 export class ProcRefNode extends AbstractAlternatives {
+  override nameForError(): string {
+    return `as a reference to a procedure`;
+  }
+
   constructor() {
     super();
     this.alternatives.push(new InstanceProcRef());

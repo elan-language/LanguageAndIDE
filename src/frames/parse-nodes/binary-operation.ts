@@ -5,6 +5,9 @@ import { DIVIDE, GT, LT, MINUS, MULT, PLUS, POWER } from "../symbols";
 import { AbstractParseNode } from "./abstract-parse-node";
 
 export class BinaryOperation extends AbstractParseNode {
+  nameForError(): string {
+    return "as a binary operation";
+  }
   constructor() {
     super();
     this.completionWhenEmpty = "<i>operator </i>";

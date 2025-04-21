@@ -29,6 +29,10 @@ export class ExprNode extends AbstractAlternatives {
     this.completionWhenEmpty = "<i>expression</i>";
   }
 
+  override nameForError(): string {
+    return "an expression";
+  }
+
   parseText(text: string): void {
     //evaluate options that start with a keyword, first
     if (text.trim().length > 0) {
