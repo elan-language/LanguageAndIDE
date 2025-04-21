@@ -228,6 +228,8 @@ body {
 /* Buttons */
 button {
   margin-right: 5px;
+  font-family: var(--ideTitleFont);
+  border: none;
 }
 button.icon,
 button.icon img {
@@ -240,6 +242,20 @@ button.icon img {
 
 button.icon img {
   height: 40px;
+}
+
+#preferences-dialog button {
+  margin-top: 10px;
+  margin-right: 0;
+  background-color: var(--ideBackground);
+  color: white;
+  float: right;
+}
+
+#preferences-dialog input  {
+  float: right;
+  margin-left: 10px;
+  margin-top: 5px;
 }
 
 button.icon:enabled img:hover,
@@ -384,10 +400,15 @@ button.plain:disabled, menu-item.button.plain:disabled {
   text-decoration: none;
 }
 
-.menu-item,
-#help {
+.menu-item, #help{
   font-family: var(--ideTitleFont);
 }
+
+#preferences-dialog {
+  font-family: var(--ideTitleFont);
+  border: none;
+}
+
 
 .elan-code:not( :focus-within),
 #display:not( :focus-within),
@@ -405,6 +426,6 @@ button.plain:disabled, menu-item.button.plain:disabled {
   width: 100%;
 }
 
-el-user.hide, el-profile.hide {
+el-user, el-profile {
   display:none;
 }

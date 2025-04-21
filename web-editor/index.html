@@ -55,6 +55,7 @@
                         <button class="plain menu-item" id="auto-save"  tabindex="1">Auto Save</button>
                         <button class="plain menu-item" id="save" tabindex="1">Manual Save</button>
                         <button class="plain menu-item" id="save-as-standalone" tabindex="1">Save as Standalone</button>
+                        <button class="plain menu-item" id="preferences" tabindex="1">Preferences</button>
                     </div>
                 </div>
 
@@ -62,13 +63,17 @@
                 <button id="expand-collapse" class="plain" tabindex="1">+/-</button>
                 <button id="undo" class="plain" tabindex="1">Undo</button>  
                 <button id="redo" class="plain" tabindex="1">Redo</button>
-                <button id="preferences" class="plain" tabindex="1">Preferences</button>
+                
                 <dialog id="preferences-dialog">
                     <form>
-                        <label for="use-ap">Advanced programming:</label>
-                        <input type="checkbox" id="use-ap" name="ap" value="use-ap"><br>
-                        <label for="use-cvd">Use CVD colour scheme:</label>
+                        <div>
+                        <label for="use-ap">Advanced level coding:</label>
+                        <input type="checkbox" id="use-ap" name="ap" value="use-ap">
+                    </div>
+                    <div>
+                        <label for="use-cvd">CVD colour scheme:</label>
                         <input type="checkbox" id="use-cvd" name="cvd" value="use-cvd">
+                    </div>
                         <div>
                           <button id="confirmBtn" value="default">Confirm</button>
                         </div>

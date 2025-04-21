@@ -8,7 +8,7 @@
     --reverseText: white;
 
     /* Code colours */
-    --keyword: #332288;
+    --keyword: rgb(56,0,255);
     --method: #999933;
     --type:  #44aa99;
     --string:  #882255;
