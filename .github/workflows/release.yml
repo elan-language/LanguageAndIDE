@@ -8,6 +8,7 @@ on:
     inputs:
       dryRun:
         type: boolean
+        default: true
     
 jobs:
   build:
