@@ -3,6 +3,7 @@ import { RegExMatchNode } from "./regex-match-node";
 
 export class TypeSimpleNode extends RegExMatchNode {
   tokenTypes: Set<TokenType> = new Set<TokenType>();
+  override errorLink: string = "#parse_type_name";
 
   constructor(
     tokenTypes: Set<TokenType> = new Set<TokenType>([

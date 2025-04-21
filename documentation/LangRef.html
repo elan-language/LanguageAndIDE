@@ -359,7 +359,7 @@ Or even to the same name if that name is a variable:</p>
 </el-code-block>
 </p>
 
-<h4 class="no-TOC">Record deconstruction</h4>
+<h4 class="no-TOC" id="record_deconstruction">Record deconstruction</h4>
 <p>A record may be &lsquo;deconstructed&rsquo;, meaning that its properties are read into separate variables using the same syntax as for deconstructing a <span class="Link">Tuple</span>. For example, assuming that Square is a record defined as in the example above, then this code:</p>
 <el-code-block>
   <el-statement class="" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>x</el-id>, <el-id>y</el-id>, <el-id>size</el-id>, <el-id>colour</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="" tabindex="0"><el-txt><el-id>mySquare</el-id></el-txt><el-place><i>expression</i></el-place></el-field> <el-msg class="warning"></el-msg></el-statement>
@@ -1000,6 +1000,88 @@ Example of use in this manner (taken from the 'Snake - functional' demo program)
 </el-code-block>
 
 <p>It is also possible explicitly to set a property or a named value to an empty instance of the appropriate Type.</p>
+
+<!-- #region Parse errors -->
+<h1 id="parse_error">Parse errors</h1>
+
+<p>A parse error occurs when the text entered into a field cannot be matched against any of the valid formats for contents of that fields.
+  The field will display in red (for the default colour scheme) with a message alongside it containing a link to 
+  one of the headings below. The <b>Parse</b> status in the status panel in the IDE will show as <b>Invalid</b>.
+</p>
+
+<h3 id="parse_arg_list" class="no-TOC">Invalid argument list</h3>
+<p>An argument list passed into a function or procedure call, must consist of one or more arguments separated by commas.
+  Each argument may in general be any of:</p>
+  <ul>
+    <li>A literal value</li>
+    <li>A named value</li>
+    <li>An expression</li>
+  </ul>
+  <p>(though in certain very specific contexts some options are disallowed by the compiler.)</p>
+
+<h3 id="parse_assert_actual" class="no-TOC">Invalid assert actual</h3>
+<p>The 'actual' field in an assert statement must be a named value or a function evaluation.</p>
+
+<h3 id="parse_constant_literal" class="no-TOC">Invalid constant value</h3>
+<p>The value of a constant must be a literal value of a type that is not mutable. 
+  This can be a simple value (e.g. a number or string), or an <i>immutable</i> List or Dictionary.</p>
+
+<h3 id="parse_enum_values" class="no-TOC">Invalid enum value(s)</h3>
+<p>Enum values must each be a valid identifier, separated by commas.</p>
+
+<h3 id="parse_exception_message" class="no-TOC">Invalid exception message</h3>
+<p>An exception message must either be a literal string or a named value holding a string.</p>
+
+<h3 id="parse_expression" class="no-TOC">Invalid expression</h3>
+<p>The field you are entering must be a valid expression.</p>
+
+<h3 id="parse_name" class="no-TOC">Invalid name</h3>
+<p>The name defined for any variable, constant, let, parameter, function, procedure, or property 
+  must begin with a lower-case letter, optionally followed by letters or either case, numeric digits,
+  or underscore symbols. Nothing else.
+</p>
+
+<h3 id="parse_inheritance" class="no-TOC">Invalid inheritance clause</h3>
+<p>An inheritance clause, if used, must consist of the keyword <el-code><el-kw>inherits</el-kw></el-code>
+followed by a space and then one or more Type names separated by commas.</p>
+
+<h3 id="parse_params" class="no-TOC">Invalid parameter list</h3>
+<p>Each parameter definition takes the form:</p>
+<el-code><el-id>name</el-id> <el-kw>as</el-kw> <el-type>Type</el-type></el-code>
+<p>If more than one parameter is defined, the definitions must be separated by commas.</p>
+
+<h3 id="parse_proc_ref" class="no-TOC">Invalid reference to a procedure</h3>
+<p>Valid forms for a procedure call are</p>
+<ul>
+  <li><el-code><el-kw>call</el-kw> <el-method>procedureName</el-method>()</el-code></li>
+  <li><el-code><el-kw>call</el-kw> <el-id>instanceName</el-id>.<el-method>procedureMethodName</el-method>()</el-code></li>
+  <li><el-code><el-kw>call</el-kw> <el-kw>property</el-kw>.<el-id>instanceName</el-id>.<el-method>procedureMethodName</el-method>()</el-code></li>
+  <li><el-code><el-kw>call</el-kw> <el-kw>library</el-kw>.<el-method>procedureMethodName</el-method>()</el-code></li>
+ </ul>
+
+<p>The last one is used only if there is a need to disambiguate between a library procedure and a user-defined (global)
+  procedure with the same name.
+</p>
+
+<h3 id="parse_type" class="no-TOC">Invalid Type format</h3>
+<p>For certain types the name may be followed by an <el-code><el-kw>of</el-kw></el-code> clause, for example:</p>
+
+<el-code><el-Type>List</el-Type>&lt;<el-kw>of</el-kw> <el-Type>Int</el-Type>&gt;</el-code>
+<el-code><el-Type>Dictionary</el-Type>&lt;<el-kw>of</el-kw> <el-Type>String</el-Type>, <el-Type>Int</el-Type>&gt;</el-code>
+
+<h3 id="parse_type_name" class="no-TOC">Invalid Type name</h3>
+<p>Type names always begin with a captial letter,  optionally followed by letters or either case, numeric digits,
+  or underscore symbols. Nothing else.
+</p>
+
+<h3 id="parse_var_or_let_def" class="no-TOC">Invalid variable or let definition</h3>
+<p>The definition for a variable, or for a <el-code><el-kw>let</el-kw></el-code> statement is most commonly
+a simple <a href="#parse_name">name</a>. Less commonly, it may take the form of:
+a href="LibRef.html#Tuple">tuple deconstruction</a>, <a href="">list deconstruction</a>, or <a href="record_deconstruction">record deconstruction</a>.
+</p>
+
+<!-- #endregion -->
+
 
 <!-- #region Compile Errors and Warnings -->
 <h1 id="compile_error">Compile Errors and Warnings</h1>

@@ -131,7 +131,11 @@ export function expandCollapseAll(file: File) {
   }
 }
 export function escapeHtmlChars(str: string): string {
-  return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  return str.replaceAll(/&/g, "&amp;").replaceAll(/</g, "&lt;").replaceAll(/>/g, "&gt;");
+}
+
+export function escapeHtmlInclSpaces(str: string): string {
+  return escapeHtmlChars(str).replaceAll(/\s/g, "&nbsp;");
 }
 
 export function helper_compileMsgAsHtml(loc: Frame | Field): string {

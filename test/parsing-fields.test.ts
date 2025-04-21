@@ -30,6 +30,20 @@ suite("Field Parsing Tests", () => {
       `<el-field id="comment4" class="optional ok" tabindex=0><el-txt>Hello</el-txt><el-place><i>comment</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Any text on a single line.">?</el-help></el-field>`,
     );
   });
+  test("parse CommentFieldWithSpaces", () => {
+    const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), "", transforms()));
+    const commentStatement = new CommentStatement(main);
+    const text = commentStatement.text;
+    assert.equal(text.textAsSource(), "");
+    assert.equal(text.readParseStatus(), ParseStatus.valid);
+    text.setFieldToKnownValidText("  Hello   World ");
+    text.parseCurrentText();
+    assert.equal(text.readParseStatus(), ParseStatus.valid);
+    assert.equal(
+      text.renderAsHtml(),
+      `<el-field id="comment4" class="optional ok" tabindex=0><el-txt>&nbsp;&nbsp;Hello&nbsp;&nbsp;&nbsp;World&nbsp;</el-txt><el-place><i>comment</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Any text on a single line.">?</el-help></el-field>`,
+    );
+  });
   test("parse varDefField", () => {
     const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), "", transforms()));
     const variable = new VariableStatement(main);
@@ -46,7 +60,6 @@ suite("Field Parsing Tests", () => {
     id.setFieldToKnownValidText("Ab_1");
     id.parseCurrentText();
     assert.equal(id.readParseStatus(), ParseStatus.invalid);
-    assert.equal(id.parseErrorMsg, "");
     id.setFieldToKnownValidText("default");
     id.parseCurrentText();
     assert.equal(id.readParseStatus(), ParseStatus.valid); //Because use of a keyword should now be picked up as a compile error
@@ -107,6 +120,9 @@ suite("Field Parsing Tests", () => {
     assert.equal(type.readParseStatus(), ParseStatus.invalid);
     assert.equal(type.textAsSource(), "Foo<of bar");
     assert.equal(type.textAsHtml(), "Foo&lt;of bar");
+    type.setFieldToKnownValidText(`foo`);
+    type.parseCurrentText();
+    assert.equal(type.readParseStatus(), ParseStatus.invalid);
   });
 
   test("parse ExpressionField - literal string with interpolations", () => {

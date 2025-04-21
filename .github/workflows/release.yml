@@ -5,6 +5,10 @@ name: Release
 
 on:
   workflow_dispatch:
+    inputs:
+      dryRun:
+        type: boolean
+        default: true
     
 jobs:
   build:
@@ -51,7 +55,7 @@ jobs:
         username: ${{ secrets.ftp_user }}
         password: ${{ secrets.ftp_password }}
         uploads: ./web-editor/ => ./
-        dry-run: true
+        dry-run: ${{ inputs.dryRun }}
     - name: Push archive
       uses: Dylan700/sftp-upload-action@latest
       with:
@@ -61,5 +65,5 @@ jobs:
         uploads: ${{ github.workspace }}/ => ./versions/
         ignore: |
           !Elan_v${{ steps.read_file.outputs.content }}.zip
-        dry-run: true
+        dry-run: ${{ inputs.dryRun }}
         

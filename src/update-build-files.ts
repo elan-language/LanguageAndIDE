@@ -1,8 +1,8 @@
 import { readFileSync, writeFileSync } from "node:fs";
+import { elanVersion } from "./environment";
 import { DefaultProfile } from "./frames/default-profile";
 import { FileImpl } from "./frames/file-impl";
 import { transforms } from "./frames/syntax-nodes/ast-helpers";
-import { elanVersion } from "./production";
 import { hash } from "./util";
 
 function updateVersion() {
@@ -17,13 +17,15 @@ function updateVersion() {
 
   const replacePhrase = "<!-- Insert new release here at the top of the table under the header-->";
 
-  const tableEntry = `<tr><td>v${semver}</td><td>${date}</td><td><a href="/versions/Elan_v${semver}.zip">Download zip</a></td></tr>`;
+  const zipFileName = `Elan_v${semver}.zip`;
+
+  const tableEntry = `<tr><td>v${semver}</td><td>${date}</td><td><a href="/versions/${zipFileName}">Download zip</a></td></tr>`;
 
   const versionFilePath = `${__dirname}/../../web-editor/version-history.html`;
 
   const versionFileContent = readFileSync(versionFilePath, "utf-8");
 
-  if (!versionFileContent.includes(tableEntry)) {
+  if (!versionFileContent.includes(zipFileName)) {
     const newContent = versionFileContent.replace(
       replacePhrase,
       `${replacePhrase}

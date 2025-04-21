@@ -1,10 +1,10 @@
 import { readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { elanVersion } from "./environment";
 import { CodeSourceFromString } from "./frames/code-source";
 import { DefaultProfile } from "./frames/default-profile";
 import { FileImpl } from "./frames/file-impl";
-import { elanVersion } from "./production";
-import { hash } from "./util";
 import { transforms } from "./frames/syntax-nodes/ast-helpers";
+import { hash } from "./util";
 
 const demos = `${__dirname}/../../demo_programs/`;
 const snippets = `${__dirname}/../../documentation/CodeSnippets/`;

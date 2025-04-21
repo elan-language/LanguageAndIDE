@@ -8,6 +8,7 @@ import { TypeTupleNode } from "./type-tuple-node";
 
 export class TypeNode extends AbstractAlternatives {
   tokenTypes: Set<TokenType> = new Set<TokenType>();
+  override errorLink: string = "#parse_type";
 
   constructor(tokenTypes: Set<TokenType> = new Set<TokenType>()) {
     super();

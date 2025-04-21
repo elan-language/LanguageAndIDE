@@ -14,24 +14,26 @@
     "Education"
   ],
   "scripts": {
-    "update-build" : "node ./out/src/update-build-files.js",
-    "update" : "node ./out/src/update-elan-files.js",
+    "update-build": "node ./out/src/update-build-files.js",
+    "update": "node ./out/src/update-elan-files.js",
     "copy-static-files": "npm run update && cpr ./demo_programs ./web-editor/demo -o && cpr ./documentation ./web-editor/documentation -f .*\\.pptx  -o ",
-    "compile-standalone" : "esbuild ./src/web/standalone.ts --bundle --outfile=web-editor/standalone.js",
+    "compile-standalone": "esbuild ./src/web/standalone.ts --bundle --outfile=web-editor/standalone.js",
     "compile-test-api": "esbuild ./src/standard-library/std-lib.ts --bundle --format=esm --outfile=out/test/elan-api.js",
     "compile-api": "esbuild ./src/standard-library/std-lib.ts --bundle --format=esm --outfile=web-editor/elan-api.js",
     "compile-test": "tsc -p ./test && npm run format-test",
     "compile-src": "tsc -p ./ && esbuild ./out/src/web/web-scripts.js --bundle --outfile=web-editor/web-scripts.js",
-    "compile": "npm run compile-src && npm run compile-api && npm run compile-standalone && npm run format-src && npm run lint && npm run copy-static-files",
-    "production-compile": "cpr ./src/production/production.ts ./src/production.ts -o && npm run compile && npm run update-build",
+    "compile-base": "npm run compile-src && npm run compile-api && npm run compile-standalone && npm run format-src && npm run lint && npm run copy-static-files",
+    "compile": "cpr ./src/environments/environment.ts ./src/environment.ts -o && npm run compile-base",
+    "production-compile": "cpr ./src/environments/environment.prod.ts ./src/environment.ts -o && npm run compile-base && npm run update-build",
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile-src && npm run compile-test && npm run compile-test-api && cpr ./test/files ./out/test/files -o",
     "lint": "eslint src",
+    "ui-test": "tsc -p ./ui-test && mocha --timeout 10000 out/ui-test/**/*.test.js",
     "test": "npm run pretest && mocha --timeout 10000 out/test/**/*.test.js",
     "test-coverage": "npm run pretest && nyc --reporter=lcov mocha out/test/**/*.test.js",
     "format-src": "prettier --ignore-path .gitignore --print-width 100 --log-level silent --end-of-line auto --write \"src/**/*.ts\"",
     "format-test": "prettier --ignore-path .gitignore --print-width 100 --log-level silent --end-of-line auto --write \"test/**/*.test.ts\"",
-    "update-elan" :"npm run compile-src && npm run compile-test && npm run update"
+    "update-elan": "npm run compile-src && npm run compile-test && npm run update"
   },
   "dependencies": {
     "@types/wicg-file-system-access": "^2023.10.5",
@@ -53,6 +55,7 @@
     "mocha": "^11.0.0",
     "nyc": "^17.0.0",
     "prettier": "^3.4.2",
+    "puppeteer": "^24.6.1",
     "source-map-support": "^0.5.21",
     "typescript": "^5.7.2",
     "web-worker": "^1.5.0"

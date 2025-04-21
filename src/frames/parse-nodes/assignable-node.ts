@@ -4,6 +4,8 @@ import { DeconstructedTuple } from "./deconstructed-tuple";
 import { VariableOrProperty } from "./variable-or-property";
 
 export class AssignableNode extends AbstractAlternatives {
+  errorLink: string = "#parse_assignable";
+
   constructor() {
     super();
     this.alternatives.push(new VariableOrProperty());
